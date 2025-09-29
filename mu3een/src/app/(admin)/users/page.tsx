@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import EmptyState from "@/components/common/EmptyState";
+import { Skeleton } from "@/components/common/Skeleton";
 
 type UserRow = { id: string; email: string; role: "admin" | "staff" | "viewer"; status: "active" | "suspended" };
 
@@ -12,6 +13,8 @@ const seed: UserRow[] = [
 ];
 
 export default function UsersAdminPage() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => { const t = setTimeout(() => setLoading(false), 400); return () => clearTimeout(t); }, []);
   const [q, setQ] = useState("");
   const [rows, setRows] = useState<UserRow[]>(seed);
   const filtered = useMemo(() => rows.filter((r) => r.email.includes(q)), [rows, q]);
@@ -33,7 +36,11 @@ export default function UsersAdminPage() {
         </div>
       </div>
 
-      {filtered.length === 0 ? (
+      {loading ? (
+        <div className="grid gap-2">
+          {Array.from({ length: 6 }).map((_, i) => (<Skeleton key={i} className="h-12" />))}
+        </div>
+      ) : filtered.length === 0 ? (
         <EmptyState title="لا يوجد مستخدمون" description="أضف أعضاء جدد لبدء العمل." cta={<button className=\"h-9 rounded-md border px-3\">دعوة عضو</button>} />
       ) : (
       <div className="overflow-x-auto rounded-xl border">

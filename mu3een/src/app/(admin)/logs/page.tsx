@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import EmptyState from "@/components/common/EmptyState";
+import { Skeleton } from "@/components/common/Skeleton";
 
 type LogEvent = { id: string; type: "webhook" | "ai" | "error"; ts: string; message: string };
 
@@ -12,6 +13,8 @@ const seed: LogEvent[] = [
 ];
 
 export default function LogsAdminPage() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => { const t = setTimeout(() => setLoading(false), 400); return () => clearTimeout(t); }, []);
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<string>("all");
   const [rows] = useState<LogEvent[]>(seed);
@@ -31,7 +34,9 @@ export default function LogsAdminPage() {
         <input className="h-10 rounded-md border px-3 w-full md:w-64" placeholder="بحث" value={q} onChange={(e) => setQ(e.target.value)} />
       </div>
 
-      {filtered.length === 0 ? (
+      {loading ? (
+        <div className="grid gap-2">{Array.from({ length: 6 }).map((_, i) => (<Skeleton key={i} className="h-12" />))}</div>
+      ) : filtered.length === 0 ? (
         <EmptyState title="لا توجد سجلات" description="جرّب تغيير المرشحات أو التوقيت." />
       ) : (
       <div className="overflow-x-auto rounded-xl border">

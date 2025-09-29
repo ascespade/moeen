@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import EmptyState from "@/components/common/EmptyState";
+import { Skeleton } from "@/components/common/Skeleton";
 
 type Message = { id: string; from: "customer" | "agent" | "ai"; text: string; ts: string };
 
@@ -20,6 +21,8 @@ const seed: Conversation[] = [
 ];
 
 export default function ConversationsPage() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => { const t = setTimeout(() => setLoading(false), 400); return () => clearTimeout(t); }, []);
   const [conversations, setConversations] = useState<Conversation[]>(seed);
   const [activeId, setActiveId] = useState<string>(seed[0]?.id || "");
   const [input, setInput] = useState("");
@@ -69,7 +72,9 @@ export default function ConversationsPage() {
             <option value="me">معي</option>
           </select>
         </div>
-        {filtered.length === 0 ? (
+        {loading ? (
+          <div className="grid gap-2">{Array.from({ length: 6 }).map((_, i) => (<Skeleton key={i} className="h-12" />))}</div>
+        ) : filtered.length === 0 ? (
           <EmptyState title="لا توجد محادثات" description="غيّر المرشحات أو ابدأ محادثة جديدة." />
         ) : (
           <div className="grid gap-2">

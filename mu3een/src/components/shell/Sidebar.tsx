@@ -40,7 +40,7 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`h-10 rounded-md px-3 grid items-center ${active ? "bg-gray-900 text-white" : "hover:bg-gray-100 dark:hover:bg-white/10"}`}
+              className={`h-10 rounded-md px-3 grid items-center ${active ? "text-white" : "hover:bg-gray-100 dark:hover:bg-white/10"} ${active ? "bg-brand" : ""}`}
             >
               {item.label}
             </Link>
