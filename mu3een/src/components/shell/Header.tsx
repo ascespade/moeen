@@ -3,6 +3,7 @@
 import { useAtom } from "jotai";
 import { langAtom, notificationsAtom, themeAtom } from "@/components/providers/UIProvider";
 import { useState } from "react";
+import Icon from "@/components/common/Icon";
 
 export default function Header() {
   const [theme, setTheme] = useAtom(themeAtom);
@@ -16,10 +17,11 @@ export default function Header() {
       <div className="flex items-center gap-2 relative">
         <button
           aria-label="theme"
-          className="h-9 rounded-md border px-3"
+          className="h-9 rounded-md border px-3 inline-flex items-center gap-2"
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
         >
-          {theme === "light" ? "🌞" : "🌙"}
+          <Icon name={theme === "light" ? "Sun" : "Moon"} />
+          <span className="hidden sm:inline">الثيم</span>
         </button>
         <button
           aria-label="lang"
@@ -29,7 +31,9 @@ export default function Header() {
           {lang.toUpperCase()}
         </button>
         <div className="relative">
-          <button className="h-9 w-9 rounded-full border grid place-items-center" onClick={() => setOpen(!open)}>🔔</button>
+          <button className="h-9 w-9 rounded-full border grid place-items-center" onClick={() => setOpen(!open)}>
+            <Icon name="Bell" />
+          </button>
           {notif > 0 && (
             <span className="absolute -top-1 -start-1 h-5 min-w-5 px-1 rounded-full bg-red-600 text-white text-xs grid place-items-center">{notif}</span>
           )}
@@ -41,7 +45,10 @@ export default function Header() {
               ) : (
                 <div className="grid gap-2">
                   {Array.from({ length: Math.min(3, notif) }).map((_, i) => (
-                    <div key={i} className="rounded border p-2">تنبيه #{i + 1}</div>
+                    <div key={i} className="rounded border p-2 flex items-center gap-2">
+                      <Icon name="Info" className="text-brand" />
+                      تنبيه #{i + 1}
+                    </div>
                   ))}
                   <button className="h-8 rounded-md border" onClick={() => setNotif(0)}>تمييز كمقروء</button>
                 </div>

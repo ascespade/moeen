@@ -4,22 +4,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAtom } from "jotai";
 import { roleAtom } from "@/components/providers/UIProvider";
+import Icon from "@/components/common/Icon";
 
 const adminItems = [
-  { href: "/dashboard", label: "داشبورد" },
-  { href: "/conversations", label: "المحادثات" },
-  { href: "/flow", label: "منشئ التدفق" },
-  { href: "/review", label: "مركز المراجعة" },
-  { href: "/settings", label: "الإعدادات" },
-  { href: "/users", label: "إدارة الفريق" },
+  { href: "/dashboard", label: "داشبورد", icon: "LayoutDashboard" },
+  { href: "/conversations", label: "المحادثات", icon: "MessagesSquare" },
+  { href: "/flow", label: "منشئ التدفق", icon: "Workflow" },
+  { href: "/review", label: "مركز المراجعة", icon: "Sparkles" },
+  { href: "/settings", label: "الإعدادات", icon: "Settings" },
+  { href: "/users", label: "إدارة الفريق", icon: "Users" },
 ];
 const staffItems = [
-  { href: "/dashboard", label: "داشبورد" },
-  { href: "/conversations", label: "المحادثات" },
+  { href: "/dashboard", label: "داشبورد", icon: "LayoutDashboard" },
+  { href: "/conversations", label: "المحادثات", icon: "MessagesSquare" },
 ];
 const viewerItems = [
-  { href: "/dashboard", label: "داشبورد" },
-  { href: "/conversations", label: "المحادثات" },
+  { href: "/dashboard", label: "داشبورد", icon: "LayoutDashboard" },
+  { href: "/conversations", label: "المحادثات", icon: "MessagesSquare" },
 ];
 
 export default function Sidebar() {
@@ -42,7 +43,10 @@ export default function Sidebar() {
               href={item.href}
               className={`h-10 rounded-md px-3 grid items-center ${active ? "text-white" : "hover:bg-gray-100 dark:hover:bg-white/10"} ${active ? "bg-brand" : ""}`}
             >
-              {item.label}
+              <span className="inline-flex items-center gap-2">
+                {item.icon ? <Icon name={item.icon as any} /> : null}
+                {item.label}
+              </span>
             </Link>
           );
         })}

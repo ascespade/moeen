@@ -3,7 +3,7 @@ import Header from "@/components/shell/Header";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-dvh grid lg:grid-cols-[16rem_1fr]">
+    <div className="min-h-dvh grid lg:grid-cols-[16rem_1fr] container-app">
       <Sidebar />
       <div className="grid grid-rows-[auto_1fr]">
         <Header />
