@@ -1,4 +1,5 @@
 import KpiCard from "@/components/dashboard/KpiCard";
+import { ChartsA, ChartsB, ChartsPie } from "@/components/dashboard/Charts";
 
 export default function DashboardPage() {
   return (
@@ -11,10 +12,10 @@ export default function DashboardPage() {
         <KpiCard title="تكلفة اليوم" value="$12.40" hint="LLM + واتساب" />
       </div>
       <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
-        <div className="rounded-xl border p-4 h-64">Chart A</div>
-        <div className="rounded-xl border p-4 h-64">Chart B</div>
+        <div className="rounded-xl border p-4"><ChartsA /></div>
+        <div className="rounded-xl border p-4"><ChartsB /></div>
       </div>
-      <div className="rounded-xl border p-4">Realtime Stream</div>
+      <div className="rounded-xl border p-4"><ChartsPie /></div>
     </main>
   );
 }
