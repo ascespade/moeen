@@ -10,6 +10,9 @@ type Settings = {
   channels?: { whatsappWebhookUrl?: string; phoneNumberId?: string };
   security?: { dataRetentionDays?: number; piiMasking?: boolean };
   billing?: { dailyAiBudgetUsd?: number };
+  notifications?: { slackWebhookUrl?: string };
+  emergency?: { keywords?: string[] };
+  account?: { name?: string; email?: string; locale?: string };
 };
 
 const tabs = [
@@ -19,8 +22,11 @@ const tabs = [
   { id: "providers", label: "المزودون" },
   { id: "channels", label: "القنوات" },
   { id: "security", label: "الأمان" },
-  { id: "users", label: "المستخدمون والأدوار" },
+  { id: "notifications", label: "الإشعارات" },
+  { id: "emergency", label: "الطوارئ" },
+  { id: "account", label: "حسابي" },
   { id: "billing", label: "الفوترة والاستخدام" },
+  { id: "users", label: "المستخدمون والأدوار" },
 ];
 
 export default function SettingsTabs() {
@@ -264,6 +270,73 @@ export default function SettingsTabs() {
           </div>
           <div>
             <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ security: settings?.security })}>
+              {saving ? "جارٍ الحفظ..." : "حفظ"}
+            </button>
+          </div>
+        </section>
+      )}
+
+      {active === "notifications" && (
+        <section className="rounded-xl border p-4 grid gap-4">
+          <div className="grid gap-2">
+            <label className="text-sm">Slack Webhook URL</label>
+            <input
+              className="h-10 rounded-md border px-3"
+              value={settings?.notifications?.slackWebhookUrl || ""}
+              onChange={(e) => setSettings({ ...(settings as Settings), notifications: { ...(settings?.notifications || {}), slackWebhookUrl: e.target.value } })}
+              placeholder="https://hooks.slack.com/services/..."
+            />
+          </div>
+          <div>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ notifications: settings?.notifications })}>
+              {saving ? "جارٍ الحفظ..." : "حفظ"}
+            </button>
+          </div>
+        </section>
+      )}
+
+      {active === "emergency" && (
+        <section className="rounded-xl border p-4 grid gap-4">
+          <KeywordEditor
+            keywords={(settings?.emergency?.keywords || []) as string[]}
+            onChange={(kw) => setSettings({ ...(settings as Settings), emergency: { ...(settings?.emergency || {}), keywords: kw } })}
+          />
+          <div>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ emergency: settings?.emergency })}>
+              {saving ? "جارٍ الحفظ..." : "حفظ"}
+            </button>
+          </div>
+        </section>
+      )}
+
+      {active === "account" && (
+        <section className="rounded-xl border p-4 grid gap-4">
+          <div className="grid gap-2">
+            <label className="text-sm">الاسم</label>
+            <input
+              className="h-10 rounded-md border px-3"
+              value={settings?.account?.name || ""}
+              onChange={(e) => setSettings({ ...(settings as Settings), account: { ...(settings?.account || {}), name: e.target.value } })}
+            />
+          </div>
+          <div className="grid gap-2">
+            <label className="text-sm">البريد الإلكتروني</label>
+            <input
+              className="h-10 rounded-md border px-3"
+              value={settings?.account?.email || ""}
+              onChange={(e) => setSettings({ ...(settings as Settings), account: { ...(settings?.account || {}), email: e.target.value } })}
+            />
+          </div>
+          <div className="grid gap-2">
+            <label className="text-sm">اللغة</label>
+            <input
+              className="h-10 rounded-md border px-3"
+              value={settings?.account?.locale || "ar"}
+              onChange={(e) => setSettings({ ...(settings as Settings), account: { ...(settings?.account || {}), locale: e.target.value } })}
+            />
+          </div>
+          <div>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ account: settings?.account })}>
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
           </div>
