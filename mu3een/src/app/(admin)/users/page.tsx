@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import EmptyState from "@/components/common/EmptyState";
 
 type UserRow = { id: string; email: string; role: "admin" | "staff" | "viewer"; status: "active" | "suspended" };
 
@@ -32,6 +33,9 @@ export default function UsersAdminPage() {
         </div>
       </div>
 
+      {filtered.length === 0 ? (
+        <EmptyState title="لا يوجد مستخدمون" description="أضف أعضاء جدد لبدء العمل." cta={<button className=\"h-9 rounded-md border px-3\">دعوة عضو</button>} />
+      ) : (
       <div className="overflow-x-auto rounded-xl border">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 dark:bg-white/5">
@@ -67,6 +71,7 @@ export default function UsersAdminPage() {
           </tbody>
         </table>
       </div>
+      )}
     </main>
   );
 }

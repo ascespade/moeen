@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import EmptyState from "@/components/common/EmptyState";
 
 type LogEvent = { id: string; type: "webhook" | "ai" | "error"; ts: string; message: string };
 
@@ -30,6 +31,9 @@ export default function LogsAdminPage() {
         <input className="h-10 rounded-md border px-3 w-full md:w-64" placeholder="بحث" value={q} onChange={(e) => setQ(e.target.value)} />
       </div>
 
+      {filtered.length === 0 ? (
+        <EmptyState title="لا توجد سجلات" description="جرّب تغيير المرشحات أو التوقيت." />
+      ) : (
       <div className="overflow-x-auto rounded-xl border">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 dark:bg-white/5">
@@ -50,6 +54,7 @@ export default function LogsAdminPage() {
           </tbody>
         </table>
       </div>
+      )}
     </main>
   );
 }

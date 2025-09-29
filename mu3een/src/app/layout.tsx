@@ -1,23 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cairo } from "next/font/google";
 import "./globals.css";
 import PrelineInit from "@/components/providers/PrelineInit";
 import UIProvider from "@/components/providers/UIProvider";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import StatusBanner from "@/components/common/StatusBanner";
 
 export const metadata: Metadata = {
   title: "مُعين",
   description: "منصة دردشة متعددة القنوات مدعومة بالذكاء الاصطناعي",
 };
+
+const cairo = Cairo({ subsets: ["arabic", "latin"], weight: ["400", "600", "700"], variable: "--font-cairo" });
 
 export default function RootLayout({
   children,
@@ -26,9 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${cairo.variable} antialiased`}>
         <UIProvider>
           <PrelineInit />
+          <StatusBanner />
           {children}
         </UIProvider>
       </body>

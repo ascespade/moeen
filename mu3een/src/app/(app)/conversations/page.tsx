@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import EmptyState from "@/components/common/EmptyState";
 
 type Message = { id: string; from: "customer" | "agent" | "ai"; text: string; ts: string };
 
@@ -68,14 +69,18 @@ export default function ConversationsPage() {
             <option value="me">معي</option>
           </select>
         </div>
-        <div className="grid gap-2">
-          {filtered.map((c) => (
-            <button key={c.id} className={`text-start rounded-md border p-3 ${c.id === activeId ? "bg-gray-900 text-white" : "hover:bg-gray-50 dark:hover:bg-white/10"}`} onClick={() => setActiveId(c.id)}>
-              <div className="font-medium">{c.title}</div>
-              <div className="text-xs text-gray-500">{c.status}</div>
-            </button>
-          ))}
-        </div>
+        {filtered.length === 0 ? (
+          <EmptyState title="لا توجد محادثات" description="غيّر المرشحات أو ابدأ محادثة جديدة." />
+        ) : (
+          <div className="grid gap-2">
+            {filtered.map((c) => (
+              <button key={c.id} className={`text-start rounded-md border p-3 ${c.id === activeId ? "bg-gray-900 text-white" : "hover:bg-gray-50 dark:hover:bg-white/10"}`} onClick={() => setActiveId(c.id)}>
+                <div className="font-medium">{c.title}</div>
+                <div className="text-xs text-gray-500">{c.status}</div>
+              </button>
+            ))}
+          </div>
+        )}
       </aside>
 
       <section className="rounded-xl border grid grid-rows-[1fr_auto]">
