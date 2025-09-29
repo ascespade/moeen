@@ -1,0 +1,64 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useAtom } from "jotai";
+import { roleAtom } from "@/components/providers/UIProvider";
+import Icon from "@/components/common/Icon";
+
+const adminItems = [
+  { href: "/dashboard", label: "داشبورد", icon: "LayoutDashboard" },
+  { href: "/conversations", label: "المحادثات", icon: "MessagesSquare" },
+  { href: "/flow", label: "منشئ التدفق", icon: "Workflow" },
+  { href: "/review", label: "مركز المراجعة", icon: "Sparkles" },
+  { href: "/settings", label: "الإعدادات", icon: "Settings" },
+  { href: "/users", label: "إدارة الفريق", icon: "Users" },
+];
+const staffItems = [
+  { href: "/dashboard", label: "داشبورد", icon: "LayoutDashboard" },
+  { href: "/conversations", label: "المحادثات", icon: "MessagesSquare" },
+];
+const viewerItems = [
+  { href: "/dashboard", label: "داشبورد", icon: "LayoutDashboard" },
+  { href: "/conversations", label: "المحادثات", icon: "MessagesSquare" },
+];
+
+export default function Sidebar() {
+  const pathname = usePathname();
+  const [role] = useAtom(roleAtom);
+  const items = role === "admin" ? adminItems : role === "staff" ? staffItems : viewerItems;
+
+  return (
+    <aside className="w-full lg:w-64 shrink-0 border-s lg:border-s-0 lg:border-e min-h-dvh p-4 grid grid-rows-[auto_1fr_auto]">
+      <div className="mb-2">
+        <span className="text-lg font-semibold">مركز الهمم</span>
+        <div className="text-xs text-gray-500">Mu’ayin</div>
+      </div>
+      <nav className="grid gap-1">
+        {items.map((item) => {
+          const active = pathname === item.href || pathname.startsWith(item.href + "/");
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`h-10 rounded-md px-3 grid items-center ${active ? "text-white" : "hover:bg-gray-100 dark:hover:bg-white/10"} ${active ? "bg-brand" : ""}`}
+            >
+              <span className="inline-flex items-center gap-2">
+                {item.icon ? <Icon name={item.icon as any} /> : null}
+                {item.label}
+              </span>
+            </Link>
+          );
+        })}
+      </nav>
+      <div className="flex items-center gap-2 pt-4 border-t mt-4">
+        <div className="h-9 w-9 rounded-full bg-gray-200" />
+        <div className="text-sm">
+          <div className="font-medium">مستخدم تجريبي</div>
+          <button className="text-gray-500 hover:underline">تسجيل الخروج</button>
+        </div>
+      </div>
+    </aside>
+  );
+}
+
