@@ -32,7 +32,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-surface">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
       <header className="bg-white dark:bg-slate-800 border-b border-brand-border">
         <div className="container-app px-4 py-4">
@@ -100,11 +100,11 @@ export default function DashboardPage() {
               <div className="p-6 border-b border-brand-border">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white">المحادثات الحديثة</h2>
-                  <div className="flex items-center space-x-2 space-x-reverse">
-                    <button className="btn-brand px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2">
+            <div className="flex items-center space-x-2 space-x-reverse">
+              <button className="btn btn-primary px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2">
                       ➕ محادثة جديدة
                     </button>
-                    <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors">
+              <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors">
                       🔍
                     </button>
                   </div>
@@ -123,8 +123,8 @@ export default function DashboardPage() {
                       onClick={() => setActiveTab(tab.id)}
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                         activeTab === tab.id
-                          ? "bg-brand-primary text-white"
-                          : "text-gray-600 hover:text-brand-primary hover:bg-brand-surface"
+                        ? "bg-[var(--brand-primary)] text-white"
+                        : "text-gray-600 hover:text-[var(--brand-primary)] hover:bg-[var(--brand-surface)]"
                       }`}
                     >
                       {tab.label} ({tab.count})
@@ -139,7 +139,7 @@ export default function DashboardPage() {
                   <div key={conversation.id} className="p-6 hover:bg-brand-surface transition-colors cursor-pointer">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4 space-x-reverse">
-                        <div className="w-12 h-12 bg-brand-gradient rounded-full flex items-center justify-center text-white font-semibold">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold bg-[var(--brand-primary)]">
                           {conversation.name.charAt(0)}
                         </div>
                         <div>
@@ -180,13 +180,13 @@ export default function DashboardPage() {
             <div className="card card-pad shadow-soft">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">إجراءات سريعة</h3>
               <div className="space-y-3">
-                <button className="w-full btn-brand py-3 rounded-lg font-medium flex items-center justify-center gap-2">
+                <button className="w-full btn btn-primary py-3 rounded-lg font-medium flex items-center justify-center gap-2">
                   💬 بدء محادثة جديدة
                 </button>
-                <button className="w-full border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2">
+                <button className="w-full btn btn-secondary py-3 rounded-lg font-medium flex items-center justify-center gap-2">
                   👥 إدارة العملاء
                 </button>
-                <button className="w-full border border-brand-border text-gray-600 hover:bg-brand-surface py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                <button className="w-full p-3 border border-[var(--brand-border)] text-gray-600 hover:bg-[var(--brand-surface)] rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
                   📊 عرض التقارير
                 </button>
               </div>

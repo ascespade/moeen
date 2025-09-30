@@ -58,7 +58,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-surface">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
       <header className="bg-white dark:bg-slate-800 border-b border-brand-border">
         <div className="container-app px-4 py-4">
@@ -81,13 +81,13 @@ export default function SettingsPage() {
             <div className="flex items-center space-x-4 space-x-reverse">
               <Link
                 href="/dashboard"
-                className="px-4 py-2 text-gray-600 hover:text-brand-primary transition-colors"
+                className="px-4 py-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors"
               >
                 ← العودة للوحة التحكم
               </Link>
               <button 
                 onClick={handleSave}
-                className="btn-brand px-6 py-2 rounded-lg font-medium"
+                className="btn btn-primary px-6 py-2 rounded-lg font-medium"
               >
                 💾 حفظ التغييرات
               </button>

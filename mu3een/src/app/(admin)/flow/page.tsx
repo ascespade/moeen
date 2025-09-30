@@ -66,7 +66,7 @@ export default function FlowPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-brand-surface">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
       <header className="bg-white dark:bg-slate-800 border-b border-brand-border">
         <div className="container-app px-4 py-4">
@@ -89,11 +89,11 @@ export default function FlowPage() {
             <div className="flex items-center space-x-4 space-x-reverse">
               <Link
                 href="/dashboard"
-                className="px-4 py-2 text-gray-600 hover:text-brand-primary transition-colors"
+                className="px-4 py-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors"
               >
                 ← العودة للوحة التحكم
               </Link>
-              <button className="btn-brand px-6 py-2 rounded-lg font-medium">
+              <button className="btn btn-primary px-6 py-2 rounded-lg font-medium">
                 + تدفق جديد
               </button>
             </div>
@@ -119,7 +119,7 @@ export default function FlowPage() {
                     onClick={() => setSelectedTemplate(template.id)}
                   >
                     <div className="flex items-center space-x-3 space-x-reverse">
-                      <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${template.color} flex items-center justify-center text-white text-xl`}>
+                      <div className={`w-12 h-12 rounded-lg bg-[var(--brand-primary)]/90 flex items-center justify-center text-white text-xl`}>
                         {template.icon}
                       </div>
                       <div>
@@ -139,10 +139,10 @@ export default function FlowPage() {
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">منشئ التدفق</h3>
                 <div className="flex items-center space-x-2 space-x-reverse">
-                  <button className="px-4 py-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors">
+                  <button className="px-4 py-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors">
                     معاينة
                   </button>
-                  <button className="btn-brand px-4 py-2 rounded-lg">
+                  <button className="btn btn-primary px-4 py-2 rounded-lg">
                     حفظ
                   </button>
                 </div>
