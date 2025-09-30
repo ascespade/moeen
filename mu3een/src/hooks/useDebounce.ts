@@ -2,69 +2,69 @@
 import { useState, useEffect, useCallback } from 'react';
 
 export const useDebounce = <T>(value: T, delay: number): T => {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+    const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
 
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
 
-  return debouncedValue;
+    return debouncedValue;
 };
 
 export const useDebouncedCallback = <T extends (...args: any[]) => any>(
-  callback: T,
-  delay: number
+    callback: T,
+    delay: number
 ): T => {
-  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+    const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
 
-  const debouncedCallback = useCallback(
-    (...args: Parameters<T>) => {
-      if (debounceTimer) {
-        clearTimeout(debounceTimer);
-      }
+    const debouncedCallback = useCallback(
+        (...args: Parameters<T>) => {
+            if (debounceTimer) {
+                clearTimeout(debounceTimer);
+            }
 
-      const newTimer = setTimeout(() => {
-        callback(...args);
-      }, delay);
+            const newTimer = setTimeout(() => {
+                callback(...args);
+            }, delay);
 
-      setDebounceTimer(newTimer);
-    },
-    [callback, delay, debounceTimer]
-  );
+            setDebounceTimer(newTimer);
+        },
+        [callback, delay, debounceTimer]
+    );
 
-  useEffect(() => {
-    return () => {
-      if (debounceTimer) {
-        clearTimeout(debounceTimer);
-      }
-    };
-  }, [debounceTimer]);
+    useEffect(() => {
+        return () => {
+            if (debounceTimer) {
+                clearTimeout(debounceTimer);
+            }
+        };
+    }, [debounceTimer]);
 
-  return debouncedCallback as T;
+    return debouncedCallback as T;
 };
 
 export const useDebouncedValue = <T>(
-  initialValue: T,
-  delay: number
+    initialValue: T,
+    delay: number
 ): [T, (value: T) => void, T] => {
-  const [value, setValue] = useState<T>(initialValue);
-  const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);
+    const [value, setValue] = useState<T>(initialValue);
+    const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
 
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
 
-  return [value, setValue, debouncedValue];
+    return [value, setValue, debouncedValue];
 };

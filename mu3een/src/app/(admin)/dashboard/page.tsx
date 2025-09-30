@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link"; // Unused import removed
 // Icons removed for performance
 
 export default function DashboardPage() {
@@ -85,7 +85,7 @@ export default function DashboardPage() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</span>
-                <span className={`text-sm font-medium ${stat.trend === 'up' ? 'text-brand-success' : 'text-brand-error'}`}>
+                <span className={`text-sm font-medium ${stat.change.includes('+') ? 'text-brand-success' : 'text-brand-error'}`}>
                   {stat.change}
                 </span>
               </div>

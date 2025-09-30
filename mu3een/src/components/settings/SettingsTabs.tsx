@@ -30,7 +30,7 @@ const tabs = [
 ];
 
 export default function SettingsTabs() {
-  const [active, setActive] = useState<string>(tabs[0].id);
+  const [active, setActive] = useState<string>(tabs[0]?.id || 'general');
   const [settings, setSettings] = useState<Settings | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [saving, setSaving] = useState<boolean>(false);
@@ -113,7 +113,7 @@ export default function SettingsTabs() {
             />
           </div>
           <div>
-            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ general: settings?.general })}>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ general: settings?.general || {} })}>
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
           </div>
@@ -144,7 +144,7 @@ export default function SettingsTabs() {
             </div>
           </div>
           <div>
-            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ provider: settings?.provider })}>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ provider: settings?.provider || '' })}>
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
           </div>
@@ -158,7 +158,7 @@ export default function SettingsTabs() {
             <select
               className="h-10 rounded-md border px-3"
               value={settings?.voice?.stt || "whisper"}
-              onChange={(e) => setSettings({ ...(settings as Settings), voice: { ...(settings?.voice || {}), stt: e.target.value } })}
+              onChange={(e) => setSettings({ ...(settings as Settings), voice: { stt: e.target.value, tts: settings?.voice?.tts || null } })}
             >
               <option value="whisper">OpenAI Whisper</option>
               <option value="gemini-stt">Gemini Audio (إن توفر)</option>
@@ -169,7 +169,7 @@ export default function SettingsTabs() {
             <select
               className="h-10 rounded-md border px-3"
               value={settings?.voice?.tts || ""}
-              onChange={(e) => setSettings({ ...(settings as Settings), voice: { ...(settings?.voice || {}), tts: e.target.value } })}
+              onChange={(e) => setSettings({ ...(settings as Settings), voice: { stt: settings?.voice?.stt || null, tts: e.target.value } })}
             >
               <option value="">غير مفعّل</option>
               <option value="openai-tts">OpenAI TTS</option>
@@ -177,7 +177,7 @@ export default function SettingsTabs() {
             </select>
           </div>
           <div>
-            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ voice: settings?.voice })}>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ voice: settings?.voice || { stt: null, tts: null } })}>
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
           </div>
@@ -302,7 +302,7 @@ export default function SettingsTabs() {
             onChange={(kw) => setSettings({ ...(settings as Settings), emergency: { ...(settings?.emergency || {}), keywords: kw } })}
           />
           <div>
-            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ emergency: settings?.emergency })}>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ emergency: settings?.emergency || { keywords: [] } })}>
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
           </div>

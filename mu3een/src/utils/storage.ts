@@ -1,102 +1,102 @@
 // Storage utilities
 export const storage = {
-  // Local Storage
-  get: <T = any>(key: string, defaultValue?: T): T | null => {
-    if (typeof window === 'undefined') return defaultValue || null;
-    
-    try {
-      const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : defaultValue || null;
-    } catch (error) {
-      console.error(`Error reading from localStorage key "${key}":`, error);
-      return defaultValue || null;
-    }
-  },
+    // Local Storage
+    get: <T = any>(key: string, defaultValue?: T): T | null => {
+        if (typeof window === 'undefined') return defaultValue || null;
 
-  set: <T = any>(key: string, value: T): void => {
-    if (typeof window === 'undefined') return;
-    
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      console.error(`Error writing to localStorage key "${key}":`, error);
-    }
-  },
+        try {
+            const item = localStorage.getItem(key);
+            return item ? JSON.parse(item) : defaultValue || null;
+        } catch (error) {
+            console.error(`Error reading from localStorage key "${key}":`, error);
+            return defaultValue || null;
+        }
+    },
 
-  remove: (key: string): void => {
-    if (typeof window === 'undefined') return;
-    
-    try {
-      localStorage.removeItem(key);
-    } catch (error) {
-      console.error(`Error removing from localStorage key "${key}":`, error);
-    }
-  },
+    set: <T = any>(key: string, value: T): void => {
+        if (typeof window === 'undefined') return;
 
-  clear: (): void => {
-    if (typeof window === 'undefined') return;
-    
-    try {
-      localStorage.clear();
-    } catch (error) {
-      console.error('Error clearing localStorage:', error);
-    }
-  },
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+        } catch (error) {
+            console.error(`Error writing to localStorage key "${key}":`, error);
+        }
+    },
 
-  // Session Storage
-  getSession: <T = any>(key: string, defaultValue?: T): T | null => {
-    if (typeof window === 'undefined') return defaultValue || null;
-    
-    try {
-      const item = sessionStorage.getItem(key);
-      return item ? JSON.parse(item) : defaultValue || null;
-    } catch (error) {
-      console.error(`Error reading from sessionStorage key "${key}":`, error);
-      return defaultValue || null;
-    }
-  },
+    remove: (key: string): void => {
+        if (typeof window === 'undefined') return;
 
-  setSession: <T = any>(key: string, value: T): void => {
-    if (typeof window === 'undefined') return;
-    
-    try {
-      sessionStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      console.error(`Error writing to sessionStorage key "${key}":`, error);
-    }
-  },
+        try {
+            localStorage.removeItem(key);
+        } catch (error) {
+            console.error(`Error removing from localStorage key "${key}":`, error);
+        }
+    },
 
-  removeSession: (key: string): void => {
-    if (typeof window === 'undefined') return;
-    
-    try {
-      sessionStorage.removeItem(key);
-    } catch (error) {
-      console.error(`Error removing from sessionStorage key "${key}":`, error);
-    }
-  },
+    clear: (): void => {
+        if (typeof window === 'undefined') return;
 
-  clearSession: (): void => {
-    if (typeof window === 'undefined') return;
-    
-    try {
-      sessionStorage.clear();
-    } catch (error) {
-      console.error('Error clearing sessionStorage:', error);
-    }
-  },
+        try {
+            localStorage.clear();
+        } catch (error) {
+            console.error('Error clearing localStorage:', error);
+        }
+    },
+
+    // Session Storage
+    getSession: <T = any>(key: string, defaultValue?: T): T | null => {
+        if (typeof window === 'undefined') return defaultValue || null;
+
+        try {
+            const item = sessionStorage.getItem(key);
+            return item ? JSON.parse(item) : defaultValue || null;
+        } catch (error) {
+            console.error(`Error reading from sessionStorage key "${key}":`, error);
+            return defaultValue || null;
+        }
+    },
+
+    setSession: <T = any>(key: string, value: T): void => {
+        if (typeof window === 'undefined') return;
+
+        try {
+            sessionStorage.setItem(key, JSON.stringify(value));
+        } catch (error) {
+            console.error(`Error writing to sessionStorage key "${key}":`, error);
+        }
+    },
+
+    removeSession: (key: string): void => {
+        if (typeof window === 'undefined') return;
+
+        try {
+            sessionStorage.removeItem(key);
+        } catch (error) {
+            console.error(`Error removing from sessionStorage key "${key}":`, error);
+        }
+    },
+
+    clearSession: (): void => {
+        if (typeof window === 'undefined') return;
+
+        try {
+            sessionStorage.clear();
+        } catch (error) {
+            console.error('Error clearing sessionStorage:', error);
+        }
+    },
 };
 
 // Specific storage keys
 export const STORAGE_KEYS = {
-  USER: 'user',
-  TOKEN: 'token',
-  REFRESH_TOKEN: 'refreshToken',
-  THEME: 'theme',
-  LANGUAGE: 'language',
-  SETTINGS: 'settings',
-  RECENT_CHANNELS: 'recentChannels',
-  DRAFT_MESSAGES: 'draftMessages',
+    USER: 'user',
+    TOKEN: 'token',
+    REFRESH_TOKEN: 'refreshToken',
+    THEME: 'theme',
+    LANGUAGE: 'language',
+    SETTINGS: 'settings',
+    RECENT_CHANNELS: 'recentChannels',
+    DRAFT_MESSAGES: 'draftMessages',
 } as const;
 
 // Storage helpers
@@ -122,7 +122,7 @@ export const getSettings = () => storage.get(STORAGE_KEYS.SETTINGS);
 export const setSettings = (settings: any) => storage.set(STORAGE_KEYS.SETTINGS, settings);
 
 export const clearAuth = () => {
-  removeUser();
-  removeToken();
-  removeRefreshToken();
+    removeUser();
+    removeToken();
+    removeRefreshToken();
 };

@@ -42,7 +42,7 @@ export default class ErrorBoundary extends Component<Props, State> {
               {this.state.error?.message || "حدث خطأ في التطبيق"}
             </p>
             <button
-              onClick={() => this.setState({ hasError: false, error: undefined })}
+              onClick={() => this.setState({ hasError: false })}
               className="btn-brand px-6 py-2 rounded-lg inline-flex items-center gap-2"
             >
               🔄 إعادة المحاولة
