@@ -44,7 +44,7 @@ export default function ReviewPage() {
       id: 4,
       customer: "سارة أحمد",
       channel: "إنستغرام",
-      message: "خدمة رائعة! أنصح بها",
+      message: "خدمة رائعة! أنصح ب��ا",
       time: "منذ ساعتين",
       status: "positive",
       rating: 5,
@@ -273,7 +273,7 @@ export default function ReviewPage() {
             <div className="card card-pad shadow-soft">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">إجراءات سريعة</h3>
               <div className="space-y-3">
-                <button className="w-full btn-brand py-3 rounded-lg font-medium flex items-center justify-center gap-2">
+                <button className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
                   📊 تقرير شامل
                 </button>
                 <button className="w-full border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2">
