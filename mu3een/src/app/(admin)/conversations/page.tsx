@@ -124,7 +124,7 @@ export default function ConversationsPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
-      <header className="bg-white dark:bg-slate-800 border-b border-brand-border">
+      <header className="bg-white dark:bg-slate-800 border-b border-[var(--brand-border)]">
         <div className="container-app px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 space-x-reverse">
@@ -149,7 +149,7 @@ export default function ConversationsPage() {
               >
                 ← العودة للوحة التحكم
               </Link>
-              <button className="btn btn-primary px-6 py-2 rounded-lg font-medium">
+              <button className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-2 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
                 + محادثة جديدة
               </button>
             </div>
@@ -159,17 +159,17 @@ export default function ConversationsPage() {
 
       <div className="flex h-[calc(100vh-80px)]">
         {/* Conversations List */}
-        <div className="w-1/3 border-l border-brand-border bg-white dark:bg-slate-800">
-          <div className="p-4 border-b border-brand-border">
+        <div className="w-1/3 border-l border-[var(--brand-border)] bg-white dark:bg-slate-800">
+          <div className="p-4 border-b border-[var(--brand-border)]">
             <div className="flex items-center space-x-2 space-x-reverse mb-4">
               <input
                 type="text"
                 placeholder="البحث في المحادثات..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="input flex-1"
+                className="flex-1 py-2 px-3 border border-[var(--brand-border)] rounded-lg bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)]"
               />
-              <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Search">
+              <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]" aria-label="Search">
                 <Search className="h-4 w-4" />
               </button>
             </div>
@@ -198,10 +198,10 @@ export default function ConversationsPage() {
             {filteredConversations.map((conversation) => (
               <div
                 key={conversation.id}
-                className={`p-4 border-b border-brand-border cursor-pointer transition-colors ${
+                className={`p-4 border-b border-[var(--brand-border)] cursor-pointer transition-colors ${
                   selectedConversation === conversation.id
-                    ? "bg-brand-primary/5 border-r-4 border-brand-primary"
-                    : "hover:bg-brand-surface"
+                    ? "bg-[color:var(--brand-primary)]/5 border-r-4 border-[var(--brand-primary)]"
+                    : "hover:bg-[var(--brand-surface)]"
                 }`}
                 onClick={() => setSelectedConversation(conversation.id)}
               >
@@ -244,10 +244,10 @@ export default function ConversationsPage() {
           {selectedConv ? (
             <>
               {/* Chat Header */}
-              <div className="p-4 border-b border-brand-border bg-white dark:bg-slate-800">
+              <div className="p-4 border-b border-[var(--brand-border)] bg-white dark:bg-slate-800">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3 space-x-reverse">
-                    <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-brand-primary font-semibold">
+                    <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-[var(--brand-primary)] font-semibold">
                       {selectedConv.avatar}
                     </div>
                     <div>
@@ -256,13 +256,13 @@ export default function ConversationsPage() {
                     </div>
                   </div>
                   <div className="flex items-center space-x-2 space-x-reverse">
-                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Call">
+                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]" aria-label="Call">
                       <Phone className="h-4 w-4" />
                     </button>
-                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Video">
+                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]" aria-label="Video">
                       <Video className="h-4 w-4" />
                     </button>
-                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Settings">
+                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]" aria-label="Settings">
                       <Settings className="h-4 w-4" />
                     </button>
                   </div>
@@ -294,20 +294,20 @@ export default function ConversationsPage() {
               </div>
 
               {/* Message Input */}
-              <div className="p-4 border-t border-brand-border bg-white dark:bg-slate-800">
+              <div className="p-4 border-t border-[var(--brand-border)] bg-white dark:bg-slate-800">
                 <div className="flex items-center space-x-2 space-x-reverse">
-                  <button className="p-2 text-gray-600 hover:text-brand-primary transition-colors">
+                  <button className="p-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors">
                     📎
                   </button>
-                  <button className="p-2 text-gray-600 hover:text-brand-primary transition-colors">
+                  <button className="p-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors">
                     😊
                   </button>
                   <input
                     type="text"
                     placeholder="اكتب رسالتك هنا..."
-                    className="input flex-1"
+                    className="flex-1 py-2 px-3 border border-[var(--brand-border)] rounded-lg bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)]"
                   />
-                  <button className="btn btn-primary px-6 py-2 rounded-lg">
+                  <button className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-2 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
                     <Send className="h-4 w-4" /> إرسال
                   </button>
                 </div>
