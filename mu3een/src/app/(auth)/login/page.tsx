@@ -3,11 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-// Icons removed for performance
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function LoginPage() {
-  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -17,10 +14,8 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate login process
+
     setTimeout(() => {
-      // Set demo auth cookie
       document.cookie = "mu3een_demo_auth=true; path=/; max-age=86400";
       window.location.href = "/dashboard";
     }, 1000);
@@ -36,9 +31,8 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Logo and Title */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-3 space-x-reverse mb-4">
+          <div className="flex items-center justify-center gap-3 mb-4">
             <Image
               src="/hemam-logo.jpg"
               alt="Hemam Logo"
@@ -50,22 +44,14 @@ export default function LoginPage() {
             />
             <span className="text-3xl font-bold text-brand-primary">مُعين</span>
           </div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
-            مرحباً بك مرة أخرى
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            سجل دخولك للوصول إلى لوحة التحكم
-          </p>
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">مرحباً بك مرة أخرى</h1>
+          <p className="text-gray-600 dark:text-gray-400">سجل دخولك للوصول إلى لوحة التحكم</p>
         </div>
 
-        {/* Login Form */}
-        <div className="card card-pad shadow-soft">
+        <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-soft">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                البريد الإلكتروني
-              </label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">البريد الإلكتروني</label>
               <div className="relative">
                 <input
                   type="email"
@@ -73,65 +59,57 @@ export default function LoginPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="input pr-10"
+                  className="py-3 px-4 block w-full border border-[var(--brand-border)] rounded-lg bg-white placeholder-slate-400 focus:outline-none focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] sm:text-sm transition"
                   placeholder="أدخل بريدك الإلكتروني"
                   required
                 />
               </div>
             </div>
 
-            {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                كلمة المرور
-              </label>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">كلمة المرور</label>
               <div className="relative">
                 <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
+                  id="password-input"
+                  type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="input pr-10"
+                  className="py-3 px-4 pe-12 block w-full border border-[var(--brand-border)] rounded-lg bg-white placeholder-slate-400 focus:outline-none focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] sm:text-sm transition"
                   placeholder="أدخل كلمة المرور"
                   required
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute top-1/2 -translate-y-1/2 start-3 inline-flex items-center gap-x-2 text-sm text-gray-500 hover:text-gray-700"
+                  aria-label="إظهار/إخفاء كلمة المرور"
+                  data-hs-toggle-password='{"target":"#password-input"}'
                 >
-                  {showPassword ? "إخفاء" : "إظهار"}
+                  <span data-hs-toggle-password-class="hidden">إظهار</span>
+                  <span className="hidden" data-hs-toggle-password-class="block">إخفاء</span>
                 </button>
               </div>
             </div>
 
-            {/* Remember Me & Forgot Password */}
             <div className="flex items-center justify-between">
               <label className="flex items-center">
                 <input
                   type="checkbox"
-                  className="rounded border-[var(--brand-border)] text-[var(--brand-primary)] focus:ring-[var(--focus-ring)]"
+                  className="shrink-0 rounded border-[var(--brand-border)] text-[var(--brand-primary)] focus:ring-[var(--focus-ring)]"
                 />
-                <span className="mr-2 text-sm text-gray-600 dark:text-gray-400">تذكرني</span>
+                <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">تذكرني</span>
               </label>
-              <Link
-                href="/forgot-password"
-                className="text-sm text-brand-primary underline hover:text-brand-primary-hover"
-              >
-                نسيت كلمة المرور؟
-              </Link>
+              <Link href="/forgot-password" className="text-sm text-brand-primary underline hover:text-brand-primary-hover">نسيت كلمة المرور؟</Link>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full btn btn-primary py-3 rounded-lg font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full inline-flex justify-center items-center gap-2 rounded-lg px-4 py-3 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>
-                  <LoadingSpinner size="sm" />
+                  <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   جاري تسجيل الدخول...
                 </>
               ) : (
@@ -140,30 +118,23 @@ export default function LoginPage() {
             </button>
           </form>
 
-          {/* Demo Login */}
           <div className="mt-6 pt-6 border-t border-[var(--brand-border)]">
             <button
               onClick={() => {
                 document.cookie = "mu3een_demo_auth=true; path=/; max-age=86400";
                 window.location.href = "/dashboard";
               }}
-              className="w-full py-3 btn btn-secondary rounded-lg font-medium flex items-center justify-center gap-2"
+              className="w-full inline-flex justify-center items-center gap-2 rounded-lg px-4 py-3 font-medium bg-[var(--brand-surface)] text-[color:var(--foreground)] hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)] border border-[var(--brand-border)]"
             >
               ➡️ دخول تجريبي
             </button>
           </div>
         </div>
 
-        {/* Sign Up Link */}
         <div className="text-center mt-6">
           <p className="text-gray-600 dark:text-gray-400">
             ليس لديك حساب؟{" "}
-            <Link
-              href="/register"
-              className="text-brand-primary hover:text-brand-primary-hover font-medium transition-colors"
-            >
-              إنشاء حساب جديد
-            </Link>
+            <Link href="/register" className="text-brand-primary hover:text-brand-primary-hover font-medium transition-colors">إنشاء حساب جديد</Link>
           </p>
         </div>
       </div>
