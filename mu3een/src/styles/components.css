@@ -52,7 +52,9 @@
 
 /* Card components */
 .card {
-    @apply bg-white rounded-xl shadow-lg border border-slate-200 backdrop-blur-sm transition-all duration-300;
+    @apply rounded-xl border backdrop-blur-sm transition-all duration-300;
+    background: var(--color-surface);
+    border-color: var(--color-border);
 }
 
 .card-hover {

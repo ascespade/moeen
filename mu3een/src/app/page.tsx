@@ -66,7 +66,7 @@ export default function Home() {
 
           {/* Features Grid */}
           <div className="grid md:grid-cols-3 gap-8 mt-16">
-            <div className="card card-pad shadow-soft text-center">
+            <div className="card card-pad shadow-soft text-center" style={{contentVisibility: 'auto', containIntrinsicSize: '300px'}}>
               <div className="mx-auto mb-4 text-brand-primary text-4xl">💬</div>
               <h3 className="text-xl font-semibold mb-2">دردشة موحدة</h3>
               <p className="text-gray-600 dark:text-gray-300">
@@ -74,7 +74,7 @@ export default function Home() {
               </p>
             </div>
             
-            <div className="card card-pad shadow-soft text-center">
+            <div className="card card-pad shadow-soft text-center" style={{contentVisibility: 'auto', containIntrinsicSize: '300px'}}>
               <div className="mx-auto mb-4 text-brand-primary text-4xl">👥</div>
               <h3 className="text-xl font-semibold mb-2">إدارة العملاء</h3>
               <p className="text-gray-600 dark:text-gray-300">
@@ -82,7 +82,7 @@ export default function Home() {
               </p>
             </div>
             
-            <div className="card card-pad shadow-soft text-center">
+            <div className="card card-pad shadow-soft text-center" style={{contentVisibility: 'auto', containIntrinsicSize: '300px'}}>
               <div className="mx-auto mb-4 text-brand-primary text-4xl">📊</div>
               <h3 className="text-xl font-semibold mb-2">تقارير ذكية</h3>
               <p className="text-gray-600 dark:text-gray-300">
