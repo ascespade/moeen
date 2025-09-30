@@ -34,7 +34,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
-      <header className="bg-white dark:bg-slate-800 border-b border-brand-border">
+      <header className="bg-white dark:bg-slate-800 border-b border-[var(--brand-border)]">
         <div className="container-app px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 space-x-reverse">
@@ -57,13 +57,13 @@ export default function DashboardPage() {
                 <input
                   type="text"
                   placeholder="البحث في المحادثات..."
-                  className="pr-10 pl-4 py-2 border border-brand-border rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent w-64"
+                  className="pr-10 pl-4 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent w-64"
                 />
               </div>
               
               <button className="relative p-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors" aria-label="Notifications">
                 <Bell className="h-5 w-5" />
-                <span className="absolute -top-1 -right-1 bg-brand-error text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                <span className="absolute -top-1 -right-1 bg-[var(--brand-error)] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
               </button>
               
               <button className="p-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors" aria-label="Settings">
@@ -78,14 +78,14 @@ export default function DashboardPage() {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
-            <div key={index} className="card card-pad shadow-soft">
+            <div key={index} className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">{stat.title}</h3>
                 <BarChart className="h-5 w-5 text-green-500" />
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</span>
-                <span className={`text-sm font-medium ${stat.change.includes('+') ? 'text-brand-success' : 'text-brand-error'}`}>
+                <span className={`text-sm font-medium ${stat.change.includes('+') ? 'text-[var(--brand-success)]' : 'text-[var(--brand-error)]'}`}>
                   {stat.change}
                 </span>
               </div>
@@ -96,8 +96,8 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Conversations List */}
           <div className="lg:col-span-2">
-            <div className="card shadow-soft">
-              <div className="p-6 border-b border-brand-border">
+            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur shadow-sm">
+              <div className="p-6 border-b border-[var(--brand-border)]">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white">المحادثات الحديثة</h2>
             <div className="flex items-center space-x-2 space-x-reverse">
@@ -134,9 +134,9 @@ export default function DashboardPage() {
               </div>
 
               {/* Conversations */}
-              <div className="divide-y divide-brand-border">
+              <div className="divide-y divide-[var(--brand-border)]">
                 {conversations.map((conversation) => (
-                  <div key={conversation.id} className="p-6 hover:bg-brand-surface transition-colors cursor-pointer">
+                  <div key={conversation.id} className="p-6 hover:bg-[var(--brand-surface)] transition-colors cursor-pointer">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4 space-x-reverse">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold bg-[var(--brand-primary)]">
@@ -145,11 +145,11 @@ export default function DashboardPage() {
                         <div>
                           <div className="flex items-center space-x-2 space-x-reverse">
                             <h3 className="font-medium text-gray-900 dark:text-white">{conversation.name}</h3>
-                            <span className="text-xs bg-brand-surface text-brand-primary px-2 py-1 rounded-full">
+                            <span className="text-xs bg-[var(--brand-surface)] text-[var(--brand-primary)] px-2 py-1 rounded-full">
                               {conversation.channel}
                             </span>
                             {conversation.unread > 0 && (
-                              <span className="bg-brand-error text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                              <span className="bg-[var(--brand-error)] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                                 {conversation.unread}
                               </span>
                             )}
@@ -163,7 +163,7 @@ export default function DashboardPage() {
                           <span className="text-sm font-medium capitalize">{conversation.status}</span>
                         </div>
                         <span className="text-sm text-gray-500">{conversation.time}</span>
-                        <button className="p-1 hover:bg-brand-surface rounded">
+                        <button className="p-1 hover:bg-[var(--brand-surface)] rounded">
                           ⚙️
                         </button>
                       </div>
@@ -177,7 +177,7 @@ export default function DashboardPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Quick Actions */}
-            <div className="card card-pad shadow-soft">
+            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">إجراءات سريعة</h3>
               <div className="space-y-3">
                 <button className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
@@ -193,7 +193,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Recent Activity */}
-            <div className="card card-pad shadow-soft">
+            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">النشاط الأخير</h3>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3 space-x-reverse">
