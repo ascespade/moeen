@@ -44,7 +44,7 @@ export default function ReviewPage() {
       id: 4,
       customer: "سارة أحمد",
       channel: "إنستغرام",
-      message: "خدمة رائعة! أنصح ب��ا",
+      message: "خدمة رائعة! أنصح بها",
       time: "منذ ساعتين",
       status: "positive",
       rating: 5,
@@ -85,7 +85,7 @@ export default function ReviewPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
-      <header className="bg-white dark:bg-slate-800 border-b border-brand-border">
+      <header className="bg-white dark:bg-slate-800 border-b border-[var(--brand-border)]">
         <div className="container-app px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 space-x-reverse">
@@ -110,7 +110,7 @@ export default function ReviewPage() {
               >
                 <ArrowLeft className="h-4 w-4" /> العودة للوحة التحكم
               </Link>
-              <button className="btn btn-primary px-6 py-2 rounded-lg font-medium inline-flex items-center gap-2">
+              <button className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-2 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
                 <BarChart className="h-4 w-4" /> تقرير شامل
               </button>
             </div>
@@ -122,14 +122,14 @@ export default function ReviewPage() {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
-            <div key={index} className="card card-pad shadow-soft">
+            <div key={index} className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">{stat.title}</h3>
                 <span className="text-green-500">📈</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</span>
-                <span className={`text-sm font-medium ${stat.trend === 'up' ? 'text-brand-success' : 'text-brand-error'}`}>
+                <span className={`text-sm font-medium ${stat.trend === 'up' ? 'text-[var(--brand-success)]' : 'text-[var(--brand-error)]'}`}>
                   {stat.change}
                 </span>
               </div>
@@ -141,7 +141,7 @@ export default function ReviewPage() {
           {/* Conversations List */}
           <div className="lg:col-span-2">
             <div className="card shadow-soft">
-              <div className="p-6 border-b border-brand-border">
+              <div className="p-6 border-b border-[var(--brand-border)]">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white">المراجعات الحديثة</h2>
                   <div className="flex items-center space-x-2 space-x-reverse">
@@ -181,15 +181,15 @@ export default function ReviewPage() {
                     key={conversation.id} 
                     className={`p-6 cursor-pointer transition-colors ${
                       selectedConversation === conversation.id 
-                        ? "bg-brand-primary/5 border-r-4 border-brand-primary" 
-                        : "hover:bg-brand-surface"
+                        ? "bg-[color:var(--brand-primary)]/5 border-r-4 border-brand-primary" 
+                        : "hover:bg-[var(--brand-surface)]"
                     }`}
                     onClick={() => setSelectedConversation(selectedConversation === conversation.id ? null : conversation.id)}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-4 space-x-reverse">
                         <div className="relative">
-                          <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-brand-primary font-semibold">
+                          <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-[var(--brand-primary)] font-semibold">
                             {conversation.customer.charAt(0)}
                           </div>
                         </div>
@@ -216,14 +216,14 @@ export default function ReviewPage() {
 
                       <div className="flex items-center space-x-3 space-x-reverse">
                         <span className="text-sm text-gray-500">{conversation.time}</span>
-                        <button className="p-1 hover:bg-brand-surface rounded" aria-label="Settings">
+                        <button className="p-1 hover:bg-[var(--brand-surface)] rounded" aria-label="Settings">
                           <Settings className="h-4 w-4" />
                         </button>
                       </div>
                     </div>
 
                     {selectedConversation === conversation.id && (
-                      <div className="mt-4 pt-4 border-t border-brand-border">
+                      <div className="mt-4 pt-4 border-t border-[var(--brand-border)]">
                         <div className="space-y-3">
                           <div>
                             <h4 className="font-medium text-gray-900 dark:text-white mb-2">التقييم التفصيلي</h4>
@@ -243,7 +243,7 @@ export default function ReviewPage() {
                             <h4 className="font-medium text-gray-900 dark:text-white mb-2">العلامات</h4>
                             <div className="flex flex-wrap gap-2">
                               {conversation.tags.map((tag, index) => (
-                                <span key={index} className="px-2 py-1 bg-brand-primary/10 text-brand-primary text-xs rounded-full">
+                                <span key={index} className="px-2 py-1 bg-brand-primary/10 text-[var(--brand-primary)] text-xs rounded-full">
                                   {tag}
                                 </span>
                               ))}
@@ -270,23 +270,23 @@ export default function ReviewPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Quick Actions */}
-            <div className="card card-pad shadow-soft">
+            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">إجراءات سريعة</h3>
               <div className="space-y-3">
                 <button className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
                   📊 تقرير شامل
                 </button>
-                <button className="w-full border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2">
+                <button className="w-full border border-brand-primary text-[var(--brand-primary)] hover:bg-brand-primary hover:text-white py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2">
                   📧 إرسال استطلاع
                 </button>
-                <button className="w-full border border-brand-border text-gray-600 hover:bg-brand-surface py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                <button className="w-full border border-[var(--brand-border)] text-gray-600 hover:bg-[var(--brand-surface)] py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
                   ⚙️ إعدادات المراجعة
                 </button>
               </div>
             </div>
 
             {/* Recent Activity */}
-            <div className="card card-pad shadow-soft">
+            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">النشاط الأخير</h3>
               <ul className="space-y-3 text-gray-600 dark:text-gray-400">
                 <li className="flex items-center space-x-2 space-x-reverse">
