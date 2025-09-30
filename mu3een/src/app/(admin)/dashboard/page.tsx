@@ -101,7 +101,7 @@ export default function DashboardPage() {
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white">المحادثات الحديثة</h2>
             <div className="flex items-center space-x-2 space-x-reverse">
-              <button className="btn btn-primary px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2">
+              <button className="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
                       ➕ محادثة جديدة
                     </button>
               <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors">
@@ -180,10 +180,10 @@ export default function DashboardPage() {
             <div className="card card-pad shadow-soft">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">إجراءات سريعة</h3>
               <div className="space-y-3">
-                <button className="w-full btn btn-primary py-3 rounded-lg font-medium flex items-center justify-center gap-2">
+                <button className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
                   <MessageSquare className="h-5 w-5" /> بدء محادثة جديدة
                 </button>
-                <button className="w-full btn btn-secondary py-3 rounded-lg font-medium flex items-center justify-center gap-2">
+                <button className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium bg-[var(--brand-surface)] text-[color:var(--foreground)] hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)] border border-[var(--brand-border)]">
                   <Users className="h-5 w-5" /> إدارة العملاء
                 </button>
                 <button className="w-full p-3 border border-[var(--brand-border)] text-gray-600 hover:bg-[var(--brand-surface)] rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
