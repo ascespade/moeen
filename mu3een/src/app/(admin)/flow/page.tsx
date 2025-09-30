@@ -69,7 +69,7 @@ export default function FlowPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
-      <header className="bg-white dark:bg-slate-800 border-b border-brand-border">
+      <header className="bg-white dark:bg-slate-800 border-b border-[var(--brand-border)]">
         <div className="container-app px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 space-x-reverse">
@@ -94,7 +94,7 @@ export default function FlowPage() {
               >
                 <ArrowLeft className="h-4 w-4" /> العودة للوحة التحكم
               </Link>
-              <button className="btn btn-primary px-6 py-2 rounded-lg font-medium inline-flex items-center gap-2">
+              <button className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-2 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
                 <Edit3 className="h-4 w-4" /> تدفق جديد
               </button>
             </div>
@@ -106,7 +106,7 @@ export default function FlowPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Templates */}
           <div className="lg:col-span-1">
-            <div className="card card-pad shadow-soft">
+            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">القوالب الجاهزة</h3>
               <div className="space-y-3">
                 {templates.map((template) => (
@@ -114,8 +114,8 @@ export default function FlowPage() {
                     key={template.id}
                     className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
                       selectedTemplate === template.id
-                        ? "border-brand-primary bg-brand-primary/5"
-                        : "border-brand-border hover:border-brand-primary/50"
+                        ? "border-brand-primary bg-[color:var(--brand-primary)]/5"
+                        : "border-[var(--brand-border)] hover:border-brand-primary/50"
                     }`}
                     onClick={() => setSelectedTemplate(template.id)}
                   >
@@ -136,14 +136,14 @@ export default function FlowPage() {
 
           {/* Flow Builder */}
           <div className="lg:col-span-2">
-            <div className="card card-pad shadow-soft">
+            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">منشئ التدفق</h3>
                 <div className="flex items-center space-x-2 space-x-reverse">
-                  <button className="px-4 py-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors inline-flex items-center gap-2">
+                  <button className="px-4 py-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors inline-flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]">
                     <Eye className="h-4 w-4" /> معاينة
                   </button>
-                  <button className="btn btn-primary px-4 py-2 rounded-lg inline-flex items-center gap-2">
+                  <button className="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
                     <Save className="h-4 w-4" /> حفظ
                   </button>
                 </div>
@@ -151,8 +151,8 @@ export default function FlowPage() {
 
               {selectedTemplate ? (
                 <div className="space-y-4">
-                  <div className="p-4 bg-brand-primary/10 rounded-lg border border-brand-primary/20">
-                    <h4 className="font-medium text-brand-primary mb-2">
+                  <div className="p-4 bg-brand-primary/10 rounded-lg border border-[color:var(--brand-primary)]/20">
+                    <h4 className="font-medium text-[var(--brand-primary)] mb-2">
                       {templates.find(t => t.id === selectedTemplate)?.name}
                     </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -161,7 +161,7 @@ export default function FlowPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <div className="p-4 border border-brand-border rounded-lg">
+                    <div className="p-4 border border-[var(--brand-border)] rounded-lg">
                       <div className="flex items-center space-x-3 space-x-reverse mb-2">
                         <span className="text-2xl">👋</span>
                         <span className="font-medium">رسالة الترحيب</span>
@@ -171,7 +171,7 @@ export default function FlowPage() {
                       </p>
                     </div>
 
-                    <div className="p-4 border border-brand-border rounded-lg">
+                    <div className="p-4 border border-[var(--brand-border)] rounded-lg">
                       <div className="flex items-center space-x-3 space-x-reverse mb-2">
                         <span className="text-2xl">🤖</span>
                         <span className="font-medium">رد تلقائي</span>
@@ -181,7 +181,7 @@ export default function FlowPage() {
                       </p>
                     </div>
 
-                    <div className="p-4 border border-brand-border rounded-lg">
+                    <div className="p-4 border border-[var(--brand-border)] rounded-lg">
                       <div className="flex items-center space-x-3 space-x-reverse mb-2">
                         <span className="text-2xl">👤</span>
                         <span className="font-medium">تحويل للفريق</span>
@@ -209,14 +209,14 @@ export default function FlowPage() {
 
         {/* Existing Flows */}
         <div className="mt-8">
-          <div className="card card-pad shadow-soft">
+          <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">التدفقات الموجودة</h3>
               <div className="flex items-center space-x-2 space-x-reverse">
-                <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors" aria-label="Search">
+                <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Search">
                   <Search className="h-4 w-4" />
                 </button>
-                <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors" aria-label="Settings">
+                <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Settings">
                   <Settings className="h-4 w-4" />
                 </button>
               </div>
@@ -224,7 +224,7 @@ export default function FlowPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {flows.map((flow) => (
-                <div key={flow.id} className="p-4 border border-brand-border rounded-lg hover:shadow-md transition-shadow">
+                <div key={flow.id} className="p-4 border border-[var(--brand-border)] rounded-lg hover:shadow-md transition-shadow">
                   <div className="flex items-center space-x-3 space-x-reverse mb-3">
                     <span className="text-2xl">{flow.icon}</span>
                     <div>
@@ -254,7 +254,7 @@ export default function FlowPage() {
                     <button className="flex-1 btn btn-primary py-2 rounded-lg text-sm inline-flex items-center justify-center gap-2">
                       <Edit3 className="h-4 w-4" /> تحرير
                     </button>
-                    <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors" aria-label="Settings">
+                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Settings">
                       <Settings className="h-4 w-4" />
                     </button>
                   </div>
