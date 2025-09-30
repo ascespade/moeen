@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Cairo } from "next/font/google";
 import "./globals.css";
-import PrelineInit from "@/components/providers/PrelineInit";
 import UIProvider from "@/components/providers/UIProvider";
 import StatusBanner from "@/components/common/StatusBanner";
 
@@ -18,10 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl">
-      <body className={`${cairo.variable} antialiased`}>
+    <html lang="ar" dir="rtl" suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="noindex, nofollow" />
+      </head>
+      <body className={`${cairo.variable} antialiased`} suppressHydrationWarning>
         <UIProvider>
-          <PrelineInit />
           <StatusBanner />
           {children}
         </UIProvider>

@@ -14,7 +14,11 @@ const seed: UserRow[] = [
 
 export default function UsersAdminPage() {
   const [loading, setLoading] = useState(true);
-  useEffect(() => { const t = setTimeout(() => setLoading(false), 400); return () => clearTimeout(t); }, []);
+  useEffect(() => {
+    // Simple timeout for demo purposes
+    const timer = setTimeout(() => setLoading(false), 100);
+    return () => clearTimeout(timer);
+  }, []);
   const [q, setQ] = useState("");
   const [rows, setRows] = useState<UserRow[]>(seed);
   const filtered = useMemo(() => rows.filter((r) => r.email.includes(q)), [rows, q]);
@@ -41,7 +45,7 @@ export default function UsersAdminPage() {
           {Array.from({ length: 6 }).map((_, i) => (<Skeleton key={i} className="h-12" />))}
         </div>
       ) : filtered.length === 0 ? (
-        <EmptyState title="لا يوجد مستخدمون" description="أضف أعضاء جدد لبدء العمل." cta={<button className=\"h-9 rounded-md border px-3\">دعوة عضو</button>} />
+        <EmptyState title="لا يوجد مستخدمون" description="أضف أعضاء جدد لبدء العمل." cta={<button className="h-9 rounded-md border px-3">دعوة عضو</button>} />
       ) : (
       <div className="overflow-x-auto rounded-xl border">
         <table className="w-full text-sm">

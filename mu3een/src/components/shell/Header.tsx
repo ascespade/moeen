@@ -1,14 +1,11 @@
 "use client";
 
-import { useAtom } from "jotai";
-import { langAtom, notificationsAtom, themeAtom } from "@/components/providers/UIProvider";
 import { useState } from "react";
-import Icon from "@/components/common/Icon";
 
 export default function Header() {
-  const [theme, setTheme] = useAtom(themeAtom);
-  const [lang, setLang] = useAtom(langAtom);
-  const [notif, setNotif] = useAtom(notificationsAtom);
+  const [theme, setTheme] = useState("light");
+  const [lang, setLang] = useState("ar");
+  const [notif, setNotif] = useState(3);
   const [open, setOpen] = useState(false);
 
   return (
@@ -20,7 +17,7 @@ export default function Header() {
           className="h-9 rounded-md border px-3 inline-flex items-center gap-2"
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
         >
-          <Icon name={theme === "light" ? "Sun" : "Moon"} />
+          {theme === "light" ? "☀️" : "🌙"}
           <span className="hidden sm:inline">الثيم</span>
         </button>
         <button
@@ -32,7 +29,7 @@ export default function Header() {
         </button>
         <div className="relative">
           <button className="h-9 w-9 rounded-full border grid place-items-center" onClick={() => setOpen(!open)}>
-            <Icon name="Bell" />
+            🔔
           </button>
           {notif > 0 && (
             <span className="absolute -top-1 -start-1 h-5 min-w-5 px-1 rounded-full bg-red-600 text-white text-xs grid place-items-center">{notif}</span>
@@ -46,7 +43,7 @@ export default function Header() {
                 <div className="grid gap-2">
                   {Array.from({ length: Math.min(3, notif) }).map((_, i) => (
                     <div key={i} className="rounded border p-2 flex items-center gap-2">
-                      <Icon name="Info" className="text-brand" />
+                      ℹ️
                       تنبيه #{i + 1}
                     </div>
                   ))}
