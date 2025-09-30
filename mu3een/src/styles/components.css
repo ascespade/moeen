@@ -39,7 +39,7 @@
 }
 
 .input-error {
-    @apply border-[var(--brand-error)]/60 focus:ring-[var(--brand-error)] focus:border-[var(--brand-error)];
+    @apply border-[color:var(--brand-error)] border-opacity-60 focus:ring-[color:var(--brand-error)] focus:border-[color:var(--brand-error)];
 }
 
 .input-sm {

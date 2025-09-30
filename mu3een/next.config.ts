@@ -7,6 +7,9 @@ const baseConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
 
+  // Transpile specific packages from node_modules
+  transpilePackages: ['preline'],
+
   // Image optimization
   images: {
     unoptimized: false,

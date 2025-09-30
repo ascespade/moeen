@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import "preline";
 import useBrandColorFromLogo from "@/hooks/useBrandColorFromLogo";
 import DirectionToggle from "@/components/common/DirectionToggle";
 import ThemeToggle from "@/components/common/ThemeToggle";
@@ -13,9 +12,12 @@ export type AppRole = "admin" | "staff" | "viewer";
 export default function UIProvider({ children }: { children: React.ReactNode }) {
   useBrandColorFromLogo("/hemam-logo.jpg");
   useEffect(() => {
+    // Load Preline only on the client to avoid SSR window references
+    import("preline").catch(() => { });
+
     // Only apply changes after component has mounted to avoid hydration issues
     const html = document.documentElement;
-    
+
     // Set default theme and lang
     html.setAttribute("lang", "ar");
     html.setAttribute("dir", "rtl");
