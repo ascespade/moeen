@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
+import withBundleAnalyzer from "@next/bundle-analyzer";
 
-const nextConfig: NextConfig = {
+const baseConfig: NextConfig = {
   // Basic optimizations
   compress: true,
   poweredByHeader: false,
@@ -19,8 +20,8 @@ const nextConfig: NextConfig = {
 
   // Experimental features
   experimental: {
-    optimizeCss: false,
-    optimizePackageImports: ['@/components', '@/utils', '@/hooks'],
+    optimizeCss: true,
+    optimizePackageImports: ['lucide-react'],
   },
 
   // Webpack configuration
@@ -88,4 +89,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withAnalyzer = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
+
+export default withAnalyzer(baseConfig);

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Search, Phone, Video, Settings, Send } from "lucide-react";
 
 export default function ConversationsPage() {
   const [selectedConversation, setSelectedConversation] = useState<number | null>(1);
@@ -121,7 +122,7 @@ export default function ConversationsPage() {
   const selectedConv = conversations.find(conv => conv.id === selectedConversation);
 
   return (
-    <div className="min-h-screen bg-brand-surface">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
       <header className="bg-white dark:bg-slate-800 border-b border-brand-border">
         <div className="container-app px-4 py-4">
@@ -144,11 +145,11 @@ export default function ConversationsPage() {
             <div className="flex items-center space-x-4 space-x-reverse">
               <Link
                 href="/dashboard"
-                className="px-4 py-2 text-gray-600 hover:text-brand-primary transition-colors"
+                className="px-4 py-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors"
               >
                 ← العودة للوحة التحكم
               </Link>
-              <button className="btn-brand px-6 py-2 rounded-lg font-medium">
+              <button className="btn btn-primary px-6 py-2 rounded-lg font-medium">
                 + محادثة جديدة
               </button>
             </div>
@@ -166,10 +167,10 @@ export default function ConversationsPage() {
                 placeholder="البحث في المحادثات..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="flex-1 px-3 py-2 border border-brand-border rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+                className="input flex-1"
               />
-              <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors">
-                🔍
+              <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Search">
+                <Search className="h-4 w-4" />
               </button>
             </div>
 
@@ -180,8 +181,8 @@ export default function ConversationsPage() {
                   onClick={() => setStatusFilter(status)}
                   className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
                     statusFilter === status
-                      ? "bg-brand-primary text-white"
-                      : "text-gray-600 hover:bg-brand-surface dark:text-gray-400"
+                    ? "bg-[var(--brand-primary)] text-white"
+                    : "text-gray-600 hover:bg-[var(--brand-surface)] dark:text-gray-400"
                   }`}
                 >
                   {status === "all" && "الكل"}
@@ -206,7 +207,7 @@ export default function ConversationsPage() {
               >
                 <div className="flex items-center space-x-3 space-x-reverse">
                   <div className="relative">
-                    <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-brand-primary font-semibold">
+                    <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-[var(--brand-primary)] font-semibold">
                       {conversation.avatar}
                     </div>
                     {conversation.unread > 0 && (
@@ -255,14 +256,14 @@ export default function ConversationsPage() {
                     </div>
                   </div>
                   <div className="flex items-center space-x-2 space-x-reverse">
-                    <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors">
-                      📞
+                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Call">
+                      <Phone className="h-4 w-4" />
                     </button>
-                    <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors">
-                      📹
+                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Video">
+                      <Video className="h-4 w-4" />
                     </button>
-                    <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors">
-                      ⚙️
+                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Settings">
+                      <Settings className="h-4 w-4" />
                     </button>
                   </div>
                 </div>
@@ -304,10 +305,10 @@ export default function ConversationsPage() {
                   <input
                     type="text"
                     placeholder="اكتب رسالتك هنا..."
-                    className="flex-1 px-4 py-2 border border-brand-border rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+                    className="input flex-1"
                   />
-                  <button className="btn-brand px-6 py-2 rounded-lg">
-                    إرسال
+                  <button className="btn btn-primary px-6 py-2 rounded-lg">
+                    <Send className="h-4 w-4" /> إرسال
                   </button>
                 </div>
               </div>

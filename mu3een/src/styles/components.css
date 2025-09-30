@@ -5,25 +5,25 @@
     @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
-  .btn-primary {
-    @apply bg-sky-600 text-white hover:bg-sky-700 focus:ring-sky-500 shadow-lg shadow-sky-500/25;
-  }
+.btn-primary {
+  @apply bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-primary-hover)] focus:ring-[var(--focus-ring)] shadow-lg shadow-sky-500/25;
+}
 
-  .btn-secondary {
-    @apply bg-slate-100 text-slate-900 hover:bg-slate-200 focus:ring-slate-500 border border-slate-200;
-  }
+.btn-secondary {
+  @apply bg-[var(--brand-surface)] text-[color:var(--foreground)] hover:bg-slate-200 focus:ring-[var(--focus-ring)] border border-[var(--brand-border)];
+}
 
-  .btn-danger {
-    @apply bg-red-500 text-white hover:bg-red-600 focus:ring-red-500 shadow-lg shadow-red-500/25;
-  }
+.btn-danger {
+  @apply bg-[var(--brand-error)] text-white hover:bg-red-700 focus:ring-[var(--focus-ring)] shadow-lg shadow-red-500/25;
+}
 
   .btn-ghost {
     @apply text-slate-700 hover:bg-slate-100 focus:ring-slate-500 border border-transparent hover:border-slate-200;
   }
 
-  .btn-accent {
-    @apply bg-purple-600 text-white hover:bg-purple-700 focus:ring-purple-500 shadow-lg shadow-purple-500/25;
-  }
+.btn-accent {
+  @apply bg-[var(--brand-accent)] text-white hover:bg-amber-600 focus:ring-[var(--focus-ring)] shadow-lg shadow-amber-500/25;
+}
 
 .btn-sm {
     @apply px-3 py-1.5 text-xs;
@@ -35,11 +35,11 @@
 
 /* Input components */
 .input {
-    @apply block w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white transition-all duration-200;
+    @apply block w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] sm:text-sm bg-white transition-all duration-200;
 }
 
 .input-error {
-    @apply border-red-300 focus:ring-red-500 focus:border-red-500;
+    @apply border-[var(--brand-error)]/60 focus:ring-[var(--brand-error)] focus:border-[var(--brand-error)];
 }
 
 .input-sm {
@@ -52,7 +52,9 @@
 
 /* Card components */
 .card {
-    @apply bg-white rounded-xl shadow-lg border border-slate-200 backdrop-blur-sm transition-all duration-300;
+    @apply rounded-xl border backdrop-blur-sm transition-all duration-300;
+    background: var(--color-surface);
+    border-color: var(--color-border);
 }
 
 .card-hover {
@@ -98,7 +100,7 @@
 }
 
 .badge-primary {
-    @apply bg-sky-100 text-sky-800 border border-sky-200;
+    @apply bg-[color:var(--color-primary-50)] text-[color:var(--color-primary-800)] border border-[color:var(--color-primary-200)];
 }
 
 .badge-secondary {
@@ -177,7 +179,7 @@
 }
 
 .nav-link-active {
-    @apply text-sky-600 bg-sky-50 border border-sky-200;
+    @apply text-[color:var(--color-primary-600)] bg-[color:var(--color-primary-50)] border border-[color:var(--color-primary-200)];
 }
 
 /* Sidebar components */
@@ -203,7 +205,7 @@
 
 /* Loading components */
 .spinner {
-    @apply animate-spin rounded-full border-2 border-slate-300 border-t-sky-600;
+  @apply animate-spin rounded-full border-2 border-[var(--brand-border)] border-t-[var(--brand-primary)];
 }
 
 .spinner-sm {

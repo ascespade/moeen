@@ -3,6 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Save, ArrowLeft } from "lucide-react";
+import siWhatsapp from "simple-icons/icons/whatsapp.js";
+import siTelegram from "simple-icons/icons/telegram.js";
+import siFacebook from "simple-icons/icons/facebook.js";
+import siInstagram from "simple-icons/icons/instagram.js";
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState("general");
@@ -58,7 +63,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-surface">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
       <header className="bg-white dark:bg-slate-800 border-b border-brand-border">
         <div className="container-app px-4 py-4">
@@ -81,15 +86,15 @@ export default function SettingsPage() {
             <div className="flex items-center space-x-4 space-x-reverse">
               <Link
                 href="/dashboard"
-                className="px-4 py-2 text-gray-600 hover:text-brand-primary transition-colors"
+                className="px-4 py-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors inline-flex items-center gap-2"
               >
-                ← العودة للوحة التحكم
+                <ArrowLeft className="h-4 w-4" /> العودة للوحة التحكم
               </Link>
               <button 
                 onClick={handleSave}
-                className="btn-brand px-6 py-2 rounded-lg font-medium"
+                className="btn btn-primary px-6 py-2 rounded-lg font-medium inline-flex items-center gap-2"
               >
-                💾 حفظ التغييرات
+                <Save className="h-4 w-4" /> حفظ التغييرات
               </button>
             </div>
           </div>
@@ -317,8 +322,10 @@ export default function SettingsPage() {
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="flex items-center justify-between p-4 border border-brand-border rounded-lg">
-                        <div className="flex items-center space-x-3 space-x-reverse">
-                          <span className="text-2xl">📱</span>
+                      <div className="flex items-center space-x-3 space-x-reverse">
+                          <svg role="img" aria-label="WhatsApp" viewBox="0 0 24 24" width="24" height="24" fill={`#${siWhatsapp.hex}`}>
+                            <path d={siWhatsapp.path} />
+                          </svg>
                           <div>
                             <h3 className="font-medium text-gray-900 dark:text-white">واتساب</h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400">تكامل مع واتساب</p>
@@ -336,8 +343,10 @@ export default function SettingsPage() {
                       </div>
 
                       <div className="flex items-center justify-between p-4 border border-brand-border rounded-lg">
-                        <div className="flex items-center space-x-3 space-x-reverse">
-                          <span className="text-2xl">✈️</span>
+                      <div className="flex items-center space-x-3 space-x-reverse">
+                          <svg role="img" aria-label="Telegram" viewBox="0 0 24 24" width="24" height="24" fill={`#${siTelegram.hex}`}>
+                            <path d={siTelegram.path} />
+                          </svg>
                           <div>
                             <h3 className="font-medium text-gray-900 dark:text-white">تليجرام</h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400">تكامل مع تليجرام</p>
@@ -355,8 +364,10 @@ export default function SettingsPage() {
                       </div>
 
                       <div className="flex items-center justify-between p-4 border border-brand-border rounded-lg">
-                        <div className="flex items-center space-x-3 space-x-reverse">
-                          <span className="text-2xl">📘</span>
+                      <div className="flex items-center space-x-3 space-x-reverse">
+                          <svg role="img" aria-label="Facebook" viewBox="0 0 24 24" width="24" height="24" fill={`#${siFacebook.hex}`}>
+                            <path d={siFacebook.path} />
+                          </svg>
                           <div>
                             <h3 className="font-medium text-gray-900 dark:text-white">فيسبوك</h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400">تكامل مع فيسبوك</p>
@@ -374,8 +385,10 @@ export default function SettingsPage() {
                       </div>
 
                       <div className="flex items-center justify-between p-4 border border-brand-border rounded-lg">
-                        <div className="flex items-center space-x-3 space-x-reverse">
-                          <span className="text-2xl">📷</span>
+                      <div className="flex items-center space-x-3 space-x-reverse">
+                          <svg role="img" aria-label="Instagram" viewBox="0 0 24 24" width="24" height="24" fill={`#${siInstagram.hex}`}>
+                            <path d={siInstagram.path} />
+                          </svg>
                           <div>
                             <h3 className="font-medium text-gray-900 dark:text-white">إنستغرام</h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400">تكامل مع إنستغرام</p>

@@ -34,7 +34,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-blue-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo and Title */}
         <div className="text-center mb-8">
@@ -73,7 +73,7 @@ export default function LoginPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full pr-10 pl-4 py-3 border border-brand-border rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-colors"
+                  className="input pr-10"
                   placeholder="أدخل بريدك الإلكتروني"
                   required
                 />
@@ -92,7 +92,7 @@ export default function LoginPage() {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full pr-10 pl-4 py-3 border border-brand-border rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-colors"
+                  className="input pr-10"
                   placeholder="أدخل كلمة المرور"
                   required
                 />
@@ -111,13 +111,13 @@ export default function LoginPage() {
               <label className="flex items-center">
                 <input
                   type="checkbox"
-                  className="rounded border-brand-border text-brand-primary focus:ring-brand-primary"
+                  className="rounded border-[var(--brand-border)] text-[var(--brand-primary)] focus:ring-[var(--focus-ring)]"
                 />
                 <span className="mr-2 text-sm text-gray-600 dark:text-gray-400">تذكرني</span>
               </label>
               <Link
                 href="/forgot-password"
-                className="text-sm text-brand-primary hover:text-brand-primary-hover transition-colors"
+                className="text-sm text-brand-primary underline hover:text-brand-primary-hover"
               >
                 نسيت كلمة المرور؟
               </Link>
@@ -127,7 +127,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full btn-brand py-3 rounded-lg font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full btn btn-primary py-3 rounded-lg font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>
@@ -141,13 +141,13 @@ export default function LoginPage() {
           </form>
 
           {/* Demo Login */}
-          <div className="mt-6 pt-6 border-t border-brand-border">
+          <div className="mt-6 pt-6 border-t border-[var(--brand-border)]">
             <button
               onClick={() => {
                 document.cookie = "mu3een_demo_auth=true; path=/; max-age=86400";
                 window.location.href = "/dashboard";
               }}
-              className="w-full py-3 border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2"
+              className="w-full py-3 btn btn-secondary rounded-lg font-medium flex items-center justify-center gap-2"
             >
               ➡️ دخول تجريبي
             </button>

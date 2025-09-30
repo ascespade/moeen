@@ -7,17 +7,19 @@
   --foreground: #171717;
   /* Hemam Brand Colors - Inspired by logo */
   --brand-primary: #1e40af;        /* Deep blue from logo */
-  --brand-primary-hover: #1e3a8a;  /* Darker blue */
+  --brand-primary-hover: #1e3a8a;  /* Darker blue for hover */
   --brand-secondary: #3b82f6;      /* Bright blue */
   --brand-accent: #f59e0b;         /* Golden accent */
-  --brand-success: #10b981;        /* Green */
-  --brand-warning: #f59e0b;        /* Amber */
-  --brand-error: #ef4444;          /* Red */
-  --brand-border: #e5e7eb;         /* Light gray */
+  --brand-success: #16a34a;        /* Accessible green */
+  --brand-warning: #d97706;        /* Accessible amber */
+  --brand-error: #dc2626;          /* Accessible red */
+  --brand-border: #cbd6e2;         /* Higher-contrast gray */
   --brand-surface: #f8fafc;        /* Very light blue-gray */
-  --brand-gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-  --brand-gradient-2: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-  --brand-gradient-3: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+  --focus-ring: #22d3ee;           /* High-visibility focus ring */
+  /* Gradients disabled by request; use solid tokens only */
+  --brand-gradient: none;
+  --brand-gradient-2: none;
+  --brand-gradient-3: none;
 }
 
 @theme inline {
@@ -40,9 +42,10 @@
     --brand-error: #f87171;
     --brand-border: #334155;
     --brand-surface: #1e293b;
-    --brand-gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-    --brand-gradient-2: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
-    --brand-gradient-3: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    --focus-ring: #22d3ee;
+    --brand-gradient: none;
+    --brand-gradient-2: none;
+    --brand-gradient-3: none;
   }
 }
 
@@ -58,9 +61,9 @@ body {
 
 /* Enhanced Brand utility helpers */
 .btn-brand { 
-  background: var(--brand-gradient); 
+  background: var(--brand-primary);
   color: #fff; 
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   transform: translateY(0);
 }
 .btn-brand:hover { 
@@ -68,14 +71,14 @@ body {
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 .btn-brand-2 { 
-  background: var(--brand-gradient-2); 
+  background: var(--brand-primary); 
   color: #fff; 
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 .btn-brand-3 { 
-  background: var(--brand-gradient-3); 
+  background: var(--brand-secondary); 
   color: #fff; 
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 .badge-accent { 
   background: linear-gradient(45deg, var(--brand-accent), #fbbf24); 
@@ -83,7 +86,7 @@ body {
   animation: pulse 2s infinite;
 }
 .border-brand { border-color: var(--brand-border); }
-.bg-brand { background: var(--brand-gradient); }
+.bg-brand { background: var(--brand-primary); }
 .text-brand { color: var(--brand-primary); }
 
 /* Fun animations */
@@ -174,7 +177,7 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--brand-primary);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
 

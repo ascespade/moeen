@@ -17,10 +17,10 @@
   --color-primary-800: #075985;
   --color-primary-900: #0c4a6e;
   
-  /* Accent Colors */
-  --color-accent: #8b5cf6;
-  --color-accent-light: #a78bfa;
-  --color-accent-dark: #7c3aed;
+  /* Accent Colors (aligned with brand accent) */
+  --color-accent: #f59e0b;
+  --color-accent-light: #fbbf24;
+  --color-accent-dark: #d97706;
   
   /* Success Colors */
   --color-success: #10b981;
@@ -32,10 +32,10 @@
   --color-warning-light: #fbbf24;
   --color-warning-dark: #d97706;
   
-  /* Error Colors */
-  --color-error: #ef4444;
+  /* Error Colors - higher contrast */
+  --color-error: #dc2626;
   --color-error-light: #f87171;
-  --color-error-dark: #dc2626;
+  --color-error-dark: #991b1b;
 
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -109,8 +109,8 @@ body {
 }
 
 /* Focus styles */
-:focus-visible {
-    outline: 2px solid var(--color-primary-500);
+::focus-visible {
+    outline: 2px solid var(--color-primary-600);
     outline-offset: 2px;
 }
 
@@ -202,15 +202,16 @@ p {
     margin: 0;
 }
 
+/* Links - underline by default for non-color cue */
 a {
     color: var(--color-primary-600);
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 2px;
     transition: color var(--transition-fast);
 }
 
 a:hover {
     color: var(--color-primary-700);
-    text-decoration: underline;
 }
 
 [data-theme="dark"] a {
