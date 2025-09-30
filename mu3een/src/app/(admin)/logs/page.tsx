@@ -25,13 +25,13 @@ export default function LogsAdminPage() {
     <main className="p-6 grid gap-4">
       <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-3 items-center">
         <h1 className="text-2xl font-semibold">السجلات</h1>
-        <select className="h-10 rounded-md border px-2" value={filter} onChange={(e) => setFilter(e.target.value)}>
+        <select className="h-10 rounded-md border border-[var(--brand-border)] px-2 focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]" value={filter} onChange={(e) => setFilter(e.target.value)}>
           <option value="all">الكل</option>
           <option value="webhook">Webhook</option>
           <option value="ai">AI</option>
           <option value="error">Errors</option>
         </select>
-        <input className="h-10 rounded-md border px-3 w-full md:w-64" placeholder="بحث" value={q} onChange={(e) => setQ(e.target.value)} />
+        <input className="h-10 rounded-md border border-[var(--brand-border)] px-3 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]" placeholder="بحث" value={q} onChange={(e) => setQ(e.target.value)} />
       </div>
 
       {loading ? (
@@ -39,7 +39,7 @@ export default function LogsAdminPage() {
       ) : filtered.length === 0 ? (
         <EmptyState title="لا توجد سجلات" description="جرّب تغيير المرشحات أو التوقيت." />
       ) : (
-      <div className="overflow-x-auto rounded-xl border">
+      <div className="overflow-x-auto rounded-xl border border-[var(--brand-border)]">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 dark:bg-white/5">
             <tr>
@@ -63,4 +63,3 @@ export default function LogsAdminPage() {
     </main>
   );
 }
-
