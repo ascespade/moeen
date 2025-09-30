@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-blue-900">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
       <header className="container-app px-4 py-6">
         <nav className="flex items-center justify-between">
@@ -52,13 +52,13 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Link 
               href="/demo" 
-              className="btn-brand px-8 py-4 rounded-xl text-lg font-semibold inline-flex items-center justify-center"
+              className="btn btn-primary px-8 py-4 rounded-xl text-lg font-semibold inline-flex items-center justify-center"
             >
               جرب الآن مجاناً
             </Link>
             <Link 
               href="/features" 
-              className="px-8 py-4 border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white rounded-xl text-lg font-semibold transition-all duration-300 inline-flex items-center justify-center"
+              className="btn btn-secondary px-8 py-4 rounded-xl text-lg font-semibold inline-flex items-center justify-center"
             >
               اكتشف المميزات
             </Link>
@@ -88,6 +88,18 @@ export default function Home() {
               <p className="text-gray-600 dark:text-gray-300">
                 احصل على تحليلات مفصلة عن أداء فريقك
               </p>
+            </div>
+          </div>
+          {/* Infographic Section */}
+          <div className="mt-16">
+            {/* @ts-expect-error Server Component boundary */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <div className="card card-pad shadow-soft">
+              <h3 className="text-xl font-semibold mb-4">أثر المنصة (آخر 30 يوماً)</h3>
+              <div className="h-64">
+                {/* Lazy load the infographic to keep TTI fast */}
+                <iframe title="stats" loading="lazy" className="w-full h-full rounded" srcdoc="<html><body style='margin:0;background:transparent'><script src='https://unpkg.com/echarts@5/dist/echarts.min.js'></script><div id='c' style='width:100%;height:100%'></div><script>var c=echarts.init(document.getElementById('c'));var x=[...Array(30)].map((_,i)=>i+1);var s=x.map(x=>Math.round(50+Math.random()*50));c.setOption({xAxis:{type:'category',data:x},yAxis:{type:'value'},grid:{left:24,right:12,top:12,bottom:24},series:[{data:s,type:'bar',itemStyle:{color:'#1e40af',borderRadius:[4,4,0,0]}}],tooltip:{}});</script></body></html>"></iframe>
+              </div>
             </div>
           </div>
         </div>

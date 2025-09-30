@@ -16,9 +16,10 @@
   --brand-border: #cbd6e2;         /* Higher-contrast gray */
   --brand-surface: #f8fafc;        /* Very light blue-gray */
   --focus-ring: #22d3ee;           /* High-visibility focus ring */
-  --brand-gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-  --brand-gradient-2: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-  --brand-gradient-3: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+  /* Gradients disabled by request; use solid tokens only */
+  --brand-gradient: none;
+  --brand-gradient-2: none;
+  --brand-gradient-3: none;
 }
 
 @theme inline {
@@ -42,9 +43,9 @@
     --brand-border: #334155;
     --brand-surface: #1e293b;
     --focus-ring: #22d3ee;
-    --brand-gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-    --brand-gradient-2: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
-    --brand-gradient-3: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    --brand-gradient: none;
+    --brand-gradient-2: none;
+    --brand-gradient-3: none;
   }
 }
 
@@ -60,9 +61,9 @@ body {
 
 /* Enhanced Brand utility helpers */
 .btn-brand { 
-  background: var(--brand-gradient); 
+  background: var(--brand-primary);
   color: #fff; 
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   transform: translateY(0);
 }
 .btn-brand:hover { 
@@ -70,14 +71,14 @@ body {
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 .btn-brand-2 { 
-  background: var(--brand-gradient-2); 
+  background: var(--brand-primary); 
   color: #fff; 
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 .btn-brand-3 { 
-  background: var(--brand-gradient-3); 
+  background: var(--brand-secondary); 
   color: #fff; 
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 .badge-accent { 
   background: linear-gradient(45deg, var(--brand-accent), #fbbf24); 
@@ -85,7 +86,7 @@ body {
   animation: pulse 2s infinite;
 }
 .border-brand { border-color: var(--brand-border); }
-.bg-brand { background: var(--brand-gradient); }
+.bg-brand { background: var(--brand-primary); }
 .text-brand { color: var(--brand-primary); }
 
 /* Fun animations */
