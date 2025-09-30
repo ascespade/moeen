@@ -30,54 +30,53 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-xl card card-pad shadow-soft">
+      <div className="w-full max-w-xl rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
         <h1 className="text-2xl font-bold mb-6">إنشاء حساب</h1>
         <form onSubmit={submit} className="space-y-5">
           <div>
             <label className="block text-sm mb-1">الاسم الكامل</label>
-            <input name="fullName" required className="input" onChange={onChange} placeholder="مثال: أحمد محمد" />
+            <input name="fullName" required className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white" onChange={onChange} placeholder="مثال: أحمد محمد" />
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm mb-1">البريد الإلكتروني</label>
-              <input type="email" name="email" required className="input" onChange={onChange} placeholder="name@example.com" />
+              <input type="email" name="email" required className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white" onChange={onChange} placeholder="name@example.com" />
             </div>
             <div>
               <label className="block text-sm mb-1">رقم الجوال</label>
-              <input type="tel" name="phone" className="input" onChange={onChange} placeholder="05xxxxxxxx" />
+              <input type="tel" name="phone" className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white" onChange={onChange} placeholder="05xxxxxxxx" />
             </div>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm mb-1">كلمة المرور</label>
-              <input type="password" name="password" required className="input" onChange={onChange} />
+              <input type="password" name="password" required className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white" onChange={onChange} />
             </div>
             <div>
-              <label className="block text-sm mb-1">تأكيد كلمة المرور</label>
-              <input type="password" name="confirmPassword" required className="input" onChange={onChange} />
+              <label className="block text-sm mb-1">تأكيد ك��مة المرور</label>
+              <input type="password" name="confirmPassword" required className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white" onChange={onChange} />
             </div>
           </div>
           <div>
             <label className="block text-sm mb-1">الدور</label>
-            <select name="role" className="input" onChange={onChange} defaultValue={formData.role}>
+            <select name="role" className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white" onChange={onChange} defaultValue={formData.role}>
               <option value="beneficiary">مستفيد</option>
               <option value="volunteer">متطوع</option>
               <option value="donor">متبرع</option>
             </select>
           </div>
           <label className="flex items-center gap-2">
-            <input type="checkbox" name="agree" required onChange={onChange} className="rounded border-[var(--brand-border)] text-[var(--brand-primary)]" />
+            <input type="checkbox" name="agree" required onChange={onChange} className="shrink-0 rounded border-[var(--brand-border)] text-[var(--brand-primary)] focus:ring-[var(--focus-ring)]" />
             <span className="text-sm">أوافق على الشروط والسياسة</span>
           </label>
-          <button type="submit" disabled={isLoading} className="btn btn-primary w-full">
+          <button type="submit" disabled={isLoading} className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
             {isLoading ? "جاري الإنشاء..." : "إنشاء الحساب"}
           </button>
         </form>
         <p className="text-center text-sm mt-4">
-          لديك حساب؟ <Link href="/login" className="text-brand-primary underline">سجّل دخول</Link>
+          لديك حساب؟ <Link href="/login" className="text-[var(--brand-primary)] underline hover:text-[var(--brand-primary-hover)]">سجّل دخول</Link>
         </p>
       </div>
     </div>
   );
 }
-
