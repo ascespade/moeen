@@ -4,19 +4,18 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-  /* Hemam Brand Colors - Inspired by logo */
-  --brand-primary: #1e40af;        /* Deep blue from logo */
-  --brand-primary-hover: #1e3a8a;  /* Darker blue for hover */
-  --brand-secondary: #3b82f6;      /* Bright blue */
-  --brand-accent: #f59e0b;         /* Golden accent */
-  --brand-success: #16a34a;        /* Accessible green */
-  --brand-warning: #d97706;        /* Accessible amber */
-  --brand-error: #dc2626;          /* Accessible red */
-  --brand-border: #cbd6e2;         /* Higher-contrast gray */
-  --brand-surface: #f8fafc;        /* Very light blue-gray */
-  --focus-ring: #22d3ee;           /* High-visibility focus ring */
-  /* Gradients disabled by request; use solid tokens only */
+  --foreground: #0f172a;
+  /* Brand Tokens (refreshed) */
+  --brand-primary: #0ea5e9;
+  --brand-primary-hover: #0284c7;
+  --brand-secondary: #14b8a6;
+  --brand-accent: #eab308;
+  --brand-success: #10b981;
+  --brand-warning: #f59e0b;
+  --brand-error: #ef4444;
+  --brand-border: #e2e8f0;
+  --brand-surface: #f8fafc;
+  --focus-ring: #22d3ee;
   --brand-gradient: none;
   --brand-gradient-2: none;
   --brand-gradient-3: none;
@@ -30,18 +29,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0f172a;
-    --foreground: #f1f5f9;
-    /* Hemam Brand Colors (Dark) */
-    --brand-primary: #3b82f6;
-    --brand-primary-hover: #60a5fa;
-    --brand-secondary: #60a5fa;
-    --brand-accent: #f59e0b;
+    --background: #0b1220;
+    --foreground: #e5eef7;
+    /* Brand Tokens (Dark) */
+    --brand-primary: #38bdf8;
+    --brand-primary-hover: #0ea5e9;
+    --brand-secondary: #2dd4bf;
+    --brand-accent: #facc15;
     --brand-success: #34d399;
     --brand-warning: #fbbf24;
     --brand-error: #f87171;
-    --brand-border: #334155;
-    --brand-surface: #1e293b;
+    --brand-border: #233047;
+    --brand-surface: #0f172a;
     --focus-ring: #22d3ee;
     --brand-gradient: none;
     --brand-gradient-2: none;
