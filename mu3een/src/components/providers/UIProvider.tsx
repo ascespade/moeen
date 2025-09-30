@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import "preline";
 import useBrandColorFromLogo from "@/hooks/useBrandColorFromLogo";
 import DirectionToggle from "@/components/common/DirectionToggle";
+import ThemeToggle from "@/components/common/ThemeToggle";
 
 export type AppTheme = "light" | "dark";
 export type AppLang = "ar" | "en";
@@ -24,6 +25,7 @@ export default function UIProvider({ children }: { children: React.ReactNode }) 
     <div>
       {children}
       <DirectionToggle />
+      <ThemeToggle />
     </div>
   );
 }
