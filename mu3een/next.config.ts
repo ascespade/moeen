@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 import withBundleAnalyzer from "@next/bundle-analyzer";
+import path from "path";
 
 const baseConfig: NextConfig = {
+  // Ensure Next.js treats this folder as the workspace root
+  outputFileTracingRoot: path.join(__dirname),
   // Basic optimizations
   compress: true,
   poweredByHeader: false,
