@@ -84,5 +84,13 @@ module.exports = {
       },
     },
   },
-  plugins: [require('preline/plugin')],
+  plugins: [
+    (() => {
+      try {
+        return require('preline/plugin');
+      } catch {
+        return () => {};
+      }
+    })(),
+  ],
 }
