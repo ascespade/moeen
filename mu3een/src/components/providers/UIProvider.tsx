@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import useBrandColorFromLogo from "@/hooks/useBrandColorFromLogo";
 import DirectionToggle from "@/components/common/DirectionToggle";
 import ThemeToggle from "@/components/common/ThemeToggle";
@@ -9,19 +10,27 @@ export type AppTheme = "light" | "dark";
 export type AppLang = "ar" | "en";
 export type AppRole = "admin" | "staff" | "viewer";
 
+declare global {
+  interface Window {
+    HSStaticMethods?: { autoInit?: () => void };
+  }
+}
+
 export default function UIProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   useBrandColorFromLogo("/hemam-logo.jpg");
+
   useEffect(() => {
-    // Load Preline only on the client to avoid SSR window references
-    import("preline").catch(() => { });
+    import("preline")
+      .then(() => {
+        window.HSStaticMethods?.autoInit?.();
+      })
+      .catch(() => {});
 
-    // Only apply changes after component has mounted to avoid hydration issues
     const html = document.documentElement;
-
-    // Set default theme and lang
     html.setAttribute("lang", "ar");
     html.setAttribute("dir", "rtl");
-  }, []);
+  }, [pathname]);
 
   return (
     <div>
