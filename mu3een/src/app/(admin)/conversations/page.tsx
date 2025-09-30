@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Search, Phone, Video, Settings, Send } from "lucide-react";
 
 export default function ConversationsPage() {
   const [selectedConversation, setSelectedConversation] = useState<number | null>(1);
@@ -168,8 +169,8 @@ export default function ConversationsPage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="input flex-1"
               />
-              <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors">
-                🔍
+              <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Search">
+                <Search className="h-4 w-4" />
               </button>
             </div>
 
@@ -255,14 +256,14 @@ export default function ConversationsPage() {
                     </div>
                   </div>
                   <div className="flex items-center space-x-2 space-x-reverse">
-                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors">
-                      📞
+                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Call">
+                      <Phone className="h-4 w-4" />
                     </button>
-                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors">
-                      📹
+                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Video">
+                      <Video className="h-4 w-4" />
                     </button>
-                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors">
-                      ⚙️
+                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Settings">
+                      <Settings className="h-4 w-4" />
                     </button>
                   </div>
                 </div>
@@ -307,7 +308,7 @@ export default function ConversationsPage() {
                     className="input flex-1"
                   />
                   <button className="btn btn-primary px-6 py-2 rounded-lg">
-                    إرسال
+                    <Send className="h-4 w-4" /> إرسال
                   </button>
                 </div>
               </div>

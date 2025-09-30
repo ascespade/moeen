@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Bell, Settings, BarChart, MessageSquare, Users } from "lucide-react";
 // import Link from "next/link"; // Unused import removed
-// Icons removed for performance
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("all");
@@ -61,13 +61,13 @@ export default function DashboardPage() {
                 />
               </div>
               
-              <button className="relative p-2 text-gray-600 hover:text-brand-primary transition-colors">
-                🔔
+              <button className="relative p-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors" aria-label="Notifications">
+                <Bell className="h-5 w-5" />
                 <span className="absolute -top-1 -right-1 bg-brand-error text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
               </button>
               
-              <button className="p-2 text-gray-600 hover:text-brand-primary transition-colors">
-                ⚙️
+              <button className="p-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors" aria-label="Settings">
+                <Settings className="h-5 w-5" />
               </button>
             </div>
           </div>
@@ -81,7 +81,7 @@ export default function DashboardPage() {
             <div key={index} className="card card-pad shadow-soft">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">{stat.title}</h3>
-                <span className="text-green-500">📈</span>
+                <BarChart className="h-5 w-5 text-green-500" />
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</span>
@@ -181,13 +181,13 @@ export default function DashboardPage() {
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">إجراءات سريعة</h3>
               <div className="space-y-3">
                 <button className="w-full btn btn-primary py-3 rounded-lg font-medium flex items-center justify-center gap-2">
-                  💬 بدء محادثة جديدة
+                  <MessageSquare className="h-5 w-5" /> بدء محادثة جديدة
                 </button>
                 <button className="w-full btn btn-secondary py-3 rounded-lg font-medium flex items-center justify-center gap-2">
-                  👥 إدارة العملاء
+                  <Users className="h-5 w-5" /> إدارة العملاء
                 </button>
                 <button className="w-full p-3 border border-[var(--brand-border)] text-gray-600 hover:bg-[var(--brand-surface)] rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
-                  📊 عرض التقارير
+                  <BarChart className="h-5 w-5" /> عرض التقارير
                 </button>
               </div>
             </div>

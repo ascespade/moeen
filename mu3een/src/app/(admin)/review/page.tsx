@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { RefreshCw, Search, ArrowLeft, BarChart, Settings } from "lucide-react";
 
 export default function ReviewPage() {
   const [selectedFilter, setSelectedFilter] = useState("all");
@@ -105,12 +106,12 @@ export default function ReviewPage() {
             <div className="flex items-center space-x-4 space-x-reverse">
               <Link
                 href="/dashboard"
-                className="px-4 py-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors"
+                className="px-4 py-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors inline-flex items-center gap-2"
               >
-                ← العودة للوحة التحكم
+                <ArrowLeft className="h-4 w-4" /> العودة للوحة التحكم
               </Link>
-              <button className="btn btn-primary px-6 py-2 rounded-lg font-medium">
-                📊 تقرير شامل
+              <button className="btn btn-primary px-6 py-2 rounded-lg font-medium inline-flex items-center gap-2">
+                <BarChart className="h-4 w-4" /> تقرير شامل
               </button>
             </div>
           </div>
@@ -144,11 +145,11 @@ export default function ReviewPage() {
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white">المراجعات الحديثة</h2>
                   <div className="flex items-center space-x-2 space-x-reverse">
-                    <button className="btn btn-primary px-4 py-2 rounded-lg text-sm font-medium">
-                      🔄 تحديث
+                    <button className="btn btn-primary px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center gap-2">
+                      <RefreshCw className="h-4 w-4" /> تحديث
                     </button>
-                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors">
-                      🔍
+                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Search">
+                      <Search className="h-4 w-4" />
                     </button>
                   </div>
                 </div>
@@ -215,8 +216,8 @@ export default function ReviewPage() {
 
                       <div className="flex items-center space-x-3 space-x-reverse">
                         <span className="text-sm text-gray-500">{conversation.time}</span>
-                        <button className="p-1 hover:bg-brand-surface rounded">
-                          ⚙️
+                        <button className="p-1 hover:bg-brand-surface rounded" aria-label="Settings">
+                          <Settings className="h-4 w-4" />
                         </button>
                       </div>
                     </div>
@@ -250,8 +251,8 @@ export default function ReviewPage() {
                           </div>
 
                           <div className="flex items-center space-x-2 space-x-reverse">
-                            <button className="btn btn-primary px-4 py-2 rounded-lg text-sm">
-                              📝 إضافة رد
+                            <button className="btn btn-primary px-4 py-2 rounded-lg text-sm inline-flex items-center gap-2">
+                              <RefreshCw className="h-4 w-4" /> إضافة رد
                             </button>
                             <button className="px-4 py-2 border border-[var(--brand-border)] text-gray-600 hover:bg-[var(--brand-surface)] rounded-lg text-sm transition-colors">
                               📊 تحليل

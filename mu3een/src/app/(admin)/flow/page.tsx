@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Save, Eye, ArrowLeft, Edit3, Settings, Search } from "lucide-react";
 
 export default function FlowPage() {
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
@@ -89,12 +90,12 @@ export default function FlowPage() {
             <div className="flex items-center space-x-4 space-x-reverse">
               <Link
                 href="/dashboard"
-                className="px-4 py-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors"
+                className="px-4 py-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors inline-flex items-center gap-2"
               >
-                ← العودة للوحة التحكم
+                <ArrowLeft className="h-4 w-4" /> العودة للوحة التحكم
               </Link>
-              <button className="btn btn-primary px-6 py-2 rounded-lg font-medium">
-                + تدفق جديد
+              <button className="btn btn-primary px-6 py-2 rounded-lg font-medium inline-flex items-center gap-2">
+                <Edit3 className="h-4 w-4" /> تدفق جديد
               </button>
             </div>
           </div>
@@ -139,11 +140,11 @@ export default function FlowPage() {
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">منشئ التدفق</h3>
                 <div className="flex items-center space-x-2 space-x-reverse">
-                  <button className="px-4 py-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors">
-                    معاينة
+                  <button className="px-4 py-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors inline-flex items-center gap-2">
+                    <Eye className="h-4 w-4" /> معاينة
                   </button>
-                  <button className="btn btn-primary px-4 py-2 rounded-lg">
-                    حفظ
+                  <button className="btn btn-primary px-4 py-2 rounded-lg inline-flex items-center gap-2">
+                    <Save className="h-4 w-4" /> حفظ
                   </button>
                 </div>
               </div>
@@ -212,11 +213,11 @@ export default function FlowPage() {
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">التدفقات الموجودة</h3>
               <div className="flex items-center space-x-2 space-x-reverse">
-                <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors">
-                  🔍
+                <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors" aria-label="Search">
+                  <Search className="h-4 w-4" />
                 </button>
-                <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors">
-                  ⚙️
+                <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors" aria-label="Settings">
+                  <Settings className="h-4 w-4" />
                 </button>
               </div>
             </div>
@@ -250,11 +251,11 @@ export default function FlowPage() {
                   </div>
 
                   <div className="flex items-center space-x-2 space-x-reverse mt-4">
-                    <button className="flex-1 btn-brand py-2 rounded-lg text-sm">
-                      تحرير
+                    <button className="flex-1 btn btn-primary py-2 rounded-lg text-sm inline-flex items-center justify-center gap-2">
+                      <Edit3 className="h-4 w-4" /> تحرير
                     </button>
-                    <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors">
-                      ⚙️
+                    <button className="p-2 border border-brand-border rounded-lg hover:bg-brand-surface transition-colors" aria-label="Settings">
+                      <Settings className="h-4 w-4" />
                     </button>
                   </div>
                 </div>
