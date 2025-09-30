@@ -7,14 +7,15 @@
   --foreground: #171717;
   /* Hemam Brand Colors - Inspired by logo */
   --brand-primary: #1e40af;        /* Deep blue from logo */
-  --brand-primary-hover: #1e3a8a;  /* Darker blue */
+  --brand-primary-hover: #1e3a8a;  /* Darker blue for hover */
   --brand-secondary: #3b82f6;      /* Bright blue */
   --brand-accent: #f59e0b;         /* Golden accent */
-  --brand-success: #10b981;        /* Green */
-  --brand-warning: #f59e0b;        /* Amber */
-  --brand-error: #ef4444;          /* Red */
-  --brand-border: #e5e7eb;         /* Light gray */
+  --brand-success: #16a34a;        /* Accessible green */
+  --brand-warning: #d97706;        /* Accessible amber */
+  --brand-error: #dc2626;          /* Accessible red */
+  --brand-border: #cbd6e2;         /* Higher-contrast gray */
   --brand-surface: #f8fafc;        /* Very light blue-gray */
+  --focus-ring: #22d3ee;           /* High-visibility focus ring */
   --brand-gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
   --brand-gradient-2: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
   --brand-gradient-3: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
@@ -40,6 +41,7 @@
     --brand-error: #f87171;
     --brand-border: #334155;
     --brand-surface: #1e293b;
+    --focus-ring: #22d3ee;
     --brand-gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
     --brand-gradient-2: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
     --brand-gradient-3: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
@@ -174,7 +176,7 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--brand-primary);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
 

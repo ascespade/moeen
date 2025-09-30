@@ -29,7 +29,7 @@ export default function Home() {
             </Link>
             <Link 
               href="/register" 
-              className="btn-brand px-6 py-2 rounded-lg font-medium"
+              className="btn-brand px-6 py-2 rounded-lg font-medium focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               ابدأ الآن
             </Link>

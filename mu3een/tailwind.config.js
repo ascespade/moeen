@@ -10,6 +10,30 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-cairo)', 'system-ui', 'sans-serif'],
       },
+      spacing: {
+        '1.5': '0.375rem',
+        '4.5': '1.125rem',
+        '7': '1.75rem',
+        '9': '2.25rem',
+        '11': '2.75rem',
+      },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: '1rem',
+          sm: '1rem',
+          md: '1.25rem',
+          lg: '1.5rem',
+          xl: '2rem',
+        },
+        screens: {
+          sm: '640px',
+          md: '768px',
+          lg: '1024px',
+          xl: '1280px',
+          '2xl': '1440px',
+        },
+      },
       colors: {
         brand: {
           primary: 'var(--brand-primary)',
