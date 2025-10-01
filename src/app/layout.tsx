@@ -27,6 +27,7 @@ export default function RootLayout({
         <meta name="robots" content="noindex, nofollow" />
       </head>
       <body className={`${cairo.variable} ${inter.variable} antialiased`} suppressHydrationWarning>
+        <a href="#content" className="sr-only focus:not-sr-only fixed top-2 start-2 z-[1000] bg-gray-900 text-white px-3 py-2 rounded">تخطي إلى المحتوى</a>
         <UIProvider>
           <I18nProvider locale={"ar"}>
             <StatusBanner />
