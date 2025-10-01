@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Save, Eye, ArrowLeft, Edit3, Settings, Search, Plus, ZoomIn, ZoomOut, Bot, MessageSquare, Timer, SplitSquareHorizontal } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
+import { useT } from "@/components/providers/I18nProvider";
 
 type NodeType = "trigger" | "action" | "condition" | "delay" | "ai";
 
@@ -19,6 +20,7 @@ type FlowNode = {
 
 export default function FlowPage() {
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const { t } = useT();
   const [nodes, setNodes] = useState<FlowNode[]>([
     { id: "n1", type: "trigger", x: 80, y: 120, label: "عند وصول رسالة" },
     { id: "n2", type: "condition", x: 320, y: 120, label: "إذا تحتوي على 'طلب'" },
@@ -127,8 +129,8 @@ export default function FlowPage() {
                 unoptimized
               />
               <div>
-                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">منشئ التدفق</h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">إنشاء وإدارة تدفقات المحادثة</p>
+                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">{t('nav.flow','منشئ التدفق')}</h1>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t('flow.subtitle','إنشاء وإدارة تدفقات المحادثة')}</p>
               </div>
             </div>
 
@@ -141,7 +143,7 @@ export default function FlowPage() {
                 <ArrowLeft className="h-4 w-4" /> العودة للوحة التحكم
               </Link>
               <Button className="px-6" variant="primary">
-                <Edit3 className="h-4 w-4" /> تدفق جديد
+                <Edit3 className="h-4 w-4" /> {t('flow.new','تدفق جديد')}
               </Button>
             </div>
           </div>
@@ -154,7 +156,7 @@ export default function FlowPage() {
           <div className="lg:col-span-1">
             <Card>
               <CardHeader>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">القوالب الجاهزة</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('flow.templates','القوالب الجاهزة')}</h3>
               </CardHeader>
               <CardContent className="space-y-3">
                 {templates.map((template) => (
@@ -186,10 +188,10 @@ export default function FlowPage() {
             <Card>
               <CardContent>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">منشئ التدفق</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('nav.flow','منشئ التدفق')}</h3>
                 <div className="flex items-center gap-2">
-                  <Button variant="secondary" className="inline-flex items-center gap-2"><Eye className="h-4 w-4" /> معاينة</Button>
-                  <Button className="inline-flex items-center gap-2"><Save className="h-4 w-4" /> حفظ</Button>
+                  <Button variant="secondary" className="inline-flex items-center gap-2"><Eye className="h-4 w-4" /> {t('ui.preview','معاينة')}</Button>
+                  <Button className="inline-flex items-center gap-2"><Save className="h-4 w-4" /> {t('ui.save','حفظ')}</Button>
                 </div>
               </div>
 

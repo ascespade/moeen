@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useT } from "@/components/providers/I18nProvider";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 
@@ -12,6 +13,7 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
+  const { t } = useT();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,14 +48,14 @@ export default function LoginPage() {
             />
             <span className="text-3xl font-bold" style={{ color: "var(--brand-primary)" }}>مُعين</span>
           </div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">مرحباً بك مرة أخرى</h1>
-          <p className="text-gray-600 dark:text-gray-400">سجل دخولك للوصول إلى لوحة التحكم</p>
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{t('auth.welcomeBack','مرحباً بك مرة أخرى')}</h1>
+          <p className="text-gray-600 dark:text-gray-400">{t('auth.login.subtitle','سجل دخولك للوصول إلى لوحة التحكم')}</p>
         </div>
 
         <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">البريد الإلكتروني</label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('auth.email','البريد الإلكتروني')}</label>
               <div className="relative">
                 <Input
                   type="email"
@@ -61,14 +63,14 @@ export default function LoginPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="أدخل بريدك الإلكتروني"
+                  placeholder={t('auth.email.placeholder','أدخل بريدك الإلكتروني')}
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">كلمة المرور</label>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('auth.password','كلمة المرور')}</label>
               <div className="relative">
                 <Input
                   id="password-input"
@@ -76,7 +78,7 @@ export default function LoginPage() {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  placeholder="أدخل كلمة المرور"
+                  placeholder={t('auth.password.placeholder','أدخل كلمة المرور')}
                   required
                 />
                 <button
@@ -94,9 +96,9 @@ export default function LoginPage() {
             <div className="flex items-center justify-between">
               <label className="flex items-center">
                 <input type="checkbox" className="shrink-0 rounded border-gray-300" style={{ accentColor: "var(--brand-primary)" }} />
-                <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">تذكرني</span>
+                <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">{t('auth.remember','تذكرني')}</span>
               </label>
-              <Link href="/forgot-password" className="text-sm underline" style={{ color: "var(--brand-primary)" }}>نسيت كلمة المرور؟</Link>
+              <Link href="/forgot-password" className="text-sm underline" style={{ color: "var(--brand-primary)" }}>{t('auth.forgot','نسيت كلمة المرور؟')}</Link>
             </div>
 
             <Button type="submit" disabled={isLoading} className="w-full inline-flex justify-center items-center gap-2 px-4 py-3">
@@ -106,7 +108,7 @@ export default function LoginPage() {
                   جاري تسجيل الدخول...
                 </>
               ) : (
-                "تسجيل الدخول"
+                t('auth.login','تسجيل الدخول')
               )}
             </Button>
           </form>

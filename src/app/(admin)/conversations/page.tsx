@@ -4,12 +4,14 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
+import { useT } from "@/components/providers/I18nProvider";
 import { Search, Phone, Video, Settings, Send } from "lucide-react";
 
 export default function ConversationsPage() {
   const [selectedConversation, setSelectedConversation] = useState<number | null>(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const { t } = useT();
 
   const conversations = [
     {
@@ -138,16 +140,16 @@ export default function ConversationsPage() {
                 unoptimized
               />
               <div>
-                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">المحادثات</h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">إدارة جميع المحادثات</p>
+                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">{t('nav.conversations','المحادثات')}</h1>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t('conv.subtitle','إدارة جميع المحادثات')}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
               <Link href="/dashboard" className="px-4 py-2 text-gray-600 dark:text-gray-300 transition-colors" style={{ color: "var(--brand-primary)" }}>
-                ← العودة للوحة التحكم
+                ← {t('nav.dashboard','لوحة التحكم')}
               </Link>
-              <Button className="inline-flex items-center gap-2">+ محادثة جديدة</Button>
+              <Button className="inline-flex items-center gap-2">+ {t('conv.new','محادثة جديدة')}</Button>
             </div>
           </div>
         </div>
@@ -160,7 +162,7 @@ export default function ConversationsPage() {
             <div className="flex items-center gap-2 mb-4">
               <input
                 type="text"
-                placeholder="البحث في المحادثات..."
+                placeholder={t('conv.search','البحث في المحادثات...')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="flex-1 py-2 px-3 border border-gray-200 dark:border-gray-800 rounded-md bg-white dark:bg-gray-900 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -180,10 +182,10 @@ export default function ConversationsPage() {
                     : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                     }`}
                 >
-                  {status === "all" && "الكل"}
-                  {status === "active" && "نشط"}
-                  {status === "pending" && "معلق"}
-                  {status === "resolved" && "تم الحل"}
+                  {status === "all" && t('conv.filter.all','الكل')}
+                  {status === "active" && t('conv.filter.active','نشط')}
+                  {status === "pending" && t('conv.filter.pending','معلق')}
+                  {status === "resolved" && t('conv.filter.resolved','تم الحل')}
                 </button>
               ))}
             </div>
