@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import clsx from "clsx";
 
 export interface ModalProps {
@@ -11,12 +11,24 @@ export interface ModalProps {
 }
 
 export function Modal({ open, onClose, title, children }: ModalProps) {
+  const dialogRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (open) document.documentElement.style.overflow = "hidden";
     return () => {
       document.documentElement.style.overflow = "";
     };
   }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const focusable = dialog.querySelector<HTMLElement>("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
+    focusable?.focus();
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
 
   return (
     <div
@@ -29,7 +41,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
       aria-modal="true"
     >
       <div className={clsx("fixed inset-0 bg-black/40", open ? "opacity-100" : "opacity-0")} onClick={onClose} />
-      <div className={clsx(
+      <div ref={dialogRef} className={clsx(
         "relative z-10 w-full max-w-lg rounded-xl border border-brand-border bg-[var(--panel)] shadow-soft",
         open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       )}

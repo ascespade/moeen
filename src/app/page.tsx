@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MessageSquare, Users, BarChart3, ShieldCheck, Globe, Zap, ArrowRight } from "lucide-react";
+import { useT } from "@/components/providers/I18nProvider";
 
 export default function Home() {
+  const { t } = useT();
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Navbar */}
@@ -30,18 +32,18 @@ export default function Home() {
         <div className="absolute -top-20 -start-20 size-[420px] rounded-full blur-3xl opacity-30 -z-10" style={{ background: "var(--brand-gradient-3)" }} />
         <div className="max-w-screen-xl mx-auto px-4 py-16 md:py-24 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight">
-            منصة دردشة متعددة القنوات
+            {t('home.hero.title','منصة دردشة متعددة القنوات')}
           </h1>
-          <p className="mt-4 text-2xl font-semibold" style={{ color: "var(--brand-primary)" }}>مدعومة بالذكاء الاصطناعي</p>
+          <p className="mt-4 text-2xl font-semibold" style={{ color: "var(--brand-primary)" }}>{t('home.hero.subtitle','مدعومة بالذكاء الاصطناعي')}</p>
           <p className="mt-4 text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
             واجهة احترافية موحّدة لإدارة محادثات واتساب وتليجرام وفيسبوك والقنوات الأخرى بكفاءة عالية.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/register" className="px-8 h-12 inline-flex items-center justify-center gap-2 rounded-md text-white font-semibold shadow-sm hover:opacity-95 transition" style={{ background: "var(--brand-primary)" }}>
-              جرب الآن مجانًا <ArrowRight className="h-5 w-5" />
+              {t('home.hero.ctaPrimary','جرب الآن مجانًا')} <ArrowRight className="h-5 w-5" />
             </Link>
             <Link href="/features" className="px-8 h-12 inline-flex items-center justify-center rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
-              اكتشف المميزات
+              {t('home.hero.ctaSecondary','اكتشف المميزات')}
             </Link>
           </div>
         </div>
@@ -51,9 +53,9 @@ export default function Home() {
       <section id="features" className="max-w-screen-xl mx-auto px-4 py-16">
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { icon: <MessageSquare className="h-6 w-6" />, title: "دردشة موحدة", desc: "كل محادثاتك في واجهة واحدة مع بحث وفلاتر ذكية." },
-            { icon: <Users className="h-6 w-6" />, title: "إدارة العملاء", desc: "ملفات تعريف غنية وسجل كامل للتفاعل." },
-            { icon: <BarChart3 className="h-6 w-6" />, title: "تقارير ذكية", desc: "لوحات تحكم ومؤشرات أداء لحظية." },
+            { icon: <MessageSquare className="h-6 w-6" />, title: t('home.features.unifiedChat','دردشة موحدة'), desc: t('home.features.unifiedChat.desc','كل محادثاتك في واجهة واحدة مع بحث وفلاتر ذكية.') },
+            { icon: <Users className="h-6 w-6" />, title: t('home.features.customers','إدارة العملاء'), desc: t('home.features.customers.desc','ملفات تعريف غنية وسجل كامل للتفاعل.') },
+            { icon: <BarChart3 className="h-6 w-6" />, title: t('home.features.reports','تقارير ذكية'), desc: t('home.features.reports.desc','لوحات تحكم ومؤشرات أداء لحظية.') },
             { icon: <ShieldCheck className="h-6 w-6" />, title: "أمان متقدم", desc: "رؤوس أمان، تشفير، ووضع صارم." },
             { icon: <Globe className="h-6 w-6" />, title: "RTL / LTR", desc: "دعم لغوي كامل مع تبديل فوري." },
             { icon: <Zap className="h-6 w-6" />, title: "أداء فائق", desc: "CSS مُحسّن، صور WebP/AVIF وتحميل كسول." },
@@ -70,9 +72,9 @@ export default function Home() {
       {/* CTA */}
       <section className="max-w-screen-xl mx-auto px-4 py-16">
         <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-8 md:p-12 text-center shadow-sm">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">ابدأ اليوم</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">{t('home.cta.title','ابدأ اليوم')}</h2>
           <p className="text-gray-600 dark:text-gray-300 mb-6">انطلق بخطوات بسيطة ووسّع قنواتك بثقة.</p>
-          <Link href="/register" className="px-8 h-12 inline-flex items-center justify-center rounded-md text-white font-semibold shadow-sm hover:opacity-95 transition" style={{ background: "var(--brand-primary)" }}>إنشاء حساب</Link>
+          <Link href="/register" className="px-8 h-12 inline-flex items-center justify-center rounded-md text-white font-semibold shadow-sm hover:opacity-95 transition" style={{ background: "var(--brand-primary)" }}>{t('home.cta.button','إنشاء حساب')}</Link>
         </div>
       </section>
 
