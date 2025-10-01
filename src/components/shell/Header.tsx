@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import { Sun, Moon, Languages } from "lucide-react";
 import Link from "next/link";
+import { useT } from "@/components/providers/I18nProvider";
 
 export default function Header() {
   const [theme, setTheme] = useState<string>(typeof window !== 'undefined' ? (localStorage.getItem('theme') || 'light') : 'light');
   const [dir, setDir] = useState<"rtl" | "ltr">(typeof window !== 'undefined' ? ((localStorage.getItem('dir') as "rtl" | "ltr") || 'rtl') : 'rtl');
   const [notif, setNotif] = useState(3);
+  const { t } = useT();
 
   useEffect(() => {
     const html = document.documentElement;
@@ -51,7 +53,7 @@ export default function Header() {
             <div className="hs-dropdown relative inline-flex">
               <button className="h-9 rounded-md border border-gray-200 dark:border-gray-700 px-3 inline-flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2" aria-haspopup="menu" style={{ outlineColor: "var(--brand-primary)" }}>
                 {theme === "light" ? <Sun className="h-4 w-4"/> : <Moon className="h-4 w-4"/>}
-                <span className="hidden sm:inline">الثيم</span>
+                <span className="hidden sm:inline">{t('ui.theme','الثيم')}</span>
               </button>
               <div className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-36 bg-white dark:bg-gray-900 shadow-md rounded-lg p-1 border border-gray-200 dark:border-gray-700" role="menu">
                 <button className="w-full text-start px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800" onClick={() => setTheme("light")}>
@@ -70,7 +72,7 @@ export default function Header() {
             <div className="hs-dropdown relative inline-flex">
               <button className="h-9 rounded-md border border-gray-200 dark:border-gray-700 px-3 inline-flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2">
                 <Languages className="h-4 w-4" />
-                <span className="hidden sm:inline">اللغة</span>
+                <span className="hidden sm:inline">{t('ui.language','اللغة')}</span>
               </button>
               <div className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-32 bg-white dark:bg-gray-900 shadow-md rounded-lg p-1 border border-gray-200 dark:border-gray-700" role="menu">
                 <Link className="block px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800" href="/ar">العربية</Link>

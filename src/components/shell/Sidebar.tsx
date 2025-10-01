@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, MessagesSquare, Workflow, ShieldCheck, Settings, Users } from "lucide-react";
+import { useT } from "@/components/providers/I18nProvider";
 
 const adminItems = [
   { href: "/dashboard", label: "داشبورد", icon: <LayoutDashboard className="h-4 w-4"/> },
@@ -25,6 +26,7 @@ export default function Sidebar() {
   const pathname = usePathname();
   const role = "admin";
   const items = role === "admin" ? adminItems : role === "staff" ? staffItems : viewerItems;
+  const { t } = useT();
 
   return (
     <>
@@ -50,7 +52,7 @@ export default function Sidebar() {
                 data-hs-overlay="#app-sidebar"
               >
                 <span>{item.icon}</span>
-                <span className="font-medium">{item.label}</span>
+                <span className="font-medium">{t(item.label, item.label)}</span>
               </Link>
             );
           })}

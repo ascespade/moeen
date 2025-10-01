@@ -5,10 +5,12 @@ import Image from "next/image";
 import { Bell, Settings, BarChart, MessageSquare, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import { useT } from "@/components/providers/I18nProvider";
 // import Link from "next/link"; // Unused import removed
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("all");
+  const { t } = useT();
 
   const stats = [
     { title: "المحادثات", value: "1,234", change: "+12%" },
@@ -49,8 +51,8 @@ export default function DashboardPage() {
                 unoptimized
               />
               <div>
-                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">مُعين</h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">لوحة التحكم</p>
+                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">{t('app.name','مُعين')}</h1>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t('nav.dashboard','لوحة التحكم')}</p>
               </div>
             </div>
 
