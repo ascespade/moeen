@@ -89,6 +89,14 @@ const baseConfig: NextConfig = {
     ];
   },
 
+  // Locale-like rewrites so /ar/* and /en/* map to existing routes
+  async rewrites() {
+    return [
+      { source: '/:locale(ar|en)', destination: '/' },
+      { source: '/:locale(ar|en)/:path*', destination: '/:path*' },
+    ];
+  },
+
   // Environment variables
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
