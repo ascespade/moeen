@@ -6,20 +6,20 @@ import { LayoutDashboard, MessagesSquare, Workflow, ShieldCheck, Settings, Users
 import { useT } from "@/components/providers/I18nProvider";
 
 const adminItems = [
-  { href: "/dashboard", label: "داشبورد", icon: <LayoutDashboard className="h-4 w-4"/> },
-  { href: "/conversations", label: "المحادثات", icon: <MessagesSquare className="h-4 w-4"/> },
-  { href: "/flow", label: "منشئ التدفق", icon: <Workflow className="h-4 w-4"/> },
-  { href: "/review", label: "مركز المراجعة", icon: <ShieldCheck className="h-4 w-4"/> },
-  { href: "/settings", label: "الإعدادات", icon: <Settings className="h-4 w-4"/> },
-  { href: "/users", label: "إدارة الفريق", icon: <Users className="h-4 w-4"/> },
+  { href: "/dashboard", label: "nav.dashboard", icon: <LayoutDashboard className="h-4 w-4"/> },
+  { href: "/conversations", label: "nav.conversations", icon: <MessagesSquare className="h-4 w-4"/> },
+  { href: "/flow", label: "nav.flow", icon: <Workflow className="h-4 w-4"/> },
+  { href: "/review", label: "nav.review", icon: <ShieldCheck className="h-4 w-4"/> },
+  { href: "/settings", label: "nav.settings", icon: <Settings className="h-4 w-4"/> },
+  { href: "/users", label: "nav.users", icon: <Users className="h-4 w-4"/> },
 ];
 const staffItems = [
-  { href: "/dashboard", label: "داشبورد", icon: "📊" },
-  { href: "/conversations", label: "المحادثات", icon: "💬" },
+  { href: "/dashboard", label: "nav.dashboard", icon: <LayoutDashboard className="h-4 w-4"/> },
+  { href: "/conversations", label: "nav.conversations", icon: <MessagesSquare className="h-4 w-4"/> },
 ];
 const viewerItems = [
-  { href: "/dashboard", label: "داشبورد", icon: "📊" },
-  { href: "/conversations", label: "المحادثات", icon: "💬" },
+  { href: "/dashboard", label: "nav.dashboard", icon: <LayoutDashboard className="h-4 w-4"/> },
+  { href: "/conversations", label: "nav.conversations", icon: <MessagesSquare className="h-4 w-4"/> },
 ];
 
 export default function Sidebar() {
@@ -81,7 +81,7 @@ export default function Sidebar() {
                   }`}
               >
                 <span>{item.icon}</span>
-                <span className="font-medium">{item.label}</span>
+                <span className="font-medium">{t(item.label, item.label)}</span>
               </Link>
             );
           })}
