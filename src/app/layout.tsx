@@ -4,6 +4,7 @@ import "@/styles/index.css";
 import UIProvider from "@/components/providers/UIProvider";
 import StatusBanner from "@/components/common/StatusBanner";
 import "@/app/globals.css";
+import { I18nProvider } from "@/components/providers/I18nProvider";
 
 export const metadata: Metadata = {
   title: "مُعين",
@@ -27,8 +28,10 @@ export default function RootLayout({
       </head>
       <body className={`${cairo.variable} ${inter.variable} antialiased`} suppressHydrationWarning>
         <UIProvider>
-          <StatusBanner />
-          {children}
+          <I18nProvider locale={"ar"}>
+            <StatusBanner />
+            {children}
+          </I18nProvider>
         </UIProvider>
       </body>
     </html>

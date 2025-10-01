@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LayoutDashboard, MessagesSquare, Workflow, ShieldCheck, Settings, Users } from "lucide-react";
 
 const adminItems = [
-  { href: "/dashboard", label: "داشبورد", icon: "📊" },
-  { href: "/conversations", label: "المحادثات", icon: "💬" },
-  { href: "/flow", label: "منشئ التدفق", icon: "🔄" },
-  { href: "/review", label: "مركز المراجعة", icon: "✨" },
-  { href: "/settings", label: "الإعدادات", icon: "⚙️" },
-  { href: "/users", label: "إدارة الفريق", icon: "👥" },
+  { href: "/dashboard", label: "داشبورد", icon: <LayoutDashboard className="h-4 w-4"/> },
+  { href: "/conversations", label: "المحادثات", icon: <MessagesSquare className="h-4 w-4"/> },
+  { href: "/flow", label: "منشئ التدفق", icon: <Workflow className="h-4 w-4"/> },
+  { href: "/review", label: "مركز المراجعة", icon: <ShieldCheck className="h-4 w-4"/> },
+  { href: "/settings", label: "الإعدادات", icon: <Settings className="h-4 w-4"/> },
+  { href: "/users", label: "إدارة الفريق", icon: <Users className="h-4 w-4"/> },
 ];
 const staffItems = [
   { href: "/dashboard", label: "داشبورد", icon: "📊" },

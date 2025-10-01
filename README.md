@@ -12,6 +12,7 @@ npm run dev
 - Tailwind CSS + Preline UI
 - Icons: Lucide
 - Fonts: Cairo (Arabic), Inter (English)
+- Supabase (i18n translations, API)
 
 ### Design Tokens
 - Central tokens in `src/lib/theme.ts` and CSS vars in `src/app/globals.css`
@@ -25,7 +26,8 @@ Primary colors
 
 ### RTL/LTR & i18n
 - Direction auto-derives from pathname; routes starting with `/en` render LTR English.
-- Provider sets `<html lang, dir>` based on pathname.
+- I18n provider fetches strings from Supabase table `translations` (see `src/lib/i18n.sql`).
+- API endpoint: `/api/i18n?locale=ar&ns=common`.
 
 ### Components
 Shared UI lives in `src/components/ui/*` and is used across pages.
@@ -48,6 +50,16 @@ Shared UI lives in `src/components/ui/*` and is used across pages.
 1) Create route under `src/app/.../page.tsx`
 2) Use shared components and tokens
 3) Verify responsiveness at sm/md/lg breakpoints
+
+### Supabase Setup
+1) Create `.env.local` with:
+```
+NEXT_PUBLIC_SUPABASE_URL=your-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon
+SUPABASE_SERVICE_ROLE=your-service-role (server only)
+```
+2) Run SQL in `src/lib/i18n.sql` on your Supabase project to create `translations` and policies.
+3) Visit `/api/i18n?locale=ar&ns=common` to verify.
 
 ### Saudi Vision 2030 Note
 The UI tone emphasizes trust, modernity, inclusivity, and efficiency, aligning with Vision 2030 digital transformation priorities.
