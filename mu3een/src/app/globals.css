@@ -3,22 +3,36 @@
 @tailwind utilities;
 
 :root {
+  /* Light theme base */
   --background: #ffffff;
+  /* white */
   --foreground: #0f172a;
-  /* Brand Tokens (refreshed) */
-  --brand-primary: #0ea5e9;
-  --brand-primary-hover: #0284c7;
-  --brand-secondary: #14b8a6;
-  --brand-accent: #eab308;
-  --brand-success: #10b981;
+  /* slate-900 */
+
+  /* Brand palette (from logo) */
+  --brand-primary: #F58220;
+  /* orange */
+  --brand-primary-hover: #d66f15;
+  /* darkened orange */
+  --brand-secondary: #009688;
+  /* green */
+  --brand-accent: #007BFF;
+  /* blue */
+  --brand-success: #009688;
+  /* align success with green */
   --brand-warning: #f59e0b;
   --brand-error: #ef4444;
-  --brand-border: #e2e8f0;
-  --brand-surface: #f8fafc;
-  --focus-ring: #22d3ee;
-  --brand-gradient: none;
-  --brand-gradient-2: none;
-  --brand-gradient-3: none;
+
+  --brand-border: #e5e7eb;
+  /* neutral border */
+  --brand-surface: #F9FAFB;
+  /* very light gray */
+  --focus-ring: #007BFF;
+  /* blue accent */
+
+  --brand-gradient: linear-gradient(135deg, color-mix(in oklab, var(--brand-primary) 85%, #fff) 0%, color-mix(in oklab, var(--brand-accent) 70%, #fff) 100%);
+  --brand-gradient-2: linear-gradient(135deg, color-mix(in oklab, var(--brand-secondary) 85%, #fff) 0%, color-mix(in oklab, var(--brand-primary) 70%, #fff) 100%);
+  --brand-gradient-3: radial-gradient(800px circle at 10% 10%, color-mix(in oklab, var(--brand-accent) 18%, transparent), transparent 40%);
 }
 
 @theme inline {
@@ -29,22 +43,26 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0b1220;
+    --background: #0D1117;
+    /* dark navy */
     --foreground: #e5eef7;
-    /* Brand Tokens (Dark) */
-    --brand-primary: #38bdf8;
-    --brand-primary-hover: #0ea5e9;
-    --brand-secondary: #2dd4bf;
-    --brand-accent: #facc15;
-    --brand-success: #34d399;
+
+    /* Keep brand consistent in dark */
+    --brand-primary: #F58220;
+    --brand-primary-hover: #c25e0f;
+    --brand-secondary: #009688;
+    --brand-accent: #007BFF;
+    --brand-success: #00b39b;
     --brand-warning: #fbbf24;
     --brand-error: #f87171;
-    --brand-border: #233047;
-    --brand-surface: #0f172a;
-    --focus-ring: #22d3ee;
-    --brand-gradient: none;
-    --brand-gradient-2: none;
-    --brand-gradient-3: none;
+
+    --brand-border: #1f2937;
+    --brand-surface: #0D1117;
+    --focus-ring: #007BFF;
+
+    --brand-gradient: linear-gradient(135deg, color-mix(in oklab, var(--brand-primary) 25%, #0D1117) 0%, color-mix(in oklab, var(--brand-accent) 20%, #0D1117) 100%);
+    --brand-gradient-2: linear-gradient(135deg, color-mix(in oklab, var(--brand-secondary) 25%, #0D1117) 0%, color-mix(in oklab, var(--brand-primary) 20%, #0D1117) 100%);
+    --brand-gradient-3: radial-gradient(800px circle at 10% 10%, color-mix(in oklab, var(--brand-accent) 10%, transparent), transparent 40%);
   }
 }
 
@@ -59,46 +77,83 @@ body {
 }
 
 /* Enhanced Brand utility helpers */
-.btn-brand { 
+.btn-brand {
   background: var(--brand-primary);
-  color: #fff; 
+  color: #fff;
   transition: all 0.2s ease;
   transform: translateY(0);
 }
-.btn-brand:hover { 
+
+.btn-brand:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
-.btn-brand-2 { 
-  background: var(--brand-primary); 
-  color: #fff; 
+
+.btn-brand-2 {
+  background: var(--brand-primary);
+  color: #fff;
   transition: all 0.2s ease;
 }
-.btn-brand-3 { 
-  background: var(--brand-secondary); 
-  color: #fff; 
+
+.btn-brand-3 {
+  background: var(--brand-secondary);
+  color: #fff;
   transition: all 0.2s ease;
 }
-.badge-accent { 
-  background: linear-gradient(45deg, var(--brand-accent), #fbbf24); 
-  color: #fff; 
+
+.badge-accent {
+  background: linear-gradient(45deg, var(--brand-accent), #fbbf24);
+  color: #fff;
   animation: pulse 2s infinite;
 }
-.border-brand { border-color: var(--brand-border); }
-.bg-brand { background: var(--brand-primary); }
-.text-brand { color: var(--brand-primary); }
+
+.border-brand {
+  border-color: var(--brand-border);
+}
+
+.bg-brand {
+  background: var(--brand-primary);
+}
+
+.text-brand {
+  color: var(--brand-primary);
+}
 
 /* Fun animations */
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 @keyframes bounce {
-  0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
-  40%, 43% { transform: translate3d(0,-8px,0); }
-  70% { transform: translate3d(0,-4px,0); }
-  90% { transform: translate3d(0,-2px,0); }
+
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    transform: translate3d(0, -8px, 0);
+  }
+
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
 }
 
 @keyframes fadeInUp {
@@ -106,6 +161,7 @@ body {
     opacity: 0;
     transform: translate3d(0, 40px, 0);
   }
+
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
@@ -117,42 +173,61 @@ body {
     opacity: 0;
     transform: translate3d(100%, 0, 0);
   }
+
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
 
-.animate-pulse { animation: pulse 2s infinite; }
-.animate-bounce { animation: bounce 1s infinite; }
-.animate-fadeInUp { animation: fadeInUp 0.6s ease-out; }
-.animate-slideInRight { animation: slideInRight 0.6s ease-out; }
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.6s ease-out;
+}
 
 /* Card and container utilities */
-.card { 
-  background: color-mix(in oklab, var(--foreground) 2%, var(--background)); 
-  border: 1px solid var(--brand-border); 
-  border-radius: 12px; 
+.card {
+  background: color-mix(in oklab, var(--foreground) 2%, var(--background));
+  border: 1px solid var(--brand-border);
+  border-radius: 12px;
   transition: all 0.2s ease;
 }
+
 .card:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-.card-pad { padding: 1rem; }
-.shadow-soft { 
-  box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 8px 24px rgba(0,0,0,0.04); 
+
+.card-pad {
+  padding: 1rem;
+}
+
+.shadow-soft {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.04);
   transition: box-shadow 0.2s ease;
 }
+
 @media (prefers-color-scheme: dark) {
-  .shadow-soft { 
-    box-shadow: 0 1px 2px rgba(0,0,0,0.35), 0 8px 24px rgba(0,0,0,0.25); 
+  .shadow-soft {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.25);
   }
 }
-.container-app { 
-  max-width: 1200px; 
-  margin-inline: auto; 
-  width: 100%; 
+
+.container-app {
+  max-width: 1200px;
+  margin-inline: auto;
+  width: 100%;
   padding-inline: 1rem;
 }
 
@@ -191,7 +266,7 @@ select:focus-visible {
   .container-app {
     padding-inline: 0.75rem;
   }
-  
+
   .card-pad {
     padding: 0.75rem;
   }

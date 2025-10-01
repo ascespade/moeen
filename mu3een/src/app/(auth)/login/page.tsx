@@ -29,7 +29,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -42,13 +42,13 @@ export default function LoginPage() {
               priority
               unoptimized
             />
-            <span className="text-3xl font-bold text-brand-primary">مُعين</span>
+            <span className="text-3xl font-bold" style={{ color: "var(--brand-primary)" }}>مُعين</span>
           </div>
           <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">مرحباً بك مرة أخرى</h1>
           <p className="text-gray-600 dark:text-gray-400">سجل دخولك للوصول إلى لوحة التحكم</p>
         </div>
 
-        <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-soft">
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">البريد الإلكتروني</label>
@@ -59,7 +59,8 @@ export default function LoginPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="py-3 px-4 block w-full border border-[var(--brand-border)] rounded-lg bg-white placeholder-slate-400 focus:outline-none focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] sm:text-sm transition"
+                  className="py-3 px-4 block w-full border border-gray-200 dark:border-gray-800 rounded-md bg-white dark:bg-gray-900 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 sm:text-sm transition"
+                  style={{ outlineColor: "var(--brand-primary)" }}
                   placeholder="أدخل بريدك الإلكتروني"
                   required
                 />
@@ -75,7 +76,8 @@ export default function LoginPage() {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="py-3 px-4 pe-12 block w-full border border-[var(--brand-border)] rounded-lg bg-white placeholder-slate-400 focus:outline-none focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] sm:text-sm transition"
+                  className="py-3 px-4 pe-12 block w-full border border-gray-200 dark:border-gray-800 rounded-md bg-white dark:bg-gray-900 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 sm:text-sm transition"
+                  style={{ outlineColor: "var(--brand-primary)" }}
                   placeholder="أدخل كلمة المرور"
                   required
                 />
@@ -93,19 +95,17 @@ export default function LoginPage() {
 
             <div className="flex items-center justify-between">
               <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="shrink-0 rounded border-[var(--brand-border)] text-[var(--brand-primary)] focus:ring-[var(--focus-ring)]"
-                />
+                <input type="checkbox" className="shrink-0 rounded border-gray-300" style={{ accentColor: "var(--brand-primary)" }} />
                 <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">تذكرني</span>
               </label>
-              <Link href="/forgot-password" className="text-sm text-brand-primary underline hover:text-brand-primary-hover">نسيت كلمة المرور؟</Link>
+              <Link href="/forgot-password" className="text-sm underline" style={{ color: "var(--brand-primary)" }}>نسيت كلمة المرور؟</Link>
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full inline-flex justify-center items-center gap-2 rounded-lg px-4 py-3 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full inline-flex justify-center items-center gap-2 rounded-md px-4 py-3 font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ background: "var(--brand-primary)" }}
             >
               {isLoading ? (
                 <>
@@ -118,13 +118,13 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-[var(--brand-border)]">
+          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800">
             <button
               onClick={() => {
                 document.cookie = "mu3een_demo_auth=true; path=/; max-age=86400";
                 window.location.href = "/dashboard";
               }}
-              className="w-full inline-flex justify-center items-center gap-2 rounded-lg px-4 py-3 font-medium bg-[var(--brand-surface)] text-[color:var(--foreground)] hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)] border border-[var(--brand-border)]"
+              className="w-full inline-flex justify-center items-center gap-2 rounded-md px-4 py-3 font-medium bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 border border-gray-200 dark:border-gray-800"
             >
               ➡️ دخول تجريبي
             </button>
@@ -134,7 +134,7 @@ export default function LoginPage() {
         <div className="text-center mt-6">
           <p className="text-gray-600 dark:text-gray-400">
             ليس لديك حساب؟{" "}
-            <Link href="/register" className="text-brand-primary hover:text-brand-primary-hover font-medium transition-colors">إنشاء حساب جديد</Link>
+            <Link href="/register" className="font-medium transition-colors" style={{ color: "var(--brand-primary)" }}>إنشاء حساب جديد</Link>
           </p>
         </div>
       </div>

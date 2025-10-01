@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   description: "منصة دردشة متعددة القنوات مدعومة بالذكاء الاصطناعي",
 };
 
-const cairo = Cairo({ subsets: ["arabic", "latin"], weight: ["400", "600", "700"], variable: "--font-cairo" });
+// Reduce font payload by limiting weights
+const cairo = Cairo({ subsets: ["arabic", "latin"], weight: ["400", "700"], variable: "--font-cairo" });
 
 export default function RootLayout({
   children,

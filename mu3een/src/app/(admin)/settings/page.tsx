@@ -4,10 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Save, ArrowLeft } from "lucide-react";
-import siWhatsapp from "simple-icons/icons/whatsapp.js";
-import siTelegram from "simple-icons/icons/telegram.js";
-import siFacebook from "simple-icons/icons/facebook.js";
-import siInstagram from "simple-icons/icons/instagram.js";
+// Brand icons removed to avoid heavy dependencies; using simple badges instead
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState("general");
@@ -18,25 +15,25 @@ export default function SettingsPage() {
     language: "ar",
     timezone: "Asia/Riyadh",
     theme: "light",
-    
+
     // Notification Settings
     emailNotifications: true,
     pushNotifications: true,
     smsNotifications: false,
     notificationSound: true,
-    
+
     // Security Settings
     twoFactorAuth: false,
     sessionTimeout: 30,
     passwordExpiry: 90,
-    
+
     // Integration Settings
     whatsappEnabled: true,
     telegramEnabled: true,
     facebookEnabled: true,
     instagramEnabled: true,
     webhookUrl: "",
-    
+
     // AI Settings
     aiEnabled: true,
     aiModel: "gpt-4",
@@ -63,10 +60,10 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white dark:bg-slate-800 border-b border-[var(--brand-border)]">
-        <div className="container-app px-4 py-4">
+      <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div className="max-w-screen-xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 space-x-reverse">
               <Image
@@ -86,13 +83,13 @@ export default function SettingsPage() {
             <div className="flex items-center space-x-4 space-x-reverse">
               <Link
                 href="/dashboard"
-                className="px-4 py-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors inline-flex items-center gap-2"
+                className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors inline-flex items-center gap-2"
               >
                 <ArrowLeft className="h-4 w-4" /> العودة للوحة التحكم
               </Link>
-              <button 
+              <button
                 onClick={handleSave}
-                className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-2 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]"
+                className="inline-flex items-center justify-center gap-2 rounded-md px-6 py-2 font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
                 <Save className="h-4 w-4" /> حفظ التغييرات
               </button>
@@ -101,22 +98,21 @@ export default function SettingsPage() {
         </div>
       </header>
 
-      <div className="container-app px-4 py-6">
+      <div className="max-w-screen-xl mx-auto px-4 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
+            <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">الإعدادات</h3>
               <nav className="space-y-2">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center space-x-3 space-x-reverse px-3 py-2 rounded-lg text-right transition-colors ${
-                      activeTab === tab.id
-                        ? "bg-[var(--brand-primary)] text-white"
-                        : "text-gray-600 hover:bg-[var(--brand-surface)] dark:text-gray-400 dark:hover:bg-slate-700"
-                    }`}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-right transition-colors ${activeTab === tab.id
+                      ? "bg-blue-600 text-white"
+                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      }`}
                   >
                     <span className="text-lg">{tab.icon}</span>
                     <span className="font-medium">{tab.name}</span>
@@ -128,12 +124,12 @@ export default function SettingsPage() {
 
           {/* Settings Content */}
           <div className="lg:col-span-3">
-            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
+            <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
               {/* General Settings */}
               {activeTab === "general" && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white">الإعدادات العامة</h2>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -143,7 +139,7 @@ export default function SettingsPage() {
                         type="text"
                         value={settings.siteName}
                         onChange={(e) => handleSettingChange("siteName", e.target.value)}
-                        className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                       />
                     </div>
 
@@ -154,7 +150,7 @@ export default function SettingsPage() {
                       <select
                         value={settings.language}
                         onChange={(e) => handleSettingChange("language", e.target.value)}
-                        className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                       >
                         <option value="ar">العربية</option>
                         <option value="en">English</option>
@@ -168,7 +164,7 @@ export default function SettingsPage() {
                       <select
                         value={settings.timezone}
                         onChange={(e) => handleSettingChange("timezone", e.target.value)}
-                        className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                       >
                         <option value="Asia/Riyadh">الرياض (GMT+3)</option>
                         <option value="Asia/Dubai">دبي (GMT+4)</option>
@@ -183,7 +179,7 @@ export default function SettingsPage() {
                       <select
                         value={settings.theme}
                         onChange={(e) => handleSettingChange("theme", e.target.value)}
-                        className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                       >
                         <option value="light">فاتح</option>
                         <option value="dark">داكن</option>
@@ -200,7 +196,7 @@ export default function SettingsPage() {
                       value={settings.siteDescription}
                       onChange={(e) => handleSettingChange("siteDescription", e.target.value)}
                       rows={3}
-                      className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                     />
                   </div>
                 </div>
@@ -210,7 +206,7 @@ export default function SettingsPage() {
               {activeTab === "notifications" && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white">إعدادات الإشعارات</h2>
-                  
+
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                       <div>
@@ -267,7 +263,7 @@ export default function SettingsPage() {
               {activeTab === "security" && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white">إعدادات الأمان</h2>
-                  
+
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                       <div>
@@ -318,14 +314,12 @@ export default function SettingsPage() {
               {activeTab === "integrations" && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white">إعدادات التكاملات</h2>
-                  
+
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
-                      <div className="flex items-center space-x-3 space-x-reverse">
-                          <svg role="img" aria-label="WhatsApp" viewBox="0 0 24 24" width="24" height="24" fill={`#${siWhatsapp.hex}`}>
-                            <path d={siWhatsapp.path} />
-                          </svg>
+                        <div className="flex items-center space-x-3 space-x-reverse">
+                          <div className="h-6 w-6 rounded bg-green-600 text-white grid place-items-center text-[10px] font-bold">WA</div>
                           <div>
                             <h3 className="font-medium text-gray-900 dark:text-white">واتساب</h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400">تكامل مع واتساب</p>
@@ -343,10 +337,8 @@ export default function SettingsPage() {
                       </div>
 
                       <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
-                      <div className="flex items-center space-x-3 space-x-reverse">
-                          <svg role="img" aria-label="Telegram" viewBox="0 0 24 24" width="24" height="24" fill={`#${siTelegram.hex}`}>
-                            <path d={siTelegram.path} />
-                          </svg>
+                        <div className="flex items-center space-x-3 space-x-reverse">
+                          <div className="h-6 w-6 rounded bg-sky-600 text-white grid place-items-center text-[10px] font-bold">TG</div>
                           <div>
                             <h3 className="font-medium text-gray-900 dark:text-white">تليجرام</h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400">تكامل مع تليجرام</p>
@@ -364,10 +356,8 @@ export default function SettingsPage() {
                       </div>
 
                       <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
-                      <div className="flex items-center space-x-3 space-x-reverse">
-                          <svg role="img" aria-label="Facebook" viewBox="0 0 24 24" width="24" height="24" fill={`#${siFacebook.hex}`}>
-                            <path d={siFacebook.path} />
-                          </svg>
+                        <div className="flex items-center space-x-3 space-x-reverse">
+                          <div className="h-6 w-6 rounded bg-blue-700 text-white grid place-items-center text-[10px] font-bold">FB</div>
                           <div>
                             <h3 className="font-medium text-gray-900 dark:text-white">فيسبوك</h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400">تكامل مع فيسبوك</p>
@@ -385,10 +375,8 @@ export default function SettingsPage() {
                       </div>
 
                       <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
-                      <div className="flex items-center space-x-3 space-x-reverse">
-                          <svg role="img" aria-label="Instagram" viewBox="0 0 24 24" width="24" height="24" fill={`#${siInstagram.hex}`}>
-                            <path d={siInstagram.path} />
-                          </svg>
+                        <div className="flex items-center space-x-3 space-x-reverse">
+                          <div className="h-6 w-6 rounded bg-pink-600 text-white grid place-items-center text-[10px] font-bold">IG</div>
                           <div>
                             <h3 className="font-medium text-gray-900 dark:text-white">إنستغرام</h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400">تكامل مع إنستغرام</p>
@@ -426,7 +414,7 @@ export default function SettingsPage() {
               {activeTab === "ai" && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white">إعدادات الذكاء الاصطناعي</h2>
-                  
+
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                       <div>

@@ -32,12 +32,12 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-slate-800 border-b border-[var(--brand-border)]">
-        <div className="container-app px-4 py-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Page Intro */}
+      <section className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div className="max-w-screen-xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4 space-x-reverse">
+            <div className="flex items-center gap-4">
               <Image
                 src="/hemam-logo.jpg"
                 alt="Hemam Logo"
@@ -51,41 +51,37 @@ export default function DashboardPage() {
                 <p className="text-sm text-gray-600 dark:text-gray-400">لوحة التحكم</p>
               </div>
             </div>
-            
-            <div className="flex items-center space-x-4 space-x-reverse">
+
+            <div className="flex items-center gap-3">
               <div className="relative">
-                <input
-                  type="text"
-                  placeholder="البحث في المحادثات..."
-                  className="pr-10 pl-4 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent w-64"
-                />
+                <input type="search" placeholder="ابحث في المحادثات..." className="py-2 pe-10 ps-3 block w-64 border border-gray-200 dark:border-gray-700 rounded-md text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
               </div>
-              
-              <button className="relative p-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors" aria-label="Notifications">
+
+              <button className="relative p-2 text-gray-600 dark:text-gray-300 transition-colors" aria-label="Notifications" style={{ color: "var(--brand-primary)" }}>
                 <Bell className="h-5 w-5" />
                 <span className="absolute -top-1 -right-1 bg-[var(--brand-error)] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
               </button>
-              
-              <button className="p-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors" aria-label="Settings">
+
+              <button className="p-2 text-gray-600 dark:text-gray-300 transition-colors" aria-label="Settings" style={{ color: "var(--brand-primary)" }}>
                 <Settings className="h-5 w-5" />
               </button>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
-      <div className="container-app px-4 py-6">
+      <div className="max-w-screen-xl mx-auto px-4 py-6">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
-            <div key={index} className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
+            <div key={index} className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">{stat.title}</h3>
                 <BarChart className="h-5 w-5 text-green-500" />
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</span>
-                <span className={`text-sm font-medium ${stat.change.includes('+') ? 'text-[var(--brand-success)]' : 'text-[var(--brand-error)]'}`}>
+                <span className={`text-sm font-medium ${stat.change.includes('+') ? 'text-green-600' : 'text-red-600'}`}>
                   {stat.change}
                 </span>
               </div>
@@ -96,22 +92,22 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Conversations List */}
           <div className="lg:col-span-2">
-            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur shadow-sm">
-              <div className="p-6 border-b border-[var(--brand-border)]">
+            <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm">
+              <div className="p-6 border-b border-gray-200 dark:border-gray-800">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white">المحادثات الحديثة</h2>
-            <div className="flex items-center space-x-2 space-x-reverse">
-              <button className="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
+                  <div className="flex items-center space-x-2 space-x-reverse">
+                    <button className="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
                       ➕ محادثة جديدة
                     </button>
-              <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors">
+                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors">
                       🔍
                     </button>
                   </div>
                 </div>
-                
+
                 {/* Tabs */}
-                <div className="flex space-x-1 space-x-reverse">
+                <div className="hs-tab flex gap-1">
                   {[
                     { id: "all", label: "الكل", count: 24 },
                     { id: "new", label: "جديدة", count: 8 },
@@ -121,11 +117,10 @@ export default function DashboardPage() {
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        activeTab === tab.id
-                        ? "bg-[var(--brand-primary)] text-white"
-                        : "text-gray-600 hover:text-[var(--brand-primary)] hover:bg-[var(--brand-surface)]"
-                      }`}
+                      className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === tab.id
+                        ? "bg-blue-600 text-white"
+                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        }`}
                     >
                       {tab.label} ({tab.count})
                     </button>
@@ -134,22 +129,22 @@ export default function DashboardPage() {
               </div>
 
               {/* Conversations */}
-              <div className="divide-y divide-[var(--brand-border)]">
+              <div className="divide-y divide-gray-200 dark:divide-gray-800">
                 {conversations.map((conversation) => (
-                  <div key={conversation.id} className="p-6 hover:bg-[var(--brand-surface)] transition-colors cursor-pointer">
+                  <div key={conversation.id} className="p-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4 space-x-reverse">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold bg-[var(--brand-primary)]">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold bg-[var(--brand-primary)]">
                           {conversation.name.charAt(0)}
                         </div>
                         <div>
                           <div className="flex items-center space-x-2 space-x-reverse">
                             <h3 className="font-medium text-gray-900 dark:text-white">{conversation.name}</h3>
-                            <span className="text-xs bg-[var(--brand-surface)] text-[var(--brand-primary)] px-2 py-1 rounded-full">
+                            <span className="text-xs bg-gray-100 dark:bg-gray-800 text-blue-700 dark:text-blue-300 px-2 py-1 rounded-full">
                               {conversation.channel}
                             </span>
                             {conversation.unread > 0 && (
-                              <span className="bg-[var(--brand-error)] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                              <span className="bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                                 {conversation.unread}
                               </span>
                             )}
@@ -157,13 +152,13 @@ export default function DashboardPage() {
                           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{conversation.lastMessage}</p>
                         </div>
                       </div>
-                      
-                      <div className="flex items-center space-x-3 space-x-reverse">
+
+                      <div className="flex items-center gap-3">
                         <div className={`flex items-center space-x-1 space-x-reverse ${getStatusColor(conversation.status)}`}>
                           <span className="text-sm font-medium capitalize">{conversation.status}</span>
                         </div>
                         <span className="text-sm text-gray-500">{conversation.time}</span>
-                        <button className="p-1 hover:bg-[var(--brand-surface)] rounded">
+                        <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
                           ⚙️
                         </button>
                       </div>
@@ -177,41 +172,41 @@ export default function DashboardPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Quick Actions */}
-            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
+            <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">إجراءات سريعة</h3>
               <div className="space-y-3">
-                <button className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
+                <button className="w-full inline-flex items-center justify-center gap-2 rounded-md px-4 py-3 font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                   <MessageSquare className="h-5 w-5" /> بدء محادثة جديدة
                 </button>
-                <button className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium bg-[var(--brand-surface)] text-[color:var(--foreground)] hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)] border border-[var(--brand-border)]">
+                <button className="w-full inline-flex items-center justify-center gap-2 rounded-md px-4 py-3 font-medium bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 border border-gray-200 dark:border-gray-800">
                   <Users className="h-5 w-5" /> إدارة العملاء
                 </button>
-                <button className="w-full p-3 border border-[var(--brand-border)] text-gray-600 hover:bg-[var(--brand-surface)] rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                <button className="w-full p-3 border border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md font-medium transition-colors flex items-center justify-center gap-2">
                   <BarChart className="h-5 w-5" /> عرض التقارير
                 </button>
               </div>
             </div>
 
             {/* Recent Activity */}
-            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
+            <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">النشاط الأخير</h3>
               <div className="space-y-4">
-                <div className="flex items-start space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-brand-success rounded-full mt-2"></div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">تم حل محادثة مع أحمد محمد</p>
                     <span className="text-xs text-gray-500">منذ 10 دقائق</span>
                   </div>
                 </div>
-                <div className="flex items-start space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-brand-warning rounded-full mt-2"></div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">محادثة جديدة من فاطمة علي</p>
                     <span className="text-xs text-gray-500">منذ 25 دقيقة</span>
                   </div>
                 </div>
-                <div className="flex items-start space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-brand-primary rounded-full mt-2"></div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">تم إنشاء تقرير شهري</p>
                     <span className="text-xs text-gray-500">منذ ساعة</span>

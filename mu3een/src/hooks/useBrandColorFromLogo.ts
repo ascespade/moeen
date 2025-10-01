@@ -37,11 +37,16 @@ export default function useBrandColorFromLogo(logoPath: string) {
         const toHex = (x: number) => x.toString(16).padStart(2, "0");
         const hex = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
         const root = document.documentElement;
+        // Central brand palette
         root.style.setProperty("--brand-primary", hex);
-        // hover: darken ~10%
-        const darken = (c: number) => Math.max(0, Math.round(c * 0.9));
-        const hexDark = `#${toHex(darken(r))}${toHex(darken(g))}${toHex(darken(b))}`;
-        root.style.setProperty("--brand-primary-hover", hexDark);
+        const darken = (c: number, pct = 0.12) => Math.max(0, Math.round(c * (1 - pct)));
+        const lighten = (c: number, pct = 0.12) => Math.min(255, Math.round(c * (1 + pct)));
+        const hexHover = `#${toHex(darken(r))}${toHex(darken(g))}${toHex(darken(b))}`;
+        const hexAccent = `#${toHex(lighten(r))}${toHex(lighten(g))}${toHex(lighten(b))}`;
+        root.style.setProperty("--brand-primary-hover", hexHover);
+        root.style.setProperty("--brand-accent", hexAccent);
+        // Update Tailwind theme alias colors
+        root.style.setProperty("--focus-ring", hexAccent);
       };
     } catch {
       // no-op: keep defaults

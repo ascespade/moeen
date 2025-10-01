@@ -83,12 +83,12 @@ export default function ReviewPage() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-slate-800 border-b border-[var(--brand-border)]">
-        <div className="container-app px-4 py-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Page Intro */}
+      <section className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div className="max-w-screen-xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4 space-x-reverse">
+            <div className="flex items-center gap-4">
               <Image
                 src="/hemam-logo.jpg"
                 alt="Hemam Logo"
@@ -103,33 +103,33 @@ export default function ReviewPage() {
               </div>
             </div>
 
-            <div className="flex items-center space-x-4 space-x-reverse">
+            <div className="flex items-center gap-3">
               <Link
                 href="/dashboard"
-                className="px-4 py-2 text-gray-600 hover:text-[var(--brand-primary)] transition-colors inline-flex items-center gap-2"
+                className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors inline-flex items-center gap-2"
               >
                 <ArrowLeft className="h-4 w-4" /> العودة للوحة التحكم
               </Link>
-              <button className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-2 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">
+              <button className="inline-flex items-center justify-center gap-2 rounded-md px-6 py-2 font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 <BarChart className="h-4 w-4" /> تقرير شامل
               </button>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
-      <div className="container-app px-4 py-6">
+      <div className="max-w-screen-xl mx-auto px-4 py-6">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
-            <div key={index} className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
+            <div key={index} className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">{stat.title}</h3>
                 <span className="text-green-500">📈</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</span>
-                <span className={`text-sm font-medium ${stat.trend === 'up' ? 'text-[var(--brand-success)]' : 'text-[var(--brand-error)]'}`}>
+                <span className={`text-sm font-medium ${stat.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
                   {stat.change}
                 </span>
               </div>
@@ -140,31 +140,30 @@ export default function ReviewPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Conversations List */}
           <div className="lg:col-span-2">
-            <div className="card shadow-soft">
-              <div className="p-6 border-b border-[var(--brand-border)]">
+            <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm">
+              <div className="p-6 border-b border-gray-200 dark:border-gray-800">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white">المراجعات الحديثة</h2>
-                  <div className="flex items-center space-x-2 space-x-reverse">
-                    <button className="btn btn-primary px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center gap-2">
+                  <div className="flex items-center gap-2">
+                    <button className="px-4 py-2 rounded-md text-sm font-medium inline-flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                       <RefreshCw className="h-4 w-4" /> تحديث
                     </button>
-                    <button className="p-2 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors" aria-label="Search">
+                    <button className="p-2 border border-gray-200 dark:border-gray-800 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" aria-label="Search">
                       <Search className="h-4 w-4" />
                     </button>
                   </div>
                 </div>
 
                 {/* Filters */}
-                <div className="flex space-x-1 space-x-reverse">
+                <div className="flex gap-1">
                   {["all", "positive", "neutral", "negative"].map((filter) => (
                     <button
                       key={filter}
                       onClick={() => setSelectedFilter(filter)}
-                      className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                        selectedFilter === filter
-                        ? "bg-[var(--brand-primary)] text-white"
-                        : "text-gray-600 hover:bg-[var(--brand-surface)] dark:text-gray-400 dark:hover:bg-slate-700"
-                      }`}
+                      className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${selectedFilter === filter
+                          ? "bg-blue-600 text-white"
+                          : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        }`}
                     >
                       {filter === "all" && "الكل"}
                       {filter === "positive" && "إيجابي"}
@@ -175,21 +174,20 @@ export default function ReviewPage() {
                 </div>
               </div>
 
-              <div className="divide-y divide-brand-border">
+              <div className="divide-y divide-gray-200 dark:divide-gray-800">
                 {filteredConversations.map((conversation) => (
-                  <div 
-                    key={conversation.id} 
-                    className={`p-6 cursor-pointer transition-colors ${
-                      selectedConversation === conversation.id 
-                        ? "bg-[color:var(--brand-primary)]/5 border-r-4 border-brand-primary" 
-                        : "hover:bg-[var(--brand-surface)]"
-                    }`}
+                  <div
+                    key={conversation.id}
+                    className={`p-6 cursor-pointer transition-colors ${selectedConversation === conversation.id
+                        ? "bg-blue-50 dark:bg-gray-800 border-e-4 border-blue-600"
+                        : "hover:bg-gray-50 dark:hover:bg-gray-800"
+                      }`}
                     onClick={() => setSelectedConversation(selectedConversation === conversation.id ? null : conversation.id)}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-4 space-x-reverse">
                         <div className="relative">
-                          <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-[var(--brand-primary)] font-semibold">
+                          <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-700 dark:text-blue-300 font-semibold">
                             {conversation.customer.charAt(0)}
                           </div>
                         </div>
@@ -199,7 +197,7 @@ export default function ReviewPage() {
                             <span className="text-sm text-gray-500">{conversation.channel}</span>
                           </div>
                           <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{conversation.message}</p>
-                          <div className="flex items-center space-x-2 space-x-reverse">
+                          <div className="flex items-center gap-2">
                             <div className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(conversation.status)}`}>
                               {getStatusText(conversation.status)}
                             </div>
@@ -216,7 +214,7 @@ export default function ReviewPage() {
 
                       <div className="flex items-center space-x-3 space-x-reverse">
                         <span className="text-sm text-gray-500">{conversation.time}</span>
-                        <button className="p-1 hover:bg-[var(--brand-surface)] rounded" aria-label="Settings">
+                        <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded" aria-label="Settings">
                           <Settings className="h-4 w-4" />
                         </button>
                       </div>
@@ -227,7 +225,7 @@ export default function ReviewPage() {
                         <div className="space-y-3">
                           <div>
                             <h4 className="font-medium text-gray-900 dark:text-white mb-2">التقييم التفصيلي</h4>
-                            <div className="flex items-center space-x-2 space-x-reverse">
+                            <div className="flex items-center gap-2">
                               <span className="text-2xl font-bold text-yellow-500">{conversation.rating}/5</span>
                               <div className="flex items-center space-x-1 space-x-reverse">
                                 {Array.from({ length: 5 }).map((_, i) => (
@@ -238,12 +236,12 @@ export default function ReviewPage() {
                               </div>
                             </div>
                           </div>
-                          
+
                           <div>
                             <h4 className="font-medium text-gray-900 dark:text-white mb-2">العلامات</h4>
                             <div className="flex flex-wrap gap-2">
                               {conversation.tags.map((tag, index) => (
-                                <span key={index} className="px-2 py-1 bg-brand-primary/10 text-[var(--brand-primary)] text-xs rounded-full">
+                                <span key={index} className="px-2 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-full">
                                   {tag}
                                 </span>
                               ))}
@@ -251,10 +249,10 @@ export default function ReviewPage() {
                           </div>
 
                           <div className="flex items-center space-x-2 space-x-reverse">
-                            <button className="btn btn-primary px-4 py-2 rounded-lg text-sm inline-flex items-center gap-2">
+                            <button className="px-4 py-2 rounded-md text-sm inline-flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                               <RefreshCw className="h-4 w-4" /> إضافة رد
                             </button>
-                            <button className="px-4 py-2 border border-[var(--brand-border)] text-gray-600 hover:bg-[var(--brand-surface)] rounded-lg text-sm transition-colors">
+                            <button className="px-4 py-2 border border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md text-sm transition-colors">
                               📊 تحليل
                             </button>
                           </div>
@@ -270,7 +268,7 @@ export default function ReviewPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Quick Actions */}
-            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
+            <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">إجراءات سريعة</h3>
               <div className="space-y-3">
                 <button className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]">

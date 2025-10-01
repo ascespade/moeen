@@ -3,8 +3,6 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import useBrandColorFromLogo from "@/hooks/useBrandColorFromLogo";
-import DirectionToggle from "@/components/common/DirectionToggle";
-import ThemeToggle from "@/components/common/ThemeToggle";
 
 export type AppTheme = "light" | "dark";
 export type AppLang = "ar" | "en";
@@ -25,7 +23,7 @@ export default function UIProvider({ children }: { children: React.ReactNode }) 
       .then(() => {
         window.HSStaticMethods?.autoInit?.();
       })
-      .catch(() => {});
+      .catch(() => { });
 
     const html = document.documentElement;
     html.setAttribute("lang", "ar");
@@ -33,10 +31,6 @@ export default function UIProvider({ children }: { children: React.ReactNode }) 
   }, [pathname]);
 
   return (
-    <div>
-      {children}
-      <DirectionToggle />
-      <ThemeToggle />
-    </div>
+    <div>{children}</div>
   );
 }
