@@ -20,6 +20,55 @@ create policy "Service write" on public.translations
 
 -- Seed basic keys
 insert into public.translations(locale, namespace, key, value) values
+-- Conversations
+('ar','common','conv.subtitle','إدارة جميع المحادثات'),
+('ar','common','conv.new','محادثة جديدة'),
+('ar','common','conv.search','البحث في المحادثات...'),
+('ar','common','conv.filter.all','الكل'),
+('ar','common','conv.filter.active','نشط'),
+('ar','common','conv.filter.pending','معلق'),
+('ar','common','conv.filter.resolved','تم الحل'),
+('en','common','conv.subtitle','Manage all conversations'),
+('en','common','conv.new','New conversation'),
+('en','common','conv.search','Search conversations...'),
+('en','common','conv.filter.all','All'),
+('en','common','conv.filter.active','Active'),
+('en','common','conv.filter.pending','Pending'),
+('en','common','conv.filter.resolved','Resolved'),
+
+-- Flow
+('ar','common','flow.subtitle','إنشاء وإدارة تدفقات المحادثة'),
+('ar','common','flow.new','تدفق جديد'),
+('ar','common','flow.templates','القوالب الجاهزة'),
+('en','common','flow.subtitle','Create and manage flows'),
+('en','common','flow.new','New flow'),
+('en','common','flow.templates','Templates'),
+
+-- Auth
+('ar','common','auth.welcomeBack','مرحباً بك مرة أخرى'),
+('ar','common','auth.login.subtitle','سجل دخولك للوصول إلى لوحة التحكم'),
+('ar','common','auth.email','البريد الإلكتروني'),
+('ar','common','auth.email.placeholder','أدخل بريدك الإلكتروني'),
+('ar','common','auth.password','كلمة المرور'),
+('ar','common','auth.password.placeholder','أدخل كلمة المرور'),
+('ar','common','auth.remember','تذكرني'),
+('ar','common','auth.forgot','نسيت كلمة المرور؟'),
+('ar','common','auth.login','تسجيل الدخول'),
+('en','common','auth.welcomeBack','Welcome back'),
+('en','common','auth.login.subtitle','Sign in to access the dashboard'),
+('en','common','auth.email','Email'),
+('en','common','auth.email.placeholder','Enter your email'),
+('en','common','auth.password','Password'),
+('en','common','auth.password.placeholder','Enter your password'),
+('en','common','auth.remember','Remember me'),
+('en','common','auth.forgot','Forgot password?'),
+('en','common','auth.login','Sign in'),
+
+-- UI common
+('ar','common','ui.preview','معاينة'),
+('ar','common','ui.save','حفظ'),
+('en','common','ui.preview','Preview'),
+('en','common','ui.save','Save')
 ('ar','common','app.name','معين'),
 ('ar','common','nav.dashboard','لوحة التحكم'),
 ('ar','common','nav.conversations','المحادثات'),

@@ -1,12 +1,15 @@
+import { useT } from "@/components/providers/I18nProvider";
+
 export default function PricingPage() {
+  const { t } = useT();
   const tiers = [
-    { name: "أساسي", price: "مجاني", features: ["قناة واحدة", "محادثات محدودة"] },
-    { name: "محترف", price: "$29", features: ["3 قنوات", "تقارير أساسية"] },
-    { name: "مؤسسات", price: "مخصص", features: ["قنوات غير محدودة", "دعم مخصص"] },
+    { name: t('pricing.basic','أساسي'), price: t('pricing.free','مجاني'), features: [t('pricing.f1','قناة واحدة'), t('pricing.f2','محادثات محدودة')] },
+    { name: t('pricing.pro','محترف'), price: '$29', features: [t('pricing.f3','3 قنوات'), t('pricing.f4','تقارير أساسية')] },
+    { name: t('pricing.enterprise','مؤسسات'), price: t('pricing.custom','مخصص'), features: [t('pricing.f5','قنوات غير محدودة'), t('pricing.f6','دعم مخصص')] },
   ];
   return (
     <div className="max-w-screen-xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-6">الأسعار</h1>
+      <h1 className="text-3xl font-bold mb-6">{t('pricing.title','الأسعار')}</h1>
       <div className="grid md:grid-cols-3 gap-6">
         {tiers.map((t) => (
           <div key={t.name} className="rounded-xl border border-brand-border p-5 bg-[var(--panel)]">

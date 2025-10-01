@@ -1,12 +1,15 @@
+import { useT } from "@/components/providers/I18nProvider";
+
 export default function FeaturesPage() {
+  const { t } = useT();
   const features = [
-    { title: "دردشة موحّدة", desc: "إدارة كل القنوات من واجهة واحدة" },
-    { title: "تقارير لحظية", desc: "لوحات ذكية ومؤشرات أداء" },
-    { title: "تلقائية وذكاء", desc: "قوالب وتدفقات بمساعدة AI" },
+    { title: t('home.features.unifiedChat','دردشة موحّدة'), desc: t('home.features.unifiedChat.desc','إدارة كل القنوات من واجهة واحدة') },
+    { title: t('home.features.reports','تقارير لحظية'), desc: t('home.features.reports.desc','لوحات ذكية ومؤشرات أداء') },
+    { title: t('home.hero.subtitle','تلقائية وذكاء'), desc: 'AI assisted flows' },
   ];
   return (
     <div className="max-w-screen-xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-6">المميزات</h1>
+      <h1 className="text-3xl font-bold mb-6">{t('features.title','المميزات')}</h1>
       <div className="grid md:grid-cols-3 gap-6">
         {features.map((f, i) => (
           <div key={i} className="rounded-xl border border-brand-border p-5 bg-[var(--panel)]">
