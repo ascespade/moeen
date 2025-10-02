@@ -1,0 +1,209 @@
+{
+  "platform": {
+    "name": "Cursor Dev Platform",
+    "version": "1.0.0",
+    "description": "منصة التطوير المتكاملة مع أفضل أداء ممكن",
+    "author": "Cursor Development Team"
+  },
+  "server": {
+    "domain": "cursor-dev.local",
+    "ports": {
+      "code_server": 8080,
+      "nginx_http": 80,
+      "nginx_https": 443,
+      "monitoring": 3000,
+      "database": 5432,
+      "redis": 6379
+    },
+    "ssl": {
+      "enabled": true,
+      "auto_renew": true,
+      "provider": "letsencrypt"
+    }
+  },
+  "performance": {
+    "system": {
+      "max_file_watchers": 1048576,
+      "max_user_instances": 1024,
+      "swappiness": 10,
+      "dirty_ratio": 15,
+      "dirty_background_ratio": 5
+    },
+    "code_server": {
+      "max_memory_mb": 4096,
+      "max_old_space_size": 4096,
+      "disable_telemetry": true,
+      "disable_update_check": true,
+      "worker_processes": "auto"
+    },
+    "nginx": {
+      "worker_processes": "auto",
+      "worker_connections": 2048,
+      "keepalive_timeout": 65,
+      "client_max_body_size": "100M",
+      "gzip_enabled": true,
+      "gzip_level": 6
+    },
+    "database": {
+      "postgresql": {
+        "shared_buffers_percent": 25,
+        "effective_cache_size_percent": 75,
+        "work_mem_percent": 1,
+        "max_connections": 200
+      },
+      "redis": {
+        "maxmemory_percent": 12.5,
+        "maxmemory_policy": "allkeys-lru",
+        "save_intervals": ["900 1", "300 10", "60 10000"]
+      }
+    }
+  },
+  "security": {
+    "fail2ban": {
+      "enabled": true,
+      "ban_time": 3600,
+      "find_time": 600,
+      "max_retry": 5,
+      "jails": ["sshd", "nginx-http-auth", "nginx-limit-req", "code-server"]
+    },
+    "firewall": {
+      "enabled": true,
+      "default_policy": "deny",
+      "allowed_ports": [22, 80, 443]
+    },
+    "ssl_security": {
+      "protocols": ["TLSv1.2", "TLSv1.3"],
+      "ciphers": "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256",
+      "hsts_enabled": true,
+      "hsts_max_age": 63072000
+    }
+  },
+  "monitoring": {
+    "enabled": true,
+    "interval_seconds": 300,
+    "metrics": {
+      "system": ["cpu", "memory", "disk", "network"],
+      "services": ["code-server", "nginx", "postgresql", "redis", "fail2ban"],
+      "security": ["blocked_ips", "failed_logins", "ssl_status"]
+    },
+    "alerts": {
+      "cpu_threshold": 90,
+      "memory_threshold": 85,
+      "disk_threshold": 90,
+      "response_time_threshold": 5000
+    },
+    "retention": {
+      "logs_days": 30,
+      "metrics_days": 90,
+      "backups_days": 7
+    }
+  },
+  "backup": {
+    "enabled": true,
+    "schedule": "0 2 * * *",
+    "retention": {
+      "daily": 7,
+      "weekly": 4,
+      "monthly": 3
+    },
+    "compression": "gzip",
+    "verification": true,
+    "exclude_patterns": [
+      "node_modules",
+      ".git",
+      "dist",
+      "build",
+      "tmp",
+      "cache",
+      ".npm",
+      ".cache"
+    ]
+  },
+  "development": {
+    "workspace": {
+      "default_path": "/home/codeserver/workspace",
+      "temp_path": "/home/codeserver/workspace/tmp",
+      "cache_path": "/home/codeserver/cache",
+      "auto_save": true,
+      "auto_format": true
+    },
+    "extensions": {
+      "auto_install": [
+        "ms-python.python",
+        "ms-vscode.vscode-typescript-next",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "ms-vscode.vscode-json",
+        "redhat.vscode-yaml",
+        "ms-vscode.vscode-eslint"
+      ],
+      "recommended": [
+        "github.copilot",
+        "ms-vscode.vscode-docker",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "hashicorp.terraform",
+        "ms-azuretools.vscode-azurefunctions"
+      ]
+    },
+    "git": {
+      "auto_fetch": true,
+      "auto_prune": true,
+      "default_branch": "main"
+    }
+  },
+  "integrations": {
+    "cursor_agent": {
+      "enabled": true,
+      "keep_running": true,
+      "compatibility_mode": true
+    },
+    "ai_services": {
+      "enabled": true,
+      "providers": ["openai", "anthropic", "local"]
+    },
+    "cloud_sync": {
+      "enabled": false,
+      "providers": ["github", "gitlab", "bitbucket"]
+    }
+  },
+  "advanced": {
+    "docker": {
+      "enabled": true,
+      "compose_version": "latest",
+      "registry_mirrors": []
+    },
+    "kubernetes": {
+      "enabled": false,
+      "cluster_type": "minikube"
+    },
+    "ci_cd": {
+      "enabled": false,
+      "provider": "github_actions"
+    }
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "rotation": {
+      "max_size": "100MB",
+      "max_files": 10,
+      "max_age": 30
+    },
+    "destinations": [
+      "file",
+      "console"
+    ]
+  },
+  "api": {
+    "enabled": true,
+    "port": 9000,
+    "auth": {
+      "type": "token",
+      "token_expiry": 3600
+    },
+    "rate_limiting": {
+      "enabled": true,
+      "requests_per_minute": 100
+    }
+  }
+}
