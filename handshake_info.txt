@@ -1,0 +1,24 @@
+WPA2 HANDSHAKE INFORMATION
+==========================
+
+Capture Date: 2025-02-05 20:03:46 CEST
+Network SSID: Abooo bader (hex: 41626f6f6f206261646572)
+
+Access Point (AP):
+- MAC Address: f4:e5:f2:65:cf:08
+- Manufacturer: Huawei Tech Co, Ltd
+
+Client Station:
+- MAC Address: 12:29:bf:ce:17:d8
+
+WPA2 Handshake Details:
+- Message Integrity Code (MIC): 83240595551da6113065f4a7ad8589a7
+- AP Nonce: 8c8c8559392c73d3a5d30bc39fb7da2fd09f098262685c9a1bf5e0d4cef2c7df
+- Message Pair: Unknown message pair
+
+Hash Format (Hashcat Mode 22000/2500):
+WPA*02*83240595551da6113065f4a7ad8589a7*f4e5f265cf08*1229bfce17d8*41626f6f6f206261646572*8c8c8559392c73d3a5d30bc39fb7da2fd09f098262685c9a1bf5e0d4cef2c7df*0103007502010a0000000000000000000173acb5ed59e71dec3a6c3c4590f0aa86bd398b13c2ad9f23b989c528da26f43300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001630140100000fac020100000fac040100000fac020000*80
+
+Files Created:
+- wpa2_hash.hccapx (Hashcat-compatible hash file)
+- handshake_info.txt (This information file)

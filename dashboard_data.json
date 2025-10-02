@@ -1,0 +1,89 @@
+{
+  "totalFiles": 40159,
+  "codeLines": 3925016,
+  "completedTasks": 7,
+  "workHours": 14,
+  "commits": 7,
+  "progress": 80,
+  "dailyProgress": [
+    {
+      "date": "2025-09-24",
+      "completed": 0,
+      "formatted_date": "24/09"
+    },
+    {
+      "date": "2025-09-25",
+      "completed": 0,
+      "formatted_date": "25/09"
+    },
+    {
+      "date": "2025-09-26",
+      "completed": 0,
+      "formatted_date": "26/09"
+    },
+    {
+      "date": "2025-09-27",
+      "completed": 0,
+      "formatted_date": "27/09"
+    },
+    {
+      "date": "2025-09-28",
+      "completed": 0,
+      "formatted_date": "28/09"
+    },
+    {
+      "date": "2025-09-29",
+      "completed": 2,
+      "formatted_date": "29/09"
+    },
+    {
+      "date": "2025-09-30",
+      "completed": 0,
+      "formatted_date": "30/09"
+    }
+  ],
+  "tasksDistribution": {
+    "completed": 75,
+    "inProgress": 24,
+    "pending": 1
+  },
+  "recentActivity": [
+    {
+      "icon": "📝",
+      "title": "Auto-save: 2025-09-30 09:53:18",
+      "time": "61 minutes ago",
+      "status": "success"
+    },
+    {
+      "icon": "📝",
+      "title": "حفظ جميع التغييرات قبل انتهاء السيرفر",
+      "time": "65 minutes ago",
+      "status": "success"
+    },
+    {
+      "icon": "📝",
+      "title": "🔧 Update .gitignore to exclude .claude/ directory",
+      "time": "3 hours ago",
+      "status": "success"
+    },
+    {
+      "icon": "💻",
+      "title": "📝 Add comprehensive .gitignore file",
+      "time": "3 hours ago",
+      "status": "success"
+    },
+    {
+      "icon": "📝",
+      "title": "🚀 Complete project optimization and new pages",
+      "time": "3 hours ago",
+      "status": "success"
+    }
+  ],
+  "projectProgress": {
+    "frontend": 100,
+    "backend": 100,
+    "database": 21,
+    "testing": 35
+  },
+  "lastUpdate": "2025-09-30T10:54:16.756096"
+}

@@ -1,0 +1,282 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme base */
+  --background: #ffffff;
+  /* white */
+  --foreground: #0f172a;
+  /* slate-900 */
+
+  /* Brand palette (from logo) */
+  --brand-primary: #F58220;
+  /* orange */
+  --brand-primary-hover: #d66f15;
+  /* darkened orange */
+  --brand-secondary: #009688;
+  /* green */
+  --brand-accent: #007BFF;
+  /* blue */
+  --brand-success: #009688;
+  /* align success with green */
+  --brand-warning: #f59e0b;
+  --brand-error: #ef4444;
+
+  --brand-border: #e5e7eb;
+  /* neutral border */
+  --brand-surface: #F9FAFB;
+  /* very light gray */
+  --panel: #ffffff;
+  --focus-ring: #007BFF;
+  /* blue accent */
+
+  --brand-gradient: linear-gradient(135deg, color-mix(in oklab, var(--brand-primary) 85%, #fff) 0%, color-mix(in oklab, var(--brand-accent) 70%, #fff) 100%);
+  --brand-gradient-2: linear-gradient(135deg, color-mix(in oklab, var(--brand-secondary) 85%, #fff) 0%, color-mix(in oklab, var(--brand-primary) 70%, #fff) 100%);
+  --brand-gradient-3: radial-gradient(800px circle at 10% 10%, color-mix(in oklab, var(--brand-accent) 18%, transparent), transparent 40%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-cairo);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0D1117;
+    /* dark navy */
+    --foreground: #e5eef7;
+
+    /* Keep brand consistent in dark */
+    --brand-primary: #F58220;
+    --brand-primary-hover: #c25e0f;
+    --brand-secondary: #009688;
+    --brand-accent: #007BFF;
+    --brand-success: #00b39b;
+    --brand-warning: #fbbf24;
+    --brand-error: #f87171;
+
+    --brand-border: #1f2937;
+    --brand-surface: #0D1117;
+    --panel: #111827;
+    --focus-ring: #007BFF;
+
+    --brand-gradient: linear-gradient(135deg, color-mix(in oklab, var(--brand-primary) 25%, #0D1117) 0%, color-mix(in oklab, var(--brand-accent) 20%, #0D1117) 100%);
+    --brand-gradient-2: linear-gradient(135deg, color-mix(in oklab, var(--brand-secondary) 25%, #0D1117) 0%, color-mix(in oklab, var(--brand-primary) 20%, #0D1117) 100%);
+    --brand-gradient-3: radial-gradient(800px circle at 10% 10%, color-mix(in oklab, var(--brand-accent) 10%, transparent), transparent 40%);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-cairo), system-ui, sans-serif;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Enhanced Brand utility helpers */
+.btn-brand {
+  background: var(--brand-primary);
+  color: #fff;
+  transition: all 0.2s ease;
+  transform: translateY(0);
+}
+
+.btn-brand:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.btn-brand-2 {
+  background: var(--brand-primary);
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.btn-brand-3 {
+  background: var(--brand-secondary);
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.badge-accent {
+  background: linear-gradient(45deg, var(--brand-accent), #fbbf24);
+  color: #fff;
+  animation: pulse 2s infinite;
+}
+
+.border-brand {
+  border-color: var(--brand-border);
+}
+
+.bg-brand {
+  background: var(--brand-primary);
+}
+
+.text-brand {
+  color: var(--brand-primary);
+}
+
+/* Fun animations */
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    transform: translate3d(0, -8px, 0);
+  }
+
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.6s ease-out;
+}
+
+/* Card and container utilities */
+.card {
+  background: color-mix(in oklab, var(--foreground) 2%, var(--background));
+  border: 1px solid var(--brand-border);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-pad {
+  padding: 1rem;
+}
+
+.shadow-soft {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadow-soft {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.container-app {
+  max-width: 1200px;
+  margin-inline: auto;
+  width: 100%;
+  padding-inline: 1rem;
+}
+
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Loading states */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .container-app {
+    padding-inline: 0.75rem;
+  }
+
+  .card-pad {
+    padding: 0.75rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
