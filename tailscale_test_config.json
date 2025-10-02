@@ -1,0 +1,49 @@
+{
+  "machines": [
+    {
+      "name": "cursor",
+      "ip": "100.87.127.117",
+      "os": "Linux",
+      "version": "1.88.3",
+      "description": "Main development machine",
+      "services": ["ssh", "http", "https", "development"],
+      "ports": [22, 80, 443, 3000, 8080, 5000, 9000]
+    },
+    {
+      "name": "desktop-p6jvl92",
+      "ip": "100.90.100.116", 
+      "os": "Windows",
+      "version": "1.88.3",
+      "description": "Windows desktop machine",
+      "services": ["ssh", "rdp", "http", "smb"],
+      "ports": [22, 80, 135, 139, 445, 3389, 5985, 8080]
+    },
+    {
+      "name": "ec2-jump-server",
+      "ip": "100.97.57.53",
+      "os": "Linux", 
+      "version": "1.88.3",
+      "description": "AWS EC2 jump server",
+      "services": ["ssh", "http", "https", "proxy"],
+      "ports": [22, 80, 443, 8080, 1080, 3128]
+    }
+  ],
+  "tests": {
+    "basic_connectivity": true,
+    "service_availability": true,
+    "performance_tests": true,
+    "security_tests": true,
+    "application_tests": true,
+    "advanced_diagnostics": true
+  },
+  "thresholds": {
+    "max_latency_ms": 200,
+    "min_bandwidth_mbps": 10,
+    "timeout_seconds": 30
+  },
+  "notifications": {
+    "email_on_failure": false,
+    "webhook_url": "",
+    "slack_channel": ""
+  }
+}

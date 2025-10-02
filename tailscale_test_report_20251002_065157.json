@@ -1,0 +1,224 @@
+{
+  "timestamp": "2025-10-02T06:51:57.221536",
+  "duration_seconds": 43.83,
+  "summary": {
+    "total_machines": 3,
+    "tests_completed": 4,
+    "overall_status": "completed"
+  },
+  "results": {
+    "connectivity": [
+      {
+        "machine": "desktop-p6jvl92",
+        "ip": "100.90.100.116",
+        "tests": {
+          "ping": {
+            "status": "success",
+            "output": "\nPinging 100.90.100.116 with 32 bytes of data:\nReply from 100.90.100.116: bytes=32 time<1ms TTL=64\nReply from 100.90.100.116: bytes=32 time<1ms TTL=64\nReply from 100.90.100.116: bytes=32 time<1ms TTL=64\nReply from 100.90.100.116: bytes=32 time<1ms TTL=64\n\nPing statistics for 100.90.100.116:\n    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),\nApproximate round trip times in milli-seconds:\n    Minimum = 0ms, Maximum = 0ms, Average = 0ms\n"
+          }
+        }
+      },
+      {
+        "machine": "ec2-jump-server",
+        "ip": "100.97.57.53",
+        "tests": {
+          "ping": {
+            "status": "success",
+            "output": "\nPinging 100.97.57.53 with 32 bytes of data:\nReply from 100.97.57.53: bytes=32 time=1201ms TTL=64\nReply from 100.97.57.53: bytes=32 time=189ms TTL=64\nReply from 100.97.57.53: bytes=32 time=182ms TTL=64\nReply from 100.97.57.53: bytes=32 time=172ms TTL=64\n\nPing statistics for 100.97.57.53:\n    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),\nApproximate round trip times in milli-seconds:\n    Minimum = 172ms, Maximum = 1201ms, Average = 436ms\n"
+          }
+        }
+      },
+      {
+        "machine": "cursor",
+        "ip": "100.87.127.117",
+        "tests": {
+          "ping": {
+            "status": "success",
+            "output": "\nPinging 100.87.127.117 with 32 bytes of data:\nReply from 100.87.127.117: bytes=32 time=1361ms TTL=64\nReply from 100.87.127.117: bytes=32 time=321ms TTL=64\nReply from 100.87.127.117: bytes=32 time=333ms TTL=64\nReply from 100.87.127.117: bytes=32 time=281ms TTL=64\n\nPing statistics for 100.87.127.117:\n    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),\nApproximate round trip times in milli-seconds:\n    Minimum = 281ms, Maximum = 1361ms, Average = 574ms\n"
+          }
+        }
+      }
+    ],
+    "services": [
+      {
+        "machine": "ec2-jump-server",
+        "ip": "100.97.57.53",
+        "services": {
+          "22": {
+            "port": 22,
+            "status": "open"
+          },
+          "80": {
+            "port": 80,
+            "status": "open"
+          },
+          "443": {
+            "port": 443,
+            "status": "closed"
+          },
+          "8080": {
+            "port": 8080,
+            "status": "open"
+          },
+          "1080": {
+            "port": 1080,
+            "status": "closed"
+          },
+          "3128": {
+            "port": 3128,
+            "status": "closed"
+          }
+        }
+      },
+      {
+        "machine": "desktop-p6jvl92",
+        "ip": "100.90.100.116",
+        "services": {
+          "22": {
+            "port": 22,
+            "status": "closed"
+          },
+          "80": {
+            "port": 80,
+            "status": "closed"
+          },
+          "135": {
+            "port": 135,
+            "status": "open"
+          },
+          "139": {
+            "port": 139,
+            "status": "closed"
+          },
+          "445": {
+            "port": 445,
+            "status": "open"
+          },
+          "3389": {
+            "port": 3389,
+            "status": "closed"
+          },
+          "5985": {
+            "port": 5985,
+            "status": "closed"
+          },
+          "8080": {
+            "port": 8080,
+            "status": "open"
+          }
+        }
+      },
+      {
+        "machine": "cursor",
+        "ip": "100.87.127.117",
+        "services": {
+          "22": {
+            "port": 22,
+            "status": "open"
+          },
+          "80": {
+            "port": 80,
+            "status": "closed"
+          },
+          "443": {
+            "port": 443,
+            "status": "closed"
+          },
+          "3000": {
+            "port": 3000,
+            "status": "closed"
+          },
+          "8080": {
+            "port": 8080,
+            "status": "closed"
+          },
+          "5000": {
+            "port": 5000,
+            "status": "closed"
+          },
+          "9000": {
+            "port": 9000,
+            "status": "closed"
+          }
+        }
+      }
+    ],
+    "performance": [
+      {
+        "machine": "ec2-jump-server",
+        "ip": "100.97.57.53",
+        "performance": {
+          "latency": {
+            "status": "success",
+            "average_ms": 206.7,
+            "min_ms": 172.05,
+            "max_ms": 278.29,
+            "samples": 5
+          }
+        }
+      },
+      {
+        "machine": "cursor",
+        "ip": "100.87.127.117",
+        "performance": {
+          "latency": {
+            "status": "success",
+            "average_ms": 305.06,
+            "min_ms": 272.67,
+            "max_ms": 362.73,
+            "samples": 5
+          }
+        }
+      },
+      {
+        "machine": "desktop-p6jvl92",
+        "ip": "100.90.100.116",
+        "performance": {
+          "latency": {
+            "status": "failed",
+            "error": "No successful measurements"
+          }
+        }
+      }
+    ],
+    "applications": [
+      {
+        "machine": "cursor",
+        "ip": "100.87.127.117",
+        "applications": {
+          "nextjs": {
+            "status": "connection_error",
+            "error": "Connection failed"
+          },
+          "ssh": {
+            "status": "accessible"
+          }
+        }
+      },
+      {
+        "machine": "desktop-p6jvl92",
+        "ip": "100.90.100.116",
+        "applications": {
+          "ssh": {
+            "status": "not_accessible"
+          },
+          "rdp": {
+            "status": "not_accessible"
+          }
+        }
+      },
+      {
+        "machine": "ec2-jump-server",
+        "ip": "100.97.57.53",
+        "applications": {
+          "ssh": {
+            "status": "accessible"
+          }
+        }
+      }
+    ]
+  },
+  "recommendations": [
+    "High latency detected. Consider optimizing network routes or checking for issues."
+  ]
+}

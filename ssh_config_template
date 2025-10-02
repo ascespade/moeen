@@ -1,0 +1,88 @@
+# SSH Config Template for Cursor IDE
+# نسخ هذا الملف إلى ~/.ssh/config
+
+# ========================================
+# Cursor Development Server
+# ========================================
+Host cursor-dev
+    HostName 100.87.127.117
+    User ubuntu
+    Port 22
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    # IdentityFile ~/.ssh/cursor_key.pem
+    # LocalForward 3000 localhost:3000
+    # LocalForward 5000 localhost:5000
+
+# اختصار للاتصال السريع بـ Cursor
+Host cursor
+    HostName 100.87.127.117
+    User ubuntu
+    Port 22
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+# ========================================  
+# Amazon EC2 Jump Server
+# ========================================
+Host aws-jump
+    HostName 100.97.57.53
+    User ubuntu
+    Port 22
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    # IdentityFile ~/.ssh/aws_key.pem
+    # LocalForward 8080 localhost:80
+    # LocalForward 3128 localhost:3128
+
+# اختصار للاتصال السريع بـ AWS
+Host aws
+    HostName 100.97.57.53
+    User ubuntu
+    Port 22
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+# ========================================
+# Desktop Windows Machine (للمرجع)
+# ========================================
+Host desktop-win
+    HostName 100.90.100.116
+    User Administrator
+    Port 22
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    # ملاحظة: SSH غير مفعل على هذا الجهاز حالياً
+
+# ========================================
+# إعدادات عامة لجميع الاتصالات
+# ========================================
+Host *
+    # تسريع الاتصال
+    Compression yes
+    TCPKeepAlive yes
+    
+    # إعدادات الأمان
+    Protocol 2
+    
+    # إعدادات إعادة الاتصال
+    ConnectTimeout 10
+    
+    # تجنب مشاكل DNS
+    AddressFamily inet
+
+# ========================================
+# أمثلة للاستخدام:
+# ========================================
+# ssh cursor-dev
+# ssh aws-jump  
+# ssh cursor
+# ssh aws
+#
+# في Cursor IDE:
+# Remote-SSH: Connect to Host -> cursor-dev
+# Remote-SSH: Connect to Host -> aws-jump
