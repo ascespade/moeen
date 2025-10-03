@@ -65,12 +65,17 @@ export default function LoginPage() {
   };
 
   const handleDemoLogin = () => {
+    setIsLoading(true);
     localStorage.setItem("muayin_user", JSON.stringify({
       email: "demo@alhemamcenter.com",
       role: "demo",
       name: "مستخدم تجريبي"
     }));
-    router.push("/");
+    
+    setTimeout(() => {
+      setIsLoading(false);
+      router.push("/");
+    }, 500);
   };
 
   return (
@@ -79,11 +84,12 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <div className="mx-auto w-20 h-20 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
             <Image
-              src="/hemam-logo.jpg"
+              src="/logo.jpg"
               alt="مركز الهمم"
               width={48}
               height={48}
               className="rounded-full object-cover"
+              style={{ width: "auto", height: "auto" }}
             />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">مرحباً بك</h1>
@@ -231,11 +237,12 @@ export default function LoginPage() {
         <div className="mt-8 text-center">
           <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
             <Image
-              src="/hemam-logo.jpg"
+              src="/logo.jpg"
               alt="مركز الهمم"
               width={20}
               height={20}
               className="rounded-full"
+              style={{ width: "auto", height: "auto" }}
             />
             <span>مركز الهمم - نظام مُعين</span>
           </div>

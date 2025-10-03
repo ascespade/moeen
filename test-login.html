@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار تسجيل الدخول</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>اختبار تسجيل الدخول</h1>
+    
+    <div class="test-section">
+        <h3>اختبار البيانات</h3>
+        <button onclick="testLogin('admin@alhemamcenter.com', 'admin123')">اختبار مدير</button>
+        <button onclick="testLogin('doctor@alhemamcenter.com', 'doctor123')">اختبار طبيب</button>
+        <button onclick="testLogin('staff@alhemamcenter.com', 'staff123')">اختبار موظف</button>
+        <button onclick="testLogin('demo@alhemamcenter.com', 'demo123')">اختبار تجريبي</button>
+        <button onclick="testDemoLogin()">دخول تجريبي سريع</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>البيانات المحفوظة</h3>
+        <button onclick="checkStoredData()">فحص البيانات المحفوظة</button>
+        <button onclick="clearData()">مسح البيانات</button>
+        <div id="stored-data" class="result"></div>
+    </div>
+
+    <script>
+        function testLogin(email, password) {
+            const validCredentials = [
+                { email: "admin@alhemamcenter.com", password: "admin123", role: "admin" },
+                { email: "doctor@alhemamcenter.com", password: "doctor123", role: "doctor" },
+                { email: "staff@alhemamcenter.com", password: "staff123", role: "staff" },
+                { email: "demo@alhemamcenter.com", password: "demo123", role: "demo" }
+            ];
+
+            const user = validCredentials.find(
+                cred => cred.email === email && cred.password === password
+            );
+
+            if (user) {
+                const userData = {
+                    email: user.email,
+                    role: user.role,
+                    name: user.role === "admin" ? "مدير النظام" : 
+                          user.role === "doctor" ? "د. أحمد محمد" :
+                          user.role === "staff" ? "موظف الدعم" : "مستخدم تجريبي"
+                };
+                
+                localStorage.setItem("muayin_user", JSON.stringify(userData));
+                document.getElementById('result').innerHTML = `
+                    <strong>نجح تسجيل الدخول!</strong><br>
+                    المستخدم: ${userData.name}<br>
+                    الدور: ${userData.role}<br>
+                    البريد: ${userData.email}
+                `;
+            } else {
+                document.getElementById('result').innerHTML = '<strong style="color: red;">فشل تسجيل الدخول - بيانات غير صحيحة</strong>';
+            }
+        }
+
+        function testDemoLogin() {
+            localStorage.setItem("muayin_user", JSON.stringify({
+                email: "demo@alhemamcenter.com",
+                role: "demo",
+                name: "مستخدم تجريبي"
+            }));
+            document.getElementById('result').innerHTML = '<strong>نجح الدخول التجريبي!</strong>';
+        }
+
+        function checkStoredData() {
+            const data = localStorage.getItem("muayin_user");
+            if (data) {
+                const user = JSON.parse(data);
+                document.getElementById('stored-data').innerHTML = `
+                    <strong>البيانات المحفوظة:</strong><br>
+                    ${JSON.stringify(user, null, 2)}
+                `;
+            } else {
+                document.getElementById('stored-data').innerHTML = '<strong>لا توجد بيانات محفوظة</strong>';
+            }
+        }
+
+        function clearData() {
+            localStorage.removeItem("muayin_user");
+            document.getElementById('stored-data').innerHTML = '<strong>تم مسح البيانات</strong>';
+        }
+    </script>
+</body>
+</html>
