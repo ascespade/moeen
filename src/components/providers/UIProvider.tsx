@@ -1,6 +1,5 @@
 'use client'
 
-import { ThemeProvider } from 'next-themes'
 import { ReactNode } from 'react'
 
 interface UIProviderProps {
@@ -9,13 +8,8 @@ interface UIProviderProps {
 
 export default function UIProvider({ children }: UIProviderProps) {
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="light"
-      enableSystem
-      disableTransitionOnChange
-    >
+    <div className="min-h-screen bg-white">
       {children}
-    </ThemeProvider>
+    </div>
   )
 }
