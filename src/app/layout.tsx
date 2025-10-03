@@ -11,7 +11,11 @@ export const metadata: Metadata = {
   description: "نظام ذكي متكامل يجمع بين التكنولوجيا المتقدمة والرعاية الإنسانية لخدمة مجتمع مركز الهمم",
   keywords: ["مساعد ذكي", "مركز الهمم", "رعاية صحية", "ذكاء اصطناعي", "WhatsApp", "chatbot"],
   authors: [{ name: "فريق مُعين" }],
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 // Reduce font payload by limiting weights
