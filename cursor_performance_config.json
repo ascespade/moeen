@@ -1,0 +1,45 @@
+{
+  "cursor.performance": {
+    "maxMemoryUsage": "80%",
+    "cpuCores": 4,
+    "parallelProcessing": true,
+    "aggressiveMode": true,
+    "fileCreationMode": "instant",
+    "optimizationLevel": "maximum"
+  },
+  "editor.performance": {
+    "maxMemory": "12GB",
+    "workerCount": 4,
+    "parallelWorkers": true,
+    "instantFileCreation": true,
+    "aggressiveCaching": true,
+    "memoryOptimization": "aggressive"
+  },
+  "typescript.performance": {
+    "maxMemory": "4GB",
+    "workerCount": 4,
+    "parallelProcessing": true,
+    "instantCompilation": true,
+    "aggressiveCaching": true
+  },
+  "languageServer.performance": {
+    "maxMemory": "2GB",
+    "workerCount": 2,
+    "parallelProcessing": true,
+    "instantResponse": true,
+    "aggressiveCaching": true
+  },
+  "fileWatcher.performance": {
+    "maxMemory": "1GB",
+    "parallelWatching": true,
+    "instantUpdates": true,
+    "aggressiveCaching": true
+  },
+  "system.optimization": {
+    "maxMemoryUsage": "80%",
+    "cpuUtilization": "100%",
+    "parallelProcessing": true,
+    "aggressiveMode": true,
+    "instantOperations": true
+  }
+}
