@@ -1,14 +1,21 @@
 {
-  "name": "mu3een",
-  "version": "0.1.0",
+  "name": "muayin-assistant",
+  "version": "1.0.0",
   "private": true,
-  "description": "A modern communication platform built with Next.js",
+  "description": "مُعين - المساعد الذكي لمركز الهمم | AI Assistant for Al-Hemam Center",
   "keywords": [
     "nextjs",
     "react",
     "typescript",
     "tailwindcss",
-    "communication"
+    "ai-assistant",
+    "healthcare",
+    "whatsapp",
+    "supabase",
+    "gemini",
+    "openai",
+    "chatbot",
+    "medical-assistant"
   ],
   "author": "Mu3een Team",
   "license": "MIT",

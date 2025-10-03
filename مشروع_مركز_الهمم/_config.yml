@@ -1,0 +1,32 @@
+# GitHub Pages Configuration
+title: "مشروع مركز الهمم - العرض الرقمي الشامل"
+description: "عرض شامل لتطوير الحلول الرقمية لمركز الهمم في جدة"
+author: "خالد جمال عبدالناصر"
+email: "khaledjamal51@gmail.com"
+
+# Site settings
+lang: ar
+timezone: Asia/Riyadh
+
+# GitHub Pages settings
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - دليل_رفع_GitHub.md
+  - .gitignore
+
+# Include files
+include:
+  - _config.yml
+
+# Markdown settings
+markdown: kramdown
+highlighter: rouge
+
+# Sass settings
+sass:
+  style: compressed

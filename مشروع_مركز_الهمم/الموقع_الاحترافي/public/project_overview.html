@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع "مُعين" - المساعد الرقمي الذكي لمركز الهمم</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><polygon points="1000,100 1000,0 0,100"/></svg>');
+            background-size: cover;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo-container {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            display: inline-block;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .logo-container img {
+            height: 80px;
+            width: auto;
+        }
+        
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        
+        .phase-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.5s ease;
+        }
+        
+        .phase-card:hover::before {
+            top: -25%;
+            right: -25%;
+        }
+        
+        .phase-number {
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .feature-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding: 20px 0;
+            border-left: 3px solid #667eea;
+            margin-left: 30px;
+            padding-left: 40px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 30px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #667eea;
+        }
+        
+        .tech-stack-item {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .tech-stack-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .benefit-card {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            height: 100%;
+        }
+        
+        .integration-flow {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+        
+        .flow-step {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 10px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .flow-arrow {
+            text-align: center;
+            font-size: 24px;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .stats-number {
+            font-size: 48px;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .navbar-custom {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .btn-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+        
+        @media print {
+            body { background: white !important; }
+            .hero-section { background: #1e3c72 !important; }
+            .section-card { box-shadow: none !important; border: 1px solid #ddd !important; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#home">
+                <i class="fas fa-robot me-2 text-primary"></i>
+                مشروع "مُعين"
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#overview">نظرة عامة</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#phases">المراحل</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">المميزات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#timeline">الجدول الزمني</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tech">التقنيات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#benefits">الفوائد</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up">
+                <div class="logo-container">
+                    <img src="https://via.placeholder.com/200x80/1e3c72/white?text=مركز+الهمم" alt="مركز الهمم" class="img-fluid">
+                </div>
+                <h1 class="display-4 fw-bold mb-4">مشروع "مُعين"</h1>
+                <h2 class="h3 mb-4">المساعد الرقمي الذكي لمركز الهمم</h2>
+                <p class="lead mb-5">
+                    نظام شات بوت متطور ومتكامل عبر واتساب يهدف لتحسين تجربة المستفيدين وتمكين الطاقم الطبي
+                </p>
+                <div class="row justify-content-center">
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="stats-card">
+                            <span class="stats-number">24/7</span>
+                            <small>خدمة مستمرة</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="stats-card">
+                            <span class="stats-number">5</span>
+                            <small>مراحل تطوير</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="stats-card">
+                            <span class="stats-number">12</span>
+                            <small>أسبوع تنفيذ</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="stats-card">
+                            <span class="stats-number">∞</span>
+                            <small>إمكانيات التطوير</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        
+        <!-- Project Overview -->
+        <section id="overview" class="mb-5" data-aos="fade-up">
+            <div class="section-card">
+                <h2 class="section-title text-primary mb-4">
+                    <i class="fas fa-eye me-2"></i>
+                    نظرة عامة على المشروع
+                </h2>
+                
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h4 class="text-secondary mb-3">الهدف الاستراتيجي</h4>
+                        <p class="lead">
+                            تطوير مساعد رقمي ذكي يحمل اسم <strong>"مُعين"</strong> ليكون الواجهة الرقمية الأولى لمركز الهمم، 
+                            يعمل عبر واتساب ويتكامل مع أنظمة المركز الداخلية لتقديم خدمة استثنائية للمستفيدين وتمكين الطاقم الطبي.
+                        </p>
+                        
+                        <div class="integration-flow">
+                            <h5 class="text-center mb-4">
+                                <i class="fas fa-sitemap me-2"></i>
+                                تدفق النظام المتكامل
+                            </h5>
+                            
+                            <div class="flow-step">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2 text-center">
+                                        <i class="fab fa-whatsapp fa-3x text-success"></i>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h6>واجهة واتساب</h6>
+                                        <p class="mb-0">المستفيد يتفاعل مع "مُعين" عبر رقم واتساب مخصص للمركز</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flow-arrow">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            
+                            <div class="flow-step">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2 text-center">
+                                        <i class="fas fa-brain fa-3x text-primary"></i>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h6>المعالجة الذكية</h6>
+                                        <p class="mb-0">تحليل الرسائل باستخدام الذكاء الاصطناعي وتوجيهها للمسار المناسب</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flow-arrow">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            
+                            <div class="flow-step">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2 text-center">
+                                        <i class="fas fa-database fa-3x text-info"></i>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h6>قاعدة البيانات المتكاملة</h6>
+                                        <p class="mb-0">تخزين واسترجاع معلومات المستفيدين والمواعيد والتفاعلات</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flow-arrow">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            
+                            <div class="flow-step">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2 text-center">
+                                        <i class="fab fa-slack fa-3x text-warning"></i>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h6>التكامل مع Slack</h6>
+                                        <p class="mb-0">إشعار الطاقم الطبي وتنسيق المتابعات عبر منصة العمل المألوفة</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="card border-0 bg-light">
+                            <div class="card-header bg-primary text-white text-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-bullseye me-2"></i>
+                                    الأهداف الرئيسية
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li class="mb-3">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        تحسين تجربة المستفيدين
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        تقليل العبء الإداري
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        زيادة كفاءة الطاقم الطبي
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        توفير خدمة 24/7
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        تعزيز التواصل الفعال
+                                    </li>
+                                    <li class="mb-0">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        بناء قاعدة بيانات ذكية
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Phases -->
+        <section id="phases" class="mb-5" data-aos="fade-up">
+            <div class="section-card">
+                <h2 class="section-title text-primary mb-4">
+                    <i class="fas fa-layer-group me-2"></i>
+                    مراحل تطوير المشروع
+                </h2>
+                
+                <div class="row">
+                    <!-- Phase 0 -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="phase-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="phase-number">0</div>
+                            <h4>التأسيس والبنية التحتية</h4>
+                            <p class="mb-3">إعداد الأساس التقني للمشروع</p>
+                            
+                            <div class="timeline-item">
+                                <h6>إنشاء مستودع GitHub + README</h6>
+                                <small>تنظيم الكود وتوثيق المشروع</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>إنشاء مشروع Next.js</h6>
+                                <small>TypeScript + ESLint + Tailwind + App Router</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>دمج Preline UI</h6>
+                                <small>واجهات مستخدم احترافية وتفاعلية</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>إعداد Supabase</h6>
+                                <small>قاعدة البيانات والمصادقة</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>إدارة المتغيرات والأمان</h6>
+                                <small>ملفات البيئة وأدوات جودة الكود</small>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <small class="text-light">
+                                    <i class="fas fa-clock me-1"></i>
+                                    المدة المقترحة: أسبوع واحد
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 1 -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="phase-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <div class="phase-number">1</div>
+                            <h4>الواجهة الخلفية والأمان</h4>
+                            <p class="mb-3">بناء العمود الفقري للنظام</p>
+                            
+                            <div class="timeline-item">
+                                <h6>تصميم قاعدة البيانات</h6>
+                                <small>جداول المستخدمين والمحادثات والمواعيد</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>تفعيل RLS الصارمة</h6>
+                                <small>أمان البيانات وصلاحيات الوصول</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>نظام المصادقة</h6>
+                                <small>Supabase Auth مع Magic Links</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>أمان الجلسات</h6>
+                                <small>إعدادات الكوكيز الآمنة</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>Edge Function للواتساب</h6>
+                                <small>معالجة Webhook وتوجيه الرسائل</small>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <small class="text-light">
+                                    <i class="fas fa-clock me-1"></i>
+                                    المدة المقترحة: أسبوعان
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 2 -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="phase-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <div class="phase-number">2</div>
+                            <h4>لوحة التحكم الإدارية</h4>
+                            <p class="mb-3">واجهة المستخدم للطاقم الطبي</p>
+                            
+                            <div class="timeline-item">
+                                <h6>تنظيم مجلدات الواجهة</h6>
+                                <small>هيكلة المشروع والمكونات</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>Layout الرئيسي</h6>
+                                <small>Sidebar + Header + تبديل الوضع/اللغة</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>صفحة تسجيل الدخول</h6>
+                                <small>بريد إلكتروني + Magic Link</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>الصفحات الأساسية</h6>
+                                <small>Dashboard + المحادثات + الإعدادات</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>Realtime Subscriptions</h6>
+                                <small>تحديثات فورية للمحادثات</small>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <small class="text-light">
+                                    <i class="fas fa-clock me-1"></i>
+                                    المدة المقترحة: 3 أسابيع
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 3 -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="phase-card" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                            <div class="phase-number">3</div>
+                            <h4>الميزات المتقدمة والذكاء</h4>
+                            <p class="mb-3">إضافة القدرات الذكية للنظام</p>
+                            
+                            <div class="timeline-item">
+                                <h6>Flow Builder</h6>
+                                <small>واجهة مرئية لإنشاء مسارات المحادثة</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>مركز المراجعة والتحسين</h6>
+                                <small>Review Hub مع خيارات الأرشفة</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>المعالجة المختلطة</h6>
+                                <small>Hybrid Processing (قواعد → LLM)</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>تكامل LLM والصوت</h6>
+                                <small>Gemini Pro + Flash 2.5 + OpenAI Whisper</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>معالجة الأخطاء</h6>
+                                <small>إعادة المحاولة التلقائية</small>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <small class="text-light">
+                                    <i class="fas fa-clock me-1"></i>
+                                    المدة المقترحة: 4 أسابيع
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 4 -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="phase-card" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #333;">
+                            <div class="phase-number" style="background: rgba(0,0,0,0.1);">4</div>
+                            <h4>الاختبار والنشر</h4>
+                            <p class="mb-3">اختبار شامل ونشر المشروع</p>
+                            
+                            <div class="timeline-item">
+                                <h6>اختبارات Unit و E2E</h6>
+                                <small>Jest + Playwright/Cypress</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>CI/CD Pipeline</h6>
+                                <small>GitHub → Vercel (نشر تلقائي)</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>إدارة قاعدة البيانات</h6>
+                                <small>نسخ احتياطية يومية + migrations</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>المراقبة والتسجيل</h6>
+                                <small>Sentry أو Vercel Analytics</small>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <small>
+                                    <i class="fas fa-clock me-1"></i>
+                                    المدة المقترحة: أسبوعان
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- WhatsApp API Setup -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="phase-card" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);">
+                            <div class="phase-number">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <h4>إعداد واتساب بيزنس API</h4>
+                            <p class="mb-3">التكامل مع منصة واتساب (خارج النظام)</p>
+                            
+                            <div class="timeline-item">
+                                <h6>تسجيل حساب Business API</h6>
+                                <small>عبر Meta Business Manager</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>الحصول على رقم مخصص</h6>
+                                <small>تفعيل الرقم عبر Meta</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>إعداد Webhook</h6>
+                                <small>ربط مع Supabase Edge Function</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>إدارة Tokens</h6>
+                                <small>تجديد تلقائي للمفاتيح</small>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h6>الربط الآمن</h6>
+                                <small>مفاتيح آمنة في لوحة الإدارة</small>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <small class="text-light">
+                                    <i class="fas fa-clock me-1"></i>
+                                    المدة المقترحة: متوازي مع المراحل
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Features -->
+        <section id="features" class="mb-5" data-aos="fade-up">
+            <div class="section-card">
+                <h2 class="section-title text-primary mb-4">
+                    <i class="fas fa-star me-2"></i>
+                    المميزات الأساسية للنظام
+                </h2>
+                
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <div class="text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h5>مسارات محادثة ذكية</h5>
+                            <p>تفاعل طبيعي ومرن مع المستفيدين بناءً على احتياجاتهم المختلفة</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success me-2"></i>ترحيب مخصص</li>
+                                <li><i class="fas fa-check text-success me-2"></i>فهم السياق</li>
+                                <li><i class="fas fa-check text-success me-2"></i>ردود تعاطفية</li>
+                                <li><i class="fas fa-check text-success me-2"></i>تحويل ذكي للطاقم</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-4">
+                        <div class="text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h5>إدارة المواعيد المتقدمة</h5>
+                            <p>نظام شامل لحجز وإدارة ومتابعة المواعيد مع التذكيرات الذكية</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success me-2"></i>حجز تلقائي</li>
+                                <li><i class="fas fa-check text-success me-2"></i>تذكيرات ذكية</li>
+                                <li><i class="fas fa-check text-success me-2"></i>إعادة جدولة</li>
+                                <li><i class="fas fa-check text-success me-2"></i>تنسيق مع الطاقم</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-4">
+                        <div class="text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <h5>دعم الطاقم الطبي</h5>
+                            <p>أدوات متقدمة لتمكين الأطباء والمختصين من تقديم أفضل رعاية</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success me-2"></i>ملخصات ذكية</li>
+                                <li><i class="fas fa-check text-success me-2"></i>تكامل مع Slack</li>
+                                <li><i class="fas fa-check text-success me-2"></i>ملفات المرضى</li>
+                                <li><i class="fas fa-check text-success me-2"></i>تقارير مفصلة</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-4">
+                        <div class="text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h5>الذكاء الاصطناعي المتقدم</h5>
+                            <p>تقنيات AI حديثة لفهم وتحليل ومعالجة الاستفسارات بدقة عالية</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success me-2"></i>Gemini Pro + Flash 2.5</li>
+                                <li><i class="fas fa-check text-success me-2"></i>معالجة صوتية</li>
+                                <li><i class="fas fa-check text-success me-2"></i>تعلم مستمر</li>
+                                <li><i class="fas fa-check text-success me-2"></i>تحليل المشاعر</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-4">
+                        <div class="text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h5>الأمان والخصوصية</h5>
+                            <p>حماية قصوى للبيانات الطبية والشخصية مع الامتثال للمعايير الدولية</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success me-2"></i>تشفير شامل</li>
+                                <li><i class="fas fa-check text-success me-2"></i>RLS صارمة</li>
+                                <li><i class="fas fa-check text-success me-2"></i>مصادقة آمنة</li>
+                                <li><i class="fas fa-check text-success me-2"></i>تدقيق العمليات</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-4">
+                        <div class="text-center">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h5>التحليلات والتقارير</h5>
+                            <p>رؤى عميقة حول أداء النظام ورضا المستفيدين وكفاءة الخدمات</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success me-2"></i>لوحة معلومات تفاعلية</li>
+                                <li><i class="fas fa-check text-success me-2"></i>تقارير مخصصة</li>
+                                <li><i class="fas fa-check text-success me-2"></i>مؤشرات الأداء</li>
+                                <li><i class="fas fa-check text-success me-2"></i>تحليل الاتجاهات</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section id="timeline" class="mb-5" data-aos="fade-up">
+            <div class="section-card">
+                <h2 class="section-title text-primary mb-4">
+                    <i class="fas fa-clock me-2"></i>
+                    الجدول الزمني التفصيلي
+                </h2>
+                
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="timeline-item">
+                            <h5>الأسبوع 1: التأسيس</h5>
+                            <p>إعداد البنية التحتية وأدوات التطوير</p>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-primary" style="width: 100%"></div>
+                            </div>
+                            <small class="text-muted">مخرجات: مشروع Next.js + Supabase + GitHub</small>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h5>الأسابيع 2-3: Backend والأمان</h5>
+                            <p>بناء قاعدة البيانات وأنظمة الأمان</p>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-info" style="width: 85%"></div>
+                            </div>
+                            <small class="text-muted">مخرجات: قاعدة بيانات آمنة + Edge Functions</small>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h5>الأسابيع 4-6: واجهة المستخدم</h5>
+                            <p>تطوير لوحة التحكم والواجهات الإدارية</p>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-warning" style="width: 60%"></div>
+                            </div>
+                            <small class="text-muted">مخرجات: Dashboard + صفحات إدارية</small>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h5>الأسابيع 7-10: الميزات الذكية</h5>
+                            <p>تكامل الذكاء الاصطناعي والميزات المتقدمة</p>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-success" style="width: 30%"></div>
+                            </div>
+                            <small class="text-muted">مخرجات: AI Integration + Flow Builder</small>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h5>الأسابيع 11-12: الاختبار والنشر</h5>
+                            <p>اختبار شامل ونشر النظام</p>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-danger" style="width: 10%"></div>
+                            </div>
+                            <small class="text-muted">مخرجات: نظام مكتمل وجاهز للإنتاج</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="card border-0 bg-light">
+                            <div class="card-header bg-success text-white text-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-calendar-check me-2"></i>
+                                    معالم مهمة
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <h6 class="text-primary">نهاية الأسبوع 3</h6>
+                                    <p class="small mb-0">أول اختبار للواتساب API</p>
+                                </div>
+                                <hr>
+                                <div class="mb-3">
+                                    <h6 class="text-primary">نهاية الأسبوع 6</h6>
+                                    <p class="small mb-0">عرض تجريبي للطاقم الطبي</p>
+                                </div>
+                                <hr>
+                                <div class="mb-3">
+                                    <h6 class="text-primary">نهاية الأسبوع 10</h6>
+                                    <p class="small mb-0">اختبار تجريبي مع مستفيدين</p>
+                                </div>
+                                <hr>
+                                <div class="mb-0">
+                                    <h6 class="text-primary">نهاية الأسبوع 12</h6>
+                                    <p class="small mb-0">الإطلاق الرسمي</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Stack -->
+        <section id="tech" class="mb-5" data-aos="fade-up">
+            <div class="section-card">
+                <h2 class="section-title text-primary mb-4">
+                    <i class="fas fa-code me-2"></i>
+                    التقنيات والأدوات المستخدمة
+                </h2>
+                
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="tech-stack-item">
+                            <i class="fab fa-react fa-2x mb-2"></i>
+                            <h6>Next.js 14</h6>
+                            <small>إطار العمل الأساسي</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="tech-stack-item">
+                            <i class="fab fa-js-square fa-2x mb-2"></i>
+                            <h6>TypeScript</h6>
+                            <small>لغة البرمجة الآمنة</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="tech-stack-item">
+                            <i class="fas fa-database fa-2x mb-2"></i>
+                            <h6>Supabase</h6>
+                            <small>قاعدة البيانات والمصادقة</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="tech-stack-item">
+                            <i class="fab fa-whatsapp fa-2x mb-2"></i>
+                            <h6>WhatsApp API</h6>
+                            <small>واجهة التفاعل الرئيسية</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="tech-stack-item">
+                            <i class="fas fa-brain fa-2x mb-2"></i>
+                            <h6>Gemini Pro</h6>
+                            <small>الذكاء الاصطناعي</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="tech-stack-item">
+                            <i class="fab fa-slack fa-2x mb-2"></i>
+                            <h6>Slack API</h6>
+                            <small>تكامل فريق العمل</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="tech-stack-item">
+                            <i class="fas fa-paint-brush fa-2x mb-2"></i>
+                            <h6>Tailwind CSS</h6>
+                            <small>تصميم الواجهات</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="tech-stack-item">
+                            <i class="fas fa-cloud fa-2x mb-2"></i>
+                            <h6>Vercel</h6>
+                            <small>منصة النشر</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h4 class="text-center mb-4">معمارية النظام</h4>
+                        <div class="text-center">
+                            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400' style='background:%23f8f9fa'><rect width='800' height='400' fill='%23f8f9fa'/><text x='400' y='200' text-anchor='middle' font-size='24' fill='%23666'>معمارية النظام - سيتم إضافة مخطط تفصيلي</text></svg>" alt="معمارية النظام" class="img-fluid rounded">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits and ROI -->
+        <section id="benefits" class="mb-5" data-aos="fade-up">
+            <div class="section-card">
+                <h2 class="section-title text-primary mb-4">
+                    <i class="fas fa-chart-line me-2"></i>
+                    الفوائد والعائد على الاستثمار
+                </h2>
+                
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <div class="benefit-card">
+                            <i class="fas fa-users fa-3x mb-3"></i>
+                            <h5>تحسين تجربة المستفيدين</h5>
+                            <ul class="list-unstyled text-start">
+                                <li>• خدمة 24/7 بدون انقطاع</li>
+                                <li>• ردود فورية ودقيقة</li>
+                                <li>• تفاعل تعاطفي ومهني</li>
+                                <li>• سهولة حجز المواعيد</li>
+                                <li>• متابعة مستمرة للحالة</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-4">
+                        <div class="benefit-card">
+                            <i class="fas fa-clock fa-3x mb-3"></i>
+                            <h5>زيادة الكفاءة التشغيلية</h5>
+                            <ul class="list-unstyled text-start">
+                                <li>• تقليل الأعمال الإدارية بـ 70%</li>
+                                <li>• أتمتة جدولة المواعيد</li>
+                                <li>• تنظيم أفضل للطاقم الطبي</li>
+                                <li>• تقليل أوقات الانتظار</li>
+                                <li>• تحسين استغلال الموارد</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 mb-4">
+                        <div class="benefit-card">
+                            <i class="fas fa-dollar-sign fa-3x mb-3"></i>
+                            <h5>العائد المالي</h5>
+                            <ul class="list-unstyled text-start">
+                                <li>• توفير تكاليف الموظفين</li>
+                                <li>• زيادة عدد المستفيدين</li>
+                                <li>• تقليل الأخطاء الإدارية</li>
+                                <li>• تحسين معدل الحضور</li>
+                                <li>• زيادة رضا العملاء</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card border-0 bg-primary text-white">
+                            <div class="card-body text-center">
+                                <h4 class="mb-4">التوقعات المالية للسنة الأولى</h4>
+                                <div class="row">
+                                    <div class="col-md-3 mb-3">
+                                        <div class="border-end border-light pe-3">
+                                            <h3 class="mb-0">40%</h3>
+                                            <small>تقليل التكاليف الإدارية</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <div class="border-end border-light pe-3">
+                                            <h3 class="mb-0">25%</h3>
+                                            <small>زيادة عدد المستفيدين</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <div class="border-end border-light pe-3">
+                                            <h3 class="mb-0">60%</h3>
+                                            <small>تحسين رضا العملاء</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <h3 class="mb-0">300%</h3>
+                                        <small>العائد على الاستثمار</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Requirements -->
+        <section id="requirements" class="mb-5" data-aos="fade-up">
+            <div class="section-card">
+                <h2 class="section-title text-primary mb-4">
+                    <i class="fas fa-list-check me-2"></i>
+                    متطلبات التنفيذ والاحتياجات
+                </h2>
+                
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4 class="text-secondary mb-3">المتطلبات التقنية</h4>
+                        <div class="card border-0 bg-light">
+                            <div class="card-body">
+                                <h6 class="text-primary">من مركز الهمم:</h6>
+                                <ul class="mb-3">
+                                    <li>رقم واتساب بيزنس مخصص</li>
+                                    <li>حساب Meta Business Manager</li>
+                                    <li>تفعيل Slack workspace</li>
+                                    <li>معلومات الأطباء والخدمات</li>
+                                    <li>سياسات الخصوصية والأمان</li>
+                                </ul>
+                                
+                                <h6 class="text-primary">من فريق التطوير:</h6>
+                                <ul class="mb-0">
+                                    <li>مطور Full-Stack متخصص</li>
+                                    <li>مصمم UI/UX للواجهات</li>
+                                    <li>مختص AI/ML للذكاء الاصطناعي</li>
+                                    <li>مهندس DevOps للنشر</li>
+                                    <li>مختص QA للاختبار</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <h4 class="text-secondary mb-3">التكاليف المقدرة</h4>
+                        <div class="card border-0 bg-light">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>البند</th>
+                                                <th>التكلفة</th>
+                                                <th>المدة</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>تطوير النظام</td>
+                                                <td>150,000 ريال</td>
+                                                <td>12 أسبوع</td>
+                                            </tr>
+                                            <tr>
+                                                <td>WhatsApp API</td>
+                                                <td>500 ريال/شهر</td>
+                                                <td>مستمر</td>
+                                            </tr>
+                                            <tr>
+                                                <td>استضافة وقواعد البيانات</td>
+                                                <td>300 ريال/شهر</td>
+                                                <td>مستمر</td>
+                                            </tr>
+                                            <tr>
+                                                <td>صيانة ودعم</td>
+                                                <td>5,000 ريال/شهر</td>
+                                                <td>مستمر</td>
+                                            </tr>
+                                            <tr class="table-primary">
+                                                <td><strong>المجموع الأولي</strong></td>
+                                                <td><strong>150,000 ريال</strong></td>
+                                                <td><strong>3 أشهر</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            <h5 class="alert-heading">
+                                <i class="fas fa-info-circle me-2"></i>
+                                ملاحظات مهمة
+                            </h5>
+                            <ul class="mb-0">
+                                <li><strong>التطوير التدريجي:</strong> يمكن تنفيذ المشروع على مراحل حسب الميزانية المتاحة</li>
+                                <li><strong>التخصيص الكامل:</strong> جميع المميزات قابلة للتخصيص حسب احتياجات المركز</li>
+                                <li><strong>التدريب المجاني:</strong> تدريب شامل للطاقم على استخدام النظام</li>
+                                <li><strong>الدعم المستمر:</strong> دعم فني 24/7 خلال الأشهر الثلاثة الأولى</li>
+                                <li><strong>الضمان:</strong> ضمان على جودة العمل لمدة 6 أشهر</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="text-center mb-5" data-aos="fade-up">
+            <div class="section-card bg-primary text-white">
+                <h2 class="mb-4">جاهز لبدء رحلة التحول الرقمي؟</h2>
+                <p class="lead mb-4">
+                    مشروع "مُعين" سيحدث نقلة نوعية في خدمات مركز الهمم ويضعه في المقدمة كمركز رائد في استخدام التقنيات الحديثة
+                </p>
+                <div class="row justify-content-center">
+                    <div class="col-md-4 mb-3">
+                        <button class="btn btn-light btn-lg w-100" onclick="window.print()">
+                            <i class="fas fa-print me-2"></i>
+                            طباعة المستند
+                        </button>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <button class="btn btn-outline-light btn-lg w-100" onclick="downloadPDF()">
+                            <i class="fas fa-download me-2"></i>
+                            تحميل PDF
+                        </button>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <button class="btn btn-success btn-lg w-100" onclick="shareWhatsApp()">
+                            <i class="fab fa-whatsapp me-2"></i>
+                            مشاركة عبر واتساب
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-0">
+                © 2024 مشروع "مُعين" - المساعد الرقمي الذكي لمركز الهمم
+                <br>
+                <small class="text-muted">تم إعداد هذا المستند كدليل شامل للمشروع</small>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Download PDF function
+        function downloadPDF() {
+            alert('سيتم إضافة وظيفة تحميل PDF قريباً');
+        }
+
+        // Share via WhatsApp
+        function shareWhatsApp() {
+            const text = 'مشروع "مُعين" - المساعد الرقمي الذكي لمركز الهمم';
+            const url = window.location.href;
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Add active class to navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

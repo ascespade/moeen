@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الشات بوت الذكي "مُعين" - التفاصيل المتقدمة</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            min-height: 100vh;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><polygon points="1000,100 1000,0 0,100"/></svg>');
+            background-size: cover;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .chatbot-icon {
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            backdrop-filter: blur(10px);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            border: none;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 70px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 20px;
+        }
+        
+        .strength-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .strength-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.5s ease;
+        }
+        
+        .strength-card:hover::before {
+            top: -25%;
+            right: -25%;
+        }
+        
+        .flow-diagram {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 40px;
+            border-radius: 25px;
+            margin: 30px 0;
+        }
+        
+        .flow-step {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .flow-step:hover {
+            transform: translateX(10px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+        
+        .flow-arrow {
+            text-align: center;
+            font-size: 24px;
+            color: #25D366;
+            margin: 10px 0;
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin: 5px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .metric-number {
+            font-size: 48px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .demo-chat {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+        
+        .chat-bubble {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            position: relative;
+        }
+        
+        .chat-bubble.user {
+            background: #25D366;
+            color: white;
+        }
+        
+        .chat-bubble.bot {
+            background: white;
+            color: #333;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            font-size: 18px;
+        }
+        
+        .chat-avatar.user {
+            background: #25D366;
+            color: white;
+        }
+        
+        .chat-avatar.bot {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .navbar-custom {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 40px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            border-radius: 2px;
+        }
+        
+        .comparison-table {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .check-icon {
+            color: #25D366;
+            font-size: 18px;
+        }
+        
+        .cross-icon {
+            color: #dc3545;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="fas fa-arrow-right me-2 text-success"></i>
+                العودة للعرض الرئيسي
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#overview">نظرة عامة</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#strengths">نقاط القوة</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#flows">المسارات الذكية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#ai">الذكاء الاصطناعي</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#demo">عرض تجريبي</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#comparison">المقارنة</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up">
+                <div class="chatbot-icon">
+                    <i class="fas fa-robot fa-4x"></i>
+                </div>
+                <h1 class="display-3 fw-bold mb-4">الشات بوت الذكي "مُعين"</h1>
+                <h2 class="h3 mb-4">مساعد رقمي متطور بذكاء عاطفي واصطناعي</h2>
+                <p class="lead mb-5">
+                    ليس مجرد شات بوت عادي، بل شريك رقمي ذكي يحمل روح وقيم مركز الهمم
+                </p>
+                <div class="row justify-content-center">
+                    <div class="col-md-2 col-4 mb-3">
+                        <div class="metric-card">
+                            <span class="metric-number">24/7</span>
+                            <small>خدمة مستمرة</small>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-4 mb-3">
+                        <div class="metric-card">
+                            <span class="metric-number">95%</span>
+                            <small>معدل الرضا</small>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-4 mb-3">
+                        <div class="metric-card">
+                            <span class="metric-number">3s</span>
+                            <small>سرعة الاستجابة</small>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-4 mb-3">
+                        <div class="metric-card">
+                            <span class="metric-number">60%</span>
+                            <small>تقليل المكالمات</small>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-4 mb-3">
+                        <div class="metric-card">
+                            <span class="metric-number">∞</span>
+                            <small>قابلية التطوير</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        
+        <!-- Overview -->
+        <section id="overview" class="mb-5" data-aos="fade-up">
+            <div class="text-center mb-5">
+                <h2 class="section-title text-dark">ما يميز "مُعين" عن الشات بوتات العادية</h2>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4>الذكاء العاطفي</h4>
+                        <p>يفهم المشاعر ويستجيب بتعاطف حقيقي، مصمم خصيصاً لمجتمع ذوي الاحتياجات الخاصة</p>
+                        <ul class="list-unstyled text-start">
+                            <li><i class="fas fa-check text-success me-2"></i>تحليل المشاعر في النصوص</li>
+                            <li><i class="fas fa-check text-success me-2"></i>لغة مطمئنة ومتعاطفة</li>
+                            <li><i class="fas fa-check text-success me-2"></i>كشف الحالات الطارئة</li>
+                            <li><i class="fas fa-check text-success me-2"></i>دعم نفسي أولي</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>الذكاء الاصطناعي المتقدم</h4>
+                        <p>تقنيات AI حديثة مع تعلم مستمر وفهم عميق للغة العربية والعامية السعودية</p>
+                        <ul class="list-unstyled text-start">
+                            <li><i class="fas fa-check text-success me-2"></i>معالجة لغة طبيعية متقدمة</li>
+                            <li><i class="fas fa-check text-success me-2"></i>تعلم آلي مستمر</li>
+                            <li><i class="fas fa-check text-success me-2"></i>ذاكرة السياق</li>
+                            <li><i class="fas fa-check text-success me-2"></i>توقع الاحتياجات</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h4>التكامل الشامل</h4>
+                        <p>يتصل بجميع أنظمة المركز ويعمل كمركز تحكم موحد لجميع العمليات</p>
+                        <ul class="list-unstyled text-start">
+                            <li><i class="fas fa-check text-success me-2"></i>ربط مع قاعدة البيانات</li>
+                            <li><i class="fas fa-check text-success me-2"></i>تزامن مع التقويم</li>
+                            <li><i class="fas fa-check text-success me-2"></i>تكامل مع Slack</li>
+                            <li><i class="fas fa-check text-success me-2"></i>أنظمة الدفع</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Strengths -->
+        <section id="strengths" class="mb-5" data-aos="fade-up">
+            <div class="text-center mb-5">
+                <h2 class="section-title text-dark">النقاط القوية الأساسية</h2>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="strength-card">
+                        <h4><i class="fas fa-comments me-3"></i>تفاعل طبيعي ومرن</h4>
+                        <p class="mb-3">يتحدث مثل الإنسان ويفهم السياق والمقصد</p>
+                        <div class="row">
+                            <div class="col-6">
+                                <small><i class="fas fa-check me-2"></i>فهم العامية</small><br>
+                                <small><i class="fas fa-check me-2"></i>تصحيح الأخطاء</small>
+                            </div>
+                            <div class="col-6">
+                                <small><i class="fas fa-check me-2"></i>استخراج المعنى</small><br>
+                                <small><i class="fas fa-check me-2"></i>ترجمة فورية</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="strength-card">
+                        <h4><i class="fas fa-shield-alt me-3"></i>أمان وخصوصية متقدمة</h4>
+                        <p class="mb-3">حماية قصوى للبيانات الطبية والشخصية</p>
+                        <div class="row">
+                            <div class="col-6">
+                                <small><i class="fas fa-check me-2"></i>تشفير شامل</small><br>
+                                <small><i class="fas fa-check me-2"></i>مصادقة متعددة</small>
+                            </div>
+                            <div class="col-6">
+                                <small><i class="fas fa-check me-2"></i>سجل مدقق</small><br>
+                                <small><i class="fas fa-check me-2"></i>امتثال HIPAA</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="strength-card">
+                        <h4><i class="fas fa-chart-line me-3"></i>تحليلات ذكية</h4>
+                        <p class="mb-3">رؤى عميقة وتقارير مفصلة لتحسين الخدمات</p>
+                        <div class="row">
+                            <div class="col-6">
+                                <small><i class="fas fa-check me-2"></i>إحصائيات شاملة</small><br>
+                                <small><i class="fas fa-check me-2"></i>تحليل الأداء</small>
+                            </div>
+                            <div class="col-6">
+                                <small><i class="fas fa-check me-2"></i>تقارير مخصصة</small><br>
+                                <small><i class="fas fa-check me-2"></i>توقعات ذكية</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="strength-card">
+                        <h4><i class="fas fa-universal-access me-3"></i>إمكانية الوصول الشاملة</h4>
+                        <p class="mb-3">مصمم ليكون سهل الاستخدام للجميع</p>
+                        <div class="row">
+                            <div class="col-6">
+                                <small><i class="fas fa-check me-2"></i>دعم قارئ الشاشة</small><br>
+                                <small><i class="fas fa-check me-2"></i>خط كبير</small>
+                            </div>
+                            <div class="col-6">
+                                <small><i class="fas fa-check me-2"></i>ألوان متباينة</small><br>
+                                <small><i class="fas fa-check me-2"></i>أوامر صوتية</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Smart Flows -->
+        <section id="flows" class="mb-5" data-aos="fade-up">
+            <div class="text-center mb-5">
+                <h2 class="section-title text-dark">المسارات الذكية المتخصصة</h2>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="flow-diagram">
+                        <h4 class="text-center mb-4">
+                            <i class="fas fa-user-plus me-2"></i>
+                            مسار المستفيد الجديد
+                        </h4>
+                        
+                        <div class="flow-step">
+                            <h6><i class="fas fa-hand-wave me-2"></i>ترحيب مخصص</h6>
+                            <small>ترحيب دافئ يعكس روح مركز الهمم</small>
+                        </div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                        
+                        <div class="flow-step">
+                            <h6><i class="fas fa-brain me-2"></i>فهم الاحتياج</h6>
+                            <small>أسئلة ذكية تتكيف حسب الإجابات</small>
+                        </div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                        
+                        <div class="flow-step">
+                            <h6><i class="fas fa-clipboard-list me-2"></i>جمع المعلومات</h6>
+                            <small>استبيان ذكي مخصص للحالة</small>
+                        </div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                        
+                        <div class="flow-step">
+                            <h6><i class="fas fa-route me-2"></i>التوجيه الذكي</h6>
+                            <small>اقتراح الخدمة والطبيب المناسب</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="flow-diagram">
+                        <h4 class="text-center mb-4">
+                            <i class="fas fa-calendar-alt me-2"></i>
+                            إدارة المواعيد المتقدمة
+                        </h4>
+                        
+                        <div class="flow-step">
+                            <h6><i class="fas fa-search me-2"></i>طلب الموعد</h6>
+                            <small>فهم نوع الموعد والاستعجال</small>
+                        </div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                        
+                        <div class="flow-step">
+                            <h6><i class="fas fa-user-md me-2"></i>تحديد التخصص</h6>
+                            <small>اختيار الطبيب المناسب تلقائياً</small>
+                        </div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                        
+                        <div class="flow-step">
+                            <h6><i class="fas fa-clock me-2"></i>عرض المواعيد</h6>
+                            <small>تقويم تفاعلي بالأوقات المتاحة</small>
+                        </div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                        
+                        <div class="flow-step">
+                            <h6><i class="fas fa-check-circle me-2"></i>التأكيد والمتابعة</h6>
+                            <small>تذكيرات ذكية ومتابعة مستمرة</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="flow-diagram">
+                        <h4 class="text-center mb-4">
+                            <i class="fas fa-heart me-2"></i>
+                            الدعم المستمر
+                        </h4>
+                        
+                        <div class="flow-step">
+                            <h6><i class="fas fa-sun me-2"></i>تحية يومية</h6>
+                            <small>رسائل تشجيعية مخصصة</small>
+                        </div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                        
+                        <div class="flow-step">
+                            <h6><i class="fas fa-chart-line me-2"></i>متابعة التقدم</h6>
+                            <small>تتبع التحسن والإنجازات</small>
+                        </div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                        
+                        <div class="flow-step">
+                            <h6><i class="fas fa-dumbbell me-2"></i>إرسال تمارين</h6>
+                            <small>تمارين تفاعلية حسب الخطة</small>
+                        </div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                        
+                        <div class="flow-step">
+                            <h6><i class="fas fa-trophy me-2"></i>تحفيز مستمر</h6>
+                            <small>الاحتفال بالإنجازات الصغيرة</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Capabilities -->
+        <section id="ai" class="mb-5" data-aos="fade-up">
+            <div class="text-center mb-5">
+                <h2 class="section-title text-dark">قدرات الذكاء الاصطناعي المتقدمة</h2>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="feature-card">
+                        <h4><i class="fas fa-language me-3 text-primary"></i>معالجة اللغة الطبيعية</h4>
+                        <div class="mb-3">
+                            <span class="tech-badge">Arabic NLP</span>
+                            <span class="tech-badge">Dialect Recognition</span>
+                            <span class="tech-badge">Context Understanding</span>
+                        </div>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>فهم العامية السعودية بطلاقة</li>
+                            <li><i class="fas fa-check text-success me-2"></i>تصحيح الأخطاء الإملائية تلقائياً</li>
+                            <li><i class="fas fa-check text-success me-2"></i>استخراج المعنى من النصوص المعقدة</li>
+                            <li><i class="fas fa-check text-success me-2"></i>ترجمة فورية للمقيمين</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="feature-card">
+                        <h4><i class="fas fa-robot me-3 text-success"></i>التعلم الآلي المستمر</h4>
+                        <div class="mb-3">
+                            <span class="tech-badge">Machine Learning</span>
+                            <span class="tech-badge">Pattern Recognition</span>
+                            <span class="tech-badge">Predictive AI</span>
+                        </div>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>تحسين الردود من تقييمات المستخدمين</li>
+                            <li><i class="fas fa-check text-success me-2"></i>توقع الاحتياجات قبل طلبها</li>
+                            <li><i class="fas fa-check text-success me-2"></i>تخصيص التجربة لكل مستخدم</li>
+                            <li><i class="fas fa-check text-success me-2"></i>كشف الأنماط والاتجاهات</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="feature-card">
+                        <h4><i class="fas fa-heart me-3 text-danger"></i>الذكاء العاطفي</h4>
+                        <div class="mb-3">
+                            <span class="tech-badge">Sentiment Analysis</span>
+                            <span class="tech-badge">Emotion Detection</span>
+                            <span class="tech-badge">Empathy Engine</span>
+                        </div>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>تحليل المشاعر في النصوص</li>
+                            <li><i class="fas fa-check text-success me-2"></i>استجابة متعاطفة حسب الحالة</li>
+                            <li><i class="fas fa-check text-success me-2"></i>إنذار مبكر للحالات الطارئة</li>
+                            <li><i class="fas fa-check text-success me-2"></i>دعم نفسي أولي متخصص</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="feature-card">
+                        <h4><i class="fas fa-photo-video me-3 text-warning"></i>معالجة الوسائط المتعددة</h4>
+                        <div class="mb-3">
+                            <span class="tech-badge">Image Analysis</span>
+                            <span class="tech-badge">Voice Recognition</span>
+                            <span class="tech-badge">Video Processing</span>
+                        </div>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>تحليل الصور الطبية</li>
+                            <li><i class="fas fa-check text-success me-2"></i>تحويل الصوت إلى نص</li>
+                            <li><i class="fas fa-check text-success me-2"></i>معالجة مقاطع الفيديو</li>
+                            <li><i class="fas fa-check text-success me-2"></i>قراءة المستندات الطبية</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Chat -->
+        <section id="demo" class="mb-5" data-aos="fade-up">
+            <div class="text-center mb-5">
+                <h2 class="section-title text-dark">عرض تجريبي للمحادثة</h2>
+                <p class="lead">شاهد كيف يتفاعل "مُعين" مع المستفيدين</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="demo-chat">
+                        <div class="chat-message user">
+                            <div class="chat-bubble user">
+                                السلام عليكم، أريد حجز موعد لابني
+                            </div>
+                            <div class="chat-avatar user">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-message">
+                            <div class="chat-avatar bot">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="chat-bubble bot">
+                                وعليكم السلام ورحمة الله وبركاته 🌸<br><br>
+                                أهلاً وسهلاً بك في مركز الهمم، أنا مُعين مساعدك الرقمي.<br><br>
+                                يسعدني مساعدتك في حجز موعد لابنك الكريم. لأتمكن من خدمتك بأفضل شكل، هل يمكنك إخباري عن عمر ابنك ونوع الخدمة التي يحتاجها؟
+                            </div>
+                        </div>
+                        
+                        <div class="chat-message user">
+                            <div class="chat-bubble user">
+                                عمره 8 سنوات ويحتاج علاج نطق
+                            </div>
+                            <div class="chat-avatar user">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-message">
+                            <div class="chat-avatar bot">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="chat-bubble bot">
+                                ممتاز! العلاج النطقي من تخصصاتنا المميزة 👨‍⚕️<br><br>
+                                لدينا فريق متخصص من أخصائيي النطق واللغة. هل هذه أول زيارة لابنك أم لديه ملف سابق معنا؟<br><br>
+                                وهل تفضل موعد في الفترة الصباحية أم المسائية؟
+                            </div>
+                        </div>
+                        
+                        <div class="chat-message user">
+                            <div class="chat-bubble user">
+                                أول زيارة، وأفضل الفترة الصباحية
+                            </div>
+                            <div class="chat-avatar user">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-message">
+                            <div class="chat-avatar bot">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="chat-bubble bot">
+                                رائع! بما أنها أول زيارة، سأحجز لك موعد تقييم أولي مع د. سارة المتخصصة في علاج النطق للأطفال 👩‍⚕️<br><br>
+                                المواعيد المتاحة في الفترة الصباحية:<br>
+                                📅 الأحد 15/10 - 10:00 ص<br>
+                                📅 الثلاثاء 17/10 - 9:30 ص<br>
+                                📅 الخميس 19/10 - 11:00 ص<br><br>
+                                أي موعد يناسبك أكثر؟
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <p class="text-muted">
+                            <i class="fas fa-info-circle me-2"></i>
+                            هذا مثال على التفاعل الذكي والمتعاطف لـ "مُعين"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Table -->
+        <section id="comparison" class="mb-5" data-aos="fade-up">
+            <div class="text-center mb-5">
+                <h2 class="section-title text-dark">مقارنة مع الشات بوتات التقليدية</h2>
+            </div>
+            
+            <div class="comparison-table">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>الميزة</th>
+                            <th class="text-center">الشات بوتات التقليدية</th>
+                            <th class="text-center">"مُعين" الذكي</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>فهم اللغة العربية</strong></td>
+                            <td class="text-center"><i class="fas fa-times cross-icon"></i></td>
+                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td><strong>الذكاء العاطفي</strong></td>
+                            <td class="text-center"><i class="fas fa-times cross-icon"></i></td>
+                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td><strong>التعلم المستمر</strong></td>
+                            <td class="text-center"><i class="fas fa-minus text-warning"></i></td>
+                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td><strong>التكامل مع الأنظمة</strong></td>
+                            <td class="text-center"><i class="fas fa-minus text-warning"></i></td>
+                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td><strong>كشف الحالات الطارئة</strong></td>
+                            <td class="text-center"><i class="fas fa-times cross-icon"></i></td>
+                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td><strong>تخصيص للمجال الطبي</strong></td>
+                            <td class="text-center"><i class="fas fa-times cross-icon"></i></td>
+                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td><strong>معالجة الوسائط المتعددة</strong></td>
+                            <td class="text-center"><i class="fas fa-times cross-icon"></i></td>
+                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td><strong>إمكانية الوصول الشاملة</strong></td>
+                            <td class="text-center"><i class="fas fa-times cross-icon"></i></td>
+                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td><strong>الأمان المتقدم</strong></td>
+                            <td class="text-center"><i class="fas fa-minus text-warning"></i></td>
+                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td><strong>التحليلات المتقدمة</strong></td>
+                            <td class="text-center"><i class="fas fa-minus text-warning"></i></td>
+                            <td class="text-center"><i class="fas fa-check check-icon"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="text-center mt-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><i class="fas fa-check check-icon me-2"></i><strong>متوفر بالكامل</strong></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><i class="fas fa-minus text-warning me-2"></i><strong>متوفر جزئياً</strong></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><i class="fas fa-times cross-icon me-2"></i><strong>غير متوفر</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="text-center mb-5" data-aos="fade-up">
+            <div class="feature-card bg-gradient text-white" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);">
+                <h2 class="mb-4">جاهز لتجربة "مُعين"؟</h2>
+                <p class="lead mb-4">
+                    شات بوت ذكي يحدث نقلة نوعية في خدمات مركز الهمم
+                </p>
+                <div class="row justify-content-center">
+                    <div class="col-md-4 mb-3">
+                        <button class="btn btn-light btn-lg w-100" onclick="window.history.back()">
+                            <i class="fas fa-arrow-right me-2"></i>
+                            العودة للعرض الرئيسي
+                        </button>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <button class="btn btn-outline-light btn-lg w-100" onclick="window.print()">
+                            <i class="fas fa-print me-2"></i>
+                            طباعة التفاصيل
+                        </button>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <button class="btn btn-success btn-lg w-100" onclick="shareWhatsApp()">
+                            <i class="fab fa-whatsapp me-2"></i>
+                            مشاركة عبر واتساب
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-0">
+                © 2024 الشات بوت الذكي "مُعين" - مركز الهمم
+                <br>
+                <small class="text-muted">مساعد رقمي بذكاء عاطفي واصطناعي متقدم</small>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Share via WhatsApp
+        function shareWhatsApp() {
+            const text = 'الشات بوت الذكي "مُعين" - مساعد رقمي متطور لمركز الهمم';
+            const url = window.location.href;
+            const whatsappUrl = `https://wa.me/+966581421483?text=${encodeURIComponent(text + ' ' + url)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Add active class to navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Animate metrics on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.metric-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
