@@ -1,36 +1,21 @@
-"use client";
+'use client'
 
-import { useEffect } from "react";
-import { usePathname } from "next/navigation";
-import useBrandColorFromLogo from "@/hooks/useBrandColorFromLogo";
+import { ThemeProvider } from 'next-themes'
+import { ReactNode } from 'react'
 
-export type AppTheme = "light" | "dark";
-export type AppLang = "ar" | "en";
-export type AppRole = "admin" | "staff" | "viewer";
-
-declare global {
-  interface Window {
-    HSStaticMethods?: { autoInit?: () => void };
-  }
+interface UIProviderProps {
+  children: ReactNode
 }
 
-export default function UIProvider({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  useBrandColorFromLogo("/hemam-logo.jpg");
-
-  useEffect(() => {
-    import("preline")
-      .then(() => {
-        window.HSStaticMethods?.autoInit?.();
-      })
-      .catch(() => { });
-    const html = document.documentElement;
-    const isEnglish = pathname?.startsWith("/en");
-    html.setAttribute("lang", isEnglish ? "en" : "ar");
-    html.setAttribute("dir", isEnglish ? "ltr" : "rtl");
-  }, [pathname]);
-
+export default function UIProvider({ children }: UIProviderProps) {
   return (
-    <div>{children}</div>
-  );
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="light"
+      enableSystem
+      disableTransitionOnChange
+    >
+      {children}
+    </ThemeProvider>
+  )
 }

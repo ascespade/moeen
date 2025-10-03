@@ -1,23 +1,28 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import LiveDot from "./LiveDot";
+import { useState, useEffect } from 'react'
 
 export default function StatusBanner() {
-  const [visible, setVisible] = useState(false);
-  // Toggle this to simulate maintenance or critical notice
-  if (!visible) return null;
+  const [isOnline, setIsOnline] = useState(true)
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true)
+    const handleOffline = () => setIsOnline(false)
+
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+
+    return () => {
+      window.removeEventListener('online', handleOnline)
+      window.removeEventListener('offline', handleOffline)
+    }
+  }, [])
+
+  if (isOnline) return null
 
   return (
-    <div className="w-full bg-amber-50 dark:bg-amber-900/20 border-b border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200">
-      <div className="max-w-screen-xl mx-auto px-4 py-2 text-sm flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <LiveDot color="#F59E0B" />
-          هناك صيانة مجدولة الساعة 11 مساءً. قد تتأثر الإشعارات.
-        </div>
-        <button className="h-8 px-3 rounded-md border border-amber-200 dark:border-amber-800" onClick={() => setVisible(false)}>إخفاء</button>
-      </div>
+    <div className="bg-red-500 text-white text-center py-2 px-4">
+      <span className="font-medium">تحذير:</span> لا يوجد اتصال بالإنترنت
     </div>
-  );
+  )
 }
-

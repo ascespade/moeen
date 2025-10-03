@@ -7,8 +7,11 @@ import "@/app/globals.css";
 import { I18nProvider } from "@/components/providers/I18nProvider";
 
 export const metadata: Metadata = {
-  title: "مُعين",
-  description: "منصة دردشة متعددة القنوات مدعومة بالذكاء الاصطناعي",
+  title: "مُعين - المساعد الذكي لمركز الهمم",
+  description: "نظام ذكي متكامل يجمع بين التكنولوجيا المتقدمة والرعاية الإنسانية لخدمة مجتمع مركز الهمم",
+  keywords: ["مساعد ذكي", "مركز الهمم", "رعاية صحية", "ذكاء اصطناعي", "WhatsApp", "chatbot"],
+  authors: [{ name: "فريق مُعين" }],
+  viewport: "width=device-width, initial-scale=1",
 };
 
 // Reduce font payload by limiting weights

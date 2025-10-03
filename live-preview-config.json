@@ -1,0 +1,36 @@
+{
+  "livePreview": {
+    "enabled": true,
+    "port": 3002,
+    "host": "localhost",
+    "autoReload": true,
+    "hotReload": true,
+    "watchFiles": [
+      "src/**/*",
+      "public/**/*",
+      "*.html",
+      "*.css",
+      "*.js"
+    ],
+    "excludeFiles": [
+      "node_modules/**",
+      ".git/**",
+      "*.log"
+    ],
+    "browserSync": {
+      "enabled": true,
+      "open": true,
+      "notify": true
+    }
+  },
+  "development": {
+    "nextjs": {
+      "port": 3002,
+      "hostname": "localhost"
+    },
+    "static": {
+      "port": 8080,
+      "directory": "public"
+    }
+  }
+}
