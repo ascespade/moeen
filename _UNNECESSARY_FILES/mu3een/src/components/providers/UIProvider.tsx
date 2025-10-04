@@ -16,7 +16,7 @@ declare global {
 
 export default function UIProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  useBrandColorFromLogo("/hemam-logo.jpg");
+  useBrandColorFromLogo("/ logo.svg");
 
   useEffect(() => {
     import("preline")

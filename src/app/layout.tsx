@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Cairo, Inter } from "next/font/google";
 import "@/styles/index.css";
-import UIProvider from "@/components/providers/UIProvider";
+import { UIProvider } from "@/components/providers/UIProvider";
 import StatusBanner from "@/components/common/StatusBanner";
 import "@/app/globals.css";
 import { I18nProvider } from "@/components/providers/I18nProvider";

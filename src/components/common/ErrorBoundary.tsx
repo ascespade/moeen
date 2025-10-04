@@ -1,7 +1,6 @@
 "use client";
 
-import { Component, ReactNode } from "react";
-// Icons removed for performance
+import React, { Component, ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
@@ -36,14 +35,14 @@ export default class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="min-h-screen flex items-center justify-center p-4">
           <div className="text-center max-w-md">
-            <div className="mx-auto mb-4 text-[color:var(--brand-error)] text-6xl">⚠️</div>
-            <h2 className="text-xl font-semibold mb-2">حدث خطأ غير متوقع</h2>
+            <div className="mx-auto mb-4 text-red-500 text-6xl">⚠️</div>
+            <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">حدث خطأ غير متوقع</h2>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               {this.state.error?.message || "حدث خطأ في التطبيق"}
             </p>
             <button
               onClick={() => this.setState({ hasError: false })}
-              className="btn-brand px-6 py-2 rounded-lg inline-flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="bg-blue-600 text-white px-6 py-2 rounded-lg inline-flex items-center gap-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
               🔄 إعادة المحاولة
             </button>

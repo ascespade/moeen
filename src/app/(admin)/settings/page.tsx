@@ -67,7 +67,7 @@ export default function SettingsPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 space-x-reverse">
               <Image
-                src="/hemam-logo.jpg"
+                src="/logo.svg"
                 alt="Hemam Logo"
                 width={40}
                 height={40}

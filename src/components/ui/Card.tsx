@@ -1,28 +1,22 @@
-import clsx from "clsx";
+import { ReactNode } from "react";
 
-export function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+interface CardProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function Card({ children, className = "" }: CardProps) {
   return (
-    <div
-      className={clsx(
-        "card shadow-soft bg-[var(--panel)] border border-brand-border rounded-xl",
-        className
-      )}
-      {...props}
-    />
+    <div className={`bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm ${className}`}>
+      {children}
+    </div>
   );
 }
 
-export function CardHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={clsx("px-4 py-3 border-b border-brand-border", className)} {...props} />;
+export function CardContent({ children, className = "" }: CardProps) {
+  return (
+    <div className={`p-6 ${className}`}>
+      {children}
+    </div>
+  );
 }
-
-export function CardContent({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={clsx("p-4", className)} {...props} />;
-}
-
-export function CardFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={clsx("px-4 py-3 border-t border-brand-border", className)} {...props} />;
-}
-
-export default Card;
-

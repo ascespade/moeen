@@ -10,7 +10,7 @@ export default function Home() {
         <div className="max-w-screen-xl mx-auto px-4 py-3">
           <nav className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Image src="/hemam-logo.jpg" alt="Hemam Logo" width={36} height={36} className="rounded" priority unoptimized />
+              <Image src="/ logo.svg" alt="Hemam Logo" width={36} height={36} className="rounded" priority unoptimized />
               <span className="text-lg md:text-xl font-bold" style={{ color: "var(--brand-primary)" }}>مُعين</span>
             </div>
             <div className="hidden md:flex items-center gap-6 text-sm">
@@ -80,7 +80,7 @@ export default function Home() {
       <footer className="border-t border-gray-200 dark:border-gray-800">
         <div className="max-w-screen-xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Image src="/hemam-logo.jpg" alt="Hemam Logo" width={28} height={28} className="rounded" unoptimized />
+            <Image src="/ logo.svg" alt="Hemam Logo" width={28} height={28} className="rounded" unoptimized />
             <span className="text-sm font-semibold" style={{ color: "var(--brand-primary)" }}>مُعين</span>
           </div>
           <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">

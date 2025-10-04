@@ -51,7 +51,7 @@ export const lazyLoadImage = (img: HTMLImageElement) => {
 // Preload critical resources
 export const preloadCriticalResources = () => {
   const criticalImages = [
-    '/hemam-logo.jpg',
+    '/ logo.svg',
   ];
 
   criticalImages.forEach((src) => {

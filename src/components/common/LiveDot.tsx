@@ -1,9 +1,32 @@
-export default function LiveDot({ color = "#16A34A" }: { color?: string }) {
-  return (
-    <span className="relative inline-flex h-2.5 w-2.5">
-      <span className="absolute inline-flex h-full w-full rounded-full opacity-70 animate-ping" style={{ backgroundColor: color }} />
-      <span className="relative inline-flex rounded-full h-2.5 w-2.5" style={{ backgroundColor: color }} />
-    </span>
-  );
+import React from 'react';
+
+interface LiveDotProps {
+  color?: string;
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
 }
 
+export default function LiveDot({ 
+  color = '#10B981', 
+  size = 'md', 
+  className = '' 
+}: LiveDotProps) {
+  const sizeClasses = {
+    sm: 'w-2 h-2',
+    md: 'w-3 h-3',
+    lg: 'w-4 h-4'
+  };
+
+  return (
+    <div className={`relative ${sizeClasses[size]} ${className}`}>
+      <div 
+        className="w-full h-full rounded-full animate-pulse"
+        style={{ backgroundColor: color }}
+      />
+      <div 
+        className="absolute inset-0 rounded-full animate-ping opacity-75"
+        style={{ backgroundColor: color }}
+      />
+    </div>
+  );
+}

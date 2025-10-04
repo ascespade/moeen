@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 interface LoadingSpinnerProps {
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -13,6 +15,6 @@ export default function LoadingSpinner({ size = "md", className = "" }: LoadingS
   };
 
   return (
-    <div className={`animate-spin rounded-full border-2 border-[var(--brand-border)] border-t-[var(--brand-primary)] ${sizeClasses[size]} ${className}`} />
+    <div className={`animate-spin rounded-full border-2 border-gray-200 border-t-blue-600 ${sizeClasses[size]} ${className}`} />
   );
 }

@@ -1,254 +1,269 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { useT } from "@/components/providers/I18nProvider";
+import Button from "@/components/ui/button";
+import Input from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import Toast from "@/components/ui/toast";
+
+interface LoginFormData {
+  email: string;
+  password: string;
+  remember: boolean;
+}
+
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+  avatar?: string;
+}
 
 export default function LoginPage() {
-  const [formData, setFormData] = useState({
+  const router = useRouter();
+  const { t } = useT();
+  const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
-    rememberMe: false,
+    remember: false,
   });
-  const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "info" } | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setIsLoading(true);
+  // Demo users for testing
+  const demoUsers = [
+    { email: "admin@alhemamcenter.com", password: "admin123", role: "admin", name: "مدير النظام" },
+    { email: "manager@alhemamcenter.com", password: "manager123", role: "manager", name: "مدير الفريق" },
+    { email: "agent@alhemamcenter.com", password: "agent123", role: "agent", name: "وكيل خدمة العملاء" },
+    { email: "demo@alhemamcenter.com", password: "demo123", role: "user", name: "مستخدم تجريبي" },
+  ];
 
-    // بيانات الدخول التجريبية
-    const validCredentials = [
-      { email: "admin@alhemamcenter.com", password: "admin123", role: "admin" },
-      { email: "doctor@alhemamcenter.com", password: "doctor123", role: "doctor" },
-      { email: "staff@alhemamcenter.com", password: "staff123", role: "staff" },
-      { email: "demo@alhemamcenter.com", password: "demo123", role: "demo" }
-    ];
+  useEffect(() => {
+    // Check if user is already logged in
+    const checkAuth = () => {
+      const user = localStorage.getItem("muayin_user");
+      if (user) {
+        try {
+          const userData = JSON.parse(user);
+          console.log("User already logged in:", userData);
+          if (userData.role === "admin") {
+            window.location.href = "/admin/dashboard";
+          } else {
+            window.location.href = "/dashboard";
+          }
+        } catch (error) {
+          console.error("Error parsing user data:", error);
+          localStorage.removeItem("muayin_user");
+          localStorage.removeItem("muayin_token");
+        }
+      }
+    };
 
-    const user = validCredentials.find(
-      cred => cred.email === formData.email && cred.password === formData.password
-    );
+    // Check immediately
+    checkAuth();
 
-    if (user) {
-      // حفظ بيانات المستخدم في localStorage
-      const userData = {
-        email: user.email,
-        role: user.role,
-        name: user.role === "admin" ? "مدير النظام" : 
-              user.role === "doctor" ? "د. أحمد محمد" :
-              user.role === "staff" ? "موظف الدعم" : "مستخدم تجريبي",
-        rememberMe: formData.rememberMe
-      };
-      
-      localStorage.setItem("muayin_user", JSON.stringify(userData));
-      
-      // محاكاة تأخير للتحميل
-      setTimeout(() => {
-        setIsLoading(false);
-        router.push("/");
-      }, 1000);
-    } else {
-      setIsLoading(false);
-      setError("البريد الإلكتروني أو كلمة المرور غير صحيحة");
-    }
-  };
+    // Also check on storage changes
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "muayin_user" && e.newValue) {
+        checkAuth();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
-  const handleDemoLogin = () => {
+  const handleDemoLogin = (demoUser: typeof demoUsers[0]) => {
+    setFormData({
+      email: demoUser.email,
+      password: demoUser.password,
+      remember: false,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
-    localStorage.setItem("muayin_user", JSON.stringify({
-      email: "demo@alhemamcenter.com",
-      role: "demo",
-      name: "مستخدم تجريبي"
-    }));
-    
-    setTimeout(() => {
+
+    try {
+      // Simulate API call with database integration
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        // Store user data in localStorage
+        const userData: User = {
+          id: data.user.id,
+          email: data.user.email,
+          name: data.user.name,
+          role: data.user.role,
+          avatar: data.user.avatar,
+        };
+
+        localStorage.setItem("muayin_user", JSON.stringify(userData));
+        localStorage.setItem("muayin_token", data.token);
+
+        setToast({ message: "تم تسجيل الدخول بنجاح!", type: "success" });
+
+        // Redirect based on role
+        setTimeout(() => {
+          if (userData.role === "admin") {
+            router.push("/admin/dashboard");
+          } else {
+            router.push("/dashboard");
+          }
+        }, 1000);
+      } else {
+        setToast({ message: data.message || "خطأ في تسجيل الدخول", type: "error" });
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setToast({ message: "خطأ في الاتصال بالخادم", type: "error" });
+    } finally {
       setIsLoading(false);
-      router.push("/");
-    }, 500);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-2xl p-8 border border-gray-100">
-        <div className="text-center mb-8">
-          <div className="mx-auto w-20 h-20 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
-            <Image
-              src="/logo.jpg"
-              alt="مركز الهمم"
-              width={48}
-              height={48}
-              className="rounded-full object-cover"
-              style={{ width: "auto", height: "auto" }}
-            />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <Card className="p-8 shadow-2xl">
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-white text-2xl font-bold">م</span>
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              مرحباً بك في مُعين
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400">
+              سجل دخولك للوصول إلى لوحة التحكم
+            </p>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">مرحباً بك</h1>
-          <p className="text-gray-600 text-lg">نظام مُعين - المساعد الذكي لمركز الهمم</p>
-        </div>
-        
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg flex items-center">
-            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-            </svg>
-            {error}
-          </div>
-        )}
-        
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              البريد الإلكتروني
-            </label>
-            <div className="relative">
-              <input
-                type="email"
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                البريد الإلكتروني
+              </label>
+              <Input
+                id="email"
                 name="email"
+                type="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-                placeholder="admin@alhemamcenter.com"
+                placeholder="أدخل بريدك الإلكتروني"
                 required
-                disabled={isLoading}
+                className="w-full"
               />
-              <svg className="absolute right-3 top-3.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-              </svg>
             </div>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              كلمة المرور
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors pr-12"
-                placeholder="أدخل كلمة المرور"
-                required
-                disabled={isLoading}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3.5 w-5 h-5 text-gray-400 hover:text-gray-600"
-                disabled={isLoading}
-              >
-                {showPassword ? (
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
-                  </svg>
-                ) : (
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
-                )}
-              </button>
-            </div>
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                name="rememberMe"
-                checked={formData.rememberMe}
-                onChange={handleInputChange}
-                className="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500"
-                disabled={isLoading}
-              />
-              <span className="mr-2 text-sm text-gray-600">تذكرني</span>
-            </label>
-            <button
-              type="button"
-              className="text-sm text-emerald-600 hover:text-emerald-700 font-medium"
-              disabled={isLoading}
-            >
-              نسيت كلمة المرور؟
-            </button>
-          </div>
-          
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-gradient-to-r from-emerald-500 to-blue-600 text-white py-3 px-4 rounded-lg hover:from-emerald-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? (
-              <div className="flex items-center justify-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                جاري تسجيل الدخول...
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                كلمة المرور
+              </label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  placeholder="أدخل كلمة المرور"
+                  required
+                  className="w-full pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                >
+                  {showPassword ? "👁️" : "👁️‍🗨️"}
+                </button>
               </div>
-            ) : (
-              "تسجيل الدخول"
-            )}
-          </button>
-        </form>
-        
-        <div className="mt-6">
-          <button
-            onClick={handleDemoLogin}
-            disabled={isLoading}
-            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-4 rounded-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            🚀 دخول تجريبي سريع
-          </button>
-        </div>
-        
-        <div className="mt-8 p-4 bg-gradient-to-r from-emerald-50 to-blue-50 rounded-lg border border-emerald-100">
-          <h3 className="text-sm font-semibold text-gray-700 mb-3 text-center">بيانات الدخول التجريبية</h3>
-          <div className="text-xs text-gray-600 space-y-2">
-            <div className="flex justify-between items-center p-2 bg-white rounded border">
-              <span className="font-medium text-emerald-700">مدير</span>
-              <span className="text-gray-500">admin@alhemamcenter.com / admin123</span>
             </div>
-            <div className="flex justify-between items-center p-2 bg-white rounded border">
-              <span className="font-medium text-blue-700">طبيب</span>
-              <span className="text-gray-500">doctor@alhemamcenter.com / doctor123</span>
+
+            <div className="flex items-center justify-between">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="remember"
+                  checked={formData.remember}
+                  onChange={handleInputChange}
+                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="mr-2 text-sm text-gray-600 dark:text-gray-400">
+                  تذكرني
+                </span>
+              </label>
+              <a href="#" className="text-sm text-blue-600 hover:text-blue-500">
+                نسيت كلمة المرور؟
+              </a>
             </div>
-            <div className="flex justify-between items-center p-2 bg-white rounded border">
-              <span className="font-medium text-purple-700">موظف</span>
-              <span className="text-gray-500">staff@alhemamcenter.com / staff123</span>
-            </div>
-            <div className="flex justify-between items-center p-2 bg-white rounded border">
-              <span className="font-medium text-orange-700">تجريبي</span>
-              <span className="text-gray-500">demo@alhemamcenter.com / demo123</span>
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors"
+            >
+              {isLoading ? <LoadingSpinner size="sm" /> : "تسجيل الدخول"}
+            </Button>
+          </form>
+
+          {/* Demo Users Section */}
+          <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4 text-center">
+              حسابات تجريبية للاختبار
+            </h3>
+            <div className="space-y-2">
+              {demoUsers.map((user, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleDemoLogin(user)}
+                  className="w-full text-right p-2 text-sm bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                >
+                  <div className="font-medium text-gray-900 dark:text-white">{user.name}</div>
+                  <div className="text-gray-500 text-xs">{user.email}</div>
+                </button>
+              ))}
             </div>
           </div>
-        </div>
-        
-        <div className="mt-8 text-center">
-          <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
-            <Image
-              src="/logo.jpg"
-              alt="مركز الهمم"
-              width={20}
-              height={20}
-              className="rounded-full"
-              style={{ width: "auto", height: "auto" }}
-            />
-            <span>مركز الهمم - نظام مُعين</span>
-          </div>
-          <p className="mt-1 text-xs text-gray-400">نظام ذكي للرعاية الصحية</p>
-        </div>
+        </Card>
       </div>
+
+      {/* Toast Notifications */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 }

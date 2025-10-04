@@ -1,61 +1,85 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import clsx from "clsx";
+import React, { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
-export interface ModalProps {
-  open: boolean;
+interface ModalProps {
+  isOpen: boolean;
   onClose: () => void;
   title?: string;
-  children?: React.ReactNode;
+  children: React.ReactNode;
+  size?: "sm" | "md" | "lg" | "xl";
+  className?: string;
 }
 
-export function Modal({ open, onClose, title, children }: ModalProps) {
-  const dialogRef = useRef<HTMLDivElement | null>(null);
+export default function Modal({ 
+  isOpen, 
+  onClose, 
+  title, 
+  children, 
+  size = "md",
+  className = "" 
+}: ModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (open) document.documentElement.style.overflow = "hidden";
-    return () => {
-      document.documentElement.style.overflow = "";
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
     };
-  }, [open]);
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen, onClose]);
 
   useEffect(() => {
-    if (!open) return;
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-    const focusable = dialog.querySelector<HTMLElement>("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
-    focusable?.focus();
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [open, onClose]);
+    if (isOpen && modalRef.current) {
+      modalRef.current.focus();
+    }
+  }, [isOpen]);
 
-  return (
-    <div
-      className={clsx(
-        "fixed inset-0 z-50 grid place-items-center p-4 transition",
-        open ? "visible" : "invisible"
-      )}
-      aria-hidden={!open}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div className={clsx("fixed inset-0 bg-black/40", open ? "opacity-100" : "opacity-0")} onClick={onClose} />
-      <div ref={dialogRef} className={clsx(
-        "relative z-10 w-full max-w-lg rounded-xl border border-brand-border bg-[var(--panel)] shadow-soft",
-        open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-      )}
+  if (!isOpen) return null;
+
+  const sizeClasses = {
+    sm: "max-w-md",
+    md: "max-w-lg", 
+    lg: "max-w-2xl",
+    xl: "max-w-4xl"
+  };
+
+  return createPortal(
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div 
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <div 
+        ref={modalRef}
+        className={`relative w-full ${sizeClasses[size]} bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-200 dark:border-gray-800 ${className}`}
+        tabIndex={-1}
       >
         {title && (
-          <div className="px-4 py-3 border-b border-brand-border text-sm font-semibold">
-            {title}
+          <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h2>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            >
+              ✕
+            </button>
           </div>
         )}
-        <div className="p-4">{children}</div>
+        <div className="p-6">
+          {children}
+        </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
-
-export default Modal;
-

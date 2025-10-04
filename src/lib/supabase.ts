@@ -1,201 +1,52 @@
-import { createClient } from '@supabase/supabase-js'
-import { createBrowserClient, createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// Supabase Configuration - محمي من التعديل
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://socwpqzcalgvpzjwavgh.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_SUOK-3frglejEWKTYESWWw_zGmbekdc';
 
-// Client-side Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Create Supabase client
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Browser client for client-side operations
-export const createBrowserSupabaseClient = () => {
-  return createBrowserClient(supabaseUrl, supabaseAnonKey)
-}
-
-// Server client for server-side operations
-export const createServerSupabaseClient = () => {
-  const cookieStore = cookies()
-  
-  return createServerClient(supabaseUrl, supabaseAnonKey, {
-    cookies: {
-      getAll() {
-        return cookieStore.getAll()
-      },
-      setAll(cookiesToSet) {
-        try {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          )
-        } catch {
-          // The `setAll` method was called from a Server Component.
-          // This can be ignored if you have middleware refreshing
-          // user sessions.
-        }
-      },
-    },
-  })
-}
-
-// Database types
-export interface Database {
-  public: {
-    Tables: {
-      users: {
-        Row: {
-          id: string
-          email: string
-          full_name: string
-          phone: string | null
-          role_id: number
-          is_active: boolean
-          last_login: string | null
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          email: string
-          full_name: string
-          phone?: string | null
-          role_id: number
-          is_active?: boolean
-          last_login?: string | null
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          email?: string
-          full_name?: string
-          phone?: string | null
-          role_id?: number
-          is_active?: boolean
-          last_login?: string | null
-          created_at?: string
-          updated_at?: string
-        }
-      }
-      patients: {
-        Row: {
-          id: string
-          full_name: string
-          phone: string
-          email: string | null
-          date_of_birth: string | null
-          gender: string | null
-          emergency_contact_name: string | null
-          emergency_contact_phone: string | null
-          medical_history: string | null
-          current_conditions: string[] | null
-          assigned_staff_id: string | null
-          is_active: boolean
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          full_name: string
-          phone: string
-          email?: string | null
-          date_of_birth?: string | null
-          gender?: string | null
-          emergency_contact_name?: string | null
-          emergency_contact_phone?: string | null
-          medical_history?: string | null
-          current_conditions?: string[] | null
-          assigned_staff_id?: string | null
-          is_active?: boolean
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          full_name?: string
-          phone?: string
-          email?: string | null
-          date_of_birth?: string | null
-          gender?: string | null
-          emergency_contact_name?: string | null
-          emergency_contact_phone?: string | null
-          medical_history?: string | null
-          current_conditions?: string[] | null
-          assigned_staff_id?: string | null
-          is_active?: boolean
-          created_at?: string
-          updated_at?: string
-        }
-      }
-      conversations: {
-        Row: {
-          id: string
-          patient_id: string
-          staff_id: string | null
-          status: string
-          priority: string
-          last_message_at: string | null
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          patient_id: string
-          staff_id?: string | null
-          status?: string
-          priority?: string
-          last_message_at?: string | null
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          patient_id?: string
-          staff_id?: string | null
-          status?: string
-          priority?: string
-          last_message_at?: string | null
-          created_at?: string
-          updated_at?: string
-        }
-      }
-      messages: {
-        Row: {
-          id: string
-          conversation_id: string
-          sender_type: string
-          sender_id: string | null
-          content: string
-          message_type: string
-          metadata: any
-          is_ai_generated: boolean
-          ai_model: string | null
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          conversation_id: string
-          sender_type: string
-          sender_id?: string | null
-          content: string
-          message_type?: string
-          metadata?: any
-          is_ai_generated?: boolean
-          ai_model?: string | null
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          conversation_id?: string
-          sender_type?: string
-          sender_id?: string | null
-          content?: string
-          message_type?: string
-          metadata?: any
-          is_ai_generated?: boolean
-          ai_model?: string | null
-          created_at?: string
-        }
-      }
+// Server-side client for admin operations
+export const supabaseAdmin = createClient(
+  supabaseUrl,
+  process.env.SUPABASE_SERVICE_ROLE_KEY || 'sb_secret_e07nVssMWN37xExeZhQG4A_4koosqNe',
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
     }
   }
-}
+);
+
+// Database Tables - محمي من التعديل
+export const TABLES = {
+  USERS: 'users',
+  CONVERSATIONS: 'conversations',
+  MESSAGES: 'messages',
+  FLOWS: 'flows',
+  REVIEWS: 'reviews',
+} as const;
+
+// Row Level Security Policies - محمي من التعديل
+export const RLS_POLICIES = {
+  // Users can only see their own data
+  USERS_SELECT: 'users_select_policy',
+  USERS_UPDATE: 'users_update_policy',
+  
+  // Staff can only see their own conversations
+  CONVERSATIONS_SELECT: 'conversations_select_policy',
+  CONVERSATIONS_INSERT: 'conversations_insert_policy',
+  CONVERSATIONS_UPDATE: 'conversations_update_policy',
+  
+  // Messages are linked to conversations
+  MESSAGES_SELECT: 'messages_select_policy',
+  MESSAGES_INSERT: 'messages_insert_policy',
+  
+  // Flows are public for reading
+  FLOWS_SELECT: 'flows_select_policy',
+  
+  // Reviews are linked to conversations
+  REVIEWS_SELECT: 'reviews_select_policy',
+  REVIEWS_INSERT: 'reviews_insert_policy',
+} as const;
