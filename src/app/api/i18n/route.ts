@@ -9,7 +9,7 @@ export async function GET(request: Request) {
   
   try {
     // محاولة قراءة من قاعدة البيانات
-    const supabase = getServerSupabase()
+    const supabase = await getServerSupabase()
     const { data, error } = await supabase
       .from('translations')
       .select('key, value')

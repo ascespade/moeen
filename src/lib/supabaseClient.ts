@@ -7,17 +7,18 @@ export function getBrowserSupabase() {
   return createBrowserClient(url, anon)
 }
 
-export function getServerSupabase() {
+export async function getServerSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key'
+  const cookieStore = await cookies()
   return createServerClient(url, anon, {
     cookies: {
       getAll() {
-        return cookies().getAll()
+        return cookieStore.getAll()
       },
       setAll(cookiesToSet) {
         cookiesToSet.forEach(({ name, value, options }) => {
-          cookies().set(name, value, options)
+          cookieStore.set(name, value, options)
         })
       },
     },

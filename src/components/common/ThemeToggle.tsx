@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 type Mode = "light" | "dark" | "system";
 
 export default function ThemeToggle() {
-  const [mode, setMode] = useState<Mode>("system");
+  const [mode, setMode] = useState<Mode>("light");
 
   useEffect(() => {
-    const saved = (localStorage.getItem("theme-mode") as Mode) || "system";
+    const saved = (localStorage.getItem("theme-mode") as Mode) || "light";
     applyMode(saved);
   }, []);
 
