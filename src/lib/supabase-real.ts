@@ -550,8 +550,12 @@ export class RealSupabaseManager {
       throw new Error(`Failed to get appointment stats: ${error.message}`);
 
     const total = (data as any[]).length;
-    const completed = (data as any[]).filter((a: any) => a.status === "completed").length;
-    const cancelled = (data as any[]).filter((a: any) => a.status === "cancelled").length;
+    const completed = (data as any[]).filter(
+      (a: any) => a.status === "completed",
+    ).length;
+    const cancelled = (data as any[]).filter(
+      (a: any) => a.status === "cancelled",
+    ).length;
     const upcoming = (data as any[]).filter((a: any) => {
       const appointmentDate = new Date(a.appointment_date as string);
       return appointmentDate >= new Date() && a.status === "scheduled";
@@ -569,7 +573,9 @@ export class RealSupabaseManager {
       throw new Error(`Failed to get conversation stats: ${error.message}`);
 
     const total = (data as any[]).length;
-    const crisis = (data as any[]).filter((c: any) => c.crisis_level === "crisis").length;
+    const crisis = (data as any[]).filter(
+      (c: any) => c.crisis_level === "crisis",
+    ).length;
     const recent = (data as any[]).filter((c: any) => {
       const createdAt = new Date(c.created_at as string);
       const sevenDaysAgo = new Date();
