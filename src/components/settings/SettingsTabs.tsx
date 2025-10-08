@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import PlaceholderSquare from "@/components/common/PlaceholderSquare";
+import { isWhatsAppConfigured, getApiConfig } from "@/lib/api/config";
 
 type Settings = {
   provider: string;
@@ -186,6 +188,53 @@ export default function SettingsTabs() {
 
       {active === "providers" && (
         <section className="rounded-xl border p-4 grid gap-4">
+          {/* WhatsApp Configuration */}
+          <div className="grid gap-2">
+            <h3 className="text-base font-semibold">إعداد WhatsApp</h3>
+            {!isWhatsAppConfigured() && (
+              <PlaceholderSquare
+                title="WhatsApp API غير مهيأ بعد"
+                description="قم بإدخال Token و Phone Number ID ورابط Webhook لربط واتساب."
+                steps={[
+                  "أنشئ تطبيق واتساب بيزنس من Meta",
+                  "انسخ ال Token و Phone Number ID",
+                  "أدخل Webhook URL في Meta، وأضفه هنا أيضًا",
+                ]}
+                docsLink="https://developers.facebook.com/docs/whatsapp/cloud-api/get-started/"
+              />
+            )}
+          </div>
+          <div className="grid gap-2">
+            <label className="text-sm">WhatsApp Token</label>
+            <input
+              className="h-10 rounded-md border px-3"
+              value={settings?.providers?.whatsappAccessToken || ""}
+              onChange={(e) => setSettings({ ...(settings as Settings), providers: { ...(settings?.providers || {}), whatsappAccessToken: e.target.value } })}
+              placeholder="EAAG..."
+            />
+          </div>
+          <div className="grid gap-2">
+            <label className="text-sm">Phone Number ID</label>
+            <input
+              className="h-10 rounded-md border px-3"
+              value={getApiConfig().whatsapp.phoneNumberId || ""}
+              onChange={(e) => {
+                // Persist to server-side env store if implemented; keep placeholder behavior here
+              }}
+              placeholder="e.g. 123456789012345"
+            />
+          </div>
+          <div className="grid gap-2">
+            <label className="text-sm">Webhook URL</label>
+            <input
+              className="h-10 rounded-md border px-3"
+              value={getApiConfig().whatsapp.webhookUrl || ""}
+              onChange={(e) => {
+                // Persist to server-side env store if implemented; keep placeholder behavior here
+              }}
+              placeholder="https://your-domain.com/api/webhooks/whatsapp"
+            />
+          </div>
           <div className="grid gap-2">
             <label className="text-sm">Google AI API Key</label>
             <input
