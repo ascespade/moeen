@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { EHRSystem } from '@/lib/integration-system';
-import { CalendarAPI } from '@/lib/integration-system';
-import { WhatsAppIntegration } from '@/lib/whatsapp-integration';
-
-const ehr = new EHRSystem();
-const calendar = new CalendarAPI();
-const whatsapp = new WhatsAppIntegration();
+import { realDB } from '@/lib/supabase-real';
+import { whatsappAPI } from '@/lib/whatsapp-business-api';
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,70 +8,15 @@ export async function GET(request: NextRequest) {
     const doctorId = searchParams.get('doctorId');
     const date = searchParams.get('date');
     const patientId = searchParams.get('patientId');
+    const status = searchParams.get('status');
 
-    if (doctorId && date) {
-      // Get available slots for a specific doctor and date
-      const availableSlots = calendar.getAvailableTimeSlots(doctorId, new Date(date));
-      
-      return NextResponse.json({
-        success: true,
-        data: {
-          doctorId,
-          date,
-          availableSlots
-        }
-      });
-    }
-
-    if (patientId) {
-      // Get appointments for a specific patient
-      const patient = ehr.getPatient(patientId);
-      if (!patient) {
-        return NextResponse.json(
-          { 
-            success: false, 
-            error: 'Patient not found',
-            code: 'PATIENT_NOT_FOUND' 
-          },
-          { status: 404 }
-        );
-      }
-
-      return NextResponse.json({
-        success: true,
-        data: {
-          patientId,
-          nextAppointment: patient.nextAppointment,
-          lastVisit: patient.lastVisit
-        }
-      });
-    }
-
-    // Return mock appointments data
-    const appointments = [
-      {
-        id: '1',
-        patientId: '1',
-        patientName: 'أحمد محمد',
-        doctorId: '1',
-        doctorName: 'د. سارة أحمد',
-        date: '2024-01-20',
-        time: '10:00',
-        type: 'treatment',
-        status: 'confirmed'
-      },
-      {
-        id: '2',
-        patientId: '2',
-        patientName: 'فاطمة علي',
-        doctorId: '2',
-        doctorName: 'د. محمد السعيد',
-        date: '2024-01-18',
-        time: '14:00',
-        type: 'assessment',
-        status: 'pending'
-      }
-    ];
+    // Get appointments from real database
+    const appointments = await realDB.getAppointments({
+      patientId: patientId || undefined,
+      doctorId: doctorId || undefined,
+      date: date || undefined,
+      status: status || undefined
+    });
 
     return NextResponse.json({
       success: true,
@@ -100,9 +40,20 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { patientId, doctorId, date, time, type = 'treatment' } = body;
+    const { 
+      patientId, 
+      doctorId, 
+      appointment_date, 
+      appointment_time, 
+      duration_minutes = 60,
+      type = 'treatment',
+      notes,
+      insurance_covered = false,
+      insurance_approval_number,
+      created_by
+    } = body;
 
-    if (!patientId || !doctorId || !date || !time) {
+    if (!patientId || !doctorId || !appointment_date || !appointment_time) {
       return NextResponse.json(
         { 
           success: false, 
@@ -113,45 +64,47 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Book appointment
-    const success = ehr.bookAppointment(patientId, doctorId, new Date(date), time);
-    
-    if (!success) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Failed to book appointment - slot may not be available',
-          code: 'APPOINTMENT_BOOKING_FAILED' 
-        },
-        { status: 400 }
-      );
-    }
+    // Create appointment in database
+    const appointment = await realDB.createAppointment({
+      patient_id: patientId,
+      doctor_id: doctorId,
+      appointment_date,
+      appointment_time,
+      duration_minutes,
+      type,
+      notes,
+      insurance_covered,
+      insurance_approval_number,
+      created_by: created_by || patientId
+    });
 
     // Get patient info for WhatsApp notification
-    const patient = ehr.getPatient(patientId);
-    if (patient && patient.contactInfo.phone) {
-      // Send appointment confirmation
-      await whatsapp.sendTemplateMessage(
-        'appointment_confirmation',
-        patient.contactInfo.phone,
-        {
-          name: patient.name,
-          date: new Date(date).toLocaleDateString('ar-SA'),
-          time: time
-        }
-      );
-
-      // Schedule reminder
-      const reminderTime = new Date(new Date(date).getTime() - 24 * 60 * 60 * 1000);
-      await whatsapp.sendAppointmentReminder(patient.contactInfo.phone, time);
+    const patient = await realDB.getPatient(patientId);
+    if (patient && patient.users?.phone) {
+      try {
+        // Send appointment confirmation via WhatsApp
+        await whatsappAPI.sendTemplateMessage(
+          patient.users.phone,
+          'appointment_confirmation',
+          'ar',
+          [
+            patient.users.name,
+            new Date(appointment_date).toLocaleDateString('ar-SA'),
+            appointment_time
+          ]
+        );
+      } catch (whatsappError) {
+        console.error('WhatsApp confirmation failed:', whatsappError);
+        // Don't fail the entire request if WhatsApp fails
+      }
     }
 
     return NextResponse.json({
       success: true,
       data: {
-        appointmentId: `apt_${Date.now()}`,
+        appointmentId: appointment.id,
         message: 'Appointment booked successfully',
-        confirmationSent: !!patient?.contactInfo.phone
+        confirmationSent: !!patient?.users?.phone
       }
     });
 

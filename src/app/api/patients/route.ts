@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { EHRSystem } from '@/lib/integration-system';
-import { WhatsAppIntegration } from '@/lib/whatsapp-integration';
-
-const ehr = new EHRSystem();
-const whatsapp = new WhatsAppIntegration();
+import { realDB } from '@/lib/supabase-real';
+import { whatsappAPI } from '@/lib/whatsapp-business-api';
 
 export async function GET(request: NextRequest) {
   try {
@@ -12,42 +9,34 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '20');
     const search = searchParams.get('search') || '';
 
-    // In a real implementation, this would query the database
-    // For now, return mock data
-    const patients = [
-      {
-        id: '1',
-        name: 'أحمد محمد',
-        age: 25,
-        contactInfo: {
-          phone: '+966501234567',
-          email: 'ahmed@example.com'
-        },
-        lastVisit: new Date('2024-01-15'),
-        nextAppointment: new Date('2024-01-20')
-      },
-      {
-        id: '2',
-        name: 'فاطمة علي',
-        age: 30,
-        contactInfo: {
-          phone: '+966501234568',
-          email: 'fatima@example.com'
-        },
-        lastVisit: new Date('2024-01-10'),
-        nextAppointment: new Date('2024-01-18')
-      }
-    ];
-
-    // Filter by search term if provided
-    const filteredPatients = search 
-      ? patients.filter(p => p.name.includes(search) || p.contactInfo.phone.includes(search))
-      : patients;
+    // Get patients from real database
+    const patients = await realDB.searchUsers(search, 'patient');
+    
+    // Get additional patient data
+    const patientsWithDetails = await Promise.all(
+      patients.map(async (patient) => {
+        const patientData = await realDB.getPatient(patient.id);
+        const appointments = await realDB.getAppointments({ patientId: patient.id, limit: 1 });
+        
+        return {
+          id: patient.id,
+          name: patient.name,
+          age: patient.age,
+          contactInfo: {
+            phone: patient.phone,
+            email: patient.email
+          },
+          lastVisit: appointments.length > 0 ? new Date(appointments[0].appointment_date) : null,
+          nextAppointment: appointments.length > 0 ? new Date(appointments[0].appointment_date) : null,
+          status: patientData?.status || 'active'
+        };
+      })
+    );
 
     // Pagination
     const startIndex = (page - 1) * limit;
     const endIndex = startIndex + limit;
-    const paginatedPatients = filteredPatients.slice(startIndex, endIndex);
+    const paginatedPatients = patientsWithDetails.slice(startIndex, endIndex);
 
     return NextResponse.json({
       success: true,
@@ -55,8 +44,8 @@ export async function GET(request: NextRequest) {
       pagination: {
         page,
         limit,
-        total: filteredPatients.length,
-        totalPages: Math.ceil(filteredPatients.length / limit)
+        total: patientsWithDetails.length,
+        totalPages: Math.ceil(patientsWithDetails.length / limit)
       }
     });
 
@@ -77,7 +66,30 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, age, phone, email, medicalHistory, familyMembers } = body;
+    const { 
+      name, 
+      age, 
+      phone, 
+      email, 
+      national_id,
+      gender,
+      address,
+      city,
+      emergency_contact,
+      emergency_contact_relation,
+      insurance_provider,
+      insurance_number,
+      medical_history,
+      current_conditions,
+      medications,
+      allergies,
+      guardian_name,
+      guardian_relation,
+      guardian_phone,
+      medical_conditions,
+      treatment_goals,
+      assigned_doctor_id
+    } = body;
 
     if (!name || !age || !phone) {
       return NextResponse.json(
@@ -90,42 +102,59 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create patient record
-    const patientData = {
+    // Create user first
+    const userData = {
+      national_id,
       name,
       age,
-      contactInfo: {
-        phone,
-        email
-      },
-      medicalHistory: medicalHistory || [],
-      currentTreatment: {
-        doctor: '',
-        sessions: [],
-        goals: []
-      },
-      familyMembers: familyMembers || [],
-      lastVisit: new Date()
+      gender,
+      phone,
+      email,
+      role: 'patient' as const,
+      address,
+      city,
+      emergency_contact,
+      emergency_contact_relation,
+      insurance_provider,
+      insurance_number,
+      medical_history,
+      current_conditions,
+      medications,
+      allergies
     };
 
-    const patientId = ehr.createPatient(patientData);
+    const user = await realDB.createUser(userData);
 
-    // Add WhatsApp contact
-    whatsapp.addContact({
-      phone,
-      name,
-      isPatient: true,
-      isFamilyMember: false,
-      patientId,
-      lastInteraction: new Date(),
-      preferredLanguage: 'ar'
-    });
+    // Create patient record
+    const patientData = {
+      id: user.id,
+      guardian_name,
+      guardian_relation,
+      guardian_phone,
+      medical_conditions,
+      treatment_goals,
+      assigned_doctor_id,
+      status: 'active'
+    };
+
+    const patient = await realDB.createPatient(patientData);
+
+    // Send welcome WhatsApp message
+    try {
+      await whatsappAPI.sendTextMessage(phone, 
+        `مرحباً ${name}، أهلاً بك في مركز الهمم! تم إنشاء حسابك بنجاح. نحن هنا لمساعدتك في رحلة العلاج والشفاء.`
+      );
+    } catch (whatsappError) {
+      console.error('WhatsApp message failed:', whatsappError);
+      // Don't fail the entire request if WhatsApp fails
+    }
 
     return NextResponse.json({
       success: true,
       data: {
-        id: patientId,
-        message: 'Patient created successfully'
+        id: user.id,
+        message: 'Patient created successfully',
+        whatsappSent: true
       }
     });
 
