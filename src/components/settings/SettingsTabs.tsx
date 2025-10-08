@@ -214,7 +214,7 @@ export default function SettingsTabs() {
             />
           </div>
           <div>
-            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ providers: settings?.providers })}>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ providers: settings?.providers || {} })}>
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
           </div>
@@ -241,7 +241,7 @@ export default function SettingsTabs() {
             />
           </div>
           <div>
-            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ channels: settings?.channels })}>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ channels: settings?.channels || {} })}>
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
           </div>
@@ -269,7 +269,7 @@ export default function SettingsTabs() {
             <label htmlFor="pii" className="text-sm">إخفاء بيانات حساسة (PII)</label>
           </div>
           <div>
-            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ security: settings?.security })}>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ security: settings?.security || {} })}>
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
           </div>
@@ -288,7 +288,7 @@ export default function SettingsTabs() {
             />
           </div>
           <div>
-            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ notifications: settings?.notifications })}>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ notifications: settings?.notifications || {} })}>
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
           </div>
@@ -344,7 +344,7 @@ export default function SettingsTabs() {
             />
           </div>
           <div>
-            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ account: settings?.account })}>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ account: settings?.account || {} })}>
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
           </div>
@@ -369,7 +369,7 @@ export default function SettingsTabs() {
             />
           </div>
           <div>
-            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ billing: settings?.billing })}>
+            <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ billing: settings?.billing || {} })}>
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+// Removed unused Image import to fix type error and reduce bundle size
 import Link from "next/link";
 import { 
   Heart, 
@@ -12,17 +12,14 @@ import {
   Phone,
   MapPin,
   Clock,
-  Star,
   ArrowRight,
   CheckCircle,
   Brain,
   Activity
 } from "lucide-react";
-import { useT } from "@/components/providers/I18nProvider";
 import DirectionToggle from "@/components/common/DirectionToggle";
 
 export default function Home() {
-  const { t } = useT();
   
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
