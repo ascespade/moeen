@@ -300,7 +300,32 @@ export class LocalFileStorage implements FileStorage {
     await realDB.logAudit({
       action: "FILE_UPLOAD",
       table_name: "file_metadata",
-      new_values: fileMetadata,
+      new_values: {
+        id: fileMetadata.id,
+        originalName: fileMetadata.originalName,
+        fileName: fileMetadata.fileName,
+        filePath: fileMetadata.filePath,
+        fileSize: fileMetadata.fileSize,
+        mimeType: fileMetadata.mimeType,
+        fileType: fileMetadata.fileType,
+        uploadedBy: fileMetadata.uploadedBy,
+        patientId: fileMetadata.patientId ?? null,
+        sessionId: fileMetadata.sessionId ?? null,
+        appointmentId: fileMetadata.appointmentId ?? null,
+        tags: fileMetadata.tags,
+        description: fileMetadata.description ?? null,
+        isPublic: fileMetadata.isPublic,
+        isEncrypted: fileMetadata.isEncrypted,
+        checksum: fileMetadata.checksum,
+        uploadedAt: fileMetadata.uploadedAt.toISOString(),
+        expiresAt: fileMetadata.expiresAt
+          ? fileMetadata.expiresAt.toISOString()
+          : null,
+        downloadCount: fileMetadata.downloadCount,
+        lastAccessedAt: fileMetadata.lastAccessedAt
+          ? fileMetadata.lastAccessedAt.toISOString()
+          : null,
+      },
     });
 
     return fileMetadata;

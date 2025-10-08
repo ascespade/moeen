@@ -17,8 +17,7 @@ const getCrypto = () => {
 export class CSRFProtection {
   private static readonly CSRF_TOKEN_HEADER = "x-csrf-token";
   private static readonly CSRF_TOKEN_COOKIE = "csrf-token";
-  private static readonly CSRF_SECRET =
-    process.env.CSRF_SECRET || "fallback-csrf-secret";
+  // kept for future use to support token signing if needed (removed until used)
 
   static generateToken(): string {
     const crypto = getCrypto();
@@ -194,7 +193,7 @@ export class SessionSecurity {
     const data = encoder.encode(sessionId);
     return crypto.subtle
       .digest("SHA-256", data)
-      .then((hashBuffer) => {
+      .then((hashBuffer: ArrayBuffer) => {
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
       })

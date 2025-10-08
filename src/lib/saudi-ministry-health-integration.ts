@@ -279,7 +279,7 @@ export class SaudiMinistryHealthIntegration {
       const sehaResponse = await this.callSehaAPI(
         "POST",
         "/services",
-        serviceData,
+        { ...serviceData, patientId },
       );
       if (sehaResponse.success) {
         results.sehaSubmission = true;
@@ -294,7 +294,7 @@ export class SaudiMinistryHealthIntegration {
       const shoonResponse = await this.callShoonAPI(
         "POST",
         "/services",
-        serviceData,
+        { ...serviceData, patientId },
       );
       if (shoonResponse.success) {
         results.shoonSubmission = true;
@@ -309,7 +309,7 @@ export class SaudiMinistryHealthIntegration {
       const tatmanResponse = await this.callTatmanAPI(
         "POST",
         "/claims",
-        serviceData,
+        { ...serviceData, patientId },
       );
       if (tatmanResponse.success) {
         results.tatmanSubmission = true;
@@ -455,7 +455,8 @@ export class SaudiMinistryHealthIntegration {
     endpoint: string,
     data?: any,
   ): Promise<any> {
-    console.log(`Calling SEHA API: ${method} ${endpoint}`, data);
+    const baseUrl = this.sehaApiEndpoint;
+    console.log(`Calling SEHA API: ${method} ${baseUrl}${endpoint}`, data);
 
     // Mock response for development
     return {
@@ -502,7 +503,8 @@ export class SaudiMinistryHealthIntegration {
     endpoint: string,
     data?: any,
   ): Promise<any> {
-    console.log(`Calling SHOON API: ${method} ${endpoint}`, data);
+    const baseUrl = this.shoonApiEndpoint;
+    console.log(`Calling SHOON API: ${method} ${baseUrl}${endpoint}`, data);
 
     // Mock response for development
     return {
@@ -525,7 +527,8 @@ export class SaudiMinistryHealthIntegration {
     endpoint: string,
     data?: any,
   ): Promise<any> {
-    console.log(`Calling TATMAN API: ${method} ${endpoint}`, data);
+    const baseUrl = this.tatmanApiEndpoint;
+    console.log(`Calling TATMAN API: ${method} ${baseUrl}${endpoint}`, data);
 
     // Mock response for development
     return {
