@@ -157,7 +157,7 @@ export class WhatsAppBusinessAPI {
       console.error("WhatsApp API error:", error);
       return {
         success: false,
-        error: error.message,
+        error: (error as Error).message,
       };
     }
   }
@@ -224,7 +224,7 @@ export class WhatsAppBusinessAPI {
       console.error("WhatsApp Template API error:", error);
       return {
         success: false,
-        error: error.message,
+        error: (error as Error).message,
       };
     }
   }
@@ -273,7 +273,7 @@ export class WhatsAppBusinessAPI {
       console.error("WhatsApp Image API error:", error);
       return {
         success: false,
-        error: error.message,
+        error: (error as Error).message,
       };
     }
   }
@@ -324,7 +324,7 @@ export class WhatsAppBusinessAPI {
       console.error("WhatsApp Document API error:", error);
       return {
         success: false,
-        error: error.message,
+        error: (error as Error).message,
       };
     }
   }
@@ -417,7 +417,7 @@ export class WhatsAppBusinessAPI {
       console.error("Error creating template:", error);
       return {
         success: false,
-        error: error.message,
+        error: (error as Error).message,
       };
     }
   }
@@ -476,7 +476,7 @@ export class WhatsAppBusinessAPI {
   }
 
   // Verify Webhook
-  verifyWebhook(mode: string, token: string, challenge: string): boolean {
+  verifyWebhook(mode: string, token: string, _challenge: string): boolean {
     const verifyToken = process.env.WHATSAPP_VERIFY_TOKEN;
     return mode === "subscribe" && token === verifyToken;
   }
@@ -512,7 +512,7 @@ export class WhatsAppBusinessAPI {
       console.error("Error getting business profile:", error);
       return {
         success: false,
-        error: error.message,
+        error: (error as Error).message,
       };
     }
   }
@@ -550,7 +550,7 @@ export class WhatsAppBusinessAPI {
       console.error("Error updating business profile:", error);
       return {
         success: false,
-        error: error.message,
+        error: (error as Error).message,
       };
     }
   }

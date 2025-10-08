@@ -11,12 +11,12 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get("status");
 
     // Get appointments from real database
-    const appointments = await realDB.getAppointments({
-      patientId: patientId || undefined,
-      doctorId: doctorId || undefined,
-      date: date || undefined,
-      status: status || undefined,
-    });
+    const opts: any = {};
+    if (patientId) opts.patientId = patientId;
+    if (doctorId) opts.doctorId = doctorId;
+    if (date) opts.date = date;
+    if (status) opts.status = status;
+    const appointments = (await realDB.getAppointments(opts)) as any[];
 
     return NextResponse.json({
       success: true,
@@ -78,16 +78,16 @@ export async function POST(request: NextRequest) {
     });
 
     // Get patient info for WhatsApp notification
-    const patient = await realDB.getPatient(patientId);
-    if (patient && patient.users?.phone) {
+    const patient = (await realDB.getPatient(patientId)) as any;
+    if (patient && (patient as any).users?.phone) {
       try {
         // Send appointment confirmation via WhatsApp
         await whatsappAPI.sendTemplateMessage(
-          patient.users.phone,
+          (patient as any).users.phone,
           "appointment_confirmation",
           "ar",
           [
-            patient.users.name,
+            (patient as any).users.name,
             new Date(appointment_date).toLocaleDateString("ar-SA"),
             appointment_time,
           ],
@@ -101,9 +101,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: {
-        appointmentId: appointment.id,
+        appointmentId: (appointment as any).id,
         message: "Appointment booked successfully",
-        confirmationSent: !!patient?.users?.phone,
+        confirmationSent: !!(patient as any)?.users?.phone,
       },
     });
   } catch (error) {

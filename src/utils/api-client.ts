@@ -1,9 +1,12 @@
 // API client utilities
 export class ApiClient {
   private baseURL: string;
+  private static responseCache: Map<string, { timestamp: number; payload: any }> = new Map();
+  private cacheTtlMs: number;
 
-  constructor(baseURL: string = "/api") {
+  constructor(baseURL: string = "/api", cacheTtlMs: number = 30000) {
     this.baseURL = baseURL;
+    this.cacheTtlMs = cacheTtlMs;
   }
 
   private async request<T>(
@@ -11,6 +14,8 @@ export class ApiClient {
     options: RequestInit = {},
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
+    const method = (options.method || "GET").toUpperCase();
+    const cacheKey = `${method}:${url}:${JSON.stringify(options.headers || {})}:${options.body ?? ""}`;
 
     const defaultHeaders = {
       "Content-Type": "application/json",
@@ -25,6 +30,14 @@ export class ApiClient {
     };
 
     try {
+      // Serve from cache for idempotent GET requests
+      if (method === "GET" && this.cacheTtlMs > 0) {
+        const cached = ApiClient.responseCache.get(cacheKey);
+        if (cached && Date.now() - cached.timestamp < this.cacheTtlMs) {
+          return cached.payload as T;
+        }
+      }
+
       const response = await fetch(url, config);
 
       if (!response.ok) {
@@ -34,7 +47,13 @@ export class ApiClient {
         );
       }
 
-      return await response.json();
+      const json = await response.json();
+
+      if (method === "GET" && this.cacheTtlMs > 0) {
+        ApiClient.responseCache.set(cacheKey, { timestamp: Date.now(), payload: json });
+      }
+
+      return json;
     } catch (error) {
       console.error("API request failed:", error);
       throw error;
@@ -73,14 +92,14 @@ export class ApiClient {
   async post<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
       method: "POST",
-      body: data ? JSON.stringify(data) : undefined,
+      body: data ? JSON.stringify(data) : null,
     });
   }
 
   async put<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
       method: "PUT",
-      body: data ? JSON.stringify(data) : undefined,
+      body: data ? JSON.stringify(data) : null,
     });
   }
 

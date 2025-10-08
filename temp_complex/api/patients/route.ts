@@ -14,12 +14,12 @@ export async function GET(request: NextRequest) {
 
     // Get additional patient data
     const patientsWithDetails = await Promise.all(
-      patients.map(async (patient) => {
-        const patientData = await realDB.getPatient(patient.id);
-        const appointments = await realDB.getAppointments({
+      (patients as any[]).map(async (patient: any) => {
+        const patientData = (await realDB.getPatient(patient.id)) as any;
+        const appointments = (await realDB.getAppointments({
           patientId: patient.id,
           limit: 1,
-        });
+        })) as any[];
 
         return {
           id: patient.id,
@@ -30,14 +30,14 @@ export async function GET(request: NextRequest) {
             email: patient.email,
           },
           lastVisit:
-            appointments.length > 0
-              ? new Date(appointments[0].appointment_date)
+            (appointments as any[]).length > 0
+              ? new Date((appointments as any[])[0].appointment_date as string)
               : null,
           nextAppointment:
-            appointments.length > 0
-              ? new Date(appointments[0].appointment_date)
+            (appointments as any[]).length > 0
+              ? new Date((appointments as any[])[0].appointment_date as string)
               : null,
-          status: patientData?.status || "active",
+          status: (patientData as any)?.status || "active",
         };
       }),
     );
@@ -145,7 +145,7 @@ export async function POST(request: NextRequest) {
       status: "active",
     };
 
-    const patient = await realDB.createPatient(patientData);
+    await realDB.createPatient(patientData);
 
     // Send welcome WhatsApp message
     try {
