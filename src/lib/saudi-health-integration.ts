@@ -306,11 +306,11 @@ export class SaudiHealthSystemIntegration {
       return result;
     } catch (error) {
       console.error('Error checking claim status:', error);
-      return {
+      const result: { status: string; processedAt?: string; rejectionReason?: string } = {
         status: 'error',
-        processedAt: undefined,
         rejectionReason: 'System error'
       };
+      return result;
     }
   }
 
