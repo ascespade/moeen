@@ -1,34 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useT } from "@/components/providers/I18nProvider";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    rememberMe: false,
   });
   const { t } = useT();
+  const { loginWithCredentials, isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/dashboard');
+    }
+  }, [isAuthenticated, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
 
-    setTimeout(() => {
-      document.cookie = "mu3een_demo_auth=true; path=/; max-age=86400";
-      window.location.href = "/dashboard";
-    }, 1000);
+    try {
+      await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
+      router.push('/dashboard');
+    } catch (err) {
+      console.error('Login error:', err);
+      setError(err instanceof Error ? err.message : 'Login failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
@@ -53,6 +73,11 @@ export default function LoginPage() {
         </div>
 
         <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('auth.email','البريد الإلكتروني')}</label>
@@ -95,7 +120,14 @@ export default function LoginPage() {
 
             <div className="flex items-center justify-between">
               <label className="flex items-center">
-                <input type="checkbox" className="shrink-0 rounded border-gray-300" style={{ accentColor: "var(--brand-primary)" }} />
+                <input 
+                  type="checkbox" 
+                  name="rememberMe"
+                  checked={formData.rememberMe}
+                  onChange={handleInputChange}
+                  className="shrink-0 rounded border-gray-300" 
+                  style={{ accentColor: "var(--brand-primary)" }} 
+                />
                 <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">{t('auth.remember','تذكرني')}</span>
               </label>
               <Link href="/forgot-password" className="text-sm underline" style={{ color: "var(--brand-primary)" }}>{t('auth.forgot','نسيت كلمة المرور؟')}</Link>
@@ -118,11 +150,14 @@ export default function LoginPage() {
               variant="secondary"
               className="w-full inline-flex justify-center items-center gap-2 px-4 py-3"
               onClick={() => {
-                document.cookie = "mu3een_demo_auth=true; path=/; max-age=86400";
-                window.location.href = "/dashboard";
+                setFormData({
+                  email: "admin@mu3een.com",
+                  password: "password",
+                  rememberMe: false,
+                });
               }}
             >
-              ➡️ دخول تجريبي
+              ➡️ استخدام بيانات تجريبية
             </Button>
           </div>
         </div>
