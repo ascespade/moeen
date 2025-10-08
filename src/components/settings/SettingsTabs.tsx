@@ -218,9 +218,6 @@ export default function SettingsTabs() {
             <input
               className="h-10 rounded-md border px-3"
               value={getApiConfig().whatsapp.phoneNumberId || ""}
-              onChange={(e) => {
-                // Persist to server-side env store if implemented; keep placeholder behavior here
-              }}
               placeholder="e.g. 123456789012345"
             />
           </div>
@@ -229,9 +226,6 @@ export default function SettingsTabs() {
             <input
               className="h-10 rounded-md border px-3"
               value={getApiConfig().whatsapp.webhookUrl || ""}
-              onChange={(e) => {
-                // Persist to server-side env store if implemented; keep placeholder behavior here
-              }}
               placeholder="https://your-domain.com/api/webhooks/whatsapp"
             />
           </div>
