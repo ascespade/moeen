@@ -300,11 +300,10 @@ export class SaudiHealthSystemIntegration {
         };
       }
 
-      return {
-        status: 'unknown',
-        processedAt: undefined,
-        rejectionReason: undefined
+      const result: { status: string; processedAt?: string; rejectionReason?: string } = {
+        status: 'unknown'
       };
+      return result;
     } catch (error) {
       console.error('Error checking claim status:', error);
       return {
