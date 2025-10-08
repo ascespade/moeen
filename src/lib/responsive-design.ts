@@ -1,5 +1,5 @@
 // Comprehensive Responsive Design System for Hemam Center
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Breakpoint definitions
 export const breakpoints = {
@@ -288,21 +288,13 @@ export function ResponsiveWrapper({
 }) {
   const { isMobile, isTablet, isDesktop } = useResponsive();
   
-  const getClassName = () => {
-    let classes = className;
-    
-    if (isMobile) classes += ` ${mobileClassName}`;
-    if (isTablet) classes += ` ${tabletClassName}`;
-    if (isDesktop) classes += ` ${desktopClassName}`;
-    
-    return classes.trim();
-  };
+  let classes = className;
+  if (isMobile) classes += ` ${mobileClassName}`;
+  if (isTablet) classes += ` ${tabletClassName}`;
+  if (isDesktop) classes += ` ${desktopClassName}`;
+  classes = classes.trim();
   
-  return (
-    <div className={getClassName()}>
-      {children}
-    </div>
-  );
+  return React.createElement('div', { className: classes }, children);
 }
 
 // Export all utilities
