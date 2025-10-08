@@ -297,10 +297,18 @@ export default function SettingsTabs() {
 
       {active === "emergency" && (
         <section className="rounded-xl border p-4 grid gap-4">
-          <KeywordEditor
-            keywords={(settings?.emergency?.keywords || []) as string[]}
-            onChange={(kw) => setSettings({ ...(settings as Settings), emergency: { ...(settings?.emergency || {}), keywords: kw } })}
-          />
+          <div className="grid gap-2">
+            <label className="text-sm font-medium">كلمات الطوارئ</label>
+            <textarea 
+              className="w-full p-2 border rounded-md"
+              placeholder="أدخل الكلمات مفصولة بفواصل"
+              value={(settings?.emergency?.keywords || []).join(', ')}
+              onChange={(e) => {
+                const keywords = e.target.value.split(',').map(k => k.trim()).filter(k => k);
+                setSettings({ ...(settings as Settings), emergency: { ...(settings?.emergency || {}), keywords } });
+              }}
+            />
+          </div>
           <div>
             <button disabled={saving} className="h-10 rounded-md bg-gray-900 text-white px-4" onClick={() => save({ emergency: settings?.emergency || { keywords: [] } })}>
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -345,7 +353,7 @@ export default function SettingsTabs() {
 
       {active === "users" && (
         <section className="rounded-xl border p-4">
-          إدارة المستخدمين تُنجز من صفحة "المستخدمون". هذه تبويب عرض فقط.
+          إدارة المستخدمين تُنجز من صفحة &quot;المستخدمون&quot;. هذه تبويب عرض فقط.
         </section>
       )}
 

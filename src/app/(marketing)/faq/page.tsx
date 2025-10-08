@@ -1,3 +1,5 @@
+"use client";
+
 import { useT } from "@/components/providers/I18nProvider";
 
 export default function FAQPage() {

@@ -34,22 +34,21 @@ export function ChartsB() {
           <XAxis dataKey="day" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="messages" fill="#16a34a" />
+          <Bar dataKey="messages" fill="#2563eb" />
+          <Bar dataKey="conversations" fill="#16a34a" />
         </BarChart>
       </ResponsiveContainer>
     </div>
   );
 }
 
-export function ChartsPie() {
+export function ChartsC() {
   return (
     <div className="h-64">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
-          <Pie data={pie} innerRadius={50} outerRadius={80} paddingAngle={4} dataKey="value" nameKey="name">
-            {pie.map((_, i) => (
-              <Cell key={i} fill={colors[i % colors.length]} />
-            ))}
+          <Pie data={pie} cx="50%" cy="50%" outerRadius={80} dataKey="value">
+            {pie.map((_, i) => <Cell key={i} fill={colors[i % colors.length]} />)}
           </Pie>
           <Tooltip />
         </PieChart>

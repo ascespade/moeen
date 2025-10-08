@@ -3,6 +3,7 @@ import { Cairo, Inter } from "next/font/google";
 import "@/styles/index.css";
 import UIProvider from "@/components/providers/UIProvider";
 import StatusBanner from "@/components/common/StatusBanner";
+import ErrorBoundary from "@/components/common/ErrorBoundary";
 import "@/app/globals.css";
 import { I18nProvider } from "@/components/providers/I18nProvider";
 
@@ -36,15 +37,17 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${cairo.variable} ${inter.variable} antialiased`} suppressHydrationWarning>
-        <a href="#content" className="sr-only focus:not-sr-only fixed top-2 start-2 z-[1000] bg-gray-900 text-white px-3 py-2 rounded">تخطي إلى المحتوى</a>
-        <UIProvider>
-          <I18nProvider locale={"ar"}>
-            <StatusBanner />
-            {children}
-          </I18nProvider>
-        </UIProvider>
-      </body>
+             <body className={`${cairo.variable} ${inter.variable} antialiased`} suppressHydrationWarning>
+               <a href="#content" className="sr-only focus:not-sr-only fixed top-2 start-2 z-[1000] bg-gray-900 text-white px-3 py-2 rounded">تخطي إلى المحتوى</a>
+               <ErrorBoundary>
+                 <UIProvider>
+                   <I18nProvider locale={"ar"}>
+                     <StatusBanner />
+                     {children}
+                   </I18nProvider>
+                 </UIProvider>
+               </ErrorBoundary>
+             </body>
     </html>
   );
 }

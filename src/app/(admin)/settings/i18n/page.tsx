@@ -55,7 +55,7 @@ export default function I18nManagerPage() {
     <div className="max-w-screen-xl mx-auto px-4 py-6 grid gap-6">
       <div className="grid md:grid-cols-4 gap-3">
         <Input placeholder="بحث في المفاتيح/القيم" value={filter} onChange={e=>setFilter(e.target.value)} />
-        <select className="border rounded-md px-3" value={locale} onChange={e=>setLocale(e.target.value as any)}>
+        <select className="border rounded-md px-3" value={locale} onChange={e=>setLocale(e.target.value as 'ar'|'en')}>
           <option value="ar">ar</option>
           <option value="en">en</option>
         </select>
@@ -103,4 +103,3 @@ export default function I18nManagerPage() {
     </div>
   )
 }
-

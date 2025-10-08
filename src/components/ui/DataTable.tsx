@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 
 export type Column<T> = { key: keyof T; header: string };
 
-export function DataTable<T extends Record<string, any>>({ data, columns, pageSize = 10 }: { data: T[]; columns: Column<T>[]; pageSize?: number }) {
+export function DataTable<T extends Record<string, unknown>>({ data, columns, pageSize = 10 }: { data: T[]; columns: Column<T>[]; pageSize?: number }) {
   const [page, setPage] = useState(1)
   const [sort, setSort] = useState<{ key: keyof T; dir: 'asc'|'desc' } | null>(null)
 
@@ -28,15 +28,18 @@ export function DataTable<T extends Record<string, any>>({ data, columns, pageSi
         <thead className="bg-gray-50 dark:bg-gray-800">
           <tr>
             {columns.map(c => (
-              <th key={String(c.key)} className="px-4 py-3 text-start font-semibold cursor-pointer" onClick={()=>toggleSort(c.key)}>
-                {c.header}
+              <th key={String(c.key)} className="px-4 py-3 text-start">
+                <button onClick={()=>toggleSort(c.key)} className="flex items-center gap-1 hover:text-brand-primary">
+                  {c.header}
+                  {sort?.key===c.key && (sort.dir==='asc' ? '↑' : '↓')}
+                </button>
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-brand-border">
+        <tbody>
           {pageData.map((row, i) => (
-            <tr key={i} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+            <tr key={i} className="border-t border-brand-border hover:bg-gray-50 dark:hover:bg-gray-800">
               {columns.map(c => (
                 <td key={String(c.key)} className="px-4 py-3">{String(row[c.key])}</td>
               ))}
@@ -44,16 +47,18 @@ export function DataTable<T extends Record<string, any>>({ data, columns, pageSi
           ))}
         </tbody>
       </table>
-      <div className="flex items-center justify-between p-3 text-sm">
-        <div>Page {page} / {pages}</div>
-        <div className="flex items-center gap-2">
-          <button className="px-3 h-8 border rounded-md" onClick={()=>setPage(p=>Math.max(1,p-1))} disabled={page===1}>Prev</button>
-          <button className="px-3 h-8 border rounded-md" onClick={()=>setPage(p=>Math.min(pages,p+1))} disabled={page===pages}>Next</button>
+      <div className="px-4 py-3 bg-gray-50 dark:bg-gray-800 flex items-center justify-between">
+        <span className="text-sm text-gray-600 dark:text-gray-400">
+          {start + 1}-{Math.min(start + pageSize, sorted.length)} من {sorted.length}
+        </span>
+        <div className="flex gap-1">
+          <button onClick={()=>setPage(1)} disabled={page===1} className="px-2 py-1 text-sm border rounded disabled:opacity-50">«</button>
+          <button onClick={()=>setPage(p=>Math.max(1, p-1))} disabled={page===1} className="px-2 py-1 text-sm border rounded disabled:opacity-50">‹</button>
+          <span className="px-2 py-1 text-sm">{page} / {pages}</span>
+          <button onClick={()=>setPage(p=>Math.min(pages, p+1))} disabled={page===pages} className="px-2 py-1 text-sm border rounded disabled:opacity-50">›</button>
+          <button onClick={()=>setPage(pages)} disabled={page===pages} className="px-2 py-1 text-sm border rounded disabled:opacity-50">»</button>
         </div>
       </div>
     </div>
   )
 }
-
-export default DataTable;
-

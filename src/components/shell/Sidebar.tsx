@@ -66,7 +66,7 @@ export default function Sidebar() {
             <div className="h-8 w-8 rounded-lg bg-blue-600 text-white grid place-items-center">م</div>
             <span className="text-xl font-bold text-gray-900 dark:text-white">مركز الهمم</span>
           </div>
-          <div className="text-xs text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full inline-block">Mu'ayin</div>
+          <div className="text-xs text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full inline-block">Mu&apos;ayin</div>
         </div>
         <nav className="grid gap-1">
           {items.map((item) => {

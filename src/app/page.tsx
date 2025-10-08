@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MessageSquare, Users, BarChart3, ShieldCheck, Globe, Zap, ArrowRight } from "lucide-react";
 import { useT } from "@/components/providers/I18nProvider";
+import DirectionToggle from "@/components/common/DirectionToggle";
 
 export default function Home() {
   const { t } = useT();
@@ -94,6 +95,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      
+      {/* Direction Toggle */}
+      <DirectionToggle />
     </div>
   );
 }
