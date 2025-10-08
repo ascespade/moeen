@@ -2,17 +2,17 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  
+
   // Disable image optimization in development for faster builds
   images: {
     unoptimized: true,
   },
-  
+
   // Faster development builds
   experimental: {
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: ["lucide-react"],
   },
-  
+
   // Simple webpack config for dev
   webpack: (config, { dev }) => {
     if (dev) {
@@ -24,6 +24,6 @@ const nextConfig = {
     }
     return config;
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -1,461 +1,462 @@
 /* Utility classes */
 
 /* Spacing utilities */
-.space-y-1>*+* {
-    margin-top: 0.25rem;
+.space-y-1 > * + * {
+  margin-top: 0.25rem;
 }
 
-.space-y-2>*+* {
-    margin-top: 0.5rem;
+.space-y-2 > * + * {
+  margin-top: 0.5rem;
 }
 
-.space-y-3>*+* {
-    margin-top: 0.75rem;
+.space-y-3 > * + * {
+  margin-top: 0.75rem;
 }
 
-.space-y-4>*+* {
-    margin-top: 1rem;
+.space-y-4 > * + * {
+  margin-top: 1rem;
 }
 
-.space-y-6>*+* {
-    margin-top: 1.5rem;
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
 }
 
-.space-y-8>*+* {
-    margin-top: 2rem;
+.space-y-8 > * + * {
+  margin-top: 2rem;
 }
 
-.space-x-1>*+* {
-    margin-left: 0.25rem;
+.space-x-1 > * + * {
+  margin-left: 0.25rem;
 }
 
-.space-x-2>*+* {
-    margin-left: 0.5rem;
+.space-x-2 > * + * {
+  margin-left: 0.5rem;
 }
 
-.space-x-3>*+* {
-    margin-left: 0.75rem;
+.space-x-3 > * + * {
+  margin-left: 0.75rem;
 }
 
-.space-x-4>*+* {
-    margin-left: 1rem;
+.space-x-4 > * + * {
+  margin-left: 1rem;
 }
 
-.space-x-6>*+* {
-    margin-left: 1.5rem;
+.space-x-6 > * + * {
+  margin-left: 1.5rem;
 }
 
-.space-x-8>*+* {
-    margin-left: 2rem;
+.space-x-8 > * + * {
+  margin-left: 2rem;
 }
 
 /* Text utilities */
 .text-balance {
-    text-wrap: balance;
+  text-wrap: balance;
 }
 
 .text-pretty {
-    text-wrap: pretty;
+  text-wrap: pretty;
 }
 
 /* Scroll utilities */
 .scroll-smooth {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 .scroll-auto {
-    scroll-behavior: auto;
+  scroll-behavior: auto;
 }
 
 /* Animation utilities */
 .animate-fade-in {
-    animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .animate-fade-out {
-    animation: fadeOut 0.3s ease-in-out;
+  animation: fadeOut 0.3s ease-in-out;
 }
 
 .animate-slide-in-up {
-    animation: slideInUp 0.3s ease-out;
+  animation: slideInUp 0.3s ease-out;
 }
 
 .animate-slide-in-down {
-    animation: slideInDown 0.3s ease-out;
+  animation: slideInDown 0.3s ease-out;
 }
 
 .animate-slide-in-left {
-    animation: slideInLeft 0.3s ease-out;
+  animation: slideInLeft 0.3s ease-out;
 }
 
 .animate-slide-in-right {
-    animation: slideInRight 0.3s ease-out;
+  animation: slideInRight 0.3s ease-out;
 }
 
 .animate-scale-in {
-    animation: scaleIn 0.2s ease-out;
+  animation: scaleIn 0.2s ease-out;
 }
 
 .animate-scale-out {
-    animation: scaleOut 0.2s ease-in;
+  animation: scaleOut 0.2s ease-in;
 }
 
 /* Transition utilities */
 .transition-all {
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 .transition-colors {
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
+  transition-property:
+    color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 .transition-opacity {
-    transition-property: opacity;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 .transition-transform {
-    transition-property: transform;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 /* Layout utilities */
 .container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 @media (min-width: 640px) {
-    .container {
-        max-width: 640px;
-    }
+  .container {
+    max-width: 640px;
+  }
 }
 
 @media (min-width: 768px) {
-    .container {
-        max-width: 768px;
-    }
+  .container {
+    max-width: 768px;
+  }
 }
 
 @media (min-width: 1024px) {
-    .container {
-        max-width: 1024px;
-    }
+  .container {
+    max-width: 1024px;
+  }
 }
 
 @media (min-width: 1280px) {
-    .container {
-        max-width: 1280px;
-    }
+  .container {
+    max-width: 1280px;
+  }
 }
 
 @media (min-width: 1536px) {
-    .container {
-        max-width: 1536px;
-    }
+  .container {
+    max-width: 1536px;
+  }
 }
 
 /* Flexbox utilities */
 .flex-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .flex-between {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .flex-start {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .flex-end {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 /* Grid utilities */
 .grid-auto-fit {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
 }
 
 .grid-auto-fill {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
 }
 
 /* Position utilities */
 .absolute-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .fixed-center {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Overflow utilities */
 .overflow-hidden {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .overflow-auto {
-    overflow: auto;
+  overflow: auto;
 }
 
 .overflow-scroll {
-    overflow: scroll;
+  overflow: scroll;
 }
 
 .overflow-x-hidden {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 .overflow-y-hidden {
-    overflow-y: hidden;
+  overflow-y: hidden;
 }
 
 .overflow-x-auto {
-    overflow-x: auto;
+  overflow-x: auto;
 }
 
 .overflow-y-auto {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 /* Z-index utilities */
 .z-0 {
-    z-index: 0;
+  z-index: 0;
 }
 
 .z-10 {
-    z-index: 10;
+  z-index: 10;
 }
 
 .z-20 {
-    z-index: 20;
+  z-index: 20;
 }
 
 .z-30 {
-    z-index: 30;
+  z-index: 30;
 }
 
 .z-40 {
-    z-index: 40;
+  z-index: 40;
 }
 
 .z-50 {
-    z-index: 50;
+  z-index: 50;
 }
 
 /* Cursor utilities */
 .cursor-pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .cursor-not-allowed {
-    cursor: not-allowed;
+  cursor: not-allowed;
 }
 
 .cursor-wait {
-    cursor: wait;
+  cursor: wait;
 }
 
 .cursor-move {
-    cursor: move;
+  cursor: move;
 }
 
 .cursor-grab {
-    cursor: grab;
+  cursor: grab;
 }
 
 .cursor-grabbing {
-    cursor: grabbing;
+  cursor: grabbing;
 }
 
 /* User select utilities */
 .select-none {
-    user-select: none;
+  user-select: none;
 }
 
 .select-text {
-    user-select: text;
+  user-select: text;
 }
 
 .select-all {
-    user-select: all;
+  user-select: all;
 }
 
 .select-auto {
-    user-select: auto;
+  user-select: auto;
 }
 
 /* Pointer events utilities */
 .pointer-events-none {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 .pointer-events-auto {
-    pointer-events: auto;
+  pointer-events: auto;
 }
 
 /* Resize utilities */
 .resize-none {
-    resize: none;
+  resize: none;
 }
 
 .resize-y {
-    resize: vertical;
+  resize: vertical;
 }
 
 .resize-x {
-    resize: horizontal;
+  resize: horizontal;
 }
 
 .resize {
-    resize: both;
+  resize: both;
 }
 
 /* Appearance utilities */
 .appearance-none {
-    appearance: none;
+  appearance: none;
 }
 
 /* Outline utilities */
 .outline-none {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 /* Focus utilities */
 .focus-visible {
-    outline: 2px solid var(--color-primary-500);
-    outline-offset: 2px;
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
 }
 
 /* Print utilities */
 @media print {
-    .print-hidden {
-        display: none !important;
-    }
+  .print-hidden {
+    display: none !important;
+  }
 
-    .print-visible {
-        display: block !important;
-    }
+  .print-visible {
+    display: block !important;
+  }
 }
 
 /* Keyframe animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
+  from {
+    opacity: 0;
+  }
 
-    to {
-        opacity: 1;
-    }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
+  from {
+    opacity: 1;
+  }
 
-    to {
-        opacity: 0;
-    }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes slideInUp {
-    from {
-        transform: translateY(100%);
-        opacity: 0;
-    }
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
 
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slideInDown {
-    from {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
 
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slideInLeft {
-    from {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
 
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
 
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes scaleIn {
-    from {
-        transform: scale(0.9);
-        opacity: 0;
-    }
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
 
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes scaleOut {
-    from {
-        transform: scale(1);
-        opacity: 1;
-    }
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
 
-    to {
-        transform: scale(0.9);
-        opacity: 0;
-    }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
 }

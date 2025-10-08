@@ -70,4 +70,3 @@ export const dirForLocale = (locale: string): "rtl" | "ltr" =>
 
 export const langForLocale = (locale: string): "ar" | "en" =>
   locale?.toLowerCase() === "ar" ? "ar" : "en";
-

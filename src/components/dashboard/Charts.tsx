@@ -2,7 +2,11 @@
 
 // Lightweight chart implementations using SVG and CSS only to minimize bundle size
 
-const data = Array.from({ length: 7 }).map((_, i) => ({ day: `D${i + 1}`, messages: Math.round(50 + Math.random() * 100), conversations: Math.round(5 + Math.random() * 20) }));
+const data = Array.from({ length: 7 }).map((_, i) => ({
+  day: `D${i + 1}`,
+  messages: Math.round(50 + Math.random() * 100),
+  conversations: Math.round(5 + Math.random() * 20),
+}));
 const pie = [
   { name: "WhatsApp", value: 60, color: "#16a34a" },
   { name: "Web", value: 30, color: "#2563eb" },
@@ -13,23 +17,47 @@ export function ChartsA() {
   const width = 600;
   const height = 220;
   const padding = 30;
-  const maxY = Math.max(...data.map(d => Math.max(d.messages, d.conversations))) * 1.1;
+  const maxY =
+    Math.max(...data.map((d) => Math.max(d.messages, d.conversations))) * 1.1;
   const xStep = (width - padding * 2) / (data.length - 1);
-  const yScale = (v: number) => height - padding - (v / maxY) * (height - padding * 2);
+  const yScale = (v: number) =>
+    height - padding - (v / maxY) * (height - padding * 2);
 
-  const toPolyline = (key: 'messages' | 'conversations') =>
-    data.map((d, i) => `${padding + i * xStep},${yScale(d[key])}`).join(' ');
+  const toPolyline = (key: "messages" | "conversations") =>
+    data.map((d, i) => `${padding + i * xStep},${yScale(d[key])}`).join(" ");
 
   return (
     <div className="h-64">
       <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-full">
         <g>
           {/* Axes */}
-          <line x1={padding} y1={height - padding} x2={width - padding} y2={height - padding} stroke="#e5e7eb" />
-          <line x1={padding} y1={padding} x2={padding} y2={height - padding} stroke="#e5e7eb" />
+          <line
+            x1={padding}
+            y1={height - padding}
+            x2={width - padding}
+            y2={height - padding}
+            stroke="#e5e7eb"
+          />
+          <line
+            x1={padding}
+            y1={padding}
+            x2={padding}
+            y2={height - padding}
+            stroke="#e5e7eb"
+          />
           {/* Lines */}
-          <polyline fill="none" stroke="#2563eb" strokeWidth={2} points={toPolyline('messages')} />
-          <polyline fill="none" stroke="#16a34a" strokeWidth={2} points={toPolyline('conversations')} />
+          <polyline
+            fill="none"
+            stroke="#2563eb"
+            strokeWidth={2}
+            points={toPolyline("messages")}
+          />
+          <polyline
+            fill="none"
+            stroke="#16a34a"
+            strokeWidth={2}
+            points={toPolyline("conversations")}
+          />
         </g>
       </svg>
     </div>
@@ -37,7 +65,8 @@ export function ChartsA() {
 }
 
 export function ChartsB() {
-  const maxY = Math.max(...data.map(d => Math.max(d.messages, d.conversations))) * 1.1;
+  const maxY =
+    Math.max(...data.map((d) => Math.max(d.messages, d.conversations))) * 1.1;
   return (
     <div className="h-64 grid grid-cols-7 items-end gap-2 p-4 border border-gray-200 dark:border-gray-700 rounded-md">
       {data.map((d, i) => (
@@ -68,8 +97,8 @@ export function ChartsC() {
       acc.push({ start, end, color: seg.color });
       return acc;
     }, [])
-    .map(s => `${s.color} ${s.start}deg ${s.end}deg`)
-    .join(', ');
+    .map((s) => `${s.color} ${s.start}deg ${s.end}deg`)
+    .join(", ");
 
   return (
     <div className="h-64 flex items-center justify-center">
@@ -83,8 +112,13 @@ export function ChartsC() {
       <div className="ml-6 space-y-2">
         {pie.map((s, i) => (
           <div key={i} className="flex items-center gap-2 text-sm">
-            <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: s.color }} />
-            <span className="text-gray-700 dark:text-gray-300">{s.name}: {s.value}%</span>
+            <span
+              className="inline-block w-3 h-3 rounded-sm"
+              style={{ backgroundColor: s.color }}
+            />
+            <span className="text-gray-700 dark:text-gray-300">
+              {s.name}: {s.value}%
+            </span>
           </div>
         ))}
       </div>

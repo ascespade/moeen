@@ -23,7 +23,7 @@ export interface Session {
   id: string;
   date: Date;
   doctor: string;
-  type: 'assessment' | 'treatment' | 'follow_up';
+  type: "assessment" | "treatment" | "follow_up";
   notes: string;
   exercises: Exercise[];
   completed: boolean;
@@ -63,13 +63,13 @@ export interface ScheduleSlot {
   endTime: string;
   available: boolean;
   patientId?: string;
-  type: 'assessment' | 'treatment' | 'follow_up' | 'break';
+  type: "assessment" | "treatment" | "follow_up" | "break";
 }
 
 export interface MessageTemplate {
   id: string;
   name: string;
-  type: 'motivational' | 'reminder' | 'educational' | 'follow_up';
+  type: "motivational" | "reminder" | "educational" | "follow_up";
   content: string;
   triggerConditions: string[];
 }
@@ -79,12 +79,12 @@ export class EHRSystem {
   private doctors: Map<string, Doctor> = new Map();
 
   // Patient Management
-  createPatient(patientData: Omit<PatientRecord, 'id'>): string {
+  createPatient(patientData: Omit<PatientRecord, "id">): string {
     const id = this.generateId();
     const patient: PatientRecord = {
       id,
       ...patientData,
-      lastVisit: new Date()
+      lastVisit: new Date(),
     };
     this.patients.set(id, patient);
     return id;
@@ -114,11 +114,11 @@ export class EHRSystem {
   }
 
   // Doctor Management
-  createDoctor(doctorData: Omit<Doctor, 'id'>): string {
+  createDoctor(doctorData: Omit<Doctor, "id">): string {
     const id = this.generateId();
     const doctor: Doctor = {
       id,
-      ...doctorData
+      ...doctorData,
     };
     this.doctors.set(id, doctor);
     return id;
@@ -138,14 +138,20 @@ export class EHRSystem {
   }
 
   // Appointment Management
-  bookAppointment(patientId: string, doctorId: string, date: Date, time: string): boolean {
+  bookAppointment(
+    patientId: string,
+    doctorId: string,
+    date: Date,
+    time: string,
+  ): boolean {
     const doctor = this.doctors.get(doctorId);
     if (!doctor) return false;
 
-    const slot = doctor.schedule.find(s => 
-      s.date.toDateString() === date.toDateString() && 
-      s.startTime === time && 
-      s.available
+    const slot = doctor.schedule.find(
+      (s) =>
+        s.date.toDateString() === date.toDateString() &&
+        s.startTime === time &&
+        s.available,
     );
 
     if (!slot) return false;
@@ -167,9 +173,9 @@ export class EHRSystem {
     const doctor = this.doctors.get(doctorId);
     if (!doctor) return [];
 
-    return doctor.schedule.filter(slot => 
-      slot.date.toDateString() === date.toDateString() && 
-      slot.available
+    return doctor.schedule.filter(
+      (slot) =>
+        slot.date.toDateString() === date.toDateString() && slot.available,
     );
   }
 
@@ -193,7 +199,10 @@ export class EHRSystem {
     const patient = this.patients.get(patientId);
     if (!patient) return false;
 
-    const lastSession = patient.currentTreatment.sessions[patient.currentTreatment.sessions.length - 1];
+    const lastSession =
+      patient.currentTreatment.sessions[
+        patient.currentTreatment.sessions.length - 1
+      ];
     if (lastSession) {
       lastSession.exercises.push(exercise);
       this.patients.set(patientId, patient);
@@ -206,9 +215,12 @@ export class EHRSystem {
     const patient = this.patients.get(patientId);
     if (!patient) return false;
 
-    const lastSession = patient.currentTreatment.sessions[patient.currentTreatment.sessions.length - 1];
+    const lastSession =
+      patient.currentTreatment.sessions[
+        patient.currentTreatment.sessions.length - 1
+      ];
     if (lastSession) {
-      const exercise = lastSession.exercises.find(e => e.id === exerciseId);
+      const exercise = lastSession.exercises.find((e) => e.id === exerciseId);
       if (exercise) {
         exercise.completed = true;
         this.patients.set(patientId, patient);
@@ -236,26 +248,26 @@ export class CalendarAPI {
     const schedule = this.schedules.get(doctorId);
     if (!schedule) return [];
 
-    return schedule.filter(slot => 
-      slot.date.toDateString() === date.toDateString()
+    return schedule.filter(
+      (slot) => slot.date.toDateString() === date.toDateString(),
     );
   }
 
   getAvailableTimeSlots(doctorId: string, date: Date): string[] {
     const schedule = this.getSchedule(doctorId, date);
     return schedule
-      .filter(slot => slot.available)
-      .map(slot => slot.startTime);
+      .filter((slot) => slot.available)
+      .map((slot) => slot.startTime);
   }
 
   // Recurring Appointments
   createRecurringAppointment(
-    doctorId: string, 
-    patientId: string, 
-    startDate: Date, 
-    endDate: Date, 
-    frequency: 'daily' | 'weekly' | 'monthly',
-    time: string
+    doctorId: string,
+    patientId: string,
+    startDate: Date,
+    endDate: Date,
+    frequency: "daily" | "weekly" | "monthly",
+    time: string,
   ): boolean {
     const schedule = this.schedules.get(doctorId);
     if (!schedule) return false;
@@ -270,18 +282,18 @@ export class CalendarAPI {
         endTime: this.calculateEndTime(time, 60), // 60 minutes default
         available: false,
         patientId,
-        type: 'treatment'
+        type: "treatment",
       });
 
       // Increment date based on frequency
       switch (frequency) {
-        case 'daily':
+        case "daily":
           currentDate.setDate(currentDate.getDate() + 1);
           break;
-        case 'weekly':
+        case "weekly":
           currentDate.setDate(currentDate.getDate() + 7);
           break;
-        case 'monthly':
+        case "monthly":
           currentDate.setMonth(currentDate.getMonth() + 1);
           break;
       }
@@ -293,20 +305,20 @@ export class CalendarAPI {
   }
 
   private calculateEndTime(startTime: string, durationMinutes: number): string {
-    const [hoursRaw, minutesRaw] = startTime.split(':');
+    const [hoursRaw, minutesRaw] = startTime.split(":");
     const hours = Number(hoursRaw ?? 0);
     const minutes = Number(minutesRaw ?? 0);
     const totalMinutes = hours * 60 + minutes + durationMinutes;
     const endHours = Math.floor(totalMinutes / 60);
     const endMinutes = totalMinutes % 60;
-    return `${endHours.toString().padStart(2, '0')}:${endMinutes.toString().padStart(2, '0')}`;
+    return `${endHours.toString().padStart(2, "0")}:${endMinutes.toString().padStart(2, "0")}`;
   }
 }
 
 export interface Message {
   id: string;
   recipient: string;
-  type: 'whatsapp' | 'email' | 'sms';
+  type: "whatsapp" | "email" | "sms";
   content: string;
   scheduledTime: Date;
   sent: boolean;
@@ -322,10 +334,10 @@ export class CommunicationAutomation {
     recipient: string,
     content: string,
     scheduledTime: Date,
-    type: 'whatsapp' | 'email' | 'sms' = 'whatsapp',
-    patientId?: string
+    type: "whatsapp" | "email" | "sms" = "whatsapp",
+    patientId?: string,
   ): string {
-    const base: Omit<Message, 'patientId'> = {
+    const base: Omit<Message, "patientId"> = {
       id: this.generateId(),
       recipient,
       content,
@@ -341,36 +353,46 @@ export class CommunicationAutomation {
 
   // Automated Reminders
   scheduleAppointmentReminder(patientId: string, appointmentDate: Date): void {
-    const reminderTime = new Date(appointmentDate.getTime() - 24 * 60 * 60 * 1000); // 24 hours before
-    
+    const reminderTime = new Date(
+      appointmentDate.getTime() - 24 * 60 * 60 * 1000,
+    ); // 24 hours before
+
     this.scheduleMessage(
       patientId,
       `تذكير: لديك موعد غداً في مركز الهمم. ننتظرك!`,
       reminderTime,
-      'whatsapp',
-      patientId
+      "whatsapp",
+      patientId,
     );
   }
 
   // Motivational Messages
-  scheduleMotivationalMessage(patientId: string, message: string, scheduledTime: Date): void {
+  scheduleMotivationalMessage(
+    patientId: string,
+    message: string,
+    scheduledTime: Date,
+  ): void {
     this.scheduleMessage(
       patientId,
       message,
       scheduledTime,
-      'whatsapp',
-      patientId
+      "whatsapp",
+      patientId,
     );
   }
 
   // Family Notifications
-  notifyFamilyMember(familyMemberId: string, message: string, patientId: string): void {
+  notifyFamilyMember(
+    familyMemberId: string,
+    message: string,
+    patientId: string,
+  ): void {
     this.scheduleMessage(
       familyMemberId,
       message,
       new Date(),
-      'whatsapp',
-      patientId
+      "whatsapp",
+      patientId,
     );
   }
 
@@ -378,13 +400,15 @@ export class CommunicationAutomation {
   processScheduledMessages(): Message[] {
     const now = new Date();
     const messagesToSend = this.messageQueue.filter(
-      message => !message.sent && message.scheduledTime <= now
+      (message) => !message.sent && message.scheduledTime <= now,
     );
 
-    messagesToSend.forEach(message => {
+    messagesToSend.forEach((message) => {
       message.sent = true;
       // Here you would integrate with actual messaging services
-      console.log(`Sending ${message.type} to ${message.recipient}: ${message.content}`);
+      console.log(
+        `Sending ${message.type} to ${message.recipient}: ${message.content}`,
+      );
     });
 
     return messagesToSend;
@@ -406,18 +430,24 @@ export class DoctorsDashboard {
     messages: string[];
   } {
     const doctor = this.doctors.get(doctorId);
-    if (!doctor) return { todayAppointments: [], upcomingAppointments: [], patientUpdates: [], messages: [] };
+    if (!doctor)
+      return {
+        todayAppointments: [],
+        upcomingAppointments: [],
+        patientUpdates: [],
+        messages: [],
+      };
 
     const today = new Date();
-    const todayAppointments = doctor.schedule.filter(slot => 
-      slot.date.toDateString() === today.toDateString()
+    const todayAppointments = doctor.schedule.filter(
+      (slot) => slot.date.toDateString() === today.toDateString(),
     );
 
-    const upcomingAppointments = doctor.schedule.filter(slot => 
-      slot.date > today && slot.available === false
+    const upcomingAppointments = doctor.schedule.filter(
+      (slot) => slot.date > today && slot.available === false,
     );
 
-    const patientUpdates = doctor.patients.map(_patientId => {
+    const patientUpdates = doctor.patients.map((_patientId) => {
       // This would fetch from EHR system
       return {} as PatientRecord;
     });
@@ -426,7 +456,7 @@ export class DoctorsDashboard {
       todayAppointments,
       upcomingAppointments,
       patientUpdates,
-      messages: [] // Would contain conversation summaries
+      messages: [], // Would contain conversation summaries
     };
   }
 

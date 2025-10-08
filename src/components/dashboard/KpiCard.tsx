@@ -9,4 +9,3 @@ export default function KpiCard({ title, value, hint }: Props) {
     </div>
   );
 }
-
