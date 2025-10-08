@@ -1,0 +1,11 @@
+{
+  "tasks": [
+    {
+      "name": "-",
+      "status": "build",
+      "stdout": "",
+      "stderr": "\n> hemam-center-ai-assistant@1.0.0 build\n> next build\n\n   \u25b2 Next.js 14.0.4\n   - Environments: .env.local\n\n   Creating an optimized production build ...\n \u2713 Compiled successfully\n   Linting and checking validity of types ...\n\n> hemam-center-ai-assistant@1.0.0 build\n> next build\n\n   \u25b2 Next.js 14.0.4\n   - Environments: .env.local\n\n   Creating an optimized production build ...\n \u2713 Compiled successfully\n   Linting and checking validity of types ...\n",
+      "timestamp": ""
+    }
+  ]
+}

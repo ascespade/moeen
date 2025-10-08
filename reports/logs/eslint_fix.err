@@ -1,0 +1,11 @@
+{
+  "tasks": [
+    {
+      "name": "-",
+      "status": "eslint_fix",
+      "stdout": "",
+      "stderr": "",
+      "timestamp": ""
+    }
+  ]
+}
