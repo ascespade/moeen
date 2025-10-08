@@ -1,0 +1,13 @@
+{
+  "tasks": [],
+  "skipped": [
+    {
+      "name": "lighthouse",
+      "reason": "server_not_reachable",
+      "timestamp": ""
+    }
+  ],
+  "consoleErrors": 8,
+  "vision2030_alignment": "This optimization aligns with Saudi Vision 2030 digital transformation goals by improving national-grade web performance, accessibility, and readiness for scalable cloud deployment.",
+  "finalStatus": "no_tasks_recorded"
+}
