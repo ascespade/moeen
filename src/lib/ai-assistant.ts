@@ -35,7 +35,7 @@ export interface CrisisKeywords {
 }
 
 export class HemamAssistant {
-  private persona: AssistantPersona;
+  private readonly persona: AssistantPersona;
   private crisisKeywords: CrisisKeywords;
   private emergencyContacts: {
     crisis: string;
@@ -77,6 +77,10 @@ export class HemamAssistant {
       medical: '+966501234567', // Center's emergency line
       admin: '+966501234568' // Admin emergency line
     };
+  }
+
+  public getPersona(): AssistantPersona {
+    return this.persona;
   }
 
   // Analyze message for crisis indicators
@@ -158,7 +162,7 @@ export class HemamAssistant {
   }
 
   // New beneficiary onboarding flow
-  private handleNewBeneficiaryFlow(message: string): string {
+  private handleNewBeneficiaryFlow(_message: string): string {
     return `أهلاً بك في مركز الهمم، أنا مُعين، مساعدك الرقمي. نحن هنا لتقديم الدعم لكل فرد. كيف يمكننا خدمتك اليوم؟ يمكنك اختيار:
 1️⃣ استفسار جديد
 2️⃣ حجز تقييم أولي  
@@ -166,7 +170,7 @@ export class HemamAssistant {
   }
 
   // Appointment booking flow
-  private handleAppointmentFlow(message: string): string {
+  private handleAppointmentFlow(_message: string): string {
     return `هل هذا موعد جديد أم متابعة؟ يمكنني مساعدتك في:
 1️⃣ حجز موعد جديد
 2️⃣ إعادة جدولة موعد
@@ -175,7 +179,7 @@ export class HemamAssistant {
   }
 
   // General inquiry handling
-  private handleGeneralInquiry(message: string): string {
+  private handleGeneralInquiry(_message: string): string {
     return `يمكنني مساعدتك في:
 1️⃣ معلومات عن المركز
 2️⃣ الخدمات المتاحة
@@ -184,7 +188,7 @@ export class HemamAssistant {
   }
 
   // Family support flow
-  private handleFamilySupportFlow(message: string): string {
+  private handleFamilySupportFlow(_message: string): string {
     return `نحن نقدر دوركم كعائلة في رحلة الرعاية. يمكنني مساعدتكم في:
 1️⃣ تنسيق المواعيد
 2️⃣ الحصول على التحديثات
@@ -193,7 +197,7 @@ export class HemamAssistant {
   }
 
   // Default flow
-  private handleDefaultFlow(message: string): string {
+  private handleDefaultFlow(_message: string): string {
     return `كيف يمكنني مساعدتك اليوم؟ يمكنك اختيار:
 1️⃣ إدارة المواعيد
 2️⃣ التواصل مع طبيبك
@@ -214,7 +218,10 @@ export class HemamAssistant {
       return `تهانينا الحارة يا بطل! لقد أكملت بنجاح ${milestone}. نحن في مركز الهمم فخورون جداً بإصرارك وهمتك العالية. إلى الأمام دائماً!`;
     }
 
-    return motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+    const idx = Math.floor(Math.random() * motivationalMessages.length);
+    const selected = motivationalMessages[idx];
+    const fallback: string = 'نحن معك وكل خطوة تُحدث فرقاً — استمر!';
+    return selected ?? fallback;
   }
 
   // Generate proactive care message

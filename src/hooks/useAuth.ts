@@ -1,7 +1,7 @@
 // Authentication hooks
 import { useState, useEffect, useCallback } from 'react';
 import { User } from '@/types';
-import { getUser, setUser, removeUser, getToken, setToken, removeToken, clearAuth } from '@/utils/storage';
+import { getUser, setUser, getToken, setToken, clearAuth } from '@/utils/storage';
 
 interface AuthState {
     user: User | null;
@@ -14,6 +14,7 @@ interface AuthActions {
     login: (user: User, token: string) => void;
     logout: () => void;
     updateUser: (user: Partial<User>) => void;
+    loginWithCredentials: (email: string, password: string, rememberMe?: boolean) => Promise<{ success: boolean }>;
 }
 
 export const useAuth = (): AuthState & AuthActions => {

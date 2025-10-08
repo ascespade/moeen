@@ -12,10 +12,10 @@ interface PerformanceMetrics {
   responseTime: number;
   memoryUsage: NodeJS.MemoryUsage;
   cpuUsage: NodeJS.CpuUsage;
-  userAgent?: string;
-  ip?: string;
-  userId?: string;
-  error?: string;
+  userAgent?: string | undefined;
+  ip?: string | undefined;
+  userId?: string | undefined;
+  error?: string | undefined;
 }
 
 // Performance thresholds
@@ -92,7 +92,7 @@ export class PerformanceMonitor {
     const context = (request as any).__performanceContext;
     if (!context) return;
 
-    const { requestId, startTime, startCpuUsage, startMemory } = context;
+    const { requestId, startTime, startCpuUsage } = context;
     const endTime = process.hrtime(startTime);
     const endCpuUsage = process.cpuUsage(startCpuUsage);
     const endMemory = process.memoryUsage();
@@ -418,7 +418,7 @@ interface RealTimeMetrics {
 export function withPerformanceMonitoring(handler: Function) {
   return async (request: NextRequest, ...args: any[]) => {
     const monitor = PerformanceMonitor.getInstance();
-    const requestId = monitor.startMonitoring(request);
+    monitor.startMonitoring(request);
     
     try {
       const response = await handler(request, ...args);

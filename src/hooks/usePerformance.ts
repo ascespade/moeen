@@ -2,7 +2,6 @@ import { useEffect, useCallback, useRef } from 'react';
 
 // Performance monitoring hook
 export const usePerformance = () => {
-  const performanceRef = useRef<PerformanceObserver | null>(null);
 
   // Monitor Core Web Vitals
   const measureCoreWebVitals = useCallback(() => {
@@ -12,7 +11,9 @@ export const usePerformance = () => {
     const lcpObserver = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       const lastEntry = entries[entries.length - 1];
-      console.log('LCP:', lastEntry.startTime);
+      if (lastEntry && 'startTime' in lastEntry) {
+        console.log('LCP:', (lastEntry as PerformanceEntry).startTime);
+      }
     });
 
     try {
@@ -25,7 +26,10 @@ export const usePerformance = () => {
     const fidObserver = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       entries.forEach((entry) => {
-        console.log('FID:', entry.processingStart - entry.startTime);
+        const e: any = entry as any;
+        if (typeof e.processingStart === 'number' && typeof e.startTime === 'number') {
+          console.log('FID:', e.processingStart - e.startTime);
+        }
       });
     });
 

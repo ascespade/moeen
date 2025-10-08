@@ -48,12 +48,8 @@ export interface FileMetadata {
 // File upload handler class
 export class FileUploadHandler {
   private static instance: FileUploadHandler;
-  private uploadDir: string;
-  private tempDir: string;
 
   private constructor() {
-    this.uploadDir = process.env.UPLOAD_DIR || './uploads';
-    this.tempDir = process.env.TEMP_DIR || './temp';
   }
 
   static getInstance(): FileUploadHandler {
@@ -152,11 +148,11 @@ export class FileUploadHandler {
   getFileType(fileName: string): 'image' | 'document' | 'audio' | 'video' | 'medical' {
     const extension = extname(fileName).toLowerCase().slice(1);
     
-    if (ALLOWED_FILE_TYPES.images.includes(extension)) return 'image';
-    if (ALLOWED_FILE_TYPES.documents.includes(extension)) return 'document';
-    if (ALLOWED_FILE_TYPES.audio.includes(extension)) return 'audio';
-    if (ALLOWED_FILE_TYPES.video.includes(extension)) return 'video';
-    if (ALLOWED_FILE_TYPES.medical.includes(extension)) return 'medical';
+    if ((ALLOWED_FILE_TYPES.images as unknown as string[]).includes(extension)) return 'image';
+    if ((ALLOWED_FILE_TYPES.documents as unknown as string[]).includes(extension)) return 'document';
+    if ((ALLOWED_FILE_TYPES.audio as unknown as string[]).includes(extension)) return 'audio';
+    if ((ALLOWED_FILE_TYPES.video as unknown as string[]).includes(extension)) return 'video';
+    if ((ALLOWED_FILE_TYPES.medical as unknown as string[]).includes(extension)) return 'medical';
     
     return 'document'; // Default fallback
   }
@@ -176,12 +172,12 @@ export class FileUploadHandler {
   // Get allowed extensions for file type
   getAllowedExtensions(fileType: string): string[] {
     switch (fileType) {
-      case 'image': return ALLOWED_FILE_TYPES.images;
-      case 'document': return ALLOWED_FILE_TYPES.documents;
-      case 'audio': return ALLOWED_FILE_TYPES.audio;
-      case 'video': return ALLOWED_FILE_TYPES.video;
-      case 'medical': return ALLOWED_FILE_TYPES.medical;
-      default: return ALLOWED_FILE_TYPES.documents;
+      case 'image': return [...ALLOWED_FILE_TYPES.images];
+      case 'document': return [...ALLOWED_FILE_TYPES.documents];
+      case 'audio': return [...ALLOWED_FILE_TYPES.audio];
+      case 'video': return [...ALLOWED_FILE_TYPES.video];
+      case 'medical': return [...ALLOWED_FILE_TYPES.medical];
+      default: return [...ALLOWED_FILE_TYPES.documents];
     }
   }
 }
@@ -230,7 +226,7 @@ export class LocalFileStorage implements FileStorage {
     const filePath = `${this.uploadDir}/${fileName}`;
     const checksum = await this.fileHandler.calculateChecksum(file);
 
-    const fileMetadata: FileMetadata = {
+    const baseMetadata = {
       id: fileId,
       originalName: file.name,
       fileName,
@@ -239,18 +235,22 @@ export class LocalFileStorage implements FileStorage {
       mimeType: file.type,
       fileType,
       uploadedBy: metadata.uploadedBy || 'unknown',
-      patientId: metadata.patientId,
-      sessionId: metadata.sessionId,
-      appointmentId: metadata.appointmentId,
       tags: metadata.tags || [],
-      description: metadata.description,
       isPublic: metadata.isPublic || false,
       isEncrypted: metadata.isEncrypted || false,
       checksum,
       uploadedAt: new Date(),
-      expiresAt: metadata.expiresAt,
-      downloadCount: 0
-    };
+      downloadCount: 0,
+    } as const;
+
+    const fileMetadata: FileMetadata = {
+      ...baseMetadata,
+      ...(metadata.patientId ? { patientId: metadata.patientId } : {}),
+      ...(metadata.sessionId ? { sessionId: metadata.sessionId } : {}),
+      ...(metadata.appointmentId ? { appointmentId: metadata.appointmentId } : {}),
+      ...(metadata.description ? { description: metadata.description } : {}),
+      ...(metadata.expiresAt ? { expiresAt: metadata.expiresAt } : {}),
+    } as FileMetadata;
 
     // Save file to disk (in a real implementation, this would be handled by the server)
     // For now, we'll just store the metadata in the database
@@ -265,7 +265,7 @@ export class LocalFileStorage implements FileStorage {
     return fileMetadata;
   }
 
-  async download(fileId: string): Promise<Buffer> {
+  async download(_fileId: string): Promise<Buffer> {
     // In a real implementation, read file from disk
     // For now, return empty buffer
     return Buffer.from('');
@@ -283,13 +283,13 @@ export class LocalFileStorage implements FileStorage {
     return true;
   }
 
-  async getMetadata(fileId: string): Promise<FileMetadata | null> {
+  async getMetadata(_fileId: string): Promise<FileMetadata | null> {
     // In a real implementation, query database for file metadata
     // For now, return null
     return null;
   }
 
-  async listFiles(filters: {
+  async listFiles(_filters: {
     userId?: string;
     patientId?: string;
     fileType?: string;
@@ -302,7 +302,7 @@ export class LocalFileStorage implements FileStorage {
     return [];
   }
 
-  async updateMetadata(fileId: string, updates: Partial<FileMetadata>): Promise<FileMetadata> {
+  async updateMetadata(_fileId: string, _updates: Partial<FileMetadata>): Promise<FileMetadata> {
     // In a real implementation, update file metadata in database
     // For now, return empty metadata
     return {} as FileMetadata;
@@ -336,7 +336,6 @@ export async function handleFileUpload(request: NextRequest): Promise<NextRespon
       );
     }
 
-    const fileHandler = FileUploadHandler.getInstance();
     const storage = new LocalFileStorage();
 
     // Upload file
@@ -392,6 +391,7 @@ export async function handleFileDownload(fileId: string): Promise<NextResponse> 
     }
 
     const fileBuffer = await storage.download(fileId);
+    const arrayBuffer = fileBuffer.buffer.slice(fileBuffer.byteOffset, fileBuffer.byteOffset + fileBuffer.byteLength);
 
     // Update download count and last accessed
     await storage.updateMetadata(fileId, {
@@ -399,7 +399,7 @@ export async function handleFileDownload(fileId: string): Promise<NextResponse> 
       lastAccessedAt: new Date()
     });
 
-    return new NextResponse(fileBuffer, {
+    return new NextResponse(arrayBuffer as ArrayBuffer, {
       headers: {
         'Content-Type': metadata.mimeType,
         'Content-Disposition': `attachment; filename="${metadata.originalName}"`,
@@ -428,14 +428,19 @@ export async function handleFileList(request: NextRequest): Promise<NextResponse
     const offset = parseInt(searchParams.get('offset') || '0');
 
     const storage = new LocalFileStorage();
-    const files = await storage.listFiles({
-      userId,
-      patientId,
-      fileType: fileType || undefined,
-      tags,
-      limit,
-      offset
-    });
+    const filters: {
+      userId?: string;
+      patientId?: string;
+      fileType?: string;
+      tags?: string[];
+      limit?: number;
+      offset?: number;
+    } = { limit, offset };
+    if (userId) filters.userId = userId;
+    if (patientId) filters.patientId = patientId;
+    if (fileType) filters.fileType = fileType;
+    if (tags && tags.length) filters.tags = tags;
+    const files = await storage.listFiles(filters);
 
     return NextResponse.json({
       success: true,

@@ -1,6 +1,7 @@
 // API hooks
 import { useState, useEffect, useCallback } from 'react';
 import { api, ApiError } from '@/utils/api';
+import { ApiResponse } from '@/types';
 
 interface UseApiState<T> {
     data: T | null;
@@ -23,7 +24,8 @@ export const useApi = <T = any>(
             setLoading(true);
             setError(null);
             const response = await api.get<T>(endpoint, options);
-            setData(response.data || response);
+            const payload = (response as unknown as ApiResponse<T>);
+            setData((payload && 'data' in payload ? payload.data : (response as unknown as T)) ?? null);
         } catch (err) {
             const errorMessage = err instanceof ApiError ? err.message : 'An error occurred';
             setError(errorMessage);
@@ -59,7 +61,8 @@ export const useApiPost = <T = any, D = any>(
             setLoading(true);
             setError(null);
             const response = await api.post<T>(endpoint, requestData, options);
-            setData(response.data || response);
+            const payload = (response as unknown as ApiResponse<T>);
+            setData((payload && 'data' in payload ? payload.data : (response as unknown as T)) ?? null);
             return response;
         } catch (err) {
             const errorMessage = err instanceof ApiError ? err.message : 'An error occurred';
@@ -91,7 +94,8 @@ export const useApiPut = <T = any, D = any>(
             setLoading(true);
             setError(null);
             const response = await api.put<T>(endpoint, requestData, options);
-            setData(response.data || response);
+            const payload = (response as unknown as ApiResponse<T>);
+            setData((payload && 'data' in payload ? payload.data : (response as unknown as T)) ?? null);
             return response;
         } catch (err) {
             const errorMessage = err instanceof ApiError ? err.message : 'An error occurred';
@@ -123,7 +127,8 @@ export const useApiDelete = <T = any>(
             setLoading(true);
             setError(null);
             const response = await api.delete<T>(endpoint, options);
-            setData(response.data || response);
+            const payload = (response as unknown as ApiResponse<T>);
+            setData((payload && 'data' in payload ? payload.data : (response as unknown as T)) ?? null);
             return response;
         } catch (err) {
             const errorMessage = err instanceof ApiError ? err.message : 'An error occurred';

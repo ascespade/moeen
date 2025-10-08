@@ -35,7 +35,7 @@ export class AppError extends Error {
     details?: any
   ) {
     super(message);
-    this.type = ErrorType;
+    this.type = type;
     this.statusCode = statusCode;
     this.isOperational = isOperational;
     this.details = details;
@@ -101,14 +101,27 @@ export class ErrorHandler {
       };
 
       // Log to database
-      await realDB.logAudit({
-        user_id: request?.headers.get('x-user-id') || undefined,
+      const userId = request?.headers.get('x-user-id') || undefined;
+      const payload: {
+        user_id?: string;
+        action: string;
+        table_name?: string;
+        record_id?: string;
+        old_values?: any;
+        new_values?: any;
+        ip_address?: string;
+        user_agent?: string;
+      } = {
         action: 'ERROR_LOG',
         table_name: 'error_logs',
         new_values: errorLog,
-        ip_address: request?.headers.get('x-forwarded-for') || request?.headers.get('x-real-ip'),
-        user_agent: request?.headers.get('user-agent')
-      });
+      };
+      const ip = request?.headers.get('x-forwarded-for') || request?.headers.get('x-real-ip');
+      const ua = request?.headers.get('user-agent');
+      if (ip) payload.ip_address = ip;
+      if (ua) payload.user_agent = ua;
+      if (userId) payload.user_id = userId;
+      await realDB.logAudit(payload);
 
       // Log to console in development
       if (this.isDevelopment) {
@@ -143,7 +156,7 @@ export class ErrorHandler {
     );
   }
 
-  private static handleAuthError(error: any): NextResponse {
+  private static handleAuthError(_error: any): NextResponse {
     return NextResponse.json(
       {
         success: false,
@@ -154,49 +167,49 @@ export class ErrorHandler {
     );
   }
 
-  private static handleCastError(error: any): NextResponse {
+  private static handleCastError(_error: any): NextResponse {
     return NextResponse.json(
       {
         success: false,
         error: 'Invalid data format',
         code: ErrorType.VALIDATION_ERROR,
-        details: this.isDevelopment ? error.message : undefined
+        details: this.isDevelopment ? _error.message : undefined
       },
       { status: 400 }
     );
   }
 
-  private static handleDuplicateError(error: any): NextResponse {
+  private static handleDuplicateError(_error: any): NextResponse {
     return NextResponse.json(
       {
         success: false,
         error: 'Resource already exists',
         code: ErrorType.CONFLICT,
-        details: this.isDevelopment ? error.keyValue : undefined
+        details: this.isDevelopment ? _error.keyValue : undefined
       },
       { status: 409 }
     );
   }
 
-  private static handleNetworkError(error: any): NextResponse {
+  private static handleNetworkError(_error: any): NextResponse {
     return NextResponse.json(
       {
         success: false,
         error: 'Network error',
         code: ErrorType.NETWORK_ERROR,
-        details: this.isDevelopment ? error.message : undefined
+        details: this.isDevelopment ? _error.message : undefined
       },
       { status: 503 }
     );
   }
 
-  private static handleConnectionError(error: any): NextResponse {
+  private static handleConnectionError(_error: any): NextResponse {
     return NextResponse.json(
       {
         success: false,
         error: 'Service unavailable',
         code: ErrorType.EXTERNAL_API_ERROR,
-        details: this.isDevelopment ? error.message : undefined
+        details: this.isDevelopment ? _error.message : undefined
       },
       { status: 503 }
     );
