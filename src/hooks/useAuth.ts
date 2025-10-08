@@ -50,10 +50,48 @@ export const useAuth = (): AuthState & AuthActions => {
         setTokenState(tokenData);
     }, []);
 
-    const logout = useCallback(() => {
-        clearAuth();
-        setUserState(null);
-        setTokenState(null);
+    const loginWithCredentials = useCallback(async (email: string, password: string, rememberMe: boolean = false) => {
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password, rememberMe }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Login failed');
+            }
+
+            if (data.success) {
+                login(data.data.user, data.data.token);
+                return { success: true };
+            } else {
+                throw new Error(data.error || 'Login failed');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            throw error;
+        }
+    }, [login]);
+
+    const logout = useCallback(async () => {
+        try {
+            // Call logout API to clear server-side session
+            await fetch('/api/auth/logout', {
+                method: 'POST',
+            });
+        } catch (error) {
+            console.error('Logout API error:', error);
+        } finally {
+            // Clear local storage regardless of API call result
+            clearAuth();
+            setUserState(null);
+            setTokenState(null);
+        }
     }, []);
 
     const updateUser = useCallback((userData: Partial<User>) => {
@@ -70,6 +108,7 @@ export const useAuth = (): AuthState & AuthActions => {
         isAuthenticated: !!user && !!token,
         isLoading,
         login,
+        loginWithCredentials,
         logout,
         updateUser,
     };
