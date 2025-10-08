@@ -19,10 +19,10 @@ export default function useBrandColorFromLogo(logoPath: string) {
         const data = ctx.getImageData(0, 0, size, size).data;
         let r = 0, g = 0, b = 0, n = 0;
         for (let i = 0; i < data.length; i += 4) {
-          const rr = data[i];
-          const gg = data[i + 1];
-          const bb = data[i + 2];
-          const aa = data[i + 3];
+          const rr = data[i] ?? 0;
+          const gg = data[i + 1] ?? 0;
+          const bb = data[i + 2] ?? 0;
+          const aa = data[i + 3] ?? 255;
           if (aa < 200) continue; // skip transparent
           // ignore very bright/very dark pixels
           const luma = 0.2126 * rr + 0.7152 * gg + 0.0722 * bb;

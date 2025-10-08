@@ -74,9 +74,9 @@ export class PrivateCenterIntegration {
   private centerId: string;
   private centerName: string;
   private licenseNumber: string;
-  private mohApiEndpoint: string;
-  private sfdApiEndpoint: string;
-  private cchiApiEndpoint: string;
+  private readonly mohApiEndpoint: string;
+  private readonly sfdApiEndpoint: string;
+  private readonly cchiApiEndpoint: string;
 
   constructor() {
     this.centerId = process.env.CENTER_ID || 'HEMAM001';
@@ -339,7 +339,7 @@ export class PrivateCenterIntegration {
   }
 
   // Private Center Analytics
-  async getCenterAnalytics(period: 'monthly' | 'quarterly' | 'annual'): Promise<{
+  async getCenterAnalytics(_period: 'monthly' | 'quarterly' | 'annual'): Promise<{
     totalPatients: number;
     newPatients: number;
     completedSessions: number;
@@ -448,7 +448,7 @@ export class PrivateCenterIntegration {
 
   // API Call Methods
   private async callMOHAPI(method: string, endpoint: string, data?: any): Promise<any> {
-    console.log(`Calling MOH API: ${method} ${endpoint}`, data);
+    console.log(`Calling MOH API: ${method} ${this.mohApiEndpoint}${endpoint}`, data);
     
     // Mock response for development
     return {
@@ -458,7 +458,7 @@ export class PrivateCenterIntegration {
   }
 
   private async callSFDAPI(method: string, endpoint: string, data?: any): Promise<any> {
-    console.log(`Calling SFDA API: ${method} ${endpoint}`, data);
+    console.log(`Calling SFDA API: ${method} ${this.sfdApiEndpoint}${endpoint}`, data);
     
     // Mock response for development
     return {
@@ -468,7 +468,7 @@ export class PrivateCenterIntegration {
   }
 
   private async callCCHIAPI(method: string, endpoint: string, data?: any): Promise<any> {
-    console.log(`Calling CCHI API: ${method} ${endpoint}`, data);
+    console.log(`Calling CCHI API: ${method} ${this.cchiApiEndpoint}${endpoint}`, data);
     
     // Mock response for development
     return {

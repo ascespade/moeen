@@ -2,11 +2,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { validateForm } from '@/utils/validation';
 
-interface FormField<T> {
-    value: T;
-    error?: string;
-    touched: boolean;
-}
+// removed unused FormField interface
 
 interface FormState<T> {
     values: T;
@@ -53,7 +49,8 @@ export const useForm = <T extends Record<string, any>>(
             return { isValid: true, errors: {} };
         }
 
-        return validateForm(state.values, validationRules);
+        const rules = validationRules as Record<keyof T, (value: any) => { isValid: boolean; error?: string }>;
+        return validateForm(state.values, rules);
     }, [state.values, validationRules]);
 
     // Update validation state
@@ -95,8 +92,10 @@ export const useForm = <T extends Record<string, any>>(
     // Clear field error
     const clearFieldError = useCallback((field: keyof T) => {
         setState(prev => {
-            const { [field]: _, ...errors } = prev.errors;
-            return { ...prev, errors };
+            const newErrors: Partial<Record<keyof T, string>> = { ...prev.errors };
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            delete (newErrors as any)[field as any];
+            return { ...prev, errors: newErrors } as typeof prev;
         });
     }, []);
 
@@ -114,8 +113,10 @@ export const useForm = <T extends Record<string, any>>(
             setFieldValue(field, value);
 
             if (validateOnChange) {
-                const rule = validationRules[field as keyof typeof validationRules];
-                if (rule) {
+                const rule = validationRules[field as keyof typeof validationRules] as
+                    | ((value: any) => { isValid: boolean; error?: string })
+                    | undefined;
+                if (typeof rule === 'function') {
                     const result = rule(value);
                     if (!result.isValid) {
                         setFieldError(field, result.error || 'Invalid value');
@@ -134,8 +135,10 @@ export const useForm = <T extends Record<string, any>>(
             setFieldTouched(field);
 
             if (validateOnBlur) {
-                const rule = validationRules[field as keyof typeof validationRules];
-                if (rule) {
+                const rule = validationRules[field as keyof typeof validationRules] as
+                    | ((value: any) => { isValid: boolean; error?: string })
+                    | undefined;
+                if (typeof rule === 'function') {
                     const result = rule(state.values[field]);
                     if (!result.isValid) {
                         setFieldError(field, result.error || 'Invalid value');

@@ -293,7 +293,9 @@ export class CalendarAPI {
   }
 
   private calculateEndTime(startTime: string, durationMinutes: number): string {
-    const [hours, minutes] = startTime.split(':').map(Number);
+    const [hoursRaw, minutesRaw] = startTime.split(':');
+    const hours = Number(hoursRaw ?? 0);
+    const minutes = Number(minutesRaw ?? 0);
     const totalMinutes = hours * 60 + minutes + durationMinutes;
     const endHours = Math.floor(totalMinutes / 60);
     const endMinutes = totalMinutes % 60;
@@ -301,19 +303,19 @@ export class CalendarAPI {
   }
 }
 
-export class CommunicationAutomation {
-  private messageQueue: Message[] = [];
-  private templates: Map<string, MessageTemplate> = new Map();
+export interface Message {
+  id: string;
+  recipient: string;
+  type: 'whatsapp' | 'email' | 'sms';
+  content: string;
+  scheduledTime: Date;
+  sent: boolean;
+  patientId?: string;
+}
 
-  interface Message {
-    id: string;
-    recipient: string;
-    type: 'whatsapp' | 'email' | 'sms';
-    content: string;
-    scheduledTime: Date;
-    sent: boolean;
-    patientId?: string;
-  }
+export class CommunicationAutomation {
+  messageQueue: Message[] = [];
+  templates: Map<string, MessageTemplate> = new Map();
 
   // Message Scheduling
   scheduleMessage(
@@ -323,15 +325,15 @@ export class CommunicationAutomation {
     type: 'whatsapp' | 'email' | 'sms' = 'whatsapp',
     patientId?: string
   ): string {
-    const message: Message = {
+    const base: Omit<Message, 'patientId'> = {
       id: this.generateId(),
       recipient,
       content,
       scheduledTime,
       type,
       sent: false,
-      patientId
     };
+    const message: Message = patientId ? { ...base, patientId } : base;
 
     this.messageQueue.push(message);
     return message.id;
@@ -415,7 +417,7 @@ export class DoctorsDashboard {
       slot.date > today && slot.available === false
     );
 
-    const patientUpdates = doctor.patients.map(patientId => {
+    const patientUpdates = doctor.patients.map(_patientId => {
       // This would fetch from EHR system
       return {} as PatientRecord;
     });

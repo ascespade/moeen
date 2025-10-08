@@ -51,7 +51,7 @@ export class RealTimeNotificationSystem {
     this.io = io;
     
     // Initialize email transporter
-    this.emailTransporter = nodemailer.createTransporter({
+    this.emailTransporter = nodemailer.createTransport({
       host: config.email.host,
       port: config.email.port,
       secure: config.email.secure,

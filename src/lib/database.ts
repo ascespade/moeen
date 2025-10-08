@@ -351,7 +351,8 @@ export class DatabaseManager {
       await this.pool.query('SELECT 1');
       return { status: 'healthy', connected: this.isConnected };
     } catch (error) {
-      return { status: 'unhealthy', error: error.message };
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      return { status: 'unhealthy', error: message };
     }
   }
 

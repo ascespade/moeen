@@ -35,8 +35,11 @@ export class MemoryCache {
   set<T>(key: string, data: T, ttl?: number): void {
     // Remove oldest entries if cache is full
     if (this.cache.size >= this.config.maxSize) {
-      const oldestKey = this.cache.keys().next().value;
-      this.cache.delete(oldestKey);
+      const iter = this.cache.keys().next();
+      const oldestKey: string | undefined = iter && iter.value ? String(iter.value) : undefined;
+      if (oldestKey !== undefined) {
+        this.cache.delete(oldestKey);
+      }
     }
 
     this.cache.set(key, {
@@ -246,10 +249,10 @@ export class CacheManager {
   }
 
   async getAppointments(
-    patientId?: string, 
-    doctorId?: string, 
-    date?: string, 
-    fetcher: () => Promise<any>
+    fetcher: () => Promise<any>,
+    patientId?: string,
+    doctorId?: string,
+    date?: string,
   ): Promise<any> {
     return this.get(CacheKeys.appointments(patientId, doctorId, date), fetcher, 2 * 60 * 1000); // 2 minutes
   }
@@ -355,11 +358,11 @@ export class CacheManager {
 }
 
 // Cache middleware
-export function withCache<T>(
+export function withCache(
   keyGenerator: (request: NextRequest) => string,
   ttl?: number
 ) {
-  return function(target: any, propertyName: string, descriptor: PropertyDescriptor) {
+  return function(_target: any, _propertyName: string, descriptor: PropertyDescriptor) {
     const method = descriptor.value;
     const cache = CacheManager.getInstance();
 

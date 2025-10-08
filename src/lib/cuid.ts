@@ -27,12 +27,7 @@ function timestamp(): string {
   return Date.now().toString(36)
 }
 
-/**
- * Get process ID (simulated for browser environment)
- */
-function pid(): string {
-  return Math.floor(Math.random() * 1000).toString(36)
-}
+// Note: pid() omitted intentionally to avoid unused symbol; timestamp/counter ensure uniqueness
 
 /**
  * Get hostname hash (simulated for browser environment)
@@ -112,7 +107,7 @@ export function isValidCuid(id: string): boolean {
  */
 export function extractPrefix(id: string): string | null {
   const match = id.match(/^([a-z]+)_/)
-  return match ? match[1] : null
+  return match && typeof match[1] === 'string' ? match[1] : null
 }
 
 /**
