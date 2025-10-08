@@ -1,10 +1,7 @@
-import type { NextConfig } from "next";
-import withBundleAnalyzer from "@next/bundle-analyzer";
-import path from "path";
+const withBundleAnalyzer = require("@next/bundle-analyzer");
+const path = require("path");
 
-const baseConfig: NextConfig = {
-  // Ensure Next.js treats this folder as the workspace root
-  outputFileTracingRoot: path.join(__dirname),
+const baseConfig = {
   // Basic optimizations
   compress: true,
   poweredByHeader: false,
@@ -30,9 +27,9 @@ const baseConfig: NextConfig = {
     optimizePackageImports: ['lucide-react'],
   },
 
-  // Webpack configuration
+  // Webpack configuration - simplified for faster dev builds
   webpack: (config, { dev, isServer }) => {
-    // Optimize bundle size
+    // Only optimize for production builds
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: 'all',
@@ -41,12 +38,6 @@ const baseConfig: NextConfig = {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors',
             chunks: 'all',
-          },
-          common: {
-            name: 'common',
-            minChunks: 2,
-            chunks: 'all',
-            enforce: true,
           },
         },
       };
@@ -97,12 +88,8 @@ const baseConfig: NextConfig = {
     ];
   },
 
-  // Environment variables
-  env: {
-    CUSTOM_KEY: process.env.CUSTOM_KEY,
-  },
 };
 
 const withAnalyzer = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
 
-export default withAnalyzer(baseConfig);
+module.exports = withAnalyzer(baseConfig);

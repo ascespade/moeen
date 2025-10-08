@@ -19,11 +19,6 @@ export default function UIProvider({ children }: { children: React.ReactNode }) 
   useBrandColorFromLogo("/hemam-logo.jpg");
 
   useEffect(() => {
-    import("preline")
-      .then(() => {
-        window.HSStaticMethods?.autoInit?.();
-      })
-      .catch(() => { });
     const html = document.documentElement;
     const isEnglish = pathname?.startsWith("/en");
     html.setAttribute("lang", isEnglish ? "en" : "ar");

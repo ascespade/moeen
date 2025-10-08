@@ -2,7 +2,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "../../node_modules/preline/variants.css";
 
 /* CSS Custom Properties */
 :root {
