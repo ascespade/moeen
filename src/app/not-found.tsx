@@ -6,8 +6,8 @@ import { Home, ArrowLeft, Search, HelpCircle } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full text-center">
+    <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center p-4">
+      <div className="container-app text-center">
         {/* Logo */}
         <div className="mb-8">
           <Image
@@ -26,7 +26,7 @@ export default function NotFound() {
         </div>
 
         {/* 404 Content */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-soft border border-brand">
           <div className="text-8xl font-bold text-[var(--brand-primary)] mb-4">
             404
           </div>
@@ -62,7 +62,7 @@ export default function NotFound() {
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
               <Link
-                href="/contact"
+                href={"/contact"}
                 className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
               >
                 <HelpCircle className="w-5 h-5 text-[var(--brand-primary)]" />
@@ -71,7 +71,7 @@ export default function NotFound() {
                 </span>
               </Link>
               <Link
-                href="/faq"
+                href={"/faq"}
                 className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
               >
                 <Search className="w-5 h-5 text-[var(--brand-primary)]" />
@@ -89,28 +89,28 @@ export default function NotFound() {
             </h4>
             <div className="flex flex-wrap gap-2 justify-center">
               <Link
-                href="/about"
+                href={"/about"}
                 className="text-sm text-[var(--brand-primary)] hover:underline"
               >
                 من نحن
               </Link>
               <span className="text-gray-300">•</span>
               <Link
-                href="/features"
+                href={"/features"}
                 className="text-sm text-[var(--brand-primary)] hover:underline"
               >
                 المميزات
               </Link>
               <span className="text-gray-300">•</span>
               <Link
-                href="/pricing"
+                href={"/pricing"}
                 className="text-sm text-[var(--brand-primary)] hover:underline"
               >
                 الأسعار
               </Link>
               <span className="text-gray-300">•</span>
               <Link
-                href="/contact"
+                href={"/contact"}
                 className="text-sm text-[var(--brand-primary)] hover:underline"
               >
                 تواصل

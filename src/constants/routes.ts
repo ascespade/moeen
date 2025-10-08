@@ -1,5 +1,11 @@
 // Route constants
 export const ROUTES = {
+  AUTH: {
+    LOGIN: "/login",
+    REGISTER: "/register",
+    FORGOT_PASSWORD: "/forgot-password",
+    RESET_PASSWORD: "/reset-password",
+  },
   // Public routes
   HOME: "/",
   LOGIN: "/login",
@@ -42,6 +48,37 @@ export const ROUTES = {
     LIST: "/conversations",
     VIEW: (id: string) => `/conversations/${id}`,
   },
+
+  // Chatbot routes
+  CHATBOT: {
+    FLOWS: "/chatbot/flows",
+    FLOW: (id: string) => `/chatbot/flows/${id}`,
+    TEMPLATES: "/chatbot/templates",
+    TEMPLATE: (id: string) => `/chatbot/templates/${id}`,
+    INTEGRATIONS: "/chatbot/integrations",
+    ANALYTICS: "/chatbot/analytics",
+  },
+
+  // CRM routes
+  CRM: {
+    CONTACTS: "/crm/contacts",
+    CONTACT: (id: string) => `/crm/contacts/${id}`,
+    LEADS: "/crm/leads",
+    DEALS: "/crm/deals",
+    ACTIVITIES: "/crm/activities",
+  },
+
+  // Healthcare routes
+  HEALTH: {
+    APPOINTMENTS: "/appointments",
+    SESSIONS: "/sessions",
+    PATIENTS: "/patients",
+    PATIENT: (id: string) => `/patients/${id}`,
+    INSURANCE_CLAIMS: "/insurance-claims",
+  },
+
+  // Settings
+  SETTINGS: "/settings",
 
   // API routes
   API: {
