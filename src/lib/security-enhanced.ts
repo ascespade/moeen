@@ -152,7 +152,8 @@ export class AuditLogger {
       const userId = request.headers.get("x-user-id");
 
       await realDB.logAudit({
-        user_id: userId || undefined,
+        // Only include user_id when present to satisfy exactOptionalPropertyTypes
+        ...(userId ? { user_id: userId } : {}),
         action,
         table_name: details?.table_name,
         record_id: details?.record_id,
@@ -200,8 +201,13 @@ export class EnhancedAuthMiddleware {
       }
 
       // Get user from database
-      const user = await realDB.getUser(decoded.userId);
-      if (!user || !user.is_active) {
+      const user = (await realDB.getUser(decoded.userId)) as unknown as {
+        id: string;
+        email?: string;
+        role?: string;
+        is_active?: boolean;
+      } | null;
+      if (!user || user.is_active === false) {
         return { success: false, error: "User not found or inactive" };
       }
 
@@ -312,9 +318,11 @@ export function secureAPI(
         }
 
         // Add user info to headers for the handler
-        request.headers.set("x-user-id", auth.user.id);
-        request.headers.set("x-user-email", auth.user.email);
-        request.headers.set("x-user-role", auth.user.role);
+        if (auth.user?.id) request.headers.set("x-user-id", auth.user.id);
+        if (auth.user?.email)
+          request.headers.set("x-user-email", auth.user.email);
+        if (auth.user?.role)
+          request.headers.set("x-user-role", auth.user.role);
       }
 
       // CSRF Protection for state-changing methods
@@ -349,9 +357,10 @@ export function secureAPI(
       console.error("Security middleware error:", error);
 
       // Log the error
+      const err = error as { message?: string; stack?: string };
       await AuditLogger.log(request, "SECURITY_ERROR", {
-        error: error.message,
-        stack: error.stack,
+        error: err?.message || String(error),
+        stack: err?.stack,
       });
 
       return NextResponse.json(
@@ -394,13 +403,4 @@ export class DataValidator {
   }
 }
 
-// Export security utilities
-export {
-  EnhancedRateLimiter,
-  EnhancedCSRFProtection,
-  EnhancedSessionSecurity,
-  InputSanitizer,
-  AuditLogger,
-  EnhancedAuthMiddleware,
-  DataValidator,
-};
+// Note: individual classes and functions are already exported above.
