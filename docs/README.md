@@ -38,30 +38,34 @@ Mu3een is a modern communication platform built with Next.js, React, and TypeScr
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm 8+
 - Git
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd mu3een
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Set up environment variables:
+
 ```bash
 cp .env.example .env.local
 # Edit .env.local with your configuration
 ```
 
 4. Run the development server:
+
 ```bash
 npm run dev
 ```
@@ -224,11 +228,13 @@ JWT_SECRET=your-jwt-secret
 ### Build and Deploy
 
 1. Build the application:
+
 ```bash
 npm run build
 ```
 
 2. Start the production server:
+
 ```bash
 npm run start
 ```

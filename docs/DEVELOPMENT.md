@@ -42,17 +42,20 @@ Install the following extensions for the best development experience:
 ### Environment Setup
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd mu3een
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Copy environment file:
+
 ```bash
 cp .env.example .env.local
 ```
@@ -60,6 +63,7 @@ cp .env.example .env.local
 4. Configure environment variables in `.env.local`
 
 5. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -199,11 +203,11 @@ import { useCounter } from '@/hooks/useCounter';
 describe('useCounter', () => {
   it('should increment counter', () => {
     const { result } = renderHook(() => useCounter(0));
-    
+
     act(() => {
       result.current.increment();
     });
-    
+
     expect(result.current.count).toBe(1);
   });
 });
@@ -268,18 +272,18 @@ import { specificFunction } from 'large-library';
 
 ```typescript
 // Console logging
-console.log('Debug info:', { data, error });
+console.log("Debug info:", { data, error });
 
 // Error boundaries
 class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo);
+    console.error("Error caught by boundary:", error, errorInfo);
   }
 }
 
 // Debug mode
-if (process.env.NODE_ENV === 'development') {
-  console.log('Debug information');
+if (process.env.NODE_ENV === "development") {
+  console.log("Debug information");
 }
 ```
 

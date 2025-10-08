@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { saudiHealthSystem } from '@/lib/saudi-health-integration';
+import { NextRequest, NextResponse } from "next/server";
+import { saudiHealthSystem } from "@/lib/saudi-health-integration";
 
 export async function POST(request: NextRequest) {
   try {
@@ -8,17 +8,20 @@ export async function POST(request: NextRequest) {
 
     if (!nationalId || !providerCode) {
       return NextResponse.json(
-        { 
-          success: false, 
-          error: 'National ID and provider code are required',
-          code: 'MISSING_REQUIRED_FIELDS' 
+        {
+          success: false,
+          error: "National ID and provider code are required",
+          code: "MISSING_REQUIRED_FIELDS",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // Verify insurance coverage
-    const coverage = await saudiHealthSystem.verifyInsuranceCoverage(nationalId, providerCode);
+    const coverage = await saudiHealthSystem.verifyInsuranceCoverage(
+      nationalId,
+      providerCode,
+    );
 
     return NextResponse.json({
       success: true,
@@ -26,20 +29,19 @@ export async function POST(request: NextRequest) {
         nationalId,
         providerCode,
         coverage,
-        verifiedAt: new Date().toISOString()
-      }
-    });
-
-  } catch (error) {
-    console.error('Saudi health verification error:', error);
-    
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Failed to verify insurance coverage',
-        code: 'VERIFICATION_FAILED' 
+        verifiedAt: new Date().toISOString(),
       },
-      { status: 500 }
+    });
+  } catch (error) {
+    console.error("Saudi health verification error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Failed to verify insurance coverage",
+        code: "VERIFICATION_FAILED",
+      },
+      { status: 500 },
     );
   }
 }

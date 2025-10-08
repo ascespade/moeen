@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { 
-  Building2, 
-  Shield, 
-  TrendingUp, 
-  AlertTriangle, 
+import {
+  Building2,
+  Shield,
+  TrendingUp,
+  AlertTriangle,
   CheckCircle,
   FileText,
   Users,
@@ -15,7 +15,7 @@ import {
   LineChart,
   Calendar,
   Award,
-  Activity
+  Activity,
 } from "lucide-react";
 
 interface CenterCompliance {
@@ -42,7 +42,7 @@ export default function PrivateCenterDashboard() {
   const [compliance, setCompliance] = useState<CenterCompliance | null>(null);
   const [analytics, setAnalytics] = useState<CenterAnalytics | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedPeriod, setSelectedPeriod] = useState('monthly');
+  const [selectedPeriod, setSelectedPeriod] = useState("monthly");
 
   useEffect(() => {
     fetchComplianceData();
@@ -51,27 +51,29 @@ export default function PrivateCenterDashboard() {
 
   const fetchComplianceData = async () => {
     try {
-      const response = await fetch('/api/private-center/compliance');
+      const response = await fetch("/api/private-center/compliance");
       const data = await response.json();
-      
+
       if (data.success) {
         setCompliance(data.data.compliance);
       }
     } catch (error) {
-      console.error('Error fetching compliance data:', error);
+      console.error("Error fetching compliance data:", error);
     }
   };
 
   const fetchAnalyticsData = async () => {
     try {
-      const response = await fetch(`/api/private-center/analytics?period=${selectedPeriod}`);
+      const response = await fetch(
+        `/api/private-center/analytics?period=${selectedPeriod}`,
+      );
       const data = await response.json();
-      
+
       if (data.success) {
         setAnalytics(data.data.analytics);
       }
     } catch (error) {
-      console.error('Error fetching analytics data:', error);
+      console.error("Error fetching analytics data:", error);
     } finally {
       setLoading(false);
     }
@@ -99,8 +101,12 @@ export default function PrivateCenterDashboard() {
                 <Building2 className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">لوحة تحكم المركز</h1>
-                <p className="text-lg text-gray-600">مركز الهمم - إدارة شاملة</p>
+                <h1 className="text-3xl font-bold text-gray-900">
+                  لوحة تحكم المركز
+                </h1>
+                <p className="text-lg text-gray-600">
+                  مركز الهمم - إدارة شاملة
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
@@ -123,39 +129,51 @@ export default function PrivateCenterDashboard() {
         {compliance && (
           <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold text-gray-900">حالة الامتثال</h3>
-              <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-                compliance.compliant 
-                  ? 'bg-green-100 text-green-800' 
-                  : 'bg-red-100 text-red-800'
-              }`}>
-                {compliance.compliant ? 'متوافق' : 'غير متوافق'}
+              <h3 className="text-xl font-semibold text-gray-900">
+                حالة الامتثال
+              </h3>
+              <div
+                className={`px-3 py-1 rounded-full text-sm font-medium ${
+                  compliance.compliant
+                    ? "bg-green-100 text-green-800"
+                    : "bg-red-100 text-red-800"
+                }`}
+              >
+                {compliance.compliant ? "متوافق" : "غير متوافق"}
               </div>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
                   <Shield className="w-8 h-8 text-blue-600" />
                 </div>
-                <h4 className="font-semibold text-gray-900 mb-2">درجة الامتثال</h4>
-                <p className="text-2xl font-bold text-blue-600">{compliance.score}%</p>
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  درجة الامتثال
+                </h4>
+                <p className="text-2xl font-bold text-blue-600">
+                  {compliance.score}%
+                </p>
               </div>
-              
+
               <div className="text-center">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                   <CheckCircle className="w-8 h-8 text-green-600" />
                 </div>
                 <h4 className="font-semibold text-gray-900 mb-2">المخالفات</h4>
-                <p className="text-2xl font-bold text-green-600">{compliance.violations.length}</p>
+                <p className="text-2xl font-bold text-green-600">
+                  {compliance.violations.length}
+                </p>
               </div>
-              
+
               <div className="text-center">
                 <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
                   <AlertTriangle className="w-8 h-8 text-orange-600" />
                 </div>
                 <h4 className="font-semibold text-gray-900 mb-2">التوصيات</h4>
-                <p className="text-2xl font-bold text-orange-600">{compliance.recommendations.length}</p>
+                <p className="text-2xl font-bold text-orange-600">
+                  {compliance.recommendations.length}
+                </p>
               </div>
             </div>
 
@@ -190,9 +208,15 @@ export default function PrivateCenterDashboard() {
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">إجمالي المرضى</p>
-                    <p className="text-3xl font-bold text-gray-900">{analytics.totalPatients}</p>
-                    <p className="text-sm text-green-600">+{analytics.newPatients} جديد</p>
+                    <p className="text-sm font-medium text-gray-600">
+                      إجمالي المرضى
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900">
+                      {analytics.totalPatients}
+                    </p>
+                    <p className="text-sm text-green-600">
+                      +{analytics.newPatients} جديد
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Users className="w-6 h-6 text-blue-600" />
@@ -203,8 +227,12 @@ export default function PrivateCenterDashboard() {
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">الجلسات المكتملة</p>
-                    <p className="text-3xl font-bold text-gray-900">{analytics.completedSessions}</p>
+                    <p className="text-sm font-medium text-gray-600">
+                      الجلسات المكتملة
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900">
+                      {analytics.completedSessions}
+                    </p>
                     <p className="text-sm text-green-600">هذا الشهر</p>
                   </div>
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -216,8 +244,12 @@ export default function PrivateCenterDashboard() {
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">الإيرادات</p>
-                    <p className="text-3xl font-bold text-gray-900">{analytics.revenue.toLocaleString()} ريال</p>
+                    <p className="text-sm font-medium text-gray-600">
+                      الإيرادات
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900">
+                      {analytics.revenue.toLocaleString()} ريال
+                    </p>
                     <p className="text-sm text-green-600">هذا الشهر</p>
                   </div>
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -229,8 +261,12 @@ export default function PrivateCenterDashboard() {
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">درجة الامتثال</p>
-                    <p className="text-3xl font-bold text-gray-900">{analytics.complianceScore}%</p>
+                    <p className="text-sm font-medium text-gray-600">
+                      درجة الامتثال
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900">
+                      {analytics.complianceScore}%
+                    </p>
                     <p className="text-sm text-green-600">ممتاز</p>
                   </div>
                   <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -242,30 +278,44 @@ export default function PrivateCenterDashboard() {
 
             {/* Quality Metrics */}
             <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">مؤشرات الجودة</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                مؤشرات الجودة
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                     <TrendingUp className="w-8 h-8 text-green-600" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-2">رضا المرضى</h4>
-                  <p className="text-2xl font-bold text-green-600">{analytics.qualityMetrics.patientSatisfaction}/5</p>
+                  <h4 className="font-semibold text-gray-900 mb-2">
+                    رضا المرضى
+                  </h4>
+                  <p className="text-2xl font-bold text-green-600">
+                    {analytics.qualityMetrics.patientSatisfaction}/5
+                  </p>
                 </div>
-                
+
                 <div className="text-center">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
                     <BarChart3 className="w-8 h-8 text-blue-600" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-2">نتائج العلاج</h4>
-                  <p className="text-2xl font-bold text-blue-600">{analytics.qualityMetrics.treatmentOutcomes}/5</p>
+                  <h4 className="font-semibold text-gray-900 mb-2">
+                    نتائج العلاج
+                  </h4>
+                  <p className="text-2xl font-bold text-blue-600">
+                    {analytics.qualityMetrics.treatmentOutcomes}/5
+                  </p>
                 </div>
-                
+
                 <div className="text-center">
                   <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
                     <AlertTriangle className="w-8 h-8 text-red-600" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-2">الحوادث الأمنية</h4>
-                  <p className="text-2xl font-bold text-red-600">{analytics.qualityMetrics.safetyIncidents}</p>
+                  <h4 className="font-semibold text-gray-900 mb-2">
+                    الحوادث الأمنية
+                  </h4>
+                  <p className="text-2xl font-bold text-red-600">
+                    {analytics.qualityMetrics.safetyIncidents}
+                  </p>
                 </div>
               </div>
             </div>
@@ -274,7 +324,9 @@ export default function PrivateCenterDashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">نمو المرضى</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    نمو المرضى
+                  </h3>
                   <TrendingUp className="w-5 h-5 text-green-600" />
                 </div>
                 <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
@@ -287,7 +339,9 @@ export default function PrivateCenterDashboard() {
 
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">توزيع الخدمات</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    توزيع الخدمات
+                  </h3>
                   <PieChart className="w-5 h-5 text-blue-600" />
                 </div>
                 <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">

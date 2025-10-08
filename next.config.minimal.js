@@ -2,17 +2,17 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
-  
+
   // Disable everything for speed
   images: {
     unoptimized: true,
   },
-  
+
   // Minimal experimental features
   experimental: {
     optimizePackageImports: [],
   },
-  
+
   // Ultra-fast webpack config
   webpack: (config, { dev }) => {
     if (dev) {
@@ -24,7 +24,6 @@ const nextConfig = {
     }
     return config;
   },
-}
+};
 
-module.exports = nextConfig
-
+module.exports = nextConfig;

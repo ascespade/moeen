@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from "react";
 
 // Hook to prevent memory leaks by cleaning up resources
 export const useMemoryLeakPrevention = () => {
@@ -9,11 +9,11 @@ export const useMemoryLeakPrevention = () => {
   }, []);
 
   const cleanup = useCallback(() => {
-    cleanupFunctions.current.forEach(fn => {
+    cleanupFunctions.current.forEach((fn) => {
       try {
         fn();
       } catch (error) {
-        console.error('Error during cleanup:', error);
+        console.error("Error during cleanup:", error);
       }
     });
     cleanupFunctions.current = [];
@@ -30,7 +30,7 @@ export const useMemoryLeakPrevention = () => {
 export const useEventListener = <T extends keyof WindowEventMap>(
   eventName: T,
   handler: (event: WindowEventMap[T]) => void,
-  element?: Element | Window | Document
+  element?: Element | Window | Document,
 ) => {
   const savedHandler = useRef<(event: WindowEventMap[T]) => void>();
 
@@ -40,7 +40,7 @@ export const useEventListener = <T extends keyof WindowEventMap>(
 
   useEffect(() => {
     const targetElement = element || window;
-    
+
     if (!targetElement.addEventListener) return;
 
     const eventListener = (event: Event) => {
@@ -130,7 +130,15 @@ export const useAbortController = () => {
 };
 
 // Hook for managing WebSocket connections with automatic cleanup
-export const useWebSocket = (url: string, options?: { onOpen?: () => void; onMessage?: (event: MessageEvent) => void; onClose?: () => void; onError?: (event: Event) => void }) => {
+export const useWebSocket = (
+  url: string,
+  options?: {
+    onOpen?: () => void;
+    onMessage?: (event: MessageEvent) => void;
+    onClose?: () => void;
+    onError?: (event: Event) => void;
+  },
+) => {
   const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {

@@ -1,28 +1,35 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { privateCenterIntegration } from '@/lib/private-center-integration';
+import { NextRequest, NextResponse } from "next/server";
+import { privateCenterIntegration } from "@/lib/private-center-integration";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { 
-      patientId, 
-      nationalId, 
-      serviceCode, 
-      diagnosisCode, 
-      serviceDate, 
-      amount, 
-      provider, 
-      notes 
+    const {
+      patientId,
+      nationalId,
+      serviceCode,
+      diagnosisCode,
+      serviceDate,
+      amount,
+      provider,
+      notes,
     } = body;
 
-    if (!patientId || !nationalId || !serviceCode || !diagnosisCode || !amount || !provider) {
+    if (
+      !patientId ||
+      !nationalId ||
+      !serviceCode ||
+      !diagnosisCode ||
+      !amount ||
+      !provider
+    ) {
       return NextResponse.json(
-        { 
-          success: false, 
-          error: 'All required fields must be provided',
-          code: 'MISSING_REQUIRED_FIELDS' 
+        {
+          success: false,
+          error: "All required fields must be provided",
+          code: "MISSING_REQUIRED_FIELDS",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -35,7 +42,7 @@ export async function POST(request: NextRequest) {
       serviceDate: serviceDate || new Date().toISOString(),
       amount: parseFloat(amount),
       provider,
-      notes
+      notes,
     });
 
     return NextResponse.json({
@@ -46,20 +53,19 @@ export async function POST(request: NextRequest) {
         serviceCode,
         diagnosisCode,
         result,
-        submittedAt: new Date().toISOString()
-      }
-    });
-
-  } catch (error) {
-    console.error('CCHI claim submission error:', error);
-    
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Failed to submit CCHI claim',
-        code: 'CCHI_CLAIM_FAILED' 
+        submittedAt: new Date().toISOString(),
       },
-      { status: 500 }
+    });
+  } catch (error) {
+    console.error("CCHI claim submission error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Failed to submit CCHI claim",
+        code: "CCHI_CLAIM_FAILED",
+      },
+      { status: 500 },
     );
   }
 }

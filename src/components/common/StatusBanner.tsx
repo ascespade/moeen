@@ -15,9 +15,13 @@ export default function StatusBanner() {
           <LiveDot color="#F59E0B" />
           هناك صيانة مجدولة الساعة 11 مساءً. قد تتأثر الإشعارات.
         </div>
-        <button className="h-8 px-3 rounded-md border border-amber-200 dark:border-amber-800" onClick={() => setVisible(false)}>إخفاء</button>
+        <button
+          className="h-8 px-3 rounded-md border border-amber-200 dark:border-amber-800"
+          onClick={() => setVisible(false)}
+        >
+          إخفاء
+        </button>
       </div>
     </div>
   );
 }
-

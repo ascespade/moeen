@@ -5,14 +5,19 @@ interface LoadingSpinnerProps {
   className?: string;
 }
 
-export default function LoadingSpinner({ size = "md", className = "" }: LoadingSpinnerProps) {
+export default function LoadingSpinner({
+  size = "md",
+  className = "",
+}: LoadingSpinnerProps) {
   const sizeClasses = {
     sm: "w-4 h-4",
-    md: "w-6 h-6", 
-    lg: "w-8 h-8"
+    md: "w-6 h-6",
+    lg: "w-8 h-8",
   };
 
   return (
-    <div className={`animate-spin rounded-full border-2 border-[var(--brand-border)] border-t-[var(--brand-primary)] ${sizeClasses[size]} ${className}`} />
+    <div
+      className={`animate-spin rounded-full border-2 border-[var(--brand-border)] border-t-[var(--brand-primary)] ${sizeClasses[size]} ${className}`}
+    />
   );
 }

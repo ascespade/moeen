@@ -14,7 +14,11 @@ declare global {
   }
 }
 
-export default function UIProvider({ children }: { children: React.ReactNode }) {
+export default function UIProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   useBrandColorFromLogo("/hemam-logo.jpg");
 
@@ -25,7 +29,5 @@ export default function UIProvider({ children }: { children: React.ReactNode }) 
     html.setAttribute("dir", isEnglish ? "ltr" : "rtl");
   }, [pathname]);
 
-  return (
-    <div>{children}</div>
-  );
+  return <div>{children}</div>;
 }

@@ -2,7 +2,13 @@
 
 import * as React from "react";
 
-export function Tooltip({ label, children }: { label: string; children: React.ReactNode }) {
+export function Tooltip({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <span className="hs-tooltip inline-block">
       <span className="hs-tooltip-toggle inline-block cursor-default">
@@ -16,4 +22,3 @@ export function Tooltip({ label, children }: { label: string; children: React.Re
 }
 
 export default Tooltip;
-

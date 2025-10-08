@@ -1,22 +1,22 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef } from "react";
 
 // Performance monitoring hook
 export const usePerformance = () => {
-  const performanceRef = useRef<PerformanceObserver | null>(null);
-
   // Monitor Core Web Vitals
   const measureCoreWebVitals = useCallback(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     // Largest Contentful Paint (LCP)
     const lcpObserver = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       const lastEntry = entries[entries.length - 1];
-      console.log('LCP:', lastEntry.startTime);
+      if (lastEntry && "startTime" in lastEntry) {
+        console.log("LCP:", (lastEntry as PerformanceEntry).startTime);
+      }
     });
 
     try {
-      lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+      lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
     } catch (e) {
       // LCP not supported
     }
@@ -25,12 +25,18 @@ export const usePerformance = () => {
     const fidObserver = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       entries.forEach((entry) => {
-        console.log('FID:', entry.processingStart - entry.startTime);
+        const e: any = entry as any;
+        if (
+          typeof e.processingStart === "number" &&
+          typeof e.startTime === "number"
+        ) {
+          console.log("FID:", e.processingStart - e.startTime);
+        }
       });
     });
 
     try {
-      fidObserver.observe({ entryTypes: ['first-input'] });
+      fidObserver.observe({ entryTypes: ["first-input"] });
     } catch (e) {
       // FID not supported
     }
@@ -44,11 +50,11 @@ export const usePerformance = () => {
           clsValue += entry.value;
         }
       });
-      console.log('CLS:', clsValue);
+      console.log("CLS:", clsValue);
     });
 
     try {
-      clsObserver.observe({ entryTypes: ['layout-shift'] });
+      clsObserver.observe({ entryTypes: ["layout-shift"] });
     } catch (e) {
       // CLS not supported
     }
@@ -62,15 +68,15 @@ export const usePerformance = () => {
 
   // Monitor memory usage
   const measureMemory = useCallback(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const checkMemory = () => {
-      if ('memory' in performance) {
+      if ("memory" in performance) {
         const memory = (performance as any).memory;
-        console.log('Memory usage:', {
-          used: Math.round(memory.usedJSHeapSize / 1048576) + ' MB',
-          total: Math.round(memory.totalJSHeapSize / 1048576) + ' MB',
-          limit: Math.round(memory.jsHeapSizeLimit / 1048576) + ' MB',
+        console.log("Memory usage:", {
+          used: Math.round(memory.usedJSHeapSize / 1048576) + " MB",
+          total: Math.round(memory.totalJSHeapSize / 1048576) + " MB",
+          limit: Math.round(memory.jsHeapSizeLimit / 1048576) + " MB",
         });
       }
     };
@@ -82,17 +88,17 @@ export const usePerformance = () => {
 
   // Monitor long tasks
   const measureLongTasks = useCallback(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const longTaskObserver = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       entries.forEach((entry) => {
-        console.log('Long task detected:', entry.duration + 'ms');
+        console.log("Long task detected:", entry.duration + "ms");
       });
     });
 
     try {
-      longTaskObserver.observe({ entryTypes: ['longtask'] });
+      longTaskObserver.observe({ entryTypes: ["longtask"] });
       return () => longTaskObserver.disconnect();
     } catch (e) {
       // Long task API not supported
@@ -108,7 +114,7 @@ export const usePerformance = () => {
     ].filter(Boolean);
 
     return () => {
-      cleanupFunctions.forEach(cleanup => cleanup?.());
+      cleanupFunctions.forEach((cleanup) => cleanup?.());
     };
   }, [measureCoreWebVitals, measureMemory, measureLongTasks]);
 
@@ -129,37 +135,46 @@ export const useRenderPerformance = (componentName: string) => {
 
   useEffect(() => {
     const renderTime = performance.now() - renderStart.current;
-    if (renderTime > 16) { // More than one frame (16ms at 60fps)
-      console.warn(`${componentName} took ${renderTime.toFixed(2)}ms to render`);
+    if (renderTime > 16) {
+      // More than one frame (16ms at 60fps)
+      console.warn(
+        `${componentName} took ${renderTime.toFixed(2)}ms to render`,
+      );
     }
   });
 };
 
 // Hook for measuring API call performance
 export const useApiPerformance = () => {
-  const measureApiCall = useCallback(async <T>(
-    apiCall: () => Promise<T>,
-    endpoint: string
-  ): Promise<T> => {
-    const startTime = performance.now();
-    
-    try {
-      const result = await apiCall();
-      const duration = performance.now() - startTime;
-      
-      console.log(`API call to ${endpoint} took ${duration.toFixed(2)}ms`);
-      
-      if (duration > 1000) { // More than 1 second
-        console.warn(`Slow API call to ${endpoint}: ${duration.toFixed(2)}ms`);
+  const measureApiCall = useCallback(
+    async <T>(apiCall: () => Promise<T>, endpoint: string): Promise<T> => {
+      const startTime = performance.now();
+
+      try {
+        const result = await apiCall();
+        const duration = performance.now() - startTime;
+
+        console.log(`API call to ${endpoint} took ${duration.toFixed(2)}ms`);
+
+        if (duration > 1000) {
+          // More than 1 second
+          console.warn(
+            `Slow API call to ${endpoint}: ${duration.toFixed(2)}ms`,
+          );
+        }
+
+        return result;
+      } catch (error) {
+        const duration = performance.now() - startTime;
+        console.error(
+          `API call to ${endpoint} failed after ${duration.toFixed(2)}ms:`,
+          error,
+        );
+        throw error;
       }
-      
-      return result;
-    } catch (error) {
-      const duration = performance.now() - startTime;
-      console.error(`API call to ${endpoint} failed after ${duration.toFixed(2)}ms:`, error);
-      throw error;
-    }
-  }, []);
+    },
+    [],
+  );
 
   return { measureApiCall };
 };

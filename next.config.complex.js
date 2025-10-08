@@ -8,12 +8,12 @@ const baseConfig = {
   reactStrictMode: true,
 
   // Transpile specific packages from node_modules
-  transpilePackages: ['preline'],
+  transpilePackages: ["preline"],
 
   // Image optimization
   images: {
     unoptimized: false,
-    formats: ['image/webp', 'image/avif'],
+    formats: ["image/webp", "image/avif"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
@@ -24,7 +24,7 @@ const baseConfig = {
   // Experimental features
   experimental: {
     optimizeCss: true,
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: ["lucide-react"],
   },
 
   // Webpack configuration - simplified for faster dev builds
@@ -32,12 +32,12 @@ const baseConfig = {
     // Only optimize for production builds
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
-        chunks: 'all',
+        chunks: "all",
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
+            name: "vendors",
+            chunks: "all",
           },
         },
       };
@@ -50,19 +50,19 @@ const baseConfig = {
   async headers() {
     return [
       {
-        source: '/(.*)',
+        source: "/(.*)",
         headers: [
           {
-            key: 'X-Frame-Options',
-            value: 'DENY',
+            key: "X-Frame-Options",
+            value: "DENY",
           },
           {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
+            key: "X-Content-Type-Options",
+            value: "nosniff",
           },
           {
-            key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin',
+            key: "Referrer-Policy",
+            value: "origin-when-cross-origin",
           },
         ],
       },
@@ -73,8 +73,8 @@ const baseConfig = {
   async redirects() {
     return [
       {
-        source: '/admin',
-        destination: '/admin/dashboard',
+        source: "/admin",
+        destination: "/admin/dashboard",
         permanent: true,
       },
     ];
@@ -83,13 +83,14 @@ const baseConfig = {
   // Locale-like rewrites so /ar/* and /en/* map to existing routes
   async rewrites() {
     return [
-      { source: '/:locale(ar|en)', destination: '/' },
-      { source: '/:locale(ar|en)/:path*', destination: '/:path*' },
+      { source: "/:locale(ar|en)", destination: "/" },
+      { source: "/:locale(ar|en)/:path*", destination: "/:path*" },
     ];
   },
-
 };
 
-const withAnalyzer = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
+const withAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 module.exports = withAnalyzer(baseConfig);

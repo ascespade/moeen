@@ -1,213 +1,235 @@
 // Form hooks
-import { useState, useCallback, useRef, useEffect } from 'react';
-import { validateForm } from '@/utils/validation';
+import { useState, useCallback, useRef, useEffect } from "react";
+import { validateForm } from "@/utils/validation";
 
-interface FormField<T> {
-    value: T;
-    error?: string;
-    touched: boolean;
-}
+// removed unused FormField interface
 
 interface FormState<T> {
-    values: T;
-    errors: Partial<Record<keyof T, string>>;
-    touched: Partial<Record<keyof T, boolean>>;
-    isValid: boolean;
-    isSubmitting: boolean;
-    isDirty: boolean;
+  values: T;
+  errors: Partial<Record<keyof T, string>>;
+  touched: Partial<Record<keyof T, boolean>>;
+  isValid: boolean;
+  isSubmitting: boolean;
+  isDirty: boolean;
 }
 
 interface FormOptions<T> {
-    initialValues: T;
-    validationRules?: Partial<Record<keyof T, (value: any) => { isValid: boolean; error?: string }>>;
-    onSubmit?: (values: T) => void | Promise<void>;
-    validateOnChange?: boolean;
-    validateOnBlur?: boolean;
+  initialValues: T;
+  validationRules?: Partial<
+    Record<keyof T, (value: any) => { isValid: boolean; error?: string }>
+  >;
+  onSubmit?: (values: T) => void | Promise<void>;
+  validateOnChange?: boolean;
+  validateOnBlur?: boolean;
 }
 
 export const useForm = <T extends Record<string, any>>(
-    options: FormOptions<T>
+  options: FormOptions<T>,
 ) => {
-    const {
-        initialValues,
-        validationRules = {},
-        onSubmit,
-        validateOnChange = true,
-        validateOnBlur = true,
-    } = options;
+  const {
+    initialValues,
+    validationRules = {},
+    onSubmit,
+    validateOnChange = true,
+    validateOnBlur = true,
+  } = options;
 
-    const [state, setState] = useState<FormState<T>>({
-        values: initialValues,
-        errors: {},
-        touched: {},
-        isValid: true,
-        isSubmitting: false,
-        isDirty: false,
+  const [state, setState] = useState<FormState<T>>({
+    values: initialValues,
+    errors: {},
+    touched: {},
+    isValid: true,
+    isSubmitting: false,
+    isDirty: false,
+  });
+
+  const initialValuesRef = useRef(initialValues);
+
+  // Validate form
+  const validate = useCallback(() => {
+    if (Object.keys(validationRules).length === 0) {
+      return { isValid: true, errors: {} };
+    }
+
+    const rules = validationRules as Record<
+      keyof T,
+      (value: any) => { isValid: boolean; error?: string }
+    >;
+    return validateForm(state.values, rules);
+  }, [state.values, validationRules]);
+
+  // Update validation state
+  useEffect(() => {
+    const { isValid, errors } = validate();
+    setState((prev) => ({
+      ...prev,
+      isValid,
+      errors,
+    }));
+  }, [validate]);
+
+  // Check if form is dirty
+  useEffect(() => {
+    const isDirty =
+      JSON.stringify(state.values) !== JSON.stringify(initialValuesRef.current);
+    setState((prev) => ({ ...prev, isDirty }));
+  }, [state.values]);
+
+  // Set field value
+  const setFieldValue = useCallback((field: keyof T, value: any) => {
+    setState((prev) => ({
+      ...prev,
+      values: { ...prev.values, [field]: value },
+      touched: { ...prev.touched, [field]: true },
+    }));
+  }, []);
+
+  // Set field error
+  const setFieldError = useCallback((field: keyof T, error: string) => {
+    setState((prev) => ({
+      ...prev,
+      errors: { ...prev.errors, [field]: error },
+    }));
+  }, []);
+
+  // Clear field error
+  const clearFieldError = useCallback((field: keyof T) => {
+    setState((prev) => {
+      const newErrors: Partial<Record<keyof T, string>> = { ...prev.errors };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (newErrors as any)[field as any];
+      return { ...prev, errors: newErrors } as typeof prev;
     });
+  }, []);
 
-    const initialValuesRef = useRef(initialValues);
+  // Set field touched
+  const setFieldTouched = useCallback(
+    (field: keyof T, touched: boolean = true) => {
+      setState((prev) => ({
+        ...prev,
+        touched: { ...prev.touched, [field]: touched },
+      }));
+    },
+    [],
+  );
 
-    // Validate form
-    const validate = useCallback(() => {
-        if (Object.keys(validationRules).length === 0) {
-            return { isValid: true, errors: {} };
+  // Handle field change
+  const handleChange = useCallback(
+    (field: keyof T) => (value: any) => {
+      setFieldValue(field, value);
+
+      if (validateOnChange) {
+        const rule = validationRules[field as keyof typeof validationRules] as
+          | ((value: any) => { isValid: boolean; error?: string })
+          | undefined;
+        if (typeof rule === "function") {
+          const result = rule(value);
+          if (!result.isValid) {
+            setFieldError(field, result.error || "Invalid value");
+          } else {
+            clearFieldError(field);
+          }
         }
+      }
+    },
+    [
+      setFieldValue,
+      setFieldError,
+      clearFieldError,
+      validationRules,
+      validateOnChange,
+    ],
+  );
 
-        return validateForm(state.values, validationRules);
-    }, [state.values, validationRules]);
+  // Handle field blur
+  const handleBlur = useCallback(
+    (field: keyof T) => () => {
+      setFieldTouched(field);
 
-    // Update validation state
-    useEffect(() => {
-        const { isValid, errors } = validate();
-        setState(prev => ({
-            ...prev,
-            isValid,
-            errors,
-        }));
-    }, [validate]);
+      if (validateOnBlur) {
+        const rule = validationRules[field as keyof typeof validationRules] as
+          | ((value: any) => { isValid: boolean; error?: string })
+          | undefined;
+        if (typeof rule === "function") {
+          const result = rule(state.values[field]);
+          if (!result.isValid) {
+            setFieldError(field, result.error || "Invalid value");
+          } else {
+            clearFieldError(field);
+          }
+        }
+      }
+    },
+    [
+      setFieldTouched,
+      setFieldError,
+      clearFieldError,
+      validationRules,
+      validateOnBlur,
+      state.values,
+    ],
+  );
 
-    // Check if form is dirty
-    useEffect(() => {
-        const isDirty = JSON.stringify(state.values) !== JSON.stringify(initialValuesRef.current);
-        setState(prev => ({ ...prev, isDirty }));
-    }, [state.values]);
+  // Reset form
+  const reset = useCallback(() => {
+    setState({
+      values: initialValues,
+      errors: {},
+      touched: {},
+      isValid: true,
+      isSubmitting: false,
+      isDirty: false,
+    });
+    initialValuesRef.current = initialValues;
+  }, [initialValues]);
 
-    // Set field value
-    const setFieldValue = useCallback(
-        (field: keyof T, value: any) => {
-            setState(prev => ({
-                ...prev,
-                values: { ...prev.values, [field]: value },
-                touched: { ...prev.touched, [field]: true },
-            }));
-        },
-        []
-    );
+  // Submit form
+  const handleSubmit = useCallback(
+    async (e?: React.FormEvent) => {
+      e?.preventDefault();
 
-    // Set field error
-    const setFieldError = useCallback((field: keyof T, error: string) => {
-        setState(prev => ({
-            ...prev,
-            errors: { ...prev.errors, [field]: error },
-        }));
-    }, []);
+      if (!onSubmit) return;
 
-    // Clear field error
-    const clearFieldError = useCallback((field: keyof T) => {
-        setState(prev => {
-            const { [field]: _, ...errors } = prev.errors;
-            return { ...prev, errors };
-        });
-    }, []);
+      setState((prev) => ({ ...prev, isSubmitting: true }));
 
-    // Set field touched
-    const setFieldTouched = useCallback((field: keyof T, touched: boolean = true) => {
-        setState(prev => ({
-            ...prev,
-            touched: { ...prev.touched, [field]: touched },
-        }));
-    }, []);
+      try {
+        await onSubmit(state.values);
+      } catch (error) {
+        console.error("Form submission error:", error);
+      } finally {
+        setState((prev) => ({ ...prev, isSubmitting: false }));
+      }
+    },
+    [onSubmit, state.values],
+  );
 
-    // Handle field change
-    const handleChange = useCallback(
-        (field: keyof T) => (value: any) => {
-            setFieldValue(field, value);
+  // Get field props
+  const getFieldProps = useCallback(
+    (field: keyof T) => ({
+      value: state.values[field],
+      onChange: handleChange(field),
+      onBlur: handleBlur(field),
+      error: state.errors[field],
+      touched: state.touched[field],
+    }),
+    [state.values, state.errors, state.touched, handleChange, handleBlur],
+  );
 
-            if (validateOnChange) {
-                const rule = validationRules[field as keyof typeof validationRules];
-                if (rule) {
-                    const result = rule(value);
-                    if (!result.isValid) {
-                        setFieldError(field, result.error || 'Invalid value');
-                    } else {
-                        clearFieldError(field);
-                    }
-                }
-            }
-        },
-        [setFieldValue, setFieldError, clearFieldError, validationRules, validateOnChange]
-    );
-
-    // Handle field blur
-    const handleBlur = useCallback(
-        (field: keyof T) => () => {
-            setFieldTouched(field);
-
-            if (validateOnBlur) {
-                const rule = validationRules[field as keyof typeof validationRules];
-                if (rule) {
-                    const result = rule(state.values[field]);
-                    if (!result.isValid) {
-                        setFieldError(field, result.error || 'Invalid value');
-                    } else {
-                        clearFieldError(field);
-                    }
-                }
-            }
-        },
-        [setFieldTouched, setFieldError, clearFieldError, validationRules, validateOnBlur, state.values]
-    );
-
-    // Reset form
-    const reset = useCallback(() => {
-        setState({
-            values: initialValues,
-            errors: {},
-            touched: {},
-            isValid: true,
-            isSubmitting: false,
-            isDirty: false,
-        });
-        initialValuesRef.current = initialValues;
-    }, [initialValues]);
-
-    // Submit form
-    const handleSubmit = useCallback(
-        async (e?: React.FormEvent) => {
-            e?.preventDefault();
-
-            if (!onSubmit) return;
-
-            setState(prev => ({ ...prev, isSubmitting: true }));
-
-            try {
-                await onSubmit(state.values);
-            } catch (error) {
-                console.error('Form submission error:', error);
-            } finally {
-                setState(prev => ({ ...prev, isSubmitting: false }));
-            }
-        },
-        [onSubmit, state.values]
-    );
-
-    // Get field props
-    const getFieldProps = useCallback(
-        (field: keyof T) => ({
-            value: state.values[field],
-            onChange: handleChange(field),
-            onBlur: handleBlur(field),
-            error: state.errors[field],
-            touched: state.touched[field],
-        }),
-        [state.values, state.errors, state.touched, handleChange, handleBlur]
-    );
-
-    return {
-        values: state.values,
-        errors: state.errors,
-        touched: state.touched,
-        isValid: state.isValid,
-        isSubmitting: state.isSubmitting,
-        isDirty: state.isDirty,
-        setFieldValue,
-        setFieldError,
-        clearFieldError,
-        setFieldTouched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        reset,
-        getFieldProps,
-    };
+  return {
+    values: state.values,
+    errors: state.errors,
+    touched: state.touched,
+    isValid: state.isValid,
+    isSubmitting: state.isSubmitting,
+    isDirty: state.isDirty,
+    setFieldValue,
+    setFieldError,
+    clearFieldError,
+    setFieldTouched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    reset,
+    getFieldProps,
+  };
 };

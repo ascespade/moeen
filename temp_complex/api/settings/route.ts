@@ -15,4 +15,3 @@ export async function PATCH(req: NextRequest) {
   SETTINGS = { ...SETTINGS, ...patch };
   return NextResponse.json(SETTINGS);
 }
-
