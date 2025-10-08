@@ -10,13 +10,13 @@
   /* slate-900 */
 
   /* Brand palette (from logo) */
-  --brand-primary: #F58220;
+  --brand-primary: #f58220;
   /* orange */
   --brand-primary-hover: #d66f15;
   /* darkened orange */
   --brand-secondary: #009688;
   /* green */
-  --brand-accent: #007BFF;
+  --brand-accent: #007bff;
   /* blue */
   --brand-success: #009688;
   /* align success with green */
@@ -25,15 +25,27 @@
 
   --brand-border: #e5e7eb;
   /* neutral border */
-  --brand-surface: #F9FAFB;
+  --brand-surface: #f9fafb;
   /* very light gray */
   --panel: #ffffff;
-  --focus-ring: #007BFF;
+  --focus-ring: #007bff;
   /* blue accent */
 
-  --brand-gradient: linear-gradient(135deg, color-mix(in oklab, var(--brand-primary) 85%, #fff) 0%, color-mix(in oklab, var(--brand-accent) 70%, #fff) 100%);
-  --brand-gradient-2: linear-gradient(135deg, color-mix(in oklab, var(--brand-secondary) 85%, #fff) 0%, color-mix(in oklab, var(--brand-primary) 70%, #fff) 100%);
-  --brand-gradient-3: radial-gradient(800px circle at 10% 10%, color-mix(in oklab, var(--brand-accent) 18%, transparent), transparent 40%);
+  --brand-gradient: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--brand-primary) 85%, #fff) 0%,
+    color-mix(in oklab, var(--brand-accent) 70%, #fff) 100%
+  );
+  --brand-gradient-2: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--brand-secondary) 85%, #fff) 0%,
+    color-mix(in oklab, var(--brand-primary) 70%, #fff) 100%
+  );
+  --brand-gradient-3: radial-gradient(
+    800px circle at 10% 10%,
+    color-mix(in oklab, var(--brand-accent) 18%, transparent),
+    transparent 40%
+  );
 }
 
 @theme inline {
@@ -44,27 +56,39 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0D1117;
+    --background: #0d1117;
     /* dark navy */
     --foreground: #e5eef7;
 
     /* Keep brand consistent in dark */
-    --brand-primary: #F58220;
+    --brand-primary: #f58220;
     --brand-primary-hover: #c25e0f;
     --brand-secondary: #009688;
-    --brand-accent: #007BFF;
+    --brand-accent: #007bff;
     --brand-success: #00b39b;
     --brand-warning: #fbbf24;
     --brand-error: #f87171;
 
     --brand-border: #1f2937;
-    --brand-surface: #0D1117;
+    --brand-surface: #0d1117;
     --panel: #111827;
-    --focus-ring: #007BFF;
+    --focus-ring: #007bff;
 
-    --brand-gradient: linear-gradient(135deg, color-mix(in oklab, var(--brand-primary) 25%, #0D1117) 0%, color-mix(in oklab, var(--brand-accent) 20%, #0D1117) 100%);
-    --brand-gradient-2: linear-gradient(135deg, color-mix(in oklab, var(--brand-secondary) 25%, #0D1117) 0%, color-mix(in oklab, var(--brand-primary) 20%, #0D1117) 100%);
-    --brand-gradient-3: radial-gradient(800px circle at 10% 10%, color-mix(in oklab, var(--brand-accent) 10%, transparent), transparent 40%);
+    --brand-gradient: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--brand-primary) 25%, #0d1117) 0%,
+      color-mix(in oklab, var(--brand-accent) 20%, #0d1117) 100%
+    );
+    --brand-gradient-2: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--brand-secondary) 25%, #0d1117) 0%,
+      color-mix(in oklab, var(--brand-primary) 20%, #0d1117) 100%
+    );
+    --brand-gradient-3: radial-gradient(
+      800px circle at 10% 10%,
+      color-mix(in oklab, var(--brand-accent) 10%, transparent),
+      transparent 40%
+    );
   }
 }
 
@@ -72,7 +96,10 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-cairo), system-ui, sans-serif;
-  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  font-feature-settings:
+    "kern" 1,
+    "liga" 1,
+    "calt" 1;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -123,7 +150,6 @@ body {
 
 /* Fun animations */
 @keyframes pulse {
-
   0%,
   100% {
     transform: scale(1);
@@ -135,7 +161,6 @@ body {
 }
 
 @keyframes bounce {
-
   0%,
   20%,
   53%,
@@ -216,13 +241,17 @@ body {
 }
 
 .shadow-soft {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.03),
+    0 8px 24px rgba(0, 0, 0, 0.04);
   transition: box-shadow 0.2s ease;
 }
 
 @media (prefers-color-scheme: dark) {
   .shadow-soft {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.25);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.35),
+      0 8px 24px rgba(0, 0, 0, 0.25);
   }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type PlaceholderSquareProps = {
   title: string;
@@ -7,14 +7,25 @@ type PlaceholderSquareProps = {
   docsLink?: string;
 };
 
-export default function PlaceholderSquare({ title, description, steps = [], docsLink }: PlaceholderSquareProps) {
+export default function PlaceholderSquare({
+  title,
+  description,
+  steps = [],
+  docsLink,
+}: PlaceholderSquareProps) {
   return (
     <div className="rounded-xl border border-dashed border-gray-300 dark:border-gray-700 p-4 md:p-6 bg-white dark:bg-gray-900">
       <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-blue-600 text-white flex items-center justify-center text-xl">📌</div>
+        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-blue-600 text-white flex items-center justify-center text-xl">
+          📌
+        </div>
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
-          <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{description}</p>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {title}
+          </h3>
+          <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+            {description}
+          </p>
           {steps.length > 0 && (
             <ol className="mt-3 list-decimal list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
               {steps.map((s, i) => (
@@ -23,7 +34,12 @@ export default function PlaceholderSquare({ title, description, steps = [], docs
             </ol>
           )}
           {docsLink && (
-            <a className="mt-3 inline-block text-sm text-blue-600 hover:underline" href={docsLink} target="_blank" rel="noreferrer">
+            <a
+              className="mt-3 inline-block text-sm text-blue-600 hover:underline"
+              href={docsLink}
+              target="_blank"
+              rel="noreferrer"
+            >
               Documentation
             </a>
           )}
@@ -32,4 +48,3 @@ export default function PlaceholderSquare({ title, description, steps = [], docs
     </div>
   );
 }
-

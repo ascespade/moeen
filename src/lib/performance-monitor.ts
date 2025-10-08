@@ -1,6 +1,6 @@
 // Comprehensive Performance Monitoring System for Hemam Center
-import { NextRequest, NextResponse } from 'next/server';
-import { realDB } from './supabase-real';
+import { NextRequest, NextResponse } from "next/server";
+import { realDB } from "./supabase-real";
 
 // Performance metrics interface
 interface PerformanceMetrics {
@@ -46,16 +46,16 @@ export class PerformanceMonitor {
     this.thresholds = {
       responseTime: {
         warning: 1000, // 1 second
-        critical: 3000 // 3 seconds
+        critical: 3000, // 3 seconds
       },
       memoryUsage: {
         warning: 512, // 512 MB
-        critical: 1024 // 1 GB
+        critical: 1024, // 1 GB
       },
       errorRate: {
         warning: 5, // 5%
-        critical: 10 // 10%
-      }
+        critical: 10, // 10%
+      },
     };
   }
 
@@ -77,7 +77,7 @@ export class PerformanceMonitor {
       requestId,
       startTime,
       startCpuUsage,
-      startMemory: process.memoryUsage()
+      startMemory: process.memoryUsage(),
     };
 
     return requestId;
@@ -85,9 +85,9 @@ export class PerformanceMonitor {
 
   // End monitoring a request
   endMonitoring(
-    request: NextRequest, 
-    response: NextResponse, 
-    error?: Error
+    request: NextRequest,
+    response: NextResponse,
+    error?: Error,
   ): void {
     const context = (request as any).__performanceContext;
     if (!context) return;
@@ -106,10 +106,13 @@ export class PerformanceMonitor {
       responseTime: endTime[0] * 1000 + endTime[1] / 1000000, // Convert to milliseconds
       memoryUsage: endMemory,
       cpuUsage: endCpuUsage,
-      userAgent: request.headers.get('user-agent') || undefined,
-      ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || undefined,
-      userId: request.headers.get('x-user-id') || undefined,
-      error: error?.message
+      userAgent: request.headers.get("user-agent") || undefined,
+      ip:
+        request.headers.get("x-forwarded-for") ||
+        request.headers.get("x-real-ip") ||
+        undefined,
+      userId: request.headers.get("x-user-id") || undefined,
+      error: error?.message,
     };
 
     this.recordMetrics(metrics);
@@ -138,23 +141,23 @@ export class PerformanceMonitor {
     // Check response time
     if (metrics.responseTime > this.thresholds.responseTime.critical) {
       alerts.push({
-        type: 'CRITICAL',
-        metric: 'responseTime',
+        type: "CRITICAL",
+        metric: "responseTime",
         value: metrics.responseTime,
         threshold: this.thresholds.responseTime.critical,
         message: `Response time ${metrics.responseTime}ms exceeds critical threshold`,
         requestId: metrics.requestId,
-        url: metrics.url
+        url: metrics.url,
       });
     } else if (metrics.responseTime > this.thresholds.responseTime.warning) {
       alerts.push({
-        type: 'WARNING',
-        metric: 'responseTime',
+        type: "WARNING",
+        metric: "responseTime",
         value: metrics.responseTime,
         threshold: this.thresholds.responseTime.warning,
         message: `Response time ${metrics.responseTime}ms exceeds warning threshold`,
         requestId: metrics.requestId,
-        url: metrics.url
+        url: metrics.url,
       });
     }
 
@@ -162,46 +165,46 @@ export class PerformanceMonitor {
     const memoryUsageMB = metrics.memoryUsage.heapUsed / 1024 / 1024;
     if (memoryUsageMB > this.thresholds.memoryUsage.critical) {
       alerts.push({
-        type: 'CRITICAL',
-        metric: 'memoryUsage',
+        type: "CRITICAL",
+        metric: "memoryUsage",
         value: memoryUsageMB,
         threshold: this.thresholds.memoryUsage.critical,
         message: `Memory usage ${memoryUsageMB.toFixed(2)}MB exceeds critical threshold`,
         requestId: metrics.requestId,
-        url: metrics.url
+        url: metrics.url,
       });
     } else if (memoryUsageMB > this.thresholds.memoryUsage.warning) {
       alerts.push({
-        type: 'WARNING',
-        metric: 'memoryUsage',
+        type: "WARNING",
+        metric: "memoryUsage",
         value: memoryUsageMB,
         threshold: this.thresholds.memoryUsage.warning,
         message: `Memory usage ${memoryUsageMB.toFixed(2)}MB exceeds warning threshold`,
         requestId: metrics.requestId,
-        url: metrics.url
+        url: metrics.url,
       });
     }
 
     // Check for errors
     if (metrics.statusCode >= 500) {
       alerts.push({
-        type: 'CRITICAL',
-        metric: 'errorRate',
+        type: "CRITICAL",
+        metric: "errorRate",
         value: 100,
         threshold: 0,
         message: `Server error ${metrics.statusCode} occurred`,
         requestId: metrics.requestId,
-        url: metrics.url
+        url: metrics.url,
       });
     }
 
     // Trigger alert callbacks
-    alerts.forEach(alert => {
-      this.alertCallbacks.forEach(callback => {
+    alerts.forEach((alert) => {
+      this.alertCallbacks.forEach((callback) => {
         try {
           callback(alert);
         } catch (error) {
-          console.error('Alert callback error:', error);
+          console.error("Alert callback error:", error);
         }
       });
     });
@@ -211,7 +214,9 @@ export class PerformanceMonitor {
   getStats(timeWindow?: number): PerformanceStats {
     const now = Date.now();
     const windowMs = timeWindow || 60 * 60 * 1000; // 1 hour default
-    const recentMetrics = this.metrics.filter(m => now - m.timestamp < windowMs);
+    const recentMetrics = this.metrics.filter(
+      (m) => now - m.timestamp < windowMs,
+    );
 
     if (recentMetrics.length === 0) {
       return {
@@ -223,28 +228,39 @@ export class PerformanceMonitor {
         memoryUsage: {
           average: 0,
           max: 0,
-          min: 0
+          min: 0,
         },
         cpuUsage: {
           average: 0,
           max: 0,
-          min: 0
+          min: 0,
         },
         topSlowEndpoints: [],
-        topErrorEndpoints: []
+        topErrorEndpoints: [],
       };
     }
 
-    const responseTimes = recentMetrics.map(m => m.responseTime);
-    const memoryUsages = recentMetrics.map(m => m.memoryUsage.heapUsed / 1024 / 1024);
-    const cpuUsages = recentMetrics.map(m => m.cpuUsage.user + m.cpuUsage.system);
-    const errors = recentMetrics.filter(m => m.statusCode >= 400);
+    const responseTimes = recentMetrics.map((m) => m.responseTime);
+    const memoryUsages = recentMetrics.map(
+      (m) => m.memoryUsage.heapUsed / 1024 / 1024,
+    );
+    const cpuUsages = recentMetrics.map(
+      (m) => m.cpuUsage.user + m.cpuUsage.system,
+    );
+    const errors = recentMetrics.filter((m) => m.statusCode >= 400);
 
     // Calculate endpoint performance
-    const endpointStats = new Map<string, { count: number; totalTime: number; errors: number }>();
-    recentMetrics.forEach(metric => {
+    const endpointStats = new Map<
+      string,
+      { count: number; totalTime: number; errors: number }
+    >();
+    recentMetrics.forEach((metric) => {
       const key = `${metric.method} ${metric.url}`;
-      const existing = endpointStats.get(key) || { count: 0, totalTime: 0, errors: 0 };
+      const existing = endpointStats.get(key) || {
+        count: 0,
+        totalTime: 0,
+        errors: 0,
+      };
       existing.count++;
       existing.totalTime += metric.responseTime;
       if (metric.statusCode >= 400) existing.errors++;
@@ -255,7 +271,7 @@ export class PerformanceMonitor {
       .map(([endpoint, stats]) => ({
         endpoint,
         averageTime: stats.totalTime / stats.count,
-        requestCount: stats.count
+        requestCount: stats.count,
       }))
       .sort((a, b) => b.averageTime - a.averageTime)
       .slice(0, 10);
@@ -265,50 +281,60 @@ export class PerformanceMonitor {
       .map(([endpoint, stats]) => ({
         endpoint,
         errorCount: stats.errors,
-        errorRate: (stats.errors / stats.count) * 100
+        errorRate: (stats.errors / stats.count) * 100,
       }))
       .sort((a, b) => b.errorRate - a.errorRate)
       .slice(0, 10);
 
     return {
       totalRequests: recentMetrics.length,
-      averageResponseTime: responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length,
+      averageResponseTime:
+        responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length,
       maxResponseTime: Math.max(...responseTimes),
       minResponseTime: Math.min(...responseTimes),
       errorRate: (errors.length / recentMetrics.length) * 100,
       memoryUsage: {
         average: memoryUsages.reduce((a, b) => a + b, 0) / memoryUsages.length,
         max: Math.max(...memoryUsages),
-        min: Math.min(...memoryUsages)
+        min: Math.min(...memoryUsages),
       },
       cpuUsage: {
         average: cpuUsages.reduce((a, b) => a + b, 0) / cpuUsages.length,
         max: Math.max(...cpuUsages),
-        min: Math.min(...cpuUsages)
+        min: Math.min(...cpuUsages),
       },
       topSlowEndpoints,
-      topErrorEndpoints
+      topErrorEndpoints,
     };
   }
 
   // Get real-time metrics
   getRealTimeMetrics(): RealTimeMetrics {
     const now = Date.now();
-    const lastMinute = this.metrics.filter(m => now - m.timestamp < 60 * 1000);
-    const last5Minutes = this.metrics.filter(m => now - m.timestamp < 5 * 60 * 1000);
+    const lastMinute = this.metrics.filter(
+      (m) => now - m.timestamp < 60 * 1000,
+    );
+    const last5Minutes = this.metrics.filter(
+      (m) => now - m.timestamp < 5 * 60 * 1000,
+    );
 
     return {
       requestsPerMinute: lastMinute.length,
       requestsPer5Minutes: last5Minutes.length,
-      averageResponseTime: lastMinute.length > 0 
-        ? lastMinute.reduce((sum, m) => sum + m.responseTime, 0) / lastMinute.length 
-        : 0,
-      errorRate: lastMinute.length > 0 
-        ? (lastMinute.filter(m => m.statusCode >= 400).length / lastMinute.length) * 100 
-        : 0,
+      averageResponseTime:
+        lastMinute.length > 0
+          ? lastMinute.reduce((sum, m) => sum + m.responseTime, 0) /
+            lastMinute.length
+          : 0,
+      errorRate:
+        lastMinute.length > 0
+          ? (lastMinute.filter((m) => m.statusCode >= 400).length /
+              lastMinute.length) *
+            100
+          : 0,
       memoryUsage: process.memoryUsage(),
       cpuUsage: process.cpuUsage(),
-      uptime: process.uptime()
+      uptime: process.uptime(),
     };
   }
 
@@ -321,11 +347,11 @@ export class PerformanceMonitor {
   private async logMetricsToDatabase(): Promise<void> {
     try {
       const recentMetrics = this.metrics.slice(-100); // Last 100 metrics
-      
+
       for (const metric of recentMetrics) {
         await realDB.logAudit({
-          action: 'PERFORMANCE_METRIC',
-          table_name: 'performance_metrics',
+          action: "PERFORMANCE_METRIC",
+          table_name: "performance_metrics",
           new_values: {
             request_id: metric.requestId,
             method: metric.method,
@@ -338,12 +364,12 @@ export class PerformanceMonitor {
             ip: metric.ip,
             user_id: metric.userId,
             error: metric.error,
-            timestamp: metric.timestamp
-          }
+            timestamp: metric.timestamp,
+          },
         });
       }
     } catch (error) {
-      console.error('Failed to log performance metrics to database:', error);
+      console.error("Failed to log performance metrics to database:", error);
     }
   }
 
@@ -365,7 +391,7 @@ export class PerformanceMonitor {
 
 // Performance alert interface
 interface PerformanceAlert {
-  type: 'WARNING' | 'CRITICAL';
+  type: "WARNING" | "CRITICAL";
   metric: string;
   value: number;
   threshold: number;
@@ -419,13 +445,15 @@ export function withPerformanceMonitoring(handler: Function) {
   return async (request: NextRequest, ...args: any[]) => {
     const monitor = PerformanceMonitor.getInstance();
     monitor.startMonitoring(request);
-    
+
     try {
       const response = await handler(request, ...args);
       monitor.endMonitoring(request, response);
       return response;
     } catch (error) {
-      const errorResponse = new NextResponse('Internal Server Error', { status: 500 });
+      const errorResponse = new NextResponse("Internal Server Error", {
+        status: 500,
+      });
       monitor.endMonitoring(request, errorResponse, error as Error);
       throw error;
     }

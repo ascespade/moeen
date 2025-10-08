@@ -38,7 +38,7 @@ export default function SettingsPage() {
     aiEnabled: true,
     aiModel: "gpt-4",
     aiTemperature: 0.7,
-    autoResponse: true
+    autoResponse: true,
   });
 
   const tabs = [
@@ -46,11 +46,11 @@ export default function SettingsPage() {
     { id: "notifications", name: "الإشعارات", icon: "🔔" },
     { id: "security", name: "الأمان", icon: "🔒" },
     { id: "integrations", name: "التكاملات", icon: "🔗" },
-    { id: "ai", name: "الذكاء الاصطناعي", icon: "🤖" }
+    { id: "ai", name: "الذكاء الاصطناعي", icon: "🤖" },
   ];
 
   const handleSettingChange = (key: string, value: any) => {
-    setSettings(prev => ({ ...prev, [key]: value }));
+    setSettings((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSave = () => {
@@ -75,8 +75,12 @@ export default function SettingsPage() {
                 unoptimized
               />
               <div>
-                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">الإعدادات</h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">إدارة إعدادات النظام</p>
+                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  الإعدادات
+                </h1>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  إدارة إعدادات النظام
+                </p>
               </div>
             </div>
 
@@ -103,16 +107,19 @@ export default function SettingsPage() {
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">الإعدادات</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                الإعدادات
+              </h3>
               <nav className="space-y-2">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-right transition-colors ${activeTab === tab.id
-                      ? "bg-blue-600 text-white"
-                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-                      }`}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-right transition-colors ${
+                      activeTab === tab.id
+                        ? "bg-blue-600 text-white"
+                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    }`}
                   >
                     <span className="text-lg">{tab.icon}</span>
                     <span className="font-medium">{tab.name}</span>
@@ -128,7 +135,9 @@ export default function SettingsPage() {
               {/* General Settings */}
               {activeTab === "general" && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">الإعدادات العامة</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    الإعدادات العامة
+                  </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -138,7 +147,9 @@ export default function SettingsPage() {
                       <input
                         type="text"
                         value={settings.siteName}
-                        onChange={(e) => handleSettingChange("siteName", e.target.value)}
+                        onChange={(e) =>
+                          handleSettingChange("siteName", e.target.value)
+                        }
                         className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                       />
                     </div>
@@ -149,7 +160,9 @@ export default function SettingsPage() {
                       </label>
                       <select
                         value={settings.language}
-                        onChange={(e) => handleSettingChange("language", e.target.value)}
+                        onChange={(e) =>
+                          handleSettingChange("language", e.target.value)
+                        }
                         className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                       >
                         <option value="ar">العربية</option>
@@ -163,7 +176,9 @@ export default function SettingsPage() {
                       </label>
                       <select
                         value={settings.timezone}
-                        onChange={(e) => handleSettingChange("timezone", e.target.value)}
+                        onChange={(e) =>
+                          handleSettingChange("timezone", e.target.value)
+                        }
                         className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                       >
                         <option value="Asia/Riyadh">الرياض (GMT+3)</option>
@@ -178,7 +193,9 @@ export default function SettingsPage() {
                       </label>
                       <select
                         value={settings.theme}
-                        onChange={(e) => handleSettingChange("theme", e.target.value)}
+                        onChange={(e) =>
+                          handleSettingChange("theme", e.target.value)
+                        }
                         className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                       >
                         <option value="light">فاتح</option>
@@ -194,7 +211,9 @@ export default function SettingsPage() {
                     </label>
                     <textarea
                       value={settings.siteDescription}
-                      onChange={(e) => handleSettingChange("siteDescription", e.target.value)}
+                      onChange={(e) =>
+                        handleSettingChange("siteDescription", e.target.value)
+                      }
                       rows={3}
                       className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                     />
@@ -205,19 +224,30 @@ export default function SettingsPage() {
               {/* Notification Settings */}
               {activeTab === "notifications" && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">إعدادات الإشعارات</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    إعدادات الإشعارات
+                  </h2>
 
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                       <div>
-                        <h3 className="font-medium text-gray-900 dark:text-white">إشعارات البريد الإلكتروني</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">تلقي إشعارات عبر البريد الإلكتروني</p>
+                        <h3 className="font-medium text-gray-900 dark:text-white">
+                          إشعارات البريد الإلكتروني
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          تلقي إشعارات عبر البريد الإلكتروني
+                        </p>
                       </div>
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
                           checked={settings.emailNotifications}
-                          onChange={(e) => handleSettingChange("emailNotifications", e.target.checked)}
+                          onChange={(e) =>
+                            handleSettingChange(
+                              "emailNotifications",
+                              e.target.checked,
+                            )
+                          }
                           className="sr-only peer"
                         />
                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--brand-primary)]"></div>
@@ -226,14 +256,23 @@ export default function SettingsPage() {
 
                     <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                       <div>
-                        <h3 className="font-medium text-gray-900 dark:text-white">الإشعارات الفورية</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">تلقي إشعارات فورية في المتصفح</p>
+                        <h3 className="font-medium text-gray-900 dark:text-white">
+                          الإشعارات الفورية
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          تلقي إشعارات فورية في المتصفح
+                        </p>
                       </div>
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
                           checked={settings.pushNotifications}
-                          onChange={(e) => handleSettingChange("pushNotifications", e.target.checked)}
+                          onChange={(e) =>
+                            handleSettingChange(
+                              "pushNotifications",
+                              e.target.checked,
+                            )
+                          }
                           className="sr-only peer"
                         />
                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--brand-primary)]"></div>
@@ -242,14 +281,23 @@ export default function SettingsPage() {
 
                     <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                       <div>
-                        <h3 className="font-medium text-gray-900 dark:text-white">إشعارات SMS</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">تلقي إشعارات عبر الرسائل النصية</p>
+                        <h3 className="font-medium text-gray-900 dark:text-white">
+                          إشعارات SMS
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          تلقي إشعارات عبر الرسائل النصية
+                        </p>
                       </div>
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
                           checked={settings.smsNotifications}
-                          onChange={(e) => handleSettingChange("smsNotifications", e.target.checked)}
+                          onChange={(e) =>
+                            handleSettingChange(
+                              "smsNotifications",
+                              e.target.checked,
+                            )
+                          }
                           className="sr-only peer"
                         />
                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--brand-primary)]"></div>
@@ -262,19 +310,30 @@ export default function SettingsPage() {
               {/* Security Settings */}
               {activeTab === "security" && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">إعدادات الأمان</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    إعدادات الأمان
+                  </h2>
 
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                       <div>
-                        <h3 className="font-medium text-gray-900 dark:text-white">المصادقة الثنائية</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">إضافة طبقة أمان إضافية لحسابك</p>
+                        <h3 className="font-medium text-gray-900 dark:text-white">
+                          المصادقة الثنائية
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          إضافة طبقة أمان إضافية لحسابك
+                        </p>
                       </div>
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
                           checked={settings.twoFactorAuth}
-                          onChange={(e) => handleSettingChange("twoFactorAuth", e.target.checked)}
+                          onChange={(e) =>
+                            handleSettingChange(
+                              "twoFactorAuth",
+                              e.target.checked,
+                            )
+                          }
                           className="sr-only peer"
                         />
                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--brand-primary)]"></div>
@@ -289,7 +348,12 @@ export default function SettingsPage() {
                         <input
                           type="number"
                           value={settings.sessionTimeout}
-                          onChange={(e) => handleSettingChange("sessionTimeout", parseInt(e.target.value))}
+                          onChange={(e) =>
+                            handleSettingChange(
+                              "sessionTimeout",
+                              parseInt(e.target.value),
+                            )
+                          }
                           className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
                         />
                       </div>
@@ -301,7 +365,12 @@ export default function SettingsPage() {
                         <input
                           type="number"
                           value={settings.passwordExpiry}
-                          onChange={(e) => handleSettingChange("passwordExpiry", parseInt(e.target.value))}
+                          onChange={(e) =>
+                            handleSettingChange(
+                              "passwordExpiry",
+                              parseInt(e.target.value),
+                            )
+                          }
                           className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
                         />
                       </div>
@@ -313,23 +382,36 @@ export default function SettingsPage() {
               {/* Integration Settings */}
               {activeTab === "integrations" && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">إعدادات التكاملات</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    إعدادات التكاملات
+                  </h2>
 
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                         <div className="flex items-center space-x-3 space-x-reverse">
-                          <div className="h-6 w-6 rounded bg-green-600 text-white grid place-items-center text-[10px] font-bold">WA</div>
+                          <div className="h-6 w-6 rounded bg-green-600 text-white grid place-items-center text-[10px] font-bold">
+                            WA
+                          </div>
                           <div>
-                            <h3 className="font-medium text-gray-900 dark:text-white">واتساب</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">تكامل مع واتساب</p>
+                            <h3 className="font-medium text-gray-900 dark:text-white">
+                              واتساب
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              تكامل مع واتساب
+                            </p>
                           </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input
                             type="checkbox"
                             checked={settings.whatsappEnabled}
-                            onChange={(e) => handleSettingChange("whatsappEnabled", e.target.checked)}
+                            onChange={(e) =>
+                              handleSettingChange(
+                                "whatsappEnabled",
+                                e.target.checked,
+                              )
+                            }
                             className="sr-only peer"
                           />
                           <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--brand-primary)]"></div>
@@ -338,17 +420,28 @@ export default function SettingsPage() {
 
                       <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                         <div className="flex items-center space-x-3 space-x-reverse">
-                          <div className="h-6 w-6 rounded bg-sky-600 text-white grid place-items-center text-[10px] font-bold">TG</div>
+                          <div className="h-6 w-6 rounded bg-sky-600 text-white grid place-items-center text-[10px] font-bold">
+                            TG
+                          </div>
                           <div>
-                            <h3 className="font-medium text-gray-900 dark:text-white">تليجرام</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">تكامل مع تليجرام</p>
+                            <h3 className="font-medium text-gray-900 dark:text-white">
+                              تليجرام
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              تكامل مع تليجرام
+                            </p>
                           </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input
                             type="checkbox"
                             checked={settings.telegramEnabled}
-                            onChange={(e) => handleSettingChange("telegramEnabled", e.target.checked)}
+                            onChange={(e) =>
+                              handleSettingChange(
+                                "telegramEnabled",
+                                e.target.checked,
+                              )
+                            }
                             className="sr-only peer"
                           />
                           <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--brand-primary)]"></div>
@@ -357,17 +450,28 @@ export default function SettingsPage() {
 
                       <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                         <div className="flex items-center space-x-3 space-x-reverse">
-                          <div className="h-6 w-6 rounded bg-blue-700 text-white grid place-items-center text-[10px] font-bold">FB</div>
+                          <div className="h-6 w-6 rounded bg-blue-700 text-white grid place-items-center text-[10px] font-bold">
+                            FB
+                          </div>
                           <div>
-                            <h3 className="font-medium text-gray-900 dark:text-white">فيسبوك</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">تكامل مع فيسبوك</p>
+                            <h3 className="font-medium text-gray-900 dark:text-white">
+                              فيسبوك
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              تكامل مع فيسبوك
+                            </p>
                           </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input
                             type="checkbox"
                             checked={settings.facebookEnabled}
-                            onChange={(e) => handleSettingChange("facebookEnabled", e.target.checked)}
+                            onChange={(e) =>
+                              handleSettingChange(
+                                "facebookEnabled",
+                                e.target.checked,
+                              )
+                            }
                             className="sr-only peer"
                           />
                           <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--brand-primary)]"></div>
@@ -376,17 +480,28 @@ export default function SettingsPage() {
 
                       <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                         <div className="flex items-center space-x-3 space-x-reverse">
-                          <div className="h-6 w-6 rounded bg-pink-600 text-white grid place-items-center text-[10px] font-bold">IG</div>
+                          <div className="h-6 w-6 rounded bg-pink-600 text-white grid place-items-center text-[10px] font-bold">
+                            IG
+                          </div>
                           <div>
-                            <h3 className="font-medium text-gray-900 dark:text-white">إنستغرام</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">تكامل مع إنستغرام</p>
+                            <h3 className="font-medium text-gray-900 dark:text-white">
+                              إنستغرام
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              تكامل مع إنستغرام
+                            </p>
                           </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input
                             type="checkbox"
                             checked={settings.instagramEnabled}
-                            onChange={(e) => handleSettingChange("instagramEnabled", e.target.checked)}
+                            onChange={(e) =>
+                              handleSettingChange(
+                                "instagramEnabled",
+                                e.target.checked,
+                              )
+                            }
                             className="sr-only peer"
                           />
                           <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--brand-primary)]"></div>
@@ -401,7 +516,9 @@ export default function SettingsPage() {
                       <input
                         type="url"
                         value={settings.webhookUrl}
-                        onChange={(e) => handleSettingChange("webhookUrl", e.target.value)}
+                        onChange={(e) =>
+                          handleSettingChange("webhookUrl", e.target.value)
+                        }
                         placeholder="https://example.com/webhook"
                         className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
                       />
@@ -413,19 +530,27 @@ export default function SettingsPage() {
               {/* AI Settings */}
               {activeTab === "ai" && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">إعدادات الذكاء الاصطناعي</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    إعدادات الذكاء الاصطناعي
+                  </h2>
 
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                       <div>
-                        <h3 className="font-medium text-gray-900 dark:text-white">تفعيل الذكاء الاصطناعي</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">استخدام الذكاء الاصطناعي في الر��ود</p>
+                        <h3 className="font-medium text-gray-900 dark:text-white">
+                          تفعيل الذكاء الاصطناعي
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          استخدام الذكاء الاصطناعي في الر��ود
+                        </p>
                       </div>
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
                           checked={settings.aiEnabled}
-                          onChange={(e) => handleSettingChange("aiEnabled", e.target.checked)}
+                          onChange={(e) =>
+                            handleSettingChange("aiEnabled", e.target.checked)
+                          }
                           className="sr-only peer"
                         />
                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--brand-primary)]"></div>
@@ -439,7 +564,9 @@ export default function SettingsPage() {
                         </label>
                         <select
                           value={settings.aiModel}
-                          onChange={(e) => handleSettingChange("aiModel", e.target.value)}
+                          onChange={(e) =>
+                            handleSettingChange("aiModel", e.target.value)
+                          }
                           className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
                         >
                           <option value="gpt-4">GPT-4</option>
@@ -458,23 +585,39 @@ export default function SettingsPage() {
                           max="1"
                           step="0.1"
                           value={settings.aiTemperature}
-                          onChange={(e) => handleSettingChange("aiTemperature", parseFloat(e.target.value))}
+                          onChange={(e) =>
+                            handleSettingChange(
+                              "aiTemperature",
+                              parseFloat(e.target.value),
+                            )
+                          }
                           className="w-full"
                         />
-                        <span className="text-sm text-gray-600 dark:text-gray-400">{settings.aiTemperature}</span>
+                        <span className="text-sm text-gray-600 dark:text-gray-400">
+                          {settings.aiTemperature}
+                        </span>
                       </div>
                     </div>
 
                     <div className="flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg">
                       <div>
-                        <h3 className="font-medium text-gray-900 dark:text-white">الرد التلقائي</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">السماح للذكاء الاصطناعي بالرد تلقائياً</p>
+                        <h3 className="font-medium text-gray-900 dark:text-white">
+                          الرد التلقائي
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          السماح للذكاء الاصطناعي بالرد تلقائياً
+                        </p>
                       </div>
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
                           checked={settings.autoResponse}
-                          onChange={(e) => handleSettingChange("autoResponse", e.target.checked)}
+                          onChange={(e) =>
+                            handleSettingChange(
+                              "autoResponse",
+                              e.target.checked,
+                            )
+                          }
                           className="sr-only peer"
                         />
                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--brand-primary)]"></div>

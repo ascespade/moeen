@@ -1,5 +1,10 @@
 import Button from "@/components/ui/Button";
-import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/Card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardFooter,
+} from "@/components/ui/Card";
 import Input from "@/components/ui/Input";
 import { Table, THead, TBody, TR, TH, TD } from "@/components/ui/Table";
 
@@ -46,7 +51,7 @@ export default function ComponentsIndex() {
                 </TR>
               </THead>
               <TBody>
-                {[1,2,3].map((i) => (
+                {[1, 2, 3].map((i) => (
                   <TR key={i}>
                     <TD>عنصر {i}</TD>
                     <TD>واتساب</TD>
@@ -61,4 +66,3 @@ export default function ComponentsIndex() {
     </div>
   );
 }
-

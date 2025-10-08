@@ -35,6 +35,7 @@ Authorization: Bearer <your-jwt-token>
 Login with email and password.
 
 **Request:**
+
 ```json
 {
   "email": "user@example.com",
@@ -44,6 +45,7 @@ Login with email and password.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -68,6 +70,7 @@ Login with email and password.
 Register a new user.
 
 **Request:**
+
 ```json
 {
   "name": "John Doe",
@@ -77,6 +80,7 @@ Register a new user.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -100,6 +104,7 @@ Register a new user.
 Logout and invalidate token.
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -112,6 +117,7 @@ Logout and invalidate token.
 Refresh JWT token using refresh token.
 
 **Request:**
+
 ```json
 {
   "refreshToken": "refresh-token-123"
@@ -119,6 +125,7 @@ Refresh JWT token using refresh token.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -136,6 +143,7 @@ Refresh JWT token using refresh token.
 Get list of users with pagination.
 
 **Query Parameters:**
+
 - `page` (number): Page number (default: 1)
 - `limit` (number): Items per page (default: 20)
 - `search` (string): Search term
@@ -143,6 +151,7 @@ Get list of users with pagination.
 - `status` (string): Filter by status
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -171,6 +180,7 @@ Get list of users with pagination.
 Get user by ID.
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -191,6 +201,7 @@ Get user by ID.
 Update user information.
 
 **Request:**
+
 ```json
 {
   "name": "John Smith",
@@ -200,6 +211,7 @@ Update user information.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -220,6 +232,7 @@ Update user information.
 Delete user.
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -234,12 +247,14 @@ Delete user.
 Get list of channels.
 
 **Query Parameters:**
+
 - `page` (number): Page number
 - `limit` (number): Items per page
 - `type` (string): Filter by channel type
 - `search` (string): Search term
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -268,6 +283,7 @@ Get list of channels.
 Create a new channel.
 
 **Request:**
+
 ```json
 {
   "name": "New Channel",
@@ -278,6 +294,7 @@ Create a new channel.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -298,6 +315,7 @@ Create a new channel.
 Get channel by ID.
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -318,6 +336,7 @@ Get channel by ID.
 Update channel.
 
 **Request:**
+
 ```json
 {
   "name": "Updated Channel Name",
@@ -326,6 +345,7 @@ Update channel.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -346,6 +366,7 @@ Update channel.
 Delete channel.
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -360,12 +381,14 @@ Delete channel.
 Get messages for a channel.
 
 **Query Parameters:**
+
 - `page` (number): Page number
 - `limit` (number): Items per page
 - `before` (string): Get messages before this ID
 - `after` (string): Get messages after this ID
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -394,6 +417,7 @@ Get messages for a channel.
 Send a message to a channel.
 
 **Request:**
+
 ```json
 {
   "content": "Hello, world!",
@@ -402,6 +426,7 @@ Send a message to a channel.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -422,6 +447,7 @@ Send a message to a channel.
 Update a message.
 
 **Request:**
+
 ```json
 {
   "content": "Updated message content"
@@ -429,6 +455,7 @@ Update a message.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -449,6 +476,7 @@ Update a message.
 Delete a message.
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -463,6 +491,7 @@ Delete a message.
 Get user settings.
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -487,6 +516,7 @@ Get user settings.
 Update user settings.
 
 **Request:**
+
 ```json
 {
   "theme": "dark",
@@ -499,6 +529,7 @@ Update user settings.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -612,28 +643,28 @@ X-RateLimit-Reset: 1640995200
 ### JavaScript/TypeScript
 
 ```typescript
-import { Mu3eenAPI } from '@mu3een/sdk';
+import { Mu3eenAPI } from "@mu3een/sdk";
 
 const api = new Mu3eenAPI({
-  baseURL: 'https://api.mu3een.com',
-  apiKey: 'your-api-key'
+  baseURL: "https://api.mu3een.com",
+  apiKey: "your-api-key",
 });
 
 // Login
 const { data } = await api.auth.login({
-  email: 'user@example.com',
-  password: 'password123'
+  email: "user@example.com",
+  password: "password123",
 });
 
 // Get users
 const users = await api.users.list({
   page: 1,
-  limit: 20
+  limit: 20,
 });
 
 // Send message
-const message = await api.messages.create('channel-123', {
-  content: 'Hello, world!'
+const message = await api.messages.create("channel-123", {
+  content: "Hello, world!",
 });
 ```
 

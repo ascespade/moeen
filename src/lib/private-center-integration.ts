@@ -3,11 +3,11 @@ export interface PrivateCenterLicense {
   centerId: string;
   centerName: string;
   licenseNumber: string;
-  licenseType: 'rehabilitation' | 'therapy' | 'specialized' | 'general';
-  issuedBy: 'MOH' | 'SFDA' | 'MOL';
+  licenseType: "rehabilitation" | "therapy" | "specialized" | "general";
+  issuedBy: "MOH" | "SFDA" | "MOL";
   issueDate: string;
   expiryDate: string;
-  status: 'active' | 'suspended' | 'expired' | 'under_review';
+  status: "active" | "suspended" | "expired" | "under_review";
   services: string[];
   specialties: string[];
   capacity: number;
@@ -24,12 +24,12 @@ export interface PrivateCenterLicense {
 
 export interface PrivateCenterAccreditation {
   centerId: string;
-  accreditationBody: 'CCHI' | 'JCI' | 'CAP' | 'ISO';
-  accreditationType: 'quality' | 'safety' | 'excellence' | 'international';
+  accreditationBody: "CCHI" | "JCI" | "CAP" | "ISO";
+  accreditationType: "quality" | "safety" | "excellence" | "international";
   accreditationNumber: string;
   issueDate: string;
   expiryDate: string;
-  status: 'active' | 'expired' | 'under_review';
+  status: "active" | "expired" | "under_review";
   standards: string[];
   score?: number;
 }
@@ -47,16 +47,16 @@ export interface PrivateCenterInsurance {
       therapy: number;
       assessment: number;
     };
-    status: 'active' | 'expired' | 'suspended';
+    status: "active" | "expired" | "suspended";
   }>;
 }
 
 export interface PrivateCenterReporting {
   centerId: string;
-  reportType: 'monthly' | 'quarterly' | 'annual';
+  reportType: "monthly" | "quarterly" | "annual";
   reportPeriod: string;
   submittedAt: string;
-  status: 'submitted' | 'approved' | 'rejected' | 'under_review';
+  status: "submitted" | "approved" | "rejected" | "under_review";
   data: {
     totalPatients: number;
     newPatients: number;
@@ -79,12 +79,15 @@ export class PrivateCenterIntegration {
   private readonly cchiApiEndpoint: string;
 
   constructor() {
-    this.centerId = process.env.CENTER_ID || 'HEMAM001';
-    this.centerName = process.env.CENTER_NAME || 'مركز الهمم';
-    this.licenseNumber = process.env.CENTER_LICENSE || 'LIC-HEMAM-2024';
-    this.mohApiEndpoint = process.env.MOH_API_ENDPOINT || 'https://api.moh.gov.sa';
-    this.sfdApiEndpoint = process.env.SFDA_API_ENDPOINT || 'https://api.sfda.gov.sa';
-    this.cchiApiEndpoint = process.env.CCHI_API_ENDPOINT || 'https://api.cchi.gov.sa';
+    this.centerId = process.env.CENTER_ID || "HEMAM001";
+    this.centerName = process.env.CENTER_NAME || "مركز الهمم";
+    this.licenseNumber = process.env.CENTER_LICENSE || "LIC-HEMAM-2024";
+    this.mohApiEndpoint =
+      process.env.MOH_API_ENDPOINT || "https://api.moh.gov.sa";
+    this.sfdApiEndpoint =
+      process.env.SFDA_API_ENDPOINT || "https://api.sfda.gov.sa";
+    this.cchiApiEndpoint =
+      process.env.CCHI_API_ENDPOINT || "https://api.cchi.gov.sa";
   }
 
   // MOH Integration - وزارة الصحة للمراكز الخاصة
@@ -94,23 +97,26 @@ export class PrivateCenterIntegration {
     lastSync: string;
   }> {
     try {
-      const response = await this.callMOHAPI('GET', `/private-centers/${this.centerId}`);
-      
+      const response = await this.callMOHAPI(
+        "GET",
+        `/private-centers/${this.centerId}`,
+      );
+
       if (response.success) {
         return {
           success: true,
           centerData: response.data,
-          lastSync: new Date().toISOString()
+          lastSync: new Date().toISOString(),
         };
       }
-      
-      throw new Error('Failed to sync with MOH');
+
+      throw new Error("Failed to sync with MOH");
     } catch (error) {
-      console.error('MOH sync error:', error);
+      console.error("MOH sync error:", error);
       return {
         success: false,
         centerData: this.getDefaultCenterData(),
-        lastSync: new Date().toISOString()
+        lastSync: new Date().toISOString(),
       };
     }
   }
@@ -121,22 +127,26 @@ export class PrivateCenterIntegration {
     status: string;
   }> {
     try {
-      const response = await this.callMOHAPI('POST', '/private-centers/reports', reportData);
-      
+      const response = await this.callMOHAPI(
+        "POST",
+        "/private-centers/reports",
+        reportData,
+      );
+
       if (response.success) {
         return {
           success: true,
           reportId: response.data.reportId,
-          status: 'submitted'
+          status: "submitted",
         };
       }
-      
-      throw new Error('Failed to submit MOH report');
+
+      throw new Error("Failed to submit MOH report");
     } catch (error) {
-      console.error('MOH report submission error:', error);
+      console.error("MOH report submission error:", error);
       return {
         success: false,
-        status: 'failed'
+        status: "failed",
       };
     }
   }
@@ -148,23 +158,26 @@ export class PrivateCenterIntegration {
     lastSync: string;
   }> {
     try {
-      const response = await this.callSFDAPI('GET', `/accreditations/${this.centerId}`);
-      
+      const response = await this.callSFDAPI(
+        "GET",
+        `/accreditations/${this.centerId}`,
+      );
+
       if (response.success) {
         return {
           success: true,
           accreditation: response.data,
-          lastSync: new Date().toISOString()
+          lastSync: new Date().toISOString(),
         };
       }
-      
-      throw new Error('Failed to sync with SFDA');
+
+      throw new Error("Failed to sync with SFDA");
     } catch (error) {
-      console.error('SFDA sync error:', error);
+      console.error("SFDA sync error:", error);
       return {
         success: false,
         accreditation: this.getDefaultAccreditation(),
-        lastSync: new Date().toISOString()
+        lastSync: new Date().toISOString(),
       };
     }
   }
@@ -181,7 +194,7 @@ export class PrivateCenterIntegration {
     };
     incidents: Array<{
       type: string;
-      severity: 'low' | 'medium' | 'high' | 'critical';
+      severity: "low" | "medium" | "high" | "critical";
       description: string;
       date: string;
       resolved: boolean;
@@ -192,22 +205,26 @@ export class PrivateCenterIntegration {
     status: string;
   }> {
     try {
-      const response = await this.callSFDAPI('POST', '/quality-reports', qualityData);
-      
+      const response = await this.callSFDAPI(
+        "POST",
+        "/quality-reports",
+        qualityData,
+      );
+
       if (response.success) {
         return {
           success: true,
           reportId: response.data.reportId,
-          status: 'submitted'
+          status: "submitted",
         };
       }
-      
-      throw new Error('Failed to submit SFDA quality report');
+
+      throw new Error("Failed to submit SFDA quality report");
     } catch (error) {
-      console.error('SFDA quality report submission error:', error);
+      console.error("SFDA quality report submission error:", error);
       return {
         success: false,
-        status: 'failed'
+        status: "failed",
       };
     }
   }
@@ -219,23 +236,26 @@ export class PrivateCenterIntegration {
     lastSync: string;
   }> {
     try {
-      const response = await this.callCCHIAPI('GET', `/centers/${this.centerId}/insurance`);
-      
+      const response = await this.callCCHIAPI(
+        "GET",
+        `/centers/${this.centerId}/insurance`,
+      );
+
       if (response.success) {
         return {
           success: true,
           insuranceData: response.data,
-          lastSync: new Date().toISOString()
+          lastSync: new Date().toISOString(),
         };
       }
-      
-      throw new Error('Failed to sync with CCHI');
+
+      throw new Error("Failed to sync with CCHI");
     } catch (error) {
-      console.error('CCHI sync error:', error);
+      console.error("CCHI sync error:", error);
       return {
         success: false,
         insuranceData: this.getDefaultInsuranceData(),
-        lastSync: new Date().toISOString()
+        lastSync: new Date().toISOString(),
       };
     }
   }
@@ -256,24 +276,24 @@ export class PrivateCenterIntegration {
     approvalRequired: boolean;
   }> {
     try {
-      const response = await this.callCCHIAPI('POST', '/claims', claimData);
-      
+      const response = await this.callCCHIAPI("POST", "/claims", claimData);
+
       if (response.success) {
         return {
           success: true,
           claimId: response.data.claimId,
           status: response.data.status,
-          approvalRequired: response.data.approvalRequired
+          approvalRequired: response.data.approvalRequired,
         };
       }
-      
-      throw new Error('Failed to submit CCHI claim');
+
+      throw new Error("Failed to submit CCHI claim");
     } catch (error) {
-      console.error('CCHI claim submission error:', error);
+      console.error("CCHI claim submission error:", error);
       return {
         success: false,
-        status: 'failed',
-        approvalRequired: false
+        status: "failed",
+        approvalRequired: false,
       };
     }
   }
@@ -293,53 +313,55 @@ export class PrivateCenterIntegration {
       // Check MOH compliance
       const mohSync = await this.syncWithMOH();
       if (!mohSync.success) {
-        violations.push('فشل في المزامنة مع وزارة الصحة');
+        violations.push("فشل في المزامنة مع وزارة الصحة");
         score -= 20;
       }
 
       // Check SFDA compliance
       const sfdSync = await this.syncWithSFDA();
       if (!sfdSync.success) {
-        violations.push('فشل في المزامنة مع الهيئة العامة للغذاء والدواء');
+        violations.push("فشل في المزامنة مع الهيئة العامة للغذاء والدواء");
         score -= 15;
       }
 
       // Check CCHI compliance
       const cchiSync = await this.syncWithCCHI();
       if (!cchiSync.success) {
-        violations.push('فشل في المزامنة مع مجلس الضمان الصحي التعاوني');
+        violations.push("فشل في المزامنة مع مجلس الضمان الصحي التعاوني");
         score -= 10;
       }
 
       // Generate recommendations
       if (violations.length === 0) {
-        recommendations.push('المركز متوافق مع جميع المتطلبات الحكومية');
-        recommendations.push('يُنصح بالمحافظة على هذا المستوى من الامتثال');
+        recommendations.push("المركز متوافق مع جميع المتطلبات الحكومية");
+        recommendations.push("يُنصح بالمحافظة على هذا المستوى من الامتثال");
       } else {
-        recommendations.push('يرجى حل المشاكل المذكورة أعلاه');
-        recommendations.push('تأكد من تحديث البيانات بانتظام');
-        recommendations.push('تواصل مع الجهات المختصة لحل أي مشاكل');
+        recommendations.push("يرجى حل المشاكل المذكورة أعلاه");
+        recommendations.push("تأكد من تحديث البيانات بانتظام");
+        recommendations.push("تواصل مع الجهات المختصة لحل أي مشاكل");
       }
 
       return {
         compliant: violations.length === 0,
         violations,
         recommendations,
-        score: Math.max(0, score)
+        score: Math.max(0, score),
       };
     } catch (error) {
-      console.error('Center compliance validation error:', error);
+      console.error("Center compliance validation error:", error);
       return {
         compliant: false,
-        violations: ['خطأ في التحقق من الامتثال'],
-        recommendations: ['تواصل مع الدعم الفني'],
-        score: 0
+        violations: ["خطأ في التحقق من الامتثال"],
+        recommendations: ["تواصل مع الدعم الفني"],
+        score: 0,
       };
     }
   }
 
   // Private Center Analytics
-  async getCenterAnalytics(_period: 'monthly' | 'quarterly' | 'annual'): Promise<{
+  async getCenterAnalytics(
+    _period: "monthly" | "quarterly" | "annual",
+  ): Promise<{
     totalPatients: number;
     newPatients: number;
     completedSessions: number;
@@ -354,7 +376,7 @@ export class PrivateCenterIntegration {
     try {
       // Get compliance score
       const compliance = await this.validateCenterCompliance();
-      
+
       // Mock analytics data (in real implementation, this would come from database)
       return {
         totalPatients: 150,
@@ -364,12 +386,12 @@ export class PrivateCenterIntegration {
         qualityMetrics: {
           patientSatisfaction: 4.8,
           treatmentOutcomes: 4.6,
-          safetyIncidents: 0
+          safetyIncidents: 0,
         },
-        complianceScore: compliance.score
+        complianceScore: compliance.score,
       };
     } catch (error) {
-      console.error('Center analytics error:', error);
+      console.error("Center analytics error:", error);
       return {
         totalPatients: 0,
         newPatients: 0,
@@ -378,9 +400,9 @@ export class PrivateCenterIntegration {
         qualityMetrics: {
           patientSatisfaction: 0,
           treatmentOutcomes: 0,
-          safetyIncidents: 0
+          safetyIncidents: 0,
         },
-        complianceScore: 0
+        complianceScore: 0,
       };
     }
   }
@@ -391,37 +413,37 @@ export class PrivateCenterIntegration {
       centerId: this.centerId,
       centerName: this.centerName,
       licenseNumber: this.licenseNumber,
-      licenseType: 'rehabilitation',
-      issuedBy: 'MOH',
-      issueDate: '2024-01-01',
-      expiryDate: '2025-12-31',
-      status: 'active',
-      services: ['علاج طبيعي', 'علاج وظيفي', 'علاج نطق', 'تقييم نفسي'],
-      specialties: ['إعادة تأهيل', 'علاج الأطفال', 'علاج كبار السن'],
+      licenseType: "rehabilitation",
+      issuedBy: "MOH",
+      issueDate: "2024-01-01",
+      expiryDate: "2025-12-31",
+      status: "active",
+      services: ["علاج طبيعي", "علاج وظيفي", "علاج نطق", "تقييم نفسي"],
+      specialties: ["إعادة تأهيل", "علاج الأطفال", "علاج كبار السن"],
       capacity: 50,
       location: {
-        city: 'جدة',
-        district: 'حي الصفا',
-        address: 'شارع الأمير محمد بن عبدالعزيز',
+        city: "جدة",
+        district: "حي الصفا",
+        address: "شارع الأمير محمد بن عبدالعزيز",
         coordinates: {
           lat: 21.4858,
-          lng: 39.1925
-        }
-      }
+          lng: 39.1925,
+        },
+      },
     };
   }
 
   private getDefaultAccreditation(): PrivateCenterAccreditation {
     return {
       centerId: this.centerId,
-      accreditationBody: 'CCHI',
-      accreditationType: 'quality',
-      accreditationNumber: 'ACC-HEMAM-2024',
-      issueDate: '2024-01-01',
-      expiryDate: '2025-12-31',
-      status: 'active',
-      standards: ['ISO 9001', 'ISO 15189', 'JCI'],
-      score: 95
+      accreditationBody: "CCHI",
+      accreditationType: "quality",
+      accreditationNumber: "ACC-HEMAM-2024",
+      issueDate: "2024-01-01",
+      expiryDate: "2025-12-31",
+      status: "active",
+      standards: ["ISO 9001", "ISO 15189", "JCI"],
+      score: 95,
     };
   }
 
@@ -430,54 +452,75 @@ export class PrivateCenterIntegration {
       centerId: this.centerId,
       insuranceProviders: [
         {
-          provider: 'التعاونية',
-          contractNumber: 'CONTRACT-001',
-          contractDate: '2024-01-01',
-          expiryDate: '2025-12-31',
-          services: ['علاج طبيعي', 'تقييم نفسي'],
+          provider: "التعاونية",
+          contractNumber: "CONTRACT-001",
+          contractDate: "2024-01-01",
+          expiryDate: "2025-12-31",
+          services: ["علاج طبيعي", "تقييم نفسي"],
           rates: {
             consultation: 200,
             therapy: 300,
-            assessment: 500
+            assessment: 500,
           },
-          status: 'active'
-        }
-      ]
+          status: "active",
+        },
+      ],
     };
   }
 
   // API Call Methods
-  private async callMOHAPI(method: string, endpoint: string, data?: any): Promise<any> {
-    console.log(`Calling MOH API: ${method} ${this.mohApiEndpoint}${endpoint}`, data);
-    
+  private async callMOHAPI(
+    method: string,
+    endpoint: string,
+    data?: any,
+  ): Promise<any> {
+    console.log(
+      `Calling MOH API: ${method} ${this.mohApiEndpoint}${endpoint}`,
+      data,
+    );
+
     // Mock response for development
     return {
       success: true,
-      data: this.getDefaultCenterData()
+      data: this.getDefaultCenterData(),
     };
   }
 
-  private async callSFDAPI(method: string, endpoint: string, data?: any): Promise<any> {
-    console.log(`Calling SFDA API: ${method} ${this.sfdApiEndpoint}${endpoint}`, data);
-    
+  private async callSFDAPI(
+    method: string,
+    endpoint: string,
+    data?: any,
+  ): Promise<any> {
+    console.log(
+      `Calling SFDA API: ${method} ${this.sfdApiEndpoint}${endpoint}`,
+      data,
+    );
+
     // Mock response for development
     return {
       success: true,
-      data: this.getDefaultAccreditation()
+      data: this.getDefaultAccreditation(),
     };
   }
 
-  private async callCCHIAPI(method: string, endpoint: string, data?: any): Promise<any> {
-    console.log(`Calling CCHI API: ${method} ${this.cchiApiEndpoint}${endpoint}`, data);
-    
+  private async callCCHIAPI(
+    method: string,
+    endpoint: string,
+    data?: any,
+  ): Promise<any> {
+    console.log(
+      `Calling CCHI API: ${method} ${this.cchiApiEndpoint}${endpoint}`,
+      data,
+    );
+
     // Mock response for development
     return {
       success: true,
       data: {
-        claimId: 'CLAIM_' + Math.random().toString(36).substr(2, 9),
-        status: 'pending',
-        approvalRequired: false
-      }
+        claimId: "CLAIM_" + Math.random().toString(36).substr(2, 9),
+        status: "pending",
+        approvalRequired: false,
+      },
     };
   }
 }

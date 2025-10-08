@@ -6,8 +6,15 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-gray-900">مركز الهمم</h1>
             <nav className="flex gap-4">
-              <a href="/login" className="text-gray-700 hover:text-blue-600">تسجيل الدخول</a>
-              <a href="/register" className="bg-blue-600 text-white px-4 py-2 rounded">احجز موعد</a>
+              <a href="/login" className="text-gray-700 hover:text-blue-600">
+                تسجيل الدخول
+              </a>
+              <a
+                href="/register"
+                className="bg-blue-600 text-white px-4 py-2 rounded"
+              >
+                احجز موعد
+              </a>
             </nav>
           </div>
         </div>
@@ -22,10 +29,16 @@ export default function Home() {
             نقدم رعاية صحية شاملة ومتخصصة مع أحدث التقنيات
           </p>
           <div className="flex gap-4 justify-center">
-            <a href="/register" className="bg-blue-600 text-white px-8 py-3 rounded-lg">
+            <a
+              href="/register"
+              className="bg-blue-600 text-white px-8 py-3 rounded-lg"
+            >
               احجز موعد الآن
             </a>
-            <a href="#services" className="border border-gray-300 px-8 py-3 rounded-lg">
+            <a
+              href="#services"
+              className="border border-gray-300 px-8 py-3 rounded-lg"
+            >
               اكتشف خدماتنا
             </a>
           </div>
@@ -58,4 +71,3 @@ export default function Home() {
     </div>
   );
 }
-

@@ -1,37 +1,37 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { DatabaseManager } from '@/lib/database';
+import { NextRequest, NextResponse } from "next/server";
+import { DatabaseManager } from "@/lib/database";
 
 const db = new DatabaseManager({
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '5432'),
-  database: process.env.DB_NAME || 'hemam_center',
-  username: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'password',
-  ssl: process.env.NODE_ENV === 'production'
+  host: process.env.DB_HOST || "localhost",
+  port: parseInt(process.env.DB_PORT || "5432"),
+  database: process.env.DB_NAME || "hemam_center",
+  username: process.env.DB_USER || "postgres",
+  password: process.env.DB_PASSWORD || "password",
+  ssl: process.env.NODE_ENV === "production",
 });
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const period = searchParams.get('period') || '30'; // days
-    const type = searchParams.get('type') || 'overview';
+    const period = searchParams.get("period") || "30"; // days
+    const type = searchParams.get("type") || "overview";
 
     let data: any = {};
 
     switch (type) {
-      case 'overview':
+      case "overview":
         data = await getOverviewData(parseInt(period));
         break;
-      case 'patients':
+      case "patients":
         data = await getPatientAnalytics(parseInt(period));
         break;
-      case 'appointments':
+      case "appointments":
         data = await getAppointmentAnalytics(parseInt(period));
         break;
-      case 'conversations':
+      case "conversations":
         data = await getConversationAnalytics(parseInt(period));
         break;
-      case 'crisis':
+      case "crisis":
         data = await getCrisisAnalytics(parseInt(period));
         break;
       default:
@@ -42,19 +42,18 @@ export async function GET(request: NextRequest) {
       success: true,
       data,
       period: parseInt(period),
-      generatedAt: new Date().toISOString()
+      generatedAt: new Date().toISOString(),
     });
-
   } catch (error) {
-    console.error('Analytics dashboard error:', error);
-    
+    console.error("Analytics dashboard error:", error);
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Failed to generate analytics',
-        code: 'ANALYTICS_ERROR' 
+      {
+        success: false,
+        error: "Failed to generate analytics",
+        code: "ANALYTICS_ERROR",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -69,37 +68,42 @@ async function getOverviewData(period: number) {
 
   // Get appointments for the period
   const appointments = await db.getAppointments();
-  const recentAppointments = appointments.filter(apt => 
-    new Date(apt.appointment_date) >= startDate
+  const recentAppointments = appointments.filter(
+    (apt) => new Date(apt.appointment_date) >= startDate,
   );
 
   // Get sessions for the period
-  const sessions = await db.pool.query(`
+  const sessions = await db.pool.query(
+    `
     SELECT COUNT(*) as total_sessions,
            COUNT(CASE WHEN completed = true THEN 1 END) as completed_sessions,
            COUNT(CASE WHEN created_at >= $1 THEN 1 END) as recent_sessions
     FROM sessions
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   return {
     patients: {
       total: patientStats.total_patients,
       newLast30Days: patientStats.new_patients_30_days,
-      newLast7Days: patientStats.new_patients_7_days
+      newLast7Days: patientStats.new_patients_7_days,
     },
     appointments: {
       total: appointments.length,
       recent: recentAppointments.length,
-      completed: recentAppointments.filter(apt => apt.status === 'completed').length,
-      cancelled: recentAppointments.filter(apt => apt.status === 'cancelled').length
+      completed: recentAppointments.filter((apt) => apt.status === "completed")
+        .length,
+      cancelled: recentAppointments.filter((apt) => apt.status === "cancelled")
+        .length,
     },
     sessions: sessions.rows[0],
     conversations: {
       total: conversationStats.total_conversations,
       crisis: conversationStats.crisis_conversations,
-      recent: conversationStats.conversations_7_days
+      recent: conversationStats.conversations_7_days,
     },
-    systemHealth: await db.healthCheck()
+    systemHealth: await db.healthCheck(),
   };
 }
 
@@ -108,7 +112,8 @@ async function getPatientAnalytics(period: number) {
   startDate.setDate(startDate.getDate() - period);
 
   // Patient demographics
-  const demographics = await db.pool.query(`
+  const demographics = await db.pool.query(
+    `
     SELECT 
       CASE 
         WHEN age < 18 THEN 'children'
@@ -121,10 +126,13 @@ async function getPatientAnalytics(period: number) {
     WHERE created_at >= $1
     GROUP BY age_group
     ORDER BY count DESC
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   // Patient growth over time
-  const growthData = await db.pool.query(`
+  const growthData = await db.pool.query(
+    `
     SELECT 
       DATE(created_at) as date,
       COUNT(*) as new_patients
@@ -132,10 +140,13 @@ async function getPatientAnalytics(period: number) {
     WHERE created_at >= $1
     GROUP BY DATE(created_at)
     ORDER BY date
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   // Most active patients
-  const activePatients = await db.pool.query(`
+  const activePatients = await db.pool.query(
+    `
     SELECT 
       p.name,
       p.phone,
@@ -148,12 +159,14 @@ async function getPatientAnalytics(period: number) {
     GROUP BY p.id, p.name, p.phone
     ORDER BY (appointment_count + session_count) DESC
     LIMIT 10
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   return {
     demographics: demographics.rows,
     growthData: growthData.rows,
-    activePatients: activePatients.rows
+    activePatients: activePatients.rows,
   };
 }
 
@@ -162,7 +175,8 @@ async function getAppointmentAnalytics(period: number) {
   startDate.setDate(startDate.getDate() - period);
 
   // Appointment statistics
-  const appointmentStats = await db.pool.query(`
+  const appointmentStats = await db.pool.query(
+    `
     SELECT 
       status,
       COUNT(*) as count,
@@ -170,10 +184,13 @@ async function getAppointmentAnalytics(period: number) {
     FROM appointments
     WHERE created_at >= $1
     GROUP BY status
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   // Daily appointment trends
-  const dailyTrends = await db.pool.query(`
+  const dailyTrends = await db.pool.query(
+    `
     SELECT 
       DATE(appointment_date) as date,
       COUNT(*) as total_appointments,
@@ -183,10 +200,13 @@ async function getAppointmentAnalytics(period: number) {
     WHERE appointment_date >= $1
     GROUP BY DATE(appointment_date)
     ORDER BY date
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   // Doctor workload
-  const doctorWorkload = await db.pool.query(`
+  const doctorWorkload = await db.pool.query(
+    `
     SELECT 
       d.name as doctor_name,
       d.specialty,
@@ -197,12 +217,14 @@ async function getAppointmentAnalytics(period: number) {
     WHERE a.created_at >= $1 OR a.created_at IS NULL
     GROUP BY d.id, d.name, d.specialty
     ORDER BY appointment_count DESC
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   return {
     stats: appointmentStats.rows,
     dailyTrends: dailyTrends.rows,
-    doctorWorkload: doctorWorkload.rows
+    doctorWorkload: doctorWorkload.rows,
   };
 }
 
@@ -211,7 +233,8 @@ async function getConversationAnalytics(period: number) {
   startDate.setDate(startDate.getDate() - period);
 
   // Conversation statistics
-  const conversationStats = await db.pool.query(`
+  const conversationStats = await db.pool.query(
+    `
     SELECT 
       message_type,
       crisis_level,
@@ -221,10 +244,13 @@ async function getConversationAnalytics(period: number) {
     WHERE created_at >= $1
     GROUP BY message_type, crisis_level, sentiment
     ORDER BY count DESC
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   // Hourly conversation patterns
-  const hourlyPatterns = await db.pool.query(`
+  const hourlyPatterns = await db.pool.query(
+    `
     SELECT 
       EXTRACT(HOUR FROM created_at) as hour,
       COUNT(*) as conversation_count
@@ -232,10 +258,13 @@ async function getConversationAnalytics(period: number) {
     WHERE created_at >= $1
     GROUP BY EXTRACT(HOUR FROM created_at)
     ORDER BY hour
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   // Crisis intervention data
-  const crisisData = await db.pool.query(`
+  const crisisData = await db.pool.query(
+    `
     SELECT 
       DATE(created_at) as date,
       COUNT(*) as crisis_count,
@@ -244,12 +273,14 @@ async function getConversationAnalytics(period: number) {
     WHERE created_at >= $1 AND crisis_level IN ('urgent', 'crisis')
     GROUP BY DATE(created_at)
     ORDER BY date
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   return {
     stats: conversationStats.rows,
     hourlyPatterns: hourlyPatterns.rows,
-    crisisData: crisisData.rows
+    crisisData: crisisData.rows,
   };
 }
 
@@ -258,7 +289,8 @@ async function getCrisisAnalytics(period: number) {
   startDate.setDate(startDate.getDate() - period);
 
   // Crisis intervention statistics
-  const crisisStats = await db.pool.query(`
+  const crisisStats = await db.pool.query(
+    `
     SELECT 
       crisis_level,
       COUNT(*) as count,
@@ -266,10 +298,13 @@ async function getCrisisAnalytics(period: number) {
     FROM conversations
     WHERE created_at >= $1 AND crisis_level IN ('urgent', 'crisis')
     GROUP BY crisis_level
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   // Crisis response times
-  const responseTimes = await db.pool.query(`
+  const responseTimes = await db.pool.query(
+    `
     SELECT 
       DATE(created_at) as date,
       COUNT(*) as crisis_count,
@@ -278,10 +313,13 @@ async function getCrisisAnalytics(period: number) {
     WHERE created_at >= $1 AND crisis_level IN ('urgent', 'crisis')
     GROUP BY DATE(created_at)
     ORDER BY date
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   // Most common crisis triggers
-  const crisisTriggers = await db.pool.query(`
+  const crisisTriggers = await db.pool.query(
+    `
     SELECT 
       content,
       COUNT(*) as frequency
@@ -290,11 +328,13 @@ async function getCrisisAnalytics(period: number) {
     GROUP BY content
     ORDER BY frequency DESC
     LIMIT 10
-  `, [startDate]);
+  `,
+    [startDate],
+  );
 
   return {
     stats: crisisStats.rows,
     responseTimes: responseTimes.rows,
-    triggers: crisisTriggers.rows
+    triggers: crisisTriggers.rows,
   };
 }

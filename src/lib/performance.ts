@@ -2,7 +2,7 @@
 
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
-  wait: number
+  wait: number,
 ): ((...args: Parameters<T>) => void) => {
   let timeout: NodeJS.Timeout;
   return (...args: Parameters<T>) => {
@@ -13,7 +13,7 @@ export const debounce = <T extends (...args: any[]) => any>(
 
 export const throttle = <T extends (...args: any[]) => any>(
   func: T,
-  limit: number
+  limit: number,
 ): ((...args: Parameters<T>) => void) => {
   let inThrottle: boolean;
   return (...args: Parameters<T>) => {
@@ -27,14 +27,14 @@ export const throttle = <T extends (...args: any[]) => any>(
 
 // Image lazy loading
 export const lazyLoadImage = (img: HTMLImageElement) => {
-  if ('IntersectionObserver' in window) {
+  if ("IntersectionObserver" in window) {
     const imageObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const image = entry.target as HTMLImageElement;
           if (image.dataset.src) {
             image.src = image.dataset.src;
-            image.classList.remove('lazy');
+            image.classList.remove("lazy");
             observer.unobserve(image);
           }
         }
@@ -44,20 +44,18 @@ export const lazyLoadImage = (img: HTMLImageElement) => {
     imageObserver.observe(img);
   } else {
     // Fallback for older browsers
-    img.src = img.dataset.src || '';
+    img.src = img.dataset.src || "";
   }
 };
 
 // Preload critical resources
 export const preloadCriticalResources = () => {
-  const criticalImages = [
-    '/hemam-logo.jpg',
-  ];
+  const criticalImages = ["/hemam-logo.jpg"];
 
   criticalImages.forEach((src) => {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'image';
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
     link.href = src;
     document.head.appendChild(link);
   });
@@ -66,8 +64,11 @@ export const preloadCriticalResources = () => {
 // Optimize animations
 export const optimizeAnimations = () => {
   // Reduce motion for users who prefer it
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.documentElement.style.setProperty('--animation-duration', '0.01ms');
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.style.setProperty(
+      "--animation-duration",
+      "0.01ms",
+    );
   }
 };
 
@@ -80,7 +81,7 @@ export const cleanupEventListeners = (element: HTMLElement) => {
 
 // Performance monitoring
 export const measurePerformance = (name: string, fn: () => void) => {
-  if (typeof performance !== 'undefined' && performance.mark) {
+  if (typeof performance !== "undefined" && performance.mark) {
     performance.mark(`${name}-start`);
     fn();
     performance.mark(`${name}-end`);
@@ -93,7 +94,7 @@ export const measurePerformance = (name: string, fn: () => void) => {
 // Bundle size optimization
 export const loadComponentLazy = (importFn: () => Promise<any>) => {
   return importFn().catch((error) => {
-    console.warn('Failed to load component:', error);
+    console.warn("Failed to load component:", error);
     return null;
   });
 };

@@ -17,7 +17,10 @@ export default function useBrandColorFromLogo(logoPath: string) {
         canvas.height = size;
         ctx.drawImage(img, 0, 0, size, size);
         const data = ctx.getImageData(0, 0, size, size).data;
-        let r = 0, g = 0, b = 0, n = 0;
+        let r = 0,
+          g = 0,
+          b = 0,
+          n = 0;
         for (let i = 0; i < data.length; i += 4) {
           const rr = data[i] ?? 0;
           const gg = data[i + 1] ?? 0;
@@ -27,7 +30,10 @@ export default function useBrandColorFromLogo(logoPath: string) {
           // ignore very bright/very dark pixels
           const luma = 0.2126 * rr + 0.7152 * gg + 0.0722 * bb;
           if (luma < 30 || luma > 230) continue;
-          r += rr; g += gg; b += bb; n++;
+          r += rr;
+          g += gg;
+          b += bb;
+          n++;
         }
         if (n === 0) return;
         r = Math.round(r / n);
@@ -39,8 +45,10 @@ export default function useBrandColorFromLogo(logoPath: string) {
         const root = document.documentElement;
         // Central brand palette
         root.style.setProperty("--brand-primary", hex);
-        const darken = (c: number, pct = 0.12) => Math.max(0, Math.round(c * (1 - pct)));
-        const lighten = (c: number, pct = 0.12) => Math.min(255, Math.round(c * (1 + pct)));
+        const darken = (c: number, pct = 0.12) =>
+          Math.max(0, Math.round(c * (1 - pct)));
+        const lighten = (c: number, pct = 0.12) =>
+          Math.min(255, Math.round(c * (1 + pct)));
         const hexHover = `#${toHex(darken(r))}${toHex(darken(g))}${toHex(darken(b))}`;
         const hexAccent = `#${toHex(lighten(r))}${toHex(lighten(g))}${toHex(lighten(b))}`;
         root.style.setProperty("--brand-primary-hover", hexHover);
@@ -53,4 +61,3 @@ export default function useBrandColorFromLogo(logoPath: string) {
     }
   }, [logoPath]);
 }
-

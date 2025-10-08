@@ -1,29 +1,29 @@
 // Click outside hook
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 export const useClickOutside = <T extends HTMLElement = HTMLDivElement>(
-    handler: () => void,
-    enabled: boolean = true
+  handler: () => void,
+  enabled: boolean = true,
 ) => {
-    const ref = useRef<T>(null);
+  const ref = useRef<T>(null);
 
-    useEffect(() => {
-        if (!enabled) return;
+  useEffect(() => {
+    if (!enabled) return;
 
-        const handleClickOutside = (event: Event) => {
-            if (ref.current && !ref.current.contains(event.target as Node)) {
-                handler();
-            }
-        };
+    const handleClickOutside = (event: Event) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        handler();
+      }
+    };
 
-        document.addEventListener('mousedown', handleClickOutside);
-        document.addEventListener('touchstart', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
 
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-            document.removeEventListener('touchstart', handleClickOutside);
-        };
-    }, [handler, enabled]);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [handler, enabled]);
 
-    return ref;
+  return ref;
 };

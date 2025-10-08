@@ -8,8 +8,7 @@ const buttonStyles = cva(
   {
     variants: {
       variant: {
-        primary:
-          "bg-brand-primary text-white hover:bg-brand-primary-hover",
+        primary: "bg-brand-primary text-white hover:bg-brand-primary-hover",
         secondary:
           "bg-white text-gray-900 border border-brand-border hover:bg-gray-50 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-800 dark:hover:bg-gray-800",
         ghost:
@@ -25,7 +24,7 @@ const buttonStyles = cva(
       variant: "primary",
       size: "md",
     },
-  }
+  },
 );
 
 export interface ButtonProps
@@ -33,8 +32,12 @@ export interface ButtonProps
     VariantProps<typeof buttonStyles> {}
 
 export function Button({ className, variant, size, ...props }: ButtonProps) {
-  return <button className={clsx(buttonStyles({ variant, size }), className)} {...props} />;
+  return (
+    <button
+      className={clsx(buttonStyles({ variant, size }), className)}
+      {...props}
+    />
+  );
 }
 
 export default Button;
-
