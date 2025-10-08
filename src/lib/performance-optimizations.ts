@@ -1,7 +1,7 @@
 // Performance optimizations for the application
 
 // Disable console logs in production
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   console.log = () => {};
   console.warn = () => {};
   console.error = () => {};
@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // Optimize memory usage
 export const optimizeMemory = () => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     // Clear unused variables
     if (window.gc) {
       window.gc();
@@ -20,7 +20,7 @@ export const optimizeMemory = () => {
 // Lazy load components
 export const lazyLoadComponent = (importFn: () => Promise<any>) => {
   return importFn().catch((error) => {
-    console.warn('Failed to load component:', error);
+    console.warn("Failed to load component:", error);
     return null;
   });
 };
@@ -29,15 +29,15 @@ export const lazyLoadComponent = (importFn: () => Promise<any>) => {
 export const optimizeImage = (src: string) => {
   return {
     src,
-    loading: 'lazy' as const,
-    decoding: 'async' as const,
+    loading: "lazy" as const,
+    decoding: "async" as const,
   };
 };
 
 // Debounce function for performance
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
-  wait: number
+  wait: number,
 ): ((...args: Parameters<T>) => void) => {
   let timeout: NodeJS.Timeout;
   return (...args: Parameters<T>) => {
@@ -49,7 +49,7 @@ export const debounce = <T extends (...args: any[]) => any>(
 // Throttle function for performance
 export const throttle = <T extends (...args: any[]) => any>(
   func: T,
-  limit: number
+  limit: number,
 ): ((...args: Parameters<T>) => void) => {
   let inThrottle: boolean;
   return (...args: Parameters<T>) => {

@@ -1,36 +1,45 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { realDB } from '@/lib/supabase-real';
-import { whatsappAPI } from '@/lib/whatsapp-business-api';
+import { NextRequest, NextResponse } from "next/server";
+import { realDB } from "@/lib/supabase-real";
+import { whatsappAPI } from "@/lib/whatsapp-business-api";
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '20');
-    const search = searchParams.get('search') || '';
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "20");
+    const search = searchParams.get("search") || "";
 
     // Get patients from real database
-    const patients = await realDB.searchUsers(search, 'patient');
-    
+    const patients = await realDB.searchUsers(search, "patient");
+
     // Get additional patient data
     const patientsWithDetails = await Promise.all(
       patients.map(async (patient) => {
         const patientData = await realDB.getPatient(patient.id);
-        const appointments = await realDB.getAppointments({ patientId: patient.id, limit: 1 });
-        
+        const appointments = await realDB.getAppointments({
+          patientId: patient.id,
+          limit: 1,
+        });
+
         return {
           id: patient.id,
           name: patient.name,
           age: patient.age,
           contactInfo: {
             phone: patient.phone,
-            email: patient.email
+            email: patient.email,
           },
-          lastVisit: appointments.length > 0 ? new Date(appointments[0].appointment_date) : null,
-          nextAppointment: appointments.length > 0 ? new Date(appointments[0].appointment_date) : null,
-          status: patientData?.status || 'active'
+          lastVisit:
+            appointments.length > 0
+              ? new Date(appointments[0].appointment_date)
+              : null,
+          nextAppointment:
+            appointments.length > 0
+              ? new Date(appointments[0].appointment_date)
+              : null,
+          status: patientData?.status || "active",
         };
-      })
+      }),
     );
 
     // Pagination
@@ -45,20 +54,19 @@ export async function GET(request: NextRequest) {
         page,
         limit,
         total: patientsWithDetails.length,
-        totalPages: Math.ceil(patientsWithDetails.length / limit)
-      }
-    });
-
-  } catch (error) {
-    console.error('Get patients error:', error);
-    
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Internal server error',
-        code: 'INTERNAL_ERROR' 
+        totalPages: Math.ceil(patientsWithDetails.length / limit),
       },
-      { status: 500 }
+    });
+  } catch (error) {
+    console.error("Get patients error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Internal server error",
+        code: "INTERNAL_ERROR",
+      },
+      { status: 500 },
     );
   }
 }
@@ -66,11 +74,11 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { 
-      name, 
-      age, 
-      phone, 
-      email, 
+    const {
+      name,
+      age,
+      phone,
+      email,
       national_id,
       gender,
       address,
@@ -88,17 +96,17 @@ export async function POST(request: NextRequest) {
       guardian_phone,
       medical_conditions,
       treatment_goals,
-      assigned_doctor_id
+      assigned_doctor_id,
     } = body;
 
     if (!name || !age || !phone) {
       return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Name, age, and phone are required',
-          code: 'MISSING_REQUIRED_FIELDS' 
+        {
+          success: false,
+          error: "Name, age, and phone are required",
+          code: "MISSING_REQUIRED_FIELDS",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -110,7 +118,7 @@ export async function POST(request: NextRequest) {
       gender,
       phone,
       email,
-      role: 'patient' as const,
+      role: "patient" as const,
       address,
       city,
       emergency_contact,
@@ -120,7 +128,7 @@ export async function POST(request: NextRequest) {
       medical_history,
       current_conditions,
       medications,
-      allergies
+      allergies,
     };
 
     const user = await realDB.createUser(userData);
@@ -134,18 +142,19 @@ export async function POST(request: NextRequest) {
       medical_conditions,
       treatment_goals,
       assigned_doctor_id,
-      status: 'active'
+      status: "active",
     };
 
     const patient = await realDB.createPatient(patientData);
 
     // Send welcome WhatsApp message
     try {
-      await whatsappAPI.sendTextMessage(phone, 
-        `مرحباً ${name}، أهلاً بك في مركز الهمم! تم إنشاء حسابك بنجاح. نحن هنا لمساعدتك في رحلة العلاج والشفاء.`
+      await whatsappAPI.sendTextMessage(
+        phone,
+        `مرحباً ${name}، أهلاً بك في مركز الهمم! تم إنشاء حسابك بنجاح. نحن هنا لمساعدتك في رحلة العلاج والشفاء.`,
       );
     } catch (whatsappError) {
-      console.error('WhatsApp message failed:', whatsappError);
+      console.error("WhatsApp message failed:", whatsappError);
       // Don't fail the entire request if WhatsApp fails
     }
 
@@ -153,21 +162,20 @@ export async function POST(request: NextRequest) {
       success: true,
       data: {
         id: user.id,
-        message: 'Patient created successfully',
-        whatsappSent: true
-      }
-    });
-
-  } catch (error) {
-    console.error('Create patient error:', error);
-    
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Internal server error',
-        code: 'INTERNAL_ERROR' 
+        message: "Patient created successfully",
+        whatsappSent: true,
       },
-      { status: 500 }
+    });
+  } catch (error) {
+    console.error("Create patient error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Internal server error",
+        code: "INTERNAL_ERROR",
+      },
+      { status: 500 },
     );
   }
 }

@@ -10,20 +10,20 @@ interface OptimizedImageProps {
   priority?: boolean;
 }
 
-export default function OptimizedImage({ 
-  src, 
-  alt, 
-  width, 
-  height, 
+export default function OptimizedImage({
+  src,
+  alt,
+  width,
+  height,
   className = "",
-  priority = false 
+  priority = false,
 }: OptimizedImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
     return (
-      <div 
+      <div
         className={`bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center ${className}`}
         style={{ width, height }}
       >
@@ -35,7 +35,7 @@ export default function OptimizedImage({
   return (
     <div className={`relative ${className}`}>
       {isLoading && (
-        <div 
+        <div
           className="absolute inset-0 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"
           style={{ width, height }}
         />
@@ -48,7 +48,7 @@ export default function OptimizedImage({
         priority={priority}
         unoptimized
         className={`rounded-lg transition-opacity duration-300 ${
-          isLoading ? 'opacity-0' : 'opacity-100'
+          isLoading ? "opacity-0" : "opacity-100"
         }`}
         onLoad={() => setIsLoading(false)}
         onError={() => {

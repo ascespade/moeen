@@ -1,5 +1,5 @@
 // Comprehensive Caching System for Hemam Center
-import { NextRequest } from 'next/server';
+import { NextRequest } from "next/server";
 
 // Cache entry interface
 interface CacheEntry<T> {
@@ -26,7 +26,7 @@ export class MemoryCache {
     this.config = {
       maxSize: config.maxSize || 1000,
       defaultTTL: config.defaultTTL || 5 * 60 * 1000, // 5 minutes
-      cleanupInterval: config.cleanupInterval || 60 * 1000 // 1 minute
+      cleanupInterval: config.cleanupInterval || 60 * 1000, // 1 minute
     };
 
     this.startCleanup();
@@ -35,21 +35,25 @@ export class MemoryCache {
   set<T>(key: string, data: T, ttl?: number): void {
     // Remove oldest entries if cache is full
     if (this.cache.size >= this.config.maxSize) {
-      const oldestKey = this.cache.keys().next().value;
-      this.cache.delete(oldestKey);
+      const iter = this.cache.keys().next();
+      const oldestKey: string | undefined =
+        iter && iter.value ? String(iter.value) : undefined;
+      if (oldestKey !== undefined) {
+        this.cache.delete(oldestKey);
+      }
     }
 
     this.cache.set(key, {
       data,
       timestamp: Date.now(),
       ttl: ttl || this.config.defaultTTL,
-      hits: 0
+      hits: 0,
     });
   }
 
   get<T>(key: string): T | null {
     const entry = this.cache.get(key);
-    
+
     if (!entry) {
       return null;
     }
@@ -87,11 +91,11 @@ export class MemoryCache {
     for (const entry of this.cache.values()) {
       totalHits += entry.hits;
     }
-    
+
     return {
       size: this.cache.size,
       hits: totalHits,
-      missRate: 0 // Would need to track misses separately
+      missRate: 0, // Would need to track misses separately
     };
   }
 
@@ -128,8 +132,12 @@ export class CacheKeys {
     return `doctor:${id}`;
   }
 
-  static appointments(patientId?: string, doctorId?: string, date?: string): string {
-    const params = [patientId, doctorId, date].filter(Boolean).join(':');
+  static appointments(
+    patientId?: string,
+    doctorId?: string,
+    date?: string,
+  ): string {
+    const params = [patientId, doctorId, date].filter(Boolean).join(":");
     return `appointments:${params}`;
   }
 
@@ -154,11 +162,11 @@ export class CacheKeys {
   }
 
   static centerSettings(): string {
-    return 'center_settings';
+    return "center_settings";
   }
 
   static messageTemplates(): string {
-    return 'message_templates';
+    return "message_templates";
   }
 }
 
@@ -172,7 +180,7 @@ export class CacheManager {
     this.cache = new MemoryCache({
       maxSize: 2000,
       defaultTTL: 5 * 60 * 1000, // 5 minutes
-      cleanupInterval: 60 * 1000 // 1 minute
+      cleanupInterval: 60 * 1000, // 1 minute
     });
   }
 
@@ -184,7 +192,11 @@ export class CacheManager {
   }
 
   // Generic cache methods
-  async get<T>(key: string, fetcher?: () => Promise<T>, ttl?: number): Promise<T | null> {
+  async get<T>(
+    key: string,
+    fetcher?: () => Promise<T>,
+    ttl?: number,
+  ): Promise<T | null> {
     // Check cache first
     const cached = this.cache.get<T>(key);
     if (cached !== null) {
@@ -202,14 +214,16 @@ export class CacheManager {
     }
 
     // Fetch data
-    const promise = fetcher().then(data => {
-      this.cache.set(key, data, ttl);
-      this.requestCache.delete(key);
-      return data;
-    }).catch(error => {
-      this.requestCache.delete(key);
-      throw error;
-    });
+    const promise = fetcher()
+      .then((data) => {
+        this.cache.set(key, data, ttl);
+        this.requestCache.delete(key);
+        return data;
+      })
+      .catch((error) => {
+        this.requestCache.delete(key);
+        throw error;
+      });
 
     this.requestCache.set(key, promise);
     return promise;
@@ -224,8 +238,8 @@ export class CacheManager {
   }
 
   invalidatePattern(pattern: string): void {
-    const regex = new RegExp(pattern.replace(/\*/g, '.*'));
-    for (const key of this.cache['cache'].keys()) {
+    const regex = new RegExp(pattern.replace(/\*/g, ".*"));
+    for (const key of this.cache["cache"].keys()) {
       if (regex.test(key)) {
         this.cache.delete(key);
       }
@@ -246,32 +260,55 @@ export class CacheManager {
   }
 
   async getAppointments(
-    patientId?: string, 
-    doctorId?: string, 
-    date?: string, 
-    fetcher: () => Promise<any>
+    fetcher: () => Promise<any>,
+    patientId?: string,
+    doctorId?: string,
+    date?: string,
   ): Promise<any> {
-    return this.get(CacheKeys.appointments(patientId, doctorId, date), fetcher, 2 * 60 * 1000); // 2 minutes
+    return this.get(
+      CacheKeys.appointments(patientId, doctorId, date),
+      fetcher,
+      2 * 60 * 1000,
+    ); // 2 minutes
   }
 
-  async getSessions(patientId: string, fetcher: () => Promise<any>): Promise<any> {
+  async getSessions(
+    patientId: string,
+    fetcher: () => Promise<any>,
+  ): Promise<any> {
     return this.get(CacheKeys.sessions(patientId), fetcher, 5 * 60 * 1000); // 5 minutes
   }
 
-  async getConversations(patientId: string, fetcher: () => Promise<any>): Promise<any> {
+  async getConversations(
+    patientId: string,
+    fetcher: () => Promise<any>,
+  ): Promise<any> {
     return this.get(CacheKeys.conversations(patientId), fetcher, 1 * 60 * 1000); // 1 minute
   }
 
-  async getAnalytics(period: string, fetcher: () => Promise<any>): Promise<any> {
+  async getAnalytics(
+    period: string,
+    fetcher: () => Promise<any>,
+  ): Promise<any> {
     return this.get(CacheKeys.analytics(period), fetcher, 5 * 60 * 1000); // 5 minutes
   }
 
-  async getNotifications(userId: string, fetcher: () => Promise<any>): Promise<any> {
+  async getNotifications(
+    userId: string,
+    fetcher: () => Promise<any>,
+  ): Promise<any> {
     return this.get(CacheKeys.notifications(userId), fetcher, 1 * 60 * 1000); // 1 minute
   }
 
-  async getInsuranceClaims(patientId: string, fetcher: () => Promise<any>): Promise<any> {
-    return this.get(CacheKeys.insuranceClaims(patientId), fetcher, 10 * 60 * 1000); // 10 minutes
+  async getInsuranceClaims(
+    patientId: string,
+    fetcher: () => Promise<any>,
+  ): Promise<any> {
+    return this.get(
+      CacheKeys.insuranceClaims(patientId),
+      fetcher,
+      10 * 60 * 1000,
+    ); // 10 minutes
   }
 
   async getCenterSettings(fetcher: () => Promise<any>): Promise<any> {
@@ -311,7 +348,7 @@ export class CacheManager {
     if (doctorId) {
       this.invalidatePattern(`appointments:*:${doctorId}`);
     }
-    this.invalidatePattern('appointments:*');
+    this.invalidatePattern("appointments:*");
   }
 
   invalidateSessions(patientId: string): void {
@@ -323,7 +360,7 @@ export class CacheManager {
   }
 
   invalidateAnalytics(): void {
-    this.invalidatePattern('analytics:*');
+    this.invalidatePattern("analytics:*");
   }
 
   invalidateNotifications(userId: string): void {
@@ -355,20 +392,28 @@ export class CacheManager {
 }
 
 // Cache middleware
-export function withCache<T>(
+export function withCache(
   keyGenerator: (request: NextRequest) => string,
-  ttl?: number
+  ttl?: number,
 ) {
-  return function(target: any, propertyName: string, descriptor: PropertyDescriptor) {
+  return function (
+    _target: any,
+    _propertyName: string,
+    descriptor: PropertyDescriptor,
+  ) {
     const method = descriptor.value;
     const cache = CacheManager.getInstance();
 
-    descriptor.value = async function(request: NextRequest, ...args: any[]) {
+    descriptor.value = async function (request: NextRequest, ...args: any[]) {
       const key = keyGenerator(request);
-      
-      return cache.get(key, async () => {
-        return await method.call(this, request, ...args);
-      }, ttl);
+
+      return cache.get(
+        key,
+        async () => {
+          return await method.call(this, request, ...args);
+        },
+        ttl,
+      );
     };
   };
 }

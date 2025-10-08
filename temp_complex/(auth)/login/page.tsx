@@ -24,7 +24,7 @@ export default function LoginPage() {
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/dashboard');
+      router.push("/dashboard");
     }
   }, [isAuthenticated, router]);
 
@@ -34,11 +34,15 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
-      router.push('/dashboard');
+      await loginWithCredentials(
+        formData.email,
+        formData.password,
+        formData.rememberMe,
+      );
+      router.push("/dashboard");
     } catch (err) {
-      console.error('Login error:', err);
-      setError(err instanceof Error ? err.message : 'Login failed');
+      console.error("Login error:", err);
+      setError(err instanceof Error ? err.message : "Login failed");
     } finally {
       setIsLoading(false);
     }
@@ -46,9 +50,9 @@ export default function LoginPage() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -66,10 +70,19 @@ export default function LoginPage() {
               priority
               unoptimized
             />
-            <span className="text-3xl font-bold" style={{ color: "var(--brand-primary)" }}>مُعين</span>
+            <span
+              className="text-3xl font-bold"
+              style={{ color: "var(--brand-primary)" }}
+            >
+              مُعين
+            </span>
           </div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{t('auth.welcomeBack','مرحباً بك مرة أخرى')}</h1>
-          <p className="text-gray-600 dark:text-gray-400">{t('auth.login.subtitle','سجل دخولك للوصول إلى لوحة التحكم')}</p>
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
+            {t("auth.welcomeBack", "مرحباً بك مرة أخرى")}
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            {t("auth.login.subtitle", "سجل دخولك للوصول إلى لوحة التحكم")}
+          </p>
         </div>
 
         <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
@@ -80,7 +93,12 @@ export default function LoginPage() {
           )}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('auth.email','البريد الإلكتروني')}</label>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
+                {t("auth.email", "البريد الإلكتروني")}
+              </label>
               <div className="relative">
                 <Input
                   type="email"
@@ -88,14 +106,22 @@ export default function LoginPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder={t('auth.email.placeholder','أدخل بريدك الإلكتروني')}
+                  placeholder={t(
+                    "auth.email.placeholder",
+                    "أدخل بريدك الإلكتروني",
+                  )}
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('auth.password','كلمة المرور')}</label>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
+                {t("auth.password", "كلمة المرور")}
+              </label>
               <div className="relative">
                 <Input
                   id="password-input"
@@ -103,7 +129,10 @@ export default function LoginPage() {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  placeholder={t('auth.password.placeholder','أدخل كلمة المرور')}
+                  placeholder={t(
+                    "auth.password.placeholder",
+                    "أدخل كلمة المرور",
+                  )}
                   required
                 />
                 <button
@@ -113,34 +142,51 @@ export default function LoginPage() {
                   data-hs-toggle-password='{"target":"#password-input"}'
                 >
                   <span data-hs-toggle-password-class="hidden">إظهار</span>
-                  <span className="hidden" data-hs-toggle-password-class="block">إخفاء</span>
+                  <span
+                    className="hidden"
+                    data-hs-toggle-password-class="block"
+                  >
+                    إخفاء
+                  </span>
                 </button>
               </div>
             </div>
 
             <div className="flex items-center justify-between">
               <label className="flex items-center">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   name="rememberMe"
                   checked={formData.rememberMe}
                   onChange={handleInputChange}
-                  className="shrink-0 rounded border-gray-300" 
-                  style={{ accentColor: "var(--brand-primary)" }} 
+                  className="shrink-0 rounded border-gray-300"
+                  style={{ accentColor: "var(--brand-primary)" }}
                 />
-                <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">{t('auth.remember','تذكرني')}</span>
+                <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">
+                  {t("auth.remember", "تذكرني")}
+                </span>
               </label>
-              <Link href="/forgot-password" className="text-sm underline" style={{ color: "var(--brand-primary)" }}>{t('auth.forgot','نسيت كلمة المرور؟')}</Link>
+              <Link
+                href="/forgot-password"
+                className="text-sm underline"
+                style={{ color: "var(--brand-primary)" }}
+              >
+                {t("auth.forgot", "نسيت كلمة المرور؟")}
+              </Link>
             </div>
 
-            <Button type="submit" disabled={isLoading} className="w-full inline-flex justify-center items-center gap-2 px-4 py-3">
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full inline-flex justify-center items-center gap-2 px-4 py-3"
+            >
               {isLoading ? (
                 <>
                   <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   جاري تسجيل الدخول...
                 </>
               ) : (
-                t('auth.login','تسجيل الدخول')
+                t("auth.login", "تسجيل الدخول")
               )}
             </Button>
           </form>
@@ -165,7 +211,13 @@ export default function LoginPage() {
         <div className="text-center mt-6">
           <p className="text-gray-600 dark:text-gray-400">
             ليس لديك حساب؟{" "}
-            <Link href="/register" className="font-medium transition-colors" style={{ color: "var(--brand-primary)" }}>إنشاء حساب جديد</Link>
+            <Link
+              href="/register"
+              className="font-medium transition-colors"
+              style={{ color: "var(--brand-primary)" }}
+            >
+              إنشاء حساب جديد
+            </Link>
           </p>
         </div>
       </div>

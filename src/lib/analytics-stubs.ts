@@ -8,4 +8,3 @@ export function trackEvent(name: string, props?: Record<string, unknown>) {
 export function trackPage(path: string) {
   trackEvent("page_view", { path });
 }
-

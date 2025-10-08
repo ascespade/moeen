@@ -1,5 +1,5 @@
 // Database Integration System
-import { Pool } from 'pg';
+import { Pool } from "pg";
 
 export interface DatabaseConfig {
   host: string;
@@ -133,9 +133,9 @@ export class DatabaseManager {
       `);
 
       this.isConnected = true;
-      console.log('Database tables initialized successfully');
+      console.log("Database tables initialized successfully");
     } catch (error) {
-      console.error('Database initialization error:', error);
+      console.error("Database initialization error:", error);
       this.isConnected = false;
     }
   }
@@ -154,14 +154,14 @@ export class DatabaseManager {
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING id, name, age, phone, email, emergency_contact, medical_history, created_at
     `;
-    
+
     const values = [
       patientData.name,
       patientData.age,
       patientData.phone,
       patientData.email,
       patientData.emergencyContact,
-      patientData.medicalHistory || []
+      patientData.medicalHistory || [],
     ];
 
     const result = await this.pool.query(query, values);
@@ -169,13 +169,13 @@ export class DatabaseManager {
   }
 
   async getPatient(patientId: number) {
-    const query = 'SELECT * FROM patients WHERE id = $1';
+    const query = "SELECT * FROM patients WHERE id = $1";
     const result = await this.pool.query(query, [patientId]);
     return result.rows[0];
   }
 
   async getPatientByPhone(phone: string) {
-    const query = 'SELECT * FROM patients WHERE phone = $1';
+    const query = "SELECT * FROM patients WHERE phone = $1";
     const result = await this.pool.query(query, [phone]);
     return result.rows[0];
   }
@@ -183,15 +183,17 @@ export class DatabaseManager {
   async updatePatient(patientId: number, updates: any) {
     const fields = Object.keys(updates);
     const values = Object.values(updates);
-    const setClause = fields.map((field, index) => `${field} = $${index + 2}`).join(', ');
-    
+    const setClause = fields
+      .map((field, index) => `${field} = $${index + 2}`)
+      .join(", ");
+
     const query = `
       UPDATE patients 
       SET ${setClause}, updated_at = CURRENT_TIMESTAMP 
       WHERE id = $1 
       RETURNING *
     `;
-    
+
     const result = await this.pool.query(query, [patientId, ...values]);
     return result.rows[0];
   }
@@ -210,14 +212,14 @@ export class DatabaseManager {
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *
     `;
-    
+
     const values = [
       appointmentData.patientId,
       appointmentData.doctorId,
       appointmentData.appointmentDate,
       appointmentData.appointmentTime,
-      appointmentData.type || 'treatment',
-      appointmentData.notes
+      appointmentData.type || "treatment",
+      appointmentData.notes,
     ];
 
     const result = await this.pool.query(query, values);
@@ -225,7 +227,8 @@ export class DatabaseManager {
   }
 
   async getAppointments(patientId?: number, doctorId?: number, date?: string) {
-    let query = 'SELECT a.*, p.name as patient_name, d.name as doctor_name FROM appointments a JOIN patients p ON a.patient_id = p.id JOIN doctors d ON a.doctor_id = d.id';
+    let query =
+      "SELECT a.*, p.name as patient_name, d.name as doctor_name FROM appointments a JOIN patients p ON a.patient_id = p.id JOIN doctors d ON a.doctor_id = d.id";
     const conditions = [];
     const values = [];
     let paramCount = 1;
@@ -249,10 +252,10 @@ export class DatabaseManager {
     }
 
     if (conditions.length > 0) {
-      query += ' WHERE ' + conditions.join(' AND ');
+      query += " WHERE " + conditions.join(" AND ");
     }
 
-    query += ' ORDER BY a.appointment_date, a.appointment_time';
+    query += " ORDER BY a.appointment_date, a.appointment_time";
 
     const result = await this.pool.query(query, values);
     return result.rows;
@@ -273,7 +276,7 @@ export class DatabaseManager {
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *
     `;
-    
+
     const values = [
       sessionData.patientId,
       sessionData.doctorId,
@@ -281,7 +284,7 @@ export class DatabaseManager {
       sessionData.sessionTime,
       sessionData.type,
       sessionData.notes,
-      JSON.stringify(sessionData.exercises || [])
+      JSON.stringify(sessionData.exercises || []),
     ];
 
     const result = await this.pool.query(query, values);
@@ -303,15 +306,15 @@ export class DatabaseManager {
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *
     `;
-    
+
     const values = [
       conversationData.patientId,
       conversationData.sessionId,
       conversationData.messageType,
       conversationData.content,
       conversationData.response,
-      conversationData.sentiment || 'neutral',
-      conversationData.crisisLevel || 'normal'
+      conversationData.sentiment || "neutral",
+      conversationData.crisisLevel || "normal",
     ];
 
     const result = await this.pool.query(query, values);
@@ -327,7 +330,7 @@ export class DatabaseManager {
         COUNT(CASE WHEN created_at >= CURRENT_DATE - INTERVAL '7 days' THEN 1 END) as new_patients_7_days
       FROM patients
     `;
-    
+
     const result = await this.pool.query(query);
     return result.rows[0];
   }
@@ -340,7 +343,7 @@ export class DatabaseManager {
         COUNT(CASE WHEN created_at >= CURRENT_DATE - INTERVAL '7 days' THEN 1 END) as conversations_7_days
       FROM conversations
     `;
-    
+
     const result = await this.pool.query(query);
     return result.rows[0];
   }
@@ -348,10 +351,11 @@ export class DatabaseManager {
   // Health Check
   async healthCheck() {
     try {
-      await this.pool.query('SELECT 1');
-      return { status: 'healthy', connected: this.isConnected };
+      await this.pool.query("SELECT 1");
+      return { status: "healthy", connected: this.isConnected };
     } catch (error) {
-      return { status: 'unhealthy', error: error.message };
+      const message = error instanceof Error ? error.message : "Unknown error";
+      return { status: "unhealthy", error: message };
     }
   }
 

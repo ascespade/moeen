@@ -1,27 +1,33 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { ministryHealthIntegration } from '@/lib/saudi-ministry-health-integration';
+import { NextRequest, NextResponse } from "next/server";
+import { ministryHealthIntegration } from "@/lib/saudi-ministry-health-integration";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { 
-      patientId, 
-      serviceType, 
-      serviceCode, 
-      diagnosisCode, 
-      serviceDate, 
-      amount, 
-      notes 
+    const {
+      patientId,
+      serviceType,
+      serviceCode,
+      diagnosisCode,
+      serviceDate,
+      amount,
+      notes,
     } = body;
 
-    if (!patientId || !serviceType || !serviceCode || !diagnosisCode || !amount) {
+    if (
+      !patientId ||
+      !serviceType ||
+      !serviceCode ||
+      !diagnosisCode ||
+      !amount
+    ) {
       return NextResponse.json(
-        { 
-          success: false, 
-          error: 'All required fields must be provided',
-          code: 'MISSING_REQUIRED_FIELDS' 
+        {
+          success: false,
+          error: "All required fields must be provided",
+          code: "MISSING_REQUIRED_FIELDS",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -32,7 +38,7 @@ export async function POST(request: NextRequest) {
       diagnosisCode,
       serviceDate: serviceDate || new Date().toISOString(),
       amount: parseFloat(amount),
-      notes
+      notes,
     });
 
     return NextResponse.json({
@@ -45,23 +51,22 @@ export async function POST(request: NextRequest) {
           diagnosisCode,
           serviceDate,
           amount,
-          notes
+          notes,
         },
         ministrySubmissions: result,
-        submittedAt: new Date().toISOString()
-      }
-    });
-
-  } catch (error) {
-    console.error('Ministry health submission error:', error);
-    
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Failed to submit to ministry health systems',
-        code: 'SUBMISSION_FAILED' 
+        submittedAt: new Date().toISOString(),
       },
-      { status: 500 }
+    });
+  } catch (error) {
+    console.error("Ministry health submission error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Failed to submit to ministry health systems",
+        code: "SUBMISSION_FAILED",
+      },
+      { status: 500 },
     );
   }
 }

@@ -1,0 +1,12 @@
+Failed to compile.
+
+./src/lib/saudi-ministry-health-integration.ts:60:11
+Type error: 'sehaApiEndpoint' is declared but its value is never read.
+
+[0m [90m 58 |[39m[0m
+[0m [90m 59 |[39m [36mexport[39m [36mclass[39m [33mSaudiMinistryHealthIntegration[39m {[0m
+[0m[31m[1m>[22m[39m[90m 60 |[39m   [36mprivate[39m sehaApiEndpoint[33m:[39m string[33m;[39m[0m
+[0m [90m    |[39m           [31m[1m^[22m[39m[0m
+[0m [90m 61 |[39m   [36mprivate[39m shoonApiEndpoint[33m:[39m string[33m;[39m[0m
+[0m [90m 62 |[39m   [36mprivate[39m tatmanApiEndpoint[33m:[39m string[33m;[39m[0m
+[0m [90m 63 |[39m[0m
