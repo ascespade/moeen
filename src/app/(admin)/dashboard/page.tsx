@@ -41,17 +41,17 @@ export default function DashboardPage() {
   }
 
   const stats = [
-    { title: "المحادثات", value: "1,234", change: "+12%" },
-    { title: "العملاء", value: "456", change: "+8%" },
-    { title: "الاستجابة", value: "94%", change: "+2%" },
-    { title: "الوقت", value: "2.3د", change: "-15%" },
+    { title: "المرضى النشطون", value: "1,234", change: "+12%" },
+    { title: "المواعيد اليوم", value: "45", change: "+8%" },
+    { title: "معدل الرضا", value: "94%", change: "+2%" },
+    { title: "وقت الانتظار", value: "15د", change: "-15%" },
   ];
 
   const conversations = [
-    { id: 1, name: "أحمد محمد", channel: "واتساب", lastMessage: "شكراً لكم على المساعدة", time: "منذ 5 دقائق", status: "new", unread: 2 },
-    { id: 2, name: "فاطمة علي", channel: "تليجرام", lastMessage: "هل يمكنني تغيير الموعد؟", time: "منذ 15 دقيقة", status: "pending", unread: 0 },
-    { id: 3, name: "محمد السعيد", channel: "فيسبوك", lastMessage: "متى سيكون المنتج متاحاً؟", time: "منذ ساعة", status: "resolved", unread: 0 },
-    { id: 4, name: "سارة أحمد", channel: "إنستغرام", lastMessage: "أريد معرفة المزيد عن الخدمة", time: "منذ ساعتين", status: "new", unread: 1 },
+    { id: 1, name: "أحمد محمد", channel: "واتساب", lastMessage: "شكراً لكم على العلاج", time: "منذ 5 دقائق", status: "new", unread: 2 },
+    { id: 2, name: "فاطمة علي", channel: "واتساب", lastMessage: "هل يمكنني تغيير الموعد؟", time: "منذ 15 دقيقة", status: "pending", unread: 0 },
+    { id: 3, name: "محمد السعيد", channel: "واتساب", lastMessage: "متى سيكون موعدي القادم؟", time: "منذ ساعة", status: "resolved", unread: 0 },
+    { id: 4, name: "سارة أحمد", channel: "واتساب", lastMessage: "أريد معرفة المزيد عن العلاج", time: "منذ ساعتين", status: "new", unread: 1 },
   ];
 
   const getStatusColor = (status: string) => {
@@ -79,8 +79,8 @@ export default function DashboardPage() {
                 unoptimized
               />
               <div>
-                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">{t('app.name','مُعين')}</h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('nav.dashboard','لوحة التحكم')}</p>
+                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">مركز الهمم</h1>
+                <p className="text-sm text-gray-600 dark:text-gray-400">لوحة التحكم الطبية</p>
               </div>
             </div>
 
@@ -130,7 +130,7 @@ export default function DashboardPage() {
               <CardContent className="p-0">
               <div className="p-6 border-b border-gray-200 dark:border-gray-800">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">المحادثات الحديثة</h2>
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">المحادثات الطبية</h2>
                   <div className="flex items-center space-x-2 space-x-reverse">
                     <Button className="inline-flex items-center gap-2 text-sm">➕ محادثة جديدة</Button>
                     <Button variant="secondary" className="h-10 w-10">🔍</Button>
@@ -143,7 +143,7 @@ export default function DashboardPage() {
                     { id: "all", label: "الكل", count: 24 },
                     { id: "new", label: "جديدة", count: 8 },
                     { id: "pending", label: "معلقة", count: 12 },
-                    { id: "resolved", label: "محلولة", count: 4 },
+                    { id: "resolved", label: "مكتملة", count: 4 },
                   ].map((tab) => (
                     <button
                       key={tab.id}
@@ -208,9 +208,9 @@ export default function DashboardPage() {
               <CardContent className="p-4">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">إجراءات سريعة</h3>
               <div className="space-y-3">
-                <Button className="w-full inline-flex items-center justify-center gap-2"><MessageSquare className="h-5 w-5" /> بدء محادثة جديدة</Button>
-                <Button variant="secondary" className="w-full inline-flex items-center justify-center gap-2"><Users className="h-5 w-5" /> إدارة العملاء</Button>
-                <Button variant="secondary" className="w-full inline-flex items-center justify-center gap-2"><BarChart className="h-5 w-5" /> عرض التقارير</Button>
+                <Button className="w-full inline-flex items-center justify-center gap-2"><MessageSquare className="h-5 w-5" /> بدء محادثة طبية</Button>
+                <Button variant="secondary" className="w-full inline-flex items-center justify-center gap-2"><Users className="h-5 w-5" /> إدارة المرضى</Button>
+                <Button variant="secondary" className="w-full inline-flex items-center justify-center gap-2"><BarChart className="h-5 w-5" /> التقارير الطبية</Button>
               </div>
               </CardContent>
             </Card>
@@ -218,26 +218,26 @@ export default function DashboardPage() {
             {/* Recent Activity */}
             <Card>
               <CardContent className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">النشاط الأخير</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">النشاط الطبي</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">تم حل محادثة مع أحمد محمد</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">تم إكمال جلسة علاج مع أحمد محمد</p>
                     <span className="text-xs text-gray-500">منذ 10 دقائق</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">محادثة جديدة من فاطمة علي</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">موعد جديد مع فاطمة علي</p>
                     <span className="text-xs text-gray-500">منذ 25 دقيقة</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">تم إنشاء تقرير شهري</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">تم إنشاء تقرير طبي شهري</p>
                     <span className="text-xs text-gray-500">منذ ساعة</span>
                   </div>
                 </div>
