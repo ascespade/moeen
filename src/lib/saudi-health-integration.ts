@@ -391,7 +391,7 @@ export class SaudiHealthSystemIntegration {
   // API Call Methods
   private async callSehaAPI(method: string, endpoint: string, data?: any): Promise<any> {
     // In real implementation, this would make actual API calls
-    console.log(`Calling Seha API: ${method} ${endpoint}`, data);
+    console.log(`Calling Seha API: ${method} ${this.sehaApiEndpoint}${endpoint}`, data);
     
     // Mock response for development
     return {
