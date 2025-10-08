@@ -1,345 +1,58 @@
-"use client";
-
-import Image from "next/image";
-import Link from "next/link";
-import { 
-  Heart, 
-  Users, 
-  Stethoscope, 
-  ShieldCheck, 
-  MessageSquare, 
-  Calendar,
-  Phone,
-  MapPin,
-  Clock,
-  Star,
-  ArrowRight,
-  CheckCircle,
-  Brain,
-  Activity
-} from "lucide-react";
-import { useT } from "@/components/providers/I18nProvider";
-import DirectionToggle from "@/components/common/DirectionToggle";
-
 export default function Home() {
-  const { t } = useT();
-  
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Navbar */}
-      <header className="sticky top-0 z-40 backdrop-blur bg-white/70 dark:bg-gray-900/70 border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-screen-xl mx-auto px-4 py-3">
-          <nav className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <Heart className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">مركز الهمم</span>
-            </div>
-            <div className="hidden md:flex items-center gap-6 text-sm">
-              <Link href="#services" className="hover:opacity-80 text-gray-700 dark:text-gray-300">خدماتنا</Link>
-              <Link href="#about" className="hover:opacity-80 text-gray-700 dark:text-gray-300">من نحن</Link>
-              <Link href="#contact" className="hover:opacity-80 text-gray-700 dark:text-gray-300">تواصل معنا</Link>
-              <Link href="/login" className="text-gray-700 dark:text-gray-300 hover:opacity-80">تسجيل الدخول</Link>
-              <Link href="/register" className="px-4 h-10 inline-flex items-center justify-center rounded-md text-white font-medium shadow bg-gradient-to-r from-orange-500 to-blue-600 hover:opacity-90 transition">
-                احجز موعد
-              </Link>
-            </div>
-          </nav>
-        </div>
+    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif', maxWidth: '800px', margin: '0 auto' }}>
+      <header style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <h1 style={{ color: '#2563eb', fontSize: '2.5rem', margin: '0 0 10px 0' }}>مركز الهمم</h1>
+        <p style={{ fontSize: '1.2rem', color: '#666' }}>للرعاية الصحية المتخصصة</p>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-blue-600/10" />
-        <div className="max-w-screen-xl mx-auto px-4 py-16 md:py-24">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight">
-                مركز الهمم
-                <span className="block text-3xl md:text-5xl bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent">
-                  للرعاية الصحية
-                </span>
-              </h1>
-              <p className="mt-6 text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
-                نقدم رعاية صحية شاملة ومتخصصة مع أحدث التقنيات والذكاء الاصطناعي لضمان أفضل النتائج العلاجية
-              </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Link href="/register" className="px-8 h-12 inline-flex items-center justify-center gap-2 rounded-md text-white font-semibold shadow-lg bg-gradient-to-r from-orange-500 to-blue-600 hover:opacity-90 transition">
-                  احجز موعد الآن <ArrowRight className="h-5 w-5" />
-                </Link>
-                <Link href="#services" className="px-8 h-12 inline-flex items-center justify-center rounded-md border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
-                  اكتشف خدماتنا
-                </Link>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="w-full h-96 bg-gradient-to-br from-orange-100 to-blue-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl flex items-center justify-center">
-                <div className="text-center">
-                  <Stethoscope className="w-24 h-24 text-orange-500 mx-auto mb-4" />
-                  <p className="text-gray-600 dark:text-gray-300">صورة المركز</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <nav style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <a href="/login" style={{ 
+          margin: '0 10px', 
+          padding: '10px 20px', 
+          background: '#f3f4f6', 
+          color: '#374151', 
+          textDecoration: 'none', 
+          borderRadius: '5px',
+          display: 'inline-block'
+        }}>تسجيل الدخول</a>
+        <a href="/register" style={{ 
+          margin: '0 10px', 
+          padding: '10px 20px', 
+          background: '#2563eb', 
+          color: 'white', 
+          textDecoration: 'none', 
+          borderRadius: '5px',
+          display: 'inline-block'
+        }}>احجز موعد</a>
+      </nav>
 
-      {/* Services Section */}
-      <section id="services" className="py-16 bg-white dark:bg-gray-900">
-        <div className="max-w-screen-xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              خدماتنا المتخصصة
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              نقدم مجموعة شاملة من الخدمات الصحية مع أحدث التقنيات والذكاء الاصطناعي
-            </p>
+      <main>
+        <section style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <h2 style={{ fontSize: '2rem', marginBottom: '20px' }}>خدماتنا المتخصصة</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginTop: '30px' }}>
+            <div style={{ padding: '20px', background: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+              <h3 style={{ color: '#2563eb', marginBottom: '10px' }}>العلاج الطبيعي</h3>
+              <p style={{ color: '#666' }}>برامج علاج طبيعي متخصصة مع متابعة ذكية</p>
+            </div>
+            <div style={{ padding: '20px', background: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+              <h3 style={{ color: '#2563eb', marginBottom: '10px' }}>العلاج النفسي</h3>
+              <p style={{ color: '#666' }}>جلسات علاج نفسي مع دعم متخصص</p>
+            </div>
+            <div style={{ padding: '20px', background: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+              <h3 style={{ color: '#2563eb', marginBottom: '10px' }}>العلاج الوظيفي</h3>
+              <p style={{ color: '#666' }}>تحسين المهارات الوظيفية والحياتية</p>
+            </div>
           </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { 
-                icon: <Stethoscope className="h-8 w-8" />, 
-                title: "العلاج الطبيعي", 
-                desc: "برامج علاج طبيعي متخصصة مع متابعة ذكية للحالة",
-                features: ["تقييم شامل", "برامج مخصصة", "متابعة ذكية"]
-              },
-              { 
-                icon: <Brain className="h-8 w-8" />, 
-                title: "العلاج النفسي", 
-                desc: "جلسات علاج نفسي مع مساعد ذكي للدعم المستمر",
-                features: ["جلسات فردية", "مجموعات دعم", "مساعد ذكي"]
-              },
-              { 
-                icon: <Activity className="h-8 w-8" />, 
-                title: "العلاج الوظيفي", 
-                desc: "تحسين المهارات الوظيفية مع تقنيات متقدمة",
-                features: ["تقييم المهارات", "برامج تطوير", "متابعة النتائج"]
-              },
-              { 
-                icon: <Users className="h-8 w-8" />, 
-                title: "الاستشارات الأسرية", 
-                desc: "دعم شامل للأسر مع برامج متخصصة",
-                features: ["استشارات أسرية", "برامج تدريب", "دعم مستمر"]
-              },
-              { 
-                icon: <MessageSquare className="h-8 w-8" />, 
-                title: "المساعد الذكي", 
-                desc: "مساعد ذكي متاح 24/7 للدعم والإرشاد",
-                features: ["دعم فوري", "إرشادات مخصصة", "متابعة الحالة"]
-              },
-              { 
-                icon: <Calendar className="h-8 w-8" />, 
-                title: "إدارة المواعيد", 
-                desc: "نظام ذكي لإدارة المواعيد والمتابعة",
-                features: ["حجز سهل", "تذكيرات ذكية", "متابعة تلقائية"]
-              }
-            ].map((service, i) => (
-              <div key={i} className="group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700">
-                <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{service.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">{service.desc}</p>
-                <ul className="space-y-2">
-                  {service.features.map((feature, j) => (
-                    <li key={j} className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                      <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Features Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <div className="max-w-screen-xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              مميزاتنا التقنية
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              نستخدم أحدث التقنيات والذكاء الاصطناعي لتقديم أفضل الخدمات
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: <ShieldCheck className="h-6 w-6" />, title: "أمان متقدم", desc: "حماية كاملة للبيانات مع تشفير متقدم" },
-              { icon: <MessageSquare className="h-6 w-6" />, title: "دردشة ذكية", desc: "مساعد ذكي متاح 24/7 للدعم الفوري" },
-              { icon: <Calendar className="h-6 w-6" />, title: "مواعيد ذكية", desc: "نظام حجز ذكي مع تذكيرات تلقائية" },
-              { icon: <Activity className="h-6 w-6" />, title: "متابعة مستمرة", desc: "تتبع التقدم مع تقارير مفصلة" }
-            ].map((feature, i) => (
-              <div key={i} className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center text-white mb-4">
-                  {feature.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{feature.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-16 bg-white dark:bg-gray-900">
-        <div className="max-w-screen-xl mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                من نحن
-              </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                مركز الهمم هو مركز رعاية صحية متخصص يهدف إلى تقديم أفضل الخدمات العلاجية 
-                باستخدام أحدث التقنيات والذكاء الاصطناعي لضمان أفضل النتائج للمرضى.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
-                  <span className="text-gray-700 dark:text-gray-300">فريق طبي متخصص وذو خبرة عالية</span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
-                  <span className="text-gray-700 dark:text-gray-300">أحدث التقنيات والذكاء الاصطناعي</span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
-                  <span className="text-gray-700 dark:text-gray-300">رعاية شاملة ومتابعة مستمرة</span>
-                </div>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="w-full h-96 bg-gradient-to-br from-orange-100 to-blue-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl flex items-center justify-center">
-                <div className="text-center">
-                  <Users className="w-24 h-24 text-blue-500 mx-auto mb-4" />
-                  <p className="text-gray-600 dark:text-gray-300">فريق المركز</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-16 bg-gray-50 dark:bg-gray-800">
-        <div className="max-w-screen-xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              تواصل معنا
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
-              نحن هنا لمساعدتك في أي وقت
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
-                <Phone className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">اتصل بنا</h3>
-              <p className="text-gray-600 dark:text-gray-300">+966 50 123 4567</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
-                <MapPin className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">موقعنا</h3>
-              <p className="text-gray-600 dark:text-gray-300">جدة، المملكة العربية السعودية</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
-                <Clock className="h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">ساعات العمل</h3>
-              <p className="text-gray-600 dark:text-gray-300">الأحد - الخميس: 8:00 - 20:00</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-orange-500 to-blue-600">
-        <div className="max-w-screen-xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            ابدأ رحلتك نحو الشفاء
-          </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            احجز موعدك الآن واستفد من خدماتنا المتخصصة مع أحدث التقنيات
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register" className="px-8 h-12 inline-flex items-center justify-center gap-2 rounded-md bg-white text-gray-900 font-semibold shadow-lg hover:bg-gray-100 transition">
-              احجز موعد الآن <ArrowRight className="h-5 w-5" />
-            </Link>
-            <Link href="/login" className="px-8 h-12 inline-flex items-center justify-center rounded-md border-2 border-white text-white hover:bg-white/10 transition">
-              تسجيل الدخول
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white">
-        <div className="max-w-screen-xl mx-auto px-4 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-xl font-bold">مركز الهمم</span>
-              </div>
-              <p className="text-gray-400">
-                مركز رعاية صحية متخصص يهدف إلى تقديم أفضل الخدمات العلاجية
-              </p>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-4">خدماتنا</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="#" className="hover:text-white transition">العلاج الطبيعي</Link></li>
-                <li><Link href="#" className="hover:text-white transition">العلاج النفسي</Link></li>
-                <li><Link href="#" className="hover:text-white transition">العلاج الوظيفي</Link></li>
-                <li><Link href="#" className="hover:text-white transition">الاستشارات الأسرية</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-4">روابط سريعة</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/about" className="hover:text-white transition">من نحن</Link></li>
-                <li><Link href="/contact" className="hover:text-white transition">تواصل معنا</Link></li>
-                <li><Link href="/privacy" className="hover:text-white transition">الخصوصية</Link></li>
-                <li><Link href="/terms" className="hover:text-white transition">الشروط</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-4">تواصل معنا</h3>
-              <div className="space-y-2 text-gray-400">
-                <p>+966 50 123 4567</p>
-                <p>info@alhemam.sa</p>
-                <p>جدة، المملكة العربية السعودية</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 مركز الهمم. جميع الحقوق محفوظة.</p>
-          </div>
-        </div>
-      </footer>
-      
-      {/* Direction Toggle */}
-      <DirectionToggle />
+        <section style={{ textAlign: 'center', background: '#f3f4f6', padding: '30px', borderRadius: '8px' }}>
+          <h2 style={{ marginBottom: '20px' }}>تواصل معنا</h2>
+          <p style={{ fontSize: '1.1rem', margin: '10px 0' }}>📞 +966 50 123 4567</p>
+          <p style={{ fontSize: '1.1rem', margin: '10px 0' }}>📍 جدة، المملكة العربية السعودية</p>
+          <p style={{ fontSize: '1.1rem', margin: '10px 0' }}>✉️ info@alhemam.sa</p>
+        </section>
+      </main>
     </div>
   );
 }
