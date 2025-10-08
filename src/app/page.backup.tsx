@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -6,15 +9,15 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-gray-900">مركز الهمم</h1>
             <nav className="flex gap-4">
-              <a href="/login" className="text-gray-700 hover:text-blue-600">
+              <Link href={ROUTES.LOGIN} className="text-gray-700 hover:text-blue-600">
                 تسجيل الدخول
-              </a>
-              <a
-                href="/register"
+              </Link>
+              <Link
+                href={ROUTES.REGISTER}
                 className="bg-blue-600 text-white px-4 py-2 rounded"
               >
                 احجز موعد
-              </a>
+              </Link>
             </nav>
           </div>
         </div>
@@ -29,12 +32,12 @@ export default function Home() {
             نقدم رعاية صحية شاملة ومتخصصة مع أحدث التقنيات
           </p>
           <div className="flex gap-4 justify-center">
-            <a
-              href="/register"
+            <Link
+              href={ROUTES.REGISTER}
               className="bg-blue-600 text-white px-8 py-3 rounded-lg"
             >
               احجز موعد الآن
-            </a>
+            </Link>
             <a
               href="#services"
               className="border border-gray-300 px-8 py-3 rounded-lg"

@@ -2,6 +2,7 @@
 
 // Removed unused Image import to fix type error and reduce bundle size
 import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
 import {
   Heart,
   Users,
@@ -54,13 +55,13 @@ export default function Home() {
                 تواصل معنا
               </Link>
               <Link
-                href="/login"
+                href={ROUTES.LOGIN}
                 className="text-gray-700 dark:text-gray-300 hover:opacity-80"
               >
                 تسجيل الدخول
               </Link>
               <Link
-                href="/register"
+                href={ROUTES.REGISTER}
                 className="px-4 h-10 inline-flex items-center justify-center rounded-md text-white font-medium shadow bg-gradient-to-r from-orange-500 to-blue-600 hover:opacity-90 transition"
               >
                 احجز موعد
@@ -88,7 +89,7 @@ export default function Home() {
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <Link
-                  href="/register"
+                  href={ROUTES.REGISTER}
                   className="px-8 h-12 inline-flex items-center justify-center gap-2 rounded-md text-white font-semibold shadow-lg bg-gradient-to-r from-orange-500 to-blue-600 hover:opacity-90 transition"
                 >
                   احجز موعد الآن <ArrowRight className="h-5 w-5" />
@@ -362,13 +363,13 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/register"
+              href={ROUTES.REGISTER}
               className="px-8 h-12 inline-flex items-center justify-center gap-2 rounded-md bg-white text-gray-900 font-semibold shadow-lg hover:bg-gray-100 transition"
             >
               احجز موعد الآن <ArrowRight className="h-5 w-5" />
             </Link>
             <Link
-              href="/login"
+              href={ROUTES.LOGIN}
               className="px-8 h-12 inline-flex items-center justify-center rounded-md border-2 border-white text-white hover:bg-white/10 transition"
             >
               تسجيل الدخول
@@ -423,12 +424,12 @@ export default function Home() {
               <h3 className="text-lg font-semibold mb-4">روابط سريعة</h3>
               <ul className="space-y-2 text-gray-400">
                 <li>
-                  <Link href="/about" className="hover:text-white transition">
+                  <Link href={"/about"} className="hover:text-white transition">
                     من نحن
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="hover:text-white transition">
+                  <Link href={"/contact"} className="hover:text-white transition">
                     تواصل معنا
                   </Link>
                 </li>
