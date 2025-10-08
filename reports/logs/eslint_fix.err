@@ -1,11 +1,11 @@
-{
-  "tasks": [
-    {
-      "name": "-",
-      "status": "eslint_fix",
-      "stdout": "",
-      "stderr": "",
-      "timestamp": ""
-    }
-  ]
-}
+
+Oops! Something went wrong! :(
+
+ESLint: 8.57.1
+
+ESLint couldn't find the config "next/typescript" to extend from. Please check that the name of the config is correct.
+
+The config "next/typescript" was referenced from the config file in "".
+
+If you still have problems, please stop by https://eslint.org/chat/help to chat with the team.
+
