@@ -20,7 +20,7 @@ export const securityHeaders = {
 };
 
 // Enhanced Rate Limiter
-export class EnhancedRateLimiter {
+class EnhancedRateLimiter {
   private maxRequests: number;
   private windowMs: number;
 
@@ -60,7 +60,7 @@ export class EnhancedRateLimiter {
 }
 
 // Enhanced CSRF Protection
-export class EnhancedCSRFProtection {
+class EnhancedCSRFProtection {
   private static tokens = new Map<string, { token: string; expires: number }>();
 
   static generateToken(): string {
@@ -71,7 +71,7 @@ export class EnhancedCSRFProtection {
     this.tokens.set(id, { token, expires });
 
     // Clean up expired tokens
-    for (const [key, value] of this.tokens.entries()) {
+    for (const [key, value] of Array.from(this.tokens.entries())) {
       if (Date.now() > value.expires) {
         this.tokens.delete(key);
       }
@@ -99,7 +99,7 @@ export class EnhancedCSRFProtection {
 }
 
 // Enhanced Session Security
-export class EnhancedSessionSecurity {
+class EnhancedSessionSecurity {
   static generateSessionId(): string {
     return randomBytes(32).toString("hex");
   }
@@ -117,7 +117,7 @@ export class EnhancedSessionSecurity {
 }
 
 // Input Sanitization
-export class InputSanitizer {
+class InputSanitizer {
   static sanitizeString(input: string): string {
     return input
       .replace(/[<>]/g, "") // Remove potential HTML tags
@@ -140,7 +140,7 @@ export class InputSanitizer {
 }
 
 // Audit Logger
-export class AuditLogger {
+class AuditLogger {
   static async log(request: NextRequest, action: string, details?: any) {
     try {
       const userAgent = request.headers.get("user-agent") || "";
@@ -168,7 +168,7 @@ export class AuditLogger {
 }
 
 // Enhanced Authentication Middleware
-export class EnhancedAuthMiddleware {
+class EnhancedAuthMiddleware {
   static async authenticate(request: NextRequest): Promise<{
     success: boolean;
     user?: any;
@@ -201,7 +201,7 @@ export class EnhancedAuthMiddleware {
 
       // Get user from database
       const user = await realDB.getUser(decoded.userId);
-      if (!user || !user.is_active) {
+      if (!user || (user as any).is_active === false) {
         return { success: false, error: "User not found or inactive" };
       }
 
@@ -350,8 +350,8 @@ export function secureAPI(
 
       // Log the error
       await AuditLogger.log(request, "SECURITY_ERROR", {
-        error: error.message,
-        stack: error.stack,
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
       });
 
       return NextResponse.json(
@@ -363,7 +363,7 @@ export function secureAPI(
 }
 
 // Data Validation
-export class DataValidator {
+class DataValidator {
   static validateEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);

@@ -215,7 +215,7 @@ export class FlowManager {
 
   // Get flow by entry point
   getFlowByEntryPoint(entryPoint: string): ConversationFlow | undefined {
-    for (const flow of this.flows.values()) {
+    for (const flow of Array.from(this.flows.values())) {
       if (flow.entryPoints.includes(entryPoint)) {
         return flow;
       }
