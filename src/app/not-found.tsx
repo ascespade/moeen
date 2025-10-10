@@ -1,8 +1,9 @@
+import { Home, ArrowLeft, Search, HelpCircle } from 'lucide-react';
 "use client";
 
 import Link from "next/link";
 import Image from "next/image";
-import { Home, ArrowLeft, Search, HelpCircle } from "lucide-react";
+
 
 export default function NotFound() {
   return (

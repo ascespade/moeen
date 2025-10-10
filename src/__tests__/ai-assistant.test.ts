@@ -1,5 +1,4 @@
-import { HemamAssistant } from "@/lib/ai-assistant";
-
+import { HemamAssistant } from '@/lib/ai-assistant';
 describe("HemamAssistant", () => {
   let assistant: HemamAssistant;
 

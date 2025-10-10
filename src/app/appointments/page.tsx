@@ -1,8 +1,10 @@
+import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
 "use client";
 
-import { useState } from "react";
+
 import Image from "next/image";
-import { ROUTES } from "@/constants/routes";
+
 
 interface Appointment {
   id: string;

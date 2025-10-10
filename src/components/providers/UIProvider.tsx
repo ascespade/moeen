@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 "use client";
 
-import { useEffect } from "react";
-import { usePathname } from "next/navigation";
+
+
 import useBrandColorFromLogo from "@/hooks/useBrandColorFromLogo";
 
 export type AppTheme = "light" | "dark";

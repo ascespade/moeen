@@ -12,8 +12,11 @@
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "tsc": "tsc --noEmit",
-    "stylelint": "stylelint '**/*.css'",
-    "stylelint:fix": "stylelint '**/*.css' --fix",
+    "stylelint": "stylelint '**/*.{css,scss}'",
+    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix",
+    "dev:check": "npm run lint && npm run tsc && npm run prettier && npm run dev",
+    "clean:smart": "node scripts/smart-clean.js",
+    "reorg": "node scripts/reorganize-project.js && node scripts/generate-barrels.js && node scripts/fix-imports.js",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {

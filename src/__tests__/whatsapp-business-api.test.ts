@@ -1,5 +1,4 @@
-import { whatsappAPI } from "@/lib/whatsapp-business-api";
-
+import { whatsappAPI } from '@/lib/whatsapp-business-api';
 // Mock fetch for testing
 global.fetch = jest.fn();
 

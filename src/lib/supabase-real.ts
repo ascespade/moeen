@@ -1,6 +1,7 @@
+import { createClient } from '@supabase/supabase-js';
 // Real Supabase Integration for Hemam Center
 // @ts-ignore - shimmed for type checking without full types
-import { createClient } from "@supabase/supabase-js";
+
 type Database = any;
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;

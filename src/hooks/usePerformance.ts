@@ -1,5 +1,4 @@
-import { useEffect, useCallback, useRef } from "react";
-
+import { useEffect, useCallback, useRef } from 'react';
 // Performance monitoring hook
 export const usePerformance = () => {
   // Monitor Core Web Vitals

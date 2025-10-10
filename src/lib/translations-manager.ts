@@ -1,10 +1,12 @@
+import { cuid } from './cuid';
+import { getServerSupabase } from './supabaseClient';
 /**
  * Translations Manager
  * Centralized system for managing translations with CUID
  */
 
-import { cuid } from "./cuid";
-import { getServerSupabase } from "./supabaseClient";
+
+
 
 export interface Translation {
   id: string;

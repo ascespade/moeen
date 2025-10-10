@@ -1,5 +1,4 @@
-import { ROUTES } from "@/constants/routes";
-
+import { ROUTES } from '@/constants/routes';
 export interface User {
   id: string;
   email: string;
