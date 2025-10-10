@@ -44,7 +44,7 @@ export class RealSupabaseManager {
     medications?: string[];
     allergies?: string[];
   }) {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await (supabaseAdmin as any)
       .from("users")
       .insert([userData])
       .select()
@@ -77,7 +77,7 @@ export class RealSupabaseManager {
   }
 
   async updateUser(userId: string, updates: any) {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await (supabaseAdmin as any)
       .from("users")
       .update({ ...updates, updated_at: new Date().toISOString() })
       .eq("id", userId)
@@ -264,7 +264,7 @@ export class RealSupabaseManager {
       offset?: number;
     } = {},
   ) {
-    let query = supabaseAdmin.from("appointments").select(`
+    let query = supabaseAdmin as any).from("appointments").select(`
         *,
         patients!appointments_patient_id_fkey(
           *,

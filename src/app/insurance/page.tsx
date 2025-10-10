@@ -100,7 +100,7 @@ export default function InsurancePage() {
   const getStatusBadge = (status: InsuranceClaim["status"]) => {
     const config = statusConfig[status];
     return (
-      <Badge variant={config.color} className="text-sm">
+      <Badge variant="default" className="text-sm">
         {config.label}
       </Badge>
     );
@@ -162,10 +162,10 @@ export default function InsurancePage() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm">
+              <Button variant="secondary" size="sm">
                 تصدير التقرير
               </Button>
-              <Button variant="brand" size="sm">
+              <Button variant="primary" size="sm">
                 إضافة مطالبة جديدة
               </Button>
             </div>
@@ -205,28 +205,28 @@ export default function InsurancePage() {
         {/* Filters */}
         <div className="flex flex-wrap gap-3 mb-6">
           <Button
-            variant={filter === "all" ? "brand" : "outline"}
+            variant={filter === "all" ? "primary" : "secondary"}
             size="sm"
             onClick={() => setFilter("all")}
           >
             جميع المطالبات
           </Button>
           <Button
-            variant={filter === "pending" ? "brand" : "outline"}
+            variant={filter === "pending" ? "primary" : "secondary"}
             size="sm"
             onClick={() => setFilter("pending")}
           >
             قيد المراجعة
           </Button>
           <Button
-            variant={filter === "approved" ? "brand" : "outline"}
+            variant={filter === "approved" ? "primary" : "secondary"}
             size="sm"
             onClick={() => setFilter("approved")}
           >
             موافق عليها
           </Button>
           <Button
-            variant={filter === "rejected" ? "brand" : "outline"}
+            variant={filter === "rejected" ? "primary" : "secondary"}
             size="sm"
             onClick={() => setFilter("rejected")}
           >
@@ -281,10 +281,10 @@ export default function InsurancePage() {
               </div>
 
               <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="flex-1">
+                <Button variant="secondary" size="sm" className="flex-1">
                   عرض التفاصيل
                 </Button>
-                <Button variant="brand" size="sm" className="flex-1">
+                <Button variant="primary" size="sm" className="flex-1">
                   تحديث
                 </Button>
               </div>
@@ -306,7 +306,7 @@ export default function InsurancePage() {
             <p className="text-gray-600 dark:text-gray-300 mb-4">
               لا توجد مطالبات تأمينية تطابق الفلتر المحدد
             </p>
-            <Button variant="brand">
+            <Button variant="primary">
               إضافة مطالبة جديدة
             </Button>
           </Card>
@@ -321,7 +321,7 @@ export default function InsurancePage() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold">تفاصيل المطالبة</h2>
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   size="sm"
                   onClick={() => setSelectedClaim(null)}
                 >
@@ -409,10 +409,10 @@ export default function InsurancePage() {
               </div>
 
               <div className="flex gap-3 mt-8">
-                <Button variant="outline" className="flex-1">
+                <Button variant="secondary" className="flex-1">
                   طباعة
                 </Button>
-                <Button variant="brand" className="flex-1">
+                <Button variant="primary" className="flex-1">
                   تحديث الحالة
                 </Button>
               </div>
