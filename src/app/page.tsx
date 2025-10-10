@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ROUTES } from "@/constants/routes";
+import GlobalHeader from "@/components/layout/GlobalHeader";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -165,46 +166,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
-      {/* Navigation */}
-      <nav className="nav sticky top-0 z-50">
-        <div className="container-app py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Image
-                src="/logo.jpg"
-                alt="مُعين"
-                width={50}
-                height={50}
-                className="rounded-lg"
-              />
-              <h1 className="text-brand text-2xl font-bold">مُعين</h1>
-            </div>
-            <div className="hidden items-center gap-6 md:flex">
-              <Link href="#services" className="nav-link">
-                الخدمات
-              </Link>
-              <Link href="#about" className="nav-link">
-                عن معين
-              </Link>
-              <Link href="#gallery" className="nav-link">
-                المعرض
-              </Link>
-              <Link href="#contact" className="nav-link">
-                اتصل بنا
-              </Link>
-            </div>
-            <div className="flex items-center gap-3">
-              <Link href={ROUTES.LOGIN} className="btn btn-outline">
-                تسجيل الدخول
-              </Link>
-              <Link href={ROUTES.REGISTER} className="btn btn-brand">
-                إنشاء حساب
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+      {/* Header */}
+      <GlobalHeader />
+      
       {/* Hero Slider */}
       <section className="relative h-[80vh] overflow-hidden">
         {heroSlides.map((slide, index) => (
@@ -410,7 +374,7 @@ export default function HomePage() {
             </div>
             <div className="relative">
               <Image
-                src="/about-image.jpg"
+                src="/logo.jpg"
                 alt="عن مُعين"
                 width={600}
                 height={400}
