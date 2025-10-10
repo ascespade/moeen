@@ -1,33 +1,33 @@
 {
-  "timestamp": "2025-10-10T16:12:06.295Z",
+  "timestamp": "2025-10-10T16:42:09.451Z",
   "totalProcesses": 4,
   "runningProcesses": 4,
   "processDetails": [
     {
       "name": "continuous-ai-loop",
       "running": true,
-      "uptime": 1813165,
+      "uptime": 3616321,
       "restarts": 0,
       "pid": 7216
     },
     {
       "name": "advanced-monitoring",
       "running": true,
-      "uptime": 1811159,
+      "uptime": 3614315,
       "restarts": 0,
       "pid": 7239
     },
     {
       "name": "ml-learning-engine",
       "running": true,
-      "uptime": 1807150,
+      "uptime": 3610306,
       "restarts": 0,
       "pid": 7292
     },
     {
       "name": "sandbox-testing",
       "running": true,
-      "uptime": 1805145,
+      "uptime": 3608301,
       "restarts": 0,
       "pid": 7299
     }
