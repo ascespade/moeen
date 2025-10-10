@@ -1,12 +1,7 @@
-
 "use client";
-
-import { useState } from 'react';
-import { ROUTES } from '@/constants/routes';
-
-
+import { useState } from "react";
+import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
-
 
 interface Integration {
   id: string;

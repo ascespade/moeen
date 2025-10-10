@@ -1,12 +1,15 @@
-import { usePathname } from 'next/navigation';
-import { LayoutDashboard, MessagesSquare, Workflow, ShieldCheck, Settings, Users } from 'lucide-react';
-import { useT } from '@/components/providers/I18nProvider';
 "use client";
-
+import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  MessagesSquare,
+  Workflow,
+  ShieldCheck,
+  Settings,
+  Users,
+} from "lucide-react";
+import { useT } from "@/components/providers/I18nProvider";
 import Link from "next/link";
-
-
-
 
 const adminItems = [
   {

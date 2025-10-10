@@ -1,7 +1,6 @@
-import { Cairo, Inter } from 'next/font/google';
+import { Cairo, Inter } from "next/font/google";
 import "./globals.css";
 import type { Metadata } from "next";
-
 
 export const metadata: Metadata = {
   title: "مُعين",

@@ -1,12 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { realDB } from './supabase-real';
-import { createHash } from 'crypto';
-import { extname } from 'path';
+import { NextRequest, NextResponse } from "next/server";
+import { realDB } from "./supabase-real";
+import { createHash } from "crypto";
+import { extname } from "path";
 // Comprehensive File Upload and Media Management System for Hemam Center
-
-
-
-
 
 // File types and configurations
 export const ALLOWED_FILE_TYPES = {
