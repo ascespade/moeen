@@ -1,13 +1,13 @@
 {
-  "timestamp": "2025-10-10T16:12:07.332Z",
+  "timestamp": "2025-10-10T16:42:21.801Z",
   "workspace": "/workspace",
   "cleanup": {
     "deleted": 0,
     "archived": 0,
-    "timestamp": "2025-10-10T16:12:07.334Z"
+    "timestamp": "2025-10-10T16:42:21.804Z"
   },
   "fileIndex": {
-    "timestamp": "2025-10-10T16:12:07.334Z",
+    "timestamp": "2025-10-10T16:42:21.804Z",
     "workspace": "/workspace",
     "files": [
       {
@@ -168,7 +168,7 @@
         "path": "config/cache-config.json",
         "size": 182,
         "created": "2025-10-10T15:35:08.119Z",
-        "modified": "2025-10-10T16:07:07.201Z",
+        "modified": "2025-10-10T16:37:21.530Z",
         "extension": ".json"
       },
       {
@@ -182,7 +182,7 @@
         "path": "config/error-recovery.json",
         "size": 406,
         "created": "2025-10-10T15:35:08.119Z",
-        "modified": "2025-10-10T16:07:07.201Z",
+        "modified": "2025-10-10T16:37:21.534Z",
         "extension": ".json"
       },
       {
@@ -196,7 +196,7 @@
         "path": "config/health-checks.json",
         "size": 482,
         "created": "2025-10-10T15:35:08.123Z",
-        "modified": "2025-10-10T16:07:07.205Z",
+        "modified": "2025-10-10T16:37:21.534Z",
         "extension": ".json"
       },
       {
@@ -210,7 +210,7 @@
         "path": "config/logging.json",
         "size": 346,
         "created": "2025-10-10T15:35:08.119Z",
-        "modified": "2025-10-10T16:07:07.201Z",
+        "modified": "2025-10-10T16:37:21.534Z",
         "extension": ".json"
       },
       {
@@ -233,6 +233,27 @@
         "created": "2025-10-10T15:02:39.480Z",
         "modified": "2025-10-10T15:02:39.480Z",
         "extension": ".js"
+      },
+      {
+        "path": "data/chatbot-knowledge.json",
+        "size": 238,
+        "created": "2025-10-10T16:15:51.704Z",
+        "modified": "2025-10-10T16:40:51.936Z",
+        "extension": ".json"
+      },
+      {
+        "path": "data/scheduling-optimization.json",
+        "size": 233,
+        "created": "2025-10-10T16:15:51.704Z",
+        "modified": "2025-10-10T16:40:51.936Z",
+        "extension": ".json"
+      },
+      {
+        "path": "data/specialized-services.json",
+        "size": 1592,
+        "created": "2025-10-10T16:15:51.704Z",
+        "modified": "2025-10-10T16:40:51.936Z",
+        "extension": ".json"
       },
       {
         "path": "docker-compose.yml",
@@ -305,59 +326,73 @@
         "extension": ".js"
       },
       {
+        "path": "learning/hemmam-learning-data.json",
+        "size": 3900,
+        "created": "2025-10-10T16:15:51.700Z",
+        "modified": "2025-10-10T16:40:51.936Z",
+        "extension": ".json"
+      },
+      {
         "path": "learning/ml-model.json",
         "size": 398,
         "created": "2025-10-10T15:41:59.176Z",
-        "modified": "2025-10-10T16:11:59.400Z",
+        "modified": "2025-10-10T16:41:59.624Z",
         "extension": ".json"
       },
       {
         "path": "learning/test-history.json",
-        "size": 16044,
+        "size": 29790,
         "created": "2025-10-10T15:42:01.228Z",
-        "modified": "2025-10-10T16:12:01.596Z",
+        "modified": "2025-10-10T16:42:02.124Z",
         "extension": ".json"
       },
       {
         "path": "logs/admin-module.log",
-        "size": 7468,
+        "size": 13810,
         "created": "2025-10-10T15:35:08.071Z",
-        "modified": "2025-10-10T16:07:07.165Z",
+        "modified": "2025-10-10T16:37:21.466Z",
         "extension": ".log"
       },
       {
         "path": "logs/advanced-monitoring.log",
-        "size": 14378,
+        "size": 28208,
         "created": "2025-10-10T15:41:55.172Z",
-        "modified": "2025-10-10T16:11:56.800Z",
+        "modified": "2025-10-10T16:41:58.372Z",
         "extension": ".log"
       },
       {
         "path": "logs/continuous-ai-loop.log",
-        "size": 11596,
+        "size": 23444,
         "created": "2025-10-10T15:41:53.156Z",
-        "modified": "2025-10-10T16:12:07.296Z",
+        "modified": "2025-10-10T16:42:21.716Z",
         "extension": ".log"
       },
       {
         "path": "logs/enhancements.log",
-        "size": 9302,
+        "size": 17210,
         "created": "2025-10-10T15:35:08.111Z",
-        "modified": "2025-10-10T16:07:07.205Z",
+        "modified": "2025-10-10T16:37:21.534Z",
         "extension": ".log"
       },
       {
         "path": "logs/file-cleanup.log",
-        "size": 4281,
+        "size": 7737,
         "created": "2025-10-10T15:35:05.923Z",
-        "modified": "2025-10-10T16:12:07.332Z",
+        "modified": "2025-10-10T16:42:21.804Z",
+        "extension": ".log"
+      },
+      {
+        "path": "logs/hemmam-ai-integration.log",
+        "size": 12406,
+        "created": "2025-10-10T16:15:51.692Z",
+        "modified": "2025-10-10T16:40:51.936Z",
         "extension": ".log"
       },
       {
         "path": "logs/master-ai-controller.log",
-        "size": 137776,
+        "size": 273051,
         "created": "2025-10-10T15:41:53.120Z",
-        "modified": "2025-10-10T16:12:07.296Z",
+        "modified": "2025-10-10T16:42:18.884Z",
         "extension": ".log"
       },
       {
@@ -369,16 +404,16 @@
       },
       {
         "path": "logs/ml-learning.log",
-        "size": 3183,
+        "size": 5592,
         "created": "2025-10-10T15:41:59.168Z",
-        "modified": "2025-10-10T16:11:59.400Z",
+        "modified": "2025-10-10T16:41:59.632Z",
         "extension": ".log"
       },
       {
         "path": "logs/n8n-workflow.log",
-        "size": 7361,
+        "size": 13433,
         "created": "2025-10-10T15:35:05.983Z",
-        "modified": "2025-10-10T16:07:07.089Z",
+        "modified": "2025-10-10T16:37:21.302Z",
         "extension": ".log"
       },
       {
@@ -390,30 +425,30 @@
       },
       {
         "path": "logs/sandbox-testing.log",
-        "size": 15076,
+        "size": 27364,
         "created": "2025-10-10T15:42:01.180Z",
-        "modified": "2025-10-10T16:12:01.596Z",
+        "modified": "2025-10-10T16:42:02.124Z",
         "extension": ".log"
       },
       {
         "path": "logs/self-healing.log",
-        "size": 250040,
+        "size": 497496,
         "created": "2025-10-10T15:41:57.168Z",
-        "modified": "2025-10-10T16:12:04.180Z",
+        "modified": "2025-10-10T16:42:18.860Z",
         "extension": ".log"
       },
       {
         "path": "logs/social-media.log",
-        "size": 5318,
+        "size": 9758,
         "created": "2025-10-10T15:35:08.031Z",
-        "modified": "2025-10-10T16:07:07.125Z",
+        "modified": "2025-10-10T16:37:21.374Z",
         "extension": ".log"
       },
       {
         "path": "logs/verification.log",
-        "size": 12870,
+        "size": 23400,
         "created": "2025-10-10T15:35:19.299Z",
-        "modified": "2025-10-10T16:12:07.332Z",
+        "modified": "2025-10-10T16:42:10.552Z",
         "extension": ".log"
       },
       {
@@ -462,7 +497,7 @@
         "path": "n8n-workflows/social-media-posting.json",
         "size": 5405,
         "created": "2025-10-10T15:35:05.991Z",
-        "modified": "2025-10-10T16:07:05.081Z",
+        "modified": "2025-10-10T16:37:19.294Z",
         "extension": ".json"
       },
       {
@@ -588,7 +623,7 @@
         "path": "reports/admin-report.json",
         "size": 1281,
         "created": "2025-10-10T15:35:08.083Z",
-        "modified": "2025-10-10T16:07:07.165Z",
+        "modified": "2025-10-10T16:37:21.466Z",
         "extension": ".json"
       },
       {
@@ -596,6 +631,27 @@
         "size": 477,
         "created": "2025-10-10T15:41:55.460Z",
         "modified": "2025-10-10T15:41:55.460Z",
+        "extension": ".json"
+      },
+      {
+        "path": "reports/cycle-10-report.json",
+        "size": 495,
+        "created": "2025-10-10T16:27:16.614Z",
+        "modified": "2025-10-10T16:27:16.614Z",
+        "extension": ".json"
+      },
+      {
+        "path": "reports/cycle-11-report.json",
+        "size": 497,
+        "created": "2025-10-10T16:32:19.032Z",
+        "modified": "2025-10-10T16:32:19.032Z",
+        "extension": ".json"
+      },
+      {
+        "path": "reports/cycle-12-report.json",
+        "size": 498,
+        "created": "2025-10-10T16:37:21.610Z",
+        "modified": "2025-10-10T16:37:21.610Z",
         "extension": ".json"
       },
       {
@@ -634,6 +690,27 @@
         "extension": ".json"
       },
       {
+        "path": "reports/cycle-7-report.json",
+        "size": 491,
+        "created": "2025-10-10T16:12:09.572Z",
+        "modified": "2025-10-10T16:12:09.572Z",
+        "extension": ".json"
+      },
+      {
+        "path": "reports/cycle-8-report.json",
+        "size": 492,
+        "created": "2025-10-10T16:17:11.886Z",
+        "modified": "2025-10-10T16:17:11.886Z",
+        "extension": ".json"
+      },
+      {
+        "path": "reports/cycle-9-report.json",
+        "size": 493,
+        "created": "2025-10-10T16:22:14.184Z",
+        "modified": "2025-10-10T16:22:14.184Z",
+        "extension": ".json"
+      },
+      {
         "path": "reports/depcheck.json",
         "size": 20615,
         "created": "2025-10-09T20:39:25.430Z",
@@ -642,9 +719,9 @@
       },
       {
         "path": "reports/file-cleanup-report.json",
-        "size": 121063,
+        "size": 125323,
         "created": "2025-10-10T15:41:53.228Z",
-        "modified": "2025-10-10T16:07:05.041Z",
+        "modified": "2025-10-10T16:37:19.234Z",
         "extension": ".json"
       },
       {
@@ -655,10 +732,17 @@
         "extension": ".json"
       },
       {
+        "path": "reports/hemmam-center-report.json",
+        "size": 2494,
+        "created": "2025-10-10T16:15:51.708Z",
+        "modified": "2025-10-10T16:40:51.936Z",
+        "extension": ".json"
+      },
+      {
         "path": "reports/master-ai-report.json",
-        "size": 641,
+        "size": 642,
         "created": "2025-10-10T15:42:04.196Z",
-        "modified": "2025-10-10T16:02:06.292Z",
+        "modified": "2025-10-10T16:42:10.568Z",
         "extension": ".json"
       },
       {
@@ -672,28 +756,28 @@
         "path": "reports/ml-learning-report.json",
         "size": 693,
         "created": "2025-10-10T15:51:59.267Z",
-        "modified": "2025-10-10T16:11:59.400Z",
+        "modified": "2025-10-10T16:41:59.628Z",
         "extension": ".json"
       },
       {
         "path": "reports/monitoring-report.json",
-        "size": 1908,
+        "size": 1955,
         "created": "2025-10-10T15:41:55.204Z",
-        "modified": "2025-10-10T16:11:56.800Z",
+        "modified": "2025-10-10T16:41:58.372Z",
         "extension": ".json"
       },
       {
         "path": "reports/verification-report.json",
         "size": 4362,
         "created": "2025-10-10T15:35:19.311Z",
-        "modified": "2025-10-10T16:12:07.332Z",
+        "modified": "2025-10-10T16:42:10.552Z",
         "extension": ".json"
       },
       {
         "path": "sandbox/config/sandbox-config.json",
         "size": 275,
         "created": "2025-10-10T15:42:01.184Z",
-        "modified": "2025-10-10T16:12:01.596Z",
+        "modified": "2025-10-10T16:42:02.124Z",
         "extension": ".json"
       },
       {
@@ -840,7 +924,7 @@
         "path": "scripts/enhanced-run-all.js",
         "size": 2030,
         "created": "2025-10-10T15:35:08.123Z",
-        "modified": "2025-10-10T16:07:07.205Z",
+        "modified": "2025-10-10T16:37:21.534Z",
         "extension": ".js"
       },
       {
@@ -883,6 +967,13 @@
         "size": 1638,
         "created": "2025-10-10T15:02:39.488Z",
         "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/hemmam-center-ai-integration.js",
+        "size": 19374,
+        "created": "2025-10-10T16:15:43.804Z",
+        "modified": "2025-10-10T16:15:43.804Z",
         "extension": ".js"
       },
       {
@@ -1405,9 +1496,9 @@
       },
       {
         "path": "src/app/page.tsx",
-        "size": 9718,
+        "size": 14716,
         "created": "2025-10-10T15:02:39.488Z",
-        "modified": "2025-10-10T15:06:09.467Z",
+        "modified": "2025-10-10T16:14:53.745Z",
         "extension": ".tsx"
       },
       {
@@ -1465,6 +1556,20 @@
         "created": "2025-10-09T20:39:25.426Z",
         "modified": "2025-10-09T20:39:25.426Z",
         "extension": ".ts"
+      },
+      {
+        "path": "src/components/appointments/AppointmentManager.tsx",
+        "size": 16456,
+        "created": "2025-10-10T16:12:44.271Z",
+        "modified": "2025-10-10T16:12:44.271Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/chatbot/MoainChatbot.tsx",
+        "size": 12582,
+        "created": "2025-10-10T16:13:17.215Z",
+        "modified": "2025-10-10T16:13:17.215Z",
+        "extension": ".tsx"
       },
       {
         "path": "src/components/common/DirectionToggle.tsx",
@@ -1583,6 +1688,13 @@
         "size": 1473,
         "created": "2025-10-10T15:14:39.374Z",
         "modified": "2025-10-10T15:14:39.374Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/patients/PatientRecords.tsx",
+        "size": 24881,
+        "created": "2025-10-10T16:14:16.102Z",
+        "modified": "2025-10-10T16:14:16.102Z",
         "extension": ".tsx"
       },
       {
@@ -2595,72 +2707,72 @@
       },
       {
         "path": "temp/ai-learning-data.json",
-        "size": 658,
+        "size": 665,
         "created": "2025-10-10T15:41:53.160Z",
-        "modified": "2025-10-10T16:07:07.253Z",
+        "modified": "2025-10-10T16:37:21.606Z",
         "extension": ".json"
       },
       {
         "path": "temp/ai-loop-state.json",
-        "size": 250,
+        "size": 258,
         "created": "2025-10-10T15:41:55.460Z",
-        "modified": "2025-10-10T16:07:07.253Z",
+        "modified": "2025-10-10T16:37:21.610Z",
         "extension": ".json"
       },
       {
         "path": "temp/alerts.json",
         "size": 156,
         "created": "2025-10-10T15:41:55.204Z",
-        "modified": "2025-10-10T16:11:56.800Z",
+        "modified": "2025-10-10T16:41:58.372Z",
         "extension": ".json"
       },
       {
         "path": "temp/file-index.json",
-        "size": 112555,
+        "size": 116537,
         "created": "2025-10-10T15:41:53.220Z",
-        "modified": "2025-10-10T16:07:05.033Z",
+        "modified": "2025-10-10T16:37:19.222Z",
         "extension": ".json"
       },
       {
         "path": "temp/healing-history.json",
-        "size": 220366,
+        "size": 438254,
         "created": "2025-10-10T15:41:57.176Z",
-        "modified": "2025-10-10T16:12:04.184Z",
+        "modified": "2025-10-10T16:42:18.864Z",
         "extension": ".json"
       },
       {
         "path": "temp/master-ai-state.json",
         "size": 257,
         "created": "2025-10-10T15:42:04.196Z",
-        "modified": "2025-10-10T16:12:07.336Z",
+        "modified": "2025-10-10T16:42:10.568Z",
         "extension": ".json"
       },
       {
         "path": "temp/monitoring-metrics.json",
-        "size": 1592,
+        "size": 1637,
         "created": "2025-10-10T15:41:55.204Z",
-        "modified": "2025-10-10T16:11:56.800Z",
+        "modified": "2025-10-10T16:41:58.372Z",
         "extension": ".json"
       },
       {
         "path": "temp/process-status.json",
         "size": 661,
         "created": "2025-10-10T15:42:03.148Z",
-        "modified": "2025-10-10T16:12:06.292Z",
+        "modified": "2025-10-10T16:42:09.448Z",
         "extension": ".json"
       },
       {
         "path": "temp/sandbox-test-results.json",
-        "size": 2184,
+        "size": 2185,
         "created": "2025-10-10T15:42:01.228Z",
-        "modified": "2025-10-10T16:12:01.596Z",
+        "modified": "2025-10-10T16:42:02.124Z",
         "extension": ".json"
       },
       {
         "path": "temp/workflow-test-results.json",
         "size": 1607,
         "created": "2025-10-10T15:35:05.991Z",
-        "modified": "2025-10-10T16:07:05.081Z",
+        "modified": "2025-10-10T16:37:19.294Z",
         "extension": ".json"
       },
       {
@@ -3135,6 +3247,11 @@
         "modified": "2025-10-10T16:11:49.420Z"
       },
       {
+        "path": "data",
+        "created": "2025-10-10T16:15:51.700Z",
+        "modified": "2025-10-10T16:15:51.704Z"
+      },
+      {
         "path": "docs",
         "created": "2025-10-09T20:39:25.399Z",
         "modified": "2025-10-10T15:02:39.480Z"
@@ -3142,12 +3259,12 @@
       {
         "path": "learning",
         "created": "2025-10-10T15:41:53.124Z",
-        "modified": "2025-10-10T15:42:01.228Z"
+        "modified": "2025-10-10T16:15:51.700Z"
       },
       {
         "path": "logs",
         "created": "2025-10-10T15:02:39.428Z",
-        "modified": "2025-10-10T15:42:01.180Z"
+        "modified": "2025-10-10T16:15:51.692Z"
       },
       {
         "path": "n8n-workflows",
@@ -3162,7 +3279,7 @@
       {
         "path": "reports",
         "created": "2025-10-09T20:39:25.399Z",
-        "modified": "2025-10-10T16:07:07.253Z"
+        "modified": "2025-10-10T16:37:21.610Z"
       },
       {
         "path": "sandbox",
@@ -3172,7 +3289,7 @@
       {
         "path": "sandbox/config",
         "created": "2025-10-10T15:42:01.184Z",
-        "modified": "2025-10-10T16:12:01.596Z"
+        "modified": "2025-10-10T16:42:02.124Z"
       },
       {
         "path": "sandbox/logs",
@@ -3197,7 +3314,7 @@
       {
         "path": "scripts",
         "created": "2025-10-09T20:39:25.399Z",
-        "modified": "2025-10-10T15:41:21.037Z"
+        "modified": "2025-10-10T16:15:43.804Z"
       },
       {
         "path": "src",
@@ -3482,7 +3599,17 @@
       {
         "path": "src/components",
         "created": "2025-10-09T20:39:25.403Z",
-        "modified": "2025-10-10T15:14:39.374Z"
+        "modified": "2025-10-10T16:14:16.102Z"
+      },
+      {
+        "path": "src/components/appointments",
+        "created": "2025-10-10T16:12:44.271Z",
+        "modified": "2025-10-10T16:12:44.271Z"
+      },
+      {
+        "path": "src/components/chatbot",
+        "created": "2025-10-10T16:13:17.215Z",
+        "modified": "2025-10-10T16:13:17.215Z"
       },
       {
         "path": "src/components/common",
@@ -3503,6 +3630,11 @@
         "path": "src/components/lazy",
         "created": "2025-10-10T15:14:39.374Z",
         "modified": "2025-10-10T15:14:39.374Z"
+      },
+      {
+        "path": "src/components/patients",
+        "created": "2025-10-10T16:14:16.102Z",
+        "modified": "2025-10-10T16:14:16.102Z"
       },
       {
         "path": "src/components/providers",
