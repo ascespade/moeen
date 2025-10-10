@@ -26,7 +26,7 @@ export class ApiClient {
 
   async request<T>(
     endpoint: string,
-    options: RequestOptions = {}
+    options: RequestOptions = {},
   ): Promise<ApiResponse<T>> {
     // Implementation with error handling, retries, and logging
   }
@@ -265,7 +265,7 @@ export async function POST(request: Request) {
 // app/api/chatbot/flows/[id]/route.ts
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const flow = await getChatbotFlowById(params.id);
   if (!flow) {
@@ -276,7 +276,7 @@ export async function GET(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const data = await request.json();
   const validatedData = validationSchemas.chatbotFlow.parse(data);
@@ -287,7 +287,7 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   await deleteChatbotFlow(params.id);
   return NextResponse.json({ success: true });
@@ -361,19 +361,21 @@ export function useChatbotFlows(filters?: FlowFilters) {
 
   const createFlow = async (flowData: CreateFlowData) => {
     const newFlow = await apiClient.post("/chatbot/flows", flowData);
-    setFlows(prev => [...prev, newFlow]);
+    setFlows((prev) => [...prev, newFlow]);
     return newFlow;
   };
 
   const updateFlow = async (id: string, flowData: UpdateFlowData) => {
     const updatedFlow = await apiClient.put(`/chatbot/flows/${id}`, flowData);
-    setFlows(prev => prev.map(flow => (flow.id === id ? updatedFlow : flow)));
+    setFlows((prev) =>
+      prev.map((flow) => (flow.id === id ? updatedFlow : flow)),
+    );
     return updatedFlow;
   };
 
   const deleteFlow = async (id: string) => {
     await apiClient.delete(`/chatbot/flows/${id}`);
-    setFlows(prev => prev.filter(flow => flow.id !== id));
+    setFlows((prev) => prev.filter((flow) => flow.id !== id));
   };
 
   useEffect(() => {
@@ -512,7 +514,7 @@ export function useCRM() {
 
   const createLead = async (leadData: CreateLeadData) => {
     const newLead = await apiClient.post("/crm/leads", leadData);
-    setLeads(prev => [...prev, newLead]);
+    setLeads((prev) => [...prev, newLead]);
     return newLead;
   };
 
@@ -529,7 +531,7 @@ export function useCRM() {
 
   const createDeal = async (dealData: CreateDealData) => {
     const newDeal = await apiClient.post("/crm/deals", dealData);
-    setDeals(prev => [...prev, newDeal]);
+    setDeals((prev) => [...prev, newDeal]);
     return newDeal;
   };
 
@@ -537,8 +539,8 @@ export function useCRM() {
     const updatedDeal = await apiClient.patch(`/crm/deals/${dealId}`, {
       stage: newStage,
     });
-    setDeals(prev =>
-      prev.map(deal => (deal.id === dealId ? updatedDeal : deal))
+    setDeals((prev) =>
+      prev.map((deal) => (deal.id === dealId ? updatedDeal : deal)),
     );
     return updatedDeal;
   };
@@ -557,7 +559,7 @@ export function useCRM() {
 
   const createActivity = async (activityData: CreateActivityData) => {
     const newActivity = await apiClient.post("/crm/activities", activityData);
-    setActivities(prev => [...prev, newActivity]);
+    setActivities((prev) => [...prev, newActivity]);
     return newActivity;
   };
 
@@ -619,13 +621,13 @@ export async function POST(request: Request) {
 // app/api/healthcare/appointments/[id]/route.ts
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const appointment = await getAppointmentById(params.id);
   if (!appointment) {
     return NextResponse.json(
       { error: "Appointment not found" },
-      { status: 404 }
+      { status: 404 },
     );
   }
   return NextResponse.json(appointment);
@@ -633,7 +635,7 @@ export async function GET(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const data = await request.json();
   const validatedData = validationSchemas.appointment.parse(data);
@@ -644,7 +646,7 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   await deleteAppointment(params.id);
   return NextResponse.json({ success: true });
@@ -746,29 +748,29 @@ export function useHealthcare() {
   const createAppointment = async (appointmentData: CreateAppointmentData) => {
     const newAppointment = await apiClient.post(
       "/healthcare/appointments",
-      appointmentData
+      appointmentData,
     );
-    setAppointments(prev => [...prev, newAppointment]);
+    setAppointments((prev) => [...prev, newAppointment]);
     return newAppointment;
   };
 
   const updateAppointment = async (
     id: string,
-    appointmentData: UpdateAppointmentData
+    appointmentData: UpdateAppointmentData,
   ) => {
     const updatedAppointment = await apiClient.put(
       `/healthcare/appointments/${id}`,
-      appointmentData
+      appointmentData,
     );
-    setAppointments(prev =>
-      prev.map(apt => (apt.id === id ? updatedAppointment : apt))
+    setAppointments((prev) =>
+      prev.map((apt) => (apt.id === id ? updatedAppointment : apt)),
     );
     return updatedAppointment;
   };
 
   const deleteAppointment = async (id: string) => {
     await apiClient.delete(`/healthcare/appointments/${id}`);
-    setAppointments(prev => prev.filter(apt => apt.id !== id));
+    setAppointments((prev) => prev.filter((apt) => apt.id !== id));
   };
 
   // Patients
@@ -786,9 +788,9 @@ export function useHealthcare() {
   const createPatient = async (patientData: CreatePatientData) => {
     const newPatient = await apiClient.post(
       "/healthcare/patients",
-      patientData
+      patientData,
     );
-    setPatients(prev => [...prev, newPatient]);
+    setPatients((prev) => [...prev, newPatient]);
     return newPatient;
   };
 
@@ -807,19 +809,19 @@ export function useHealthcare() {
   const createSession = async (sessionData: CreateSessionData) => {
     const newSession = await apiClient.post(
       "/healthcare/sessions",
-      sessionData
+      sessionData,
     );
-    setSessions(prev => [...prev, newSession]);
+    setSessions((prev) => [...prev, newSession]);
     return newSession;
   };
 
   const updateSession = async (id: string, sessionData: UpdateSessionData) => {
     const updatedSession = await apiClient.put(
       `/healthcare/sessions/${id}`,
-      sessionData
+      sessionData,
     );
-    setSessions(prev =>
-      prev.map(session => (session.id === id ? updatedSession : session))
+    setSessions((prev) =>
+      prev.map((session) => (session.id === id ? updatedSession : session)),
     );
     return updatedSession;
   };
@@ -831,7 +833,7 @@ export function useHealthcare() {
     if (filters?.status) queryParams.append("status", filters.status);
 
     const data = await apiClient.get(
-      `/healthcare/insurance-claims?${queryParams}`
+      `/healthcare/insurance-claims?${queryParams}`,
     );
     setClaims(data);
     return data;
@@ -840,26 +842,26 @@ export function useHealthcare() {
   const createClaim = async (claimData: CreateClaimData) => {
     const newClaim = await apiClient.post(
       "/healthcare/insurance-claims",
-      claimData
+      claimData,
     );
-    setClaims(prev => [...prev, newClaim]);
+    setClaims((prev) => [...prev, newClaim]);
     return newClaim;
   };
 
   const updateClaimStatus = async (
     id: string,
     status: string,
-    reason?: string
+    reason?: string,
   ) => {
     const updatedClaim = await apiClient.patch(
       `/healthcare/insurance-claims/${id}`,
       {
         status,
         rejection_reason: reason,
-      }
+      },
     );
-    setClaims(prev =>
-      prev.map(claim => (claim.id === id ? updatedClaim : claim))
+    setClaims((prev) =>
+      prev.map((claim) => (claim.id === id ? updatedClaim : claim)),
     );
     return updatedClaim;
   };
@@ -990,7 +992,7 @@ export async function POST(request: Request) {
 // app/api/notifications/[id]/read/route.ts
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   await markNotificationAsRead(params.id);
   return NextResponse.json({ success: true });
@@ -1040,8 +1042,8 @@ export function useAdmin() {
     const updatedUser = await apiClient.patch(`/admin/users/${userId}`, {
       roleId,
     });
-    setUsers(prev =>
-      prev.map(user => (user.id === userId ? updatedUser : user))
+    setUsers((prev) =>
+      prev.map((user) => (user.id === userId ? updatedUser : user)),
     );
     return updatedUser;
   };
@@ -1055,7 +1057,7 @@ export function useAdmin() {
 
   const createRole = async (roleData: CreateRoleData) => {
     const newRole = await apiClient.post("/admin/roles", roleData);
-    setRoles(prev => [...prev, newRole]);
+    setRoles((prev) => [...prev, newRole]);
     return newRole;
   };
 
@@ -1111,36 +1113,36 @@ export function useNotifications() {
 
   const markAsRead = async (notificationId: string) => {
     await apiClient.patch(`/notifications/${notificationId}/read`);
-    setNotifications(prev =>
-      prev.map(n =>
+    setNotifications((prev) =>
+      prev.map((n) =>
         n.id === notificationId
           ? { ...n, is_read: true, read_at: new Date().toISOString() }
-          : n
-      )
+          : n,
+      ),
     );
-    setUnreadCount(prev => Math.max(0, prev - 1));
+    setUnreadCount((prev) => Math.max(0, prev - 1));
   };
 
   const markAllAsRead = async () => {
     await apiClient.patch("/notifications/read-all");
-    setNotifications(prev =>
-      prev.map(n => ({
+    setNotifications((prev) =>
+      prev.map((n) => ({
         ...n,
         is_read: true,
         read_at: new Date().toISOString(),
-      }))
+      })),
     );
     setUnreadCount(0);
   };
 
   const createNotification = async (
-    notificationData: CreateNotificationData
+    notificationData: CreateNotificationData,
   ) => {
     const newNotification = await apiClient.post(
       "/notifications",
-      notificationData
+      notificationData,
     );
-    setNotifications(prev => [newNotification, ...prev]);
+    setNotifications((prev) => [newNotification, ...prev]);
     return newNotification;
   };
 
@@ -1176,8 +1178,8 @@ export async function middleware(request: NextRequest) {
     "/reset-password",
     "/",
   ];
-  const isPublicRoute = publicRoutes.some(route =>
-    request.nextUrl.pathname.startsWith(route)
+  const isPublicRoute = publicRoutes.some((route) =>
+    request.nextUrl.pathname.startsWith(route),
   );
 
   if (isPublicRoute) {
@@ -1193,7 +1195,7 @@ export async function middleware(request: NextRequest) {
     // Verify token with Supabase
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
     );
 
     const {
@@ -1396,7 +1398,7 @@ describe("Chatbot API Integration", () => {
 
     // Get flow
     const retrievedFlow = await apiClient.get(
-      `/chatbot/flows/${createdFlow.id}`
+      `/chatbot/flows/${createdFlow.id}`,
     );
     expect(retrievedFlow.id).toBe(createdFlow.id);
 
@@ -1406,7 +1408,7 @@ describe("Chatbot API Integration", () => {
       {
         ...flowData,
         status: "published",
-      }
+      },
     );
     expect(updatedFlow.status).toBe("published");
 
@@ -1445,7 +1447,7 @@ test.describe("Dashboard", () => {
 
     // Check KPI cards
     await expect(
-      page.locator('[data-testid="kpi-appointments"]')
+      page.locator('[data-testid="kpi-appointments"]'),
     ).toBeVisible();
     await expect(page.locator('[data-testid="kpi-patients"]')).toBeVisible();
     await expect(page.locator('[data-testid="kpi-sessions"]')).toBeVisible();
@@ -1453,7 +1455,7 @@ test.describe("Dashboard", () => {
 
     // Check charts
     await expect(
-      page.locator('[data-testid="chart-appointments"]')
+      page.locator('[data-testid="chart-appointments"]'),
     ).toBeVisible();
     await expect(page.locator('[data-testid="chart-revenue"]')).toBeVisible();
   });
@@ -1469,7 +1471,7 @@ test.describe("Dashboard", () => {
 
     // Verify data has changed (this would need specific assertions based on your data)
     const appointmentsCount = await page.textContent(
-      '[data-testid="kpi-appointments"] .value'
+      '[data-testid="kpi-appointments"] .value',
     );
     expect(appointmentsCount).toBeTruthy();
   });
@@ -1486,7 +1488,7 @@ export class AppError extends Error {
   constructor(
     public message: string,
     public statusCode: number = 500,
-    public code?: string
+    public code?: string,
   ) {
     super(message);
     this.name = "AppError";
@@ -1497,7 +1499,7 @@ export function handleApiError(error: unknown): Response {
   if (error instanceof AppError) {
     return NextResponse.json(
       { error: error.message, code: error.code },
-      { status: error.statusCode }
+      { status: error.statusCode },
     );
   }
 
@@ -1505,13 +1507,13 @@ export function handleApiError(error: unknown): Response {
     console.error("Unexpected error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
   return NextResponse.json(
     { error: "Unknown error occurred" },
-    { status: 500 }
+    { status: 500 },
   );
 }
 
