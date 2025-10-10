@@ -81,9 +81,9 @@ export default function PrivateCenterDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-orange-500 mx-auto"></div>
+          <div className="mx-auto h-32 w-32 animate-spin rounded-full border-b-2 border-orange-500"></div>
           <p className="mt-4 text-gray-600">جاري تحميل بيانات المركز...</p>
         </div>
       </div>
@@ -93,12 +93,12 @@ export default function PrivateCenterDashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="border-b bg-white shadow-sm">
+        <div className="mx-auto max-w-7xl px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 space-x-reverse">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <Building2 className="w-8 h-8 text-white" />
+              <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-blue-600">
+                <Building2 className="h-8 w-8 text-white" />
               </div>
               <div>
                 <h1 className="text-3xl font-bold text-gray-900">
@@ -113,7 +113,7 @@ export default function PrivateCenterDashboard() {
               <select
                 value={selectedPeriod}
                 onChange={(e) => setSelectedPeriod(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                className="rounded-lg border border-gray-300 px-4 py-2 focus:border-orange-500 focus:ring-2 focus:ring-orange-500"
               >
                 <option value="monthly">شهري</option>
                 <option value="quarterly">ربعي</option>
@@ -124,16 +124,16 @@ export default function PrivateCenterDashboard() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="mx-auto max-w-7xl px-4 py-8">
         {/* Compliance Status */}
         {compliance && (
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-            <div className="flex items-center justify-between mb-4">
+          <div className="mb-8 rounded-xl bg-white p-6 shadow-lg">
+            <div className="mb-4 flex items-center justify-between">
               <h3 className="text-xl font-semibold text-gray-900">
                 حالة الامتثال
               </h3>
               <div
-                className={`px-3 py-1 rounded-full text-sm font-medium ${
+                className={`rounded-full px-3 py-1 text-sm font-medium ${
                   compliance.compliant
                     ? "bg-green-100 text-green-800"
                     : "bg-red-100 text-red-800"
@@ -143,12 +143,12 @@ export default function PrivateCenterDashboard() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Shield className="w-8 h-8 text-blue-600" />
+                <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+                  <Shield className="h-8 w-8 text-blue-600" />
                 </div>
-                <h4 className="font-semibold text-gray-900 mb-2">
+                <h4 className="mb-2 font-semibold text-gray-900">
                   درجة الامتثال
                 </h4>
                 <p className="text-2xl font-bold text-blue-600">
@@ -157,20 +157,20 @@ export default function PrivateCenterDashboard() {
               </div>
 
               <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <CheckCircle className="w-8 h-8 text-green-600" />
+                <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+                  <CheckCircle className="h-8 w-8 text-green-600" />
                 </div>
-                <h4 className="font-semibold text-gray-900 mb-2">المخالفات</h4>
+                <h4 className="mb-2 font-semibold text-gray-900">المخالفات</h4>
                 <p className="text-2xl font-bold text-green-600">
                   {compliance.violations.length}
                 </p>
               </div>
 
               <div className="text-center">
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <AlertTriangle className="w-8 h-8 text-orange-600" />
+                <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-orange-100">
+                  <AlertTriangle className="h-8 w-8 text-orange-600" />
                 </div>
-                <h4 className="font-semibold text-gray-900 mb-2">التوصيات</h4>
+                <h4 className="mb-2 font-semibold text-gray-900">التوصيات</h4>
                 <p className="text-2xl font-bold text-orange-600">
                   {compliance.recommendations.length}
                 </p>
@@ -178,9 +178,9 @@ export default function PrivateCenterDashboard() {
             </div>
 
             {compliance.violations.length > 0 && (
-              <div className="mt-6 bg-red-50 border-l-4 border-red-500 p-4">
-                <h4 className="font-semibold text-red-900 mb-2">المخالفات:</h4>
-                <ul className="text-red-700 space-y-1">
+              <div className="mt-6 border-l-4 border-red-500 bg-red-50 p-4">
+                <h4 className="mb-2 font-semibold text-red-900">المخالفات:</h4>
+                <ul className="space-y-1 text-red-700">
                   {compliance.violations.map((violation, index) => (
                     <li key={index}>• {violation}</li>
                   ))}
@@ -189,9 +189,9 @@ export default function PrivateCenterDashboard() {
             )}
 
             {compliance.recommendations.length > 0 && (
-              <div className="mt-4 bg-blue-50 border-l-4 border-blue-500 p-4">
-                <h4 className="font-semibold text-blue-900 mb-2">التوصيات:</h4>
-                <ul className="text-blue-700 space-y-1">
+              <div className="mt-4 border-l-4 border-blue-500 bg-blue-50 p-4">
+                <h4 className="mb-2 font-semibold text-blue-900">التوصيات:</h4>
+                <ul className="space-y-1 text-blue-700">
                   {compliance.recommendations.map((recommendation, index) => (
                     <li key={index}>• {recommendation}</li>
                   ))}
@@ -204,8 +204,8 @@ export default function PrivateCenterDashboard() {
         {/* Analytics Overview */}
         {analytics && (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <div className="rounded-xl bg-white p-6 shadow-lg">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">
@@ -218,13 +218,13 @@ export default function PrivateCenterDashboard() {
                       +{analytics.newPatients} جديد
                     </p>
                   </div>
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Users className="w-6 h-6 text-blue-600" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
+                    <Users className="h-6 w-6 text-blue-600" />
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="rounded-xl bg-white p-6 shadow-lg">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">
@@ -235,13 +235,13 @@ export default function PrivateCenterDashboard() {
                     </p>
                     <p className="text-sm text-green-600">هذا الشهر</p>
                   </div>
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <Activity className="w-6 h-6 text-green-600" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-100">
+                    <Activity className="h-6 w-6 text-green-600" />
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="rounded-xl bg-white p-6 shadow-lg">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">
@@ -252,13 +252,13 @@ export default function PrivateCenterDashboard() {
                     </p>
                     <p className="text-sm text-green-600">هذا الشهر</p>
                   </div>
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <DollarSign className="w-6 h-6 text-green-600" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-100">
+                    <DollarSign className="h-6 w-6 text-green-600" />
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="rounded-xl bg-white p-6 shadow-lg">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">
@@ -269,24 +269,24 @@ export default function PrivateCenterDashboard() {
                     </p>
                     <p className="text-sm text-green-600">ممتاز</p>
                   </div>
-                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <Award className="w-6 h-6 text-purple-600" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100">
+                    <Award className="h-6 w-6 text-purple-600" />
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Quality Metrics */}
-            <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
+            <div className="mb-8 rounded-xl bg-white p-6 shadow-lg">
+              <h3 className="mb-4 text-xl font-semibold text-gray-900">
                 مؤشرات الجودة
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <TrendingUp className="w-8 h-8 text-green-600" />
+                  <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+                    <TrendingUp className="h-8 w-8 text-green-600" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
+                  <h4 className="mb-2 font-semibold text-gray-900">
                     رضا المرضى
                   </h4>
                   <p className="text-2xl font-bold text-green-600">
@@ -295,10 +295,10 @@ export default function PrivateCenterDashboard() {
                 </div>
 
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <BarChart3 className="w-8 h-8 text-blue-600" />
+                  <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+                    <BarChart3 className="h-8 w-8 text-blue-600" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
+                  <h4 className="mb-2 font-semibold text-gray-900">
                     نتائج العلاج
                   </h4>
                   <p className="text-2xl font-bold text-blue-600">
@@ -307,10 +307,10 @@ export default function PrivateCenterDashboard() {
                 </div>
 
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <AlertTriangle className="w-8 h-8 text-red-600" />
+                  <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
+                    <AlertTriangle className="h-8 w-8 text-red-600" />
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
+                  <h4 className="mb-2 font-semibold text-gray-900">
                     الحوادث الأمنية
                   </h4>
                   <p className="text-2xl font-bold text-red-600">
@@ -321,32 +321,32 @@ export default function PrivateCenterDashboard() {
             </div>
 
             {/* Charts Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <div className="flex items-center justify-between mb-4">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+              <div className="rounded-xl bg-white p-6 shadow-lg">
+                <div className="mb-4 flex items-center justify-between">
                   <h3 className="text-lg font-semibold text-gray-900">
                     نمو المرضى
                   </h3>
-                  <TrendingUp className="w-5 h-5 text-green-600" />
+                  <TrendingUp className="h-5 w-5 text-green-600" />
                 </div>
-                <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
+                <div className="flex h-64 items-center justify-center rounded-lg bg-gray-50">
                   <div className="text-center">
-                    <BarChart3 className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+                    <BarChart3 className="mx-auto mb-2 h-12 w-12 text-gray-400" />
                     <p className="text-gray-500">رسم بياني لنمو المرضى</p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <div className="flex items-center justify-between mb-4">
+              <div className="rounded-xl bg-white p-6 shadow-lg">
+                <div className="mb-4 flex items-center justify-between">
                   <h3 className="text-lg font-semibold text-gray-900">
                     توزيع الخدمات
                   </h3>
-                  <PieChart className="w-5 h-5 text-blue-600" />
+                  <PieChart className="h-5 w-5 text-blue-600" />
                 </div>
-                <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
+                <div className="flex h-64 items-center justify-center rounded-lg bg-gray-50">
                   <div className="text-center">
-                    <PieChart className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+                    <PieChart className="mx-auto mb-2 h-12 w-12 text-gray-400" />
                     <p className="text-gray-500">رسم بياني لتوزيع الخدمات</p>
                   </div>
                 </div>

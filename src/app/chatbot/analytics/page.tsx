@@ -42,13 +42,13 @@ const mockAnalytics: AnalyticsData = {
     { name: "حجز المواعيد", usage: 892, satisfaction: 4.3 },
     { name: "استفسارات عامة", usage: 756, satisfaction: 4.1 },
     { name: "تأكيد المواعيد", usage: 634, satisfaction: 4.4 },
-    { name: "الدعم الفني", usage: 423, satisfaction: 3.9 }
+    { name: "الدعم الفني", usage: 423, satisfaction: 3.9 },
   ],
   channelStats: [
     { channel: "واتساب", messages: 8923, users: 2156, growth: 12.5 },
     { channel: "الموقع", messages: 4567, users: 892, growth: 8.3 },
     { channel: "تيليجرام", messages: 1234, users: 156, growth: -2.1 },
-    { channel: "فيسبوك", messages: 696, users: 43, growth: 5.7 }
+    { channel: "فيسبوك", messages: 696, users: 43, growth: 5.7 },
   ],
   hourlyStats: [
     { hour: "00:00", messages: 45, users: 23 },
@@ -74,18 +74,22 @@ const mockAnalytics: AnalyticsData = {
     { hour: "20:00", messages: 378, users: 189 },
     { hour: "21:00", messages: 289, users: 145 },
     { hour: "22:00", messages: 198, users: 98 },
-    { hour: "23:00", messages: 123, users: 67 }
+    { hour: "23:00", messages: 123, users: 67 },
   ],
   sentimentData: [
     { sentiment: "إيجابي", count: 8923, percentage: 65.2 },
     { sentiment: "محايد", count: 3124, percentage: 22.8 },
-    { sentiment: "سلبي", count: 1633, percentage: 12.0 }
-  ]
+    { sentiment: "سلبي", count: 1633, percentage: 12.0 },
+  ],
 };
 
 export default function ChatbotAnalyticsPage() {
-  const [selectedPeriod, setSelectedPeriod] = useState<"day" | "week" | "month" | "year">("month");
-  const [selectedMetric, setSelectedMetric] = useState<"messages" | "users" | "satisfaction">("messages");
+  const [selectedPeriod, setSelectedPeriod] = useState<
+    "day" | "week" | "month" | "year"
+  >("month");
+  const [selectedMetric, setSelectedMetric] = useState<
+    "messages" | "users" | "satisfaction"
+  >("messages");
 
   const getGrowthColor = (growth: number) => {
     if (growth > 0) return "text-green-600";
@@ -102,7 +106,7 @@ export default function ChatbotAnalyticsPage() {
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-900 border-b border-brand sticky top-0 z-10">
+      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
         <div className="container-app py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -114,22 +118,26 @@ export default function ChatbotAnalyticsPage() {
                 className="rounded-lg"
               />
               <div>
-                <h1 className="text-2xl font-bold text-brand">تحليلات الشات بوت</h1>
-                <p className="text-gray-600 dark:text-gray-300">إحصائيات وأداء المحادثات الذكية</p>
+                <h1 className="text-brand text-2xl font-bold">
+                  تحليلات الشات بوت
+                </h1>
+                <p className="text-gray-600 dark:text-gray-300">
+                  إحصائيات وأداء المحادثات الذكية
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <select
                 value={selectedPeriod}
                 onChange={(e) => setSelectedPeriod(e.target.value as any)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                className="rounded-lg border border-gray-300 px-3 py-2 text-sm"
               >
                 <option value="day">اليوم</option>
                 <option value="week">هذا الأسبوع</option>
                 <option value="month">هذا الشهر</option>
                 <option value="year">هذا العام</option>
               </select>
-              <button className="btn-brand px-6 py-2 rounded-lg text-white hover:bg-[var(--brand-primary-hover)] transition-colors">
+              <button className="btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
                 تصدير التقرير
               </button>
             </div>
@@ -139,49 +147,57 @@ export default function ChatbotAnalyticsPage() {
 
       <main className="container-app py-8">
         {/* Key Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-2">
+            <div className="mb-2 text-3xl font-bold text-blue-600">
               {mockAnalytics.totalMessages.toLocaleString()}
             </div>
-            <div className="text-gray-600 dark:text-gray-300 mb-2">إجمالي الرسائل</div>
+            <div className="mb-2 text-gray-600 dark:text-gray-300">
+              إجمالي الرسائل
+            </div>
             <div className="text-sm text-green-600">+12.5% من الشهر الماضي</div>
           </div>
           <div className="card p-6 text-center">
-            <div className="text-3xl font-bold text-green-600 mb-2">
+            <div className="mb-2 text-3xl font-bold text-green-600">
               {mockAnalytics.totalUsers.toLocaleString()}
             </div>
-            <div className="text-gray-600 dark:text-gray-300 mb-2">إجمالي المستخدمين</div>
+            <div className="mb-2 text-gray-600 dark:text-gray-300">
+              إجمالي المستخدمين
+            </div>
             <div className="text-sm text-green-600">+8.3% من الشهر الماضي</div>
           </div>
           <div className="card p-6 text-center">
-            <div className="text-3xl font-bold text-purple-600 mb-2">
+            <div className="mb-2 text-3xl font-bold text-purple-600">
               {mockAnalytics.avgResponseTime}ث
             </div>
-            <div className="text-gray-600 dark:text-gray-300 mb-2">متوسط وقت الاستجابة</div>
+            <div className="mb-2 text-gray-600 dark:text-gray-300">
+              متوسط وقت الاستجابة
+            </div>
             <div className="text-sm text-green-600">-0.5ث من الشهر الماضي</div>
           </div>
           <div className="card p-6 text-center">
-            <div className="text-3xl font-bold text-orange-600 mb-2">
+            <div className="mb-2 text-3xl font-bold text-orange-600">
               {mockAnalytics.satisfactionRate}/5
             </div>
-            <div className="text-gray-600 dark:text-gray-300 mb-2">معدل الرضا</div>
+            <div className="mb-2 text-gray-600 dark:text-gray-300">
+              معدل الرضا
+            </div>
             <div className="text-sm text-green-600">+0.2 من الشهر الماضي</div>
           </div>
         </div>
 
         {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <div className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Messages Chart */}
           <div className="card p-6">
-            <div className="flex justify-between items-center mb-6">
+            <div className="mb-6 flex items-center justify-between">
               <h3 className="text-lg font-semibold">الرسائل حسب الساعة</h3>
               <div className="flex gap-2">
                 <button
                   onClick={() => setSelectedMetric("messages")}
-                  className={`px-3 py-1 text-sm rounded-lg ${
-                    selectedMetric === "messages" 
-                      ? "bg-[var(--brand-primary)] text-white" 
+                  className={`rounded-lg px-3 py-1 text-sm ${
+                    selectedMetric === "messages"
+                      ? "bg-[var(--brand-primary)] text-white"
                       : "bg-gray-100 text-gray-600"
                   }`}
                 >
@@ -189,9 +205,9 @@ export default function ChatbotAnalyticsPage() {
                 </button>
                 <button
                   onClick={() => setSelectedMetric("users")}
-                  className={`px-3 py-1 text-sm rounded-lg ${
-                    selectedMetric === "users" 
-                      ? "bg-[var(--brand-primary)] text-white" 
+                  className={`rounded-lg px-3 py-1 text-sm ${
+                    selectedMetric === "users"
+                      ? "bg-[var(--brand-primary)] text-white"
                       : "bg-gray-100 text-gray-600"
                   }`}
                 >
@@ -199,16 +215,16 @@ export default function ChatbotAnalyticsPage() {
                 </button>
               </div>
             </div>
-            <div className="h-64 flex items-end justify-between gap-1">
+            <div className="flex h-64 items-end justify-between gap-1">
               {mockAnalytics.hourlyStats.map((stat, index) => (
                 <div key={index} className="flex flex-col items-center">
                   <div
-                    className="bg-[var(--brand-primary)] rounded-t w-4 mb-2"
+                    className="mb-2 w-4 rounded-t bg-[var(--brand-primary)]"
                     style={{
-                      height: `${(selectedMetric === "messages" ? stat.messages : stat.users) / 20}px`
+                      height: `${(selectedMetric === "messages" ? stat.messages : stat.users) / 20}px`,
                     }}
                   ></div>
-                  <span className="text-xs text-gray-500 transform -rotate-45 origin-left">
+                  <span className="origin-left -rotate-45 transform text-xs text-gray-500">
                     {stat.hour}
                   </span>
                 </div>
@@ -218,21 +234,25 @@ export default function ChatbotAnalyticsPage() {
 
           {/* Sentiment Analysis */}
           <div className="card p-6">
-            <h3 className="text-lg font-semibold mb-6">تحليل المشاعر</h3>
+            <h3 className="mb-6 text-lg font-semibold">تحليل المشاعر</h3>
             <div className="space-y-4">
               {mockAnalytics.sentimentData.map((sentiment, index) => (
                 <div key={index}>
-                  <div className="flex justify-between items-center mb-2">
+                  <div className="mb-2 flex items-center justify-between">
                     <span className="font-medium">{sentiment.sentiment}</span>
                     <span className="text-sm text-gray-600">
-                      {sentiment.count.toLocaleString()} ({sentiment.percentage}%)
+                      {sentiment.count.toLocaleString()} ({sentiment.percentage}
+                      %)
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="h-2 w-full rounded-full bg-gray-200">
                     <div
                       className={`h-2 rounded-full ${
-                        sentiment.sentiment === "إيجابي" ? "bg-green-500" :
-                        sentiment.sentiment === "محايد" ? "bg-yellow-500" : "bg-red-500"
+                        sentiment.sentiment === "إيجابي"
+                          ? "bg-green-500"
+                          : sentiment.sentiment === "محايد"
+                            ? "bg-yellow-500"
+                            : "bg-red-500"
                       }`}
                       style={{ width: `${sentiment.percentage}%` }}
                     ></div>
@@ -244,13 +264,18 @@ export default function ChatbotAnalyticsPage() {
         </div>
 
         {/* Top Flows */}
-        <div className="card p-6 mb-8">
-          <h3 className="text-lg font-semibold mb-6">أكثر التدفقات استخداماً</h3>
+        <div className="card mb-8 p-6">
+          <h3 className="mb-6 text-lg font-semibold">
+            أكثر التدفقات استخداماً
+          </h3>
           <div className="space-y-4">
             {mockAnalytics.topFlows.map((flow, index) => (
-              <div key={index} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <div
+                key={index}
+                className="flex items-center justify-between rounded-lg bg-gray-50 p-4 dark:bg-gray-800"
+              >
                 <div className="flex items-center gap-4">
-                  <div className="w-8 h-8 bg-[var(--brand-primary)] text-white rounded-full flex items-center justify-center text-sm font-semibold">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--brand-primary)] text-sm font-semibold text-white">
                     {index + 1}
                   </div>
                   <div>
@@ -261,7 +286,9 @@ export default function ChatbotAnalyticsPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-sm font-medium">{flow.satisfaction}/5</div>
+                  <div className="text-sm font-medium">
+                    {flow.satisfaction}/5
+                  </div>
                   <div className="text-xs text-gray-500">معدل الرضا</div>
                 </div>
               </div>
@@ -271,40 +298,59 @@ export default function ChatbotAnalyticsPage() {
 
         {/* Channel Statistics */}
         <div className="card p-6">
-          <h3 className="text-lg font-semibold mb-6">إحصائيات القنوات</h3>
+          <h3 className="mb-6 text-lg font-semibold">إحصائيات القنوات</h3>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-200 dark:border-gray-700">
-                  <th className="text-right py-3 px-4 font-medium text-gray-700 dark:text-gray-300">القناة</th>
-                  <th className="text-right py-3 px-4 font-medium text-gray-700 dark:text-gray-300">الرسائل</th>
-                  <th className="text-right py-3 px-4 font-medium text-gray-700 dark:text-gray-300">المستخدمين</th>
-                  <th className="text-right py-3 px-4 font-medium text-gray-700 dark:text-gray-300">النمو</th>
+                  <th className="px-4 py-3 text-right font-medium text-gray-700 dark:text-gray-300">
+                    القناة
+                  </th>
+                  <th className="px-4 py-3 text-right font-medium text-gray-700 dark:text-gray-300">
+                    الرسائل
+                  </th>
+                  <th className="px-4 py-3 text-right font-medium text-gray-700 dark:text-gray-300">
+                    المستخدمين
+                  </th>
+                  <th className="px-4 py-3 text-right font-medium text-gray-700 dark:text-gray-300">
+                    النمو
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {mockAnalytics.channelStats.map((channel, index) => (
-                  <tr key={index} className="border-b border-gray-100 dark:border-gray-800">
-                    <td className="py-3 px-4">
+                  <tr
+                    key={index}
+                    className="border-b border-gray-100 dark:border-gray-800"
+                  >
+                    <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
                         <span className="text-lg">
-                          {channel.channel === "واتساب" ? "📱" :
-                           channel.channel === "الموقع" ? "🌐" :
-                           channel.channel === "تيليجرام" ? "✈️" : "💬"}
+                          {channel.channel === "واتساب"
+                            ? "📱"
+                            : channel.channel === "الموقع"
+                              ? "🌐"
+                              : channel.channel === "تيليجرام"
+                                ? "✈️"
+                                : "💬"}
                         </span>
                         <span className="font-medium">{channel.channel}</span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-gray-600 dark:text-gray-300">
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-300">
                       {channel.messages.toLocaleString()}
                     </td>
-                    <td className="py-3 px-4 text-gray-600 dark:text-gray-300">
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-300">
                       {channel.users.toLocaleString()}
                     </td>
-                    <td className="py-3 px-4">
-                      <div className={`flex items-center gap-1 ${getGrowthColor(channel.growth)}`}>
+                    <td className="px-4 py-3">
+                      <div
+                        className={`flex items-center gap-1 ${getGrowthColor(channel.growth)}`}
+                      >
                         <span>{getGrowthIcon(channel.growth)}</span>
-                        <span className="font-medium">{Math.abs(channel.growth)}%</span>
+                        <span className="font-medium">
+                          {Math.abs(channel.growth)}%
+                        </span>
                       </div>
                     </td>
                   </tr>

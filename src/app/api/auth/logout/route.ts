@@ -5,5 +5,3 @@ export async function POST() {
   response.cookies.set("auth-token", "", { path: "/", maxAge: 0 });
   return response;
 }
-
-

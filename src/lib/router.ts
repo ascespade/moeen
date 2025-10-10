@@ -30,7 +30,9 @@ export function getDefaultRouteForUser(user: User | null): string {
  * Check if a route requires authentication
  */
 export function isProtectedRoute(pathname: string): boolean {
-  return !ROUTES.PUBLIC_ROUTES.includes(pathname as any);
+  return !((ROUTES as any).PUBLIC_ROUTES as readonly string[]).includes(
+    pathname,
+  );
 }
 
 /**

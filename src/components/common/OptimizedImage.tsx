@@ -24,10 +24,10 @@ export default function OptimizedImage({
   if (hasError) {
     return (
       <div
-        className={`bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center ${className}`}
+        className={`flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700 ${className}`}
         style={{ width, height }}
       >
-        <span className="text-gray-500 text-sm">صورة</span>
+        <span className="text-sm text-gray-500">صورة</span>
       </div>
     );
   }
@@ -36,7 +36,7 @@ export default function OptimizedImage({
     <div className={`relative ${className}`}>
       {isLoading && (
         <div
-          className="absolute inset-0 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"
+          className="absolute inset-0 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700"
           style={{ width, height }}
         />
       )}

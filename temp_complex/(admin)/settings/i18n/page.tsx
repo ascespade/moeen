@@ -77,15 +77,15 @@ export default function I18nManagerPage() {
   const missingInEn = [...arKeys].filter((k) => !enKeys.has(k));
 
   return (
-    <div className="max-w-screen-xl mx-auto px-4 py-6 grid gap-6">
-      <div className="grid md:grid-cols-4 gap-3">
+    <div className="mx-auto grid max-w-screen-xl gap-6 px-4 py-6">
+      <div className="grid gap-3 md:grid-cols-4">
         <Input
           placeholder="بحث في المفاتيح/القيم"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         />
         <select
-          className="border rounded-md px-3"
+          className="rounded-md border px-3"
           value={locale}
           onChange={(e) => setLocale(e.target.value as "ar" | "en")}
         >
@@ -113,22 +113,22 @@ export default function I18nManagerPage() {
         </Button>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid gap-4 md:grid-cols-2">
         <div className="rounded-xl border border-brand-border p-4">
-          <div className="font-semibold mb-2">
+          <div className="mb-2 font-semibold">
             مفقود بالعربية ({missingInAr.length})
           </div>
-          <ul className="text-sm text-gray-600 dark:text-gray-400 list-disc ps-5">
+          <ul className="list-disc ps-5 text-sm text-gray-600 dark:text-gray-400">
             {missingInAr.map((k) => (
               <li key={k}>{k}</li>
             ))}
           </ul>
         </div>
         <div className="rounded-xl border border-brand-border p-4">
-          <div className="font-semibold mb-2">
+          <div className="mb-2 font-semibold">
             مفقود بالإنجليزية ({missingInEn.length})
           </div>
-          <ul className="text-sm text-gray-600 dark:text-gray-400 list-disc ps-5">
+          <ul className="list-disc ps-5 text-sm text-gray-600 dark:text-gray-400">
             {missingInEn.map((k) => (
               <li key={k}>{k}</li>
             ))}

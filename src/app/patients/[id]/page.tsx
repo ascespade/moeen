@@ -52,7 +52,7 @@ const mockPatient: Patient = {
   address: "الرياض، حي النرجس",
   emergencyContact: "0509876543 - فاطمة العتيبي",
   medicalHistory: ["جراحة في العمود الفقري 2020", "كسر في الساق 2018"],
-  allergies: ["البنسلين", "الأسبرين"]
+  allergies: ["البنسلين", "الأسبرين"],
 };
 
 const mockSessions: Session[] = [
@@ -63,7 +63,7 @@ const mockSessions: Session[] = [
     type: "علاج طبيعي",
     duration: 60,
     status: "completed",
-    notes: "جلسة علاج طبيعي للظهر - تحسن ملحوظ"
+    notes: "جلسة علاج طبيعي للظهر - تحسن ملحوظ",
   },
   {
     id: "2",
@@ -72,7 +72,7 @@ const mockSessions: Session[] = [
     type: "علاج طبيعي",
     duration: 60,
     status: "completed",
-    notes: "تمارين تقوية عضلات الظهر"
+    notes: "تمارين تقوية عضلات الظهر",
   },
   {
     id: "3",
@@ -80,8 +80,8 @@ const mockSessions: Session[] = [
     doctor: "د. سارة أحمد",
     type: "علاج طبيعي",
     duration: 60,
-    status: "upcoming"
-  }
+    status: "upcoming",
+  },
 ];
 
 const mockDocuments: Document[] = [
@@ -90,26 +90,32 @@ const mockDocuments: Document[] = [
     name: "تقرير الأشعة السينية",
     type: "PDF",
     uploadDate: "2024-01-10",
-    size: "2.3 MB"
+    size: "2.3 MB",
   },
   {
     id: "2",
     name: "تحليل الدم",
     type: "PDF",
     uploadDate: "2024-01-08",
-    size: "1.1 MB"
+    size: "1.1 MB",
   },
   {
     id: "3",
     name: "صورة الأشعة المقطعية",
     type: "JPG",
     uploadDate: "2024-01-05",
-    size: "5.7 MB"
-  }
+    size: "5.7 MB",
+  },
 ];
 
-export default function PatientDetailsPage({ params }: { params: { id: string } }) {
-  const [activeTab, setActiveTab] = useState<"info" | "sessions" | "documents" | "relatives" | "claims">("info");
+export default function PatientDetailsPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const [activeTab, setActiveTab] = useState<
+    "info" | "sessions" | "documents" | "relatives" | "claims"
+  >("info");
   const [showEditModal, setShowEditModal] = useState(false);
 
   const getStatusColor = (status: Patient["status"]) => {
@@ -167,7 +173,7 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-900 border-b border-brand sticky top-0 z-10">
+      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
         <div className="container-app py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -177,7 +183,7 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
               >
                 ← العودة
               </Link>
-              <div className="w-16 h-16 bg-[var(--brand-primary)] rounded-full flex items-center justify-center text-white font-semibold text-xl">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--brand-primary)] text-xl font-semibold text-white">
                 {mockPatient.name.charAt(0)}
               </div>
               <div>
@@ -190,11 +196,11 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setShowEditModal(true)}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
               >
                 تعديل البيانات
               </button>
-              <button className="btn-brand px-6 py-2 rounded-lg text-white hover:bg-[var(--brand-primary-hover)] transition-colors">
+              <button className="btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
                 حجز موعد
               </button>
             </div>
@@ -204,30 +210,32 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
 
       <main className="container-app py-8">
         {/* Patient Summary */}
-        <div className="card p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="card mb-8 p-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
             <div className="text-center">
-              <div className="text-3xl font-bold text-[var(--brand-primary)] mb-2">
+              <div className="mb-2 text-3xl font-bold text-[var(--brand-primary)]">
                 {mockSessions.length}
               </div>
-              <div className="text-gray-600 dark:text-gray-300">إجمالي الجلسات</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-600 mb-2">
-                {mockSessions.filter(s => s.status === "completed").length}
+              <div className="text-gray-600 dark:text-gray-300">
+                إجمالي الجلسات
               </div>
-              <div className="text-gray-600 dark:text-gray-300">جلسات مكتملة</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600 mb-2">
+              <div className="mb-2 text-3xl font-bold text-green-600">
+                {mockSessions.filter((s) => s.status === "completed").length}
+              </div>
+              <div className="text-gray-600 dark:text-gray-300">
+                جلسات مكتملة
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="mb-2 text-3xl font-bold text-blue-600">
                 {mockDocuments.length}
               </div>
               <div className="text-gray-600 dark:text-gray-300">الوثائق</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600 mb-2">
-                2
-              </div>
+              <div className="mb-2 text-3xl font-bold text-purple-600">2</div>
               <div className="text-gray-600 dark:text-gray-300">المطالبات</div>
             </div>
           </div>
@@ -242,15 +250,15 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
                 { id: "sessions", label: "سجل الجلسات" },
                 { id: "documents", label: "الوثائق" },
                 { id: "relatives", label: "الأقارب" },
-                { id: "claims", label: "المطالبات" }
+                { id: "claims", label: "المطالبات" },
               ].map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  className={`border-b-2 px-1 py-4 text-sm font-medium ${
                     activeTab === tab.id
                       ? "border-[var(--brand-primary)] text-[var(--brand-primary)]"
-                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                      : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   }`}
                 >
                   {tab.label}
@@ -262,33 +270,53 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
           <div className="p-6">
             {/* Personal Info Tab */}
             {activeTab === "info" && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                 <div>
-                  <h3 className="text-lg font-semibold mb-4">المعلومات الأساسية</h3>
+                  <h3 className="mb-4 text-lg font-semibold">
+                    المعلومات الأساسية
+                  </h3>
                   <div className="space-y-4">
                     <div className="flex justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">الاسم:</span>
+                      <span className="text-gray-600 dark:text-gray-300">
+                        الاسم:
+                      </span>
                       <span className="font-medium">{mockPatient.name}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">الهاتف:</span>
+                      <span className="text-gray-600 dark:text-gray-300">
+                        الهاتف:
+                      </span>
                       <span className="font-medium">{mockPatient.phone}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">البريد الإلكتروني:</span>
-                      <span className="font-medium">{mockPatient.email || "غير محدد"}</span>
+                      <span className="text-gray-600 dark:text-gray-300">
+                        البريد الإلكتروني:
+                      </span>
+                      <span className="font-medium">
+                        {mockPatient.email || "غير محدد"}
+                      </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">العمر:</span>
+                      <span className="text-gray-600 dark:text-gray-300">
+                        العمر:
+                      </span>
                       <span className="font-medium">{mockPatient.age} سنة</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">الجنس:</span>
-                      <span className="font-medium">{mockPatient.gender === "male" ? "ذكر" : "أنثى"}</span>
+                      <span className="text-gray-600 dark:text-gray-300">
+                        الجنس:
+                      </span>
+                      <span className="font-medium">
+                        {mockPatient.gender === "male" ? "ذكر" : "أنثى"}
+                      </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">الحالة:</span>
-                      <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(mockPatient.status)}`}>
+                      <span className="text-gray-600 dark:text-gray-300">
+                        الحالة:
+                      </span>
+                      <span
+                        className={`rounded-full px-2 py-1 text-xs ${getStatusColor(mockPatient.status)}`}
+                      >
                         {getStatusText(mockPatient.status)}
                       </span>
                     </div>
@@ -296,49 +324,79 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-4">معلومات إضافية</h3>
+                  <h3 className="mb-4 text-lg font-semibold">معلومات إضافية</h3>
                   <div className="space-y-4">
                     <div>
-                      <span className="text-gray-600 dark:text-gray-300 block mb-1">العنوان:</span>
-                      <span className="font-medium">{mockPatient.address || "غير محدد"}</span>
+                      <span className="mb-1 block text-gray-600 dark:text-gray-300">
+                        العنوان:
+                      </span>
+                      <span className="font-medium">
+                        {mockPatient.address || "غير محدد"}
+                      </span>
                     </div>
                     <div>
-                      <span className="text-gray-600 dark:text-gray-300 block mb-1">جهة الاتصال في الطوارئ:</span>
-                      <span className="font-medium">{mockPatient.emergencyContact || "غير محدد"}</span>
+                      <span className="mb-1 block text-gray-600 dark:text-gray-300">
+                        جهة الاتصال في الطوارئ:
+                      </span>
+                      <span className="font-medium">
+                        {mockPatient.emergencyContact || "غير محدد"}
+                      </span>
                     </div>
                     <div>
-                      <span className="text-gray-600 dark:text-gray-300 block mb-1">شركة التأمين:</span>
-                      <span className="font-medium">{mockPatient.insuranceProvider || "بدون تأمين"}</span>
+                      <span className="mb-1 block text-gray-600 dark:text-gray-300">
+                        شركة التأمين:
+                      </span>
+                      <span className="font-medium">
+                        {mockPatient.insuranceProvider || "بدون تأمين"}
+                      </span>
                     </div>
                     <div>
-                      <span className="text-gray-600 dark:text-gray-300 block mb-1">ملاحظات:</span>
-                      <span className="font-medium">{mockPatient.notes || "لا توجد ملاحظات"}</span>
+                      <span className="mb-1 block text-gray-600 dark:text-gray-300">
+                        ملاحظات:
+                      </span>
+                      <span className="font-medium">
+                        {mockPatient.notes || "لا توجد ملاحظات"}
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 {/* Medical History */}
                 <div className="md:col-span-2">
-                  <h3 className="text-lg font-semibold mb-4">التاريخ الطبي</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <h3 className="mb-4 text-lg font-semibold">التاريخ الطبي</h3>
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
-                      <h4 className="font-medium mb-2">الأمراض السابقة:</h4>
+                      <h4 className="mb-2 font-medium">الأمراض السابقة:</h4>
                       <ul className="space-y-1">
                         {mockPatient.medicalHistory?.map((item, index) => (
-                          <li key={index} className="text-sm text-gray-600 dark:text-gray-300">
+                          <li
+                            key={index}
+                            className="text-sm text-gray-600 dark:text-gray-300"
+                          >
                             • {item}
                           </li>
-                        )) || <li className="text-sm text-gray-500">لا توجد أمراض سابقة</li>}
+                        )) || (
+                          <li className="text-sm text-gray-500">
+                            لا توجد أمراض سابقة
+                          </li>
+                        )}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-medium mb-2">الحساسية:</h4>
+                      <h4 className="mb-2 font-medium">الحساسية:</h4>
                       <ul className="space-y-1">
                         {mockPatient.allergies?.map((item, index) => (
-                          <li key={index} className="text-sm text-gray-600 dark:text-gray-300">
+                          <li
+                            key={index}
+                            className="text-sm text-gray-600 dark:text-gray-300"
+                          >
                             • {item}
                           </li>
-                        )) || <li className="text-sm text-gray-500">لا توجد حساسية</li>}
+                        )) || (
+                          <li className="text-sm text-gray-500">
+                            لا توجد حساسية
+                          </li>
+                        )}
                       </ul>
                     </div>
                   </div>
@@ -349,25 +407,32 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
             {/* Sessions Tab */}
             {activeTab === "sessions" && (
               <div>
-                <div className="flex justify-between items-center mb-6">
+                <div className="mb-6 flex items-center justify-between">
                   <h3 className="text-lg font-semibold">سجل الجلسات</h3>
-                  <button className="btn-brand px-4 py-2 rounded-lg text-white text-sm hover:bg-[var(--brand-primary-hover)] transition-colors">
+                  <button className="btn-brand rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
                     إضافة جلسة
                   </button>
                 </div>
                 <div className="space-y-4">
                   {mockSessions.map((session) => (
-                    <div key={session.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                      <div className="flex justify-between items-start mb-2">
+                    <div
+                      key={session.id}
+                      className="rounded-lg border border-gray-200 p-4 dark:border-gray-700"
+                    >
+                      <div className="mb-2 flex items-start justify-between">
                         <div>
                           <h4 className="font-medium">{session.doctor}</h4>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">{session.type}</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">
+                            {session.type}
+                          </p>
                         </div>
-                        <span className={`px-3 py-1 rounded-full text-sm ${getSessionStatusColor(session.status)}`}>
+                        <span
+                          className={`rounded-full px-3 py-1 text-sm ${getSessionStatusColor(session.status)}`}
+                        >
                           {getSessionStatusText(session.status)}
                         </span>
                       </div>
-                      <div className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-300">
+                      <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300">
                         <span>{session.date}</span>
                         <span>{session.duration} دقيقة</span>
                       </div>
@@ -385,29 +450,40 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
             {/* Documents Tab */}
             {activeTab === "documents" && (
               <div>
-                <div className="flex justify-between items-center mb-6">
+                <div className="mb-6 flex items-center justify-between">
                   <h3 className="text-lg font-semibold">الوثائق</h3>
-                  <button className="btn-brand px-4 py-2 rounded-lg text-white text-sm hover:bg-[var(--brand-primary-hover)] transition-colors">
+                  <button className="btn-brand rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
                     رفع وثيقة
                   </button>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {mockDocuments.map((doc) => (
-                    <div key={doc.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-soft transition-shadow">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                          <span className="text-red-600 font-semibold">PDF</span>
+                    <div
+                      key={doc.id}
+                      className="hover:shadow-soft rounded-lg border border-gray-200 p-4 transition-shadow dark:border-gray-700"
+                    >
+                      <div className="mb-2 flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100">
+                          <span className="font-semibold text-red-600">
+                            PDF
+                          </span>
                         </div>
                         <div>
-                          <h4 className="font-medium text-sm">{doc.name}</h4>
-                          <p className="text-xs text-gray-500">{doc.type} • {doc.size}</p>
+                          <h4 className="text-sm font-medium">{doc.name}</h4>
+                          <p className="text-xs text-gray-500">
+                            {doc.type} • {doc.size}
+                          </p>
                         </div>
                       </div>
-                      <div className="flex justify-between items-center text-xs text-gray-500">
+                      <div className="flex items-center justify-between text-xs text-gray-500">
                         <span>{doc.uploadDate}</span>
                         <div className="flex gap-2">
-                          <button className="text-[var(--brand-primary)] hover:underline">عرض</button>
-                          <button className="text-gray-500 hover:underline">تحميل</button>
+                          <button className="text-[var(--brand-primary)] hover:underline">
+                            عرض
+                          </button>
+                          <button className="text-gray-500 hover:underline">
+                            تحميل
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -419,14 +495,14 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
             {/* Relatives Tab */}
             {activeTab === "relatives" && (
               <div>
-                <div className="flex justify-between items-center mb-6">
+                <div className="mb-6 flex items-center justify-between">
                   <h3 className="text-lg font-semibold">الأقارب</h3>
-                  <button className="btn-brand px-4 py-2 rounded-lg text-white text-sm hover:bg-[var(--brand-primary-hover)] transition-colors">
+                  <button className="btn-brand rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
                     إضافة قريب
                   </button>
                 </div>
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="py-8 text-center">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
                     <span className="text-2xl">👥</span>
                   </div>
                   <p className="text-gray-500">لا توجد أقارب مسجلين</p>
@@ -437,39 +513,43 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
             {/* Claims Tab */}
             {activeTab === "claims" && (
               <div>
-                <div className="flex justify-between items-center mb-6">
+                <div className="mb-6 flex items-center justify-between">
                   <h3 className="text-lg font-semibold">المطالبات التأمينية</h3>
-                  <button className="btn-brand px-4 py-2 rounded-lg text-white text-sm hover:bg-[var(--brand-primary-hover)] transition-colors">
+                  <button className="btn-brand rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
                     إضافة مطالبة
                   </button>
                 </div>
                 <div className="space-y-4">
-                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                    <div className="flex justify-between items-start mb-2">
+                  <div className="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+                    <div className="mb-2 flex items-start justify-between">
                       <div>
                         <h4 className="font-medium">مطالبة علاج طبيعي</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">رقم المطالبة: #12345</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                          رقم المطالبة: #12345
+                        </p>
                       </div>
-                      <span className="px-3 py-1 rounded-full text-sm bg-green-100 text-green-800">
+                      <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-800">
                         موافق عليها
                       </span>
                     </div>
-                    <div className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-300">
+                    <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300">
                       <span>المبلغ: 1,500 ريال</span>
                       <span>2024-01-10</span>
                     </div>
                   </div>
-                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                    <div className="flex justify-between items-start mb-2">
+                  <div className="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+                    <div className="mb-2 flex items-start justify-between">
                       <div>
                         <h4 className="font-medium">مطالبة أشعة</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">رقم المطالبة: #12346</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                          رقم المطالبة: #12346
+                        </p>
                       </div>
-                      <span className="px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-800">
+                      <span className="rounded-full bg-yellow-100 px-3 py-1 text-sm text-yellow-800">
                         قيد المراجعة
                       </span>
                     </div>
-                    <div className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-300">
+                    <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300">
                       <span>المبلغ: 800 ريال</span>
                       <span>2024-01-12</span>
                     </div>
@@ -483,9 +563,9 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
 
       {/* Edit Modal */}
       {showEditModal && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-gray-900 rounded-lg p-6 w-full max-w-2xl">
-            <div className="flex justify-between items-center mb-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900">
+            <div className="mb-6 flex items-center justify-between">
               <h3 className="text-xl font-semibold">تعديل بيانات المريض</h3>
               <button
                 onClick={() => setShowEditModal(false)}
@@ -498,70 +578,70 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
             <form className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     الاسم الكامل
                   </label>
                   <input
                     type="text"
                     defaultValue={mockPatient.name}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     الهاتف
                   </label>
                   <input
                     type="tel"
                     defaultValue={mockPatient.phone}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     البريد الإلكتروني
                   </label>
                   <input
                     type="email"
                     defaultValue={mockPatient.email}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     العمر
                   </label>
                   <input
                     type="number"
                     defaultValue={mockPatient.age}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     الجنس
                   </label>
                   <select
                     defaultValue={mockPatient.gender}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                   >
                     <option value="male">ذكر</option>
                     <option value="female">أنثى</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     الحالة
                   </label>
                   <select
                     defaultValue={mockPatient.status}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                   >
                     <option value="active">نشط</option>
                     <option value="inactive">غير نشط</option>
@@ -571,13 +651,13 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   ملاحظات
                 </label>
                 <textarea
                   rows={3}
                   defaultValue={mockPatient.notes}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                 />
               </div>
 
@@ -585,13 +665,13 @@ export default function PatientDetailsPage({ params }: { params: { id: string } 
                 <button
                   type="button"
                   onClick={() => setShowEditModal(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
                 >
                   إلغاء
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 btn-brand py-2 rounded-lg text-white hover:bg-[var(--brand-primary-hover)] transition-colors"
+                  className="btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
                 >
                   حفظ التغييرات
                 </button>

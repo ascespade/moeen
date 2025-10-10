@@ -173,12 +173,12 @@ const mockStaffWorkHours: StaffWorkHours[] = [
 ];
 
 const activityTypeConfig = {
-  appointment: { icon: "📅", color: "blue" },
-  claim: { icon: "📋", color: "green" },
-  patient: { icon: "👤", color: "red" },
-  staff: { icon: "👨‍⚕️", color: "purple" },
-  payment: { icon: "💰", color: "green" },
-};
+  appointment: { icon: "📅", color: "blue", bg: "bg-blue-50" },
+  claim: { icon: "📋", color: "green", bg: "bg-green-50" },
+  patient: { icon: "👤", color: "red", bg: "bg-red-50" },
+  staff: { icon: "👨‍⚕️", color: "purple", bg: "bg-purple-50" },
+  payment: { icon: "💰", color: "green", bg: "bg-green-50" },
+} as const;
 
 const statusConfig = {
   success: { color: "text-green-600", bg: "bg-green-50" },
@@ -188,12 +188,16 @@ const statusConfig = {
 };
 
 export default function AdminDashboard() {
-  const [selectedPeriod, setSelectedPeriod] = useState<"today" | "week" | "month" | "year">("month");
+  const [selectedPeriod, setSelectedPeriod] = useState<
+    "today" | "week" | "month" | "year"
+  >("month");
 
   const getActivityIcon = (type: RecentActivity["type"]) => {
     const config = activityTypeConfig[type];
     return (
-      <div className={`w-8 h-8 rounded-full ${config.bg} flex items-center justify-center text-sm`}>
+      <div
+        className={`h-8 w-8 rounded-full ${config.bg} flex items-center justify-center text-sm`}
+      >
         {config.icon}
       </div>
     );
@@ -208,14 +212,14 @@ export default function AdminDashboard() {
     if (staff.isOnDuty) {
       return (
         <div className="flex items-center gap-2 text-green-600">
-          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+          <span className="h-2 w-2 animate-pulse rounded-full bg-green-500"></span>
           <span className="text-sm font-medium">في الخدمة</span>
         </div>
       );
     }
     return (
       <div className="flex items-center gap-2 text-gray-600">
-        <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
+        <span className="h-2 w-2 rounded-full bg-gray-400"></span>
         <span className="text-sm font-medium">خارج الخدمة</span>
       </div>
     );
@@ -224,7 +228,7 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-900 border-b border-brand sticky top-0 z-10">
+      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
         <div className="container-app py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -236,15 +240,19 @@ export default function AdminDashboard() {
                 className="rounded-lg"
               />
               <div>
-                <h1 className="text-2xl font-bold text-brand">لوحة تحكم الإدارة</h1>
-                <p className="text-gray-600 dark:text-gray-300">مركز الهمم للرعاية الصحية المتخصصة</p>
+                <h1 className="text-brand text-2xl font-bold">
+                  لوحة تحكم الإدارة
+                </h1>
+                <p className="text-gray-600 dark:text-gray-300">
+                  مركز الهمم للرعاية الصحية المتخصصة
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <select
                 value={selectedPeriod}
                 onChange={(e) => setSelectedPeriod(e.target.value as any)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                className="rounded-lg border border-gray-300 px-3 py-2 text-sm"
               >
                 <option value="today">اليوم</option>
                 <option value="week">هذا الأسبوع</option>
@@ -264,116 +272,168 @@ export default function AdminDashboard() {
 
       <main className="container-app py-8">
         {/* Main Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-brand mb-2">
+            <div className="text-brand mb-2 text-3xl font-bold">
               {mockStats.totalPatients.toLocaleString()}
             </div>
-            <div className="text-gray-600 dark:text-gray-300 mb-2">إجمالي المرضى</div>
+            <div className="mb-2 text-gray-600 dark:text-gray-300">
+              إجمالي المرضى
+            </div>
             <div className="text-sm text-green-600">
               {mockStats.activePatients} نشط • {mockStats.blockedPatients} محظور
             </div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-green-600 mb-2">
+            <div className="mb-2 text-3xl font-bold text-green-600">
               {mockStats.totalAppointments.toLocaleString()}
             </div>
-            <div className="text-gray-600 dark:text-gray-300 mb-2">إجمالي المواعيد</div>
+            <div className="mb-2 text-gray-600 dark:text-gray-300">
+              إجمالي المواعيد
+            </div>
             <div className="text-sm text-blue-600">
-              {mockStats.completedAppointments} مكتمل • {mockStats.pendingAppointments} قيد الانتظار
+              {mockStats.completedAppointments} مكتمل •{" "}
+              {mockStats.pendingAppointments} قيد الانتظار
             </div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-purple-600 mb-2">
+            <div className="mb-2 text-3xl font-bold text-purple-600">
               {mockStats.totalRevenue.toLocaleString()} ريال
             </div>
-            <div className="text-gray-600 dark:text-gray-300 mb-2">إجمالي الإيرادات</div>
+            <div className="mb-2 text-gray-600 dark:text-gray-300">
+              إجمالي الإيرادات
+            </div>
             <div className="text-sm text-green-600">
               {mockStats.monthlyRevenue.toLocaleString()} ريال هذا الشهر
             </div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-orange-600 mb-2">
+            <div className="mb-2 text-3xl font-bold text-orange-600">
               {mockStats.totalStaff}
             </div>
-            <div className="text-gray-600 dark:text-gray-300 mb-2">إجمالي الموظفين</div>
+            <div className="mb-2 text-gray-600 dark:text-gray-300">
+              إجمالي الموظفين
+            </div>
             <div className="text-sm text-blue-600">
-              {mockStats.activeStaff} نشط • {mockStats.onDutyStaff} في الخدمة الآن
+              {mockStats.activeStaff} نشط • {mockStats.onDutyStaff} في الخدمة
+              الآن
             </div>
           </Card>
         </div>
 
         {/* Secondary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
           <Card className="p-6">
-            <h3 className="text-lg font-semibold mb-4">المطالبات التأمينية</h3>
+            <h3 className="mb-4 text-lg font-semibold">المطالبات التأمينية</h3>
             <div className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-300">إجمالي المطالبات:</span>
+                <span className="text-gray-600 dark:text-gray-300">
+                  إجمالي المطالبات:
+                </span>
                 <span className="font-semibold">{mockStats.totalClaims}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-300">موافق عليها:</span>
-                <span className="font-semibold text-green-600">{mockStats.approvedClaims}</span>
+                <span className="text-gray-600 dark:text-gray-300">
+                  موافق عليها:
+                </span>
+                <span className="font-semibold text-green-600">
+                  {mockStats.approvedClaims}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-300">قيد المراجعة:</span>
-                <span className="font-semibold text-yellow-600">{mockStats.pendingClaims}</span>
+                <span className="text-gray-600 dark:text-gray-300">
+                  قيد المراجعة:
+                </span>
+                <span className="font-semibold text-yellow-600">
+                  {mockStats.pendingClaims}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-300">مرفوضة:</span>
-                <span className="font-semibold text-red-600">{mockStats.rejectedClaims}</span>
+                <span className="text-gray-600 dark:text-gray-300">
+                  مرفوضة:
+                </span>
+                <span className="font-semibold text-red-600">
+                  {mockStats.rejectedClaims}
+                </span>
               </div>
             </div>
           </Card>
 
           <Card className="p-6">
-            <h3 className="text-lg font-semibold mb-4">الجلسات العلاجية</h3>
+            <h3 className="mb-4 text-lg font-semibold">الجلسات العلاجية</h3>
             <div className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-300">إجمالي الجلسات:</span>
-                <span className="font-semibold">{mockStats.totalSessions.toLocaleString()}</span>
+                <span className="text-gray-600 dark:text-gray-300">
+                  إجمالي الجلسات:
+                </span>
+                <span className="font-semibold">
+                  {mockStats.totalSessions.toLocaleString()}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-300">مكتملة:</span>
-                <span className="font-semibold text-green-600">{mockStats.completedSessions.toLocaleString()}</span>
+                <span className="text-gray-600 dark:text-gray-300">
+                  مكتملة:
+                </span>
+                <span className="font-semibold text-green-600">
+                  {mockStats.completedSessions.toLocaleString()}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600 dark:text-gray-300">قادمة:</span>
-                <span className="font-semibold text-blue-600">{mockStats.upcomingSessions.toLocaleString()}</span>
+                <span className="font-semibold text-blue-600">
+                  {mockStats.upcomingSessions.toLocaleString()}
+                </span>
               </div>
             </div>
           </Card>
 
           <Card className="p-6">
-            <h3 className="text-lg font-semibold mb-4">معدلات الأداء</h3>
+            <h3 className="mb-4 text-lg font-semibold">معدلات الأداء</h3>
             <div className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-300">معدل إكمال المواعيد:</span>
+                <span className="text-gray-600 dark:text-gray-300">
+                  معدل إكمال المواعيد:
+                </span>
                 <span className="font-semibold text-green-600">
-                  {Math.round((mockStats.completedAppointments / mockStats.totalAppointments) * 100)}%
+                  {Math.round(
+                    (mockStats.completedAppointments /
+                      mockStats.totalAppointments) *
+                      100,
+                  )}
+                  %
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-300">معدل الموافقة على المطالبات:</span>
+                <span className="text-gray-600 dark:text-gray-300">
+                  معدل الموافقة على المطالبات:
+                </span>
                 <span className="font-semibold text-green-600">
-                  {Math.round((mockStats.approvedClaims / mockStats.totalClaims) * 100)}%
+                  {Math.round(
+                    (mockStats.approvedClaims / mockStats.totalClaims) * 100,
+                  )}
+                  %
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-300">معدل إكمال الجلسات:</span>
+                <span className="text-gray-600 dark:text-gray-300">
+                  معدل إكمال الجلسات:
+                </span>
                 <span className="font-semibold text-green-600">
-                  {Math.round((mockStats.completedSessions / mockStats.totalSessions) * 100)}%
+                  {Math.round(
+                    (mockStats.completedSessions / mockStats.totalSessions) *
+                      100,
+                  )}
+                  %
                 </span>
               </div>
             </div>
           </Card>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Recent Activities */}
           <Card className="p-6">
-            <div className="flex items-center justify-between mb-6">
+            <div className="mb-6 flex items-center justify-between">
               <h3 className="text-lg font-semibold">النشاطات الأخيرة</h3>
               <Button variant="outline" size="sm">
                 عرض الكل
@@ -381,16 +441,21 @@ export default function AdminDashboard() {
             </div>
             <div className="space-y-4">
               {mockRecentActivities.map((activity) => (
-                <div key={activity.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+                <div
+                  key={activity.id}
+                  className="flex items-start gap-3 rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-gray-800"
+                >
                   {getActivityIcon(activity.type)}
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <h4 className="font-medium text-gray-900 dark:text-white">
                         {activity.title}
                       </h4>
-                      <span className="text-xs text-gray-500">{activity.timestamp}</span>
+                      <span className="text-xs text-gray-500">
+                        {activity.timestamp}
+                      </span>
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                       {activity.description}
                     </p>
                   </div>
@@ -401,7 +466,7 @@ export default function AdminDashboard() {
 
           {/* Staff Work Hours */}
           <Card className="p-6">
-            <div className="flex items-center justify-between mb-6">
+            <div className="mb-6 flex items-center justify-between">
               <h3 className="text-lg font-semibold">ساعات عمل الموظفين</h3>
               <Button variant="outline" size="sm">
                 عرض التقرير الكامل
@@ -409,26 +474,42 @@ export default function AdminDashboard() {
             </div>
             <div className="space-y-4">
               {mockStaffWorkHours.map((staff) => (
-                <div key={staff.id} className="p-4 border rounded-lg">
-                  <div className="flex items-center justify-between mb-3">
+                <div key={staff.id} className="rounded-lg border p-4">
+                  <div className="mb-3 flex items-center justify-between">
                     <div>
-                      <h4 className="font-medium text-gray-900 dark:text-white">{staff.name}</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">{staff.position}</p>
+                      <h4 className="font-medium text-gray-900 dark:text-white">
+                        {staff.name}
+                      </h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                        {staff.position}
+                      </p>
                     </div>
                     {getOnDutyStatus(staff)}
                   </div>
                   <div className="grid grid-cols-3 gap-4 text-sm">
                     <div className="text-center">
-                      <div className="font-semibold text-brand">{staff.todayHours}س</div>
-                      <div className="text-gray-600 dark:text-gray-300">اليوم</div>
+                      <div className="text-brand font-semibold">
+                        {staff.todayHours}س
+                      </div>
+                      <div className="text-gray-600 dark:text-gray-300">
+                        اليوم
+                      </div>
                     </div>
                     <div className="text-center">
-                      <div className="font-semibold text-blue-600">{staff.thisWeekHours}س</div>
-                      <div className="text-gray-600 dark:text-gray-300">هذا الأسبوع</div>
+                      <div className="font-semibold text-blue-600">
+                        {staff.thisWeekHours}س
+                      </div>
+                      <div className="text-gray-600 dark:text-gray-300">
+                        هذا الأسبوع
+                      </div>
                     </div>
                     <div className="text-center">
-                      <div className="font-semibold text-green-600">{staff.thisMonthHours}س</div>
-                      <div className="text-gray-600 dark:text-gray-300">هذا الشهر</div>
+                      <div className="font-semibold text-green-600">
+                        {staff.thisMonthHours}س
+                      </div>
+                      <div className="text-gray-600 dark:text-gray-300">
+                        هذا الشهر
+                      </div>
                     </div>
                   </div>
                   {staff.isOnDuty && staff.lastCheckIn && (
@@ -443,31 +524,49 @@ export default function AdminDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <Card className="p-6 mt-8">
-          <h3 className="text-lg font-semibold mb-6">إجراءات سريعة</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
-              <span className="text-2xl mb-2">👤</span>
+        <Card className="mt-8 p-6">
+          <h3 className="mb-6 text-lg font-semibold">إجراءات سريعة</h3>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
+            <Button
+              variant="outline"
+              className="flex h-20 flex-col items-center justify-center"
+            >
+              <span className="mb-2 text-2xl">👤</span>
               <span className="text-sm">إضافة مريض</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
-              <span className="text-2xl mb-2">📅</span>
+            <Button
+              variant="outline"
+              className="flex h-20 flex-col items-center justify-center"
+            >
+              <span className="mb-2 text-2xl">📅</span>
               <span className="text-sm">حجز موعد</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
-              <span className="text-2xl mb-2">📋</span>
+            <Button
+              variant="outline"
+              className="flex h-20 flex-col items-center justify-center"
+            >
+              <span className="mb-2 text-2xl">📋</span>
               <span className="text-sm">مطالبة تأمين</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
-              <span className="text-2xl mb-2">👨‍⚕️</span>
+            <Button
+              variant="outline"
+              className="flex h-20 flex-col items-center justify-center"
+            >
+              <span className="mb-2 text-2xl">👨‍⚕️</span>
               <span className="text-sm">إضافة موظف</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
-              <span className="text-2xl mb-2">📊</span>
+            <Button
+              variant="outline"
+              className="flex h-20 flex-col items-center justify-center"
+            >
+              <span className="mb-2 text-2xl">📊</span>
               <span className="text-sm">تقرير مالي</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
-              <span className="text-2xl mb-2">⚙️</span>
+            <Button
+              variant="outline"
+              className="flex h-20 flex-col items-center justify-center"
+            >
+              <span className="mb-2 text-2xl">⚙️</span>
               <span className="text-sm">الإعدادات</span>
             </Button>
           </div>

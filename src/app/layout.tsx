@@ -26,14 +26,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
-      <body className={`${cairo.variable} ${inter.variable} antialiased`} style={{
-        fontFamily: 'Cairo, sans-serif',
-        margin: 0,
-        padding: 0,
-        backgroundColor: '#f5f5f5',
-        direction: 'rtl',
-        textAlign: 'right'
-      }} suppressHydrationWarning>
+      <body
+        className={`${cairo.variable} ${inter.variable} antialiased`}
+        style={{
+          fontFamily: "Cairo, sans-serif",
+          margin: 0,
+          padding: 0,
+          backgroundColor: "#f5f5f5",
+          direction: "rtl",
+          textAlign: "right",
+        }}
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>

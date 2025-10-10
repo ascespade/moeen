@@ -11,7 +11,7 @@ export default function RegisterPage() {
     email: "",
     password: "",
     confirmPassword: "",
-    agreeToTerms: false
+    agreeToTerms: false,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -19,16 +19,16 @@ export default function RegisterPage() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
@@ -66,24 +66,24 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setIsLoading(true);
-    
+
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       setSuccess(true);
       setFormData({
         name: "",
         email: "",
         password: "",
         confirmPassword: "",
-        agreeToTerms: false
+        agreeToTerms: false,
       });
     } catch (error) {
       setErrors({ general: "حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى." });
@@ -94,20 +94,20 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center p-4">
-        <div className="card p-8 max-w-md w-full text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--brand-surface)] p-4">
+        <div className="card w-full max-w-md p-8 text-center">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl">
             ✅
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
             تم إنشاء الحساب بنجاح!
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
+          <p className="mb-6 text-gray-600 dark:text-gray-300">
             مرحباً بك في مُعين. يمكنك الآن تسجيل الدخول باستخدام بياناتك.
           </p>
           <Link
             href={ROUTES.LOGIN}
-            className="btn-brand px-6 py-3 rounded-lg text-white hover:bg-[var(--brand-primary-hover)] transition-colors inline-block"
+            className="btn-brand inline-block rounded-lg px-6 py-3 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
           >
             تسجيل الدخول
           </Link>
@@ -117,11 +117,11 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center p-4">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--brand-surface)] p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
+        <div className="mb-8 text-center">
+          <div className="mb-4 flex items-center justify-center gap-3">
             <Image
               src="/logo.jpg"
               alt="مُعين"
@@ -129,9 +129,9 @@ export default function RegisterPage() {
               height={50}
               className="rounded-lg"
             />
-            <h1 className="text-3xl font-bold text-brand">مُعين</h1>
+            <h1 className="text-brand text-3xl font-bold">مُعين</h1>
           </div>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
+          <h2 className="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
             إنشاء حساب جديد
           </h2>
           <p className="text-gray-600 dark:text-gray-300">
@@ -142,7 +142,7 @@ export default function RegisterPage() {
         {/* Form */}
         <div className="card p-8">
           {errors.general && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+            <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
               {errors.general}
             </div>
           )}
@@ -150,7 +150,10 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="name"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 الاسم الكامل
               </label>
               <input
@@ -159,7 +162,7 @@ export default function RegisterPage() {
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-colors ${
+                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] ${
                   errors.name ? "border-red-500" : "border-gray-300"
                 }`}
                 placeholder="أدخل اسمك الكامل"
@@ -172,7 +175,10 @@ export default function RegisterPage() {
 
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="email"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 البريد الإلكتروني
               </label>
               <input
@@ -181,7 +187,7 @@ export default function RegisterPage() {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-colors ${
+                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] ${
                   errors.email ? "border-red-500" : "border-gray-300"
                 }`}
                 placeholder="أدخل بريدك الإلكتروني"
@@ -194,7 +200,10 @@ export default function RegisterPage() {
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="password"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 كلمة المرور
               </label>
               <input
@@ -203,7 +212,7 @@ export default function RegisterPage() {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-colors ${
+                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] ${
                   errors.password ? "border-red-500" : "border-gray-300"
                 }`}
                 placeholder="أدخل كلمة المرور"
@@ -216,7 +225,10 @@ export default function RegisterPage() {
 
             {/* Confirm Password */}
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="confirmPassword"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 تأكيد كلمة المرور
               </label>
               <input
@@ -225,14 +237,16 @@ export default function RegisterPage() {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-colors ${
+                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] ${
                   errors.confirmPassword ? "border-red-500" : "border-gray-300"
                 }`}
                 placeholder="أعد إدخال كلمة المرور"
                 disabled={isLoading}
               />
               {errors.confirmPassword && (
-                <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.confirmPassword}
+                </p>
               )}
             </div>
 
@@ -244,22 +258,30 @@ export default function RegisterPage() {
                   name="agreeToTerms"
                   checked={formData.agreeToTerms}
                   onChange={handleInputChange}
-                  className="mt-1 w-4 h-4 text-[var(--brand-primary)] border-gray-300 rounded focus:ring-[var(--brand-primary)]"
+                  className="mt-1 h-4 w-4 rounded border-gray-300 text-[var(--brand-primary)] focus:ring-[var(--brand-primary)]"
                   disabled={isLoading}
                 />
                 <span className="text-sm text-gray-700 dark:text-gray-300">
                   أوافق على{" "}
-                  <Link href="/terms" className="text-[var(--brand-primary)] hover:underline">
+                  <Link
+                    href="/terms"
+                    className="text-[var(--brand-primary)] hover:underline"
+                  >
                     الشروط والأحكام
                   </Link>{" "}
                   و{" "}
-                  <Link href="/privacy" className="text-[var(--brand-primary)] hover:underline">
+                  <Link
+                    href="/privacy"
+                    className="text-[var(--brand-primary)] hover:underline"
+                  >
                     سياسة الخصوصية
                   </Link>
                 </span>
               </label>
               {errors.agreeToTerms && (
-                <p className="mt-1 text-sm text-red-600">{errors.agreeToTerms}</p>
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.agreeToTerms}
+                </p>
               )}
             </div>
 
@@ -267,11 +289,11 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full btn-brand py-3 rounded-lg text-white font-semibold hover:bg-[var(--brand-primary-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-brand w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isLoading ? (
                 <div className="flex items-center justify-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
                   جاري إنشاء الحساب...
                 </div>
               ) : (
@@ -286,7 +308,7 @@ export default function RegisterPage() {
               لديك حساب بالفعل؟{" "}
               <Link
                 href={ROUTES.LOGIN}
-                className="text-[var(--brand-primary)] hover:underline font-semibold"
+                className="font-semibold text-[var(--brand-primary)] hover:underline"
               >
                 تسجيل الدخول
               </Link>

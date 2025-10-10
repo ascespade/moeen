@@ -13,7 +13,7 @@ export default function ForgotPasswordPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email.trim()) {
       setError("البريد الإلكتروني مطلوب");
       return;
@@ -29,10 +29,12 @@ export default function ForgotPasswordPage() {
 
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       setIsSuccess(true);
     } catch (error) {
-      setError("حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. حاول مرة أخرى.");
+      setError(
+        "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. حاول مرة أخرى.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -40,22 +42,22 @@ export default function ForgotPasswordPage() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center p-4">
-        <div className="card p-8 max-w-md w-full text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--brand-surface)] p-4">
+        <div className="card w-full max-w-md p-8 text-center">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl">
             ✅
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
             تم إرسال الرابط!
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
-            تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني. 
-            تحقق من صندوق الوارد أو مجلد الرسائل المزعجة.
+          <p className="mb-6 text-gray-600 dark:text-gray-300">
+            تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني. تحقق من
+            صندوق الوارد أو مجلد الرسائل المزعجة.
           </p>
           <div className="space-y-3">
             <Link
               href={ROUTES.LOGIN}
-              className="btn-brand px-6 py-3 rounded-lg text-white hover:bg-[var(--brand-primary-hover)] transition-colors inline-block w-full"
+              className="btn-brand inline-block w-full rounded-lg px-6 py-3 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
             >
               العودة لتسجيل الدخول
             </Link>
@@ -64,7 +66,7 @@ export default function ForgotPasswordPage() {
                 setIsSuccess(false);
                 setEmail("");
               }}
-              className="w-full px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              className="w-full rounded-lg border border-gray-300 px-6 py-3 text-gray-700 transition-colors hover:bg-gray-50"
             >
               إرسال رابط آخر
             </button>
@@ -75,11 +77,11 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center p-4">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--brand-surface)] p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
+        <div className="mb-8 text-center">
+          <div className="mb-4 flex items-center justify-center gap-3">
             <Image
               src="/logo.jpg"
               alt="مُعين"
@@ -87,9 +89,9 @@ export default function ForgotPasswordPage() {
               height={50}
               className="rounded-lg"
             />
-            <h1 className="text-3xl font-bold text-brand">مُعين</h1>
+            <h1 className="text-brand text-3xl font-bold">مُعين</h1>
           </div>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
+          <h2 className="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
             نسيان كلمة المرور
           </h2>
           <p className="text-gray-600 dark:text-gray-300">
@@ -100,7 +102,7 @@ export default function ForgotPasswordPage() {
         {/* Form */}
         <div className="card p-8">
           {error && (
-            <div className="mb-6 p-4 status-error">
+            <div className="status-error mb-6 p-4">
               <div className="flex items-center gap-2">
                 <span className="text-lg">⚠️</span>
                 <p className="text-sm font-medium">{error}</p>
@@ -133,7 +135,7 @@ export default function ForgotPasswordPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full btn btn-brand btn-lg"
+              className="btn btn-brand btn-lg w-full"
             >
               {isLoading ? (
                 <>
@@ -152,7 +154,7 @@ export default function ForgotPasswordPage() {
               تذكرت كلمة المرور؟{" "}
               <Link
                 href={ROUTES.LOGIN}
-                className="text-brand hover:underline font-semibold"
+                className="text-brand font-semibold hover:underline"
               >
                 تسجيل الدخول
               </Link>

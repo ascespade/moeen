@@ -7,36 +7,36 @@ import { Users, Target, Heart, Award, Globe, Shield } from "lucide-react";
 export default function AboutPage() {
   const features = [
     {
-      icon: <Users className="w-8 h-8" />,
+      icon: <Users className="h-8 w-8" />,
       title: "مجتمع متكامل",
       description:
         "نوفر منصة شاملة تجمع المستفيدين والمتطوعين والمتبرعين في مكان واحد",
     },
     {
-      icon: <Target className="w-8 h-8" />,
+      icon: <Target className="h-8 w-8" />,
       title: "رؤية واضحة",
       description:
         "نسعى لبناء مجتمع داعم ومتضامن يساعد الجميع على تحقيق أهدافهم",
     },
     {
-      icon: <Heart className="w-8 h-8" />,
+      icon: <Heart className="h-8 w-8" />,
       title: "قيم إنسانية",
       description: "نؤمن بقوة التضامن والتعاون في بناء مجتمع أفضل للجميع",
     },
     {
-      icon: <Award className="w-8 h-8" />,
+      icon: <Award className="h-8 w-8" />,
       title: "جودة عالية",
       description:
         "نلتزم بتقديم خدمات عالية الجودة تلبي احتياجات جميع المستخدمين",
     },
     {
-      icon: <Globe className="w-8 h-8" />,
+      icon: <Globe className="h-8 w-8" />,
       title: "وصول عالمي",
       description:
         "نعمل على توسيع نطاق خدماتنا لتشمل أكبر عدد ممكن من المحتاجين",
     },
     {
-      icon: <Shield className="w-8 h-8" />,
+      icon: <Shield className="h-8 w-8" />,
       title: "أمان وخصوصية",
       description: "نضمن أمان وخصوصية جميع البيانات والمعلومات الشخصية",
     },
@@ -52,8 +52,8 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="max-w-screen-xl mx-auto px-4 py-6">
+      <header className="bg-white shadow-sm dark:bg-gray-800">
+        <div className="mx-auto max-w-screen-xl px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Image
@@ -70,22 +70,22 @@ export default function AboutPage() {
                 مُعين
               </span>
             </div>
-            <nav className="hidden md:flex items-center gap-6">
+            <nav className="hidden items-center gap-6 md:flex">
               <Link
                 href="/"
-                className="text-gray-600 dark:text-gray-400 hover:text-[var(--brand-primary)]"
+                className="text-gray-600 hover:text-[var(--brand-primary)] dark:text-gray-400"
               >
                 الرئيسية
               </Link>
               <Link
                 href="/about"
-                className="text-[var(--brand-primary)] font-medium"
+                className="font-medium text-[var(--brand-primary)]"
               >
                 من نحن
               </Link>
               <Link
                 href="/contact"
-                className="text-gray-600 dark:text-gray-400 hover:text-[var(--brand-primary)]"
+                className="text-gray-600 hover:text-[var(--brand-primary)] dark:text-gray-400"
               >
                 تواصل
               </Link>
@@ -95,13 +95,13 @@ export default function AboutPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white">
-        <div className="max-w-screen-xl mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">من نحن</h1>
-          <p className="text-xl md:text-2xl mb-8 opacity-90">
+      <section className="bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] py-20 text-white">
+        <div className="mx-auto max-w-screen-xl px-4 text-center">
+          <h1 className="mb-6 text-4xl font-bold md:text-6xl">من نحن</h1>
+          <p className="mb-8 text-xl opacity-90 md:text-2xl">
             منصة مُعين - جسر التواصل بين المحتاجين والمتطوعين والمتبرعين
           </p>
-          <p className="text-lg opacity-80 max-w-3xl mx-auto">
+          <p className="mx-auto max-w-3xl text-lg opacity-80">
             نحن نؤمن بقوة التضامن والتعاون في بناء مجتمع أفضل. منصة مُعين تجمع
             بين المستفيدين والمتطوعين والمتبرعين لتقديم الدعم والمساعدة للجميع.
           </p>
@@ -109,12 +109,12 @@ export default function AboutPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-white dark:bg-gray-800">
-        <div className="max-w-screen-xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <section className="bg-white py-16 dark:bg-gray-800">
+        <div className="mx-auto max-w-screen-xl px-4">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-[var(--brand-primary)] mb-2">
+                <div className="mb-2 text-3xl font-bold text-[var(--brand-primary)] md:text-4xl">
                   {stat.number}
                 </div>
                 <div className="text-gray-600 dark:text-gray-400">
@@ -128,27 +128,27 @@ export default function AboutPage() {
 
       {/* Features Section */}
       <section className="py-20">
-        <div className="max-w-screen-xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <div className="mx-auto max-w-screen-xl px-4">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">
               رؤيتنا ورسالتنا
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+            <p className="mx-auto max-w-3xl text-lg text-gray-600 dark:text-gray-400">
               نسعى لبناء مجتمع متكامل يجمع بين جميع فئات المجتمع لتحقيق التضامن
               والتعاون
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700"
+                className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
               >
-                <div className="text-[var(--brand-primary)] mb-4">
+                <div className="mb-4 text-[var(--brand-primary)]">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+                <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
                   {feature.title}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400">
@@ -161,32 +161,32 @@ export default function AboutPage() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 bg-gray-100 dark:bg-gray-800">
-        <div className="max-w-screen-xl mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <section className="bg-gray-100 py-20 dark:bg-gray-800">
+        <div className="mx-auto max-w-screen-xl px-4">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+              <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">
                 مهمتنا
               </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
+              <p className="mb-6 text-lg text-gray-600 dark:text-gray-400">
                 نعمل على تسهيل التواصل بين المحتاجين والمتطوعين والمتبرعين من
                 خلال منصة موحدة وآمنة تتيح للجميع المشاركة في بناء مجتمع أفضل.
               </p>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[var(--brand-primary)] rounded-full mt-2"></div>
+                  <div className="mt-2 h-2 w-2 rounded-full bg-[var(--brand-primary)]"></div>
                   <p className="text-gray-600 dark:text-gray-400">
                     توفير منصة آمنة وموثوقة للتواصل بين جميع فئات المجتمع
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[var(--brand-primary)] rounded-full mt-2"></div>
+                  <div className="mt-2 h-2 w-2 rounded-full bg-[var(--brand-primary)]"></div>
                   <p className="text-gray-600 dark:text-gray-400">
                     تسهيل عملية التطوع والتبرع وطلب المساعدة
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[var(--brand-primary)] rounded-full mt-2"></div>
+                  <div className="mt-2 h-2 w-2 rounded-full bg-[var(--brand-primary)]"></div>
                   <p className="text-gray-600 dark:text-gray-400">
                     بناء مجتمع متضامن ومتعاون يساعد الجميع على تحقيق أهدافهم
                   </p>
@@ -207,24 +207,24 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-[var(--brand-primary)] text-white">
-        <div className="max-w-screen-xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+      <section className="bg-[var(--brand-primary)] py-20 text-white">
+        <div className="mx-auto max-w-screen-xl px-4 text-center">
+          <h2 className="mb-6 text-3xl font-bold md:text-4xl">
             انضم إلينا اليوم
           </h2>
-          <p className="text-xl mb-8 opacity-90">
+          <p className="mb-8 text-xl opacity-90">
             كن جزءاً من مجتمع مُعين وساعد في بناء عالم أفضل للجميع
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Link
               href="/register"
-              className="bg-white text-[var(--brand-primary)] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              className="rounded-lg bg-white px-8 py-3 font-semibold text-[var(--brand-primary)] transition-colors hover:bg-gray-100"
             >
               انضم الآن
             </Link>
             <Link
               href="/contact"
-              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-[var(--brand-primary)] transition-colors"
+              className="rounded-lg border-2 border-white px-8 py-3 font-semibold text-white transition-colors hover:bg-white hover:text-[var(--brand-primary)]"
             >
               تواصل معنا
             </Link>
@@ -233,11 +233,11 @@ export default function AboutPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-screen-xl mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
+      <footer className="bg-gray-900 py-12 text-white">
+        <div className="mx-auto max-w-screen-xl px-4">
+          <div className="grid gap-8 md:grid-cols-3">
             <div>
-              <div className="flex items-center gap-3 mb-4">
+              <div className="mb-4 flex items-center gap-3">
                 <Image
                   src="/logo.jpg"
                   alt="Hemam Logo"
@@ -253,7 +253,7 @@ export default function AboutPage() {
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">روابط سريعة</h3>
+              <h3 className="mb-4 font-semibold">روابط سريعة</h3>
               <div className="space-y-2">
                 <Link href="/" className="block text-gray-400 hover:text-white">
                   الرئيسية
@@ -273,14 +273,14 @@ export default function AboutPage() {
               </div>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">تواصل معنا</h3>
+              <h3 className="mb-4 font-semibold">تواصل معنا</h3>
               <div className="space-y-2 text-gray-400">
                 <p>البريد الإلكتروني: info@mu3een.com</p>
                 <p>الهاتف: +966 50 123 4567</p>
               </div>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <div className="mt-8 border-t border-gray-800 pt-8 text-center text-gray-400">
             <p>&copy; 2024 مُعين. جميع الحقوق محفوظة.</p>
           </div>
         </div>

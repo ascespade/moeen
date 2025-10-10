@@ -1,6 +1,6 @@
 /* Main stylesheet - imports all other styles */
-@import "./base.css";
-@import "./tokens.css";
-@import "./components.css";
-@import "./utilities.css";
-@import "./themes.css";
+@import url("./base.css");
+@import url("./tokens.css");
+@import url("./components.css");
+@import url("./utilities.css");
+@import url("./themes.css");

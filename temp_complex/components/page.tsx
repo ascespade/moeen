@@ -10,10 +10,10 @@ import { Table, THead, TBody, TR, TH, TD } from "@/components/ui/Table";
 
 export default function ComponentsIndex() {
   return (
-    <div className="max-w-screen-xl mx-auto px-4 py-8 grid gap-8">
+    <div className="mx-auto grid max-w-screen-xl gap-8 px-4 py-8">
       <h1 className="text-2xl font-bold">Components Preview</h1>
 
-      <section className="grid md:grid-cols-3 gap-4">
+      <section className="grid gap-4 md:grid-cols-3">
         <Card>
           <CardHeader className="font-semibold">Buttons</CardHeader>
           <CardContent className="flex flex-wrap gap-2">

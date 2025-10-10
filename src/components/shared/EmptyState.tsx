@@ -16,23 +16,23 @@ export default function EmptyState({
   title,
   description,
   action,
-  className = ""
+  className = "",
 }: EmptyStateProps) {
   return (
-    <div className={`text-center py-12 ${className}`}>
-      <div className="w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+    <div className={`py-12 text-center ${className}`}>
+      <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
         <span className="text-4xl">{icon}</span>
       </div>
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+      <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
         {title}
       </h3>
-      <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
+      <p className="mx-auto mb-6 max-w-md text-gray-600 dark:text-gray-300">
         {description}
       </p>
       {action && (
         <button
           onClick={action.onClick}
-          className="btn-brand px-6 py-2 rounded-lg text-white hover:bg-[var(--brand-primary-hover)] transition-colors"
+          className="btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
         >
           {action.label}
         </button>

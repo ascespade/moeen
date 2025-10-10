@@ -28,17 +28,17 @@ export default function DataTable({
   pagination = true,
   pageSize = 10,
   onRowClick,
-  actions
+  actions,
 }: DataTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortField, setSortField] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredData = data.filter(row =>
-    Object.values(row).some(value =>
-      String(value).toLowerCase().includes(searchTerm.toLowerCase())
-    )
+  const filteredData = data.filter((row) =>
+    Object.values(row).some((value) =>
+      String(value).toLowerCase().includes(searchTerm.toLowerCase()),
+    ),
   );
 
   const sortedData = sortField
@@ -70,17 +70,17 @@ export default function DataTable({
   return (
     <div className="card overflow-hidden">
       {searchable && (
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+        <div className="border-b border-gray-200 p-4 dark:border-gray-700">
           <input
             type="text"
             placeholder="البحث..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
           />
         </div>
       )}
-      
+
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-50 dark:bg-gray-800">
@@ -88,25 +88,33 @@ export default function DataTable({
               {columns.map((column) => (
                 <th
                   key={column.key}
-                  className={`px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider ${
-                    column.sortable && sortable ? "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700" : ""
+                  className={`px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300 ${
+                    column.sortable && sortable
+                      ? "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                      : ""
                   }`}
                   onClick={() => column.sortable && handleSort(column.key)}
                 >
                   <div className="flex items-center gap-2">
                     {column.label}
-                    {column.sortable && sortable && sortField === column.key && (
-                      <span className="text-[var(--brand-primary)]">
-                        {sortDirection === "asc" ? "↑" : "↓"}
-                      </span>
-                    )}
+                    {column.sortable &&
+                      sortable &&
+                      sortField === column.key && (
+                        <span className="text-[var(--brand-primary)]">
+                          {sortDirection === "asc" ? "↑" : "↓"}
+                        </span>
+                      )}
                   </div>
                 </th>
               ))}
-              {actions && <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">الإجراءات</th>}
+              {actions && (
+                <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
+                  الإجراءات
+                </th>
+              )}
             </tr>
           </thead>
-          <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+          <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
             {paginatedData.map((row, index) => (
               <tr
                 key={index}
@@ -114,12 +122,14 @@ export default function DataTable({
                 onClick={() => onRowClick?.(row)}
               >
                 {columns.map((column) => (
-                  <td key={column.key} className="px-6 py-4 whitespace-nowrap">
-                    {column.render ? column.render(row[column.key], row) : row[column.key]}
+                  <td key={column.key} className="whitespace-nowrap px-6 py-4">
+                    {column.render
+                      ? column.render(row[column.key], row)
+                      : row[column.key]}
                   </td>
                 ))}
                 {actions && (
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <td className="whitespace-nowrap px-6 py-4 text-sm font-medium">
                     {actions(row)}
                   </td>
                 )}
@@ -130,15 +140,17 @@ export default function DataTable({
       </div>
 
       {pagination && totalPages > 1 && (
-        <div className="px-6 py-3 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+        <div className="flex items-center justify-between border-t border-gray-200 px-6 py-3 dark:border-gray-700">
           <div className="text-sm text-gray-700 dark:text-gray-300">
-            عرض {startIndex + 1} إلى {Math.min(startIndex + pageSize, sortedData.length)} من {sortedData.length} نتيجة
+            عرض {startIndex + 1} إلى{" "}
+            {Math.min(startIndex + pageSize, sortedData.length)} من{" "}
+            {sortedData.length} نتيجة
           </div>
           <div className="flex gap-2">
             <button
               onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
-              className="px-3 py-1 border border-gray-300 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+              className="rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
             >
               السابق
             </button>
@@ -146,9 +158,11 @@ export default function DataTable({
               {currentPage} من {totalPages}
             </span>
             <button
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              onClick={() =>
+                setCurrentPage(Math.min(totalPages, currentPage + 1))
+              }
               disabled={currentPage === totalPages}
-              className="px-3 py-1 border border-gray-300 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+              className="rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
             >
               التالي
             </button>
