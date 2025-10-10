@@ -109,6 +109,38 @@
   }
 }
 
+/* Dark theme override when user manually selects dark mode */
+[data-theme="dark"] {
+  --background: #0d1117;
+  --foreground: #e5eef7;
+  --brand-primary: #f58220;
+  --brand-primary-hover: #c25e0f;
+  --brand-secondary: #009688;
+  --brand-accent: #007bff;
+  --brand-success: #00b39b;
+  --brand-warning: #fbbf24;
+  --brand-error: #f87171;
+  --brand-border: #1f2937;
+  --brand-surface: #0d1117;
+  --panel: #111827;
+  --focus-ring: #007bff;
+  --brand-gradient: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--brand-primary) 25%, #0d1117) 0%,
+    color-mix(in oklab, var(--brand-accent) 20%, #0d1117) 100%
+  );
+  --brand-gradient-2: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--brand-secondary) 25%, #0d1117) 0%,
+    color-mix(in oklab, var(--brand-primary) 20%, #0d1117) 100%
+  );
+  --brand-gradient-3: radial-gradient(
+    800px circle at 10% 10%,
+    color-mix(in oklab, var(--brand-accent) 10%, transparent),
+    transparent 40%
+  );
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
