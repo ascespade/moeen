@@ -17,7 +17,19 @@
     "dev:check": "npm run lint && npm run tsc && npm run prettier && npm run dev",
     "clean:smart": "node scripts/smart-clean.js",
     "reorg": "node scripts/reorganize-project.js && node scripts/generate-barrels.js && node scripts/fix-imports.js",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "analyze": "ANALYZE=true npm run build",
+    "analyze:server": "BUNDLE_ANALYZE=server npm run build",
+    "analyze:browser": "BUNDLE_ANALYZE=browser npm run build",
+    "docker:build": "docker build -f Dockerfile.production -t healthcare-dashboard .",
+    "docker:run": "docker run -p 3000:3000 healthcare-dashboard",
+    "docker:dev": "docker-compose up -d",
+    "docker:stop": "docker-compose down",
+    "validate:content": "npx tsx src/scripts/validate-dynamic-content.ts",
+    "test:lighthouse": "playwright test tests/lighthouse/",
+    "test:accessibility": "playwright test tests/accessibility/",
+    "test:performance": "playwright test tests/performance/",
+    "test:all": "npm run test:lighthouse && npm run test:accessibility && npm run test:performance"
   },
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
