@@ -1,22 +1,22 @@
 {
-  "timestamp": "2025-10-10T15:41:55.207Z",
+  "timestamp": "2025-10-10T15:50:55.630Z",
   "metrics": {
-    "timestamp": "2025-10-10T15:41:55.177Z",
+    "timestamp": "2025-10-10T15:50:55.610Z",
     "system": {
       "memory": {
-        "rss": 48287744,
-        "heapTotal": 5611520,
-        "heapUsed": 4490840,
-        "external": 1605475,
-        "arrayBuffers": 10515
+        "rss": 58191872,
+        "heapTotal": 6397952,
+        "heapUsed": 5032024,
+        "external": 1606464,
+        "arrayBuffers": 11464
       },
-      "uptime": 0.038093181,
+      "uptime": 540.470992797,
       "nodeVersion": "v22.20.0",
       "platform": "linux",
       "arch": "x64"
     },
     "performance": {
-      "cpuUsage": 80,
+      "cpuUsage": 0,
       "diskUsage": {
         "output": "Filesystem      Size  Used Avail Use% Mounted on\noverlay         126G  7.0G  113G   6% /\ntmpfs            64M     0   64M   0% /dev\ntmpfs           7.9G     0  7.9G   0% /sys/fs/cgroup\nshm              64M     0   64M   0% /dev/shm\n/dev/root       126G  7.0G  113G   6% /etc/hosts\n"
       },
@@ -25,7 +25,7 @@
       }
     },
     "application": {
-      "activeProcesses": 9,
+      "activeProcesses": 10,
       "fileSystemHealth": {
         "tempDir": true,
         "logsDir": true,
@@ -33,17 +33,20 @@
         "configDir": true
       },
       "logFileSizes": {
-        "admin-module.log": 1126,
-        "advanced-monitoring.log": 258,
-        "continuous-ai-loop.log": 665,
-        "enhancements.log": 1394,
-        "file-cleanup.log": 1030,
-        "master-ai-controller.log": 754,
+        "admin-module.log": 3240,
+        "advanced-monitoring.log": 4407,
+        "continuous-ai-loop.log": 3467,
+        "enhancements.log": 4030,
+        "file-cleanup.log": 1606,
+        "master-ai-controller.log": 41803,
         "master-executor.log": 2356,
-        "n8n-workflow.log": 2145,
+        "ml-learning.log": 774,
+        "n8n-workflow.log": 3313,
         "pre-db-health.json": 1720,
-        "social-media.log": 878,
-        "verification.log": 1170
+        "sandbox-testing.log": 4836,
+        "self-healing.log": 74421,
+        "social-media.log": 2358,
+        "verification.log": 4680
       }
     }
   },
