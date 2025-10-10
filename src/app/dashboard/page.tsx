@@ -142,7 +142,8 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="min-h-screen bg-[var(--brand-surface)]">
+      <div className="container-app py-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <div>
@@ -421,6 +422,7 @@ export default function DashboardPage() {
           </Card>
         </TabsContent>
       </Tabs>
+      </div>
     </div>
   );
 }
