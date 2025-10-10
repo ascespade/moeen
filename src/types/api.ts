@@ -1,6 +1,5 @@
-import { ApiResponse, PaginationParams, PaginatedResponse } from './index';
+import { ApiResponse, PaginationParams, PaginatedResponse } from "./index";
 // API-specific type definitions
-
 
 // Auth API Types
 export interface LoginRequest {

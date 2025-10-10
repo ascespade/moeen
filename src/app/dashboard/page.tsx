@@ -1,13 +1,10 @@
-import { useRequireAuth } from '@/hooks/useAuth';
-import { ROUTES } from '@/constants/routes';
-import { ChartsA, ChartsB, ChartsC } from '@/components/dashboard/Charts';
 "use client";
-
-
+import { useRequireAuth } from "@/hooks/useAuth";
+import { ROUTES } from "@/constants/routes";
+import { ChartsA, ChartsB, ChartsC } from "@/components/dashboard/Charts";
 import Link from "next/link";
 
 import KpiCard from "@/components/dashboard/KpiCard";
-
 
 export default function DashboardPage() {
   useRequireAuth("/login");

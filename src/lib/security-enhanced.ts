@@ -1,11 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createHash, randomBytes } from 'crypto';
-import { realDB } from './supabase-real';
+import { NextRequest, NextResponse } from "next/server";
+import { createHash, randomBytes } from "crypto";
+import { realDB } from "./supabase-real";
 // Enhanced Security System for Hemam Center
 
 import jwt from "jsonwebtoken";
-
-
 
 // Rate limiting store
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();

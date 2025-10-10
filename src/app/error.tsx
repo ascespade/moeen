@@ -1,9 +1,8 @@
 "use client";
-import { RefreshCw, Home, Bug, AlertTriangle } from 'lucide-react';
+import { RefreshCw, Home, Bug, AlertTriangle } from "lucide-react";
 
 import Image from "next/image";
 import Link from "next/link";
-
 
 export default function GlobalError({
   error,

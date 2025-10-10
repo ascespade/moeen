@@ -24,7 +24,10 @@ for (const file of files) {
 
   let newContent = content.replace(importRegex, "");
   const merged = Object.entries(imports)
-    .map(([module, set]) => `import { ${Array.from(set).join(", ")} } from '${module}';`)
+    .map(
+      ([module, set]) =>
+        `import { ${Array.from(set).join(", ")} } from '${module}';`,
+    )
     .join("\n");
 
   if (merged) {

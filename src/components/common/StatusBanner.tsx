@@ -1,7 +1,5 @@
-import { useState } from 'react';
 "use client";
-
-
+import { useState } from "react";
 import LiveDot from "./LiveDot";
 
 export default function StatusBanner() {
