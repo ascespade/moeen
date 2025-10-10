@@ -1,0 +1,16 @@
+{
+  "environment": "sandbox",
+  "database": {
+    "url": "sandbox://localhost:5432/sandbox_db",
+    "enabled": false
+  },
+  "logging": {
+    "level": "debug",
+    "file": "sandbox-test.log"
+  },
+  "testing": {
+    "enabled": true,
+    "timeout": 30000,
+    "retries": 3
+  }
+}

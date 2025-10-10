@@ -1,0 +1,58 @@
+{
+  "timestamp": "2025-10-10T15:41:55.207Z",
+  "metrics": {
+    "timestamp": "2025-10-10T15:41:55.177Z",
+    "system": {
+      "memory": {
+        "rss": 48287744,
+        "heapTotal": 5611520,
+        "heapUsed": 4490840,
+        "external": 1605475,
+        "arrayBuffers": 10515
+      },
+      "uptime": 0.038093181,
+      "nodeVersion": "v22.20.0",
+      "platform": "linux",
+      "arch": "x64"
+    },
+    "performance": {
+      "cpuUsage": 80,
+      "diskUsage": {
+        "output": "Filesystem      Size  Used Avail Use% Mounted on\noverlay         126G  7.0G  113G   6% /\ntmpfs            64M     0   64M   0% /dev\ntmpfs           7.9G     0  7.9G   0% /sys/fs/cgroup\nshm              64M     0   64M   0% /dev/shm\n/dev/root       126G  7.0G  113G   6% /etc/hosts\n"
+      },
+      "networkLatency": {
+        "error": "Command failed: ping -c 1 8.8.8.8\nping: socktype: SOCK_RAW\nping: socket: Operation not permitted\nping: => missing cap_net_raw+p capability or setuid?\n"
+      }
+    },
+    "application": {
+      "activeProcesses": 9,
+      "fileSystemHealth": {
+        "tempDir": true,
+        "logsDir": true,
+        "reportsDir": true,
+        "configDir": true
+      },
+      "logFileSizes": {
+        "admin-module.log": 1126,
+        "advanced-monitoring.log": 258,
+        "continuous-ai-loop.log": 665,
+        "enhancements.log": 1394,
+        "file-cleanup.log": 1030,
+        "master-ai-controller.log": 754,
+        "master-executor.log": 2356,
+        "n8n-workflow.log": 2145,
+        "pre-db-health.json": 1720,
+        "social-media.log": 878,
+        "verification.log": 1170
+      }
+    }
+  },
+  "alerts": [],
+  "summary": {
+    "totalAlerts": 0,
+    "criticalAlerts": 0,
+    "warningAlerts": 0,
+    "infoAlerts": 0,
+    "systemHealth": "healthy"
+  }
+}
