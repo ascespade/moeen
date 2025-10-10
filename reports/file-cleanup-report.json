@@ -1,0 +1,3780 @@
+{
+  "timestamp": "2025-10-10T15:41:53.200Z",
+  "workspace": "/workspace",
+  "cleanup": {
+    "deleted": 0,
+    "archived": 0,
+    "timestamp": "2025-10-10T15:41:53.202Z"
+  },
+  "fileIndex": {
+    "timestamp": "2025-10-10T15:41:53.202Z",
+    "workspace": "/workspace",
+    "files": [
+      {
+        "path": ".cursor-config.json",
+        "size": 3763,
+        "created": "2025-10-10T15:02:39.472Z",
+        "modified": "2025-10-10T15:03:19.435Z",
+        "extension": ".json"
+      },
+      {
+        "path": ".env",
+        "size": 614,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ""
+      },
+      {
+        "path": ".env.example",
+        "size": 1188,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".example"
+      },
+      {
+        "path": ".eslintrc.js",
+        "size": 425,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".js"
+      },
+      {
+        "path": ".gitignore",
+        "size": 390,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ""
+      },
+      {
+        "path": ".playwright-mcp/language-dropdown-options.png",
+        "size": 83667,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".png"
+      },
+      {
+        "path": ".playwright-mcp/theme-dropdown-debug.png",
+        "size": 83659,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".png"
+      },
+      {
+        "path": ".playwright-mcp/theme-dropdown-fixed.png",
+        "size": 83342,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".png"
+      },
+      {
+        "path": ".playwright-mcp/theme-dropdown-open.png",
+        "size": 32760,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".png"
+      },
+      {
+        "path": ".playwright-mcp/theme-dropdown-options.png",
+        "size": 85123,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".png"
+      },
+      {
+        "path": "DYNAMIC_CONTENT_GUIDE.md",
+        "size": 8341,
+        "created": "2025-10-10T15:08:09.620Z",
+        "modified": "2025-10-10T15:08:09.620Z",
+        "extension": ".md"
+      },
+      {
+        "path": "Dockerfile.dev",
+        "size": 217,
+        "created": "2025-10-10T15:18:52.940Z",
+        "modified": "2025-10-10T15:18:52.940Z",
+        "extension": ".dev"
+      },
+      {
+        "path": "Dockerfile.production",
+        "size": 1369,
+        "created": "2025-10-10T15:15:51.996Z",
+        "modified": "2025-10-10T15:15:51.996Z",
+        "extension": ".production"
+      },
+      {
+        "path": "IMPLEMENTATION_SUMMARY.md",
+        "size": 6808,
+        "created": "2025-10-10T15:09:47.540Z",
+        "modified": "2025-10-10T15:09:47.540Z",
+        "extension": ".md"
+      },
+      {
+        "path": "MIGRATION_STATUS.md",
+        "size": 10386,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".md"
+      },
+      {
+        "path": "STYLING_GUIDE.md",
+        "size": 6750,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".md"
+      },
+      {
+        "path": "ai-task-processor.js",
+        "size": 5194,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".js"
+      },
+      {
+        "path": "backup/migrations/004_user_preferences.sql",
+        "size": 2076,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "backup/package.json.backup",
+        "size": 1698,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".backup"
+      },
+      {
+        "path": "components/Footer.jsx",
+        "size": 454,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".jsx"
+      },
+      {
+        "path": "components/Header.jsx",
+        "size": 479,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".jsx"
+      },
+      {
+        "path": "config/admin-config.json",
+        "size": 1427,
+        "created": "2025-10-10T15:35:08.079Z",
+        "modified": "2025-10-10T15:35:08.079Z",
+        "extension": ".json"
+      },
+      {
+        "path": "config/cache-config.json",
+        "size": 182,
+        "created": "2025-10-10T15:35:08.119Z",
+        "modified": "2025-10-10T15:35:08.119Z",
+        "extension": ".json"
+      },
+      {
+        "path": "config/enhancements-config.json",
+        "size": 1288,
+        "created": "2025-10-10T15:35:08.119Z",
+        "modified": "2025-10-10T15:35:08.119Z",
+        "extension": ".json"
+      },
+      {
+        "path": "config/error-recovery.json",
+        "size": 406,
+        "created": "2025-10-10T15:35:08.119Z",
+        "modified": "2025-10-10T15:35:08.119Z",
+        "extension": ".json"
+      },
+      {
+        "path": "config/health-checks.json",
+        "size": 482,
+        "created": "2025-10-10T15:35:08.123Z",
+        "modified": "2025-10-10T15:35:08.123Z",
+        "extension": ".json"
+      },
+      {
+        "path": "config/logging.json",
+        "size": 346,
+        "created": "2025-10-10T15:35:08.119Z",
+        "modified": "2025-10-10T15:35:08.119Z",
+        "extension": ".json"
+      },
+      {
+        "path": "config/n8n-config.json",
+        "size": 899,
+        "created": "2025-10-10T15:35:05.991Z",
+        "modified": "2025-10-10T15:35:05.991Z",
+        "extension": ".json"
+      },
+      {
+        "path": "config/social-media-config.json",
+        "size": 1119,
+        "created": "2025-10-10T15:35:08.035Z",
+        "modified": "2025-10-10T15:35:08.035Z",
+        "extension": ".json"
+      },
+      {
+        "path": "cursor-agent-monitor.js",
+        "size": 9843,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".js"
+      },
+      {
+        "path": "docker-compose.yml",
+        "size": 1945,
+        "created": "2025-10-10T15:18:50.044Z",
+        "modified": "2025-10-10T15:18:50.044Z",
+        "extension": ".yml"
+      },
+      {
+        "path": "docs/01-ui-screens-roadmap.md",
+        "size": 11916,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".md"
+      },
+      {
+        "path": "docs/02-db-schema-final.md",
+        "size": 19211,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".md"
+      },
+      {
+        "path": "docs/03-implementation-plan-db-binding.md",
+        "size": 46532,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".md"
+      },
+      {
+        "path": "docs/04-finalize-and-quality.md",
+        "size": 35797,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".md"
+      },
+      {
+        "path": "docs/API.md",
+        "size": 11977,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".md"
+      },
+      {
+        "path": "docs/DEVELOPMENT.md",
+        "size": 8958,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".md"
+      },
+      {
+        "path": "docs/README.md",
+        "size": 8001,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".md"
+      },
+      {
+        "path": "jest.config.js",
+        "size": 1767,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".js"
+      },
+      {
+        "path": "jest.setup.js",
+        "size": 2238,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".js"
+      },
+      {
+        "path": "logs/admin-module.log",
+        "size": 1126,
+        "created": "2025-10-10T15:35:08.071Z",
+        "modified": "2025-10-10T15:35:08.083Z",
+        "extension": ".log"
+      },
+      {
+        "path": "logs/continuous-ai-loop.log",
+        "size": 580,
+        "created": "2025-10-10T15:41:53.156Z",
+        "modified": "2025-10-10T15:41:53.160Z",
+        "extension": ".log"
+      },
+      {
+        "path": "logs/enhancements.log",
+        "size": 1394,
+        "created": "2025-10-10T15:35:08.111Z",
+        "modified": "2025-10-10T15:35:08.123Z",
+        "extension": ".log"
+      },
+      {
+        "path": "logs/file-cleanup.log",
+        "size": 825,
+        "created": "2025-10-10T15:35:05.923Z",
+        "modified": "2025-10-10T15:41:53.200Z",
+        "extension": ".log"
+      },
+      {
+        "path": "logs/master-ai-controller.log",
+        "size": 554,
+        "created": "2025-10-10T15:41:53.120Z",
+        "modified": "2025-10-10T15:41:53.128Z",
+        "extension": ".log"
+      },
+      {
+        "path": "logs/master-executor.log",
+        "size": 2356,
+        "created": "2025-10-10T15:35:05.883Z",
+        "modified": "2025-10-10T15:35:08.127Z",
+        "extension": ".log"
+      },
+      {
+        "path": "logs/n8n-workflow.log",
+        "size": 1289,
+        "created": "2025-10-10T15:35:05.983Z",
+        "modified": "2025-10-10T15:35:07.995Z",
+        "extension": ".log"
+      },
+      {
+        "path": "logs/pre-db-health.json",
+        "size": 1720,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".json"
+      },
+      {
+        "path": "logs/social-media.log",
+        "size": 878,
+        "created": "2025-10-10T15:35:08.031Z",
+        "modified": "2025-10-10T15:35:08.039Z",
+        "extension": ".log"
+      },
+      {
+        "path": "logs/verification.log",
+        "size": 1170,
+        "created": "2025-10-10T15:35:19.299Z",
+        "modified": "2025-10-10T15:35:19.311Z",
+        "extension": ".log"
+      },
+      {
+        "path": "migration-complete-corrected.sql",
+        "size": 29231,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "migration-complete.sql",
+        "size": 28763,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "migration-final-clean.sql",
+        "size": 18174,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "migration-final-no-audit-insert.sql",
+        "size": 19721,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "migration-final-simplified.sql",
+        "size": 19867,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "migration-final-with-policy-cleanup.sql",
+        "size": 21133,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "n8n-workflows/social-media-posting.json",
+        "size": 5405,
+        "created": "2025-10-10T15:35:05.991Z",
+        "modified": "2025-10-10T15:35:05.991Z",
+        "extension": ".json"
+      },
+      {
+        "path": "next.config.js",
+        "size": 2750,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:20:46.708Z",
+        "extension": ".js"
+      },
+      {
+        "path": "nginx.conf",
+        "size": 2485,
+        "created": "2025-10-10T15:16:05.677Z",
+        "modified": "2025-10-10T15:16:05.677Z",
+        "extension": ".conf"
+      },
+      {
+        "path": "package-lock.json",
+        "size": 273754,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:08:33.812Z",
+        "extension": ".json"
+      },
+      {
+        "path": "package.json",
+        "size": 2848,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:20:52.860Z",
+        "extension": ".json"
+      },
+      {
+        "path": "playwright.config.ts",
+        "size": 934,
+        "created": "2025-10-10T15:20:25.906Z",
+        "modified": "2025-10-10T15:20:25.906Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "postcss.config.js",
+        "size": 83,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".js"
+      },
+      {
+        "path": "postcss.config.js.backup",
+        "size": 83,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".backup"
+      },
+      {
+        "path": "public/banner.jpg",
+        "size": 66766,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".jpg"
+      },
+      {
+        "path": "public/favicon-temp.jpg",
+        "size": 3931,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".jpg"
+      },
+      {
+        "path": "public/favicon.ico",
+        "size": 3931,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".ico"
+      },
+      {
+        "path": "public/hemam-logo.jpg",
+        "size": 3931,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".jpg"
+      },
+      {
+        "path": "public/hemam-logo.svg",
+        "size": 879,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".svg"
+      },
+      {
+        "path": "public/logo.jpg",
+        "size": 28600,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".jpg"
+      },
+      {
+        "path": "public/logo.png",
+        "size": 28600,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".png"
+      },
+      {
+        "path": "public/logo.svg",
+        "size": 290,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".svg"
+      },
+      {
+        "path": "real-ai-agent-integration.js",
+        "size": 19310,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".js"
+      },
+      {
+        "path": "real-ai-task-processor.js",
+        "size": 20511,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".js"
+      },
+      {
+        "path": "reports/admin-report.json",
+        "size": 1281,
+        "created": "2025-10-10T15:35:08.083Z",
+        "modified": "2025-10-10T15:35:08.083Z",
+        "extension": ".json"
+      },
+      {
+        "path": "reports/depcheck.json",
+        "size": 20615,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".json"
+      },
+      {
+        "path": "reports/final-report.json",
+        "size": 12269,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:35:16.363Z",
+        "extension": ".json"
+      },
+      {
+        "path": "reports/master-execution-report.json",
+        "size": 8236,
+        "created": "2025-10-10T15:35:08.127Z",
+        "modified": "2025-10-10T15:35:08.127Z",
+        "extension": ".json"
+      },
+      {
+        "path": "reports/verification-report.json",
+        "size": 4360,
+        "created": "2025-10-10T15:35:19.311Z",
+        "modified": "2025-10-10T15:35:19.311Z",
+        "extension": ".json"
+      },
+      {
+        "path": "scripts/admin-module.js",
+        "size": 12408,
+        "created": "2025-10-10T15:33:22.356Z",
+        "modified": "2025-10-10T15:33:22.356Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/advanced-monitoring.js",
+        "size": 9763,
+        "created": "2025-10-10T15:37:51.080Z",
+        "modified": "2025-10-10T15:37:51.084Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/analyze-bundle.js",
+        "size": 1832,
+        "created": "2025-10-10T15:18:21.826Z",
+        "modified": "2025-10-10T15:18:21.826Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/apply-migration-direct.js",
+        "size": 2136,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/apply-migrations-supabase.js",
+        "size": 3323,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/apply-migrations.sh",
+        "size": 1002,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".sh"
+      },
+      {
+        "path": "scripts/backfill-public-ids.js",
+        "size": 2275,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/continuous-agent.sh",
+        "size": 17793,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sh"
+      },
+      {
+        "path": "scripts/continuous-ai-loop.js",
+        "size": 15935,
+        "created": "2025-10-10T15:37:16.228Z",
+        "modified": "2025-10-10T15:37:16.228Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/create-all-tables.js",
+        "size": 14881,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/create-missing-tables.js",
+        "size": 9805,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/create-tables-supabase.js",
+        "size": 5910,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/cuid-standalone.js",
+        "size": 516,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/cursor-agent-monitor.js",
+        "size": 4635,
+        "created": "2025-10-10T15:30:01.103Z",
+        "modified": "2025-10-10T15:30:01.103Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/cursor-agent.js",
+        "size": 5019,
+        "created": "2025-10-10T15:30:16.551Z",
+        "modified": "2025-10-10T15:30:16.551Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/deploy.sh",
+        "size": 9080,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".sh"
+      },
+      {
+        "path": "scripts/enhanced-run-all.js",
+        "size": 2030,
+        "created": "2025-10-10T15:35:08.123Z",
+        "modified": "2025-10-10T15:35:08.123Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/enhancements.js",
+        "size": 15876,
+        "created": "2025-10-10T15:34:07.710Z",
+        "modified": "2025-10-10T15:34:07.710Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/file-cleanup.js",
+        "size": 7521,
+        "created": "2025-10-10T15:30:42.610Z",
+        "modified": "2025-10-10T15:30:42.610Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/fix-imports.js",
+        "size": 1114,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/generate-barrels.js",
+        "size": 776,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/generate-final-report.js",
+        "size": 7059,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-10T15:32:43.902Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/generate-migration-script.js",
+        "size": 1638,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/master-ai-controller.js",
+        "size": 11862,
+        "created": "2025-10-10T15:41:21.037Z",
+        "modified": "2025-10-10T15:41:21.037Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/ml-learning-engine.js",
+        "size": 15216,
+        "created": "2025-10-10T15:39:35.543Z",
+        "modified": "2025-10-10T15:39:35.543Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/n8n-workflow-manager.js",
+        "size": 15521,
+        "created": "2025-10-10T15:31:26.725Z",
+        "modified": "2025-10-10T15:31:26.725Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/persistent-agent.sh",
+        "size": 10179,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sh"
+      },
+      {
+        "path": "scripts/reorganize-project.js",
+        "size": 394,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/rewrite-client-directive.js",
+        "size": 1684,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/run-all.js",
+        "size": 6370,
+        "created": "2025-10-10T15:32:22.773Z",
+        "modified": "2025-10-10T15:32:22.773Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/run-all.sh",
+        "size": 5323,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".sh"
+      },
+      {
+        "path": "scripts/sandbox-testing.js",
+        "size": 13460,
+        "created": "2025-10-10T15:40:23.150Z",
+        "modified": "2025-10-10T15:40:23.150Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/screen-manager.sh",
+        "size": 4037,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sh"
+      },
+      {
+        "path": "scripts/self-healing.js",
+        "size": 15142,
+        "created": "2025-10-10T15:38:43.195Z",
+        "modified": "2025-10-10T15:38:43.195Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/smart-clean.js",
+        "size": 1256,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/social-media-automation.js",
+        "size": 13554,
+        "created": "2025-10-10T15:32:02.988Z",
+        "modified": "2025-10-10T15:32:02.988Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/test-after-migration.js",
+        "size": 3856,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/test-connection.js",
+        "size": 1138,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/test-database.js",
+        "size": 1825,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/test.sh",
+        "size": 9152,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".sh"
+      },
+      {
+        "path": "scripts/tmux-manager.sh",
+        "size": 4066,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sh"
+      },
+      {
+        "path": "scripts/validate-schema.js",
+        "size": 1713,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "scripts/verification.js",
+        "size": 15533,
+        "created": "2025-10-10T15:34:54.799Z",
+        "modified": "2025-10-10T15:34:54.799Z",
+        "extension": ".js"
+      },
+      {
+        "path": "src/__tests__/ai-assistant.test.ts",
+        "size": 3958,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/__tests__/api/appointments.test.ts",
+        "size": 11130,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/__tests__/api/patients.test.ts",
+        "size": 8457,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/__tests__/saudi-health-integration.test.ts",
+        "size": 5885,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/__tests__/setup.ts",
+        "size": 5080,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/__tests__/whatsapp-business-api.test.ts",
+        "size": 9995,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/__tests__/whatsapp-integration.test.ts",
+        "size": 4962,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/admin/audit-logs/page.tsx",
+        "size": 13834,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/admin/dashboard/page.tsx",
+        "size": 20514,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/admin/roles/page.tsx",
+        "size": 11294,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/agent-dashboard/page.tsx",
+        "size": 8471,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/api/agent/completion/route.ts",
+        "size": 731,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/api/agent/logs/route.ts",
+        "size": 708,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/api/agent/status/route.ts",
+        "size": 794,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/api/agent/tasks/route.ts",
+        "size": 862,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/api/analytics/action/route.ts",
+        "size": 1147,
+        "created": "2025-10-10T15:20:02.748Z",
+        "modified": "2025-10-10T15:20:02.748Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/api/analytics/metrics/route.ts",
+        "size": 1193,
+        "created": "2025-10-10T15:20:08.743Z",
+        "modified": "2025-10-10T15:20:08.743Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/api/auth/login/route.ts",
+        "size": 1155,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/api/auth/logout/route.ts",
+        "size": 221,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/api/errors/route.ts",
+        "size": 1327,
+        "created": "2025-10-10T15:19:56.820Z",
+        "modified": "2025-10-10T15:19:56.820Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/api/health/route.ts",
+        "size": 1940,
+        "created": "2025-10-10T15:16:38.507Z",
+        "modified": "2025-10-10T15:16:38.507Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/api/i18n/route.ts",
+        "size": 3339,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/api/user/preferences/route.ts",
+        "size": 3368,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/appointments/page.tsx",
+        "size": 17135,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/approvals/page.tsx",
+        "size": 27541,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/chatbot/analytics/page.tsx",
+        "size": 14665,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/chatbot/flows/[flowId]/page.tsx",
+        "size": 20284,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/chatbot/flows/page.tsx",
+        "size": 15426,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/chatbot/integrations/page.tsx",
+        "size": 14415,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/chatbot/templates/[id]/page.tsx",
+        "size": 16858,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/chatbot/templates/page.tsx",
+        "size": 23604,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/crm/activities/page.tsx",
+        "size": 19245,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/crm/contacts/[id]/page.tsx",
+        "size": 440,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/crm/contacts/page.tsx",
+        "size": 27827,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/crm/deals/kanban/page.tsx",
+        "size": 357,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/crm/deals/page.tsx",
+        "size": 21471,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/crm/leads/page.tsx",
+        "size": 23958,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/dashboard/page.tsx",
+        "size": 11965,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/error.tsx",
+        "size": 4633,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/forgot-password/page.tsx",
+        "size": 6137,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/globals.css",
+        "size": 2411,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:16:18.926Z",
+        "extension": ".css"
+      },
+      {
+        "path": "src/app/insurance/page.tsx",
+        "size": 17584,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/insurance-claims/page.tsx",
+        "size": 26124,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/layout.backup.tsx",
+        "size": 2104,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/layout.minimal.tsx",
+        "size": 179,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/layout.tsx",
+        "size": 924,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/login/page.tsx",
+        "size": 5838,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/medical-file/page.tsx",
+        "size": 31230,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/messages/page.tsx",
+        "size": 15525,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/not-found.tsx",
+        "size": 4866,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/notifications/page.tsx",
+        "size": 10573,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/page.backup.tsx",
+        "size": 3145,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/page.complex.tsx",
+        "size": 20949,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/page.simple.tsx",
+        "size": 3145,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/page.tsx",
+        "size": 9718,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:06:09.467Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/patients/[id]/page.tsx",
+        "size": 27395,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/patients/page.tsx",
+        "size": 11272,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/register/page.tsx",
+        "size": 11315,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/reset-password/page.tsx",
+        "size": 8371,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/robots.ts",
+        "size": 298,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/app/sessions/page.tsx",
+        "size": 13622,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/settings/page.tsx",
+        "size": 17705,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/app/sitemap.ts",
+        "size": 529,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/components/common/DirectionToggle.tsx",
+        "size": 944,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/common/EmptyState.tsx",
+        "size": 528,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/common/ErrorBoundary.tsx",
+        "size": 4515,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/common/LanguageSwitcher.tsx",
+        "size": 3875,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:06:33.775Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/common/LiveDot.tsx",
+        "size": 449,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/common/LoadingSpinner.tsx",
+        "size": 472,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/common/OptimizedImage.tsx",
+        "size": 1412,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/common/PlaceholderSquare.tsx",
+        "size": 1487,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/common/Skeleton.tsx",
+        "size": 669,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/common/StatusBanner.tsx",
+        "size": 956,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/common/ThemeSwitcher.tsx",
+        "size": 3174,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:06:21.399Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/common/ThemeToggle.tsx",
+        "size": 1447,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/dashboard/Charts.tsx",
+        "size": 3912,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/dashboard/KpiCard.tsx",
+        "size": 427,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/layout/GlobalHeader.tsx",
+        "size": 6156,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/layout/SmartHeader.tsx",
+        "size": 9146,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/lazy/LazyComponents.tsx",
+        "size": 1473,
+        "created": "2025-10-10T15:14:39.374Z",
+        "modified": "2025-10-10T15:14:39.374Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/providers/I18nProvider.tsx",
+        "size": 1265,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/providers/UIProvider.tsx",
+        "size": 834,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/settings/KeywordEditor.tsx",
+        "size": 1385,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/settings/SettingsTabs.tsx",
+        "size": 22347,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shared/AccessibleButton.tsx",
+        "size": 1656,
+        "created": "2025-10-10T15:13:56.882Z",
+        "modified": "2025-10-10T15:13:56.882Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shared/DataTable.tsx",
+        "size": 2589,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:14:27.523Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shared/EmptyState.tsx",
+        "size": 1053,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shared/ErrorBoundary.tsx",
+        "size": 3562,
+        "created": "2025-10-10T15:17:45.571Z",
+        "modified": "2025-10-10T15:17:45.571Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shared/Form.tsx",
+        "size": 1465,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shared/LiveRegion.tsx",
+        "size": 386,
+        "created": "2025-10-10T15:14:12.829Z",
+        "modified": "2025-10-10T15:14:12.829Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shared/LoadingSpinner.tsx",
+        "size": 461,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shared/Modal.tsx",
+        "size": 2331,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shared/OptimizedImage.tsx",
+        "size": 3515,
+        "created": "2025-10-10T15:18:15.370Z",
+        "modified": "2025-10-10T15:18:15.370Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shared/ScreenReaderOnly.tsx",
+        "size": 277,
+        "created": "2025-10-10T15:14:06.081Z",
+        "modified": "2025-10-10T15:14:06.081Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shared/Tabs.tsx",
+        "size": 1454,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shared/index.ts",
+        "size": 323,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/components/shell/Header.tsx",
+        "size": 11547,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shell/HeaderSimple.tsx",
+        "size": 5676,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/shell/Sidebar.tsx",
+        "size": 5512,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/ui/Badge.tsx",
+        "size": 1239,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/ui/Button.tsx",
+        "size": 1715,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/ui/Card.tsx",
+        "size": 936,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/ui/DataTable.tsx",
+        "size": 3592,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/ui/Input.tsx",
+        "size": 584,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/ui/Modal.tsx",
+        "size": 1941,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/ui/Skeleton.tsx",
+        "size": 265,
+        "created": "2025-10-10T15:02:39.476Z",
+        "modified": "2025-10-10T15:02:39.476Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/ui/Table.tsx",
+        "size": 1420,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/ui/Toast.tsx",
+        "size": 885,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/components/ui/Tooltip.tsx",
+        "size": 575,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "src/config/env.ts",
+        "size": 3384,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/constants/api.ts",
+        "size": 2982,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/constants/i18n-keys.ts",
+        "size": 9800,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/constants/index.ts",
+        "size": 178,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/constants/routes.ts",
+        "size": 3908,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/constants/storage.ts",
+        "size": 1404,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/constants/theme.ts",
+        "size": 2341,
+        "created": "2025-10-09T20:39:25.414Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/constants/ui.ts",
+        "size": 2692,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/constants/validation.ts",
+        "size": 4246,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/index.ts",
+        "size": 582,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useApi.ts",
+        "size": 4319,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useAsync.ts",
+        "size": 2885,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useAuth.ts",
+        "size": 4263,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useBrandColorFromLogo.ts",
+        "size": 2294,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useClickOutside.ts",
+        "size": 772,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useCounter.ts",
+        "size": 959,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useDebounce.ts",
+        "size": 1599,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useForm.ts",
+        "size": 5957,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useI18n.ts",
+        "size": 1092,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:03:50.185Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useIntersectionObserver.ts",
+        "size": 2123,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useKeyPress.ts",
+        "size": 3214,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useKeyboardNavigation.ts",
+        "size": 2380,
+        "created": "2025-10-10T15:13:49.047Z",
+        "modified": "2025-10-10T15:13:49.047Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useLocalStorage.ts",
+        "size": 2892,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useMediaQuery.ts",
+        "size": 1891,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useMemoryLeakPrevention.ts",
+        "size": 4487,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/usePageI18n.ts",
+        "size": 2670,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/usePerformance.ts",
+        "size": 1329,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:15:01.913Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/usePrevious.ts",
+        "size": 254,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useThrottle.ts",
+        "size": 2906,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/hooks/useToggle.ts",
+        "size": 939,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/ai-assistant.ts",
+        "size": 9782,
+        "created": "2025-10-09T20:39:25.422Z",
+        "modified": "2025-10-09T20:39:25.422Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/analytics-stubs.ts",
+        "size": 305,
+        "created": "2025-10-09T20:39:25.422Z",
+        "modified": "2025-10-09T20:39:25.422Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/api/config.ts",
+        "size": 2057,
+        "created": "2025-10-09T20:39:25.422Z",
+        "modified": "2025-10-09T20:39:25.422Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/api/whatsapp.ts",
+        "size": 1469,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/auth/roles.ts",
+        "size": 333,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/cache-system.ts",
+        "size": 10333,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/conversation-flows.ts",
+        "size": 9462,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/cuid.ts",
+        "size": 5063,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/database-utils.ts",
+        "size": 6622,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/database.ts",
+        "size": 10429,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/dynamic-content-manager.ts",
+        "size": 7952,
+        "created": "2025-10-10T15:03:43.336Z",
+        "modified": "2025-10-10T15:03:43.336Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/dynamic-theme-manager.ts",
+        "size": 7644,
+        "created": "2025-10-10T15:04:12.923Z",
+        "modified": "2025-10-10T15:04:12.923Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/error-handler.ts",
+        "size": 5434,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:18:01.438Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/file-upload.ts",
+        "size": 14970,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.480Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/i18n.sql",
+        "size": 12104,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "src/lib/integration-system.ts",
+        "size": 12095,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/migrations/004_user_preferences.sql",
+        "size": 2076,
+        "created": "2025-10-10T15:02:39.480Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "src/lib/performance-monitor.ts",
+        "size": 13172,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/performance-optimizations.ts",
+        "size": 1472,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/performance.ts",
+        "size": 2607,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-10T15:14:54.600Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/private-center-integration.ts",
+        "size": 13934,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/rate-limiter.ts",
+        "size": 1998,
+        "created": "2025-10-10T15:15:12.415Z",
+        "modified": "2025-10-10T15:15:12.415Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/real-time-notifications.ts",
+        "size": 11599,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/responsive-design.ts",
+        "size": 7843,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/router.ts",
+        "size": 2109,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/saudi-health-integration.ts",
+        "size": 14157,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/saudi-ministry-health-integration.ts",
+        "size": 14926,
+        "created": "2025-10-09T20:39:25.426Z",
+        "modified": "2025-10-09T20:39:25.426Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/security-enhanced.ts",
+        "size": 10861,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/security.ts",
+        "size": 6476,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/seed-homepage-translations.sql",
+        "size": 10679,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "src/lib/supabase/client.ts",
+        "size": 406,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/supabase-real.ts",
+        "size": 16365,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/supabase.ts",
+        "size": 10715,
+        "created": "2025-10-10T15:02:39.484Z",
+        "modified": "2025-10-10T15:02:39.484Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/supabaseClient.ts",
+        "size": 1245,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/theme.ts",
+        "size": 1502,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/translations-manager.ts",
+        "size": 5028,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/translations.sql",
+        "size": 2605,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "src/lib/update-translations-schema.sql",
+        "size": 1213,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "src/lib/validation/schemas.ts",
+        "size": 11944,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/validation.ts",
+        "size": 4750,
+        "created": "2025-10-10T15:15:40.915Z",
+        "modified": "2025-10-10T15:15:40.915Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/websocket-server.ts",
+        "size": 14152,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/whatsapp-business-api.ts",
+        "size": 13552,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/lib/whatsapp-integration.ts",
+        "size": 12715,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/middleware.backup.ts",
+        "size": 357,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/middleware.disabled.ts",
+        "size": 306,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/middleware.prod.ts",
+        "size": 4584,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/middleware.ts",
+        "size": 4764,
+        "created": "2025-10-10T15:18:39.829Z",
+        "modified": "2025-10-10T15:18:39.829Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/scripts/seed-homepage-content.ts",
+        "size": 9301,
+        "created": "2025-10-10T15:07:23.335Z",
+        "modified": "2025-10-10T15:07:23.335Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/scripts/seed-translations.ts",
+        "size": 26166,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/scripts/validate-dynamic-content.ts",
+        "size": 6353,
+        "created": "2025-10-10T15:07:41.851Z",
+        "modified": "2025-10-10T15:09:16.696Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/styles/base.css",
+        "size": 5359,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".css"
+      },
+      {
+        "path": "src/styles/components.css",
+        "size": 5339,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".css"
+      },
+      {
+        "path": "src/styles/globals.ts",
+        "size": 706,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/styles/index.css",
+        "size": 199,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".css"
+      },
+      {
+        "path": "src/styles/themes.css",
+        "size": 6763,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".css"
+      },
+      {
+        "path": "src/styles/tokens.css",
+        "size": 720,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".css"
+      },
+      {
+        "path": "src/styles/utilities.css",
+        "size": 6094,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".css"
+      },
+      {
+        "path": "src/types/api.ts",
+        "size": 3268,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/types/database.ts",
+        "size": 5740,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/types/index.ts",
+        "size": 2722,
+        "created": "2025-10-09T20:39:25.434Z",
+        "modified": "2025-10-09T20:39:25.434Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/types/shims.d.ts",
+        "size": 150,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/types/supabase.ts",
+        "size": 19406,
+        "created": "2025-10-09T20:39:25.434Z",
+        "modified": "2025-10-09T20:39:25.434Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/utils/api-client.ts",
+        "size": 2151,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/utils/api.ts",
+        "size": 4734,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/utils/date.ts",
+        "size": 5309,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/utils/format.ts",
+        "size": 2643,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/utils/index.ts",
+        "size": 186,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/utils/storage.ts",
+        "size": 3928,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/utils/string.ts",
+        "size": 5169,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "src/utils/validation.ts",
+        "size": 3061,
+        "created": "2025-10-09T20:39:25.418Z",
+        "modified": "2025-10-09T20:39:25.418Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "stylelint.config.cjs",
+        "size": 508,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".cjs"
+      },
+      {
+        "path": "supabase/.gitignore",
+        "size": 72,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ""
+      },
+      {
+        "path": "supabase/config.toml",
+        "size": 12868,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".toml"
+      },
+      {
+        "path": "supabase/migrations/001_add_public_id_core_tables.sql",
+        "size": 1940,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "supabase/migrations/010_chatbot_tables.sql",
+        "size": 4601,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "supabase/migrations/011_chatbot_indexes.sql",
+        "size": 3099,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "supabase/migrations/012_chatbot_rls.sql",
+        "size": 4387,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "supabase/migrations/020_crm_tables.sql",
+        "size": 2765,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "supabase/migrations/021_crm_indexes.sql",
+        "size": 2107,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "supabase/migrations/022_crm_rls.sql",
+        "size": 1817,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "supabase/migrations/030_system_admin_tables.sql",
+        "size": 3449,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "supabase/migrations/031_system_rls.sql",
+        "size": 4098,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "supabase/migrations/032_dynamic_content_tables.sql",
+        "size": 6651,
+        "created": "2025-10-10T15:06:55.445Z",
+        "modified": "2025-10-10T15:06:55.445Z",
+        "extension": ".sql"
+      },
+      {
+        "path": "supabase/migrations/README.md",
+        "size": 4344,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".md"
+      },
+      {
+        "path": "tailwind.config.js",
+        "size": 2409,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.488Z",
+        "extension": ".js"
+      },
+      {
+        "path": "temp/ai-learning-data.json",
+        "size": 409,
+        "created": "2025-10-10T15:41:53.160Z",
+        "modified": "2025-10-10T15:41:53.160Z",
+        "extension": ".json"
+      },
+      {
+        "path": "temp/workflow-test-results.json",
+        "size": 1605,
+        "created": "2025-10-10T15:35:05.991Z",
+        "modified": "2025-10-10T15:35:05.991Z",
+        "extension": ".json"
+      },
+      {
+        "path": "temp_complex/(admin)/analytics/page.tsx",
+        "size": 15294,
+        "created": "2025-10-10T15:02:39.488Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(admin)/channels/page.tsx",
+        "size": 1812,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(admin)/conversations/page.tsx",
+        "size": 15379,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(admin)/dashboard/page.tsx",
+        "size": 14650,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(admin)/flow/page.tsx",
+        "size": 20101,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(admin)/layout.tsx",
+        "size": 471,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(admin)/logs/page.tsx",
+        "size": 3426,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(admin)/private-center-dashboard/page.tsx",
+        "size": 14288,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.492Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(admin)/review/page.tsx",
+        "size": 17222,
+        "created": "2025-10-10T15:02:39.492Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(admin)/settings/i18n/page.tsx",
+        "size": 4955,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(admin)/settings/page.tsx",
+        "size": 33211,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(admin)/users/page.tsx",
+        "size": 5447,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(auth)/forgot-password/page.tsx",
+        "size": 5491,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(auth)/login/page.tsx",
+        "size": 7848,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(auth)/register/page.tsx",
+        "size": 5746,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(auth)/reset-password/page.tsx",
+        "size": 8203,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(auth)/verify-email/page.tsx",
+        "size": 4526,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(info)/about/page.tsx",
+        "size": 11685,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(info)/contact/page.tsx",
+        "size": 15554,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(legal)/privacy/page.tsx",
+        "size": 506,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(legal)/terms/page.tsx",
+        "size": 578,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(marketing)/faq/page.tsx",
+        "size": 1258,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(marketing)/features/page.tsx",
+        "size": 1268,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.496Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(marketing)/pricing/page.tsx",
+        "size": 1599,
+        "created": "2025-10-10T15:02:39.496Z",
+        "modified": "2025-10-10T15:02:39.500Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/(marketing)/project-documentation/page.tsx",
+        "size": 45752,
+        "created": "2025-10-10T15:02:39.500Z",
+        "modified": "2025-10-10T15:02:39.500Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "temp_complex/api/ai/chat/route.ts",
+        "size": 3336,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/ai/respond/route.ts",
+        "size": 288,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/ai/transcribe/route.ts",
+        "size": 248,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/analytics/dashboard/route.ts",
+        "size": 8892,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/appointments/route.ts",
+        "size": 5293,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/auth/login/route.ts",
+        "size": 3686,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/auth/logout/route.ts",
+        "size": 912,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/auth/me/route.ts",
+        "size": 2025,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/auth/refresh/route.ts",
+        "size": 2062,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/channels/whatsapp/send/route.ts",
+        "size": 719,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/health/route.ts",
+        "size": 7927,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/i18n/admin/route.ts",
+        "size": 1596,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/i18n/route.ts",
+        "size": 3264,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/insurance/claim/route.ts",
+        "size": 2580,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/logs/route.ts",
+        "size": 121,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/ministry-health/compliance/route.ts",
+        "size": 1092,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/ministry-health/submit/route.ts",
+        "size": 1656,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/ministry-health/sync/route.ts",
+        "size": 2185,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/ministry-health/verify/route.ts",
+        "size": 1180,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/patients/route.ts",
+        "size": 4601,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/private-center/analytics/route.ts",
+        "size": 903,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/private-center/cchi-claim/route.ts",
+        "size": 1560,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/private-center/compliance/route.ts",
+        "size": 768,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/private-center/moh-report/route.ts",
+        "size": 1752,
+        "created": "2025-10-09T20:39:25.430Z",
+        "modified": "2025-10-09T20:39:25.430Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/private-center/sfda-report/route.ts",
+        "size": 1282,
+        "created": "2025-10-09T20:39:25.434Z",
+        "modified": "2025-10-09T20:39:25.434Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/saudi-health/verify/route.ts",
+        "size": 1157,
+        "created": "2025-10-09T20:39:25.434Z",
+        "modified": "2025-10-09T20:39:25.434Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/settings/route.ts",
+        "size": 516,
+        "created": "2025-10-09T20:39:25.434Z",
+        "modified": "2025-10-09T20:39:25.434Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/translations/seed/route.ts",
+        "size": 1060,
+        "created": "2025-10-09T20:39:25.434Z",
+        "modified": "2025-10-09T20:39:25.434Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/webhooks/whatsapp/route.ts",
+        "size": 722,
+        "created": "2025-10-09T20:39:25.434Z",
+        "modified": "2025-10-09T20:39:25.434Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/whatsapp/send/route.ts",
+        "size": 3377,
+        "created": "2025-10-09T20:39:25.434Z",
+        "modified": "2025-10-09T20:39:25.434Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/api/whatsapp/webhook/route.ts",
+        "size": 2782,
+        "created": "2025-10-09T20:39:25.434Z",
+        "modified": "2025-10-09T20:39:25.434Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "temp_complex/components/page.tsx",
+        "size": 2027,
+        "created": "2025-10-10T15:02:39.500Z",
+        "modified": "2025-10-10T15:02:39.500Z",
+        "extension": ".tsx"
+      },
+      {
+        "path": "tests/accessibility/accessibility.test.ts",
+        "size": 5404,
+        "created": "2025-10-10T15:19:26.574Z",
+        "modified": "2025-10-10T15:19:26.574Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "tests/lighthouse/lighthouse.test.ts",
+        "size": 3601,
+        "created": "2025-10-10T15:19:08.559Z",
+        "modified": "2025-10-10T15:19:08.559Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "tests/performance/performance.test.ts",
+        "size": 6430,
+        "created": "2025-10-10T15:19:50.437Z",
+        "modified": "2025-10-10T15:19:50.437Z",
+        "extension": ".ts"
+      },
+      {
+        "path": "tsconfig.json",
+        "size": 1118,
+        "created": "2025-10-10T15:02:39.500Z",
+        "modified": "2025-10-10T15:02:39.500Z",
+        "extension": ".json"
+      },
+      {
+        "path": "utils/helpers.js",
+        "size": 577,
+        "created": "2025-10-10T15:02:39.500Z",
+        "modified": "2025-10-10T15:02:39.500Z",
+        "extension": ".js"
+      }
+    ],
+    "directories": [
+      {
+        "path": ".playwright-mcp",
+        "created": "2025-10-10T15:02:39.428Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "archive",
+        "created": "2025-10-10T15:35:05.931Z",
+        "modified": "2025-10-10T15:35:05.931Z"
+      },
+      {
+        "path": "backup",
+        "created": "2025-10-10T15:02:39.428Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "backup/migrations",
+        "created": "2025-10-10T15:02:39.428Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "backups",
+        "created": "2025-10-10T15:41:53.124Z",
+        "modified": "2025-10-10T15:41:53.124Z"
+      },
+      {
+        "path": "components",
+        "created": "2025-10-10T15:02:39.428Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "config",
+        "created": "2025-10-10T15:35:05.987Z",
+        "modified": "2025-10-10T15:35:08.123Z"
+      },
+      {
+        "path": "docs",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "learning",
+        "created": "2025-10-10T15:41:53.124Z",
+        "modified": "2025-10-10T15:41:53.124Z"
+      },
+      {
+        "path": "logs",
+        "created": "2025-10-10T15:02:39.428Z",
+        "modified": "2025-10-10T15:41:53.156Z"
+      },
+      {
+        "path": "n8n-workflows",
+        "created": "2025-10-10T15:35:05.987Z",
+        "modified": "2025-10-10T15:35:05.991Z"
+      },
+      {
+        "path": "public",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.484Z"
+      },
+      {
+        "path": "reports",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:35:19.311Z"
+      },
+      {
+        "path": "sandbox",
+        "created": "2025-10-10T15:41:53.124Z",
+        "modified": "2025-10-10T15:41:53.124Z"
+      },
+      {
+        "path": "scripts",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:41:21.037Z"
+      },
+      {
+        "path": "src",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:18:39.829Z"
+      },
+      {
+        "path": "src/__tests__",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/__tests__/api",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/admin",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.444Z"
+      },
+      {
+        "path": "src/app/admin/audit-logs",
+        "created": "2025-10-10T15:02:39.444Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/app/admin/dashboard",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/app/admin/roles",
+        "created": "2025-10-10T15:02:39.444Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/app/agent-dashboard",
+        "created": "2025-10-10T15:02:39.444Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/app/api",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:20:02.748Z"
+      },
+      {
+        "path": "src/app/api/agent",
+        "created": "2025-10-10T15:02:39.444Z",
+        "modified": "2025-10-10T15:02:39.444Z"
+      },
+      {
+        "path": "src/app/api/agent/completion",
+        "created": "2025-10-10T15:02:39.444Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/app/api/agent/logs",
+        "created": "2025-10-10T15:02:39.444Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/app/api/agent/status",
+        "created": "2025-10-10T15:02:39.444Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/app/api/agent/tasks",
+        "created": "2025-10-10T15:02:39.444Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/app/api/analytics",
+        "created": "2025-10-10T15:20:02.748Z",
+        "modified": "2025-10-10T15:20:08.743Z"
+      },
+      {
+        "path": "src/app/api/analytics/action",
+        "created": "2025-10-10T15:20:02.748Z",
+        "modified": "2025-10-10T15:20:02.748Z"
+      },
+      {
+        "path": "src/app/api/analytics/metrics",
+        "created": "2025-10-10T15:20:08.743Z",
+        "modified": "2025-10-10T15:20:08.743Z"
+      },
+      {
+        "path": "src/app/api/auth",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-09T20:39:25.399Z"
+      },
+      {
+        "path": "src/app/api/auth/login",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/app/api/auth/logout",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/app/api/errors",
+        "created": "2025-10-10T15:19:56.816Z",
+        "modified": "2025-10-10T15:19:56.820Z"
+      },
+      {
+        "path": "src/app/api/health",
+        "created": "2025-10-10T15:16:38.507Z",
+        "modified": "2025-10-10T15:16:38.507Z"
+      },
+      {
+        "path": "src/app/api/i18n",
+        "created": "2025-10-10T15:02:39.444Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/app/api/user",
+        "created": "2025-10-10T15:02:39.444Z",
+        "modified": "2025-10-10T15:02:39.444Z"
+      },
+      {
+        "path": "src/app/api/user/preferences",
+        "created": "2025-10-10T15:02:39.444Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/app/appointments",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/app/approvals",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/app/chatbot",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-09T20:39:25.399Z"
+      },
+      {
+        "path": "src/app/chatbot/analytics",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/app/chatbot/flows",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/app/chatbot/flows/[flowId]",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/app/chatbot/integrations",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/app/chatbot/templates",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/app/chatbot/templates/[id]",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/app/crm",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-09T20:39:25.403Z"
+      },
+      {
+        "path": "src/app/crm/activities",
+        "created": "2025-10-09T20:39:25.399Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/app/crm/contacts",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.484Z"
+      },
+      {
+        "path": "src/app/crm/contacts/[id]",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/app/crm/deals",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.484Z"
+      },
+      {
+        "path": "src/app/crm/deals/kanban",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.484Z"
+      },
+      {
+        "path": "src/app/crm/leads",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.484Z"
+      },
+      {
+        "path": "src/app/dashboard",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.484Z"
+      },
+      {
+        "path": "src/app/forgot-password",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/insurance",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/insurance-claims",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/login",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/medical-file",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/messages",
+        "created": "2025-10-10T15:02:39.448Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/notifications",
+        "created": "2025-10-10T15:02:39.448Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/patients",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/patients/[id]",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/register",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/reset-password",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/sessions",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/app/settings",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.492Z"
+      },
+      {
+        "path": "src/components",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:14:39.374Z"
+      },
+      {
+        "path": "src/components/common",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.492Z"
+      },
+      {
+        "path": "src/components/dashboard",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.492Z"
+      },
+      {
+        "path": "src/components/layout",
+        "created": "2025-10-10T15:02:39.456Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/components/lazy",
+        "created": "2025-10-10T15:14:39.374Z",
+        "modified": "2025-10-10T15:14:39.374Z"
+      },
+      {
+        "path": "src/components/providers",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/components/settings",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/components/shared",
+        "created": "2025-10-10T15:02:39.456Z",
+        "modified": "2025-10-10T15:18:15.370Z"
+      },
+      {
+        "path": "src/components/shell",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.476Z"
+      },
+      {
+        "path": "src/components/ui",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/config",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "src/constants",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/hooks",
+        "created": "2025-10-09T20:39:25.403Z",
+        "modified": "2025-10-10T15:13:49.047Z"
+      },
+      {
+        "path": "src/lib",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:15:40.915Z"
+      },
+      {
+        "path": "src/lib/api",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.480Z"
+      },
+      {
+        "path": "src/lib/auth",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-09T20:39:25.426Z"
+      },
+      {
+        "path": "src/lib/migrations",
+        "created": "2025-10-10T15:02:39.464Z",
+        "modified": "2025-10-10T15:02:39.484Z"
+      },
+      {
+        "path": "src/lib/supabase",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/lib/validation",
+        "created": "2025-10-10T15:02:39.468Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/scripts",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:07:41.851Z"
+      },
+      {
+        "path": "src/styles",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/types",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "src/utils",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "supabase",
+        "created": "2025-10-10T15:02:39.468Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "supabase/migrations",
+        "created": "2025-10-10T15:02:39.468Z",
+        "modified": "2025-10-10T15:06:55.445Z"
+      },
+      {
+        "path": "temp",
+        "created": "2025-10-10T15:35:05.991Z",
+        "modified": "2025-10-10T15:41:53.160Z"
+      },
+      {
+        "path": "temp_complex",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-09T20:39:25.414Z"
+      },
+      {
+        "path": "temp_complex/(admin)",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.492Z"
+      },
+      {
+        "path": "temp_complex/(admin)/analytics",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.488Z"
+      },
+      {
+        "path": "temp_complex/(admin)/channels",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.492Z"
+      },
+      {
+        "path": "temp_complex/(admin)/conversations",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.492Z"
+      },
+      {
+        "path": "temp_complex/(admin)/dashboard",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.492Z"
+      },
+      {
+        "path": "temp_complex/(admin)/flow",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.492Z"
+      },
+      {
+        "path": "temp_complex/(admin)/logs",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.492Z"
+      },
+      {
+        "path": "temp_complex/(admin)/private-center-dashboard",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.492Z"
+      },
+      {
+        "path": "temp_complex/(admin)/review",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.492Z"
+      },
+      {
+        "path": "temp_complex/(admin)/settings",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(admin)/settings/i18n",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(admin)/users",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(auth)",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-09T20:39:25.407Z"
+      },
+      {
+        "path": "temp_complex/(auth)/forgot-password",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(auth)/login",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(auth)/register",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(auth)/reset-password",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(auth)/verify-email",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(info)",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-09T20:39:25.411Z"
+      },
+      {
+        "path": "temp_complex/(info)/about",
+        "created": "2025-10-09T20:39:25.407Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(info)/contact",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(legal)",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.411Z"
+      },
+      {
+        "path": "temp_complex/(legal)/privacy",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(legal)/terms",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(marketing)",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.411Z"
+      },
+      {
+        "path": "temp_complex/(marketing)/faq",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(marketing)/features",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(marketing)/pricing",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-10T15:02:39.496Z"
+      },
+      {
+        "path": "temp_complex/(marketing)/project-documentation",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-10T15:02:39.500Z"
+      },
+      {
+        "path": "temp_complex/api",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.414Z"
+      },
+      {
+        "path": "temp_complex/api/ai",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.411Z"
+      },
+      {
+        "path": "temp_complex/api/ai/chat",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/ai/respond",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/ai/transcribe",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/analytics",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.411Z"
+      },
+      {
+        "path": "temp_complex/api/analytics/dashboard",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/appointments",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/auth",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.411Z"
+      },
+      {
+        "path": "temp_complex/api/auth/login",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/auth/logout",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/auth/me",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/auth/refresh",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/channels",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.411Z"
+      },
+      {
+        "path": "temp_complex/api/channels/whatsapp",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.411Z"
+      },
+      {
+        "path": "temp_complex/api/channels/whatsapp/send",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/health",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/i18n",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/i18n/admin",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/insurance",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.411Z"
+      },
+      {
+        "path": "temp_complex/api/insurance/claim",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/logs",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/ministry-health",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.411Z"
+      },
+      {
+        "path": "temp_complex/api/ministry-health/compliance",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/ministry-health/submit",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/ministry-health/sync",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/ministry-health/verify",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/patients",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/private-center",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.411Z"
+      },
+      {
+        "path": "temp_complex/api/private-center/analytics",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/private-center/cchi-claim",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/private-center/compliance",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/private-center/moh-report",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.430Z"
+      },
+      {
+        "path": "temp_complex/api/private-center/sfda-report",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.434Z"
+      },
+      {
+        "path": "temp_complex/api/saudi-health",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.411Z"
+      },
+      {
+        "path": "temp_complex/api/saudi-health/verify",
+        "created": "2025-10-09T20:39:25.411Z",
+        "modified": "2025-10-09T20:39:25.434Z"
+      },
+      {
+        "path": "temp_complex/api/settings",
+        "created": "2025-10-09T20:39:25.414Z",
+        "modified": "2025-10-09T20:39:25.434Z"
+      },
+      {
+        "path": "temp_complex/api/translations",
+        "created": "2025-10-09T20:39:25.414Z",
+        "modified": "2025-10-09T20:39:25.414Z"
+      },
+      {
+        "path": "temp_complex/api/translations/seed",
+        "created": "2025-10-09T20:39:25.414Z",
+        "modified": "2025-10-09T20:39:25.434Z"
+      },
+      {
+        "path": "temp_complex/api/webhooks",
+        "created": "2025-10-09T20:39:25.414Z",
+        "modified": "2025-10-09T20:39:25.414Z"
+      },
+      {
+        "path": "temp_complex/api/webhooks/whatsapp",
+        "created": "2025-10-09T20:39:25.414Z",
+        "modified": "2025-10-09T20:39:25.434Z"
+      },
+      {
+        "path": "temp_complex/api/whatsapp",
+        "created": "2025-10-09T20:39:25.414Z",
+        "modified": "2025-10-09T20:39:25.414Z"
+      },
+      {
+        "path": "temp_complex/api/whatsapp/send",
+        "created": "2025-10-09T20:39:25.414Z",
+        "modified": "2025-10-09T20:39:25.434Z"
+      },
+      {
+        "path": "temp_complex/api/whatsapp/webhook",
+        "created": "2025-10-09T20:39:25.414Z",
+        "modified": "2025-10-09T20:39:25.434Z"
+      },
+      {
+        "path": "temp_complex/components",
+        "created": "2025-10-09T20:39:25.414Z",
+        "modified": "2025-10-10T15:02:39.500Z"
+      },
+      {
+        "path": "tests",
+        "created": "2025-10-10T15:19:08.559Z",
+        "modified": "2025-10-10T15:19:50.437Z"
+      },
+      {
+        "path": "tests/accessibility",
+        "created": "2025-10-10T15:19:26.574Z",
+        "modified": "2025-10-10T15:19:26.574Z"
+      },
+      {
+        "path": "tests/lighthouse",
+        "created": "2025-10-10T15:19:08.559Z",
+        "modified": "2025-10-10T15:19:08.559Z"
+      },
+      {
+        "path": "tests/performance",
+        "created": "2025-10-10T15:19:50.437Z",
+        "modified": "2025-10-10T15:19:50.437Z"
+      },
+      {
+        "path": "utils",
+        "created": "2025-10-10T15:02:39.472Z",
+        "modified": "2025-10-10T15:02:39.500Z"
+      },
+      {
+        "path": "videos",
+        "created": "2025-10-10T15:35:08.035Z",
+        "modified": "2025-10-10T15:35:08.035Z"
+      }
+    ]
+  },
+  "diskUsage": {
+    "output": "Filesystem      Size  Used Avail Use% Mounted on\noverlay         126G  7.0G  113G   6% /\ntmpfs            64M     0   64M   0% /dev\ntmpfs           7.9G     0  7.9G   0% /sys/fs/cgroup\nshm              64M     0   64M   0% /dev/shm\n/dev/root       126G  7.0G  113G   6% /etc/hosts\n"
+  }
+}

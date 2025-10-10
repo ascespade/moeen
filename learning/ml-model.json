@@ -1,0 +1,22 @@
+{
+  "patterns": {
+    "success": {},
+    "failure": {},
+    "performance": {},
+    "errors": {}
+  },
+  "predictions": {
+    "nextFailure": null,
+    "optimalTiming": {},
+    "resourceNeeds": {}
+  },
+  "weights": {
+    "timeOfDay": 0.1,
+    "dayOfWeek": 0.1,
+    "systemLoad": 0.2,
+    "errorHistory": 0.3,
+    "recentChanges": 0.3
+  },
+  "accuracy": 0,
+  "lastUpdated": "2025-10-10T15:41:59.177Z"
+}

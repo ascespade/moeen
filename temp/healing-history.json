@@ -1,0 +1,230 @@
+[
+  {
+    "error": {
+      "category": "fileSystem",
+      "rule": "missingDirectories",
+      "pattern": "ENOENT.*no such file or directory",
+      "message": "[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'",
+      "priority": "high",
+      "action": "createDirectories",
+      "timestamp": "2025-10-10T15:41:57.175Z"
+    },
+    "action": "createDirectories",
+    "success": true,
+    "duration": 1,
+    "timestamp": "2025-10-10T15:41:57.180Z",
+    "result": {
+      "success": true,
+      "created": 0
+    }
+  },
+  {
+    "error": {
+      "category": "fileSystem",
+      "rule": "missingDirectories",
+      "pattern": "ENOENT.*no such file or directory",
+      "message": "[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'",
+      "priority": "high",
+      "action": "createDirectories",
+      "timestamp": "2025-10-10T15:42:02.226Z"
+    },
+    "action": "createDirectories",
+    "success": true,
+    "duration": 0,
+    "timestamp": "2025-10-10T15:42:02.231Z",
+    "result": {
+      "success": true,
+      "created": 0
+    }
+  },
+  {
+    "error": {
+      "category": "fileSystem",
+      "rule": "missingDirectories",
+      "pattern": "ENOENT.*no such file or directory",
+      "message": "[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'",
+      "priority": "high",
+      "action": "createDirectories",
+      "timestamp": "2025-10-10T15:42:07.277Z"
+    },
+    "action": "createDirectories",
+    "success": true,
+    "duration": 0,
+    "timestamp": "2025-10-10T15:42:07.284Z",
+    "result": {
+      "success": true,
+      "created": 0
+    }
+  },
+  {
+    "error": {
+      "category": "fileSystem",
+      "rule": "missingDirectories",
+      "pattern": "ENOENT.*no such file or directory",
+      "message": "[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'",
+      "priority": "high",
+      "action": "createDirectories",
+      "timestamp": "2025-10-10T15:42:12.334Z"
+    },
+    "action": "createDirectories",
+    "success": true,
+    "duration": 1,
+    "timestamp": "2025-10-10T15:42:12.341Z",
+    "result": {
+      "success": true,
+      "created": 0
+    }
+  },
+  {
+    "error": {
+      "category": "fileSystem",
+      "rule": "missingDirectories",
+      "pattern": "ENOENT.*no such file or directory",
+      "message": "[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'",
+      "priority": "high",
+      "action": "createDirectories",
+      "timestamp": "2025-10-10T15:42:17.391Z"
+    },
+    "action": "createDirectories",
+    "success": true,
+    "duration": 1,
+    "timestamp": "2025-10-10T15:42:17.397Z",
+    "result": {
+      "success": true,
+      "created": 0
+    }
+  },
+  {
+    "error": {
+      "category": "fileSystem",
+      "rule": "missingDirectories",
+      "pattern": "ENOENT.*no such file or directory",
+      "message": "[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'",
+      "priority": "high",
+      "action": "createDirectories",
+      "timestamp": "2025-10-10T15:42:22.446Z"
+    },
+    "action": "createDirectories",
+    "success": true,
+    "duration": 1,
+    "timestamp": "2025-10-10T15:42:22.453Z",
+    "result": {
+      "success": true,
+      "created": 0
+    }
+  },
+  {
+    "error": {
+      "category": "fileSystem",
+      "rule": "missingDirectories",
+      "pattern": "ENOENT.*no such file or directory",
+      "message": "[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'",
+      "priority": "high",
+      "action": "createDirectories",
+      "timestamp": "2025-10-10T15:42:27.517Z"
+    },
+    "action": "createDirectories",
+    "success": true,
+    "duration": 1,
+    "timestamp": "2025-10-10T15:42:27.525Z",
+    "result": {
+      "success": true,
+      "created": 0
+    }
+  },
+  {
+    "error": {
+      "category": "fileSystem",
+      "rule": "missingDirectories",
+      "pattern": "ENOENT.*no such file or directory",
+      "message": "[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'",
+      "priority": "high",
+      "action": "createDirectories",
+      "timestamp": "2025-10-10T15:42:32.574Z"
+    },
+    "action": "createDirectories",
+    "success": true,
+    "duration": 1,
+    "timestamp": "2025-10-10T15:42:32.582Z",
+    "result": {
+      "success": true,
+      "created": 0
+    }
+  },
+  {
+    "error": {
+      "category": "fileSystem",
+      "rule": "missingDirectories",
+      "pattern": "ENOENT.*no such file or directory",
+      "message": "[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'",
+      "priority": "high",
+      "action": "createDirectories",
+      "timestamp": "2025-10-10T15:42:37.626Z"
+    },
+    "action": "createDirectories",
+    "success": true,
+    "duration": 0,
+    "timestamp": "2025-10-10T15:42:37.632Z",
+    "result": {
+      "success": true,
+      "created": 0
+    }
+  },
+  {
+    "error": {
+      "category": "fileSystem",
+      "rule": "missingDirectories",
+      "pattern": "ENOENT.*no such file or directory",
+      "message": "[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'",
+      "priority": "high",
+      "action": "createDirectories",
+      "timestamp": "2025-10-10T15:42:42.685Z"
+    },
+    "action": "createDirectories",
+    "success": true,
+    "duration": 1,
+    "timestamp": "2025-10-10T15:42:42.693Z",
+    "result": {
+      "success": true,
+      "created": 0
+    }
+  },
+  {
+    "error": {
+      "category": "fileSystem",
+      "rule": "missingDirectories",
+      "pattern": "ENOENT.*no such file or directory",
+      "message": "[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'",
+      "priority": "high",
+      "action": "createDirectories",
+      "timestamp": "2025-10-10T15:42:47.741Z"
+    },
+    "action": "createDirectories",
+    "success": true,
+    "duration": 1,
+    "timestamp": "2025-10-10T15:42:47.748Z",
+    "result": {
+      "success": true,
+      "created": 0
+    }
+  },
+  {
+    "error": {
+      "category": "fileSystem",
+      "rule": "missingDirectories",
+      "pattern": "ENOENT.*no such file or directory",
+      "message": "[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'",
+      "priority": "high",
+      "action": "createDirectories",
+      "timestamp": "2025-10-10T15:42:52.798Z"
+    },
+    "action": "createDirectories",
+    "success": true,
+    "duration": 0,
+    "timestamp": "2025-10-10T15:42:52.805Z",
+    "result": {
+      "success": true,
+      "created": 0
+    }
+  }
+]
