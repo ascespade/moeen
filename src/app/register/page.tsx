@@ -125,7 +125,7 @@ export default function RegisterPage() {
         <div className="mb-8 text-center">
           <div className="mb-4 flex items-center justify-center gap-3">
             <Image
-              src="/logo.jpg"
+              src="/logo.png"
               alt="مُعين"
               width={50}
               height={50}
