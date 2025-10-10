@@ -1,223 +1,320 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ROUTES } from "@/constants/routes";
-import GlobalHeader from "@/components/layout/GlobalHeader";
+import { usePageI18n } from "@/hooks/usePageI18n";
+import { I18N_KEYS } from "@/constants/i18n-keys";
+import { createClient } from "@/lib/supabase/client";
 
 import Image from "next/image";
 import Link from "next/link";
 
-// Hero Slider Data
-const heroSlides = [
-  {
-    id: 1,
-    title: "مرحباً بك في مُعين",
-    subtitle: "منصة الرعاية الصحية المتخصصة",
-    description:
-      "نقدم خدمات متكاملة للرعاية الصحية مع أحدث التقنيات والذكاء الاصطناعي",
-    image: "/hero-1.jpg",
-    cta: "اكتشف خدماتنا",
-    ctaLink: "#services",
-  },
-  {
-    id: 2,
-    title: "إدارة المواعيد الذكية",
-    subtitle: "نظام تقويم متطور",
-    description:
-      "احجز مواعيدك بسهولة مع نظام التقويم الذكي وإدارة الجلسات العلاجية",
-    image: "/hero-2.jpg",
-    cta: "احجز موعدك",
-    ctaLink: ROUTES.HEALTH.APPOINTMENTS,
-  },
-  {
-    id: 3,
-    title: "شات بوت ذكي",
-    subtitle: "مساعدك الصحي الشخصي",
-    description:
-      "احصل على إجابات فورية لاستفساراتك الصحية مع الذكاء الاصطناعي المتقدم",
-    image: "/hero-3.jpg",
-    cta: "جرب الشات بوت",
-    ctaLink: ROUTES.CHATBOT.FLOWS,
-  },
-];
+interface HeroSlide {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  cta: string;
+  ctaLink: string;
+}
 
-// Services Data
-const services = [
-  {
-    id: 1,
-    title: "إدارة المواعيد",
-    description: "نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية",
-    icon: "📅",
-    color: "text-blue-600",
-    bgColor: "bg-blue-50",
-  },
-  {
-    id: 2,
-    title: "إدارة المرضى",
-    description: "ملفات مرضى شاملة مع سجل طبي مفصل",
-    icon: "👤",
-    color: "text-green-600",
-    bgColor: "bg-green-50",
-  },
-  {
-    id: 3,
-    title: "المطالبات التأمينية",
-    description: "إدارة وتتبع المطالبات التأمينية بسهولة",
-    icon: "📋",
-    color: "text-purple-600",
-    bgColor: "bg-purple-50",
-  },
-  {
-    id: 4,
-    title: "الشات بوت الذكي",
-    description: "مساعد ذكي للرد على استفسارات المرضى",
-    icon: "🤖",
-    color: "text-orange-600",
-    bgColor: "bg-orange-50",
-  },
-  {
-    id: 5,
-    title: "إدارة الموظفين",
-    description: "تتبع ساعات العمل والأداء للموظفين",
-    icon: "👨‍⚕️",
-    color: "text-red-600",
-    bgColor: "bg-red-50",
-  },
-  {
-    id: 6,
-    title: "التقارير والتحليلات",
-    description: "تقارير شاملة وإحصائيات مفصلة",
-    icon: "📊",
-    color: "text-indigo-600",
-    bgColor: "bg-indigo-50",
-  },
-];
+interface Service {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+  color: string;
+  bgColor: string;
+}
 
-// Testimonials Data
-const testimonials = [
-  {
-    id: 1,
-    name: "د. أحمد العتيبي",
-    position: "طبيب علاج طبيعي",
-    content: "منصة مُعين ساعدتني في تنظيم مواعيدي وإدارة مرضاي بكفاءة عالية",
-    rating: 5,
-    image: "/testimonial-1.jpg",
-  },
-  {
-    id: 2,
-    name: "أ. فاطمة السعيد",
-    position: "ممرضة",
-    content:
-      "النظام سهل الاستخدام ويوفر جميع الأدوات التي نحتاجها في العمل اليومي",
-    rating: 5,
-    image: "/testimonial-2.jpg",
-  },
-  {
-    id: 3,
-    name: "د. محمد القحطاني",
-    position: "طبيب نفسي",
-    content: "الشات بوت الذكي يساعد المرضى في الحصول على إجابات سريعة ودقيقة",
-    rating: 5,
-    image: "/testimonial-3.jpg",
-  },
-];
+interface Testimonial {
+  id: number;
+  name: string;
+  role: string;
+  content: string;
+  image: string;
+  rating: number;
+}
 
-// Gallery Data
-const galleryImages = [
-  { id: 1, src: "/gallery-1.jpg", alt: "مركز العلاج الطبيعي" },
-  { id: 2, src: "/gallery-2.jpg", alt: "قاعة العلاج الوظيفي" },
-  { id: 3, src: "/gallery-3.jpg", alt: "عيادة العلاج النفسي" },
-  { id: 4, src: "/gallery-4.jpg", alt: "مكتبة العلاج" },
-  { id: 5, src: "/gallery-5.jpg", alt: "قاعة التدريب" },
-  { id: 6, src: "/gallery-6.jpg", alt: "منطقة الاستقبال" },
-];
+interface GalleryImage {
+  id: number;
+  src: string;
+  alt: string;
+}
 
-// FAQ Data
-const faqs = [
-  {
-    id: 1,
-    question: "كيف يمكنني حجز موعد؟",
-    answer: "يمكنك حجز موعد بسهولة من خلال صفحة المواعيد أو الاتصال بنا مباشرة",
-  },
-  {
-    id: 2,
-    question: "هل النظام يدعم التأمين الصحي؟",
-    answer:
-      "نعم، النظام يدعم جميع شركات التأمين الصحي ويمكن إدارة المطالبات بسهولة",
-  },
-  {
-    id: 3,
-    question: "كيف يعمل الشات بوت الذكي؟",
-    answer:
-      "الشات بوت يستخدم الذكاء الاصطناعي للرد على استفسارات المرضى بشكل فوري ودقيق",
-  },
-];
+interface FAQ {
+  id: number;
+  question: string;
+  answer: string;
+}
 
 export default function HomePage() {
+  const { t } = usePageI18n();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [heroSlides, setHeroSlides] = useState<HeroSlide[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [faqs, setFaqs] = useState<FAQ[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const supabase = createClient();
+
+  // Load homepage content from database
+  useEffect(() => {
+    const loadHomepageContent = async () => {
+      try {
+        // Load hero slides from settings
+        const { data: heroData } = await supabase
+          .from('settings')
+          .select('value')
+          .eq('key', 'homepage_hero_slides')
+          .single();
+
+        // Load services from settings
+        const { data: servicesData } = await supabase
+          .from('settings')
+          .select('value')
+          .eq('key', 'homepage_services')
+          .single();
+
+        // Load testimonials from settings
+        const { data: testimonialsData } = await supabase
+          .from('settings')
+          .select('value')
+          .eq('key', 'homepage_testimonials')
+          .single();
+
+        // Load gallery images from settings
+        const { data: galleryData } = await supabase
+          .from('settings')
+          .select('value')
+          .eq('key', 'homepage_gallery')
+          .single();
+
+        // Load FAQs from settings
+        const { data: faqsData } = await supabase
+          .from('settings')
+          .select('value')
+          .eq('key', 'homepage_faqs')
+          .single();
+
+        // Set data with fallbacks
+        setHeroSlides(heroData?.value || getDefaultHeroSlides());
+        setServices(servicesData?.value || getDefaultServices());
+        setTestimonials(testimonialsData?.value || getDefaultTestimonials());
+        setGalleryImages(galleryData?.value || getDefaultGalleryImages());
+        setFaqs(faqsData?.value || getDefaultFAQs());
+
+      } catch (error) {
+        console.error('Error loading homepage content:', error);
+        // Use fallback data
+        setHeroSlides(getDefaultHeroSlides());
+        setServices(getDefaultServices());
+        setTestimonials(getDefaultTestimonials());
+        setGalleryImages(getDefaultGalleryImages());
+        setFaqs(getDefaultFAQs());
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadHomepageContent();
+  }, [t]);
+
+  // Default fallback data (only used when DB is unavailable)
+  const getDefaultHeroSlides = (): HeroSlide[] => [
+    {
+      id: 1,
+      title: t(I18N_KEYS.HOMEPAGE.HERO.SLIDE1_TITLE, "مرحباً بك في مُعين"),
+      subtitle: t(I18N_KEYS.HOMEPAGE.HERO.SLIDE1_SUBTITLE, "منصة الرعاية الصحية المتخصصة"),
+      description: t(I18N_KEYS.HOMEPAGE.HERO.SLIDE1_DESCRIPTION, "نقدم خدمات متكاملة للرعاية الصحية مع أحدث التقنيات والذكاء الاصطناعي"),
+      image: "/logo.jpg",
+      cta: t(I18N_KEYS.HOMEPAGE.HERO.SLIDE1_CTA, "اكتشف خدماتنا"),
+      ctaLink: "#services",
+    },
+    {
+      id: 2,
+      title: t(I18N_KEYS.HOMEPAGE.HERO.SLIDE2_TITLE, "إدارة المواعيد الذكية"),
+      subtitle: t(I18N_KEYS.HOMEPAGE.HERO.SLIDE2_SUBTITLE, "نظام تقويم متطور"),
+      description: t(I18N_KEYS.HOMEPAGE.HERO.SLIDE2_DESCRIPTION, "احجز مواعيدك بسهولة مع نظام التقويم الذكي وإدارة الجلسات العلاجية"),
+      image: "/logo.jpg",
+      cta: t(I18N_KEYS.HOMEPAGE.HERO.SLIDE2_CTA, "احجز موعدك"),
+      ctaLink: ROUTES.HEALTH.APPOINTMENTS,
+    },
+    {
+      id: 3,
+      title: t(I18N_KEYS.HOMEPAGE.HERO.SLIDE3_TITLE, "شات بوت ذكي"),
+      subtitle: t(I18N_KEYS.HOMEPAGE.HERO.SLIDE3_SUBTITLE, "مساعدك الصحي الشخصي"),
+      description: t(I18N_KEYS.HOMEPAGE.HERO.SLIDE3_DESCRIPTION, "احصل على إجابات فورية لاستفساراتك الصحية مع الذكاء الاصطناعي المتقدم"),
+      image: "/logo.jpg",
+      cta: t(I18N_KEYS.HOMEPAGE.HERO.SLIDE3_CTA, "جرب الشات بوت"),
+      ctaLink: ROUTES.CHATBOT.FLOWS,
+    },
+  ];
+
+  const getDefaultServices = (): Service[] => [
+    {
+      id: 1,
+      title: t(I18N_KEYS.HOMEPAGE.SERVICES.APPOINTMENTS_TITLE, "إدارة المواعيد"),
+      description: t(I18N_KEYS.HOMEPAGE.SERVICES.APPOINTMENTS_DESCRIPTION, "نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية"),
+      icon: "📅",
+      color: "text-blue-600",
+      bgColor: "bg-blue-50",
+    },
+    {
+      id: 2,
+      title: t(I18N_KEYS.HOMEPAGE.SERVICES.PATIENTS_TITLE, "إدارة المرضى"),
+      description: t(I18N_KEYS.HOMEPAGE.SERVICES.PATIENTS_DESCRIPTION, "ملفات مرضى شاملة مع سجل طبي مفصل"),
+      icon: "👤",
+      color: "text-green-600",
+      bgColor: "bg-green-50",
+    },
+    {
+      id: 3,
+      title: t(I18N_KEYS.HOMEPAGE.SERVICES.INSURANCE_TITLE, "المطالبات التأمينية"),
+      description: t(I18N_KEYS.HOMEPAGE.SERVICES.INSURANCE_DESCRIPTION, "إدارة وتتبع المطالبات التأمينية بسهولة"),
+      icon: "📋",
+      color: "text-purple-600",
+      bgColor: "bg-purple-50",
+    },
+    {
+      id: 4,
+      title: t(I18N_KEYS.HOMEPAGE.SERVICES.CHATBOT_TITLE, "الشات بوت الذكي"),
+      description: t(I18N_KEYS.HOMEPAGE.SERVICES.CHATBOT_DESCRIPTION, "مساعد ذكي للرد على استفسارات المرضى"),
+      icon: "🤖",
+      color: "text-orange-600",
+      bgColor: "bg-orange-50",
+    },
+    {
+      id: 5,
+      title: t(I18N_KEYS.HOMEPAGE.SERVICES.STAFF_TITLE, "إدارة الموظفين"),
+      description: t(I18N_KEYS.HOMEPAGE.SERVICES.STAFF_DESCRIPTION, "تتبع ساعات العمل والأداء للموظفين"),
+      icon: "👨‍⚕️",
+      color: "text-red-600",
+      bgColor: "bg-red-50",
+    },
+    {
+      id: 6,
+      title: t(I18N_KEYS.HOMEPAGE.SERVICES.REPORTS_TITLE, "التقارير والتحليلات"),
+      description: t(I18N_KEYS.HOMEPAGE.SERVICES.REPORTS_DESCRIPTION, "تقارير شاملة وإحصائيات مفصلة"),
+      icon: "📊",
+      color: "text-indigo-600",
+      bgColor: "bg-indigo-50",
+    },
+  ];
+
+  const getDefaultTestimonials = (): Testimonial[] => [
+    {
+      id: 1,
+      name: "د. أحمد محمد",
+      role: "طبيب أسنان",
+      content: "منصة مُعين ساعدتني في تنظيم مواعيدي وملفات المرضى بشكل ممتاز",
+      image: "/logo.jpg",
+      rating: 5,
+    },
+    {
+      id: 2,
+      name: "م. فاطمة السعيد",
+      role: "مدير عيادة",
+      content: "الشات بوت الذكي يوفر وقت كبير في الرد على استفسارات المرضى",
+      image: "/logo.jpg",
+      rating: 5,
+    },
+    {
+      id: 3,
+      name: "د. خالد العتيبي",
+      role: "طبيب عام",
+      content: "التقارير والإحصائيات تساعدني في اتخاذ قرارات أفضل لمرضاي",
+      image: "/logo.jpg",
+      rating: 5,
+    },
+  ];
+
+  const getDefaultGalleryImages = (): GalleryImage[] => [
+    { id: 1, src: "/logo.jpg", alt: "عيادة حديثة" },
+    { id: 2, src: "/logo.jpg", alt: "معدات طبية" },
+    { id: 3, src: "/logo.jpg", alt: "فريق العمل" },
+    { id: 4, src: "/logo.jpg", alt: "بيئة مريحة" },
+    { id: 5, src: "/logo.jpg", alt: "تقنيات متطورة" },
+    { id: 6, src: "/logo.jpg", alt: "خدمة ممتازة" },
+  ];
+
+  const getDefaultFAQs = (): FAQ[] => [
+    {
+      id: 1,
+      question: "كيف يمكنني حجز موعد؟",
+      answer: "يمكنك حجز موعد بسهولة من خلال الموقع أو التطبيق، أو الاتصال بنا مباشرة",
+    },
+    {
+      id: 2,
+      question: "هل الشات بوت متاح 24/7؟",
+      answer: "نعم، الشات بوت متاح على مدار الساعة للإجابة على استفساراتكم",
+    },
+    {
+      id: 3,
+      question: "كيف يمكنني تتبع مطالباتي التأمينية؟",
+      answer: "يمكنك تتبع حالة مطالباتك التأمينية من خلال لوحة التحكم الخاصة بك",
+    },
+    {
+      id: 4,
+      question: "هل البيانات محمية؟",
+      answer: "نعم، نستخدم أحدث تقنيات التشفير لحماية بياناتكم وخصوصيتكم",
+    },
+  ];
 
   // Auto-slide functionality
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+    if (heroSlides.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [heroSlides.length]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">جاري تحميل المحتوى...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-[var(--brand-surface)]">
-      {/* Header */}
-      <GlobalHeader />
-      
-      {/* Hero Slider */}
-      <section className="relative h-[80vh] overflow-hidden">
-        {heroSlides.map((slide, index) => (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentSlide ? "opacity-100" : "opacity-0"
-            }`}
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-90" />
+        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            {heroSlides[currentSlide]?.title}
+          </h1>
+          <h2 className="text-xl md:text-2xl mb-4 text-blue-100">
+            {heroSlides[currentSlide]?.subtitle}
+          </h2>
+          <p className="text-lg mb-8 text-gray-200">
+            {heroSlides[currentSlide]?.description}
+          </p>
+          <Link
+            href={heroSlides[currentSlide]?.ctaLink || "#services"}
+            className="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
           >
-            <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/50 to-transparent"></div>
-            <Image
-              src={slide.image}
-              alt={slide.title}
-              fill
-              className="object-cover"
-              priority={index === 0}
-            />
-            <div className="container-app relative z-20 flex h-full items-center">
-              <div className="max-w-2xl text-white">
-                <h2 className="animate-fadeInUp mb-4 text-5xl font-bold">
-                  {slide.title}
-                </h2>
-                <h3 className="animate-fadeInUp mb-4 text-2xl text-[var(--brand-primary)]">
-                  {slide.subtitle}
-                </h3>
-                <p className="animate-fadeInUp mb-8 text-lg">
-                  {slide.description}
-                </p>
-                <Link
-                  href={slide.ctaLink}
-                  className="btn-brand animate-fadeInUp transform rounded-lg px-8 py-3 text-lg font-semibold transition-all hover:-translate-y-1 hover:bg-[var(--brand-primary-hover)] hover:shadow-lg"
-                >
-                  {slide.cta}
-                </Link>
-              </div>
-            </div>
-          </div>
-        ))}
-
-        {/* Slider Controls */}
-        <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 transform gap-2">
+            {heroSlides[currentSlide]?.cta}
+          </Link>
+        </div>
+        
+        {/* Slide Indicators */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
           {heroSlides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`h-3 w-3 rounded-full transition-all ${
-                index === currentSlide
-                  ? "bg-[var(--brand-primary)]"
-                  : "bg-white/50"
+              className={`w-3 h-3 rounded-full ${
+                index === currentSlide ? "bg-white" : "bg-white/50"
               }`}
             />
           ))}
@@ -225,34 +322,30 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="bg-white py-20 dark:bg-gray-900">
-        <div className="container-app">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+      <section id="services" className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
               خدماتنا المتكاملة
             </h2>
-            <p className="mx-auto max-w-3xl text-xl text-gray-600 dark:text-gray-300">
-              نقدم مجموعة شاملة من الخدمات التقنية لمراكز الرعاية الصحية
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              نقدم مجموعة شاملة من الخدمات الصحية المتطورة لضمان أفضل رعاية لمرضانا
             </p>
           </div>
-
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service) => (
               <div
                 key={service.id}
-                className="card hover:shadow-soft group p-8 text-center transition-all duration-300"
+                className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow"
               >
-                <div
-                  className={`h-16 w-16 ${service.bgColor} mx-auto mb-6 flex items-center justify-center rounded-full text-3xl transition-transform group-hover:scale-110`}
-                >
+                <div className={`text-4xl mb-4 ${service.color}`}>
                   {service.icon}
                 </div>
-                <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  {service.description}
-                </p>
+                <p className="text-gray-600">{service.description}</p>
               </div>
             ))}
           </div>
@@ -260,43 +353,40 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="bg-[var(--brand-surface)] py-20">
-        <div className="container-app">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
               آراء عملائنا
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              ما يقوله عنا أطباؤنا وموظفونا
+            <p className="text-lg text-gray-600">
+              اكتشف ما يقوله عملاؤنا عن خدماتنا
             </p>
           </div>
-
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className="card p-8 text-center">
-                <div className="mx-auto mb-6 h-20 w-20 overflow-hidden rounded-full">
-                  <Image
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    width={80}
-                    height={80}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div className="mb-4 flex justify-center">
+              <div
+                key={testimonial.id}
+                className="bg-gray-50 rounded-lg p-6 text-center"
+              >
+                <Image
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  width={80}
+                  height={80}
+                  className="rounded-full mx-auto mb-4"
+                />
+                <div className="flex justify-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className="text-xl text-yellow-400">
-                      ★
-                    </span>
+                    <span key={i} className="text-yellow-400 text-xl">★</span>
                   ))}
                 </div>
-                <p className="mb-6 italic text-gray-600 dark:text-gray-300">
-                  &quot;{testimonial.content}&quot;
+                <p className="text-gray-600 mb-4 italic">
+                  "{testimonial.content}"
                 </p>
-                <h4 className="font-semibold text-gray-900 dark:text-white">
-                  {testimonial.name}
-                </h4>
-                <p className="text-sm text-gray-500">{testimonial.position}</p>
+                <h4 className="font-semibold text-gray-800">{testimonial.name}</h4>
+                <p className="text-gray-500 text-sm">{testimonial.role}</p>
               </div>
             ))}
           </div>
@@ -304,106 +394,52 @@ export default function HomePage() {
       </section>
 
       {/* Gallery Section */}
-      <section id="gallery" className="bg-white py-20 dark:bg-gray-900">
-        <div className="container-app">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
               معرض الصور
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              استكشف مرافقنا وبيئة العمل المريحة
+            <p className="text-lg text-gray-600">
+              اكتشف بيئة العمل المتطورة في عياداتنا
             </p>
           </div>
-
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {galleryImages.map((image) => (
-              <div
-                key={image.id}
-                className="group relative cursor-pointer overflow-hidden rounded-lg"
-                onClick={() => setSelectedImage(image.src)}
-              >
+              <div key={image.id} className="aspect-square overflow-hidden rounded-lg">
                 <Image
                   src={image.src}
                   alt={image.alt}
-                  width={400}
-                  height={300}
-                  className="h-64 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  width={200}
+                  height={200}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform"
                 />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="text-lg font-semibold text-white">
-                    عرض الصورة
-                  </span>
-                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="bg-[var(--brand-surface)] py-20">
-        <div className="container-app">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-            <div>
-              <h2 className="mb-6 text-4xl font-bold text-gray-900 dark:text-white">
-                عن مُعين
-              </h2>
-              <p className="mb-6 text-lg text-gray-600 dark:text-gray-300">
-                منصة مُعين هي الحل التقني الشامل لمراكز الرعاية الصحية المتخصصة.
-                نقدم نظاماً متكاملاً يجمع بين إدارة المواعيد، ملفات المرضى،
-                المطالبات التأمينية، والشات بوت الذكي.
-              </p>
-              <p className="mb-8 text-lg text-gray-600 dark:text-gray-300">
-                هدفنا هو تبسيط العمليات الطبية ورفع كفاءة الخدمات المقدمة للمرضى
-                من خلال التقنيات الحديثة والذكاء الاصطناعي.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  href={ROUTES.HEALTH.APPOINTMENTS}
-                  className="btn-brand rounded-lg px-6 py-3 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
-                >
-                  ابدأ الآن
-                </Link>
-                <Link
-                  href="#contact"
-                  className="border-brand text-brand hover:bg-brand rounded-lg border px-6 py-3 transition-colors hover:text-white"
-                >
-                  تواصل معنا
-                </Link>
-              </div>
-            </div>
-            <div className="relative">
-              <Image
-                src="/logo.jpg"
-                alt="عن مُعين"
-                width={600}
-                height={400}
-                className="shadow-soft rounded-lg"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* FAQ Section */}
-      <section className="bg-white py-20 dark:bg-gray-900">
-        <div className="container-app">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
               الأسئلة الشائعة
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
+            <p className="text-lg text-gray-600">
               إجابات على أكثر الأسئلة شيوعاً
             </p>
           </div>
-
-          <div className="mx-auto max-w-3xl space-y-6">
+          
+          <div className="max-w-3xl mx-auto">
             {faqs.map((faq) => (
-              <div key={faq.id} className="card p-6">
-                <h3 className="mb-3 text-lg font-semibold text-gray-900 dark:text-white">
+              <div key={faq.id} className="mb-6">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
                   {faq.question}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300">{faq.answer}</p>
+                <p className="text-gray-600">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -411,210 +447,22 @@ export default function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="bg-[var(--brand-surface)] py-20">
-        <div className="container-app">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
-              تواصل معنا
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              نحن هنا لمساعدتك في أي وقت
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <div className="card p-8 text-center">
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl">
-                📱
-              </div>
-              <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-                واتساب
-              </h3>
-              <p className="mb-4 text-gray-600 dark:text-gray-300">
-                تواصل معنا عبر واتساب
-              </p>
-              <a
-                href="https://wa.me/966501234567"
-                className="font-semibold text-green-600 hover:text-green-700"
-              >
-                +966 50 123 4567
-              </a>
-            </div>
-
-            <div className="card p-8 text-center">
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-3xl">
-                📞
-              </div>
-              <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-                اتصال مباشر
-              </h3>
-              <p className="mb-4 text-gray-600 dark:text-gray-300">
-                اتصل بنا مباشرة
-              </p>
-              <a
-                href="tel:+966501234567"
-                className="font-semibold text-blue-600 hover:text-blue-700"
-              >
-                +966 50 123 4567
-              </a>
-            </div>
-
-            <div className="card p-8 text-center">
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-3xl">
-                📍
-              </div>
-              <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-                الموقع
-              </h3>
-              <p className="mb-4 text-gray-600 dark:text-gray-300">
-                زورنا في مقرنا
-              </p>
-              <p className="text-gray-600 dark:text-gray-300">
-                الرياض، المملكة العربية السعودية
-              </p>
-            </div>
-          </div>
+      <section className="py-20 bg-blue-600 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            ابدأ رحلتك الصحية معنا
+          </h2>
+          <p className="text-xl mb-8 text-blue-100">
+            احجز موعدك اليوم واستمتع بأفضل الخدمات الصحية
+          </p>
+          <Link
+            href={ROUTES.HEALTH.APPOINTMENTS}
+            className="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+          >
+            احجز موعدك الآن
+          </Link>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 py-16 text-white">
-        <div className="container-app">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-            <div>
-              <div className="mb-6 flex items-center gap-3">
-                <Image
-                  src="/logo.jpg"
-                  alt="مُعين"
-                  width={40}
-                  height={40}
-                  className="rounded-lg"
-                />
-                <h3 className="text-2xl font-bold">مُعين</h3>
-              </div>
-              <p className="mb-6 text-gray-300">
-                منصة الرعاية الصحية المتخصصة التي تجمع بين التقنيات الحديثة
-                والذكاء الاصطناعي لخدمة المرضى والعاملين في القطاع الصحي.
-              </p>
-            </div>
-
-            <div>
-              <h4 className="mb-6 text-lg font-semibold">الخدمات</h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link
-                    href={ROUTES.HEALTH.APPOINTMENTS}
-                    className="text-gray-300 transition-colors hover:text-white"
-                  >
-                    إدارة المواعيد
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={ROUTES.HEALTH.PATIENTS}
-                    className="text-gray-300 transition-colors hover:text-white"
-                  >
-                    إدارة المرضى
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={ROUTES.HEALTH.INSURANCE_CLAIMS}
-                    className="text-gray-300 transition-colors hover:text-white"
-                  >
-                    المطالبات التأمينية
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={ROUTES.CHATBOT.FLOWS}
-                    className="text-gray-300 transition-colors hover:text-white"
-                  >
-                    الشات بوت الذكي
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="mb-6 text-lg font-semibold">روابط سريعة</h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link
-                    href="#about"
-                    className="text-gray-300 transition-colors hover:text-white"
-                  >
-                    عن معين
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#gallery"
-                    className="text-gray-300 transition-colors hover:text-white"
-                  >
-                    المعرض
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#contact"
-                    className="text-gray-300 transition-colors hover:text-white"
-                  >
-                    اتصل بنا
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={ROUTES.LOGIN}
-                    className="text-gray-300 transition-colors hover:text-white"
-                  >
-                    تسجيل الدخول
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="mb-6 text-lg font-semibold">تواصل معنا</h4>
-              <div className="space-y-3">
-                <p className="text-gray-300">📱 +966 50 123 4567</p>
-                <p className="text-gray-300">📧 info@moeen.com</p>
-                <p className="text-gray-300">
-                  📍 الرياض، المملكة العربية السعودية
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-12 border-t border-gray-700 pt-8 text-center">
-            <p className="text-gray-400">© 2024 مُعين. جميع الحقوق محفوظة.</p>
-          </div>
-        </div>
-      </footer>
-
-      {/* Lightbox Modal */}
-      {selectedImage && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
-          onClick={() => setSelectedImage(null)}
-        >
-          <div className="relative max-h-full max-w-4xl">
-            <Image
-              src={selectedImage}
-              alt="معرض الصور"
-              width={800}
-              height={600}
-              className="rounded-lg"
-            />
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute right-4 top-4 text-2xl text-white hover:text-gray-300"
-            >
-              ✕
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

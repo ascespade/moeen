@@ -25,8 +25,8 @@ export default function HeaderSimple() {
       setShowLangDropdown(false);
     };
 
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
   return (
@@ -102,7 +102,7 @@ export default function HeaderSimple() {
 
             {/* Language Dropdown */}
             <div className="relative">
-              <button 
+              <button
                 className="inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
                 onClick={(e) => {
                   e.stopPropagation();

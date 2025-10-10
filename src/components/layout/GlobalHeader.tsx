@@ -24,7 +24,7 @@ function ThemeLanguageSwitches() {
     html.setAttribute("data-theme", theme);
     html.setAttribute("lang", language);
     html.setAttribute("dir", language === "ar" ? "rtl" : "ltr");
-    
+
     // Only save to database if not initial load
     if (!isLoading) {
       saveUserPreference("theme", theme);
@@ -36,14 +36,14 @@ function ThemeLanguageSwitches() {
   const loadUserPreferences = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('/api/user/preferences');
+      const response = await fetch("/api/user/preferences");
       if (response.ok) {
         const data = await response.json();
         if (data.theme) setTheme(data.theme);
         if (data.language) setLanguage(data.language);
       }
     } catch (error) {
-      console.error('Failed to load preferences:', error);
+      console.error("Failed to load preferences:", error);
     } finally {
       setIsLoading(false);
     }
@@ -52,15 +52,15 @@ function ThemeLanguageSwitches() {
   // Function to save preferences to database
   const saveUserPreference = async (key: string, value: string) => {
     try {
-      await fetch('/api/user/preferences', {
-        method: 'POST',
+      await fetch("/api/user/preferences", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ key, value }),
       });
     } catch (error) {
-      console.error('Failed to save preference:', error);
+      console.error("Failed to save preference:", error);
     }
   };
 
@@ -98,7 +98,7 @@ function ThemeLanguageSwitches() {
       </button>
 
       {/* Language Toggle Button */}
-      <button 
+      <button
         className="inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50"
         onClick={toggleLanguage}
         disabled={isLoading}
@@ -108,7 +108,9 @@ function ThemeLanguageSwitches() {
         ) : (
           <Languages className="h-4 w-4" />
         )}
-        <span className="hidden sm:inline">{language === "ar" ? "العربية" : "English"}</span>
+        <span className="hidden sm:inline">
+          {language === "ar" ? "العربية" : "English"}
+        </span>
       </button>
     </>
   );
@@ -123,13 +125,13 @@ export default function GlobalHeader() {
   useEffect(() => {
     const loadLanguage = async () => {
       try {
-        const response = await fetch('/api/user/preferences');
+        const response = await fetch("/api/user/preferences");
         if (response.ok) {
           const data = await response.json();
           if (data.language) setLanguage(data.language);
         }
       } catch (error) {
-        console.error('Failed to load language preference:', error);
+        console.error("Failed to load language preference:", error);
       }
     };
     loadLanguage();

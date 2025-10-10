@@ -40,8 +40,8 @@ export default function Header() {
       setShowUserDropdown(false);
     };
 
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
   return (
@@ -144,7 +144,7 @@ export default function Header() {
             </button>
 
             <div className="relative inline-flex">
-              <button 
+              <button
                 className="inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
                 onClick={(e) => {
                   e.stopPropagation();
