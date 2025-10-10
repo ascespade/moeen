@@ -193,7 +193,7 @@ export default function AdminDashboard() {
   const getActivityIcon = (type: RecentActivity["type"]) => {
     const config = activityTypeConfig[type];
     return (
-      <div className={`w-8 h-8 rounded-full ${config.bg} flex items-center justify-center text-sm`}>
+      <div className={`w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-sm`}>
         {config.icon}
       </div>
     );
@@ -254,7 +254,7 @@ export default function AdminDashboard() {
               <Button variant="outline" size="sm">
                 تصدير التقرير
               </Button>
-              <Button variant="brand" size="sm">
+              <Button variant="primary" size="sm">
                 إعدادات
               </Button>
             </div>
