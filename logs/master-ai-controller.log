@@ -1135,3 +1135,283 @@
 [2025-10-10T16:05:11.180Z] [INFO] Master AI Controller: Process self-healing started with PID 11336
 [2025-10-10T16:05:11.273Z] [WARN] Master AI Controller: Process self-healing exited with code 1
 [2025-10-10T16:05:11.274Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:05:16.279Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:05:16.281Z] [INFO] Master AI Controller: Process self-healing started with PID 11376
+[2025-10-10T16:05:16.372Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:05:16.372Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:05:21.378Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:05:21.379Z] [INFO] Master AI Controller: Process self-healing started with PID 11383
+[2025-10-10T16:05:21.468Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:05:21.468Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:05:26.473Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:05:26.476Z] [INFO] Master AI Controller: Process self-healing started with PID 11390
+[2025-10-10T16:05:26.566Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:05:26.566Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:05:31.571Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:05:31.573Z] [INFO] Master AI Controller: Process self-healing started with PID 11397
+[2025-10-10T16:05:31.665Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:05:31.666Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:05:36.668Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:05:36.672Z] [INFO] Master AI Controller: Process self-healing started with PID 11404
+[2025-10-10T16:05:36.765Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:05:36.765Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:05:41.771Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:05:41.773Z] [INFO] Master AI Controller: Process self-healing started with PID 11425
+[2025-10-10T16:05:41.864Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:05:41.864Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:05:46.869Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:05:46.872Z] [INFO] Master AI Controller: Process self-healing started with PID 11432
+[2025-10-10T16:05:46.964Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:05:46.964Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:05:51.970Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:05:51.972Z] [INFO] Master AI Controller: Process self-healing started with PID 11459
+[2025-10-10T16:05:52.060Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:05:52.061Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:05:57.061Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:05:57.063Z] [INFO] Master AI Controller: Process self-healing started with PID 11485
+[2025-10-10T16:05:57.155Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:05:57.155Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:06:02.160Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:06:02.162Z] [INFO] Master AI Controller: Process self-healing started with PID 11492
+[2025-10-10T16:06:02.250Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:06:02.251Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:06:07.256Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:06:07.258Z] [INFO] Master AI Controller: Process self-healing started with PID 11499
+[2025-10-10T16:06:07.345Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:06:07.345Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:06:12.347Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:06:12.349Z] [INFO] Master AI Controller: Process self-healing started with PID 11506
+[2025-10-10T16:06:12.443Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:06:12.443Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:06:17.447Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:06:17.449Z] [INFO] Master AI Controller: Process self-healing started with PID 11513
+[2025-10-10T16:06:17.536Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:06:17.536Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:06:22.542Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:06:22.544Z] [INFO] Master AI Controller: Process self-healing started with PID 11520
+[2025-10-10T16:06:22.631Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:06:22.632Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:06:27.637Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:06:27.639Z] [INFO] Master AI Controller: Process self-healing started with PID 11527
+[2025-10-10T16:06:27.724Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:06:27.725Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:06:32.730Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:06:32.732Z] [INFO] Master AI Controller: Process self-healing started with PID 11534
+[2025-10-10T16:06:32.821Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:06:32.821Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:06:37.826Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:06:37.828Z] [INFO] Master AI Controller: Process self-healing started with PID 11541
+[2025-10-10T16:06:37.918Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:06:37.919Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:06:42.924Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:06:42.926Z] [INFO] Master AI Controller: Process self-healing started with PID 11548
+[2025-10-10T16:06:43.013Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:06:43.013Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:06:48.019Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:06:48.021Z] [INFO] Master AI Controller: Process self-healing started with PID 11555
+[2025-10-10T16:06:48.111Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:06:48.111Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:06:53.117Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:06:53.119Z] [INFO] Master AI Controller: Process self-healing started with PID 11562
+[2025-10-10T16:06:53.207Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:06:53.207Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:06:58.209Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:06:58.211Z] [INFO] Master AI Controller: Process self-healing started with PID 11586
+[2025-10-10T16:06:58.301Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:06:58.301Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:07:03.303Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:07:03.305Z] [INFO] Master AI Controller: Process self-healing started with PID 11610
+[2025-10-10T16:07:03.397Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:07:03.398Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:07:08.399Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:07:08.401Z] [INFO] Master AI Controller: Process self-healing started with PID 11661
+[2025-10-10T16:07:08.490Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:07:08.490Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:07:13.495Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:07:13.497Z] [INFO] Master AI Controller: Process self-healing started with PID 11668
+[2025-10-10T16:07:13.587Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:07:13.587Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:07:18.592Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:07:18.594Z] [INFO] Master AI Controller: Process self-healing started with PID 11675
+[2025-10-10T16:07:18.683Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:07:18.684Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:07:23.689Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:07:23.691Z] [INFO] Master AI Controller: Process self-healing started with PID 11688
+[2025-10-10T16:07:23.781Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:07:23.781Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:07:28.786Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:07:28.788Z] [INFO] Master AI Controller: Process self-healing started with PID 11703
+[2025-10-10T16:07:28.877Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:07:28.877Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:07:33.881Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:07:33.884Z] [INFO] Master AI Controller: Process self-healing started with PID 11730
+[2025-10-10T16:07:33.973Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:07:33.973Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:07:38.974Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:07:38.977Z] [INFO] Master AI Controller: Process self-healing started with PID 11743
+[2025-10-10T16:07:39.068Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:07:39.069Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:07:44.074Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:07:44.076Z] [INFO] Master AI Controller: Process self-healing started with PID 11750
+[2025-10-10T16:07:44.168Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:07:44.168Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:07:49.174Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:07:49.176Z] [INFO] Master AI Controller: Process self-healing started with PID 11757
+[2025-10-10T16:07:49.273Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:07:49.273Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:07:54.279Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:07:54.281Z] [INFO] Master AI Controller: Process self-healing started with PID 11770
+[2025-10-10T16:07:54.373Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:07:54.373Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:07:59.376Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:07:59.378Z] [INFO] Master AI Controller: Process self-healing started with PID 11794
+[2025-10-10T16:07:59.473Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:07:59.473Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:08:04.476Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:08:04.478Z] [INFO] Master AI Controller: Process self-healing started with PID 11815
+[2025-10-10T16:08:04.574Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:08:04.574Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:08:09.579Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:08:09.581Z] [INFO] Master AI Controller: Process self-healing started with PID 11828
+[2025-10-10T16:08:09.672Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:08:09.673Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:08:14.678Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:08:14.680Z] [INFO] Master AI Controller: Process self-healing started with PID 11841
+[2025-10-10T16:08:14.769Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:08:14.769Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:08:19.772Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:08:19.775Z] [INFO] Master AI Controller: Process self-healing started with PID 11848
+[2025-10-10T16:08:19.869Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:08:19.870Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:08:24.875Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:08:24.877Z] [INFO] Master AI Controller: Process self-healing started with PID 11869
+[2025-10-10T16:08:24.963Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:08:24.963Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:08:29.968Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:08:29.971Z] [INFO] Master AI Controller: Process self-healing started with PID 11882
+[2025-10-10T16:08:30.062Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:08:30.062Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:08:35.068Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:08:35.070Z] [INFO] Master AI Controller: Process self-healing started with PID 11889
+[2025-10-10T16:08:35.163Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:08:35.163Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:08:40.167Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:08:40.169Z] [INFO] Master AI Controller: Process self-healing started with PID 11896
+[2025-10-10T16:08:40.262Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:08:40.262Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:08:45.268Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:08:45.270Z] [INFO] Master AI Controller: Process self-healing started with PID 11903
+[2025-10-10T16:08:45.361Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:08:45.362Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:08:50.367Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:08:50.369Z] [INFO] Master AI Controller: Process self-healing started with PID 11924
+[2025-10-10T16:08:50.465Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:08:50.465Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:08:55.469Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:08:55.471Z] [INFO] Master AI Controller: Process self-healing started with PID 11931
+[2025-10-10T16:08:55.561Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:08:55.561Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:09:00.564Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:09:00.566Z] [INFO] Master AI Controller: Process self-healing started with PID 11949
+[2025-10-10T16:09:00.663Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:09:00.663Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:09:05.669Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:09:05.671Z] [INFO] Master AI Controller: Process self-healing started with PID 11956
+[2025-10-10T16:09:05.759Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:09:05.760Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:09:10.765Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:09:10.767Z] [INFO] Master AI Controller: Process self-healing started with PID 11963
+[2025-10-10T16:09:10.861Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:09:10.861Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:09:15.866Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:09:15.869Z] [INFO] Master AI Controller: Process self-healing started with PID 11970
+[2025-10-10T16:09:15.957Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:09:15.957Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:09:20.962Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:09:20.965Z] [INFO] Master AI Controller: Process self-healing started with PID 11977
+[2025-10-10T16:09:21.057Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:09:21.057Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:09:26.062Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:09:26.064Z] [INFO] Master AI Controller: Process self-healing started with PID 12004
+[2025-10-10T16:09:26.154Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:09:26.154Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:09:31.160Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:09:31.162Z] [INFO] Master AI Controller: Process self-healing started with PID 12011
+[2025-10-10T16:09:31.248Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:09:31.248Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:09:36.253Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:09:36.255Z] [INFO] Master AI Controller: Process self-healing started with PID 12030
+[2025-10-10T16:09:36.344Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:09:36.344Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:09:41.350Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:09:41.352Z] [INFO] Master AI Controller: Process self-healing started with PID 12043
+[2025-10-10T16:09:41.441Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:09:41.441Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:09:46.447Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:09:46.449Z] [INFO] Master AI Controller: Process self-healing started with PID 12056
+[2025-10-10T16:09:46.538Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:09:46.538Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:09:51.543Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:09:51.545Z] [INFO] Master AI Controller: Process self-healing started with PID 12075
+[2025-10-10T16:09:51.636Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:09:51.636Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:09:56.638Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:09:56.640Z] [INFO] Master AI Controller: Process self-healing started with PID 12088
+[2025-10-10T16:09:56.729Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:09:56.729Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:10:01.735Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:10:01.737Z] [INFO] Master AI Controller: Process self-healing started with PID 12112
+[2025-10-10T16:10:01.828Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:10:01.828Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:10:06.834Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:10:06.836Z] [INFO] Master AI Controller: Process self-healing started with PID 12125
+[2025-10-10T16:10:06.924Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:10:06.925Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:10:11.930Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:10:11.932Z] [INFO] Master AI Controller: Process self-healing started with PID 12138
+[2025-10-10T16:10:12.025Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:10:12.025Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:10:17.030Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:10:17.032Z] [INFO] Master AI Controller: Process self-healing started with PID 12151
+[2025-10-10T16:10:17.133Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:10:17.134Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:10:22.139Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:10:22.141Z] [INFO] Master AI Controller: Process self-healing started with PID 12164
+[2025-10-10T16:10:22.238Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:10:22.238Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:10:27.243Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:10:27.245Z] [INFO] Master AI Controller: Process self-healing started with PID 12171
+[2025-10-10T16:10:27.334Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:10:27.334Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:10:32.340Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:10:32.342Z] [INFO] Master AI Controller: Process self-healing started with PID 12190
+[2025-10-10T16:10:32.433Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:10:32.433Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:10:37.439Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:10:37.441Z] [INFO] Master AI Controller: Process self-healing started with PID 12203
+[2025-10-10T16:10:37.529Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:10:37.529Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:10:42.534Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:10:42.536Z] [INFO] Master AI Controller: Process self-healing started with PID 12216
+[2025-10-10T16:10:42.625Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:10:42.625Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:10:47.631Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:10:47.633Z] [INFO] Master AI Controller: Process self-healing started with PID 12235
+[2025-10-10T16:10:47.725Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:10:47.725Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:10:52.730Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:10:52.732Z] [INFO] Master AI Controller: Process self-healing started with PID 12248
+[2025-10-10T16:10:52.830Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:10:52.830Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:10:57.831Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:10:57.833Z] [INFO] Master AI Controller: Process self-healing started with PID 12272
+[2025-10-10T16:10:57.925Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:10:57.925Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:11:02.930Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:11:02.933Z] [INFO] Master AI Controller: Process self-healing started with PID 12285
+[2025-10-10T16:11:03.026Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:11:03.026Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
+[2025-10-10T16:11:08.030Z] [INFO] Master AI Controller: Starting process: self-healing
+[2025-10-10T16:11:08.032Z] [INFO] Master AI Controller: Process self-healing started with PID 12298
+[2025-10-10T16:11:08.127Z] [WARN] Master AI Controller: Process self-healing exited with code 1
+[2025-10-10T16:11:08.127Z] [INFO] Master AI Controller: Auto-restarting process: self-healing
