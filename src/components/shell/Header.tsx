@@ -29,8 +29,8 @@ export default function Header() {
   }, [theme, dir]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-gray-200 bg-white/80 backdrop-blur dark:border-gray-800 dark:bg-gray-900/80">
-      <div className="mx-auto px-4 sm:px-6">
+    <header className="sticky top-0 z-40 border-b bg-white/80 backdrop-blur dark:bg-gray-900/80 border-brand">
+      <div className="container-app py-2">
         <div className="grid h-14 grid-cols-[auto_1fr_auto] items-center gap-3">
           <button
             type="button"
@@ -58,7 +58,7 @@ export default function Header() {
               <div className="relative">
                 <input
                   type="search"
-                  className="block w-full rounded-md border border-gray-200 bg-white py-2 pe-10 ps-3 text-sm text-gray-800 placeholder-gray-400 focus:ring-1 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:placeholder-gray-500"
+                  className="block w-full rounded-md border border-[var(--brand-border)] bg-white py-2 pe-10 ps-3 text-sm text-gray-800 placeholder-gray-400 focus:ring-1 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:placeholder-gray-500"
                   placeholder="ابحث في النظام..."
                   aria-label="بحث"
                   style={{ outlineColor: "var(--brand-primary)" }}
@@ -73,7 +73,7 @@ export default function Header() {
           <div className="flex items-center gap-2 justify-self-end">
             <div className="hs-dropdown relative inline-flex">
               <button
-                className="inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                className="inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
                 aria-haspopup="menu"
                 style={{ outlineColor: "var(--brand-primary)" }}
               >
@@ -106,7 +106,7 @@ export default function Header() {
             </div>
 
             <button
-              className="h-9 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+              className="h-9 rounded-md border border-[var(--brand-border)] px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
               aria-label="Toggle direction"
               style={{ outlineColor: "var(--brand-primary)" }}
               onClick={() => setDir(dir === "rtl" ? "ltr" : "rtl")}
@@ -115,7 +115,7 @@ export default function Header() {
             </button>
 
             <div className="hs-dropdown relative inline-flex">
-              <button className="inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800">
+              <button className="inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800">
                 <Languages className="h-4 w-4" />
                 <span className="hidden sm:inline">
                   {t("ui.language", "اللغة")}
@@ -142,7 +142,7 @@ export default function Header() {
 
             <div className="hs-dropdown relative inline-flex [--trigger:hover]">
               <button
-                className="relative grid h-9 w-9 place-items-center rounded-full border border-gray-200 text-gray-700 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200"
+                className="relative grid h-9 w-9 place-items-center rounded-full border border-[var(--brand-border)] text-gray-700 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200"
                 style={{ outlineColor: "var(--brand-primary)" }}
                 aria-haspopup="menu"
                 aria-expanded="false"
