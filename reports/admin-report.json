@@ -1,0 +1,70 @@
+{
+  "timestamp": "2025-10-10T15:35:08.082Z",
+  "supabaseConnection": {
+    "success": false,
+    "error": "Supabase configuration missing",
+    "timestamp": "2025-10-10T15:35:08.083Z"
+  },
+  "userPermissions": [
+    {
+      "email": "admin@example.com",
+      "role": "admin",
+      "permissions": [
+        "all"
+      ],
+      "status": "valid",
+      "issues": []
+    }
+  ],
+  "roleDefinitions": [
+    {
+      "role": "admin",
+      "status": "valid",
+      "issues": []
+    },
+    {
+      "role": "doctor",
+      "status": "valid",
+      "issues": []
+    },
+    {
+      "role": "therapist",
+      "status": "valid",
+      "issues": []
+    },
+    {
+      "role": "patient",
+      "status": "valid",
+      "issues": []
+    },
+    {
+      "role": "family_member",
+      "status": "valid",
+      "issues": []
+    }
+  ],
+  "securitySettings": {
+    "passwordPolicy": {
+      "status": "valid",
+      "issues": []
+    },
+    "sessionSettings": {
+      "status": "valid",
+      "issues": []
+    },
+    "loginSecurity": {
+      "status": "valid",
+      "issues": []
+    }
+  },
+  "summary": {
+    "totalUsers": 1,
+    "validUsers": 1,
+    "invalidUsers": 0,
+    "totalRoles": 5,
+    "validRoles": 5,
+    "invalidRoles": 0,
+    "securityWarnings": 0,
+    "overallStatus": "warning"
+  }
+}

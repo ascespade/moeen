@@ -1,0 +1,26 @@
+[2025-10-10T15:35:05.887Z] Master Executor: Master execution started
+[2025-10-10T15:35:05.890Z] Master Executor: Generating final report...
+[2025-10-10T15:35:05.891Z] Master Executor: Starting master execution...
+[2025-10-10T15:35:05.891Z] Master Executor: Executing module: File Cleanup and Management
+[2025-10-10T15:35:05.891Z] Master Executor: Running script: scripts/file-cleanup.js
+[2025-10-10T15:35:05.958Z] Master Executor: Script failed with code 1: scripts/file-cleanup.js
+[2025-10-10T15:35:05.958Z] Master Executor: ✗ File Cleanup and Management failed: Script failed with code 1
+[2025-10-10T15:35:05.959Z] Master Executor: Executing module: N8n Workflow Integration
+[2025-10-10T15:35:05.959Z] Master Executor: Running script: scripts/n8n-workflow-manager.js
+[2025-10-10T15:35:08.004Z] Master Executor: Script completed successfully: scripts/n8n-workflow-manager.js
+[2025-10-10T15:35:08.004Z] Master Executor: ✓ N8n Workflow Integration completed successfully
+[2025-10-10T15:35:08.005Z] Master Executor: Executing module: Social Media Automation
+[2025-10-10T15:35:08.005Z] Master Executor: Running script: scripts/social-media-automation.js
+[2025-10-10T15:35:08.045Z] Master Executor: Script completed successfully: scripts/social-media-automation.js
+[2025-10-10T15:35:08.045Z] Master Executor: ✓ Social Media Automation completed successfully
+[2025-10-10T15:35:08.045Z] Master Executor: Executing module: Admin Module
+[2025-10-10T15:35:08.045Z] Master Executor: Running script: scripts/admin-module.js
+[2025-10-10T15:35:08.088Z] Master Executor: Script completed successfully: scripts/admin-module.js
+[2025-10-10T15:35:08.089Z] Master Executor: ✓ Admin Module completed successfully
+[2025-10-10T15:35:08.089Z] Master Executor: Executing module: Enhancements
+[2025-10-10T15:35:08.089Z] Master Executor: Running script: scripts/enhancements.js
+[2025-10-10T15:35:08.128Z] Master Executor: Script failed with code 1: scripts/enhancements.js
+[2025-10-10T15:35:08.129Z] Master Executor: ✗ Enhancements failed: Script failed with code 1
+[2025-10-10T15:35:08.129Z] Master Executor: Final report saved to: /workspace/reports/master-execution-report.json
+[2025-10-10T15:35:08.129Z] Master Executor: Execution completed: 3/5 modules successful
+[2025-10-10T15:35:08.129Z] Master Executor: Failed modules: File Cleanup and Management, Enhancements
