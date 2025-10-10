@@ -350,8 +350,8 @@ export function secureAPI(
 
       // Log the error
       await AuditLogger.log(request, "SECURITY_ERROR", {
-        error: error.message,
-        stack: error.stack,
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
       });
 
       return NextResponse.json(
@@ -394,13 +394,3 @@ export class DataValidator {
   }
 }
 
-// Export security utilities
-export {
-  EnhancedRateLimiter,
-  EnhancedCSRFProtection,
-  EnhancedSessionSecurity,
-  InputSanitizer,
-  AuditLogger,
-  EnhancedAuthMiddleware,
-  DataValidator,
-};

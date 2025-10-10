@@ -88,7 +88,7 @@ export class MemoryCache {
 
   stats(): { size: number; hits: number; missRate: number } {
     let totalHits = 0;
-    for (const entry of this.cache.values()) {
+    for (const entry of Array.from(this.cache.values())) {
       totalHits += entry.hits;
     }
 
@@ -102,7 +102,7 @@ export class MemoryCache {
   private startCleanup(): void {
     this.cleanupTimer = setInterval(() => {
       const now = Date.now();
-      for (const [key, entry] of this.cache.entries()) {
+      for (const [key, entry] of Array.from(this.cache.entries())) {
         if (now - entry.timestamp > entry.ttl) {
           this.cache.delete(key);
         }
@@ -239,7 +239,7 @@ export class CacheManager {
 
   invalidatePattern(pattern: string): void {
     const regex = new RegExp(pattern.replace(/\*/g, ".*"));
-    for (const key of this.cache["cache"].keys()) {
+    for (const key of Array.from(this.cache["cache"].keys())) {
       if (regex.test(key)) {
         this.cache.delete(key);
       }

@@ -173,11 +173,11 @@ const mockStaffWorkHours: StaffWorkHours[] = [
 ];
 
 const activityTypeConfig = {
-  appointment: { icon: "📅", color: "blue" },
-  claim: { icon: "📋", color: "green" },
-  patient: { icon: "👤", color: "red" },
-  staff: { icon: "👨‍⚕️", color: "purple" },
-  payment: { icon: "💰", color: "green" },
+  appointment: { icon: "📅", color: "blue", bg: "bg-blue-50" },
+  claim: { icon: "📋", color: "green", bg: "bg-green-50" },
+  patient: { icon: "👤", color: "red", bg: "bg-red-50" },
+  staff: { icon: "👨‍⚕️", color: "purple", bg: "bg-purple-50" },
+  payment: { icon: "💰", color: "green", bg: "bg-green-50" },
 };
 
 const statusConfig = {
@@ -251,10 +251,10 @@ export default function AdminDashboard() {
                 <option value="month">هذا الشهر</option>
                 <option value="year">هذا العام</option>
               </select>
-              <Button variant="outline" size="sm">
+              <Button variant="secondary" size="sm">
                 تصدير التقرير
               </Button>
-              <Button variant="brand" size="sm">
+              <Button variant="primary" size="sm">
                 إعدادات
               </Button>
             </div>
@@ -375,7 +375,7 @@ export default function AdminDashboard() {
           <Card className="p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold">النشاطات الأخيرة</h3>
-              <Button variant="outline" size="sm">
+              <Button variant="secondary" size="sm">
                 عرض الكل
               </Button>
             </div>
@@ -403,7 +403,7 @@ export default function AdminDashboard() {
           <Card className="p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold">ساعات عمل الموظفين</h3>
-              <Button variant="outline" size="sm">
+              <Button variant="secondary" size="sm">
                 عرض التقرير الكامل
               </Button>
             </div>
@@ -446,27 +446,27 @@ export default function AdminDashboard() {
         <Card className="p-6 mt-8">
           <h3 className="text-lg font-semibold mb-6">إجراءات سريعة</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
+            <Button variant="secondary" className="h-20 flex flex-col items-center justify-center">
               <span className="text-2xl mb-2">👤</span>
               <span className="text-sm">إضافة مريض</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
+            <Button variant="secondary" className="h-20 flex flex-col items-center justify-center">
               <span className="text-2xl mb-2">📅</span>
               <span className="text-sm">حجز موعد</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
+            <Button variant="secondary" className="h-20 flex flex-col items-center justify-center">
               <span className="text-2xl mb-2">📋</span>
               <span className="text-sm">مطالبة تأمين</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
+            <Button variant="secondary" className="h-20 flex flex-col items-center justify-center">
               <span className="text-2xl mb-2">👨‍⚕️</span>
               <span className="text-sm">إضافة موظف</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
+            <Button variant="secondary" className="h-20 flex flex-col items-center justify-center">
               <span className="text-2xl mb-2">📊</span>
               <span className="text-sm">تقرير مالي</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
+            <Button variant="secondary" className="h-20 flex flex-col items-center justify-center">
               <span className="text-2xl mb-2">⚙️</span>
               <span className="text-sm">الإعدادات</span>
             </Button>

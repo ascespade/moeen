@@ -24,10 +24,7 @@ export default function LoginPage() {
       window.location.href = getDefaultRouteForUser({
         id: "temp",
         email,
-        name: "",
         role: "user",
-        createdAt: new Date(),
-        updatedAt: new Date(),
       });
     } catch (err: any) {
       setError(err?.message || "Login failed");

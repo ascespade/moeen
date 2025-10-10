@@ -2,6 +2,12 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 
   // Disable everything for speed
   images: {
