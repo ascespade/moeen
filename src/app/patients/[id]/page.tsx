@@ -1,12 +1,605 @@
-interface Props { params: { id: string } }
+"use client";
 
-export default function PatientDetailsPage({ params }: Props) {
-  return (
-    <main className="container-app py-8">
-      <h1 className="text-2xl font-bold text-brand mb-4">ملف المريض: {params.id}</h1>
-      <div className="rounded-xl border border-brand bg-white dark:bg-gray-900 p-4">بيانات المريض (UI فقط)</div>
-    </main>
-  );
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
+
+interface Patient {
+  id: string;
+  name: string;
+  phone: string;
+  email?: string;
+  age: number;
+  gender: "male" | "female";
+  status: "active" | "inactive" | "blocked";
+  insuranceProvider?: string;
+  notes?: string;
+  address?: string;
+  emergencyContact?: string;
+  medicalHistory?: string[];
+  allergies?: string[];
 }
 
+interface Session {
+  id: string;
+  date: string;
+  doctor: string;
+  type: string;
+  duration: number;
+  status: "completed" | "cancelled" | "upcoming";
+  notes?: string;
+}
 
+interface Document {
+  id: string;
+  name: string;
+  type: string;
+  uploadDate: string;
+  size: string;
+}
+
+const mockPatient: Patient = {
+  id: "1",
+  name: "أحمد العتيبي",
+  phone: "0501234567",
+  email: "ahmed@example.com",
+  age: 35,
+  gender: "male",
+  status: "active",
+  insuranceProvider: "التأمين التعاوني",
+  notes: "مريض يعاني من آلام الظهر المزمنة",
+  address: "الرياض، حي النرجس",
+  emergencyContact: "0509876543 - فاطمة العتيبي",
+  medicalHistory: ["جراحة في العمود الفقري 2020", "كسر في الساق 2018"],
+  allergies: ["البنسلين", "الأسبرين"]
+};
+
+const mockSessions: Session[] = [
+  {
+    id: "1",
+    date: "2024-01-15",
+    doctor: "د. سارة أحمد",
+    type: "علاج طبيعي",
+    duration: 60,
+    status: "completed",
+    notes: "جلسة علاج طبيعي للظهر - تحسن ملحوظ"
+  },
+  {
+    id: "2",
+    date: "2024-01-10",
+    doctor: "د. سارة أحمد",
+    type: "علاج طبيعي",
+    duration: 60,
+    status: "completed",
+    notes: "تمارين تقوية عضلات الظهر"
+  },
+  {
+    id: "3",
+    date: "2024-01-20",
+    doctor: "د. سارة أحمد",
+    type: "علاج طبيعي",
+    duration: 60,
+    status: "upcoming"
+  }
+];
+
+const mockDocuments: Document[] = [
+  {
+    id: "1",
+    name: "تقرير الأشعة السينية",
+    type: "PDF",
+    uploadDate: "2024-01-10",
+    size: "2.3 MB"
+  },
+  {
+    id: "2",
+    name: "تحليل الدم",
+    type: "PDF",
+    uploadDate: "2024-01-08",
+    size: "1.1 MB"
+  },
+  {
+    id: "3",
+    name: "صورة الأشعة المقطعية",
+    type: "JPG",
+    uploadDate: "2024-01-05",
+    size: "5.7 MB"
+  }
+];
+
+export default function PatientDetailsPage({ params }: { params: { id: string } }) {
+  const [activeTab, setActiveTab] = useState<"info" | "sessions" | "documents" | "relatives" | "claims">("info");
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const getStatusColor = (status: Patient["status"]) => {
+    switch (status) {
+      case "active":
+        return "bg-green-100 text-green-800";
+      case "inactive":
+        return "bg-yellow-100 text-yellow-800";
+      case "blocked":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  const getStatusText = (status: Patient["status"]) => {
+    switch (status) {
+      case "active":
+        return "نشط";
+      case "inactive":
+        return "غير نشط";
+      case "blocked":
+        return "محظور";
+      default:
+        return "غير محدد";
+    }
+  };
+
+  const getSessionStatusColor = (status: Session["status"]) => {
+    switch (status) {
+      case "completed":
+        return "bg-green-100 text-green-800";
+      case "cancelled":
+        return "bg-red-100 text-red-800";
+      case "upcoming":
+        return "bg-blue-100 text-blue-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  const getSessionStatusText = (status: Session["status"]) => {
+    switch (status) {
+      case "completed":
+        return "مكتملة";
+      case "cancelled":
+        return "ملغية";
+      case "upcoming":
+        return "قادمة";
+      default:
+        return "غير محدد";
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[var(--brand-surface)]">
+      {/* Header */}
+      <header className="bg-white dark:bg-gray-900 border-b border-brand sticky top-0 z-10">
+        <div className="container-app py-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Link
+                href={ROUTES.HEALTH.PATIENTS}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                ← العودة
+              </Link>
+              <div className="w-16 h-16 bg-[var(--brand-primary)] rounded-full flex items-center justify-center text-white font-semibold text-xl">
+                {mockPatient.name.charAt(0)}
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {mockPatient.name}
+                </h1>
+                <p className="text-gray-600 dark:text-gray-300">ملف المريض</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setShowEditModal(true)}
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                تعديل البيانات
+              </button>
+              <button className="btn-brand px-6 py-2 rounded-lg text-white hover:bg-[var(--brand-primary-hover)] transition-colors">
+                حجز موعد
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main className="container-app py-8">
+        {/* Patient Summary */}
+        <div className="card p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-[var(--brand-primary)] mb-2">
+                {mockSessions.length}
+              </div>
+              <div className="text-gray-600 dark:text-gray-300">إجمالي الجلسات</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-green-600 mb-2">
+                {mockSessions.filter(s => s.status === "completed").length}
+              </div>
+              <div className="text-gray-600 dark:text-gray-300">جلسات مكتملة</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-600 mb-2">
+                {mockDocuments.length}
+              </div>
+              <div className="text-gray-600 dark:text-gray-300">الوثائق</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-purple-600 mb-2">
+                2
+              </div>
+              <div className="text-gray-600 dark:text-gray-300">المطالبات</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="card mb-8">
+          <div className="border-b border-gray-200 dark:border-gray-700">
+            <nav className="flex space-x-8">
+              {[
+                { id: "info", label: "البيانات الشخصية" },
+                { id: "sessions", label: "سجل الجلسات" },
+                { id: "documents", label: "الوثائق" },
+                { id: "relatives", label: "الأقارب" },
+                { id: "claims", label: "المطالبات" }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                    activeTab === tab.id
+                      ? "border-[var(--brand-primary)] text-[var(--brand-primary)]"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+
+          <div className="p-6">
+            {/* Personal Info Tab */}
+            {activeTab === "info" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">المعلومات الأساسية</h3>
+                  <div className="space-y-4">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-300">الاسم:</span>
+                      <span className="font-medium">{mockPatient.name}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-300">الهاتف:</span>
+                      <span className="font-medium">{mockPatient.phone}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-300">البريد الإلكتروني:</span>
+                      <span className="font-medium">{mockPatient.email || "غير محدد"}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-300">العمر:</span>
+                      <span className="font-medium">{mockPatient.age} سنة</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-300">الجنس:</span>
+                      <span className="font-medium">{mockPatient.gender === "male" ? "ذكر" : "أنثى"}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600 dark:text-gray-300">الحالة:</span>
+                      <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(mockPatient.status)}`}>
+                        {getStatusText(mockPatient.status)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">معلومات إضافية</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <span className="text-gray-600 dark:text-gray-300 block mb-1">العنوان:</span>
+                      <span className="font-medium">{mockPatient.address || "غير محدد"}</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-600 dark:text-gray-300 block mb-1">جهة الاتصال في الطوارئ:</span>
+                      <span className="font-medium">{mockPatient.emergencyContact || "غير محدد"}</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-600 dark:text-gray-300 block mb-1">شركة التأمين:</span>
+                      <span className="font-medium">{mockPatient.insuranceProvider || "بدون تأمين"}</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-600 dark:text-gray-300 block mb-1">ملاحظات:</span>
+                      <span className="font-medium">{mockPatient.notes || "لا توجد ملاحظات"}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Medical History */}
+                <div className="md:col-span-2">
+                  <h3 className="text-lg font-semibold mb-4">التاريخ الطبي</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-medium mb-2">الأمراض السابقة:</h4>
+                      <ul className="space-y-1">
+                        {mockPatient.medicalHistory?.map((item, index) => (
+                          <li key={index} className="text-sm text-gray-600 dark:text-gray-300">
+                            • {item}
+                          </li>
+                        )) || <li className="text-sm text-gray-500">لا توجد أمراض سابقة</li>}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-medium mb-2">الحساسية:</h4>
+                      <ul className="space-y-1">
+                        {mockPatient.allergies?.map((item, index) => (
+                          <li key={index} className="text-sm text-gray-600 dark:text-gray-300">
+                            • {item}
+                          </li>
+                        )) || <li className="text-sm text-gray-500">لا توجد حساسية</li>}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Sessions Tab */}
+            {activeTab === "sessions" && (
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-lg font-semibold">سجل الجلسات</h3>
+                  <button className="btn-brand px-4 py-2 rounded-lg text-white text-sm hover:bg-[var(--brand-primary-hover)] transition-colors">
+                    إضافة جلسة
+                  </button>
+                </div>
+                <div className="space-y-4">
+                  {mockSessions.map((session) => (
+                    <div key={session.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <h4 className="font-medium">{session.doctor}</h4>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">{session.type}</p>
+                        </div>
+                        <span className={`px-3 py-1 rounded-full text-sm ${getSessionStatusColor(session.status)}`}>
+                          {getSessionStatusText(session.status)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-300">
+                        <span>{session.date}</span>
+                        <span>{session.duration} دقيقة</span>
+                      </div>
+                      {session.notes && (
+                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                          {session.notes}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Documents Tab */}
+            {activeTab === "documents" && (
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-lg font-semibold">الوثائق</h3>
+                  <button className="btn-brand px-4 py-2 rounded-lg text-white text-sm hover:bg-[var(--brand-primary-hover)] transition-colors">
+                    رفع وثيقة
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {mockDocuments.map((doc) => (
+                    <div key={doc.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-soft transition-shadow">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                          <span className="text-red-600 font-semibold">PDF</span>
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-sm">{doc.name}</h4>
+                          <p className="text-xs text-gray-500">{doc.type} • {doc.size}</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center text-xs text-gray-500">
+                        <span>{doc.uploadDate}</span>
+                        <div className="flex gap-2">
+                          <button className="text-[var(--brand-primary)] hover:underline">عرض</button>
+                          <button className="text-gray-500 hover:underline">تحميل</button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Relatives Tab */}
+            {activeTab === "relatives" && (
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-lg font-semibold">الأقارب</h3>
+                  <button className="btn-brand px-4 py-2 rounded-lg text-white text-sm hover:bg-[var(--brand-primary-hover)] transition-colors">
+                    إضافة قريب
+                  </button>
+                </div>
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">👥</span>
+                  </div>
+                  <p className="text-gray-500">لا توجد أقارب مسجلين</p>
+                </div>
+              </div>
+            )}
+
+            {/* Claims Tab */}
+            {activeTab === "claims" && (
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-lg font-semibold">المطالبات التأمينية</h3>
+                  <button className="btn-brand px-4 py-2 rounded-lg text-white text-sm hover:bg-[var(--brand-primary-hover)] transition-colors">
+                    إضافة مطالبة
+                  </button>
+                </div>
+                <div className="space-y-4">
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h4 className="font-medium">مطالبة علاج طبيعي</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">رقم المطالبة: #12345</p>
+                      </div>
+                      <span className="px-3 py-1 rounded-full text-sm bg-green-100 text-green-800">
+                        موافق عليها
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-300">
+                      <span>المبلغ: 1,500 ريال</span>
+                      <span>2024-01-10</span>
+                    </div>
+                  </div>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h4 className="font-medium">مطالبة أشعة</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">رقم المطالبة: #12346</p>
+                      </div>
+                      <span className="px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-800">
+                        قيد المراجعة
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-300">
+                      <span>المبلغ: 800 ريال</span>
+                      <span>2024-01-12</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+
+      {/* Edit Modal */}
+      {showEditModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-gray-900 rounded-lg p-6 w-full max-w-2xl">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-semibold">تعديل بيانات المريض</h3>
+              <button
+                onClick={() => setShowEditModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    الاسم الكامل
+                  </label>
+                  <input
+                    type="text"
+                    defaultValue={mockPatient.name}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    الهاتف
+                  </label>
+                  <input
+                    type="tel"
+                    defaultValue={mockPatient.phone}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    البريد الإلكتروني
+                  </label>
+                  <input
+                    type="email"
+                    defaultValue={mockPatient.email}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    العمر
+                  </label>
+                  <input
+                    type="number"
+                    defaultValue={mockPatient.age}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    الجنس
+                  </label>
+                  <select
+                    defaultValue={mockPatient.gender}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                  >
+                    <option value="male">ذكر</option>
+                    <option value="female">أنثى</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    الحالة
+                  </label>
+                  <select
+                    defaultValue={mockPatient.status}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                  >
+                    <option value="active">نشط</option>
+                    <option value="inactive">غير نشط</option>
+                    <option value="blocked">محظور</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  ملاحظات
+                </label>
+                <textarea
+                  rows={3}
+                  defaultValue={mockPatient.notes}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
+                />
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowEditModal(false)}
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 btn-brand py-2 rounded-lg text-white hover:bg-[var(--brand-primary-hover)] transition-colors"
+                >
+                  حفظ التغييرات
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

@@ -1,50 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
 
-  // Enable Next image optimization in production
+  // Disable everything for speed
   images: {
-    formats: ["image/avif", "image/webp"],
-    deviceSizes: [320, 420, 640, 768, 1024, 1200, 1600, 1920],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    unoptimized: true,
   },
 
-  // Faster cold starts and smaller server bundle
-  output: "standalone",
-
-  // Reduce client bundle via optimized package imports when possible
+  // Minimal experimental features
   experimental: {
-    optimizePackageImports: ["lucide-react"],
+    optimizePackageImports: [],
   },
 
-  compiler: {
-    removeConsole:
-      process.env.NODE_ENV === "production"
-        ? { exclude: ["error", "warn"] }
-        : false,
-  },
-
-  productionBrowserSourceMaps: false,
-
-  compress: true,
-
-  webpack: (config, { dev, isServer }) => {
-    if (!dev && !isServer) {
-      config.optimization.splitChunks = {
-        chunks: "all",
-        maxInitialRequests: 25,
-        minSize: 20_000,
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: "vendors",
-            chunks: "all",
-          },
-        },
-      };
-    }
-
+  // Ultra-fast webpack config
+  webpack: (config, { dev }) => {
     if (dev) {
       config.watchOptions = {
         poll: 2000,
@@ -52,13 +22,8 @@ const nextConfig = {
         ignored: /node_modules/,
       };
     }
-
     return config;
   },
 };
 
-// Bundle analyzer (opt-in with ANALYZE=true)
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
-module.exports = withBundleAnalyzer(nextConfig);
+module.exports = nextConfig;

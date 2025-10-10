@@ -26,11 +26,11 @@ export default function NotFound() {
         </div>
 
         {/* 404 Content */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-soft border border-brand">
-          <div className="text-8xl font-bold text-[var(--brand-primary)] mb-4">
+        <div className="card shadow-soft p-8">
+          <div className="text-8xl font-bold text-brand mb-4">
             404
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl font-bold text-foreground mb-4">
             الصفحة غير موجودة
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
