@@ -1,6 +1,6 @@
+"use client";
 import { useState } from 'react';
 import { ROUTES } from '@/constants/routes';
-"use client";
 
 
 import Image from "next/image";
