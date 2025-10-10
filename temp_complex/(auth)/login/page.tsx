@@ -62,7 +62,7 @@ export default function LoginPage() {
         <div className="mb-8 text-center">
           <div className="mb-4 flex items-center justify-center gap-3">
             <Image
-              src="/logo.jpg"
+              src="/logo.png"
               alt="Hemam Logo"
               width={48}
               height={48}
