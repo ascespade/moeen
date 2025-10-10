@@ -1,46 +1,46 @@
 {
-  "timestamp": "2025-10-10T16:07:01.502Z",
+  "timestamp": "2025-10-10T16:12:01.597Z",
   "environment": "sandbox",
   "tests": [
     {
       "name": "System Health Check",
-      "startTime": "2025-10-10T16:07:01.463Z",
+      "startTime": "2025-10-10T16:12:01.557Z",
       "success": true,
-      "duration": 1,
+      "duration": 0,
       "error": null,
       "output": "Health checks: 6/6 passed",
       "warnings": [],
-      "endTime": "2025-10-10T16:07:01.464Z"
+      "endTime": "2025-10-10T16:12:01.557Z"
     },
     {
       "name": "Script Execution: scripts/test-script.js",
-      "startTime": "2025-10-10T16:07:01.464Z",
+      "startTime": "2025-10-10T16:12:01.558Z",
       "success": false,
-      "duration": 36,
+      "duration": 38,
       "error": "node:internal/modules/cjs/loader:1386\n  throw err;\n  ^\n\nError: Cannot find module '/workspace/sandbox/scripts/test-script.js'\n    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n    at Function._load (node:internal/modules/cjs/loader:1192:37)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: []\n}\n\nNode.js v22.20.0\n",
       "output": "",
       "warnings": [],
-      "endTime": "2025-10-10T16:07:01.500Z"
+      "endTime": "2025-10-10T16:12:01.596Z"
     },
     {
       "name": "Configuration Changes: /workspace/sandbox/config/sandbox-config.json",
-      "startTime": "2025-10-10T16:07:01.501Z",
+      "startTime": "2025-10-10T16:12:01.596Z",
       "success": true,
       "duration": 1,
       "error": null,
       "output": "Configuration changes applied and tested",
       "warnings": [],
-      "endTime": "2025-10-10T16:07:01.502Z"
+      "endTime": "2025-10-10T16:12:01.597Z"
     },
     {
       "name": "Performance Optimization: memory_cleanup",
-      "startTime": "2025-10-10T16:07:01.502Z",
+      "startTime": "2025-10-10T16:12:01.597Z",
       "success": true,
       "duration": 0,
       "error": null,
       "output": "Optimization applied, performance gain: 100%",
       "warnings": [],
-      "endTime": "2025-10-10T16:07:01.502Z"
+      "endTime": "2025-10-10T16:12:01.597Z"
     }
   ],
   "summary": {
@@ -48,6 +48,6 @@
     "passedTests": 3,
     "failedTests": 1,
     "successRate": 0.75,
-    "averageDuration": 9.5
+    "averageDuration": 9.75
   }
 }
