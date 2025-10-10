@@ -109,7 +109,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Image
-                src="/logo.jpg"
+                src="/logo.png"
                 alt="Hemam Logo"
                 width={40}
                 height={40}

@@ -68,7 +68,7 @@ export default function ContactPage() {
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <Image
-              src="/logo.jpg"
+              src="/logo.png"
               alt="Hemam Logo"
               width={64}
               height={64}
@@ -114,7 +114,7 @@ export default function ContactPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Image
-                src="/logo.jpg"
+                src="/logo.png"
                 alt="Hemam Logo"
                 width={40}
                 height={40}
@@ -346,7 +346,7 @@ export default function ContactPage() {
             <div>
               <div className="mb-4 flex items-center gap-3">
                 <Image
-                  src="/logo.jpg"
+                  src="/logo.png"
                   alt="Hemam Logo"
                   width={32}
                   height={32}
