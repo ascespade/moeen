@@ -1,8 +1,8 @@
+"use client";
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { ROUTES } from '@/constants/routes';
 import { getDefaultRouteForUser } from '@/lib/router';
-"use client";
 
 
 import Link from "next/link";
