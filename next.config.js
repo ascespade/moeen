@@ -1,3 +1,7 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Security headers
@@ -52,10 +56,36 @@ const nextConfig = {
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: "all",
+        minSize: 20000,
+        maxSize: 244000,
         cacheGroups: {
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
           vendor: {
             test: /[\\/]node_modules[\\/]/,
             name: "vendors",
+            priority: -10,
+            chunks: "all",
+          },
+          react: {
+            test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+            name: "react",
+            priority: 20,
+            chunks: "all",
+          },
+          ui: {
+            test: /[\\/]node_modules[\\/](@headlessui|lucide-react)[\\/]/,
+            name: "ui",
+            priority: 15,
+            chunks: "all",
+          },
+          utils: {
+            test: /[\\/]node_modules[\\/](clsx|class-variance-authority)[\\/]/,
+            name: "utils",
+            priority: 10,
             chunks: "all",
           },
         },
@@ -74,4 +104,4 @@ const nextConfig = {
   output: 'standalone',
 };
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);
