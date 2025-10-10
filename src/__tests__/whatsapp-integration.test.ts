@@ -1,5 +1,4 @@
-import { WhatsAppIntegration } from "@/lib/whatsapp-integration";
-
+import { WhatsAppIntegration } from '@/lib/whatsapp-integration';
 describe("WhatsAppIntegration", () => {
   let whatsapp: WhatsAppIntegration;
 

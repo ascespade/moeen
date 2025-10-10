@@ -1,0 +1,70 @@
+{
+  "tasks": [
+    {
+      "name": "Full Project Cleanup & Readiness",
+      "description": "Fix all ESLint, TypeScript, Prettier, Tailwind, and Stylelint issues. Reorganize structure, clean garbage files, merge duplicate imports, generate barrel files, and verify the project runs correctly in dev mode.",
+      "triggers": ["onProjectOpen", "onFileSave"],
+      "autoRun": true,
+      "persistent": true,
+      "steps": [
+        "eslint . --ext .ts,.tsx,.js,.jsx --fix || true",
+        "prettier --write . || true",
+        "stylelint '**/*.{css,scss}' --fix || true",
+        "tsc --noEmit || true",
+        "npm install || true",
+        "npm audit fix || true",
+        "npm dedupe || true",
+        "node scripts/smart-clean.js || true",
+        "node scripts/reorganize-project.js || true",
+        "node scripts/generate-barrels.js || true",
+        "node scripts/fix-imports.js || true",
+        "npm run dev --dry-run || npm run dev || true"
+      ]
+    },
+    {
+      "name": "Reorganize Project Structure",
+      "description": "Ensure clean, centralized folder structure.",
+      "steps": [
+        "node scripts/reorganize-project.js",
+        "prettier --write .",
+        "eslint . --fix"
+      ]
+    },
+    {
+      "name": "Smart Clean Garbage Files",
+      "description": "Safely remove non-essential files and folders.",
+      "steps": ["node scripts/smart-clean.js"]
+    },
+    {
+      "name": "Verify Dev & Deploy",
+      "description": "Run dev server and ensure build readiness.",
+      "steps": ["npm run dev"]
+    }
+  ],
+  "preferences": {
+    "autoFix": true,
+    "maxFixIterations": 20,
+    "stopOnClean": true,
+    "allowConfigChanges": true,
+    "allowFileReorganization": true,
+    "reportFixProgress": true,
+    "failIfDevFails": true,
+    "trackPerformance": true,
+    "safeClean": true
+  },
+  "structure": {
+    "src": {
+      "components": "UI components and reusable elements",
+      "pages": "Routes and views",
+      "layouts": "Global layouts",
+      "hooks": "Custom hooks",
+      "context": "React context providers",
+      "utils": "Helper functions",
+      "styles": "CSS/SCSS styles",
+      "assets": "Images, fonts, media",
+      "config": "App configuration files"
+    },
+    "public": "Public assets and static files",
+    "scripts": "Project maintenance scripts"
+  }
+}

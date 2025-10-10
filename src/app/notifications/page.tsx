@@ -1,6 +1,7 @@
+import { useState } from 'react';
 "use client";
 
-import { useState } from "react";
+
 import Image from "next/image";
 
 interface Notification {

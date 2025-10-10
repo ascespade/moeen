@@ -1,23 +1,11 @@
+import { ROUTES } from '@/constants/routes';
+import { Heart, Users, Stethoscope, ShieldCheck, MessageSquare, Calendar, Phone, MapPin, Clock, ArrowRight, CheckCircle, Brain, Activity } from 'lucide-react';
 "use client";
 
 // Removed unused Image import to fix type error and reduce bundle size
 import Link from "next/link";
-import { ROUTES } from "@/constants/routes";
-import {
-  Heart,
-  Users,
-  Stethoscope,
-  ShieldCheck,
-  MessageSquare,
-  Calendar,
-  Phone,
-  MapPin,
-  Clock,
-  ArrowRight,
-  CheckCircle,
-  Brain,
-  Activity,
-} from "lucide-react";
+
+
 import DirectionToggle from "@/components/common/DirectionToggle";
 
 export default function Home() {

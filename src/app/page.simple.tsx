@@ -1,5 +1,6 @@
+import { ROUTES } from '@/constants/routes';
 import Link from "next/link";
-import { ROUTES } from "@/constants/routes";
+
 
 export default function Home() {
   return (

@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
+import { isWhatsAppConfigured, getApiConfig } from '@/lib/api/config';
 "use client";
 
-import { useEffect, useState } from "react";
+
 import PlaceholderSquare from "@/components/common/PlaceholderSquare";
-import { isWhatsAppConfigured, getApiConfig } from "@/lib/api/config";
+
 
 type Settings = {
   provider: string;
