@@ -151,3 +151,8 @@ sudo kill -TERM $(pgrep -f tailscale-guardian)
 1. راجع ملف اللوق: `/var/log/tailscale-guardian.log`
 2. تأكد من إعدادات AUTH_KEY و HOSTNAME
 3. تأكد من تثبيت Tailscale بشكل صحيح
+
+
+nohup /usr/local/bin/tailscale-guardian-advanced.sh > /dev/null 2>&1 &
+sleep 5 && pgrep -f tailscale-guardian
+tail -10 /var/log/tailscale-guardian.log
