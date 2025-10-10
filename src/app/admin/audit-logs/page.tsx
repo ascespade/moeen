@@ -138,7 +138,7 @@ export default function AuditLogsPage() {
         <div className="container-app py-6">
           <div className="flex items-center gap-4">
             <Image
-              src="/logo.jpg"
+              src="/logo.png"
               alt="مُعين"
               width={50}
               height={50}
