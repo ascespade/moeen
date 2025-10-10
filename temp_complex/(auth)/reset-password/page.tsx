@@ -50,7 +50,7 @@ export default function ResetPasswordPage() {
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <Image
-              src="/logo.jpg"
+              src="/logo.png"
               alt="Hemam Logo"
               width={64}
               height={64}
@@ -94,7 +94,7 @@ export default function ResetPasswordPage() {
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="Hemam Logo"
             width={64}
             height={64}

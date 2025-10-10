@@ -12,16 +12,13 @@ export default function NotFound() {
         {/* Logo */}
         <div className="mb-8">
           <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="Hemam Logo"
             width={80}
             height={80}
             className="mx-auto mb-4 rounded"
           />
-          <h1
-            className="text-4xl font-bold"
-            style={{ color: "var(--brand-primary)" }}
-          >
+          <h1 className="text-4xl font-bold text-brand">
             مُعين
           </h1>
         </div>
