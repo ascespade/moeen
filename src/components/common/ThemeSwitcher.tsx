@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
 import { useI18n } from "@/hooks/useI18n";
+import { dynamicThemeManager, type ThemeMode } from "@/lib/dynamic-theme-manager";
 
 interface ThemeSwitcherProps {
   className?: string;
@@ -14,7 +15,7 @@ export default function ThemeSwitcher({
   showLabel = true,
   size = "md",
 }: ThemeSwitcherProps) {
-  const [theme, setTheme] = useState<string>("light");
+  const [theme, setTheme] = useState<ThemeMode>("light");
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useI18n("ar"); // Default to Arabic for theme labels
 
@@ -25,12 +26,8 @@ export default function ThemeSwitcher({
 
   // Apply theme changes
   useEffect(() => {
-    const html = document.documentElement;
-    html.setAttribute("data-theme", theme);
-
-    // Only save to database if not initial load
     if (!isLoading) {
-      saveUserPreference("theme", theme);
+      applyTheme();
     }
   }, [theme, isLoading]);
 
@@ -38,11 +35,8 @@ export default function ThemeSwitcher({
   const loadUserPreferences = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/user/preferences");
-      if (response.ok) {
-        const data = await response.json();
-        if (data.theme) setTheme(data.theme);
-      }
+      const preferences = await dynamicThemeManager.getUserPreferences();
+      setTheme(preferences.theme);
     } catch (error) {
       console.error("Failed to load preferences:", error);
     } finally {
@@ -50,24 +44,28 @@ export default function ThemeSwitcher({
     }
   };
 
-  // Function to save preferences to database
-  const saveUserPreference = async (key: string, value: string) => {
+  // Function to apply theme to document
+  const applyTheme = async () => {
     try {
-      await fetch("/api/user/preferences", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ key, value }),
-      });
+      const themeConfig = await dynamicThemeManager.getThemeConfig();
+      const resolvedTheme = dynamicThemeManager.resolveThemeMode(theme);
+      dynamicThemeManager.applyTheme(resolvedTheme, themeConfig);
     } catch (error) {
-      console.error("Failed to save preference:", error);
+      console.error("Failed to apply theme:", error);
     }
   };
 
   // Toggle theme function
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+  const toggleTheme = async () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    
+    try {
+      // Save to database
+      await dynamicThemeManager.updateUserPreferences("current_user", { theme: newTheme });
+    } catch (error) {
+      console.error("Failed to save theme preference:", error);
+    }
   };
 
   // Size classes

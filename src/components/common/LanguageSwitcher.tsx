@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Languages } from "lucide-react";
 import { useI18n } from "@/hooks/useI18n";
+import { dynamicThemeManager } from "@/lib/dynamic-theme-manager";
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -16,9 +17,9 @@ export default function LanguageSwitcher({
   size = "md",
   variant = "button",
 }: LanguageSwitcherProps) {
-  const [language, setLanguage] = useState<string>("ar");
+  const [language, setLanguage] = useState<"ar" | "en">("ar");
   const [isLoading, setIsLoading] = useState(false);
-  const { t } = useI18n(language as "ar" | "en");
+  const { t } = useI18n(language);
 
   // Load user preferences from database on mount
   useEffect(() => {
@@ -27,13 +28,8 @@ export default function LanguageSwitcher({
 
   // Apply language changes
   useEffect(() => {
-    const html = document.documentElement;
-    html.setAttribute("lang", language);
-    html.setAttribute("dir", language === "ar" ? "rtl" : "ltr");
-
-    // Only save to database if not initial load
     if (!isLoading) {
-      saveUserPreference("language", language);
+      applyLanguage();
     }
   }, [language, isLoading]);
 
@@ -41,11 +37,8 @@ export default function LanguageSwitcher({
   const loadUserPreferences = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/user/preferences");
-      if (response.ok) {
-        const data = await response.json();
-        if (data.language) setLanguage(data.language);
-      }
+      const preferences = await dynamicThemeManager.getUserPreferences();
+      setLanguage(preferences.language);
     } catch (error) {
       console.error("Failed to load preferences:", error);
     } finally {
@@ -53,29 +46,24 @@ export default function LanguageSwitcher({
     }
   };
 
-  // Function to save preferences to database
-  const saveUserPreference = async (key: string, value: string) => {
-    try {
-      await fetch("/api/user/preferences", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ key, value }),
-      });
-    } catch (error) {
-      console.error("Failed to save preference:", error);
-    }
+  // Function to apply language to document
+  const applyLanguage = () => {
+    dynamicThemeManager.applyLanguage(language);
   };
 
   // Toggle language function - reload page to apply translations
-  const toggleLanguage = () => {
+  const toggleLanguage = async () => {
     const newLanguage = language === "ar" ? "en" : "ar";
     setLanguage(newLanguage);
-    // Save preference and reload page to apply translations
-    saveUserPreference("language", newLanguage).then(() => {
+    
+    try {
+      // Save to database
+      await dynamicThemeManager.updateUserPreferences("current_user", { language: newLanguage });
+      // Reload page to apply translations
       window.location.reload();
-    });
+    } catch (error) {
+      console.error("Failed to save language preference:", error);
+    }
   };
 
   // Size classes
