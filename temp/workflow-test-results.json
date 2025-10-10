@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-10T15:46:55.639Z",
+  "timestamp": "2025-10-10T15:51:57.983Z",
   "workflow": "Social Media Auto Posting",
   "nodes": [
     {
@@ -7,7 +7,7 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "status": "success",
-      "executionTime": 398.98892861852266,
+      "executionTime": 946.4467079136833,
       "error": null
     },
     {
@@ -15,7 +15,7 @@
       "name": "Get Random Video",
       "type": "n8n-nodes-base.googleDrive",
       "status": "success",
-      "executionTime": 328.26643095043795,
+      "executionTime": 831.6151704646717,
       "error": null
     },
     {
@@ -23,7 +23,7 @@
       "name": "Select Random Video",
       "type": "n8n-nodes-base.function",
       "status": "success",
-      "executionTime": 748.7301293326257,
+      "executionTime": 239.98726706704198,
       "error": null
     },
     {
@@ -31,7 +31,7 @@
       "name": "Post to TikTok",
       "type": "n8n-nodes-base.httpRequest",
       "status": "success",
-      "executionTime": 587.4194492442426,
+      "executionTime": 963.8029482171902,
       "error": null
     },
     {
@@ -39,7 +39,7 @@
       "name": "Post to Instagram",
       "type": "n8n-nodes-base.httpRequest",
       "status": "success",
-      "executionTime": 610.8927380677918,
+      "executionTime": 934.525864623478,
       "error": null
     },
     {
@@ -47,7 +47,7 @@
       "name": "Post to LinkedIn",
       "type": "n8n-nodes-base.httpRequest",
       "status": "success",
-      "executionTime": 729.2555201312454,
+      "executionTime": 868.4872127268832,
       "error": null
     },
     {
@@ -55,7 +55,7 @@
       "name": "Post to Facebook",
       "type": "n8n-nodes-base.httpRequest",
       "status": "success",
-      "executionTime": 230.2235496408076,
+      "executionTime": 745.5347253480677,
       "error": null
     }
   ],
