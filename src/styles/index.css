@@ -1,6 +1,2 @@
-/* Main stylesheet - imports all other styles */
-@import url("./base.css");
-@import url("./tokens.css");
-@import url("./components.css");
-@import url("./utilities.css");
-@import url("./themes.css");
+/* Main stylesheet - imports centralized styles */
+@import url("./centralized.css");
