@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-10T16:07:07.254Z",
+  "timestamp": "2025-10-10T16:12:09.567Z",
   "checks": [
     {
       "check": "Cursor Agent Status",
@@ -29,7 +29,7 @@
         "workflowExists": true,
         "nodeCount": 7,
         "testResults": {
-          "timestamp": "2025-10-10T16:07:05.087Z",
+          "timestamp": "2025-10-10T16:12:07.399Z",
           "workflow": "Social Media Auto Posting",
           "nodes": [
             {
@@ -37,7 +37,7 @@
               "name": "Schedule Trigger",
               "type": "n8n-nodes-base.scheduleTrigger",
               "status": "success",
-              "executionTime": 123.53518782356998,
+              "executionTime": 682.8831904109445,
               "error": null
             },
             {
@@ -45,7 +45,7 @@
               "name": "Get Random Video",
               "type": "n8n-nodes-base.googleDrive",
               "status": "success",
-              "executionTime": 384.58631589521985,
+              "executionTime": 729.9835891380395,
               "error": null
             },
             {
@@ -53,7 +53,7 @@
               "name": "Select Random Video",
               "type": "n8n-nodes-base.function",
               "status": "success",
-              "executionTime": 584.5011363087172,
+              "executionTime": 699.9324146301398,
               "error": null
             },
             {
@@ -61,7 +61,7 @@
               "name": "Post to TikTok",
               "type": "n8n-nodes-base.httpRequest",
               "status": "success",
-              "executionTime": 212.73800806447807,
+              "executionTime": 483.63833967833057,
               "error": null
             },
             {
@@ -69,7 +69,7 @@
               "name": "Post to Instagram",
               "type": "n8n-nodes-base.httpRequest",
               "status": "success",
-              "executionTime": 112.98534237886871,
+              "executionTime": 269.0548356656481,
               "error": null
             },
             {
@@ -77,7 +77,7 @@
               "name": "Post to LinkedIn",
               "type": "n8n-nodes-base.httpRequest",
               "status": "success",
-              "executionTime": 890.1787742428278,
+              "executionTime": 815.7228156857573,
               "error": null
             },
             {
@@ -85,7 +85,7 @@
               "name": "Post to Facebook",
               "type": "n8n-nodes-base.httpRequest",
               "status": "success",
-              "executionTime": 332.5186567705316,
+              "executionTime": 258.4295077755829,
               "error": null
             }
           ],

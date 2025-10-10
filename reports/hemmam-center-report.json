@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-10-10T16:15:51.708Z",
+  "center": "مركز الهمم",
+  "period": "Last 30 days",
+  "summary": {
+    "totalPatients": 4,
+    "totalAppointments": 4,
+    "chatbotSatisfaction": 0,
+    "appointmentSatisfaction": 0.75,
+    "systemUptime": 0
+  },
+  "insights": {
+    "mostCommonSpecialNeed": "كرسي متحرك",
+    "peakAppointmentHour": "09",
+    "mostActiveInsuranceProvider": "شركة التأمين التعاوني"
+  },
+  "recommendations": [
+    {
+      "category": "chatbot",
+      "priority": "high",
+      "title": "تحسين استجابات الشات بوت",
+      "description": "معدل رضا المستخدمين منخفض. يوصى بتحسين قاعدة المعرفة والاستجابات.",
+      "action": "update_chatbot_knowledge_base"
+    },
+    {
+      "category": "appointments",
+      "priority": "medium",
+      "title": "تحسين إدارة المواعيد",
+      "description": "معدل رضا المرضى منخفض. يوصى بتحسين توقيت المواعيد وتقليل أوقات الانتظار.",
+      "action": "optimize_appointment_scheduling"
+    },
+    {
+      "category": "patient_care",
+      "priority": "medium",
+      "title": "تحسين الخدمات لـ كرسي متحرك",
+      "description": "هذا هو أكثر الاحتياجات الخاصة شيوعاً. يوصى بتطوير خدمات متخصصة.",
+      "action": "develop_specialized_services"
+    }
+  ],
+  "improvements": [
+    {
+      "category": "chatbot",
+      "priority": "high",
+      "title": "تحسين استجابات الشات بوت",
+      "description": "معدل رضا المستخدمين منخفض. يوصى بتحسين قاعدة المعرفة والاستجابات.",
+      "action": "update_chatbot_knowledge_base"
+    },
+    {
+      "category": "appointments",
+      "priority": "medium",
+      "title": "تحسين إدارة المواعيد",
+      "description": "معدل رضا المرضى منخفض. يوصى بتحسين توقيت المواعيد وتقليل أوقات الانتظار.",
+      "action": "optimize_appointment_scheduling"
+    },
+    {
+      "category": "patient_care",
+      "priority": "medium",
+      "title": "تحسين الخدمات لـ كرسي متحرك",
+      "description": "هذا هو أكثر الاحتياجات الخاصة شيوعاً. يوصى بتطوير خدمات متخصصة.",
+      "action": "develop_specialized_services"
+    }
+  ]
+}
