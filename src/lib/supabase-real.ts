@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 // Real Supabase Integration for Hemam Center
 // @ts-ignore - shimmed for type checking without full types
 

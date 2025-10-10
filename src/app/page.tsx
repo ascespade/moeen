@@ -1,11 +1,9 @@
 "use client";
-import { useState, useEffect } from 'react';
-import { ROUTES } from '@/constants/routes';
-
+import { useState, useEffect } from "react";
+import { ROUTES } from "@/constants/routes";
 
 import Image from "next/image";
 import Link from "next/link";
-
 
 // Hero Slider Data
 const heroSlides = [

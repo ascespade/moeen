@@ -563,7 +563,9 @@ select:focus-visible {
 }
 
 .card-interactive {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .card-interactive:hover {
@@ -618,7 +620,9 @@ select:focus-visible {
   color: var(--foreground);
   border-radius: 0.5rem;
   text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .sidebar-item:hover {

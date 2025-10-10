@@ -1,6 +1,5 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from "react";
 // Throttle hooks
-
 
 export const useThrottle = <T>(value: T, delay: number): T => {
   const [throttledValue, setThrottledValue] = useState<T>(value);
