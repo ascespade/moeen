@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { Calendar, Users, FileText, MessageCircle, Phone, Mail, MapPin, Clock, Heart, Shield, Brain, Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
 import Link from 'next/link';
 
 const HomePage: React.FC = () => {
