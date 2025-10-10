@@ -23,36 +23,100 @@ export default function DashboardPage() {
       <div className="container-app py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Sidebar */}
         <aside className="lg:col-span-3 space-y-4">
-          <div className="rounded-xl border border-brand bg-white dark:bg-gray-900 p-4">
-            <div className="text-sm text-gray-500 mb-2">التنقل</div>
-            <ul className="space-y-2 text-sm">
-              <li><a className="hover:underline" href="#stats">الإحصائيات</a></li>
-              <li><a className="hover:underline" href="#charts">الرسوم البيانية</a></li>
-              <li><a className="hover:underline" href="#activity">آخر الأنشطة</a></li>
-              <li><Link className="hover:underline" href={ROUTES.SETTINGS}>الإعدادات</Link></li>
+          <div className="card">
+            <div className="card-header">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-brand rounded-md flex items-center justify-center">
+                  <span className="text-white text-xs">📊</span>
+                </div>
+                <h3 className="card-title">التنقل</h3>
+              </div>
+            </div>
+            <ul className="space-y-3">
+              <li><a className="nav-link" href="#stats">
+                <span className="w-2 h-2 bg-brand rounded-full"></span>
+                الإحصائيات
+              </a></li>
+              <li><a className="nav-link" href="#charts">
+                <span className="w-2 h-2 bg-[var(--brand-secondary)] rounded-full"></span>
+                الرسوم البيانية
+              </a></li>
+              <li><a className="nav-link" href="#activity">
+                <span className="w-2 h-2 bg-[var(--brand-accent)] rounded-full"></span>
+                آخر الأنشطة
+              </a></li>
+              <li><Link className="nav-link" href={ROUTES.SETTINGS}>
+                <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
+                الإعدادات
+              </Link></li>
             </ul>
           </div>
-          <div className="rounded-xl border border-brand bg-white dark:bg-gray-900 p-4">
-            <div className="text-sm text-gray-500 mb-2">الروبوت (Chatbot)</div>
-            <ul className="space-y-2 text-sm">
-              <li><Link className="hover:underline" href={ROUTES.CHATBOT.FLOWS}>تدفقات المحادثة</Link></li>
-              <li><Link className="hover:underline" href={ROUTES.CHATBOT.TEMPLATES}>قوالب الرسائل</Link></li>
-              <li><Link className="hover:underline" href={ROUTES.CHATBOT.INTEGRATIONS}>التكاملات</Link></li>
-              <li><Link className="hover:underline" href={ROUTES.CHATBOT.ANALYTICS}>التحليلات</Link></li>
+          <div className="card">
+            <div className="card-header">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-[var(--brand-secondary)] rounded-md flex items-center justify-center">
+                  <span className="text-white text-xs">🤖</span>
+                </div>
+                <h3 className="card-title">الروبوت (Chatbot)</h3>
+              </div>
+            </div>
+            <ul className="space-y-3">
+              <li><Link className="nav-link" href={ROUTES.CHATBOT.FLOWS}>
+                <span className="w-2 h-2 bg-[var(--brand-secondary)] rounded-full"></span>
+                تدفقات المحادثة
+              </Link></li>
+              <li><Link className="nav-link" href={ROUTES.CHATBOT.TEMPLATES}>
+                <span className="w-2 h-2 bg-[var(--brand-secondary)] rounded-full"></span>
+                قوالب الرسائل
+              </Link></li>
+              <li><Link className="nav-link" href={ROUTES.CHATBOT.INTEGRATIONS}>
+                <span className="w-2 h-2 bg-[var(--brand-secondary)] rounded-full"></span>
+                التكاملات
+              </Link></li>
+              <li><Link className="nav-link" href={ROUTES.CHATBOT.ANALYTICS}>
+                <span className="w-2 h-2 bg-[var(--brand-secondary)] rounded-full"></span>
+                التحليلات
+              </Link></li>
             </ul>
           </div>
-          <div className="rounded-xl border border-brand bg-white dark:bg-gray-900 p-4">
-            <div className="text-sm text-gray-500 mb-2">إدارة علاقات العملاء (CRM)</div>
-            <ul className="space-y-2 text-sm">
-              <li><Link className="hover:underline" href={ROUTES.CRM.CONTACTS}>جهات الاتصال</Link></li>
-              <li><Link className="hover:underline" href={ROUTES.CRM.LEADS}>العملاء المحتملون</Link></li>
-              <li><Link className="hover:underline" href={ROUTES.CRM.DEALS}>الصفقات</Link></li>
-              <li><Link className="hover:underline" href={ROUTES.CRM.ACTIVITIES}>الأنشطة</Link></li>
+          <div className="card">
+            <div className="card-header">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-[var(--brand-accent)] rounded-md flex items-center justify-center">
+                  <span className="text-white text-xs">👥</span>
+                </div>
+                <h3 className="card-title">إدارة علاقات العملاء (CRM)</h3>
+              </div>
+            </div>
+            <ul className="space-y-3">
+              <li><Link className="nav-link" href={ROUTES.CRM.CONTACTS}>
+                <span className="w-2 h-2 bg-[var(--brand-accent)] rounded-full"></span>
+                جهات الاتصال
+              </Link></li>
+              <li><Link className="nav-link" href={ROUTES.CRM.LEADS}>
+                <span className="w-2 h-2 bg-[var(--brand-accent)] rounded-full"></span>
+                العملاء المحتملون
+              </Link></li>
+              <li><Link className="nav-link" href={ROUTES.CRM.DEALS}>
+                <span className="w-2 h-2 bg-[var(--brand-accent)] rounded-full"></span>
+                الصفقات
+              </Link></li>
+              <li><Link className="nav-link" href={ROUTES.CRM.ACTIVITIES}>
+                <span className="w-2 h-2 bg-[var(--brand-accent)] rounded-full"></span>
+                الأنشطة
+              </Link></li>
             </ul>
           </div>
-          <div className="rounded-xl border border-brand bg-white dark:bg-gray-900 p-4">
-            <div className="text-sm text-gray-500 mb-2">حالة النظام</div>
-            <div className="text-sm text-gray-700 dark:text-gray-300">كل الخدمات تعمل بشكل طبيعي</div>
+          <div className="card">
+            <div className="card-header">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-green-500 rounded-md flex items-center justify-center">
+                  <span className="text-white text-xs">✅</span>
+                </div>
+                <h3 className="card-title">حالة النظام</h3>
+              </div>
+            </div>
+            <div className="status-success">كل الخدمات تعمل بشكل طبيعي</div>
           </div>
         </aside>
 
@@ -68,27 +132,44 @@ export default function DashboardPage() {
 
           {/* Charts */}
           <div id="charts" className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            <div className="rounded-xl border border-brand bg-white dark:bg-gray-900 p-4">
-              <div className="text-sm text-gray-500 mb-2">النشاط اليومي</div>
+            <div className="card">
+              <div className="card-header">
+                <h3 className="card-title">النشاط اليومي</h3>
+              </div>
               <ChartsA />
             </div>
-            <div className="rounded-xl border border-brand bg-white dark:bg-gray-900 p-4">
-              <div className="text-sm text-gray-500 mb-2">مقارنة أسبوعية</div>
+            <div className="card">
+              <div className="card-header">
+                <h3 className="card-title">مقارنة أسبوعية</h3>
+              </div>
               <ChartsB />
             </div>
-            <div className="rounded-xl border border-brand bg-white dark:bg-gray-900 p-4 xl:col-span-2">
-              <div className="text-sm text-gray-500 mb-2">توزيع القنوات</div>
+            <div className="card xl:col-span-2">
+              <div className="card-header">
+                <h3 className="card-title">توزيع القنوات</h3>
+              </div>
               <ChartsC />
             </div>
           </div>
 
           {/* Activity */}
-          <div id="activity" className="rounded-xl border border-brand bg-white dark:bg-gray-900 p-4">
-            <div className="text-sm text-gray-500 mb-3">آخر الأنشطة</div>
-            <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
-              <li>تم إنشاء قناة جديدة: الدعم الفني</li>
-              <li>تم إضافة مستخدم: Ahmed@example.com</li>
-              <li>تم استقبال 230 رسالة خلال الساعة الماضية</li>
+          <div id="activity" className="card">
+            <div className="card-header">
+              <h3 className="card-title">آخر الأنشطة</h3>
+            </div>
+            <ul className="space-y-2 text-sm">
+              <li className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-brand rounded-full"></span>
+                تم إنشاء قناة جديدة: الدعم الفني
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-[var(--brand-secondary)] rounded-full"></span>
+                تم إضافة مستخدم: Ahmed@example.com
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-[var(--brand-accent)] rounded-full"></span>
+                تم استقبال 230 رسالة خلال الساعة الماضية
+              </li>
             </ul>
           </div>
         </section>

@@ -2,58 +2,298 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ROUTES } from "@/constants/routes";
 
 export default function RegisterPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    agreeToTerms: false
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [success, setSuccess] = useState(false);
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    if (password !== confirm) {
-      setError("كلمتا المرور غير متطابقتين");
-      return;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value
+    }));
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ""
+      }));
     }
-    // UI فقط حالياً
   };
 
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "الاسم مطلوب";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "البريد الإلكتروني مطلوب";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "البريد الإلكتروني غير صحيح";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "كلمة المرور مطلوبة";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "كلمة المرور يجب أن تكون 6 أحرف على الأقل";
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "كلمة المرور غير متطابقة";
+    }
+
+    if (!formData.agreeToTerms) {
+      newErrors.agreeToTerms = "يجب الموافقة على الشروط والأحكام";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      setSuccess(true);
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        agreeToTerms: false
+      });
+    } catch (error) {
+      setErrors({ general: "حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى." });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (success) {
+    return (
+      <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center p-4">
+        <div className="card p-8 max-w-md w-full text-center">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+            ✅
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            تم إنشاء الحساب بنجاح!
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            مرحباً بك في مُعين. يمكنك الآن تسجيل الدخول باستخدام بياناتك.
+          </p>
+          <Link
+            href={ROUTES.LOGIN}
+            className="btn-brand px-6 py-3 rounded-lg text-white hover:bg-[var(--brand-primary-hover)] transition-colors inline-block"
+          >
+            تسجيل الدخول
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[var(--brand-surface)] p-4">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-soft border border-brand p-6">
-        <h1 className="text-2xl font-bold text-brand mb-6 text-center">إنشاء حساب</h1>
-        {error && (
-          <div className="mb-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded p-3">{error}</div>
-        )}
-        <form onSubmit={onSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm mb-1">الاسم</label>
-            <input className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2" value={name} onChange={(e)=>setName(e.target.value)} required />
+    <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Image
+              src="/logo.jpg"
+              alt="مُعين"
+              width={50}
+              height={50}
+              className="rounded-lg"
+            />
+            <h1 className="text-3xl font-bold text-brand">مُعين</h1>
           </div>
-          <div>
-            <label className="block text-sm mb-1">البريد الإلكتروني</label>
-            <input type="email" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2" value={email} onChange={(e)=>setEmail(e.target.value)} required />
+          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
+            إنشاء حساب جديد
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">
+            انضم إلى منصة الرعاية الصحية المتخصصة
+          </p>
+        </div>
+
+        {/* Form */}
+        <div className="card p-8">
+          {errors.general && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+              {errors.general}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name */}
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                الاسم الكامل
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-colors ${
+                  errors.name ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="أدخل اسمك الكامل"
+                disabled={isLoading}
+              />
+              {errors.name && (
+                <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+              )}
+            </div>
+
+            {/* Email */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                البريد الإلكتروني
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-colors ${
+                  errors.email ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="أدخل بريدك الإلكتروني"
+                disabled={isLoading}
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+              )}
+            </div>
+
+            {/* Password */}
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                كلمة المرور
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-colors ${
+                  errors.password ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="أدخل كلمة المرور"
+                disabled={isLoading}
+              />
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+              )}
+            </div>
+
+            {/* Confirm Password */}
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                تأكيد كلمة المرور
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-colors ${
+                  errors.confirmPassword ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="أعد إدخال كلمة المرور"
+                disabled={isLoading}
+              />
+              {errors.confirmPassword && (
+                <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
+              )}
+            </div>
+
+            {/* Terms Agreement */}
+            <div>
+              <label className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  name="agreeToTerms"
+                  checked={formData.agreeToTerms}
+                  onChange={handleInputChange}
+                  className="mt-1 w-4 h-4 text-[var(--brand-primary)] border-gray-300 rounded focus:ring-[var(--brand-primary)]"
+                  disabled={isLoading}
+                />
+                <span className="text-sm text-gray-700 dark:text-gray-300">
+                  أوافق على{" "}
+                  <Link href="/terms" className="text-[var(--brand-primary)] hover:underline">
+                    الشروط والأحكام
+                  </Link>{" "}
+                  و{" "}
+                  <Link href="/privacy" className="text-[var(--brand-primary)] hover:underline">
+                    سياسة الخصوصية
+                  </Link>
+                </span>
+              </label>
+              {errors.agreeToTerms && (
+                <p className="mt-1 text-sm text-red-600">{errors.agreeToTerms}</p>
+              )}
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full btn-brand py-3 rounded-lg text-white font-semibold hover:bg-[var(--brand-primary-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  جاري إنشاء الحساب...
+                </div>
+              ) : (
+                "إنشاء الحساب"
+              )}
+            </button>
+          </form>
+
+          {/* Login Link */}
+          <div className="mt-6 text-center">
+            <p className="text-gray-600 dark:text-gray-300">
+              لديك حساب بالفعل؟{" "}
+              <Link
+                href={ROUTES.LOGIN}
+                className="text-[var(--brand-primary)] hover:underline font-semibold"
+              >
+                تسجيل الدخول
+              </Link>
+            </p>
           </div>
-          <div>
-            <label className="block text-sm mb-1">كلمة المرور</label>
-            <input type="password" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2" value={password} onChange={(e)=>setPassword(e.target.value)} required />
-          </div>
-          <div>
-            <label className="block text-sm mb-1">تأكيد كلمة المرور</label>
-            <input type="password" className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2" value={confirm} onChange={(e)=>setConfirm(e.target.value)} required />
-          </div>
-          <button type="submit" className="w-full btn-brand px-4 py-2 rounded">إنشاء الحساب</button>
-        </form>
-        <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-300">
-          لديك حساب؟ {" "}
-          <Link href={ROUTES.AUTH.LOGIN} className="text-brand hover:underline">تسجيل الدخول</Link>
-        </p>
+        </div>
       </div>
     </div>
   );
 }
-
-
