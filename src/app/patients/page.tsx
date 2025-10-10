@@ -81,7 +81,7 @@ export default function PatientsPage() {
     };
 
     loadPatients();
-  }, []);
+  }, [supabase]);
 
   // Filter patients based on search and status
   const filteredPatients = patients.filter(patient => {
