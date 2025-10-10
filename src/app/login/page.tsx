@@ -1,14 +1,10 @@
 "use client";
-import { useState } from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import { ROUTES } from '@/constants/routes';
-import { getDefaultRouteForUser } from '@/lib/router';
-
+import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { ROUTES } from "@/constants/routes";
+import { getDefaultRouteForUser } from "@/lib/router";
 
 import Link from "next/link";
-
-
-
 
 export default function LoginPage() {
   const { loginWithCredentials, isLoading } = useAuth();

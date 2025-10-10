@@ -1,7 +1,5 @@
-import { useEffect, useRef } from 'react';
 "use client";
-
-
+import { useEffect, useRef } from "react";
 import clsx from "clsx";
 
 export interface ModalProps {
