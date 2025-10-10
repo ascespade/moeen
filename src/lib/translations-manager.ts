@@ -216,7 +216,7 @@ export async function searchTranslations(
   return data || [];
 }
 
-export default {
+const translationsManager = {
   addTranslation,
   addMultipleTranslations,
   getTranslations,
@@ -226,3 +226,5 @@ export default {
   getAllTranslationsForLocale,
   searchTranslations,
 };
+
+export default translationsManager;

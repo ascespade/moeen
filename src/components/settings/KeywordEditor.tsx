@@ -40,7 +40,7 @@ export default function KeywordEditor({
         {(keywords || []).map((k) => (
           <span
             key={k}
-            className="inline-flex items-center gap-2 rounded-full bg-amber-100 text-amber-800 px-3 h-8 text-sm"
+            className="inline-flex h-8 items-center gap-2 rounded-full bg-amber-100 px-3 text-sm text-amber-800"
           >
             {k}
             <button className="text-amber-900" onClick={() => remove(k)}>

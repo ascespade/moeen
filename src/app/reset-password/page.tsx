@@ -8,7 +8,7 @@ import { ROUTES } from "@/constants/routes";
 export default function ResetPasswordPage() {
   const [formData, setFormData] = useState({
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -16,16 +16,16 @@ export default function ResetPasswordPage() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
@@ -51,19 +51,21 @@ export default function ResetPasswordPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setIsLoading(true);
-    
+
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       setIsSuccess(true);
     } catch (error) {
-      setErrors({ general: "حدث خطأ أثناء إعادة تعيين كلمة المرور. حاول مرة أخرى." });
+      setErrors({
+        general: "حدث خطأ أثناء إعادة تعيين كلمة المرور. حاول مرة أخرى.",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -71,20 +73,21 @@ export default function ResetPasswordPage() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center p-4">
-        <div className="card p-8 max-w-md w-full text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--brand-surface)] p-4">
+        <div className="card w-full max-w-md p-8 text-center">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl">
             ✅
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
             تم تغيير كلمة المرور!
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
-            تم تغيير كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة.
+          <p className="mb-6 text-gray-600 dark:text-gray-300">
+            تم تغيير كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول باستخدام كلمة
+            المرور الجديدة.
           </p>
           <Link
             href={ROUTES.LOGIN}
-            className="btn-brand px-6 py-3 rounded-lg text-white hover:bg-[var(--brand-primary-hover)] transition-colors inline-block"
+            className="btn-brand inline-block rounded-lg px-6 py-3 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
           >
             تسجيل الدخول
           </Link>
@@ -94,11 +97,11 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center p-4">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--brand-surface)] p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
+        <div className="mb-8 text-center">
+          <div className="mb-4 flex items-center justify-center gap-3">
             <Image
               src="/logo.jpg"
               alt="مُعين"
@@ -106,9 +109,9 @@ export default function ResetPasswordPage() {
               height={50}
               className="rounded-lg"
             />
-            <h1 className="text-3xl font-bold text-brand">مُعين</h1>
+            <h1 className="text-brand text-3xl font-bold">مُعين</h1>
           </div>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
+          <h2 className="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
             إعادة تعيين كلمة المرور
           </h2>
           <p className="text-gray-600 dark:text-gray-300">
@@ -119,7 +122,7 @@ export default function ResetPasswordPage() {
         {/* Form */}
         <div className="card p-8">
           {errors.general && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+            <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
               {errors.general}
             </div>
           )}
@@ -127,7 +130,10 @@ export default function ResetPasswordPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* New Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="password"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 كلمة المرور الجديدة
               </label>
               <input
@@ -136,7 +142,7 @@ export default function ResetPasswordPage() {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-colors ${
+                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] ${
                   errors.password ? "border-red-500" : "border-gray-300"
                 }`}
                 placeholder="أدخل كلمة المرور الجديدة"
@@ -152,7 +158,10 @@ export default function ResetPasswordPage() {
 
             {/* Confirm Password */}
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="confirmPassword"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 تأكيد كلمة المرور
               </label>
               <input
@@ -161,21 +170,25 @@ export default function ResetPasswordPage() {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-colors ${
+                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] ${
                   errors.confirmPassword ? "border-red-500" : "border-gray-300"
                 }`}
                 placeholder="أعد إدخال كلمة المرور الجديدة"
                 disabled={isLoading}
               />
               {errors.confirmPassword && (
-                <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.confirmPassword}
+                </p>
               )}
             </div>
 
             {/* Password Requirements */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h4 className="text-sm font-semibold text-blue-800 mb-2">متطلبات كلمة المرور:</h4>
-              <ul className="text-xs text-blue-700 space-y-1">
+            <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+              <h4 className="mb-2 text-sm font-semibold text-blue-800">
+                متطلبات كلمة المرور:
+              </h4>
+              <ul className="space-y-1 text-xs text-blue-700">
                 <li>• يجب أن تكون 6 أحرف على الأقل</li>
                 <li>• يُفضل أن تحتوي على أرقام ورموز</li>
                 <li>• تجنب استخدام كلمات مرور سهلة التخمين</li>
@@ -186,11 +199,11 @@ export default function ResetPasswordPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full btn-brand py-3 rounded-lg text-white font-semibold hover:bg-[var(--brand-primary-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-brand w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isLoading ? (
                 <div className="flex items-center justify-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
                   جاري الحفظ...
                 </div>
               ) : (
@@ -205,7 +218,7 @@ export default function ResetPasswordPage() {
               تذكرت كلمة المرور؟{" "}
               <Link
                 href={ROUTES.LOGIN}
-                className="text-[var(--brand-primary)] hover:underline font-semibold"
+                className="font-semibold text-[var(--brand-primary)] hover:underline"
               >
                 تسجيل الدخول
               </Link>

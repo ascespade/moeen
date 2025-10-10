@@ -19,7 +19,7 @@ const mockRoles: Role[] = [
     description: "صلاحيات كاملة لإدارة النظام",
     permissions: ["users", "settings", "reports", "analytics", "roles"],
     userCount: 2,
-    createdAt: "2024-01-01"
+    createdAt: "2024-01-01",
   },
   {
     id: "2",
@@ -27,7 +27,7 @@ const mockRoles: Role[] = [
     description: "إدارة وحدة الرعاية الصحية",
     permissions: ["patients", "appointments", "sessions", "claims"],
     userCount: 5,
-    createdAt: "2024-01-01"
+    createdAt: "2024-01-01",
   },
   {
     id: "3",
@@ -35,7 +35,7 @@ const mockRoles: Role[] = [
     description: "إدارة المرضى والمواعيد",
     permissions: ["patients", "appointments", "sessions"],
     userCount: 12,
-    createdAt: "2024-01-01"
+    createdAt: "2024-01-01",
   },
   {
     id: "4",
@@ -43,8 +43,8 @@ const mockRoles: Role[] = [
     description: "إدارة الجلسات والمرضى",
     permissions: ["sessions", "patients"],
     userCount: 8,
-    createdAt: "2024-01-01"
-  }
+    createdAt: "2024-01-01",
+  },
 ];
 
 const allPermissions = [
@@ -62,7 +62,7 @@ const allPermissions = [
   { id: "deals", name: "إدارة الصفقات" },
   { id: "activities", name: "إدارة الأنشطة" },
   { id: "chatbot", name: "إدارة الشات بوت" },
-  { id: "templates", name: "إدارة القوالب" }
+  { id: "templates", name: "إدارة القوالب" },
 ];
 
 export default function RolesPage() {
@@ -71,63 +71,109 @@ export default function RolesPage() {
 
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
-      <header className="bg-white dark:bg-gray-900 border-b border-brand sticky top-0 z-10">
+      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
         <div className="container-app py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Image src="/logo.jpg" alt="مُعين" width={50} height={50} className="rounded-lg" />
+              <Image
+                src="/logo.jpg"
+                alt="مُعين"
+                width={50}
+                height={50}
+                className="rounded-lg"
+              />
               <div>
-                <h1 className="text-2xl font-bold text-brand">إدارة الأدوار والصلاحيات</h1>
-                <p className="text-gray-600 dark:text-gray-300">تحديد صلاحيات المستخدمين</p>
+                <h1 className="text-brand text-2xl font-bold">
+                  إدارة الأدوار والصلاحيات
+                </h1>
+                <p className="text-gray-600 dark:text-gray-300">
+                  تحديد صلاحيات المستخدمين
+                </p>
               </div>
             </div>
-            <button onClick={() => setShowCreateModal(true)} className="btn-brand px-6 py-2 rounded-lg text-white hover:bg-[var(--brand-primary-hover)] transition-colors">إضافة دور</button>
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
+            >
+              إضافة دور
+            </button>
           </div>
         </div>
       </header>
 
       <main className="container-app py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-2">{mockRoles.length}</div>
-            <div className="text-gray-600 dark:text-gray-300">إجمالي الأدوار</div>
+            <div className="mb-2 text-3xl font-bold text-blue-600">
+              {mockRoles.length}
+            </div>
+            <div className="text-gray-600 dark:text-gray-300">
+              إجمالي الأدوار
+            </div>
           </div>
           <div className="card p-6 text-center">
-            <div className="text-3xl font-bold text-green-600 mb-2">{mockRoles.reduce((sum, r) => sum + r.userCount, 0)}</div>
-            <div className="text-gray-600 dark:text-gray-300">إجمالي المستخدمين</div>
+            <div className="mb-2 text-3xl font-bold text-green-600">
+              {mockRoles.reduce((sum, r) => sum + r.userCount, 0)}
+            </div>
+            <div className="text-gray-600 dark:text-gray-300">
+              إجمالي المستخدمين
+            </div>
           </div>
           <div className="card p-6 text-center">
-            <div className="text-3xl font-bold text-purple-600 mb-2">{allPermissions.length}</div>
-            <div className="text-gray-600 dark:text-gray-300">الصلاحيات المتاحة</div>
+            <div className="mb-2 text-3xl font-bold text-purple-600">
+              {allPermissions.length}
+            </div>
+            <div className="text-gray-600 dark:text-gray-300">
+              الصلاحيات المتاحة
+            </div>
           </div>
           <div className="card p-6 text-center">
-            <div className="text-3xl font-bold text-orange-600 mb-2">4</div>
+            <div className="mb-2 text-3xl font-bold text-orange-600">4</div>
             <div className="text-gray-600 dark:text-gray-300">أدوار نشطة</div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <div className="card p-6">
-              <h2 className="text-xl font-semibold mb-6">الأدوار</h2>
+              <h2 className="mb-6 text-xl font-semibold">الأدوار</h2>
               <div className="space-y-4">
                 {mockRoles.map((role) => (
-                  <div key={role.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-3">
+                  <div
+                    key={role.id}
+                    className="rounded-lg border border-gray-200 p-4 dark:border-gray-700"
+                  >
+                    <div className="mb-3 flex items-center justify-between">
                       <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white">{role.name}</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">{role.description}</p>
+                        <h3 className="font-semibold text-gray-900 dark:text-white">
+                          {role.name}
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                          {role.description}
+                        </p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-500">{role.userCount} مستخدم</span>
-                        <button onClick={() => setEditingRole(role)} className="px-3 py-1 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 transition-colors">تعديل</button>
+                        <span className="text-sm text-gray-500">
+                          {role.userCount} مستخدم
+                        </span>
+                        <button
+                          onClick={() => setEditingRole(role)}
+                          className="rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-gray-50"
+                        >
+                          تعديل
+                        </button>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {role.permissions.map((permission) => {
-                        const perm = allPermissions.find(p => p.id === permission);
+                        const perm = allPermissions.find(
+                          (p) => p.id === permission,
+                        );
                         return perm ? (
-                          <span key={permission} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                          <span
+                            key={permission}
+                            className="rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-800"
+                          >
                             {perm.name}
                           </span>
                         ) : null;
@@ -141,12 +187,20 @@ export default function RolesPage() {
 
           <div className="lg:col-span-1">
             <div className="card p-6">
-              <h2 className="text-xl font-semibold mb-6">جميع الصلاحيات</h2>
+              <h2 className="mb-6 text-xl font-semibold">جميع الصلاحيات</h2>
               <div className="space-y-2">
                 {allPermissions.map((permission) => (
-                  <div key={permission.id} className="flex items-center gap-2 p-2 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <input type="checkbox" className="w-4 h-4 text-[var(--brand-primary)] border-gray-300 rounded focus:ring-[var(--brand-primary)]" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">{permission.name}</span>
+                  <div
+                    key={permission.id}
+                    className="flex items-center gap-2 rounded-lg bg-gray-50 p-2 dark:bg-gray-800"
+                  >
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4 rounded border-gray-300 text-[var(--brand-primary)] focus:ring-[var(--brand-primary)]"
+                    />
+                    <span className="text-sm text-gray-700 dark:text-gray-300">
+                      {permission.name}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -156,35 +210,73 @@ export default function RolesPage() {
       </main>
 
       {showCreateModal && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-gray-900 rounded-lg p-6 w-full max-w-2xl">
-            <div className="flex justify-between items-center mb-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900">
+            <div className="mb-6 flex items-center justify-between">
               <h3 className="text-xl font-semibold">إضافة دور جديد</h3>
-              <button onClick={() => setShowCreateModal(false)} className="text-gray-400 hover:text-gray-600">✕</button>
+              <button
+                onClick={() => setShowCreateModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
             </div>
             <form className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">اسم الدور</label>
-                <input type="text" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent" placeholder="أدخل اسم الدور" />
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  اسم الدور
+                </label>
+                <input
+                  type="text"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
+                  placeholder="أدخل اسم الدور"
+                />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الوصف</label>
-                <textarea rows={3} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent" placeholder="أدخل وصف الدور"></textarea>
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  الوصف
+                </label>
+                <textarea
+                  rows={3}
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
+                  placeholder="أدخل وصف الدور"
+                ></textarea>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الصلاحيات</label>
-                <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto">
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  الصلاحيات
+                </label>
+                <div className="grid max-h-48 grid-cols-2 gap-2 overflow-y-auto">
                   {allPermissions.map((permission) => (
-                    <div key={permission.id} className="flex items-center gap-2 p-2 border border-gray-200 rounded-lg">
-                      <input type="checkbox" className="w-4 h-4 text-[var(--brand-primary)] border-gray-300 rounded focus:ring-[var(--brand-primary)]" />
-                      <span className="text-sm text-gray-700 dark:text-gray-300">{permission.name}</span>
+                    <div
+                      key={permission.id}
+                      className="flex items-center gap-2 rounded-lg border border-gray-200 p-2"
+                    >
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4 rounded border-gray-300 text-[var(--brand-primary)] focus:ring-[var(--brand-primary)]"
+                      />
+                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                        {permission.name}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
               <div className="flex gap-3 pt-4">
-                <button type="button" onClick={() => setShowCreateModal(false)} className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">إلغاء</button>
-                <button type="submit" className="flex-1 btn-brand py-2 rounded-lg text-white hover:bg-[var(--brand-primary-hover)] transition-colors">إضافة الدور</button>
+                <button
+                  type="button"
+                  onClick={() => setShowCreateModal(false)}
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="submit"
+                  className="btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
+                >
+                  إضافة الدور
+                </button>
               </div>
             </form>
           </div>

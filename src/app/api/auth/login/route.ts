@@ -24,7 +24,10 @@ export async function POST(request: Request) {
 
     const token = "mock-admin-token";
 
-    const response = NextResponse.json({ success: true, data: { user, token } });
+    const response = NextResponse.json({
+      success: true,
+      data: { user, token },
+    });
 
     // Set cookie (httpOnly in production ideally)
     response.cookies.set("auth-token", token, {
@@ -43,5 +46,3 @@ export async function POST(request: Request) {
     );
   }
 }
-
-

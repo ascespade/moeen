@@ -54,7 +54,7 @@ export function TH({
   return (
     <th
       className={clsx(
-        "px-4 py-3 text-start font-semibold text-gray-700 dark:text-gray-200 border-b border-brand-border",
+        "border-b border-brand-border px-4 py-3 text-start font-semibold text-gray-700 dark:text-gray-200",
         className,
       )}
       {...props}

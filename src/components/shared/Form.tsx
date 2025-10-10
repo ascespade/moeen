@@ -10,12 +10,18 @@ interface FormFieldProps {
   className?: string;
 }
 
-export function FormField({ label, error, required, children, className = "" }: FormFieldProps) {
+export function FormField({
+  label,
+  error,
+  required,
+  children,
+  className = "",
+}: FormFieldProps) {
   return (
     <div className={`space-y-2 ${className}`}>
       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
         {label}
-        {required && <span className="text-red-500 mr-1">*</span>}
+        {required && <span className="mr-1 text-red-500">*</span>}
       </label>
       {children}
       {error && (
@@ -31,11 +37,7 @@ interface FormGroupProps {
 }
 
 export function FormGroup({ children, className = "" }: FormGroupProps) {
-  return (
-    <div className={`space-y-4 ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`space-y-4 ${className}`}>{children}</div>;
 }
 
 interface FormRowProps {
@@ -45,7 +47,7 @@ interface FormRowProps {
 
 export function FormRow({ children, className = "" }: FormRowProps) {
   return (
-    <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${className}`}>
+    <div className={`grid grid-cols-1 gap-4 md:grid-cols-2 ${className}`}>
       {children}
     </div>
   );
@@ -58,7 +60,9 @@ interface FormActionsProps {
 
 export function FormActions({ children, className = "" }: FormActionsProps) {
   return (
-    <div className={`flex gap-3 pt-6 border-t border-gray-200 dark:border-gray-700 ${className}`}>
+    <div
+      className={`flex gap-3 border-t border-gray-200 pt-6 dark:border-gray-700 ${className}`}
+    >
       {children}
     </div>
   );

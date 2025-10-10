@@ -12,8 +12,8 @@ export default function GlobalError({
   reset: () => void;
 }) {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full text-center">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
+      <div className="w-full max-w-2xl text-center">
         {/* Logo */}
         <div className="mb-8">
           <Image
@@ -21,7 +21,7 @@ export default function GlobalError({
             alt="Hemam Logo"
             width={80}
             height={80}
-            className="mx-auto rounded mb-4"
+            className="mx-auto mb-4 rounded"
           />
           <h1
             className="text-4xl font-bold"
@@ -32,64 +32,64 @@ export default function GlobalError({
         </div>
 
         {/* Error Content */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
-          <div className="w-20 h-20 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-6">
-            <AlertTriangle className="w-10 h-10 text-red-600 dark:text-red-400" />
+        <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-lg dark:border-gray-700 dark:bg-gray-800">
+          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-red-100 dark:bg-red-900">
+            <AlertTriangle className="h-10 w-10 text-red-600 dark:text-red-400" />
           </div>
 
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
             حدث خطأ غير متوقع
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
+          <p className="mb-6 text-lg text-gray-600 dark:text-gray-400">
             عذراً، حدث خطأ غير متوقع. نحن نعمل على إصلاحه.
           </p>
 
           {error.message && (
-            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 mb-6">
-              <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">
+            <div className="mb-6 rounded-lg bg-gray-100 p-4 dark:bg-gray-700">
+              <p className="font-mono text-sm text-gray-600 dark:text-gray-400">
                 {error.message}
               </p>
             </div>
           )}
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+          <div className="mb-8 flex flex-col justify-center gap-4 sm:flex-row">
             <button
               onClick={() => reset()}
-              className="inline-flex items-center justify-center gap-2 bg-[var(--brand-primary)] text-white px-6 py-3 rounded-lg hover:bg-[var(--brand-primary-hover)] transition-colors"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-6 py-3 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
             >
-              <RefreshCw className="w-5 h-5" />
+              <RefreshCw className="h-5 w-5" />
               إعادة المحاولة
             </button>
             <Link
               href="/"
-              className="inline-flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 px-6 py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
             >
-              <Home className="w-5 h-5" />
+              <Home className="h-5 w-5" />
               العودة للرئيسية
             </Link>
           </div>
 
           {/* Help Section */}
-          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          <div className="rounded-lg bg-gray-50 p-6 dark:bg-gray-700">
+            <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
               إذا استمر الخطأ
             </h3>
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid gap-4 md:grid-cols-2">
               <Link
                 href="/contact"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                className="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-600"
               >
-                <Bug className="w-5 h-5 text-[var(--brand-primary)]" />
+                <Bug className="h-5 w-5 text-[var(--brand-primary)]" />
                 <span className="text-gray-700 dark:text-gray-300">
                   الإبلاغ عن المشكلة
                 </span>
               </Link>
               <Link
                 href="/faq"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                className="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-600"
               >
-                <AlertTriangle className="w-5 h-5 text-[var(--brand-primary)]" />
+                <AlertTriangle className="h-5 w-5 text-[var(--brand-primary)]" />
                 <span className="text-gray-700 dark:text-gray-300">
                   الحصول على المساعدة
                 </span>
@@ -99,11 +99,11 @@ export default function GlobalError({
 
           {/* Error Details */}
           {error.digest && (
-            <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-              <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+            <div className="mt-6 rounded-lg bg-gray-100 p-4 dark:bg-gray-700">
+              <h4 className="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">
                 معرف الخطأ:
               </h4>
-              <p className="text-sm font-mono text-gray-600 dark:text-gray-400">
+              <p className="font-mono text-sm text-gray-600 dark:text-gray-400">
                 {error.digest}
               </p>
             </div>

@@ -16,14 +16,14 @@ interface FormState<T> {
 interface FormOptions<T> {
   initialValues: T;
   validationRules?: Partial<
-    Record<keyof T, (value: any) => { isValid: boolean; error?: string }>
+    Record<keyof T, (value: unknown) => { isValid: boolean; error?: string }>
   >;
   onSubmit?: (values: T) => void | Promise<void>;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
 }
 
-export const useForm = <T extends Record<string, any>>(
+export const useForm = <T extends Record<string, unknown>>(
   options: FormOptions<T>,
 ) => {
   const {
@@ -53,7 +53,7 @@ export const useForm = <T extends Record<string, any>>(
 
     const rules = validationRules as Record<
       keyof T,
-      (value: any) => { isValid: boolean; error?: string }
+      (value: unknown) => { isValid: boolean; error?: string }
     >;
     return validateForm(state.values, rules);
   }, [state.values, validationRules]);
@@ -76,7 +76,7 @@ export const useForm = <T extends Record<string, any>>(
   }, [state.values]);
 
   // Set field value
-  const setFieldValue = useCallback((field: keyof T, value: any) => {
+  const setFieldValue = useCallback((field: keyof T, value: unknown) => {
     setState((prev) => ({
       ...prev,
       values: { ...prev.values, [field]: value },
@@ -96,8 +96,8 @@ export const useForm = <T extends Record<string, any>>(
   const clearFieldError = useCallback((field: keyof T) => {
     setState((prev) => {
       const newErrors: Partial<Record<keyof T, string>> = { ...prev.errors };
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (newErrors as any)[field as any];
+      // Remove the error for this field if it exists
+      delete (newErrors as Record<string, string>)[field as string];
       return { ...prev, errors: newErrors } as typeof prev;
     });
   }, []);
@@ -115,12 +115,12 @@ export const useForm = <T extends Record<string, any>>(
 
   // Handle field change
   const handleChange = useCallback(
-    (field: keyof T) => (value: any) => {
+    (field: keyof T) => (value: unknown) => {
       setFieldValue(field, value);
 
       if (validateOnChange) {
         const rule = validationRules[field as keyof typeof validationRules] as
-          | ((value: any) => { isValid: boolean; error?: string })
+          | ((value: unknown) => { isValid: boolean; error?: string })
           | undefined;
         if (typeof rule === "function") {
           const result = rule(value);
@@ -148,7 +148,7 @@ export const useForm = <T extends Record<string, any>>(
 
       if (validateOnBlur) {
         const rule = validationRules[field as keyof typeof validationRules] as
-          | ((value: any) => { isValid: boolean; error?: string })
+          | ((value: unknown) => { isValid: boolean; error?: string })
           | undefined;
         if (typeof rule === "function") {
           const result = rule(state.values[field]);

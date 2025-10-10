@@ -53,8 +53,8 @@ export default function LogsAdminPage() {
   );
 
   return (
-    <main className="p-6 grid gap-4">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-3 items-center">
+    <main className="grid gap-4 p-6">
+      <div className="grid grid-cols-1 items-center gap-3 md:grid-cols-[1fr_auto_auto]">
         <h1 className="text-2xl font-semibold">السجلات</h1>
         <select
           className="h-10 rounded-md border border-[var(--brand-border)] px-2 focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
@@ -67,7 +67,7 @@ export default function LogsAdminPage() {
           <option value="error">Errors</option>
         </select>
         <input
-          className="h-10 rounded-md border border-[var(--brand-border)] px-3 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+          className="h-10 w-full rounded-md border border-[var(--brand-border)] px-3 focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] md:w-64"
           placeholder="بحث"
           value={q}
           onChange={(e) => setQ(e.target.value)}
@@ -90,9 +90,9 @@ export default function LogsAdminPage() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 dark:bg-white/5">
               <tr>
-                <th className="text-start p-3">النوع</th>
-                <th className="text-start p-3">الوقت</th>
-                <th className="text-start p-3">الوصف</th>
+                <th className="p-3 text-start">النوع</th>
+                <th className="p-3 text-start">الوقت</th>
+                <th className="p-3 text-start">الوصف</th>
               </tr>
             </thead>
             <tbody>

@@ -46,17 +46,17 @@ export default function ResetPasswordPage() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
-        <div className="max-w-md w-full">
-          <div className="text-center mb-8">
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
+        <div className="w-full max-w-md">
+          <div className="mb-8 text-center">
             <Image
               src="/logo.jpg"
               alt="Hemam Logo"
               width={64}
               height={64}
-              className="mx-auto rounded mb-4"
+              className="mx-auto mb-4 rounded"
             />
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
               تم تغيير كلمة المرور
             </h1>
             <p className="text-gray-600 dark:text-gray-400">
@@ -64,21 +64,21 @@ export default function ResetPasswordPage() {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
             <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900">
+                <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
               </div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
                 تم بنجاح!
               </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
+              <p className="mb-6 text-gray-600 dark:text-gray-400">
                 تم تغيير كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول بحسابك
                 الجديد.
               </p>
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center w-full px-4 py-2 bg-[var(--brand-primary)] text-white rounded-lg hover:bg-[var(--brand-primary-hover)] transition-colors"
+                className="inline-flex w-full items-center justify-center rounded-lg bg-[var(--brand-primary)] px-4 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
               >
                 تسجيل الدخول
               </Link>
@@ -90,17 +90,17 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
-        <div className="text-center mb-8">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
+      <div className="w-full max-w-md">
+        <div className="mb-8 text-center">
           <Image
             src="/logo.jpg"
             alt="Hemam Logo"
             width={64}
             height={64}
-            className="mx-auto rounded mb-4"
+            className="mx-auto mb-4 rounded"
           />
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
             إعادة تعيين كلمة المرور
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
@@ -108,12 +108,12 @@ export default function ResetPasswordPage() {
           </p>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 كلمة المرور الجديدة
               </label>
@@ -125,18 +125,18 @@ export default function ResetPasswordPage() {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="أدخل كلمة المرور الجديدة"
-                  className="w-full px-3 py-2 pr-10 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent dark:bg-gray-700 dark:text-white"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 pr-10 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3"
                 >
                   {showPassword ? (
-                    <EyeOff className="w-5 h-5 text-gray-400" />
+                    <EyeOff className="h-5 w-5 text-gray-400" />
                   ) : (
-                    <Eye className="w-5 h-5 text-gray-400" />
+                    <Eye className="h-5 w-5 text-gray-400" />
                   )}
                 </button>
               </div>
@@ -145,7 +145,7 @@ export default function ResetPasswordPage() {
             <div>
               <label
                 htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 تأكيد كلمة المرور
               </label>
@@ -157,28 +157,28 @@ export default function ResetPasswordPage() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="أعد إدخال كلمة المرور"
-                  className="w-full px-3 py-2 pr-10 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent dark:bg-gray-700 dark:text-white"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 pr-10 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3"
                 >
                   {showConfirmPassword ? (
-                    <EyeOff className="w-5 h-5 text-gray-400" />
+                    <EyeOff className="h-5 w-5 text-gray-400" />
                   ) : (
-                    <Eye className="w-5 h-5 text-gray-400" />
+                    <Eye className="h-5 w-5 text-gray-400" />
                   )}
                 </button>
               </div>
             </div>
 
-            <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg">
-              <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">
+            <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-900">
+              <h4 className="mb-2 text-sm font-medium text-blue-900 dark:text-blue-100">
                 متطلبات كلمة المرور:
               </h4>
-              <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+              <ul className="space-y-1 text-sm text-blue-800 dark:text-blue-200">
                 <li>• 8 أحرف على الأقل</li>
                 <li>• تحتوي على حروف وأرقام</li>
                 <li>• لا تحتوي على مسافات</li>
@@ -188,7 +188,7 @@ export default function ResetPasswordPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[var(--brand-primary)] text-white py-2 px-4 rounded-lg hover:bg-[var(--brand-primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full rounded-lg bg-[var(--brand-primary)] px-4 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isLoading ? "جاري التحديث..." : "تحديث كلمة المرور"}
             </button>
@@ -197,7 +197,7 @@ export default function ResetPasswordPage() {
           <div className="mt-6 text-center">
             <Link
               href="/login"
-              className="text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)] text-sm"
+              className="text-sm text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]"
             >
               العودة لتسجيل الدخول
             </Link>

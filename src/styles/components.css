@@ -19,11 +19,11 @@
 }
 
 .card-flat {
-  @apply card shadow-none border;
+  @apply card border shadow-none;
 }
 
 .card-interactive {
-  @apply card cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105;
+  @apply card cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg;
 }
 
 /* Form Components */
@@ -32,16 +32,16 @@
 }
 
 .form-error {
-  @apply text-sm text-red-600 mt-1;
+  @apply mt-1 text-sm text-red-600;
 }
 
 .form-help {
-  @apply text-sm text-gray-500 mt-1;
+  @apply mt-1 text-sm text-gray-500;
 }
 
 /* Status Badges */
 .badge {
-  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
 }
 
 .badge-success {
@@ -66,11 +66,11 @@
 }
 
 .table th {
-  @apply px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-brand;
+  @apply border-brand border-b px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500;
 }
 
 .table td {
-  @apply px-4 py-4 whitespace-nowrap text-sm text-foreground border-b border-brand;
+  @apply border-brand whitespace-nowrap border-b px-4 py-4 text-sm text-foreground;
 }
 
 .table tbody tr:hover {
@@ -79,15 +79,15 @@
 
 /* Modal Components */
 .modal-overlay {
-  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+  @apply fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50;
 }
 
 .modal-content {
-  @apply bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full mx-4;
+  @apply mx-4 w-full max-w-md rounded-lg bg-white shadow-xl dark:bg-gray-800;
 }
 
 .modal-header {
-  @apply px-6 py-4 border-b border-brand;
+  @apply border-brand border-b px-6 py-4;
 }
 
 .modal-body {
@@ -95,25 +95,25 @@
 }
 
 .modal-footer {
-  @apply px-6 py-4 border-t border-brand flex justify-end gap-3;
+  @apply border-brand flex justify-end gap-3 border-t px-6 py-4;
 }
 
 /* Loading States */
 .loading-spinner {
-  @apply inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin;
+  @apply inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent;
 }
 
 .loading-skeleton {
-  @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded;
+  @apply animate-pulse rounded bg-gray-200 dark:bg-gray-700;
 }
 
 /* Navigation Components */
 .sidebar {
-  @apply bg-white dark:bg-gray-900 border-l border-brand h-full;
+  @apply border-brand h-full border-l bg-white dark:bg-gray-900;
 }
 
 .sidebar-item {
-  @apply flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors;
+  @apply flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800;
 }
 
 .sidebar-item.active {
@@ -126,7 +126,7 @@
 
 /* Dashboard Components */
 .dashboard-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
+  @apply grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
 }
 
 .dashboard-card {
@@ -134,7 +134,7 @@
 }
 
 .dashboard-metric {
-  @apply text-3xl font-bold text-brand;
+  @apply text-brand text-3xl font-bold;
 }
 
 .dashboard-label {
@@ -155,11 +155,11 @@
 
 /* Chart Containers */
 .chart-container {
-  @apply w-full h-64 p-4;
+  @apply h-64 w-full p-4;
 }
 
 .chart-title {
-  @apply text-lg font-semibold text-foreground mb-4;
+  @apply mb-4 text-lg font-semibold text-foreground;
 }
 
 /* Responsive Utilities */
@@ -167,15 +167,15 @@
   .dashboard-grid {
     @apply grid-cols-1;
   }
-  
+
   .modal-content {
     @apply mx-2;
   }
-  
+
   .table {
     @apply text-xs;
   }
-  
+
   .table th,
   .table td {
     @apply px-2 py-2;
@@ -187,11 +187,11 @@
   .no-print {
     @apply hidden;
   }
-  
+
   .card {
-    @apply shadow-none border;
+    @apply border shadow-none;
   }
-  
+
   .btn {
     @apply border border-gray-300 bg-transparent text-gray-900;
   }

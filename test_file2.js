@@ -2,8 +2,7 @@
 console.log("Hello from file 2");
 
 function test2() {
-    return "File 2 working";
+  return "File 2 working";
 }
 
 export default test2;
-

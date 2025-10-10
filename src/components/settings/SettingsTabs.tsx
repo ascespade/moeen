@@ -84,7 +84,7 @@ export default function SettingsTabs() {
         {tabs.map((t) => (
           <button
             key={t.id}
-            className={`h-9 px-3 rounded-md border whitespace-nowrap ${active === t.id ? "bg-gray-900 text-white" : "hover:bg-gray-100 dark:hover:bg-white/10"}`}
+            className={`h-9 whitespace-nowrap rounded-md border px-3 ${active === t.id ? "bg-gray-900 text-white" : "hover:bg-gray-100 dark:hover:bg-white/10"}`}
             onClick={() => setActive(t.id)}
           >
             {t.label}
@@ -93,7 +93,7 @@ export default function SettingsTabs() {
       </div>
 
       {active === "general" && (
-        <section className="rounded-xl border p-4 grid gap-4">
+        <section className="grid gap-4 rounded-xl border p-4">
           <div className="grid gap-2">
             <label className="text-sm">اسم المؤسسة</label>
             <input
@@ -145,7 +145,7 @@ export default function SettingsTabs() {
           <div>
             <button
               disabled={saving}
-              className="h-10 rounded-md bg-gray-900 text-white px-4"
+              className="h-10 rounded-md bg-gray-900 px-4 text-white"
               onClick={() => save({ general: settings?.general || {} })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -155,7 +155,7 @@ export default function SettingsTabs() {
       )}
 
       {active === "ai" && (
-        <section className="rounded-xl border p-4 grid gap-4">
+        <section className="grid gap-4 rounded-xl border p-4">
           <div className="grid gap-2">
             <label className="text-sm">مزود LLM</label>
             <select
@@ -172,7 +172,7 @@ export default function SettingsTabs() {
               <option value="flash">Gemini Flash 2.5</option>
             </select>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="grid gap-2">
               <label className="text-sm">Temperature</label>
               <input
@@ -191,7 +191,7 @@ export default function SettingsTabs() {
           <div>
             <button
               disabled={saving}
-              className="h-10 rounded-md bg-gray-900 text-white px-4"
+              className="h-10 rounded-md bg-gray-900 px-4 text-white"
               onClick={() => save({ provider: settings?.provider || "" })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -201,7 +201,7 @@ export default function SettingsTabs() {
       )}
 
       {active === "voice" && (
-        <section className="rounded-xl border p-4 grid gap-4">
+        <section className="grid gap-4 rounded-xl border p-4">
           <div className="grid gap-2">
             <label className="text-sm">STT (تحويل صوت لنص)</label>
             <select
@@ -244,7 +244,7 @@ export default function SettingsTabs() {
           <div>
             <button
               disabled={saving}
-              className="h-10 rounded-md bg-gray-900 text-white px-4"
+              className="h-10 rounded-md bg-gray-900 px-4 text-white"
               onClick={() =>
                 save({ voice: settings?.voice || { stt: null, tts: null } })
               }
@@ -256,7 +256,7 @@ export default function SettingsTabs() {
       )}
 
       {active === "providers" && (
-        <section className="rounded-xl border p-4 grid gap-4">
+        <section className="grid gap-4 rounded-xl border p-4">
           {/* WhatsApp Configuration */}
           <div className="grid gap-2">
             <h3 className="text-base font-semibold">إعداد WhatsApp</h3>
@@ -360,7 +360,7 @@ export default function SettingsTabs() {
           <div>
             <button
               disabled={saving}
-              className="h-10 rounded-md bg-gray-900 text-white px-4"
+              className="h-10 rounded-md bg-gray-900 px-4 text-white"
               onClick={() => save({ providers: settings?.providers || {} })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -370,7 +370,7 @@ export default function SettingsTabs() {
       )}
 
       {active === "channels" && (
-        <section className="rounded-xl border p-4 grid gap-4">
+        <section className="grid gap-4 rounded-xl border p-4">
           <div className="grid gap-2">
             <label className="text-sm">WhatsApp Webhook URL</label>
             <input
@@ -407,7 +407,7 @@ export default function SettingsTabs() {
           <div>
             <button
               disabled={saving}
-              className="h-10 rounded-md bg-gray-900 text-white px-4"
+              className="h-10 rounded-md bg-gray-900 px-4 text-white"
               onClick={() => save({ channels: settings?.channels || {} })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -417,7 +417,7 @@ export default function SettingsTabs() {
       )}
 
       {active === "security" && (
-        <section className="rounded-xl border p-4 grid gap-4">
+        <section className="grid gap-4 rounded-xl border p-4">
           <div className="grid gap-2">
             <label className="text-sm">أيام الاحتفاظ بالبيانات</label>
             <input
@@ -457,7 +457,7 @@ export default function SettingsTabs() {
           <div>
             <button
               disabled={saving}
-              className="h-10 rounded-md bg-gray-900 text-white px-4"
+              className="h-10 rounded-md bg-gray-900 px-4 text-white"
               onClick={() => save({ security: settings?.security || {} })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -467,7 +467,7 @@ export default function SettingsTabs() {
       )}
 
       {active === "notifications" && (
-        <section className="rounded-xl border p-4 grid gap-4">
+        <section className="grid gap-4 rounded-xl border p-4">
           <div className="grid gap-2">
             <label className="text-sm">Slack Webhook URL</label>
             <input
@@ -488,7 +488,7 @@ export default function SettingsTabs() {
           <div>
             <button
               disabled={saving}
-              className="h-10 rounded-md bg-gray-900 text-white px-4"
+              className="h-10 rounded-md bg-gray-900 px-4 text-white"
               onClick={() =>
                 save({ notifications: settings?.notifications || {} })
               }
@@ -500,11 +500,11 @@ export default function SettingsTabs() {
       )}
 
       {active === "emergency" && (
-        <section className="rounded-xl border p-4 grid gap-4">
+        <section className="grid gap-4 rounded-xl border p-4">
           <div className="grid gap-2">
             <label className="text-sm font-medium">كلمات الطوارئ</label>
             <textarea
-              className="w-full p-2 border rounded-md"
+              className="w-full rounded-md border p-2"
               placeholder="أدخل الكلمات مفصولة بفواصل"
               value={(settings?.emergency?.keywords || []).join(", ")}
               onChange={(e) => {
@@ -522,7 +522,7 @@ export default function SettingsTabs() {
           <div>
             <button
               disabled={saving}
-              className="h-10 rounded-md bg-gray-900 text-white px-4"
+              className="h-10 rounded-md bg-gray-900 px-4 text-white"
               onClick={() =>
                 save({ emergency: settings?.emergency || { keywords: [] } })
               }
@@ -534,7 +534,7 @@ export default function SettingsTabs() {
       )}
 
       {active === "account" && (
-        <section className="rounded-xl border p-4 grid gap-4">
+        <section className="grid gap-4 rounded-xl border p-4">
           <div className="grid gap-2">
             <label className="text-sm">الاسم</label>
             <input
@@ -586,7 +586,7 @@ export default function SettingsTabs() {
           <div>
             <button
               disabled={saving}
-              className="h-10 rounded-md bg-gray-900 text-white px-4"
+              className="h-10 rounded-md bg-gray-900 px-4 text-white"
               onClick={() => save({ account: settings?.account || {} })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -603,7 +603,7 @@ export default function SettingsTabs() {
       )}
 
       {active === "billing" && (
-        <section className="rounded-xl border p-4 grid gap-4">
+        <section className="grid gap-4 rounded-xl border p-4">
           <div className="grid gap-2">
             <label className="text-sm">الميزانية اليومية (USD)</label>
             <input
@@ -624,7 +624,7 @@ export default function SettingsTabs() {
           <div>
             <button
               disabled={saving}
-              className="h-10 rounded-md bg-gray-900 text-white px-4"
+              className="h-10 rounded-md bg-gray-900 px-4 text-white"
               onClick={() => save({ billing: settings?.billing || {} })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}

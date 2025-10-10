@@ -40,7 +40,7 @@ export function DataTable<T extends Record<string, unknown>>({
     );
 
   return (
-    <div className="border border-brand-border rounded-xl overflow-hidden">
+    <div className="overflow-hidden rounded-xl border border-brand-border">
       <table className="min-w-full text-sm">
         <thead className="bg-gray-50 dark:bg-gray-800">
           <tr>
@@ -72,7 +72,7 @@ export function DataTable<T extends Record<string, unknown>>({
           ))}
         </tbody>
       </table>
-      <div className="px-4 py-3 bg-gray-50 dark:bg-gray-800 flex items-center justify-between">
+      <div className="flex items-center justify-between bg-gray-50 px-4 py-3 dark:bg-gray-800">
         <span className="text-sm text-gray-600 dark:text-gray-400">
           {start + 1}-{Math.min(start + pageSize, sorted.length)} من{" "}
           {sorted.length}
@@ -81,14 +81,14 @@ export function DataTable<T extends Record<string, unknown>>({
           <button
             onClick={() => setPage(1)}
             disabled={page === 1}
-            className="px-2 py-1 text-sm border rounded disabled:opacity-50"
+            className="rounded border px-2 py-1 text-sm disabled:opacity-50"
           >
             «
           </button>
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="px-2 py-1 text-sm border rounded disabled:opacity-50"
+            className="rounded border px-2 py-1 text-sm disabled:opacity-50"
           >
             ‹
           </button>
@@ -98,14 +98,14 @@ export function DataTable<T extends Record<string, unknown>>({
           <button
             onClick={() => setPage((p) => Math.min(pages, p + 1))}
             disabled={page === pages}
-            className="px-2 py-1 text-sm border rounded disabled:opacity-50"
+            className="rounded border px-2 py-1 text-sm disabled:opacity-50"
           >
             ›
           </button>
           <button
             onClick={() => setPage(pages)}
             disabled={page === pages}
-            className="px-2 py-1 text-sm border rounded disabled:opacity-50"
+            className="rounded border px-2 py-1 text-sm disabled:opacity-50"
           >
             »
           </button>

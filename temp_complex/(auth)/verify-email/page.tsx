@@ -20,17 +20,17 @@ export default function VerifyEmailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
-        <div className="text-center mb-8">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
+      <div className="w-full max-w-md">
+        <div className="mb-8 text-center">
           <Image
             src="/logo.jpg"
             alt="Hemam Logo"
             width={64}
             height={64}
-            className="mx-auto rounded mb-4"
+            className="mx-auto mb-4 rounded"
           />
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
             تحقق من بريدك الإلكتروني
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
@@ -38,25 +38,25 @@ export default function VerifyEmailPage() {
           </p>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
           <div className="text-center">
-            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Mail className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
+              <Mail className="h-8 w-8 text-blue-600 dark:text-blue-400" />
             </div>
 
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
               تحقق من بريدك الإلكتروني
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="mb-6 text-gray-600 dark:text-gray-400">
               تم إرسال رابط التحقق إلى بريدك الإلكتروني. يرجى فتح الرسالة والنقر
               على الرابط لتفعيل حسابك.
             </p>
 
-            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6">
-              <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
+            <div className="mb-6 rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+              <h4 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 لم تجد الرسالة؟
               </h4>
-              <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+              <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-400">
                 <li>• تحقق من مجلد الرسائل المهملة</li>
                 <li>• تأكد من صحة عنوان البريد الإلكتروني</li>
                 <li>• انتظر بضع دقائق ثم حاول مرة أخرى</li>
@@ -67,21 +67,21 @@ export default function VerifyEmailPage() {
               <button
                 onClick={handleResend}
                 disabled={isResending || isResent}
-                className="w-full bg-[var(--brand-primary)] text-white py-2 px-4 rounded-lg hover:bg-[var(--brand-primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-4 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isResending ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
                     جاري الإرسال...
                   </>
                 ) : isResent ? (
                   <>
-                    <CheckCircle className="w-4 h-4" />
+                    <CheckCircle className="h-4 w-4" />
                     تم الإرسال مرة أخرى
                   </>
                 ) : (
                   <>
-                    <RefreshCw className="w-4 h-4" />
+                    <RefreshCw className="h-4 w-4" />
                     إعادة إرسال الرابط
                   </>
                 )}
@@ -89,7 +89,7 @@ export default function VerifyEmailPage() {
 
               <Link
                 href="/login"
-                className="block w-full text-center text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)] text-sm py-2"
+                className="block w-full py-2 text-center text-sm text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]"
               >
                 العودة لتسجيل الدخول
               </Link>
