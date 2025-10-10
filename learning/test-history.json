@@ -104,5 +104,58 @@
       "successRate": 0.75,
       "averageDuration": 9.5
     }
+  },
+  {
+    "timestamp": "2025-10-10T15:52:01.469Z",
+    "environment": "sandbox",
+    "tests": [
+      {
+        "name": "System Health Check",
+        "startTime": "2025-10-10T15:52:01.429Z",
+        "success": true,
+        "duration": 0,
+        "error": null,
+        "output": "Health checks: 6/6 passed",
+        "warnings": [],
+        "endTime": "2025-10-10T15:52:01.429Z"
+      },
+      {
+        "name": "Script Execution: scripts/test-script.js",
+        "startTime": "2025-10-10T15:52:01.430Z",
+        "success": false,
+        "duration": 38,
+        "error": "node:internal/modules/cjs/loader:1386\n  throw err;\n  ^\n\nError: Cannot find module '/workspace/sandbox/scripts/test-script.js'\n    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n    at Function._load (node:internal/modules/cjs/loader:1192:37)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: []\n}\n\nNode.js v22.20.0\n",
+        "output": "",
+        "warnings": [],
+        "endTime": "2025-10-10T15:52:01.468Z"
+      },
+      {
+        "name": "Configuration Changes: /workspace/sandbox/config/sandbox-config.json",
+        "startTime": "2025-10-10T15:52:01.468Z",
+        "success": true,
+        "duration": 1,
+        "error": null,
+        "output": "Configuration changes applied and tested",
+        "warnings": [],
+        "endTime": "2025-10-10T15:52:01.469Z"
+      },
+      {
+        "name": "Performance Optimization: memory_cleanup",
+        "startTime": "2025-10-10T15:52:01.469Z",
+        "success": true,
+        "duration": 0,
+        "error": null,
+        "output": "Optimization applied, performance gain: 100%",
+        "warnings": [],
+        "endTime": "2025-10-10T15:52:01.469Z"
+      }
+    ],
+    "summary": {
+      "totalTests": 4,
+      "passedTests": 3,
+      "failedTests": 1,
+      "successRate": 0.75,
+      "averageDuration": 9.75
+    }
   }
 ]
