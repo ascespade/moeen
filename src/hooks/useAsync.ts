@@ -75,7 +75,7 @@ export const useAsync = <T>(
 
 export const useAsyncEffect = <T>(
   asyncFunction: () => Promise<T>,
-  deps: any[] = [],
+  deps: ReadonlyArray<unknown> = [],
   options: AsyncOptions = {},
 ) => {
   const { onSuccess, onError } = options;
@@ -115,7 +115,9 @@ export const useAsyncEffect = <T>(
     return () => {
       isCancelled = true;
     };
-  }, deps);
+    // Dependencies include async function and handlers plus custom deps
+    // This ensures stable behavior and satisfies exhaustive-deps
+  }, [asyncFunction, onSuccess, onError, deps]);
 
   useEffect(() => {
     return () => {

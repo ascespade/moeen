@@ -1,198 +1,212 @@
 /* Shared Components Styles */
+@tailwind components;
 
-/* Button Variants */
-.btn-primary {
-  @apply btn btn-brand;
-}
+@layer components {
+  /* Button Variants */
+  .btn-primary {
+    @apply btn;
+    background: var(--brand-primary);
+    color: #fff;
+  }
 
-.btn-secondary {
-  @apply btn btn-secondary;
-}
+  .btn-secondary {
+    @apply bg-white text-gray-900 border hover:bg-gray-50 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-800 dark:hover:bg-gray-800;
+    border-color: var(--brand-border);
+  }
 
-.btn-outline-primary {
-  @apply btn btn-outline;
-}
+  .btn-outline-primary {
+    @apply bg-transparent hover:text-white;
+    color: var(--brand-primary);
+    border: 1px solid var(--brand-primary);
+  }
 
-/* Card Variants */
-.card-elevated {
-  @apply card shadow-lg;
-}
+  /* Card Variants */
+  .card-elevated {
+    @apply card shadow-lg;
+  }
 
-.card-flat {
-  @apply card border shadow-none;
-}
+  .card-flat {
+    @apply card border shadow-none;
+  }
 
-.card-interactive {
-  @apply card cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg;
-}
+  .card-interactive {
+    @apply card cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg;
+  }
 
-/* Form Components */
-.form-group {
-  @apply space-y-2;
-}
+  /* Form Components */
+  .form-group {
+    @apply space-y-2;
+  }
 
-.form-error {
-  @apply mt-1 text-sm text-red-600;
-}
+  .form-error {
+    @apply mt-1 text-sm text-red-600;
+  }
 
-.form-help {
-  @apply mt-1 text-sm text-gray-500;
-}
+  .form-help {
+    @apply mt-1 text-sm text-gray-500;
+  }
 
-/* Status Badges */
-.badge {
-  @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
-}
+  /* Status Badges */
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
 
-.badge-success {
-  @apply badge bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200;
-}
+  .badge-success {
+    @apply badge bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200;
+  }
 
-.badge-warning {
-  @apply badge bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200;
-}
+  .badge-warning {
+    @apply badge bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200;
+  }
 
-.badge-error {
-  @apply badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200;
-}
+  .badge-error {
+    @apply badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200;
+  }
 
-.badge-info {
-  @apply badge bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200;
-}
+  .badge-info {
+    @apply badge bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200;
+  }
 
-/* Table Components */
-.table {
-  @apply w-full border-collapse;
-}
+  /* Table Components */
+  .table {
+    @apply w-full border-collapse;
+  }
 
-.table th {
-  @apply border-brand border-b px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500;
-}
+  .table th {
+    @apply border-b px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500;
+    border-color: var(--brand-border);
+  }
 
-.table td {
-  @apply border-brand whitespace-nowrap border-b px-4 py-4 text-sm text-foreground;
-}
+  .table td {
+    @apply whitespace-nowrap border-b px-4 py-4 text-sm;
+    border-color: var(--brand-border);
+    color: var(--foreground);
+  }
 
-.table tbody tr:hover {
-  @apply bg-gray-50 dark:bg-gray-800;
-}
+  .table tbody tr:hover {
+    @apply bg-gray-50 dark:bg-gray-800;
+  }
 
-/* Modal Components */
-.modal-overlay {
-  @apply fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50;
-}
-
-.modal-content {
-  @apply mx-4 w-full max-w-md rounded-lg bg-white shadow-xl dark:bg-gray-800;
-}
-
-.modal-header {
-  @apply border-brand border-b px-6 py-4;
-}
-
-.modal-body {
-  @apply px-6 py-4;
-}
-
-.modal-footer {
-  @apply border-brand flex justify-end gap-3 border-t px-6 py-4;
-}
-
-/* Loading States */
-.loading-spinner {
-  @apply inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent;
-}
-
-.loading-skeleton {
-  @apply animate-pulse rounded bg-gray-200 dark:bg-gray-700;
-}
-
-/* Navigation Components */
-.sidebar {
-  @apply border-brand h-full border-l bg-white dark:bg-gray-900;
-}
-
-.sidebar-item {
-  @apply flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800;
-}
-
-.sidebar-item.active {
-  @apply bg-brand text-white;
-}
-
-.sidebar-item.active:hover {
-  @apply bg-brand text-white;
-}
-
-/* Dashboard Components */
-.dashboard-grid {
-  @apply grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
-}
-
-.dashboard-card {
-  @apply card p-6;
-}
-
-.dashboard-metric {
-  @apply text-brand text-3xl font-bold;
-}
-
-.dashboard-label {
-  @apply text-sm text-gray-500 dark:text-gray-400;
-}
-
-.dashboard-change {
-  @apply text-sm font-medium;
-}
-
-.dashboard-change.positive {
-  @apply text-green-600;
-}
-
-.dashboard-change.negative {
-  @apply text-red-600;
-}
-
-/* Chart Containers */
-.chart-container {
-  @apply h-64 w-full p-4;
-}
-
-.chart-title {
-  @apply mb-4 text-lg font-semibold text-foreground;
-}
-
-/* Responsive Utilities */
-@media (max-width: 640px) {
-  .dashboard-grid {
-    @apply grid-cols-1;
+  /* Modal Components */
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50;
   }
 
   .modal-content {
-    @apply mx-2;
+    @apply mx-4 w-full max-w-md rounded-lg bg-white shadow-xl dark:bg-gray-800;
   }
 
-  .table {
-    @apply text-xs;
+  .modal-header {
+    @apply border-b px-6 py-4;
+    border-color: var(--brand-border);
   }
 
-  .table th,
-  .table td {
-    @apply px-2 py-2;
-  }
-}
-
-/* Print Styles */
-@media print {
-  .no-print {
-    @apply hidden;
+  .modal-body {
+    @apply px-6 py-4;
   }
 
-  .card {
-    @apply border shadow-none;
+  .modal-footer {
+    @apply flex justify-end gap-3 border-t px-6 py-4;
+    border-color: var(--brand-border);
   }
 
-  .btn {
-    @apply border border-gray-300 bg-transparent text-gray-900;
+  /* Loading States */
+  .loading-spinner {
+    @apply inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent;
+  }
+
+  .loading-skeleton {
+    @apply animate-pulse rounded bg-gray-200 dark:bg-gray-700;
+  }
+
+  /* Navigation Components */
+  .sidebar {
+    @apply h-full border-l bg-white dark:bg-gray-900;
+    border-color: var(--brand-border);
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800;
+  }
+
+  .sidebar-item.active {
+    @apply bg-[var(--brand-primary)] text-white;
+  }
+
+  .sidebar-item.active:hover {
+    @apply bg-[var(--brand-primary)] text-white;
+  }
+
+  /* Dashboard Components */
+  .dashboard-grid {
+    @apply grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
+
+  .dashboard-card {
+    @apply card p-6;
+  }
+
+  .dashboard-metric {
+    @apply text-brand text-3xl font-bold;
+  }
+
+  .dashboard-label {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+  }
+
+  .dashboard-change {
+    @apply text-sm font-medium;
+  }
+
+  .dashboard-change.positive {
+    @apply text-green-600;
+  }
+
+  .dashboard-change.negative {
+    @apply text-red-600;
+  }
+
+  /* Chart Containers */
+  .chart-container {
+    @apply h-64 w-full p-4;
+  }
+
+  .chart-title {
+    @apply mb-4 text-lg font-semibold text-foreground;
+  }
+
+  /* Responsive Utilities */
+  @media (max-width: 640px) {
+    .dashboard-grid {
+      @apply grid-cols-1;
+    }
+
+    .modal-content {
+      @apply mx-2;
+    }
+
+    .table {
+      @apply text-xs;
+    }
+
+    .table th,
+    .table td {
+      @apply px-2 py-2;
+    }
+  }
+
+  /* Print Styles */
+  @media print {
+    .no-print {
+      @apply hidden;
+    }
+
+    .card {
+      @apply border shadow-none;
+    }
+
+    .btn {
+      @apply border border-gray-300 bg-transparent text-gray-900;
+    }
   }
 }
