@@ -190,7 +190,7 @@ export default function ApprovalsPage() {
   const getRequestTypeBadge = (type: Approval["requestType"]) => {
     const config = requestTypeConfig[type];
     return (
-      <Badge variant={config.color} className="text-xs">
+      <Badge variant="default" className="text-xs">
         <span className="mr-1">{config.icon}</span>
         {config.label}
       </Badge>
@@ -200,7 +200,7 @@ export default function ApprovalsPage() {
   const getStatusBadge = (status: Approval["status"]) => {
     const config = statusConfig[status];
     return (
-      <Badge variant={config.color} className="text-sm">
+      <Badge variant="default" className="text-sm">
         {config.label}
       </Badge>
     );
@@ -209,7 +209,7 @@ export default function ApprovalsPage() {
   const getPriorityBadge = (priority: Approval["priority"]) => {
     const config = priorityConfig[priority];
     return (
-      <Badge variant={config.color} className="text-xs">
+      <Badge variant="default" className="text-xs">
         {config.label}
       </Badge>
     );
@@ -313,10 +313,10 @@ export default function ApprovalsPage() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm">
+              <Button variant="secondary" size="sm">
                 تصدير التقرير
               </Button>
-              <Button variant="brand" size="sm">
+              <Button variant="primary" size="sm">
                 إضافة طلب موافقة
               </Button>
             </div>
@@ -368,28 +368,28 @@ export default function ApprovalsPage() {
           </div>
           <div className="flex flex-wrap gap-3">
             <Button
-              variant={filter === "all" ? "brand" : "outline"}
+              variant={filter === "all" ? "primary" : "secondary"}
               size="sm"
               onClick={() => setFilter("all")}
             >
               جميع الطلبات
             </Button>
             <Button
-              variant={filter === "pending" ? "brand" : "outline"}
+              variant={filter === "pending" ? "primary" : "secondary"}
               size="sm"
               onClick={() => setFilter("pending")}
             >
               قيد المراجعة
             </Button>
             <Button
-              variant={filter === "approved" ? "brand" : "outline"}
+              variant={filter === "approved" ? "primary" : "secondary"}
               size="sm"
               onClick={() => setFilter("approved")}
             >
               موافق عليها
             </Button>
             <Button
-              variant={filter === "rejected" ? "brand" : "outline"}
+              variant={filter === "rejected" ? "primary" : "secondary"}
               size="sm"
               onClick={() => setFilter("rejected")}
             >
@@ -401,7 +401,7 @@ export default function ApprovalsPage() {
         {/* Type Filters */}
         <div className="mb-6 flex flex-wrap gap-3">
           <Button
-            variant={typeFilter === "all" ? "brand" : "outline"}
+            variant={typeFilter === "all" ? "primary" : "secondary"}
             size="sm"
             onClick={() => setTypeFilter("all")}
           >
@@ -410,7 +410,7 @@ export default function ApprovalsPage() {
           {Object.entries(requestTypeConfig).map(([type, config]) => (
             <Button
               key={type}
-              variant={typeFilter === type ? "brand" : "outline"}
+              variant={typeFilter === type ? "primary" : "secondary"}
               size="sm"
               onClick={() => setTypeFilter(type as Approval["requestType"])}
             >
@@ -484,11 +484,11 @@ export default function ApprovalsPage() {
                   {getOutstandingBalance(approval)}
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">
+                  <Button variant="secondary" size="sm">
                     عرض التفاصيل
                   </Button>
                   {approval.status === "pending" && (
-                    <Button variant="brand" size="sm">
+                    <Button variant="primary" size="sm">
                       مراجعة
                     </Button>
                   )}
@@ -523,6 +523,9 @@ export default function ApprovalsPage() {
               لا توجد طلبات موافقة تطابق البحث أو الفلتر المحدد
             </p>
             <Button variant="brand">إضافة طلب موافقة</Button>
+            <Button variant="primary">
+              إضافة طلب موافقة
+            </Button>
           </Card>
         )}
       </main>
@@ -535,7 +538,7 @@ export default function ApprovalsPage() {
               <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-xl font-bold">تفاصيل طلب الموافقة</h2>
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   size="sm"
                   onClick={() => setSelectedApproval(null)}
                 >
@@ -627,7 +630,7 @@ export default function ApprovalsPage() {
                   <h4 className="mb-3 font-semibold">المرفقات</h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedApproval.attachments.map((attachment, index) => (
-                      <Badge key={index} variant="outline" className="text-sm">
+                      <Badge variant="default" className="text-sm">
                         📎 {attachment}
                       </Badge>
                     ))}
@@ -707,19 +710,21 @@ export default function ApprovalsPage() {
 
               <div className="mt-8 flex gap-3">
                 <Button variant="outline" className="flex-1">
+              <div className="flex gap-3 mt-8">
+                <Button variant="secondary" className="flex-1">
                   طباعة
                 </Button>
                 {selectedApproval.status === "pending" && (
                   <>
-                    <Button variant="error" className="flex-1">
+                    <Button variant="secondary" className="flex-1">
                       رفض
                     </Button>
-                    <Button variant="brand" className="flex-1">
+                    <Button variant="primary" className="flex-1">
                       موافقة
                     </Button>
                   </>
                 )}
-                <Button variant="brand" className="flex-1">
+                <Button variant="primary" className="flex-1">
                   تحديث
                 </Button>
               </div>

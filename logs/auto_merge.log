@@ -35,3 +35,66 @@
 [2025-10-14T22:19:20.546Z] [INFO] 🔧 Resolving conflicts in: tsconfig.json
 [2025-10-14T22:19:20.546Z] [INFO] ✅ Resolved conflicts in: tsconfig.json
 [2025-10-14T22:19:20.547Z] [INFO] Executing: git add .
+[2025-10-14T22:19:20.559Z] [INFO] ✅ Command successful: git add .
+[2025-10-14T22:19:20.559Z] [INFO] Executing: git commit --no-edit
+[2025-10-14T22:19:20.569Z] [INFO] ✅ Command successful: git commit --no-edit
+[2025-10-14T22:19:20.569Z] [INFO] ✅ Conflicts resolved for: cursor/comprehensive-code-review-and-optimization-f391
+[2025-10-14T22:19:20.569Z] [INFO] 🔄 Smart merging branch: cursor/design-the-mueen-project-architecture-and-interfaces-3c77
+[2025-10-14T22:19:20.569Z] [INFO] Executing: git merge origin/cursor/design-the-mueen-project-architecture-and-interfaces-3c77 --no-ff -m "Smart auto-merge: cursor/design-the-mueen-project-architecture-and-interfaces-3c77"
+[2025-10-14T22:19:20.572Z] [ERROR] ❌ Command failed: git merge origin/cursor/design-the-mueen-project-architecture-and-interfaces-3c77 --no-ff -m "Smart auto-merge: cursor/design-the-mueen-project-architecture-and-interfaces-3c77" - Command failed: git merge origin/cursor/design-the-mueen-project-architecture-and-interfaces-3c77 --no-ff -m "Smart auto-merge: cursor/design-the-mueen-project-architecture-and-interfaces-3c77"
+fatal: refusing to merge unrelated histories
+
+[2025-10-14T22:19:20.572Z] [WARN] ⚠️  Merge conflict detected for: cursor/design-the-mueen-project-architecture-and-interfaces-3c77
+[2025-10-14T22:19:20.572Z] [INFO] 🔧 Resolving conflicts for: cursor/design-the-mueen-project-architecture-and-interfaces-3c77
+[2025-10-14T22:19:20.572Z] [INFO] Executing: git diff --name-only --diff-filter=U
+[2025-10-14T22:19:20.580Z] [INFO] ✅ Command successful: git diff --name-only --diff-filter=U
+[2025-10-14T22:19:20.580Z] [INFO] No conflicted files found
+[2025-10-14T22:19:20.580Z] [INFO] 🔄 Smart merging branch: cursor/enforce-dynamic-content-and-translations-257d
+[2025-10-14T22:19:20.580Z] [INFO] Executing: git merge origin/cursor/enforce-dynamic-content-and-translations-257d --no-ff -m "Smart auto-merge: cursor/enforce-dynamic-content-and-translations-257d"
+[2025-10-14T22:19:20.652Z] [INFO] ✅ Command successful: git merge origin/cursor/enforce-dynamic-content-and-translations-257d --no-ff -m "Smart auto-merge: cursor/enforce-dynamic-content-and-translations-257d"
+[2025-10-14T22:19:20.652Z] [INFO] ✅ Successfully merged: cursor/enforce-dynamic-content-and-translations-257d
+[2025-10-14T22:19:20.653Z] [INFO] 🔄 Smart merging branch: cursor/final-design-audit-and-completion-aa38
+[2025-10-14T22:19:20.653Z] [INFO] Executing: git merge origin/cursor/final-design-audit-and-completion-aa38 --no-ff -m "Smart auto-merge: cursor/final-design-audit-and-completion-aa38"
+[2025-10-14T22:19:20.656Z] [ERROR] ❌ Command failed: git merge origin/cursor/final-design-audit-and-completion-aa38 --no-ff -m "Smart auto-merge: cursor/final-design-audit-and-completion-aa38" - Command failed: git merge origin/cursor/final-design-audit-and-completion-aa38 --no-ff -m "Smart auto-merge: cursor/final-design-audit-and-completion-aa38"
+fatal: refusing to merge unrelated histories
+
+[2025-10-14T22:19:20.656Z] [WARN] ⚠️  Merge conflict detected for: cursor/final-design-audit-and-completion-aa38
+[2025-10-14T22:19:20.656Z] [INFO] 🔧 Resolving conflicts for: cursor/final-design-audit-and-completion-aa38
+[2025-10-14T22:19:20.656Z] [INFO] Executing: git diff --name-only --diff-filter=U
+[2025-10-14T22:19:20.669Z] [INFO] ✅ Command successful: git diff --name-only --diff-filter=U
+[2025-10-14T22:19:20.669Z] [INFO] No conflicted files found
+[2025-10-14T22:19:20.669Z] [INFO] 🔄 Smart merging branch: cursor/fix-project-errors-and-apply-consistent-styling-99ec
+[2025-10-14T22:19:20.670Z] [INFO] Executing: git merge origin/cursor/fix-project-errors-and-apply-consistent-styling-99ec --no-ff -m "Smart auto-merge: cursor/fix-project-errors-and-apply-consistent-styling-99ec"
+[2025-10-14T22:19:20.744Z] [ERROR] ❌ Command failed: git merge origin/cursor/fix-project-errors-and-apply-consistent-styling-99ec --no-ff -m "Smart auto-merge: cursor/fix-project-errors-and-apply-consistent-styling-99ec" - Command failed: git merge origin/cursor/fix-project-errors-and-apply-consistent-styling-99ec --no-ff -m "Smart auto-merge: cursor/fix-project-errors-and-apply-consistent-styling-99ec"
+[2025-10-14T22:19:20.745Z] [WARN] ⚠️  Merge conflict detected for: cursor/fix-project-errors-and-apply-consistent-styling-99ec
+[2025-10-14T22:19:20.745Z] [INFO] 🔧 Resolving conflicts for: cursor/fix-project-errors-and-apply-consistent-styling-99ec
+[2025-10-14T22:19:20.745Z] [INFO] Executing: git diff --name-only --diff-filter=U
+[2025-10-14T22:19:20.769Z] [INFO] ✅ Command successful: git diff --name-only --diff-filter=U
+[2025-10-14T22:19:20.769Z] [INFO] Found 13 conflicted files: package-lock.json, package.json, src/app/admin/dashboard/page.tsx, src/app/approvals/page.tsx, src/app/chatbot/templates/[id]/page.tsx, src/app/globals.css, src/app/insurance/page.tsx, src/app/login/page.tsx, src/app/medical-file/page.tsx, src/lib/router.ts, src/lib/security-enhanced.ts, src/lib/supabase-real.ts, src/styles/components.css
+[2025-10-14T22:19:20.769Z] [INFO] 🔧 Resolving conflicts in: package-lock.json
+[2025-10-14T22:19:20.774Z] [INFO] ✅ Resolved conflicts in: package-lock.json
+[2025-10-14T22:19:20.774Z] [INFO] 🔧 Resolving conflicts in: package.json
+[2025-10-14T22:19:20.774Z] [INFO] ✅ Resolved conflicts in: package.json
+[2025-10-14T22:19:20.774Z] [INFO] 🔧 Resolving conflicts in: src/app/admin/dashboard/page.tsx
+[2025-10-14T22:19:20.774Z] [INFO] ✅ Resolved conflicts in: src/app/admin/dashboard/page.tsx
+[2025-10-14T22:19:20.774Z] [INFO] 🔧 Resolving conflicts in: src/app/approvals/page.tsx
+[2025-10-14T22:19:20.774Z] [INFO] ✅ Resolved conflicts in: src/app/approvals/page.tsx
+[2025-10-14T22:19:20.774Z] [INFO] 🔧 Resolving conflicts in: src/app/chatbot/templates/[id]/page.tsx
+[2025-10-14T22:19:20.775Z] [INFO] ✅ Resolved conflicts in: src/app/chatbot/templates/[id]/page.tsx
+[2025-10-14T22:19:20.775Z] [INFO] 🔧 Resolving conflicts in: src/app/globals.css
+[2025-10-14T22:19:20.775Z] [INFO] ✅ Resolved conflicts in: src/app/globals.css
+[2025-10-14T22:19:20.775Z] [INFO] 🔧 Resolving conflicts in: src/app/insurance/page.tsx
+[2025-10-14T22:19:20.775Z] [INFO] ✅ Resolved conflicts in: src/app/insurance/page.tsx
+[2025-10-14T22:19:20.775Z] [INFO] 🔧 Resolving conflicts in: src/app/login/page.tsx
+[2025-10-14T22:19:20.775Z] [INFO] ✅ Resolved conflicts in: src/app/login/page.tsx
+[2025-10-14T22:19:20.775Z] [INFO] 🔧 Resolving conflicts in: src/app/medical-file/page.tsx
+[2025-10-14T22:19:20.775Z] [INFO] ✅ Resolved conflicts in: src/app/medical-file/page.tsx
+[2025-10-14T22:19:20.775Z] [INFO] 🔧 Resolving conflicts in: src/lib/router.ts
+[2025-10-14T22:19:20.775Z] [INFO] ✅ Resolved conflicts in: src/lib/router.ts
+[2025-10-14T22:19:20.775Z] [INFO] 🔧 Resolving conflicts in: src/lib/security-enhanced.ts
+[2025-10-14T22:19:20.776Z] [INFO] ✅ Resolved conflicts in: src/lib/security-enhanced.ts
+[2025-10-14T22:19:20.776Z] [INFO] 🔧 Resolving conflicts in: src/lib/supabase-real.ts
+[2025-10-14T22:19:20.776Z] [INFO] ✅ Resolved conflicts in: src/lib/supabase-real.ts
+[2025-10-14T22:19:20.776Z] [INFO] 🔧 Resolving conflicts in: src/styles/components.css
+[2025-10-14T22:19:20.776Z] [INFO] ✅ Resolved conflicts in: src/styles/components.css
+[2025-10-14T22:19:20.776Z] [INFO] Executing: git add .
