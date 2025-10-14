@@ -1,38 +1,208 @@
 {
-  "tasks": [
-    {
-      "name": "depcheck",
-      "status": "failed",
-      "reason": "",
-      "timestamp": "2025-10-08T11:20:35Z"
+  "metadata": {
+    "generatedAt": "2025-10-10T15:35:16.357Z",
+    "version": "1.0.0",
+    "generator": "FinalReportGenerator"
+  },
+  "execution": {
+    "execution": {
+      "startTime": "2025-10-10T15:35:05.886Z",
+      "endTime": "2025-10-10T15:35:05.891Z",
+      "totalDuration": 5,
+      "status": "completed"
     },
-    {
-      "name": "eslint_fix",
-      "status": "completed",
-      "reason": "",
-      "timestamp": "2025-10-08T11:20:37Z"
+    "modules": [
+      {
+        "module": "File Cleanup and Management",
+        "success": false,
+        "duration": 67,
+        "startTime": "2025-10-10T15:35:05.891Z",
+        "endTime": "2025-10-10T15:35:05.958Z",
+        "stdout": "[2025-10-10T15:35:05.924Z] File Cleanup: Generating cleanup report...\n[2025-10-10T15:35:05.931Z] File Cleanup: Starting file cleanup process...\n[2025-10-10T15:35:05.931Z] File Cleanup: Directory does not exist: /workspace/temp\n[2025-10-10T15:35:05.932Z] File Cleanup: Archiving important logs...\n[2025-10-10T15:35:05.932Z] File Cleanup: Cleanup completed: 0 files deleted, 0 files archived\n[2025-10-10T15:35:05.933Z] File Cleanup: Updating file index...\n",
+        "stderr": "File cleanup failed: Error: ENOENT: no such file or directory, open '/workspace/temp/file-index.json'\n    at Object.writeFileSync (node:fs:2425:20)\n    at FileCleanupManager.updateFileIndex (/workspace/scripts/file-cleanup.js:156:8)\n    at FileCleanupManager.generateCleanupReport (/workspace/scripts/file-cleanup.js:207:29)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {\n  errno: -2,\n  code: 'ENOENT',\n  syscall: 'open',\n  path: '/workspace/temp/file-index.json'\n}\n",
+        "error": "Script failed with code 1"
+      },
+      {
+        "module": "N8n Workflow Integration",
+        "success": true,
+        "duration": 2045,
+        "startTime": "2025-10-10T15:35:05.959Z",
+        "endTime": "2025-10-10T15:35:08.004Z",
+        "stdout": "[2025-10-10T15:35:05.985Z] N8n Workflow: Starting workflow management...\n[2025-10-10T15:35:05.991Z] N8n Workflow: Initializing N8n Workflow Manager...\n[2025-10-10T15:35:05.992Z] N8n Workflow: Created directory: n8n-workflows\n[2025-10-10T15:35:05.992Z] N8n Workflow: Created directory: config\n[2025-10-10T15:35:05.992Z] N8n Workflow: Created directory: temp\n[2025-10-10T15:35:05.992Z] N8n Workflow: Default configuration created\n[2025-10-10T15:35:05.993Z] N8n Workflow: N8n Workflow Manager initialized\n[2025-10-10T15:35:05.993Z] N8n Workflow: Creating social media posting workflow...\n[2025-10-10T15:35:05.993Z] N8n Workflow: Social media workflow created\n[2025-10-10T15:35:05.994Z] N8n Workflow: Validating workflow...\n[2025-10-10T15:35:05.994Z] N8n Workflow: Workflow validation passed\n[2025-10-10T15:35:05.995Z] N8n Workflow: Running workflow dry test...\n[2025-10-10T15:35:05.995Z] N8n Workflow: Dry test completed: 7 nodes tested, 0 errors found\n[2025-10-10T15:35:05.995Z] N8n Workflow: Deploying workflow to N8n...\n[2025-10-10T15:35:05.995Z] N8n Workflow: Deploying workflow \"Social Media Auto Posting\" to http://localhost:5678\n[2025-10-10T15:35:07.998Z] N8n Workflow: Workflow deployed successfully\n[2025-10-10T15:35:07.998Z] N8n Workflow: Workflow management completed successfully\nN8n workflow management completed successfully\n",
+        "stderr": "",
+        "error": null
+      },
+      {
+        "module": "Social Media Automation",
+        "success": true,
+        "duration": 40,
+        "startTime": "2025-10-10T15:35:08.005Z",
+        "endTime": "2025-10-10T15:35:08.045Z",
+        "stdout": "[2025-10-10T15:35:08.032Z] Social Media: Starting social media automation...\n[2025-10-10T15:35:08.038Z] Social Media: Initializing Social Media Automation...\n[2025-10-10T15:35:08.038Z] Social Media: Created directory: videos\n[2025-10-10T15:35:08.039Z] Social Media: Default configuration created\n[2025-10-10T15:35:08.039Z] Social Media: Social Media Automation initialized\n[2025-10-10T15:35:08.040Z] Social Media: Generating post schedule...\n[2025-10-10T15:35:08.040Z] Social Media: Selecting 3 random videos...\n[2025-10-10T15:35:08.040Z] Social Media: Scanning for available videos...\n[2025-10-10T15:35:08.040Z] Social Media: Found 0 available videos\n[2025-10-10T15:35:08.041Z] Social Media: No videos available for posting\n[2025-10-10T15:35:08.041Z] Social Media: No videos selected for posting\n[2025-10-10T15:35:08.041Z] Social Media: No posts scheduled, automation complete\nSocial media automation completed successfully\n",
+        "stderr": "",
+        "error": null
+      },
+      {
+        "module": "Admin Module",
+        "success": true,
+        "duration": 43,
+        "startTime": "2025-10-10T15:35:08.045Z",
+        "endTime": "2025-10-10T15:35:08.088Z",
+        "stdout": "[2025-10-10T15:35:08.075Z] Admin Module: Starting admin module...\n[2025-10-10T15:35:08.081Z] Admin Module: Initializing Admin Module...\n[2025-10-10T15:35:08.082Z] Admin Module: Admin configuration created\n[2025-10-10T15:35:08.082Z] Admin Module: Admin Module initialized\n[2025-10-10T15:35:08.082Z] Admin Module: Generating admin report...\n[2025-10-10T15:35:08.082Z] Admin Module: Verifying Supabase connection...\n[2025-10-10T15:35:08.083Z] Admin Module: Supabase connection failed: Supabase configuration missing\n[2025-10-10T15:35:08.083Z] Admin Module: Checking user permissions...\n[2025-10-10T15:35:08.083Z] Admin Module: Permission checks completed for 1 users\n[2025-10-10T15:35:08.084Z] Admin Module: Validating role definitions...\n[2025-10-10T15:35:08.084Z] Admin Module: Role validation completed for 5 roles\n[2025-10-10T15:35:08.084Z] Admin Module: Checking security settings...\n[2025-10-10T15:35:08.084Z] Admin Module: Security settings check completed\n[2025-10-10T15:35:08.085Z] Admin Module: Admin report saved to: /workspace/reports/admin-report.json\n[2025-10-10T15:35:08.085Z] Admin Module: Admin module completed\nAdmin module completed successfully\nOverall Status: warning\nValid Users: 1/1\nValid Roles: 5/5\nSecurity Warnings: 0\n",
+        "stderr": "",
+        "error": null
+      },
+      {
+        "module": "Enhancements",
+        "success": false,
+        "duration": 40,
+        "startTime": "2025-10-10T15:35:08.089Z",
+        "endTime": "2025-10-10T15:35:08.129Z",
+        "stdout": "[2025-10-10T15:35:08.114Z] Enhancements: Starting enhancements module...\n[2025-10-10T15:35:08.120Z] Enhancements: Initializing Enhancements Module...\n[2025-10-10T15:35:08.121Z] Enhancements: Enhancements configuration created\n[2025-10-10T15:35:08.121Z] Enhancements: Enhancements Module initialized\n[2025-10-10T15:35:08.122Z] Enhancements: Generating enhancements report...\n[2025-10-10T15:35:08.122Z] Enhancements: Applying performance optimizations...\n[2025-10-10T15:35:08.122Z] Enhancements: Enabling caching...\n[2025-10-10T15:35:08.122Z] Enhancements: Caching configuration created\n[2025-10-10T15:35:08.123Z] Enhancements: Enabling compression...\n[2025-10-10T15:35:08.123Z] Enhancements: Performance optimization failed: ENOENT: no such file or directory, open '/workspace/middleware/compression.js'\n[2025-10-10T15:35:08.123Z] Enhancements: Enabling error recovery...\n[2025-10-10T15:35:08.124Z] Enhancements: Error recovery configuration created\n[2025-10-10T15:35:08.124Z] Enhancements: Enabling real-time logging...\n[2025-10-10T15:35:08.124Z] Enhancements: Real-time logging configuration created\n[2025-10-10T15:35:08.124Z] Enhancements: Enabling health checks...\n[2025-10-10T15:35:08.124Z] Enhancements: Health checks configuration created\n[2025-10-10T15:35:08.124Z] Enhancements: Updating automation scripts...\n[2025-10-10T15:35:08.125Z] Enhancements: Enhanced automation scripts created\n",
+        "stderr": "Enhancements module failed: TypeError: Cannot read properties of undefined (reading 'success')\n    at /workspace/scripts/enhancements.js:532:72\n    at Array.filter (<anonymous>)\n    at EnhancementsModule.generateEnhancementsReport (/workspace/scripts/enhancements.js:532:58)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async EnhancementsModule.run (/workspace/scripts/enhancements.js:555:20)\n",
+        "error": "Script failed with code 1"
+      }
+    ],
+    "summary": {
+      "totalModules": 5,
+      "successfulModules": 3,
+      "failedModules": 2,
+      "totalDuration": 5
     },
-    {
-      "name": "prettier",
-      "status": "completed",
-      "reason": "",
-      "timestamp": "2025-10-08T11:20:44Z"
-    },
-    {
-      "name": "build",
-      "status": "completed",
-      "reason": "",
-      "timestamp": "2025-10-08T11:21:16Z"
+    "system": {
+      "nodeVersion": "v22.20.0",
+      "platform": "linux",
+      "arch": "x64",
+      "memoryUsage": {
+        "rss": 48701440,
+        "heapTotal": 6922240,
+        "heapUsed": 4665776,
+        "external": 1607307,
+        "arrayBuffers": 12347
+      }
     }
-  ],
-  "skipped": [
-    {
-      "name": "lighthouse",
-      "reason": "server_not_reachable",
-      "timestamp": ""
+  },
+  "fileCleanup": null,
+  "socialMedia": null,
+  "workflowTests": {
+    "timestamp": "2025-10-10T15:35:05.995Z",
+    "workflow": "Social Media Auto Posting",
+    "nodes": [
+      {
+        "id": "schedule-trigger",
+        "name": "Schedule Trigger",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "status": "success",
+        "executionTime": 790.9856682389502,
+        "error": null
+      },
+      {
+        "id": "google-drive-node",
+        "name": "Get Random Video",
+        "type": "n8n-nodes-base.googleDrive",
+        "status": "success",
+        "executionTime": 243.04542159969378,
+        "error": null
+      },
+      {
+        "id": "random-selector",
+        "name": "Select Random Video",
+        "type": "n8n-nodes-base.function",
+        "status": "success",
+        "executionTime": 720.3868982270217,
+        "error": null
+      },
+      {
+        "id": "tiktok-poster",
+        "name": "Post to TikTok",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "success",
+        "executionTime": 296.43771689810825,
+        "error": null
+      },
+      {
+        "id": "instagram-poster",
+        "name": "Post to Instagram",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "success",
+        "executionTime": 697.0911333282311,
+        "error": null
+      },
+      {
+        "id": "linkedin-poster",
+        "name": "Post to LinkedIn",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "success",
+        "executionTime": 96.56940455805496,
+        "error": null
+      },
+      {
+        "id": "facebook-poster",
+        "name": "Post to Facebook",
+        "type": "n8n-nodes-base.httpRequest",
+        "status": "success",
+        "executionTime": 885.9342671941497,
+        "error": null
+      }
+    ],
+    "errors": []
+  },
+  "systemStatus": {
+    "timestamp": "2025-10-10T15:35:16.358Z",
+    "uptime": 0.032068742,
+    "memoryUsage": {
+      "rss": 45785088,
+      "heapTotal": 5611520,
+      "heapUsed": 4365800,
+      "external": 1511078,
+      "arrayBuffers": 10515
+    },
+    "nodeVersion": "v22.20.0",
+    "platform": "linux",
+    "arch": "x64",
+    "diskUsage": {
+      "output": "Filesystem      Size  Used Avail Use% Mounted on\noverlay         126G  7.0G  113G   6% /\ntmpfs            64M     0   64M   0% /dev\ntmpfs           7.9G     0  7.9G   0% /sys/fs/cgroup\nshm              64M     0   64M   0% /dev/shm\n/dev/root       126G  7.0G  113G   6% /etc/hosts\n"
     }
-  ],
-  "consoleErrors": 8,
-  "vision2030_alignment": "This optimization aligns with Saudi Vision 2030 digital transformation goals by improving national-grade web performance, accessibility, and readiness for scalable cloud deployment.",
-  "finalStatus": "no_tasks_recorded"
+  },
+  "logs": {
+    "cursor-agent.log": {
+      "exists": false
+    },
+    "file-cleanup.log": {
+      "size": 454,
+      "lastModified": "2025-10-10T15:35:05.931Z",
+      "lineCount": 6,
+      "lastEntry": "[2025-10-10T15:35:05.933Z] File Cleanup: Updating file index..."
+    },
+    "n8n-workflow.log": {
+      "size": 1289,
+      "lastModified": "2025-10-10T15:35:07.995Z",
+      "lineCount": 17,
+      "lastEntry": "[2025-10-10T15:35:07.998Z] N8n Workflow: Workflow management completed successfully"
+    },
+    "social-media.log": {
+      "size": 878,
+      "lastModified": "2025-10-10T15:35:08.039Z",
+      "lineCount": 12,
+      "lastEntry": "[2025-10-10T15:35:08.041Z] Social Media: No posts scheduled, automation complete"
+    },
+    "master-executor.log": {
+      "size": 2356,
+      "lastModified": "2025-10-10T15:35:08.127Z",
+      "lineCount": 26,
+      "lastEntry": "[2025-10-10T15:35:08.129Z] Master Executor: Failed modules: File Cleanup and Management, Enhancements"
+    }
+  },
+  "summary": {
+    "overallStatus": "partial",
+    "totalTasks": 5,
+    "completedTasks": 3,
+    "failedTasks": 2,
+    "warnings": [
+      "2 modules failed execution"
+    ],
+    "recommendations": [
+      "Some modules failed - review logs and retry failed modules"
+    ]
+  }
 }

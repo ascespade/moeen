@@ -96,57 +96,43 @@ export default function SessionsPage() {
 
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
-      {/* Header */}
-      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
-        <div className="container-app py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Image
-                src="/logo.jpg"
-                alt="مُعين"
-                width={50}
-                height={50}
-                className="rounded-lg"
-              />
-              <div>
-                <h1 className="text-brand text-2xl font-bold">إدارة الجلسات</h1>
-                <p className="text-gray-600 dark:text-gray-300">
-                  جلسات اليوم العلاجية
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="rounded-lg border border-gray-300 px-3 py-2 text-sm"
+      <main className="container-app py-8">
+        {/* Page Header */}
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-brand text-3xl font-bold">إدارة الجلسات</h1>
+            <p className="text-gray-600 dark:text-gray-300">
+              جلسات اليوم العلاجية
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="rounded-lg border border-gray-300 px-3 py-2 text-sm"
+            >
+              <option value="all">جميع الجلسات</option>
+              <option value="upcoming">قادمة</option>
+              <option value="in-progress">جارية</option>
+              <option value="completed">مكتملة</option>
+              <option value="cancelled">ملغية</option>
+            </select>
+            <div className="flex rounded-lg border border-gray-300">
+              <button
+                onClick={() => setViewMode("cards")}
+                className={`px-3 py-2 text-sm ${viewMode === "cards" ? "bg-[var(--brand-primary)] text-white" : "text-gray-600"}`}
               >
-                <option value="all">جميع الجلسات</option>
-                <option value="upcoming">قادمة</option>
-                <option value="in-progress">جارية</option>
-                <option value="completed">مكتملة</option>
-                <option value="cancelled">ملغية</option>
-              </select>
-              <div className="flex rounded-lg border border-gray-300">
-                <button
-                  onClick={() => setViewMode("cards")}
-                  className={`px-3 py-2 text-sm ${viewMode === "cards" ? "bg-[var(--brand-primary)] text-white" : "text-gray-600"}`}
-                >
-                  بطاقات
-                </button>
-                <button
-                  onClick={() => setViewMode("table")}
-                  className={`px-3 py-2 text-sm ${viewMode === "table" ? "bg-[var(--brand-primary)] text-white" : "text-gray-600"}`}
-                >
-                  جدول
-                </button>
-              </div>
+                بطاقات
+              </button>
+              <button
+                onClick={() => setViewMode("table")}
+                className={`px-3 py-2 text-sm ${viewMode === "table" ? "bg-[var(--brand-primary)] text-white" : "text-gray-600"}`}
+              >
+                جدول
+              </button>
             </div>
           </div>
         </div>
-      </header>
-
-      <main className="container-app py-8">
         {/* Stats Cards */}
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">

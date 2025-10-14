@@ -16,6 +16,10 @@ export default function Header() {
       : "rtl",
   );
   const [notif, setNotif] = useState(3);
+  const [showThemeDropdown, setShowThemeDropdown] = useState(false);
+  const [showLangDropdown, setShowLangDropdown] = useState(false);
+  const [showNotifDropdown, setShowNotifDropdown] = useState(false);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
   const { t } = useT();
 
   useEffect(() => {
@@ -26,6 +30,19 @@ export default function Header() {
     localStorage.setItem("theme", theme);
     localStorage.setItem("dir", dir);
   }, [theme, dir]);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setShowThemeDropdown(false);
+      setShowLangDropdown(false);
+      setShowNotifDropdown(false);
+      setShowUserDropdown(false);
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 border-b bg-white/80 backdrop-blur dark:bg-gray-900/80 border-brand">
@@ -70,11 +87,15 @@ export default function Header() {
           </div>
 
           <div className="flex items-center gap-2 justify-self-end">
-            <div className="hs-dropdown relative inline-flex">
+            <div className="relative inline-flex">
               <button
                 className="inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
                 aria-haspopup="menu"
                 style={{ outlineColor: "var(--brand-primary)" }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowThemeDropdown(!showThemeDropdown);
+                }}
               >
                 {theme === "light" ? (
                   <Sun className="h-4 w-4" />
@@ -85,23 +106,32 @@ export default function Header() {
                   {t("ui.theme", "الثيم")}
                 </span>
               </button>
-              <div
-                className="hs-dropdown-menu duration hs-dropdown-open:opacity-100 hidden min-w-36 rounded-lg border border-gray-200 bg-white p-1 opacity-0 shadow-md transition-[opacity,margin] dark:border-gray-700 dark:bg-gray-900"
-                role="menu"
-              >
-                <button
-                  className="w-full rounded-md px-3 py-2 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
-                  onClick={() => setTheme("light")}
+              {showThemeDropdown && (
+                <div
+                  className="absolute top-full right-0 z-50 min-w-36 rounded-lg border border-gray-200 bg-white p-1 shadow-md dark:border-gray-700 dark:bg-gray-900"
+                  role="menu"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  وضع نهاري
-                </button>
-                <button
-                  className="w-full rounded-md px-3 py-2 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
-                  onClick={() => setTheme("dark")}
-                >
-                  وضع ليلي
-                </button>
-              </div>
+                  <button
+                    className="w-full rounded-md px-3 py-2 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
+                    onClick={() => {
+                      setTheme("light");
+                      setShowThemeDropdown(false);
+                    }}
+                  >
+                    وضع نهاري
+                  </button>
+                  <button
+                    className="w-full rounded-md px-3 py-2 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
+                    onClick={() => {
+                      setTheme("dark");
+                      setShowThemeDropdown(false);
+                    }}
+                  >
+                    وضع ليلي
+                  </button>
+                </div>
+              )}
             </div>
 
             <button
@@ -113,30 +143,41 @@ export default function Header() {
               {dir === "rtl" ? "RTL" : "LTR"}
             </button>
 
-            <div className="hs-dropdown relative inline-flex">
-              <button className="inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800">
+            <div className="relative inline-flex">
+              <button
+                className="inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowLangDropdown(!showLangDropdown);
+                }}
+              >
                 <Languages className="h-4 w-4" />
                 <span className="hidden sm:inline">
                   {t("ui.language", "اللغة")}
                 </span>
               </button>
-              <div
-                className="hs-dropdown-menu duration hs-dropdown-open:opacity-100 hidden min-w-32 rounded-lg border border-gray-200 bg-white p-1 opacity-0 shadow-md transition-[opacity,margin] dark:border-gray-700 dark:bg-gray-900"
-                role="menu"
-              >
-                <Link
-                  className="block rounded-md px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  href="/ar"
+              {showLangDropdown && (
+                <div
+                  className="absolute top-full right-0 z-50 min-w-32 rounded-lg border border-gray-200 bg-white p-1 shadow-md dark:border-gray-700 dark:bg-gray-900"
+                  role="menu"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  العربية
-                </Link>
-                <Link
-                  className="block rounded-md px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  href="/en"
-                >
-                  English
-                </Link>
-              </div>
+                  <Link
+                    className="block rounded-md px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    href="/ar"
+                    onClick={() => setShowLangDropdown(false)}
+                  >
+                    العربية
+                  </Link>
+                  <Link
+                    className="block rounded-md px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    href="/en"
+                    onClick={() => setShowLangDropdown(false)}
+                  >
+                    English
+                  </Link>
+                </div>
+              )}
             </div>
 
             <div className="hs-dropdown relative inline-flex [--trigger:hover]">

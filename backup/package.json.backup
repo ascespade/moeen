@@ -1,0 +1,59 @@
+{
+  "name": "moeen-platform",
+  "version": "1.0.0",
+  "description": "منصة دردشة متعددة القنوات مدعومة بالذكاء الاصطناعي",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "tsc": "tsc --noEmit",
+    "stylelint": "stylelint '**/*.{css,scss}'",
+    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix",
+    "dev:check": "npm run lint && npm run tsc && npm run prettier && npm run dev",
+    "clean:smart": "node scripts/smart-clean.js",
+    "reorg": "node scripts/reorganize-project.js && node scripts/generate-barrels.js && node scripts/fix-imports.js",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.7.0",
+    "@types/node": "20.10.5",
+    "@types/react": "18.2.45",
+    "@types/react-dom": "18.2.18",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "lucide-react": "^0.294.0",
+    "next": "14.0.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.3.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.0.4",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14",
+    "stylelint": "^16.25.0",
+    "stylelint-config-standard": "^36.0.1",
+    "tailwindcss": "^3.4.18"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "chatbot",
+    "ai",
+    "healthcare",
+    "crm",
+    "nextjs",
+    "typescript",
+    "tailwindcss"
+  ],
+  "author": "مُعين Team",
+  "license": "MIT"
+}
