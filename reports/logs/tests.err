@@ -1,11 +1,11 @@
-{
-  "tasks": [
-    {
-      "name": "-",
-      "status": "tests",
-      "stdout": "",
-      "stderr": "",
-      "timestamp": ""
-    }
-  ]
-}
+● Multiple configurations found:
+
+    * /workspace/jest.config.js
+    * `jest` key in /workspace/package.json
+
+  Implicit config resolution does not allow multiple configuration files.
+  Either remove unused config files or select one explicitly with `--config`.
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+
