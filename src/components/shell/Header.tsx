@@ -46,10 +46,7 @@ export default function Header() {
 
           <div className="flex min-w-0 items-center gap-3">
             <div className="hidden items-center gap-2 sm:flex">
-              <div
-                className="grid h-8 w-8 place-items-center rounded-lg text-white"
-                style={{ background: "var(--brand-primary)" }}
-              >
+              <div className="grid h-8 w-8 place-items-center rounded-lg text-white bg-brand">
                 م
               </div>
               <div className="truncate text-base font-semibold text-gray-900 sm:text-lg dark:text-white">

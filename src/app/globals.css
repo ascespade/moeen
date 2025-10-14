@@ -1,6 +1,5 @@
 /* Import centralized styles */
 @import url("../styles/centralized.css");
-
 :root {
   /* Light theme base */
   --background: #fff;
@@ -675,3 +674,5 @@ select:focus-visible {
   color: #6b7280;
   font-size: 0.75rem;
 }
+/* Additional global overrides if needed */
+/* This file should be minimal and only contain overrides */
