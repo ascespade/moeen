@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 /* Enhanced accessibility styles */
+
 :root {
   /* High contrast color palette */
   --color-text-primary: #1a1a1a;

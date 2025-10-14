@@ -32,6 +32,14 @@ export function isProtectedRoute(pathname: string): boolean {
   return !((ROUTES as any).PUBLIC_ROUTES as readonly string[]).includes(
     pathname,
   );
+  const publicRoutes = [
+    ROUTES.AUTH.LOGIN,
+    ROUTES.AUTH.REGISTER,
+    ROUTES.AUTH.FORGOT_PASSWORD,
+    ROUTES.AUTH.RESET_PASSWORD,
+    ROUTES.HOME
+  ];
+  return !publicRoutes.includes(pathname as any);
 }
 
 /**

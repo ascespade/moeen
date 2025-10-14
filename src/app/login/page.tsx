@@ -26,6 +26,7 @@ export default function LoginPage() {
         email,
         role: "user",
       } as any);
+      });
     } catch (err: any) {
       setError(err?.message || "Login failed");
     } finally {
