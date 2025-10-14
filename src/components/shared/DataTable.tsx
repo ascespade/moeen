@@ -37,7 +37,7 @@ export function DataTable({
               <th
                 key={column.key}
                 role="columnheader"
-                aria-sort={column.sortDirection || 'none'}
+                aria-sort={column.sortDirection === 'asc' ? 'ascending' : column.sortDirection === 'desc' ? 'descending' : 'none'}
                 tabIndex={0}
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onKeyDown={(e) => {

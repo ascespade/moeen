@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/Select';
 
 interface Appointment {
   id: string;
@@ -216,7 +216,7 @@ const AppointmentManager: React.FC = () => {
       <div className="flex gap-4 items-center">
         <Select value={filter} onValueChange={(value: any) => setFilter(value)}>
           <SelectTrigger className="w-48">
-            <SelectValue placeholder="فلترة المواعيد" />
+            <span className="text-gray-400">فلترة المواعيد</span>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">جميع المواعيد</SelectItem>
@@ -357,7 +357,7 @@ const AppointmentManager: React.FC = () => {
                   <Label htmlFor="doctor">الطبيب *</Label>
                   <Select value={newAppointment.doctorId} onValueChange={(value) => setNewAppointment(prev => ({ ...prev, doctorId: value }))}>
                     <SelectTrigger>
-                      <SelectValue placeholder="اختر الطبيب" />
+                      <span className="text-gray-400">اختر الطبيب</span>
                     </SelectTrigger>
                     <SelectContent>
                       {doctors.map((doctor) => (
@@ -385,7 +385,7 @@ const AppointmentManager: React.FC = () => {
                   <Label htmlFor="time">الوقت *</Label>
                   <Select value={newAppointment.time} onValueChange={(value) => setNewAppointment(prev => ({ ...prev, time: value }))}>
                     <SelectTrigger>
-                      <SelectValue placeholder="اختر الوقت" />
+                      <span className="text-gray-400">اختر الوقت</span>
                     </SelectTrigger>
                     <SelectContent>
                       {doctors.find(d => d.id === newAppointment.doctorId)?.availableSlots.map((slot) => (

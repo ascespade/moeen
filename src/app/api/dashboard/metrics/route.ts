@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
       summary: {
         overallHealth: calculateOverallHealth(systemHealth),
         activeServices: countActiveServices(systemHealth),
-        totalAutomation: socialMediaMetrics.postsPublished + workflowMetrics.executionsSuccessful,
+        totalAutomation: (socialMediaMetrics as any).postsPublished + (workflowMetrics as any).executionsSuccessful,
         errorRate: calculateErrorRate(systemMetrics)
       }
     };
