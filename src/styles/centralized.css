@@ -1,0 +1,412 @@
+/* ========================================
+   CENTRALIZED STYLING SYSTEM - مُعين
+   ========================================
+   This file contains all centralized styles for the application.       
+   All components and pages should use classes defined here.
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme base */
+  --background: #fff;
+  --foreground: #0f172a;
+
+  /* Brand palette (from logo) - Brown and Orange theme */
+  --brand-primary: #d2691e; /* Chocolate orange */
+  --brand-primary-hover: #b8860b; /* Dark goldenrod */
+  --brand-secondary: #8b4513; /* Saddle brown */
+  --brand-accent: #cd853f; /* Peru brown */
+  --brand-success: #009688; /* Teal */
+  --brand-warning: #f59e0b; /* Amber */
+  --brand-error: #ef4444; /* Red */
+  --brand-border: #e5e7eb; /* Light gray */
+  --brand-surface: #f9fafb; /* Very light gray */
+  --panel: #fff;
+  --focus-ring: #f58220; /* Orange focus */
+
+  /* Brand gradients with brown and orange */
+  --brand-gradient: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--brand-primary) 85%, #fff) 0%,
+    color-mix(in oklab, var(--brand-secondary) 70%, #fff) 100%
+  );
+  --brand-gradient-2: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--brand-secondary) 85%, #fff) 0%,
+    color-mix(in oklab, var(--brand-primary) 70%, #fff) 100%
+  );
+  --brand-gradient-3: radial-gradient(
+    800px circle at 10% 10%,
+    color-mix(in oklab, var(--brand-accent) 18%, transparent),
+    transparent 40%
+  );
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0d1117; /* Dark navy */
+    --foreground: #e5eef7; /* Light blue-gray */
+    
+    /* Keep brand consistent in dark mode */
+    --brand-primary: #d2691e; /* Chocolate orange */
+    --brand-primary-hover: #b8860b; /* Dark goldenrod */
+    --brand-secondary: #8b4513; /* Saddle brown */
+    --brand-accent: #cd853f; /* Peru brown */
+    --brand-success: #00b39b; /* Teal */
+    --brand-warning: #fbbf24; /* Amber */
+    --brand-error: #f87171; /* Light red */
+    --brand-border: #1f2937; /* Dark gray */
+    --brand-surface: #0d1117; /* Dark navy */
+    --panel: #111827; /* Darker navy */
+    --focus-ring: #f58220; /* Orange focus */
+
+    --brand-gradient: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--brand-primary) 25%, #0d1117) 0%,
+      color-mix(in oklab, var(--brand-secondary) 20%, #0d1117) 100%
+    );
+    --brand-gradient-2: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--brand-secondary) 25%, #0d1117) 0%,
+      color-mix(in oklab, var(--brand-primary) 20%, #0d1117) 100%
+    );
+    --brand-gradient-3: radial-gradient(
+      800px circle at 10% 10%,
+      color-mix(in oklab, var(--brand-accent) 10%, transparent),
+      transparent 40%
+    );
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-cairo), system-ui, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Enhanced Brand Components */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--brand-primary);
+}
+
+.btn-brand {
+  background: var(--brand-primary);
+  color: #fff;
+  transition: all 0.2s ease;
+  transform: translateY(0);
+}
+
+.btn-brand:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgb(0 0 0 / 20%);
+}
+
+.btn-brand-2 {
+  background: var(--brand-secondary);
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.btn-brand-3 {
+  background: var(--brand-accent);
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--brand-primary);
+  border: 1px solid var(--brand-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--brand-primary);
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Card Components */
+.card {
+  background: color-mix(in oklab, var(--foreground) 2%, var(--background));
+  border: 1px solid var(--brand-border);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+}
+
+.card-pad {
+  padding: 1rem;
+}
+
+/* Navigation Components */
+.nav {
+  background: var(--panel);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  padding: 1rem 0;
+}
+
+.nav-link {
+  color: var(--foreground);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--brand-primary);
+  background-color: var(--brand-surface);
+}
+
+/* Form Components */
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--brand-border);
+  border-radius: 0.5rem;
+  background: var(--panel);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px rgb(245 130 32 / 10%);
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+/* Status Indicators */
+.status-success {
+  color: var(--brand-success);
+  background-color: rgb(0 150 136 / 10%);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-warning {
+  color: var(--brand-warning);
+  background-color: rgb(245 158 11 / 10%);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-error {
+  color: var(--brand-error);
+  background-color: rgb(239 68 68 / 10%);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Layout Utilities */
+.container-app {
+  max-width: 1200px;
+  margin-inline: auto;
+  width: 100%;
+  padding-inline: 1rem;
+}
+
+.text-gradient {
+  background: var(--brand-gradient);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-gradient-brand {
+  background: var(--brand-gradient);
+}
+
+.bg-gradient-brand-2 {
+  background: var(--brand-gradient-2);
+}
+
+.bg-gradient-brand-3 {
+  background: var(--brand-gradient-3);
+}
+
+/* Brand utility classes */
+.border-brand {
+  border-color: var(--brand-border);
+}
+
+.bg-brand {
+  background: var(--brand-primary);
+}
+
+.text-brand {
+  color: var(--brand-primary);
+}
+
+.badge-accent {
+  background: linear-gradient(45deg, var(--brand-accent), var(--brand-primary));
+  color: #fff;
+  animation: pulse 2s infinite;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.6s ease-out;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Loading states */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .container-app {
+    padding-inline: 0.75rem;
+  }
+  .card-pad {
+    padding: 0.75rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
