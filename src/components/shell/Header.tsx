@@ -57,12 +57,9 @@ export default function Header() {
             ☰
           </button>
 
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="hidden sm:flex items-center gap-2">
-              <div
-                className="h-8 w-8 rounded-lg text-white grid place-items-center"
-                style={{ background: "var(--brand-primary)" }}
-              >
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="hidden items-center gap-2 sm:flex">
+              <div className="grid h-8 w-8 place-items-center rounded-lg text-white bg-brand">
                 م
               </div>
               <div className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white truncate">

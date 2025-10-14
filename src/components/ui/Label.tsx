@@ -1,23 +1,15 @@
-"use client";
+import clsx from "clsx";
 
-import { forwardRef } from 'react';
-import { cn } from '@/lib/utils';
-
-export interface LabelProps
-  extends React.LabelHTMLAttributes<HTMLLabelElement> {}
-
-const Label = forwardRef<HTMLLabelElement, LabelProps>(
-  ({ className, ...props }, ref) => (
+export function Label({
+  className,
+  ...props
+}: React.LabelHTMLAttributes<HTMLLabelElement>) {
+  return (
     <label
-      ref={ref}
-      className={cn(
-        'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
-        className
-      )}
+      className={clsx("form-label", className)}
       {...props}
     />
-  )
-);
-Label.displayName = 'Label';
+  );
+}
 
-export { Label };
+export default Label;

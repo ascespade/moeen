@@ -105,7 +105,7 @@ export default function AgentDashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading agent status...</p>
@@ -115,8 +115,8 @@ export default function AgentDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[var(--brand-surface)] py-8">
+      <div className="container-app">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">🤖 AI Agent Dashboard</h1>
           <p className="mt-2 text-gray-600">Monitor your continuous AI agent progress</p>
