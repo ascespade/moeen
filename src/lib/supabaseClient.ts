@@ -1,5 +1,5 @@
-import { createBrowserClient, createServerClient } from '@supabase/ssr';
-import { cookies, headers } from 'next/headers';
+import { createBrowserClient, createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 export function getBrowserSupabase() {
   const url =
     process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
