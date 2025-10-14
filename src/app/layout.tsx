@@ -1,3 +1,24 @@
+import { Cairo, Inter } from "next/font/google";
+import "./globals.css";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "مُعين",
+  description: "منصة دردشة متعددة القنوات مدعومة بالذكاء الاصطناعي",
+};
+
+const cairo = Cairo({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "700"],
+  variable: "--font-cairo",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-inter",
+});
+
 export default function RootLayout({
   children,
 }: {

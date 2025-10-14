@@ -1,12 +1,8 @@
-import { NextRequest } from 'next/server';
-import { GET, POST, PUT } from '@/app/api/appointments/route';
-import { realDB } from '@/lib/supabase-real';
-import { whatsappAPI } from '@/lib/whatsapp-business-api';
+import { NextRequest } from "next/server";
+import { GET, POST, PUT } from "@/app/api/appointments/route";
+import { realDB } from "@/lib/supabase-real";
+import { whatsappAPI } from "@/lib/whatsapp-business-api";
 // Comprehensive API Tests for Appointments
-
-
-
-
 
 // Mock dependencies
 jest.mock("@/lib/supabase-real");

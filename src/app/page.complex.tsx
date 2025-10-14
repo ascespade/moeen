@@ -1,7 +1,5 @@
 "use client";
-
-// Removed unused Image import to fix type error and reduce bundle size
-import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
 import {
   Heart,
   Users,
@@ -17,6 +15,9 @@ import {
   Brain,
   Activity,
 } from "lucide-react";
+// Removed unused Image import to fix type error and reduce bundle size
+import Link from "next/link";
+
 import DirectionToggle from "@/components/common/DirectionToggle";
 
 export default function Home() {
