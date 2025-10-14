@@ -13,7 +13,7 @@ export class DatabaseUtils {
    * Generate public_id for a specific entity type
    */
   static generateEntityId(entityType: keyof typeof cuidEntity): string {
-    return cuidEntity[entityType]();
+    return cuidEntity[entityType]('');
   }
 
   /**
@@ -23,7 +23,7 @@ export class DatabaseUtils {
     entityType: keyof typeof cuidEntity,
     count: number
   ): string[] {
-    return Array.from({ length: count }, () => cuidEntity[entityType]());
+    return Array.from({ length: count }, () => cuidEntity[entityType](''));
   }
 
   /**
@@ -50,8 +50,8 @@ export class DatabaseUtils {
   ): T {
     return {
       ...data,
-      public_id: cuidEntity[entityType](),
-    } as T;
+      public_id: cuidEntity[entityType](''),
+    } as unknown as T;
   }
 
   /**
@@ -235,7 +235,7 @@ export class MigrationHelpers {
   ): Array<{ id: string; public_id: string }> {
     return existingRecords.map(record => ({
       id: record.id,
-      public_id: cuidEntity[entityType](),
+      public_id: cuidEntity[entityType](''),
     }));
   }
 

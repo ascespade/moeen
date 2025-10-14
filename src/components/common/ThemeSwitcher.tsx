@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Sun, Moon } from "lucide-react";
 import { useI18n } from "@/hooks/useI18n";
 import { dynamicThemeManager, type ThemeMode } from "@/lib/dynamic-theme-manager";
@@ -19,18 +19,6 @@ export default function ThemeSwitcher({
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useI18n("ar"); // Default to Arabic for theme labels
 
-  // Load user preferences from database on mount
-  useEffect(() => {
-    loadUserPreferences();
-  }, []);
-
-  // Apply theme changes
-  useEffect(() => {
-    if (!isLoading) {
-      applyTheme();
-    }
-  }, [theme, isLoading]);
-
   // Function to load user preferences from database
   const loadUserPreferences = async () => {
     try {
@@ -45,7 +33,7 @@ export default function ThemeSwitcher({
   };
 
   // Function to apply theme to document
-  const applyTheme = async () => {
+  const applyTheme = useCallback(async () => {
     try {
       const themeConfig = await dynamicThemeManager.getThemeConfig();
       const resolvedTheme = dynamicThemeManager.resolveThemeMode(theme);
@@ -53,7 +41,19 @@ export default function ThemeSwitcher({
     } catch (error) {
       console.error("Failed to apply theme:", error);
     }
-  };
+  }, [theme]);
+
+  // Load user preferences from database on mount
+  useEffect(() => {
+    loadUserPreferences();
+  }, []);
+
+  // Apply theme changes
+  useEffect(() => {
+    if (!isLoading) {
+      applyTheme();
+    }
+  }, [theme, isLoading, applyTheme]);
 
   // Toggle theme function
   const toggleTheme = async () => {
