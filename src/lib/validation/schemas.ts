@@ -228,7 +228,7 @@ export const AuditLogSchema = BaseEntitySchema.extend({
 });
 
 export const RoleSchema = BaseEntitySchema.extend({
-  name: z.string().min(1).max(100).unique(),
+  name: z.string().min(1).max(100),
   description: z.string().optional(),
   permissions: z.array(z.string()), // Array of permission strings
   is_system: z.boolean().default(false),
@@ -242,7 +242,7 @@ export const UserRoleSchema = BaseEntitySchema.extend({
 });
 
 export const SettingSchema = BaseEntitySchema.extend({
-  key: z.string().min(1).max(255).unique(),
+  key: z.string().min(1).max(255),
   value: z.record(z.any()), // JSONB field
   description: z.string().optional(),
   category: z.enum(['general', 'api', 'integrations', 'notifications']).default('general'),
@@ -254,7 +254,7 @@ export const SettingSchema = BaseEntitySchema.extend({
  * User Preferences Schema
  */
 export const UserPreferencesSchema = BaseEntitySchema.extend({
-  user_id: z.string().uuid().unique(),
+  user_id: z.string().uuid(),
   theme: z.enum(['light', 'dark', 'system']).default('light'),
   language: z.enum(['ar', 'en']).default('ar'),
   timezone: z.string().default('Asia/Riyadh'),

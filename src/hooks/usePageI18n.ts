@@ -59,7 +59,7 @@ export function usePageI18n(locale: "ar" | "en" = "ar") {
 
     // If not found and not the same as fallback, try common namespace
     if (translation === key && currentNamespace !== "common") {
-      const commonTranslation = t(key, undefined, "common");
+      const commonTranslation = t(key, "common");
       if (commonTranslation !== key) {
         translation = commonTranslation;
       }

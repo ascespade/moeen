@@ -12,7 +12,7 @@ export * from "./useKeyPress";
 export * from "./useLocalStorage";
 export * from "./useMediaQuery";
 export * from "./useMemoryLeakPrevention";
-export * from "./usePerformance";
+// export * from "./usePerformance"; // Commented out due to duplicate useDebounce export
 export * from "./usePrevious";
 export * from "./useThrottle";
 export * from "./useToggle";
