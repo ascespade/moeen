@@ -1,10 +1,10 @@
 "use client";
-
 import { useState } from "react";
-import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { ROUTES } from "@/constants/routes";
 import { getDefaultRouteForUser } from "@/lib/router";
+
+import Link from "next/link";
 
 export default function LoginPage() {
   const { loginWithCredentials, isLoading } = useAuth();
@@ -24,11 +24,8 @@ export default function LoginPage() {
       window.location.href = getDefaultRouteForUser({
         id: "temp",
         email,
-        name: "",
         role: "user",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
+      } as any);
     } catch (err: any) {
       setError(err?.message || "Login failed");
     } finally {
@@ -37,73 +34,118 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-        <h1 className="text-2xl font-bold text-center mb-6" style={{ color: "var(--brand-primary)" }}>
-          تسجيل الدخول
-        </h1>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--brand-surface)] via-white to-[var(--bg-gray-50)] p-4">
+      <div className="w-full max-w-md">
+        {/* Logo and Header */}
+        <div className="mb-8 text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] shadow-lg">
+            <span className="text-2xl font-bold text-white">م</span>
+          </div>
+          <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+            مرحباً بعودتك
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            سجل دخولك للوصول إلى لوحة التحكم
+          </p>
+        </div>
 
-        {error && (
-          <div className="mb-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded p-3">
-            {error}
-          </div>
-        )}
+        {/* Login Form */}
+        <div className="card shadow-xl">
+          <div className="p-8">
+            {error && (
+              <div className="status-error mb-6 p-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">⚠️</span>
+                  <p className="text-sm font-medium">{error}</p>
+                </div>
+              </div>
+            )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm mb-1">البريد الإلكتروني</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--brand-primary)]"
-              placeholder="you@example.com"
-            />
-          </div>
-          <div>
-            <label className="block text-sm mb-1">كلمة المرور</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--brand-primary)]"
-              placeholder="••••••••"
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <label className="inline-flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="rounded border-gray-300 text-[var(--brand-primary)] focus:ring-[var(--brand-primary)]"
-              />
-              تذكرني
-            </label>
-            <Link href="/forgot-password" className="text-sm text-[var(--brand-primary)] hover:underline">
-              نسيت كلمة المرور؟
-            </Link>
-          </div>
-          <button
-            type="submit"
-            disabled={submitting || isLoading}
-            className="w-full inline-flex items-center justify-center gap-2 bg-[var(--brand-primary)] text-white px-4 py-2 rounded-md hover:bg-[var(--brand-primary-hover)] transition-colors disabled:opacity-60"
-          >
-            {submitting ? "جارٍ تسجيل الدخول..." : "تسجيل الدخول"}
-          </button>
-        </form>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="form-label">البريد الإلكتروني</label>
+                <div className="relative">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="form-input pr-10"
+                    placeholder="you@example.com"
+                  />
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                    <span className="text-sm text-gray-400">📧</span>
+                  </div>
+                </div>
+              </div>
 
-        <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-300">
-          ليس لديك حساب؟ {" "}
-          <Link href={ROUTES.REGISTER} className="text-[var(--brand-primary)] hover:underline">
-            إنشاء حساب
-          </Link>
-        </p>
+              <div>
+                <label className="form-label">كلمة المرور</label>
+                <div className="relative">
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="form-input pr-10"
+                    placeholder="••••••••"
+                  />
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                    <span className="text-sm text-gray-400">🔒</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <label className="inline-flex items-center gap-3 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="text-brand focus:ring-brand h-4 w-4 rounded border-gray-300 focus:ring-2"
+                  />
+                  تذكرني
+                </label>
+                <Link
+                  href="/forgot-password"
+                  className="text-brand text-sm font-medium transition-colors hover:text-[var(--brand-primary-hover)]"
+                >
+                  نسيت كلمة المرور؟
+                </Link>
+              </div>
+
+              <button
+                type="submit"
+                disabled={submitting || isLoading}
+                className="btn btn-brand btn-lg w-full font-semibold"
+              >
+                {submitting ? (
+                  <>
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                    جارٍ تسجيل الدخول...
+                  </>
+                ) : (
+                  <>
+                    <span>🔑</span>
+                    تسجيل الدخول
+                  </>
+                )}
+              </button>
+            </form>
+
+            <div className="border-brand mt-6 border-t pt-6">
+              <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+                ليس لديك حساب؟{" "}
+                <Link
+                  href={ROUTES.REGISTER}
+                  className="text-brand font-medium transition-colors hover:text-[var(--brand-primary-hover)]"
+                >
+                  إنشاء حساب جديد
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
-
-

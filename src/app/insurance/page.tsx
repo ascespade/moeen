@@ -1,11 +1,10 @@
 "use client";
-
 import { useState } from "react";
-import Image from "next/image";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { ROUTES } from "@/constants/routes";
+import Image from "next/image";
 
 interface InsuranceClaim {
   id: string;
@@ -90,11 +89,15 @@ const statusConfig = {
 };
 
 export default function InsurancePage() {
-  const [selectedClaim, setSelectedClaim] = useState<InsuranceClaim | null>(null);
-  const [filter, setFilter] = useState<"all" | "pending" | "approved" | "rejected">("all");
+  const [selectedClaim, setSelectedClaim] = useState<InsuranceClaim | null>(
+    null,
+  );
+  const [filter, setFilter] = useState<
+    "all" | "pending" | "approved" | "rejected"
+  >("all");
 
-  const filteredClaims = mockClaims.filter(claim => 
-    filter === "all" || claim.status === filter
+  const filteredClaims = mockClaims.filter(
+    (claim) => filter === "all" || claim.status === filter,
   );
 
   const getStatusBadge = (status: InsuranceClaim["status"]) => {
@@ -110,14 +113,14 @@ export default function InsurancePage() {
     if (claim.isBlocked) {
       return (
         <div className="flex items-center gap-2 text-red-600">
-          <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+          <span className="h-2 w-2 rounded-full bg-red-500"></span>
           <span className="text-sm font-medium">محظور</span>
         </div>
       );
     }
     return (
       <div className="flex items-center gap-2 text-green-600">
-        <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+        <span className="h-2 w-2 rounded-full bg-green-500"></span>
         <span className="text-sm font-medium">نشط</span>
       </div>
     );
@@ -127,7 +130,7 @@ export default function InsurancePage() {
     if (claim.hasOutstandingBalance) {
       return (
         <div className="flex items-center gap-2 text-orange-600">
-          <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+          <span className="h-2 w-2 rounded-full bg-orange-500"></span>
           <span className="text-sm font-medium">
             رصيد مستحق: {claim.outstandingAmount?.toLocaleString()} ريال
           </span>
@@ -136,7 +139,7 @@ export default function InsurancePage() {
     }
     return (
       <div className="flex items-center gap-2 text-green-600">
-        <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+        <span className="h-2 w-2 rounded-full bg-green-500"></span>
         <span className="text-sm font-medium">لا يوجد رصيد مستحق</span>
       </div>
     );
@@ -145,7 +148,7 @@ export default function InsurancePage() {
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-900 border-b border-brand sticky top-0 z-10">
+      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
         <div className="container-app py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -157,8 +160,12 @@ export default function InsurancePage() {
                 className="rounded-lg"
               />
               <div>
-                <h1 className="text-2xl font-bold text-brand">إدارة المطالبات التأمينية</h1>
-                <p className="text-gray-600 dark:text-gray-300">مركز الهمم للرعاية الصحية المتخصصة</p>
+                <h1 className="text-brand text-2xl font-bold">
+                  إدارة المطالبات التأمينية
+                </h1>
+                <p className="text-gray-600 dark:text-gray-300">
+                  مركز الهمم للرعاية الصحية المتخصصة
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -175,35 +182,41 @@ export default function InsurancePage() {
 
       <main className="container-app py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-brand mb-2">
+            <div className="text-brand mb-2 text-3xl font-bold">
               {mockClaims.length}
             </div>
-            <div className="text-gray-600 dark:text-gray-300">إجمالي المطالبات</div>
-          </Card>
-          <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-green-600 mb-2">
-              {mockClaims.filter(c => c.status === "approved").length}
+            <div className="text-gray-600 dark:text-gray-300">
+              إجمالي المطالبات
             </div>
-            <div className="text-gray-600 dark:text-gray-300">مطالبات موافق عليها</div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-yellow-600 mb-2">
-              {mockClaims.filter(c => c.status === "pending").length}
+            <div className="mb-2 text-3xl font-bold text-green-600">
+              {mockClaims.filter((c) => c.status === "approved").length}
+            </div>
+            <div className="text-gray-600 dark:text-gray-300">
+              مطالبات موافق عليها
+            </div>
+          </Card>
+          <Card className="p-6 text-center">
+            <div className="mb-2 text-3xl font-bold text-yellow-600">
+              {mockClaims.filter((c) => c.status === "pending").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">قيد المراجعة</div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-red-600 mb-2">
-              {mockClaims.filter(c => c.isBlocked).length}
+            <div className="mb-2 text-3xl font-bold text-red-600">
+              {mockClaims.filter((c) => c.isBlocked).length}
             </div>
-            <div className="text-gray-600 dark:text-gray-300">مطالبات محظورة</div>
+            <div className="text-gray-600 dark:text-gray-300">
+              مطالبات محظورة
+            </div>
           </Card>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-3 mb-6">
+        <div className="mb-6 flex flex-wrap gap-3">
           <Button
             variant={filter === "all" ? "brand" : "outline"}
             size="sm"
@@ -235,16 +248,16 @@ export default function InsurancePage() {
         </div>
 
         {/* Claims List */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
           {filteredClaims.map((claim) => (
             <Card
               key={claim.id}
-              className="p-6 hover:shadow-lg transition-all duration-300 cursor-pointer"
+              className="cursor-pointer p-6 transition-all duration-300 hover:shadow-lg"
               onClick={() => setSelectedClaim(claim)}
             >
-              <div className="flex items-start justify-between mb-4">
+              <div className="mb-4 flex items-start justify-between">
                 <div>
-                  <h3 className="font-semibold text-lg text-gray-900 dark:text-white">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     {claim.patientName}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
@@ -254,28 +267,42 @@ export default function InsurancePage() {
                 {getStatusBadge(claim.status)}
               </div>
 
-              <div className="space-y-3 mb-4">
+              <div className="mb-4 space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">رقم المطالبة:</span>
-                  <span className="text-sm font-medium">{claim.claimNumber}</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    رقم المطالبة:
+                  </span>
+                  <span className="text-sm font-medium">
+                    {claim.claimNumber}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">شركة التأمين:</span>
-                  <span className="text-sm font-medium">{claim.insuranceCompany}</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    شركة التأمين:
+                  </span>
+                  <span className="text-sm font-medium">
+                    {claim.insuranceCompany}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">نوع الخدمة:</span>
-                  <span className="text-sm font-medium">{claim.serviceType}</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    نوع الخدمة:
+                  </span>
+                  <span className="text-sm font-medium">
+                    {claim.serviceType}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">المبلغ:</span>
-                  <span className="text-sm font-bold text-brand">
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    المبلغ:
+                  </span>
+                  <span className="text-brand text-sm font-bold">
                     {claim.amount.toLocaleString()} ريال
                   </span>
                 </div>
               </div>
 
-              <div className="space-y-2 mb-4">
+              <div className="mb-4 space-y-2">
                 {getBlockStatus(claim)}
                 {getOutstandingBalance(claim)}
               </div>
@@ -295,30 +322,38 @@ export default function InsurancePage() {
         {/* Empty State */}
         {filteredClaims.length === 0 && (
           <Card className="p-12 text-center">
-            <div className="text-gray-400 mb-4">
-              <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            <div className="mb-4 text-gray-400">
+              <svg
+                className="mx-auto h-16 w-16"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
               لا توجد مطالبات
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
+            <p className="mb-4 text-gray-600 dark:text-gray-300">
               لا توجد مطالبات تأمينية تطابق الفلتر المحدد
             </p>
-            <Button variant="brand">
-              إضافة مطالبة جديدة
-            </Button>
+            <Button variant="brand">إضافة مطالبة جديدة</Button>
           </Card>
         )}
       </main>
 
       {/* Claim Details Modal */}
       {selectedClaim && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+          <Card className="max-h-[90vh] w-full max-w-2xl overflow-y-auto">
             <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
+              <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-xl font-bold">تفاصيل المطالبة</h2>
                 <Button
                   variant="outline"
@@ -332,34 +367,48 @@ export default function InsurancePage() {
               <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-gray-600 dark:text-gray-300">اسم المريض</label>
+                    <label className="text-sm text-gray-600 dark:text-gray-300">
+                      اسم المريض
+                    </label>
                     <p className="font-medium">{selectedClaim.patientName}</p>
                   </div>
                   <div>
-                    <label className="text-sm text-gray-600 dark:text-gray-300">رقم المريض</label>
+                    <label className="text-sm text-gray-600 dark:text-gray-300">
+                      رقم المريض
+                    </label>
                     <p className="font-medium">{selectedClaim.patientId}</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-gray-600 dark:text-gray-300">رقم المطالبة</label>
+                    <label className="text-sm text-gray-600 dark:text-gray-300">
+                      رقم المطالبة
+                    </label>
                     <p className="font-medium">{selectedClaim.claimNumber}</p>
                   </div>
                   <div>
-                    <label className="text-sm text-gray-600 dark:text-gray-300">شركة التأمين</label>
-                    <p className="font-medium">{selectedClaim.insuranceCompany}</p>
+                    <label className="text-sm text-gray-600 dark:text-gray-300">
+                      شركة التأمين
+                    </label>
+                    <p className="font-medium">
+                      {selectedClaim.insuranceCompany}
+                    </p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-gray-600 dark:text-gray-300">نوع الخدمة</label>
+                    <label className="text-sm text-gray-600 dark:text-gray-300">
+                      نوع الخدمة
+                    </label>
                     <p className="font-medium">{selectedClaim.serviceType}</p>
                   </div>
                   <div>
-                    <label className="text-sm text-gray-600 dark:text-gray-300">المبلغ</label>
-                    <p className="font-bold text-brand text-lg">
+                    <label className="text-sm text-gray-600 dark:text-gray-300">
+                      المبلغ
+                    </label>
+                    <p className="text-brand text-lg font-bold">
                       {selectedClaim.amount.toLocaleString()} ريال
                     </p>
                   </div>
@@ -367,11 +416,17 @@ export default function InsurancePage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-gray-600 dark:text-gray-300">تاريخ التقديم</label>
-                    <p className="font-medium">{selectedClaim.submissionDate}</p>
+                    <label className="text-sm text-gray-600 dark:text-gray-300">
+                      تاريخ التقديم
+                    </label>
+                    <p className="font-medium">
+                      {selectedClaim.submissionDate}
+                    </p>
                   </div>
                   <div>
-                    <label className="text-sm text-gray-600 dark:text-gray-300">الحالة</label>
+                    <label className="text-sm text-gray-600 dark:text-gray-300">
+                      الحالة
+                    </label>
                     <div className="mt-1">
                       {getStatusBadge(selectedClaim.status)}
                     </div>
@@ -380,27 +435,35 @@ export default function InsurancePage() {
 
                 {selectedClaim.approvalDate && (
                   <div>
-                    <label className="text-sm text-gray-600 dark:text-gray-300">تاريخ الموافقة</label>
+                    <label className="text-sm text-gray-600 dark:text-gray-300">
+                      تاريخ الموافقة
+                    </label>
                     <p className="font-medium">{selectedClaim.approvalDate}</p>
                   </div>
                 )}
 
                 {selectedClaim.rejectionReason && (
                   <div>
-                    <label className="text-sm text-gray-600 dark:text-gray-300">سبب الرفض</label>
-                    <p className="font-medium text-red-600">{selectedClaim.rejectionReason}</p>
+                    <label className="text-sm text-gray-600 dark:text-gray-300">
+                      سبب الرفض
+                    </label>
+                    <p className="font-medium text-red-600">
+                      {selectedClaim.rejectionReason}
+                    </p>
                   </div>
                 )}
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-gray-600 dark:text-gray-300">حالة الحظر</label>
-                    <div className="mt-1">
-                      {getBlockStatus(selectedClaim)}
-                    </div>
+                    <label className="text-sm text-gray-600 dark:text-gray-300">
+                      حالة الحظر
+                    </label>
+                    <div className="mt-1">{getBlockStatus(selectedClaim)}</div>
                   </div>
                   <div>
-                    <label className="text-sm text-gray-600 dark:text-gray-300">الرصيد المستحق</label>
+                    <label className="text-sm text-gray-600 dark:text-gray-300">
+                      الرصيد المستحق
+                    </label>
                     <div className="mt-1">
                       {getOutstandingBalance(selectedClaim)}
                     </div>
@@ -408,7 +471,7 @@ export default function InsurancePage() {
                 </div>
               </div>
 
-              <div className="flex gap-3 mt-8">
+              <div className="mt-8 flex gap-3">
                 <Button variant="outline" className="flex-1">
                   طباعة
                 </Button>

@@ -1,11 +1,10 @@
 "use client";
-
 import { useState } from "react";
-import Image from "next/image";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
+import Image from "next/image";
 
 interface MedicalRecord {
   id: string;
@@ -192,23 +191,34 @@ const treatmentStatusConfig = {
 };
 
 export default function MedicalFilePage() {
-  const [selectedRecord, setSelectedRecord] = useState<MedicalRecord | null>(null);
+  const [selectedRecord, setSelectedRecord] = useState<MedicalRecord | null>(
+    null,
+  );
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState<"all" | "active" | "blocked" | "outstanding">("all");
+  const [filter, setFilter] = useState<
+    "all" | "active" | "blocked" | "outstanding"
+  >("all");
 
-  const filteredRecords = mockRecords.filter(record => {
-    const matchesSearch = record.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         record.patientId.toLowerCase().includes(searchTerm.toLowerCase());
-    
+  const filteredRecords = mockRecords.filter((record) => {
+    const matchesSearch =
+      record.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      record.patientId.toLowerCase().includes(searchTerm.toLowerCase());
+
     if (filter === "all") return matchesSearch;
-    if (filter === "active") return matchesSearch && !record.isBlocked && !record.hasOutstandingBalance;
+    if (filter === "active")
+      return (
+        matchesSearch && !record.isBlocked && !record.hasOutstandingBalance
+      );
     if (filter === "blocked") return matchesSearch && record.isBlocked;
-    if (filter === "outstanding") return matchesSearch && record.hasOutstandingBalance;
-    
+    if (filter === "outstanding")
+      return matchesSearch && record.hasOutstandingBalance;
+
     return matchesSearch;
   });
 
-  const getInsuranceStatusBadge = (status: MedicalRecord["insuranceStatus"]) => {
+  const getInsuranceStatusBadge = (
+    status: MedicalRecord["insuranceStatus"],
+  ) => {
     const config = insuranceStatusConfig[status];
     return (
       <Badge variant={config.color} className="text-xs">
@@ -217,7 +227,9 @@ export default function MedicalFilePage() {
     );
   };
 
-  const getTreatmentStatusBadge = (status: MedicalRecord["treatmentPlan"][0]["status"]) => {
+  const getTreatmentStatusBadge = (
+    status: MedicalRecord["treatmentPlan"][0]["status"],
+  ) => {
     const config = treatmentStatusConfig[status];
     return (
       <Badge variant={config.color} className="text-xs">
@@ -230,17 +242,19 @@ export default function MedicalFilePage() {
     if (record.isBlocked) {
       return (
         <div className="flex items-center gap-2 text-red-600">
-          <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+          <span className="h-2 w-2 rounded-full bg-red-500"></span>
           <span className="text-sm font-medium">محظور</span>
           {record.blockReason && (
-            <span className="text-xs text-gray-500">({record.blockReason})</span>
+            <span className="text-xs text-gray-500">
+              ({record.blockReason})
+            </span>
           )}
         </div>
       );
     }
     return (
       <div className="flex items-center gap-2 text-green-600">
-        <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+        <span className="h-2 w-2 rounded-full bg-green-500"></span>
         <span className="text-sm font-medium">نشط</span>
       </div>
     );
@@ -250,7 +264,7 @@ export default function MedicalFilePage() {
     if (record.hasOutstandingBalance) {
       return (
         <div className="flex items-center gap-2 text-orange-600">
-          <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+          <span className="h-2 w-2 rounded-full bg-orange-500"></span>
           <span className="text-sm font-medium">
             رصيد مستحق: {record.outstandingAmount?.toLocaleString()} ريال
           </span>
@@ -259,7 +273,7 @@ export default function MedicalFilePage() {
     }
     return (
       <div className="flex items-center gap-2 text-green-600">
-        <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+        <span className="h-2 w-2 rounded-full bg-green-500"></span>
         <span className="text-sm font-medium">لا يوجد رصيد مستحق</span>
       </div>
     );
@@ -270,7 +284,10 @@ export default function MedicalFilePage() {
     const birthDate = new Date(dateOfBirth);
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
       age--;
     }
     return age;
@@ -279,7 +296,7 @@ export default function MedicalFilePage() {
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-900 border-b border-brand sticky top-0 z-10">
+      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
         <div className="container-app py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -291,8 +308,12 @@ export default function MedicalFilePage() {
                 className="rounded-lg"
               />
               <div>
-                <h1 className="text-2xl font-bold text-brand">الملفات الطبية</h1>
-                <p className="text-gray-600 dark:text-gray-300">مركز الهمم للرعاية الصحية المتخصصة</p>
+                <h1 className="text-brand text-2xl font-bold">
+                  الملفات الطبية
+                </h1>
+                <p className="text-gray-600 dark:text-gray-300">
+                  مركز الهمم للرعاية الصحية المتخصصة
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -309,35 +330,41 @@ export default function MedicalFilePage() {
 
       <main className="container-app py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-brand mb-2">
+            <div className="text-brand mb-2 text-3xl font-bold">
               {mockRecords.length}
             </div>
-            <div className="text-gray-600 dark:text-gray-300">إجمالي الملفات</div>
+            <div className="text-gray-600 dark:text-gray-300">
+              إجمالي الملفات
+            </div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-green-600 mb-2">
-              {mockRecords.filter(r => !r.isBlocked && !r.hasOutstandingBalance).length}
+            <div className="mb-2 text-3xl font-bold text-green-600">
+              {
+                mockRecords.filter(
+                  (r) => !r.isBlocked && !r.hasOutstandingBalance,
+                ).length
+              }
             </div>
             <div className="text-gray-600 dark:text-gray-300">ملفات نشطة</div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-red-600 mb-2">
-              {mockRecords.filter(r => r.isBlocked).length}
+            <div className="mb-2 text-3xl font-bold text-red-600">
+              {mockRecords.filter((r) => r.isBlocked).length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">ملفات محظورة</div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-orange-600 mb-2">
-              {mockRecords.filter(r => r.hasOutstandingBalance).length}
+            <div className="mb-2 text-3xl font-bold text-orange-600">
+              {mockRecords.filter((r) => r.hasOutstandingBalance).length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">رصيد مستحق</div>
           </Card>
         </div>
 
         {/* Search and Filters */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <div className="mb-6 flex flex-col gap-4 md:flex-row">
           <div className="flex-1">
             <Input
               type="text"
@@ -380,20 +407,21 @@ export default function MedicalFilePage() {
         </div>
 
         {/* Records List */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
           {filteredRecords.map((record) => (
             <Card
               key={record.id}
-              className="p-6 hover:shadow-lg transition-all duration-300 cursor-pointer"
+              className="cursor-pointer p-6 transition-all duration-300 hover:shadow-lg"
               onClick={() => setSelectedRecord(record)}
             >
-              <div className="flex items-start justify-between mb-4">
+              <div className="mb-4 flex items-start justify-between">
                 <div>
-                  <h3 className="font-semibold text-lg text-gray-900 dark:text-white">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     {record.patientName}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
-                    رقم المريض: {record.patientId} • العمر: {calculateAge(record.dateOfBirth)} سنة
+                    رقم المريض: {record.patientId} • العمر:{" "}
+                    {calculateAge(record.dateOfBirth)} سنة
                   </p>
                 </div>
                 <div className="text-right">
@@ -401,48 +429,67 @@ export default function MedicalFilePage() {
                 </div>
               </div>
 
-              <div className="space-y-3 mb-4">
+              <div className="mb-4 space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">الجنس:</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    الجنس:
+                  </span>
                   <span className="text-sm font-medium">
                     {record.gender === "male" ? "ذكر" : "أنثى"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">الهاتف:</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    الهاتف:
+                  </span>
                   <span className="text-sm font-medium">{record.phone}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">آخر زيارة:</span>
-                  <span className="text-sm font-medium">{record.lastVisit}</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    آخر زيارة:
+                  </span>
+                  <span className="text-sm font-medium">
+                    {record.lastVisit}
+                  </span>
                 </div>
                 {record.nextAppointment && (
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-300">الموعد القادم:</span>
-                    <span className="text-sm font-medium text-brand">{record.nextAppointment}</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">
+                      الموعد القادم:
+                    </span>
+                    <span className="text-brand text-sm font-medium">
+                      {record.nextAppointment}
+                    </span>
                   </div>
                 )}
               </div>
 
-              <div className="space-y-2 mb-4">
+              <div className="mb-4 space-y-2">
                 {getBlockStatus(record)}
                 {getOutstandingBalance(record)}
               </div>
 
               <div className="mb-4">
-                <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">خطط العلاج النشطة:</div>
+                <div className="mb-2 text-sm text-gray-600 dark:text-gray-300">
+                  خطط العلاج النشطة:
+                </div>
                 <div className="space-y-1">
-                  {record.treatmentPlan.filter(tp => tp.status === "active").map((plan) => (
-                    <div key={plan.id} className="flex items-center justify-between text-sm">
-                      <span>{plan.type}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-gray-500">
-                          {plan.completedSessions}/{plan.sessions}
-                        </span>
-                        {getTreatmentStatusBadge(plan.status)}
+                  {record.treatmentPlan
+                    .filter((tp) => tp.status === "active")
+                    .map((plan) => (
+                      <div
+                        key={plan.id}
+                        className="flex items-center justify-between text-sm"
+                      >
+                        <span>{plan.type}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-500">
+                            {plan.completedSessions}/{plan.sessions}
+                          </span>
+                          {getTreatmentStatusBadge(plan.status)}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
 
@@ -461,30 +508,38 @@ export default function MedicalFilePage() {
         {/* Empty State */}
         {filteredRecords.length === 0 && (
           <Card className="p-12 text-center">
-            <div className="text-gray-400 mb-4">
-              <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            <div className="mb-4 text-gray-400">
+              <svg
+                className="mx-auto h-16 w-16"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
               لا توجد ملفات
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
+            <p className="mb-4 text-gray-600 dark:text-gray-300">
               لا توجد ملفات طبية تطابق البحث أو الفلتر المحدد
             </p>
-            <Button variant="brand">
-              إضافة ملف جديد
-            </Button>
+            <Button variant="brand">إضافة ملف جديد</Button>
           </Card>
         )}
       </main>
 
       {/* Record Details Modal */}
       {selectedRecord && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+          <Card className="max-h-[90vh] w-full max-w-4xl overflow-y-auto">
             <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
+              <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-xl font-bold">تفاصيل الملف الطبي</h2>
                 <Button
                   variant="outline"
@@ -495,50 +550,76 @@ export default function MedicalFilePage() {
                 </Button>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
                 {/* Basic Info */}
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-semibold mb-4">المعلومات الأساسية</h3>
+                    <h3 className="mb-4 text-lg font-semibold">
+                      المعلومات الأساسية
+                    </h3>
                     <div className="space-y-3">
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="text-sm text-gray-600 dark:text-gray-300">الاسم الكامل</label>
-                          <p className="font-medium">{selectedRecord.patientName}</p>
+                          <label className="text-sm text-gray-600 dark:text-gray-300">
+                            الاسم الكامل
+                          </label>
+                          <p className="font-medium">
+                            {selectedRecord.patientName}
+                          </p>
                         </div>
                         <div>
-                          <label className="text-sm text-gray-600 dark:text-gray-300">رقم المريض</label>
-                          <p className="font-medium">{selectedRecord.patientId}</p>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="text-sm text-gray-600 dark:text-gray-300">تاريخ الميلاد</label>
-                          <p className="font-medium">{selectedRecord.dateOfBirth}</p>
-                        </div>
-                        <div>
-                          <label className="text-sm text-gray-600 dark:text-gray-300">العمر</label>
-                          <p className="font-medium">{calculateAge(selectedRecord.dateOfBirth)} سنة</p>
+                          <label className="text-sm text-gray-600 dark:text-gray-300">
+                            رقم المريض
+                          </label>
+                          <p className="font-medium">
+                            {selectedRecord.patientId}
+                          </p>
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="text-sm text-gray-600 dark:text-gray-300">الجنس</label>
+                          <label className="text-sm text-gray-600 dark:text-gray-300">
+                            تاريخ الميلاد
+                          </label>
+                          <p className="font-medium">
+                            {selectedRecord.dateOfBirth}
+                          </p>
+                        </div>
+                        <div>
+                          <label className="text-sm text-gray-600 dark:text-gray-300">
+                            العمر
+                          </label>
+                          <p className="font-medium">
+                            {calculateAge(selectedRecord.dateOfBirth)} سنة
+                          </p>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="text-sm text-gray-600 dark:text-gray-300">
+                            الجنس
+                          </label>
                           <p className="font-medium">
                             {selectedRecord.gender === "male" ? "ذكر" : "أنثى"}
                           </p>
                         </div>
                         <div>
-                          <label className="text-sm text-gray-600 dark:text-gray-300">الهاتف</label>
+                          <label className="text-sm text-gray-600 dark:text-gray-300">
+                            الهاتف
+                          </label>
                           <p className="font-medium">{selectedRecord.phone}</p>
                         </div>
                       </div>
                       <div>
-                        <label className="text-sm text-gray-600 dark:text-gray-300">البريد الإلكتروني</label>
+                        <label className="text-sm text-gray-600 dark:text-gray-300">
+                          البريد الإلكتروني
+                        </label>
                         <p className="font-medium">{selectedRecord.email}</p>
                       </div>
                       <div>
-                        <label className="text-sm text-gray-600 dark:text-gray-300">العنوان</label>
+                        <label className="text-sm text-gray-600 dark:text-gray-300">
+                          العنوان
+                        </label>
                         <p className="font-medium">{selectedRecord.address}</p>
                       </div>
                     </div>
@@ -546,15 +627,25 @@ export default function MedicalFilePage() {
 
                   {/* Emergency Contact */}
                   <div>
-                    <h3 className="text-lg font-semibold mb-4">جهة الاتصال في الطوارئ</h3>
+                    <h3 className="mb-4 text-lg font-semibold">
+                      جهة الاتصال في الطوارئ
+                    </h3>
                     <div className="space-y-3">
                       <div>
-                        <label className="text-sm text-gray-600 dark:text-gray-300">الاسم</label>
-                        <p className="font-medium">{selectedRecord.emergencyContact}</p>
+                        <label className="text-sm text-gray-600 dark:text-gray-300">
+                          الاسم
+                        </label>
+                        <p className="font-medium">
+                          {selectedRecord.emergencyContact}
+                        </p>
                       </div>
                       <div>
-                        <label className="text-sm text-gray-600 dark:text-gray-300">الهاتف</label>
-                        <p className="font-medium">{selectedRecord.emergencyPhone}</p>
+                        <label className="text-sm text-gray-600 dark:text-gray-300">
+                          الهاتف
+                        </label>
+                        <p className="font-medium">
+                          {selectedRecord.emergencyPhone}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -564,22 +655,36 @@ export default function MedicalFilePage() {
                 <div className="space-y-6">
                   {/* Insurance Info */}
                   <div>
-                    <h3 className="text-lg font-semibold mb-4">معلومات التأمين</h3>
+                    <h3 className="mb-4 text-lg font-semibold">
+                      معلومات التأمين
+                    </h3>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600 dark:text-gray-300">الحالة</span>
-                        {getInsuranceStatusBadge(selectedRecord.insuranceStatus)}
+                        <span className="text-sm text-gray-600 dark:text-gray-300">
+                          الحالة
+                        </span>
+                        {getInsuranceStatusBadge(
+                          selectedRecord.insuranceStatus,
+                        )}
                       </div>
                       {selectedRecord.insuranceCompany && (
                         <div>
-                          <label className="text-sm text-gray-600 dark:text-gray-300">شركة التأمين</label>
-                          <p className="font-medium">{selectedRecord.insuranceCompany}</p>
+                          <label className="text-sm text-gray-600 dark:text-gray-300">
+                            شركة التأمين
+                          </label>
+                          <p className="font-medium">
+                            {selectedRecord.insuranceCompany}
+                          </p>
                         </div>
                       )}
                       {selectedRecord.insuranceNumber && (
                         <div>
-                          <label className="text-sm text-gray-600 dark:text-gray-300">رقم التأمين</label>
-                          <p className="font-medium">{selectedRecord.insuranceNumber}</p>
+                          <label className="text-sm text-gray-600 dark:text-gray-300">
+                            رقم التأمين
+                          </label>
+                          <p className="font-medium">
+                            {selectedRecord.insuranceNumber}
+                          </p>
                         </div>
                       )}
                     </div>
@@ -587,40 +692,66 @@ export default function MedicalFilePage() {
 
                   {/* Medical History */}
                   <div>
-                    <h3 className="text-lg font-semibold mb-4">التاريخ الطبي</h3>
+                    <h3 className="mb-4 text-lg font-semibold">
+                      التاريخ الطبي
+                    </h3>
                     <div className="space-y-3">
                       <div>
-                        <label className="text-sm text-gray-600 dark:text-gray-300">الأمراض السابقة</label>
-                        <div className="flex flex-wrap gap-2 mt-1">
-                          {selectedRecord.medicalHistory.map((condition, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">
-                              {condition}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <label className="text-sm text-gray-600 dark:text-gray-300">الحساسية</label>
-                        <div className="flex flex-wrap gap-2 mt-1">
-                          {selectedRecord.allergies.length > 0 ? (
-                            selectedRecord.allergies.map((allergy, index) => (
-                              <Badge key={index} variant="error" className="text-xs">
-                                {allergy}
+                        <label className="text-sm text-gray-600 dark:text-gray-300">
+                          الأمراض السابقة
+                        </label>
+                        <div className="mt-1 flex flex-wrap gap-2">
+                          {selectedRecord.medicalHistory.map(
+                            (condition, index) => (
+                              <Badge
+                                key={index}
+                                variant="outline"
+                                className="text-xs"
+                              >
+                                {condition}
                               </Badge>
-                            ))
-                          ) : (
-                            <span className="text-sm text-gray-500">لا توجد حساسية</span>
+                            ),
                           )}
                         </div>
                       </div>
                       <div>
-                        <label className="text-sm text-gray-600 dark:text-gray-300">الأدوية الحالية</label>
-                        <div className="flex flex-wrap gap-2 mt-1">
-                          {selectedRecord.currentMedications.map((medication, index) => (
-                            <Badge key={index} variant="info" className="text-xs">
-                              {medication}
-                            </Badge>
-                          ))}
+                        <label className="text-sm text-gray-600 dark:text-gray-300">
+                          الحساسية
+                        </label>
+                        <div className="mt-1 flex flex-wrap gap-2">
+                          {selectedRecord.allergies.length > 0 ? (
+                            selectedRecord.allergies.map((allergy, index) => (
+                              <Badge
+                                key={index}
+                                variant="error"
+                                className="text-xs"
+                              >
+                                {allergy}
+                              </Badge>
+                            ))
+                          ) : (
+                            <span className="text-sm text-gray-500">
+                              لا توجد حساسية
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-sm text-gray-600 dark:text-gray-300">
+                          الأدوية الحالية
+                        </label>
+                        <div className="mt-1 flex flex-wrap gap-2">
+                          {selectedRecord.currentMedications.map(
+                            (medication, index) => (
+                              <Badge
+                                key={index}
+                                variant="info"
+                                className="text-xs"
+                              >
+                                {medication}
+                              </Badge>
+                            ),
+                          )}
                         </div>
                       </div>
                     </div>
@@ -628,19 +759,23 @@ export default function MedicalFilePage() {
 
                   {/* Treatment Plans */}
                   <div>
-                    <h3 className="text-lg font-semibold mb-4">خطط العلاج</h3>
+                    <h3 className="mb-4 text-lg font-semibold">خطط العلاج</h3>
                     <div className="space-y-3">
                       {selectedRecord.treatmentPlan.map((plan) => (
-                        <div key={plan.id} className="p-3 border rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
+                        <div key={plan.id} className="rounded-lg border p-3">
+                          <div className="mb-2 flex items-center justify-between">
                             <span className="font-medium">{plan.type}</span>
                             {getTreatmentStatusBadge(plan.status)}
                           </div>
-                          <div className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                          <div className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
                             <div>المعالج: {plan.therapist}</div>
-                            <div>الجلسات: {plan.completedSessions}/{plan.sessions}</div>
+                            <div>
+                              الجلسات: {plan.completedSessions}/{plan.sessions}
+                            </div>
                             <div>تاريخ البداية: {plan.startDate}</div>
-                            {plan.endDate && <div>تاريخ الانتهاء: {plan.endDate}</div>}
+                            {plan.endDate && (
+                              <div>تاريخ الانتهاء: {plan.endDate}</div>
+                            )}
                           </div>
                         </div>
                       ))}
@@ -649,16 +784,20 @@ export default function MedicalFilePage() {
 
                   {/* Status Info */}
                   <div>
-                    <h3 className="text-lg font-semibold mb-4">حالة الملف</h3>
+                    <h3 className="mb-4 text-lg font-semibold">حالة الملف</h3>
                     <div className="space-y-3">
                       <div>
-                        <label className="text-sm text-gray-600 dark:text-gray-300">حالة الحظر</label>
+                        <label className="text-sm text-gray-600 dark:text-gray-300">
+                          حالة الحظر
+                        </label>
                         <div className="mt-1">
                           {getBlockStatus(selectedRecord)}
                         </div>
                       </div>
                       <div>
-                        <label className="text-sm text-gray-600 dark:text-gray-300">الرصيد المستحق</label>
+                        <label className="text-sm text-gray-600 dark:text-gray-300">
+                          الرصيد المستحق
+                        </label>
                         <div className="mt-1">
                           {getOutstandingBalance(selectedRecord)}
                         </div>
@@ -668,7 +807,7 @@ export default function MedicalFilePage() {
                 </div>
               </div>
 
-              <div className="flex gap-3 mt-8">
+              <div className="mt-8 flex gap-3">
                 <Button variant="outline" className="flex-1">
                   طباعة الملف
                 </Button>

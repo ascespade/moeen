@@ -1,6 +1,6 @@
-// Comprehensive Error Handling System for Hemam Center
 import { NextRequest, NextResponse } from "next/server";
 import { realDB } from "./supabase-real";
+// Comprehensive Error Handling System for Hemam Center
 
 // Error types
 export enum ErrorType {

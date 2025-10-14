@@ -1,4 +1,3 @@
-// Authentication hooks
 import { useState, useEffect, useCallback } from "react";
 import { User } from "@/types";
 import {
@@ -8,6 +7,7 @@ import {
   setToken,
   clearAuth,
 } from "@/utils/storage";
+// Authentication hooks
 
 interface AuthState {
   user: User | null;

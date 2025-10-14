@@ -1,17 +1,22 @@
 "use client";
-
 import { useState } from "react";
-import Image from "next/image";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 
+import Image from "next/image";
+
 interface Approval {
   id: string;
   patientName: string;
   patientId: string;
-  requestType: "treatment" | "medication" | "procedure" | "referral" | "emergency";
+  requestType:
+    | "treatment"
+    | "medication"
+    | "procedure"
+    | "referral"
+    | "emergency";
   requestTitle: string;
   description: string;
   requestedBy: string;
@@ -39,7 +44,8 @@ const mockApprovals: Approval[] = [
     patientId: "P001",
     requestType: "treatment",
     requestTitle: "موافقة على برنامج العلاج الطبيعي",
-    description: "طلب موافقة على بدء برنامج علاج طبيعي مكثف لمدة 6 أسابيع لعلاج إصابة العمود الفقري",
+    description:
+      "طلب موافقة على بدء برنامج علاج طبيعي مكثف لمدة 6 أسابيع لعلاج إصابة العمود الفقري",
     requestedBy: "د. سارة أحمد",
     requestedDate: "2024-01-20",
     status: "approved",
@@ -157,19 +163,27 @@ const priorityConfig = {
 };
 
 export default function ApprovalsPage() {
-  const [selectedApproval, setSelectedApproval] = useState<Approval | null>(null);
+  const [selectedApproval, setSelectedApproval] = useState<Approval | null>(
+    null,
+  );
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState<"all" | "pending" | "approved" | "rejected">("all");
-  const [typeFilter, setTypeFilter] = useState<"all" | Approval["requestType"]>("all");
+  const [filter, setFilter] = useState<
+    "all" | "pending" | "approved" | "rejected"
+  >("all");
+  const [typeFilter, setTypeFilter] = useState<"all" | Approval["requestType"]>(
+    "all",
+  );
 
-  const filteredApprovals = mockApprovals.filter(approval => {
-    const matchesSearch = approval.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         approval.patientId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         approval.requestTitle.toLowerCase().includes(searchTerm.toLowerCase());
-    
+  const filteredApprovals = mockApprovals.filter((approval) => {
+    const matchesSearch =
+      approval.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      approval.patientId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      approval.requestTitle.toLowerCase().includes(searchTerm.toLowerCase());
+
     const matchesStatus = filter === "all" || approval.status === filter;
-    const matchesType = typeFilter === "all" || approval.requestType === typeFilter;
-    
+    const matchesType =
+      typeFilter === "all" || approval.requestType === typeFilter;
+
     return matchesSearch && matchesStatus && matchesType;
   });
 
@@ -205,17 +219,19 @@ export default function ApprovalsPage() {
     if (approval.isBlocked) {
       return (
         <div className="flex items-center gap-2 text-red-600">
-          <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+          <span className="h-2 w-2 rounded-full bg-red-500"></span>
           <span className="text-sm font-medium">محظور</span>
           {approval.blockReason && (
-            <span className="text-xs text-gray-500">({approval.blockReason})</span>
+            <span className="text-xs text-gray-500">
+              ({approval.blockReason})
+            </span>
           )}
         </div>
       );
     }
     return (
       <div className="flex items-center gap-2 text-green-600">
-        <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+        <span className="h-2 w-2 rounded-full bg-green-500"></span>
         <span className="text-sm font-medium">نشط</span>
       </div>
     );
@@ -225,7 +241,7 @@ export default function ApprovalsPage() {
     if (approval.hasOutstandingBalance) {
       return (
         <div className="flex items-center gap-2 text-orange-600">
-          <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+          <span className="h-2 w-2 rounded-full bg-orange-500"></span>
           <span className="text-sm font-medium">
             رصيد مستحق: {approval.outstandingAmount?.toLocaleString()} ريال
           </span>
@@ -234,7 +250,7 @@ export default function ApprovalsPage() {
     }
     return (
       <div className="flex items-center gap-2 text-green-600">
-        <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+        <span className="h-2 w-2 rounded-full bg-green-500"></span>
         <span className="text-sm font-medium">لا يوجد رصيد مستحق</span>
       </div>
     );
@@ -242,23 +258,31 @@ export default function ApprovalsPage() {
 
   const getCostBreakdown = (approval: Approval) => {
     if (!approval.estimatedCost) return null;
-    
+
     return (
-      <div className="text-sm space-y-1">
+      <div className="space-y-1 text-sm">
         <div className="flex justify-between">
-          <span className="text-gray-600 dark:text-gray-300">التكلفة الإجمالية:</span>
-          <span className="font-medium">{approval.estimatedCost.toLocaleString()} ريال</span>
+          <span className="text-gray-600 dark:text-gray-300">
+            التكلفة الإجمالية:
+          </span>
+          <span className="font-medium">
+            {approval.estimatedCost.toLocaleString()} ريال
+          </span>
         </div>
         {approval.insuranceCoverage && (
           <div className="flex justify-between text-green-600">
             <span>التغطية التأمينية:</span>
-            <span className="font-medium">-{approval.insuranceCoverage.toLocaleString()} ريال</span>
+            <span className="font-medium">
+              -{approval.insuranceCoverage.toLocaleString()} ريال
+            </span>
           </div>
         )}
         {approval.patientContribution && (
-          <div className="flex justify-between text-brand">
+          <div className="text-brand flex justify-between">
             <span>مساهمة المريض:</span>
-            <span className="font-bold">{approval.patientContribution.toLocaleString()} ريال</span>
+            <span className="font-bold">
+              {approval.patientContribution.toLocaleString()} ريال
+            </span>
           </div>
         )}
       </div>
@@ -268,7 +292,7 @@ export default function ApprovalsPage() {
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-900 border-b border-brand sticky top-0 z-10">
+      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
         <div className="container-app py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -280,8 +304,12 @@ export default function ApprovalsPage() {
                 className="rounded-lg"
               />
               <div>
-                <h1 className="text-2xl font-bold text-brand">إدارة الموافقات</h1>
-                <p className="text-gray-600 dark:text-gray-300">مركز الهمم للرعاية الصحية المتخصصة</p>
+                <h1 className="text-brand text-2xl font-bold">
+                  إدارة الموافقات
+                </h1>
+                <p className="text-gray-600 dark:text-gray-300">
+                  مركز الهمم للرعاية الصحية المتخصصة
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -298,35 +326,37 @@ export default function ApprovalsPage() {
 
       <main className="container-app py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-brand mb-2">
+            <div className="text-brand mb-2 text-3xl font-bold">
               {mockApprovals.length}
             </div>
-            <div className="text-gray-600 dark:text-gray-300">إجمالي الطلبات</div>
+            <div className="text-gray-600 dark:text-gray-300">
+              إجمالي الطلبات
+            </div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-yellow-600 mb-2">
-              {mockApprovals.filter(a => a.status === "pending").length}
+            <div className="mb-2 text-3xl font-bold text-yellow-600">
+              {mockApprovals.filter((a) => a.status === "pending").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">قيد المراجعة</div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-green-600 mb-2">
-              {mockApprovals.filter(a => a.status === "approved").length}
+            <div className="mb-2 text-3xl font-bold text-green-600">
+              {mockApprovals.filter((a) => a.status === "approved").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">موافق عليها</div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="text-3xl font-bold text-red-600 mb-2">
-              {mockApprovals.filter(a => a.status === "rejected").length}
+            <div className="mb-2 text-3xl font-bold text-red-600">
+              {mockApprovals.filter((a) => a.status === "rejected").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">مرفوضة</div>
           </Card>
         </div>
 
         {/* Search and Filters */}
-        <div className="flex flex-col lg:flex-row gap-4 mb-6">
+        <div className="mb-6 flex flex-col gap-4 lg:flex-row">
           <div className="flex-1">
             <Input
               type="text"
@@ -369,7 +399,7 @@ export default function ApprovalsPage() {
         </div>
 
         {/* Type Filters */}
-        <div className="flex flex-wrap gap-3 mb-6">
+        <div className="mb-6 flex flex-wrap gap-3">
           <Button
             variant={typeFilter === "all" ? "brand" : "outline"}
             size="sm"
@@ -395,19 +425,19 @@ export default function ApprovalsPage() {
           {filteredApprovals.map((approval) => (
             <Card
               key={approval.id}
-              className="p-6 hover:shadow-lg transition-all duration-300 cursor-pointer"
+              className="cursor-pointer p-6 transition-all duration-300 hover:shadow-lg"
               onClick={() => setSelectedApproval(approval)}
             >
-              <div className="flex items-start justify-between mb-4">
+              <div className="mb-4 flex items-start justify-between">
                 <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="font-semibold text-lg text-gray-900 dark:text-white">
+                  <div className="mb-2 flex items-center gap-3">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                       {approval.requestTitle}
                     </h3>
                     {getRequestTypeBadge(approval.requestType)}
                     {getPriorityBadge(approval.priority)}
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                  <p className="mb-2 text-sm text-gray-600 dark:text-gray-300">
                     المريض: {approval.patientName} (رقم: {approval.patientId})
                   </p>
                   <p className="text-sm text-gray-700 dark:text-gray-300">
@@ -419,25 +449,33 @@ export default function ApprovalsPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-3">
                 <div>
-                  <span className="text-sm text-gray-600 dark:text-gray-300">طلب من:</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    طلب من:
+                  </span>
                   <p className="text-sm font-medium">{approval.requestedBy}</p>
                 </div>
                 <div>
-                  <span className="text-sm text-gray-600 dark:text-gray-300">تاريخ الطلب:</span>
-                  <p className="text-sm font-medium">{approval.requestedDate}</p>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    تاريخ الطلب:
+                  </span>
+                  <p className="text-sm font-medium">
+                    {approval.requestedDate}
+                  </p>
                 </div>
                 <div>
-                  <span className="text-sm text-gray-600 dark:text-gray-300">المرفقات:</span>
-                  <p className="text-sm font-medium">{approval.attachments.length} ملف</p>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    المرفقات:
+                  </span>
+                  <p className="text-sm font-medium">
+                    {approval.attachments.length} ملف
+                  </p>
                 </div>
               </div>
 
               {approval.estimatedCost && (
-                <div className="mb-4">
-                  {getCostBreakdown(approval)}
-                </div>
+                <div className="mb-4">{getCostBreakdown(approval)}</div>
               )}
 
               <div className="flex items-center justify-between">
@@ -463,30 +501,38 @@ export default function ApprovalsPage() {
         {/* Empty State */}
         {filteredApprovals.length === 0 && (
           <Card className="p-12 text-center">
-            <div className="text-gray-400 mb-4">
-              <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div className="mb-4 text-gray-400">
+              <svg
+                className="mx-auto h-16 w-16"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
               لا توجد طلبات موافقة
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
+            <p className="mb-4 text-gray-600 dark:text-gray-300">
               لا توجد طلبات موافقة تطابق البحث أو الفلتر المحدد
             </p>
-            <Button variant="brand">
-              إضافة طلب موافقة
-            </Button>
+            <Button variant="brand">إضافة طلب موافقة</Button>
           </Card>
         )}
       </main>
 
       {/* Approval Details Modal */}
       {selectedApproval && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+          <Card className="max-h-[90vh] w-full max-w-4xl overflow-y-auto">
             <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
+              <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-xl font-bold">تفاصيل طلب الموافقة</h2>
                 <Button
                   variant="outline"
@@ -501,7 +547,9 @@ export default function ApprovalsPage() {
                 {/* Header Info */}
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">{selectedApproval.requestTitle}</h3>
+                    <h3 className="mb-2 text-lg font-semibold">
+                      {selectedApproval.requestTitle}
+                    </h3>
                     <div className="flex items-center gap-3">
                       {getRequestTypeBadge(selectedApproval.requestType)}
                       {getPriorityBadge(selectedApproval.priority)}
@@ -511,30 +559,46 @@ export default function ApprovalsPage() {
                 </div>
 
                 {/* Patient Info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   <div>
-                    <h4 className="font-semibold mb-3">معلومات المريض</h4>
+                    <h4 className="mb-3 font-semibold">معلومات المريض</h4>
                     <div className="space-y-2">
                       <div>
-                        <span className="text-sm text-gray-600 dark:text-gray-300">الاسم:</span>
-                        <p className="font-medium">{selectedApproval.patientName}</p>
+                        <span className="text-sm text-gray-600 dark:text-gray-300">
+                          الاسم:
+                        </span>
+                        <p className="font-medium">
+                          {selectedApproval.patientName}
+                        </p>
                       </div>
                       <div>
-                        <span className="text-sm text-gray-600 dark:text-gray-300">رقم المريض:</span>
-                        <p className="font-medium">{selectedApproval.patientId}</p>
+                        <span className="text-sm text-gray-600 dark:text-gray-300">
+                          رقم المريض:
+                        </span>
+                        <p className="font-medium">
+                          {selectedApproval.patientId}
+                        </p>
                       </div>
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-3">معلومات الطلب</h4>
+                    <h4 className="mb-3 font-semibold">معلومات الطلب</h4>
                     <div className="space-y-2">
                       <div>
-                        <span className="text-sm text-gray-600 dark:text-gray-300">طلب من:</span>
-                        <p className="font-medium">{selectedApproval.requestedBy}</p>
+                        <span className="text-sm text-gray-600 dark:text-gray-300">
+                          طلب من:
+                        </span>
+                        <p className="font-medium">
+                          {selectedApproval.requestedBy}
+                        </p>
                       </div>
                       <div>
-                        <span className="text-sm text-gray-600 dark:text-gray-300">تاريخ الطلب:</span>
-                        <p className="font-medium">{selectedApproval.requestedDate}</p>
+                        <span className="text-sm text-gray-600 dark:text-gray-300">
+                          تاريخ الطلب:
+                        </span>
+                        <p className="font-medium">
+                          {selectedApproval.requestedDate}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -542,8 +606,8 @@ export default function ApprovalsPage() {
 
                 {/* Description */}
                 <div>
-                  <h4 className="font-semibold mb-3">وصف الطلب</h4>
-                  <p className="text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                  <h4 className="mb-3 font-semibold">وصف الطلب</h4>
+                  <p className="rounded-lg bg-gray-50 p-4 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
                     {selectedApproval.description}
                   </p>
                 </div>
@@ -551,8 +615,8 @@ export default function ApprovalsPage() {
                 {/* Cost Information */}
                 {selectedApproval.estimatedCost && (
                   <div>
-                    <h4 className="font-semibold mb-3">معلومات التكلفة</h4>
-                    <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                    <h4 className="mb-3 font-semibold">معلومات التكلفة</h4>
+                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                       {getCostBreakdown(selectedApproval)}
                     </div>
                   </div>
@@ -560,7 +624,7 @@ export default function ApprovalsPage() {
 
                 {/* Attachments */}
                 <div>
-                  <h4 className="font-semibold mb-3">المرفقات</h4>
+                  <h4 className="mb-3 font-semibold">المرفقات</h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedApproval.attachments.map((attachment, index) => (
                       <Badge key={index} variant="outline" className="text-sm">
@@ -571,37 +635,47 @@ export default function ApprovalsPage() {
                 </div>
 
                 {/* Approval Info */}
-                {selectedApproval.status === "approved" && selectedApproval.approvedBy && (
-                  <div>
-                    <h4 className="font-semibold mb-3">معلومات الموافقة</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <span className="text-sm text-gray-600 dark:text-gray-300">وافق عليه:</span>
-                        <p className="font-medium">{selectedApproval.approvedBy}</p>
-                      </div>
-                      <div>
-                        <span className="text-sm text-gray-600 dark:text-gray-300">تاريخ الموافقة:</span>
-                        <p className="font-medium">{selectedApproval.approvedDate}</p>
+                {selectedApproval.status === "approved" &&
+                  selectedApproval.approvedBy && (
+                    <div>
+                      <h4 className="mb-3 font-semibold">معلومات الموافقة</h4>
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <div>
+                          <span className="text-sm text-gray-600 dark:text-gray-300">
+                            وافق عليه:
+                          </span>
+                          <p className="font-medium">
+                            {selectedApproval.approvedBy}
+                          </p>
+                        </div>
+                        <div>
+                          <span className="text-sm text-gray-600 dark:text-gray-300">
+                            تاريخ الموافقة:
+                          </span>
+                          <p className="font-medium">
+                            {selectedApproval.approvedDate}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
                 {/* Rejection Info */}
-                {selectedApproval.status === "rejected" && selectedApproval.rejectionReason && (
-                  <div>
-                    <h4 className="font-semibold mb-3">سبب الرفض</h4>
-                    <p className="text-red-600 bg-red-50 dark:bg-red-900/20 p-4 rounded-lg">
-                      {selectedApproval.rejectionReason}
-                    </p>
-                  </div>
-                )}
+                {selectedApproval.status === "rejected" &&
+                  selectedApproval.rejectionReason && (
+                    <div>
+                      <h4 className="mb-3 font-semibold">سبب الرفض</h4>
+                      <p className="rounded-lg bg-red-50 p-4 text-red-600 dark:bg-red-900/20">
+                        {selectedApproval.rejectionReason}
+                      </p>
+                    </div>
+                  )}
 
                 {/* Notes */}
                 {selectedApproval.notes && (
                   <div>
-                    <h4 className="font-semibold mb-3">ملاحظات</h4>
-                    <p className="text-gray-700 dark:text-gray-300 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                    <h4 className="mb-3 font-semibold">ملاحظات</h4>
+                    <p className="rounded-lg bg-blue-50 p-4 text-gray-700 dark:bg-blue-900/20 dark:text-gray-300">
                       {selectedApproval.notes}
                     </p>
                   </div>
@@ -609,16 +683,20 @@ export default function ApprovalsPage() {
 
                 {/* Status Info */}
                 <div>
-                  <h4 className="font-semibold mb-3">حالة الطلب</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <h4 className="mb-3 font-semibold">حالة الطلب</h4>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
-                      <span className="text-sm text-gray-600 dark:text-gray-300">حالة الحظر:</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-300">
+                        حالة الحظر:
+                      </span>
                       <div className="mt-1">
                         {getBlockStatus(selectedApproval)}
                       </div>
                     </div>
                     <div>
-                      <span className="text-sm text-gray-600 dark:text-gray-300">الرصيد المستحق:</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-300">
+                        الرصيد المستحق:
+                      </span>
                       <div className="mt-1">
                         {getOutstandingBalance(selectedApproval)}
                       </div>
@@ -627,7 +705,7 @@ export default function ApprovalsPage() {
                 </div>
               </div>
 
-              <div className="flex gap-3 mt-8">
+              <div className="mt-8 flex gap-3">
                 <Button variant="outline" className="flex-1">
                   طباعة
                 </Button>

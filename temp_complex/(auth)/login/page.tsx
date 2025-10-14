@@ -57,10 +57,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
+        <div className="mb-8 text-center">
+          <div className="mb-4 flex items-center justify-center gap-3">
             <Image
               src="/logo.jpg"
               alt="Hemam Logo"
@@ -77,7 +77,7 @@ export default function LoginPage() {
               مُعين
             </span>
           </div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
+          <h1 className="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
             {t("auth.welcomeBack", "مرحباً بك مرة أخرى")}
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
@@ -85,9 +85,9 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
+        <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           {error && (
-            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800 dark:bg-red-900/20">
               <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
             </div>
           )}
@@ -95,7 +95,7 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 {t("auth.email", "البريد الإلكتروني")}
               </label>
@@ -118,7 +118,7 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 {t("auth.password", "كلمة المرور")}
               </label>
@@ -137,7 +137,7 @@ export default function LoginPage() {
                 />
                 <button
                   type="button"
-                  className="absolute top-1/2 -translate-y-1/2 start-3 inline-flex items-center gap-x-2 text-sm text-gray-500 hover:text-gray-700"
+                  className="absolute start-3 top-1/2 inline-flex -translate-y-1/2 items-center gap-x-2 text-sm text-gray-500 hover:text-gray-700"
                   aria-label="إظهار/إخفاء كلمة المرور"
                   data-hs-toggle-password='{"target":"#password-input"}'
                 >
@@ -178,7 +178,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full inline-flex justify-center items-center gap-2 px-4 py-3"
+              className="inline-flex w-full items-center justify-center gap-2 px-4 py-3"
             >
               {isLoading ? (
                 <>
@@ -191,10 +191,10 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <div className="mt-6 border-t border-gray-200 pt-6 dark:border-gray-800">
             <Button
               variant="secondary"
-              className="w-full inline-flex justify-center items-center gap-2 px-4 py-3"
+              className="inline-flex w-full items-center justify-center gap-2 px-4 py-3"
               onClick={() => {
                 setFormData({
                   email: "admin@mu3een.com",
@@ -208,7 +208,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="text-center mt-6">
+        <div className="mt-6 text-center">
           <p className="text-gray-600 dark:text-gray-400">
             ليس لديك حساب؟{" "}
             <Link

@@ -1,7 +1,5 @@
 "use client";
-
 import { useEffect } from "react";
-
 export default function useBrandColorFromLogo(logoPath: string) {
   useEffect(() => {
     try {

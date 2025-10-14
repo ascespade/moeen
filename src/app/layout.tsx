@@ -1,6 +1,6 @@
+import { Cairo, Inter } from "next/font/google";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Cairo, Inter } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "مُعين",
@@ -26,7 +26,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
-      <body className={`${cairo.variable} ${inter.variable} antialiased`} suppressHydrationWarning>
+      <body
+        className={`${cairo.variable} ${inter.variable} antialiased`}
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>

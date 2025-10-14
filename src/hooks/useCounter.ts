@@ -1,5 +1,5 @@
-// Counter hooks
 import { useState, useCallback } from "react";
+// Counter hooks
 
 export const useCounter = (
   initialValue: number = 0,

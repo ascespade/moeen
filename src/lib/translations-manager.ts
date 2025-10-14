@@ -1,10 +1,9 @@
+import { cuid } from "./cuid";
+import { getServerSupabase } from "./supabaseClient";
 /**
  * Translations Manager
  * Centralized system for managing translations with CUID
  */
-
-import { cuid } from "./cuid";
-import { getServerSupabase } from "./supabaseClient";
 
 export interface Translation {
   id: string;
@@ -216,7 +215,7 @@ export async function searchTranslations(
   return data || [];
 }
 
-export default {
+const translationsManager = {
   addTranslation,
   addMultipleTranslations,
   getTranslations,
@@ -226,3 +225,5 @@ export default {
   getAllTranslationsForLocale,
   searchTranslations,
 };
+
+export default translationsManager;
