@@ -1,15 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer components {
-  /* Brand button utility used by style guide */
-  .btn-brand {
-    @apply bg-[var(--brand-primary)] text-white transition-all duration-200;
-  }
-}
-
-@import url("../styles/components.css");
+/* Import centralized styles */
+@import url("../styles/centralized.css");
 
 :root {
   /* Light theme base */
