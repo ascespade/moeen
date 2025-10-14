@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/Select';
 
 interface Patient {
   id: string;
@@ -242,6 +242,7 @@ const PatientRecords: React.FC = () => {
     const record: MedicalRecord = {
       id: Date.now().toString(),
       patientId: selectedPatient.id,
+      attachments: [],
       ...newRecord
     };
 
@@ -310,7 +311,7 @@ const PatientRecords: React.FC = () => {
         </div>
         <Select value={filterStatus} onValueChange={(value: any) => setFilterStatus(value)}>
           <SelectTrigger className="w-48">
-            <SelectValue placeholder="فلترة الحالة" />
+            <span className="text-gray-400">فلترة الحالة</span>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">جميع المرضى</SelectItem>
@@ -439,7 +440,7 @@ const PatientRecords: React.FC = () => {
                         <label className="text-sm font-medium text-gray-700">الحساسيات</label>
                         <div className="flex flex-wrap gap-2 mt-1">
                           {selectedPatient.allergies.map((allergy, index) => (
-                            <Badge key={index} variant="destructive">{allergy}</Badge>
+                            <Badge key={index} variant="error">{allergy}</Badge>
                           ))}
                         </div>
                       </div>
@@ -450,7 +451,7 @@ const PatientRecords: React.FC = () => {
                         <label className="text-sm font-medium text-gray-700">الأدوية الحالية</label>
                         <div className="flex flex-wrap gap-2 mt-1">
                           {selectedPatient.medications.map((medication, index) => (
-                            <Badge key={index} variant="secondary">{medication}</Badge>
+                            <Badge key={index} variant="info">{medication}</Badge>
                           ))}
                         </div>
                       </div>
@@ -590,7 +591,7 @@ const PatientRecords: React.FC = () => {
                   <label className="text-sm font-medium text-gray-700">الجنس</label>
                   <Select value={newPatient.gender} onValueChange={(value: any) => setNewPatient(prev => ({ ...prev, gender: value }))}>
                     <SelectTrigger>
-                      <SelectValue />
+                      <span className="text-gray-400">اختر الجنس</span>
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="male">ذكر</SelectItem>

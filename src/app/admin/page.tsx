@@ -466,7 +466,7 @@ export default function AdminPage() {
                         </div>
                       </div>
                     </div>
-                    <Badge variant={event.success ? 'default' : 'destructive'}>
+                    <Badge variant={event.success ? 'success' : 'error'}>
                       {event.success ? 'Success' : 'Failed'}
                     </Badge>
                   </div>
