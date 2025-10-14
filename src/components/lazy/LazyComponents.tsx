@@ -4,15 +4,15 @@ import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 // Lazy load heavy components
 export const LazyCalendar = dynamic(
-  () => import('@/components/healthcare/Calendar'),
+  () => import('@/components/appointments/AppointmentManager'),
   {
     loading: () => <LoadingSpinner />,
-    ssr: false // Calendar doesn't need SSR
+    ssr: false
   }
 );
 
 export const LazyChart = dynamic(
-  () => import('@/components/dashboard/Chart'),
+  () => import('@/components/dashboard/Charts'),
   {
     loading: () => <LoadingSpinner />,
     ssr: false
@@ -20,7 +20,7 @@ export const LazyChart = dynamic(
 );
 
 export const LazyFlowBuilder = dynamic(
-  () => import('@/components/chatbot/FlowBuilder'),
+  () => import('@/components/chatbot/MoainChatbot'),
   {
     loading: () => <LoadingSpinner />,
     ssr: false
@@ -62,7 +62,7 @@ export function SuspenseWrapper({
   );
 }
 
-export default {
+const LazyComponents = {
   LazyCalendar,
   LazyChart,
   LazyFlowBuilder,
@@ -70,3 +70,5 @@ export default {
   LazyModal,
   SuspenseWrapper
 };
+
+export default LazyComponents;

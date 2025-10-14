@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Languages } from "lucide-react";
 import { useI18n } from "@/hooks/useI18n";
 import { dynamicThemeManager } from "@/lib/dynamic-theme-manager";
@@ -21,18 +21,6 @@ export default function LanguageSwitcher({
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useI18n(language);
 
-  // Load user preferences from database on mount
-  useEffect(() => {
-    loadUserPreferences();
-  }, []);
-
-  // Apply language changes
-  useEffect(() => {
-    if (!isLoading) {
-      applyLanguage();
-    }
-  }, [language, isLoading]);
-
   // Function to load user preferences from database
   const loadUserPreferences = async () => {
     try {
@@ -47,9 +35,21 @@ export default function LanguageSwitcher({
   };
 
   // Function to apply language to document
-  const applyLanguage = () => {
+  const applyLanguage = useCallback(() => {
     dynamicThemeManager.applyLanguage(language);
-  };
+  }, [language]);
+
+  // Load user preferences from database on mount
+  useEffect(() => {
+    loadUserPreferences();
+  }, []);
+
+  // Apply language changes
+  useEffect(() => {
+    if (!isLoading) {
+      applyLanguage();
+    }
+  }, [language, isLoading, applyLanguage]);
 
   // Toggle language function - reload page to apply translations
   const toggleLanguage = async () => {
