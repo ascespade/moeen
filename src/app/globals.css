@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Import centralized styles */
+@import url("../styles/centralized.css");
 
 /* Enhanced accessibility styles */
 
@@ -120,3 +119,5 @@ button:disabled {
   outline: 2px solid var(--color-border-focus);
   outline-offset: 2px;
 }
+/* Additional global overrides if needed */
+/* This file should be minimal and only contain overrides */

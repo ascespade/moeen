@@ -81,7 +81,7 @@ export default function PatientsPage() {
     };
 
     loadPatients();
-  }, []);
+  }, [supabase]);
 
   // Filter patients based on search and status
   const filteredPatients = patients.filter(patient => {
@@ -116,7 +116,7 @@ export default function PatientsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">جاري تحميل بيانات المرضى...</p>
@@ -127,7 +127,7 @@ export default function PatientsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center">
         <div className="text-center">
           <div className="text-red-600 text-xl mb-4">⚠️</div>
           <p className="text-gray-600">{error}</p>
@@ -143,10 +143,10 @@ export default function PatientsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-[var(--brand-surface)]">
       {/* Page Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="container mx-auto px-4 py-6">
+      <div className="bg-white dark:bg-gray-900 border-b border-[var(--brand-border)]">
+        <div className="container-app py-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">إدارة المرضى</h1>
@@ -163,7 +163,7 @@ export default function PatientsPage() {
       </div>
 
       {/* Filters and Search */}
-      <div className="container mx-auto px-4 py-6">
+      <div className="container-app py-6">
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Search */}

@@ -143,7 +143,7 @@ export default function GlobalHeader() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Image
-              src="/logo.jpg"
+              src="/logo.png"
               alt="مُعين"
               width={50}
               height={50}

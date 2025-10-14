@@ -98,3 +98,22 @@ fatal: refusing to merge unrelated histories
 [2025-10-14T22:19:20.776Z] [INFO] 🔧 Resolving conflicts in: src/styles/components.css
 [2025-10-14T22:19:20.776Z] [INFO] ✅ Resolved conflicts in: src/styles/components.css
 [2025-10-14T22:19:20.776Z] [INFO] Executing: git add .
+[2025-10-14T22:19:20.802Z] [INFO] ✅ Command successful: git add .
+[2025-10-14T22:19:20.802Z] [INFO] Executing: git commit --no-edit
+[2025-10-14T22:19:20.820Z] [INFO] ✅ Command successful: git commit --no-edit
+[2025-10-14T22:19:20.820Z] [INFO] ✅ Conflicts resolved for: cursor/fix-project-errors-and-apply-consistent-styling-99ec
+[2025-10-14T22:19:20.820Z] [INFO] 🔄 Smart merging branch: cursor/keep-tailscale-always-on-6ab6
+[2025-10-14T22:19:20.820Z] [INFO] Executing: git merge origin/cursor/keep-tailscale-always-on-6ab6 --no-ff -m "Smart auto-merge: cursor/keep-tailscale-always-on-6ab6"
+[2025-10-14T22:19:20.905Z] [ERROR] ❌ Command failed: git merge origin/cursor/keep-tailscale-always-on-6ab6 --no-ff -m "Smart auto-merge: cursor/keep-tailscale-always-on-6ab6" - Command failed: git merge origin/cursor/keep-tailscale-always-on-6ab6 --no-ff -m "Smart auto-merge: cursor/keep-tailscale-always-on-6ab6"
+[2025-10-14T22:19:20.905Z] [WARN] ⚠️  Merge conflict detected for: cursor/keep-tailscale-always-on-6ab6
+[2025-10-14T22:19:20.905Z] [INFO] 🔧 Resolving conflicts for: cursor/keep-tailscale-always-on-6ab6
+[2025-10-14T22:19:20.905Z] [INFO] Executing: git diff --name-only --diff-filter=U
+[2025-10-14T22:19:20.919Z] [INFO] ✅ Command successful: git diff --name-only --diff-filter=U
+[2025-10-14T22:19:20.920Z] [INFO] Found 3 conflicted files: package-lock.json, package.json, src/app/globals.css
+[2025-10-14T22:19:20.920Z] [INFO] 🔧 Resolving conflicts in: package-lock.json
+[2025-10-14T22:19:20.924Z] [INFO] ✅ Resolved conflicts in: package-lock.json
+[2025-10-14T22:19:20.924Z] [INFO] 🔧 Resolving conflicts in: package.json
+[2025-10-14T22:19:20.924Z] [INFO] ✅ Resolved conflicts in: package.json
+[2025-10-14T22:19:20.924Z] [INFO] 🔧 Resolving conflicts in: src/app/globals.css
+[2025-10-14T22:19:20.924Z] [INFO] ✅ Resolved conflicts in: src/app/globals.css
+[2025-10-14T22:19:20.924Z] [INFO] Executing: git add .
