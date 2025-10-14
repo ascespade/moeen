@@ -1,336 +1,665 @@
-'use client';
+"use client";
+import { useState, useEffect } from "react";
+import { ROUTES } from "@/constants/routes";
 
-import React from 'react';
-import { Calendar, Users, FileText, MessageCircle, Phone, Mail, MapPin, Clock, Heart, Shield, Brain, Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
-const HomePage: React.FC = () => {
-  const features = [
-    {
-      icon: Calendar,
-      title: 'تنظيم المواعيد',
-      description: 'نظام متقدم لإدارة المواعيد مع إشعارات ذكية وتذكيرات تلقائية',
-      color: 'text-blue-600'
-    },
-    {
-      icon: Users,
-      title: 'سجل المرضى',
-      description: 'إدارة شاملة لسجلات المرضى مع تتبع التاريخ الطبي والاحتياجات الخاصة',
-      color: 'text-green-600'
-    },
-    {
-      icon: FileText,
-      title: 'التقارير الذكية',
-      description: 'تقارير مفصلة وإحصائيات دقيقة لتحسين الخدمات المقدمة',
-      color: 'text-purple-600'
-    },
-    {
-      icon: MessageCircle,
-      title: 'الشات بوت الذكي',
-      description: 'معين - مساعد ذكي متخصص في دعم ذوي الهمم والإعاقات',
-      color: 'text-orange-600'
-    }
-  ];
+// Hero Slider Data
+const heroSlides = [
+  {
+    id: 1,
+    title: "مرحباً بك في مُعين",
+    subtitle: "منصة الرعاية الصحية المتخصصة",
+    description:
+      "نقدم خدمات متكاملة للرعاية الصحية مع أحدث التقنيات والذكاء الاصطناعي",
+    image: "/hero-1.jpg",
+    cta: "اكتشف خدماتنا",
+    ctaLink: "#services",
+  },
+  {
+    id: 2,
+    title: "إدارة المواعيد الذكية",
+    subtitle: "نظام تقويم متطور",
+    description:
+      "احجز مواعيدك بسهولة مع نظام التقويم الذكي وإدارة الجلسات العلاجية",
+    image: "/hero-2.jpg",
+    cta: "احجز موعدك",
+    ctaLink: ROUTES.HEALTH.APPOINTMENTS,
+  },
+  {
+    id: 3,
+    title: "شات بوت ذكي",
+    subtitle: "مساعدك الصحي الشخصي",
+    description:
+      "احصل على إجابات فورية لاستفساراتك الصحية مع الذكاء الاصطناعي المتقدم",
+    image: "/hero-3.jpg",
+    cta: "جرب الشات بوت",
+    ctaLink: ROUTES.CHATBOT.FLOWS,
+  },
+];
 
-  const services = [
-    {
-      title: 'العلاج الطبيعي',
-      description: 'برامج علاجية متخصصة لتحسين الحركة والقدرات البدنية',
-      icon: Heart
-    },
-    {
-      title: 'العلاج الوظيفي',
-      description: 'تدريب على المهارات اليومية وتحسين الاستقلالية',
-      icon: Shield
-    },
-    {
-      title: 'العلاج النفسي',
-      description: 'دعم نفسي واجتماعي للمرضى وأسرهم',
-      icon: Brain
-    },
-    {
-      title: 'الاستشارات الطبية',
-      description: 'استشارات طبية متخصصة من أطباء مؤهلين',
-      icon: Star
-    }
-  ];
+// Services Data
+const services = [
+  {
+    id: 1,
+    title: "إدارة المواعيد",
+    description: "نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية",
+    icon: "📅",
+    color: "text-blue-600",
+    bgColor: "bg-blue-50",
+  },
+  {
+    id: 2,
+    title: "إدارة المرضى",
+    description: "ملفات مرضى شاملة مع سجل طبي مفصل",
+    icon: "👤",
+    color: "text-green-600",
+    bgColor: "bg-green-50",
+  },
+  {
+    id: 3,
+    title: "المطالبات التأمينية",
+    description: "إدارة وتتبع المطالبات التأمينية بسهولة",
+    icon: "📋",
+    color: "text-purple-600",
+    bgColor: "bg-purple-50",
+  },
+  {
+    id: 4,
+    title: "الشات بوت الذكي",
+    description: "مساعد ذكي للرد على استفسارات المرضى",
+    icon: "🤖",
+    color: "text-orange-600",
+    bgColor: "bg-orange-50",
+  },
+  {
+    id: 5,
+    title: "إدارة الموظفين",
+    description: "تتبع ساعات العمل والأداء للموظفين",
+    icon: "👨‍⚕️",
+    color: "text-red-600",
+    bgColor: "bg-red-50",
+  },
+  {
+    id: 6,
+    title: "التقارير والتحليلات",
+    description: "تقارير شاملة وإحصائيات مفصلة",
+    icon: "📊",
+    color: "text-indigo-600",
+    bgColor: "bg-indigo-50",
+  },
+];
 
-  const testimonials = [
-    {
-      name: 'أحمد محمد',
-      role: 'والد طفل',
-      content: 'مركز الهمم غير حياة ابني للأفضل. الخدمات المقدمة ممتازة والطاقم متخصص جداً.',
-      rating: 5
-    },
-    {
-      name: 'فاطمة علي',
-      role: 'مريضة',
-      content: 'أشكر المركز على الدعم المستمر والرعاية المتميزة. أنصح الجميع بالتعامل معهم.',
-      rating: 5
-    },
-    {
-      name: 'محمد حسن',
-      role: 'ولي أمر',
-      content: 'الخدمات المقدمة تتجاوز التوقعات. المركز يهتم بكل التفاصيل الصغيرة.',
-      rating: 5
-    }
-  ];
+// Testimonials Data
+const testimonials = [
+  {
+    id: 1,
+    name: "د. أحمد العتيبي",
+    position: "طبيب علاج طبيعي",
+    content: "منصة مُعين ساعدتني في تنظيم مواعيدي وإدارة مرضاي بكفاءة عالية",
+    rating: 5,
+    image: "/testimonial-1.jpg",
+  },
+  {
+    id: 2,
+    name: "أ. فاطمة السعيد",
+    position: "ممرضة",
+    content:
+      "النظام سهل الاستخدام ويوفر جميع الأدوات التي نحتاجها في العمل اليومي",
+    rating: 5,
+    image: "/testimonial-2.jpg",
+  },
+  {
+    id: 3,
+    name: "د. محمد القحطاني",
+    position: "طبيب نفسي",
+    content: "الشات بوت الذكي يساعد المرضى في الحصول على إجابات سريعة ودقيقة",
+    rating: 5,
+    image: "/testimonial-3.jpg",
+  },
+];
+
+// Gallery Data
+const galleryImages = [
+  { id: 1, src: "/gallery-1.jpg", alt: "مركز العلاج الطبيعي" },
+  { id: 2, src: "/gallery-2.jpg", alt: "قاعة العلاج الوظيفي" },
+  { id: 3, src: "/gallery-3.jpg", alt: "عيادة العلاج النفسي" },
+  { id: 4, src: "/gallery-4.jpg", alt: "مكتبة العلاج" },
+  { id: 5, src: "/gallery-5.jpg", alt: "قاعة التدريب" },
+  { id: 6, src: "/gallery-6.jpg", alt: "منطقة الاستقبال" },
+];
+
+// FAQ Data
+const faqs = [
+  {
+    id: 1,
+    question: "كيف يمكنني حجز موعد؟",
+    answer: "يمكنك حجز موعد بسهولة من خلال صفحة المواعيد أو الاتصال بنا مباشرة",
+  },
+  {
+    id: 2,
+    question: "هل النظام يدعم التأمين الصحي؟",
+    answer:
+      "نعم، النظام يدعم جميع شركات التأمين الصحي ويمكن إدارة المطالبات بسهولة",
+  },
+  {
+    id: 3,
+    question: "كيف يعمل الشات بوت الذكي؟",
+    answer:
+      "الشات بوت يستخدم الذكاء الاصطناعي للرد على استفسارات المرضى بشكل فوري ودقيق",
+  },
+];
+
+export default function HomePage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  // Auto-slide functionality
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50" dir="rtl">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-                <Heart className="w-8 h-8 text-white" />
-              </div>
-              <div className="mr-4">
-                <h1 className="text-2xl font-bold text-gray-900">مركز الهمم</h1>
-                <p className="text-sm text-gray-600">دعم ذوي الهمم والإعاقات</p>
-              </div>
+    <div className="min-h-screen bg-[var(--brand-surface)]">
+      {/* Navigation */}
+      <nav className="nav sticky top-0 z-50">
+        <div className="container-app py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Image
+                src="/logo.png"
+                alt="مُعين"
+                width={50}
+                height={50}
+                className="rounded-lg"
+              />
+              <h1 className="text-brand text-2xl font-bold">مُعين</h1>
             </div>
-            <nav className="hidden md:flex space-x-8 space-x-reverse">
-              <Link href="#home" className="text-gray-900 hover:text-blue-600">الرئيسية</Link>
-              <Link href="#services" className="text-gray-600 hover:text-blue-600">الخدمات</Link>
-              <Link href="#appointments" className="text-gray-600 hover:text-blue-600">المواعيد</Link>
-              <Link href="#contact" className="text-gray-600 hover:text-blue-600">تواصل معنا</Link>
-            </nav>
-            <div className="flex items-center space-x-4 space-x-reverse">
-              <Button variant="outline" size="sm">
+            <div className="hidden items-center gap-6 md:flex">
+              <Link href="#services" className="nav-link">
+                الخدمات
+              </Link>
+              <Link href="#about" className="nav-link">
+                عن معين
+              </Link>
+              <Link href="#gallery" className="nav-link">
+                المعرض
+              </Link>
+              <Link href="#contact" className="nav-link">
+                اتصل بنا
+              </Link>
+            </div>
+            <div className="flex items-center gap-3">
+              <Link href={ROUTES.LOGIN} className="btn btn-outline">
                 تسجيل الدخول
-              </Button>
-              <Button className="bg-blue-600 hover:bg-blue-700">
-                حجز موعد
-              </Button>
+              </Link>
+              <Link href={ROUTES.REGISTER} className="btn btn-brand">
+                إنشاء حساب
+              </Link>
             </div>
           </div>
         </div>
-      </header>
+      </nav>
 
-      {/* Hero Section */}
-      <section id="home" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              مركز الهمم
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
-              مركز متخصص في دعم ذوي الهمم والإعاقات، مع إدارة مواعيد، محادثات، وسجلات المرضى
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
-                <Calendar className="w-5 h-5 ml-2" />
-                حجز موعد الآن
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600">
-                <MessageCircle className="w-5 h-5 ml-2" />
-                تحدث مع معين
-              </Button>
+      {/* Hero Slider */}
+      <section className="relative h-[80vh] overflow-hidden">
+        {heroSlides.map((slide, index) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/50 to-transparent"></div>
+            <Image
+              src={slide.image}
+              alt={slide.title}
+              fill
+              className="object-cover"
+              priority={index === 0}
+            />
+            <div className="container-app relative z-20 flex h-full items-center">
+              <div className="max-w-2xl text-white">
+                <h2 className="animate-fadeInUp mb-4 text-5xl font-bold">
+                  {slide.title}
+                </h2>
+                <h3 className="animate-fadeInUp mb-4 text-2xl text-[var(--brand-primary)]">
+                  {slide.subtitle}
+                </h3>
+                <p className="animate-fadeInUp mb-8 text-lg">
+                  {slide.description}
+                </p>
+                <Link
+                  href={slide.ctaLink}
+                  className="btn-brand animate-fadeInUp transform rounded-lg px-8 py-3 text-lg font-semibold transition-all hover:-translate-y-1 hover:bg-[var(--brand-primary-hover)] hover:shadow-lg"
+                >
+                  {slide.cta}
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        ))}
 
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              مميزاتنا الرئيسية
-            </h2>
-            <p className="text-xl text-gray-600">
-              نقدم خدمات متطورة ومتخصصة لدعم ذوي الهمم
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center`}>
-                    <feature.icon className={`w-8 h-8 ${feature.color}`} />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+        {/* Slider Controls */}
+        <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 transform gap-2">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`h-3 w-3 rounded-full transition-all ${
+                index === currentSlide
+                  ? "bg-[var(--brand-primary)]"
+                  : "bg-white/50"
+              }`}
+            />
+          ))}
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              خدماتنا المتخصصة
+      <section id="services" className="bg-white py-20 dark:bg-gray-900">
+        <div className="container-app">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+              خدماتنا المتكاملة
             </h2>
-            <p className="text-xl text-gray-600">
-              نقدم مجموعة شاملة من الخدمات الطبية والعلاجية
+            <p className="mx-auto max-w-3xl text-xl text-gray-600 dark:text-gray-300">
+              نقدم مجموعة شاملة من الخدمات التقنية لمراكز الرعاية الصحية
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                    <service.icon className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                  <p className="text-gray-600">{service.description}</p>
-                </CardContent>
-              </Card>
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {services.map((service) => (
+              <div
+                key={service.id}
+                className="card hover:shadow-soft group p-8 text-center transition-all duration-300"
+              >
+                <div
+                  className={`h-16 w-16 ${service.bgColor} mx-auto mb-6 flex items-center justify-center rounded-full text-3xl transition-transform group-hover:scale-110`}
+                >
+                  {service.icon}
+                </div>
+                <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+                  {service.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {service.description}
+                </p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      <section className="bg-[var(--brand-surface)] py-20">
+        <div className="container-app">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
               آراء عملائنا
             </h2>
-            <p className="text-xl text-gray-600">
-              ما يقوله عملاؤنا عن خدماتنا
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              ما يقوله عنا أطباؤنا وموظفونا
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                    ))}
-                  </div>
-                  <p className="text-gray-600 mb-4">"{testimonial.content}"</p>
-                  <div>
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-gray-500">{testimonial.role}</p>
-                  </div>
-                </CardContent>
-              </Card>
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {testimonials.map((testimonial) => (
+              <div key={testimonial.id} className="card p-8 text-center">
+                <div className="mx-auto mb-6 h-20 w-20 overflow-hidden rounded-full">
+                  <Image
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    width={80}
+                    height={80}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="mb-4 flex justify-center">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <span key={i} className="text-xl text-yellow-400">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <p className="mb-6 italic text-gray-600 dark:text-gray-300">
+                  &quot;{testimonial.content}&quot;
+                </p>
+                <h4 className="font-semibold text-gray-900 dark:text-white">
+                  {testimonial.name}
+                </h4>
+                <p className="text-sm text-gray-500">{testimonial.position}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section id="gallery" className="bg-white py-20 dark:bg-gray-900">
+        <div className="container-app">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+              معرض الصور
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              استكشف مرافقنا وبيئة العمل المريحة
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {galleryImages.map((image) => (
+              <div
+                key={image.id}
+                className="group relative cursor-pointer overflow-hidden rounded-lg"
+                onClick={() => setSelectedImage(image.src)}
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={400}
+                  height={300}
+                  className="h-64 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="text-lg font-semibold text-white">
+                    عرض الصورة
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="bg-[var(--brand-surface)] py-20">
+        <div className="container-app">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <div>
+              <h2 className="mb-6 text-4xl font-bold text-gray-900 dark:text-white">
+                عن مُعين
+              </h2>
+              <p className="mb-6 text-lg text-gray-600 dark:text-gray-300">
+                منصة مُعين هي الحل التقني الشامل لمراكز الرعاية الصحية المتخصصة.
+                نقدم نظاماً متكاملاً يجمع بين إدارة المواعيد، ملفات المرضى،
+                المطالبات التأمينية، والشات بوت الذكي.
+              </p>
+              <p className="mb-8 text-lg text-gray-600 dark:text-gray-300">
+                هدفنا هو تبسيط العمليات الطبية ورفع كفاءة الخدمات المقدمة للمرضى
+                من خلال التقنيات الحديثة والذكاء الاصطناعي.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href={ROUTES.HEALTH.APPOINTMENTS}
+                  className="btn-brand rounded-lg px-6 py-3 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
+                >
+                  ابدأ الآن
+                </Link>
+                <Link
+                  href="#contact"
+                  className="border-brand text-brand hover:bg-brand rounded-lg border px-6 py-3 transition-colors hover:text-white"
+                >
+                  تواصل معنا
+                </Link>
+              </div>
+            </div>
+            <div className="relative">
+              <Image
+                src="/about-image.jpg"
+                alt="عن مُعين"
+                width={600}
+                height={400}
+                className="shadow-soft rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="bg-white py-20 dark:bg-gray-900">
+        <div className="container-app">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+              الأسئلة الشائعة
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              إجابات على أكثر الأسئلة شيوعاً
+            </p>
+          </div>
+
+          <div className="mx-auto max-w-3xl space-y-6">
+            {faqs.map((faq) => (
+              <div key={faq.id} className="card p-6">
+                <h3 className="mb-3 text-lg font-semibold text-gray-900 dark:text-white">
+                  {faq.question}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">{faq.answer}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      <section id="contact" className="bg-[var(--brand-surface)] py-20">
+        <div className="container-app">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
               تواصل معنا
             </h2>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-gray-600 dark:text-gray-300">
               نحن هنا لمساعدتك في أي وقت
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="bg-gray-800 border-gray-700">
-              <CardContent className="p-6 text-center">
-                <Phone className="w-8 h-8 text-blue-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">الهاتف</h3>
-                <p className="text-gray-300">+966581421483</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gray-800 border-gray-700">
-              <CardContent className="p-6 text-center">
-                <Mail className="w-8 h-8 text-blue-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">البريد الإلكتروني</h3>
-                <p className="text-gray-300">info@alhemmamcenter.com.sa</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gray-800 border-gray-700">
-              <CardContent className="p-6 text-center">
-                <MapPin className="w-8 h-8 text-blue-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">العنوان</h3>
-                <p className="text-gray-300">جدة، المملكة العربية السعودية</p>
-              </CardContent>
-            </Card>
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <div className="card p-8 text-center">
+              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl">
+                📱
+              </div>
+              <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+                واتساب
+              </h3>
+              <p className="mb-4 text-gray-600 dark:text-gray-300">
+                تواصل معنا عبر واتساب
+              </p>
+              <a
+                href="https://wa.me/966501234567"
+                className="font-semibold text-green-600 hover:text-green-700"
+              >
+                +966 50 123 4567
+              </a>
+            </div>
+
+            <div className="card p-8 text-center">
+              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-3xl">
+                📞
+              </div>
+              <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+                اتصال مباشر
+              </h3>
+              <p className="mb-4 text-gray-600 dark:text-gray-300">
+                اتصل بنا مباشرة
+              </p>
+              <a
+                href="tel:+966501234567"
+                className="font-semibold text-blue-600 hover:text-blue-700"
+              >
+                +966 50 123 4567
+              </a>
+            </div>
+
+            <div className="card p-8 text-center">
+              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-3xl">
+                📍
+              </div>
+              <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+                الموقع
+              </h3>
+              <p className="mb-4 text-gray-600 dark:text-gray-300">
+                زورنا في مقرنا
+              </p>
+              <p className="text-gray-600 dark:text-gray-300">
+                الرياض، المملكة العربية السعودية
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <footer className="bg-gray-900 py-16 text-white">
+        <div className="container-app">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
             <div>
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-white" />
-                </div>
-                <div className="mr-3">
-                  <h3 className="text-xl font-bold">مركز الهمم</h3>
-                </div>
+              <div className="mb-6 flex items-center gap-3">
+                <Image
+                  src="/logo.png"
+                  alt="مُعين"
+                  width={40}
+                  height={40}
+                  className="rounded-lg"
+                />
+                <h3 className="text-2xl font-bold">مُعين</h3>
               </div>
-              <p className="text-gray-300">
-                مركز متخصص في دعم ذوي الهمم والإعاقات، نقدم خدمات شاملة ومتطورة.
+              <p className="mb-6 text-gray-300">
+                منصة الرعاية الصحية المتخصصة التي تجمع بين التقنيات الحديثة
+                والذكاء الاصطناعي لخدمة المرضى والعاملين في القطاع الصحي.
               </p>
             </div>
-            
+
             <div>
-              <h4 className="text-lg font-semibold mb-4">روابط سريعة</h4>
-              <ul className="space-y-2">
-                <li><Link href="#home" className="text-gray-300 hover:text-white">الرئيسية</Link></li>
-                <li><Link href="#services" className="text-gray-300 hover:text-white">الخدمات</Link></li>
-                <li><Link href="#appointments" className="text-gray-300 hover:text-white">المواعيد</Link></li>
-                <li><Link href="#contact" className="text-gray-300 hover:text-white">تواصل معنا</Link></li>
+              <h4 className="mb-6 text-lg font-semibold">الخدمات</h4>
+              <ul className="space-y-3">
+                <li>
+                  <Link
+                    href={ROUTES.HEALTH.APPOINTMENTS}
+                    className="text-gray-300 transition-colors hover:text-white"
+                  >
+                    إدارة المواعيد
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={ROUTES.HEALTH.PATIENTS}
+                    className="text-gray-300 transition-colors hover:text-white"
+                  >
+                    إدارة المرضى
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={ROUTES.HEALTH.INSURANCE_CLAIMS}
+                    className="text-gray-300 transition-colors hover:text-white"
+                  >
+                    المطالبات التأمينية
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={ROUTES.CHATBOT.FLOWS}
+                    className="text-gray-300 transition-colors hover:text-white"
+                  >
+                    الشات بوت الذكي
+                  </Link>
+                </li>
               </ul>
             </div>
-            
+
             <div>
-              <h4 className="text-lg font-semibold mb-4">الخدمات</h4>
-              <ul className="space-y-2">
-                <li className="text-gray-300">العلاج الطبيعي</li>
-                <li className="text-gray-300">العلاج الوظيفي</li>
-                <li className="text-gray-300">العلاج النفسي</li>
-                <li className="text-gray-300">الاستشارات الطبية</li>
+              <h4 className="mb-6 text-lg font-semibold">روابط سريعة</h4>
+              <ul className="space-y-3">
+                <li>
+                  <Link
+                    href="#services"
+                    className="text-gray-300 transition-colors hover:text-white"
+                  >
+                    الخدمات
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#about"
+                    className="text-gray-300 transition-colors hover:text-white"
+                  >
+                    عن معين
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#gallery"
+                    className="text-gray-300 transition-colors hover:text-white"
+                  >
+                    المعرض
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#contact"
+                    className="text-gray-300 transition-colors hover:text-white"
+                  >
+                    اتصل بنا
+                  </Link>
+                </li>
               </ul>
             </div>
-            
+
             <div>
-              <h4 className="text-lg font-semibold mb-4">معلومات الاتصال</h4>
-              <div className="space-y-2">
+              <h4 className="mb-6 text-lg font-semibold">معلومات الاتصال</h4>
+              <div className="space-y-3">
                 <div className="flex items-center">
-                  <Phone className="w-4 h-4 text-blue-400 ml-2" />
-                  <span className="text-gray-300">+966581421483</span>
+                  <span className="ml-2 text-2xl">📱</span>
+                  <span className="text-gray-300">+966 50 123 4567</span>
                 </div>
                 <div className="flex items-center">
-                  <Mail className="w-4 h-4 text-blue-400 ml-2" />
-                  <span className="text-gray-300">info@alhemmamcenter.com.sa</span>
+                  <span className="ml-2 text-2xl">📧</span>
+                  <span className="text-gray-300">info@moain.com</span>
                 </div>
                 <div className="flex items-center">
-                  <MapPin className="w-4 h-4 text-blue-400 ml-2" />
-                  <span className="text-gray-300">جدة، المملكة العربية السعودية</span>
+                  <span className="ml-2 text-2xl">📍</span>
+                  <span className="text-gray-300">الرياض، المملكة العربية السعودية</span>
                 </div>
               </div>
             </div>
           </div>
-          
+
           <div className="border-t border-gray-700 mt-8 pt-8 text-center">
             <p className="text-gray-300">
-              © 2024 مركز الهمم. جميع الحقوق محفوظة.
+              © 2024 مُعين. جميع الحقوق محفوظة.
             </p>
           </div>
         </div>
       </footer>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-4xl max-h-[90vh] p-4">
+            <Image
+              src={selectedImage}
+              alt="Gallery Image"
+              width={800}
+              height={600}
+              className="max-h-[80vh] w-full object-contain"
+            />
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 rounded-full bg-white/20 p-2 text-white hover:bg-white/30"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
-};
-
-export default HomePage;
+}
