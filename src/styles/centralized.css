@@ -25,7 +25,7 @@
   --brand-border: #e5e7eb; /* Light gray */
   --brand-surface: #f9fafb; /* Very light gray */
   --panel: #fff;
-  --focus-ring: #f58220; /* Orange focus */
+  --focus-ring: #d2691e; /* Chocolate orange focus */
 
   /* Brand gradients with brown and orange */
   --brand-gradient: linear-gradient(
@@ -61,7 +61,7 @@
     --brand-border: #1f2937; /* Dark gray */
     --brand-surface: #0d1117; /* Dark navy */
     --panel: #111827; /* Darker navy */
-    --focus-ring: #f58220; /* Orange focus */
+    --focus-ring: #d2691e; /* Chocolate orange focus */
 
     --brand-gradient: linear-gradient(
       135deg,
@@ -204,7 +204,7 @@ body {
 .form-input:focus {
   outline: none;
   border-color: var(--brand-primary);
-  box-shadow: 0 0 0 3px rgb(245 130 32 / 10%);
+  box-shadow: 0 0 0 3px rgb(210 105 30 / 10%);
 }
 
 .form-label {
