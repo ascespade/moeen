@@ -1,296 +1,336 @@
-"use client";
-import { useState, useEffect } from "react";
-import { ROUTES } from "@/constants/routes";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
+import React from 'react';
+import { Calendar, Users, FileText, MessageCircle, Phone, Mail, MapPin, Clock, Heart, Shield, Brain, Star } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
 
-// Hero Slider Data
-const heroSlides = [
-  {
-    id: 1,
-    title: "مرحباً بك في مُعين",
-    subtitle: "منصة الرعاية الصحية المتخصصة",
-    description:
-      "نقدم خدمات متكاملة للرعاية الصحية مع أحدث التقنيات والذكاء الاصطناعي",
-    image: "/hero-1.jpg",
-    cta: "اكتشف خدماتنا",
-    ctaLink: "#services",
-  },
-  {
-    id: 2,
-    title: "إدارة المواعيد الذكية",
-    subtitle: "نظام تقويم متطور",
-    description:
-      "احجز مواعيدك بسهولة مع نظام التقويم الذكي وإدارة الجلسات العلاجية",
-    image: "/hero-2.jpg",
-    cta: "احجز موعدك",
-    ctaLink: ROUTES.HEALTH.APPOINTMENTS,
-  },
-  {
-    id: 3,
-    title: "شات بوت ذكي",
-    subtitle: "مساعدك الصحي الشخصي",
-    description:
-      "احصل على إجابات فورية لاستفساراتك الصحية مع الذكاء الاصطناعي المتقدم",
-    image: "/hero-3.jpg",
-    cta: "جرب الشات بوت",
-    ctaLink: ROUTES.CHATBOT.FLOWS,
-  },
-];
+const HomePage: React.FC = () => {
+  const features = [
+    {
+      icon: Calendar,
+      title: 'تنظيم المواعيد',
+      description: 'نظام متقدم لإدارة المواعيد مع إشعارات ذكية وتذكيرات تلقائية',
+      color: 'text-blue-600'
+    },
+    {
+      icon: Users,
+      title: 'سجل المرضى',
+      description: 'إدارة شاملة لسجلات المرضى مع تتبع التاريخ الطبي والاحتياجات الخاصة',
+      color: 'text-green-600'
+    },
+    {
+      icon: FileText,
+      title: 'التقارير الذكية',
+      description: 'تقارير مفصلة وإحصائيات دقيقة لتحسين الخدمات المقدمة',
+      color: 'text-purple-600'
+    },
+    {
+      icon: MessageCircle,
+      title: 'الشات بوت الذكي',
+      description: 'معين - مساعد ذكي متخصص في دعم ذوي الهمم والإعاقات',
+      color: 'text-orange-600'
+    }
+  ];
 
-// Services Data
-const services = [
-  {
-    id: 1,
-    title: "إدارة المواعيد",
-    description: "نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية",
-    icon: "📅",
-    color: "text-blue-600",
-    bgColor: "bg-blue-50",
-  },
-  {
-    id: 2,
-    title: "إدارة المرضى",
-    description: "ملفات مرضى شاملة مع سجل طبي مفصل",
-    icon: "👤",
-    color: "text-green-600",
-    bgColor: "bg-green-50",
-  },
-  {
-    id: 3,
-    title: "المطالبات التأمينية",
-    description: "إدارة وتتبع المطالبات التأمينية بسهولة",
-    icon: "📋",
-    color: "text-purple-600",
-    bgColor: "bg-purple-50",
-  },
-  {
-    id: 4,
-    title: "الشات بوت الذكي",
-    description: "مساعد ذكي للرد على استفسارات المرضى",
-    icon: "🤖",
-    color: "text-orange-600",
-    bgColor: "bg-orange-50",
-  },
-  {
-    id: 5,
-    title: "إدارة الموظفين",
-    description: "تتبع ساعات العمل والأداء للموظفين",
-    icon: "👨‍⚕️",
-    color: "text-red-600",
-    bgColor: "bg-red-50",
-  },
-  {
-    id: 6,
-    title: "التقارير والتحليلات",
-    description: "تقارير شاملة وإحصائيات مفصلة",
-    icon: "📊",
-    color: "text-indigo-600",
-    bgColor: "bg-indigo-50",
-  },
-];
+  const services = [
+    {
+      title: 'العلاج الطبيعي',
+      description: 'برامج علاجية متخصصة لتحسين الحركة والقدرات البدنية',
+      icon: Heart
+    },
+    {
+      title: 'العلاج الوظيفي',
+      description: 'تدريب على المهارات اليومية وتحسين الاستقلالية',
+      icon: Shield
+    },
+    {
+      title: 'العلاج النفسي',
+      description: 'دعم نفسي واجتماعي للمرضى وأسرهم',
+      icon: Brain
+    },
+    {
+      title: 'الاستشارات الطبية',
+      description: 'استشارات طبية متخصصة من أطباء مؤهلين',
+      icon: Star
+    }
+  ];
 
-// Testimonials Data
-const testimonials = [
-  {
-    id: 1,
-    name: "د. أحمد العتيبي",
-    position: "طبيب علاج طبيعي",
-    content: "منصة مُعين ساعدتني في تنظيم مواعيدي وإدارة مرضاي بكفاءة عالية",
-    rating: 5,
-    image: "/testimonial-1.jpg",
-  },
-  {
-    id: 2,
-    name: "أ. فاطمة السعيد",
-    position: "ممرضة",
-    content:
-      "النظام سهل الاستخدام ويوفر جميع الأدوات التي نحتاجها في العمل اليومي",
-    rating: 5,
-    image: "/testimonial-2.jpg",
-  },
-  {
-    id: 3,
-    name: "د. محمد القحطاني",
-    position: "طبيب نفسي",
-    content: "الشات بوت الذكي يساعد المرضى في الحصول على إجابات سريعة ودقيقة",
-    rating: 5,
-    image: "/testimonial-3.jpg",
-  },
-];
-
-// Gallery Data
-const galleryImages = [
-  { id: 1, src: "/gallery-1.jpg", alt: "مركز العلاج الطبيعي" },
-  { id: 2, src: "/gallery-2.jpg", alt: "قاعة العلاج الوظيفي" },
-  { id: 3, src: "/gallery-3.jpg", alt: "عيادة العلاج النفسي" },
-  { id: 4, src: "/gallery-4.jpg", alt: "مكتبة العلاج" },
-  { id: 5, src: "/gallery-5.jpg", alt: "قاعة التدريب" },
-  { id: 6, src: "/gallery-6.jpg", alt: "منطقة الاستقبال" },
-];
-
-// FAQ Data
-const faqs = [
-  {
-    id: 1,
-    question: "كيف يمكنني حجز موعد؟",
-    answer: "يمكنك حجز موعد بسهولة من خلال صفحة المواعيد أو الاتصال بنا مباشرة",
-  },
-  {
-    id: 2,
-    question: "هل النظام يدعم التأمين الصحي؟",
-    answer:
-      "نعم، النظام يدعم جميع شركات التأمين الصحي ويمكن إدارة المطالبات بسهولة",
-  },
-  {
-    id: 3,
-    question: "كيف يعمل الشات بوت الذكي؟",
-    answer:
-      "الشات بوت يستخدم الذكاء الاصطناعي للرد على استفسارات المرضى بشكل فوري ودقيق",
-  },
-];
-
-export default function HomePage() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  // Auto-slide functionality
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+  const testimonials = [
+    {
+      name: 'أحمد محمد',
+      role: 'والد طفل',
+      content: 'مركز الهمم غير حياة ابني للأفضل. الخدمات المقدمة ممتازة والطاقم متخصص جداً.',
+      rating: 5
+    },
+    {
+      name: 'فاطمة علي',
+      role: 'مريضة',
+      content: 'أشكر المركز على الدعم المستمر والرعاية المتميزة. أنصح الجميع بالتعامل معهم.',
+      rating: 5
+    },
+    {
+      name: 'محمد حسن',
+      role: 'ولي أمر',
+      content: 'الخدمات المقدمة تتجاوز التوقعات. المركز يهتم بكل التفاصيل الصغيرة.',
+      rating: 5
+    }
+  ];
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        fontFamily: "Arial, sans-serif",
-        maxWidth: "800px",
-        margin: "0 auto",
-      }}
-    >
-      <header style={{ textAlign: "center", marginBottom: "40px" }}>
-        <h1
-          style={{ color: "#2563eb", fontSize: "2.5rem", margin: "0 0 10px 0" }}
-        >
-          مركز الهمم
-        </h1>
-        <p style={{ fontSize: "1.2rem", color: "#666" }}>
-          للرعاية الصحية المتخصصة
-        </p>
-      </header>
-
-      <nav style={{ textAlign: "center", marginBottom: "40px" }}>
-        <a
-          href="/login"
-          style={{
-            margin: "0 10px",
-            padding: "10px 20px",
-            background: "#f3f4f6",
-            color: "#374151",
-            textDecoration: "none",
-            borderRadius: "5px",
-            display: "inline-block",
-          }}
-        >
-          تسجيل الدخول
-        </a>
-        <a
-          href="/register"
-          style={{
-            margin: "0 10px",
-            padding: "10px 20px",
-            background: "#2563eb",
-            color: "white",
-            textDecoration: "none",
-            borderRadius: "5px",
-            display: "inline-block",
-          }}
-        >
-          احجز موعد
-        </a>
-      </nav>
-
-      <main>
-        <section style={{ textAlign: "center", marginBottom: "50px" }}>
-          <h2 style={{ fontSize: "2rem", marginBottom: "20px" }}>
-            خدماتنا المتخصصة
-          </h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-              gap: "20px",
-              marginTop: "30px",
-            }}
-          >
-            <div
-              style={{
-                padding: "20px",
-                background: "#f9fafb",
-                borderRadius: "8px",
-                border: "1px solid #e5e7eb",
-              }}
-            >
-              <h3 style={{ color: "#2563eb", marginBottom: "10px" }}>
-                العلاج الطبيعي
-              </h3>
-              <p style={{ color: "#666" }}>
-                برامج علاج طبيعي متخصصة مع متابعة ذكية
-              </p>
+    <div className="min-h-screen bg-gray-50" dir="rtl">
+      {/* Header */}
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-6">
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                <Heart className="w-8 h-8 text-white" />
+              </div>
+              <div className="mr-4">
+                <h1 className="text-2xl font-bold text-gray-900">مركز الهمم</h1>
+                <p className="text-sm text-gray-600">دعم ذوي الهمم والإعاقات</p>
+              </div>
             </div>
-            <div
-              style={{
-                padding: "20px",
-                background: "#f9fafb",
-                borderRadius: "8px",
-                border: "1px solid #e5e7eb",
-              }}
-            >
-              <h3 style={{ color: "#2563eb", marginBottom: "10px" }}>
-                العلاج النفسي
-              </h3>
-              <p style={{ color: "#666" }}>جلسات علاج نفسي مع دعم متخصص</p>
-            </div>
-            <div
-              style={{
-                padding: "20px",
-                background: "#f9fafb",
-                borderRadius: "8px",
-                border: "1px solid #e5e7eb",
-              }}
-            >
-              <h3 style={{ color: "#2563eb", marginBottom: "10px" }}>
-                العلاج الوظيفي
-              </h3>
-              <p style={{ color: "#666" }}>تحسين المهارات الوظيفية والحياتية</p>
+            <nav className="hidden md:flex space-x-8 space-x-reverse">
+              <Link href="#home" className="text-gray-900 hover:text-blue-600">الرئيسية</Link>
+              <Link href="#services" className="text-gray-600 hover:text-blue-600">الخدمات</Link>
+              <Link href="#appointments" className="text-gray-600 hover:text-blue-600">المواعيد</Link>
+              <Link href="#contact" className="text-gray-600 hover:text-blue-600">تواصل معنا</Link>
+            </nav>
+            <div className="flex items-center space-x-4 space-x-reverse">
+              <Button variant="outline" size="sm">
+                تسجيل الدخول
+              </Button>
+              <Button className="bg-blue-600 hover:bg-blue-700">
+                حجز موعد
+              </Button>
             </div>
           </div>
-        </section>
+        </div>
+      </header>
 
-        <section
-          style={{
-            textAlign: "center",
-            background: "#f3f4f6",
-            padding: "30px",
-            borderRadius: "8px",
-          }}
-        >
-          <h2 style={{ marginBottom: "20px" }}>تواصل معنا</h2>
-          <p style={{ fontSize: "1.1rem", margin: "10px 0" }}>
-            📞 +966 50 123 4567
-          </p>
-          <p style={{ fontSize: "1.1rem", margin: "10px 0" }}>
-            📍 جدة، المملكة العربية السعودية
-          </p>
-          <p style={{ fontSize: "1.1rem", margin: "10px 0" }}>
-            ✉️ info@alhemam.sa
-          </p>
-        </section>
-      </main>
+      {/* Hero Section */}
+      <section id="home" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              مركز الهمم
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 text-blue-100">
+              مركز متخصص في دعم ذوي الهمم والإعاقات، مع إدارة مواعيد، محادثات، وسجلات المرضى
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+                <Calendar className="w-5 h-5 ml-2" />
+                حجز موعد الآن
+              </Button>
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600">
+                <MessageCircle className="w-5 h-5 ml-2" />
+                تحدث مع معين
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              مميزاتنا الرئيسية
+            </h2>
+            <p className="text-xl text-gray-600">
+              نقدم خدمات متطورة ومتخصصة لدعم ذوي الهمم
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <div className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center`}>
+                    <feature.icon className={`w-8 h-8 ${feature.color}`} />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-gray-600">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section id="services" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              خدماتنا المتخصصة
+            </h2>
+            <p className="text-xl text-gray-600">
+              نقدم مجموعة شاملة من الخدمات الطبية والعلاجية
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {services.map((service, index) => (
+              <Card key={index} className="hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <service.icon className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+                  <p className="text-gray-600">{service.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              آراء عملائنا
+            </h2>
+            <p className="text-xl text-gray-600">
+              ما يقوله عملاؤنا عن خدماتنا
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-gray-600 mb-4">"{testimonial.content}"</p>
+                  <div>
+                    <p className="font-semibold">{testimonial.name}</p>
+                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 bg-gray-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              تواصل معنا
+            </h2>
+            <p className="text-xl text-gray-300">
+              نحن هنا لمساعدتك في أي وقت
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="bg-gray-800 border-gray-700">
+              <CardContent className="p-6 text-center">
+                <Phone className="w-8 h-8 text-blue-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold mb-2">الهاتف</h3>
+                <p className="text-gray-300">+966581421483</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gray-800 border-gray-700">
+              <CardContent className="p-6 text-center">
+                <Mail className="w-8 h-8 text-blue-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold mb-2">البريد الإلكتروني</h3>
+                <p className="text-gray-300">info@alhemmamcenter.com.sa</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gray-800 border-gray-700">
+              <CardContent className="p-6 text-center">
+                <MapPin className="w-8 h-8 text-blue-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold mb-2">العنوان</h3>
+                <p className="text-gray-300">جدة، المملكة العربية السعودية</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                  <Heart className="w-6 h-6 text-white" />
+                </div>
+                <div className="mr-3">
+                  <h3 className="text-xl font-bold">مركز الهمم</h3>
+                </div>
+              </div>
+              <p className="text-gray-300">
+                مركز متخصص في دعم ذوي الهمم والإعاقات، نقدم خدمات شاملة ومتطورة.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4">روابط سريعة</h4>
+              <ul className="space-y-2">
+                <li><Link href="#home" className="text-gray-300 hover:text-white">الرئيسية</Link></li>
+                <li><Link href="#services" className="text-gray-300 hover:text-white">الخدمات</Link></li>
+                <li><Link href="#appointments" className="text-gray-300 hover:text-white">المواعيد</Link></li>
+                <li><Link href="#contact" className="text-gray-300 hover:text-white">تواصل معنا</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4">الخدمات</h4>
+              <ul className="space-y-2">
+                <li className="text-gray-300">العلاج الطبيعي</li>
+                <li className="text-gray-300">العلاج الوظيفي</li>
+                <li className="text-gray-300">العلاج النفسي</li>
+                <li className="text-gray-300">الاستشارات الطبية</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4">معلومات الاتصال</h4>
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <Phone className="w-4 h-4 text-blue-400 ml-2" />
+                  <span className="text-gray-300">+966581421483</span>
+                </div>
+                <div className="flex items-center">
+                  <Mail className="w-4 h-4 text-blue-400 ml-2" />
+                  <span className="text-gray-300">info@alhemmamcenter.com.sa</span>
+                </div>
+                <div className="flex items-center">
+                  <MapPin className="w-4 h-4 text-blue-400 ml-2" />
+                  <span className="text-gray-300">جدة، المملكة العربية السعودية</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-700 mt-8 pt-8 text-center">
+            <p className="text-gray-300">
+              © 2024 مركز الهمم. جميع الحقوق محفوظة.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
-}
+};
+
+export default HomePage;
