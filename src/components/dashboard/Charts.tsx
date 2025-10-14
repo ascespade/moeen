@@ -28,7 +28,7 @@ export function ChartsA() {
 
   return (
     <div className="h-64">
-      <svg viewBox={`0 0 ${width} ${height}`} className="h-full w-full">
+      <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-full">
         <g>
           {/* Axes */}
           <line
@@ -68,16 +68,16 @@ export function ChartsB() {
   const maxY =
     Math.max(...data.map((d) => Math.max(d.messages, d.conversations))) * 1.1;
   return (
-    <div className="grid h-64 grid-cols-7 items-end gap-2 rounded-md border border-gray-200 p-4 dark:border-gray-700">
+    <div className="h-64 grid grid-cols-7 items-end gap-2 p-4 border border-gray-200 dark:border-gray-700 rounded-md">
       {data.map((d, i) => (
         <div key={i} className="flex h-full items-end gap-1">
           <div
-            className="w-3 rounded-sm bg-blue-600/80"
+            className="w-3 bg-blue-600/80 rounded-sm"
             style={{ height: `${(d.messages / maxY) * 100}%` }}
             title={`Messages: ${d.messages}`}
           />
           <div
-            className="w-3 rounded-sm bg-green-600/80"
+            className="w-3 bg-green-600/80 rounded-sm"
             style={{ height: `${(d.conversations / maxY) * 100}%` }}
             title={`Conversations: ${d.conversations}`}
           />
@@ -101,9 +101,9 @@ export function ChartsC() {
     .join(", ");
 
   return (
-    <div className="flex h-64 items-center justify-center">
+    <div className="h-64 flex items-center justify-center">
       <div
-        className="relative h-40 w-40 rounded-full"
+        className="relative w-40 h-40 rounded-full"
         style={{ background: `conic-gradient(${gradientStops})` }}
         aria-label="Channel distribution"
       >
@@ -113,7 +113,7 @@ export function ChartsC() {
         {pie.map((s, i) => (
           <div key={i} className="flex items-center gap-2 text-sm">
             <span
-              className="inline-block h-3 w-3 rounded-sm"
+              className="inline-block w-3 h-3 rounded-sm"
               style={{ backgroundColor: s.color }}
             />
             <span className="text-gray-700 dark:text-gray-300">

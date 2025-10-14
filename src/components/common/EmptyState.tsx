@@ -9,10 +9,10 @@ export default function EmptyState({
 }) {
   return (
     <div className="rounded-xl border p-8 text-center text-gray-600">
-      <div className="mx-auto mb-3 h-12 w-12 rounded-full bg-gray-100" />
+      <div className="mx-auto h-12 w-12 rounded-full bg-gray-100 mb-3" />
       <div className="text-lg font-medium">{title}</div>
       {description && (
-        <div className="mt-1 text-sm text-gray-500">{description}</div>
+        <div className="text-sm text-gray-500 mt-1">{description}</div>
       )}
       {cta && <div className="mt-4">{cta}</div>}
     </div>

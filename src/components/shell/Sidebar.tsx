@@ -1,12 +1,16 @@
-import { usePathname } from 'next/navigation';
-import { LayoutDashboard, MessagesSquare, Workflow, ShieldCheck, Settings, Users } from 'lucide-react';
-import { useT } from '@/components/providers/I18nProvider';
 "use client";
 
 import Link from "next/link";
-
-
-
+import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  MessagesSquare,
+  Workflow,
+  ShieldCheck,
+  Settings,
+  Users,
+} from "lucide-react";
+import { useT } from "@/components/providers/I18nProvider";
 
 const adminItems = [
   {
@@ -69,11 +73,11 @@ export default function Sidebar() {
       {/* Overlay sidebar for mobile */}
       <div
         id="app-sidebar"
-        className="hs-overlay hs-overlay-open:translate-x-0 fixed bottom-0 start-0 top-0 z-50 w-72 -translate-x-full border-e border-gray-200 bg-white transition-all duration-300 lg:hidden dark:border-gray-800 dark:bg-gray-900"
+        className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full fixed top-0 start-0 bottom-0 z-50 w-72 bg-white dark:bg-gray-900 border-e border-gray-200 dark:border-gray-800 transition-all duration-300 lg:hidden"
       >
-        <div className="flex h-14 items-center border-b border-gray-200 px-4 dark:border-gray-800">
+        <div className="h-14 flex items-center px-4 border-b border-gray-200 dark:border-gray-800">
           <div className="inline-flex items-center gap-3">
-            <div className="grid h-8 w-8 place-items-center rounded-lg bg-blue-600 text-white">
+            <div className="h-8 w-8 rounded-lg bg-blue-600 text-white grid place-items-center">
               م
             </div>
             <span className="text-lg font-bold text-gray-900 dark:text-white">
@@ -81,7 +85,7 @@ export default function Sidebar() {
             </span>
           </div>
         </div>
-        <nav className="grid gap-1 p-3">
+        <nav className="p-3 grid gap-1">
           {items.map((item) => {
             const active =
               pathname === item.href || pathname.startsWith(item.href + "/");
@@ -89,10 +93,10 @@ export default function Sidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`inline-flex h-11 items-center gap-3 rounded-lg border px-3 transition-colors ${
+                className={`px-3 h-11 rounded-lg inline-flex items-center gap-3 border transition-colors ${
                   active
-                    ? "border-transparent bg-blue-600 text-white"
-                    : "border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-200 dark:hover:bg-gray-800"
+                    ? "bg-blue-600 text-white border-transparent"
+                    : "border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
                 }`}
                 data-hs-overlay="#app-sidebar"
               >
@@ -105,17 +109,17 @@ export default function Sidebar() {
       </div>
 
       {/* Static sidebar for desktop */}
-      <aside className="grid hidden min-h-dvh w-64 shrink-0 grid-rows-[auto_1fr_auto] border-e border-gray-200 bg-white p-4 lg:block dark:border-gray-800 dark:bg-gray-900">
+      <aside className="hidden lg:block w-64 shrink-0 border-e border-gray-200 dark:border-gray-800 min-h-dvh p-4 grid grid-rows-[auto_1fr_auto] bg-white dark:bg-gray-900">
         <div className="mb-4">
-          <div className="mb-1 flex items-center gap-3">
-            <div className="grid h-8 w-8 place-items-center rounded-lg bg-blue-600 text-white">
+          <div className="flex items-center gap-3 mb-1">
+            <div className="h-8 w-8 rounded-lg bg-blue-600 text-white grid place-items-center">
               م
             </div>
             <span className="text-xl font-bold text-gray-900 dark:text-white">
               مركز الهمم
             </span>
           </div>
-          <div className="inline-block rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-500 dark:bg-gray-800">
+          <div className="text-xs text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full inline-block">
             Mu&apos;ayin
           </div>
         </div>
@@ -127,10 +131,10 @@ export default function Sidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`inline-flex h-11 items-center gap-3 rounded-lg border px-3 transition-colors ${
+                className={`px-3 h-11 rounded-lg inline-flex items-center gap-3 border transition-colors ${
                   active
-                    ? "border-transparent bg-blue-600 text-white"
-                    : "border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-200 dark:hover:bg-gray-800"
+                    ? "bg-blue-600 text-white border-transparent"
+                    : "border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
                 }`}
               >
                 <span>{item.icon}</span>
@@ -139,15 +143,15 @@ export default function Sidebar() {
             );
           })}
         </nav>
-        <div className="mt-6 flex items-center gap-3 border-t border-gray-200 pt-6 dark:border-gray-800">
-          <div className="grid h-10 w-10 place-items-center rounded-full bg-blue-600 text-white">
+        <div className="flex items-center gap-3 pt-6 border-t border-gray-200 dark:border-gray-800 mt-6">
+          <div className="h-10 w-10 rounded-full bg-blue-600 text-white grid place-items-center">
             م
           </div>
           <div className="text-sm">
             <div className="font-semibold text-gray-900 dark:text-white">
               مستخدم تجريبي
             </div>
-            <button className="text-gray-500 transition-colors hover:text-blue-600">
+            <button className="text-gray-500 hover:text-blue-600 transition-colors">
               تسجيل الخروج
             </button>
           </div>
