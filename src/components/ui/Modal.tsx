@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef } from "react";
 import clsx from "clsx";
 
@@ -54,12 +53,12 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
       <div
         ref={dialogRef}
         className={clsx(
-          "relative z-10 w-full max-w-lg rounded-xl border border-brand-border bg-[var(--panel)] shadow-soft",
-          open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+          "shadow-soft relative z-10 w-full max-w-lg rounded-xl border border-brand-border bg-[var(--panel)]",
+          open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
         )}
       >
         {title && (
-          <div className="px-4 py-3 border-b border-brand-border text-sm font-semibold">
+          <div className="border-b border-brand-border px-4 py-3 text-sm font-semibold">
             {title}
           </div>
         )}

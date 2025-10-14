@@ -1,7 +1,5 @@
 "use client";
-
 import { useEffect, useState } from "react";
-
 export type Messages = Record<string, string>;
 
 export function useI18n(locale: "ar" | "en" = "ar", ns: string = "common") {

@@ -1,9 +1,8 @@
+import { bulkInsertTranslations } from "../lib/translations-manager";
 /**
  * Seed Translations Script
  * Adds all translations to the database using CUID system
  */
-
-import { bulkInsertTranslations } from "../lib/translations-manager";
 
 // Comprehensive translations data
 const translations = [

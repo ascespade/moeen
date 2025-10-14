@@ -34,70 +34,70 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-xl rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
-        <h1 className="text-2xl font-bold mb-6">إنشاء حساب</h1>
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
+      <div className="w-full max-w-xl rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <h1 className="mb-6 text-2xl font-bold">إنشاء حساب</h1>
         <form onSubmit={submit} className="space-y-5">
           <div>
-            <label className="block text-sm mb-1">الاسم الكامل</label>
+            <label className="mb-1 block text-sm">الاسم الكامل</label>
             <input
               name="fullName"
               required
-              className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white"
+              className="w-full rounded-lg border border-[var(--brand-border)] bg-white px-3 py-2 focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
               onChange={onChange}
               placeholder="مثال: أحمد محمد"
             />
           </div>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="block text-sm mb-1">البريد الإلكتروني</label>
+              <label className="mb-1 block text-sm">البريد الإلكتروني</label>
               <input
                 type="email"
                 name="email"
                 required
-                className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white"
+                className="w-full rounded-lg border border-[var(--brand-border)] bg-white px-3 py-2 focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
                 onChange={onChange}
                 placeholder="name@example.com"
               />
             </div>
             <div>
-              <label className="block text-sm mb-1">رقم الجوال</label>
+              <label className="mb-1 block text-sm">رقم الجوال</label>
               <input
                 type="tel"
                 name="phone"
-                className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white"
+                className="w-full rounded-lg border border-[var(--brand-border)] bg-white px-3 py-2 focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
                 onChange={onChange}
                 placeholder="05xxxxxxxx"
               />
             </div>
           </div>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="block text-sm mb-1">كلمة المرور</label>
+              <label className="mb-1 block text-sm">كلمة المرور</label>
               <input
                 type="password"
                 name="password"
                 required
-                className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white"
+                className="w-full rounded-lg border border-[var(--brand-border)] bg-white px-3 py-2 focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
                 onChange={onChange}
               />
             </div>
             <div>
-              <label className="block text-sm mb-1">تأكيد ك��مة المرور</label>
+              <label className="mb-1 block text-sm">تأكيد ك��مة المرور</label>
               <input
                 type="password"
                 name="confirmPassword"
                 required
-                className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white"
+                className="w-full rounded-lg border border-[var(--brand-border)] bg-white px-3 py-2 focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
                 onChange={onChange}
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm mb-1">الدور</label>
+            <label className="mb-1 block text-sm">الدور</label>
             <select
               name="role"
-              className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white"
+              className="w-full rounded-lg border border-[var(--brand-border)] bg-white px-3 py-2 focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
               onChange={onChange}
               defaultValue={formData.role}
             >
@@ -119,12 +119,12 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-4 py-3 font-medium text-white hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:ring-offset-2"
           >
             {isLoading ? "جاري الإنشاء..." : "إنشاء الحساب"}
           </button>
         </form>
-        <p className="text-center text-sm mt-4">
+        <p className="mt-4 text-center text-sm">
           لديك حساب؟{" "}
           <Link
             href="/login"

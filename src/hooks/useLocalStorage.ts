@@ -1,6 +1,6 @@
-// Local storage hooks
 import { useState, useCallback } from "react";
 import { storage } from "@/utils/storage";
+// Local storage hooks
 
 export const useLocalStorage = <T>(
   key: string,

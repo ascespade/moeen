@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
 import { Cairo, Inter } from "next/font/google";
+import { ErrorBoundary } from "@/components/common/ErrorBoundary";
+import { I18nProvider } from "@/components/providers/I18nProvider";
+import type { Metadata } from "next";
+
 import "@/styles/index.css";
 import UIProvider from "@/components/providers/UIProvider";
 import StatusBanner from "@/components/common/StatusBanner";
-import { ErrorBoundary } from "@/components/common/ErrorBoundary";
+
 import "@/app/globals.css";
-import { I18nProvider } from "@/components/providers/I18nProvider";
 
 export const metadata: Metadata = {
   title: "مُعين",
@@ -51,7 +53,7 @@ export default function RootLayout({
       >
         <a
           href="#content"
-          className="sr-only focus:not-sr-only fixed top-2 start-2 z-[1000] bg-gray-900 text-white px-3 py-2 rounded"
+          className="sr-only fixed start-2 top-2 z-[1000] rounded bg-gray-900 px-3 py-2 text-white focus:not-sr-only"
         >
           تخطي إلى المحتوى
         </a>
