@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/client";
+import { getServiceSupabase } from "@/lib/supabaseClient";
 
 export async function GET() {
   try {
@@ -42,7 +42,7 @@ export async function GET() {
 
 async function checkDatabaseHealth(): Promise<boolean> {
   try {
-    const supabase = createClient();
+    const supabase = getServiceSupabase();
     const { data, error } = await supabase
       .from("users")
       .select("count")

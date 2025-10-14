@@ -3,12 +3,9 @@
 // Provides real-time logs and activity monitoring
 
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { getServiceSupabase } from "@/lib/supabaseClient";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-);
+const supabase = getServiceSupabase();
 
 export async function GET(request: NextRequest) {
   try {
