@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
+
 // Browser-compatible crypto functions
 const getCrypto = () => {
   if (typeof window !== "undefined" && window.crypto) {

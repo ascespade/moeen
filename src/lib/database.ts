@@ -1,6 +1,5 @@
-import { Pool } from 'pg';
 // Database Integration System
-
+import { Pool } from "pg";
 
 export interface DatabaseConfig {
   host: string;

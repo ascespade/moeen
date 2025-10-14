@@ -1,6 +1,5 @@
-import { Server } from 'socket.io';
 // Real-time Notifications System
-
+import { Server } from "socket.io";
 import nodemailer from "nodemailer";
 
 export interface NotificationConfig {

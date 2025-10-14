@@ -1,7 +1,8 @@
+"use client";
+
 import { useRequireAuth } from '@/hooks/useAuth';
 import { ROUTES } from '@/constants/routes';
 import { ChartsA, ChartsB, ChartsC } from '@/components/dashboard/Charts';
-"use client";
 
 
 import Link from "next/link";

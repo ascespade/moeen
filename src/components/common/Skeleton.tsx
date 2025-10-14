@@ -9,15 +9,15 @@ export function Skeleton({ className = "" }: { className?: string }) {
 export function ChartSkeleton() {
   return (
     <div className="p-4">
-      <Skeleton className="mb-4 h-5 w-32" />
-      <div className="grid h-40 grid-cols-12 gap-2">
+      <Skeleton className="h-5 w-32 mb-4" />
+      <div className="grid grid-cols-12 gap-2 h-40">
         {Array.from({ length: 12 }).map((_, i) => (
           <div
             key={i}
             className="w-full self-end"
             style={{ height: `${20 + (i % 10) * 6}px` }}
           >
-            <Skeleton className="h-full w-full" />
+            <Skeleton className="w-full h-full" />
           </div>
         ))}
       </div>

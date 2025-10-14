@@ -307,7 +307,7 @@ export function ResponsiveWrapper({
 }
 
 // Export all utilities
-const responsiveDesignUtils = {
+export default {
   breakpoints,
   useScreenSize,
   useResponsive,
@@ -321,5 +321,3 @@ const responsiveDesignUtils = {
   print,
   ResponsiveWrapper,
 };
-
-export default responsiveDesignUtils;

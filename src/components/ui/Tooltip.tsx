@@ -14,7 +14,7 @@ export function Tooltip({
       <span className="hs-tooltip-toggle inline-block cursor-default">
         {children}
       </span>
-      <span className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible invisible rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 shadow-sm transition">
+      <span className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 invisible transition px-2 py-1 bg-gray-900 text-white text-xs rounded shadow-sm">
         {label}
       </span>
     </span>

@@ -1,23 +1,25 @@
-import { createClient } from '@supabase/supabase-js';
 // Real Supabase Integration for Hemam Center
-// @ts-ignore - shimmed for type checking without full types
-
-type Database = any;
+import { createClient } from "@supabase/supabase-js";
+import { Database } from "@/types/supabase";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
 
 // Client for client-side operations
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 
 // Admin client for server-side operations
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
+export const supabaseAdmin = createClient<Database>(
+  supabaseUrl,
+  supabaseServiceKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
   },
-});
+);
 
 // Use a relaxed admin alias to mitigate strict generics during development
 const admin: any = supabaseAdmin as any;
@@ -548,8 +550,12 @@ export class RealSupabaseManager {
       throw new Error(`Failed to get appointment stats: ${error.message}`);
 
     const total = (data as any[]).length;
-    const completed = (data as any[]).filter((a: any) => a.status === "completed").length;
-    const cancelled = (data as any[]).filter((a: any) => a.status === "cancelled").length;
+    const completed = (data as any[]).filter(
+      (a: any) => a.status === "completed",
+    ).length;
+    const cancelled = (data as any[]).filter(
+      (a: any) => a.status === "cancelled",
+    ).length;
     const upcoming = (data as any[]).filter((a: any) => {
       const appointmentDate = new Date(a.appointment_date as string);
       return appointmentDate >= new Date() && a.status === "scheduled";
@@ -567,7 +573,9 @@ export class RealSupabaseManager {
       throw new Error(`Failed to get conversation stats: ${error.message}`);
 
     const total = (data as any[]).length;
-    const crisis = (data as any[]).filter((c: any) => c.crisis_level === "crisis").length;
+    const crisis = (data as any[]).filter(
+      (c: any) => c.crisis_level === "crisis",
+    ).length;
     const recent = (data as any[]).filter((c: any) => {
       const createdAt = new Date(c.created_at as string);
       const sevenDaysAgo = new Date();
