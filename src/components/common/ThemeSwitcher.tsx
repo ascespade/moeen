@@ -29,7 +29,7 @@ export default function ThemeSwitcher({
     if (!isLoading) {
       applyTheme();
     }
-  }, [theme, isLoading, applyTheme]);
+  }, [theme, isLoading]);
 
   // Function to load user preferences from database
   const loadUserPreferences = async () => {

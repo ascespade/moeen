@@ -112,8 +112,8 @@ export default function DashboardPage() {
   const getHealthBadge = (status: string) => {
     switch (status) {
       case 'healthy': return <Badge variant="default" className="bg-green-100 text-green-800">Healthy</Badge>;
-      case 'unhealthy': return <Badge variant="destructive">Unhealthy</Badge>;
-      case 'degraded': return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">Degraded</Badge>;
+      case 'unhealthy': return <Badge variant="error">Unhealthy</Badge>;
+      case 'degraded': return <Badge variant="warning" className="bg-yellow-100 text-yellow-800">Degraded</Badge>;
       default: return <Badge variant="outline">Unknown</Badge>;
     }
   };
@@ -408,7 +408,7 @@ export default function DashboardPage() {
                 {Object.entries(metrics?.automation.workflows.commonIssues || {}).map(([issue, count]) => (
                   <div key={issue} className="flex items-center justify-between p-3 border rounded-lg">
                     <div className="font-medium">{issue}</div>
-                    <Badge variant="secondary">{count} occurrences</Badge>
+                    <Badge variant="info">{count} occurrences</Badge>
                   </div>
                 ))}
                 {Object.keys(metrics?.automation.workflows.commonIssues || {}).length === 0 && (

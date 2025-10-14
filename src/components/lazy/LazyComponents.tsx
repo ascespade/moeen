@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
-import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 // Lazy load heavy components
 export const LazyCalendar = dynamic(
