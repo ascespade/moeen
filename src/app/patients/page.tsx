@@ -1,205 +1,194 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ROUTES } from "@/constants/routes";
+import { createClient } from "@/lib/supabase/client";
 import Image from "next/image";
 import Link from "next/link";
 
 interface Patient {
   id: string;
-  name: string;
+  public_id: string;
+  first_name: string;
+  last_name: string;
   phone: string;
   email?: string;
-  age: number;
+  date_of_birth: string;
   gender: "male" | "female";
-  status: "active" | "inactive" | "blocked";
+  address?: string;
+  emergency_contact_name?: string;
+  emergency_contact_phone?: string;
+  medical_history?: string;
+  allergies?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface PatientWithStats extends Patient {
   lastVisit: string;
   totalSessions: number;
   insuranceProvider?: string;
   notes?: string;
+  status: "active" | "inactive" | "blocked";
 }
 
-const mockPatients: Patient[] = [
-  {
-    id: "1",
-    name: "أحمد العتيبي",
-    phone: "0501234567",
-    email: "ahmed@example.com",
-    age: 35,
-    gender: "male",
-    status: "active",
-    lastVisit: "2024-01-10",
-    totalSessions: 12,
-    insuranceProvider: "التأمين التعاوني",
-    notes: "مريض يعاني من آلام الظهر",
-  },
-  {
-    id: "2",
-    name: "فاطمة السعيد",
-    phone: "0507654321",
-    email: "fatima@example.com",
-    age: 28,
-    gender: "female",
-    status: "active",
-    lastVisit: "2024-01-12",
-    totalSessions: 8,
-    insuranceProvider: "الراجحي للتأمين",
-  },
-  {
-    id: "3",
-    name: "خالد القحطاني",
-    phone: "0509876543",
-    age: 42,
-    gender: "male",
-    status: "inactive",
-    lastVisit: "2023-12-15",
-    totalSessions: 5,
-    notes: "توقف عن الحضور",
-  },
-  {
-    id: "4",
-    name: "نورا السعد",
-    phone: "0504567890",
-    email: "nora@example.com",
-    age: 31,
-    gender: "female",
-    status: "blocked",
-    lastVisit: "2024-01-05",
-    totalSessions: 3,
-    insuranceProvider: "التحالف الوطني",
-    notes: "حظر بسبب عدم السداد",
-  },
-];
-
 export default function PatientsPage() {
+  const [patients, setPatients] = useState<PatientWithStats[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState<string>("all");
-  const [viewMode, setViewMode] = useState<"table" | "cards">("cards");
-  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [filterStatus, setFilterStatus] = useState<"all" | "active" | "inactive" | "blocked">("all");
 
-  const getStatusColor = (status: Patient["status"]) => {
-    switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800";
-      case "inactive":
-        return "bg-yellow-100 text-yellow-800";
-      case "blocked":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
+  const supabase = createClient();
 
-  const getStatusText = (status: Patient["status"]) => {
-    switch (status) {
-      case "active":
-        return "نشط";
-      case "inactive":
-        return "غير نشط";
-      case "blocked":
-        return "محظور";
-      default:
-        return "غير محدد";
-    }
-  };
+  // Load patients from database
+  useEffect(() => {
+    const loadPatients = async () => {
+      try {
+        setLoading(true);
+        
+        // Get patients with their appointment statistics
+        const { data: patientsData, error: patientsError } = await supabase
+          .from('patients')
+          .select(`
+            *,
+            appointments:appointments(count),
+            sessions:sessions(count)
+          `)
+          .order('created_at', { ascending: false });
 
-  const filteredPatients = mockPatients.filter((patient) => {
-    const matchesSearch =
-      patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        if (patientsError) throw patientsError;
+
+        // Transform data to include stats
+        const patientsWithStats: PatientWithStats[] = (patientsData || []).map(patient => ({
+          ...patient,
+          name: `${patient.first_name} ${patient.last_name}`,
+          age: patient.date_of_birth ? 
+            new Date().getFullYear() - new Date(patient.date_of_birth).getFullYear() : 0,
+          lastVisit: patient.appointments?.[0]?.appointment_date || 'لم يتم تحديد موعد',
+          totalSessions: patient.sessions?.length || 0,
+          status: 'active' as const, // Default status, can be enhanced later
+          insuranceProvider: 'غير محدد', // Can be enhanced with insurance claims data
+          notes: patient.medical_history || ''
+        }));
+
+        setPatients(patientsWithStats);
+      } catch (err) {
+        console.error('Error loading patients:', err);
+        setError('فشل في تحميل بيانات المرضى');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPatients();
+  }, []);
+
+  // Filter patients based on search and status
+  const filteredPatients = patients.filter(patient => {
+    const matchesSearch = 
+      patient.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      patient.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       patient.phone.includes(searchTerm) ||
       patient.email?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus =
-      selectedStatus === "all" || patient.status === selectedStatus;
+    
+    const matchesStatus = filterStatus === "all" || patient.status === filterStatus;
+    
     return matchesSearch && matchesStatus;
   });
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "active": return "bg-green-100 text-green-800";
+      case "inactive": return "bg-yellow-100 text-yellow-800";
+      case "blocked": return "bg-red-100 text-red-800";
+      default: return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case "active": return "نشط";
+      case "inactive": return "غير نشط";
+      case "blocked": return "محظور";
+      default: return "غير محدد";
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">جاري تحميل بيانات المرضى...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-600 text-xl mb-4">⚠️</div>
+          <p className="text-gray-600">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            إعادة المحاولة
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-[var(--brand-surface)]">
-      {/* Header */}
-      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
-        <div className="container-app py-6">
+    <main className="min-h-screen bg-gray-50">
+      {/* Page Header */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Image
-                src="/logo.jpg"
-                alt="مُعين"
-                width={50}
-                height={50}
-                className="rounded-lg"
-              />
-              <div>
-                <h1 className="text-brand text-2xl font-bold">إدارة المرضى</h1>
-                <p className="text-gray-600 dark:text-gray-300">
-                  ملفات المرضى الشاملة
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setShowCreateModal(true)}
-                className="btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
-              >
-                إضافة مريض
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="container-app py-8">
-        {/* Stats Cards */}
-        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
-          <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-blue-600">
-              {mockPatients.length}
-            </div>
-            <div className="text-gray-600 dark:text-gray-300">
-              إجمالي المرضى
-            </div>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
-              {mockPatients.filter((p) => p.status === "active").length}
-            </div>
-            <div className="text-gray-600 dark:text-gray-300">مرضى نشطين</div>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-yellow-600">
-              {mockPatients.filter((p) => p.status === "inactive").length}
-            </div>
-            <div className="text-gray-600 dark:text-gray-300">غير نشطين</div>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-red-600">
-              {mockPatients.filter((p) => p.status === "blocked").length}
-            </div>
-            <div className="text-gray-600 dark:text-gray-300">محظورين</div>
-          </div>
-        </div>
-
-        {/* Filters */}
-        <div className="card mb-8 p-6">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
             <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <h1 className="text-2xl font-bold text-gray-900">إدارة المرضى</h1>
+              <p className="text-gray-600 mt-1">إجمالي المرضى: {patients.length}</p>
+            </div>
+            <Link
+              href={ROUTES.HEALTH.PATIENTS + "/new"}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              إضافة مريض جديد
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Filters and Search */}
+      <div className="container mx-auto px-4 py-6">
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Search */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 البحث
               </label>
               <input
                 type="text"
+                placeholder="البحث بالاسم، الهاتف، أو البريد الإلكتروني..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="ابحث بالاسم أو الهاتف أو البريد..."
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
+            {/* Status Filter */}
             <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 الحالة
               </label>
               <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value as any)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="all">جميع الحالات</option>
                 <option value="active">نشط</option>
@@ -207,354 +196,95 @@ export default function PatientsPage() {
                 <option value="blocked">محظور</option>
               </select>
             </div>
-
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                طريقة العرض
-              </label>
-              <div className="flex rounded-lg border border-gray-300">
-                <button
-                  onClick={() => setViewMode("cards")}
-                  className={`px-3 py-2 text-sm ${viewMode === "cards" ? "bg-[var(--brand-primary)] text-white" : "text-gray-600"}`}
-                >
-                  بطاقات
-                </button>
-                <button
-                  onClick={() => setViewMode("table")}
-                  className={`px-3 py-2 text-sm ${viewMode === "table" ? "bg-[var(--brand-primary)] text-white" : "text-gray-600"}`}
-                >
-                  جدول
-                </button>
-              </div>
-            </div>
-
-            <div className="flex items-end">
-              <button className="btn-brand w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
-                تطبيق الفلاتر
-              </button>
-            </div>
           </div>
         </div>
 
-        {/* Patients Content */}
-        {viewMode === "cards" ? (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredPatients.map((patient) => (
-              <div
-                key={patient.id}
-                className="card hover:shadow-soft p-6 transition-shadow"
-              >
-                <div className="mb-4 flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--brand-primary)] font-semibold text-white">
-                      {patient.name.charAt(0)}
+        {/* Patients Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredPatients.map((patient) => (
+            <div key={patient.id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div className="p-6">
+                {/* Patient Info */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                      <span className="text-blue-600 font-semibold text-lg">
+                        {patient.first_name.charAt(0)}
+                      </span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                        {patient.name}
+                      <h3 className="font-semibold text-gray-900">
+                        {patient.first_name} {patient.last_name}
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        {patient.phone}
-                      </p>
+                      <p className="text-sm text-gray-500">العمر: {patient.age} سنة</p>
                     </div>
                   </div>
-                  <span
-                    className={`rounded-full px-3 py-1 text-sm ${getStatusColor(patient.status)}`}
-                  >
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(patient.status)}`}>
                     {getStatusText(patient.status)}
                   </span>
                 </div>
 
-                <div className="mb-4 space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-300">
-                      العمر:
-                    </span>
-                    <span className="font-medium">{patient.age} سنة</span>
+                {/* Contact Info */}
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center text-sm text-gray-600">
+                    <span className="w-4 h-4 mr-2">📞</span>
+                    {patient.phone}
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-300">
-                      الجنس:
-                    </span>
-                    <span className="font-medium">
-                      {patient.gender === "male" ? "ذكر" : "أنثى"}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-300">
-                      آخر زيارة:
-                    </span>
-                    <span className="font-medium">{patient.lastVisit}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-300">
-                      إجمالي الجلسات:
-                    </span>
-                    <span className="font-medium">{patient.totalSessions}</span>
-                  </div>
-                  {patient.insuranceProvider && (
-                    <div className="flex justify-between">
-                      <span className="text-gray-600 dark:text-gray-300">
-                        التأمين:
-                      </span>
-                      <span className="text-sm font-medium">
-                        {patient.insuranceProvider}
-                      </span>
+                  {patient.email && (
+                    <div className="flex items-center text-sm text-gray-600">
+                      <span className="w-4 h-4 mr-2">✉️</span>
+                      {patient.email}
                     </div>
                   )}
                 </div>
 
-                {patient.notes && (
-                  <div className="mb-4 rounded-lg bg-gray-50 p-3 dark:bg-gray-800">
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      <strong>ملاحظات:</strong> {patient.notes}
-                    </p>
+                {/* Stats */}
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div className="text-center">
+                    <div className="text-lg font-semibold text-blue-600">{patient.totalSessions}</div>
+                    <div className="text-xs text-gray-500">الجلسات</div>
                   </div>
-                )}
+                  <div className="text-center">
+                    <div className="text-lg font-semibold text-green-600">
+                      {patient.lastVisit === 'لم يتم تحديد موعد' ? '0' : '1'}
+                    </div>
+                    <div className="text-xs text-gray-500">آخر زيارة</div>
+                  </div>
+                </div>
 
-                <div className="flex gap-2">
+                {/* Actions */}
+                <div className="flex space-x-2">
                   <Link
-                    href={ROUTES.HEALTH.PATIENT(patient.id)}
-                    className="btn-brand flex-1 rounded-lg py-2 text-center text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
+                    href={`${ROUTES.HEALTH.PATIENTS}/${patient.public_id}`}
+                    className="flex-1 bg-blue-600 text-white text-center py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm"
                   >
-                    عرض الملف
+                    عرض التفاصيل
                   </Link>
-                  <button className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50">
-                    تعديل
-                  </button>
+                  <Link
+                    href={`${ROUTES.HEALTH.APPOINTMENTS}?patient=${patient.public_id}`}
+                    className="flex-1 bg-green-600 text-white text-center py-2 px-3 rounded-lg hover:bg-green-700 transition-colors text-sm"
+                  >
+                    حجز موعد
+                  </Link>
                 </div>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="card overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50 dark:bg-gray-800">
-                  <tr>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      المريض
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      الهاتف
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      العمر
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      آخر زيارة
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      الجلسات
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      الحالة
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      الإجراءات
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
-                  {filteredPatients.map((patient) => (
-                    <tr
-                      key={patient.id}
-                      className="hover:bg-gray-50 dark:hover:bg-gray-800"
-                    >
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <div className="flex items-center">
-                          <div className="ml-3 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--brand-primary)] text-sm font-semibold text-white">
-                            {patient.name.charAt(0)}
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium text-gray-900 dark:text-white">
-                              {patient.name}
-                            </div>
-                            {patient.email && (
-                              <div className="text-sm text-gray-500">
-                                {patient.email}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <div className="text-sm text-gray-600 dark:text-gray-300">
-                          {patient.phone}
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <div className="text-sm text-gray-600 dark:text-gray-300">
-                          {patient.age} سنة
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <div className="text-sm text-gray-600 dark:text-gray-300">
-                          {patient.lastVisit}
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <div className="text-sm text-gray-600 dark:text-gray-300">
-                          {patient.totalSessions}
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <span
-                          className={`rounded-full px-2 py-1 text-xs ${getStatusColor(patient.status)}`}
-                        >
-                          {getStatusText(patient.status)}
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm font-medium">
-                        <div className="flex gap-2">
-                          <Link
-                            href={ROUTES.HEALTH.PATIENT(patient.id)}
-                            className="text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]"
-                          >
-                            عرض
-                          </Link>
-                          <button className="text-gray-600 hover:text-gray-900">
-                            تعديل
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
             </div>
-          </div>
-        )}
+          ))}
+        </div>
 
         {/* Empty State */}
-        {filteredPatients.length === 0 && (
-          <div className="py-12 text-center">
-            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
-              <span className="text-4xl">👤</span>
-            </div>
-            <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-              لا توجد نتائج
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              لا توجد مرضى مطابقون للبحث المحدد
+        {filteredPatients.length === 0 && !loading && (
+          <div className="text-center py-12">
+            <div className="text-gray-400 text-6xl mb-4">👥</div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">لا توجد نتائج</h3>
+            <p className="text-gray-500">
+              {searchTerm || filterStatus !== "all" 
+                ? "لم يتم العثور على مرضى يطابقون معايير البحث" 
+                : "لم يتم إضافة أي مرضى بعد"}
             </p>
           </div>
         )}
-      </main>
-
-      {/* Create Patient Modal */}
-      {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md rounded-lg bg-white p-6 dark:bg-gray-900">
-            <div className="mb-6 flex items-center justify-between">
-              <h3 className="text-xl font-semibold">إضافة مريض جديد</h3>
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                ✕
-              </button>
-            </div>
-
-            <form className="space-y-4">
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  الاسم الكامل
-                </label>
-                <input
-                  type="text"
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                  placeholder="أدخل الاسم الكامل"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    الهاتف
-                  </label>
-                  <input
-                    type="tel"
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                    placeholder="0501234567"
-                  />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    العمر
-                  </label>
-                  <input
-                    type="number"
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                    placeholder="30"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  البريد الإلكتروني
-                </label>
-                <input
-                  type="email"
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                  placeholder="patient@example.com"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    الجنس
-                  </label>
-                  <select className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]">
-                    <option value="male">ذكر</option>
-                    <option value="female">أنثى</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    شركة التأمين
-                  </label>
-                  <select className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]">
-                    <option value="">بدون تأمين</option>
-                    <option value="التأمين التعاوني">التأمين التعاوني</option>
-                    <option value="الراجحي للتأمين">الراجحي للتأمين</option>
-                    <option value="التحالف الوطني">التحالف الوطني</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  ملاحظات
-                </label>
-                <textarea
-                  rows={3}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                  placeholder="أضف ملاحظات إضافية..."
-                />
-              </div>
-
-              <div className="flex gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={() => setShowCreateModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
-                >
-                  إلغاء
-                </button>
-                <button
-                  type="submit"
-                  className="btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
-                >
-                  إضافة المريض
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-    </div>
+      </div>
+    </main>
   );
 }

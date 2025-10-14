@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import { dynamicContentManager } from "@/lib/dynamic-content-manager";
+
 export type Messages = Record<string, string>;
 
 export function useI18n(locale: "ar" | "en" = "ar", ns: string = "common") {
@@ -9,13 +11,22 @@ export function useI18n(locale: "ar" | "en" = "ar", ns: string = "common") {
   useEffect(() => {
     let mounted = true;
     setLoading(true);
-    fetch(`/api/i18n?locale=${locale}&ns=${ns}`)
-      .then((r) => r.json())
-      .then((json) => {
+    
+    // Load translations from dynamic content manager
+    dynamicContentManager.getTranslations(locale, ns)
+      .then((translations) => {
         if (!mounted) return;
-        setMessages(json.messages || {});
+        setMessages(translations);
       })
-      .finally(() => mounted && setLoading(false));
+      .catch((error) => {
+        console.error('Failed to load translations:', error);
+        if (!mounted) return;
+        setMessages({});
+      })
+      .finally(() => {
+        if (mounted) setLoading(false);
+      });
+
     return () => {
       mounted = false;
     };
