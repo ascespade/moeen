@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import { glob } from 'glob';
+import fs from "fs";
+import path from "path";
+import { glob } from "glob";
 
 /**
  * Validation script to check for hardcoded content violations
@@ -11,8 +11,8 @@ interface Violation {
   file: string;
   line: number;
   content: string;
-  type: 'hardcoded_string' | 'static_array' | 'mock_data' | 'fallback_data';
-  severity: 'error' | 'warning';
+  type: "hardcoded_string" | "static_array" | "mock_data" | "fallback_data";
+  severity: "error" | "warning";
 }
 
 class DynamicContentValidator {
@@ -72,22 +72,28 @@ class DynamicContentValidator {
         return;
       }
 
-      const content = fs.readFileSync(filePath, 'utf-8');
-      const lines = content.split('\n');
+      const content = fs.readFileSync(filePath, "utf-8");
+      const lines = content.split("\n");
 
       lines.forEach((line, index) => {
         // Skip comments and imports
-        if (line.trim().startsWith('//') || line.trim().startsWith('/*') || line.trim().startsWith('*') || line.trim().startsWith('import ')) {
+        if (
+          line.trim().startsWith("//") ||
+          line.trim().startsWith("/*") ||
+          line.trim().startsWith("*") ||
+          line.trim().startsWith("import ")
+        ) {
           return;
         }
 
         // Check for disallowed patterns
-        this.disallowedPatterns.forEach(pattern => {
+        this.disallowedPatterns.forEach((pattern) => {
           const matches = line.match(pattern);
           if (matches) {
             // Check if this line contains allowed patterns (exceptions)
-            const hasAllowedPattern = this.allowedPatterns.some(allowedPattern => 
-              allowedPattern.test(line) || allowedPattern.test(filePath)
+            const hasAllowedPattern = this.allowedPatterns.some(
+              (allowedPattern) =>
+                allowedPattern.test(line) || allowedPattern.test(filePath),
             );
 
             if (!hasAllowedPattern) {
@@ -96,7 +102,7 @@ class DynamicContentValidator {
                 line: index + 1,
                 content: line.trim(),
                 type: this.getViolationType(pattern),
-                severity: 'error'
+                severity: "error",
               });
             }
           }
@@ -125,26 +131,32 @@ class DynamicContentValidator {
       /build\//,
     ];
 
-    return skipPatterns.some(pattern => pattern.test(filePath));
+    return skipPatterns.some((pattern) => pattern.test(filePath));
   }
 
-  private getViolationType(pattern: RegExp): Violation['type'] {
-    if (pattern.source.includes('mock|fixture|simulation|sampleData')) {
-      return 'mock_data';
+  private getViolationType(pattern: RegExp): Violation["type"] {
+    if (pattern.source.includes("mock|fixture|simulation|sampleData")) {
+      return "mock_data";
     }
-    if (pattern.source.includes('const.*=.*\\[') || pattern.source.includes('export.*=.*\\[')) {
-      return 'static_array';
+    if (
+      pattern.source.includes("const.*=.*\\[") ||
+      pattern.source.includes("export.*=.*\\[")
+    ) {
+      return "static_array";
     }
-    if (pattern.source.includes('getDefault') || pattern.source.includes('fallback')) {
-      return 'fallback_data';
+    if (
+      pattern.source.includes("getDefault") ||
+      pattern.source.includes("fallback")
+    ) {
+      return "fallback_data";
     }
-    return 'hardcoded_string';
+    return "hardcoded_string";
   }
 
   async validateDirectory(dirPath: string): Promise<void> {
-    const files = await glob('**/*.{ts,tsx,js,jsx}', { 
+    const files = await glob("**/*.{ts,tsx,js,jsx}", {
       cwd: dirPath,
-      ignore: ['node_modules/**', 'dist/**', 'build/**', '**/*.d.ts']
+      ignore: ["node_modules/**", "dist/**", "build/**", "**/*.d.ts"],
     });
 
     console.log(`🔍 Validating ${files.length} files...`);
@@ -156,42 +168,53 @@ class DynamicContentValidator {
   }
 
   generateReport(): void {
-    console.log('\n📊 Dynamic Content Validation Report');
-    console.log('=====================================\n');
+    console.log("\n📊 Dynamic Content Validation Report");
+    console.log("=====================================\n");
 
     if (this.violations.length === 0) {
-      console.log('✅ No violations found! All content is dynamic and database-driven.');
+      console.log(
+        "✅ No violations found! All content is dynamic and database-driven.",
+      );
       return;
     }
 
     // Group violations by type
-    const violationsByType = this.violations.reduce((acc, violation) => {
-      if (!acc[violation.type]) {
-        acc[violation.type] = [];
-      }
-      acc[violation.type].push(violation);
-      return acc;
-    }, {} as Record<string, Violation[]>);
+    const violationsByType = this.violations.reduce(
+      (acc, violation) => {
+        if (!acc[violation.type]) {
+          acc[violation.type] = [];
+        }
+        acc[violation.type].push(violation);
+        return acc;
+      },
+      {} as Record<string, Violation[]>,
+    );
 
     // Print violations by type
     Object.entries(violationsByType).forEach(([type, violations]) => {
-      console.log(`\n❌ ${type.toUpperCase()} VIOLATIONS (${violations.length}):`);
-      console.log('─'.repeat(50));
-      
-      violations.forEach(violation => {
+      console.log(
+        `\n❌ ${type.toUpperCase()} VIOLATIONS (${violations.length}):`,
+      );
+      console.log("─".repeat(50));
+
+      violations.forEach((violation) => {
         console.log(`📁 ${violation.file}:${violation.line}`);
         console.log(`   ${violation.content}`);
-        console.log('');
+        console.log("");
       });
     });
 
     console.log(`\n📈 Summary:`);
     console.log(`   Total violations: ${this.violations.length}`);
-    console.log(`   Error severity: ${this.violations.filter(v => v.severity === 'error').length}`);
-    console.log(`   Warning severity: ${this.violations.filter(v => v.severity === 'warning').length}`);
+    console.log(
+      `   Error severity: ${this.violations.filter((v) => v.severity === "error").length}`,
+    );
+    console.log(
+      `   Warning severity: ${this.violations.filter((v) => v.severity === "warning").length}`,
+    );
 
     if (this.violations.length > 0) {
-      console.log('\n🚨 Build should be blocked due to violations!');
+      console.log("\n🚨 Build should be blocked due to violations!");
       process.exit(1);
     }
   }
@@ -203,12 +226,12 @@ class DynamicContentValidator {
 
 async function main() {
   const validator = new DynamicContentValidator();
-  
-  console.log('🔍 Starting dynamic content validation...');
-  
+
+  console.log("🔍 Starting dynamic content validation...");
+
   // Validate src directory
-  await validator.validateDirectory('./src');
-  
+  await validator.validateDirectory("./src");
+
   // Generate report
   validator.generateReport();
 }

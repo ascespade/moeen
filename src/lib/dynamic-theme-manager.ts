@@ -33,8 +33,8 @@ class DynamicThemeManager {
    * Get user preferences from database
    */
   async getUserPreferences(userId?: string): Promise<UserPreferences> {
-    const cacheKey = `user_preferences_${userId || 'anonymous'}`;
-    
+    const cacheKey = `user_preferences_${userId || "anonymous"}`;
+
     // Check cache first
     if (this.cache.has(cacheKey)) {
       const cached = this.cache.get(cacheKey);
@@ -47,64 +47,67 @@ class DynamicThemeManager {
       if (userId) {
         // Get user-specific preferences
         const { data, error } = await this.supabase
-          .from('user_preferences')
-          .select('*')
-          .eq('user_id', userId)
+          .from("user_preferences")
+          .select("*")
+          .eq("user_id", userId)
           .single();
 
-        if (error && error.code !== 'PGRST116') { // Not found error
+        if (error && error.code !== "PGRST116") {
+          // Not found error
           throw new Error(`Failed to load user preferences: ${error.message}`);
         }
 
         const preferences: UserPreferences = {
-          theme: data?.theme || 'system',
-          language: data?.language || 'ar',
-          fontSize: data?.font_size || 'md',
-          direction: data?.direction || 'rtl'
+          theme: data?.theme || "system",
+          language: data?.language || "ar",
+          fontSize: data?.font_size || "md",
+          direction: data?.direction || "rtl",
         };
 
         // Cache the result
         this.cache.set(cacheKey, {
           data: preferences,
-          timestamp: Date.now()
+          timestamp: Date.now(),
         });
 
         return preferences;
       } else {
         // Get default preferences from settings
         const { data, error } = await this.supabase
-          .from('settings')
-          .select('value')
-          .eq('key', 'default_user_preferences')
+          .from("settings")
+          .select("value")
+          .eq("key", "default_user_preferences")
           .single();
 
         if (error) {
-          throw new Error(`Failed to load default preferences: ${error.message}`);
+          throw new Error(
+            `Failed to load default preferences: ${error.message}`,
+          );
         }
 
         const preferences: UserPreferences = data?.value || {
-          theme: 'system',
-          language: 'ar',
-          fontSize: 'md',
-          direction: 'rtl'
+          theme: "system",
+          language: "ar",
+          fontSize: "md",
+          direction: "rtl",
         };
 
         // Cache the result
         this.cache.set(cacheKey, {
           data: preferences,
-          timestamp: Date.now()
+          timestamp: Date.now(),
         });
 
         return preferences;
       }
     } catch (error) {
-      console.error('Error loading user preferences:', error);
+      console.error("Error loading user preferences:", error);
       // Return default preferences instead of hardcoded values
       return {
-        theme: 'system',
-        language: 'ar',
-        fontSize: 'md',
-        direction: 'rtl'
+        theme: "system",
+        language: "ar",
+        fontSize: "md",
+        direction: "rtl",
       };
     }
   }
@@ -113,8 +116,8 @@ class DynamicThemeManager {
    * Get theme configuration from database
    */
   async getThemeConfig(): Promise<ThemeConfig> {
-    const cacheKey = 'theme_config';
-    
+    const cacheKey = "theme_config";
+
     // Check cache first
     if (this.cache.has(cacheKey)) {
       const cached = this.cache.get(cacheKey);
@@ -125,9 +128,9 @@ class DynamicThemeManager {
 
     try {
       const { data, error } = await this.supabase
-        .from('settings')
-        .select('value')
-        .eq('key', 'theme_config')
+        .from("settings")
+        .select("value")
+        .eq("key", "theme_config")
         .single();
 
       if (error) {
@@ -135,31 +138,31 @@ class DynamicThemeManager {
       }
 
       const config: ThemeConfig = data?.value || {
-        mode: 'system',
-        primaryColor: '#F58220',
-        secondaryColor: '#009688',
-        accentColor: '#007BFF',
-        borderRadius: '0.5rem',
-        fontFamily: 'var(--font-cairo)'
+        mode: "system",
+        primaryColor: "#F58220",
+        secondaryColor: "#009688",
+        accentColor: "#007BFF",
+        borderRadius: "0.5rem",
+        fontFamily: "var(--font-cairo)",
       };
 
       // Cache the result
       this.cache.set(cacheKey, {
         data: config,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
 
       return config;
     } catch (error) {
-      console.error('Error loading theme config:', error);
+      console.error("Error loading theme config:", error);
       // Return default theme config instead of hardcoded values
       return {
-        mode: 'system',
-        primaryColor: '#F58220',
-        secondaryColor: '#009688',
-        accentColor: '#007BFF',
-        borderRadius: '0.5rem',
-        fontFamily: 'var(--font-cairo)'
+        mode: "system",
+        primaryColor: "#F58220",
+        secondaryColor: "#009688",
+        accentColor: "#007BFF",
+        borderRadius: "0.5rem",
+        fontFamily: "var(--font-cairo)",
       };
     }
   }
@@ -168,17 +171,18 @@ class DynamicThemeManager {
    * Update user preferences in database
    */
   async updateUserPreferences(
-    userId: string, 
-    preferences: Partial<UserPreferences>
+    userId: string,
+    preferences: Partial<UserPreferences>,
   ): Promise<void> {
     try {
-      const { error } = await this.supabase
-        .from('user_preferences')
-        .upsert({
+      const { error } = await this.supabase.from("user_preferences").upsert(
+        {
           user_id: userId,
           ...preferences,
-          updated_at: new Date().toISOString()
-        }, { onConflict: 'user_id' });
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id" },
+      );
 
       if (error) {
         throw new Error(`Failed to update user preferences: ${error.message}`);
@@ -187,7 +191,7 @@ class DynamicThemeManager {
       // Clear cache
       this.cache.delete(`user_preferences_${userId}`);
     } catch (error) {
-      console.error('Error updating user preferences:', error);
+      console.error("Error updating user preferences:", error);
       throw error;
     }
   }
@@ -197,24 +201,25 @@ class DynamicThemeManager {
    */
   async updateThemeConfig(config: Partial<ThemeConfig>): Promise<void> {
     try {
-      const { error } = await this.supabase
-        .from('settings')
-        .upsert({
-          key: 'theme_config',
+      const { error } = await this.supabase.from("settings").upsert(
+        {
+          key: "theme_config",
           value: config,
-          category: 'theme',
+          category: "theme",
           is_public: true,
-          updated_at: new Date().toISOString()
-        }, { onConflict: 'key' });
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "key" },
+      );
 
       if (error) {
         throw new Error(`Failed to update theme config: ${error.message}`);
       }
 
       // Clear cache
-      this.cache.delete('theme_config');
+      this.cache.delete("theme_config");
     } catch (error) {
-      console.error('Error updating theme config:', error);
+      console.error("Error updating theme config:", error);
       throw error;
     }
   }
@@ -224,23 +229,23 @@ class DynamicThemeManager {
    */
   applyTheme(theme: ThemeMode, config: ThemeConfig): void {
     const html = document.documentElement;
-    
+
     // Set theme mode
-    html.setAttribute('data-theme', theme);
-    
+    html.setAttribute("data-theme", theme);
+
     // Set CSS custom properties
-    html.style.setProperty('--color-primary', config.primaryColor);
-    html.style.setProperty('--color-secondary', config.secondaryColor);
-    html.style.setProperty('--color-accent', config.accentColor);
-    html.style.setProperty('--border-radius', config.borderRadius);
-    html.style.setProperty('--font-family', config.fontFamily);
-    
+    html.style.setProperty("--color-primary", config.primaryColor);
+    html.style.setProperty("--color-secondary", config.secondaryColor);
+    html.style.setProperty("--color-accent", config.accentColor);
+    html.style.setProperty("--border-radius", config.borderRadius);
+    html.style.setProperty("--font-family", config.fontFamily);
+
     // Apply custom CSS if provided
     if (config.customCSS) {
-      let styleElement = document.getElementById('dynamic-theme-css');
+      let styleElement = document.getElementById("dynamic-theme-css");
       if (!styleElement) {
-        styleElement = document.createElement('style');
-        styleElement.id = 'dynamic-theme-css';
+        styleElement = document.createElement("style");
+        styleElement.id = "dynamic-theme-css";
         document.head.appendChild(styleElement);
       }
       styleElement.textContent = config.customCSS;
@@ -252,23 +257,25 @@ class DynamicThemeManager {
    */
   applyLanguage(language: "ar" | "en"): void {
     const html = document.documentElement;
-    html.setAttribute('lang', language);
-    html.setAttribute('dir', language === 'ar' ? 'rtl' : 'ltr');
+    html.setAttribute("lang", language);
+    html.setAttribute("dir", language === "ar" ? "rtl" : "ltr");
   }
 
   /**
    * Get system theme preference
    */
   getSystemTheme(): "light" | "dark" {
-    if (typeof window === 'undefined') return 'light';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    if (typeof window === "undefined") return "light";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   }
 
   /**
    * Resolve actual theme mode (system -> light/dark)
    */
   resolveThemeMode(theme: ThemeMode): "light" | "dark" {
-    if (theme === 'system') {
+    if (theme === "system") {
       return this.getSystemTheme();
     }
     return theme;

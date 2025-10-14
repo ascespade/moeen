@@ -287,11 +287,10 @@ export class SaudiMinistryHealthIntegration {
 
     try {
       // Submit to SEHA
-      const sehaResponse = await this.callSehaAPI(
-        "POST",
-        "/services",
-        { ...serviceData, patientId },
-      );
+      const sehaResponse = await this.callSehaAPI("POST", "/services", {
+        ...serviceData,
+        patientId,
+      });
       if (sehaResponse.success) {
         results.sehaSubmission = true;
         results.submissionIds.sehaId = sehaResponse.data.submissionId;
@@ -302,11 +301,10 @@ export class SaudiMinistryHealthIntegration {
 
     try {
       // Submit to SHOON
-      const shoonResponse = await this.callShoonAPI(
-        "POST",
-        "/services",
-        { ...serviceData, patientId },
-      );
+      const shoonResponse = await this.callShoonAPI("POST", "/services", {
+        ...serviceData,
+        patientId,
+      });
       if (shoonResponse.success) {
         results.shoonSubmission = true;
         results.submissionIds.shoonId = shoonResponse.data.submissionId;
@@ -317,11 +315,10 @@ export class SaudiMinistryHealthIntegration {
 
     try {
       // Submit to TATMAN
-      const tatmanResponse = await this.callTatmanAPI(
-        "POST",
-        "/claims",
-        { ...serviceData, patientId },
-      );
+      const tatmanResponse = await this.callTatmanAPI("POST", "/claims", {
+        ...serviceData,
+        patientId,
+      });
       if (tatmanResponse.success) {
         results.tatmanSubmission = true;
         results.submissionIds.tatmanId = tatmanResponse.data.claimId;

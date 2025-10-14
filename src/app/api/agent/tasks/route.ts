@@ -7,7 +7,7 @@ const LOG_DIR = "/home/ubuntu/workspace/projects/moeen/logs";
 export async function GET(request: NextRequest) {
   try {
     const taskFile = path.join(LOG_DIR, "tasks.json");
-    
+
     if (!fs.existsSync(taskFile)) {
       return NextResponse.json({
         total_tasks: 100,
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
         progress_percentage: 0,
         status: "not_started",
         last_update: new Date().toISOString(),
-        estimated_completion: null
+        estimated_completion: null,
       });
     }
 
@@ -26,9 +26,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to read task status" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
-
-

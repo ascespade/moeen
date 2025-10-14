@@ -381,7 +381,7 @@ export class SupabaseDatabaseManager {
   // Health Check
   async healthCheck() {
     try {
-      const { data: _d, error } = await supabaseAdmin
+      const { data: _d, error } = await supabaseAdmin;
       const { data, error } = await supabaseAdmin
         .from("patients")
         .select("id")

@@ -36,7 +36,9 @@ export default function PatientsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState<"all" | "active" | "inactive" | "blocked">("all");
+  const [filterStatus, setFilterStatus] = useState<
+    "all" | "active" | "inactive" | "blocked"
+  >("all");
 
   const supabase = createClient();
 
@@ -45,36 +47,44 @@ export default function PatientsPage() {
     const loadPatients = async () => {
       try {
         setLoading(true);
-        
+
         // Get patients with their appointment statistics
         const { data: patientsData, error: patientsError } = await supabase
-          .from('patients')
-          .select(`
+          .from("patients")
+          .select(
+            `
             *,
             appointments:appointments(count),
             sessions:sessions(count)
-          `)
-          .order('created_at', { ascending: false });
+          `,
+          )
+          .order("created_at", { ascending: false });
 
         if (patientsError) throw patientsError;
 
         // Transform data to include stats
-        const patientsWithStats: PatientWithStats[] = (patientsData || []).map(patient => ({
-          ...patient,
-          name: `${patient.first_name} ${patient.last_name}`,
-          age: patient.date_of_birth ? 
-            new Date().getFullYear() - new Date(patient.date_of_birth).getFullYear() : 0,
-          lastVisit: patient.appointments?.[0]?.appointment_date || 'لم يتم تحديد موعد',
-          totalSessions: patient.sessions?.length || 0,
-          status: 'active' as const, // Default status, can be enhanced later
-          insuranceProvider: 'غير محدد', // Can be enhanced with insurance claims data
-          notes: patient.medical_history || ''
-        }));
+        const patientsWithStats: PatientWithStats[] = (patientsData || []).map(
+          (patient) => ({
+            ...patient,
+            name: `${patient.first_name} ${patient.last_name}`,
+            age: patient.date_of_birth
+              ? new Date().getFullYear() -
+                new Date(patient.date_of_birth).getFullYear()
+              : 0,
+            lastVisit:
+              patient.appointments?.[0]?.appointment_date ||
+              "لم يتم تحديد موعد",
+            totalSessions: patient.sessions?.length || 0,
+            status: "active" as const, // Default status, can be enhanced later
+            insuranceProvider: "غير محدد", // Can be enhanced with insurance claims data
+            notes: patient.medical_history || "",
+          }),
+        );
 
         setPatients(patientsWithStats);
       } catch (err) {
-        console.error('Error loading patients:', err);
-        setError('فشل في تحميل بيانات المرضى');
+        console.error("Error loading patients:", err);
+        setError("فشل في تحميل بيانات المرضى");
       } finally {
         setLoading(false);
       }
@@ -84,33 +94,42 @@ export default function PatientsPage() {
   }, [supabase]);
 
   // Filter patients based on search and status
-  const filteredPatients = patients.filter(patient => {
-    const matchesSearch = 
+  const filteredPatients = patients.filter((patient) => {
+    const matchesSearch =
       patient.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       patient.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       patient.phone.includes(searchTerm) ||
       patient.email?.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesStatus = filterStatus === "all" || patient.status === filterStatus;
-    
+
+    const matchesStatus =
+      filterStatus === "all" || patient.status === filterStatus;
+
     return matchesSearch && matchesStatus;
   });
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "active": return "bg-green-100 text-green-800";
-      case "inactive": return "bg-yellow-100 text-yellow-800";
-      case "blocked": return "bg-red-100 text-red-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "active":
+        return "bg-green-100 text-green-800";
+      case "inactive":
+        return "bg-yellow-100 text-yellow-800";
+      case "blocked":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case "active": return "نشط";
-      case "inactive": return "غير نشط";
-      case "blocked": return "محظور";
-      default: return "غير محدد";
+      case "active":
+        return "نشط";
+      case "inactive":
+        return "غير نشط";
+      case "blocked":
+        return "محظور";
+      default:
+        return "غير محدد";
     }
   };
 
@@ -131,7 +150,7 @@ export default function PatientsPage() {
         <div className="text-center">
           <div className="text-red-600 text-xl mb-4">⚠️</div>
           <p className="text-gray-600">{error}</p>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
@@ -150,7 +169,9 @@ export default function PatientsPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">إدارة المرضى</h1>
-              <p className="text-gray-600 mt-1">إجمالي المرضى: {patients.length}</p>
+              <p className="text-gray-600 mt-1">
+                إجمالي المرضى: {patients.length}
+              </p>
             </div>
             <Link
               href={ROUTES.HEALTH.PATIENTS + "/new"}
@@ -202,7 +223,10 @@ export default function PatientsPage() {
         {/* Patients Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPatients.map((patient) => (
-            <div key={patient.id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <div
+              key={patient.id}
+              className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+            >
               <div className="p-6">
                 {/* Patient Info */}
                 <div className="flex items-start justify-between mb-4">
@@ -216,10 +240,14 @@ export default function PatientsPage() {
                       <h3 className="font-semibold text-gray-900">
                         {patient.first_name} {patient.last_name}
                       </h3>
-                      <p className="text-sm text-gray-500">العمر: {(patient as any).age || 'غير محدد'} سنة</p>
+                      <p className="text-sm text-gray-500">
+                        العمر: {(patient as any).age || "غير محدد"} سنة
+                      </p>
                     </div>
                   </div>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(patient.status)}`}>
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(patient.status)}`}
+                  >
                     {getStatusText(patient.status)}
                   </span>
                 </div>
@@ -241,12 +269,14 @@ export default function PatientsPage() {
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="text-center">
-                    <div className="text-lg font-semibold text-blue-600">{patient.totalSessions}</div>
+                    <div className="text-lg font-semibold text-blue-600">
+                      {patient.totalSessions}
+                    </div>
                     <div className="text-xs text-gray-500">الجلسات</div>
                   </div>
                   <div className="text-center">
                     <div className="text-lg font-semibold text-green-600">
-                      {patient.lastVisit === 'لم يتم تحديد موعد' ? '0' : '1'}
+                      {patient.lastVisit === "لم يتم تحديد موعد" ? "0" : "1"}
                     </div>
                     <div className="text-xs text-gray-500">آخر زيارة</div>
                   </div>
@@ -276,10 +306,12 @@ export default function PatientsPage() {
         {filteredPatients.length === 0 && !loading && (
           <div className="text-center py-12">
             <div className="text-gray-400 text-6xl mb-4">👥</div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">لا توجد نتائج</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              لا توجد نتائج
+            </h3>
             <p className="text-gray-500">
-              {searchTerm || filterStatus !== "all" 
-                ? "لم يتم العثور على مرضى يطابقون معايير البحث" 
+              {searchTerm || filterStatus !== "all"
+                ? "لم يتم العثور على مرضى يطابقون معايير البحث"
                 : "لم يتم إضافة أي مرضى بعد"}
             </p>
           </div>

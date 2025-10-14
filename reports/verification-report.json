@@ -6,10 +6,7 @@
       "expected": "Cursor Agent running continuously",
       "status": "failed",
       "details": {},
-      "issues": [
-        "PID file not found",
-        "Log file not found"
-      ]
+      "issues": ["PID file not found", "Log file not found"]
     },
     {
       "check": "File Cleanup",
@@ -132,18 +129,14 @@
           "overallStatus": "warning"
         }
       },
-      "issues": [
-        "Supabase connection failed"
-      ]
+      "issues": ["Supabase connection failed"]
     },
     {
       "check": "Enhancements Applied",
       "expected": "All optimizations active and functioning",
       "status": "failed",
       "details": {},
-      "issues": [
-        "Enhancements report not found"
-      ]
+      "issues": ["Enhancements report not found"]
     }
   ],
   "summary": {
