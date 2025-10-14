@@ -125,3 +125,4 @@ export function ChartsC() {
     </div>
   );
 }
+export default ChartsA;
