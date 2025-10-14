@@ -3,6 +3,8 @@ import { createClient } from "@supabase/supabase-js";
 // @ts-ignore - shimmed for type checking without full types
 
 type Database = any;
+import { createClient } from "@supabase/supabase-js";
+import { Database } from "@/types/supabase";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -18,6 +20,16 @@ export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
     persistSession: false,
   },
 });
+export const supabaseAdmin = createClient<Database>(
+  supabaseUrl,
+  supabaseServiceKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  },
+);
 
 // Use a relaxed admin alias to mitigate strict generics during development
 const admin: any = supabaseAdmin as any;
@@ -47,6 +59,7 @@ export class RealSupabaseManager {
   }) {
     const { data, error } = await admin
     const { data, error } = await (supabaseAdmin as any)
+    const { data, error } = await supabaseAdmin
       .from("users")
       .insert([userData])
       .select()
@@ -58,6 +71,7 @@ export class RealSupabaseManager {
 
   async getUser(userId: string) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("users")
       .select("*")
       .eq("id", userId)
@@ -69,6 +83,7 @@ export class RealSupabaseManager {
 
   async getUserByPhone(phone: string) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("users")
       .select("*")
       .eq("phone", phone)
@@ -81,6 +96,7 @@ export class RealSupabaseManager {
   async updateUser(userId: string, updates: any) {
     const { data, error } = await admin
     const { data, error } = await (supabaseAdmin as any)
+    const { data, error } = await supabaseAdmin
       .from("users")
       .update({ ...updates, updated_at: new Date().toISOString() })
       .eq("id", userId)
@@ -122,6 +138,7 @@ export class RealSupabaseManager {
     working_hours?: any;
   }) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("doctors")
       .insert([doctorData])
       .select()
@@ -133,6 +150,7 @@ export class RealSupabaseManager {
 
   async getDoctor(doctorId: string) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("doctors")
       .select(
         `
@@ -149,6 +167,7 @@ export class RealSupabaseManager {
 
   async getDoctorsBySpecialty(specialty: string) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("doctors")
       .select(
         `
@@ -178,6 +197,7 @@ export class RealSupabaseManager {
     status?: string;
   }) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("patients")
       .insert([patientData])
       .select()
@@ -235,6 +255,7 @@ export class RealSupabaseManager {
     created_by: string;
   }) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("appointments")
       .insert([appointmentData])
       .select(
@@ -269,6 +290,7 @@ export class RealSupabaseManager {
   ) {
     let query = admin.from("appointments").select(`
     let query = supabaseAdmin as any).from("appointments").select(`
+    let query = supabaseAdmin.from("appointments").select(`
         *,
         patients!appointments_patient_id_fkey(
           *,
@@ -302,6 +324,7 @@ export class RealSupabaseManager {
 
   async updateAppointment(appointmentId: string, updates: any) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("appointments")
       .update({ ...updates, updated_at: new Date().toISOString() })
       .eq("id", appointmentId)
@@ -327,6 +350,7 @@ export class RealSupabaseManager {
     insurance_claim_number?: string;
   }) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("sessions")
       .insert([sessionData])
       .select(
@@ -350,6 +374,7 @@ export class RealSupabaseManager {
 
   async getSessions(patientId: string, limit?: number) {
     let query = admin
+    let query = supabaseAdmin
       .from("sessions")
       .select(
         `
@@ -373,6 +398,7 @@ export class RealSupabaseManager {
 
   async updateSession(sessionId: string, updates: any) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("sessions")
       .update({ ...updates, updated_at: new Date().toISOString() })
       .eq("id", sessionId)
@@ -401,6 +427,7 @@ export class RealSupabaseManager {
     metadata?: any;
   }) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("conversations")
       .insert([conversationData])
       .select()
@@ -412,6 +439,7 @@ export class RealSupabaseManager {
 
   async getConversations(patientId: string, limit?: number) {
     let query = admin
+    let query = supabaseAdmin
       .from("conversations")
       .select("*")
       .eq("patient_id", patientId)
@@ -438,6 +466,7 @@ export class RealSupabaseManager {
     status?: string;
   }) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("insurance_claims")
       .insert([claimData])
       .select()
@@ -450,6 +479,7 @@ export class RealSupabaseManager {
 
   async getInsuranceClaims(patientId: string) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("insurance_claims")
       .select("*")
       .eq("patient_id", patientId)
@@ -462,6 +492,7 @@ export class RealSupabaseManager {
 
   async updateInsuranceClaim(claimId: string, updates: any) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("insurance_claims")
       .update(updates)
       .eq("id", claimId)
@@ -483,6 +514,7 @@ export class RealSupabaseManager {
     data?: any;
   }) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("notifications")
       .insert([notificationData])
       .select()
@@ -495,6 +527,7 @@ export class RealSupabaseManager {
 
   async getNotifications(userId: string, unreadOnly?: boolean) {
     let query = admin
+    let query = supabaseAdmin
       .from("notifications")
       .select("*")
       .eq("user_id", userId)
@@ -510,6 +543,7 @@ export class RealSupabaseManager {
 
   async markNotificationAsRead(notificationId: string) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("notifications")
       .update({ is_read: true })
       .eq("id", notificationId)
@@ -524,6 +558,7 @@ export class RealSupabaseManager {
   // Analytics
   async getPatientStats() {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("users")
       .select("id, created_at, role")
       .eq("role", "patient");
@@ -534,6 +569,10 @@ export class RealSupabaseManager {
     const active = (data as any[]).filter((p: any) => p.created_at).length;
     const newLast30Days = (data as any[]).filter((p: any) => {
       const createdAt = new Date(p.created_at as string);
+    const total = data.length;
+    const active = data.filter((p) => p.created_at).length;
+    const newLast30Days = data.filter((p) => {
+      const createdAt = new Date(p.created_at);
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       return createdAt >= thirtyDaysAgo;
@@ -544,6 +583,7 @@ export class RealSupabaseManager {
 
   async getAppointmentStats() {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("appointments")
       .select("status, appointment_date, created_at");
 
@@ -559,6 +599,11 @@ export class RealSupabaseManager {
     ).length;
     const upcoming = (data as any[]).filter((a: any) => {
       const appointmentDate = new Date(a.appointment_date as string);
+    const total = data.length;
+    const completed = data.filter((a) => a.status === "completed").length;
+    const cancelled = data.filter((a) => a.status === "cancelled").length;
+    const upcoming = data.filter((a) => {
+      const appointmentDate = new Date(a.appointment_date);
       return appointmentDate >= new Date() && a.status === "scheduled";
     }).length;
 
@@ -567,6 +612,7 @@ export class RealSupabaseManager {
 
   async getConversationStats() {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("conversations")
       .select("crisis_level, created_at");
 
@@ -579,6 +625,10 @@ export class RealSupabaseManager {
     ).length;
     const recent = (data as any[]).filter((c: any) => {
       const createdAt = new Date(c.created_at as string);
+    const total = data.length;
+    const crisis = data.filter((c) => c.crisis_level === "crisis").length;
+    const recent = data.filter((c) => {
+      const createdAt = new Date(c.created_at);
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
       return createdAt >= sevenDaysAgo;
@@ -591,6 +641,7 @@ export class RealSupabaseManager {
   async healthCheck() {
     try {
       const { data: _d, error } = await admin
+      const { data, error } = await supabaseAdmin
         .from("users")
         .select("id")
         .limit(1);
@@ -608,6 +659,7 @@ export class RealSupabaseManager {
         status: "unhealthy",
         connected: false,
         error: err.message,
+        error: error.message,
         timestamp: new Date().toISOString(),
       };
     }
@@ -625,6 +677,7 @@ export class RealSupabaseManager {
     user_agent?: string;
   }) {
     const { data, error } = await admin
+    const { data, error } = await supabaseAdmin
       .from("audit_logs")
       .insert([auditData])
       .select()

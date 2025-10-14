@@ -306,6 +306,7 @@ export class WhatsAppIntegration {
   }
 
   private async processImageMessage(_from: string): Promise<string> {
+  private async processImageMessage(from: string): Promise<string> {
     return "شكراً لك على الصورة. يرجى إرسال رسالة نصية لمساعدتي في فهم ما تحتاجه.";
   }
 

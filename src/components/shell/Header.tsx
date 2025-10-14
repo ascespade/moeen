@@ -63,6 +63,15 @@ export default function Header() {
                 م
               </div>
               <div className="truncate text-base font-semibold text-gray-900 sm:text-lg dark:text-white">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="hidden sm:flex items-center gap-2">
+              <div
+                className="h-8 w-8 rounded-lg text-white grid place-items-center"
+                style={{ background: "var(--brand-primary)" }}
+              >
+                م
+              </div>
+              <div className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white truncate">
                 لوحة مُعين
               </div>
             </div>
@@ -72,6 +81,7 @@ export default function Header() {
                 <input
                   type="search"
                   className="block w-full rounded-md border border-[var(--brand-border)] bg-white py-2 pe-10 ps-3 text-sm text-gray-800 placeholder-gray-400 focus:ring-1 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:placeholder-gray-500"
+                  className="py-2 pe-10 ps-3 block w-full border border-gray-200 dark:border-gray-700 rounded-md text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-900 focus:ring-1"
                   placeholder="ابحث في النظام..."
                   aria-label="بحث"
                   style={{ outlineColor: "var(--brand-primary)" }}
@@ -93,6 +103,11 @@ export default function Header() {
                   e.stopPropagation();
                   setShowThemeDropdown(!showThemeDropdown);
                 }}
+            <div className="hs-dropdown relative inline-flex">
+              <button
+                className="h-9 rounded-md border border-gray-200 dark:border-gray-700 px-3 inline-flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2"
+                aria-haspopup="menu"
+                style={{ outlineColor: "var(--brand-primary)" }}
               >
                 {theme === "light" ? (
                   <Sun className="h-4 w-4" />
@@ -133,6 +148,27 @@ export default function Header() {
 
             <button
               className="h-9 rounded-md border border-[var(--brand-border)] px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+              <div
+                className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-36 bg-white dark:bg-gray-900 shadow-md rounded-lg p-1 border border-gray-200 dark:border-gray-700"
+                role="menu"
+              >
+                <button
+                  className="w-full text-start px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800"
+                  onClick={() => setTheme("light")}
+                >
+                  وضع نهاري
+                </button>
+                <button
+                  className="w-full text-start px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800"
+                  onClick={() => setTheme("dark")}
+                >
+                  وضع ليلي
+                </button>
+              </div>
+            </div>
+
+            <button
+              className="h-9 rounded-md border border-gray-200 dark:border-gray-700 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2"
               aria-label="Toggle direction"
               style={{ outlineColor: "var(--brand-primary)" }}
               onClick={() => setDir(dir === "rtl" ? "ltr" : "rtl")}
@@ -180,6 +216,28 @@ export default function Header() {
             <div className="hs-dropdown relative inline-flex [--trigger:hover]">
               <button
                 className="relative grid h-9 w-9 place-items-center rounded-full border border-[var(--brand-border)] text-gray-700 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200"
+              <div
+                className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-32 bg-white dark:bg-gray-900 shadow-md rounded-lg p-1 border border-gray-200 dark:border-gray-700"
+                role="menu"
+              >
+                <Link
+                  className="block px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800"
+                  href="/ar"
+                >
+                  العربية
+                </Link>
+                <Link
+                  className="block px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800"
+                  href="/en"
+                >
+                  English
+                </Link>
+              </div>
+            </div>
+
+            <div className="hs-dropdown [--trigger:hover] relative inline-flex">
+              <button
+                className="relative h-9 w-9 rounded-full border border-gray-200 dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2"
                 style={{ outlineColor: "var(--brand-primary)" }}
                 aria-haspopup="menu"
                 aria-expanded="false"
@@ -187,6 +245,7 @@ export default function Header() {
                 🔔
                 {notif > 0 && (
                   <span className="absolute -start-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-red-600 px-1 text-xs text-white">
+                  <span className="absolute -top-1 -start-1 h-5 min-w-5 px-1 rounded-full bg-red-600 text-white text-xs grid place-items-center">
                     {notif}
                   </span>
                 )}
@@ -196,6 +255,10 @@ export default function Header() {
                 role="menu"
               >
                 <div className="mb-2 px-2 font-medium text-gray-800 dark:text-gray-100">
+                className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-64 bg-white dark:bg-gray-900 shadow-md rounded-lg p-2 border border-gray-200 dark:border-gray-700"
+                role="menu"
+              >
+                <div className="mb-2 font-medium px-2 text-gray-800 dark:text-gray-100">
                   إشعارات
                 </div>
                 {notif === 0 ? (
@@ -206,12 +269,14 @@ export default function Header() {
                       <div
                         key={i}
                         className="flex items-center gap-2 rounded border border-gray-200 p-2 text-gray-800 dark:border-gray-700 dark:text-gray-100"
+                        className="rounded border border-gray-200 dark:border-gray-700 p-2 flex items-center gap-2 text-gray-800 dark:text-gray-100"
                       >
                         ℹ️ تنبيه #{i + 1}
                       </div>
                     ))}
                     <button
                       className="mx-2 h-8 rounded-md border border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                      className="h-8 rounded-md border border-gray-200 dark:border-gray-700 mx-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800"
                       onClick={() => setNotif(0)}
                     >
                       تمييز كمقروء
@@ -224,12 +289,14 @@ export default function Header() {
             <div className="hs-dropdown relative inline-flex">
               <button
                 className="h-9 w-9 rounded-full bg-gray-200 focus:outline-none focus:ring-2 dark:bg-gray-700"
+                className="h-9 w-9 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2"
                 style={{ outlineColor: "var(--brand-primary)" }}
                 aria-haspopup="menu"
                 aria-expanded="false"
               />
               <div
                 className="hs-dropdown-menu duration hs-dropdown-open:opacity-100 hidden min-w-44 rounded-lg border border-gray-200 bg-white p-1 opacity-0 shadow-md transition-[opacity,margin] dark:border-gray-700 dark:bg-gray-900"
+                className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-44 bg-white dark:bg-gray-900 shadow-md rounded-lg p-1 border border-gray-200 dark:border-gray-700"
                 role="menu"
               >
                 <div className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">
@@ -242,6 +309,13 @@ export default function Header() {
                   الإعدادات
                 </button>
                 <button className="w-full rounded-md px-3 py-2 text-start text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800">
+                <button className="w-full text-start px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800">
+                  الملف الشخصي
+                </button>
+                <button className="w-full text-start px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800">
+                  الإعدادات
+                </button>
+                <button className="w-full text-start px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 text-red-600">
                   تسجيل الخروج
                 </button>
               </div>

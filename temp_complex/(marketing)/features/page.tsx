@@ -33,6 +33,17 @@ export default function FeaturesPage() {
             className="rounded-xl border border-brand-border bg-[var(--panel)] p-5"
           >
             <h3 className="mb-2 text-lg font-semibold">{f.title}</h3>
+    <div className="max-w-screen-xl mx-auto px-4 py-12">
+      <h1 className="text-3xl font-bold mb-6">
+        {t("features.title", "المميزات")}
+      </h1>
+      <div className="grid md:grid-cols-3 gap-6">
+        {features.map((f, i) => (
+          <div
+            key={i}
+            className="rounded-xl border border-brand-border p-5 bg-[var(--panel)]"
+          >
+            <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
             <p className="text-gray-600 dark:text-gray-400">{f.desc}</p>
           </div>
         ))}

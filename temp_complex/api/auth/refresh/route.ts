@@ -43,6 +43,8 @@ export async function POST(request: NextRequest) {
           userId: decoded.userId,
           email: decoded.email || "",
           role: decoded.role || "patient",
+          email: decoded.email,
+          role: decoded.role,
         },
         jwtSecret,
         { expiresIn: "7d" },

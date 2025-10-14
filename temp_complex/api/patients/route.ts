@@ -20,6 +20,12 @@ export async function GET(request: NextRequest) {
           patientId: patient.id,
           limit: 1,
         })) as any[];
+      patients.map(async (patient) => {
+        const patientData = await realDB.getPatient(patient.id);
+        const appointments = await realDB.getAppointments({
+          patientId: patient.id,
+          limit: 1,
+        });
 
         return {
           id: patient.id,
@@ -38,6 +44,14 @@ export async function GET(request: NextRequest) {
               ? new Date((appointments as any[])[0].appointment_date as string)
               : null,
           status: (patientData as any)?.status || "active",
+            appointments.length > 0
+              ? new Date(appointments[0].appointment_date)
+              : null,
+          nextAppointment:
+            appointments.length > 0
+              ? new Date(appointments[0].appointment_date)
+              : null,
+          status: patientData?.status || "active",
         };
       }),
     );

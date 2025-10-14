@@ -167,6 +167,7 @@ export default function ConversationsPage() {
               <Link
                 href="/dashboard"
                 className="px-4 py-2 text-gray-600 transition-colors dark:text-gray-300"
+                className="px-4 py-2 text-gray-600 dark:text-gray-300 transition-colors"
                 style={{ color: "var(--brand-primary)" }}
               >
                 ← {t("nav.dashboard", "لوحة التحكم")}
@@ -193,6 +194,7 @@ export default function ConversationsPage() {
               />
               <button
                 className="rounded-md border border-gray-200 p-2 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-800 dark:hover:bg-gray-800"
+                className="p-2 border border-gray-200 dark:border-gray-800 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-1 focus:ring-blue-500"
                 aria-label="Search"
               >
                 <Search className="h-4 w-4" />
@@ -208,6 +210,10 @@ export default function ConversationsPage() {
                     statusFilter === status
                       ? "bg-blue-600 text-white"
                       : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                  className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+                    statusFilter === status
+                      ? "bg-blue-600 text-white"
+                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
                 >
                   {status === "all" && t("conv.filter.all", "الكل")}
@@ -227,6 +233,9 @@ export default function ConversationsPage() {
                 className={`cursor-pointer border-b border-gray-200 p-4 transition-colors dark:border-gray-800 ${
                   selectedConversation === conversation.id
                     ? "border-e-4 border-blue-600 bg-blue-50 dark:bg-gray-800"
+                className={`p-4 border-b border-gray-200 dark:border-gray-800 cursor-pointer transition-colors ${
+                  selectedConversation === conversation.id
+                    ? "bg-blue-50 dark:bg-gray-800 border-e-4 border-blue-600"
                     : "hover:bg-gray-50 dark:hover:bg-gray-800"
                 }`}
                 onClick={() => setSelectedConversation(conversation.id)}
@@ -260,6 +269,7 @@ export default function ConversationsPage() {
                       </span>
                       <span
                         className={`rounded-full px-2 py-1 text-xs font-medium ${getStatusColor(conversation.status)}`}
+                        className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(conversation.status)}`}
                       >
                         {getStatusText(conversation.status)}
                       </span>
@@ -294,18 +304,21 @@ export default function ConversationsPage() {
                   <div className="flex items-center gap-2">
                     <button
                       className="rounded-md border border-gray-200 p-2 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-800 dark:hover:bg-gray-800"
+                      className="p-2 border border-gray-200 dark:border-gray-800 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-1 focus:ring-blue-500"
                       aria-label="Call"
                     >
                       <Phone className="h-4 w-4" />
                     </button>
                     <button
                       className="rounded-md border border-gray-200 p-2 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-800 dark:hover:bg-gray-800"
+                      className="p-2 border border-gray-200 dark:border-gray-800 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-1 focus:ring-blue-500"
                       aria-label="Video"
                     >
                       <Video className="h-4 w-4" />
                     </button>
                     <button
                       className="rounded-md border border-gray-200 p-2 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-800 dark:hover:bg-gray-800"
+                      className="p-2 border border-gray-200 dark:border-gray-800 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-1 focus:ring-blue-500"
                       aria-label="Settings"
                     >
                       <Settings className="h-4 w-4" />
@@ -331,6 +344,10 @@ export default function ConversationsPage() {
                         message.sender === "customer"
                           ? "bg-blue-600 text-white"
                           : "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
+                      className={`max-w-xs lg:max-w-md px-4 py-2 rounded-md ${
+                        message.sender === "customer"
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                       }`}
                     >
                       <p className="text-sm">{message.message}</p>

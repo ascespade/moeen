@@ -55,6 +55,8 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
         className={clsx(
           "shadow-soft relative z-10 w-full max-w-lg rounded-xl border border-brand-border bg-[var(--panel)]",
           open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
+          "relative z-10 w-full max-w-lg rounded-xl border border-brand-border bg-[var(--panel)] shadow-soft",
+          open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
         )}
       >
         {title && (

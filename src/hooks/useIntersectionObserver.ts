@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 // Intersection Observer hook
+import { useEffect, useRef, useState } from "react";
 
 interface UseIntersectionObserverOptions {
   threshold?: number | number[];

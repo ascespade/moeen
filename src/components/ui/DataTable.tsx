@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+
 export type Column<T> = { key: keyof T; header: string };
 
 export function DataTable<T extends Record<string, unknown>>({
@@ -81,6 +82,7 @@ export function DataTable<T extends Record<string, unknown>>({
             onClick={() => setPage(1)}
             disabled={page === 1}
             className="rounded border px-2 py-1 text-sm disabled:opacity-50"
+            className="px-2 py-1 text-sm border rounded disabled:opacity-50"
           >
             «
           </button>
@@ -88,6 +90,7 @@ export function DataTable<T extends Record<string, unknown>>({
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
             className="rounded border px-2 py-1 text-sm disabled:opacity-50"
+            className="px-2 py-1 text-sm border rounded disabled:opacity-50"
           >
             ‹
           </button>
@@ -98,6 +101,7 @@ export function DataTable<T extends Record<string, unknown>>({
             onClick={() => setPage((p) => Math.min(pages, p + 1))}
             disabled={page === pages}
             className="rounded border px-2 py-1 text-sm disabled:opacity-50"
+            className="px-2 py-1 text-sm border rounded disabled:opacity-50"
           >
             ›
           </button>
@@ -105,6 +109,7 @@ export function DataTable<T extends Record<string, unknown>>({
             onClick={() => setPage(pages)}
             disabled={page === pages}
             className="rounded border px-2 py-1 text-sm disabled:opacity-50"
+            className="px-2 py-1 text-sm border rounded disabled:opacity-50"
           >
             »
           </button>

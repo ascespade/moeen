@@ -3,6 +3,10 @@ import { Server as HTTPServer } from "http";
 import { realDB } from "./supabase-real";
 import { performanceMonitor } from "./performance-monitor";
 // Real-time WebSocket Server for Hemam Center
+import { Server as SocketIOServer } from "socket.io";
+import { Server as HTTPServer } from "http";
+import { realDB } from "./supabase-real";
+import { performanceMonitor } from "./performance-monitor";
 
 // Socket event types
 export interface SocketEvents {
@@ -195,6 +199,7 @@ export class WebSocketServer {
         if (user && user.role === "doctor") {
           // Create appointment in database
           const appointment = (await realDB.createAppointment(data)) as any;
+          const appointment = await realDB.createAppointment(data);
 
           // Notify relevant users
           this.io.to(`patient:${data.patient_id}`).emit("appointment:created", {
@@ -214,12 +219,14 @@ export class WebSocketServer {
           const user = this.users.get(socket.id);
           if (user && user.role === "doctor") {
             const session = (await realDB.createSession({
+            const session = await realDB.createSession({
               patient_id: data.patientId,
               doctor_id: data.doctorId,
               session_date: new Date().toISOString().split("T")[0],
               session_time: new Date().toTimeString().split(" ")[0],
               type: "treatment",
             })) as any;
+            });
 
             this.io.to(`patient:${data.patientId}`).emit("session:started", {
               sessionId: session.id,
@@ -336,6 +343,7 @@ export class WebSocketServer {
 
   private async authenticateUser(
     _token: string,
+    token: string,
     userId: string,
   ): Promise<SocketUser | null> {
     try {
@@ -370,6 +378,8 @@ export class WebSocketServer {
       // Get doctor's patients and join their rooms
       const patients = (await realDB.getPatientsByDoctor(user.id)) as any[];
       patients.forEach((patient: any) => {
+      const patients = await realDB.getPatientsByDoctor(user.id);
+      patients.forEach((patient) => {
         socket.join(`patient:${patient.id}`);
       });
     } else if (user.role === "admin") {
@@ -391,6 +401,12 @@ export class WebSocketServer {
     // Monitor WebSocket performance
     setInterval(() => {
       // periodic stats could be emitted/logged in the future
+      const stats = {
+        connectedUsers: this.users.size,
+        patientRooms: this.patientRooms.size,
+        doctorRooms: this.doctorRooms.size,
+        timestamp: new Date().toISOString(),
+      };
 
       // Log performance metrics
       (performanceMonitor as any).recordMetrics({

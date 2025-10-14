@@ -78,6 +78,7 @@ export default function LoginPage() {
             </span>
           </div>
           <h1 className="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
             {t("auth.welcomeBack", "مرحباً بك مرة أخرى")}
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
@@ -96,6 +97,7 @@ export default function LoginPage() {
               <label
                 htmlFor="email"
                 className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
               >
                 {t("auth.email", "البريد الإلكتروني")}
               </label>
@@ -119,6 +121,7 @@ export default function LoginPage() {
               <label
                 htmlFor="password"
                 className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
               >
                 {t("auth.password", "كلمة المرور")}
               </label>
@@ -179,6 +182,7 @@ export default function LoginPage() {
               type="submit"
               disabled={isLoading}
               className="inline-flex w-full items-center justify-center gap-2 px-4 py-3"
+              className="w-full inline-flex justify-center items-center gap-2 px-4 py-3"
             >
               {isLoading ? (
                 <>

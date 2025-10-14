@@ -33,6 +33,17 @@ export default function ForgotPasswordPage() {
               className="mx-auto mb-4 rounded"
             />
             <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="text-center mb-8">
+            <Image
+              src="/logo.jpg"
+              alt="Hemam Logo"
+              width={64}
+              height={64}
+              className="mx-auto rounded mb-4"
+            />
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               تم إرسال الرابط
             </h1>
             <p className="text-gray-600 dark:text-gray-400">
@@ -45,6 +56,11 @@ export default function ForgotPasswordPage() {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900">
                 <svg
                   className="h-8 w-8 text-green-600 dark:text-green-400"
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg
+                  className="w-8 h-8 text-green-600 dark:text-green-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -61,6 +77,7 @@ export default function ForgotPasswordPage() {
                 تحقق من بريدك الإلكتروني
               </h2>
               <p className="mb-6 text-gray-600 dark:text-gray-400">
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
                 إذا كان هذا البريد الإلكتروني مرتبط بحساب، فستتلقى رابط إعادة
                 تعيين كلمة المرور خلال دقائق قليلة.
               </p>
@@ -89,6 +106,17 @@ export default function ForgotPasswordPage() {
             className="mx-auto mb-4 rounded"
           />
           <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+      <div className="max-w-md w-full">
+        <div className="text-center mb-8">
+          <Image
+            src="/logo.jpg"
+            alt="Hemam Logo"
+            width={64}
+            height={64}
+            className="mx-auto rounded mb-4"
+          />
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
             نسيت كلمة المرور؟
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
@@ -97,11 +125,13 @@ export default function ForgotPasswordPage() {
         </div>
 
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label
                 htmlFor="email"
                 className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
               >
                 البريد الإلكتروني
               </label>

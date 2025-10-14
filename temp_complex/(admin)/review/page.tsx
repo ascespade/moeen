@@ -141,6 +141,9 @@ export default function ReviewPage() {
               className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900"
             >
               <div className="mb-2 flex items-center justify-between">
+              className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm"
+            >
+              <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
                   {stat.title}
                 </h3>
@@ -166,6 +169,9 @@ export default function ReviewPage() {
             <div className="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <div className="border-b border-gray-200 p-6 dark:border-gray-800">
                 <div className="mb-4 flex items-center justify-between">
+            <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm">
+              <div className="p-6 border-b border-gray-200 dark:border-gray-800">
+                <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                     المراجعات الحديثة
                   </h2>
@@ -175,6 +181,7 @@ export default function ReviewPage() {
                     </button>
                     <button
                       className="rounded-md border border-gray-200 p-2 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-800"
+                      className="p-2 border border-gray-200 dark:border-gray-800 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                       aria-label="Search"
                     >
                       <Search className="h-4 w-4" />
@@ -192,6 +199,10 @@ export default function ReviewPage() {
                         selectedFilter === filter
                           ? "bg-blue-600 text-white"
                           : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                      className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                        selectedFilter === filter
+                          ? "bg-blue-600 text-white"
+                          : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                       }`}
                     >
                       {filter === "all" && "الكل"}
@@ -210,6 +221,9 @@ export default function ReviewPage() {
                     className={`cursor-pointer p-6 transition-colors ${
                       selectedConversation === conversation.id
                         ? "border-e-4 border-blue-600 bg-blue-50 dark:bg-gray-800"
+                    className={`p-6 cursor-pointer transition-colors ${
+                      selectedConversation === conversation.id
+                        ? "bg-blue-50 dark:bg-gray-800 border-e-4 border-blue-600"
                         : "hover:bg-gray-50 dark:hover:bg-gray-800"
                     }`}
                     onClick={() =>
@@ -229,6 +243,7 @@ export default function ReviewPage() {
                         </div>
                         <div className="flex-1">
                           <div className="mb-1 flex items-center space-x-2 space-x-reverse">
+                          <div className="flex items-center space-x-2 space-x-reverse mb-1">
                             <p className="text-lg font-semibold text-gray-900 dark:text-white">
                               {conversation.customer}
                             </p>
@@ -237,11 +252,13 @@ export default function ReviewPage() {
                             </span>
                           </div>
                           <p className="mb-2 text-sm text-gray-600 dark:text-gray-400">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                             {conversation.message}
                           </p>
                           <div className="flex items-center gap-2">
                             <div
                               className={`rounded-full px-2 py-1 text-xs font-medium ${getStatusColor(conversation.status)}`}
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(conversation.status)}`}
                             >
                               {getStatusText(conversation.status)}
                             </div>
@@ -265,6 +282,7 @@ export default function ReviewPage() {
                         </span>
                         <button
                           className="rounded p-1 hover:bg-gray-100 dark:hover:bg-gray-800"
+                          className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
                           aria-label="Settings"
                         >
                           <Settings className="h-4 w-4" />
@@ -277,6 +295,7 @@ export default function ReviewPage() {
                         <div className="space-y-3">
                           <div>
                             <h4 className="mb-2 font-medium text-gray-900 dark:text-white">
+                            <h4 className="font-medium text-gray-900 dark:text-white mb-2">
                               التقييم التفصيلي
                             </h4>
                             <div className="flex items-center gap-2">
@@ -298,6 +317,7 @@ export default function ReviewPage() {
 
                           <div>
                             <h4 className="mb-2 font-medium text-gray-900 dark:text-white">
+                            <h4 className="font-medium text-gray-900 dark:text-white mb-2">
                               العلامات
                             </h4>
                             <div className="flex flex-wrap gap-2">
@@ -305,6 +325,7 @@ export default function ReviewPage() {
                                 <span
                                   key={index}
                                   className="rounded-full bg-blue-50 px-2 py-1 text-xs text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
+                                  className="px-2 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-full"
                                 >
                                   {tag}
                                 </span>
@@ -334,6 +355,8 @@ export default function ReviewPage() {
             {/* Quick Actions */}
             <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+            <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 إجراءات سريعة
               </h3>
               <div className="space-y-3">
@@ -352,6 +375,8 @@ export default function ReviewPage() {
             {/* Recent Activity */}
             <div className="bg-[color:var(--background)]/70 rounded-xl border border-[var(--brand-border)] p-4 shadow-sm backdrop-blur">
               <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+            <div className="rounded-xl border border-[var(--brand-border)] bg-[color:var(--background)]/70 backdrop-blur p-4 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 النشاط الأخير
               </h3>
               <ul className="space-y-3 text-gray-600 dark:text-gray-400">

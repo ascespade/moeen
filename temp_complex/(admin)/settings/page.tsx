@@ -108,6 +108,8 @@ export default function SettingsPage() {
           <div className="lg:col-span-1">
             <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+            <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 الإعدادات
               </h3>
               <nav className="space-y-2">
@@ -119,6 +121,10 @@ export default function SettingsPage() {
                       activeTab === tab.id
                         ? "bg-blue-600 text-white"
                         : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-right transition-colors ${
+                      activeTab === tab.id
+                        ? "bg-blue-600 text-white"
+                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                     }`}
                   >
                     <span className="text-lg">{tab.icon}</span>
@@ -151,6 +157,7 @@ export default function SettingsPage() {
                           handleSettingChange("siteName", e.target.value)
                         }
                         className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 focus:border-transparent focus:ring-1 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-900"
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                       />
                     </div>
 
@@ -164,6 +171,7 @@ export default function SettingsPage() {
                           handleSettingChange("language", e.target.value)
                         }
                         className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 focus:border-transparent focus:ring-1 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-900"
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                       >
                         <option value="ar">العربية</option>
                         <option value="en">English</option>
@@ -180,6 +188,7 @@ export default function SettingsPage() {
                           handleSettingChange("timezone", e.target.value)
                         }
                         className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 focus:border-transparent focus:ring-1 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-900"
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                       >
                         <option value="Asia/Riyadh">الرياض (GMT+3)</option>
                         <option value="Asia/Dubai">دبي (GMT+4)</option>
@@ -197,6 +206,7 @@ export default function SettingsPage() {
                           handleSettingChange("theme", e.target.value)
                         }
                         className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 focus:border-transparent focus:ring-1 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-900"
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900"
                       >
                         <option value="light">فاتح</option>
                         <option value="dark">داكن</option>
@@ -249,6 +259,7 @@ export default function SettingsPage() {
                             )
                           }
                           className="peer sr-only"
+                          className="sr-only peer"
                         />
                         <div className="peer-focus:ring-brand-primary/20 peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[var(--brand-primary)] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4"></div>
                       </label>
@@ -274,6 +285,7 @@ export default function SettingsPage() {
                             )
                           }
                           className="peer sr-only"
+                          className="sr-only peer"
                         />
                         <div className="peer-focus:ring-brand-primary/20 peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[var(--brand-primary)] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4"></div>
                       </label>
@@ -299,6 +311,7 @@ export default function SettingsPage() {
                             )
                           }
                           className="peer sr-only"
+                          className="sr-only peer"
                         />
                         <div className="peer-focus:ring-brand-primary/20 peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[var(--brand-primary)] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4"></div>
                       </label>
@@ -335,6 +348,7 @@ export default function SettingsPage() {
                             )
                           }
                           className="peer sr-only"
+                          className="sr-only peer"
                         />
                         <div className="peer-focus:ring-brand-primary/20 peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[var(--brand-primary)] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4"></div>
                       </label>
@@ -355,6 +369,7 @@ export default function SettingsPage() {
                             )
                           }
                           className="w-full rounded-lg border border-[var(--brand-border)] px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-brand-primary"
+                          className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
                         />
                       </div>
 
@@ -372,6 +387,7 @@ export default function SettingsPage() {
                             )
                           }
                           className="w-full rounded-lg border border-[var(--brand-border)] px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-brand-primary"
+                          className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
                         />
                       </div>
                     </div>
@@ -391,6 +407,7 @@ export default function SettingsPage() {
                       <div className="flex items-center justify-between rounded-lg border border-[var(--brand-border)] p-4">
                         <div className="flex items-center space-x-3 space-x-reverse">
                           <div className="grid h-6 w-6 place-items-center rounded bg-green-600 text-[10px] font-bold text-white">
+                          <div className="h-6 w-6 rounded bg-green-600 text-white grid place-items-center text-[10px] font-bold">
                             WA
                           </div>
                           <div>
@@ -413,6 +430,7 @@ export default function SettingsPage() {
                               )
                             }
                             className="peer sr-only"
+                            className="sr-only peer"
                           />
                           <div className="peer-focus:ring-brand-primary/20 peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[var(--brand-primary)] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4"></div>
                         </label>
@@ -421,6 +439,7 @@ export default function SettingsPage() {
                       <div className="flex items-center justify-between rounded-lg border border-[var(--brand-border)] p-4">
                         <div className="flex items-center space-x-3 space-x-reverse">
                           <div className="grid h-6 w-6 place-items-center rounded bg-sky-600 text-[10px] font-bold text-white">
+                          <div className="h-6 w-6 rounded bg-sky-600 text-white grid place-items-center text-[10px] font-bold">
                             TG
                           </div>
                           <div>
@@ -443,6 +462,7 @@ export default function SettingsPage() {
                               )
                             }
                             className="peer sr-only"
+                            className="sr-only peer"
                           />
                           <div className="peer-focus:ring-brand-primary/20 peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[var(--brand-primary)] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4"></div>
                         </label>
@@ -451,6 +471,7 @@ export default function SettingsPage() {
                       <div className="flex items-center justify-between rounded-lg border border-[var(--brand-border)] p-4">
                         <div className="flex items-center space-x-3 space-x-reverse">
                           <div className="grid h-6 w-6 place-items-center rounded bg-blue-700 text-[10px] font-bold text-white">
+                          <div className="h-6 w-6 rounded bg-blue-700 text-white grid place-items-center text-[10px] font-bold">
                             FB
                           </div>
                           <div>
@@ -473,6 +494,7 @@ export default function SettingsPage() {
                               )
                             }
                             className="peer sr-only"
+                            className="sr-only peer"
                           />
                           <div className="peer-focus:ring-brand-primary/20 peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[var(--brand-primary)] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4"></div>
                         </label>
@@ -481,6 +503,7 @@ export default function SettingsPage() {
                       <div className="flex items-center justify-between rounded-lg border border-[var(--brand-border)] p-4">
                         <div className="flex items-center space-x-3 space-x-reverse">
                           <div className="grid h-6 w-6 place-items-center rounded bg-pink-600 text-[10px] font-bold text-white">
+                          <div className="h-6 w-6 rounded bg-pink-600 text-white grid place-items-center text-[10px] font-bold">
                             IG
                           </div>
                           <div>
@@ -503,6 +526,7 @@ export default function SettingsPage() {
                               )
                             }
                             className="peer sr-only"
+                            className="sr-only peer"
                           />
                           <div className="peer-focus:ring-brand-primary/20 peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[var(--brand-primary)] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4"></div>
                         </label>
@@ -552,6 +576,7 @@ export default function SettingsPage() {
                             handleSettingChange("aiEnabled", e.target.checked)
                           }
                           className="peer sr-only"
+                          className="sr-only peer"
                         />
                         <div className="peer-focus:ring-brand-primary/20 peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[var(--brand-primary)] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4"></div>
                       </label>
@@ -568,6 +593,7 @@ export default function SettingsPage() {
                             handleSettingChange("aiModel", e.target.value)
                           }
                           className="w-full rounded-lg border border-[var(--brand-border)] px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-brand-primary"
+                          className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
                         >
                           <option value="gpt-4">GPT-4</option>
                           <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
@@ -619,6 +645,7 @@ export default function SettingsPage() {
                             )
                           }
                           className="peer sr-only"
+                          className="sr-only peer"
                         />
                         <div className="peer-focus:ring-brand-primary/20 peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[var(--brand-primary)] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4"></div>
                       </label>

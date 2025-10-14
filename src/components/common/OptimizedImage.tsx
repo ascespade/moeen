@@ -25,6 +25,7 @@ export default function OptimizedImage({
     return (
       <div
         className={`flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700 ${className}`}
+        className={`bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center ${className}`}
         style={{ width, height }}
       >
         <span className="text-sm text-gray-500">صورة</span>
@@ -37,6 +38,7 @@ export default function OptimizedImage({
       {isLoading && (
         <div
           className="absolute inset-0 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700"
+          className="absolute inset-0 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"
           style={{ width, height }}
         />
       )}

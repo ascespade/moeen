@@ -207,11 +207,14 @@ export default function AnalyticsPage() {
             {/* System Health */}
             <div className="mb-8 rounded-xl bg-white p-6 shadow-lg">
               <div className="mb-4 flex items-center justify-between">
+            <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+              <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-900">
                   حالة النظام
                 </h3>
                 <div
                   className={`rounded-full px-3 py-1 text-sm font-medium ${
+                  className={`px-3 py-1 rounded-full text-sm font-medium ${
                     analyticsData.systemHealth.status === "healthy"
                       ? "bg-green-100 text-green-800"
                       : "bg-red-100 text-red-800"
@@ -226,6 +229,7 @@ export default function AnalyticsPage() {
                 <div className="flex items-center space-x-3 space-x-reverse">
                   <div
                     className={`h-3 w-3 rounded-full ${
+                    className={`w-3 h-3 rounded-full ${
                       analyticsData.systemHealth.connected
                         ? "bg-green-500"
                         : "bg-red-500"
@@ -237,6 +241,7 @@ export default function AnalyticsPage() {
                 </div>
                 <div className="flex items-center space-x-3 space-x-reverse">
                   <div className="h-3 w-3 rounded-full bg-green-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
                   <span className="text-sm text-gray-600">
                     خدمة الذكاء الاصطناعي
                   </span>
@@ -257,6 +262,12 @@ export default function AnalyticsPage() {
                     نمو المرضى
                   </h3>
                   <TrendingUp className="h-5 w-5 text-green-600" />
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    نمو المرضى
+                  </h3>
+                  <TrendingUp className="w-5 h-5 text-green-600" />
                 </div>
                 <div className="flex h-64 items-center justify-center rounded-lg bg-gray-50">
                   <div className="text-center">
@@ -273,6 +284,12 @@ export default function AnalyticsPage() {
                     حالة المواعيد
                   </h3>
                   <PieChart className="h-5 w-5 text-blue-600" />
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    حالة المواعيد
+                  </h3>
+                  <PieChart className="w-5 h-5 text-blue-600" />
                 </div>
                 <div className="flex h-64 items-center justify-center rounded-lg bg-gray-50">
                   <div className="text-center">
@@ -289,10 +306,17 @@ export default function AnalyticsPage() {
                     اتجاهات المحادثات
                   </h3>
                   <LineChart className="h-5 w-5 text-orange-600" />
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    اتجاهات المحادثات
+                  </h3>
+                  <LineChart className="w-5 h-5 text-orange-600" />
                 </div>
                 <div className="flex h-64 items-center justify-center rounded-lg bg-gray-50">
                   <div className="text-center">
                     <LineChart className="mx-auto mb-2 h-12 w-12 text-gray-400" />
+                    <LineChart className="w-12 h-12 text-gray-400 mx-auto mb-2" />
                     <p className="text-gray-500">
                       رسم بياني لاتجاهات المحادثات
                     </p>
@@ -307,6 +331,12 @@ export default function AnalyticsPage() {
                     أوقات الاستجابة للأزمات
                   </h3>
                   <Clock className="h-5 w-5 text-red-600" />
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    أوقات الاستجابة للأزمات
+                  </h3>
+                  <Clock className="w-5 h-5 text-red-600" />
                 </div>
                 <div className="flex h-64 items-center justify-center rounded-lg bg-gray-50">
                   <div className="text-center">
@@ -320,6 +350,8 @@ export default function AnalyticsPage() {
             {/* Recent Activity */}
             <div className="mt-8 rounded-xl bg-white p-6 shadow-lg">
               <h3 className="mb-4 text-lg font-semibold text-gray-900">
+            <div className="bg-white rounded-xl shadow-lg p-6 mt-8">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 النشاط الأخير
               </h3>
               <div className="space-y-4">

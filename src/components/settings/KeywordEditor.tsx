@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+
 export default function KeywordEditor({
   keywords,
   onChange,
@@ -39,6 +40,7 @@ export default function KeywordEditor({
           <span
             key={k}
             className="inline-flex h-8 items-center gap-2 rounded-full bg-amber-100 px-3 text-sm text-amber-800"
+            className="inline-flex items-center gap-2 rounded-full bg-amber-100 text-amber-800 px-3 h-8 text-sm"
           >
             {k}
             <button className="text-amber-900" onClick={() => remove(k)}>

@@ -18,6 +18,7 @@ export function ChartSkeleton() {
             style={{ height: `${20 + (i % 10) * 6}px` }}
           >
             <Skeleton className="h-full w-full" />
+            <Skeleton className="w-full h-full" />
           </div>
         ))}
       </div>

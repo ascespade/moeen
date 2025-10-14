@@ -91,6 +91,42 @@ export const ROUTES = {
   // Settings
   SETTINGS: "/settings",
 
+  // Admin routes
+  ADMIN: {
+    DASHBOARD: "/admin/dashboard",
+    USERS: "/admin/users",
+    CHANNELS: "/admin/channels",
+    CONVERSATIONS: "/admin/conversations",
+    SETTINGS: "/admin/settings",
+    LOGS: "/admin/logs",
+    REVIEW: "/admin/review",
+    FLOW: "/admin/flow",
+  },
+
+  // User routes
+  USER: {
+    DASHBOARD: "/dashboard",
+    PROFILE: "/profile",
+    SETTINGS: "/settings",
+    CHANNELS: "/channels",
+    CONVERSATIONS: "/conversations",
+  },
+
+  // Channel routes
+  CHANNEL: {
+    LIST: "/channels",
+    CREATE: "/channels/create",
+    VIEW: (id: string) => `/channels/${id}`,
+    EDIT: (id: string) => `/channels/${id}/edit`,
+    SETTINGS: (id: string) => `/channels/${id}/settings`,
+  },
+
+  // Conversation routes
+  CONVERSATION: {
+    LIST: "/conversations",
+    VIEW: (id: string) => `/conversations/${id}`,
+  },
+
   // API routes
   API: {
     AUTH: "/api/auth",

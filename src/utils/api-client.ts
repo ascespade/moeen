@@ -5,6 +5,7 @@ export class ApiClient {
   private cacheTtlMs: number;
 
   constructor(baseURL: string = "/api", cacheTtlMs: number = 30000) {
+  constructor(baseURL: string = "/api") {
     this.baseURL = baseURL;
     this.cacheTtlMs = cacheTtlMs;
   }
@@ -36,6 +37,13 @@ export class ApiClient {
         if (cached && Date.now() - cached.timestamp < this.cacheTtlMs) {
           return cached.payload as T;
         }
+      const response = await fetch(url, config);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.error || `HTTP ${response.status}: ${response.statusText}`,
+        );
       }
 
       const response = await fetch(url, config);
@@ -93,6 +101,7 @@ export class ApiClient {
     return this.request<T>(endpoint, {
       method: "POST",
       body: data ? JSON.stringify(data) : null,
+      body: data ? JSON.stringify(data) : undefined,
     });
   }
 
@@ -100,6 +109,7 @@ export class ApiClient {
     return this.request<T>(endpoint, {
       method: "PUT",
       body: data ? JSON.stringify(data) : null,
+      body: data ? JSON.stringify(data) : undefined,
     });
   }
 

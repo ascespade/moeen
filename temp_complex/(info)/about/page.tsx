@@ -58,6 +58,7 @@ export default function AboutPage() {
             <div className="flex items-center gap-3">
               <Image
                 src="/logo.png"
+                src="/logo.jpg"
                 alt="Hemam Logo"
                 width={40}
                 height={40}
@@ -74,18 +75,24 @@ export default function AboutPage() {
               <Link
                 href="/"
                 className="text-gray-600 hover:text-[var(--brand-primary)] dark:text-gray-400"
+            <nav className="hidden md:flex items-center gap-6">
+              <Link
+                href="/"
+                className="text-gray-600 dark:text-gray-400 hover:text-[var(--brand-primary)]"
               >
                 الرئيسية
               </Link>
               <Link
                 href="/about"
                 className="font-medium text-[var(--brand-primary)]"
+                className="text-[var(--brand-primary)] font-medium"
               >
                 من نحن
               </Link>
               <Link
                 href="/contact"
                 className="text-gray-600 hover:text-[var(--brand-primary)] dark:text-gray-400"
+                className="text-gray-600 dark:text-gray-400 hover:text-[var(--brand-primary)]"
               >
                 تواصل
               </Link>
@@ -102,6 +109,7 @@ export default function AboutPage() {
             منصة مُعين - جسر التواصل بين المحتاجين والمتطوعين والمتبرعين
           </p>
           <p className="mx-auto max-w-3xl text-lg opacity-80">
+          <p className="text-lg opacity-80 max-w-3xl mx-auto">
             نحن نؤمن بقوة التضامن والتعاون في بناء مجتمع أفضل. منصة مُعين تجمع
             بين المستفيدين والمتطوعين والمتبرعين لتقديم الدعم والمساعدة للجميع.
           </p>
@@ -134,6 +142,7 @@ export default function AboutPage() {
               رؤيتنا ورسالتنا
             </h2>
             <p className="mx-auto max-w-3xl text-lg text-gray-600 dark:text-gray-400">
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
               نسعى لبناء مجتمع متكامل يجمع بين جميع فئات المجتمع لتحقيق التضامن
               والتعاون
             </p>
@@ -146,6 +155,13 @@ export default function AboutPage() {
                 className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
               >
                 <div className="mb-4 text-[var(--brand-primary)]">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700"
+              >
+                <div className="text-[var(--brand-primary)] mb-4">
                   {feature.icon}
                 </div>
                 <h3 className="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
@@ -169,6 +185,7 @@ export default function AboutPage() {
                 مهمتنا
               </h2>
               <p className="mb-6 text-lg text-gray-600 dark:text-gray-400">
+              <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
                 نعمل على تسهيل التواصل بين المحتاجين والمتطوعين والمتبرعين من
                 خلال منصة موحدة وآمنة تتيح للجميع المشاركة في بناء مجتمع أفضل.
               </p>
@@ -196,6 +213,7 @@ export default function AboutPage() {
             <div className="relative">
               <Image
                 src="/logo.png"
+                src="/logo.jpg"
                 alt="Hemam Logo"
                 width={400}
                 height={400}
@@ -216,6 +234,7 @@ export default function AboutPage() {
             كن جزءاً من مجتمع مُعين وساعد في بناء عالم أفضل للجميع
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/register"
               className="rounded-lg bg-white px-8 py-3 font-semibold text-[var(--brand-primary)] transition-colors hover:bg-gray-100"
@@ -240,6 +259,9 @@ export default function AboutPage() {
               <div className="mb-4 flex items-center gap-3">
                 <Image
                   src="/logo.png"
+              <div className="flex items-center gap-3 mb-4">
+                <Image
+                  src="/logo.jpg"
                   alt="Hemam Logo"
                   width={32}
                   height={32}

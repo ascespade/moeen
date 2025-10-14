@@ -259,6 +259,7 @@ export class SaudiMinistryHealthIntegration {
   // Submit to Ministry Systems
   async submitToMinistry(
     _patientId: string,
+    patientId: string,
     serviceData: {
       serviceType: string;
       serviceCode: string;
