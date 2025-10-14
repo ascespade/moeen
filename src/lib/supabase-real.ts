@@ -4,7 +4,17 @@ import { createClient } from "@supabase/supabase-js";
 
 type Database = any;
 import { createClient } from "@supabase/supabase-js";
-import { Database } from "@/types/supabase";
+import type { Database } from "@/types/supabase";
+
+type UsersInsert = Database["public"]["Tables"]["users"]["Insert"];
+type DoctorsInsert = Database["public"]["Tables"]["doctors"]["Insert"];
+type PatientsInsert = Database["public"]["Tables"]["patients"]["Insert"];
+type AppointmentsInsert = Database["public"]["Tables"]["appointments"]["Insert"];
+type SessionsInsert = Database["public"]["Tables"]["sessions"]["Insert"];
+type ConversationsInsert = Database["public"]["Tables"]["conversations"]["Insert"];
+type InsuranceClaimsInsert = Database["public"]["Tables"]["insurance_claims"]["Insert"];
+type NotificationsInsert = Database["public"]["Tables"]["notifications"]["Insert"];
+type AuditLogsInsert = Database["public"]["Tables"]["audit_logs"]["Insert"];
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -59,6 +69,7 @@ export class RealSupabaseManager {
   }) {
     const { data, error } = await admin
     const { data, error } = await (supabaseAdmin as any)
+  async createUser(userData: UsersInsert) {
     const { data, error } = await supabaseAdmin
       .from("users")
       .insert([userData])
@@ -138,6 +149,7 @@ export class RealSupabaseManager {
     working_hours?: any;
   }) {
     const { data, error } = await admin
+  async createDoctor(doctorData: DoctorsInsert) {
     const { data, error } = await supabaseAdmin
       .from("doctors")
       .insert([doctorData])
@@ -197,6 +209,7 @@ export class RealSupabaseManager {
     status?: string;
   }) {
     const { data, error } = await admin
+  async createPatient(patientData: PatientsInsert) {
     const { data, error } = await supabaseAdmin
       .from("patients")
       .insert([patientData])
@@ -255,6 +268,7 @@ export class RealSupabaseManager {
     created_by: string;
   }) {
     const { data, error } = await admin
+  async createAppointment(appointmentData: AppointmentsInsert) {
     const { data, error } = await supabaseAdmin
       .from("appointments")
       .insert([appointmentData])
@@ -350,6 +364,7 @@ export class RealSupabaseManager {
     insurance_claim_number?: string;
   }) {
     const { data, error } = await admin
+  async createSession(sessionData: SessionsInsert) {
     const { data, error } = await supabaseAdmin
       .from("sessions")
       .insert([sessionData])
@@ -427,6 +442,7 @@ export class RealSupabaseManager {
     metadata?: any;
   }) {
     const { data, error } = await admin
+  async logConversation(conversationData: ConversationsInsert) {
     const { data, error } = await supabaseAdmin
       .from("conversations")
       .insert([conversationData])
@@ -466,6 +482,7 @@ export class RealSupabaseManager {
     status?: string;
   }) {
     const { data, error } = await admin
+  async createInsuranceClaim(claimData: InsuranceClaimsInsert) {
     const { data, error } = await supabaseAdmin
       .from("insurance_claims")
       .insert([claimData])
@@ -514,6 +531,7 @@ export class RealSupabaseManager {
     data?: any;
   }) {
     const { data, error } = await admin
+  async createNotification(notificationData: NotificationsInsert) {
     const { data, error } = await supabaseAdmin
       .from("notifications")
       .insert([notificationData])
@@ -677,6 +695,7 @@ export class RealSupabaseManager {
     user_agent?: string;
   }) {
     const { data, error } = await admin
+  async logAudit(auditData: AuditLogsInsert) {
     const { data, error } = await supabaseAdmin
       .from("audit_logs")
       .insert([auditData])
