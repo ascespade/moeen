@@ -1,8 +1,8 @@
-// Real-time WebSocket Server for Hemam Center
 import { Server as SocketIOServer } from "socket.io";
 import { Server as HTTPServer } from "http";
 import { realDB } from "./supabase-real";
 import { performanceMonitor } from "./performance-monitor";
+// Real-time WebSocket Server for Hemam Center
 
 // Socket event types
 export interface SocketEvents {

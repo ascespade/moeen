@@ -1,6 +1,4 @@
 "use client";
-
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -11,6 +9,7 @@ import {
   Users,
 } from "lucide-react";
 import { useT } from "@/components/providers/I18nProvider";
+import Link from "next/link";
 
 const adminItems = [
   {

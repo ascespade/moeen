@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 // Ultra-simple middleware for fastest compilation

@@ -1,11 +1,8 @@
-import { useState } from 'react';
-import { ROUTES } from '@/constants/routes';
 "use client";
-
-
+import { useState } from "react";
+import { ROUTES } from "@/constants/routes";
 import Link from "next/link";
 import Image from "next/image";
-
 
 export default function ResetPasswordPage() {
   const [formData, setFormData] = useState({

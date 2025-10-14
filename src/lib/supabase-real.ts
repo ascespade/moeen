@@ -1,3 +1,4 @@
+import { createClient } from "@supabase/supabase-js";
 // Real Supabase Integration for Hemam Center
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "@/types/supabase";

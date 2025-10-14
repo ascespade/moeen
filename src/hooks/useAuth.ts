@@ -1,10 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
-import { User } from '@/types';
-import { getUser, setUser, getToken, setToken, clearAuth } from '@/utils/storage';
+import { useState, useEffect, useCallback } from "react";
+import { User } from "@/types";
+import {
+  getUser,
+  setUser,
+  getToken,
+  setToken,
+  clearAuth,
+} from "@/utils/storage";
 // Authentication hooks
-
-
-
 
 interface AuthState {
   user: User | null;

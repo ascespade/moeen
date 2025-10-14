@@ -1,9 +1,8 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { Sun, Moon, Languages } from "lucide-react";
-import Link from "next/link";
 import { useT } from "@/components/providers/I18nProvider";
+import Link from "next/link";
 
 export default function Header() {
   const [theme, setTheme] = useState<string>(
