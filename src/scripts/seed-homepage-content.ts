@@ -14,7 +14,8 @@ async function seedHomepageContent() {
         id: 1,
         title: "مرحباً بك في مُعين",
         subtitle: "منصة الرعاية الصحية المتخصصة",
-        description: "نقدم خدمات متكاملة للرعاية الصحية مع أحدث التقنيات والذكاء الاصطناعي",
+        description:
+          "نقدم خدمات متكاملة للرعاية الصحية مع أحدث التقنيات والذكاء الاصطناعي",
         image: "/logo.jpg",
         cta: "اكتشف خدماتنا",
         ctaLink: "#services",
@@ -23,7 +24,8 @@ async function seedHomepageContent() {
         id: 2,
         title: "إدارة المواعيد الذكية",
         subtitle: "نظام تقويم متطور",
-        description: "احجز مواعيدك بسهولة مع نظام التقويم الذكي وإدارة الجلسات العلاجية",
+        description:
+          "احجز مواعيدك بسهولة مع نظام التقويم الذكي وإدارة الجلسات العلاجية",
         image: "/logo.jpg",
         cta: "احجز موعدك",
         ctaLink: "/appointments",
@@ -32,7 +34,8 @@ async function seedHomepageContent() {
         id: 3,
         title: "شات بوت ذكي",
         subtitle: "مساعدك الصحي الشخصي",
-        description: "احصل على إجابات فورية لاستفساراتك الصحية مع الذكاء الاصطناعي المتقدم",
+        description:
+          "احصل على إجابات فورية لاستفساراتك الصحية مع الذكاء الاصطناعي المتقدم",
         image: "/logo.jpg",
         cta: "جرب الشات بوت",
         ctaLink: "/chatbot/flows",
@@ -134,7 +137,8 @@ async function seedHomepageContent() {
       {
         id: 1,
         question: "كيف يمكنني حجز موعد؟",
-        answer: "يمكنك حجز موعد بسهولة من خلال الموقع أو التطبيق، أو الاتصال بنا مباشرة",
+        answer:
+          "يمكنك حجز موعد بسهولة من خلال الموقع أو التطبيق، أو الاتصال بنا مباشرة",
       },
       {
         id: 2,
@@ -144,7 +148,8 @@ async function seedHomepageContent() {
       {
         id: 3,
         question: "كيف يمكنني تتبع مطالباتي التأمينية؟",
-        answer: "يمكنك تتبع حالة مطالباتك التأمينية من خلال لوحة التحكم الخاصة بك",
+        answer:
+          "يمكنك تتبع حالة مطالباتك التأمينية من خلال لوحة التحكم الخاصة بك",
       },
       {
         id: 4,
@@ -167,35 +172,137 @@ async function seedHomepageContent() {
     // Also seed translations for the homepage
     const translations = [
       // Arabic translations
-      { locale: "ar", namespace: "common", key: "homepage.services.title", value: "خدماتنا المتكاملة" },
-      { locale: "ar", namespace: "common", key: "homepage.services.subtitle", value: "نقدم مجموعة شاملة من الخدمات الصحية المتطورة لضمان أفضل رعاية لمرضانا" },
-      { locale: "ar", namespace: "common", key: "homepage.testimonials.title", value: "آراء عملائنا" },
-      { locale: "ar", namespace: "common", key: "homepage.testimonials.subtitle", value: "اكتشف ما يقوله عملاؤنا عن خدماتنا" },
-      { locale: "ar", namespace: "common", key: "homepage.gallery.title", value: "معرض الصور" },
-      { locale: "ar", namespace: "common", key: "homepage.gallery.subtitle", value: "اكتشف بيئة العمل المتطورة في عياداتنا" },
-      { locale: "ar", namespace: "common", key: "homepage.faq.title", value: "الأسئلة الشائعة" },
-      { locale: "ar", namespace: "common", key: "homepage.faq.subtitle", value: "إجابات على أكثر الأسئلة شيوعاً" },
-      { locale: "ar", namespace: "common", key: "homepage.contact.title", value: "ابدأ رحلتك الصحية معنا" },
-      { locale: "ar", namespace: "common", key: "homepage.contact.subtitle", value: "احجز موعدك اليوم واستمتع بأفضل الخدمات الصحية" },
+      {
+        locale: "ar",
+        namespace: "common",
+        key: "homepage.services.title",
+        value: "خدماتنا المتكاملة",
+      },
+      {
+        locale: "ar",
+        namespace: "common",
+        key: "homepage.services.subtitle",
+        value:
+          "نقدم مجموعة شاملة من الخدمات الصحية المتطورة لضمان أفضل رعاية لمرضانا",
+      },
+      {
+        locale: "ar",
+        namespace: "common",
+        key: "homepage.testimonials.title",
+        value: "آراء عملائنا",
+      },
+      {
+        locale: "ar",
+        namespace: "common",
+        key: "homepage.testimonials.subtitle",
+        value: "اكتشف ما يقوله عملاؤنا عن خدماتنا",
+      },
+      {
+        locale: "ar",
+        namespace: "common",
+        key: "homepage.gallery.title",
+        value: "معرض الصور",
+      },
+      {
+        locale: "ar",
+        namespace: "common",
+        key: "homepage.gallery.subtitle",
+        value: "اكتشف بيئة العمل المتطورة في عياداتنا",
+      },
+      {
+        locale: "ar",
+        namespace: "common",
+        key: "homepage.faq.title",
+        value: "الأسئلة الشائعة",
+      },
+      {
+        locale: "ar",
+        namespace: "common",
+        key: "homepage.faq.subtitle",
+        value: "إجابات على أكثر الأسئلة شيوعاً",
+      },
+      {
+        locale: "ar",
+        namespace: "common",
+        key: "homepage.contact.title",
+        value: "ابدأ رحلتك الصحية معنا",
+      },
+      {
+        locale: "ar",
+        namespace: "common",
+        key: "homepage.contact.subtitle",
+        value: "احجز موعدك اليوم واستمتع بأفضل الخدمات الصحية",
+      },
 
       // English translations
-      { locale: "en", namespace: "common", key: "homepage.services.title", value: "Our Integrated Services" },
-      { locale: "en", namespace: "common", key: "homepage.services.subtitle", value: "We provide a comprehensive range of advanced healthcare services to ensure the best care for our patients" },
-      { locale: "en", namespace: "common", key: "homepage.testimonials.title", value: "Client Testimonials" },
-      { locale: "en", namespace: "common", key: "homepage.testimonials.subtitle", value: "Discover what our clients say about our services" },
-      { locale: "en", namespace: "common", key: "homepage.gallery.title", value: "Photo Gallery" },
-      { locale: "en", namespace: "common", key: "homepage.gallery.subtitle", value: "Discover the advanced work environment in our clinics" },
-      { locale: "en", namespace: "common", key: "homepage.faq.title", value: "Frequently Asked Questions" },
-      { locale: "en", namespace: "common", key: "homepage.faq.subtitle", value: "Answers to the most common questions" },
-      { locale: "en", namespace: "common", key: "homepage.contact.title", value: "Start Your Health Journey With Us" },
-      { locale: "en", namespace: "common", key: "homepage.contact.subtitle", value: "Book your appointment today and enjoy the best healthcare services" },
+      {
+        locale: "en",
+        namespace: "common",
+        key: "homepage.services.title",
+        value: "Our Integrated Services",
+      },
+      {
+        locale: "en",
+        namespace: "common",
+        key: "homepage.services.subtitle",
+        value:
+          "We provide a comprehensive range of advanced healthcare services to ensure the best care for our patients",
+      },
+      {
+        locale: "en",
+        namespace: "common",
+        key: "homepage.testimonials.title",
+        value: "Client Testimonials",
+      },
+      {
+        locale: "en",
+        namespace: "common",
+        key: "homepage.testimonials.subtitle",
+        value: "Discover what our clients say about our services",
+      },
+      {
+        locale: "en",
+        namespace: "common",
+        key: "homepage.gallery.title",
+        value: "Photo Gallery",
+      },
+      {
+        locale: "en",
+        namespace: "common",
+        key: "homepage.gallery.subtitle",
+        value: "Discover the advanced work environment in our clinics",
+      },
+      {
+        locale: "en",
+        namespace: "common",
+        key: "homepage.faq.title",
+        value: "Frequently Asked Questions",
+      },
+      {
+        locale: "en",
+        namespace: "common",
+        key: "homepage.faq.subtitle",
+        value: "Answers to the most common questions",
+      },
+      {
+        locale: "en",
+        namespace: "common",
+        key: "homepage.contact.title",
+        value: "Start Your Health Journey With Us",
+      },
+      {
+        locale: "en",
+        namespace: "common",
+        key: "homepage.contact.subtitle",
+        value:
+          "Book your appointment today and enjoy the best healthcare services",
+      },
     ];
 
     await dynamicContentManager.updateTranslations(translations);
 
     console.log("✅ Translations seeded successfully!");
     console.log("🎉 All dynamic content has been seeded!");
-
   } catch (error) {
     console.error("❌ Error seeding homepage content:", error);
     throw error;

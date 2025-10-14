@@ -24,7 +24,9 @@ export function Tabs({
   const handleValueChange = onValueChange || setInternalValue;
 
   return (
-    <TabsContext.Provider value={{ value: currentValue, onValueChange: handleValueChange }}>
+    <TabsContext.Provider
+      value={{ value: currentValue, onValueChange: handleValueChange }}
+    >
       <div className={clsx("w-full", className)} {...props} />
     </TabsContext.Provider>
   );

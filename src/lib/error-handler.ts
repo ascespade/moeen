@@ -1,10 +1,12 @@
+type ErrorSeverity = "low" | "medium" | "high" | "critical";
+
 interface ErrorContext {
-  userId?: string;
-  sessionId?: string;
-  url?: string;
-  userAgent?: string;
+  userId?: string | undefined;
+  sessionId?: string | undefined;
+  url?: string | undefined;
+  userAgent?: string | undefined;
   timestamp: string;
-  severity: 'low' | 'medium' | 'high' | 'critical';
+  severity: ErrorSeverity;
 }
 
 interface ErrorReport {
@@ -29,7 +31,7 @@ export class ErrorHandler {
   async reportError(
     error: Error,
     context: Partial<ErrorContext> = {},
-    componentStack?: string
+    componentStack?: string,
   ): Promise<void> {
     const errorReport: ErrorReport = {
       message: error.message,
@@ -37,8 +39,11 @@ export class ErrorHandler {
       context: {
         userId: context.userId,
         sessionId: context.sessionId,
-        url: typeof window !== 'undefined' ? window.location.href : context.url,
-        userAgent: typeof window !== 'undefined' ? navigator.userAgent : context.userAgent,
+        url: typeof window !== "undefined" ? window.location.href : context.url,
+        userAgent:
+          typeof window !== "undefined"
+            ? navigator.userAgent
+            : context.userAgent,
         timestamp: new Date().toISOString(),
         severity: this.determineSeverity(error),
         ...context,
@@ -55,27 +60,27 @@ export class ErrorHandler {
     }
 
     // Log to console in development
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Error reported:', errorReport);
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error reported:", errorReport);
     }
   }
 
-  private determineSeverity(error: Error): ErrorContext['severity'] {
+  private determineSeverity(error: Error): ErrorSeverity {
     const message = error.message.toLowerCase();
-    
-    if (message.includes('network') || message.includes('fetch')) {
-      return 'medium';
+
+    if (message.includes("network") || message.includes("fetch")) {
+      return "medium";
     }
-    
-    if (message.includes('auth') || message.includes('permission')) {
-      return 'high';
+
+    if (message.includes("auth") || message.includes("permission")) {
+      return "high";
     }
-    
-    if (message.includes('critical') || message.includes('fatal')) {
-      return 'critical';
+
+    if (message.includes("critical") || message.includes("fatal")) {
+      return "critical";
     }
-    
-    return 'low';
+
+    return "low";
   }
 
   private async processErrorQueue(): Promise<void> {
@@ -93,7 +98,7 @@ export class ErrorHandler {
         }
       }
     } catch (error) {
-      console.error('Failed to process error queue:', error);
+      console.error("Failed to process error queue:", error);
     } finally {
       this.isProcessing = false;
     }
@@ -102,11 +107,11 @@ export class ErrorHandler {
   private async sendErrorReport(errorReport: ErrorReport): Promise<void> {
     try {
       // Send to analytics/monitoring service
-      if (process.env.NODE_ENV === 'production') {
-        await fetch('/api/errors', {
-          method: 'POST',
+      if (process.env.NODE_ENV === "production") {
+        await fetch("/api/errors", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(errorReport),
         });
@@ -115,7 +120,7 @@ export class ErrorHandler {
       // Log to audit_logs table
       await this.logToAuditLogs(errorReport);
     } catch (error) {
-      console.error('Failed to send error report:', error);
+      console.error("Failed to send error report:", error);
     }
   }
 
@@ -124,7 +129,6 @@ export class ErrorHandler {
       // This would integrate with your Supabase client
       // const { createClient } = await import('@/lib/supabase/client');
       // const supabase = createClient();
-      
       // await supabase.from('audit_logs').insert({
       //   action: 'error_occurred',
       //   details: errorReport,
@@ -134,7 +138,7 @@ export class ErrorHandler {
       //   created_at: errorReport.context.timestamp,
       // });
     } catch (error) {
-      console.error('Failed to log to audit_logs:', error);
+      console.error("Failed to log to audit_logs:", error);
     }
   }
 
@@ -143,26 +147,28 @@ export class ErrorHandler {
     metric: string,
     value: number,
     threshold: number,
-    context: Partial<ErrorContext> = {}
+    context: Partial<ErrorContext> = {},
   ): Promise<void> {
-    const error = new Error(`Performance issue: ${metric} exceeded threshold (${value}ms > ${threshold}ms)`);
+    const error = new Error(
+      `Performance issue: ${metric} exceeded threshold (${value}ms > ${threshold}ms)`,
+    );
     await this.reportError(error, {
       ...context,
-      severity: 'medium',
+      severity: "medium",
     });
   }
 
   // User analytics (privacy-compliant)
   async trackUserAction(
     action: string,
-    context: Partial<ErrorContext> = {}
+    context: Partial<ErrorContext> = {},
   ): Promise<void> {
     try {
-      if (process.env.NODE_ENV === 'production') {
-        await fetch('/api/analytics/action', {
-          method: 'POST',
+      if (process.env.NODE_ENV === "production") {
+        await fetch("/api/analytics/action", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             action,
@@ -174,7 +180,7 @@ export class ErrorHandler {
         });
       }
     } catch (error) {
-      console.error('Failed to track user action:', error);
+      console.error("Failed to track user action:", error);
     }
   }
 }
@@ -182,21 +188,21 @@ export class ErrorHandler {
 export const errorHandler = ErrorHandler.getInstance();
 
 // Global error handler
-if (typeof window !== 'undefined') {
-  window.addEventListener('error', (event) => {
+if (typeof window !== "undefined") {
+  window.addEventListener("error", (event) => {
     errorHandler.reportError(event.error, {
       url: window.location.href,
       userAgent: navigator.userAgent,
     });
   });
 
-  window.addEventListener('unhandledrejection', (event) => {
+  window.addEventListener("unhandledrejection", (event) => {
     errorHandler.reportError(
       new Error(`Unhandled Promise Rejection: ${event.reason}`),
       {
         url: window.location.href,
         userAgent: navigator.userAgent,
-      }
+      },
     );
   });
 }

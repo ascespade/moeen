@@ -84,12 +84,7 @@
       "from\\('settings'\\)",
       "from\\('translations'\\)"
     ],
-    "requiredImports": [
-      "useI18n",
-      "usePageI18n",
-      "createClient",
-      "I18N_KEYS"
-    ],
+    "requiredImports": ["useI18n", "usePageI18n", "createClient", "I18N_KEYS"],
     "enforcedPatterns": [
       "t\\(I18N_KEYS\\.",
       "usePageI18n\\(\\)",

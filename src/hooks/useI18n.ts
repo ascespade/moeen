@@ -11,15 +11,16 @@ export function useI18n(locale: "ar" | "en" = "ar", ns: string = "common") {
   useEffect(() => {
     let mounted = true;
     setLoading(true);
-    
+
     // Load translations from dynamic content manager
-    dynamicContentManager.getTranslations(locale, ns)
+    dynamicContentManager
+      .getTranslations(locale, ns)
       .then((translations) => {
         if (!mounted) return;
         setMessages(translations);
       })
       .catch((error) => {
-        console.error('Failed to load translations:', error);
+        console.error("Failed to load translations:", error);
         if (!mounted) return;
         setMessages({});
       })

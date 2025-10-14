@@ -24,7 +24,7 @@ const DEFAULT_NAMESPACE = "common";
  * and loads the appropriate namespace
  */
 export function usePageI18n(locale: "ar" | "en" = "ar") {
-  const pathname = usePathname();
+  const pathname = (usePathname() as string) || "/";
   const [currentNamespace, setCurrentNamespace] =
     useState<string>(DEFAULT_NAMESPACE);
 
@@ -34,8 +34,9 @@ export function usePageI18n(locale: "ar" | "en" = "ar") {
     let namespace = DEFAULT_NAMESPACE;
 
     // Check for exact matches first
-    if (ROUTE_NAMESPACES[pathname]) {
-      namespace = ROUTE_NAMESPACES[pathname];
+    const exactNs = ROUTE_NAMESPACES[pathname as keyof typeof ROUTE_NAMESPACES];
+    if (exactNs) {
+      namespace = exactNs;
     } else {
       // Check for partial matches (e.g., /patients/123 -> patients)
       for (const [route, ns] of Object.entries(ROUTE_NAMESPACES)) {

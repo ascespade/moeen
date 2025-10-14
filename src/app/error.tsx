@@ -23,9 +23,7 @@ export default function GlobalError({
             height={80}
             className="mx-auto rounded mb-4"
           />
-          <h1 className="text-4xl font-bold text-brand">
-            مُعين
-          </h1>
+          <h1 className="text-4xl font-bold text-brand">مُعين</h1>
         </div>
 
         {/* Error Content */}

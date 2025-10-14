@@ -46,7 +46,7 @@ const services = [
     title: "إدارة المواعيد",
     description: "نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية",
     icon: "📅",
-    color: "text-blue-600",
+    color: "text-[var(--brand-primary)]",
     bgColor: "bg-blue-50",
   },
   {
@@ -62,7 +62,7 @@ const services = [
     title: "المطالبات التأمينية",
     description: "إدارة وتتبع المطالبات التأمينية بسهولة",
     icon: "📋",
-    color: "text-purple-600",
+    color: "text-orange-600",
     bgColor: "bg-purple-50",
   },
   {
@@ -87,7 +87,7 @@ const services = [
     description: "تقارير شاملة وإحصائيات مفصلة",
     icon: "📊",
     color: "text-indigo-600",
-    bgColor: "bg-indigo-50",
+    bgColor: "bg-orange-50",
   },
 ];
 
@@ -489,7 +489,7 @@ export default function HomePage() {
               </p>
               <a
                 href="tel:+966501234567"
-                className="font-semibold text-blue-600 hover:text-blue-700"
+                className="font-semibold text-[var(--brand-primary)] hover:brightness-95"
               >
                 +966 50 123 4567
               </a>
@@ -623,16 +623,16 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-center">
                   <span className="ml-2 text-2xl">📍</span>
-                  <span className="text-gray-300">الرياض، المملكة العربية السعودية</span>
+                  <span className="text-gray-300">
+                    الرياض، المملكة العربية السعودية
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-            <p className="text-gray-300">
-              © 2024 مُعين. جميع الحقوق محفوظة.
-            </p>
+            <p className="text-gray-300">© 2024 مُعين. جميع الحقوق محفوظة.</p>
           </div>
         </div>
       </footer>

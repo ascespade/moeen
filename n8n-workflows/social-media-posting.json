@@ -7,10 +7,7 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
-      "position": [
-        240,
-        300
-      ],
+      "position": [240, 300],
       "parameters": {
         "rule": {
           "interval": [
@@ -27,10 +24,7 @@
       "name": "Get Random Video",
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 2,
-      "position": [
-        460,
-        300
-      ],
+      "position": [460, 300],
       "parameters": {
         "operation": "list",
         "folderId": "",
@@ -44,10 +38,7 @@
       "name": "Select Random Video",
       "type": "n8n-nodes-base.function",
       "typeVersion": 1,
-      "position": [
-        680,
-        300
-      ],
+      "position": [680, 300],
       "parameters": {
         "functionCode": "\n              const videos = $input.all();\n              const randomIndex = Math.floor(Math.random() * videos.length);\n              return [videos[randomIndex]];\n            "
       }
@@ -57,10 +48,7 @@
       "name": "Post to TikTok",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [
-        900,
-        200
-      ],
+      "position": [900, 200],
       "parameters": {
         "url": "https://open-api.tiktok.com/v2/post/publish/",
         "method": "POST",
@@ -79,10 +67,7 @@
       "name": "Post to Instagram",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [
-        900,
-        300
-      ],
+      "position": [900, 300],
       "parameters": {
         "url": "https://graph.instagram.com/v18.0/me/media",
         "method": "POST",
@@ -101,10 +86,7 @@
       "name": "Post to LinkedIn",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [
-        900,
-        400
-      ],
+      "position": [900, 400],
       "parameters": {
         "url": "https://api.linkedin.com/v2/ugcPosts",
         "method": "POST",
@@ -143,10 +125,7 @@
       "name": "Post to Facebook",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [
-        900,
-        500
-      ],
+      "position": [900, 500],
       "parameters": {
         "url": "https://graph.facebook.com/v18.0/me/videos",
         "method": "POST",

@@ -123,33 +123,39 @@ moeen/
 ## 🚀 Quick Start
 
 ### 1. Install Dependencies
+
 ```bash
 npm install
 ```
 
 ### 2. Environment Setup
+
 ```bash
 cp .env.example .env
 # Edit .env with your actual values
 ```
 
 ### 3. Database Seeding
+
 ```bash
 npm run seed:database
 npm run seed:enhance
 ```
 
 ### 4. Start Development Server
+
 ```bash
 npm run dev
 ```
 
 ### 5. Start Automation Systems
+
 ```bash
 npm run automation:start
 ```
 
 ### 6. Run Tests
+
 ```bash
 npm run test:comprehensive
 ```
@@ -157,11 +163,13 @@ npm run test:comprehensive
 ## 📊 Available Scripts
 
 ### Development
+
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 
 ### Testing
+
 - `npm run test:e2e` - Run all E2E tests
 - `npm run test:e2e:ui` - Run tests with UI
 - `npm run test:e2e:headed` - Run tests in headed mode
@@ -173,6 +181,7 @@ npm run test:comprehensive
 - `npm run test:automation` - Test automation systems only
 
 ### Automation
+
 - `npm run monitor:start` - Start Cursor Agent monitoring
 - `npm run cleanup:start` - Start file cleanup system
 - `npm run workflow:start` - Start n8n workflow orchestration
@@ -182,6 +191,7 @@ npm run test:comprehensive
 - `npm run automation:stop` - Stop all automation systems
 
 ### Database
+
 - `npm run seed:database` - Seed database with sample data
 - `npm run seed:enhance` - Enhance chatbot flows
 
@@ -219,24 +229,28 @@ CLEANUP_RETENTION_DAYS=7
 ## 📈 Features
 
 ### Real-time Monitoring
+
 - System health indicators with auto-refresh
 - Performance metrics with CPU/Memory usage
 - Service status monitoring with uptime tracking
 - Error rate monitoring with alerting
 
 ### Automation Systems
+
 - **Social Media**: Automated posting to multiple platforms
 - **File Management**: Intelligent cleanup with retention policies
 - **Workflow Orchestration**: n8n workflow validation and optimization
 - **Self-healing**: Automatic error detection and correction
 
 ### Security & Admin
+
 - Role-based access control (RBAC)
 - User management with audit logging
 - Security event monitoring
 - Unauthorized access blocking
 
 ### Testing & Quality
+
 - Comprehensive E2E test coverage
 - Automated test execution with reporting
 - Performance testing and monitoring
@@ -251,16 +265,18 @@ CLEANUP_RETENTION_DAYS=7
 ✅ Dashboard shows real-time accurate data  
 ✅ Zero manual intervention required  
 ✅ Self-healing detects and fixes issues automatically  
-✅ Performance optimized with < 100ms API responses  
+✅ Performance optimized with < 100ms API responses
 
 ## 📝 API Endpoints
 
 ### Dashboard APIs
+
 - `GET /api/dashboard/metrics` - Real-time system metrics
 - `GET /api/dashboard/health` - System health status
 - `GET /api/dashboard/logs` - Activity logs
 
 ### Admin APIs
+
 - `GET /api/admin/users` - List all users
 - `POST /api/admin/users` - Create new user
 - `PATCH /api/admin/users/[id]` - Update user
@@ -269,6 +285,7 @@ CLEANUP_RETENTION_DAYS=7
 ## 🔍 Monitoring & Logging
 
 All systems include comprehensive logging with Winston:
+
 - Application logs: `logs/app.log`
 - Error logs: `logs/error.log`
 - System metrics: `logs/metrics.log`
@@ -301,6 +318,7 @@ All systems include comprehensive logging with Winston:
 ## 📞 Support
 
 For issues or questions:
+
 1. Check logs in `logs/` directory
 2. Review test results in `test-results/`
 3. Check system health in dashboard
@@ -309,6 +327,7 @@ For issues or questions:
 ## 🎉 Conclusion
 
 This implementation provides a complete, production-ready automation platform with:
+
 - **15+ automation scripts** for comprehensive system management
 - **20+ API routes** for dashboard and admin functionality
 - **50+ Playwright tests** for complete E2E coverage

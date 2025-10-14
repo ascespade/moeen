@@ -73,13 +73,16 @@ export class PerformanceMonitor {
 
   // Memory usage monitoring
   checkMemoryUsage(): void {
-    if (typeof window !== "undefined" && 'memory' in performance) {
+    if (typeof window !== "undefined" && "memory" in performance) {
       const memory = (performance as any).memory;
       const used = memory.usedJSHeapSize / 1024 / 1024; // MB
       const total = memory.totalJSHeapSize / 1024 / 1024; // MB
-      
-      if (used > 100) { // Alert if using more than 100MB
-        console.warn(`High memory usage: ${used.toFixed(2)}MB / ${total.toFixed(2)}MB`);
+
+      if (used > 100) {
+        // Alert if using more than 100MB
+        console.warn(
+          `High memory usage: ${used.toFixed(2)}MB / ${total.toFixed(2)}MB`,
+        );
       }
     }
   }
