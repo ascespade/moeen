@@ -381,7 +381,7 @@ export class SupabaseDatabaseManager {
   // Health Check
   async healthCheck() {
     try {
-      const { data, error } = await supabaseAdmin
+      const { data: _d, error } = await supabaseAdmin
         .from("patients")
         .select("id")
         .limit(1);
@@ -394,10 +394,11 @@ export class SupabaseDatabaseManager {
         timestamp: new Date().toISOString(),
       };
     } catch (error) {
+      const err = error as Error;
       return {
         status: "unhealthy",
         connected: false,
-        error: error.message,
+        error: err.message,
         timestamp: new Date().toISOString(),
       };
     }

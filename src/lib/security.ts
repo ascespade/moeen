@@ -16,8 +16,6 @@ const getCrypto = () => {
 export class CSRFProtection {
   private static readonly CSRF_TOKEN_HEADER = "x-csrf-token";
   private static readonly CSRF_TOKEN_COOKIE = "csrf-token";
-  private static readonly CSRF_SECRET =
-    process.env.CSRF_SECRET || "fallback-csrf-secret";
 
   static generateToken(): string {
     const crypto = getCrypto();
@@ -191,9 +189,9 @@ export class SessionSecurity {
     // Fallback for browser - use Web Crypto API
     const encoder = new TextEncoder();
     const data = encoder.encode(sessionId);
-    return crypto.subtle
+    return (crypto as any).subtle
       .digest("SHA-256", data)
-      .then((hashBuffer) => {
+      .then((hashBuffer: ArrayBuffer) => {
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
       })

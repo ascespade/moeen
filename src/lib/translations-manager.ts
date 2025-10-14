@@ -31,7 +31,7 @@ export interface TranslationInput {
 export async function addTranslation(
   translation: TranslationInput,
 ): Promise<Translation> {
-  const supabase = getServerSupabase();
+  const supabase = await getServerSupabase();
   const id = cuid.translation();
 
   const { data, error } = await supabase
@@ -59,7 +59,7 @@ export async function addTranslation(
 export async function addMultipleTranslations(
   translations: TranslationInput[],
 ): Promise<Translation[]> {
-  const supabase = getServerSupabase();
+  const supabase = await getServerSupabase();
 
   const translationsWithIds = translations.map((translation) => ({
     id: cuid.translation(),
@@ -88,7 +88,7 @@ export async function getTranslations(
   locale: "ar" | "en",
   namespace: string = "common",
 ): Promise<Record<string, string>> {
-  const supabase = getServerSupabase();
+  const supabase = await getServerSupabase();
 
   const { data, error } = await supabase
     .from("translations")
@@ -101,7 +101,7 @@ export async function getTranslations(
   }
 
   const result: Record<string, string> = {};
-  data?.forEach((item) => {
+  data?.forEach((item: { key: string; value: string }) => {
     result[item.key] = item.value;
   });
 
@@ -115,7 +115,7 @@ export async function updateTranslation(
   id: string,
   value: string,
 ): Promise<Translation> {
-  const supabase = getServerSupabase();
+  const supabase = await getServerSupabase();
 
   const { data, error } = await supabase
     .from("translations")
@@ -135,7 +135,7 @@ export async function updateTranslation(
  * Delete a translation
  */
 export async function deleteTranslation(id: string): Promise<void> {
-  const supabase = getServerSupabase();
+  const supabase = await getServerSupabase();
 
   const { error } = await supabase.from("translations").delete().eq("id", id);
 
@@ -150,7 +150,7 @@ export async function deleteTranslation(id: string): Promise<void> {
 export async function bulkInsertTranslations(
   translations: TranslationInput[],
 ): Promise<void> {
-  const supabase = getServerSupabase();
+  const supabase = await getServerSupabase();
 
   const translationsWithIds = translations.map((translation) => ({
     id: cuid.translation(),
@@ -175,7 +175,7 @@ export async function bulkInsertTranslations(
 export async function getAllTranslationsForLocale(
   locale: "ar" | "en",
 ): Promise<Translation[]> {
-  const supabase = getServerSupabase();
+  const supabase = await getServerSupabase();
 
   const { data, error } = await supabase
     .from("translations")
@@ -198,7 +198,7 @@ export async function searchTranslations(
   query: string,
   locale?: "ar" | "en",
 ): Promise<Translation[]> {
-  const supabase = getServerSupabase();
+  const supabase = await getServerSupabase();
 
   let queryBuilder = supabase
     .from("translations")

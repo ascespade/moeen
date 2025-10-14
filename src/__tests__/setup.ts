@@ -134,11 +134,11 @@ Object.defineProperty(global, "performance", {
 });
 
 // Mock IntersectionObserver
-global.IntersectionObserver = jest.fn(() => ({
-  observe: jest.fn(),
-  unobserve: jest.fn(),
-  disconnect: jest.fn(),
-}));
+global.IntersectionObserver = (class {
+  observe = jest.fn();
+  unobserve = jest.fn();
+  disconnect = jest.fn();
+}) as unknown as typeof IntersectionObserver;
 
 // Mock ResizeObserver
 global.ResizeObserver = jest.fn(() => ({

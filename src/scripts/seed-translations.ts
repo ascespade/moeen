@@ -1087,7 +1087,6 @@ const translations = [
   },
   {
     locale: "ar" as const,
-    namespace: "ar" as const,
     namespace: "common",
     key: "status.noData",
     value: "لا توجد بيانات",
