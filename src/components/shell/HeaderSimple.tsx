@@ -36,7 +36,7 @@ export default function HeaderSimple() {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <Image
-              src="/logo.png"
+              src="/logo.jpg"
               alt="مُعين"
               width={32}
               height={32}

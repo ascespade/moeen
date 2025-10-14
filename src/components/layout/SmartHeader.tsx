@@ -182,7 +182,7 @@ export default function SmartHeader() {
           {/* Logo */}
           <div className="flex items-center gap-4">
             <Image
-                src="/logo.png"
+              src="/logo.jpg"
               alt="مُعين"
               width={50}
               height={50}

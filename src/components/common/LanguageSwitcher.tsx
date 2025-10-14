@@ -31,7 +31,7 @@ export default function LanguageSwitcher({
     if (!isLoading) {
       applyLanguage();
     }
-  }, [language, isLoading, applyLanguage]);
+  }, [language, isLoading]);
 
   // Function to load user preferences from database
   const loadUserPreferences = async () => {

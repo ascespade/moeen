@@ -78,7 +78,7 @@ export function OptimizedImage({
           <div className="text-gray-400 text-sm">Loading...</div>
         </div>
       )}
-      <Image {...imageProps} alt={alt || ""} />
+      <Image {...imageProps} />
     </div>
   );
 }
