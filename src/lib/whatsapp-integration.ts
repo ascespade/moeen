@@ -300,12 +300,12 @@ export class WhatsAppIntegration {
     return "شكراً لك على رسالتك. يمكنني مساعدتك في حجز المواعيد، تقديم المعلومات، أو التواصل مع الفريق الطبي. ما الذي تحتاجه؟";
   }
 
-  private async processAudioMessage(from: string): Promise<string> {
+  private async processAudioMessage(_from: string): Promise<string> {
     // In real implementation, this would use speech-to-text
     return "شكراً لك على الرسالة الصوتية. يرجى إرسال رسالة نصية لمساعدتي في فهم طلبك بشكل أفضل.";
   }
 
-  private async processImageMessage(from: string): Promise<string> {
+  private async processImageMessage(_from: string): Promise<string> {
     return "شكراً لك على الصورة. يرجى إرسال رسالة نصية لمساعدتي في فهم ما تحتاجه.";
   }
 

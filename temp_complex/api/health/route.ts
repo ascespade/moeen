@@ -252,7 +252,7 @@ export async function GET(request: NextRequest) {
         timestamp: new Date().toISOString(),
         uptime: process.uptime(),
         error: "Health check failed",
-        details: { error: error.message },
+        details: { error: (error as Error).message },
       },
       { status: 503 },
     );
@@ -294,6 +294,12 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Detailed health check error:", error);
 
-    return NextResponse.json({ error: "Health check failed" }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Health check failed",
+        details: { error: (error as Error).message },
+      },
+      { status: 500 },
+    );
   }
 }

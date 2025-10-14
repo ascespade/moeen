@@ -22,6 +22,8 @@ export async function POST(request: NextRequest) {
       const decoded = jwt.verify(refreshToken, jwtSecret) as {
         userId: string;
         type: string;
+        email?: string;
+        role?: string;
       };
 
       if (decoded.type !== "refresh") {
@@ -39,8 +41,8 @@ export async function POST(request: NextRequest) {
       const newToken = jwt.sign(
         {
           userId: decoded.userId,
-          email: decoded.email,
-          role: decoded.role,
+          email: decoded.email || "",
+          role: decoded.role || "patient",
         },
         jwtSecret,
         { expiresIn: "7d" },

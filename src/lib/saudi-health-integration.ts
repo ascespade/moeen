@@ -355,10 +355,10 @@ export class SaudiHealthSystemIntegration {
   }
 
   // Saudi Health Regulations Compliance
-  async validatePatientData(patientData: Partial<SaudiHealthRecord>): Promise<{
+  validatePatientData(patientData: Partial<SaudiHealthRecord>): {
     valid: boolean;
     errors: string[];
-  }> {
+  } {
     const errors: string[] = [];
 
     // National ID validation (Saudi format)

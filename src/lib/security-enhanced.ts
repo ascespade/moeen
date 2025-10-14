@@ -150,10 +150,10 @@ export class AuditLogger {
         request.headers.get("x-real-ip") ||
         "unknown";
 
-      const userId = request.headers.get("x-user-id");
+      const userId = request.headers.get("x-user-id") || undefined;
 
       await realDB.logAudit({
-        user_id: userId || undefined,
+        ...(userId ? { user_id: userId } : {}),
         action,
         table_name: details?.table_name,
         record_id: details?.record_id,
@@ -201,7 +201,7 @@ export class EnhancedAuthMiddleware {
       }
 
       // Get user from database
-      const user = await realDB.getUser(decoded.userId);
+      const user = (await realDB.getUser(decoded.userId)) as any;
       if (!user || !user.is_active) {
         return { success: false, error: "User not found or inactive" };
       }
@@ -350,9 +350,10 @@ export function secureAPI(
       console.error("Security middleware error:", error);
 
       // Log the error
+      const err = error as unknown as { message?: string; stack?: string };
       await AuditLogger.log(request, "SECURITY_ERROR", {
-        error: error.message,
-        stack: error.stack,
+        error: err?.message,
+        stack: err?.stack,
       });
 
       return NextResponse.json(
@@ -396,12 +397,4 @@ export class DataValidator {
 }
 
 // Export security utilities
-export {
-  EnhancedRateLimiter,
-  EnhancedCSRFProtection,
-  EnhancedSessionSecurity,
-  InputSanitizer,
-  AuditLogger,
-  EnhancedAuthMiddleware,
-  DataValidator,
-};
+// Re-export types via named exports are already declared above; avoid duplicate export list
