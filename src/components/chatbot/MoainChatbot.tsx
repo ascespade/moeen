@@ -1,16 +1,28 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Send, Bot, User, Calendar, Phone, Mail, MapPin, Clock, MessageCircle, Settings, Brain } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Input } from '@/components/ui/Input';
-import { Badge } from '@/components/ui/Badge';
-import { ScrollArea } from '@/components/ui/ScrollArea';
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Send,
+  Bot,
+  User,
+  Calendar,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  MessageCircle,
+  Settings,
+  Brain,
+} from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Input } from "@/components/ui/Input";
+import { Badge } from "@/components/ui/Badge";
+import { ScrollArea } from "@/components/ui/ScrollArea";
 
 interface ChatMessage {
   id: string;
-  type: 'user' | 'bot';
+  type: "user" | "bot";
   content: string;
   timestamp: Date;
   metadata?: {
@@ -31,9 +43,11 @@ interface AppointmentSuggestion {
 
 const MoainChatbot: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [inputMessage, setInputMessage] = useState('');
+  const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [appointmentSuggestions, setAppointmentSuggestions] = useState<AppointmentSuggestion[]>([]);
+  const [appointmentSuggestions, setAppointmentSuggestions] = useState<
+    AppointmentSuggestion[]
+  >([]);
   const [learningMode, setLearningMode] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -48,18 +62,19 @@ const MoainChatbot: React.FC = () => {
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const loadChatHistory = async () => {
     // محاكاة تحميل تاريخ المحادثة
     const mockMessages: ChatMessage[] = [
       {
-        id: '1',
-        type: 'bot',
-        content: 'مرحباً! أنا معين، مساعدك الذكي في مركز الهمم. كيف يمكنني مساعدتك اليوم؟',
-        timestamp: new Date()
-      }
+        id: "1",
+        type: "bot",
+        content:
+          "مرحباً! أنا معين، مساعدك الذكي في مركز الهمم. كيف يمكنني مساعدتك اليوم؟",
+        timestamp: new Date(),
+      },
     ];
     setMessages(mockMessages);
   };
@@ -69,13 +84,13 @@ const MoainChatbot: React.FC = () => {
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
-      type: 'user',
+      type: "user",
       content: inputMessage,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
-    setInputMessage('');
+    setMessages((prev) => [...prev, userMessage]);
+    setInputMessage("");
     setIsTyping(true);
 
     // محاكاة استجابة البوت
@@ -83,13 +98,13 @@ const MoainChatbot: React.FC = () => {
       const botResponse = generateBotResponse(inputMessage);
       const botMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        type: 'bot',
+        type: "bot",
         content: botResponse.content,
         timestamp: new Date(),
-        metadata: botResponse.metadata
+        metadata: botResponse.metadata,
       };
 
-      setMessages(prev => [...prev, botMessage]);
+      setMessages((prev) => [...prev, botMessage]);
       setIsTyping(false);
 
       // إذا كانت الاستجابة تحتوي على اقتراحات مواعيد
@@ -101,99 +116,124 @@ const MoainChatbot: React.FC = () => {
 
   const generateBotResponse = (userInput: string) => {
     const input = userInput.toLowerCase();
-    
+
     // تحليل نية المستخدم
-    if (input.includes('موعد') || input.includes('حجز') || input.includes('زيارة')) {
+    if (
+      input.includes("موعد") ||
+      input.includes("حجز") ||
+      input.includes("زيارة")
+    ) {
       return {
-        content: 'أفهم أنك تريد حجز موعد. دعني أساعدك في العثور على أفضل وقت متاح.',
+        content:
+          "أفهم أنك تريد حجز موعد. دعني أساعدك في العثور على أفضل وقت متاح.",
         appointmentSuggestions: [
           {
-            id: '1',
-            doctorName: 'د. سارة أحمد',
-            specialty: 'طب الأطفال',
-            availableSlots: ['09:00', '10:00', '11:00', '14:00'],
-            date: '2024-01-15'
+            id: "1",
+            doctorName: "د. سارة أحمد",
+            specialty: "طب الأطفال",
+            availableSlots: ["09:00", "10:00", "11:00", "14:00"],
+            date: "2024-01-15",
           },
           {
-            id: '2',
-            doctorName: 'د. محمد حسن',
-            specialty: 'العلاج الطبيعي',
-            availableSlots: ['08:00', '09:30', '11:00', '13:30'],
-            date: '2024-01-15'
-          }
-        ]
+            id: "2",
+            doctorName: "د. محمد حسن",
+            specialty: "العلاج الطبيعي",
+            availableSlots: ["08:00", "09:30", "11:00", "13:30"],
+            date: "2024-01-15",
+          },
+        ],
       };
     }
-    
-    if (input.includes('إلغاء') || input.includes('تغيير')) {
+
+    if (input.includes("إلغاء") || input.includes("تغيير")) {
       return {
-        content: 'يمكنني مساعدتك في إلغاء أو تغيير موعدك. يرجى إعطائي رقم الموعد أو اسم المريض.',
+        content:
+          "يمكنني مساعدتك في إلغاء أو تغيير موعدك. يرجى إعطائي رقم الموعد أو اسم المريض.",
         metadata: {
-          appointmentId: 'APT-001'
-        }
+          appointmentId: "APT-001",
+        },
       };
     }
-    
-    if (input.includes('ساعات') || input.includes('وقت') || input.includes('متى')) {
+
+    if (
+      input.includes("ساعات") ||
+      input.includes("وقت") ||
+      input.includes("متى")
+    ) {
       return {
-        content: 'مركز الهمم مفتوح من السبت إلى الخميس من 8:00 صباحاً إلى 6:00 مساءً. الجمعة من 2:00 مساءً إلى 6:00 مساءً.',
+        content:
+          "مركز الهمم مفتوح من السبت إلى الخميس من 8:00 صباحاً إلى 6:00 مساءً. الجمعة من 2:00 مساءً إلى 6:00 مساءً.",
         metadata: {
-          appointmentDate: '2024-01-15',
-          appointmentTime: '09:00'
-        }
+          appointmentDate: "2024-01-15",
+          appointmentTime: "09:00",
+        },
       };
     }
-    
-    if (input.includes('عنوان') || input.includes('موقع') || input.includes('أين')) {
+
+    if (
+      input.includes("عنوان") ||
+      input.includes("موقع") ||
+      input.includes("أين")
+    ) {
       return {
-        content: 'مركز الهمم يقع في جدة، المملكة العربية السعودية. يمكنك العثور على العنوان الدقيق في صفحة "تواصل معنا".',
+        content:
+          'مركز الهمم يقع في جدة، المملكة العربية السعودية. يمكنك العثور على العنوان الدقيق في صفحة "تواصل معنا".',
         metadata: {
-          appointmentDate: '2024-01-15',
-          appointmentTime: '09:00'
-        }
+          appointmentDate: "2024-01-15",
+          appointmentTime: "09:00",
+        },
       };
     }
-    
-    if (input.includes('تأمين') || input.includes('تكلفة') || input.includes('سعر')) {
+
+    if (
+      input.includes("تأمين") ||
+      input.includes("تكلفة") ||
+      input.includes("سعر")
+    ) {
       return {
-        content: 'نقبل جميع شركات التأمين الرئيسية في المملكة. يرجى إحضار بطاقة التأمين معك عند الزيارة.',
+        content:
+          "نقبل جميع شركات التأمين الرئيسية في المملكة. يرجى إحضار بطاقة التأمين معك عند الزيارة.",
         metadata: {
-          appointmentDate: '2024-01-15',
-          appointmentTime: '09:00'
-        }
+          appointmentDate: "2024-01-15",
+          appointmentTime: "09:00",
+        },
       };
     }
-    
+
     // استجابة عامة مع تعلم
     return {
-      content: 'شكراً لك على سؤالك. سأقوم بتعلم هذا النوع من الاستفسارات لتحسين خدمتي في المستقبل. هل يمكنك إعطائي المزيد من التفاصيل؟',
+      content:
+        "شكراً لك على سؤالك. سأقوم بتعلم هذا النوع من الاستفسارات لتحسين خدمتي في المستقبل. هل يمكنك إعطائي المزيد من التفاصيل؟",
       metadata: {
-        appointmentDate: '2024-01-15',
-        appointmentTime: '09:00'
-      }
+        appointmentDate: "2024-01-15",
+        appointmentTime: "09:00",
+      },
     };
   };
 
-  const handleAppointmentSelect = (appointment: AppointmentSuggestion, time: string) => {
+  const handleAppointmentSelect = (
+    appointment: AppointmentSuggestion,
+    time: string,
+  ) => {
     const confirmationMessage: ChatMessage = {
       id: Date.now().toString(),
-      type: 'bot',
+      type: "bot",
       content: `تم حجز موعدك مع ${appointment.doctorName} في ${appointment.date} الساعة ${time}. ستصلك رسالة تأكيد قريباً.`,
       timestamp: new Date(),
       metadata: {
         appointmentId: `APT-${Date.now()}`,
         doctorName: appointment.doctorName,
         appointmentDate: appointment.date,
-        appointmentTime: time
-      }
+        appointmentTime: time,
+      },
     };
 
-    setMessages(prev => [...prev, confirmationMessage]);
+    setMessages((prev) => [...prev, confirmationMessage]);
     setAppointmentSuggestions([]);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -215,9 +255,12 @@ const MoainChatbot: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant={learningMode ? "default" : "outline"} className="flex items-center gap-1">
+              <Badge
+                variant={learningMode ? "default" : "outline"}
+                className="flex items-center gap-1"
+              >
                 <Brain className="w-3 h-3" />
-                {learningMode ? 'يتعلم' : 'عادي'}
+                {learningMode ? "يتعلم" : "عادي"}
               </Badge>
               <Button
                 variant="outline"
@@ -237,33 +280,33 @@ const MoainChatbot: React.FC = () => {
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
                 className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                  message.type === 'user'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white border shadow-sm'
+                  message.type === "user"
+                    ? "bg-blue-600 text-white"
+                    : "bg-white border shadow-sm"
                 }`}
               >
                 <div className="flex items-start gap-2">
-                  {message.type === 'bot' && (
+                  {message.type === "bot" && (
                     <Bot className="w-4 h-4 mt-1 text-blue-600" />
                   )}
-                  {message.type === 'user' && (
+                  {message.type === "user" && (
                     <User className="w-4 h-4 mt-1 text-white" />
                   )}
                   <div className="flex-1">
                     <p className="text-sm">{message.content}</p>
                     <p className="text-xs opacity-70 mt-1">
-                      {message.timestamp.toLocaleTimeString('ar-SA')}
+                      {message.timestamp.toLocaleTimeString("ar-SA")}
                     </p>
                   </div>
                 </div>
               </div>
             </div>
           ))}
-          
+
           {isTyping && (
             <div className="flex justify-start">
               <div className="bg-white border shadow-sm rounded-lg px-4 py-2">
@@ -271,14 +314,20 @@ const MoainChatbot: React.FC = () => {
                   <Bot className="w-4 h-4 text-blue-600" />
                   <div className="flex gap-1">
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div
+                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.1s" }}
+                    ></div>
+                    <div
+                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.2s" }}
+                    ></div>
                   </div>
                 </div>
               </div>
             </div>
           )}
-          
+
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
@@ -295,8 +344,12 @@ const MoainChatbot: React.FC = () => {
                 <div key={appointment.id} className="border rounded-lg p-3">
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <h4 className="font-semibold">{appointment.doctorName}</h4>
-                      <p className="text-sm text-gray-600">{appointment.specialty}</p>
+                      <h4 className="font-semibold">
+                        {appointment.doctorName}
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        {appointment.specialty}
+                      </p>
                     </div>
                     <Badge variant="outline">{appointment.date}</Badge>
                   </div>
@@ -306,7 +359,9 @@ const MoainChatbot: React.FC = () => {
                         key={time}
                         variant="outline"
                         size="sm"
-                        onClick={() => handleAppointmentSelect(appointment, time)}
+                        onClick={() =>
+                          handleAppointmentSelect(appointment, time)
+                        }
                         className="text-xs"
                       >
                         <Clock className="w-3 h-3 mr-1" />

@@ -8,20 +8,12 @@
     "socialMediaPosting": {
       "enabled": true,
       "schedule": "0 9,15,21 * * *",
-      "platforms": [
-        "tiktok",
-        "instagram",
-        "linkedin",
-        "facebook"
-      ]
+      "platforms": ["tiktok", "instagram", "linkedin", "facebook"]
     },
     "contentGeneration": {
       "enabled": true,
       "schedule": "0 8 * * *",
-      "sources": [
-        "google-drive",
-        "local-videos"
-      ]
+      "sources": ["google-drive", "local-videos"]
     }
   },
   "platforms": {

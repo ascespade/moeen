@@ -11,13 +11,7 @@
     "mainBranch": "main",
     "autoMergeBranch": "auto-merge-main",
     "finalBranch": "final-optimized-version",
-    "excludeBranches": [
-      "HEAD",
-      "main",
-      "master",
-      "develop",
-      "staging"
-    ],
+    "excludeBranches": ["HEAD", "main", "master", "develop", "staging"],
     "mergeStrategy": "smart",
     "conflictResolution": {
       "autoResolve": true,

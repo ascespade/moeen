@@ -101,7 +101,7 @@ export const validationSchemas = {
       .max(128, "Password must be less than 128 characters")
       .regex(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
       ),
     full_name: z
       .string()
@@ -136,11 +136,16 @@ export function validateRequest<T>(schema: z.ZodSchema<T>) {
 
 // CSRF protection
 export function generateCSRFToken(): string {
-  return Math.random().toString(36).substring(2, 15) + 
-         Math.random().toString(36).substring(2, 15);
+  return (
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  );
 }
 
-export function validateCSRFToken(token: string, sessionToken: string): boolean {
+export function validateCSRFToken(
+  token: string,
+  sessionToken: string,
+): boolean {
   return token === sessionToken && token.length > 0;
 }
 

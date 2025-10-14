@@ -2,11 +2,7 @@
   "realTime": {
     "enabled": true,
     "level": "info",
-    "transports": [
-      "console",
-      "file",
-      "webhook"
-    ]
+    "transports": ["console", "file", "webhook"]
   },
   "rotation": {
     "enabled": true,

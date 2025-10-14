@@ -7,32 +7,36 @@
 ## الملفات المركزية
 
 ### الملف الرئيسي
+
 - `src/styles/centralized.css` - الملف الرئيسي الذي يحتوي على جميع الأنماط المركزية
 
 ### الملفات المساعدة
+
 - `src/app/globals.css` - يستورد الأنماط المركزية
 - `src/styles/index.css` - نقطة الدخول الرئيسية للأنماط
 
 ## نظام الألوان
 
 ### الألوان الأساسية
+
 ```css
---brand-primary: #f58220;           /* البرتقالي الأساسي */
---brand-primary-hover: #d66f15;     /* البرتقالي عند التمرير */
---brand-secondary: #009688;         /* الأخضر الثانوي */
---brand-accent: #007bff;            /* الأزرق المميز */
---brand-success: #009688;           /* الأخضر للنجاح */
---brand-warning: #f59e0b;           /* الأصفر للتحذير */
---brand-error: #ef4444;             /* الأحمر للخطأ */
+--brand-primary: #f58220; /* البرتقالي الأساسي */
+--brand-primary-hover: #d66f15; /* البرتقالي عند التمرير */
+--brand-secondary: #009688; /* الأخضر الثانوي */
+--brand-accent: #007bff; /* الأزرق المميز */
+--brand-success: #009688; /* الأخضر للنجاح */
+--brand-warning: #f59e0b; /* الأصفر للتحذير */
+--brand-error: #ef4444; /* الأحمر للخطأ */
 ```
 
 ### ألوان الخلفية
+
 ```css
---background: #ffffff;              /* الخلفية الأساسية */
---foreground: #0f172a;              /* لون النص الأساسي */
---brand-surface: #f9fafb;           /* خلفية السطح */
---panel: #ffffff;                   /* خلفية اللوحة */
---brand-border: #e5e7eb;            /* لون الحدود */
+--background: #ffffff; /* الخلفية الأساسية */
+--foreground: #0f172a; /* لون النص الأساسي */
+--brand-surface: #f9fafb; /* خلفية السطح */
+--panel: #ffffff; /* خلفية اللوحة */
+--brand-border: #e5e7eb; /* لون الحدود */
 ```
 
 ## المكونات الأساسية
@@ -40,6 +44,7 @@
 ### الأزرار (Buttons)
 
 #### الاستخدام الأساسي
+
 ```html
 <!-- زر أساسي -->
 <button class="btn btn-brand">نص الزر</button>
@@ -52,6 +57,7 @@
 ```
 
 #### الأحجام
+
 ```html
 <!-- زر صغير -->
 <button class="btn btn-brand btn-sm">صغير</button>
@@ -66,6 +72,7 @@
 ### البطاقات (Cards)
 
 #### الاستخدام الأساسي
+
 ```html
 <!-- بطاقة عادية -->
 <div class="card">
@@ -78,6 +85,7 @@
 ```
 
 #### أنواع البطاقات
+
 ```html
 <!-- بطاقة مرتفعة -->
 <div class="card card-elevated">محتوى البطاقة</div>
@@ -136,6 +144,7 @@
 ## التخطيط (Layout)
 
 ### الحاوية الرئيسية
+
 ```html
 <div class="container-app">
   <!-- محتوى الصفحة -->
@@ -143,6 +152,7 @@
 ```
 
 ### مساحة الأقسام
+
 ```html
 <section class="section-padding">
   <!-- قسم عادي -->
@@ -154,6 +164,7 @@
 ```
 
 ### شبكة لوحة التحكم
+
 ```html
 <div class="dashboard-grid">
   <div class="dashboard-card">
@@ -166,6 +177,7 @@
 ## الفئات المساعدة
 
 ### الألوان
+
 ```css
 .text-brand        /* نص باللون الأساسي */
 .bg-brand          /* خلفية باللون الأساسي */
@@ -173,6 +185,7 @@
 ```
 
 ### التدرجات
+
 ```css
 .text-gradient         /* نص متدرج */
 .bg-gradient-brand     /* خلفية متدرجة أساسية */
@@ -181,6 +194,7 @@
 ```
 
 ### الرسوم المتحركة
+
 ```css
 .animate-fadeInUp      /* ظهور من الأسفل */
 .animate-slideInRight  /* انزلاق من اليمين */
@@ -189,6 +203,7 @@
 ```
 
 ### الظلال
+
 ```css
 .shadow-soft           /* ظل ناعم */
 ```
@@ -196,6 +211,7 @@
 ## الاستجابة (Responsive Design)
 
 ### نقاط التوقف
+
 - `sm`: 640px
 - `md`: 768px
 - `lg`: 1024px
@@ -203,6 +219,7 @@
 - `2xl`: 1440px
 
 ### أمثلة الاستخدام
+
 ```html
 <div class="dashboard-grid">
   <!-- يتكيف تلقائياً مع الشاشات المختلفة -->
@@ -220,6 +237,7 @@
 ## إمكانية الوصول (Accessibility)
 
 ### التركيز
+
 ```css
 .focus-visible:focus {
   outline: 2px solid var(--focus-ring);
@@ -228,11 +246,13 @@
 ```
 
 ### الشاشات القارئة
+
 ```html
 <span class="sr-only">نص مخفي للشاشات القارئة</span>
 ```
 
 ### الحركة المقللة
+
 يتم دعم `prefers-reduced-motion` تلقائياً.
 
 ## الطباعة (Print Styles)
@@ -244,6 +264,7 @@
 ## أفضل الممارسات
 
 ### 1. استخدم الفئات المحددة مسبقاً
+
 ```html
 <!-- ✅ صحيح -->
 <button class="btn btn-brand">زر</button>
@@ -253,6 +274,7 @@
 ```
 
 ### 2. استخدم متغيرات CSS
+
 ```css
 /* ✅ صحيح */
 .custom-element {
@@ -266,6 +288,7 @@
 ```
 
 ### 3. اتبع هيكل المكونات
+
 ```html
 <!-- ✅ صحيح -->
 <div class="card">
@@ -277,6 +300,7 @@
 ```
 
 ### 4. استخدم الحاوية الصحيحة
+
 ```html
 <!-- ✅ صحيح -->
 <div class="container-app">
@@ -292,8 +316,11 @@
 ## أمثلة كاملة
 
 ### صفحة تسجيل الدخول
+
 ```html
-<div class="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center p-4">
+<div
+  class="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center p-4"
+>
   <div class="w-full max-w-md">
     <div class="card p-8">
       <form class="space-y-6">
@@ -311,6 +338,7 @@
 ```
 
 ### لوحة التحكم
+
 ```html
 <main class="min-h-screen bg-[var(--brand-surface)]">
   <div class="border-brand border-b bg-white dark:bg-gray-900">

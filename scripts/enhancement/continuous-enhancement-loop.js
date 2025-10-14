@@ -3,36 +3,36 @@
 // Continuous Enhancement Loop with Self-Healing Mechanisms
 // Automatically detects issues, optimizes performance, and implements fixes
 
-const fs = require('fs').promises;
-const path = require('path');
-const winston = require('winston');
-const cron = require('node-cron');
-const { createClient } = require('@supabase/supabase-js');
-const { exec, spawn } = require('child_process');
-const { promisify } = require('util');
+const fs = require("fs").promises;
+const path = require("path");
+const winston = require("winston");
+const cron = require("node-cron");
+const { createClient } = require("@supabase/supabase-js");
+const { exec, spawn } = require("child_process");
+const { promisify } = require("util");
 
 const execAsync = promisify(exec);
 
 // Configure Winston logger
 const logger = winston.createLogger({
-  level: 'info',
+  level: "info",
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.errors({ stack: true }),
-    winston.format.json()
+    winston.format.json(),
   ),
   transports: [
-    new winston.transports.File({ filename: 'logs/enhancement-loop.log' }),
+    new winston.transports.File({ filename: "logs/enhancement-loop.log" }),
     new winston.transports.Console({
-      format: winston.format.simple()
-    })
-  ]
+      format: winston.format.simple(),
+    }),
+  ],
 });
 
 // Supabase client
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
 );
 
 class ContinuousEnhancementLoop {
@@ -43,10 +43,10 @@ class ContinuousEnhancementLoop {
       healthCheckInterval: 300000, // 5 minutes
       maxRetries: 3,
       retryDelay: 5000,
-      sandboxDir: './sandbox',
-      backupDir: './backups'
+      sandboxDir: "./sandbox",
+      backupDir: "./backups",
     };
-    
+
     this.stats = {
       analysesPerformed: 0,
       optimizationsApplied: 0,
@@ -55,51 +55,50 @@ class ContinuousEnhancementLoop {
       errors: 0,
       lastAnalysis: null,
       lastOptimization: null,
-      performanceImprovements: []
+      performanceImprovements: [],
     };
-    
+
     this.isRunning = false;
     this.issuePatterns = new Map();
     this.optimizationHistory = [];
   }
 
   async start() {
-    logger.info('🔄 Starting Continuous Enhancement Loop...');
+    logger.info("🔄 Starting Continuous Enhancement Loop...");
     this.isRunning = true;
-    
+
     try {
       // Initialize directories
       await this.initializeDirectories();
-      
+
       // Load historical data
       await this.loadHistoricalData();
-      
+
       // Schedule enhancement tasks
       this.scheduleEnhancementTasks();
-      
+
       // Start monitoring
       this.startMonitoring();
-      
-      logger.info('✅ Continuous Enhancement Loop started successfully');
-      
+
+      logger.info("✅ Continuous Enhancement Loop started successfully");
+
       // Keep process alive
-      process.on('SIGINT', () => this.shutdown());
-      process.on('SIGTERM', () => this.shutdown());
-      
+      process.on("SIGINT", () => this.shutdown());
+      process.on("SIGTERM", () => this.shutdown());
     } catch (error) {
-      logger.error('❌ Failed to start Enhancement Loop:', error);
+      logger.error("❌ Failed to start Enhancement Loop:", error);
       process.exit(1);
     }
   }
 
   async initializeDirectories() {
-    logger.info('📁 Initializing enhancement directories...');
-    
+    logger.info("📁 Initializing enhancement directories...");
+
     const dirs = [
       this.config.sandboxDir,
       this.config.backupDir,
-      './logs/enhancement',
-      './temp/analysis'
+      "./logs/enhancement",
+      "./temp/analysis",
     ];
 
     for (const dir of dirs) {
@@ -107,7 +106,7 @@ class ContinuousEnhancementLoop {
         await fs.mkdir(dir, { recursive: true });
         logger.info(`✅ Created directory: ${dir}`);
       } catch (error) {
-        if (error.code !== 'EEXIST') {
+        if (error.code !== "EEXIST") {
           logger.error(`❌ Failed to create directory ${dir}:`, error);
         }
       }
@@ -117,56 +116,64 @@ class ContinuousEnhancementLoop {
   async loadHistoricalData() {
     try {
       // Load issue patterns
-      const patternsData = await fs.readFile('./logs/enhancement/issue-patterns.json', 'utf8');
+      const patternsData = await fs.readFile(
+        "./logs/enhancement/issue-patterns.json",
+        "utf8",
+      );
       const patterns = JSON.parse(patternsData);
       this.issuePatterns = new Map(Object.entries(patterns));
       logger.info(`📋 Loaded ${this.issuePatterns.size} issue patterns`);
     } catch (error) {
-      logger.info('📋 No existing issue patterns found, starting fresh');
+      logger.info("📋 No existing issue patterns found, starting fresh");
       this.issuePatterns = new Map();
     }
 
     try {
       // Load optimization history
-      const historyData = await fs.readFile('./logs/enhancement/optimization-history.json', 'utf8');
+      const historyData = await fs.readFile(
+        "./logs/enhancement/optimization-history.json",
+        "utf8",
+      );
       this.optimizationHistory = JSON.parse(historyData);
-      logger.info(`📋 Loaded ${this.optimizationHistory.length} optimization records`);
+      logger.info(
+        `📋 Loaded ${this.optimizationHistory.length} optimization records`,
+      );
     } catch (error) {
-      logger.info('📋 No existing optimization history found, starting fresh');
+      logger.info("📋 No existing optimization history found, starting fresh");
       this.optimizationHistory = [];
     }
   }
 
   scheduleEnhancementTasks() {
-    logger.info('⏰ Scheduling enhancement tasks...');
-    
+    logger.info("⏰ Scheduling enhancement tasks...");
+
     // Performance analysis every hour
-    cron.schedule('0 * * * *', async () => {
-      logger.info('📊 Starting performance analysis...');
+    cron.schedule("0 * * * *", async () => {
+      logger.info("📊 Starting performance analysis...");
       await this.performPerformanceAnalysis();
     });
 
     // Optimization every 24 hours
-    cron.schedule('0 2 * * *', async () => {
-      logger.info('🔧 Starting optimization cycle...');
+    cron.schedule("0 2 * * *", async () => {
+      logger.info("🔧 Starting optimization cycle...");
       await this.performOptimizationCycle();
     });
 
     // Health monitoring every 5 minutes
-    cron.schedule('*/5 * * * *', async () => {
+    cron.schedule("*/5 * * * *", async () => {
       await this.performHealthMonitoring();
     });
 
     // Issue pattern analysis every 6 hours
-    cron.schedule('0 */6 * * *', async () => {
-      logger.info('🔍 Analyzing issue patterns...');
+    cron.schedule("0 */6 * * *", async () => {
+      logger.info("🔍 Analyzing issue patterns...");
       await this.analyzeIssuePatterns();
     });
   }
 
   async performPerformanceAnalysis() {
-    logger.info('📊 Performing performance analysis...');
-    
+    logger.info("📊 Performing performance analysis...");
+
     try {
       const analysis = {
         timestamp: new Date().toISOString(),
@@ -174,12 +181,12 @@ class ContinuousEnhancementLoop {
         applicationMetrics: await this.collectApplicationMetrics(),
         databaseMetrics: await this.collectDatabaseMetrics(),
         issues: [],
-        recommendations: []
+        recommendations: [],
       };
 
       // Analyze metrics for issues
       analysis.issues = await this.detectPerformanceIssues(analysis);
-      
+
       // Generate recommendations
       analysis.recommendations = await this.generateRecommendations(analysis);
 
@@ -192,10 +199,11 @@ class ContinuousEnhancementLoop {
       this.stats.analysesPerformed++;
       this.stats.lastAnalysis = new Date();
 
-      logger.info(`✅ Performance analysis completed - ${analysis.issues.length} issues detected`);
-
+      logger.info(
+        `✅ Performance analysis completed - ${analysis.issues.length} issues detected`,
+      );
     } catch (error) {
-      logger.error('❌ Performance analysis failed:', error);
+      logger.error("❌ Performance analysis failed:", error);
       this.stats.errors++;
     }
   }
@@ -205,25 +213,32 @@ class ContinuousEnhancementLoop {
       const metrics = {};
 
       // CPU usage
-      const cpuResult = await execAsync('top -bn1 | grep "Cpu(s)" | awk \'{print $2}\' | awk -F\'%\' \'{print $1}\'');
+      const cpuResult = await execAsync(
+        "top -bn1 | grep \"Cpu(s)\" | awk '{print $2}' | awk -F'%' '{print $1}'",
+      );
       metrics.cpuUsage = parseFloat(cpuResult.stdout.trim()) || 0;
 
       // Memory usage
-      const memResult = await execAsync('free | grep Mem | awk \'{printf "%.2f", $3/$2 * 100.0}\'');
+      const memResult = await execAsync(
+        "free | grep Mem | awk '{printf \"%.2f\", $3/$2 * 100.0}'",
+      );
       metrics.memoryUsage = parseFloat(memResult.stdout.trim()) || 0;
 
       // Disk usage
-      const diskResult = await execAsync('df -h / | awk \'NR==2{print $5}\' | sed \'s/%//\'');
+      const diskResult = await execAsync(
+        "df -h / | awk 'NR==2{print $5}' | sed 's/%//'",
+      );
       metrics.diskUsage = parseFloat(diskResult.stdout.trim()) || 0;
 
       // Load average
-      const loadResult = await execAsync('uptime | awk -F\'load average:\' \'{print $2}\' | awk \'{print $1}\' | sed \'s/,//\'');
+      const loadResult = await execAsync(
+        "uptime | awk -F'load average:' '{print $2}' | awk '{print $1}' | sed 's/,//'",
+      );
       metrics.loadAverage = parseFloat(loadResult.stdout.trim()) || 0;
 
       return metrics;
-
     } catch (error) {
-      logger.error('❌ Failed to collect system metrics:', error);
+      logger.error("❌ Failed to collect system metrics:", error);
       return {};
     }
   }
@@ -232,24 +247,25 @@ class ContinuousEnhancementLoop {
     try {
       // Get metrics from Supabase
       const { data: metrics } = await supabase
-        .from('system_metrics')
-        .select('*')
-        .gte('timestamp', new Date(Date.now() - 3600000).toISOString()) // Last hour
-        .order('timestamp', { ascending: false });
+        .from("system_metrics")
+        .select("*")
+        .gte("timestamp", new Date(Date.now() - 3600000).toISOString()) // Last hour
+        .order("timestamp", { ascending: false });
 
       const aggregated = {
         totalRequests: 0,
         averageResponseTime: 0,
         errorRate: 0,
-        activeConnections: 0
+        activeConnections: 0,
       };
 
       if (metrics && metrics.length > 0) {
-        metrics.forEach(metric => {
+        metrics.forEach((metric) => {
           aggregated.totalRequests += metric.metrics?.totalRequests || 0;
           aggregated.averageResponseTime += metric.metrics?.responseTime || 0;
           aggregated.errorRate += metric.metrics?.errorRate || 0;
-          aggregated.activeConnections += metric.metrics?.activeConnections || 0;
+          aggregated.activeConnections +=
+            metric.metrics?.activeConnections || 0;
         });
 
         // Calculate averages
@@ -258,9 +274,8 @@ class ContinuousEnhancementLoop {
       }
 
       return aggregated;
-
     } catch (error) {
-      logger.error('❌ Failed to collect application metrics:', error);
+      logger.error("❌ Failed to collect application metrics:", error);
       return {};
     }
   }
@@ -269,20 +284,20 @@ class ContinuousEnhancementLoop {
     try {
       // Get database performance metrics
       const { data: dbMetrics } = await supabase
-        .from('database_metrics')
-        .select('*')
-        .gte('timestamp', new Date(Date.now() - 3600000).toISOString())
-        .order('timestamp', { ascending: false });
+        .from("database_metrics")
+        .select("*")
+        .gte("timestamp", new Date(Date.now() - 3600000).toISOString())
+        .order("timestamp", { ascending: false });
 
       const aggregated = {
         queryCount: 0,
         averageQueryTime: 0,
         slowQueries: 0,
-        connectionCount: 0
+        connectionCount: 0,
       };
 
       if (dbMetrics && dbMetrics.length > 0) {
-        dbMetrics.forEach(metric => {
+        dbMetrics.forEach((metric) => {
           aggregated.queryCount += metric.metrics?.queryCount || 0;
           aggregated.averageQueryTime += metric.metrics?.averageQueryTime || 0;
           aggregated.slowQueries += metric.metrics?.slowQueries || 0;
@@ -293,9 +308,8 @@ class ContinuousEnhancementLoop {
       }
 
       return aggregated;
-
     } catch (error) {
-      logger.error('❌ Failed to collect database metrics:', error);
+      logger.error("❌ Failed to collect database metrics:", error);
       return {};
     }
   }
@@ -306,50 +320,51 @@ class ContinuousEnhancementLoop {
     // CPU issues
     if (analysis.systemMetrics.cpuUsage > 80) {
       issues.push({
-        type: 'high_cpu_usage',
-        severity: 'warning',
+        type: "high_cpu_usage",
+        severity: "warning",
         description: `CPU usage is ${analysis.systemMetrics.cpuUsage}%`,
-        recommendation: 'Consider optimizing CPU-intensive operations or scaling resources'
+        recommendation:
+          "Consider optimizing CPU-intensive operations or scaling resources",
       });
     }
 
     // Memory issues
     if (analysis.systemMetrics.memoryUsage > 85) {
       issues.push({
-        type: 'high_memory_usage',
-        severity: 'critical',
+        type: "high_memory_usage",
+        severity: "critical",
         description: `Memory usage is ${analysis.systemMetrics.memoryUsage}%`,
-        recommendation: 'Memory cleanup or resource scaling required'
+        recommendation: "Memory cleanup or resource scaling required",
       });
     }
 
     // Disk issues
     if (analysis.systemMetrics.diskUsage > 90) {
       issues.push({
-        type: 'high_disk_usage',
-        severity: 'critical',
+        type: "high_disk_usage",
+        severity: "critical",
         description: `Disk usage is ${analysis.systemMetrics.diskUsage}%`,
-        recommendation: 'Disk cleanup or storage expansion required'
+        recommendation: "Disk cleanup or storage expansion required",
       });
     }
 
     // Application performance issues
     if (analysis.applicationMetrics.averageResponseTime > 1000) {
       issues.push({
-        type: 'slow_response_time',
-        severity: 'warning',
+        type: "slow_response_time",
+        severity: "warning",
         description: `Average response time is ${analysis.applicationMetrics.averageResponseTime}ms`,
-        recommendation: 'Optimize application performance or database queries'
+        recommendation: "Optimize application performance or database queries",
       });
     }
 
     // Error rate issues
     if (analysis.applicationMetrics.errorRate > 5) {
       issues.push({
-        type: 'high_error_rate',
-        severity: 'critical',
+        type: "high_error_rate",
+        severity: "critical",
         description: `Error rate is ${analysis.applicationMetrics.errorRate}%`,
-        recommendation: 'Investigate and fix application errors'
+        recommendation: "Investigate and fix application errors",
       });
     }
 
@@ -363,31 +378,32 @@ class ContinuousEnhancementLoop {
     // Performance recommendations
     if (analysis.systemMetrics.cpuUsage > 70) {
       recommendations.push({
-        type: 'performance',
-        priority: 'high',
-        action: 'optimize_cpu_usage',
-        description: 'Optimize CPU-intensive operations',
-        implementation: 'Review and optimize heavy computational tasks'
+        type: "performance",
+        priority: "high",
+        action: "optimize_cpu_usage",
+        description: "Optimize CPU-intensive operations",
+        implementation: "Review and optimize heavy computational tasks",
       });
     }
 
     if (analysis.applicationMetrics.averageResponseTime > 500) {
       recommendations.push({
-        type: 'performance',
-        priority: 'medium',
-        action: 'optimize_response_time',
-        description: 'Improve application response times',
-        implementation: 'Implement caching, optimize database queries, or add CDN'
+        type: "performance",
+        priority: "medium",
+        action: "optimize_response_time",
+        description: "Improve application response times",
+        implementation:
+          "Implement caching, optimize database queries, or add CDN",
       });
     }
 
     // Security recommendations
     recommendations.push({
-      type: 'security',
-      priority: 'high',
-      action: 'security_audit',
-      description: 'Perform regular security audit',
-      implementation: 'Run security scans and update dependencies'
+      type: "security",
+      priority: "high",
+      action: "security_audit",
+      description: "Perform regular security audit",
+      implementation: "Run security scans and update dependencies",
     });
 
     return recommendations;
@@ -399,23 +415,22 @@ class ContinuousEnhancementLoop {
     for (const issue of issues) {
       try {
         switch (issue.type) {
-          case 'high_memory_usage':
+          case "high_memory_usage":
             await this.fixMemoryUsage();
             break;
-          case 'high_disk_usage':
+          case "high_disk_usage":
             await this.fixDiskUsage();
             break;
-          case 'slow_response_time':
+          case "slow_response_time":
             await this.fixResponseTime();
             break;
-          case 'high_error_rate':
+          case "high_error_rate":
             await this.fixErrorRate();
             break;
         }
-        
+
         this.stats.issuesFixed++;
         logger.info(`✅ Fixed issue: ${issue.type}`);
-
       } catch (error) {
         logger.error(`❌ Failed to fix issue ${issue.type}:`, error);
       }
@@ -423,105 +438,106 @@ class ContinuousEnhancementLoop {
   }
 
   async fixMemoryUsage() {
-    logger.info('🧹 Fixing memory usage...');
-    
+    logger.info("🧹 Fixing memory usage...");
+
     try {
       // Clear application caches
       await this.clearApplicationCaches();
-      
+
       // Restart services if needed
       await this.restartServices();
-      
-      logger.info('✅ Memory usage fix applied');
+
+      logger.info("✅ Memory usage fix applied");
     } catch (error) {
-      logger.error('❌ Memory usage fix failed:', error);
+      logger.error("❌ Memory usage fix failed:", error);
     }
   }
 
   async fixDiskUsage() {
-    logger.info('🧹 Fixing disk usage...');
-    
+    logger.info("🧹 Fixing disk usage...");
+
     try {
       // Clean temporary files
-      await execAsync('find /tmp -type f -mtime +7 -delete');
-      
+      await execAsync("find /tmp -type f -mtime +7 -delete");
+
       // Clean log files
       await execAsync('find ./logs -name "*.log" -mtime +30 -delete');
-      
+
       // Clean old backups
-      await execAsync('find ./backups -type f -mtime +30 -delete');
-      
-      logger.info('✅ Disk usage fix applied');
+      await execAsync("find ./backups -type f -mtime +30 -delete");
+
+      logger.info("✅ Disk usage fix applied");
     } catch (error) {
-      logger.error('❌ Disk usage fix failed:', error);
+      logger.error("❌ Disk usage fix failed:", error);
     }
   }
 
   async fixResponseTime() {
-    logger.info('⚡ Fixing response time...');
-    
+    logger.info("⚡ Fixing response time...");
+
     try {
       // Optimize database queries
       await this.optimizeDatabaseQueries();
-      
+
       // Enable caching
       await this.enableCaching();
-      
-      logger.info('✅ Response time fix applied');
+
+      logger.info("✅ Response time fix applied");
     } catch (error) {
-      logger.error('❌ Response time fix failed:', error);
+      logger.error("❌ Response time fix failed:", error);
     }
   }
 
   async fixErrorRate() {
-    logger.info('🛠️ Fixing error rate...');
-    
+    logger.info("🛠️ Fixing error rate...");
+
     try {
       // Restart failing services
       await this.restartFailingServices();
-      
+
       // Clear error logs
       await this.clearErrorLogs();
-      
-      logger.info('✅ Error rate fix applied');
+
+      logger.info("✅ Error rate fix applied");
     } catch (error) {
-      logger.error('❌ Error rate fix failed:', error);
+      logger.error("❌ Error rate fix failed:", error);
     }
   }
 
   async performOptimizationCycle() {
-    logger.info('🔧 Starting optimization cycle...');
-    
+    logger.info("🔧 Starting optimization cycle...");
+
     try {
       const optimizations = [
         await this.optimizeDatabase(),
         await this.optimizeApplication(),
         await this.optimizeSystem(),
-        await this.updateDependencies()
+        await this.updateDependencies(),
       ];
 
       const successfulOptimizations = optimizations.filter(Boolean).length;
-      
+
       this.stats.optimizationsApplied += successfulOptimizations;
       this.stats.lastOptimization = new Date();
 
-      logger.info(`✅ Optimization cycle completed - ${successfulOptimizations} optimizations applied`);
-
+      logger.info(
+        `✅ Optimization cycle completed - ${successfulOptimizations} optimizations applied`,
+      );
     } catch (error) {
-      logger.error('❌ Optimization cycle failed:', error);
+      logger.error("❌ Optimization cycle failed:", error);
       this.stats.errors++;
     }
   }
 
   async optimizeDatabase() {
-    logger.info('🗄️ Optimizing database...');
-    
+    logger.info("🗄️ Optimizing database...");
+
     try {
       // Analyze and optimize database performance
       const { data: slowQueries } = await supabase
-        .from('slow_queries')
-        .select('*')
-        .gte('timestamp', new Date(Date.now() - 86400000).toISOString());
+        .from("slow_queries")
+        .select("*")
+        .gte("timestamp", new Date(Date.now() - 86400000).toISOString());
 
       if (slowQueries && slowQueries.length > 0) {
         // Log slow queries for manual review
@@ -529,76 +545,72 @@ class ContinuousEnhancementLoop {
       }
 
       // Update database statistics
-      await supabase.rpc('update_statistics');
+      await supabase.rpc("update_statistics");
 
-      logger.info('✅ Database optimization completed');
+      logger.info("✅ Database optimization completed");
       return true;
-
     } catch (error) {
-      logger.error('❌ Database optimization failed:', error);
+      logger.error("❌ Database optimization failed:", error);
       return false;
     }
   }
 
   async optimizeApplication() {
-    logger.info('⚡ Optimizing application...');
-    
+    logger.info("⚡ Optimizing application...");
+
     try {
       // Optimize code structure
       await this.optimizeCodeStructure();
-      
+
       // Optimize asset delivery
       await this.optimizeAssets();
-      
-      logger.info('✅ Application optimization completed');
-      return true;
 
+      logger.info("✅ Application optimization completed");
+      return true;
     } catch (error) {
-      logger.error('❌ Application optimization failed:', error);
+      logger.error("❌ Application optimization failed:", error);
       return false;
     }
   }
 
   async optimizeSystem() {
-    logger.info('🖥️ Optimizing system...');
-    
+    logger.info("🖥️ Optimizing system...");
+
     try {
       // Optimize system configuration
       await this.optimizeSystemConfig();
-      
+
       // Clean system resources
       await this.cleanSystemResources();
-      
-      logger.info('✅ System optimization completed');
-      return true;
 
+      logger.info("✅ System optimization completed");
+      return true;
     } catch (error) {
-      logger.error('❌ System optimization failed:', error);
+      logger.error("❌ System optimization failed:", error);
       return false;
     }
   }
 
   async updateDependencies() {
-    logger.info('📦 Updating dependencies...');
-    
+    logger.info("📦 Updating dependencies...");
+
     try {
       // Check for outdated packages
-      const outdatedResult = await execAsync('npm outdated --json');
+      const outdatedResult = await execAsync("npm outdated --json");
       const outdated = JSON.parse(outdatedResult.stdout);
 
       if (Object.keys(outdated).length > 0) {
         // Log outdated packages
         await this.logOutdatedPackages(outdated);
-        
+
         // Update non-breaking dependencies
         await this.updateSafeDependencies(outdated);
       }
 
-      logger.info('✅ Dependency update completed');
+      logger.info("✅ Dependency update completed");
       return true;
-
     } catch (error) {
-      logger.error('❌ Dependency update failed:', error);
+      logger.error("❌ Dependency update failed:", error);
       return false;
     }
   }
@@ -609,39 +621,36 @@ class ContinuousEnhancementLoop {
         timestamp: new Date().toISOString(),
         services: await this.checkServiceHealth(),
         resources: await this.checkResourceHealth(),
-        performance: await this.checkPerformanceHealth()
+        performance: await this.checkPerformanceHealth(),
       };
 
       // Store health status
-      await supabase
-        .from('enhancement_health')
-        .insert(healthStatus);
+      await supabase.from("enhancement_health").insert(healthStatus);
 
       // Alert on critical issues
       if (healthStatus.resources.critical > 0) {
         await this.sendHealthAlert(healthStatus);
       }
-
     } catch (error) {
-      logger.error('❌ Health monitoring failed:', error);
+      logger.error("❌ Health monitoring failed:", error);
     }
   }
 
   async analyzeIssuePatterns() {
-    logger.info('🔍 Analyzing issue patterns...');
-    
+    logger.info("🔍 Analyzing issue patterns...");
+
     try {
       // Get recent issues
       const { data: recentIssues } = await supabase
-        .from('performance_issues')
-        .select('*')
-        .gte('timestamp', new Date(Date.now() - 7 * 86400000).toISOString()) // Last 7 days
-        .order('timestamp', { ascending: false });
+        .from("performance_issues")
+        .select("*")
+        .gte("timestamp", new Date(Date.now() - 7 * 86400000).toISOString()) // Last 7 days
+        .order("timestamp", { ascending: false });
 
       if (recentIssues && recentIssues.length > 0) {
         // Analyze patterns
         const patterns = this.identifyPatterns(recentIssues);
-        
+
         // Update pattern database
         for (const [pattern, count] of patterns) {
           this.issuePatterns.set(pattern, count);
@@ -650,16 +659,15 @@ class ContinuousEnhancementLoop {
         // Save patterns
         await this.saveIssuePatterns();
       }
-
     } catch (error) {
-      logger.error('❌ Issue pattern analysis failed:', error);
+      logger.error("❌ Issue pattern analysis failed:", error);
     }
   }
 
   identifyPatterns(issues) {
     const patterns = new Map();
-    
-    issues.forEach(issue => {
+
+    issues.forEach((issue) => {
       const pattern = `${issue.type}_${issue.severity}`;
       patterns.set(pattern, (patterns.get(pattern) || 0) + 1);
     });
@@ -670,22 +678,23 @@ class ContinuousEnhancementLoop {
   async saveIssuePatterns() {
     try {
       const patternsData = Object.fromEntries(this.issuePatterns);
-      await fs.writeFile('./logs/enhancement/issue-patterns.json', JSON.stringify(patternsData, null, 2));
+      await fs.writeFile(
+        "./logs/enhancement/issue-patterns.json",
+        JSON.stringify(patternsData, null, 2),
+      );
     } catch (error) {
-      logger.error('❌ Failed to save issue patterns:', error);
+      logger.error("❌ Failed to save issue patterns:", error);
     }
   }
 
   async storeAnalysis(analysis) {
     try {
-      await supabase
-        .from('enhancement_analysis')
-        .insert({
-          analysis_data: analysis,
-          timestamp: new Date().toISOString()
-        });
+      await supabase.from("enhancement_analysis").insert({
+        analysis_data: analysis,
+        timestamp: new Date().toISOString(),
+      });
     } catch (error) {
-      logger.error('❌ Failed to store analysis:', error);
+      logger.error("❌ Failed to store analysis:", error);
     }
   }
 
@@ -695,29 +704,30 @@ class ContinuousEnhancementLoop {
         ...this.stats,
         timestamp: new Date().toISOString(),
         patternCount: this.issuePatterns.size,
-        optimizationCount: this.optimizationHistory.length
+        optimizationCount: this.optimizationHistory.length,
       };
-      
-      await fs.writeFile('./logs/enhancement/stats.json', JSON.stringify(statsData, null, 2));
-      
+
+      await fs.writeFile(
+        "./logs/enhancement/stats.json",
+        JSON.stringify(statsData, null, 2),
+      );
+
       // Store in Supabase
-      await supabase
-        .from('system_metrics')
-        .insert({
-          service_name: 'enhancement-loop',
-          metrics: statsData,
-          timestamp: new Date().toISOString()
-        });
-      
-      logger.info('📊 Statistics saved');
+      await supabase.from("system_metrics").insert({
+        service_name: "enhancement-loop",
+        metrics: statsData,
+        timestamp: new Date().toISOString(),
+      });
+
+      logger.info("📊 Statistics saved");
     } catch (error) {
-      logger.error('❌ Failed to save statistics:', error);
+      logger.error("❌ Failed to save statistics:", error);
     }
   }
 
   startMonitoring() {
-    logger.info('👁️ Starting enhancement monitoring...');
-    
+    logger.info("👁️ Starting enhancement monitoring...");
+
     // Save statistics every hour
     setInterval(async () => {
       await this.saveStatistics();
@@ -725,13 +735,13 @@ class ContinuousEnhancementLoop {
   }
 
   async shutdown() {
-    logger.info('🛑 Shutting down Enhancement Loop...');
+    logger.info("🛑 Shutting down Enhancement Loop...");
     this.isRunning = false;
-    
+
     // Save final statistics
     await this.saveStatistics();
-    
-    logger.info('✅ Enhancement Loop shutdown complete');
+
+    logger.info("✅ Enhancement Loop shutdown complete");
     process.exit(0);
   }
 
@@ -810,17 +820,17 @@ class ContinuousEnhancementLoop {
       ...this.stats,
       patternCount: this.issuePatterns.size,
       optimizationCount: this.optimizationHistory.length,
-      isRunning: this.isRunning
+      isRunning: this.isRunning,
     };
   }
 
   async forceAnalysis() {
-    logger.info('📊 Force analysis requested...');
+    logger.info("📊 Force analysis requested...");
     await this.performPerformanceAnalysis();
   }
 
   async forceOptimization() {
-    logger.info('🔧 Force optimization requested...');
+    logger.info("🔧 Force optimization requested...");
     await this.performOptimizationCycle();
   }
 }
@@ -828,8 +838,8 @@ class ContinuousEnhancementLoop {
 // Start the enhancement loop if this file is run directly
 if (require.main === module) {
   const enhancementLoop = new ContinuousEnhancementLoop();
-  enhancementLoop.start().catch(error => {
-    logger.error('❌ Failed to start enhancement loop:', error);
+  enhancementLoop.start().catch((error) => {
+    logger.error("❌ Failed to start enhancement loop:", error);
     process.exit(1);
   });
 }

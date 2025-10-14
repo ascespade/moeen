@@ -55,10 +55,12 @@ export default function LanguageSwitcher({
   const toggleLanguage = async () => {
     const newLanguage = language === "ar" ? "en" : "ar";
     setLanguage(newLanguage);
-    
+
     try {
       // Save to database
-      await dynamicThemeManager.updateUserPreferences("current_user", { language: newLanguage });
+      await dynamicThemeManager.updateUserPreferences("current_user", {
+        language: newLanguage,
+      });
       // Reload page to apply translations
       window.location.reload();
     } catch (error) {

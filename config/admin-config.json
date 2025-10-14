@@ -9,32 +9,20 @@
       {
         "email": "admin@example.com",
         "role": "admin",
-        "permissions": [
-          "all"
-        ]
+        "permissions": ["all"]
       }
     ],
     "roles": {
       "admin": {
-        "permissions": [
-          "all"
-        ],
+        "permissions": ["all"],
         "description": "Full system access"
       },
       "doctor": {
-        "permissions": [
-          "patients",
-          "appointments",
-          "medical_records"
-        ],
+        "permissions": ["patients", "appointments", "medical_records"],
         "description": "Medical staff access"
       },
       "therapist": {
-        "permissions": [
-          "patients",
-          "sessions",
-          "therapy_notes"
-        ],
+        "permissions": ["patients", "sessions", "therapy_notes"],
         "description": "Therapy staff access"
       },
       "patient": {
@@ -46,10 +34,7 @@
         "description": "Patient access"
       },
       "family_member": {
-        "permissions": [
-          "linked_patient_profile",
-          "linked_appointments"
-        ],
+        "permissions": ["linked_patient_profile", "linked_appointments"],
         "description": "Family member access"
       }
     }

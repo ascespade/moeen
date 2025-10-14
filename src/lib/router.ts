@@ -37,7 +37,7 @@ export function isProtectedRoute(pathname: string): boolean {
     ROUTES.AUTH.REGISTER,
     ROUTES.AUTH.FORGOT_PASSWORD,
     ROUTES.AUTH.RESET_PASSWORD,
-    ROUTES.HOME
+    ROUTES.HOME,
   ];
   return !publicRoutes.includes(pathname as any);
 }

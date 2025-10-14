@@ -73,8 +73,8 @@ class DynamicContentManager {
    * Get homepage content from database
    */
   async getHomepageContent(): Promise<HomepageContent> {
-    const cacheKey = 'homepage_content';
-    
+    const cacheKey = "homepage_content";
+
     // Check cache first
     if (this.cache.has(cacheKey)) {
       const cached = this.cache.get(cacheKey);
@@ -86,14 +86,14 @@ class DynamicContentManager {
     try {
       // Load all homepage content from settings table
       const { data: settings, error } = await this.supabase
-        .from('settings')
-        .select('key, value')
-        .in('key', [
-          'homepage_hero_slides',
-          'homepage_services', 
-          'homepage_testimonials',
-          'homepage_gallery',
-          'homepage_faqs'
+        .from("settings")
+        .select("key, value")
+        .in("key", [
+          "homepage_hero_slides",
+          "homepage_services",
+          "homepage_testimonials",
+          "homepage_gallery",
+          "homepage_faqs",
         ]);
 
       if (error) {
@@ -102,29 +102,29 @@ class DynamicContentManager {
 
       // Parse settings into structured content
       const content: HomepageContent = {
-        heroSlides: this.parseSetting(settings, 'homepage_hero_slides', []),
-        services: this.parseSetting(settings, 'homepage_services', []),
-        testimonials: this.parseSetting(settings, 'homepage_testimonials', []),
-        galleryImages: this.parseSetting(settings, 'homepage_gallery', []),
-        faqs: this.parseSetting(settings, 'homepage_faqs', [])
+        heroSlides: this.parseSetting(settings, "homepage_hero_slides", []),
+        services: this.parseSetting(settings, "homepage_services", []),
+        testimonials: this.parseSetting(settings, "homepage_testimonials", []),
+        galleryImages: this.parseSetting(settings, "homepage_gallery", []),
+        faqs: this.parseSetting(settings, "homepage_faqs", []),
       };
 
       // Cache the result
       this.cache.set(cacheKey, {
         data: content,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
 
       return content;
     } catch (error) {
-      console.error('Error loading homepage content:', error);
+      console.error("Error loading homepage content:", error);
       // Return empty content structure instead of hardcoded fallbacks
       return {
         heroSlides: [],
         services: [],
         testimonials: [],
         galleryImages: [],
-        faqs: []
+        faqs: [],
       };
     }
   }
@@ -132,9 +132,12 @@ class DynamicContentManager {
   /**
    * Get translations for a specific locale and namespace
    */
-  async getTranslations(locale: 'ar' | 'en', namespace: string = 'common'): Promise<Record<string, string>> {
+  async getTranslations(
+    locale: "ar" | "en",
+    namespace: string = "common",
+  ): Promise<Record<string, string>> {
     const cacheKey = `translations_${locale}_${namespace}`;
-    
+
     // Check cache first
     if (this.cache.has(cacheKey)) {
       const cached = this.cache.get(cacheKey);
@@ -145,10 +148,10 @@ class DynamicContentManager {
 
     try {
       const { data, error } = await this.supabase
-        .from('translations')
-        .select('key, value')
-        .eq('locale', locale)
-        .eq('namespace', namespace);
+        .from("translations")
+        .select("key, value")
+        .eq("locale", locale)
+        .eq("namespace", namespace);
 
       if (error) {
         throw new Error(`Failed to load translations: ${error.message}`);
@@ -162,12 +165,12 @@ class DynamicContentManager {
       // Cache the result
       this.cache.set(cacheKey, {
         data: translations,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
 
       return translations;
     } catch (error) {
-      console.error('Error loading translations:', error);
+      console.error("Error loading translations:", error);
       return {};
     }
   }
@@ -176,8 +179,8 @@ class DynamicContentManager {
    * Get system settings
    */
   async getSettings(keys: string[]): Promise<Record<string, any>> {
-    const cacheKey = `settings_${keys.join('_')}`;
-    
+    const cacheKey = `settings_${keys.join("_")}`;
+
     // Check cache first
     if (this.cache.has(cacheKey)) {
       const cached = this.cache.get(cacheKey);
@@ -188,9 +191,9 @@ class DynamicContentManager {
 
     try {
       const { data, error } = await this.supabase
-        .from('settings')
-        .select('key, value')
-        .in('key', keys);
+        .from("settings")
+        .select("key, value")
+        .in("key", keys);
 
       if (error) {
         throw new Error(`Failed to load settings: ${error.message}`);
@@ -204,12 +207,12 @@ class DynamicContentManager {
       // Cache the result
       this.cache.set(cacheKey, {
         data: settings,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
 
       return settings;
     } catch (error) {
-      console.error('Error loading settings:', error);
+      console.error("Error loading settings:", error);
       return {};
     }
   }
@@ -217,66 +220,68 @@ class DynamicContentManager {
   /**
    * Update homepage content in database
    */
-  async updateHomepageContent(content: Partial<HomepageContent>): Promise<void> {
+  async updateHomepageContent(
+    content: Partial<HomepageContent>,
+  ): Promise<void> {
     try {
       const updates = [];
-      
+
       if (content.heroSlides) {
         updates.push({
-          key: 'homepage_hero_slides',
+          key: "homepage_hero_slides",
           value: content.heroSlides,
-          category: 'homepage',
-          is_public: true
+          category: "homepage",
+          is_public: true,
         });
       }
-      
+
       if (content.services) {
         updates.push({
-          key: 'homepage_services',
+          key: "homepage_services",
           value: content.services,
-          category: 'homepage',
-          is_public: true
+          category: "homepage",
+          is_public: true,
         });
       }
-      
+
       if (content.testimonials) {
         updates.push({
-          key: 'homepage_testimonials',
+          key: "homepage_testimonials",
           value: content.testimonials,
-          category: 'homepage',
-          is_public: true
+          category: "homepage",
+          is_public: true,
         });
       }
-      
+
       if (content.galleryImages) {
         updates.push({
-          key: 'homepage_gallery',
+          key: "homepage_gallery",
           value: content.galleryImages,
-          category: 'homepage',
-          is_public: true
+          category: "homepage",
+          is_public: true,
         });
       }
-      
+
       if (content.faqs) {
         updates.push({
-          key: 'homepage_faqs',
+          key: "homepage_faqs",
           value: content.faqs,
-          category: 'homepage',
-          is_public: true
+          category: "homepage",
+          is_public: true,
         });
       }
 
       // Upsert settings
       for (const update of updates) {
         await this.supabase
-          .from('settings')
-          .upsert(update, { onConflict: 'key' });
+          .from("settings")
+          .upsert(update, { onConflict: "key" });
       }
 
       // Clear cache
       this.cache.clear();
     } catch (error) {
-      console.error('Error updating homepage content:', error);
+      console.error("Error updating homepage content:", error);
       throw error;
     }
   }
@@ -284,25 +289,27 @@ class DynamicContentManager {
   /**
    * Update translations in database
    */
-  async updateTranslations(translations: Array<{
-    locale: 'ar' | 'en';
-    namespace: string;
-    key: string;
-    value: string;
-  }>): Promise<void> {
+  async updateTranslations(
+    translations: Array<{
+      locale: "ar" | "en";
+      namespace: string;
+      key: string;
+      value: string;
+    }>,
+  ): Promise<void> {
     try {
       await this.supabase
-        .from('translations')
-        .upsert(translations, { onConflict: 'locale,namespace,key' });
+        .from("translations")
+        .upsert(translations, { onConflict: "locale,namespace,key" });
 
       // Clear translation cache
       this.cache.forEach((value, key) => {
-        if (key.startsWith('translations_')) {
+        if (key.startsWith("translations_")) {
           this.cache.delete(key);
         }
       });
     } catch (error) {
-      console.error('Error updating translations:', error);
+      console.error("Error updating translations:", error);
       throw error;
     }
   }
@@ -318,7 +325,7 @@ class DynamicContentManager {
    * Parse setting value from database result
    */
   private parseSetting(settings: any[], key: string, defaultValue: any): any {
-    const setting = settings.find(s => s.key === key);
+    const setting = settings.find((s) => s.key === key);
     return setting ? setting.value : defaultValue;
   }
 }

@@ -2,7 +2,10 @@
 import { useEffect, useState, useCallback } from "react";
 import { Sun, Moon } from "lucide-react";
 import { useI18n } from "@/hooks/useI18n";
-import { dynamicThemeManager, type ThemeMode } from "@/lib/dynamic-theme-manager";
+import {
+  dynamicThemeManager,
+  type ThemeMode,
+} from "@/lib/dynamic-theme-manager";
 
 interface ThemeSwitcherProps {
   className?: string;
@@ -59,10 +62,12 @@ export default function ThemeSwitcher({
   const toggleTheme = async () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
-    
+
     try {
       // Save to database
-      await dynamicThemeManager.updateUserPreferences("current_user", { theme: newTheme });
+      await dynamicThemeManager.updateUserPreferences("current_user", {
+        theme: newTheme,
+      });
     } catch (error) {
       console.error("Failed to save theme preference:", error);
     }

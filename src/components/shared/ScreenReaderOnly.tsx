@@ -1,15 +1,11 @@
-import React from 'react';
+import React from "react";
 
 interface ScreenReaderOnlyProps {
   children: React.ReactNode;
 }
 
 export function ScreenReaderOnly({ children }: ScreenReaderOnlyProps) {
-  return (
-    <span className="sr-only">
-      {children}
-    </span>
-  );
+  return <span className="sr-only">{children}</span>;
 }
 
 export default ScreenReaderOnly;
