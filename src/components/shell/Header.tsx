@@ -50,7 +50,7 @@ export default function Header() {
         <div className="h-14 grid grid-cols-[auto_1fr_auto] items-center gap-3">
           <button
             type="button"
-            className="lg:hidden inline-flex items-center justify-center h-9 w-9 rounded-md border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="lg:hidden inline-flex items-center justify-center h-9 w-9 rounded-md border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800 focus:outline-none focus:ring-2"
             aria-label="فتح القائمة"
             data-hs-overlay="#app-sidebar"
           >
@@ -86,7 +86,7 @@ export default function Header() {
           <div className="flex items-center gap-2 justify-self-end">
             <div className="relative inline-flex">
               <button
-                className="h-9 rounded-md border border-gray-200 dark:border-gray-700 px-3 inline-flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2"
+                className="h-9 rounded-md border border-gray-200 dark:border-gray-700 px-3 inline-flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800 focus:outline-none focus:ring-2"
                 aria-haspopup="menu"
                 style={{ outlineColor: "var(--brand-primary)" }}
                 onClick={(e) => {
@@ -105,12 +105,12 @@ export default function Header() {
               </button>
               {showThemeDropdown && (
                 <div
-                  className="absolute top-full right-0 z-50 min-w-36 rounded-lg border border-gray-200 bg-white p-1 shadow-md dark:border-gray-700 dark:bg-gray-900"
+                  className="absolute top-full right-0 z-50 min-w-36 rounded-lg border border-[var(--brand-border)] bg-white p-1 shadow-md dark:border-gray-700 dark:bg-gray-900"
                   role="menu"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <button
-                    className="w-full rounded-md px-3 py-2 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="w-full rounded-md px-3 py-2 text-start hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800"
                     onClick={() => {
                       setTheme("light");
                       setShowThemeDropdown(false);
@@ -119,7 +119,7 @@ export default function Header() {
                     وضع نهاري
                   </button>
                   <button
-                    className="w-full rounded-md px-3 py-2 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="w-full rounded-md px-3 py-2 text-start hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800"
                     onClick={() => {
                       setTheme("dark");
                       setShowThemeDropdown(false);
@@ -132,7 +132,7 @@ export default function Header() {
             </div>
 
             <button
-              className="h-9 rounded-md border border-gray-200 dark:border-gray-700 px-3 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2"
+              className="h-9 rounded-md border border-gray-200 dark:border-gray-700 px-3 text-gray-700 dark:text-gray-200 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800 focus:outline-none focus:ring-2"
               aria-label="Toggle direction"
               style={{ outlineColor: "var(--brand-primary)" }}
               onClick={() => setDir(dir === "rtl" ? "ltr" : "rtl")}
@@ -142,7 +142,7 @@ export default function Header() {
 
             <div className="relative inline-flex">
               <button
-                className="inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                className="inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-gray-700 hover:bg-[var(--brand-surface)] focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowLangDropdown(!showLangDropdown);
@@ -155,19 +155,19 @@ export default function Header() {
               </button>
               {showLangDropdown && (
                 <div
-                  className="absolute top-full right-0 z-50 min-w-32 rounded-lg border border-gray-200 bg-white p-1 shadow-md dark:border-gray-700 dark:bg-gray-900"
+                  className="absolute top-full right-0 z-50 min-w-32 rounded-lg border border-[var(--brand-border)] bg-white p-1 shadow-md dark:border-gray-700 dark:bg-gray-900"
                   role="menu"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Link
-                    className="block rounded-md px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="block rounded-md px-3 py-2 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800"
                     href="/ar"
                     onClick={() => setShowLangDropdown(false)}
                   >
                     العربية
                   </Link>
                   <Link
-                    className="block rounded-md px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="block rounded-md px-3 py-2 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800"
                     href="/en"
                     onClick={() => setShowLangDropdown(false)}
                   >
@@ -179,7 +179,7 @@ export default function Header() {
 
             <div className="hs-dropdown [--trigger:hover] relative inline-flex">
               <button
-                className="relative h-9 w-9 rounded-full border border-gray-200 dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2"
+                className="relative h-9 w-9 rounded-full border border-[var(--brand-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2"
                 style={{ outlineColor: "var(--brand-primary)" }}
                 aria-haspopup="menu"
                 aria-expanded="false"
@@ -192,7 +192,7 @@ export default function Header() {
                 )}
               </button>
               <div
-                className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-64 bg-white dark:bg-gray-900 shadow-md rounded-lg p-2 border border-gray-200 dark:border-gray-700"
+                className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-64 bg-white dark:bg-gray-900 shadow-md rounded-lg p-2 border border-[var(--brand-border)] dark:border-gray-700"
                 role="menu"
               >
                 <div className="mb-2 font-medium px-2 text-gray-800 dark:text-gray-100">
@@ -223,7 +223,7 @@ export default function Header() {
 
             <div className="hs-dropdown relative inline-flex">
               <button
-                className="h-9 w-9 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2"
+                className="h-9 w-9 rounded-full bg-[var(--brand-surface)] dark:bg-gray-700 focus:outline-none focus:ring-2"
                 style={{ outlineColor: "var(--brand-primary)" }}
                 aria-haspopup="menu"
                 aria-expanded="false"

@@ -5,6 +5,7 @@ This guide explains how to use the dynamic content and translation system that e
 ## 🎯 Overview
 
 The system enforces:
+
 - **No hardcoded strings** - All text comes from translation tables
 - **No static data arrays** - All content comes from database
 - **No mock files** - All data is live and dynamic
@@ -75,7 +76,10 @@ settings (
 ### 1. Homepage Content
 
 ```tsx
-import { dynamicContentManager, type HomepageContent } from "@/lib/dynamic-content-manager";
+import {
+  dynamicContentManager,
+  type HomepageContent,
+} from "@/lib/dynamic-content-manager";
 
 export default function HomePage() {
   const [content, setContent] = useState<HomepageContent>({
@@ -83,7 +87,7 @@ export default function HomePage() {
     services: [],
     testimonials: [],
     galleryImages: [],
-    faqs: []
+    faqs: [],
   });
 
   useEffect(() => {
@@ -96,7 +100,7 @@ export default function HomePage() {
 
   return (
     <div>
-      {content.heroSlides.map(slide => (
+      {content.heroSlides.map((slide) => (
         <div key={slide.id}>
           <h1>{slide.title}</h1>
           <p>{slide.description}</p>
@@ -134,8 +138,8 @@ import { dynamicThemeManager } from "@/lib/dynamic-theme-manager";
 const preferences = await dynamicThemeManager.getUserPreferences();
 
 // Update theme
-await dynamicThemeManager.updateUserPreferences("user_id", { 
-  theme: "dark" 
+await dynamicThemeManager.updateUserPreferences("user_id", {
+  theme: "dark",
 });
 
 // Apply theme
@@ -153,17 +157,29 @@ The `.cursor-config.json` enforces these rules:
 {
   "rules": {
     "disallowedPatterns": [
-      "mock", "fixture", "simulation", "sampleData",
-      "const data =", "export const data =",
-      "require\\(.+\\.json\\)", "import .+ from .+\\.json",
+      "mock",
+      "fixture",
+      "simulation",
+      "sampleData",
+      "const data =",
+      "export const data =",
+      "require\\(.+\\.json\\)",
+      "import .+ from .+\\.json",
       "[\"'][^\"']*[\"']\\s*[,;]",
-      "getDefault.*\\(\\)", "fallback.*=.*\\["
+      "getDefault.*\\(\\)",
+      "fallback.*=.*\\["
     ],
     "allowedDataSources": [
-      "supabase", "env", "process.env",
-      "i18next", "translationsTable",
-      "useI18n", "usePageI18n", "t\\(",
-      "createClient", "from\\('settings'\\)"
+      "supabase",
+      "env",
+      "process.env",
+      "i18next",
+      "translationsTable",
+      "useI18n",
+      "usePageI18n",
+      "t\\(",
+      "createClient",
+      "from\\('settings'\\)"
     ]
   }
 }
@@ -177,7 +193,7 @@ The `.cursor-config.json` enforces these rules:
 // Add to database via dynamic content manager
 await dynamicContentManager.updateHomepageContent({
   heroSlides: [...newSlides],
-  services: [...newServices]
+  services: [...newServices],
 });
 ```
 
@@ -187,7 +203,7 @@ await dynamicContentManager.updateHomepageContent({
 // Add translations
 await dynamicContentManager.updateTranslations([
   { locale: "ar", namespace: "common", key: "new.key", value: "قيمة جديدة" },
-  { locale: "en", namespace: "common", key: "new.key", value: "New Value" }
+  { locale: "en", namespace: "common", key: "new.key", value: "New Value" },
 ]);
 ```
 
@@ -219,22 +235,24 @@ npm run migrate
 ### Common Violations
 
 1. **Hardcoded Strings**
+
    ```tsx
    // ❌ Bad
    <h1>Welcome to our site</h1>
-   
+
    // ✅ Good
    <h1>{t(I18N_KEYS.WELCOME.TITLE, "Welcome to our site")}</h1>
    ```
 
 2. **Static Arrays**
+
    ```tsx
    // ❌ Bad
    const services = [
      { id: 1, title: "Service 1" },
-     { id: 2, title: "Service 2" }
+     { id: 2, title: "Service 2" },
    ];
-   
+
    // ✅ Good
    const [services, setServices] = useState([]);
    useEffect(() => {
@@ -243,10 +261,11 @@ npm run migrate
    ```
 
 3. **Mock Data**
+
    ```tsx
    // ❌ Bad
    const mockData = { users: [...] };
-   
+
    // ✅ Good
    const { data } = await supabase.from('users').select('*');
    ```
@@ -254,6 +273,7 @@ npm run migrate
 ### Auto-Fix Suggestions
 
 The system can automatically:
+
 - Convert hardcoded strings to translation keys
 - Replace static arrays with database queries
 - Add missing imports for dynamic content
@@ -264,6 +284,7 @@ The system can automatically:
 ### Validation Report
 
 The validation script provides:
+
 - File-by-file violation report
 - Violation type categorization
 - Severity levels (error/warning)
@@ -272,6 +293,7 @@ The validation script provides:
 ### Cursor Integration
 
 Cursor will:
+
 - Highlight violations in real-time
 - Suggest fixes automatically
 - Block builds on critical violations
@@ -317,6 +339,7 @@ See the updated `src/app/page.tsx` for a complete example of dynamic content imp
 ## 🤝 Contributing
 
 When adding new features:
+
 1. Use dynamic content manager for data
 2. Add translation keys for text
 3. Store preferences in database
@@ -335,9 +358,10 @@ When adding new features:
 ### Debug Mode
 
 Enable debug logging:
+
 ```typescript
 // In development
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = "development";
 // This will show detailed logs for debugging
 ```
 

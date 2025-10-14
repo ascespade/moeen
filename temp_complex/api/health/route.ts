@@ -295,7 +295,10 @@ export async function POST(request: NextRequest) {
     console.error("Detailed health check error:", error);
 
     return NextResponse.json(
-      { error: "Health check failed", details: { error: (error as Error).message } },
+      {
+        error: "Health check failed",
+        details: { error: (error as Error).message },
+      },
       { status: 500 },
     );
   }

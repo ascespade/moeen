@@ -2,40 +2,39 @@
 // Activity logs API endpoint for dashboard
 // Provides real-time logs and activity monitoring
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const service = searchParams.get('service');
-    const level = searchParams.get('level');
-    const limit = parseInt(searchParams.get('limit') || '100');
-    const hours = parseInt(searchParams.get('hours') || '24');
+    const service = searchParams.get("service");
+    const level = searchParams.get("level");
+    const limit = parseInt(searchParams.get("limit") || "100");
+    const hours = parseInt(searchParams.get("hours") || "24");
 
     const logs = await getActivityLogs({
       service,
       level,
       limit,
-      hours
+      hours,
     });
 
     return NextResponse.json({
       timestamp: new Date().toISOString(),
       logs,
-      summary: generateLogSummary(logs)
+      summary: generateLogSummary(logs),
     });
-
   } catch (error) {
-    console.error('Logs API error:', error);
+    console.error("Logs API error:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch logs' },
-      { status: 500 }
+      { error: "Failed to fetch logs" },
+      { status: 500 },
     );
   }
 }
@@ -48,38 +47,42 @@ async function getActivityLogs(filters: {
 }) {
   try {
     let query = supabase
-      .from('activity_logs')
-      .select('*')
-      .gte('timestamp', new Date(Date.now() - filters.hours * 60 * 60 * 1000).toISOString())
-      .order('timestamp', { ascending: false })
+      .from("activity_logs")
+      .select("*")
+      .gte(
+        "timestamp",
+        new Date(Date.now() - filters.hours * 60 * 60 * 1000).toISOString(),
+      )
+      .order("timestamp", { ascending: false })
       .limit(filters.limit);
 
     if (filters.service) {
-      query = query.eq('service_name', filters.service);
+      query = query.eq("service_name", filters.service);
     }
 
     if (filters.level) {
-      query = query.eq('level', filters.level);
+      query = query.eq("level", filters.level);
     }
 
     const { data, error } = await query;
 
     if (error) throw error;
 
-    return data?.map(log => ({
-      id: log.id,
-      timestamp: log.timestamp,
-      service: log.service_name,
-      level: log.level,
-      message: log.message,
-      details: log.details,
-      category: log.category,
-      userId: log.user_id,
-      sessionId: log.session_id
-    })) || [];
-
+    return (
+      data?.map((log) => ({
+        id: log.id,
+        timestamp: log.timestamp,
+        service: log.service_name,
+        level: log.level,
+        message: log.message,
+        details: log.details,
+        category: log.category,
+        userId: log.user_id,
+        sessionId: log.session_id,
+      })) || []
+    );
   } catch (error) {
-    console.error('Get activity logs error:', error);
+    console.error("Get activity logs error:", error);
     return [];
   }
 }
@@ -92,25 +95,30 @@ function generateLogSummary(logs: any[]) {
     byCategory: {} as Record<string, number>,
     recentActivity: logs.slice(0, 10),
     errorRate: 0,
-    warningRate: 0
+    warningRate: 0,
   };
 
-  logs.forEach(log => {
+  logs.forEach((log) => {
     // Count by level
     summary.byLevel[log.level] = (summary.byLevel[log.level] || 0) + 1;
-    
+
     // Count by service
     summary.byService[log.service] = (summary.byService[log.service] || 0) + 1;
-    
+
     // Count by category
     if (log.category) {
-      summary.byCategory[log.category] = (summary.byCategory[log.category] || 0) + 1;
+      summary.byCategory[log.category] =
+        (summary.byCategory[log.category] || 0) + 1;
     }
   });
 
   // Calculate rates
-  summary.errorRate = summary.total > 0 ? (summary.byLevel.error || 0) / summary.total * 100 : 0;
-  summary.warningRate = summary.total > 0 ? (summary.byLevel.warn || 0) / summary.total * 100 : 0;
+  summary.errorRate =
+    summary.total > 0
+      ? ((summary.byLevel.error || 0) / summary.total) * 100
+      : 0;
+  summary.warningRate =
+    summary.total > 0 ? ((summary.byLevel.warn || 0) / summary.total) * 100 : 0;
 
   return summary;
 }

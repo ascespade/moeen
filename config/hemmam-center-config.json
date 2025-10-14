@@ -26,7 +26,13 @@
       },
       "header": {
         "logo": "logo.png",
-        "navigation": ["الرئيسية", "الخدمات", "المواعيد", "تواصل معنا", "السياسات"]
+        "navigation": [
+          "الرئيسية",
+          "الخدمات",
+          "المواعيد",
+          "تواصل معنا",
+          "السياسات"
+        ]
       },
       "footer": {
         "links": ["سياسات الخصوصية", "الشروط والأحكام", "اتصل بنا"],
@@ -43,7 +49,12 @@
       "pages": {
         "home": {
           "heroBanner": "hero_banner.png",
-          "features": ["تنظيم المواعيد", "سجل المرضى", "التقارير الذكية", "الشات بوت الذكي"],
+          "features": [
+            "تنظيم المواعيد",
+            "سجل المرضى",
+            "التقارير الذكية",
+            "الشات بوت الذكي"
+          ],
           "cta": "حجز موعد"
         },
         "policies": {
@@ -128,7 +139,12 @@
     },
     "notifications": {
       "channels": ["email", "internalMessage", "telegram"],
-      "triggers": ["newAppointment", "appointmentChange", "insuranceRequest", "chatFollowup"]
+      "triggers": [
+        "newAppointment",
+        "appointmentChange",
+        "insuranceRequest",
+        "chatFollowup"
+      ]
     },
     "workflow": {
       "loop": "continuous",

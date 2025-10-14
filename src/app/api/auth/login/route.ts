@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getServiceSupabase } from "@/lib/supabaseClient";
 export async function POST(request: Request) {
   try {
     const { email, password, rememberMe } = await request.json();
@@ -11,30 +12,35 @@ export async function POST(request: Request) {
       );
     }
 
-    // Mock admin user; replace with real auth later
-    const user = {
-      id: "admin-1",
-      email,
-      name: "Administrator",
-      role: "admin",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+    // Real Supabase auth
+    const supabase = getServiceSupabase();
+    const { data: authData, error: signInError } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    const token = "mock-admin-token";
+    if (signInError || !authData?.session) {
+      return NextResponse.json(
+        { success: false, error: "Invalid credentials" },
+        { status: 401 },
+      );
+    }
+
+    const { session, user } = authData;
 
     const response = NextResponse.json({
       success: true,
-      data: { user, token },
+      data: { user, token: session.access_token },
     });
 
-    // Set cookie (httpOnly in production ideally)
-    response.cookies.set("auth-token", token, {
-      httpOnly: false,
+    // Set cookie
+    response.cookies.set("auth-token", session.access_token, {
+      httpOnly: true,
       sameSite: "lax",
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
       path: "/",
-      maxAge: rememberMe ? 60 * 60 * 24 * 30 : 60 * 60 * 4, // 30d or 4h
+      maxAge: rememberMe ? 60 * 60 * 24 * 30 : 60 * 60 * 4,
     });
 
     return response;

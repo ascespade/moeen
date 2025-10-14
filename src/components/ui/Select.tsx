@@ -20,12 +20,17 @@ export function Select({
   children,
 }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(value || defaultValue || "");
+  const [selectedValue, setSelectedValue] = useState(
+    value || defaultValue || "",
+  );
   const selectRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
+      if (
+        selectRef.current &&
+        !selectRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -48,11 +53,7 @@ export function Select({
         placeholder={placeholder}
         value={selectedValue}
       />
-      {isOpen && (
-        <SelectContent>
-          {children}
-        </SelectContent>
-      )}
+      {isOpen && <SelectContent>{children}</SelectContent>}
     </div>
   );
 }
@@ -118,7 +119,7 @@ export function SelectItem({
       )}
       onClick={() => {
         // This will be handled by the parent Select component
-        const event = new CustomEvent('select-item', { detail: { value } });
+        const event = new CustomEvent("select-item", { detail: { value } });
         document.dispatchEvent(event);
       }}
       {...props}

@@ -49,6 +49,7 @@ interface StaffWorkHours {
   lastCheckOut?: string;
 }
 
+// TODO: Replace mock with live API once endpoints ready
 const mockStats: DashboardStats = {
   totalPatients: 1247,
   activePatients: 1156,
@@ -184,7 +185,7 @@ const statusConfig = {
   success: { color: "text-green-600", bg: "bg-green-50" },
   warning: { color: "text-yellow-600", bg: "bg-yellow-50" },
   error: { color: "text-red-600", bg: "bg-red-50" },
-  info: { color: "text-blue-600", bg: "bg-blue-50" },
+  info: { color: "text-orange-600", bg: "bg-orange-50" },
 };
 
 export default function AdminDashboard() {

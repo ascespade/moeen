@@ -29,21 +29,10 @@
     "postsPerDay": 3,
     "minTimeBetweenPosts": 14400000,
     "maxTimeBetweenPosts": 28800000,
-    "hashtags": [
-      "#healthcare",
-      "#ai",
-      "#innovation",
-      "#technology",
-      "#medical"
-    ]
+    "hashtags": ["#healthcare", "#ai", "#innovation", "#technology", "#medical"]
   },
   "content": {
-    "videoFormats": [
-      ".mp4",
-      ".mov",
-      ".avi",
-      ".mkv"
-    ],
+    "videoFormats": [".mp4", ".mov", ".avi", ".mkv"],
     "maxFileSize": 104857600,
     "descriptionTemplates": [
       "Amazing healthcare innovation! {hashtags}",

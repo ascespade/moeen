@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import { useState } from 'react';
-import { ImageIcon } from 'lucide-react';
+import Image from "next/image";
+import { useState } from "react";
+import { ImageIcon } from "lucide-react";
 
 interface OptimizedImageProps {
   src: string;
@@ -11,7 +11,7 @@ interface OptimizedImageProps {
   className?: string;
   sizes?: string;
   quality?: number;
-  placeholder?: 'blur' | 'empty';
+  placeholder?: "blur" | "empty";
   blurDataURL?: string;
   fill?: boolean;
   style?: React.CSSProperties;
@@ -23,10 +23,10 @@ export function OptimizedImage({
   width,
   height,
   priority = false,
-  className = '',
+  className = "",
   sizes,
   quality = 75,
-  placeholder = 'empty',
+  placeholder = "empty",
   blurDataURL,
   fill = false,
   style,
@@ -61,7 +61,7 @@ export function OptimizedImage({
       setHasError(true);
     },
     className: `transition-opacity duration-300 ${
-      isLoading ? 'opacity-0' : 'opacity-100'
+      isLoading ? "opacity-0" : "opacity-100"
     } ${className}`,
     style,
     ...(sizes && { sizes }),
@@ -69,7 +69,7 @@ export function OptimizedImage({
   };
 
   return (
-    <div className={`relative ${fill ? 'w-full h-full' : ''}`}>
+    <div className={`relative ${fill ? "w-full h-full" : ""}`}>
       {isLoading && (
         <div
           className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center"
@@ -88,54 +88,79 @@ export const ImagePresets = {
   avatar: {
     width: 40,
     height: 40,
-    className: 'rounded-full',
+    className: "rounded-full",
     quality: 80,
   },
   thumbnail: {
     width: 150,
     height: 150,
-    className: 'rounded-lg',
+    className: "rounded-lg",
     quality: 75,
   },
   hero: {
     width: 800,
     height: 400,
-    className: 'rounded-lg',
+    className: "rounded-lg",
     quality: 85,
     priority: true,
   },
   card: {
     width: 300,
     height: 200,
-    className: 'rounded-md',
+    className: "rounded-md",
     quality: 75,
   },
   gallery: {
     width: 400,
     height: 300,
-    className: 'rounded-lg',
+    className: "rounded-lg",
     quality: 80,
   },
 };
 
 // Convenience components for common use cases
-export function AvatarImage(props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality'>) {
+export function AvatarImage(
+  props: Omit<
+    OptimizedImageProps,
+    "width" | "height" | "className" | "quality"
+  >,
+) {
   return <OptimizedImage {...ImagePresets.avatar} {...props} />;
 }
 
-export function ThumbnailImage(props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality'>) {
+export function ThumbnailImage(
+  props: Omit<
+    OptimizedImageProps,
+    "width" | "height" | "className" | "quality"
+  >,
+) {
   return <OptimizedImage {...ImagePresets.thumbnail} {...props} />;
 }
 
-export function HeroImage(props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality' | 'priority'>) {
+export function HeroImage(
+  props: Omit<
+    OptimizedImageProps,
+    "width" | "height" | "className" | "quality" | "priority"
+  >,
+) {
   return <OptimizedImage {...ImagePresets.hero} {...props} />;
 }
 
-export function CardImage(props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality'>) {
+export function CardImage(
+  props: Omit<
+    OptimizedImageProps,
+    "width" | "height" | "className" | "quality"
+  >,
+) {
   return <OptimizedImage {...ImagePresets.card} {...props} />;
 }
 
-export function GalleryImage(props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality'>) {
+export function GalleryImage(
+  props: Omit<
+    OptimizedImageProps,
+    "width" | "height" | "className" | "quality"
+  >,
+) {
   return <OptimizedImage {...ImagePresets.gallery} {...props} />;
 }
 

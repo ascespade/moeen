@@ -16,7 +16,7 @@ export default function PlaceholderSquare({
   return (
     <div className="rounded-xl border border-dashed border-gray-300 dark:border-gray-700 p-4 md:p-6 bg-white dark:bg-gray-900">
       <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-blue-600 text-white flex items-center justify-center text-xl">
+        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-orange-700 text-white flex items-center justify-center text-xl">
           📌
         </div>
         <div className="flex-1">
@@ -35,7 +35,7 @@ export default function PlaceholderSquare({
           )}
           {docsLink && (
             <a
-              className="mt-3 inline-block text-sm text-blue-600 hover:underline"
+              className="mt-3 inline-block text-sm text-[var(--brand-primary)] hover:underline"
               href={docsLink}
               target="_blank"
               rel="noreferrer"

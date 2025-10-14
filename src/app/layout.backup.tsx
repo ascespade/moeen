@@ -2,11 +2,9 @@ import { Cairo, Inter } from "next/font/google";
 import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 import { I18nProvider } from "@/components/providers/I18nProvider";
 import type { Metadata } from "next";
-import { Cairo, Inter } from "next/font/google";
 import "@/styles/index.css";
 import UIProvider from "@/components/providers/UIProvider";
 import StatusBanner from "@/components/common/StatusBanner";
-import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {

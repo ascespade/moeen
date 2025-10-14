@@ -23,6 +23,7 @@ sudo nano /usr/local/bin/tailscale-guardian.sh
 ```
 
 غيّر هذه القيم:
+
 - `AUTH_KEY`: مفتاح التوثيق من Tailscale Admin Console
 - `HOSTNAME`: اسم الجهاز في شبكة Tailscale
 
@@ -49,6 +50,7 @@ crontab -e
 ## 📊 المراقبة
 
 ### عرض اللوق
+
 ```bash
 # عرض آخر 50 سطر
 tail -50 /var/log/tailscale-guardian.log
@@ -58,6 +60,7 @@ tail -f /var/log/tailscale-guardian.log
 ```
 
 ### فحص حالة السكربت
+
 ```bash
 # فحص إذا كان السكربت يعمل
 pgrep -f tailscale-guardian
@@ -67,6 +70,7 @@ ps aux | grep tailscale-guardian
 ```
 
 ### فحص حالة Tailscale
+
 ```bash
 # حالة الاتصال
 tailscale status
@@ -78,6 +82,7 @@ tailscale netcheck
 ## 🧪 الاختبار
 
 ### اختبار إعادة التشغيل التلقائي
+
 ```bash
 # إيقاف tailscaled يدوياً
 sudo pkill tailscaled
@@ -86,6 +91,7 @@ sudo pkill tailscaled
 ```
 
 ### اختبار إعادة الاتصال
+
 ```bash
 # إيقاف الاتصال
 tailscale down
@@ -115,11 +121,13 @@ sudo kill -TERM $(pgrep -f tailscale-guardian)
 ### مشاكل شائعة
 
 1. **خطأ في الصلاحيات**:
+
    ```bash
    sudo chmod +x /usr/local/bin/tailscale-guardian.sh
    ```
 
 2. **مجلدات غير موجودة**:
+
    ```bash
    sudo mkdir -p /var/lib/tailscale /var/run/tailscale
    ```
@@ -130,10 +138,11 @@ sudo kill -TERM $(pgrep -f tailscale-guardian)
    - تأكد من أن المفتاح له صلاحيات كافية
 
 4. **مشكلة في الاتصال**:
+
    ```bash
    # فحص إعدادات الشبكة
    tailscale netcheck
-   
+
    # فحص حالة الخدمة
    systemctl status tailscaled
    ```
@@ -148,10 +157,10 @@ sudo kill -TERM $(pgrep -f tailscale-guardian)
 ## 🆘 الدعم
 
 إذا واجهت مشاكل:
+
 1. راجع ملف اللوق: `/var/log/tailscale-guardian.log`
 2. تأكد من إعدادات AUTH_KEY و HOSTNAME
 3. تأكد من تثبيت Tailscale بشكل صحيح
-
 
 nohup /usr/local/bin/tailscale-guardian-advanced.sh > /dev/null 2>&1 &
 sleep 5 && pgrep -f tailscale-guardian

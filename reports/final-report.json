@@ -198,9 +198,7 @@
     "totalTasks": 5,
     "completedTasks": 3,
     "failedTasks": 2,
-    "warnings": [
-      "2 modules failed execution"
-    ],
+    "warnings": ["2 modules failed execution"],
     "recommendations": [
       "Some modules failed - review logs and retry failed modules"
     ]

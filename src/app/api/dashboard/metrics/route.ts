@@ -2,12 +2,12 @@
 // Real-time metrics API endpoint for dashboard
 // Provides system health, performance, and automation metrics
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
 
 export async function GET(request: NextRequest) {
@@ -18,41 +18,42 @@ export async function GET(request: NextRequest) {
       systemMetrics,
       socialMediaMetrics,
       workflowMetrics,
-      chatbotMetrics
+      chatbotMetrics,
     ] = await Promise.all([
       getSystemHealth(),
       getSystemMetrics(),
       getSocialMediaMetrics(),
       getWorkflowMetrics(),
-      getChatbotMetrics()
+      getChatbotMetrics(),
     ]);
 
     const metrics = {
       timestamp: new Date().toISOString(),
       system: {
         health: systemHealth,
-        metrics: systemMetrics
+        metrics: systemMetrics,
       },
       automation: {
         socialMedia: socialMediaMetrics,
         workflows: workflowMetrics,
-        chatbot: chatbotMetrics
+        chatbot: chatbotMetrics,
       },
       summary: {
         overallHealth: calculateOverallHealth(systemHealth),
         activeServices: countActiveServices(systemHealth),
-        totalAutomation: (socialMediaMetrics as any).postsPublished + (workflowMetrics as any).executionsSuccessful,
-        errorRate: calculateErrorRate(systemMetrics)
-      }
+        totalAutomation:
+          (socialMediaMetrics as any).postsPublished +
+          (workflowMetrics as any).executionsSuccessful,
+        errorRate: calculateErrorRate(systemMetrics),
+      },
     };
 
     return NextResponse.json(metrics);
-
   } catch (error) {
-    console.error('Dashboard metrics error:', error);
+    console.error("Dashboard metrics error:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch metrics' },
-      { status: 500 }
+      { error: "Failed to fetch metrics" },
+      { status: 500 },
     );
   }
 }
@@ -60,22 +61,21 @@ export async function GET(request: NextRequest) {
 async function getSystemHealth() {
   try {
     const { data, error } = await supabase
-      .from('system_health')
-      .select('*')
-      .order('last_check', { ascending: false })
+      .from("system_health")
+      .select("*")
+      .order("last_check", { ascending: false })
       .limit(10);
 
     if (error) throw error;
 
-    return data.map(service => ({
+    return data.map((service) => ({
       service: service.service_name,
-      status: service.is_healthy ? 'healthy' : 'unhealthy',
+      status: service.is_healthy ? "healthy" : "unhealthy",
       lastCheck: service.last_check,
-      details: service.health_status
+      details: service.health_status,
     }));
-
   } catch (error) {
-    console.error('System health error:', error);
+    console.error("System health error:", error);
     return [];
   }
 }
@@ -83,9 +83,9 @@ async function getSystemHealth() {
 async function getSystemMetrics() {
   try {
     const { data, error } = await supabase
-      .from('system_metrics')
-      .select('*')
-      .order('timestamp', { ascending: false })
+      .from("system_metrics")
+      .select("*")
+      .order("timestamp", { ascending: false })
       .limit(50);
 
     if (error) throw error;
@@ -97,16 +97,15 @@ async function getSystemMetrics() {
         acc[service] = {
           service,
           lastUpdate: metric.timestamp,
-          metrics: metric.metrics
+          metrics: metric.metrics,
         };
       }
       return acc;
     }, {});
 
     return Object.values(aggregated);
-
   } catch (error) {
-    console.error('System metrics error:', error);
+    console.error("System metrics error:", error);
     return [];
   }
 }
@@ -114,9 +113,9 @@ async function getSystemMetrics() {
 async function getSocialMediaMetrics() {
   try {
     const { data, error } = await supabase
-      .from('social_media_metrics')
-      .select('*')
-      .order('timestamp', { ascending: false })
+      .from("social_media_metrics")
+      .select("*")
+      .order("timestamp", { ascending: false })
       .limit(100);
 
     if (error) throw error;
@@ -128,11 +127,11 @@ async function getSocialMediaMetrics() {
         totalViews: 0,
         totalLikes: 0,
         totalComments: 0,
-        totalShares: 0
-      }
+        totalShares: 0,
+      },
     };
 
-    data.forEach(metric => {
+    data.forEach((metric) => {
       const platform = metric.platform;
       if (!summary.platforms[platform]) {
         summary.platforms[platform] = {
@@ -140,7 +139,7 @@ async function getSocialMediaMetrics() {
           views: 0,
           likes: 0,
           comments: 0,
-          shares: 0
+          shares: 0,
         };
       }
 
@@ -157,13 +156,17 @@ async function getSocialMediaMetrics() {
     });
 
     return summary;
-
   } catch (error) {
-    console.error('Social media metrics error:', error);
+    console.error("Social media metrics error:", error);
     return {
       totalPosts: 0,
       platforms: {},
-      engagement: { totalViews: 0, totalLikes: 0, totalComments: 0, totalShares: 0 }
+      engagement: {
+        totalViews: 0,
+        totalLikes: 0,
+        totalComments: 0,
+        totalShares: 0,
+      },
     };
   }
 }
@@ -171,36 +174,35 @@ async function getSocialMediaMetrics() {
 async function getWorkflowMetrics() {
   try {
     const { data, error } = await supabase
-      .from('workflow_validation')
-      .select('*')
-      .order('timestamp', { ascending: false })
+      .from("workflow_validation")
+      .select("*")
+      .order("timestamp", { ascending: false })
       .limit(50);
 
     if (error) throw error;
 
     const summary = {
       totalWorkflows: data.length,
-      validWorkflows: data.filter(w => w.is_valid).length,
-      invalidWorkflows: data.filter(w => !w.is_valid).length,
-      commonIssues: {}
+      validWorkflows: data.filter((w) => w.is_valid).length,
+      invalidWorkflows: data.filter((w) => !w.is_valid).length,
+      commonIssues: {},
     };
 
     // Count common issues
-    data.forEach(workflow => {
-      workflow.issues.forEach(issue => {
+    data.forEach((workflow) => {
+      workflow.issues.forEach((issue) => {
         summary.commonIssues[issue] = (summary.commonIssues[issue] || 0) + 1;
       });
     });
 
     return summary;
-
   } catch (error) {
-    console.error('Workflow metrics error:', error);
+    console.error("Workflow metrics error:", error);
     return {
       totalWorkflows: 0,
       validWorkflows: 0,
       invalidWorkflows: 0,
-      commonIssues: {}
+      commonIssues: {},
     };
   }
 }
@@ -208,62 +210,66 @@ async function getWorkflowMetrics() {
 async function getChatbotMetrics() {
   try {
     const { data, error } = await supabase
-      .from('chatbot_flows')
-      .select('*')
-      .eq('status', 'published');
+      .from("chatbot_flows")
+      .select("*")
+      .eq("status", "published");
 
     if (error) throw error;
 
     const summary = {
       activeFlows: data.length,
-      totalNodes: data.reduce((acc, flow) => acc + (flow.nodes?.length || 0), 0),
+      totalNodes: data.reduce(
+        (acc, flow) => acc + (flow.nodes?.length || 0),
+        0,
+      ),
       totalTemplates: 0, // Would need separate query
-      languages: [...new Set(data.map(flow => flow.language))],
-      categories: [...new Set(data.map(flow => flow.category))]
+      languages: [...new Set(data.map((flow) => flow.language))],
+      categories: [...new Set(data.map((flow) => flow.category))],
     };
 
     return summary;
-
   } catch (error) {
-    console.error('Chatbot metrics error:', error);
+    console.error("Chatbot metrics error:", error);
     return {
       activeFlows: 0,
       totalNodes: 0,
       totalTemplates: 0,
       languages: [],
-      categories: []
+      categories: [],
     };
   }
 }
 
 function calculateOverallHealth(systemHealth: any[]) {
-  if (systemHealth.length === 0) return 'unknown';
-  
-  const healthyServices = systemHealth.filter(service => service.status === 'healthy').length;
+  if (systemHealth.length === 0) return "unknown";
+
+  const healthyServices = systemHealth.filter(
+    (service) => service.status === "healthy",
+  ).length;
   const totalServices = systemHealth.length;
-  
+
   const healthPercentage = (healthyServices / totalServices) * 100;
-  
-  if (healthPercentage >= 90) return 'excellent';
-  if (healthPercentage >= 75) return 'good';
-  if (healthPercentage >= 50) return 'fair';
-  return 'poor';
+
+  if (healthPercentage >= 90) return "excellent";
+  if (healthPercentage >= 75) return "good";
+  if (healthPercentage >= 50) return "fair";
+  return "poor";
 }
 
 function countActiveServices(systemHealth: any[]) {
-  return systemHealth.filter(service => service.status === 'healthy').length;
+  return systemHealth.filter((service) => service.status === "healthy").length;
 }
 
 function calculateErrorRate(systemMetrics: any[]) {
   if (systemMetrics.length === 0) return 0;
-  
+
   const totalErrors = systemMetrics.reduce((acc, metric) => {
     return acc + (metric.metrics?.errors || 0);
   }, 0);
-  
+
   const totalOperations = systemMetrics.reduce((acc, metric) => {
     return acc + (metric.metrics?.totalOperations || 1);
   }, 0);
-  
+
   return totalOperations > 0 ? (totalErrors / totalOperations) * 100 : 0;
 }

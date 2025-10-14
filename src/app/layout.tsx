@@ -1,6 +1,8 @@
 import { Cairo, Inter } from "next/font/google";
 import "./globals.css";
 import type { Metadata } from "next";
+import UIProvider from "@/components/providers/UIProvider";
+import I18nProvider from "@/components/providers/I18nProvider";
 
 export const metadata: Metadata = {
   title: "مُعين",
@@ -30,7 +32,9 @@ export default function RootLayout({
         className={`${cairo.variable} ${inter.variable} antialiased`}
         suppressHydrationWarning
       >
-        {children}
+        <I18nProvider>
+          <UIProvider>{children}</UIProvider>
+        </I18nProvider>
       </body>
     </html>
   );

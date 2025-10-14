@@ -55,6 +55,24 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         panel: "var(--panel)",
+        // Centralized aliases to keep legacy classes consistent with brand
+        blue: {
+          50: "color-mix(in oklab, var(--brand-primary) 5%, #fff)",
+          100: "color-mix(in oklab, var(--brand-primary) 10%, #fff)",
+          500: "var(--brand-primary)",
+          600: "var(--brand-primary)",
+          700: "var(--brand-primary-hover)",
+        },
+        purple: {
+          50: "#fffbeb", // amber-50
+          100: "#fef3c7", // amber-100
+          600: "#b45309", // amber-700
+        },
+        indigo: {
+          50: "#fdf8f6", // brown-50
+          100: "#f2e8e5", // brown-100
+          600: "#a18072", // brown-600
+        },
         // Brown and orange theme colors
         brown: {
           50: "#fdf8f6",
@@ -79,6 +97,43 @@ module.exports = {
           700: "#c2410c",
           800: "#9a3412",
           900: "#7c2d12",
+        },
+        // Centralize legacy blue/purple/indigo usages to brand orange
+        blue: {
+          50: "rgb(245,130,32)",
+          100: "rgb(245,130,32)",
+          200: "rgb(245,130,32)",
+          300: "rgb(245,130,32)",
+          400: "rgb(245,130,32)",
+          500: "rgb(245,130,32)",
+          600: "rgb(245,130,32)",
+          700: "rgb(210,111,24)",
+          800: "rgb(194,94,15)",
+          900: "rgb(124,45,18)",
+        },
+        purple: {
+          50: "rgb(245,130,32)",
+          100: "rgb(245,130,32)",
+          200: "rgb(245,130,32)",
+          300: "rgb(245,130,32)",
+          400: "rgb(245,130,32)",
+          500: "rgb(245,130,32)",
+          600: "rgb(245,130,32)",
+          700: "rgb(210,111,24)",
+          800: "rgb(194,94,15)",
+          900: "rgb(124,45,18)",
+        },
+        indigo: {
+          50: "rgb(245,130,32)",
+          100: "rgb(245,130,32)",
+          200: "rgb(245,130,32)",
+          300: "rgb(245,130,32)",
+          400: "rgb(245,130,32)",
+          500: "rgb(245,130,32)",
+          600: "rgb(245,130,32)",
+          700: "rgb(210,111,24)",
+          800: "rgb(194,94,15)",
+          900: "rgb(124,45,18)",
         },
       },
       backgroundImage: {
