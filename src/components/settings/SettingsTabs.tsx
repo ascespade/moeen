@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { isWhatsAppConfigured, getApiConfig } from "@/lib/api/config";
 import PlaceholderSquare from "@/components/common/PlaceholderSquare";
+import PlaceholderSquare from "@/components/common/PlaceholderSquare";
+import { isWhatsAppConfigured, getApiConfig } from "@/lib/api/config";
 
 type Settings = {
   provider: string;
@@ -145,6 +147,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className="h-10 rounded-md bg-gray-900 px-4 text-white"
+              className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() => save({ general: settings?.general || {} })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -191,6 +194,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className="h-10 rounded-md bg-gray-900 px-4 text-white"
+              className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() => save({ provider: settings?.provider || "" })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -244,6 +248,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className="h-10 rounded-md bg-gray-900 px-4 text-white"
+              className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() =>
                 save({ voice: settings?.voice || { stt: null, tts: null } })
               }
@@ -256,6 +261,7 @@ export default function SettingsTabs() {
 
       {active === "providers" && (
         <section className="grid gap-4 rounded-xl border p-4">
+        <section className="rounded-xl border p-4 grid gap-4">
           {/* WhatsApp Configuration */}
           <div className="grid gap-2">
             <h3 className="text-base font-semibold">إعداد WhatsApp</h3>
@@ -360,6 +366,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className="h-10 rounded-md bg-gray-900 px-4 text-white"
+              className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() => save({ providers: settings?.providers || {} })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -407,6 +414,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className="h-10 rounded-md bg-gray-900 px-4 text-white"
+              className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() => save({ channels: settings?.channels || {} })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -457,6 +465,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className="h-10 rounded-md bg-gray-900 px-4 text-white"
+              className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() => save({ security: settings?.security || {} })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -488,6 +497,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className="h-10 rounded-md bg-gray-900 px-4 text-white"
+              className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() =>
                 save({ notifications: settings?.notifications || {} })
               }
@@ -504,6 +514,7 @@ export default function SettingsTabs() {
             <label className="text-sm font-medium">كلمات الطوارئ</label>
             <textarea
               className="w-full rounded-md border p-2"
+              className="w-full p-2 border rounded-md"
               placeholder="أدخل الكلمات مفصولة بفواصل"
               value={(settings?.emergency?.keywords || []).join(", ")}
               onChange={(e) => {
@@ -522,6 +533,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className="h-10 rounded-md bg-gray-900 px-4 text-white"
+              className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() =>
                 save({ emergency: settings?.emergency || { keywords: [] } })
               }
@@ -586,6 +598,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className="h-10 rounded-md bg-gray-900 px-4 text-white"
+              className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() => save({ account: settings?.account || {} })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
@@ -624,6 +637,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className="h-10 rounded-md bg-gray-900 px-4 text-white"
+              className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() => save({ billing: settings?.billing || {} })}
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}

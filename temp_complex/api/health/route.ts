@@ -253,6 +253,7 @@ export async function GET(request: NextRequest) {
         uptime: process.uptime(),
         error: "Health check failed",
         details: { error: (error as Error).message },
+        details: { error: error.message },
       },
       { status: 503 },
     );
@@ -301,5 +302,6 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 },
     );
+    return NextResponse.json({ error: "Health check failed" }, { status: 500 });
   }
 }

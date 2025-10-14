@@ -68,6 +68,7 @@ export default function LogsAdminPage() {
         </select>
         <input
           className="h-10 w-full rounded-md border border-[var(--brand-border)] px-3 focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] md:w-64"
+          className="h-10 rounded-md border border-[var(--brand-border)] px-3 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
           placeholder="بحث"
           value={q}
           onChange={(e) => setQ(e.target.value)}
@@ -93,6 +94,9 @@ export default function LogsAdminPage() {
                 <th className="p-3 text-start">النوع</th>
                 <th className="p-3 text-start">الوقت</th>
                 <th className="p-3 text-start">الوصف</th>
+                <th className="text-start p-3">النوع</th>
+                <th className="text-start p-3">الوقت</th>
+                <th className="text-start p-3">الوصف</th>
               </tr>
             </thead>
             <tbody>

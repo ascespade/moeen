@@ -75,6 +75,17 @@ export default function ContactPage() {
               className="mx-auto mb-4 rounded"
             />
             <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="text-center mb-8">
+            <Image
+              src="/logo.jpg"
+              alt="Hemam Logo"
+              width={64}
+              height={64}
+              className="mx-auto rounded mb-4"
+            />
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               تم إرسال رسالتك
             </h1>
             <p className="text-gray-600 dark:text-gray-400">
@@ -83,6 +94,7 @@ export default function ContactPage() {
           </div>
 
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
             <div className="text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900">
                 <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
@@ -115,6 +127,7 @@ export default function ContactPage() {
             <div className="flex items-center gap-3">
               <Image
                 src="/logo.png"
+                src="/logo.jpg"
                 alt="Hemam Logo"
                 width={40}
                 height={40}
@@ -131,18 +144,24 @@ export default function ContactPage() {
               <Link
                 href="/"
                 className="text-gray-600 hover:text-[var(--brand-primary)] dark:text-gray-400"
+            <nav className="hidden md:flex items-center gap-6">
+              <Link
+                href="/"
+                className="text-gray-600 dark:text-gray-400 hover:text-[var(--brand-primary)]"
               >
                 الرئيسية
               </Link>
               <Link
                 href="/about"
                 className="text-gray-600 hover:text-[var(--brand-primary)] dark:text-gray-400"
+                className="text-gray-600 dark:text-gray-400 hover:text-[var(--brand-primary)]"
               >
                 من نحن
               </Link>
               <Link
                 href="/contact"
                 className="font-medium text-[var(--brand-primary)]"
+                className="text-[var(--brand-primary)] font-medium"
               >
                 تواصل
               </Link>
@@ -159,6 +178,7 @@ export default function ContactPage() {
             نحن هنا لمساعدتك في أي وقت
           </p>
           <p className="mx-auto max-w-3xl text-lg opacity-80">
+          <p className="text-lg opacity-80 max-w-3xl mx-auto">
             يسعدنا تواصلك معنا. سواء كنت تريد المساعدة أو لديك اقتراحات أو
             استفسارات، نحن هنا للاستماع إليك.
           </p>
@@ -175,6 +195,10 @@ export default function ContactPage() {
                   <div className="text-[var(--brand-primary)]">{info.icon}</div>
                 </div>
                 <h3 className="mb-2 font-semibold text-gray-900 dark:text-white">
+                <div className="w-16 h-16 bg-[var(--brand-primary)] bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="text-[var(--brand-primary)]">{info.icon}</div>
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
                   {info.title}
                 </h3>
                 <a
@@ -198,6 +222,7 @@ export default function ContactPage() {
                 أرسل لنا رسالة
               </h2>
               <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
+              <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
                 املأ النموذج أدناه وسنرد عليك في أقرب وقت ممكن. نحن نقدر تواصلك
                 معنا ونعمل على تقديم أفضل خدمة ممكنة.
               </p>
@@ -208,6 +233,7 @@ export default function ContactPage() {
                     <label
                       htmlFor="name"
                       className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                     >
                       الاسم الكامل
                     </label>
@@ -226,6 +252,7 @@ export default function ContactPage() {
                     <label
                       htmlFor="email"
                       className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                     >
                       البريد الإلكتروني
                     </label>
@@ -246,6 +273,7 @@ export default function ContactPage() {
                   <label
                     htmlFor="subject"
                     className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                   >
                     الموضوع
                   </label>
@@ -265,6 +293,7 @@ export default function ContactPage() {
                   <label
                     htmlFor="message"
                     className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                   >
                     الرسالة
                   </label>
@@ -302,6 +331,8 @@ export default function ContactPage() {
 
             <div className="rounded-xl bg-gray-100 p-8 dark:bg-gray-800">
               <h3 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-xl p-8">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                 معلومات التواصل
               </h3>
               <div className="space-y-6">
@@ -312,6 +343,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h4 className="mb-1 font-semibold text-gray-900 dark:text-white">
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
                         {info.title}
                       </h4>
                       <a
@@ -330,6 +362,11 @@ export default function ContactPage() {
                   أوقات الاستجابة
                 </h4>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
+              <div className="mt-8 p-6 bg-[var(--brand-primary)] bg-opacity-10 rounded-lg">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
+                  أوقات الاستجابة
+                </h4>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
                   نحن نرد على جميع الرسائل خلال 24 ساعة في أيام العمل.
                   للاستفسارات العاجلة، يرجى الاتصال بنا مباشرة.
                 </p>
@@ -347,6 +384,9 @@ export default function ContactPage() {
               <div className="mb-4 flex items-center gap-3">
                 <Image
                   src="/logo.png"
+              <div className="flex items-center gap-3 mb-4">
+                <Image
+                  src="/logo.jpg"
                   alt="Hemam Logo"
                   width={32}
                   height={32}

@@ -5,6 +5,7 @@ export function Skeleton({ className }: { className?: string }) {
     <div
       className={clsx(
         "animate-pulse rounded bg-gray-200 dark:bg-gray-800",
+        "animate-pulse bg-gray-200 dark:bg-gray-800 rounded",
         className,
       )}
     />

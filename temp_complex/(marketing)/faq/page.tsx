@@ -21,6 +21,8 @@ export default function FAQPage() {
   return (
     <div className="mx-auto max-w-screen-md px-4 py-12">
       <h1 className="mb-6 text-3xl font-bold">
+    <div className="max-w-screen-md mx-auto px-4 py-12">
+      <h1 className="text-3xl font-bold mb-6">
         {t("faq.title", "الأسئلة الشائعة")}
       </h1>
       <div className="space-y-4">
@@ -30,6 +32,9 @@ export default function FAQPage() {
             className="rounded-lg border border-brand-border bg-[var(--panel)] p-4"
           >
             <summary className="cursor-pointer font-semibold">{f.q}</summary>
+            className="rounded-lg border border-brand-border p-4 bg-[var(--panel)]"
+          >
+            <summary className="font-semibold cursor-pointer">{f.q}</summary>
             <p className="mt-2 text-gray-600 dark:text-gray-400">{f.a}</p>
           </details>
         ))}

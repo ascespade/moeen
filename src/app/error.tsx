@@ -24,6 +24,16 @@ export default function GlobalError({
             className="mx-auto mb-4 rounded"
           />
           <h1 className="text-4xl font-bold text-brand">
+            src="/logo.jpg"
+            alt="Hemam Logo"
+            width={80}
+            height={80}
+            className="mx-auto rounded mb-4"
+          />
+          <h1
+            className="text-4xl font-bold"
+            style={{ color: "var(--brand-primary)" }}
+          >
             مُعين
           </h1>
         </div>
@@ -35,6 +45,7 @@ export default function GlobalError({
           </div>
 
           <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
             حدث خطأ غير متوقع
           </h2>
           <p className="mb-6 text-lg text-gray-600 dark:text-gray-400">
@@ -51,6 +62,7 @@ export default function GlobalError({
 
           {/* Action Buttons */}
           <div className="mb-8 flex flex-col justify-center gap-4 sm:flex-row">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <button
               onClick={() => reset()}
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-6 py-3 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
@@ -73,11 +85,13 @@ export default function GlobalError({
               إذا استمر الخطأ
             </h3>
             <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid md:grid-cols-2 gap-4">
               <Link
                 href="/contact"
                 className="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-600"
               >
                 <Bug className="h-5 w-5 text-[var(--brand-primary)]" />
+                <Bug className="w-5 h-5 text-[var(--brand-primary)]" />
                 <span className="text-gray-700 dark:text-gray-300">
                   الإبلاغ عن المشكلة
                 </span>
@@ -87,6 +101,7 @@ export default function GlobalError({
                 className="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-600"
               >
                 <AlertTriangle className="h-5 w-5 text-[var(--brand-primary)]" />
+                <AlertTriangle className="w-5 h-5 text-[var(--brand-primary)]" />
                 <span className="text-gray-700 dark:text-gray-300">
                   الحصول على المساعدة
                 </span>

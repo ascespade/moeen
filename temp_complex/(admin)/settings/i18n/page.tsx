@@ -79,6 +79,8 @@ export default function I18nManagerPage() {
   return (
     <div className="mx-auto grid max-w-screen-xl gap-6 px-4 py-6">
       <div className="grid gap-3 md:grid-cols-4">
+    <div className="max-w-screen-xl mx-auto px-4 py-6 grid gap-6">
+      <div className="grid md:grid-cols-4 gap-3">
         <Input
           placeholder="بحث في المفاتيح/القيم"
           value={filter}
@@ -86,6 +88,7 @@ export default function I18nManagerPage() {
         />
         <select
           className="rounded-md border px-3"
+          className="border rounded-md px-3"
           value={locale}
           onChange={(e) => setLocale(e.target.value as "ar" | "en")}
         >
@@ -119,6 +122,10 @@ export default function I18nManagerPage() {
             مفقود بالعربية ({missingInAr.length})
           </div>
           <ul className="list-disc ps-5 text-sm text-gray-600 dark:text-gray-400">
+          <div className="font-semibold mb-2">
+            مفقود بالعربية ({missingInAr.length})
+          </div>
+          <ul className="text-sm text-gray-600 dark:text-gray-400 list-disc ps-5">
             {missingInAr.map((k) => (
               <li key={k}>{k}</li>
             ))}
@@ -129,6 +136,10 @@ export default function I18nManagerPage() {
             مفقود بالإنجليزية ({missingInEn.length})
           </div>
           <ul className="list-disc ps-5 text-sm text-gray-600 dark:text-gray-400">
+          <div className="font-semibold mb-2">
+            مفقود بالإنجليزية ({missingInEn.length})
+          </div>
+          <ul className="text-sm text-gray-600 dark:text-gray-400 list-disc ps-5">
             {missingInEn.map((k) => (
               <li key={k}>{k}</li>
             ))}

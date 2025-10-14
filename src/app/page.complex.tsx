@@ -1,5 +1,8 @@
 "use client";
 import { ROUTES } from "@/constants/routes";
+
+// Removed unused Image import to fix type error and reduce bundle size
+import Link from "next/link";
 import {
   Heart,
   Users,
@@ -39,30 +42,44 @@ export default function Home() {
               <Link
                 href="#services"
                 className="text-gray-700 hover:opacity-80 dark:text-gray-300"
+              <span className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">
+                مركز الهمم
+              </span>
+            </div>
+            <div className="hidden md:flex items-center gap-6 text-sm">
+              <Link
+                href="#services"
+                className="hover:opacity-80 text-gray-700 dark:text-gray-300"
               >
                 خدماتنا
               </Link>
               <Link
                 href="#about"
                 className="text-gray-700 hover:opacity-80 dark:text-gray-300"
+                className="hover:opacity-80 text-gray-700 dark:text-gray-300"
               >
                 من نحن
               </Link>
               <Link
                 href="#contact"
                 className="text-gray-700 hover:opacity-80 dark:text-gray-300"
+                className="hover:opacity-80 text-gray-700 dark:text-gray-300"
               >
                 تواصل معنا
               </Link>
               <Link
                 href={ROUTES.LOGIN}
                 className="text-gray-700 hover:opacity-80 dark:text-gray-300"
+                href="/login"
+                className="text-gray-700 dark:text-gray-300 hover:opacity-80"
               >
                 تسجيل الدخول
               </Link>
               <Link
                 href={ROUTES.REGISTER}
                 className="inline-flex h-10 items-center justify-center rounded-md bg-gradient-to-r from-orange-500 to-blue-600 px-4 font-medium text-white shadow transition hover:opacity-90"
+                href="/register"
+                className="px-4 h-10 inline-flex items-center justify-center rounded-md text-white font-medium shadow bg-gradient-to-r from-orange-500 to-blue-600 hover:opacity-90 transition"
               >
                 احجز موعد
               </Link>
@@ -91,12 +108,21 @@ export default function Home() {
                 <Link
                   href={ROUTES.REGISTER}
                   className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-gradient-to-r from-orange-500 to-blue-600 px-8 font-semibold text-white shadow-lg transition hover:opacity-90"
+              <p className="mt-6 text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+                نقدم رعاية صحية شاملة ومتخصصة مع أحدث التقنيات والذكاء الاصطناعي
+                لضمان أفضل النتائج العلاجية
+              </p>
+              <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/register"
+                  className="px-8 h-12 inline-flex items-center justify-center gap-2 rounded-md text-white font-semibold shadow-lg bg-gradient-to-r from-orange-500 to-blue-600 hover:opacity-90 transition"
                 >
                   احجز موعد الآن <ArrowRight className="h-5 w-5" />
                 </Link>
                 <Link
                   href="#services"
                   className="inline-flex h-12 items-center justify-center rounded-md border-2 border-gray-300 bg-white px-8 transition hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-900 dark:hover:bg-gray-800"
+                  className="px-8 h-12 inline-flex items-center justify-center rounded-md border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
                 >
                   اكتشف خدماتنا
                 </Link>
@@ -106,6 +132,7 @@ export default function Home() {
               <div className="flex h-96 w-full items-center justify-center rounded-2xl bg-gradient-to-br from-orange-100 to-blue-100 dark:from-gray-800 dark:to-gray-700">
                 <div className="text-center">
                   <Stethoscope className="mx-auto mb-4 h-24 w-24 text-orange-500" />
+                  <Stethoscope className="w-24 h-24 text-orange-500 mx-auto mb-4" />
                   <p className="text-gray-600 dark:text-gray-300">
                     صورة المركز
                   </p>
@@ -124,12 +151,14 @@ export default function Home() {
               خدماتنا المتخصصة
             </h2>
             <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               نقدم مجموعة شاملة من الخدمات الصحية مع أحدث التقنيات والذكاء
               الاصطناعي
             </p>
           </div>
 
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 icon: <Stethoscope className="h-8 w-8" />,
@@ -179,6 +208,15 @@ export default function Home() {
                   {service.title}
                 </h3>
                 <p className="mb-4 text-gray-600 dark:text-gray-300">
+                className="group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700"
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
+                  {service.icon}
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                  {service.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
                   {service.desc}
                 </p>
                 <ul className="space-y-2">
@@ -188,6 +226,7 @@ export default function Home() {
                       className="flex items-center text-sm text-gray-500 dark:text-gray-400"
                     >
                       <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
+                      <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
                       {feature}
                     </li>
                   ))}
@@ -211,6 +250,7 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 icon: <ShieldCheck className="h-6 w-6" />,
@@ -244,6 +284,15 @@ export default function Home() {
                   {feature.title}
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
+                className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700"
+              >
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center text-white mb-4">
+                  {feature.icon}
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
                   {feature.desc}
                 </p>
               </div>
@@ -261,6 +310,7 @@ export default function Home() {
                 من نحن
               </h2>
               <p className="mb-6 text-lg text-gray-600 dark:text-gray-300">
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
                 مركز الهمم هو مركز رعاية صحية متخصص يهدف إلى تقديم أفضل الخدمات
                 العلاجية باستخدام أحدث التقنيات والذكاء الاصطناعي لضمان أفضل
                 النتائج للمرضى.
@@ -268,18 +318,21 @@ export default function Home() {
               <div className="space-y-4">
                 <div className="flex items-center">
                   <CheckCircle className="mr-3 h-5 w-5 text-green-500" />
+                  <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
                   <span className="text-gray-700 dark:text-gray-300">
                     فريق طبي متخصص وذو خبرة عالية
                   </span>
                 </div>
                 <div className="flex items-center">
                   <CheckCircle className="mr-3 h-5 w-5 text-green-500" />
+                  <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
                   <span className="text-gray-700 dark:text-gray-300">
                     أحدث التقنيات والذكاء الاصطناعي
                   </span>
                 </div>
                 <div className="flex items-center">
                   <CheckCircle className="mr-3 h-5 w-5 text-green-500" />
+                  <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
                   <span className="text-gray-700 dark:text-gray-300">
                     رعاية شاملة ومتابعة مستمرة
                   </span>
@@ -290,6 +343,7 @@ export default function Home() {
               <div className="flex h-96 w-full items-center justify-center rounded-2xl bg-gradient-to-br from-orange-100 to-blue-100 dark:from-gray-800 dark:to-gray-700">
                 <div className="text-center">
                   <Users className="mx-auto mb-4 h-24 w-24 text-blue-500" />
+                  <Users className="w-24 h-24 text-blue-500 mx-auto mb-4" />
                   <p className="text-gray-600 dark:text-gray-300">
                     فريق المركز
                   </p>
@@ -313,11 +367,13 @@ export default function Home() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-blue-600 text-white">
                 <Phone className="h-8 w-8" />
               </div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                 اتصل بنا
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
@@ -330,6 +386,7 @@ export default function Home() {
                 <MapPin className="h-8 w-8" />
               </div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                 موقعنا
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
@@ -342,6 +399,7 @@ export default function Home() {
                 <Clock className="h-8 w-8" />
               </div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                 ساعات العمل
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
@@ -365,12 +423,18 @@ export default function Home() {
             <Link
               href={ROUTES.REGISTER}
               className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-white px-8 font-semibold text-gray-900 shadow-lg transition hover:bg-gray-100"
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/register"
+              className="px-8 h-12 inline-flex items-center justify-center gap-2 rounded-md bg-white text-gray-900 font-semibold shadow-lg hover:bg-gray-100 transition"
             >
               احجز موعد الآن <ArrowRight className="h-5 w-5" />
             </Link>
             <Link
               href={ROUTES.LOGIN}
               className="inline-flex h-12 items-center justify-center rounded-md border-2 border-white px-8 text-white transition hover:bg-white/10"
+              href="/login"
+              className="px-8 h-12 inline-flex items-center justify-center rounded-md border-2 border-white text-white hover:bg-white/10 transition"
             >
               تسجيل الدخول
             </Link>
@@ -399,21 +463,25 @@ export default function Home() {
               <ul className="space-y-2 text-gray-400">
                 <li>
                   <Link href="#" className="transition hover:text-white">
+                  <Link href="#" className="hover:text-white transition">
                     العلاج الطبيعي
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="transition hover:text-white">
+                  <Link href="#" className="hover:text-white transition">
                     العلاج النفسي
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="transition hover:text-white">
+                  <Link href="#" className="hover:text-white transition">
                     العلاج الوظيفي
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="transition hover:text-white">
+                  <Link href="#" className="hover:text-white transition">
                     الاستشارات الأسرية
                   </Link>
                 </li>
@@ -425,6 +493,7 @@ export default function Home() {
               <ul className="space-y-2 text-gray-400">
                 <li>
                   <Link href={"/about"} className="transition hover:text-white">
+                  <Link href="/about" className="hover:text-white transition">
                     من نحن
                   </Link>
                 </li>
@@ -433,16 +502,19 @@ export default function Home() {
                     href={"/contact"}
                     className="transition hover:text-white"
                   >
+                  <Link href="/contact" className="hover:text-white transition">
                     تواصل معنا
                   </Link>
                 </li>
                 <li>
                   <Link href="/privacy" className="transition hover:text-white">
+                  <Link href="/privacy" className="hover:text-white transition">
                     الخصوصية
                   </Link>
                 </li>
                 <li>
                   <Link href="/terms" className="transition hover:text-white">
+                  <Link href="/terms" className="hover:text-white transition">
                     الشروط
                   </Link>
                 </li>
@@ -460,6 +532,7 @@ export default function Home() {
           </div>
 
           <div className="mt-8 border-t border-gray-800 pt-8 text-center text-gray-400">
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
             <p>&copy; 2024 مركز الهمم. جميع الحقوق محفوظة.</p>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 // Comprehensive Caching System for Hemam Center
+import { NextRequest } from "next/server";
 
 // Cache entry interface
 interface CacheEntry<T> {
@@ -240,6 +241,7 @@ export class CacheManager {
   invalidatePattern(pattern: string): void {
     const regex = new RegExp(pattern.replace(/\*/g, ".*"));
     for (const key of Array.from(this.cache["cache"].keys())) {
+    for (const key of this.cache["cache"].keys()) {
       if (regex.test(key)) {
         this.cache.delete(key);
       }

@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from "react";
 // Key press hooks
+import { useEffect, useCallback } from "react";
 
 export const useKeyPress = (
   targetKey: string | string[],

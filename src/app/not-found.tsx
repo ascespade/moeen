@@ -18,6 +18,16 @@ export default function NotFound() {
             className="mx-auto mb-4 rounded"
           />
           <h1 className="text-4xl font-bold text-brand">
+            src="/logo.jpg"
+            alt="Hemam Logo"
+            width={80}
+            height={80}
+            className="mx-auto rounded mb-4"
+          />
+          <h1
+            className="text-4xl font-bold"
+            style={{ color: "var(--brand-primary)" }}
+          >
             مُعين
           </h1>
         </div>
@@ -26,6 +36,11 @@ export default function NotFound() {
         <div className="card shadow-soft p-8">
           <div className="text-brand mb-4 text-8xl font-bold">404</div>
           <h2 className="mb-4 text-3xl font-bold text-foreground">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
+          <div className="text-8xl font-bold text-[var(--brand-primary)] mb-4">
+            404
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
             الصفحة غير موجودة
           </h2>
           <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
@@ -34,6 +49,7 @@ export default function NotFound() {
 
           {/* Action Buttons */}
           <div className="mb-8 flex flex-col justify-center gap-4 sm:flex-row">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <Link
               href="/"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-6 py-3 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
@@ -61,6 +77,12 @@ export default function NotFound() {
                 className="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-600"
               >
                 <HelpCircle className="h-5 w-5 text-[var(--brand-primary)]" />
+            <div className="grid md:grid-cols-2 gap-4">
+              <Link
+                href="/contact"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+              >
+                <HelpCircle className="w-5 h-5 text-[var(--brand-primary)]" />
                 <span className="text-gray-700 dark:text-gray-300">
                   تواصل معنا
                 </span>
@@ -70,6 +92,10 @@ export default function NotFound() {
                 className="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-600"
               >
                 <Search className="h-5 w-5 text-[var(--brand-primary)]" />
+                href="/faq"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+              >
+                <Search className="w-5 h-5 text-[var(--brand-primary)]" />
                 <span className="text-gray-700 dark:text-gray-300">
                   الأسئلة الشائعة
                 </span>
@@ -85,6 +111,9 @@ export default function NotFound() {
             <div className="flex flex-wrap justify-center gap-2">
               <Link
                 href={"/about"}
+            <div className="flex flex-wrap gap-2 justify-center">
+              <Link
+                href="/about"
                 className="text-sm text-[var(--brand-primary)] hover:underline"
               >
                 من نحن
@@ -92,6 +121,7 @@ export default function NotFound() {
               <span className="text-gray-300">•</span>
               <Link
                 href={"/features"}
+                href="/features"
                 className="text-sm text-[var(--brand-primary)] hover:underline"
               >
                 المميزات
@@ -99,6 +129,7 @@ export default function NotFound() {
               <span className="text-gray-300">•</span>
               <Link
                 href={"/pricing"}
+                href="/pricing"
                 className="text-sm text-[var(--brand-primary)] hover:underline"
               >
                 الأسعار
@@ -106,6 +137,7 @@ export default function NotFound() {
               <span className="text-gray-300">•</span>
               <Link
                 href={"/contact"}
+                href="/contact"
                 className="text-sm text-[var(--brand-primary)] hover:underline"
               >
                 تواصل

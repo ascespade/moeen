@@ -16,6 +16,7 @@ export default function StatusBanner() {
         </div>
         <button
           className="h-8 rounded-md border border-amber-200 px-3 dark:border-amber-800"
+          className="h-8 px-3 rounded-md border border-amber-200 dark:border-amber-800"
           onClick={() => setVisible(false)}
         >
           إخفاء

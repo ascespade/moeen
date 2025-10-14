@@ -13,6 +13,7 @@ export default function EmptyState({
       <div className="text-lg font-medium">{title}</div>
       {description && (
         <div className="mt-1 text-sm text-gray-500">{description}</div>
+        <div className="text-sm text-gray-500 mt-1">{description}</div>
       )}
       {cta && <div className="mt-4">{cta}</div>}
     </div>

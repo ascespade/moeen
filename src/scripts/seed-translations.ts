@@ -4,6 +4,8 @@ import { bulkInsertTranslations } from "../lib/translations-manager";
  * Adds all translations to the database using CUID system
  */
 
+import { bulkInsertTranslations } from "../lib/translations-manager";
+
 // Comprehensive translations data
 const translations = [
   // Conversations
@@ -1085,6 +1087,7 @@ const translations = [
   },
   {
     locale: "ar" as const,
+    namespace: "ar" as const,
     namespace: "common",
     key: "status.noData",
     value: "لا توجد بيانات",

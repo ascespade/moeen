@@ -7,6 +7,10 @@ export function Card({
   return (
     <div
       className={clsx("card", className)}
+      className={clsx(
+        "card shadow-soft bg-[var(--panel)] border border-brand-border rounded-xl",
+        className,
+      )}
       {...props}
     />
   );
@@ -19,6 +23,7 @@ export function CardHeader({
   return (
     <div
       className={clsx("card-header", className)}
+      className={clsx("px-4 py-3 border-b border-brand-border", className)}
       {...props}
     />
   );
@@ -55,6 +60,9 @@ export function CardTitle({
   );
 }
 
+  return <div className={clsx("p-4", className)} {...props} />;
+}
+
 export function CardFooter({
   className,
   ...props
@@ -62,6 +70,7 @@ export function CardFooter({
   return (
     <div
       className={clsx("card-footer", className)}
+      className={clsx("px-4 py-3 border-t border-brand-border", className)}
       {...props}
     />
   );

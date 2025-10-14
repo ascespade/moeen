@@ -57,6 +57,17 @@ export default function ResetPasswordPage() {
               className="mx-auto mb-4 rounded"
             />
             <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="text-center mb-8">
+            <Image
+              src="/logo.jpg"
+              alt="Hemam Logo"
+              width={64}
+              height={64}
+              className="mx-auto rounded mb-4"
+            />
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               تم تغيير كلمة المرور
             </h1>
             <p className="text-gray-600 dark:text-gray-400">
@@ -65,6 +76,7 @@ export default function ResetPasswordPage() {
           </div>
 
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
             <div className="text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900">
                 <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
@@ -73,6 +85,7 @@ export default function ResetPasswordPage() {
                 تم بنجاح!
               </h2>
               <p className="mb-6 text-gray-600 dark:text-gray-400">
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
                 تم تغيير كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول بحسابك
                 الجديد.
               </p>
@@ -101,6 +114,17 @@ export default function ResetPasswordPage() {
             className="mx-auto mb-4 rounded"
           />
           <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+      <div className="max-w-md w-full">
+        <div className="text-center mb-8">
+          <Image
+            src="/logo.jpg"
+            alt="Hemam Logo"
+            width={64}
+            height={64}
+            className="mx-auto rounded mb-4"
+          />
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
             إعادة تعيين كلمة المرور
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
@@ -109,11 +133,13 @@ export default function ResetPasswordPage() {
         </div>
 
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label
                 htmlFor="password"
                 className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
               >
                 كلمة المرور الجديدة
               </label>
@@ -146,6 +172,7 @@ export default function ResetPasswordPage() {
               <label
                 htmlFor="confirmPassword"
                 className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
               >
                 تأكيد كلمة المرور
               </label>
@@ -176,6 +203,8 @@ export default function ResetPasswordPage() {
 
             <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-900">
               <h4 className="mb-2 text-sm font-medium text-blue-900 dark:text-blue-100">
+            <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg">
+              <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">
                 متطلبات كلمة المرور:
               </h4>
               <ul className="space-y-1 text-sm text-blue-800 dark:text-blue-200">

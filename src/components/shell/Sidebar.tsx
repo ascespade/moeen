@@ -77,6 +77,11 @@ export default function Sidebar() {
         <div className="flex h-14 items-center border-b border-gray-200 px-4 dark:border-gray-800">
           <div className="inline-flex items-center gap-3">
             <div className="grid h-8 w-8 place-items-center rounded-lg bg-blue-600 text-white">
+        className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full fixed top-0 start-0 bottom-0 z-50 w-72 bg-white dark:bg-gray-900 border-e border-gray-200 dark:border-gray-800 transition-all duration-300 lg:hidden"
+      >
+        <div className="h-14 flex items-center px-4 border-b border-gray-200 dark:border-gray-800">
+          <div className="inline-flex items-center gap-3">
+            <div className="h-8 w-8 rounded-lg bg-blue-600 text-white grid place-items-center">
               م
             </div>
             <span className="text-lg font-bold text-gray-900 dark:text-white">
@@ -96,6 +101,10 @@ export default function Sidebar() {
                   active
                     ? "border-transparent bg-blue-600 text-white"
                     : "border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-200 dark:hover:bg-gray-800"
+                className={`px-3 h-11 rounded-lg inline-flex items-center gap-3 border transition-colors ${
+                  active
+                    ? "bg-blue-600 text-white border-transparent"
+                    : "border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
                 }`}
                 data-hs-overlay="#app-sidebar"
               >
@@ -112,6 +121,8 @@ export default function Sidebar() {
         <div className="mb-4">
           <div className="mb-1 flex items-center gap-3">
             <div className="grid h-8 w-8 place-items-center rounded-lg bg-blue-600 text-white">
+          <div className="flex items-center gap-3 mb-1">
+            <div className="h-8 w-8 rounded-lg bg-blue-600 text-white grid place-items-center">
               م
             </div>
             <span className="text-xl font-bold text-gray-900 dark:text-white">
@@ -119,6 +130,7 @@ export default function Sidebar() {
             </span>
           </div>
           <div className="inline-block rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-500 dark:bg-gray-800">
+          <div className="text-xs text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full inline-block">
             Mu&apos;ayin
           </div>
         </div>
@@ -134,6 +146,10 @@ export default function Sidebar() {
                   active
                     ? "border-transparent bg-blue-600 text-white"
                     : "border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-200 dark:hover:bg-gray-800"
+                className={`px-3 h-11 rounded-lg inline-flex items-center gap-3 border transition-colors ${
+                  active
+                    ? "bg-blue-600 text-white border-transparent"
+                    : "border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
                 }`}
               >
                 <span>{item.icon}</span>
@@ -144,6 +160,8 @@ export default function Sidebar() {
         </nav>
         <div className="mt-6 flex items-center gap-3 border-t border-gray-200 pt-6 dark:border-gray-800">
           <div className="grid h-10 w-10 place-items-center rounded-full bg-blue-600 text-white">
+        <div className="flex items-center gap-3 pt-6 border-t border-gray-200 dark:border-gray-800 mt-6">
+          <div className="h-10 w-10 rounded-full bg-blue-600 text-white grid place-items-center">
             م
           </div>
           <div className="text-sm">
@@ -151,6 +169,7 @@ export default function Sidebar() {
               مستخدم تجريبي
             </div>
             <button className="text-gray-500 transition-colors hover:text-blue-600">
+            <button className="text-gray-500 hover:text-blue-600 transition-colors">
               تسجيل الخروج
             </button>
           </div>

@@ -158,6 +158,7 @@ export class WhatsAppBusinessAPI {
       return {
         success: false,
         error: (error as Error).message,
+        error: error.message,
       };
     }
   }
@@ -225,6 +226,7 @@ export class WhatsAppBusinessAPI {
       return {
         success: false,
         error: (error as Error).message,
+        error: error.message,
       };
     }
   }
@@ -274,6 +276,7 @@ export class WhatsAppBusinessAPI {
       return {
         success: false,
         error: (error as Error).message,
+        error: error.message,
       };
     }
   }
@@ -325,6 +328,7 @@ export class WhatsAppBusinessAPI {
       return {
         success: false,
         error: (error as Error).message,
+        error: error.message,
       };
     }
   }
@@ -418,6 +422,7 @@ export class WhatsAppBusinessAPI {
       return {
         success: false,
         error: (error as Error).message,
+        error: error.message,
       };
     }
   }
@@ -513,6 +518,7 @@ export class WhatsAppBusinessAPI {
       return {
         success: false,
         error: (error as Error).message,
+        error: error.message,
       };
     }
   }
@@ -551,6 +557,7 @@ export class WhatsAppBusinessAPI {
       return {
         success: false,
         error: (error as Error).message,
+        error: error.message,
       };
     }
   }

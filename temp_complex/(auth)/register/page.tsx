@@ -44,6 +44,11 @@ export default function RegisterPage() {
               name="fullName"
               required
               className="w-full rounded-lg border border-[var(--brand-border)] bg-white px-3 py-2 focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+            <label className="block text-sm mb-1">الاسم الكامل</label>
+            <input
+              name="fullName"
+              required
+              className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white"
               onChange={onChange}
               placeholder="مثال: أحمد محمد"
             />
@@ -51,11 +56,13 @@ export default function RegisterPage() {
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <label className="mb-1 block text-sm">البريد الإلكتروني</label>
+              <label className="block text-sm mb-1">البريد الإلكتروني</label>
               <input
                 type="email"
                 name="email"
                 required
                 className="w-full rounded-lg border border-[var(--brand-border)] bg-white px-3 py-2 focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+                className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white"
                 onChange={onChange}
                 placeholder="name@example.com"
               />
@@ -66,6 +73,11 @@ export default function RegisterPage() {
                 type="tel"
                 name="phone"
                 className="w-full rounded-lg border border-[var(--brand-border)] bg-white px-3 py-2 focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+              <label className="block text-sm mb-1">رقم الجوال</label>
+              <input
+                type="tel"
+                name="phone"
+                className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white"
                 onChange={onChange}
                 placeholder="05xxxxxxxx"
               />
@@ -74,21 +86,25 @@ export default function RegisterPage() {
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <label className="mb-1 block text-sm">كلمة المرور</label>
+              <label className="block text-sm mb-1">كلمة المرور</label>
               <input
                 type="password"
                 name="password"
                 required
                 className="w-full rounded-lg border border-[var(--brand-border)] bg-white px-3 py-2 focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+                className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white"
                 onChange={onChange}
               />
             </div>
             <div>
               <label className="mb-1 block text-sm">تأكيد ك��مة المرور</label>
+              <label className="block text-sm mb-1">تأكيد ك��مة المرور</label>
               <input
                 type="password"
                 name="confirmPassword"
                 required
                 className="w-full rounded-lg border border-[var(--brand-border)] bg-white px-3 py-2 focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+                className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white"
                 onChange={onChange}
               />
             </div>
@@ -98,6 +114,10 @@ export default function RegisterPage() {
             <select
               name="role"
               className="w-full rounded-lg border border-[var(--brand-border)] bg-white px-3 py-2 focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+            <label className="block text-sm mb-1">الدور</label>
+            <select
+              name="role"
+              className="w-full px-3 py-2 border border-[var(--brand-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:border-[var(--brand-primary)] bg-white"
               onChange={onChange}
               defaultValue={formData.role}
             >
@@ -120,11 +140,13 @@ export default function RegisterPage() {
             type="submit"
             disabled={isLoading}
             className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-4 py-3 font-medium text-white hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:ring-offset-2"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--focus-ring)]"
           >
             {isLoading ? "جاري الإنشاء..." : "إنشاء الحساب"}
           </button>
         </form>
         <p className="mt-4 text-center text-sm">
+        <p className="text-center text-sm mt-4">
           لديك حساب؟{" "}
           <Link
             href="/login"

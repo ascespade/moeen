@@ -74,6 +74,7 @@ async function getOverviewData(period: number) {
 
   // Get sessions for the period
   const sessions = await (db as any).pool.query(
+  const sessions = await db.pool.query(
     `
     SELECT COUNT(*) as total_sessions,
            COUNT(CASE WHEN completed = true THEN 1 END) as completed_sessions,
@@ -113,6 +114,7 @@ async function getPatientAnalytics(period: number) {
 
   // Patient demographics
   const demographics = await (db as any).pool.query(
+  const demographics = await db.pool.query(
     `
     SELECT 
       CASE 
@@ -132,6 +134,7 @@ async function getPatientAnalytics(period: number) {
 
   // Patient growth over time
   const growthData = await (db as any).pool.query(
+  const growthData = await db.pool.query(
     `
     SELECT 
       DATE(created_at) as date,
@@ -146,6 +149,7 @@ async function getPatientAnalytics(period: number) {
 
   // Most active patients
   const activePatients = await (db as any).pool.query(
+  const activePatients = await db.pool.query(
     `
     SELECT 
       p.name,
@@ -176,6 +180,7 @@ async function getAppointmentAnalytics(period: number) {
 
   // Appointment statistics
   const appointmentStats = await (db as any).pool.query(
+  const appointmentStats = await db.pool.query(
     `
     SELECT 
       status,
@@ -190,6 +195,7 @@ async function getAppointmentAnalytics(period: number) {
 
   // Daily appointment trends
   const dailyTrends = await (db as any).pool.query(
+  const dailyTrends = await db.pool.query(
     `
     SELECT 
       DATE(appointment_date) as date,
@@ -206,6 +212,7 @@ async function getAppointmentAnalytics(period: number) {
 
   // Doctor workload
   const doctorWorkload = await (db as any).pool.query(
+  const doctorWorkload = await db.pool.query(
     `
     SELECT 
       d.name as doctor_name,
@@ -234,6 +241,7 @@ async function getConversationAnalytics(period: number) {
 
   // Conversation statistics
   const conversationStats = await (db as any).pool.query(
+  const conversationStats = await db.pool.query(
     `
     SELECT 
       message_type,
@@ -250,6 +258,7 @@ async function getConversationAnalytics(period: number) {
 
   // Hourly conversation patterns
   const hourlyPatterns = await (db as any).pool.query(
+  const hourlyPatterns = await db.pool.query(
     `
     SELECT 
       EXTRACT(HOUR FROM created_at) as hour,
@@ -264,6 +273,7 @@ async function getConversationAnalytics(period: number) {
 
   // Crisis intervention data
   const crisisData = await (db as any).pool.query(
+  const crisisData = await db.pool.query(
     `
     SELECT 
       DATE(created_at) as date,
@@ -290,6 +300,7 @@ async function getCrisisAnalytics(period: number) {
 
   // Crisis intervention statistics
   const crisisStats = await (db as any).pool.query(
+  const crisisStats = await db.pool.query(
     `
     SELECT 
       crisis_level,
@@ -304,6 +315,7 @@ async function getCrisisAnalytics(period: number) {
 
   // Crisis response times
   const responseTimes = await (db as any).pool.query(
+  const responseTimes = await db.pool.query(
     `
     SELECT 
       DATE(created_at) as date,
@@ -319,6 +331,7 @@ async function getCrisisAnalytics(period: number) {
 
   // Most common crisis triggers
   const crisisTriggers = await (db as any).pool.query(
+  const crisisTriggers = await db.pool.query(
     `
     SELECT 
       content,

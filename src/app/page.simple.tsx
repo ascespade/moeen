@@ -21,6 +21,15 @@ export default function Home() {
               >
                 احجز موعد
               </Link>
+              <a href="/login" className="text-gray-700 hover:text-blue-600">
+                تسجيل الدخول
+              </a>
+              <a
+                href="/register"
+                className="bg-blue-600 text-white px-4 py-2 rounded"
+              >
+                احجز موعد
+              </a>
             </nav>
           </div>
         </div>
@@ -44,6 +53,16 @@ export default function Home() {
             <a
               href="#services"
               className="rounded-lg border border-gray-300 px-8 py-3"
+          <div className="flex gap-4 justify-center">
+            <a
+              href="/register"
+              className="bg-blue-600 text-white px-8 py-3 rounded-lg"
+            >
+              احجز موعد الآن
+            </a>
+            <a
+              href="#services"
+              className="border border-gray-300 px-8 py-3 rounded-lg"
             >
               اكتشف خدماتنا
             </a>

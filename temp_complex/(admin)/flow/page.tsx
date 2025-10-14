@@ -201,12 +201,17 @@ export default function FlowPage() {
                       selectedTemplate === template.id
                         ? "bg-[color:var(--brand-primary)]/10 border-[var(--brand-primary)]"
                         : "hover:border-[var(--brand-primary)]/60 border-gray-200 dark:border-gray-800"
+                    className={`p-4 rounded-md border-2 cursor-pointer transition-all ${
+                      selectedTemplate === template.id
+                        ? "border-[var(--brand-primary)] bg-[color:var(--brand-primary)]/10"
+                        : "border-gray-200 dark:border-gray-800 hover:border-[var(--brand-primary)]/60"
                     }`}
                     onClick={() => setSelectedTemplate(template.id)}
                   >
                     <div className="flex items-center space-x-3 space-x-reverse">
                       <div
                         className={`flex h-12 w-12 items-center justify-center rounded-md text-xl text-white`}
+                        className={`w-12 h-12 rounded-md flex items-center justify-center text-white text-xl`}
                         style={{ background: "var(--brand-primary)" }}
                       >
                         {template.icon}
@@ -231,6 +236,7 @@ export default function FlowPage() {
             <Card>
               <CardContent>
                 <div className="mb-6 flex items-center justify-between">
+                <div className="flex items-center justify-between mb-6">
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     {t("nav.flow", "منشئ التدفق")}
                   </h3>
@@ -251,6 +257,7 @@ export default function FlowPage() {
                   <div className="space-y-4">
                     <div
                       className="rounded-md border p-4"
+                      className="p-4 rounded-md border"
                       style={{
                         background:
                           "color-mix(in oklab, var(--brand-primary) 12%, transparent)",
@@ -260,6 +267,7 @@ export default function FlowPage() {
                     >
                       <h4
                         className="mb-2 font-medium"
+                        className="font-medium mb-2"
                         style={{ color: "var(--brand-primary)" }}
                       >
                         {templates.find((t) => t.id === selectedTemplate)?.name}
@@ -275,6 +283,8 @@ export default function FlowPage() {
                     <div className="space-y-3">
                       <div className="rounded-md border border-gray-200 p-4 dark:border-gray-800">
                         <div className="mb-2 flex items-center space-x-3 space-x-reverse">
+                      <div className="p-4 border border-gray-200 dark:border-gray-800 rounded-md">
+                        <div className="flex items-center space-x-3 space-x-reverse mb-2">
                           <span className="text-2xl">👋</span>
                           <span className="font-medium">رسالة الترحيب</span>
                         </div>
@@ -285,6 +295,8 @@ export default function FlowPage() {
 
                       <div className="rounded-md border border-gray-200 p-4 dark:border-gray-800">
                         <div className="mb-2 flex items-center space-x-3 space-x-reverse">
+                      <div className="p-4 border border-gray-200 dark:border-gray-800 rounded-md">
+                        <div className="flex items-center space-x-3 space-x-reverse mb-2">
                           <span className="text-2xl">🤖</span>
                           <span className="font-medium">رد تلقائي</span>
                         </div>
@@ -295,6 +307,8 @@ export default function FlowPage() {
 
                       <div className="rounded-md border border-gray-200 p-4 dark:border-gray-800">
                         <div className="mb-2 flex items-center space-x-3 space-x-reverse">
+                      <div className="p-4 border border-gray-200 dark:border-gray-800 rounded-md">
+                        <div className="flex items-center space-x-3 space-x-reverse mb-2">
                           <span className="text-2xl">👤</span>
                           <span className="font-medium">تحويل للفريق</span>
                         </div>
@@ -308,6 +322,9 @@ export default function FlowPage() {
                   <div className="py-12 text-center">
                     <div className="mb-4 text-6xl">🔄</div>
                     <h4 className="mb-2 text-lg font-medium text-gray-900 dark:text-white">
+                  <div className="text-center py-12">
+                    <div className="text-6xl mb-4">🔄</div>
+                    <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                       اختر قالب لبدء إنشاء التدفق
                     </h4>
                     <p className="text-gray-600 dark:text-gray-400">
@@ -319,6 +336,7 @@ export default function FlowPage() {
                 {/* Canvas */}
                 <div className="mt-6">
                   <div className="mb-2 flex items-center gap-2">
+                  <div className="flex items-center gap-2 mb-2">
                     <Button
                       variant="secondary"
                       onClick={() => setZoom((z) => Math.min(2, z + 0.1))}
@@ -348,6 +366,7 @@ export default function FlowPage() {
                   >
                     <svg
                       className="absolute inset-0 h-full w-full"
+                      className="absolute inset-0 w-full h-full"
                       style={{
                         backgroundSize: "20px 20px",
                         backgroundImage:
@@ -363,6 +382,7 @@ export default function FlowPage() {
                     >
                       {/* Connections (simple bezier mock) */}
                       <svg className="pointer-events-none absolute inset-0 h-full w-full">
+                      <svg className="absolute inset-0 w-full h-full pointer-events-none">
                         <path
                           d="M 120 160 C 180 160, 220 160, 320 160"
                           stroke="#22c55e"
@@ -384,11 +404,13 @@ export default function FlowPage() {
                           onMouseDown={(e) => onNodeMouseDown(e, node.id)}
                           className={
                             "absolute cursor-grab select-none active:cursor-grabbing"
+                            "absolute select-none cursor-grab active:cursor-grabbing"
                           }
                           style={{ left: node.x, top: node.y }}
                         >
                           <div
                             className={`rounded-lg border bg-white px-3 py-2 shadow-sm dark:bg-gray-900 ${selectedNodeId === node.id ? "ring-2 ring-[var(--focus-ring)]" : ""}`}
+                            className={`rounded-lg border px-3 py-2 shadow-sm bg-white dark:bg-gray-900 ${selectedNodeId === node.id ? "ring-2 ring-[var(--focus-ring)]" : ""}`}
                           >
                             <div className="flex items-center gap-2">
                               {node.type === "trigger" && (
@@ -426,6 +448,7 @@ export default function FlowPage() {
           <Card>
             <CardContent>
               <div className="mb-6 flex items-center justify-between">
+              <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                   التدفقات الموجودة
                 </h3>
@@ -452,6 +475,13 @@ export default function FlowPage() {
                     className="rounded-md border border-gray-200 p-4 transition-shadow hover:shadow-md dark:border-gray-800"
                   >
                     <div className="mb-3 flex items-center gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {flows.map((flow) => (
+                  <div
+                    key={flow.id}
+                    className="p-4 border border-gray-200 dark:border-gray-800 rounded-md hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex items-center gap-3 mb-3">
                       <span className="text-2xl">{flow.icon}</span>
                       <div>
                         <h4 className="font-medium text-gray-900 dark:text-white">
@@ -459,6 +489,7 @@ export default function FlowPage() {
                         </h4>
                         <span
                           className={`rounded-full px-2 py-1 text-xs ${
+                          className={`text-xs px-2 py-1 rounded-full ${
                             flow.status === "نشط"
                               ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
                               : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
@@ -482,6 +513,8 @@ export default function FlowPage() {
 
                     <div className="mt-4 flex items-center gap-2">
                       <Button className="inline-flex flex-1 items-center gap-2 text-sm">
+                    <div className="flex items-center gap-2 mt-4">
+                      <Button className="flex-1 inline-flex items-center gap-2 text-sm">
                         <Edit3 className="h-4 w-4" /> تحرير
                       </Button>
                       <Button

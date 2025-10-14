@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback } from "react";
+
 // Hook to prevent memory leaks by cleaning up resources
 export const useMemoryLeakPrevention = () => {
   const cleanupFunctions = useRef<Array<() => void>>([]);

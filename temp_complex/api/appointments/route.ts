@@ -17,6 +17,12 @@ export async function GET(request: NextRequest) {
     if (date) opts.date = date;
     if (status) opts.status = status;
     const appointments = (await realDB.getAppointments(opts)) as any[];
+    const appointments = await realDB.getAppointments({
+      patientId: patientId || undefined,
+      doctorId: doctorId || undefined,
+      date: date || undefined,
+      status: status || undefined,
+    });
 
     return NextResponse.json({
       success: true,
@@ -88,6 +94,11 @@ export async function POST(request: NextRequest) {
           "ar",
           [
             (patient as any).users.name,
+          patient.users.phone,
+          "appointment_confirmation",
+          "ar",
+          [
+            patient.users.name,
             new Date(appointment_date).toLocaleDateString("ar-SA"),
             appointment_time,
           ],
@@ -104,6 +115,9 @@ export async function POST(request: NextRequest) {
         appointmentId: (appointment as any).id,
         message: "Appointment booked successfully",
         confirmationSent: !!(patient as any)?.users?.phone,
+        appointmentId: appointment.id,
+        message: "Appointment booked successfully",
+        confirmationSent: !!patient?.users?.phone,
       },
     });
   } catch (error) {

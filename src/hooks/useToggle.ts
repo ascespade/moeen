@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 // Toggle hooks
+import { useState, useCallback } from "react";
 
 export const useToggle = (
   initialValue: boolean = false,

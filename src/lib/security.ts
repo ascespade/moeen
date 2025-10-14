@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 // Browser-compatible crypto functions
 const getCrypto = () => {
   if (typeof window !== "undefined" && window.crypto) {
@@ -16,6 +17,8 @@ const getCrypto = () => {
 export class CSRFProtection {
   private static readonly CSRF_TOKEN_HEADER = "x-csrf-token";
   private static readonly CSRF_TOKEN_COOKIE = "csrf-token";
+  private static readonly CSRF_SECRET =
+    process.env.CSRF_SECRET || "fallback-csrf-secret";
 
   static generateToken(): string {
     const crypto = getCrypto();
@@ -192,6 +195,9 @@ export class SessionSecurity {
     return (crypto as any).subtle
       .digest("SHA-256", data)
       .then((hashBuffer: ArrayBuffer) => {
+    return crypto.subtle
+      .digest("SHA-256", data)
+      .then((hashBuffer) => {
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
       })

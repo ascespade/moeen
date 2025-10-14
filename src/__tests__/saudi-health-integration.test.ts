@@ -1,4 +1,5 @@
 import { saudiHealthSystem } from "@/lib/saudi-health-integration";
+
 describe("SaudiHealthSystemIntegration", () => {
   describe("Data Validation", () => {
     test("should validate Saudi National ID", () => {

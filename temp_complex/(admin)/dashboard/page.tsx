@@ -132,22 +132,26 @@ export default function DashboardPage() {
                   type="search"
                   placeholder="ابحث في المحادثات..."
                   className="block w-64 rounded-md border border-gray-200 bg-white py-2 pe-10 ps-3 text-sm text-gray-800 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:placeholder-gray-500"
+                  className="py-2 pe-10 ps-3 block w-64 border border-gray-200 dark:border-gray-700 rounded-md text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
               </div>
 
               <button
                 className="relative p-2 text-gray-600 transition-colors dark:text-gray-300"
+                className="relative p-2 text-gray-600 dark:text-gray-300 transition-colors"
                 aria-label="Notifications"
                 style={{ color: "var(--brand-primary)" }}
               >
                 <Bell className="h-5 w-5" />
                 <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--brand-error)] text-xs text-white">
+                <span className="absolute -top-1 -right-1 bg-[var(--brand-error)] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                   3
                 </span>
               </button>
 
               <button
                 className="p-2 text-gray-600 transition-colors dark:text-gray-300"
+                className="p-2 text-gray-600 dark:text-gray-300 transition-colors"
                 aria-label="Settings"
                 style={{ color: "var(--brand-primary)" }}
               >
@@ -165,6 +169,7 @@ export default function DashboardPage() {
             <Card key={index}>
               <CardContent className="p-4">
                 <div className="mb-2 flex items-center justify-between">
+                <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
                     {stat.title}
                   </h3>
@@ -192,6 +197,8 @@ export default function DashboardPage() {
               <CardContent className="p-0">
                 <div className="border-b border-gray-200 p-6 dark:border-gray-800">
                   <div className="mb-4 flex items-center justify-between">
+                <div className="p-6 border-b border-gray-200 dark:border-gray-800">
+                  <div className="flex items-center justify-between mb-4">
                     <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                       المحادثات الطبية
                     </h2>
@@ -220,6 +227,10 @@ export default function DashboardPage() {
                           activeTab === tab.id
                             ? "bg-blue-600 text-white"
                             : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                          activeTab === tab.id
+                            ? "bg-blue-600 text-white"
+                            : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                         }`}
                       >
                         {tab.label} ({tab.count})
@@ -238,6 +249,11 @@ export default function DashboardPage() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--brand-primary)] font-semibold text-white">
+                      className="p-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold bg-[var(--brand-primary)]">
                             {conversation.name.charAt(0)}
                           </div>
                           <div>
@@ -250,11 +266,17 @@ export default function DashboardPage() {
                               </span>
                               {conversation.unread > 0 && (
                                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs text-white">
+                              <span className="text-xs bg-gray-100 dark:bg-gray-800 text-blue-700 dark:text-blue-300 px-2 py-1 rounded-full">
+                                {conversation.channel}
+                              </span>
+                              {conversation.unread > 0 && (
+                                <span className="bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                                   {conversation.unread}
                                 </span>
                               )}
                             </div>
                             <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                               {conversation.lastMessage}
                             </p>
                           </div>
@@ -272,6 +294,7 @@ export default function DashboardPage() {
                             {conversation.time}
                           </span>
                           <button className="rounded p-1 hover:bg-gray-100 dark:hover:bg-gray-800">
+                          <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
                             ⚙️
                           </button>
                         </div>
@@ -293,17 +316,24 @@ export default function DashboardPage() {
                 </h3>
                 <div className="space-y-3">
                   <Button className="inline-flex w-full items-center justify-center gap-2">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                  إجراءات سريعة
+                </h3>
+                <div className="space-y-3">
+                  <Button className="w-full inline-flex items-center justify-center gap-2">
                     <MessageSquare className="h-5 w-5" /> بدء محادثة طبية
                   </Button>
                   <Button
                     variant="secondary"
                     className="inline-flex w-full items-center justify-center gap-2"
+                    className="w-full inline-flex items-center justify-center gap-2"
                   >
                     <Users className="h-5 w-5" /> إدارة المرضى
                   </Button>
                   <Button
                     variant="secondary"
                     className="inline-flex w-full items-center justify-center gap-2"
+                    className="w-full inline-flex items-center justify-center gap-2"
                   >
                     <BarChart className="h-5 w-5" /> التقارير الطبية
                   </Button>
@@ -315,11 +345,13 @@ export default function DashboardPage() {
             <Card>
               <CardContent className="p-4">
                 <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                   النشاط الطبي
                 </h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <div className="mt-2 h-2 w-2 rounded-full bg-green-500"></div>
+                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
                     <div>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
                         تم إكمال جلسة علاج مع أحمد محمد
@@ -331,6 +363,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="mt-2 h-2 w-2 rounded-full bg-yellow-500"></div>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
                     <div>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
                         موعد جديد مع فاطمة علي
@@ -342,6 +375,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="mt-2 h-2 w-2 rounded-full bg-blue-600"></div>
+                    <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
                     <div>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
                         تم إنشاء تقرير طبي شهري

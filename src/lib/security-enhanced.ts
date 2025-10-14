@@ -4,6 +4,10 @@ import { realDB } from "./supabase-real";
 // Enhanced Security System for Hemam Center
 
 import jwt from "jsonwebtoken";
+import { NextRequest, NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
+import { createHash, randomBytes } from "crypto";
+import { realDB } from "./supabase-real";
 
 // Rate limiting store
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -151,6 +155,7 @@ class AuditLogger {
         "unknown";
 
       const userId = request.headers.get("x-user-id") || undefined;
+      const userId = request.headers.get("x-user-id");
 
       await realDB.logAudit({
         ...(userId ? { user_id: userId } : {}),
@@ -358,6 +363,9 @@ export function secureAPI(
         stack: err?.stack,
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
+      await AuditLogger.log(request, "SECURITY_ERROR", {
+        error: error.message,
+        stack: error.stack,
       });
 
       return NextResponse.json(
@@ -402,3 +410,12 @@ class DataValidator {
 
 // Export security utilities
 // Re-export types via named exports are already declared above; avoid duplicate export list
+export {
+  EnhancedRateLimiter,
+  EnhancedCSRFProtection,
+  EnhancedSessionSecurity,
+  InputSanitizer,
+  AuditLogger,
+  EnhancedAuthMiddleware,
+  DataValidator,
+};

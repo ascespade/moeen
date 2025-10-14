@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 // Async hooks
+import { useState, useEffect, useCallback, useRef } from "react";
 
 interface AsyncState<T> {
   data: T | null;
@@ -76,6 +77,7 @@ export const useAsync = <T>(
 export const useAsyncEffect = <T>(
   asyncFunction: () => Promise<T>,
   deps: ReadonlyArray<unknown> = [],
+  deps: any[] = [],
   options: AsyncOptions = {},
 ) => {
   const { onSuccess, onError } = options;
@@ -118,6 +120,7 @@ export const useAsyncEffect = <T>(
     // Dependencies include async function and handlers plus custom deps
     // This ensures stable behavior and satisfies exhaustive-deps
   }, [asyncFunction, onSuccess, onError, deps]);
+  }, deps);
 
   useEffect(() => {
     return () => {
