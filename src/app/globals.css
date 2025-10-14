@@ -368,3 +368,5 @@ select:focus-visible {
     display: none !important;
   }
 }
+/* Additional global overrides if needed */
+/* This file should be minimal and only contain overrides */

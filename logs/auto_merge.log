@@ -449,3 +449,54 @@ fatal: refusing to merge unrelated histories
 [2025-10-14T22:19:21.260Z] [INFO] 🔧 Resolving conflicts in: src/lib/supabase-real.ts
 [2025-10-14T22:19:21.260Z] [INFO] ✅ Resolved conflicts in: src/lib/supabase-real.ts
 [2025-10-14T22:19:21.260Z] [INFO] Executing: git add .
+[2025-10-14T22:19:21.269Z] [INFO] ✅ Command successful: git add .
+[2025-10-14T22:19:21.270Z] [INFO] Executing: git commit --no-edit
+[2025-10-14T22:19:21.280Z] [INFO] ✅ Command successful: git commit --no-edit
+[2025-10-14T22:19:21.280Z] [INFO] ✅ Conflicts resolved for: cursor/project-cleanup-optimization-and-deployment-prep-6f95
+[2025-10-14T22:19:21.280Z] [INFO] 🔄 Smart merging branch: cursor/redesign-nextjs-project-with-preline-ui-and-tailwind-css-05ad
+[2025-10-14T22:19:21.280Z] [INFO] Executing: git merge origin/cursor/redesign-nextjs-project-with-preline-ui-and-tailwind-css-05ad --no-ff -m "Smart auto-merge: cursor/redesign-nextjs-project-with-preline-ui-and-tailwind-css-05ad"
+[2025-10-14T22:19:21.283Z] [ERROR] ❌ Command failed: git merge origin/cursor/redesign-nextjs-project-with-preline-ui-and-tailwind-css-05ad --no-ff -m "Smart auto-merge: cursor/redesign-nextjs-project-with-preline-ui-and-tailwind-css-05ad" - Command failed: git merge origin/cursor/redesign-nextjs-project-with-preline-ui-and-tailwind-css-05ad --no-ff -m "Smart auto-merge: cursor/redesign-nextjs-project-with-preline-ui-and-tailwind-css-05ad"
+fatal: refusing to merge unrelated histories
+
+[2025-10-14T22:19:21.283Z] [WARN] ⚠️  Merge conflict detected for: cursor/redesign-nextjs-project-with-preline-ui-and-tailwind-css-05ad
+[2025-10-14T22:19:21.283Z] [INFO] 🔧 Resolving conflicts for: cursor/redesign-nextjs-project-with-preline-ui-and-tailwind-css-05ad
+[2025-10-14T22:19:21.283Z] [INFO] Executing: git diff --name-only --diff-filter=U
+[2025-10-14T22:19:21.290Z] [INFO] ✅ Command successful: git diff --name-only --diff-filter=U
+[2025-10-14T22:19:21.290Z] [INFO] No conflicted files found
+[2025-10-14T22:19:21.290Z] [INFO] 🔄 Smart merging branch: cursor/revert-ui-to-original-color-design-and-fix-paths-9d57
+[2025-10-14T22:19:21.290Z] [INFO] Executing: git merge origin/cursor/revert-ui-to-original-color-design-and-fix-paths-9d57 --no-ff -m "Smart auto-merge: cursor/revert-ui-to-original-color-design-and-fix-paths-9d57"
+[2025-10-14T22:19:21.351Z] [ERROR] ❌ Command failed: git merge origin/cursor/revert-ui-to-original-color-design-and-fix-paths-9d57 --no-ff -m "Smart auto-merge: cursor/revert-ui-to-original-color-design-and-fix-paths-9d57" - Command failed: git merge origin/cursor/revert-ui-to-original-color-design-and-fix-paths-9d57 --no-ff -m "Smart auto-merge: cursor/revert-ui-to-original-color-design-and-fix-paths-9d57"
+[2025-10-14T22:19:21.351Z] [WARN] ⚠️  Merge conflict detected for: cursor/revert-ui-to-original-color-design-and-fix-paths-9d57
+[2025-10-14T22:19:21.351Z] [INFO] 🔧 Resolving conflicts for: cursor/revert-ui-to-original-color-design-and-fix-paths-9d57
+[2025-10-14T22:19:21.351Z] [INFO] Executing: git diff --name-only --diff-filter=U
+[2025-10-14T22:19:21.360Z] [INFO] ✅ Command successful: git diff --name-only --diff-filter=U
+[2025-10-14T22:19:21.360Z] [INFO] Found 14 conflicted files: package-lock.json, package.json, src/app/error.tsx, src/app/globals.css, src/app/layout.tsx, src/app/not-found.tsx, src/app/page.tsx, src/components/shell/Header.tsx, src/styles/base.css, src/styles/components.css, src/styles/index.css, src/styles/themes.css, temp_complex/(info)/about/page.tsx, temp_complex/(info)/contact/page.tsx
+[2025-10-14T22:19:21.360Z] [INFO] 🔧 Resolving conflicts in: package-lock.json
+[2025-10-14T22:19:21.363Z] [INFO] ✅ Resolved conflicts in: package-lock.json
+[2025-10-14T22:19:21.363Z] [INFO] 🔧 Resolving conflicts in: package.json
+[2025-10-14T22:19:21.363Z] [INFO] ✅ Resolved conflicts in: package.json
+[2025-10-14T22:19:21.363Z] [INFO] 🔧 Resolving conflicts in: src/app/error.tsx
+[2025-10-14T22:19:21.363Z] [INFO] ✅ Resolved conflicts in: src/app/error.tsx
+[2025-10-14T22:19:21.363Z] [INFO] 🔧 Resolving conflicts in: src/app/globals.css
+[2025-10-14T22:19:21.363Z] [INFO] ✅ Resolved conflicts in: src/app/globals.css
+[2025-10-14T22:19:21.363Z] [INFO] 🔧 Resolving conflicts in: src/app/layout.tsx
+[2025-10-14T22:19:21.363Z] [INFO] ✅ Resolved conflicts in: src/app/layout.tsx
+[2025-10-14T22:19:21.363Z] [INFO] 🔧 Resolving conflicts in: src/app/not-found.tsx
+[2025-10-14T22:19:21.363Z] [INFO] ✅ Resolved conflicts in: src/app/not-found.tsx
+[2025-10-14T22:19:21.363Z] [INFO] 🔧 Resolving conflicts in: src/app/page.tsx
+[2025-10-14T22:19:21.364Z] [INFO] ✅ Resolved conflicts in: src/app/page.tsx
+[2025-10-14T22:19:21.364Z] [INFO] 🔧 Resolving conflicts in: src/components/shell/Header.tsx
+[2025-10-14T22:19:21.364Z] [INFO] ✅ Resolved conflicts in: src/components/shell/Header.tsx
+[2025-10-14T22:19:21.364Z] [INFO] 🔧 Resolving conflicts in: src/styles/base.css
+[2025-10-14T22:19:21.364Z] [INFO] ✅ Resolved conflicts in: src/styles/base.css
+[2025-10-14T22:19:21.364Z] [INFO] 🔧 Resolving conflicts in: src/styles/components.css
+[2025-10-14T22:19:21.364Z] [INFO] ✅ Resolved conflicts in: src/styles/components.css
+[2025-10-14T22:19:21.364Z] [INFO] 🔧 Resolving conflicts in: src/styles/index.css
+[2025-10-14T22:19:21.364Z] [INFO] ✅ Resolved conflicts in: src/styles/index.css
+[2025-10-14T22:19:21.364Z] [INFO] 🔧 Resolving conflicts in: src/styles/themes.css
+[2025-10-14T22:19:21.364Z] [INFO] ✅ Resolved conflicts in: src/styles/themes.css
+[2025-10-14T22:19:21.364Z] [INFO] 🔧 Resolving conflicts in: temp_complex/(info)/about/page.tsx
+[2025-10-14T22:19:21.365Z] [INFO] ✅ Resolved conflicts in: temp_complex/(info)/about/page.tsx
+[2025-10-14T22:19:21.365Z] [INFO] 🔧 Resolving conflicts in: temp_complex/(info)/contact/page.tsx
+[2025-10-14T22:19:21.365Z] [INFO] ✅ Resolved conflicts in: temp_complex/(info)/contact/page.tsx
+[2025-10-14T22:19:21.365Z] [INFO] Executing: git add .
