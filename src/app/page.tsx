@@ -347,6 +347,50 @@ export default function HomePage() {
           </div>
         ))}
 
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Slider */}
+      <section className="relative h-[80vh] overflow-hidden">
+        {heroSlides.map((slide, index) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/50 to-transparent"></div>
+            <Image
+              src={slide.image}
+              alt={slide.title}
+              fill
+              className="object-cover"
+              priority={index === 0}
+            />
+            <div className="container-app relative z-20 flex h-full items-center">
+              <div className="max-w-2xl text-white">
+                <h2 className="animate-fadeInUp mb-4 text-5xl font-bold">
+                  {slide.title}
+                </h2>
+                <h3 className="animate-fadeInUp mb-4 text-2xl text-[var(--brand-primary)]">
+                  {slide.subtitle}
+                </h3>
+                <p className="animate-fadeInUp mb-8 text-lg">
+                  {slide.description}
+                </p>
+                <Link
+                  href={slide.ctaLink}
+                  className="btn-brand animate-fadeInUp transform rounded-lg px-8 py-3 text-lg font-semibold transition-all hover:-translate-y-1 hover:bg-[var(--brand-primary-hover)] hover:shadow-lg"
+                >
+                  {slide.cta}
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+
         {/* Slider Controls */}
         <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 transform gap-2">
           {heroSlides.map((_, index) => (
