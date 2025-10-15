@@ -13,16 +13,12 @@ const supabaseServiceKey =
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Admin client for server-side operations
-export const supabaseAdmin = createClient(
-  supabaseUrl,
-  supabaseServiceKey,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
+export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false,
   },
-);
+});
 
 // Use a relaxed admin alias to mitigate strict generics during development
 const admin: any = supabaseAdmin as any;
