@@ -115,6 +115,33 @@ export const fileUploadSchema = z.object({
   buffer: z.instanceof(Buffer)
 });
 
+// Medical record validation schemas
+export const medicalRecordSchema = z.object({
+  patientId: z.string().uuid(),
+  recordType: z.enum(['diagnosis', 'treatment', 'prescription', 'lab_result', 'xray', 'note', 'other']),
+  title: z.string().min(1).max(255),
+  content: z.string().optional(),
+  attachments: z.array(z.string()).optional()
+});
+
+// Appointment update validation schemas
+export const appointmentUpdateSchema = z.object({
+  status: z.enum(['pending', 'confirmed', 'in_progress', 'completed', 'cancelled', 'no_show']).optional(),
+  paymentStatus: z.enum(['unpaid', 'paid', 'pending', 'refunded']).optional(),
+  scheduledAt: z.string().datetime().optional(),
+  notes: z.string().optional()
+});
+
+// Notification validation schemas
+export const notificationSchema = z.object({
+  type: z.enum(['appointment_confirmation', 'payment_confirmation', 'appointment_reminder', 'insurance_claim_update']),
+  patientId: z.string().uuid(),
+  appointmentId: z.string().uuid().optional(),
+  channels: z.array(z.enum(['email', 'sms', 'both'])).default(['email']),
+  notificationData: z.record(z.any()).optional(),
+  customMessage: z.string().optional()
+});
+
 // Validation helper functions
 export function validateData<T>(schema: z.ZodSchema<T>, data: unknown): { success: true; data: T } | { success: false; errors: string[] } {
   try {
