@@ -126,7 +126,7 @@ export function useLanguage() {
     setEnglish,
     isArabic: language === 'ar',
     isEnglish: language === 'en',
-    direction: language === 'ar' ? 'rtl' : 'ltr',
+    direction: (language === 'ar' ? 'rtl' : 'ltr') as 'rtl' | 'ltr',
   };
 }
 
