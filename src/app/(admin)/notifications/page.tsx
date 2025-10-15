@@ -1,285 +1,545 @@
 "use client";
-import { useState } from "react";
-import Image from "next/image";
+
+import React, { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import { Input } from "@/components/ui/Input";
+import { 
+  Bell, 
+  BellRing, 
+  CheckCircle, 
+  AlertCircle, 
+  Info, 
+  Calendar,
+  Users,
+  MessageCircle,
+  Phone,
+  Mail,
+  Clock,
+  Filter,
+  Search,
+  MoreVertical,
+  Eye,
+  Trash2,
+  Archive,
+  Star,
+  Settings,
+  Send,
+  Plus
+} from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 interface Notification {
   id: string;
   title: string;
   message: string;
-  type: "info" | "success" | "warning" | "error";
-  read: boolean;
-  createdAt: string;
-  priority: "low" | "medium" | "high";
+  type: 'info' | 'success' | 'warning' | 'error' | 'appointment' | 'reminder' | 'system';
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  status: 'unread' | 'read' | 'archived';
+  category: string;
+  recipient_id: string;
+  recipient_name: string;
+  sender_id: string;
+  sender_name: string;
+  created_at: string;
+  read_at?: string;
+  action_url?: string;
+  action_text?: string;
+  metadata?: {
+    patient_id?: string;
+    appointment_id?: string;
+    therapy_session_id?: string;
+  };
 }
 
-const mockNotifications: Notification[] = [
-  {
-    id: "1",
-    title: "موعد جديد",
-    message: "تم حجز موعد جديد مع المريض أحمد محمد",
-    type: "info",
-    read: false,
-    createdAt: "2024-01-15 10:30",
-    priority: "medium",
-  },
-  {
-    id: "2",
-    title: "تحديث النظام",
-    message: "تم تحديث النظام بنجاح إلى الإصدار 2.1.0",
-    type: "success",
-    read: true,
-    createdAt: "2024-01-15 09:15",
-    priority: "low",
-  },
-  {
-    id: "3",
-    title: "تحذير: مساحة التخزين",
-    message: "مساحة التخزين تقترب من الحد الأقصى (85%)",
-    type: "warning",
-    read: false,
-    createdAt: "2024-01-15 08:45",
-    priority: "high",
-  },
-  {
-    id: "4",
-    title: "خطأ في التكامل",
-    message: "فشل في الاتصال بخدمة واتساب",
-    type: "error",
-    read: true,
-    createdAt: "2024-01-14 16:20",
-    priority: "high",
-  },
-];
+interface NotificationTemplate {
+  id: string;
+  name: string;
+  title: string;
+  message: string;
+  type: string;
+  category: string;
+  variables: string[];
+  is_active: boolean;
+  created_at: string;
+}
 
-export default function NotificationsPage() {
-  const [filter, setFilter] = useState<"all" | "unread" | "read">("all");
-  const [typeFilter, setTypeFilter] = useState<string>("all");
+const NotificationsPage: React.FC = () => {
+  const { user, isAuthenticated } = useAuth();
+  const router = useRouter();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [templates, setTemplates] = useState<NotificationTemplate[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterType, setFilterType] = useState<string>("all");
+  const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [filterPriority, setFilterPriority] = useState<string>("all");
+  const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
+  const [showTemplates, setShowTemplates] = useState(false);
+  const [showCompose, setShowCompose] = useState(false);
 
-  const getTypeColor = (type: Notification["type"]) => {
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
+    loadNotifications();
+  }, [isAuthenticated, router]);
+
+  const loadNotifications = async () => {
+    try {
+      setLoading(true);
+      // في التطبيق الحقيقي، سيتم جلب البيانات من API
+      const mockNotifications: Notification[] = [
+        {
+          id: "1",
+          title: "موعد جديد مجدول",
+          message: "تم جدولة موعد جديد للمريض أحمد محمد في 15 يناير 2024",
+          type: "appointment",
+          priority: "medium",
+          status: "unread",
+          category: "المواعيد",
+          recipient_id: "user-1",
+          recipient_name: "د. فاطمة العلي",
+          sender_id: "system",
+          sender_name: "النظام",
+          created_at: "2024-01-15T10:00:00Z",
+          action_url: "/appointments/123",
+          action_text: "عرض الموعد",
+          metadata: {
+            patient_id: "pat-1",
+            appointment_id: "apt-123"
+          }
+        },
+        {
+          id: "2",
+          title: "تذكير بجلسة علاج",
+          message: "تذكير: جلسة العلاج الطبيعي للمريض سارة أحمد في الساعة 2:00 مساءً",
+          type: "reminder",
+          priority: "high",
+          status: "read",
+          category: "التذكيرات",
+          recipient_id: "user-2",
+          recipient_name: "أ. محمد السعد",
+          sender_id: "system",
+          sender_name: "النظام",
+          created_at: "2024-01-15T09:30:00Z",
+          read_at: "2024-01-15T09:35:00Z",
+          action_url: "/therapy/sessions/456",
+          action_text: "عرض الجلسة",
+          metadata: {
+            patient_id: "pat-2",
+            therapy_session_id: "ts-456"
+          }
+        },
+        {
+          id: "3",
+          title: "تحديث حالة المريض",
+          message: "تم تحديث حالة المريض نورا الزهراني إلى 'مكتمل العلاج'",
+          type: "success",
+          priority: "medium",
+          status: "unread",
+          category: "تحديثات الحالة",
+          recipient_id: "user-1",
+          recipient_name: "د. فاطمة العلي",
+          sender_id: "user-3",
+          sender_name: "أ. أحمد المحمد",
+          created_at: "2024-01-15T08:45:00Z",
+          action_url: "/patients/pat-3",
+          action_text: "عرض المريض",
+          metadata: {
+            patient_id: "pat-3"
+          }
+        },
+        {
+          id: "4",
+          title: "تنبيه نظام",
+          message: "تم إجراء نسخة احتياطية من قاعدة البيانات بنجاح",
+          type: "system",
+          priority: "low",
+          status: "read",
+          category: "النظام",
+          recipient_id: "admin-1",
+          recipient_name: "مدير النظام",
+          sender_id: "system",
+          sender_name: "النظام",
+          created_at: "2024-01-15T06:00:00Z",
+          read_at: "2024-01-15T06:05:00Z"
+        }
+      ];
+
+      const mockTemplates: NotificationTemplate[] = [
+        {
+          id: "1",
+          name: "تذكير الموعد",
+          title: "تذكير بموعدك",
+          message: "عزيزي {patient_name}، نذكرك بموعدك في {appointment_date} في الساعة {appointment_time}",
+          type: "reminder",
+          category: "المواعيد",
+          variables: ["patient_name", "appointment_date", "appointment_time"],
+          is_active: true,
+          created_at: "2024-01-01T00:00:00Z"
+        },
+        {
+          id: "2",
+          name: "تأكيد الموعد",
+          title: "تأكيد حجز الموعد",
+          message: "تم تأكيد حجز موعدك في {appointment_date} مع {therapist_name}",
+          type: "success",
+          category: "المواعيد",
+          variables: ["appointment_date", "therapist_name"],
+          is_active: true,
+          created_at: "2024-01-01T00:00:00Z"
+        }
+      ];
+
+      setNotifications(mockNotifications);
+      setTemplates(mockTemplates);
+    } catch (error) {
+      console.error('Error loading notifications:', error);
+      setError('فشل في تحميل الإشعارات');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getTypeIcon = (type: string) => {
     switch (type) {
-      case "info":
-        return "text-blue-600";
-      case "success":
-        return "text-green-600";
-      case "warning":
-        return "text-yellow-600";
-      case "error":
-        return "text-red-600";
+      case 'appointment':
+        return <Calendar className="w-4 h-4 text-blue-500" />;
+      case 'reminder':
+        return <Clock className="w-4 h-4 text-orange-500" />;
+      case 'success':
+        return <CheckCircle className="w-4 h-4 text-green-500" />;
+      case 'warning':
+        return <AlertCircle className="w-4 h-4 text-yellow-500" />;
+      case 'error':
+        return <AlertCircle className="w-4 h-4 text-red-500" />;
+      case 'system':
+        return <Settings className="w-4 h-4 text-gray-500" />;
       default:
-        return "text-gray-600";
+        return <Info className="w-4 h-4 text-blue-500" />;
     }
   };
 
-  const getTypeIcon = (type: Notification["type"]) => {
-    switch (type) {
-      case "info":
-        return "ℹ️";
-      case "success":
-        return "✅";
-      case "warning":
-        return "⚠️";
-      case "error":
-        return "❌";
-      default:
-        return "📢";
-    }
+  const getPriorityBadge = (priority: string) => {
+    const priorityMap = {
+      'low': { label: 'منخفض', variant: 'secondary' as const },
+      'medium': { label: 'متوسط', variant: 'default' as const },
+      'high': { label: 'عالي', variant: 'default' as const },
+      'urgent': { label: 'عاجل', variant: 'destructive' as const }
+    };
+    
+    const priorityInfo = priorityMap[priority as keyof typeof priorityMap] || { label: priority, variant: 'default' as const };
+    return <Badge variant={priorityInfo.variant}>{priorityInfo.label}</Badge>;
   };
 
-  const getPriorityColor = (priority: Notification["priority"]) => {
-    switch (priority) {
-      case "high":
-        return "bg-red-100 text-red-800";
-      case "medium":
-        return "bg-yellow-100 text-yellow-800";
-      case "low":
-        return "bg-green-100 text-green-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
+  const getStatusBadge = (status: string) => {
+    const statusMap = {
+      'unread': { label: 'غير مقروء', variant: 'default' as const },
+      'read': { label: 'مقروء', variant: 'secondary' as const },
+      'archived': { label: 'مؤرشف', variant: 'outline' as const }
+    };
+    
+    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'default' as const };
+    return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 
-  const filteredNotifications = mockNotifications.filter((notification) => {
-    const matchesFilter =
-      filter === "all" ||
-      (filter === "unread" && !notification.read) ||
-      (filter === "read" && notification.read);
-    const matchesType =
-      typeFilter === "all" || notification.type === typeFilter;
-    return matchesFilter && matchesType;
+  const markAsRead = (notificationId: string) => {
+    setNotifications(prev => 
+      prev.map(notif => 
+        notif.id === notificationId 
+          ? { ...notif, status: 'read' as const, read_at: new Date().toISOString() }
+          : notif
+      )
+    );
+  };
+
+  const markAsArchived = (notificationId: string) => {
+    setNotifications(prev => 
+      prev.map(notif => 
+        notif.id === notificationId 
+          ? { ...notif, status: 'archived' as const }
+          : notif
+      )
+    );
+  };
+
+  const filteredNotifications = notifications.filter(notification => {
+    const matchesSearch = 
+      notification.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      notification.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      notification.recipient_name.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesType = filterType === "all" || notification.type === filterType;
+    const matchesStatus = filterStatus === "all" || notification.status === filterStatus;
+    const matchesPriority = filterPriority === "all" || notification.priority === filterPriority;
+    
+    return matchesSearch && matchesType && matchesStatus && matchesPriority;
   });
 
-  const unreadCount = mockNotifications.filter((n) => !n.read).length;
+  const unreadCount = notifications.filter(n => n.status === 'unread').length;
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
-    <div className="min-h-screen bg-[var(--brand-surface)]">
-      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
-        <div className="container-app py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Image
-                src="/logo.png"
-                alt="مُعين"
-                width={50}
-                height={50}
-                className="rounded-lg"
-              />
-              <div>
-                <h1 className="text-brand text-2xl font-bold">الإشعارات</h1>
-                <p className="text-gray-600 dark:text-gray-300">
-                  إدارة إشعارات النظام
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              {unreadCount > 0 && (
-                <button className="rounded-lg bg-blue-100 px-4 py-2 text-blue-600 transition-colors hover:bg-blue-200">
-                  قراءة الكل
-                </button>
-              )}
-              <button className="rounded-lg bg-red-100 px-4 py-2 text-red-600 transition-colors hover:bg-red-200">
-                حذف الكل
-              </button>
-            </div>
+    <div className="container mx-auto px-4 py-8" dir="rtl">
+      {/* Header */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">مركز الإشعارات</h1>
+            <p className="text-gray-600 mt-2">إدارة الإشعارات والتذكيرات</p>
           </div>
-        </div>
-      </header>
-
-      <main className="container-app py-8">
-        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
-          <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-blue-600">
-              {mockNotifications.length}
-            </div>
-            <div className="text-gray-600 dark:text-gray-300">
-              إجمالي الإشعارات
-            </div>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-red-600">
-              {unreadCount}
-            </div>
-            <div className="text-gray-600 dark:text-gray-300">غير مقروءة</div>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
-              {mockNotifications.filter((n) => n.read).length}
-            </div>
-            <div className="text-gray-600 dark:text-gray-300">مقروءة</div>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-yellow-600">
-              {mockNotifications.filter((n) => n.priority === "high").length}
-            </div>
-            <div className="text-gray-600 dark:text-gray-300">أولوية عالية</div>
-          </div>
-        </div>
-
-        <div className="card mb-8 p-6">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                فلتر الحالة
-              </label>
-              <select
-                value={filter}
-                onChange={(e) => setFilter(e.target.value as any)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-              >
-                <option value="all">جميع الإشعارات</option>
-                <option value="unread">غير مقروءة</option>
-                <option value="read">مقروءة</option>
-              </select>
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                فلتر النوع
-              </label>
-              <select
-                value={typeFilter}
-                onChange={(e) => setTypeFilter(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-              >
-                <option value="all">جميع الأنواع</option>
-                <option value="info">معلومات</option>
-                <option value="success">نجاح</option>
-                <option value="warning">تحذير</option>
-                <option value="error">خطأ</option>
-              </select>
-            </div>
-            <div className="flex items-end">
-              <button className="btn-brand w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
-                تطبيق الفلاتر
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          {filteredNotifications.map((notification) => (
-            <div
-              key={notification.id}
-              className={`card hover:shadow-soft p-6 transition-shadow ${!notification.read ? "border-r-4 border-[var(--brand-primary)]" : ""}`}
+          <div className="flex gap-2">
+            <Button
+              onClick={() => setShowTemplates(!showTemplates)}
+              variant="outline"
+              size="sm"
             >
-              <div className="flex items-start gap-4">
-                <div className="text-2xl">{getTypeIcon(notification.type)}</div>
-                <div className="flex-1">
-                  <div className="mb-2 flex items-center gap-3">
-                    <h3
-                      className={`text-lg font-semibold ${getTypeColor(notification.type)}`}
-                    >
-                      {notification.title}
-                    </h3>
-                    <span
-                      className={`rounded-full px-2 py-1 text-xs ${getPriorityColor(notification.priority)}`}
-                    >
-                      {notification.priority === "high"
-                        ? "عالي"
-                        : notification.priority === "medium"
-                          ? "متوسط"
-                          : "منخفض"}
-                    </span>
-                    {!notification.read && (
-                      <span className="h-2 w-2 rounded-full bg-[var(--brand-primary)]"></span>
-                    )}
-                  </div>
-                  <p className="mb-3 text-gray-600 dark:text-gray-300">
-                    {notification.message}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">
-                      {notification.createdAt}
-                    </span>
-                    <div className="flex gap-2">
-                      {!notification.read && (
-                        <button className="rounded bg-[var(--brand-primary)] px-3 py-1 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
-                          قراءة
-                        </button>
-                      )}
-                      <button className="rounded border border-gray-300 px-3 py-1 text-sm text-gray-700 transition-colors hover:bg-gray-50">
-                        حذف
-                      </button>
-                    </div>
-                  </div>
+              <Settings className="w-4 h-4 mr-2" />
+              القوالب
+            </Button>
+            <Button
+              onClick={() => setShowCompose(true)}
+              className="bg-[var(--brand-primary)] hover:brightness-95"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              إرسال إشعار
+            </Button>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2">
+                <Bell className="w-5 h-5 text-blue-500" />
+                <div>
+                  <div className="text-2xl font-bold">{notifications.length}</div>
+                  <div className="text-sm text-gray-600">إجمالي الإشعارات</div>
                 </div>
               </div>
-            </div>
-          ))}
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2">
+                <BellRing className="w-5 h-5 text-orange-500" />
+                <div>
+                  <div className="text-2xl font-bold">{unreadCount}</div>
+                  <div className="text-sm text-gray-600">غير مقروء</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-5 h-5 text-green-500" />
+                <div>
+                  <div className="text-2xl font-bold">
+                    {notifications.filter(n => n.type === 'appointment').length}
+                  </div>
+                  <div className="text-sm text-gray-600">مواعيد</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2">
+                <Clock className="w-5 h-5 text-purple-500" />
+                <div>
+                  <div className="text-2xl font-bold">
+                    {notifications.filter(n => n.type === 'reminder').length}
+                  </div>
+                  <div className="text-sm text-gray-600">تذكيرات</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        {filteredNotifications.length === 0 && (
-          <div className="py-12 text-center">
-            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
-              <span className="text-4xl">🔔</span>
-            </div>
-            <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-              لا توجد إشعارات
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              لا توجد إشعارات مطابقة للفلتر المحدد
-            </p>
+        {/* Search and Filters */}
+        <div className="flex flex-col md:flex-row gap-4 mb-6">
+          <div className="flex-1">
+            <Input
+              placeholder="البحث في الإشعارات..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pr-10"
+            />
           </div>
-        )}
-      </main>
+          <div className="flex gap-2">
+            <select
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-md text-sm"
+            >
+              <option value="all">جميع الأنواع</option>
+              <option value="appointment">المواعيد</option>
+              <option value="reminder">التذكيرات</option>
+              <option value="success">نجاح</option>
+              <option value="warning">تحذير</option>
+              <option value="error">خطأ</option>
+              <option value="system">النظام</option>
+            </select>
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-md text-sm"
+            >
+              <option value="all">جميع الحالات</option>
+              <option value="unread">غير مقروء</option>
+              <option value="read">مقروء</option>
+              <option value="archived">مؤرشف</option>
+            </select>
+            <select
+              value={filterPriority}
+              onChange={(e) => setFilterPriority(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-md text-sm"
+            >
+              <option value="all">جميع الأولويات</option>
+              <option value="urgent">عاجل</option>
+              <option value="high">عالي</option>
+              <option value="medium">متوسط</option>
+              <option value="low">منخفض</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]"></div>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {filteredNotifications.length === 0 ? (
+            <Card>
+              <CardContent className="p-12 text-center">
+                <Bell className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد إشعارات</h3>
+                <p className="text-gray-600 mb-4">ستظهر الإشعارات هنا عند توفرها</p>
+              </CardContent>
+            </Card>
+          ) : (
+            filteredNotifications.map((notification) => (
+              <Card 
+                key={notification.id} 
+                className={`cursor-pointer transition-colors ${
+                  notification.status === 'unread' 
+                    ? 'border-l-4 border-l-blue-500 bg-blue-50' 
+                    : 'hover:bg-gray-50'
+                }`}
+                onClick={() => {
+                  setSelectedNotification(notification);
+                  if (notification.status === 'unread') {
+                    markAsRead(notification.id);
+                  }
+                }}
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start gap-4">
+                      <div className="p-2 bg-white rounded-full">
+                        {getTypeIcon(notification.type)}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="text-lg font-semibold">{notification.title}</h3>
+                          {notification.status === 'unread' && (
+                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          )}
+                        </div>
+                        <p className="text-gray-700 mb-3">{notification.message}</p>
+                        <div className="flex items-center gap-4 text-sm text-gray-600">
+                          <span>من: {notification.sender_name}</span>
+                          <span>إلى: {notification.recipient_name}</span>
+                          <span>{new Date(notification.created_at).toLocaleDateString('ar-SA')}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {getPriorityBadge(notification.priority)}
+                      {getStatusBadge(notification.status)}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          markAsArchived(notification.id);
+                        }}
+                      >
+                        <Archive className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  {notification.action_url && (
+                    <div className="mt-4 pt-4 border-t">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          router.push(notification.action_url!);
+                        }}
+                      >
+                        {notification.action_text || 'عرض التفاصيل'}
+                      </Button>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </div>
+      )}
+
+      {/* Templates Section */}
+      {showTemplates && (
+        <Card className="mt-8">
+          <CardHeader>
+            <CardTitle>قوالب الإشعارات</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {templates.map((template) => (
+                <div key={template.id} className="p-4 border rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-semibold">{template.name}</h4>
+                    <Badge variant={template.is_active ? 'default' : 'secondary'}>
+                      {template.is_active ? 'نشط' : 'غير نشط'}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-2">{template.title}</p>
+                  <p className="text-sm text-gray-700 mb-3">{template.message}</p>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline">{template.type}</Badge>
+                    <Badge variant="outline">{template.category}</Badge>
+                    <span className="text-xs text-gray-500">
+                      متغيرات: {template.variables.join(', ')}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
-}
+};
+
+export default NotificationsPage;

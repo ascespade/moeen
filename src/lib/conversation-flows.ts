@@ -1,11 +1,14 @@
 // Conversation Flow Management System
 export interface FlowStep {
   id: string;
-  type: "question" | "information" | "action" | "redirect";
+  type: "question" | "information" | "action" | "redirect" | "slack_notify" | "whatsapp_send";
   content: string;
   options?: string[];
   nextStep?: string;
   conditions?: FlowCondition[];
+  slackChannel?: string;
+  whatsappTemplate?: string;
+  notificationType?: 'appointment' | 'reminder' | 'emergency' | 'general';
 }
 
 export interface FlowCondition {
@@ -206,6 +209,124 @@ export class FlowManager {
         },
       ],
     });
+
+    // Doctor Communication Flow
+    this.flows.set("doctor_communication", {
+      id: "doctor_communication",
+      name: "التواصل مع الطبيب",
+      description: "تسهيل التواصل بين المريض والطبيب عبر Slack",
+      entryPoints: ["طبيب", "استشارة", "سؤال طبي", "تواصل مع الطبيب"],
+      steps: [
+        {
+          id: "doctor_question",
+          type: "question",
+          content: "ما هو سؤالك أو استفسارك الطبي؟",
+          nextStep: "collect_question",
+        },
+        {
+          id: "collect_question",
+          type: "action",
+          content: "شكراً لك على سؤالك. سأقوم بإرساله للطبيب المختص وستحصل على رد قريباً.",
+          nextStep: "notify_doctor",
+        },
+        {
+          id: "notify_doctor",
+          type: "slack_notify",
+          content: "تم إرسال استفسار المريض للطبيب عبر Slack",
+          slackChannel: "general",
+          notificationType: "general",
+          nextStep: "end",
+        },
+      ],
+    });
+
+    // Emergency Flow with Slack Integration
+    this.flows.set("emergency_slack", {
+      id: "emergency_slack",
+      name: "الطوارئ مع Slack",
+      description: "نظام طوارئ متكامل مع إشعارات Slack",
+      entryPoints: ["طارئ", "عاجل", "خطر", "إسعاف"],
+      steps: [
+        {
+          id: "emergency_detection",
+          type: "action",
+          content: "🚨 تم اكتشاف حالة طوارئ! يرجى الاتصال فوراً بالرقم 997 أو 911.",
+          nextStep: "slack_alert",
+        },
+        {
+          id: "slack_alert",
+          type: "slack_notify",
+          content: "تنبيه طارئ من المريض",
+          slackChannel: "emergency",
+          notificationType: "emergency",
+          nextStep: "emergency_contacts",
+        },
+        {
+          id: "emergency_contacts",
+          type: "information",
+          content: "أرقام الطوارئ: 997 (الطوارئ العامة) - 911 (الإسعاف) - مركز الهمم: +966501234567",
+          nextStep: "follow_up",
+        },
+        {
+          id: "follow_up",
+          type: "action",
+          content: "هل تريد مني التواصل مع فريقنا الطبي فوراً؟",
+          options: ["نعم، اتصل بي", "لا، سأتصل بنفسي", "أحتاج مساعدة أخرى"],
+          nextStep: "end",
+        },
+      ],
+    });
+
+    // Appointment with Slack Notifications
+    this.flows.set("appointment_slack", {
+      id: "appointment_slack",
+      name: "حجز المواعيد مع Slack",
+      description: "نظام حجز المواعيد مع إشعارات Slack للطاقم الطبي",
+      entryPoints: ["موعد", "حجز", "جدولة", "appointment"],
+      steps: [
+        {
+          id: "appointment_type",
+          type: "question",
+          content: "هل هذا موعد جديد أم متابعة؟",
+          options: ["موعد جديد", "متابعة", "إعادة جدولة"],
+          nextStep: "check_schedule",
+        },
+        {
+          id: "check_schedule",
+          type: "action",
+          content: "دعني أتحقق من المواعيد المتاحة...",
+          nextStep: "show_availability",
+        },
+        {
+          id: "show_availability",
+          type: "information",
+          content: "المواعيد المتاحة:",
+          nextStep: "confirm_appointment",
+        },
+        {
+          id: "confirm_appointment",
+          type: "action",
+          content: "هل تود تأكيد هذا الموعد؟",
+          options: ["نعم، أؤكد", "لا، موعد آخر", "إلغاء"],
+          nextStep: "slack_notification",
+        },
+        {
+          id: "slack_notification",
+          type: "slack_notify",
+          content: "تم حجز موعد جديد",
+          slackChannel: "appointments",
+          notificationType: "appointment",
+          nextStep: "send_confirmation",
+        },
+        {
+          id: "send_confirmation",
+          type: "whatsapp_send",
+          content: "تم إرسال رسالة تأكيد عبر واتساب",
+          whatsappTemplate: "appointment_confirmation",
+          nextStep: "end",
+        },
+      ],
+    });
   }
 
   // Get flow by ID
@@ -250,6 +371,65 @@ export class FlowManager {
     }
 
     return undefined;
+  }
+
+  // Execute step action (Slack notifications, WhatsApp sending, etc.)
+  async executeStepAction(
+    step: FlowStep,
+    context: any = {}
+  ): Promise<boolean> {
+    try {
+      switch (step.type) {
+        case 'slack_notify':
+          await this.executeSlackNotification(step, context);
+          break;
+        case 'whatsapp_send':
+          await this.executeWhatsAppSend(step, context);
+          break;
+        default:
+          // No action needed for other step types
+          break;
+      }
+      return true;
+    } catch (error) {
+      console.error('Error executing step action:', error);
+      return false;
+    }
+  }
+
+  // Execute Slack notification
+  private async executeSlackNotification(step: FlowStep, context: any): Promise<void> {
+    try {
+      const response = await fetch('/api/slack/notify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: step.notificationType || 'general',
+          message: step.content,
+          channel: step.slackChannel || 'general',
+          priority: 'medium',
+          ...context
+        }),
+      });
+
+      if (!response.ok) {
+        console.error('Failed to send Slack notification:', await response.text());
+      }
+    } catch (error) {
+      console.error('Error sending Slack notification:', error);
+    }
+  }
+
+  // Execute WhatsApp send
+  private async executeWhatsAppSend(step: FlowStep, context: any): Promise<void> {
+    try {
+      // This would integrate with the existing WhatsApp system
+      console.log('Sending WhatsApp message:', step.whatsappTemplate, context);
+    } catch (error) {
+      console.error('Error sending WhatsApp message:', error);
+    }
   }
 
   // Evaluate condition

@@ -4,6 +4,35 @@ import { ROUTES } from "@/constants/routes";
 import { createClient } from "@/lib/supabase/client";
 import Image from "next/image";
 import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import { Input } from "@/components/ui/Input";
+import { 
+  Users, 
+  Phone, 
+  Mail, 
+  MapPin, 
+  Calendar,
+  Plus,
+  Search,
+  Filter,
+  MoreVertical,
+  Edit,
+  Eye,
+  Trash2,
+  UserPlus,
+  MessageCircle,
+  Star,
+  Clock,
+  Activity,
+  Heart,
+  AlertCircle,
+  CheckCircle,
+  TrendingUp,
+  Target,
+  FileText
+} from "lucide-react";
 
 interface Patient {
   id: string;
@@ -29,6 +58,18 @@ interface PatientWithStats extends Patient {
   insuranceProvider?: string;
   notes?: string;
   status: "active" | "inactive" | "blocked";
+  condition: string;
+  severity: "mild" | "moderate" | "severe";
+  therapyType: string[];
+  progressPercentage: number;
+  nextAppointment?: string;
+  assignedTherapist?: string;
+  familyMembers: number;
+  emergencyContact: {
+    name: string;
+    phone: string;
+    relationship: string;
+  };
 }
 
 export default function PatientsPage() {
@@ -39,6 +80,10 @@ export default function PatientsPage() {
   const [filterStatus, setFilterStatus] = useState<
     "all" | "active" | "inactive" | "blocked"
   >("all");
+  const [filterCondition, setFilterCondition] = useState<string>("all");
+  const [filterSeverity, setFilterSeverity] = useState<string>("all");
+  const [selectedPatient, setSelectedPatient] = useState<PatientWithStats | null>(null);
+  const [showDetails, setShowDetails] = useState(false);
 
   const supabase = createClient();
 
@@ -131,6 +176,35 @@ export default function PatientsPage() {
       default:
         return "غير محدد";
     }
+  };
+
+  const getStatusBadge = (status: string) => {
+    const statusMap = {
+      'active': { label: 'نشط', variant: 'default' as const, color: 'text-green-600' },
+      'inactive': { label: 'غير نشط', variant: 'secondary' as const, color: 'text-gray-600' },
+      'blocked': { label: 'محظور', variant: 'destructive' as const, color: 'text-red-600' }
+    };
+    
+    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'default' as const, color: 'text-gray-600' };
+    return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
+  };
+
+  const getSeverityBadge = (severity: string) => {
+    const severityMap = {
+      'mild': { label: 'خفيف', variant: 'default' as const, color: 'text-green-600' },
+      'moderate': { label: 'متوسط', variant: 'secondary' as const, color: 'text-yellow-600' },
+      'severe': { label: 'شديد', variant: 'destructive' as const, color: 'text-red-600' }
+    };
+    
+    const severityInfo = severityMap[severity as keyof typeof severityMap] || { label: severity, variant: 'default' as const, color: 'text-gray-600' };
+    return <Badge variant={severityInfo.variant}>{severityInfo.label}</Badge>;
+  };
+
+  const getProgressColor = (percentage: number) => {
+    if (percentage >= 80) return "bg-green-500";
+    if (percentage >= 60) return "bg-yellow-500";
+    if (percentage >= 40) return "bg-orange-500";
+    return "bg-red-500";
   };
 
   if (loading) {

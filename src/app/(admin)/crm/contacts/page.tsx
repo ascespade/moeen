@@ -1,666 +1,581 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
+
+import React, { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import { Input } from "@/components/ui/Input";
+import { 
+  Users, 
+  Phone, 
+  Mail, 
+  MapPin, 
+  Calendar,
+  Plus,
+  Search,
+  Filter,
+  MoreVertical,
+  Edit,
+  Eye,
+  Trash2,
+  UserPlus,
+  MessageCircle,
+  Star,
+  Clock,
+  Activity
+} from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 
 interface Contact {
   id: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
   company?: string;
   position?: string;
-  status: "active" | "inactive" | "lead" | "customer";
+  status: 'lead' | 'prospect' | 'customer' | 'inactive';
   source: string;
-  lastContact: string;
-  totalDeals: number;
-  totalValue: number;
-  tags: string[];
   notes?: string;
+  tags: string[];
+  last_contact: string;
+  next_follow_up: string;
+  created_at: string;
+  updated_at: string;
+  avatar?: string;
+  address?: {
+    street: string;
+    city: string;
+    country: string;
+  };
+  social_media?: {
+    linkedin?: string;
+    twitter?: string;
+    facebook?: string;
+  };
 }
 
-const mockContacts: Contact[] = [
-  {
-    id: "1",
-    name: "أحمد العتيبي",
-    email: "ahmed@company.com",
-    phone: "0501234567",
-    company: "شركة التقنية المتقدمة",
-    position: "مدير تقنية المعلومات",
-    status: "customer",
-    source: "موقع إلكتروني",
-    lastContact: "2024-01-15",
-    totalDeals: 3,
-    totalValue: 45000,
-    tags: ["VIP", "تقنية"],
-    notes: "عميل مهم - يهتم بالحلول التقنية",
-  },
-  {
-    id: "2",
-    name: "فاطمة السعيد",
-    email: "fatima@hospital.com",
-    phone: "0507654321",
-    company: "مستشفى الملك فهد",
-    position: "مديرة التمريض",
-    status: "lead",
-    source: "إحالة",
-    lastContact: "2024-01-12",
-    totalDeals: 0,
-    totalValue: 0,
-    tags: ["صحة", "مستشفى"],
-    notes: "مهتمة بحلول إدارة المرضى",
-  },
-  {
-    id: "3",
-    name: "خالد القحطاني",
-    email: "khalid@clinic.com",
-    phone: "0509876543",
-    company: "عيادة الأسنان المتخصصة",
-    position: "طبيب أسنان",
-    status: "active",
-    source: "معرض طبي",
-    lastContact: "2024-01-10",
-    totalDeals: 1,
-    totalValue: 15000,
-    tags: ["أسنان", "عيادة"],
-  },
-  {
-    id: "4",
-    name: "نورا السعد",
-    email: "nora@pharmacy.com",
-    phone: "0504567890",
-    company: "صيدلية النور",
-    position: "صيدلانية",
-    status: "inactive",
-    source: "إعلان فيسبوك",
-    lastContact: "2023-12-20",
-    totalDeals: 0,
-    totalValue: 0,
-    tags: ["صيدلية"],
-  },
-];
+interface ContactActivity {
+  id: string;
+  contact_id: string;
+  type: 'call' | 'email' | 'meeting' | 'note';
+  subject: string;
+  description: string;
+  date: string;
+  user_id: string;
+  user_name: string;
+}
 
-export default function CRMContactsPage() {
+const ContactsPage: React.FC = () => {
+  const { user, isAuthenticated } = useAuth();
+  const router = useRouter();
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [activities, setActivities] = useState<ContactActivity[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState<string>("all");
-  const [selectedSource, setSelectedSource] = useState<string>("all");
-  const [viewMode, setViewMode] = useState<"table" | "cards">("table");
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
+  const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [filterSource, setFilterSource] = useState<string>("all");
+  const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+  const [showActivities, setShowActivities] = useState(false);
 
-  const getStatusColor = (status: Contact["status"]) => {
-    switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800";
-      case "inactive":
-        return "bg-gray-100 text-gray-800";
-      case "lead":
-        return "bg-blue-100 text-blue-800";
-      case "customer":
-        return "bg-purple-100 text-purple-800";
-      default:
-        return "bg-gray-100 text-gray-800";
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
+    loadContacts();
+  }, [isAuthenticated, router]);
+
+  const loadContacts = async () => {
+    try {
+      setLoading(true);
+      // في التطبيق الحقيقي، سيتم جلب البيانات من API
+      const mockContacts: Contact[] = [
+        {
+          id: "1",
+          first_name: "أحمد",
+          last_name: "المحمد",
+          email: "ahmed@example.com",
+          phone: "0501234567",
+          company: "شركة التقنية المتقدمة",
+          position: "مدير المشتريات",
+          status: "customer",
+          source: "موقع إلكتروني",
+          notes: "عميل مهم، مهتم بخدمات التأهيل",
+          tags: ["مهم", "مشتري نشط"],
+          last_contact: "2024-01-15T10:00:00Z",
+          next_follow_up: "2024-01-22T14:00:00Z",
+          created_at: "2024-01-01T00:00:00Z",
+          updated_at: "2024-01-15T10:00:00Z",
+          avatar: "/logo.png",
+          address: {
+            street: "شارع الملك فهد",
+            city: "جدة",
+            country: "المملكة العربية السعودية"
+          },
+          social_media: {
+            linkedin: "ahmed-mohammed",
+            twitter: "@ahmed_m"
+          }
+        },
+        {
+          id: "2",
+          first_name: "فاطمة",
+          last_name: "العلي",
+          email: "fatima@example.com",
+          phone: "0507654321",
+          company: "مؤسسة الرعاية الاجتماعية",
+          position: "منسقة البرامج",
+          status: "prospect",
+          source: "إحالة",
+          notes: "مهتمة ببرامج التدريب المهني",
+          tags: ["إحالة", "تدريب"],
+          last_contact: "2024-01-10T15:30:00Z",
+          next_follow_up: "2024-01-20T11:00:00Z",
+          created_at: "2024-01-05T00:00:00Z",
+          updated_at: "2024-01-10T15:30:00Z",
+          avatar: "/logo.png"
+        }
+      ];
+
+      const mockActivities: ContactActivity[] = [
+        {
+          id: "1",
+          contact_id: "1",
+          type: "call",
+          subject: "مكالمة متابعة",
+          description: "مناقشة احتياجات الشركة من خدمات التأهيل",
+          date: "2024-01-15T10:00:00Z",
+          user_id: "user-1",
+          user_name: "سارة أحمد"
+        },
+        {
+          id: "2",
+          contact_id: "1",
+          type: "meeting",
+          subject: "اجتماع تقديم الخدمات",
+          description: "عرض خدمات المركز وبرامج التأهيل المتاحة",
+          date: "2024-01-12T14:00:00Z",
+          user_id: "user-2",
+          user_name: "محمد العلي"
+        }
+      ];
+
+      setContacts(mockContacts);
+      setActivities(mockActivities);
+    } catch (error) {
+      console.error('Error loading contacts:', error);
+      setError('فشل في تحميل جهات الاتصال');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const getStatusText = (status: Contact["status"]) => {
-    switch (status) {
-      case "active":
-        return "نشط";
-      case "inactive":
-        return "غير نشط";
-      case "lead":
-        return "عميل محتمل";
-      case "customer":
-        return "عميل";
+  const getStatusBadge = (status: string) => {
+    const statusMap = {
+      'lead': { label: 'عميل محتمل', variant: 'secondary' as const },
+      'prospect': { label: 'عميل واعد', variant: 'default' as const },
+      'customer': { label: 'عميل', variant: 'default' as const },
+      'inactive': { label: 'غير نشط', variant: 'destructive' as const }
+    };
+    
+    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'default' as const };
+    return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
+  };
+
+  const getActivityIcon = (type: string) => {
+    switch (type) {
+      case 'call':
+        return <Phone className="w-4 h-4 text-blue-500" />;
+      case 'email':
+        return <Mail className="w-4 h-4 text-green-500" />;
+      case 'meeting':
+        return <Calendar className="w-4 h-4 text-purple-500" />;
+      case 'note':
+        return <MessageCircle className="w-4 h-4 text-orange-500" />;
       default:
-        return "غير محدد";
+        return <Activity className="w-4 h-4 text-gray-500" />;
     }
   };
 
-  const allSources = Array.from(new Set(mockContacts.map((c) => c.source)));
-
-  const filteredContacts = mockContacts.filter((contact) => {
-    const matchesSearch =
-      contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  const filteredContacts = contacts.filter(contact => {
+    const matchesSearch = 
+      contact.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      contact.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.company?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus =
-      selectedStatus === "all" || contact.status === selectedStatus;
-    const matchesSource =
-      selectedSource === "all" || contact.source === selectedSource;
+      contact.phone.includes(searchTerm) ||
+      (contact.company && contact.company.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    const matchesStatus = filterStatus === "all" || contact.status === filterStatus;
+    const matchesSource = filterSource === "all" || contact.source === filterSource;
+    
     return matchesSearch && matchesStatus && matchesSource;
   });
 
-  const handleSelectContact = (contactId: string) => {
-    setSelectedContacts((prev) =>
-      prev.includes(contactId)
-        ? prev.filter((id) => id !== contactId)
-        : [...prev, contactId],
-    );
-  };
+  const contactActivities = selectedContact 
+    ? activities.filter(activity => activity.contact_id === selectedContact.id)
+    : [];
 
-  const handleSelectAll = () => {
-    if (selectedContacts.length === filteredContacts.length) {
-      setSelectedContacts([]);
-    } else {
-      setSelectedContacts(filteredContacts.map((c) => c.id));
-    }
-  };
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
-    <div className="min-h-screen bg-[var(--brand-surface)]">
+    <div className="container mx-auto px-4 py-8" dir="rtl">
       {/* Header */}
-      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
-        <div className="container-app py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Image
-                src="/logo.png"
-                alt="مُعين"
-                width={50}
-                height={50}
-                className="rounded-lg"
-              />
-              <div>
-                <h1 className="text-brand text-2xl font-bold">
-                  إدارة جهات الاتصال
-                </h1>
-                <p className="text-gray-600 dark:text-gray-300">
-                  قاعدة بيانات العملاء والشركاء
-                </p>
-              </div>
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">إدارة جهات الاتصال</h1>
+            <p className="text-gray-600 mt-2">إدارة العملاء المحتملين والعملاء الحاليين</p>
+          </div>
+          <Button 
+            onClick={() => router.push('/crm/contacts/new')}
+            className="bg-[var(--brand-primary)] hover:brightness-95"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            إضافة جهة اتصال
+          </Button>
+        </div>
+
+        {/* Search and Filters */}
+        <div className="flex flex-col md:flex-row gap-4 mb-6">
+          <div className="flex-1">
+            <Input
+              placeholder="البحث في جهات الاتصال..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pr-10"
+            />
+          </div>
+          <div className="flex gap-2">
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-md text-sm"
+            >
+              <option value="all">جميع الحالات</option>
+              <option value="lead">عميل محتمل</option>
+              <option value="prospect">عميل واعد</option>
+              <option value="customer">عميل</option>
+              <option value="inactive">غير نشط</option>
+            </select>
+            <select
+              value={filterSource}
+              onChange={(e) => setFilterSource(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-md text-sm"
+            >
+              <option value="all">جميع المصادر</option>
+              <option value="موقع إلكتروني">موقع إلكتروني</option>
+              <option value="إحالة">إحالة</option>
+              <option value="إعلان">إعلان</option>
+              <option value="معرض">معرض</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">إجمالي جهات الاتصال</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{contacts.length}</div>
+            <p className="text-xs text-muted-foreground">
+              {contacts.filter(c => c.status === 'customer').length} عميل
+            </p>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">العملاء المحتملين</CardTitle>
+            <UserPlus className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {contacts.filter(c => c.status === 'lead').length}
             </div>
-            <div className="flex items-center gap-3">
-              {selectedContacts.length > 0 && (
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600">
-                    {selectedContacts.length} محدد
-                  </span>
-                  <button className="rounded-lg bg-red-100 px-3 py-1 text-sm text-red-600 hover:bg-red-200">
-                    حذف
-                  </button>
-                  <button className="rounded-lg bg-blue-100 px-3 py-1 text-sm text-blue-600 hover:bg-blue-200">
-                    تصدير
-                  </button>
+            <p className="text-xs text-muted-foreground">عميل محتمل</p>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">الأنشطة اليوم</CardTitle>
+            <Activity className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {activities.filter(a => 
+                new Date(a.date).toDateString() === new Date().toDateString()
+              ).length}
+            </div>
+            <p className="text-xs text-muted-foreground">نشاط</p>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">المتابعات المعلقة</CardTitle>
+            <Clock className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {contacts.filter(c => 
+                new Date(c.next_follow_up) > new Date()
+              ).length}
+            </div>
+            <p className="text-xs text-muted-foreground">متابعة</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Contacts List */}
+        <div className="lg:col-span-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>جهات الاتصال</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <div className="flex justify-center items-center h-64">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]"></div>
+                </div>
+              ) : filteredContacts.length === 0 ? (
+                <div className="text-center py-12">
+                  <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد جهات اتصال</h3>
+                  <p className="text-gray-600 mb-4">ابدأ بإضافة جهة اتصال جديدة</p>
+                  <Button 
+                    onClick={() => router.push('/crm/contacts/new')}
+                    className="bg-[var(--brand-primary)] hover:brightness-95"
+                  >
+                    إضافة جهة اتصال
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {filteredContacts.map((contact) => (
+                    <div
+                      key={contact.id}
+                      className={`p-4 border rounded-lg cursor-pointer transition-colors ${
+                        selectedContact?.id === contact.id 
+                          ? 'border-[var(--brand-primary)] bg-blue-50' 
+                          : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                      onClick={() => setSelectedContact(contact)}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-4">
+                          <Image
+                            src={contact.avatar || "/logo.png"}
+                            alt="Contact"
+                            width={48}
+                            height={48}
+                            className="rounded-full"
+                          />
+                          <div>
+                            <h3 className="text-lg font-semibold">
+                              {contact.first_name} {contact.last_name}
+                            </h3>
+                            <p className="text-sm text-gray-600">
+                              {contact.company} - {contact.position}
+                            </p>
+                            <div className="flex items-center gap-2 mt-1">
+                              <Phone className="w-3 h-3 text-gray-500" />
+                              <span className="text-xs text-gray-600">{contact.phone}</span>
+                              <Mail className="w-3 h-3 text-gray-500 mr-2" />
+                              <span className="text-xs text-gray-600">{contact.email}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {getStatusBadge(contact.status)}
+                          <Button variant="outline" size="sm">
+                            <MoreVertical className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      {contact.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-3">
+                          {contact.tags.map((tag, index) => (
+                            <Badge key={index} variant="outline" className="text-xs">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                      
+                      <div className="flex items-center justify-between mt-3 text-xs text-gray-500">
+                        <span>آخر اتصال: {new Date(contact.last_contact).toLocaleDateString('ar-SA')}</span>
+                        <span>المصدر: {contact.source}</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
-              <button
-                onClick={() => setShowCreateModal(true)}
-                className="btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
-              >
-                إضافة جهة اتصال
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="container-app py-8">
-        {/* Stats Cards */}
-        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
-          <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-blue-600">
-              {mockContacts.length}
-            </div>
-            <div className="text-gray-600 dark:text-gray-300">
-              إجمالي جهات الاتصال
-            </div>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
-              {mockContacts.filter((c) => c.status === "customer").length}
-            </div>
-            <div className="text-gray-600 dark:text-gray-300">عملاء</div>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-blue-600">
-              {mockContacts.filter((c) => c.status === "lead").length}
-            </div>
-            <div className="text-gray-600 dark:text-gray-300">
-              عملاء محتملين
-            </div>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-purple-600">
-              {mockContacts
-                .reduce((sum, c) => sum + c.totalValue, 0)
-                .toLocaleString()}{" "}
-              ريال
-            </div>
-            <div className="text-gray-600 dark:text-gray-300">
-              إجمالي القيمة
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Filters */}
-        <div className="card mb-8 p-6">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                البحث
-              </label>
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="ابحث بالاسم أو البريد أو الشركة..."
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-              />
-            </div>
-
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                الحالة
-              </label>
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-              >
-                <option value="all">جميع الحالات</option>
-                <option value="lead">عميل محتمل</option>
-                <option value="active">نشط</option>
-                <option value="customer">عميل</option>
-                <option value="inactive">غير نشط</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                المصدر
-              </label>
-              <select
-                value={selectedSource}
-                onChange={(e) => setSelectedSource(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-              >
-                <option value="all">جميع المصادر</option>
-                {allSources.map((source) => (
-                  <option key={source} value={source}>
-                    {source}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                طريقة العرض
-              </label>
-              <div className="flex rounded-lg border border-gray-300">
-                <button
-                  onClick={() => setViewMode("table")}
-                  className={`px-3 py-2 text-sm ${viewMode === "table" ? "bg-[var(--brand-primary)] text-white" : "text-gray-600"}`}
-                >
-                  جدول
-                </button>
-                <button
-                  onClick={() => setViewMode("cards")}
-                  className={`px-3 py-2 text-sm ${viewMode === "cards" ? "bg-[var(--brand-primary)] text-white" : "text-gray-600"}`}
-                >
-                  بطاقات
-                </button>
-              </div>
-            </div>
-
-            <div className="flex items-end">
-              <button className="btn-brand w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
-                تطبيق الفلاتر
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Contacts Content */}
-        {viewMode === "table" ? (
-          <div className="card overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50 dark:bg-gray-800">
-                  <tr>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      <input
-                        type="checkbox"
-                        checked={
-                          selectedContacts.length === filteredContacts.length &&
-                          filteredContacts.length > 0
-                        }
-                        onChange={handleSelectAll}
-                        className="rounded border-gray-300"
-                      />
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      جهة الاتصال
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      الشركة
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      الحالة
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      الصفقات
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      آخر تواصل
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-                      الإجراءات
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
-                  {filteredContacts.map((contact) => (
-                    <tr
-                      key={contact.id}
-                      className="hover:bg-gray-50 dark:hover:bg-gray-800"
-                    >
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <input
-                          type="checkbox"
-                          checked={selectedContacts.includes(contact.id)}
-                          onChange={() => handleSelectContact(contact.id)}
-                          className="rounded border-gray-300"
-                        />
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <div className="flex items-center">
-                          <div className="ml-3 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--brand-primary)] text-sm font-semibold text-white">
-                            {contact.name.charAt(0)}
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium text-gray-900 dark:text-white">
-                              {contact.name}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {contact.email}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {contact.phone}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <div className="text-sm text-gray-900 dark:text-white">
-                          {contact.company || "غير محدد"}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {contact.position}
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <span
-                          className={`rounded-full px-2 py-1 text-xs ${getStatusColor(contact.status)}`}
-                        >
-                          {getStatusText(contact.status)}
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <div className="text-sm text-gray-900 dark:text-white">
-                          {contact.totalDeals} صفقة
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {contact.totalValue.toLocaleString()} ريال
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <div className="text-sm text-gray-600 dark:text-gray-300">
-                          {contact.lastContact}
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm font-medium">
-                        <div className="flex gap-2">
-                          <Link
-                            href={ROUTES.CRM.CONTACT(contact.id)}
-                            className="text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]"
-                          >
-                            عرض
-                          </Link>
-                          <button className="text-gray-600 hover:text-gray-900">
-                            تعديل
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredContacts.map((contact) => (
-              <div
-                key={contact.id}
-                className="card hover:shadow-soft p-6 transition-shadow"
-              >
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--brand-primary)] font-semibold text-white">
-                    {contact.name.charAt(0)}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      {contact.name}
+        {/* Contact Details & Activities */}
+        <div className="space-y-6">
+          {selectedContact ? (
+            <>
+              {/* Contact Details */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <UserPlus className="w-5 h-5" />
+                    تفاصيل جهة الاتصال
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-center">
+                    <Image
+                      src={selectedContact.avatar || "/logo.png"}
+                      alt="Contact"
+                      width={80}
+                      height={80}
+                      className="rounded-full mx-auto mb-4"
+                    />
+                    <h3 className="text-xl font-semibold">
+                      {selectedContact.first_name} {selectedContact.last_name}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      {contact.company}
-                    </p>
+                    <p className="text-gray-600">{selectedContact.company}</p>
+                    <p className="text-sm text-gray-500">{selectedContact.position}</p>
                   </div>
-                  <span
-                    className={`rounded-full px-3 py-1 text-sm ${getStatusColor(contact.status)}`}
-                  >
-                    {getStatusText(contact.status)}
-                  </span>
-                </div>
 
-                <div className="mb-4 space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                  <div className="flex justify-between">
-                    <span>البريد:</span>
-                    <span className="font-medium">{contact.email}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>الهاتف:</span>
-                    <span className="font-medium">{contact.phone}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>المنصب:</span>
-                    <span className="font-medium">
-                      {contact.position || "غير محدد"}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>الصفقات:</span>
-                    <span className="font-medium">
-                      {contact.totalDeals} صفقة
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>القيمة:</span>
-                    <span className="font-medium">
-                      {contact.totalValue.toLocaleString()} ريال
-                    </span>
-                  </div>
-                </div>
-
-                {contact.tags.length > 0 && (
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-1">
-                      {contact.tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-600"
-                        >
-                          {tag}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-gray-500" />
+                      <span className="text-sm">{selectedContact.phone}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Mail className="w-4 h-4 text-gray-500" />
+                      <span className="text-sm">{selectedContact.email}</span>
+                    </div>
+                    {selectedContact.address && (
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-gray-500" />
+                        <span className="text-sm">
+                          {selectedContact.address.street}, {selectedContact.address.city}
                         </span>
-                      ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pt-4 border-t">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium">الحالة:</span>
+                      {getStatusBadge(selectedContact.status)}
+                    </div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium">المصدر:</span>
+                      <span className="text-sm">{selectedContact.source}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">المتابعة التالية:</span>
+                      <span className="text-sm">
+                        {new Date(selectedContact.next_follow_up).toLocaleDateString('ar-SA')}
+                      </span>
                     </div>
                   </div>
+
+                  {selectedContact.notes && (
+                    <div className="pt-4 border-t">
+                      <h4 className="text-sm font-semibold mb-2">ملاحظات:</h4>
+                      <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg">
+                        {selectedContact.notes}
+                      </p>
+                    </div>
+                  )}
+
+                  <div className="flex gap-2 pt-4 border-t">
+                    <Button variant="outline" size="sm" className="flex-1">
+                      <Edit className="w-4 h-4 mr-1" />
+                      تعديل
+                    </Button>
+                    <Button variant="outline" size="sm" className="flex-1">
+                      <MessageCircle className="w-4 h-4 mr-1" />
+                      إرسال رسالة
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Activities */}
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2">
+                      <Activity className="w-5 h-5" />
+                      الأنشطة
+                    </CardTitle>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowActivities(!showActivities)}
+                    >
+                      {showActivities ? 'إخفاء' : 'عرض'}
+                    </Button>
+                  </div>
+                </CardHeader>
+                {showActivities && (
+                  <CardContent>
+                    <div className="space-y-3">
+                      {contactActivities.length === 0 ? (
+                        <p className="text-sm text-gray-500 text-center py-4">
+                          لا توجد أنشطة مسجلة
+                        </p>
+                      ) : (
+                        contactActivities.map((activity) => (
+                          <div key={activity.id} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                            <div className="p-2 bg-white rounded-full">
+                              {getActivityIcon(activity.type)}
+                            </div>
+                            <div className="flex-1">
+                              <h4 className="text-sm font-semibold">{activity.subject}</h4>
+                              <p className="text-xs text-gray-600">{activity.description}</p>
+                              <div className="flex items-center justify-between mt-2">
+                                <span className="text-xs text-gray-500">
+                                  {activity.user_name}
+                                </span>
+                                <span className="text-xs text-gray-500">
+                                  {new Date(activity.date).toLocaleDateString('ar-SA')}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </CardContent>
                 )}
-
-                <div className="flex gap-2">
-                  <Link
-                    href={ROUTES.CRM.CONTACT(contact.id)}
-                    className="btn-brand flex-1 rounded-lg py-2 text-center text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
-                  >
-                    عرض التفاصيل
-                  </Link>
-                  <button className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50">
-                    تعديل
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Empty State */}
-        {filteredContacts.length === 0 && (
-          <div className="py-12 text-center">
-            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
-              <span className="text-4xl">👥</span>
-            </div>
-            <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-              لا توجد جهات اتصال
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              لا توجد جهات اتصال مطابقة للفلتر المحدد
-            </p>
-          </div>
-        )}
-      </main>
-
-      {/* Create Contact Modal */}
-      {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900">
-            <div className="mb-6 flex items-center justify-between">
-              <h3 className="text-xl font-semibold">إضافة جهة اتصال جديدة</h3>
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                ✕
-              </button>
-            </div>
-
-            <form className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    الاسم الكامل
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                    placeholder="أدخل الاسم الكامل"
-                  />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    البريد الإلكتروني
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                    placeholder="example@company.com"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    الهاتف
-                  </label>
-                  <input
-                    type="tel"
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                    placeholder="0501234567"
-                  />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    الشركة
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                    placeholder="اسم الشركة"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    المنصب
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                    placeholder="المنصب الوظيفي"
-                  />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    الحالة
-                  </label>
-                  <select className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]">
-                    <option value="lead">عميل محتمل</option>
-                    <option value="active">نشط</option>
-                    <option value="customer">عميل</option>
-                    <option value="inactive">غير نشط</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  المصدر
-                </label>
-                <select className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]">
-                  <option value="موقع إلكتروني">موقع إلكتروني</option>
-                  <option value="إحالة">إحالة</option>
-                  <option value="معرض">معرض</option>
-                  <option value="إعلان فيسبوك">إعلان فيسبوك</option>
-                  <option value="بحث جوجل">بحث جوجل</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  ملاحظات
-                </label>
-                <textarea
-                  rows={3}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                  placeholder="أضف ملاحظات إضافية..."
-                />
-              </div>
-
-              <div className="flex gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={() => setShowCreateModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
-                >
-                  إلغاء
-                </button>
-                <button
-                  type="submit"
-                  className="btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
-                >
-                  إضافة جهة الاتصال
-                </button>
-              </div>
-            </form>
-          </div>
+              </Card>
+            </>
+          ) : (
+            <Card>
+              <CardContent className="p-12 text-center">
+                <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">اختر جهة اتصال</h3>
+                <p className="text-gray-600">اختر جهة اتصال لعرض التفاصيل والأنشطة</p>
+              </CardContent>
+            </Card>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
-}
+};
+
+export default ContactsPage;
