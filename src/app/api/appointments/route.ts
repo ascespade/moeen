@@ -21,7 +21,11 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Get appointments error:", error);
     return NextResponse.json(
-      { success: false, error: "Internal server error", code: "INTERNAL_ERROR" },
+      {
+        success: false,
+        error: "Internal server error",
+        code: "INTERNAL_ERROR",
+      },
       { status: 500 },
     );
   }
@@ -96,7 +100,11 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Book appointment error:", error);
     return NextResponse.json(
-      { success: false, error: "Internal server error", code: "INTERNAL_ERROR" },
+      {
+        success: false,
+        error: "Internal server error",
+        code: "INTERNAL_ERROR",
+      },
       { status: 500 },
     );
   }
@@ -118,12 +126,21 @@ export async function PUT(request: NextRequest) {
     }
     return NextResponse.json({
       success: true,
-      data: { message: "Appointment rescheduled successfully", newDate, newTime, reason },
+      data: {
+        message: "Appointment rescheduled successfully",
+        newDate,
+        newTime,
+        reason,
+      },
     });
   } catch (error) {
     console.error("Reschedule appointment error:", error);
     return NextResponse.json(
-      { success: false, error: "Internal server error", code: "INTERNAL_ERROR" },
+      {
+        success: false,
+        error: "Internal server error",
+        code: "INTERNAL_ERROR",
+      },
       { status: 500 },
     );
   }
@@ -136,18 +153,30 @@ export async function DELETE(request: NextRequest) {
     const reason = searchParams.get("reason") || "No reason provided";
     if (!appointmentId) {
       return NextResponse.json(
-        { success: false, error: "Appointment ID is required", code: "MISSING_REQUIRED_FIELDS" },
+        {
+          success: false,
+          error: "Appointment ID is required",
+          code: "MISSING_REQUIRED_FIELDS",
+        },
         { status: 400 },
       );
     }
     return NextResponse.json({
       success: true,
-      data: { message: "Appointment cancelled successfully", appointmentId, reason },
+      data: {
+        message: "Appointment cancelled successfully",
+        appointmentId,
+        reason,
+      },
     });
   } catch (error) {
     console.error("Cancel appointment error:", error);
     return NextResponse.json(
-      { success: false, error: "Internal server error", code: "INTERNAL_ERROR" },
+      {
+        success: false,
+        error: "Internal server error",
+        code: "INTERNAL_ERROR",
+      },
       { status: 500 },
     );
   }

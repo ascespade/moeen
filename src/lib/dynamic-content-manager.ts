@@ -224,7 +224,12 @@ class DynamicContentManager {
     content: Partial<HomepageContent>,
   ): Promise<void> {
     try {
-      const updates: Array<{ key: string; value: any; category: string; is_public: boolean }> = [];
+      const updates: Array<{
+        key: string;
+        value: any;
+        category: string;
+        is_public: boolean;
+      }> = [];
 
       if (content.heroSlides) {
         updates.push({
