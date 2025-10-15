@@ -1,61 +1,37 @@
-import { useState } from "react";
-import Image from "next/image";
+"use client";
 
-interface OptimizedImageProps {
+import Image, { ImageProps } from "next/image";
+import { useState } from "react";
+
+interface OptimizedImageProps extends Omit<ImageProps, 'src'> {
   src: string;
+  fallback?: string;
   alt: string;
-  width: number;
-  height: number;
-  className?: string;
-  priority?: boolean;
 }
 
 export default function OptimizedImage({
   src,
+  fallback = "/logo.png",
   alt,
-  width,
-  height,
-  className = "",
-  priority = false,
+  ...props
 }: OptimizedImageProps) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const [imageSrc, setImageSrc] = useState(src);
+  const [imageError, setImageError] = useState(false);
 
-  if (hasError) {
-    return (
-      <div
-        className={`bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center ${className}`}
-        style={{ width, height }}
-      >
-        <span className="text-gray-500 text-sm">صورة</span>
-      </div>
-    );
-  }
+  const handleError = () => {
+    if (!imageError && fallback) {
+      setImageSrc(fallback);
+      setImageError(true);
+    }
+  };
 
   return (
-    <div className={`relative ${className}`}>
-      {isLoading && (
-        <div
-          className="absolute inset-0 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"
-          style={{ width, height }}
-        />
-      )}
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        priority={priority}
-        unoptimized
-        className={`rounded-lg transition-opacity duration-300 ${
-          isLoading ? "opacity-0" : "opacity-100"
-        }`}
-        onLoad={() => setIsLoading(false)}
-        onError={() => {
-          setIsLoading(false);
-          setHasError(true);
-        }}
-      />
-    </div>
+    <Image
+      {...props}
+      src={imageSrc}
+      alt={alt}
+      onError={handleError}
+      unoptimized={imageSrc === fallback}
+    />
   );
 }

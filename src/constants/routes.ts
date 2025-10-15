@@ -82,6 +82,28 @@ export const ROUTES = {
     PATIENT: (id: string) => `/patients/${id}`,
     INSURANCE_CLAIMS: "/insurance-claims",
     MEDICAL_FILE: "/medical-file",
+    APPROVALS: "/approvals",
+    INSURANCE: "/insurance",
+  },
+
+  // Marketing routes
+  MARKETING: {
+    FEATURES: "/features",
+    PRICING: "/pricing",
+    FAQ: "/faq",
+    DOCUMENTATION: "/project-documentation",
+  },
+
+  // Info routes
+  INFO: {
+    ABOUT: "/about",
+    CONTACT: "/contact",
+  },
+
+  // Legal routes
+  LEGAL: {
+    PRIVACY: "/privacy",
+    TERMS: "/terms",
   },
 
   // Notifications and Messages
@@ -163,4 +185,12 @@ export const PUBLIC_ROUTES = [
   ROUTES.REGISTER,
   ROUTES.FORGOT_PASSWORD,
   ROUTES.RESET_PASSWORD,
+  ROUTES.MARKETING.FEATURES,
+  ROUTES.MARKETING.PRICING,
+  ROUTES.MARKETING.FAQ,
+  ROUTES.MARKETING.DOCUMENTATION,
+  ROUTES.INFO.ABOUT,
+  ROUTES.INFO.CONTACT,
+  ROUTES.LEGAL.PRIVACY,
+  ROUTES.LEGAL.TERMS,
 ] as const;
