@@ -2,7 +2,7 @@
 
 # ================================
 #  🛡️ Tailscale Guardian Script
-#  Advanced + Auto Reconnect
+#  Advanced + Auto Reconnect + SSH Integration
 # ================================
 
 STATE_FILE="/var/lib/tailscale/tailscaled.state"
@@ -10,6 +10,8 @@ SOCKET_FILE="/var/run/tailscale/tailscaled.sock"
 LOG_FILE="/var/log/tailscale-guardian.log"
 HOSTNAME="server-node"
 AUTH_KEY="<YOUR_AUTH_KEY>"
+SSH_KEY_PATH="/root/.ssh/id_rsa"
+SSH_CONFIG_PATH="/root/.ssh/config"
 
 USE_USERSPACE_NETWORKING=true
 SKIP_IPTABLES=false
@@ -20,6 +22,55 @@ sudo mkdir -p /var/run/tailscale
 sudo mkdir -p /var/log
 sudo touch "$LOG_FILE"
 sudo chmod 666 "$LOG_FILE"
+
+# دالة لإعداد SSH
+setup_ssh() {
+  echo "$(date) 🔑 إعداد SSH..." >> "$LOG_FILE"
+  
+  # إنشاء مجلد SSH إذا لم يكن موجوداً
+  mkdir -p /root/.ssh
+  chmod 700 /root/.ssh
+  
+  # إنشاء مفاتيح SSH إذا لم تكن موجودة
+  if [ ! -f "$SSH_KEY_PATH" ]; then
+    echo "$(date) 🔸 إنشاء مفاتيح SSH جديدة..." >> "$LOG_FILE"
+    ssh-keygen -t rsa -b 4096 -f "$SSH_KEY_PATH" -N "" >> "$LOG_FILE" 2>&1
+    chmod 600 "$SSH_KEY_PATH"
+    chmod 644 "$SSH_KEY_PATH.pub"
+  fi
+  
+  # إنشاء authorized_keys إذا لم يكن موجوداً
+  if [ ! -f "/root/.ssh/authorized_keys" ]; then
+    echo "$(date) 🔸 إنشاء authorized_keys..." >> "$LOG_FILE"
+    cp "$SSH_KEY_PATH.pub" /root/.ssh/authorized_keys
+    chmod 600 /root/.ssh/authorized_keys
+  fi
+  
+  # نسخ ملف التكوين إذا لم يكن موجوداً
+  if [ ! -f "$SSH_CONFIG_PATH" ]; then
+    echo "$(date) 🔸 إنشاء ملف تكوين SSH..." >> "$LOG_FILE"
+    cat > "$SSH_CONFIG_PATH" << 'EOF'
+Host *
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    TCPKeepAlive yes
+    Compression yes
+    ControlMaster auto
+    ControlPath ~/.ssh/master-%r@%h:%p
+    ControlPersist 10m
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_rsa
+    PasswordAuthentication no
+    PubkeyAuthentication yes
+    PreferredAuthentications publickey
+EOF
+    chmod 600 "$SSH_CONFIG_PATH"
+  fi
+  
+  echo "$(date) ✅ تم إعداد SSH بنجاح" >> "$LOG_FILE"
+}
 
 check_environment() {
   echo "$(date) 🔍 فحص البيئة..." >> "$LOG_FILE"
@@ -47,6 +98,9 @@ check_environment() {
   if [ "$EUID" -ne 0 ]; then
     echo "$(date) ⚠️ السكربت لا يعمل كـ root" >> "$LOG_FILE"
   fi
+  
+  # إعداد SSH
+  setup_ssh
 }
 
 start_tailscaled() {

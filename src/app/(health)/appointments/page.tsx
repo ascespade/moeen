@@ -1,432 +1,371 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
+
+import React, { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import { Input } from "@/components/ui/Input";
+import { 
+  Calendar, 
+  Clock, 
+  User, 
+  Phone, 
+  MapPin, 
+  Plus,
+  Search,
+  Filter,
+  MoreVertical,
+  Edit,
+  Trash2,
+  Eye
+} from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 interface Appointment {
   id: string;
-  patientName: string;
-  doctorName: string;
-  date: string;
-  time: string;
+  patient_id: string;
+  doctor_id: string;
+  appointment_date: string;
+  appointment_time: string;
   duration: number;
-  type: string;
-  status: "scheduled" | "completed" | "cancelled";
+  status: string;
   notes?: string;
+  created_at: string;
+  updated_at: string;
+  public_id: string;
+  appointment_type: string;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  therapy_type?: string;
+  goals?: string[];
+  completed_goals?: string[];
+  next_appointment?: string;
+  reminder_sent: boolean;
+  doctors?: {
+    first_name: string;
+    last_name: string;
+    specialty: string;
+    phone?: string;
+    avatar?: string;
+  };
+  patients?: {
+    first_name: string;
+    last_name: string;
+    phone?: string;
+    email?: string;
+    avatar?: string;
+    condition?: string;
+    age?: number;
+  };
 }
 
-const mockAppointments: Appointment[] = [
-  {
-    id: "1",
-    patientName: "أحمد العتيبي",
-    doctorName: "د. سارة أحمد",
-    date: "2024-01-15",
-    time: "09:00",
-    duration: 60,
-    type: "علاج طبيعي",
-    status: "scheduled",
-    notes: "جلسة علاج طبيعي للظهر",
-  },
-  {
-    id: "2",
-    patientName: "فاطمة السعيد",
-    doctorName: "د. محمد حسن",
-    date: "2024-01-15",
-    time: "10:30",
-    duration: 45,
-    type: "علاج نفسي",
-    status: "scheduled",
-  },
-  {
-    id: "3",
-    patientName: "خالد القحطاني",
-    doctorName: "د. نورا محمد",
-    date: "2024-01-15",
-    time: "14:00",
-    duration: 30,
-    type: "علاج وظيفي",
-    status: "completed",
-  },
-];
+const AppointmentsPage: React.FC = () => {
+  const { user, isAuthenticated } = useAuth();
+  const router = useRouter();
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [showUpcoming, setShowUpcoming] = useState(true);
+  const [filterType, setFilterType] = useState<string>("all");
+  const [filterPriority, setFilterPriority] = useState<string>("all");
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+  const [showDetails, setShowDetails] = useState(false);
+  const [viewMode, setViewMode] = useState<'list' | 'calendar' | 'timeline'>('list');
 
-const mockDoctors = [
-  { id: "1", name: "د. سارة أحمد", specialty: "علاج طبيعي" },
-  { id: "2", name: "د. محمد حسن", specialty: "علاج نفسي" },
-  { id: "3", name: "د. نورا محمد", specialty: "علاج وظيفي" },
-  { id: "4", name: "د. خالد العتيبي", specialty: "علاج طبيعي" },
-];
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
+    loadAppointments();
+  }, [isAuthenticated, router]);
 
-const mockPatients = [
-  { id: "1", name: "أحمد العتيبي", phone: "0501234567" },
-  { id: "2", name: "فاطمة السعيد", phone: "0507654321" },
-  { id: "3", name: "خالد القحطاني", phone: "0509876543" },
-  { id: "4", name: "نورا السعد", phone: "0504567890" },
-];
-
-export default function AppointmentsPage() {
-  const [selectedDoctor, setSelectedDoctor] = useState("");
-  const [selectedPatient, setSelectedPatient] = useState("");
-  const [selectedPeriod, setSelectedPeriod] = useState<
-    "day" | "week" | "month"
-  >("week");
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [showSidebar, setShowSidebar] = useState(true);
-
-  const getStatusColor = (status: Appointment["status"]) => {
-    switch (status) {
-      case "scheduled":
-        return "bg-blue-100 text-blue-800";
-      case "completed":
-        return "bg-green-100 text-green-800";
-      case "cancelled":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
+  const loadAppointments = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/appointments?patientId=current-user');
+      const data = await response.json();
+      
+      if (data.success) {
+        setAppointments(data.appointments || []);
+      } else {
+        console.error('Error loading appointments:', data.error);
+      }
+    } catch (error) {
+      console.error('Error loading appointments:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const getStatusText = (status: Appointment["status"]) => {
-    switch (status) {
-      case "scheduled":
-        return "مجدول";
-      case "completed":
-        return "مكتمل";
-      case "cancelled":
-        return "ملغي";
-      default:
-        return "غير محدد";
+  const handleCancelAppointment = async (appointmentId: string) => {
+    if (!confirm('هل أنت متأكد من إلغاء هذا الموعد؟')) return;
+
+    try {
+      const response = await fetch(`/api/appointments/${appointmentId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          status: 'cancelled'
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        loadAppointments(); // إعادة تحميل المواعيد
+      } else {
+        alert('فشل في إلغاء الموعد: ' + data.error);
+      }
+    } catch (error) {
+      console.error('Error cancelling appointment:', error);
+      alert('حدث خطأ في إلغاء الموعد');
     }
   };
+
+  const getStatusBadge = (status: string) => {
+    const statusConfig = {
+      'scheduled': { label: 'مجدول', variant: 'default' as const },
+      'confirmed': { label: 'مؤكد', variant: 'secondary' as const },
+      'completed': { label: 'مكتمل', variant: 'outline' as const },
+      'cancelled': { label: 'ملغي', variant: 'destructive' as const },
+      'no_show': { label: 'لم يحضر', variant: 'destructive' as const }
+    };
+
+    const config = statusConfig[status as keyof typeof statusConfig] || { label: status, variant: 'outline' as const };
+    
+    return (
+      <Badge variant={config.variant}>
+        {config.label}
+      </Badge>
+    );
+  };
+
+  const filteredAppointments = appointments.filter(appointment => {
+    const matchesSearch = appointment.doctors?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         appointment.doctors?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         appointment.doctors?.specialty?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesStatus = statusFilter === 'all' || appointment.status === statusFilter;
+    
+    const isUpcoming = new Date(appointment.appointment_date) >= new Date();
+    const matchesTimeFilter = showUpcoming ? isUpcoming : !isUpcoming;
+    
+    return matchesSearch && matchesStatus && matchesTimeFilter;
+  });
+
+  const upcomingAppointments = appointments.filter(apt => new Date(apt.appointment_date) >= new Date());
+  const pastAppointments = appointments.filter(apt => new Date(apt.appointment_date) < new Date());
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
-    <div className="min-h-screen bg-[var(--brand-surface)]">
-      {/* Page Header */}
-      <div className="container-app py-8">
-        <div className="mb-8 flex items-center justify-between">
+    <div className="container mx-auto px-4 py-8" dir="rtl">
+      {/* Header */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-brand text-3xl font-bold">إدارة المواعيد</h1>
-            <p className="text-gray-600 dark:text-gray-300">
-              نظام التقويم المتطور
-            </p>
+            <h1 className="text-3xl font-bold text-gray-900">مواعيدي</h1>
+            <p className="text-gray-600 mt-2">إدارة مواعيدك الطبية</p>
           </div>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setShowSidebar(!showSidebar)}
-              className="rounded-lg border border-gray-300 p-2 hover:bg-gray-50"
-            >
-              {showSidebar ? "إخفاء الشريط الجانبي" : "إظهار الشريط الجانبي"}
-            </button>
-            <button
-              onClick={() => setShowCreateModal(true)}
-              className="btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
-            >
-              إنشاء موعد
-            </button>
-          </div>
+          <Button 
+            onClick={() => router.push('/chatbot')}
+            className="bg-[var(--brand-primary)] hover:brightness-95"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            حجز موعد جديد
+          </Button>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center">
+                <Calendar className="h-8 w-8 text-[var(--brand-primary)]" />
+                <div className="mr-4">
+                  <p className="text-sm font-medium text-gray-600">المواعيد القادمة</p>
+                  <p className="text-2xl font-bold">{upcomingAppointments.length}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center">
+                <Clock className="h-8 w-8 text-green-500" />
+                <div className="mr-4">
+                  <p className="text-sm font-medium text-gray-600">المواعيد المكتملة</p>
+                  <p className="text-2xl font-bold">
+                    {appointments.filter(apt => apt.status === 'completed').length}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center">
+                <User className="h-8 w-8 text-blue-500" />
+                <div className="mr-4">
+                  <p className="text-sm font-medium text-gray-600">إجمالي المواعيد</p>
+                  <p className="text-2xl font-bold">{appointments.length}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
-      <div className="flex">
-        {/* Sidebar */}
-        {showSidebar && (
-          <aside className="border-brand w-80 border-l bg-white p-6 dark:bg-gray-900">
-            <h3 className="mb-4 text-lg font-semibold">قائمة اليوم</h3>
-            <div className="space-y-3">
-              {mockAppointments.map((appointment) => (
-                <div
-                  key={appointment.id}
-                  className="rounded-lg border p-3 hover:bg-gray-50"
-                >
-                  <div className="mb-2 flex items-start justify-between">
-                    <h4 className="font-medium">{appointment.patientName}</h4>
-                    <span
-                      className={`rounded-full px-2 py-1 text-xs ${getStatusColor(appointment.status)}`}
-                    >
-                      {getStatusText(appointment.status)}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    {appointment.doctorName}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {appointment.time} - {appointment.type}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8">
-              <h3 className="mb-4 text-lg font-semibold">إشعارات التعارض</h3>
-              <div className="space-y-2">
-                <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-3">
-                  <p className="text-sm text-yellow-800">
-                    تعارض في المواعيد: 10:30 - 11:00
-                  </p>
-                </div>
+      {/* Filters */}
+      <Card className="mb-6">
+        <CardContent className="p-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Input
+                  placeholder="البحث في المواعيد..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pr-10"
+                />
               </div>
             </div>
-
-            <div className="mt-8">
-              <h3 className="mb-4 text-lg font-semibold">أقرب وقت متاح</h3>
-              <div className="rounded-lg border border-green-200 bg-green-50 p-3">
-                <p className="text-sm text-green-800">الخميس 2:00 مساءً</p>
-                <p className="text-xs text-green-600">د. سارة أحمد</p>
-              </div>
-            </div>
-          </aside>
-        )}
-
-        {/* Main Content */}
-        <main className="flex-1 p-6">
-          {/* Filters */}
-          <div className="border-brand mb-6 rounded-lg border bg-white p-6 dark:bg-gray-900">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  الطبيب
-                </label>
-                <select
-                  value={selectedDoctor}
-                  onChange={(e) => setSelectedDoctor(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                >
-                  <option value="">جميع الأطباء</option>
-                  {mockDoctors.map((doctor) => (
-                    <option key={doctor.id} value={doctor.id}>
-                      {doctor.name} - {doctor.specialty}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  المريض
-                </label>
-                <select
-                  value={selectedPatient}
-                  onChange={(e) => setSelectedPatient(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                >
-                  <option value="">جميع المرضى</option>
-                  {mockPatients.map((patient) => (
-                    <option key={patient.id} value={patient.id}>
-                      {patient.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  الفترة
-                </label>
-                <select
-                  value={selectedPeriod}
-                  onChange={(e) => setSelectedPeriod(e.target.value as any)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                >
-                  <option value="day">اليوم</option>
-                  <option value="week">الأسبوع</option>
-                  <option value="month">الشهر</option>
-                </select>
-              </div>
-
-              <div className="flex items-end">
-                <button className="btn-brand w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
-                  تطبيق الفلاتر
-                </button>
-              </div>
+            
+            <div className="flex gap-2">
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]"
+              >
+                <option value="all">جميع الحالات</option>
+                <option value="scheduled">مجدول</option>
+                <option value="confirmed">مؤكد</option>
+                <option value="completed">مكتمل</option>
+                <option value="cancelled">ملغي</option>
+              </select>
+              
+              <Button
+                variant={showUpcoming ? "default" : "outline"}
+                onClick={() => setShowUpcoming(!showUpcoming)}
+                className="flex items-center gap-2"
+              >
+                <Filter className="w-4 h-4" />
+                {showUpcoming ? 'القادمة' : 'السابقة'}
+              </Button>
             </div>
           </div>
+        </CardContent>
+      </Card>
 
-          {/* Calendar View */}
-          <div className="border-brand rounded-lg border bg-white p-6 dark:bg-gray-900">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-xl font-semibold">التقويم</h2>
-              <div className="flex gap-2">
-                <button className="rounded-lg bg-[var(--brand-primary)] px-4 py-2 text-white">
-                  أسبوعي
-                </button>
-                <button className="rounded-lg border border-gray-300 px-4 py-2 hover:bg-gray-50">
-                  شهري
-                </button>
-              </div>
-            </div>
-
-            {/* Calendar Grid */}
-            <div className="mb-4 grid grid-cols-7 gap-1">
-              {[
-                "الأحد",
-                "الاثنين",
-                "الثلاثاء",
-                "الأربعاء",
-                "الخميس",
-                "الجمعة",
-                "السبت",
-              ].map((day) => (
-                <div
-                  key={day}
-                  className="p-3 text-center font-semibold text-gray-700 dark:text-gray-300"
-                >
-                  {day}
-                </div>
-              ))}
-            </div>
-
-            <div className="grid grid-cols-7 gap-1">
-              {Array.from({ length: 35 }, (_, i) => {
-                const day = i - 6; // Start from previous month
-                const isCurrentMonth = day > 0 && day <= 31;
-                const isToday = day === 15; // Mock today
-
-                return (
-                  <div
-                    key={i}
-                    className={`min-h-[120px] rounded-lg border border-gray-200 p-2 ${
-                      isCurrentMonth ? "bg-white" : "bg-gray-50"
-                    } ${isToday ? "ring-2 ring-[var(--brand-primary)]" : ""}`}
-                  >
-                    <div
-                      className={`text-sm font-medium ${isCurrentMonth ? "text-gray-900" : "text-gray-400"}`}
-                    >
-                      {isCurrentMonth ? day : ""}
+      {/* Appointments List */}
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]"></div>
+        </div>
+      ) : filteredAppointments.length === 0 ? (
+        <Card>
+          <CardContent className="p-12 text-center">
+            <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد مواعيد</h3>
+            <p className="text-gray-600 mb-4">
+              {showUpcoming ? 'لا توجد مواعيد قادمة' : 'لا توجد مواعيد سابقة'}
+            </p>
+            <Button 
+              onClick={() => router.push('/chatbot')}
+              className="bg-[var(--brand-primary)] hover:brightness-95"
+            >
+              حجز موعد جديد
+            </Button>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="space-y-4">
+          {filteredAppointments.map((appointment) => (
+            <Card key={appointment.id} className="hover:shadow-md transition-shadow">
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-4 mb-3">
+                      <div className="w-12 h-12 bg-[var(--brand-primary)] rounded-full flex items-center justify-center">
+                        <Image
+                          src="/logo.png"
+                          alt="Doctor"
+                          width={24}
+                          height={24}
+                          className="rounded-full"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold">
+                          د. {appointment.doctors?.first_name} {appointment.doctors?.last_name}
+                        </h3>
+                        <p className="text-gray-600">{appointment.doctors?.specialty}</p>
+                      </div>
                     </div>
-                    {isCurrentMonth && day === 15 && (
-                      <div className="mt-2 space-y-1">
-                        <div className="rounded bg-blue-100 p-1 text-xs text-blue-800">
-                          09:00 - أحمد العتيبي
-                        </div>
-                        <div className="rounded bg-green-100 p-1 text-xs text-green-800">
-                          10:30 - فاطمة السعيد
-                        </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-gray-500" />
+                        <span className="text-sm text-gray-600">
+                          {new Date(appointment.appointment_date).toLocaleDateString('ar-SA')}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-gray-500" />
+                        <span className="text-sm text-gray-600">
+                          {appointment.appointment_time}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-600">المدة:</span>
+                        <span className="text-sm font-medium">{appointment.duration} دقيقة</span>
+                      </div>
+                    </div>
+                    
+                    {appointment.notes && (
+                      <div className="bg-gray-50 p-3 rounded-lg">
+                        <p className="text-sm text-gray-700">
+                          <strong>ملاحظات:</strong> {appointment.notes}
+                        </p>
                       </div>
                     )}
                   </div>
-                );
-              })}
-            </div>
-          </div>
-        </main>
-      </div>
-
-      {/* Create Appointment Modal */}
-      {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md rounded-lg bg-white p-6 dark:bg-gray-900">
-            <div className="mb-6 flex items-center justify-between">
-              <h3 className="text-xl font-semibold">إنشاء موعد جديد</h3>
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                ✕
-              </button>
-            </div>
-
-            <form className="space-y-4">
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  المريض
-                </label>
-                <select className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]">
-                  <option value="">اختر المريض</option>
-                  {mockPatients.map((patient) => (
-                    <option key={patient.id} value={patient.id}>
-                      {patient.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  الطبيب
-                </label>
-                <select className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]">
-                  <option value="">اختر الطبيب</option>
-                  {mockDoctors.map((doctor) => (
-                    <option key={doctor.id} value={doctor.id}>
-                      {doctor.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    التاريخ
-                  </label>
-                  <input
-                    type="date"
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                  />
+                  
+                  <div className="flex items-center gap-2">
+                    {getStatusBadge(appointment.status)}
+                    
+                    {appointment.status === 'scheduled' && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleCancelAppointment(appointment.id)}
+                        className="text-red-600 hover:text-red-700"
+                      >
+                        <Trash2 className="w-4 h-4 mr-1" />
+                        إلغاء
+                      </Button>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    الوقت
-                  </label>
-                  <input
-                    type="time"
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    المدة (دقيقة)
-                  </label>
-                  <input
-                    type="number"
-                    defaultValue={60}
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                  />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    النوع
-                  </label>
-                  <select className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]">
-                    <option value="علاج طبيعي">علاج طبيعي</option>
-                    <option value="علاج نفسي">علاج نفسي</option>
-                    <option value="علاج وظيفي">علاج وظيفي</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  الملاحظات
-                </label>
-                <textarea
-                  rows={3}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                  placeholder="أضف ملاحظات إضافية..."
-                />
-              </div>
-
-              <div className="flex gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={() => setShowCreateModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
-                >
-                  إلغاء
-                </button>
-                <button
-                  type="submit"
-                  className="btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
-                >
-                  إنشاء الموعد
-                </button>
-              </div>
-            </form>
-          </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       )}
     </div>
   );
-}
+};
+
+export default AppointmentsPage;

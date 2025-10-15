@@ -69,6 +69,52 @@ interface DashboardMetrics {
       categories: string[];
     };
   };
+  healthcare: {
+    patients: {
+      total: number;
+      active: number;
+      newThisMonth: number;
+      growthRate: number;
+    };
+    appointments: {
+      total: number;
+      today: number;
+      thisWeek: number;
+      completed: number;
+      cancelled: number;
+    };
+    doctors: {
+      total: number;
+      active: number;
+      specialties: Array<{ name: string; count: number }>;
+    };
+    revenue: {
+      thisMonth: number;
+      lastMonth: number;
+      growthRate: number;
+      averagePerPatient: number;
+    };
+  };
+  crm: {
+    leads: {
+      total: number;
+      new: number;
+      qualified: number;
+      converted: number;
+    };
+    deals: {
+      total: number;
+      won: number;
+      lost: number;
+      pipeline: number;
+    };
+    activities: {
+      total: number;
+      calls: number;
+      meetings: number;
+      tasks: number;
+    };
+  };
   summary: {
     overallHealth: string;
     activeServices: number;
@@ -260,6 +306,8 @@ export default function DashboardPage() {
         <Tabs defaultValue="system" className="space-y-6">
           <TabsList>
             <TabsTrigger value="system">System Health</TabsTrigger>
+            <TabsTrigger value="healthcare">الرعاية الصحية</TabsTrigger>
+            <TabsTrigger value="crm">إدارة العملاء</TabsTrigger>
             <TabsTrigger value="automation">Automation</TabsTrigger>
             <TabsTrigger value="social">Social Media</TabsTrigger>
             <TabsTrigger value="workflows">Workflows</TabsTrigger>
@@ -330,6 +378,178 @@ export default function DashboardPage() {
                       </div>
                     ))}
                   </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="healthcare" className="space-y-6">
+            {/* Healthcare Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">إجمالي المرضى</CardTitle>
+                  <Users className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{metrics?.healthcare.patients.total || 0}</div>
+                  <p className="text-xs text-muted-foreground">
+                    +{metrics?.healthcare.patients.growthRate || 0}% من الشهر الماضي
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">المواعيد اليوم</CardTitle>
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{metrics?.healthcare.appointments.today || 0}</div>
+                  <p className="text-xs text-muted-foreground">
+                    {metrics?.healthcare.appointments.thisWeek || 0} هذا الأسبوع
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">الأطباء النشطون</CardTitle>
+                  <Activity className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{metrics?.healthcare.doctors.active || 0}</div>
+                  <p className="text-xs text-muted-foreground">
+                    من أصل {metrics?.healthcare.doctors.total || 0} طبيب
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">الإيرادات الشهرية</CardTitle>
+                  <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">
+                    {metrics?.healthcare.revenue.thisMonth?.toLocaleString() || 0} ريال
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    +{metrics?.healthcare.revenue.growthRate || 0}% من الشهر الماضي
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Appointments Status */}
+            <Card>
+              <CardHeader>
+                <CardTitle>حالة المواعيد</CardTitle>
+                <CardDescription>نظرة عامة على المواعيد والأداء</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="text-center p-4 bg-green-50 rounded-lg">
+                    <div className="text-2xl font-bold text-green-600">
+                      {metrics?.healthcare.appointments.completed || 0}
+                    </div>
+                    <div className="text-sm text-green-700">مكتملة</div>
+                  </div>
+                  <div className="text-center p-4 bg-yellow-50 rounded-lg">
+                    <div className="text-2xl font-bold text-yellow-600">
+                      {metrics?.healthcare.appointments.total - (metrics?.healthcare.appointments.completed || 0) - (metrics?.healthcare.appointments.cancelled || 0) || 0}
+                    </div>
+                    <div className="text-sm text-yellow-700">معلقة</div>
+                  </div>
+                  <div className="text-center p-4 bg-red-50 rounded-lg">
+                    <div className="text-2xl font-bold text-red-600">
+                      {metrics?.healthcare.appointments.cancelled || 0}
+                    </div>
+                    <div className="text-sm text-red-700">ملغية</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Doctor Specialties */}
+            <Card>
+              <CardHeader>
+                <CardTitle>التخصصات الطبية</CardTitle>
+                <CardDescription>توزيع الأطباء حسب التخصص</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {metrics?.healthcare.doctors.specialties?.map((specialty, index) => (
+                    <div key={index} className="flex items-center justify-between">
+                      <span className="text-sm font-medium">{specialty.name}</span>
+                      <Badge variant="secondary">{specialty.count}</Badge>
+                    </div>
+                  )) || (
+                    <div className="text-center text-gray-500 py-4">
+                      لا توجد بيانات متاحة
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="crm" className="space-y-6">
+            {/* CRM Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">إجمالي العملاء المحتملين</CardTitle>
+                  <Users className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{metrics?.crm.leads.total || 0}</div>
+                  <p className="text-xs text-muted-foreground">
+                    {metrics?.crm.leads.new || 0} جديد
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">الصفقات</CardTitle>
+                  <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{metrics?.crm.deals.total || 0}</div>
+                  <p className="text-xs text-muted-foreground">
+                    {metrics?.crm.deals.won || 0} مكتملة
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">الأنشطة</CardTitle>
+                  <Activity className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{metrics?.crm.activities.total || 0}</div>
+                  <p className="text-xs text-muted-foreground">
+                    {metrics?.crm.activities.calls || 0} مكالمات
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">معدل التحويل</CardTitle>
+                  <CheckCircle className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">
+                    {metrics?.crm.leads.total > 0 
+                      ? Math.round((metrics?.crm.leads.converted || 0) / metrics?.crm.leads.total * 100)
+                      : 0}%
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    من العملاء المحتملين
+                  </p>
                 </CardContent>
               </Card>
             </div>

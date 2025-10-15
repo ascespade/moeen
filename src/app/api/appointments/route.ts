@@ -1,183 +1,202 @@
-import { NextRequest, NextResponse } from "next/server";
-import { realDB } from "@/lib/supabase-real";
-import { whatsappAPI } from "@/lib/whatsapp-business-api";
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/utils/supabase/server';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const doctorId = searchParams.get("doctorId");
-    const date = searchParams.get("date");
-    const patientId = searchParams.get("patientId");
-    const status = searchParams.get("status");
+    const patientId = searchParams.get('patientId');
+    const doctorId = searchParams.get('doctorId');
+    const status = searchParams.get('status');
+    const date = searchParams.get('date');
 
-    const opts: any = {};
-    if (patientId) opts.patientId = patientId;
-    if (doctorId) opts.doctorId = doctorId;
-    if (date) opts.date = date;
-    if (status) opts.status = status;
-    const appointments = (await realDB.getAppointments(opts)) as any[];
+    const supabase = createClient();
 
-    return NextResponse.json({ success: true, data: appointments });
+    let query = supabase
+      .from('appointments')
+      .select(`
+        *,
+        patients!appointments_patient_id_fkey(
+          first_name,
+          last_name,
+          phone,
+          email
+        ),
+        doctors!appointments_doctor_id_fkey(
+          first_name,
+          last_name,
+          specialty,
+          phone
+        )
+      `)
+      .order('appointment_date', { ascending: true });
+
+    if (patientId) {
+      // جلب مواعيد مريض محدد
+      const { data: patient } = await supabase
+        .from('patients')
+        .select('id')
+        .eq('user_id', patientId)
+        .single();
+
+      if (patient) {
+        query = query.eq('patient_id', patient.id);
+      }
+    }
+
+    if (doctorId) {
+      query = query.eq('doctor_id', doctorId);
+    }
+
+    if (status) {
+      query = query.eq('status', status);
+    }
+
+    if (date) {
+      query = query.eq('appointment_date', date);
+    }
+
+    const { data: appointments, error } = await query;
+
+    if (error) {
+      console.error('Error fetching appointments:', error);
+      return NextResponse.json(
+        { error: 'Failed to fetch appointments' },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      appointments: appointments || []
+    });
+
   } catch (error) {
-    console.error("Get appointments error:", error);
+    console.error('Error in GET appointments:', error);
     return NextResponse.json(
-      {
-        success: false,
-        error: "Internal server error",
-        code: "INTERNAL_ERROR",
-      },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const {
-      patientId,
-      doctorId,
-      appointment_date,
-      appointment_time,
-      duration_minutes = 60,
-      type = "treatment",
+    const { 
+      patientId, 
+      doctorId, 
+      appointmentDate, 
+      appointmentTime, 
+      duration = 30, 
       notes,
-      insurance_covered = false,
-      insurance_approval_number,
-      created_by,
-    } = body;
+      type = 'consultation'
+    } = await request.json();
 
-    if (!patientId || !doctorId || !appointment_date || !appointment_time) {
+    if (!patientId || !doctorId || !appointmentDate || !appointmentTime) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "Patient ID, doctor ID, date, and time are required",
-          code: "MISSING_REQUIRED_FIELDS",
-        },
-        { status: 400 },
+        { error: 'patientId, doctorId, appointmentDate, and appointmentTime are required' },
+        { status: 400 }
       );
     }
 
-    const appointment = await realDB.createAppointment({
-      patient_id: patientId,
-      doctor_id: doctorId,
-      appointment_date,
-      appointment_time,
-      duration_minutes,
-      type,
-      notes,
-      insurance_covered,
-      insurance_approval_number,
-      created_by: created_by || patientId,
-    });
+    const supabase = createClient();
 
-    const patient = (await realDB.getPatient(patientId)) as any;
-    if (patient && (patient as any).users?.phone) {
-      try {
-        await whatsappAPI.sendTemplateMessage(
-          (patient as any).users.phone,
-          "appointment_confirmation",
-          "ar",
-          [
-            (patient as any).users.name,
-            new Date(appointment_date).toLocaleDateString("ar-SA"),
-            appointment_time,
-          ],
-        );
-      } catch (whatsappError) {
-        console.error("WhatsApp confirmation failed:", whatsappError);
-      }
+    // التحقق من وجود المريض
+    const { data: patient, error: patientError } = await supabase
+      .from('patients')
+      .select('id')
+      .eq('user_id', patientId)
+      .single();
+
+    if (patientError || !patient) {
+      return NextResponse.json(
+        { error: 'Patient not found' },
+        { status: 404 }
+      );
+    }
+
+    // التحقق من وجود الطبيب
+    const { data: doctor, error: doctorError } = await supabase
+      .from('doctors')
+      .select('id')
+      .eq('id', doctorId)
+      .single();
+
+    if (doctorError || !doctor) {
+      return NextResponse.json(
+        { error: 'Doctor not found' },
+        { status: 404 }
+      );
+    }
+
+    // التحقق من توفر الموعد
+    const { data: existingAppointment, error: checkError } = await supabase
+      .from('appointments')
+      .select('id')
+      .eq('doctor_id', doctorId)
+      .eq('appointment_date', appointmentDate)
+      .eq('appointment_time', appointmentTime)
+      .eq('status', 'scheduled')
+      .single();
+
+    if (existingAppointment) {
+      return NextResponse.json(
+        { error: 'This time slot is already booked' },
+        { status: 409 }
+      );
+    }
+
+    // إنشاء رمز تأكيد
+    const confirmationCode = `APT${Date.now().toString().slice(-6)}`;
+
+    // إنشاء الموعد
+    const { data: appointment, error: appointmentError } = await supabase
+      .from('appointments')
+      .insert({
+        patient_id: patient.id,
+        doctor_id: doctorId,
+        appointment_date: appointmentDate,
+        appointment_time: appointmentTime,
+        duration: duration,
+        status: 'scheduled',
+        notes: notes || '',
+        public_id: confirmationCode
+      })
+      .select(`
+        *,
+        patients!appointments_patient_id_fkey(
+          first_name,
+          last_name,
+          phone,
+          email
+        ),
+        doctors!appointments_doctor_id_fkey(
+          first_name,
+          last_name,
+          specialty,
+          phone
+        )
+      `)
+      .single();
+
+    if (appointmentError) {
+      console.error('Error creating appointment:', appointmentError);
+      return NextResponse.json(
+        { error: 'Failed to create appointment' },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({
       success: true,
-      data: {
-        appointmentId: (appointment as any).id,
-        message: "Appointment booked successfully",
-        confirmationSent: !!(patient as any)?.users?.phone,
-      },
+      appointment,
+      confirmationCode
     });
-  } catch (error) {
-    console.error("Book appointment error:", error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: "Internal server error",
-        code: "INTERNAL_ERROR",
-      },
-      { status: 500 },
-    );
-  }
-}
 
-export async function PUT(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { appointmentId, newDate, newTime, reason } = body;
-    if (!appointmentId || !newDate || !newTime) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Appointment ID, new date, and new time are required",
-          code: "MISSING_REQUIRED_FIELDS",
-        },
-        { status: 400 },
-      );
-    }
-    return NextResponse.json({
-      success: true,
-      data: {
-        message: "Appointment rescheduled successfully",
-        newDate,
-        newTime,
-        reason,
-      },
-    });
   } catch (error) {
-    console.error("Reschedule appointment error:", error);
+    console.error('Appointment creation error:', error);
     return NextResponse.json(
-      {
-        success: false,
-        error: "Internal server error",
-        code: "INTERNAL_ERROR",
-      },
-      { status: 500 },
-    );
-  }
-}
-
-export async function DELETE(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const appointmentId = searchParams.get("appointmentId");
-    const reason = searchParams.get("reason") || "No reason provided";
-    if (!appointmentId) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Appointment ID is required",
-          code: "MISSING_REQUIRED_FIELDS",
-        },
-        { status: 400 },
-      );
-    }
-    return NextResponse.json({
-      success: true,
-      data: {
-        message: "Appointment cancelled successfully",
-        appointmentId,
-        reason,
-      },
-    });
-  } catch (error) {
-    console.error("Cancel appointment error:", error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: "Internal server error",
-        code: "INTERNAL_ERROR",
-      },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }

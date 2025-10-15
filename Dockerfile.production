@@ -31,6 +31,13 @@ WORKDIR /app
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
+# Install SSH and other utilities
+RUN apk add --no-cache openssh-client openssh-server curl
+
+# Create SSH directory and setup
+RUN mkdir -p /root/.ssh && \
+    chmod 700 /root/.ssh
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
@@ -44,11 +51,34 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Copy SSH setup script
+COPY scripts/setup-ssh.sh /usr/local/bin/setup-ssh.sh
+RUN chmod +x /usr/local/bin/setup-ssh.sh
+
+# Create startup script
+RUN cat > /usr/local/bin/start.sh << 'EOF'
+#!/bin/bash
+# Setup SSH if keys are mounted
+if [ -f /root/.ssh/id_rsa ]; then
+    /usr/local/bin/setup-ssh.sh
+fi
+
+# Start SSH daemon in background
+if [ -f /root/.ssh/authorized_keys ]; then
+    /usr/sbin/sshd -D &
+fi
+
+# Start the main application
+exec node server.js
+EOF
+
+RUN chmod +x /usr/local/bin/start.sh
+
 USER nextjs
 
-EXPOSE 3000
+EXPOSE 3000 22
 
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
-CMD ["node", "server.js"]
+CMD ["/usr/local/bin/start.sh"]
