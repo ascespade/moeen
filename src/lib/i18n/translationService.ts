@@ -264,7 +264,13 @@ class TranslationService {
    */
   getCachedTranslations(language: string): { [key: string]: string } | null {
     if (this.cache[language] && this.isCacheValid(language)) {
-      const { timestamp, ...translations } = this.cache[language];
+      const cached = this.cache[language];
+      const translations: { [key: string]: string } = {};
+      for (const key in cached) {
+        if (key !== 'timestamp') {
+          translations[key] = cached[key] as string;
+        }
+      }
       return translations;
     }
     return null;
