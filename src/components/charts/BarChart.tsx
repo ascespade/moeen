@@ -3,6 +3,8 @@
  * RTL-compatible bar chart with brand colors and theme support
  */
 
+'use client';
+
 import React from 'react';
 import {
   BarChart as RechartsBarChart,

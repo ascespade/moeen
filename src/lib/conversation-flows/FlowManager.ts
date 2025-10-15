@@ -166,7 +166,7 @@ export class FlowManager {
   async executeStepAction(step: FlowStep, context: ConversationContext): Promise<any> {
     if (!step.actions) return null;
 
-    const results = [];
+    const results: Array<{ success: boolean; data?: any; error?: string }> = [];
     for (const action of step.actions) {
       const result = await this.actionExecutor.executeAction(action, context);
       results.push(result);

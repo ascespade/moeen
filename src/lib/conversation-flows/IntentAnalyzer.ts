@@ -90,7 +90,7 @@ export class IntentAnalyzer {
 
   async analyzeIntent(message: string): Promise<Intent> {
     const normalizedMessage = message.toLowerCase().trim();
-    let bestMatch = { type: 'unknown', confidence: 0, entities: {} };
+    let bestMatch: Intent = { type: 'unknown', confidence: 0, entities: {}, actionType: undefined };
 
     for (const [intentType, intentData] of this.intents) {
       let confidence = 0;
@@ -143,7 +143,7 @@ export class IntentAnalyzer {
 
     for (const pattern of doctorPatterns) {
       const match = message.match(pattern);
-      if (match) return match[1].trim();
+      if (match && match[1]) return match[1].trim();
     }
 
     return null;
@@ -180,13 +180,13 @@ export class IntentAnalyzer {
       const match = message.match(pattern);
       if (match) {
         if (match[0] === 'اليوم' || match[0] === 'today') {
-          return new Date().toISOString().split('T')[0];
+          return new Date().toISOString().split('T')[0] || null;
         } else if (match[0] === 'غدا' || match[0] === 'tomorrow') {
           const tomorrow = new Date();
           tomorrow.setDate(tomorrow.getDate() + 1);
-          return tomorrow.toISOString().split('T')[0];
+          return tomorrow.toISOString().split('T')[0] || null;
         }
-        return match[0].trim();
+        return match[0]?.trim() || null;
       }
     }
 
@@ -196,7 +196,7 @@ export class IntentAnalyzer {
   private extractAmount(message: string): number | null {
     const amountPattern = /(\d+(?:\.\d{2})?)\s*ريال/;
     const match = message.match(amountPattern);
-    return match ? parseFloat(match[1]) : null;
+    return match && match[1] ? parseFloat(match[1]) : null;
   }
 
   private extractPaymentMethod(message: string): string | null {

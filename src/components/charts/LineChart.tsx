@@ -3,6 +3,8 @@
  * RTL-compatible line chart with brand colors and theme support
  */
 
+'use client';
+
 import React from 'react';
 import {
   LineChart as RechartsLineChart,

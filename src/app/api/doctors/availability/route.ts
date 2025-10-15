@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { authorize } from '@/lib/auth/authorize';
 
+interface TimeSlot {
+  time: string;
+  timeString: string;
+  available: boolean;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const { user, error: authError } = await authorize(request);
@@ -69,7 +75,7 @@ export async function GET(request: NextRequest) {
       const breaks = schedule.breaks || [];
       const slotDuration = 30; // 30 minutes per slot
 
-      const slots = [];
+      const slots: TimeSlot[] = [];
       const startTime = new Date(date);
       const [startHour, startMinute] = workingHours.start.split(':').map(Number);
       startTime.setHours(startHour, startMinute, 0, 0);

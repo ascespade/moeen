@@ -38,6 +38,7 @@ export const appointmentSchema = z.object({
   patientId: z.string().uuid('Invalid patient ID format'),
   doctorId: z.string().uuid('Invalid doctor ID format'),
   scheduledAt: z.string().datetime('Invalid datetime format'),
+  type: z.string().default('consultation'),
   status: z.enum(['pending', 'confirmed', 'in_progress', 'completed', 'cancelled', 'no_show']).optional(),
   paymentStatus: z.enum(['unpaid', 'paid', 'pending', 'refunded']).optional()
 });
@@ -124,13 +125,7 @@ export const medicalRecordSchema = z.object({
   attachments: z.array(z.string()).optional()
 });
 
-// Appointment update validation schemas
-export const appointmentUpdateSchema = z.object({
-  status: z.enum(['pending', 'confirmed', 'in_progress', 'completed', 'cancelled', 'no_show']).optional(),
-  paymentStatus: z.enum(['unpaid', 'paid', 'pending', 'refunded']).optional(),
-  scheduledAt: z.string().datetime().optional(),
-  notes: z.string().optional()
-});
+// Appointment update validation schemas (using partial schema from above)
 
 // Notification validation schemas
 export const notificationSchema = z.object({
