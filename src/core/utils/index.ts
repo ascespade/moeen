@@ -74,7 +74,7 @@ export const stringUtils = {
   },
   
   camelCase: (str: string): string => {
-    return str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+    return str.replace(/-([a-z])/g, (g) => g[1]?.toUpperCase() || '');
   },
   
   kebabCase: (str: string): string => {
@@ -164,7 +164,7 @@ export const arrayUtils = {
 
 // Object utilities
 export const objectUtils = {
-  pick: <T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> => {
+  pick: <T extends object, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> => {
     const result = {} as Pick<T, K>;
     keys.forEach(key => {
       if (key in obj) {
@@ -174,7 +174,7 @@ export const objectUtils = {
     return result;
   },
   
-  omit: <T, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> => {
+  omit: <T extends object, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> => {
     const result = { ...obj };
     keys.forEach(key => {
       delete result[key];
@@ -182,13 +182,13 @@ export const objectUtils = {
     return result;
   },
   
-  deepMerge: <T>(target: T, source: Partial<T>): T => {
+  deepMerge: <T extends Record<string, any>>(target: T, source: Partial<T>): T => {
     const result = { ...target };
     
     for (const key in source) {
       if (source[key] !== undefined) {
         if (typeof source[key] === 'object' && source[key] !== null && !Array.isArray(source[key])) {
-          result[key] = objectUtils.deepMerge(result[key] || {}, source[key] as any);
+          result[key] = objectUtils.deepMerge((result[key] as any) || {}, source[key] as any);
         } else {
           result[key] = source[key] as any;
         }

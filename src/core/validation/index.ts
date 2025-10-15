@@ -4,14 +4,14 @@
  */
 
 import { z } from 'zod';
-import { VALIDATION_RULES } from '../constants';
+import { REGEX_PATTERNS } from '../constants';
 import { ValidationError } from '../errors';
 
 // Base Validation Schemas
 export const baseSchemas = {
   id: z.string().uuid('معرف غير صحيح'),
   email: z.string().email('البريد الإلكتروني غير صحيح'),
-  phone: z.string().regex(VALIDATION_RULES.PHONE, 'رقم الهاتف غير صحيح'),
+  phone: z.string().regex(REGEX_PATTERNS.PHONE, 'رقم الهاتف غير صحيح'),
   password: z.string().min(8, 'كلمة المرور يجب أن تكون 8 أحرف على الأقل'),
   date: z.string().datetime('تاريخ غير صحيح'),
   positiveNumber: z.number().positive('يجب أن يكون الرقم موجب'),
