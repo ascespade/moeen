@@ -46,6 +46,27 @@ async function globalSetup(config: FullConfig) {
   }
 }
 
+async function insertIfMissing(
+  table: string,
+  where: Record<string, any>,
+  row: Record<string, any>,
+) {
+  const { data, error } = await supabase
+    .from(table)
+    .select("id")
+    .match(where)
+    .maybeSingle();
+  if (error) {
+    console.warn(`Select error on ${table}:`, error.message);
+  }
+  if (!data) {
+    const { error: insErr } = await supabase.from(table).insert(row).single();
+    if (insErr) {
+      console.warn(`Insert error on ${table}:`, insErr.message);
+    }
+  }
+}
+
 async function setupTestData() {
   console.log("📊 Setting up test data...");
 
@@ -61,7 +82,7 @@ async function setupTestData() {
     ];
 
     for (const role of testRoles) {
-      await supabase.from("roles").upsert(role, { onConflict: "name" });
+      await insertIfMissing("roles", { name: role.name }, role);
     }
 
     // Create test users
@@ -122,7 +143,7 @@ async function setupTestUsers() {
     ];
 
     for (const patient of testPatients) {
-      await supabase.from("patients").upsert(patient, { onConflict: "email" });
+      await insertIfMissing("patients", { email: patient.email }, patient);
     }
 
     // Create test doctors
@@ -144,7 +165,7 @@ async function setupTestUsers() {
     ];
 
     for (const doctor of testDoctors) {
-      await supabase.from("doctors").upsert(doctor, { onConflict: "email" });
+      await insertIfMissing("doctors", { email: doctor.email }, doctor);
     }
 
     console.log("✅ Test users setup completed");

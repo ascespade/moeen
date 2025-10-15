@@ -118,18 +118,18 @@
   "errors": [
     {
       "message": "Error: Test roles not created",
-      "stack": "Error: Test roles not created\n    at verifySetup (/workspace/tests/e2e/global-setup.ts:267:13)\n    at globalSetup (/workspace/tests/e2e/global-setup.ts:38:5)",
+      "stack": "Error: Test roles not created\n    at verifySetup (/workspace/tests/e2e/global-setup.ts:288:13)\n    at globalSetup (/workspace/tests/e2e/global-setup.ts:38:5)",
       "location": {
         "file": "/workspace/tests/e2e/global-setup.ts",
         "column": 13,
-        "line": 267
+        "line": 288
       },
-      "snippet": "   at ../../global-setup.ts:267\n\n  265 |       .eq(\"name\", \"test_admin\");\n  266 |     if (!roles || roles.length === 0) {\n> 267 |       throw new Error(\"Test roles not created\");\n      |             ^\n  268 |     }\n  269 |\n  270 |     const { data: users } = await supabase"
+      "snippet": "   at ../../global-setup.ts:288\n\n  286 |       .eq(\"name\", \"test_admin\");\n  287 |     if (!roles || roles.length === 0) {\n> 288 |       throw new Error(\"Test roles not created\");\n      |             ^\n  289 |     }\n  290 |\n  291 |     const { data: users } = await supabase"
     }
   ],
   "stats": {
-    "startTime": "2025-10-15T00:37:53.157Z",
-    "duration": 8053.65,
+    "startTime": "2025-10-15T00:46:35.873Z",
+    "duration": 7694.534000000001,
     "expected": 0,
     "skipped": 0,
     "unexpected": 0,
