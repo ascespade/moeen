@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { getServiceSupabase } from "@/lib/supabaseClient";
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
     // Only track in production
     if (process.env.NODE_ENV === "production") {
-      const supabase = createClient();
+      const supabase = getServiceSupabase();
 
       // Insert into analytics table
       const { error } = await supabase.from("analytics").insert({
