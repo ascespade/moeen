@@ -249,16 +249,15 @@ export const useDataStore = create<DataState & DataActions>()(
           state.patients.push(patient);
         }),
 
-      updatePatient: (id, patientData) =>
+      updatePatient: (id, patientData: Partial<Omit<Patient, 'id' | 'createdAt' | 'updatedAt'>>) =>
         set((state) => {
           const index = state.patients.findIndex(p => p.id === id);
           if (index !== -1) {
-            // Only update fields that are defined and valid, excluding required fields
-            const { userId, medicalRecordNumber, emergencyContact, medicalHistory, isActivated, ...updatableFields } = patientData;
+            // Only update fields that are defined and valid
             const validUpdates = Object.fromEntries(
-              Object.entries(updatableFields).filter(([_, value]) => value !== undefined)
+              Object.entries(patientData).filter(([_, value]) => value !== undefined)
             );
-            state.patients[index] = { ...state.patients[index], ...validUpdates };
+            state.patients[index] = { ...state.patients[index], ...validUpdates } as Patient;
           }
         }),
 
@@ -278,11 +277,14 @@ export const useDataStore = create<DataState & DataActions>()(
           state.doctors.push(doctor);
         }),
 
-      updateDoctor: (id, doctorData) =>
+      updateDoctor: (id, doctorData: Partial<Omit<Doctor, 'id' | 'createdAt' | 'updatedAt'>>) =>
         set((state) => {
           const index = state.doctors.findIndex(d => d.id === id);
           if (index !== -1) {
-            state.doctors[index] = { ...state.doctors[index], ...doctorData };
+            const validUpdates = Object.fromEntries(
+              Object.entries(doctorData).filter(([_, value]) => value !== undefined)
+            );
+            state.doctors[index] = { ...state.doctors[index], ...validUpdates } as Doctor;
           }
         }),
 
