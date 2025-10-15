@@ -152,13 +152,13 @@ const TherapyPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      'scheduled': { label: 'مجدولة', variant: 'default' as const },
+      'scheduled': { label: 'مجدولة', variant: 'primary' as const },
       'in_progress': { label: 'جارية', variant: 'secondary' as const },
-      'completed': { label: 'مكتملة', variant: 'default' as const },
+      'completed': { label: 'مكتملة', variant: 'primary' as const },
       'cancelled': { label: 'ملغية', variant: 'destructive' as const }
     };
     
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'default' as const };
+    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'primary' as const };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 

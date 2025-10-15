@@ -137,7 +137,7 @@ const CRMDashboard: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      'scheduled': { label: 'مجدول', variant: 'default' as const, color: 'bg-blue-100 text-blue-800' },
+      'scheduled': { label: 'مجدول', variant: 'primary' as const, color: 'bg-blue-100 text-blue-800' },
       'confirmed': { label: 'مؤكد', variant: 'secondary' as const, color: 'bg-green-100 text-green-800' },
       'completed': { label: 'مكتمل', variant: 'outline' as const, color: 'bg-gray-100 text-gray-800' },
       'cancelled': { label: 'ملغي', variant: 'destructive' as const, color: 'bg-red-100 text-red-800' },

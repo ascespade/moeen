@@ -179,23 +179,23 @@ export default function PatientsPage() {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      'active': { label: 'نشط', variant: 'default' as const, color: 'text-green-600' },
+      'active': { label: 'نشط', variant: 'primary' as const, color: 'text-green-600' },
       'inactive': { label: 'غير نشط', variant: 'secondary' as const, color: 'text-gray-600' },
       'blocked': { label: 'محظور', variant: 'destructive' as const, color: 'text-red-600' }
     };
     
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'default' as const, color: 'text-gray-600' };
+    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'primary' as const, color: 'text-gray-600' };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 
   const getSeverityBadge = (severity: string) => {
     const severityMap = {
-      'mild': { label: 'خفيف', variant: 'default' as const, color: 'text-green-600' },
+      'mild': { label: 'خفيف', variant: 'primary' as const, color: 'text-green-600' },
       'moderate': { label: 'متوسط', variant: 'secondary' as const, color: 'text-yellow-600' },
       'severe': { label: 'شديد', variant: 'destructive' as const, color: 'text-red-600' }
     };
     
-    const severityInfo = severityMap[severity as keyof typeof severityMap] || { label: severity, variant: 'default' as const, color: 'text-gray-600' };
+    const severityInfo = severityMap[severity as keyof typeof severityMap] || { label: severity, variant: 'primary' as const, color: 'text-gray-600' };
     return <Badge variant={severityInfo.variant}>{severityInfo.label}</Badge>;
   };
 

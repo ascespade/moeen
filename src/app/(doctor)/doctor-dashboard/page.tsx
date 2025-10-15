@@ -194,7 +194,7 @@ export default function DoctorDashboard() {
                         <div className="flex items-center space-x-3">
                           <Badge 
                             variant={
-                              appointment.status === 'completed' ? 'default' :
+                              appointment.status === 'completed' ? 'primary' :
                               appointment.status === 'in_progress' ? 'secondary' : 'outline'
                             }
                           >

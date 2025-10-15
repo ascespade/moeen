@@ -158,7 +158,7 @@ const IntegrationsPage: React.FC = () => {
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
                   <span>الحالة:</span>
-                  <Badge variant={integration.status === 'active' ? 'default' : 'secondary'}>
+                  <Badge variant={integration.status === 'active' ? 'primary' : 'secondary'}>
                     {integration.status === 'active' ? 'نشط' : 'غير نشط'}
                   </Badge>
                 </div>

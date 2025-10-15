@@ -220,7 +220,7 @@ export default function SupervisorDashboard() {
                             </p>
                           </div>
                           <Badge 
-                            variant={staff.efficiency >= 80 ? 'default' : staff.efficiency >= 60 ? 'secondary' : 'destructive'}
+                            variant={staff.efficiency >= 80 ? 'primary' : staff.efficiency >= 60 ? 'secondary' : 'destructive'}
                           >
                             {staff.efficiency >= 80 ? t('common.excellent') : 
                              staff.efficiency >= 60 ? t('common.good') : t('common.needs_improvement')}

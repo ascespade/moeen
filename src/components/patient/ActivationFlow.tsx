@@ -179,7 +179,7 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
                     </Badge>
                   )}
                   {step.completed && (
-                    <Badge variant="default" className="bg-green-100 text-green-800">
+                    <Badge variant="primary" className="bg-green-100 text-green-800">
                       {t('common.completed')}
                     </Badge>
                   )}

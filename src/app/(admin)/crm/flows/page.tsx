@@ -260,7 +260,7 @@ const FlowsManagementPage: React.FC = () => {
                     <p className="text-sm text-gray-600 mb-3">{flow.description}</p>
                     
                     <div className="flex items-center gap-2 mb-3">
-                      <Badge variant={flow.isActive ? "default" : "outline"}>
+                      <Badge variant={flow.isActive ? "primary" : "outline"}>
                         {flow.isActive ? "نشط" : "غير نشط"}
                       </Badge>
                       <span className="text-xs text-gray-500">
