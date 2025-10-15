@@ -2,7 +2,7 @@
 
 # ========================================
 # DATABASE ROLLBACK SCRIPT
-# سكريبت التراجع عن هجرة قاعدة البيانات
+# سكريبت التراجع عن قاعدة البيانات
 # ========================================
 
 set -e  # Exit on any error
@@ -21,158 +21,195 @@ DB_NAME="${DB_NAME:-moeen_healthcare}"
 DB_USER="${DB_USER:-postgres}"
 DB_PASSWORD="${DB_PASSWORD:-password}"
 
-# Log function
-log() {
-    echo -e "${BLUE}[$(date +'%Y-%m-%d %H:%M:%S')]${NC} $1" | tee -a logs/rollback.log
+# Database URL
+DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
+
+# Log file
+LOG_FILE="database/migrations/rollback_$(date +%Y%m%d_%H%M%S).log"
+
+echo -e "${BLUE}========================================${NC}"
+echo -e "${BLUE}DATABASE ROLLBACK SCRIPT${NC}"
+echo -e "${BLUE}سكريبت التراجع عن قاعدة البيانات${NC}"
+echo -e "${BLUE}========================================${NC}"
+echo ""
+
+# Function to log messages
+log_message() {
+    echo -e "$1" | tee -a "$LOG_FILE"
 }
 
-error() {
-    echo -e "${RED}[ERROR]${NC} $1" | tee -a logs/rollback.log
-}
-
-success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1" | tee -a logs/rollback.log
-}
-
-warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1" | tee -a logs/rollback.log
-}
-
-# Confirm rollback
-confirm_rollback() {
-    echo -e "${YELLOW}WARNING: This will completely remove the healthcare database!${NC}"
-    echo -e "${YELLOW}تحذير: هذا سيزيل قاعدة البيانات الطبية بالكامل!${NC}"
-    echo ""
-    read -p "Are you sure you want to proceed? Type 'YES' to confirm: " confirmation
-    
-    if [ "$confirmation" != "YES" ]; then
-        log "Rollback cancelled by user"
-        exit 0
+# Function to check if backup exists
+check_backup() {
+    local backup_file="database/backups/latest_backup.txt"
+    if [ -f "$backup_file" ]; then
+        local latest_backup=$(cat "$backup_file")
+        if [ -f "$latest_backup" ]; then
+            log_message "${GREEN}✓ Found backup: $latest_backup${NC}"
+            echo "$latest_backup"
+            return 0
+        fi
     fi
+    
+    log_message "${RED}✗ No backup found${NC}"
+    return 1
 }
 
-# Drop all tables
-drop_tables() {
-    log "Dropping all tables..."
+# Function to restore from backup
+restore_from_backup() {
+    local backup_file="$1"
     
-    local tables=(
-        "crm_activities" "crm_leads"
-        "chatbot_messages" "chatbot_conversations" "chatbot_flows"
-        "system_metrics" "reports"
-        "translations" "languages"
-        "system_settings" "audit_logs"
-        "notification_templates" "notifications"
-        "payments" "insurance_claims"
-        "file_uploads" "medical_records"
-        "appointments" "doctors" "patients"
-        "roles" "users"
-    )
+    log_message "${YELLOW}Restoring database from backup...${NC}"
+    log_message "${BLUE}Backup file: $backup_file${NC}"
     
-    for table in "${tables[@]}"; do
-        log "Dropping table: $table"
-        PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -c "DROP TABLE IF EXISTS $table CASCADE;" || true
-    done
+    # Drop existing database
+    log_message "${YELLOW}Dropping existing database...${NC}"
+    PGPASSWORD="$DB_PASSWORD" dropdb -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" "$DB_NAME" --if-exists || {
+        log_message "${YELLOW}⚠ Database doesn't exist or couldn't be dropped${NC}"
+    }
     
-    success "All tables dropped"
-}
-
-# Drop functions and triggers
-drop_functions() {
-    log "Dropping functions and triggers..."
+    # Create new database
+    log_message "${YELLOW}Creating new database...${NC}"
+    PGPASSWORD="$DB_PASSWORD" createdb -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" "$DB_NAME" || {
+        log_message "${RED}✗ Failed to create database${NC}"
+        exit 1
+    }
     
-    PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -c "
-        DROP FUNCTION IF EXISTS update_updated_at_column() CASCADE;
-    " || true
-    
-    success "Functions and triggers dropped"
-}
-
-# Drop views
-drop_views() {
-    log "Dropping views..."
-    
-    local views=(
-        "appointment_details"
-        "doctor_dashboard"
-        "patient_dashboard"
-    )
-    
-    for view in "${views[@]}"; do
-        log "Dropping view: $view"
-        PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -c "DROP VIEW IF EXISTS $view CASCADE;" || true
-    done
-    
-    success "All views dropped"
-}
-
-# Drop extensions
-drop_extensions() {
-    log "Dropping extensions..."
-    
-    PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -c "
-        DROP EXTENSION IF EXISTS pgcrypto CASCADE;
-        DROP EXTENSION IF EXISTS \"uuid-ossp\" CASCADE;
-    " || true
-    
-    success "Extensions dropped"
-}
-
-# Create backup before rollback
-create_rollback_backup() {
-    log "Creating backup before rollback..."
-    
-    local backup_file="backups/rollback_backup_$(date +%Y%m%d_%H%M%S).sql"
-    mkdir -p backups
-    
-    PGPASSWORD="$DB_PASSWORD" pg_dump -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" > "$backup_file"
-    
-    if [ $? -eq 0 ]; then
-        success "Rollback backup created: $backup_file"
+    # Restore from backup
+    log_message "${YELLOW}Restoring data from backup...${NC}"
+    if psql "$DATABASE_URL" < "$backup_file" >> "$LOG_FILE" 2>&1; then
+        log_message "${GREEN}✓ Database restored successfully${NC}"
+        return 0
     else
-        warning "Failed to create rollback backup, but continuing..."
+        log_message "${RED}✗ Database restoration failed${NC}"
+        return 1
     fi
+}
+
+# Function to drop all tables
+drop_all_tables() {
+    log_message "${YELLOW}Dropping all tables...${NC}"
+    
+    local drop_script="
+    -- Drop all tables in reverse dependency order
+    DROP TABLE IF EXISTS chatbot_messages CASCADE;
+    DROP TABLE IF EXISTS chatbot_conversations CASCADE;
+    DROP TABLE IF EXISTS chatbot_flows CASCADE;
+    DROP TABLE IF EXISTS crm_activities CASCADE;
+    DROP TABLE IF EXISTS crm_leads CASCADE;
+    DROP TABLE IF EXISTS system_metrics CASCADE;
+    DROP TABLE IF EXISTS reports CASCADE;
+    DROP TABLE IF EXISTS translations CASCADE;
+    DROP TABLE IF EXISTS languages CASCADE;
+    DROP TABLE IF EXISTS system_settings CASCADE;
+    DROP TABLE IF EXISTS audit_logs CASCADE;
+    DROP TABLE IF EXISTS notification_templates CASCADE;
+    DROP TABLE IF EXISTS notifications CASCADE;
+    DROP TABLE IF EXISTS payments CASCADE;
+    DROP TABLE IF EXISTS insurance_claims CASCADE;
+    DROP TABLE IF EXISTS file_uploads CASCADE;
+    DROP TABLE IF EXISTS medical_records CASCADE;
+    DROP TABLE IF EXISTS appointments CASCADE;
+    DROP TABLE IF EXISTS doctors CASCADE;
+    DROP TABLE IF EXISTS patients CASCADE;
+    DROP TABLE IF EXISTS roles CASCADE;
+    DROP TABLE IF EXISTS users CASCADE;
+    
+    -- Drop views
+    DROP VIEW IF EXISTS appointment_details CASCADE;
+    DROP VIEW IF EXISTS doctor_dashboard CASCADE;
+    DROP VIEW IF EXISTS patient_dashboard CASCADE;
+    
+    -- Drop functions
+    DROP FUNCTION IF EXISTS update_updated_at_column() CASCADE;
+    
+    -- Drop extensions
+    DROP EXTENSION IF EXISTS \"uuid-ossp\" CASCADE;
+    DROP EXTENSION IF EXISTS \"pgcrypto\" CASCADE;
+    "
+    
+    if echo "$drop_script" | psql "$DATABASE_URL" >> "$LOG_FILE" 2>&1; then
+        log_message "${GREEN}✓ All tables dropped successfully${NC}"
+        return 0
+    else
+        log_message "${RED}✗ Failed to drop tables${NC}"
+        return 1
+    fi
+}
+
+# Function to show rollback options
+show_options() {
+    log_message "${YELLOW}Rollback Options:${NC}"
+    log_message "${BLUE}1. Restore from backup (recommended)${NC}"
+    log_message "${BLUE}2. Drop all tables (destructive)${NC}"
+    log_message "${BLUE}3. Exit without changes${NC}"
+    echo ""
 }
 
 # Main execution
 main() {
-    log "=========================================="
-    log "DATABASE ROLLBACK SCRIPT"
-    log "سكريبت التراجع عن هجرة قاعدة البيانات"
-    log "=========================================="
+    log_message "${BLUE}Starting rollback process...${NC}"
+    log_message "${BLUE}Database: $DB_NAME${NC}"
+    log_message "${BLUE}Host: $DB_HOST:$DB_PORT${NC}"
+    log_message "${BLUE}User: $DB_USER${NC}"
+    log_message "${BLUE}Log file: $LOG_FILE${NC}"
+    echo ""
     
-    # Check environment variables
-    if [ -z "$DB_PASSWORD" ]; then
-        error "DB_PASSWORD environment variable is required"
+    # Check if database exists
+    if ! psql "$DATABASE_URL" -c "SELECT 1;" > /dev/null 2>&1; then
+        log_message "${RED}✗ Database does not exist or connection failed${NC}"
         exit 1
     fi
     
-    log "Database Configuration:"
-    log "  Host: $DB_HOST"
-    log "  Port: $DB_PORT"
-    log "  Database: $DB_NAME"
-    log "  User: $DB_USER"
-    log "=========================================="
+    # Show options
+    show_options
     
-    # Confirm rollback
-    confirm_rollback
+    # Get user choice
+    read -p "Enter your choice (1-3): " choice
     
-    # Execute rollback steps
-    create_rollback_backup
-    drop_views
-    drop_tables
-    drop_functions
-    drop_extensions
+    case $choice in
+        1)
+            log_message "${YELLOW}Option 1: Restore from backup${NC}"
+            if backup_file=$(check_backup); then
+                if restore_from_backup "$backup_file"; then
+                    log_message "${GREEN}✓ Rollback completed successfully${NC}"
+                else
+                    log_message "${RED}✗ Rollback failed${NC}"
+                    exit 1
+                fi
+            else
+                log_message "${RED}✗ No backup available for restoration${NC}"
+                exit 1
+            fi
+            ;;
+        2)
+            log_message "${YELLOW}Option 2: Drop all tables${NC}"
+            read -p "Are you sure you want to drop all tables? (yes/no): " confirm
+            if [ "$confirm" = "yes" ]; then
+                if drop_all_tables; then
+                    log_message "${GREEN}✓ All tables dropped successfully${NC}"
+                else
+                    log_message "${RED}✗ Failed to drop tables${NC}"
+                    exit 1
+                fi
+            else
+                log_message "${YELLOW}Operation cancelled${NC}"
+                exit 0
+            fi
+            ;;
+        3)
+            log_message "${YELLOW}Exiting without changes${NC}"
+            exit 0
+            ;;
+        *)
+            log_message "${RED}Invalid choice. Exiting.${NC}"
+            exit 1
+            ;;
+    esac
     
-    log "=========================================="
-    success "DATABASE ROLLBACK COMPLETED SUCCESSFULLY!"
-    success "تم إكمال التراجع عن قاعدة البيانات بنجاح!"
-    log "=========================================="
-    
-    log "The healthcare database has been completely removed."
-    log "تم إزالة قاعدة البيانات الطبية بالكامل."
-    log ""
-    log "To recreate the database, run: ./run_all_migrations.sh"
-    log "لإعادة إنشاء قاعدة البيانات، قم بتشغيل: ./run_all_migrations.sh"
+    log_message "${BLUE}========================================${NC}"
+    log_message "${GREEN}ROLLBACK COMPLETED!${NC}"
+    log_message "${GREEN}تم إكمال التراجع!${NC}"
+    log_message "${BLUE}========================================${NC}"
 }
 
 # Run main function
