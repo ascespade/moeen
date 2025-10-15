@@ -11,44 +11,60 @@
 // ========================================
 
 export const BRAND_COLORS = {
-  // Primary Orange - البرتقالي الأساسي
+  // Primary Orange - البرتقالي الأساسي (Solid brand colors)
   primary: {
     50: '#fff7ed',
     100: '#ffedd5', 
     200: '#fed7aa',
     300: '#fdba74',
     400: '#fb923c',
-    500: '#f97316', // Main brand color
-    600: '#ea580c',
-    700: '#c2410c',
-    800: '#9a3412',
-    900: '#7c2d12',
-    DEFAULT: '#f58220', // CSS variable value
-    hover: '#d66f15',
+    500: '#E46C0A', // Main brand color - solid orange
+    600: '#D45F08',
+    700: '#C93C00', // Accent deep
+    800: '#B83500',
+    900: '#A72E00',
+    DEFAULT: '#E46C0A', // CSS variable value - solid brand orange
+    hover: '#D45F08',
   },
   
-  // Secondary Brown - البني الثانوي
+  // Secondary Brown - البني الثانوي (Solid brand colors)
   secondary: {
     50: '#fdf8f6',
     100: '#f2e8e5',
     200: '#eaddd7',
     300: '#e0cec7',
     400: '#d2bab0',
-    500: '#bfa094',
-    600: '#a18072',
-    700: '#977669',
-    800: '#846358',
-    900: '#43302b',
-    DEFAULT: '#a18072',
+    500: '#6B4E16', // Solid secondary brown
+    600: '#5A4213',
+    700: '#493610',
+    800: '#382A0D',
+    900: '#271E0A',
+    DEFAULT: '#6B4E16', // Solid secondary brown
   },
 
-  // Accent Colors - الألوان المميزة
+  // Neutral Beige - البيج المحايد
+  neutral_beige: {
+    50: '#FDFCFB',
+    100: '#F9F7F5',
+    200: '#F2E7DC', // Main neutral beige
+    300: '#E8D5C4',
+    400: '#DEC3AC',
+    500: '#D4B194',
+    600: '#C99F7C',
+    700: '#BE8D64',
+    800: '#B37B4C',
+    900: '#A86934',
+    DEFAULT: '#F2E7DC', // Main neutral beige
+  },
+
+  // Accent Colors - الألوان المميزة (Solid colors)
   accent: {
     blue: '#007bff',
     green: '#009688',
     purple: '#8b5cf6',
     pink: '#ec4899',
     yellow: '#f59e0b',
+    deep: '#C93C00', // Accent deep - solid red-orange
   },
 
   // Status Colors - ألوان الحالة
@@ -295,11 +311,13 @@ export const RTL = {
 // ========================================
 
 export const CSS_VARIABLES = {
-  // Brand colors as CSS variables
+  // Brand colors as CSS variables (Solid brand colors)
   '--brand-primary': BRAND_COLORS.primary.DEFAULT,
   '--brand-primary-hover': BRAND_COLORS.primary.hover,
   '--brand-secondary': BRAND_COLORS.secondary.DEFAULT,
+  '--brand-neutral-beige': BRAND_COLORS.neutral_beige.DEFAULT,
   '--brand-accent': BRAND_COLORS.accent.blue,
+  '--brand-accent-deep': BRAND_COLORS.accent.deep,
   '--brand-success': BRAND_COLORS.status.success,
   '--brand-warning': BRAND_COLORS.status.warning,
   '--brand-error': BRAND_COLORS.status.error,
@@ -364,9 +382,11 @@ export const DARK_MODE_VARIABLES = {
   '--background': '#0d1117',
   '--foreground': '#e5eef7',
   '--brand-primary': BRAND_COLORS.primary.DEFAULT,
-  '--brand-primary-hover': '#c25e0f',
+  '--brand-primary-hover': '#D45F08',
   '--brand-secondary': BRAND_COLORS.secondary.DEFAULT,
+  '--brand-neutral-beige': '#2A2520', // Darker beige for dark mode
   '--brand-accent': BRAND_COLORS.accent.blue,
+  '--brand-accent-deep': BRAND_COLORS.accent.deep,
   '--brand-success': '#00b39b',
   '--brand-warning': '#fbbf24',
   '--brand-error': '#f87171',

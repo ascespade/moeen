@@ -1,239 +1,125 @@
 /**
- * Theme Switcher Component
- * مكون تبديل الثيم
- * 
- * Enhanced theme switcher with design system integration
- * مبدل ثيم محسن مع تكامل نظام التصميم
+ * Theme Switcher Component - مكون تبديل الثيم
+ * Accessible theme toggle with translations and RTL support
  */
 
-"use client";
-
-import { useTheme } from "@/design-system/hooks";
-import { Sun, Moon, Monitor } from "lucide-react";
-import { useState } from "react";
+import React from 'react';
+import { useTheme } from '@/context/ThemeContext';
+import { useT } from '@/hooks/useT';
 
 interface ThemeSwitcherProps {
   className?: string;
+  size?: 'sm' | 'md' | 'lg';
   showLabel?: boolean;
-  size?: "sm" | "md" | "lg";
-  variant?: "button" | "dropdown" | "toggle";
 }
 
-export default function ThemeSwitcher({
-  className = "",
+export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
+  className = '',
+  size = 'md',
   showLabel = true,
-  size = "md",
-  variant = "dropdown",
-}: ThemeSwitcherProps) {
-  const { theme, toggleTheme, setLightTheme, setDarkTheme, isLoading } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
+}) => {
+  const { theme, resolvedTheme, toggleTheme, isDark, isLight, isSystem } = useTheme();
+  const { t } = useT();
 
-  if (isLoading) {
-    return (
-      <div className={`animate-pulse bg-gray-200 rounded-md ${getSizeClasses(size)} ${className}`} />
-    );
-  }
-
-  const getSizeClasses = (size: string) => {
-    switch (size) {
-      case "sm":
-        return "h-8 w-8";
-      case "md":
-        return "h-9 w-9";
-      case "lg":
-        return "h-10 w-10";
-      default:
-        return "h-9 w-9";
-    }
-  };
-
-  const getIconSize = (size: string) => {
-    switch (size) {
-      case "sm":
-        return "h-4 w-4";
-      case "md":
-        return "h-4 w-4";
-      case "lg":
-        return "h-5 w-5";
-      default:
-        return "h-4 w-4";
-    }
-  };
-
-  const getThemeIcon = (currentTheme: string) => {
-    switch (currentTheme) {
-      case "light":
-        return <Sun className={getIconSize(size)} />;
-      case "dark":
-        return <Moon className={getIconSize(size)} />;
-      default:
-        return <Monitor className={getIconSize(size)} />;
-    }
-  };
-
-  const getThemeLabel = (currentTheme: string) => {
-    switch (currentTheme) {
-      case "light":
-        return "الوضع النهاري";
-      case "dark":
-        return "الوضع الليلي";
-      default:
-        return "نظام";
-    }
-  };
-
-  if (variant === "button") {
-    return (
-      <button
-        onClick={toggleTheme}
-        className={`
-          inline-flex items-center justify-center gap-2 px-3 py-2 rounded-md border border-gray-200 dark:border-gray-700 
-          text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 
-          focus:outline-none focus:ring-2 focus:ring-brand-primary transition-colors duration-150
-          ${getSizeClasses(size)} ${className}
-        `}
-        aria-label={`تبديل إلى ${theme === "light" ? "الوضع الليلي" : "الوضع النهاري"}`}
-      >
-        {getThemeIcon(theme)}
-        {showLabel && (
-          <span className="hidden sm:inline text-sm font-medium">
-            {getThemeLabel(theme)}
-          </span>
-        )}
-      </button>
-    );
-  }
-
-  if (variant === "toggle") {
-    return (
-      <div className={`flex items-center gap-2 ${className}`}>
-        <button
-          onClick={setLightTheme}
-          className={`
-            p-2 rounded-md transition-colors duration-150
-            ${theme === "light" 
-              ? "bg-brand-primary text-white" 
-              : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-            }
-          `}
-          aria-label="الوضع النهاري"
-        >
-          <Sun className={getIconSize(size)} />
-        </button>
-        <button
-          onClick={setDarkTheme}
-          className={`
-            p-2 rounded-md transition-colors duration-150
-            ${theme === "dark" 
-              ? "bg-brand-primary text-white" 
-              : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-            }
-          `}
-          aria-label="الوضع الليلي"
-        >
-          <Moon className={getIconSize(size)} />
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <div className={`relative ${className}`}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`
-          inline-flex items-center gap-2 px-3 py-2 rounded-md border border-gray-200 dark:border-gray-700 
-          text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 
-          focus:outline-none focus:ring-2 focus:ring-brand-primary transition-colors duration-150
-          ${getSizeClasses(size)}
-        `}
-        aria-label="تبديل الثيم"
-        aria-expanded={isOpen}
-      >
-        {getThemeIcon(theme)}
-        {showLabel && (
-          <span className="hidden sm:inline text-sm font-medium">
-            {getThemeLabel(theme)}
-          </span>
-        )}
+  const getIcon = () => {
+    if (isSystem) {
+      return (
         <svg
-          className={`w-4 h-4 transition-transform duration-150 ${isOpen ? "rotate-180" : ""}`}
+          className="w-5 h-5"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-
-      {isOpen && (
-        <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 z-10"
-            onClick={() => setIsOpen(false)}
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
           />
-          
-          {/* Dropdown */}
-          <div className="absolute top-full right-0 z-20 mt-1 w-48 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-lg">
-            <div className="py-1">
-              <button
-                onClick={() => {
-                  setLightTheme();
-                  setIsOpen(false);
-                }}
-                className={`
-                  w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors duration-150
-                  ${theme === "light" 
-                    ? "bg-brand-primary text-white" 
-                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  }
-                `}
-              >
-                <Sun className="h-4 w-4" />
-                الوضع النهاري
-              </button>
-              
-              <button
-                onClick={() => {
-                  setDarkTheme();
-                  setIsOpen(false);
-                }}
-                className={`
-                  w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors duration-150
-                  ${theme === "dark" 
-                    ? "bg-brand-primary text-white" 
-                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  }
-                `}
-              >
-                <Moon className="h-4 w-4" />
-                الوضع الليلي
-              </button>
-              
-              <button
-                onClick={() => {
-                  // System theme - detect and apply
-                  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                  if (systemTheme === 'dark') {
-                    setDarkTheme();
-                  } else {
-                    setLightTheme();
-                  }
-                  setIsOpen(false);
-                }}
-                className={`
-                  w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors duration-150
-                  text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800
-                `}
-              >
-                <Monitor className="h-4 w-4" />
-                تلقائي (نظام)
-              </button>
-            </div>
-          </div>
-        </>
+        </svg>
+      );
+    }
+    
+    if (isDark) {
+      return (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+          />
+        </svg>
+      );
+    }
+    
+    return (
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+        />
+      </svg>
+    );
+  };
+
+  const getLabel = () => {
+    if (isSystem) return t('theme.system');
+    if (isDark) return t('theme.dark');
+    return t('theme.light');
+  };
+
+  const getAriaLabel = () => {
+    if (isSystem) return t('theme.system');
+    if (isDark) return t('theme.dark');
+    return t('theme.light');
+  };
+
+  const sizeClasses = {
+    sm: 'px-2 py-1 text-sm',
+    md: 'px-3 py-2 text-base',
+    lg: 'px-4 py-3 text-lg',
+  };
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className={`
+        inline-flex items-center gap-2
+        bg-brand-surface hover:bg-brand-primary/10
+        border border-brand-border
+        rounded-lg
+        transition-all duration-200
+        focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2
+        ${sizeClasses[size]}
+        ${className}
+      `}
+      aria-label={getAriaLabel()}
+      title={getAriaLabel()}
+    >
+      {getIcon()}
+      {showLabel && (
+        <span className="font-medium">
+          {getLabel()}
+        </span>
       )}
-    </div>
+    </button>
   );
-}
+};
+
+export default ThemeSwitcher;

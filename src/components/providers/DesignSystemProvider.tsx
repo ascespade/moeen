@@ -249,7 +249,7 @@ export function DesignSystemProvider({
     ...customConfig,
     theme,
     language,
-    direction,
+    direction: direction as Direction,
   };
 
   // Initialize design system
@@ -282,7 +282,7 @@ export function DesignSystemProvider({
   const value: DesignSystemContextValue = {
     theme,
     language,
-    direction,
+    direction: direction as Direction,
     config,
     updateTheme,
     updateLanguage,
