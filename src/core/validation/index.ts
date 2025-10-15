@@ -17,8 +17,8 @@ export const baseSchemas = {
   positiveNumber: z.number().positive('يجب أن يكون الرقم موجب'),
   nonEmptyString: z.string().min(1, 'النص لا يمكن أن يكون فارغاً'),
   url: z.string().url('رابط غير صحيح'),
-  medicalRecordNumber: z.string().regex(VALIDATION_RULES.MEDICAL_RECORD_NUMBER, 'رقم الملف الطبي غير صحيح'),
-  licenseNumber: z.string().regex(VALIDATION_RULES.LICENSE_NUMBER, 'رقم الترخيص غير صحيح'),
+  medicalRecordNumber: z.string().regex(REGEX_PATTERNS.MEDICAL_RECORD, 'رقم الملف الطبي غير صحيح'),
+  licenseNumber: z.string().regex(REGEX_PATTERNS.LICENSE_NUMBER, 'رقم الترخيص غير صحيح'),
 } as const;
 
 // User Validation Schemas
@@ -281,24 +281,28 @@ export class ValidationHelper {
     }
   }
 
-  public static validateAsync<T>(
+  public static async validateAsync<T>(
     schema: z.ZodSchema<T>,
     data: unknown,
     context?: Record<string, any>
   ): Promise<{ success: true; data: T } | { success: false; error: ValidationError }> {
-    return schema.parseAsync(data)
-      .then(data => ({ success: true, data }))
-      .catch(error => {
-        if (error instanceof z.ZodError) {
-          const validationError = new ValidationError(
-            error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', '),
-            undefined,
-            context
-          );
-          return { success: false, error: validationError };
-        }
-        throw error;
-      });
+    try {
+      const result = await schema.parseAsync(data);
+      return { success: true, data: result };
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const validationError = new ValidationError(
+          error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', '),
+          undefined,
+          context
+        );
+        return { success: false, error: validationError };
+      }
+      return {
+        success: false,
+        error: new ValidationError('Unknown validation error'),
+      };
+    }
   }
 
   public static validateQueryParams<T>(
