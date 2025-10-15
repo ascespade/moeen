@@ -8,8 +8,66 @@ import { getServiceSupabase } from "@/lib/supabaseClient";
 const supabase = getServiceSupabase();
 
 export async function GET(request: NextRequest) {
+  const startTime = Date.now();
+  const logError = (error: any, context: string) => {
+    const timestamp = new Date().toISOString();
+    const errorMessage = `[${timestamp}] Dashboard metrics error in ${context}: ${error.message || error}`;
+    console.error(errorMessage);
+    
+    // Log to file if possible
+    try {
+      const fs = require('fs');
+      const logPath = './logs/dashboard_refactor.log';
+      fs.appendFileSync(logPath, errorMessage + '\n');
+    } catch (logError) {
+      // Ignore log file errors
+    }
+  };
+
   try {
-    // Get system metrics from multiple sources
+    // Check database connection first
+    const { data: healthCheck, error: healthError } = await supabase
+      .from('users')
+      .select('id')
+      .limit(1);
+
+    if (healthError) {
+      logError(healthError, 'database_connection_check');
+      // Return fallback data when DB is down
+      return NextResponse.json({
+        timestamp: new Date().toISOString(),
+        system: {
+          health: [],
+          metrics: []
+        },
+        automation: {
+          socialMedia: { totalPosts: 0, platforms: {}, engagement: { totalViews: 0, totalLikes: 0, totalComments: 0, totalShares: 0 } },
+          workflows: { totalWorkflows: 0, validWorkflows: 0, invalidWorkflows: 0, commonIssues: {} },
+          chatbot: { activeFlows: 0, totalNodes: 0, totalTemplates: 0, languages: [], categories: [] }
+        },
+        healthcare: {
+          patients: { total: 0, active: 0, newThisMonth: 0, growthRate: 0 },
+          appointments: { total: 0, today: 0, thisWeek: 0, completed: 0, cancelled: 0 },
+          doctors: { total: 0, active: 0, specialties: [] },
+          revenue: { thisMonth: 0, lastMonth: 0, growthRate: 0, averagePerPatient: 0 }
+        },
+        crm: {
+          leads: { total: 0, new: 0, qualified: 0, converted: 0 },
+          deals: { total: 0, won: 0, lost: 0, pipeline: 0 },
+          activities: { total: 0, calls: 0, meetings: 0, tasks: 0 }
+        },
+        summary: {
+          overallHealth: "unknown",
+          activeServices: 0,
+          totalAutomation: 0,
+          errorRate: 0
+        },
+        fallback: true,
+        message: "Database connection failed, returning fallback data"
+      });
+    }
+
+    // Get system metrics from multiple sources with individual error handling
     const [
       systemHealth,
       systemMetrics,
@@ -18,7 +76,7 @@ export async function GET(request: NextRequest) {
       chatbotMetrics,
       healthcareMetrics,
       crmMetrics,
-    ] = await Promise.all([
+    ] = await Promise.allSettled([
       getSystemHealth(),
       getSystemMetrics(),
       getSocialMediaMetrics(),
@@ -28,34 +86,58 @@ export async function GET(request: NextRequest) {
       getCrmMetrics(),
     ]);
 
+    // Extract results or use fallback data
+    const resolvedSystemHealth = systemHealth.status === 'fulfilled' ? systemHealth.value : [];
+    const resolvedSystemMetrics = systemMetrics.status === 'fulfilled' ? systemMetrics.value : [];
+    const resolvedSocialMediaMetrics = socialMediaMetrics.status === 'fulfilled' ? socialMediaMetrics.value : { totalPosts: 0, platforms: {}, engagement: { totalViews: 0, totalLikes: 0, totalComments: 0, totalShares: 0 } };
+    const resolvedWorkflowMetrics = workflowMetrics.status === 'fulfilled' ? workflowMetrics.value : { totalWorkflows: 0, validWorkflows: 0, invalidWorkflows: 0, commonIssues: {} };
+    const resolvedChatbotMetrics = chatbotMetrics.status === 'fulfilled' ? chatbotMetrics.value : { activeFlows: 0, totalNodes: 0, totalTemplates: 0, languages: [], categories: [] };
+    const resolvedHealthcareMetrics = healthcareMetrics.status === 'fulfilled' ? healthcareMetrics.value : { patients: { total: 0, active: 0, newThisMonth: 0, growthRate: 0 }, appointments: { total: 0, today: 0, thisWeek: 0, completed: 0, cancelled: 0 }, doctors: { total: 0, active: 0, specialties: [] }, revenue: { thisMonth: 0, lastMonth: 0, growthRate: 0, averagePerPatient: 0 } };
+    const resolvedCrmMetrics = crmMetrics.status === 'fulfilled' ? crmMetrics.value : { leads: { total: 0, new: 0, qualified: 0, converted: 0 }, deals: { total: 0, won: 0, lost: 0, pipeline: 0 }, activities: { total: 0, calls: 0, meetings: 0, tasks: 0 } };
+
+    // Log any rejected promises
+    [systemHealth, systemMetrics, socialMediaMetrics, workflowMetrics, chatbotMetrics, healthcareMetrics, crmMetrics].forEach((result, index) => {
+      if (result.status === 'rejected') {
+        const contexts = ['systemHealth', 'systemMetrics', 'socialMediaMetrics', 'workflowMetrics', 'chatbotMetrics', 'healthcareMetrics', 'crmMetrics'];
+        logError(result.reason, contexts[index]);
+      }
+    });
+
     const metrics = {
       timestamp: new Date().toISOString(),
       system: {
-        health: systemHealth,
-        metrics: systemMetrics,
+        health: resolvedSystemHealth,
+        metrics: resolvedSystemMetrics,
       },
       automation: {
-        socialMedia: socialMediaMetrics,
-        workflows: workflowMetrics,
-        chatbot: chatbotMetrics,
+        socialMedia: resolvedSocialMediaMetrics,
+        workflows: resolvedWorkflowMetrics,
+        chatbot: resolvedChatbotMetrics,
       },
-      healthcare: healthcareMetrics,
-      crm: crmMetrics,
+      healthcare: resolvedHealthcareMetrics,
+      crm: resolvedCrmMetrics,
       summary: {
-        overallHealth: calculateOverallHealth(systemHealth),
-        activeServices: countActiveServices(systemHealth),
-        totalAutomation:
-          (socialMediaMetrics as any).postsPublished +
-          (workflowMetrics as any).executionsSuccessful,
-        errorRate: calculateErrorRate(systemMetrics),
+        overallHealth: calculateOverallHealth(resolvedSystemHealth),
+        activeServices: countActiveServices(resolvedSystemHealth),
+        totalAutomation: (resolvedSocialMediaMetrics as any).postsPublished + (resolvedWorkflowMetrics as any).executionsSuccessful || 0,
+        errorRate: calculateErrorRate(resolvedSystemMetrics),
       },
+      performance: {
+        responseTime: Date.now() - startTime,
+        timestamp: new Date().toISOString()
+      }
     };
 
     return NextResponse.json(metrics);
   } catch (error) {
-    console.error("Dashboard metrics error:", error);
+    logError(error, 'main_handler');
     return NextResponse.json(
-      { error: "Failed to fetch metrics" },
+      { 
+        error: "Failed to fetch metrics", 
+        fallback: true,
+        message: "System error occurred, check logs for details",
+        timestamp: new Date().toISOString()
+      },
       { status: 500 },
     );
   }
@@ -63,13 +145,29 @@ export async function GET(request: NextRequest) {
 
 async function getSystemHealth() {
   try {
+    // Check if table exists first
+    const { data: tableExists, error: tableError } = await supabase
+      .from("information_schema.tables")
+      .select("table_name")
+      .eq("table_schema", "public")
+      .eq("table_name", "system_health")
+      .single();
+
+    if (tableError || !tableExists) {
+      console.log("system_health table does not exist, returning fallback data");
+      return [];
+    }
+
     const { data, error } = await supabase
       .from("system_health")
       .select("*")
       .order("last_check", { ascending: false })
       .limit(10);
 
-    if (error) throw error;
+    if (error) {
+      console.error("System health query error:", error);
+      return [];
+    }
 
     return data.map((service) => ({
       service: service.service_name,
@@ -85,13 +183,29 @@ async function getSystemHealth() {
 
 async function getSystemMetrics() {
   try {
+    // Check if table exists first
+    const { data: tableExists, error: tableError } = await supabase
+      .from("information_schema.tables")
+      .select("table_name")
+      .eq("table_schema", "public")
+      .eq("table_name", "system_metrics")
+      .single();
+
+    if (tableError || !tableExists) {
+      console.log("system_metrics table does not exist, returning fallback data");
+      return [];
+    }
+
     const { data, error } = await supabase
       .from("system_metrics")
       .select("*")
       .order("timestamp", { ascending: false })
       .limit(50);
 
-    if (error) throw error;
+    if (error) {
+      console.error("System metrics query error:", error);
+      return [];
+    }
 
     // Aggregate metrics by service
     const aggregated = data.reduce((acc, metric) => {
