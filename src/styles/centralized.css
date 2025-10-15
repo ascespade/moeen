@@ -14,10 +14,11 @@
    ======================================== */
 
 :root {
+  /* Import design system tokens */
   /* Brand Colors - Single Source of Truth */
   --brand-primary: #f58220; /* Orange - Primary brand color */
   --brand-primary-hover: #d66f15; /* Darker orange for hover states */
-  --brand-secondary: #009688; /* Green - Secondary brand color */
+  --brand-secondary: #a18072; /* Brown - Secondary brand color */
   --brand-accent: #007bff; /* Blue - Accent color */
   --brand-success: #009688; /* Green - Success states */
   --brand-warning: #f59e0b; /* Yellow - Warning states */

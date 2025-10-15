@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import UIProvider from "@/components/providers/UIProvider";
 import I18nProvider from "@/components/providers/I18nProvider";
+import { DesignSystemProvider } from "@/components/providers/DesignSystemProvider";
 
 export const metadata: Metadata = {
   title: "مُعين",
@@ -32,9 +33,11 @@ export default function RootLayout({
         className={`${cairo.variable} ${inter.variable} antialiased`}
         suppressHydrationWarning
       >
-        <I18nProvider>
-          <UIProvider>{children}</UIProvider>
-        </I18nProvider>
+        <DesignSystemProvider>
+          <I18nProvider>
+            <UIProvider>{children}</UIProvider>
+          </I18nProvider>
+        </DesignSystemProvider>
       </body>
     </html>
   );
