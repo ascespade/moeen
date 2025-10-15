@@ -1,25 +1,24 @@
-// Real Supabase Integration for Hemam Center
 import { createClient } from "@supabase/supabase-js";
-import { Database } from "@/types/supabase";
+// Real Supabase Integration for Hemam Center
+import type { Database } from "@/types/supabase";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseUrl =
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
+const supabaseAnonKey =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key";
+const supabaseServiceKey =
+  process.env.SUPABASE_SERVICE_ROLE || "placeholder-service-key";
 
 // Client for client-side operations
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Admin client for server-side operations
-export const supabaseAdmin = createClient(
-  supabaseUrl,
-  supabaseServiceKey,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
+export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false,
   },
-);
+});
 
 // Use a relaxed admin alias to mitigate strict generics during development
 const admin: any = supabaseAdmin as any;

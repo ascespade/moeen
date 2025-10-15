@@ -1,0 +1,157 @@
+{
+  "project": {
+    "site": {
+      "name": "مركز الهمم",
+      "description": "مركز متخصص في دعم ذوي الهمم والإعاقات، مع إدارة مواعيد، محادثات، وسجلات المرضى.",
+      "theme": {
+        "lightMode": {
+          "primaryColor": "#FF6F61",
+          "secondaryColor": "#FFDAB9",
+          "background": "#FFFFFF",
+          "text": "#000000"
+        },
+        "darkMode": {
+          "primaryColor": "#1E3A8A",
+          "secondaryColor": "#3B82F6",
+          "background": "#121212",
+          "text": "#E5E7EB"
+        }
+      },
+      "seo": {
+        "metaTitle": "مركز الهمم - دعم ذوي الهمم والإعاقات",
+        "metaDescription": "مركز الهمم يقدم خدمات شاملة لدعم ذوي الهمم، مع إدارة مواعيد، محادثات، وسجلات المرضى.",
+        "ogTitle": "مركز الهمم",
+        "ogDescription": "مركز متخصص في دعم ذوي الهمم والإعاقات",
+        "structuredData": "Organization, LocalBusiness"
+      },
+      "header": {
+        "logo": "logo.png",
+        "navigation": [
+          "الرئيسية",
+          "الخدمات",
+          "المواعيد",
+          "تواصل معنا",
+          "السياسات"
+        ]
+      },
+      "footer": {
+        "links": ["سياسات الخصوصية", "الشروط والأحكام", "اتصل بنا"],
+        "contact": {
+          "email": "info@alhemmamcenter.com.sa",
+          "phone": "+966581421483",
+          "address": "جدة، المملكة العربية السعودية",
+          "mapEmbed": "google_map_embed_link"
+        }
+      },
+      "contactForm": true,
+      "googleBusinessProfile": true,
+      "responsive": true,
+      "pages": {
+        "home": {
+          "heroBanner": "hero_banner.png",
+          "features": [
+            "تنظيم المواعيد",
+            "سجل المرضى",
+            "التقارير الذكية",
+            "الشات بوت الذكي"
+          ],
+          "cta": "حجز موعد"
+        },
+        "policies": {
+          "privacyPolicy": "complete",
+          "termsOfService": "complete"
+        },
+        "login": {
+          "emailConfirmation": true,
+          "passwordReset": true
+        }
+      }
+    },
+    "chatbot": {
+      "name": "معين",
+      "platforms": ["website", "whatsapp"],
+      "features": [
+        "إدارة المحادثات",
+        "تنظيم المواعيد حسب الطبيب",
+        "تعلم مستمر وتحسين ذاتي",
+        "سجل كامل للمحادثات",
+        "إشعارات متعددة القنوات",
+        "الالتزام بالمجال المطلوب فقط"
+      ],
+      "appointmentManagement": {
+        "calendarView": true,
+        "dragAndDropReschedule": true,
+        "notifications": ["email", "internal", "telegram"],
+        "autoSyncWithDatabase": true
+      },
+      "learning": {
+        "selfImprovement": true,
+        "feedbackLoop": true
+      },
+      "restrictions": {
+        "scopeLimit": true,
+        "noExternalActions": true
+      }
+    },
+    "usersAndPermissions": {
+      "roles": ["owner", "admin", "supervisor", "employee", "patient"],
+      "userRegistration": {
+        "emailConfirmation": true,
+        "preVisitAccountCreation": true,
+        "dataReadyOnArrival": true
+      },
+      "permissions": {
+        "adminPanelAccess": true,
+        "appointmentManagement": true,
+        "patientRecordsAccess": true
+      }
+    },
+    "database": {
+      "provider": "supabase",
+      "tables": [
+        "Users",
+        "Appointments",
+        "Doctors",
+        "Notifications",
+        "ChatLogs",
+        "Settings",
+        "Permissions",
+        "InsuranceRequests",
+        "PatientData",
+        "Feedback"
+      ],
+      "relations": "fullyLinked",
+      "dataIntegrity": "ensured"
+    },
+    "adminPanel": {
+      "settings": ["site", "chatbot", "notifications", "policies"],
+      "reports": true,
+      "userManagement": true,
+      "appointmentManagement": true,
+      "chatLogsManagement": true
+    },
+    "enhancements": {
+      "uiUx": true,
+      "performanceOptimization": true,
+      "seoOptimization": true,
+      "responsiveDesign": true,
+      "continuousLearningBot": true
+    },
+    "notifications": {
+      "channels": ["email", "internalMessage", "telegram"],
+      "triggers": [
+        "newAppointment",
+        "appointmentChange",
+        "insuranceRequest",
+        "chatFollowup"
+      ]
+    },
+    "workflow": {
+      "loop": "continuous",
+      "monitoring": "realTime",
+      "selfImprovement": true,
+      "errorHandling": true,
+      "autoFixEnhancements": true
+    }
+  }
+}

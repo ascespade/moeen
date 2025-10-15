@@ -1,257 +1,507 @@
+// src/app/dashboard/page.tsx
+// Real-time Dashboard Page
+// Displays system metrics, health status, and automation status
+
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { 
-  Users, 
-  Calendar, 
-  MessageCircle, 
-  FileText, 
-  Bell, 
-  Search,
+import React, { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import {
+  Activity,
+  Server,
+  Users,
+  MessageSquare,
+  Share2,
+  Workflow,
+  AlertTriangle,
   CheckCircle,
+  Clock,
   TrendingUp,
-  TrendingDown
+  RefreshCw,
 } from "lucide-react";
 
-// Dashboard Stats Data
-const dashboardStats = [
-  {
-    id: 1,
-    title: "إجمالي المرضى",
-    value: "1,234",
-    description: "مرضى مسجلين",
-    change: "+12% من الشهر الماضي",
-    changeType: "positive",
-    icon: Users,
-    color: "text-orange-500"
-  },
-  {
-    id: 2,
-    title: "المواعيد اليوم",
-    value: "28",
-    description: "مواعيد مجدولة",
-    change: "+5% من الشهر الماضي",
-    changeType: "positive",
-    icon: Calendar,
-    color: "text-orange-500"
-  },
-  {
-    id: 3,
-    title: "رسائل الشات بوت",
-    value: "156",
-    description: "ردود تلقائية",
-    change: "+23% من الشهر الماضي",
-    changeType: "positive",
-    icon: MessageCircle,
-    color: "text-orange-500"
-  },
-  {
-    id: 4,
-    title: "المطالبات المعلقة",
-    value: "12",
-    description: "تحتاج مراجعة",
-    change: "-8% من الشهر الماضي",
-    changeType: "negative",
-    icon: FileText,
-    color: "text-orange-500"
-  }
-];
-
-// Treatment Types Data
-const treatmentTypes = [
-  { name: "العلاج الطبيعي", value: 45, color: "bg-blue-500" },
-  { name: "العلاج الوظيفي", value: 30, color: "bg-green-500" },
-  { name: "العلاج النفسي", value: 15, color: "bg-purple-500" },
-  { name: "العلاج النطقي", value: 10, color: "bg-orange-500" }
-];
-
-// Recent Activity Data
-const recentActivities = [
-  {
-    id: 1,
-    type: "موعد جديد",
-    description: "تم حجز موعد مع د. أحمد العتيبي",
-    time: "منذ 5 دقائق",
-    icon: Calendar,
-    status: "success"
-  },
-  {
-    id: 2,
-    type: "مريض جديد",
-    description: "تم تسجيل مريض جديد: فاطمة السعيد",
-    time: "منذ 15 دقيقة",
-    icon: Users,
-    status: "success"
-  },
-  {
-    id: 3,
-    type: "رسالة شات بوت",
-    description: "رد تلقائي على استفسار حول العلاج الطبيعي",
-    time: "منذ 30 دقيقة",
-    icon: MessageCircle,
-    status: "success"
-  }
-];
+interface DashboardMetrics {
+  timestamp: string;
+  system: {
+    health: Array<{
+      service: string;
+      status: string;
+      lastCheck: string;
+      details: any;
+    }>;
+    metrics: Array<{
+      service: string;
+      lastUpdate: string;
+      metrics: any;
+    }>;
+  };
+  automation: {
+    socialMedia: {
+      totalPosts: number;
+      platforms: Record<string, any>;
+      engagement: {
+        totalViews: number;
+        totalLikes: number;
+        totalComments: number;
+        totalShares: number;
+      };
+    };
+    workflows: {
+      totalWorkflows: number;
+      validWorkflows: number;
+      invalidWorkflows: number;
+      commonIssues: Record<string, number>;
+    };
+    chatbot: {
+      activeFlows: number;
+      totalNodes: number;
+      totalTemplates: number;
+      languages: string[];
+      categories: string[];
+    };
+  };
+  summary: {
+    overallHealth: string;
+    activeServices: number;
+    totalAutomation: number;
+    errorRate: number;
+  };
+}
 
 export default function DashboardPage() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
+
+  const fetchMetrics = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/dashboard/metrics");
+      if (!response.ok) throw new Error("Failed to fetch metrics");
+
+      const data = await response.json();
+      setMetrics(data);
+      setLastRefresh(new Date());
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchMetrics();
+    const interval = setInterval(fetchMetrics, 30000); // Refresh every 30 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+  const getHealthColor = (status: string) => {
+    switch (status) {
+      case "healthy":
+        return "text-green-600";
+      case "unhealthy":
+        return "text-red-600";
+      case "degraded":
+        return "text-yellow-600";
+      default:
+        return "text-gray-600";
+    }
+  };
+
+  const getHealthBadge = (status: string) => {
+    switch (status) {
+      case "healthy":
+        return (
+          <Badge variant="default" className="bg-green-100 text-green-800">
+            Healthy
+          </Badge>
+        );
+      case "unhealthy":
+        return <Badge variant="error">Unhealthy</Badge>;
+      case "degraded":
+        return (
+          <Badge variant="warning" className="bg-yellow-100 text-yellow-800">
+            Degraded
+          </Badge>
+        );
+      default:
+        return <Badge variant="outline">Unknown</Badge>;
+    }
+  };
+
+  if (loading && !metrics) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4" />
+          <p>Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <AlertTriangle className="h-8 w-8 text-red-500 mx-auto mb-4" />
+          <p className="text-red-600 mb-4">Error loading dashboard: {error}</p>
+          <Button onClick={fetchMetrics}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      {/* Top Header */}
-      <header className="bg-[var(--panel)] border-b border-[var(--brand-border)] px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-[var(--brand-primary)] rounded flex items-center justify-center">
-                <span className="text-white font-bold text-sm">م</span>
-              </div>
-              <h1 className="text-xl font-bold text-[var(--foreground)]">لوحة التحكم</h1>
-            </div>
-            <div className="text-sm text-[var(--foreground)]/70">
-              مرحباً بك في نظام إدارة مركز الهمم
-            </div>
+    <div className="min-h-screen bg-[var(--brand-surface)]">
+      <div className="container-app py-6">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold">System Dashboard</h1>
+            <p className="text-gray-600">
+              Real-time monitoring and automation status
+            </p>
           </div>
-          
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-sm">
-              <Users className="w-4 h-4 text-[var(--foreground)]/70" />
-              <span className="text-[var(--foreground)]">المستخدم</span>
-              <span className="text-[var(--foreground)]/70">مدير النظام</span>
+            <div className="text-sm text-gray-500">
+              Last updated: {lastRefresh.toLocaleTimeString()}
             </div>
-            
-            <div className="relative">
-              <Bell className="w-5 h-5 text-[var(--foreground)]/70" />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                5
-              </span>
-            </div>
-            
-            <div className="relative">
-              <Search className="w-4 h-4 absolute right-3 top-1/2 transform -translate-y-1/2 text-[var(--foreground)]/50" />
-              <input
-                type="text"
-                placeholder="بحث..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-[var(--brand-surface)] border border-[var(--brand-border)] rounded-lg px-4 py-2 pr-10 text-[var(--foreground)] placeholder-[var(--foreground)]/50 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]"
+            <Button onClick={fetchMetrics} disabled={loading}>
+              <RefreshCw
+                className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`}
               />
-            </div>
+              Refresh
+            </Button>
           </div>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <div className="flex">
-        {/* Main Content Area */}
-        <main className="flex-1 p-6">
-          {/* Dashboard Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {dashboardStats.map((stat) => {
-              const IconComponent = stat.icon;
-              return (
-                <div key={stat.id} className="bg-[var(--panel)] border border-[var(--brand-border)] rounded-lg p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <IconComponent className={`w-8 h-8 ${stat.color}`} />
-                    <div className="flex items-center gap-1">
-                      {stat.changeType === "positive" ? (
-                        <TrendingUp className="w-4 h-4 text-green-500" />
-                      ) : (
-                        <TrendingDown className="w-4 h-4 text-red-500" />
-                      )}
-                      <span className={`text-sm ${
-                        stat.changeType === "positive" ? "text-green-500" : "text-red-500"
-                      }`}>
-                        {stat.change}
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Overall Health
+              </CardTitle>
+              <CheckCircle className="h-4 w-4 text-green-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold capitalize">
+                {metrics?.summary.overallHealth}
+              </div>
+              <p className="text-xs text-gray-600">
+                {metrics?.summary.activeServices} active services
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Social Media
+              </CardTitle>
+              <Share2 className="h-4 w-4 text-blue-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {metrics?.automation.socialMedia.totalPosts}
+              </div>
+              <p className="text-xs text-gray-600">
+                {metrics?.automation.socialMedia.engagement.totalViews.toLocaleString()}{" "}
+                total views
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Workflows</CardTitle>
+              <Workflow className="h-4 w-4 text-purple-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {metrics?.automation.workflows.validWorkflows}
+              </div>
+              <p className="text-xs text-gray-600">
+                of {metrics?.automation.workflows.totalWorkflows} workflows
+                valid
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Chatbot</CardTitle>
+              <MessageSquare className="h-4 w-4 text-green-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {metrics?.automation.chatbot.activeFlows}
+              </div>
+              <p className="text-xs text-gray-600">
+                {metrics?.automation.chatbot.totalNodes} total nodes
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Detailed Tabs */}
+        <Tabs defaultValue="system" className="space-y-6">
+          <TabsList>
+            <TabsTrigger value="system">System Health</TabsTrigger>
+            <TabsTrigger value="automation">Automation</TabsTrigger>
+            <TabsTrigger value="social">Social Media</TabsTrigger>
+            <TabsTrigger value="workflows">Workflows</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="system" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* System Health */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>System Health</CardTitle>
+                  <CardDescription>
+                    Status of all system services
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {metrics?.system.health.map((service, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between p-3 border rounded-lg"
+                      >
+                        <div className="flex items-center gap-3">
+                          <Server className="h-5 w-5 text-gray-500" />
+                          <div>
+                            <div className="font-medium">{service.service}</div>
+                            <div className="text-sm text-gray-500">
+                              Last check:{" "}
+                              {new Date(service.lastCheck).toLocaleString()}
+                            </div>
+                          </div>
+                        </div>
+                        {getHealthBadge(service.status)}
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* System Metrics */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>System Metrics</CardTitle>
+                  <CardDescription>
+                    Performance and resource usage
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {metrics?.system.metrics.map((metric, index) => (
+                      <div key={index} className="p-3 border rounded-lg">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="font-medium">{metric.service}</div>
+                          <div className="text-sm text-gray-500">
+                            {new Date(metric.lastUpdate).toLocaleString()}
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <span className="text-gray-500">CPU:</span>{" "}
+                            {metric.metrics.cpuUsage || 0}%
+                          </div>
+                          <div>
+                            <span className="text-gray-500">Memory:</span>{" "}
+                            {metric.metrics.memoryUsage || 0}%
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="automation" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Social Media Summary */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Social Media</CardTitle>
+                  <CardDescription>Posting automation status</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span>Total Posts:</span>
+                      <span className="font-medium">
+                        {metrics?.automation.socialMedia.totalPosts}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Total Views:</span>
+                      <span className="font-medium">
+                        {metrics?.automation.socialMedia.engagement.totalViews.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Total Likes:</span>
+                      <span className="font-medium">
+                        {metrics?.automation.socialMedia.engagement.totalLikes.toLocaleString()}
                       </span>
                     </div>
                   </div>
-                  
-                  <h3 className="text-sm text-[var(--foreground)]/70 mb-2">{stat.title}</h3>
-                  <div className="text-3xl font-bold text-[var(--brand-primary)] mb-1">
-                    {stat.value}
-                  </div>
-                  <p className="text-sm text-[var(--foreground)]/60">{stat.description}</p>
-                </div>
-              );
-            })}
-          </div>
+                </CardContent>
+              </Card>
 
-          {/* Bottom Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Treatment Types Distribution */}
-            <div className="bg-[var(--panel)] border border-[var(--brand-border)] rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-[var(--foreground)] mb-6">
-                توزيع أنواع العلاج
-              </h3>
-              
-              <div className="flex items-center justify-center mb-6">
-                <div className="relative w-48 h-48">
-                  {/* Doughnut Chart Placeholder */}
-                  <div className="w-full h-full rounded-full border-8 border-[var(--brand-border)] flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-[var(--brand-primary)]">100</div>
-                      <div className="text-sm text-[var(--foreground)]/70">إجمالي</div>
+              {/* Workflow Summary */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Workflows</CardTitle>
+                  <CardDescription>n8n workflow status</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span>Total Workflows:</span>
+                      <span className="font-medium">
+                        {metrics?.automation.workflows.totalWorkflows}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Valid:</span>
+                      <span className="font-medium text-green-600">
+                        {metrics?.automation.workflows.validWorkflows}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Invalid:</span>
+                      <span className="font-medium text-red-600">
+                        {metrics?.automation.workflows.invalidWorkflows}
+                      </span>
                     </div>
                   </div>
-                </div>
-              </div>
-              
-              <div className="space-y-3">
-                {treatmentTypes.map((type, index) => (
-                  <div key={index} className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-3 h-3 rounded-full ${type.color}`}></div>
-                      <span className="text-sm text-[var(--foreground)]">{type.name}</span>
+                </CardContent>
+              </Card>
+
+              {/* Chatbot Summary */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Chatbot</CardTitle>
+                  <CardDescription>AI chatbot flows</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span>Active Flows:</span>
+                      <span className="font-medium">
+                        {metrics?.automation.chatbot.activeFlows}
+                      </span>
                     </div>
-                    <span className="text-sm font-semibold text-[var(--foreground)]">{type.value}</span>
+                    <div className="flex justify-between">
+                      <span>Total Nodes:</span>
+                      <span className="font-medium">
+                        {metrics?.automation.chatbot.totalNodes}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Languages:</span>
+                      <span className="font-medium">
+                        {metrics?.automation.chatbot.languages.length}
+                      </span>
+                    </div>
                   </div>
-                ))}
-              </div>
+                </CardContent>
+              </Card>
             </div>
+          </TabsContent>
 
-            {/* Recent Activity */}
-            <div className="bg-[var(--panel)] border border-[var(--brand-border)] rounded-lg p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-[var(--foreground)]">
-                  النشاط الأخير
-                </h3>
-                <Link href="/activities" className="text-sm text-[var(--brand-primary)] hover:underline">
-                  عرض الكل
-                </Link>
-              </div>
-              
-              <div className="space-y-4">
-                {recentActivities.map((activity) => {
-                  const IconComponent = activity.icon;
-                  return (
-                    <div key={activity.id} className="flex items-start gap-3">
-                      <div className="flex-shrink-0">
-                        <IconComponent className="w-5 h-5 text-[var(--foreground)]/70" />
+          <TabsContent value="social" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Social Media Platforms</CardTitle>
+                <CardDescription>Performance by platform</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {Object.entries(
+                    metrics?.automation.socialMedia.platforms || {},
+                  ).map(([platform, data]) => (
+                    <div key={platform} className="p-4 border rounded-lg">
+                      <div className="font-medium capitalize mb-3">
+                        {platform}
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm font-medium text-[var(--foreground)]">
-                            {activity.type}:
-                          </span>
-                          <CheckCircle className="w-4 h-4 text-green-500" />
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span>Posts:</span>
+                          <span>{data.posts}</span>
                         </div>
-                        <p className="text-sm text-[var(--foreground)]/80 mb-1">
-                          {activity.description}
-                        </p>
-                        <p className="text-xs text-[var(--foreground)]/60">
-                          {activity.time}
-                        </p>
+                        <div className="flex justify-between">
+                          <span>Views:</span>
+                          <span>{data.views.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Likes:</span>
+                          <span>{data.likes.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Comments:</span>
+                          <span>{data.comments.toLocaleString()}</span>
+                        </div>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </main>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="workflows" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Workflow Issues</CardTitle>
+                <CardDescription>
+                  Common issues found in workflows
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {Object.entries(
+                    metrics?.automation.workflows.commonIssues || {},
+                  ).map(([issue, count]) => (
+                    <div
+                      key={issue}
+                      className="flex items-center justify-between p-3 border rounded-lg"
+                    >
+                      <div className="font-medium">{issue}</div>
+                      <Badge variant="info">{count} occurrences</Badge>
+                    </div>
+                  ))}
+                  {Object.keys(metrics?.automation.workflows.commonIssues || {})
+                    .length === 0 && (
+                    <div className="text-center py-8 text-gray-500">
+                      <CheckCircle className="h-12 w-12 mx-auto mb-4 text-green-500" />
+                      <p>No workflow issues found!</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

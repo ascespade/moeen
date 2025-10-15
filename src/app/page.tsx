@@ -46,7 +46,7 @@ const services = [
     title: "إدارة المواعيد",
     description: "نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية",
     icon: "📅",
-    color: "text-blue-600",
+    color: "text-[var(--brand-primary)]",
     bgColor: "bg-blue-50",
   },
   {
@@ -62,7 +62,7 @@ const services = [
     title: "المطالبات التأمينية",
     description: "إدارة وتتبع المطالبات التأمينية بسهولة",
     icon: "📋",
-    color: "text-purple-600",
+    color: "text-orange-600",
     bgColor: "bg-purple-50",
   },
   {
@@ -87,7 +87,7 @@ const services = [
     description: "تقارير شاملة وإحصائيات مفصلة",
     icon: "📊",
     color: "text-indigo-600",
-    bgColor: "bg-indigo-50",
+    bgColor: "bg-orange-50",
   },
 ];
 
@@ -164,16 +164,20 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+    <div className="min-h-screen bg-[var(--brand-surface)]">
       {/* Navigation */}
       <nav className="nav sticky top-0 z-50">
         <div className="container-app py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-[var(--brand-primary)] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">م</span>
-              </div>
-              <h1 className="text-[var(--brand-primary)] text-2xl font-bold">مُعين</h1>
+              <Image
+                src="/logo.png"
+                alt="مُعين"
+                width={50}
+                height={50}
+                className="rounded-lg"
+              />
+              <h1 className="text-brand text-2xl font-bold">مُعين</h1>
             </div>
             <div className="hidden items-center gap-6 md:flex">
               <Link href="#services" className="nav-link">
@@ -257,13 +261,13 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="bg-[var(--panel)] py-20">
+      <section id="services" className="bg-white py-20 dark:bg-gray-900">
         <div className="container-app">
           <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-[var(--foreground)]">
+            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
               خدماتنا المتكاملة
             </h2>
-            <p className="mx-auto max-w-3xl text-xl text-[var(--text-muted)]">
+            <p className="mx-auto max-w-3xl text-xl text-gray-600 dark:text-gray-300">
               نقدم مجموعة شاملة من الخدمات التقنية لمراكز الرعاية الصحية
             </p>
           </div>
@@ -279,10 +283,10 @@ export default function HomePage() {
                 >
                   {service.icon}
                 </div>
-                <h3 className="mb-4 text-xl font-semibold text-[var(--foreground)]">
+                <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
                   {service.title}
                 </h3>
-                <p className="text-[var(--text-muted)]">
+                <p className="text-gray-600 dark:text-gray-300">
                   {service.description}
                 </p>
               </div>
@@ -295,10 +299,10 @@ export default function HomePage() {
       <section className="bg-[var(--brand-surface)] py-20">
         <div className="container-app">
           <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-[var(--foreground)]">
+            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
               آراء عملائنا
             </h2>
-            <p className="text-xl text-[var(--text-muted)]">
+            <p className="text-xl text-gray-600 dark:text-gray-300">
               ما يقوله عنا أطباؤنا وموظفونا
             </p>
           </div>
@@ -322,13 +326,13 @@ export default function HomePage() {
                     </span>
                   ))}
                 </div>
-                <p className="mb-6 italic text-[var(--text-muted)]">
+                <p className="mb-6 italic text-gray-600 dark:text-gray-300">
                   &quot;{testimonial.content}&quot;
                 </p>
-                <h4 className="font-semibold text-[var(--foreground)]">
+                <h4 className="font-semibold text-gray-900 dark:text-white">
                   {testimonial.name}
                 </h4>
-                <p className="text-sm text-[var(--text-secondary)]">{testimonial.position}</p>
+                <p className="text-sm text-gray-500">{testimonial.position}</p>
               </div>
             ))}
           </div>
@@ -336,13 +340,13 @@ export default function HomePage() {
       </section>
 
       {/* Gallery Section */}
-      <section id="gallery" className="bg-[var(--panel)] py-20">
+      <section id="gallery" className="bg-white py-20 dark:bg-gray-900">
         <div className="container-app">
           <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-[var(--foreground)]">
+            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
               معرض الصور
             </h2>
-            <p className="text-xl text-[var(--text-muted)]">
+            <p className="text-xl text-gray-600 dark:text-gray-300">
               استكشف مرافقنا وبيئة العمل المريحة
             </p>
           </div>
@@ -377,15 +381,15 @@ export default function HomePage() {
         <div className="container-app">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <div>
-              <h2 className="mb-6 text-4xl font-bold text-[var(--foreground)]">
+              <h2 className="mb-6 text-4xl font-bold text-gray-900 dark:text-white">
                 عن مُعين
               </h2>
-              <p className="mb-6 text-lg text-[var(--text-muted)]">
+              <p className="mb-6 text-lg text-gray-600 dark:text-gray-300">
                 منصة مُعين هي الحل التقني الشامل لمراكز الرعاية الصحية المتخصصة.
                 نقدم نظاماً متكاملاً يجمع بين إدارة المواعيد، ملفات المرضى،
                 المطالبات التأمينية، والشات بوت الذكي.
               </p>
-              <p className="mb-8 text-lg text-[var(--text-muted)]">
+              <p className="mb-8 text-lg text-gray-600 dark:text-gray-300">
                 هدفنا هو تبسيط العمليات الطبية ورفع كفاءة الخدمات المقدمة للمرضى
                 من خلال التقنيات الحديثة والذكاء الاصطناعي.
               </p>
@@ -418,13 +422,13 @@ export default function HomePage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="bg-[var(--panel)] py-20">
+      <section className="bg-white py-20 dark:bg-gray-900">
         <div className="container-app">
           <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-[var(--foreground)]">
+            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
               الأسئلة الشائعة
             </h2>
-            <p className="text-xl text-[var(--text-muted)]">
+            <p className="text-xl text-gray-600 dark:text-gray-300">
               إجابات على أكثر الأسئلة شيوعاً
             </p>
           </div>
@@ -432,10 +436,10 @@ export default function HomePage() {
           <div className="mx-auto max-w-3xl space-y-6">
             {faqs.map((faq) => (
               <div key={faq.id} className="card p-6">
-                <h3 className="mb-3 text-lg font-semibold text-[var(--foreground)]">
+                <h3 className="mb-3 text-lg font-semibold text-gray-900 dark:text-white">
                   {faq.question}
                 </h3>
-                <p className="text-[var(--text-muted)]">{faq.answer}</p>
+                <p className="text-gray-600 dark:text-gray-300">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -446,10 +450,10 @@ export default function HomePage() {
       <section id="contact" className="bg-[var(--brand-surface)] py-20">
         <div className="container-app">
           <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-[var(--foreground)]">
+            <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
               تواصل معنا
             </h2>
-            <p className="text-xl text-[var(--text-muted)]">
+            <p className="text-xl text-gray-600 dark:text-gray-300">
               نحن هنا لمساعدتك في أي وقت
             </p>
           </div>
@@ -459,10 +463,10 @@ export default function HomePage() {
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl">
                 📱
               </div>
-              <h3 className="mb-4 text-xl font-semibold text-[var(--foreground)]">
+              <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
                 واتساب
               </h3>
-              <p className="mb-4 text-[var(--text-muted)]">
+              <p className="mb-4 text-gray-600 dark:text-gray-300">
                 تواصل معنا عبر واتساب
               </p>
               <a
@@ -477,15 +481,15 @@ export default function HomePage() {
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-3xl">
                 📞
               </div>
-              <h3 className="mb-4 text-xl font-semibold text-[var(--foreground)]">
+              <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
                 اتصال مباشر
               </h3>
-              <p className="mb-4 text-[var(--text-muted)]">
+              <p className="mb-4 text-gray-600 dark:text-gray-300">
                 اتصل بنا مباشرة
               </p>
               <a
                 href="tel:+966501234567"
-                className="font-semibold text-blue-600 hover:text-blue-700"
+                className="font-semibold text-[var(--brand-primary)] hover:brightness-95"
               >
                 +966 50 123 4567
               </a>
@@ -495,13 +499,13 @@ export default function HomePage() {
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-3xl">
                 📍
               </div>
-              <h3 className="mb-4 text-xl font-semibold text-[var(--foreground)]">
+              <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
                 الموقع
               </h3>
-              <p className="mb-4 text-[var(--text-muted)]">
+              <p className="mb-4 text-gray-600 dark:text-gray-300">
                 زورنا في مقرنا
               </p>
-              <p className="text-[var(--text-muted)]">
+              <p className="text-gray-600 dark:text-gray-300">
                 الرياض، المملكة العربية السعودية
               </p>
             </div>
@@ -619,16 +623,16 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-center">
                   <span className="ml-2 text-2xl">📍</span>
-                  <span className="text-gray-300">الرياض، المملكة العربية السعودية</span>
+                  <span className="text-gray-300">
+                    الرياض، المملكة العربية السعودية
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-            <p className="text-gray-300">
-              © 2024 مُعين. جميع الحقوق محفوظة.
-            </p>
+            <p className="text-gray-300">© 2024 مُعين. جميع الحقوق محفوظة.</p>
           </div>
         </div>
       </footer>

@@ -1,11 +1,7 @@
 "use client";
-
-import { useState } from 'react';
-import { ROUTES } from '@/constants/routes';
-
-
+import { useState } from "react";
+import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
-
 
 interface Appointment {
   id: string;
@@ -104,44 +100,31 @@ export default function AppointmentsPage() {
 
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
-      {/* Header */}
-      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
-        <div className="container-app py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Image
-                src="/logo.png"
-                alt="مُعين"
-                width={50}
-                height={50}
-                className="rounded-lg"
-              />
-              <div>
-                <h1 className="text-brand text-2xl font-bold">
-                  إدارة المواعيد
-                </h1>
-                <p className="text-gray-600 dark:text-gray-300">
-                  نظام التقويم المتطور
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setShowSidebar(!showSidebar)}
-                className="rounded-lg border border-gray-300 p-2 hover:bg-gray-50"
-              >
-                {showSidebar ? "إخفاء الشريط الجانبي" : "إظهار الشريط الجانبي"}
-              </button>
-              <button
-                onClick={() => setShowCreateModal(true)}
-                className="btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
-              >
-                إنشاء موعد
-              </button>
-            </div>
+      {/* Page Header */}
+      <div className="container-app py-8">
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-brand text-3xl font-bold">إدارة المواعيد</h1>
+            <p className="text-gray-600 dark:text-gray-300">
+              نظام التقويم المتطور
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowSidebar(!showSidebar)}
+              className="rounded-lg border border-gray-300 p-2 hover:bg-gray-50"
+            >
+              {showSidebar ? "إخفاء الشريط الجانبي" : "إظهار الشريط الجانبي"}
+            </button>
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
+            >
+              إنشاء موعد
+            </button>
           </div>
         </div>
-      </header>
+      </div>
 
       <div className="flex">
         {/* Sidebar */}

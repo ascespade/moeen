@@ -1,136 +1,161 @@
 "use client";
-
-import { useState } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 import {
-  Home,
-  Users,
-  Calendar,
-  MessageCircle,
-  FileText,
-  BarChart3,
-  Bell,
+  LayoutDashboard,
+  MessagesSquare,
+  Workflow,
+  ShieldCheck,
   Settings,
-  HelpCircle,
-  LogOut,
-  ChevronLeft,
-  ChevronRight,
+  Users,
 } from "lucide-react";
+import { useT } from "@/components/providers/I18nProvider";
+import Link from "next/link";
 
-const navigationItems = [
-  { href: "/", label: "الرئيسية", icon: Home },
-  { href: "/patients", label: "المرضى", icon: Users },
-  { href: "/appointments", label: "المواعيد", icon: Calendar },
-  { href: "/chatbot", label: "الشات بوت", icon: MessageCircle },
-  { href: "/reports", label: "التقارير", icon: BarChart3 },
-  { href: "/claims", label: "المطالبات", icon: FileText },
-  { href: "/notifications", label: "الإشعارات", icon: Bell },
-  { href: "/settings", label: "الإعدادات", icon: Settings },
+const adminItems = [
+  {
+    href: "/dashboard",
+    label: "nav.dashboard",
+    icon: <LayoutDashboard className="h-4 w-4" />,
+  },
+  {
+    href: "/conversations",
+    label: "nav.conversations",
+    icon: <MessagesSquare className="h-4 w-4" />,
+  },
+  { href: "/flow", label: "nav.flow", icon: <Workflow className="h-4 w-4" /> },
+  {
+    href: "/review",
+    label: "nav.review",
+    icon: <ShieldCheck className="h-4 w-4" />,
+  },
+  {
+    href: "/settings",
+    label: "nav.settings",
+    icon: <Settings className="h-4 w-4" />,
+  },
+  { href: "/users", label: "nav.users", icon: <Users className="h-4 w-4" /> },
+];
+const staffItems = [
+  {
+    href: "/dashboard",
+    label: "nav.dashboard",
+    icon: <LayoutDashboard className="h-4 w-4" />,
+  },
+  {
+    href: "/conversations",
+    label: "nav.conversations",
+    icon: <MessagesSquare className="h-4 w-4" />,
+  },
+];
+const viewerItems = [
+  {
+    href: "/dashboard",
+    label: "nav.dashboard",
+    icon: <LayoutDashboard className="h-4 w-4" />,
+  },
+  {
+    href: "/conversations",
+    label: "nav.conversations",
+    icon: <MessagesSquare className="h-4 w-4" />,
+  },
 ];
 
 export default function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
+  const role = "admin";
+  const items =
+    role === "admin" ? adminItems : role === "staff" ? staffItems : viewerItems;
+  const { t } = useT();
 
   return (
-    <div
-      className={`bg-[var(--panel)] border-l border-[var(--brand-border)] h-screen transition-all duration-300 ${
-        isCollapsed ? "w-16" : "w-64"
-      }`}
-    >
-      <div className="flex flex-col h-full">
-        {/* Header */}
-        <div className="p-6 border-b border-[var(--brand-border)]">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[var(--brand-primary)] rounded flex items-center justify-center">
-              <span className="text-white font-bold text-sm">م</span>
+    <>
+      {/* Overlay sidebar for mobile */}
+      <div
+        id="app-sidebar"
+        className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full fixed top-0 start-0 bottom-0 z-50 w-72 bg-white dark:bg-gray-900 border-e border-gray-200 dark:border-gray-800 transition-all duration-300 lg:hidden"
+      >
+        <div className="h-14 flex items-center px-4 border-b border-gray-200 dark:border-gray-800">
+          <div className="inline-flex items-center gap-3">
+            <div className="h-8 w-8 rounded-lg bg-brand text-white grid place-items-center">
+              م
             </div>
-            {!isCollapsed && (
-              <div>
-                <h1 className="text-lg font-bold text-[var(--foreground)]">معين</h1>
-                <p className="text-sm text-[var(--foreground)]/60">لوحة التحكم</p>
-              </div>
-            )}
+            <span className="text-lg font-bold text-gray-900 dark:text-white">
+              مركز الهمم
+            </span>
           </div>
         </div>
-
-        {/* Navigation */}
-        <nav className="flex-1 p-4">
-          <ul className="space-y-1">
-            {navigationItems.map((item) => {
-              const isActive = pathname === item.href;
-              const IconComponent = item.icon;
-
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                      isActive
-                        ? "bg-[var(--brand-primary)] text-white"
-                        : "text-[var(--foreground)] hover:bg-[var(--brand-surface)]"
-                    }`}
-                  >
-                    <IconComponent className="w-5 h-5" />
-                    {!isCollapsed && (
-                      <span className="text-sm font-medium">{item.label}</span>
-                    )}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+        <nav className="p-3 grid gap-1">
+          {items.map((item) => {
+            const active =
+              pathname === item.href || pathname.startsWith(item.href + "/");
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-3 h-11 rounded-lg inline-flex items-center gap-3 border transition-colors ${
+                  active
+                    ? "bg-brand text-white border-transparent"
+                    : "border-gray-200 dark:border-gray-800 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
+                }`}
+                data-hs-overlay="#app-sidebar"
+              >
+                <span>{item.icon}</span>
+                <span className="font-medium">{t(item.label, item.label)}</span>
+              </Link>
+            );
+          })}
         </nav>
-
-        {/* User Section */}
-        <div className="p-4 border-t border-[var(--brand-border)]">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 bg-[var(--brand-primary)] rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-bold">أ</span>
-            </div>
-            {!isCollapsed && (
-              <div>
-                <p className="text-sm font-medium text-[var(--foreground)]">
-                  admin@mu3een.com
-                </p>
-              </div>
-            )}
-          </div>
-
-          <div className="space-y-1">
-            <Link
-              href="/help"
-              className="flex items-center gap-3 px-4 py-2 text-[var(--foreground)] hover:bg-[var(--brand-surface)] rounded-lg transition-colors"
-            >
-              <HelpCircle className="w-4 h-4" />
-              {!isCollapsed && <span className="text-sm">المساعدة</span>}
-            </Link>
-            <Link
-              href="/logout"
-              className="flex items-center gap-3 px-4 py-2 text-[var(--foreground)] hover:bg-[var(--brand-surface)] rounded-lg transition-colors"
-            >
-              <LogOut className="w-4 h-4" />
-              {!isCollapsed && <span className="text-sm">تسجيل الخروج</span>}
-            </Link>
-          </div>
-        </div>
-
-        {/* Collapse Toggle */}
-        <div className="p-4">
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="w-full flex items-center justify-center p-2 text-[var(--foreground)] hover:bg-[var(--brand-surface)] rounded-lg transition-colors"
-          >
-            {isCollapsed ? (
-              <ChevronLeft className="w-4 h-4" />
-            ) : (
-              <ChevronRight className="w-4 h-4" />
-            )}
-          </button>
-        </div>
       </div>
-    </div>
+
+      {/* Static sidebar for desktop */}
+      <aside className="hidden lg:block w-64 shrink-0 border-e border-gray-200 dark:border-gray-800 min-h-dvh p-4 grid grid-rows-[auto_1fr_auto] bg-white dark:bg-gray-900">
+        <div className="mb-4">
+          <div className="flex items-center gap-3 mb-1">
+            <div className="h-8 w-8 rounded-lg bg-brand text-white grid place-items-center">
+              م
+            </div>
+            <span className="text-xl font-bold text-gray-900 dark:text-white">
+              مركز الهمم
+            </span>
+          </div>
+          <div className="text-xs text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full inline-block">
+            Mu&apos;ayin
+          </div>
+        </div>
+        <nav className="grid gap-1">
+          {items.map((item) => {
+            const active =
+              pathname === item.href || pathname.startsWith(item.href + "/");
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-3 h-11 rounded-lg inline-flex items-center gap-3 border transition-colors ${
+                  active
+                    ? "bg-brand text-white border-transparent"
+                    : "border-gray-200 dark:border-gray-800 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
+                }`}
+              >
+                <span>{item.icon}</span>
+                <span className="font-medium">{t(item.label, item.label)}</span>
+              </Link>
+            );
+          })}
+        </nav>
+        <div className="flex items-center gap-3 pt-6 border-t border-gray-200 dark:border-gray-800 mt-6">
+          <div className="h-10 w-10 rounded-full bg-brand text-white grid place-items-center">
+            م
+          </div>
+          <div className="text-sm">
+            <div className="font-semibold text-gray-900 dark:text-white">
+              مستخدم تجريبي
+            </div>
+            <button className="text-gray-500 hover:text-blue-600 transition-colors">
+              تسجيل الخروج
+            </button>
+          </div>
+        </div>
+      </aside>
+    </>
   );
 }

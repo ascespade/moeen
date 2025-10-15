@@ -3,6 +3,9 @@
  * A centralized system for generating unique IDs across the application
  */
 
+// Production CUID using @paralleldrive/cuid2
+import { createId } from "@paralleldrive/cuid2";
+
 // CUID alphabet (base 36 with custom characters for URL safety)
 const ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyz";
 
@@ -47,7 +50,7 @@ function hostname(): string {
 }
 
 /**
- * Generate a CUID
+ * Generate a CUID (Legacy implementation for backward compatibility)
  * Format: c + timestamp + counter + random + hostname
  */
 export function generateCuid(): string {
@@ -122,5 +125,72 @@ export function generateMultipleCuid(count: number, prefix?: string): string[] {
     prefix ? generateDbCuid(prefix) : generateCuid(),
   );
 }
+
+// ===== PRODUCTION CUID IMPLEMENTATION =====
+
+/**
+ * Generate a production-grade CUID using @paralleldrive/cuid2
+ * This is the recommended method for new implementations
+ */
+export function generateProductionCuid(): string {
+  return createId();
+}
+
+/**
+ * Generate a public ID with prefix for API use
+ * @param prefix - Prefix for the ID (default: 'pub')
+ * @returns Formatted public ID
+ */
+export function generatePublicId(prefix: string = "pub"): string {
+  return `${prefix}_${createId()}`;
+}
+
+/**
+ * Generate a short ID (last 8 characters)
+ * @returns Short ID string
+ */
+export function generateShortId(): string {
+  return createId().slice(-8);
+}
+
+/**
+ * Entity-specific CUID generators for all database tables
+ */
+export const cuidEntity = {
+  // Healthcare entities
+  patient: () => generatePublicId("pat"),
+  appointment: () => generatePublicId("apt"),
+  session: () => generatePublicId("ses"),
+  claim: () => generatePublicId("clm"),
+  doctor: () => generatePublicId("doc"),
+
+  // Chatbot entities
+  flow: () => generatePublicId("flw"),
+  node: () => generatePublicId("nod"),
+  edge: () => generatePublicId("edg"),
+  conversation: () => generatePublicId("cnv"),
+  message: () => generatePublicId("msg"),
+  template: () => generatePublicId("tpl"),
+  integration: () => generatePublicId("int"),
+
+  // CRM entities
+  lead: () => generatePublicId("led"),
+  deal: () => generatePublicId("del"),
+  activity: () => generatePublicId("act"),
+  contact: () => generatePublicId("cnt"),
+
+  // System entities
+  notification: () => generatePublicId("ntf"),
+  audit: () => generatePublicId("aud"),
+  role: () => generatePublicId("rol"),
+  setting: () => generatePublicId("set"),
+  user: () => generatePublicId("usr"),
+
+  // Generic
+  generic: () => generatePublicId("gen"),
+
+  // Custom prefix
+  custom: (prefix: string) => generatePublicId(prefix),
+};
 
 export default generateCuid;

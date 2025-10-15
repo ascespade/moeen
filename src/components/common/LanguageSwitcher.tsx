@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Languages } from "lucide-react";
 import { useI18n } from "@/hooks/useI18n";
-// import { dynamicThemeManager } from "@/lib/dynamic-theme-manager";
+import { dynamicThemeManager } from "@/lib/dynamic-theme-manager";
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -21,18 +21,12 @@ export default function LanguageSwitcher({
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useI18n(language);
 
-  // Load user preferences from database on mount
-  useEffect(() => {
-    loadUserPreferences();
-  }, []);
-
-  // Apply language changes
   // Function to load user preferences from database
   const loadUserPreferences = async () => {
     try {
       setIsLoading(true);
-      // const preferences = await dynamicThemeManager.getUserPreferences();
-      // setLanguage(preferences.language);
+      const preferences = await dynamicThemeManager.getUserPreferences();
+      setLanguage(preferences.language);
     } catch (error) {
       console.error("Failed to load preferences:", error);
     } finally {
@@ -42,9 +36,15 @@ export default function LanguageSwitcher({
 
   // Function to apply language to document
   const applyLanguage = useCallback(() => {
-    // dynamicThemeManager.applyLanguage(language);
+    dynamicThemeManager.applyLanguage(language);
   }, [language]);
 
+  // Load user preferences from database on mount
+  useEffect(() => {
+    loadUserPreferences();
+  }, []);
+
+  // Apply language changes
   useEffect(() => {
     if (!isLoading) {
       applyLanguage();
@@ -54,11 +54,13 @@ export default function LanguageSwitcher({
   // Toggle language function - reload page to apply translations
   const toggleLanguage = async () => {
     const newLanguage = language === "ar" ? "en" : "ar";
-    setLanguage(newLanguage as "ar" | "en");
-    
+    setLanguage(newLanguage);
+
     try {
       // Save to database
-      // await dynamicThemeManager.updateUserPreferences("current_user", { language: newLanguage });
+      await dynamicThemeManager.updateUserPreferences("current_user", {
+        language: newLanguage,
+      });
       // Reload page to apply translations
       window.location.reload();
     } catch (error) {
@@ -93,9 +95,8 @@ export default function LanguageSwitcher({
           value={language}
           onChange={(e) => {
             setLanguage(e.target.value as "ar" | "en");
-            // saveUserPreference("language", e.target.value).then(() => {
-            //   window.location.reload();
-            // });
+            // Save language preference and reload
+            window.location.reload();
           }}
           disabled={isLoading}
         >
