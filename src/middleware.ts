@@ -1,154 +1,113 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import {
-  authRateLimiter,
-  apiRateLimiter,
-  uploadRateLimiter,
-} from "@/lib/rate-limiter";
+/**
+ * Main Middleware - البرنامج الوسيط الرئيسي
+ * Combines all middleware components for comprehensive request handling
+ */
+
+import { NextRequest, NextResponse } from 'next/server';
+import { rateLimitMiddleware } from './middleware/rate-limiter';
+import { securityMiddleware } from './middleware/security';
+import { auditMiddleware, auditErrorMiddleware } from './middleware/audit';
+import { authorize } from './middleware/authorize';
+
+// Performance monitoring
+const performanceStart = new Map<string, number>();
 
 export async function middleware(request: NextRequest) {
-  const ip = request.ip || request.headers.get("x-forwarded-for") || "unknown";
-  const userAgent = request.headers.get("user-agent") || "";
-  const pathname = request.nextUrl.pathname;
+  const startTime = Date.now();
+  const requestId = `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  
+  // Store start time for performance monitoring
+  performanceStart.set(requestId, startTime);
 
-  // Skip middleware for static files and API health checks
-  if (
-    pathname.startsWith("/_next/") ||
-    pathname.startsWith("/static/") ||
-    pathname === "/health" ||
-    pathname === "/api/health"
-  ) {
-    return NextResponse.next();
-  }
-
-  // Rate limiting for authentication endpoints
-  if (pathname.startsWith("/api/auth/")) {
-    if (!authRateLimiter.isAllowed(ip)) {
-      return NextResponse.json(
-        {
-          error: "Too many authentication attempts",
-          retryAfter: Math.ceil(authRateLimiter.getResetTime(ip) / 1000),
-        },
-        {
-          status: 429,
-          headers: {
-            "Retry-After": Math.ceil(
-              authRateLimiter.getResetTime(ip) / 1000,
-            ).toString(),
-            "X-RateLimit-Limit": "5",
-            "X-RateLimit-Remaining": authRateLimiter
-              .getRemainingRequests(ip)
-              .toString(),
-            "X-RateLimit-Reset": authRateLimiter.getResetTime(ip).toString(),
-          },
-        },
-      );
+  try {
+    // 1. Security middleware (CORS, CSP, security headers)
+    const securityResponse = await securityMiddleware(request);
+    if (securityResponse) {
+      return securityResponse;
     }
-  }
 
-  // Rate limiting for upload endpoints
-  if (pathname.startsWith("/api/upload/")) {
-    if (!uploadRateLimiter.isAllowed(ip)) {
-      return NextResponse.json(
-        {
-          error: "Upload rate limit exceeded",
-          retryAfter: Math.ceil(uploadRateLimiter.getResetTime(ip) / 1000),
-        },
-        {
-          status: 429,
-          headers: {
-            "Retry-After": Math.ceil(
-              uploadRateLimiter.getResetTime(ip) / 1000,
-            ).toString(),
-            "X-RateLimit-Limit": "10",
-            "X-RateLimit-Remaining": uploadRateLimiter
-              .getRemainingRequests(ip)
-              .toString(),
-            "X-RateLimit-Reset": uploadRateLimiter.getResetTime(ip).toString(),
-          },
-        },
-      );
+    // 2. Rate limiting
+    const rateLimitResponse = await rateLimitMiddleware(request);
+    if (rateLimitResponse) {
+      return rateLimitResponse;
     }
-  }
 
-  // Rate limiting for general API endpoints
-  if (pathname.startsWith("/api/")) {
-    if (!apiRateLimiter.isAllowed(ip)) {
-      return NextResponse.json(
-        {
-          error: "Rate limit exceeded",
-          retryAfter: Math.ceil(apiRateLimiter.getResetTime(ip) / 1000),
-        },
-        {
-          status: 429,
-          headers: {
-            "Retry-After": Math.ceil(
-              apiRateLimiter.getResetTime(ip) / 1000,
-            ).toString(),
-            "X-RateLimit-Limit": "100",
-            "X-RateLimit-Remaining": apiRateLimiter
-              .getRemainingRequests(ip)
-              .toString(),
-            "X-RateLimit-Reset": apiRateLimiter.getResetTime(ip).toString(),
-          },
-        },
-      );
+    // 3. Authentication and authorization for protected routes
+    if (isProtectedRoute(request.nextUrl.pathname)) {
+      const authResult = await authorize()(request);
+      if (!authResult.success) {
+        return NextResponse.json(
+          { error: 'Unauthorized', message: 'Authentication required' },
+          { status: 401 }
+        );
+      }
     }
-  }
 
-  // Security headers for all responses
-  const response = NextResponse.next();
+    // 4. Continue with the request
+    const response = NextResponse.next();
 
-  // Add security headers
-  response.headers.set("X-Frame-Options", "DENY");
-  response.headers.set("X-Content-Type-Options", "nosniff");
-  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-  response.headers.set(
-    "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=()",
-  );
+    // 5. Add security headers to response
+    addSecurityHeaders(response);
 
-  // Content Security Policy
-  const csp = [
-    "default-src 'self'",
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
-    "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: https:",
-    "font-src 'self'",
-    "connect-src 'self' https://api.supabase.co",
-    "frame-ancestors 'none'",
-  ].join("; ");
+    // 6. Add performance headers
+    addPerformanceHeaders(response, startTime);
 
-  response.headers.set("Content-Security-Policy", csp);
+    // 7. Audit logging (async, don't wait)
+    setImmediate(() => {
+      auditMiddleware(request, response, startTime, Date.now());
+    });
 
-  // Add rate limit headers for API requests
-  if (pathname.startsWith("/api/")) {
-    response.headers.set("X-RateLimit-Limit", "100");
-    response.headers.set(
-      "X-RateLimit-Remaining",
-      apiRateLimiter.getRemainingRequests(ip).toString(),
-    );
-    response.headers.set(
-      "X-RateLimit-Reset",
-      apiRateLimiter.getResetTime(ip).toString(),
+    return response;
+
+  } catch (error) {
+    console.error('Middleware error:', error);
+    
+    // Audit error
+    setImmediate(() => {
+      auditErrorMiddleware(request, error as Error, startTime, Date.now());
+    });
+
+    return NextResponse.json(
+      { error: 'Internal server error', message: 'Request processing failed' },
+      { status: 500 }
     );
   }
-
-  // Bot detection and blocking
-  const suspiciousPatterns = [/bot/i, /crawler/i, /spider/i, /scraper/i];
-
-  if (suspiciousPatterns.some((pattern) => pattern.test(userAgent))) {
-    // Allow legitimate bots (Google, Bing, etc.)
-    const allowedBots = [/googlebot/i, /bingbot/i, /slurp/i, /duckduckbot/i];
-
-    if (!allowedBots.some((pattern) => pattern.test(userAgent))) {
-      return NextResponse.json({ error: "Access denied" }, { status: 403 });
-    }
-  }
-
-  return response;
 }
 
+function isProtectedRoute(pathname: string): boolean {
+  const protectedRoutes = [
+    '/api/admin',
+    '/api/patients',
+    '/api/doctors',
+    '/api/appointments',
+    '/api/medical-records',
+    '/api/payments',
+    '/api/insurance',
+    '/api/notifications',
+    '/api/reports',
+    '/api/chatbot',
+  ];
+
+  return protectedRoutes.some(route => pathname.startsWith(route));
+}
+
+function addSecurityHeaders(response: NextResponse): void {
+  // Additional security headers
+  response.headers.set('X-Request-ID', `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('X-Frame-Options', 'DENY');
+  response.headers.set('X-XSS-Protection', '1; mode=block');
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+}
+
+function addPerformanceHeaders(response: NextResponse, startTime: number): void {
+  const duration = Date.now() - startTime;
+  response.headers.set('X-Response-Time', `${duration}ms`);
+  response.headers.set('X-Processed-At', new Date().toISOString());
+}
+
+// Configure which paths the middleware should run on
 export const config = {
   matcher: [
     /*
@@ -158,6 +117,14 @@ export const config = {
      * - favicon.ico (favicon file)
      * - public folder
      */
-    "/((?!_next/static|_next/image|favicon.ico|public/).*)",
+    '/((?!_next/static|_next/image|favicon.ico|public/).*)',
   ],
+};
+
+// Export individual middleware functions for testing
+export {
+  rateLimitMiddleware,
+  securityMiddleware,
+  auditMiddleware,
+  auditErrorMiddleware,
 };
