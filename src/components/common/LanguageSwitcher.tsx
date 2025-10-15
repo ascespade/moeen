@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Languages } from "lucide-react";
 import { useI18n } from "@/hooks/useI18n";
-import { dynamicThemeManager } from "@/lib/dynamic-theme-manager";
+// import { dynamicThemeManager } from "@/lib/dynamic-theme-manager";
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -27,18 +27,12 @@ export default function LanguageSwitcher({
   }, []);
 
   // Apply language changes
-  useEffect(() => {
-    if (!isLoading) {
-      applyLanguage();
-    }
-  }, [language, isLoading, applyLanguage]);
-
   // Function to load user preferences from database
   const loadUserPreferences = async () => {
     try {
       setIsLoading(true);
-      const preferences = await dynamicThemeManager.getUserPreferences();
-      setLanguage(preferences.language);
+      // const preferences = await dynamicThemeManager.getUserPreferences();
+      // setLanguage(preferences.language);
     } catch (error) {
       console.error("Failed to load preferences:", error);
     } finally {
@@ -47,18 +41,24 @@ export default function LanguageSwitcher({
   };
 
   // Function to apply language to document
-  const applyLanguage = () => {
-    dynamicThemeManager.applyLanguage(language);
-  };
+  const applyLanguage = useCallback(() => {
+    // dynamicThemeManager.applyLanguage(language);
+  }, [language]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      applyLanguage();
+    }
+  }, [language, isLoading, applyLanguage]);
 
   // Toggle language function - reload page to apply translations
   const toggleLanguage = async () => {
     const newLanguage = language === "ar" ? "en" : "ar";
-    setLanguage(newLanguage);
+    setLanguage(newLanguage as "ar" | "en");
     
     try {
       // Save to database
-      await dynamicThemeManager.updateUserPreferences("current_user", { language: newLanguage });
+      // await dynamicThemeManager.updateUserPreferences("current_user", { language: newLanguage });
       // Reload page to apply translations
       window.location.reload();
     } catch (error) {
@@ -92,10 +92,10 @@ export default function LanguageSwitcher({
           className={`inline-flex items-center gap-2 rounded-md border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 ${sizeClasses[size]} ${textSizes[size]}`}
           value={language}
           onChange={(e) => {
-            setLanguage(e.target.value);
-            saveUserPreference("language", e.target.value).then(() => {
-              window.location.reload();
-            });
+            setLanguage(e.target.value as "ar" | "en");
+            // saveUserPreference("language", e.target.value).then(() => {
+            //   window.location.reload();
+            // });
           }}
           disabled={isLoading}
         >

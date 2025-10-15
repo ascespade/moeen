@@ -1,6 +1,7 @@
+"use client";
+
 import { useState } from 'react';
 import { ROUTES } from '@/constants/routes';
-"use client";
 
 
 import Link from "next/link";

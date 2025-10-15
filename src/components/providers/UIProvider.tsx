@@ -2,11 +2,16 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { atom } from "jotai";
 import useBrandColorFromLogo from "@/hooks/useBrandColorFromLogo";
 
 export type AppTheme = "light" | "dark";
 export type AppLang = "ar" | "en";
 export type AppRole = "admin" | "staff" | "viewer";
+
+// Jotai atoms for global state
+export const themeAtom = atom<AppTheme>("light");
+export const langAtom = atom<AppLang>("ar");
 
 declare global {
   interface Window {

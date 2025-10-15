@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-type BadgeVariant = "default" | "success" | "warning" | "danger" | "info";
+type BadgeVariant = "default" | "success" | "warning" | "danger" | "info" | "destructive" | "error" | "outline";
 
 export function Badge({
   className,
@@ -14,7 +14,10 @@ export function Badge({
     warning:
       "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200",
     danger: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
+    destructive: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
+    error: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
     info: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
+    outline: "bg-transparent border border-gray-300 text-gray-800 dark:border-gray-700 dark:text-gray-200",
   } as const;
 
   return (

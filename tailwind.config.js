@@ -2,7 +2,9 @@
 module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/preline/dist/*.js",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -53,31 +55,11 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         panel: "var(--panel)",
-        // Brown and orange theme colors
-        brown: {
-          50: "#fdf8f6",
-          100: "#f2e8e5",
-          200: "#eaddd7",
-          300: "#e0cec7",
-          400: "#d2bab0",
-          500: "#bfa094",
-          600: "#a18072",
-          700: "#977669",
-          800: "#846358",
-          900: "#43302b",
-        },
-        orange: {
-          50: "#fff7ed",
-          100: "#ffedd5",
-          200: "#fed7aa",
-          300: "#fdba74",
-          400: "#fb923c",
-          500: "#f97316",
-          600: "#ea580c",
-          700: "#c2410c",
-          800: "#9a3412",
-          900: "#7c2d12",
-        },
+        card: "var(--card-bg)",
+        input: "var(--input-bg)",
+        hover: "var(--hover-bg)",
+        muted: "var(--text-muted)",
+        secondary: "var(--text-secondary)",
       },
       backgroundImage: {
         "brand-gradient": "var(--brand-gradient)",
@@ -113,13 +95,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    (() => {
-      try {
-        return require("preline/plugin");
-      } catch {
-        return () => {};
-      }
-    })(),
-  ],
+  plugins: [],
 };

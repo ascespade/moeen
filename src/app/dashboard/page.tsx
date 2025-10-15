@@ -1,209 +1,258 @@
 "use client";
 
-import { useRequireAuth } from '@/hooks/useAuth';
-import { ROUTES } from '@/constants/routes';
-import { ChartsA, ChartsB, ChartsC } from '@/components/dashboard/Charts';
-
-
+import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { 
+  Users, 
+  Calendar, 
+  MessageCircle, 
+  FileText, 
+  Bell, 
+  Search,
+  CheckCircle,
+  TrendingUp,
+  TrendingDown
+} from "lucide-react";
 
-import KpiCard from "@/components/dashboard/KpiCard";
+// Dashboard Stats Data
+const dashboardStats = [
+  {
+    id: 1,
+    title: "إجمالي المرضى",
+    value: "1,234",
+    description: "مرضى مسجلين",
+    change: "+12% من الشهر الماضي",
+    changeType: "positive",
+    icon: Users,
+    color: "text-orange-500"
+  },
+  {
+    id: 2,
+    title: "المواعيد اليوم",
+    value: "28",
+    description: "مواعيد مجدولة",
+    change: "+5% من الشهر الماضي",
+    changeType: "positive",
+    icon: Calendar,
+    color: "text-orange-500"
+  },
+  {
+    id: 3,
+    title: "رسائل الشات بوت",
+    value: "156",
+    description: "ردود تلقائية",
+    change: "+23% من الشهر الماضي",
+    changeType: "positive",
+    icon: MessageCircle,
+    color: "text-orange-500"
+  },
+  {
+    id: 4,
+    title: "المطالبات المعلقة",
+    value: "12",
+    description: "تحتاج مراجعة",
+    change: "-8% من الشهر الماضي",
+    changeType: "negative",
+    icon: FileText,
+    color: "text-orange-500"
+  }
+];
 
+// Treatment Types Data
+const treatmentTypes = [
+  { name: "العلاج الطبيعي", value: 45, color: "bg-blue-500" },
+  { name: "العلاج الوظيفي", value: 30, color: "bg-green-500" },
+  { name: "العلاج النفسي", value: 15, color: "bg-purple-500" },
+  { name: "العلاج النطقي", value: 10, color: "bg-orange-500" }
+];
+
+// Recent Activity Data
+const recentActivities = [
+  {
+    id: 1,
+    type: "موعد جديد",
+    description: "تم حجز موعد مع د. أحمد العتيبي",
+    time: "منذ 5 دقائق",
+    icon: Calendar,
+    status: "success"
+  },
+  {
+    id: 2,
+    type: "مريض جديد",
+    description: "تم تسجيل مريض جديد: فاطمة السعيد",
+    time: "منذ 15 دقيقة",
+    icon: Users,
+    status: "success"
+  },
+  {
+    id: 3,
+    type: "رسالة شات بوت",
+    description: "رد تلقائي على استفسار حول العلاج الطبيعي",
+    time: "منذ 30 دقيقة",
+    icon: MessageCircle,
+    status: "success"
+  }
+];
 
 export default function DashboardPage() {
-  useRequireAuth("/login");
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <main className="min-h-screen bg-[var(--brand-surface)]">
-      {/* Top Bar */}
-      <div className="border-brand border-b bg-white dark:bg-gray-900">
-        <div className="container-app flex items-center justify-between py-4">
-          <h1 className="text-brand text-2xl font-bold">لوحة التحكم</h1>
-          <div className="text-sm text-gray-500">
-            اليوم: {new Date().toLocaleDateString("ar-SA")}
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+      {/* Top Header */}
+      <header className="bg-[var(--panel)] border-b border-[var(--brand-border)] px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-[var(--brand-primary)] rounded flex items-center justify-center">
+                <span className="text-white font-bold text-sm">م</span>
+              </div>
+              <h1 className="text-xl font-bold text-[var(--foreground)]">لوحة التحكم</h1>
+            </div>
+            <div className="text-sm text-[var(--foreground)]/70">
+              مرحباً بك في نظام إدارة مركز الهمم
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-sm">
+              <Users className="w-4 h-4 text-[var(--foreground)]/70" />
+              <span className="text-[var(--foreground)]">المستخدم</span>
+              <span className="text-[var(--foreground)]/70">مدير النظام</span>
+            </div>
+            
+            <div className="relative">
+              <Bell className="w-5 h-5 text-[var(--foreground)]/70" />
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                5
+              </span>
+            </div>
+            
+            <div className="relative">
+              <Search className="w-4 h-4 absolute right-3 top-1/2 transform -translate-y-1/2 text-[var(--foreground)]/50" />
+              <input
+                type="text"
+                placeholder="بحث..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-[var(--brand-surface)] border border-[var(--brand-border)] rounded-lg px-4 py-2 pr-10 text-[var(--foreground)] placeholder-[var(--foreground)]/50 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]"
+              />
+            </div>
           </div>
         </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="flex">
+        {/* Main Content Area */}
+        <main className="flex-1 p-6">
+          {/* Dashboard Stats Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {dashboardStats.map((stat) => {
+              const IconComponent = stat.icon;
+              return (
+                <div key={stat.id} className="bg-[var(--panel)] border border-[var(--brand-border)] rounded-lg p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <IconComponent className={`w-8 h-8 ${stat.color}`} />
+                    <div className="flex items-center gap-1">
+                      {stat.changeType === "positive" ? (
+                        <TrendingUp className="w-4 h-4 text-green-500" />
+                      ) : (
+                        <TrendingDown className="w-4 h-4 text-red-500" />
+                      )}
+                      <span className={`text-sm ${
+                        stat.changeType === "positive" ? "text-green-500" : "text-red-500"
+                      }`}>
+                        {stat.change}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-sm text-[var(--foreground)]/70 mb-2">{stat.title}</h3>
+                  <div className="text-3xl font-bold text-[var(--brand-primary)] mb-1">
+                    {stat.value}
+                  </div>
+                  <p className="text-sm text-[var(--foreground)]/60">{stat.description}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Bottom Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Treatment Types Distribution */}
+            <div className="bg-[var(--panel)] border border-[var(--brand-border)] rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-[var(--foreground)] mb-6">
+                توزيع أنواع العلاج
+              </h3>
+              
+              <div className="flex items-center justify-center mb-6">
+                <div className="relative w-48 h-48">
+                  {/* Doughnut Chart Placeholder */}
+                  <div className="w-full h-full rounded-full border-8 border-[var(--brand-border)] flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold text-[var(--brand-primary)]">100</div>
+                      <div className="text-sm text-[var(--foreground)]/70">إجمالي</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-3">
+                {treatmentTypes.map((type, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-3 h-3 rounded-full ${type.color}`}></div>
+                      <span className="text-sm text-[var(--foreground)]">{type.name}</span>
+                    </div>
+                    <span className="text-sm font-semibold text-[var(--foreground)]">{type.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Recent Activity */}
+            <div className="bg-[var(--panel)] border border-[var(--brand-border)] rounded-lg p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-semibold text-[var(--foreground)]">
+                  النشاط الأخير
+                </h3>
+                <Link href="/activities" className="text-sm text-[var(--brand-primary)] hover:underline">
+                  عرض الكل
+                </Link>
+              </div>
+              
+              <div className="space-y-4">
+                {recentActivities.map((activity) => {
+                  const IconComponent = activity.icon;
+                  return (
+                    <div key={activity.id} className="flex items-start gap-3">
+                      <div className="flex-shrink-0">
+                        <IconComponent className="w-5 h-5 text-[var(--foreground)]/70" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-sm font-medium text-[var(--foreground)]">
+                            {activity.type}:
+                          </span>
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                        </div>
+                        <p className="text-sm text-[var(--foreground)]/80 mb-1">
+                          {activity.description}
+                        </p>
+                        <p className="text-xs text-[var(--foreground)]/60">
+                          {activity.time}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
-
-      {/* Content */}
-      <div className="container-app grid grid-cols-1 gap-6 py-6 lg:grid-cols-12">
-        {/* Sidebar */}
-        <aside className="space-y-4 lg:col-span-3">
-          <div className="card">
-            <div className="card-header">
-              <div className="flex items-center gap-2">
-                <div className="bg-brand flex h-6 w-6 items-center justify-center rounded-md">
-                  <span className="text-xs text-white">📊</span>
-                </div>
-                <h3 className="card-title">التنقل</h3>
-              </div>
-            </div>
-            <ul className="space-y-3">
-              <li>
-                <a className="nav-link" href="#stats">
-                  <span className="bg-brand h-2 w-2 rounded-full"></span>
-                  الإحصائيات
-                </a>
-              </li>
-              <li>
-                <a className="nav-link" href="#charts">
-                  <span className="h-2 w-2 rounded-full bg-[var(--brand-secondary)]"></span>
-                  الرسوم البيانية
-                </a>
-              </li>
-              <li>
-                <a className="nav-link" href="#activity">
-                  <span className="h-2 w-2 rounded-full bg-[var(--brand-accent)]"></span>
-                  آخر الأنشطة
-                </a>
-              </li>
-              <li>
-                <Link className="nav-link" href={ROUTES.SETTINGS}>
-                  <span className="h-2 w-2 rounded-full bg-gray-400"></span>
-                  الإعدادات
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="card">
-            <div className="card-header">
-              <div className="flex items-center gap-2">
-                <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[var(--brand-secondary)]">
-                  <span className="text-xs text-white">🤖</span>
-                </div>
-                <h3 className="card-title">الروبوت (Chatbot)</h3>
-              </div>
-            </div>
-            <ul className="space-y-3">
-              <li>
-                <Link className="nav-link" href={ROUTES.CHATBOT.FLOWS}>
-                  <span className="h-2 w-2 rounded-full bg-[var(--brand-secondary)]"></span>
-                  تدفقات المحادثة
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link" href={ROUTES.CHATBOT.TEMPLATES}>
-                  <span className="h-2 w-2 rounded-full bg-[var(--brand-secondary)]"></span>
-                  قوالب الرسائل
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link" href={ROUTES.CHATBOT.INTEGRATIONS}>
-                  <span className="h-2 w-2 rounded-full bg-[var(--brand-secondary)]"></span>
-                  التكاملات
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link" href={ROUTES.CHATBOT.ANALYTICS}>
-                  <span className="h-2 w-2 rounded-full bg-[var(--brand-secondary)]"></span>
-                  التحليلات
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="card">
-            <div className="card-header">
-              <div className="flex items-center gap-2">
-                <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[var(--brand-accent)]">
-                  <span className="text-xs text-white">👥</span>
-                </div>
-                <h3 className="card-title">إدارة علاقات العملاء (CRM)</h3>
-              </div>
-            </div>
-            <ul className="space-y-3">
-              <li>
-                <Link className="nav-link" href={ROUTES.CRM.CONTACTS}>
-                  <span className="h-2 w-2 rounded-full bg-[var(--brand-accent)]"></span>
-                  جهات الاتصال
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link" href={ROUTES.CRM.LEADS}>
-                  <span className="h-2 w-2 rounded-full bg-[var(--brand-accent)]"></span>
-                  العملاء المحتملون
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link" href={ROUTES.CRM.DEALS}>
-                  <span className="h-2 w-2 rounded-full bg-[var(--brand-accent)]"></span>
-                  الصفقات
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link" href={ROUTES.CRM.ACTIVITIES}>
-                  <span className="h-2 w-2 rounded-full bg-[var(--brand-accent)]"></span>
-                  الأنشطة
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="card">
-            <div className="card-header">
-              <div className="flex items-center gap-2">
-                <div className="flex h-6 w-6 items-center justify-center rounded-md bg-green-500">
-                  <span className="text-xs text-white">✅</span>
-                </div>
-                <h3 className="card-title">حالة النظام</h3>
-              </div>
-            </div>
-            <div className="status-success">كل الخدمات تعمل بشكل طبيعي</div>
-          </div>
-        </aside>
-
-        {/* Main */}
-        <section className="space-y-6 lg:col-span-9">
-          {/* KPIs */}
-          <div id="stats" className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            <KpiCard title="المستخدمون" value="1,248" hint="+4% هذا الأسبوع" />
-            <KpiCard title="القنوات" value="12" hint="-1% هذا الأسبوع" />
-            <KpiCard title="المحادثات" value="3,420" hint="+12%" />
-            <KpiCard title="الرسائل" value="18,305" hint="+7%" />
-          </div>
-
-          {/* Charts */}
-          <div id="charts" className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">النشاط اليومي</h3>
-              </div>
-              <ChartsA />
-            </div>
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">مقارنة أسبوعية</h3>
-              </div>
-              <ChartsB />
-            </div>
-            <div className="card xl:col-span-2">
-              <div className="card-header">
-                <h3 className="card-title">توزيع القنوات</h3>
-              </div>
-              <ChartsC />
-            </div>
-          </div>
-
-          {/* Activity */}
-          <div id="activity" className="card">
-            <div className="card-header">
-              <h3 className="card-title">آخر الأنشطة</h3>
-            </div>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-center gap-2">
-                <span className="bg-brand h-2 w-2 rounded-full"></span>
-                تم إنشاء قناة جديدة: الدعم الفني
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[var(--brand-secondary)]"></span>
-                تم إضافة مستخدم: Ahmed@example.com
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[var(--brand-accent)]"></span>
-                تم استقبال 230 رسالة خلال الساعة الماضية
-              </li>
-            </ul>
-          </div>
-        </section>
-      </div>
-    </main>
+    </div>
   );
 }

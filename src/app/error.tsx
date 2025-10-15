@@ -17,7 +17,7 @@ export default function GlobalError({
         {/* Logo */}
         <div className="mb-8">
           <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="Hemam Logo"
             width={80}
             height={80}
