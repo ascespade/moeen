@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { authorize } from '@/lib/auth/authorize';
 import { emailService } from '@/lib/notifications/email';
+import { smsService } from '@/lib/notifications/sms';
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,7 +22,8 @@ export async function POST(request: NextRequest) {
       patientId, 
       appointmentId, 
       customMessage,
-      notificationData = {} 
+      notificationData = {},
+      channels = ['email'] // email, sms, both
     } = await request.json();
 
     if (!type || !patientId) {
@@ -43,27 +45,38 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
     }
 
-    // Get user email if patient doesn't have direct email
+    // Get user email and phone if patient doesn't have direct contact info
     let patientEmail = patient.email;
-    if (!patientEmail && patient.user_id) {
+    let patientPhone = patient.phone;
+    
+    if ((!patientEmail || !patientPhone) && patient.user_id) {
       const { data: user, error: userError } = await supabase
         .from('users')
-        .select('email')
+        .select('email, meta')
         .eq('id', patient.user_id)
         .single();
 
       if (!userError && user) {
-        patientEmail = user.email;
+        if (!patientEmail) patientEmail = user.email;
+        if (!patientPhone) patientPhone = user.meta?.phone;
       }
     }
 
-    if (!patientEmail) {
+    if (channels.includes('email') && !patientEmail) {
       return NextResponse.json({ error: 'Patient email not found' }, { status: 400 });
     }
 
-    let result;
+    if (channels.includes('sms') && !patientPhone) {
+      return NextResponse.json({ error: 'Patient phone not found' }, { status: 400 });
+    }
 
-    switch (type) {
+    const results = [];
+
+    // Send email notifications
+    if (channels.includes('email') || channels.includes('both')) {
+      let emailResult;
+
+      switch (type) {
       case 'appointment_confirmation':
         if (!appointmentId) {
           return NextResponse.json({ error: 'Appointment ID required for appointment confirmation' }, { status: 400 });
@@ -85,7 +98,7 @@ export async function POST(request: NextRequest) {
         }
 
         const appointmentDate = new Date(appointment.scheduled_at);
-        result = await emailService.sendAppointmentConfirmation({
+        emailResult = await emailService.sendAppointmentConfirmation({
           patientEmail,
           patientName: patient.full_name,
           doctorName: appointment.doctors.users.email, // This should be doctor name
@@ -106,7 +119,7 @@ export async function POST(request: NextRequest) {
           }, { status: 400 });
         }
 
-        result = await emailService.sendPaymentConfirmation({
+        emailResult = await emailService.sendPaymentConfirmation({
           patientEmail,
           patientName: patient.full_name,
           amount,
@@ -137,7 +150,7 @@ export async function POST(request: NextRequest) {
         }
 
         const reminderDate = new Date(reminderAppointment.scheduled_at);
-        result = await emailService.sendAppointmentReminder({
+        emailResult = await emailService.sendAppointmentReminder({
           patientEmail,
           patientName: patient.full_name,
           doctorName: reminderAppointment.doctors.users.email, // This should be doctor name
@@ -151,11 +164,110 @@ export async function POST(request: NextRequest) {
 
       default:
         return NextResponse.json({ error: 'Invalid notification type' }, { status: 400 });
+      }
+
+      if (emailResult) {
+        results.push({ channel: 'email', ...emailResult });
+      }
     }
 
-    if (!result.success) {
+    // Send SMS notifications
+    if (channels.includes('sms') || channels.includes('both')) {
+      let smsResult;
+
+      switch (type) {
+        case 'appointment_confirmation':
+          if (appointmentId) {
+            const { data: smsAppointment, error: smsAppointmentError } = await supabase
+              .from('appointments')
+              .select(`
+                id,
+                scheduled_at,
+                doctors!inner(users!inner(email))
+              `)
+              .eq('id', appointmentId)
+              .single();
+
+            if (!smsAppointmentError && smsAppointment) {
+              const smsAppointmentDate = new Date(smsAppointment.scheduled_at);
+              smsResult = await smsService.sendAppointmentConfirmation({
+                patientPhone,
+                patientName: patient.full_name,
+                doctorName: smsAppointment.doctors.users.email,
+                appointmentDate: smsAppointmentDate.toLocaleDateString('ar-SA'),
+                appointmentTime: smsAppointmentDate.toLocaleTimeString('ar-SA', { 
+                  hour: '2-digit', 
+                  minute: '2-digit' 
+                })
+              });
+            }
+          }
+          break;
+
+        case 'payment_confirmation':
+          const { amount, paymentMethod, transactionId } = notificationData;
+          if (amount && paymentMethod) {
+            smsResult = await smsService.sendPaymentConfirmation({
+              patientPhone,
+              patientName: patient.full_name,
+              amount,
+              paymentMethod
+            });
+          }
+          break;
+
+        case 'appointment_reminder':
+          if (appointmentId) {
+            const { data: smsReminderAppointment, error: smsReminderError } = await supabase
+              .from('appointments')
+              .select(`
+                id,
+                scheduled_at,
+                doctors!inner(users!inner(email))
+              `)
+              .eq('id', appointmentId)
+              .single();
+
+            if (!smsReminderError && smsReminderAppointment) {
+              const smsReminderDate = new Date(smsReminderAppointment.scheduled_at);
+              smsResult = await smsService.sendAppointmentReminder({
+                patientPhone,
+                patientName: patient.full_name,
+                doctorName: smsReminderAppointment.doctors.users.email,
+                appointmentDate: smsReminderDate.toLocaleDateString('ar-SA'),
+                appointmentTime: smsReminderDate.toLocaleTimeString('ar-SA', { 
+                  hour: '2-digit', 
+                  minute: '2-digit' 
+                })
+              });
+            }
+          }
+          break;
+
+        case 'insurance_claim_update':
+          const { claimStatus, provider } = notificationData;
+          if (claimStatus && provider) {
+            smsResult = await smsService.sendInsuranceClaimUpdate({
+              patientPhone,
+              patientName: patient.full_name,
+              claimStatus,
+              provider
+            });
+          }
+          break;
+      }
+
+      if (smsResult) {
+        results.push({ channel: 'sms', ...smsResult });
+      }
+    }
+
+    // Check if any notification failed
+    const failedResults = results.filter(result => !result.success);
+    if (failedResults.length > 0) {
       return NextResponse.json({ 
-        error: result.error || 'Failed to send notification' 
+        error: 'Some notifications failed', 
+        details: failedResults 
       }, { status: 500 });
     }
 
