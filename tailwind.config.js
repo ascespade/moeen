@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const { BRAND_COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS, BREAKPOINTS, Z_INDEX, ANIMATION, RTL } = require('./src/design-system/tokens');
+
 module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,39 +10,30 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        sans: [
-          "var(--font-cairo)",
-          "var(--font-inter)",
-          "system-ui",
-          "sans-serif",
-        ],
-      },
-      spacing: {
-        1.5: "0.375rem",
-        4.5: "1.125rem",
-        7: "1.75rem",
-        9: "2.25rem",
-        11: "2.75rem",
-      },
+      // Font families from design system
+      fontFamily: TYPOGRAPHY.fontFamily,
+      
+      // Spacing from design system
+      spacing: SPACING,
+      
+      // Container configuration
       container: {
         center: true,
         padding: {
-          DEFAULT: "1rem",
-          sm: "1rem",
-          md: "1.25rem",
-          lg: "1.5rem",
-          xl: "2rem",
+          DEFAULT: SPACING[4],
+          sm: SPACING[4],
+          md: SPACING[5],
+          lg: SPACING[6],
+          xl: SPACING[8],
         },
-        screens: {
-          sm: "640px",
-          md: "768px",
-          lg: "1024px",
-          xl: "1280px",
-          "2xl": "1440px",
-        },
+        screens: BREAKPOINTS,
       },
+      
+      // Breakpoints from design system
+      screens: BREAKPOINTS,
+      // Colors from design system
       colors: {
+        // Brand colors
         brand: {
           primary: "var(--brand-primary)",
           "primary-hover": "var(--brand-primary-hover)",
@@ -52,100 +45,79 @@ module.exports = {
           border: "var(--brand-border)",
           surface: "var(--brand-surface)",
         },
+        
+        // System colors
         background: "var(--background)",
         foreground: "var(--foreground)",
         panel: "var(--panel)",
-        // Centralized aliases to keep legacy classes consistent with brand
+        
+        // Design system color palettes
+        orange: BRAND_COLORS.primary,
+        brown: BRAND_COLORS.secondary,
+        neutral: BRAND_COLORS.neutral,
+        
+        // Legacy color mappings - map to orange (primary)
         blue: {
           50: "color-mix(in oklab, var(--brand-primary) 5%, #fff)",
           100: "color-mix(in oklab, var(--brand-primary) 10%, #fff)",
+          200: "color-mix(in oklab, var(--brand-primary) 20%, #fff)",
+          300: "color-mix(in oklab, var(--brand-primary) 30%, #fff)",
+          400: "color-mix(in oklab, var(--brand-primary) 40%, #fff)",
           500: "var(--brand-primary)",
-          600: "var(--brand-primary)",
+          600: "var(--brand-primary-hover)",
           700: "var(--brand-primary-hover)",
+          800: "var(--brand-primary-hover)",
+          900: "var(--brand-primary-hover)",
         },
         purple: {
-          50: "#fffbeb", // amber-50
-          100: "#fef3c7", // amber-100
-          600: "#b45309", // amber-700
+          50: "color-mix(in oklab, var(--brand-primary) 5%, #fff)",
+          100: "color-mix(in oklab, var(--brand-primary) 10%, #fff)",
+          200: "color-mix(in oklab, var(--brand-primary) 20%, #fff)",
+          300: "color-mix(in oklab, var(--brand-primary) 30%, #fff)",
+          400: "color-mix(in oklab, var(--brand-primary) 40%, #fff)",
+          500: "var(--brand-primary)",
+          600: "var(--brand-primary-hover)",
+          700: "var(--brand-primary-hover)",
+          800: "var(--brand-primary-hover)",
+          900: "var(--brand-primary-hover)",
         },
         indigo: {
-          50: "#fdf8f6", // brown-50
-          100: "#f2e8e5", // brown-100
-          600: "#a18072", // brown-600
-        },
-        // Brown and orange theme colors
-        brown: {
-          50: "#fdf8f6",
-          100: "#f2e8e5",
-          200: "#eaddd7",
-          300: "#e0cec7",
-          400: "#d2bab0",
-          500: "#bfa094",
-          600: "#a18072",
-          700: "#977669",
-          800: "#846358",
-          900: "#43302b",
-        },
-        orange: {
-          50: "#fff7ed",
-          100: "#ffedd5",
-          200: "#fed7aa",
-          300: "#fdba74",
-          400: "#fb923c",
-          500: "#f97316",
-          600: "#ea580c",
-          700: "#c2410c",
-          800: "#9a3412",
-          900: "#7c2d12",
-        },
-        // Centralize legacy blue/purple/indigo usages to brand orange
-        blue: {
-          50: "rgb(245,130,32)",
-          100: "rgb(245,130,32)",
-          200: "rgb(245,130,32)",
-          300: "rgb(245,130,32)",
-          400: "rgb(245,130,32)",
-          500: "rgb(245,130,32)",
-          600: "rgb(245,130,32)",
-          700: "rgb(210,111,24)",
-          800: "rgb(194,94,15)",
-          900: "rgb(124,45,18)",
-        },
-        purple: {
-          50: "rgb(245,130,32)",
-          100: "rgb(245,130,32)",
-          200: "rgb(245,130,32)",
-          300: "rgb(245,130,32)",
-          400: "rgb(245,130,32)",
-          500: "rgb(245,130,32)",
-          600: "rgb(245,130,32)",
-          700: "rgb(210,111,24)",
-          800: "rgb(194,94,15)",
-          900: "rgb(124,45,18)",
-        },
-        indigo: {
-          50: "rgb(245,130,32)",
-          100: "rgb(245,130,32)",
-          200: "rgb(245,130,32)",
-          300: "rgb(245,130,32)",
-          400: "rgb(245,130,32)",
-          500: "rgb(245,130,32)",
-          600: "rgb(245,130,32)",
-          700: "rgb(210,111,24)",
-          800: "rgb(194,94,15)",
-          900: "rgb(124,45,18)",
+          50: "color-mix(in oklab, var(--brand-primary) 5%, #fff)",
+          100: "color-mix(in oklab, var(--brand-primary) 10%, #fff)",
+          200: "color-mix(in oklab, var(--brand-primary) 20%, #fff)",
+          300: "color-mix(in oklab, var(--brand-primary) 30%, #fff)",
+          400: "color-mix(in oklab, var(--brand-primary) 40%, #fff)",
+          500: "var(--brand-primary)",
+          600: "var(--brand-primary-hover)",
+          700: "var(--brand-primary-hover)",
+          800: "var(--brand-primary-hover)",
+          900: "var(--brand-primary-hover)",
         },
       },
-      backgroundImage: {
-        "brand-gradient": "var(--brand-gradient)",
-        "brand-gradient-2": "var(--brand-gradient-2)",
-        "brand-gradient-3": "var(--brand-gradient-3)",
-      },
+      // Typography from design system
+      fontSize: TYPOGRAPHY.fontSize,
+      fontWeight: TYPOGRAPHY.fontWeight,
+      letterSpacing: TYPOGRAPHY.letterSpacing,
+      lineHeight: TYPOGRAPHY.lineHeight,
+      
+      // Border radius from design system
+      borderRadius: BORDER_RADIUS,
+      
+      // Shadows from design system
+      boxShadow: SHADOWS,
+      
+      // Z-index from design system
+      zIndex: Z_INDEX,
+      
+      // Animation from design system
       animation: {
         "fade-in-up": "fadeInUp 0.6s ease-out",
         "slide-in-right": "slideInRight 0.6s ease-out",
         "pulse-soft": "pulse 2s infinite",
+        ...ANIMATION.duration,
       },
+      
+      // Keyframes
       keyframes: {
         fadeInUp: {
           "0%": {
@@ -167,6 +139,13 @@ module.exports = {
             transform: "translate3d(0, 0, 0)",
           },
         },
+      },
+      
+      // Background images
+      backgroundImage: {
+        "brand-gradient": "var(--brand-gradient)",
+        "brand-gradient-2": "var(--brand-gradient-2)",
+        "brand-gradient-3": "var(--brand-gradient-3)",
       },
     },
   },
