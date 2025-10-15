@@ -1,44 +1,71 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { authorize } from '@/lib/auth/authorize';
+import { validateData, appointmentUpdateSchema } from '@/lib/validation/schemas';
 
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
-    const supabase = createClient();
+    const { user, error: authError } = await authorize(request);
+    
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
-    const { data: appointment, error } = await supabase
+    const supabase = createClient();
+    const appointmentId = params.id;
+
+    const { data: appointment, error: appointmentError } = await supabase
       .from('appointments')
       .select(`
-        *,
-        patients!appointments_patient_id_fkey(
-          first_name,
-          last_name,
-          phone,
-          email
-        ),
-        doctors!appointments_doctor_id_fkey(
-          first_name,
-          last_name,
-          specialty,
-          phone
-        )
+        id,
+        public_id,
+        patient_id,
+        doctor_id,
+        scheduled_at,
+        status,
+        payment_status,
+        created_at,
+        updated_at,
+        patients!inner(id, full_name, phone, user_id),
+        doctors!inner(id, speciality, user_id)
       `)
-      .eq('id', id)
+      .eq('id', appointmentId)
       .single();
 
-    if (error) {
-      return NextResponse.json(
-        { error: 'Appointment not found' },
-        { status: 404 }
-      );
+    if (appointmentError || !appointment) {
+      return NextResponse.json({ error: 'Appointment not found' }, { status: 404 });
+    }
+
+    // Check permissions
+    if (user.role === 'patient' && appointment.patients.user_id !== user.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+    if (user.role === 'doctor' && appointment.doctors.user_id !== user.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
     return NextResponse.json({
-      success: true,
-      appointment
+      appointment: {
+        id: appointment.id,
+        publicId: appointment.public_id,
+        patient: {
+          id: appointment.patients.id,
+          name: appointment.patients.full_name,
+          phone: appointment.patients.phone
+        },
+        doctor: {
+          id: appointment.doctors.id,
+          speciality: appointment.doctors.speciality
+        },
+        scheduledAt: appointment.scheduled_at,
+        status: appointment.status,
+        paymentStatus: appointment.payment_status,
+        createdAt: appointment.created_at,
+        updatedAt: appointment.updated_at
+      }
     });
 
   } catch (error) {
@@ -54,131 +81,102 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
-    const updates = await request.json();
-    const supabase = createClient();
+    const { user, error: authError } = await authorize(request);
+    
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
-    // التحقق من وجود الموعد
-    const { data: existingAppointment, error: fetchError } = await supabase
+    const body = await request.json();
+    const validation = validateData(appointmentUpdateSchema, body);
+
+    if (!validation.success) {
+      return NextResponse.json({ 
+        error: 'Validation failed', 
+        details: validation.errors 
+      }, { status: 400 });
+    }
+
+    const supabase = createClient();
+    const appointmentId = params.id;
+
+    // Get current appointment
+    const { data: currentAppointment, error: getError } = await supabase
       .from('appointments')
-      .select('*')
-      .eq('id', id)
+      .select(`
+        id,
+        patient_id,
+        doctor_id,
+        status,
+        patients!inner(user_id),
+        doctors!inner(user_id)
+      `)
+      .eq('id', appointmentId)
       .single();
 
-    if (fetchError || !existingAppointment) {
-      return NextResponse.json(
-        { error: 'Appointment not found' },
-        { status: 404 }
-      );
+    if (getError || !currentAppointment) {
+      return NextResponse.json({ error: 'Appointment not found' }, { status: 404 });
     }
 
-    // التحقق من توفر الموعد الجديد إذا تم تغيير الوقت
-    if (updates.appointment_date || updates.appointment_time || updates.doctor_id) {
-      const checkDate = updates.appointment_date || existingAppointment.appointment_date;
-      const checkTime = updates.appointment_time || existingAppointment.appointment_time;
-      const checkDoctor = updates.doctor_id || existingAppointment.doctor_id;
-
-      const { data: conflictingAppointment, error: checkError } = await supabase
-        .from('appointments')
-        .select('id')
-        .eq('doctor_id', checkDoctor)
-        .eq('appointment_date', checkDate)
-        .eq('appointment_time', checkTime)
-        .eq('status', 'scheduled')
-        .neq('id', id)
-        .single();
-
-      if (conflictingAppointment) {
-        return NextResponse.json(
-          { error: 'This time slot is already booked' },
-          { status: 409 }
-        );
-      }
+    // Check permissions
+    if (user.role === 'patient' && currentAppointment.patients.user_id !== user.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+    if (user.role === 'doctor' && currentAppointment.doctors.user_id !== user.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    // تحديث الموعد
+    // Update appointment
     const { data: appointment, error: updateError } = await supabase
       .from('appointments')
       .update({
-        ...updates,
+        ...validation.data,
         updated_at: new Date().toISOString()
       })
-      .eq('id', id)
+      .eq('id', appointmentId)
       .select(`
-        *,
-        patients!appointments_patient_id_fkey(
-          first_name,
-          last_name,
-          phone,
-          email
-        ),
-        doctors!appointments_doctor_id_fkey(
-          first_name,
-          last_name,
-          specialty,
-          phone
-        )
+        id,
+        public_id,
+        patient_id,
+        doctor_id,
+        scheduled_at,
+        status,
+        payment_status,
+        patients!inner(full_name),
+        doctors!inner(speciality)
       `)
       .single();
 
     if (updateError) {
-      return NextResponse.json(
-        { error: 'Failed to update appointment' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to update appointment' }, { status: 500 });
     }
+
+    // Log appointment update
+    await supabase
+      .from('audit_logs')
+      .insert({
+        action: 'appointment_updated',
+        user_id: user.id,
+        resource_type: 'appointment',
+        resource_id: appointmentId,
+        metadata: {
+          old_status: currentAppointment.status,
+          new_status: appointment.status,
+          patient_name: appointment.patients.full_name
+        }
+      });
 
     return NextResponse.json({
       success: true,
-      appointment
-    });
-
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
-}
-
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const { id } = params;
-    const supabase = createClient();
-
-    // التحقق من وجود الموعد
-    const { data: existingAppointment, error: fetchError } = await supabase
-      .from('appointments')
-      .select('*')
-      .eq('id', id)
-      .single();
-
-    if (fetchError || !existingAppointment) {
-      return NextResponse.json(
-        { error: 'Appointment not found' },
-        { status: 404 }
-      );
-    }
-
-    // حذف الموعد
-    const { error: deleteError } = await supabase
-      .from('appointments')
-      .delete()
-      .eq('id', id);
-
-    if (deleteError) {
-      return NextResponse.json(
-        { error: 'Failed to delete appointment' },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: 'Appointment deleted successfully'
+      appointment: {
+        id: appointment.id,
+        publicId: appointment.public_id,
+        patientName: appointment.patients.full_name,
+        doctorSpeciality: appointment.doctors.speciality,
+        scheduledAt: appointment.scheduled_at,
+        status: appointment.status,
+        paymentStatus: appointment.payment_status
+      }
     });
 
   } catch (error) {
