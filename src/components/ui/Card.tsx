@@ -25,21 +25,12 @@ export function CardDescription({
   className,
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p className={clsx("form-help", className)} {...props} />;
-}
-
-export function CardTitle({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <h3 className={clsx("card-title", className)} {...props} />;
-}
-
-export function CardFooter({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={clsx("card-footer", className)} {...props} />;
+  return (
+    <p
+      className={clsx("text-sm text-[var(--foreground)]/60", className)}
+      {...props}
+    />
+  );
 }
 
 export function CardTitle({
@@ -54,16 +45,11 @@ export function CardTitle({
   );
 }
 
-export function CardDescription({
+export function CardFooter({
   className,
   ...props
-}: React.HTMLAttributes<HTMLParagraphElement>) {
-  return (
-    <p
-      className={clsx("text-sm text-[var(--foreground)]/60", className)}
-      {...props}
-    />
-  );
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={clsx("card-footer", className)} {...props} />;
 }
 
 export default Card;
