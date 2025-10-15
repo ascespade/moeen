@@ -68,7 +68,6 @@ export default function Header() {
           <div className="flex items-center gap-2 justify-self-end">
             {/* Theme Switcher */}
             <ThemeSwitcher 
-              variant="dropdown"
               showLabel={true}
               size="md"
             />

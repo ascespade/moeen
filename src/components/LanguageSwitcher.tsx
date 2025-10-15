@@ -28,12 +28,6 @@ export default function LanguageSwitcher({
   const { language, toggleLanguage, setArabic, setEnglish, isLoading, direction } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
 
-  if (isLoading) {
-    return (
-      <div className={`animate-pulse bg-gray-200 rounded-md ${getSizeClasses(size)} ${className}`} />
-    );
-  }
-
   const getSizeClasses = (size: string) => {
     switch (size) {
       case "sm":
@@ -46,6 +40,12 @@ export default function LanguageSwitcher({
         return "h-9 w-9";
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className={`animate-pulse bg-gray-200 rounded-md ${getSizeClasses(size)} ${className}`} />
+    );
+  }
 
   const getIconSize = (size: string) => {
     switch (size) {

@@ -33,12 +33,14 @@ module.exports = {
       screens: BREAKPOINTS,
       // Colors from design system
       colors: {
-        // Brand colors
+        // Brand colors (Solid brand colors)
         brand: {
           primary: "var(--brand-primary)",
           "primary-hover": "var(--brand-primary-hover)",
           secondary: "var(--brand-secondary)",
+          "neutral-beige": "var(--brand-neutral-beige)",
           accent: "var(--brand-accent)",
+          "accent-deep": "var(--brand-accent-deep)",
           success: "var(--brand-success)",
           warning: "var(--brand-warning)",
           error: "var(--brand-error)",
@@ -51,9 +53,10 @@ module.exports = {
         foreground: "var(--foreground)",
         panel: "var(--panel)",
         
-        // Design system color palettes
+        // Design system color palettes (Solid brand colors)
         orange: BRAND_COLORS.primary,
         brown: BRAND_COLORS.secondary,
+        beige: BRAND_COLORS.neutral_beige,
         neutral: BRAND_COLORS.neutral,
         
         // Legacy color mappings - map to orange (primary)
