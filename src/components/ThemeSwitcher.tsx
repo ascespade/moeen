@@ -3,6 +3,8 @@
  * Accessible theme toggle with translations and RTL support
  */
 
+'use client';
+
 import React from 'react';
 import { useTheme } from '@/context/ThemeContext';
 import { useT } from '@/hooks/useT';

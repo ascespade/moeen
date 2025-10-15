@@ -107,7 +107,12 @@ export async function GET(request: NextRequest) {
     }, {} as Record<string, number>) || {};
 
     // Daily statistics for charts
-    const dailyStats = [];
+    const dailyStats: Array<{
+      date: string;
+      patients: any;
+      appointments: any;
+      revenue: any;
+    }> = [];
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
       const dayStart = new Date(d);
       dayStart.setHours(0, 0, 0, 0);
@@ -130,7 +135,7 @@ export async function GET(request: NextRequest) {
       }).reduce((sum, p) => sum + parseFloat(p.amount.toString()), 0) || 0;
 
       dailyStats.push({
-        date: d.toISOString().split('T')[0],
+        date: d.toISOString().split('T')[0] || '',
         patients: dayPatients,
         appointments: dayAppointments,
         revenue: dayRevenue

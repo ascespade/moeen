@@ -3,6 +3,8 @@
  * RTL-compatible area chart with brand colors and theme support
  */
 
+'use client';
+
 import React from 'react';
 import {
   AreaChart as RechartsAreaChart,

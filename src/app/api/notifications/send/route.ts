@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Patient phone not found' }, { status: 400 });
     }
 
-    const results = [];
+    const results: Array<{ channel: string; success: boolean; data?: any; error?: string }> = [];
 
     // Send email notifications
     if (channels.includes('email') || channels.includes('both')) {

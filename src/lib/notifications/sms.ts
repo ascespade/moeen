@@ -135,7 +135,7 @@ export class SMSNotificationService {
       'approved': 'تم الموافقة على',
       'rejected': 'تم رفض',
       'under_review': 'قيد المراجعة'
-    }[claimStatus] || 'تم تحديث حالة';
+    }[data.claimStatus] || 'تم تحديث حالة';
 
     const message = `عزيزي/عزيزتي ${data.patientName}، ${statusText} مطالبة التأمين الخاصة بك مع ${data.provider}. مركز الحمام`;
 
