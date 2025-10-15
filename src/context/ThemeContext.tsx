@@ -146,6 +146,23 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     isSystem: theme === 'system',
   };
 
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return (
+      <ThemeContext.Provider value={{
+        theme: 'system',
+        resolvedTheme: 'light',
+        setTheme: () => {},
+        toggleTheme: () => {},
+        isDark: false,
+        isLight: true,
+        isSystem: true,
+      }}>
+        {children}
+      </ThemeContext.Provider>
+    );
+  }
+
   return (
     <ThemeContext.Provider value={value}>
       {children}
