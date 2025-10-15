@@ -3,7 +3,7 @@
  * Centralized error handling system
  */
 
-import { ERROR_MESSAGES } from '../config';
+import { ERROR_MESSAGES } from '../constants';
 
 // Base Error Class
 export abstract class BaseError extends Error {
@@ -37,7 +37,7 @@ export class ValidationError extends BaseError {
   readonly code = 'VALIDATION_ERROR';
 
   constructor(
-    message: string = ERROR_MESSAGES.VALIDATION.REQUIRED,
+    message: string = ERROR_MESSAGES.REQUIRED,
     public readonly field?: string,
     context?: Record<string, any>
   ) {
@@ -64,7 +64,7 @@ export class AuthenticationError extends BaseError {
   readonly code = 'AUTHENTICATION_ERROR';
 
   constructor(
-    message: string = ERROR_MESSAGES.AUTH.UNAUTHORIZED,
+    message: string = ERROR_MESSAGES.UNAUTHORIZED,
     context?: Record<string, any>
   ) {
     super(message, context);
@@ -89,7 +89,7 @@ export class AuthorizationError extends BaseError {
   readonly code = 'AUTHORIZATION_ERROR';
 
   constructor(
-    message: string = ERROR_MESSAGES.AUTH.FORBIDDEN,
+    message: string = ERROR_MESSAGES.FORBIDDEN,
     context?: Record<string, any>
   ) {
     super(message, context);
@@ -114,7 +114,7 @@ export class NotFoundError extends BaseError {
   readonly code = 'NOT_FOUND_ERROR';
 
   constructor(
-    message: string = ERROR_MESSAGES.GENERAL.NOT_FOUND,
+    message: string = ERROR_MESSAGES.NOT_FOUND,
     context?: Record<string, any>
   ) {
     super(message, context);
@@ -189,7 +189,7 @@ export class InternalServerError extends BaseError {
   readonly code = 'INTERNAL_SERVER_ERROR';
 
   constructor(
-    message: string = ERROR_MESSAGES.GENERAL.INTERNAL_ERROR,
+    message: string = ERROR_MESSAGES.INTERNAL_ERROR,
     context?: Record<string, any>
   ) {
     super(message, context);
@@ -323,7 +323,7 @@ export class ErrorHandler {
     // Handle unexpected errors
     return {
       statusCode: 500,
-      message: ERROR_MESSAGES.GENERAL.INTERNAL_ERROR,
+      message: ERROR_MESSAGES.INTERNAL_ERROR,
       code: 'INTERNAL_SERVER_ERROR',
       isOperational: false,
     };

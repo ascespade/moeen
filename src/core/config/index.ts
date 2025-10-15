@@ -171,15 +171,6 @@ export const APP_CONFIG = {
   DATETIME_FORMAT: 'DD/MM/YYYY HH:mm',
 } as const;
 
-// Feature Flags
-export const FEATURE_FLAGS = {
-  CHATBOT_ENABLED: process.env.CHATBOT_ENABLED === 'true',
-  PAYMENT_ENABLED: process.env.PAYMENT_ENABLED === 'true',
-  INSURANCE_ENABLED: process.env.INSURANCE_ENABLED === 'true',
-  NOTIFICATIONS_ENABLED: process.env.NOTIFICATIONS_ENABLED === 'true',
-  ANALYTICS_ENABLED: process.env.ANALYTICS_ENABLED === 'true',
-  MAINTENANCE_MODE: process.env.MAINTENANCE_MODE === 'true',
-} as const;
 
 // Default System Configuration
 export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [
@@ -234,49 +225,3 @@ export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [
     updatedAt: new Date(),
   },
 ];
-
-// Validation Rules
-export const VALIDATION_RULES = {
-  EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  PHONE: /^(\+966|0)?[5-9][0-9]{8}$/,
-  PASSWORD: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-  MEDICAL_RECORD_NUMBER: /^MR[0-9]{8}$/,
-  LICENSE_NUMBER: /^[A-Z]{2}[0-9]{6}$/,
-} as const;
-
-// Error Messages
-export const ERROR_MESSAGES = {
-  VALIDATION: {
-    REQUIRED: 'هذا الحقل مطلوب',
-    INVALID_EMAIL: 'البريد الإلكتروني غير صحيح',
-    INVALID_PHONE: 'رقم الهاتف غير صحيح',
-    INVALID_PASSWORD: 'كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل مع أحرف كبيرة وصغيرة وأرقام ورموز',
-    MIN_LENGTH: 'يجب أن يكون طول النص {min} أحرف على الأقل',
-    MAX_LENGTH: 'يجب أن يكون طول النص {max} أحرف على الأكثر',
-  },
-  AUTH: {
-    UNAUTHORIZED: 'غير مصرح لك بالوصول',
-    FORBIDDEN: 'ممنوع الوصول',
-    INVALID_CREDENTIALS: 'بيانات الدخول غير صحيحة',
-    ACCOUNT_LOCKED: 'تم قفل الحساب مؤقتاً',
-    SESSION_EXPIRED: 'انتهت صلاحية الجلسة',
-  },
-  GENERAL: {
-    NOT_FOUND: 'العنصر المطلوب غير موجود',
-    INTERNAL_ERROR: 'حدث خطأ داخلي في الخادم',
-    NETWORK_ERROR: 'خطأ في الاتصال بالشبكة',
-    TIMEOUT: 'انتهت مهلة الطلب',
-  },
-} as const;
-
-// Success Messages
-export const SUCCESS_MESSAGES = {
-  CREATED: 'تم الإنشاء بنجاح',
-  UPDATED: 'تم التحديث بنجاح',
-  DELETED: 'تم الحذف بنجاح',
-  SAVED: 'تم الحفظ بنجاح',
-  SENT: 'تم الإرسال بنجاح',
-  UPLOADED: 'تم الرفع بنجاح',
-  LOGGED_IN: 'تم تسجيل الدخول بنجاح',
-  LOGGED_OUT: 'تم تسجيل الخروج بنجاح',
-} as const;

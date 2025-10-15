@@ -6,6 +6,7 @@
 import { API_ENDPOINTS, ERROR_CODES } from '../constants';
 import { ErrorHandler, ExternalServiceError } from '../errors';
 import { storageUtils } from '../utils';
+import { ApiResponse } from '../types';
 
 export interface ApiRequestConfig {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -16,21 +17,6 @@ export interface ApiRequestConfig {
   retries?: number;
 }
 
-export interface ApiResponse<T = any> {
-  success: boolean;
-  data?: T;
-  error?: {
-    code: string;
-    message: string;
-    details?: any;
-  };
-  pagination?: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
-}
 
 class ApiClient {
   private baseURL: string;
@@ -95,10 +81,7 @@ class ApiClient {
       const handledError = this.errorHandler.handle(error as Error);
       return {
         success: false,
-        error: {
-          code: handledError.code,
-          message: handledError.message,
-        },
+        error: handledError.message,
       };
     }
   }
