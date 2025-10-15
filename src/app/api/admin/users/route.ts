@@ -1,216 +1,243 @@
-// src/app/api/admin/users/route.ts
-// Admin Users API endpoint
-// Handles user management with RBAC
-
-import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabaseClient";
-import bcrypt from "bcryptjs";
-
-const supabase = getServiceSupabase();
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+import { authorize } from '@/lib/auth/authorize';
+import { validateData, userSchema } from '@/lib/validation/schemas';
 
 export async function GET(request: NextRequest) {
   try {
-    // Check admin permissions
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const { user, error: authError } = await authorize(request);
+    
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Get current user
-    const currentUser = await getCurrentUser(authHeader);
-    if (!currentUser || !["admin", "manager"].includes(currentUser.role)) {
-      return NextResponse.json(
-        { error: "Insufficient permissions" },
-        { status: 403 },
-      );
+    // Only admin can manage users
+    if (user.role !== 'admin') {
+      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
-    // Get all users
-    const { data: users, error } = await supabase
-      .from("users")
-      .select(
-        `
+    const { searchParams } = new URL(request.url);
+    const role = searchParams.get('role');
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
+    const search = searchParams.get('search');
+
+    const supabase = createClient();
+
+    let query = supabase
+      .from('users')
+      .select(`
         id,
         email,
-        name,
         role,
-        status,
-        last_login,
+        meta,
         created_at,
-        user_roles (
-          roles (
-            name,
-            permissions
-          )
-        )
-      `,
-      )
-      .order("created_at", { ascending: false });
+        updated_at
+      `)
+      .order('created_at', { ascending: false });
 
-    if (error) throw error;
+    // Apply filters
+    if (role) query = query.eq('role', role);
+    if (search) {
+      query = query.ilike('email', `%${search}%`);
+    }
 
-    const formattedUsers =
-      users?.map((user) => ({
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
-        status: user.status,
-        lastLogin: user.last_login,
-        createdAt: user.created_at,
-        permissions: user.user_roles?.[0]?.roles?.permissions || [],
-      })) || [];
+    // Pagination
+    const from = (page - 1) * limit;
+    const to = from + limit - 1;
+    query = query.range(from, to);
+
+    const { data: users, error: usersError, count } = await query;
+
+    if (usersError) {
+      return NextResponse.json({ error: 'Failed to fetch users' }, { status: 500 });
+    }
 
     return NextResponse.json({
-      users: formattedUsers,
-      currentUser: {
-        id: currentUser.id,
-        name: currentUser.name,
-        role: currentUser.role,
-      },
+      users: users || [],
+      pagination: {
+        page,
+        limit,
+        total: count || 0,
+        pages: Math.ceil((count || 0) / limit)
+      }
     });
+
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch users" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    // Check admin permissions
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const { user, error: authError } = await authorize(request);
+    
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const currentUser = await getCurrentUser(authHeader);
-    if (!currentUser || !["admin", "manager"].includes(currentUser.role)) {
-      return NextResponse.json(
-        { error: "Insufficient permissions" },
-        { status: 403 },
-      );
+    // Only admin can create users
+    if (user.role !== 'admin') {
+      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
-    const { email, name, role, password } = await request.json();
+    const body = await request.json();
+    const validation = validateData(userSchema, body);
 
-    // Validate input
-    if (!email || !name || !role || !password) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 },
-      );
+    if (!validation.success) {
+      return NextResponse.json({ 
+        error: 'Validation failed', 
+        details: validation.errors 
+      }, { status: 400 });
     }
+
+    const { email, role, meta = {} } = validation.data;
+
+    const supabase = createClient();
 
     // Check if user already exists
-    const { data: existingUser } = await supabase
-      .from("users")
-      .select("id")
-      .eq("email", email)
+    const { data: existingUser, error: checkError } = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', email)
       .single();
 
     if (existingUser) {
-      return NextResponse.json(
-        { error: "User already exists" },
-        { status: 409 },
-      );
+      return NextResponse.json({ error: 'User already exists' }, { status: 409 });
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    // Create user
-    const { data: newUser, error: userError } = await supabase
-      .from("users")
+    // Create user (this would typically involve sending an invitation email)
+    const { data: newUser, error: createError } = await supabase
+      .from('users')
       .insert({
         email,
-        name,
         role,
-        password: hashedPassword,
-        status: "active",
-        created_at: new Date().toISOString(),
+        meta,
+        password_hash: null // User will set password on first login
       })
       .select()
       .single();
 
-    if (userError) throw userError;
-
-    // Get role permissions
-    const { data: roleData } = await supabase
-      .from("roles")
-      .select("id, permissions")
-      .eq("name", role)
-      .single();
-
-    if (roleData) {
-      // Assign role to user
-      await supabase.from("user_roles").insert({
-        user_id: newUser.id,
-        role_id: roleData.id,
-      });
+    if (createError) {
+      return NextResponse.json({ error: 'Failed to create user' }, { status: 500 });
     }
 
-    // Log admin action
-    await logAdminAction(currentUser.id, "CREATE_USER", {
-      targetUserId: newUser.id,
-      targetEmail: email,
-      targetRole: role,
-    });
+    // Log user creation
+    await supabase
+      .from('audit_logs')
+      .insert({
+        action: 'user_created',
+        user_id: user.id,
+        resource_type: 'user',
+        resource_id: newUser.id,
+        metadata: {
+          email,
+          role,
+          created_by: user.email
+        }
+      });
 
     return NextResponse.json({
-      message: "User created successfully",
+      success: true,
       user: {
         id: newUser.id,
         email: newUser.email,
-        name: newUser.name,
         role: newUser.role,
-        status: newUser.status,
-      },
+        meta: newUser.meta,
+        createdAt: newUser.created_at
+      }
     });
+
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to create user" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
 
-async function getCurrentUser(authHeader: string) {
+export async function PATCH(request: NextRequest) {
   try {
-    const token = authHeader.replace("Bearer ", "");
+    const { user, error: authError } = await authorize(request);
+    
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
-    // Verify JWT token (simplified - in production, use proper JWT verification)
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser(token);
+    // Only admin can update users
+    if (user.role !== 'admin') {
+      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
+    }
 
-    if (error || !user) return null;
+    const { userId, role, meta } = await request.json();
 
-    // Get user details
-    const { data: userData } = await supabase
-      .from("users")
-      .select("id, email, name, role, status")
-      .eq("id", user.id)
+    if (!userId) {
+      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    }
+
+    const supabase = createClient();
+
+    // Check if user exists
+    const { data: existingUser, error: checkError } = await supabase
+      .from('users')
+      .select('id, email, role')
+      .eq('id', userId)
       .single();
 
-    return userData;
-  } catch (error) {
-    return null;
-  }
-}
-
-async function logAdminAction(userId: string, action: string, details: any) {
-  try {
-    await supabase.from("audit_logs").insert({
-      user_id: userId,
-      action,
-      details,
-      timestamp: new Date().toISOString(),
-      ip_address: "127.0.0.1", // Would get from request in production
-      user_agent: "Admin Panel",
-    });
-  } catch (error) {
+    if (checkError || !existingUser) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
+
+    // Update user
+    const { data: updatedUser, error: updateError } = await supabase
+      .from('users')
+      .update({
+        role: role || existingUser.role,
+        meta: meta || existingUser.meta,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', userId)
+      .select()
+      .single();
+
+    if (updateError) {
+      return NextResponse.json({ error: 'Failed to update user' }, { status: 500 });
+    }
+
+    // Log user update
+    await supabase
+      .from('audit_logs')
+      .insert({
+        action: 'user_updated',
+        user_id: user.id,
+        resource_type: 'user',
+        resource_id: userId,
+        metadata: {
+          email: existingUser.email,
+          old_role: existingUser.role,
+          new_role: updatedUser.role,
+          updated_by: user.email
+        }
+      });
+
+    return NextResponse.json({
+      success: true,
+      user: {
+        id: updatedUser.id,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        meta: updatedUser.meta,
+        updatedAt: updatedUser.updated_at
+      }
+    });
+
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
 }
