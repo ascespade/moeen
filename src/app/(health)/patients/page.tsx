@@ -128,7 +128,6 @@ export default function PatientsPage() {
 
         setPatients(patientsWithStats);
       } catch (err) {
-        console.error("Error loading patients:", err);
         setError("فشل في تحميل بيانات المرضى");
       } finally {
         setLoading(false);

@@ -1,3 +1,5 @@
+import { logger } from '@/lib/logger';
+
 export class PerformanceMonitor {
   private static instance: PerformanceMonitor;
   private metrics: Map<string, number> = new Map();
@@ -22,8 +24,7 @@ export class PerformanceMonitor {
 
     // Log slow operations
     if (duration > 1000) {
-      console.warn(`Slow operation detected: ${label} took ${duration}ms`);
-    }
+      }
 
     return duration;
   }
@@ -35,8 +36,6 @@ export class PerformanceMonitor {
           "navigation",
         )[0] as PerformanceNavigationTiming;
         const loadTime = navigation.loadEventEnd - navigation.fetchStart;
-
-        console.log(`Page load time: ${loadTime}ms`);
 
         // Send to analytics
         this.sendMetric("page_load_time", loadTime);
@@ -67,7 +66,7 @@ export class PerformanceMonitor {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, value, timestamp: Date.now() }),
-      }).catch(console.error);
+      }).catch(logger.error);
     }
   }
 
@@ -80,9 +79,7 @@ export class PerformanceMonitor {
 
       if (used > 100) {
         // Alert if using more than 100MB
-        console.warn(
-          `High memory usage: ${used.toFixed(2)}MB / ${total.toFixed(2)}MB`,
-        );
+        console.warn(`High memory usage: ${used.toFixed(2)}MB / ${total.toFixed(2)}MB`);
       }
     }
   }

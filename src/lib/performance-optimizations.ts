@@ -1,10 +1,12 @@
+import { logger } from '@/lib/logger';
+
 // Performance optimizations for the application
 
 // Disable console logs in production
 if (process.env.NODE_ENV === "production") {
-  console.log = () => {};
-  console.warn = () => {};
-  console.error = () => {};
+  logger.info = () => {};
+  logger.warn = () => {};
+  logger.error = () => {};
 }
 
 // Optimize memory usage
@@ -20,7 +22,6 @@ export const optimizeMemory = () => {
 // Lazy load components
 export const lazyLoadComponent = (importFn: () => Promise<any>) => {
   return importFn().catch((error) => {
-    console.warn("Failed to load component:", error);
     return null;
   });
 };

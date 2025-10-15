@@ -25,13 +25,11 @@ export async function POST(request: NextRequest) {
       });
 
       if (error) {
-        console.error("Failed to log performance metrics:", error);
-      }
+        }
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error processing performance metrics:", error);
     return NextResponse.json(
       { error: "Failed to process performance metrics" },
       { status: 500 },

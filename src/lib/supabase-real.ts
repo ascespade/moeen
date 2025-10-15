@@ -629,7 +629,6 @@ export class RealSupabaseManager {
       .single();
 
     if (error) {
-      console.error("Failed to log audit:", error);
       return null;
     }
     return data;

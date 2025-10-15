@@ -106,8 +106,7 @@ const CRMDashboard: React.FC = () => {
         setStats(statsData.stats);
       }
     } catch (error) {
-      console.error('Error loading dashboard data:', error);
-    } finally {
+      } finally {
       setLoading(false);
     }
   };
@@ -132,7 +131,6 @@ const CRMDashboard: React.FC = () => {
         alert('فشل في تحديث حالة الموعد: ' + data.error);
       }
     } catch (error) {
-      console.error('Error updating appointment status:', error);
       alert('حدث خطأ في تحديث حالة الموعد');
     }
   };

@@ -46,7 +46,7 @@ interface PatientData {
 }
 
 export default function PatientDashboard() {
-  const t = useT();
+  const { t } = useT();
   const { theme } = useTheme();
   const [patientData, setPatientData] = useState<PatientData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -60,8 +60,7 @@ export default function PatientDashboard() {
           setPatientData(data);
         }
       } catch (error) {
-        console.error('Error fetching patient data:', error);
-      } finally {
+        } finally {
         setIsLoading(false);
       }
     };

@@ -37,7 +37,7 @@ export default function PreVisitChecklist({
   patientId, 
   onChecklistComplete 
 }: PreVisitChecklistProps) {
-  const t = useT();
+  const { t } = useT();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [checklistItems, setChecklistItems] = useState<ChecklistItem[]>([]);
@@ -51,8 +51,7 @@ export default function PreVisitChecklist({
           setChecklistItems(data.items);
         }
       } catch (error) {
-        console.error('Error fetching checklist:', error);
-      } finally {
+        } finally {
         setIsLoading(false);
       }
     };
@@ -76,8 +75,7 @@ export default function PreVisitChecklist({
         ));
       }
     } catch (error) {
-      console.error('Error updating checklist item:', error);
-    } finally {
+      } finally {
       setIsSaving(false);
     }
   };
@@ -95,8 +93,7 @@ export default function PreVisitChecklist({
         onChecklistComplete?.();
       }
     } catch (error) {
-      console.error('Error submitting checklist:', error);
-    } finally {
+      } finally {
       setIsSaving(false);
     }
   };
@@ -131,7 +128,7 @@ export default function PreVisitChecklist({
     if (!acc[item.category]) {
       acc[item.category] = [];
     }
-    acc[item.category].push(item);
+    acc[item.category]!.push(item);
     return acc;
   }, {} as Record<string, ChecklistItem[]>);
 

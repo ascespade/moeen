@@ -52,7 +52,7 @@ interface StaffData {
 }
 
 export default function StaffDashboard() {
-  const t = useT();
+  const { t } = useT();
   const { theme } = useTheme();
   const [staffData, setStaffData] = useState<StaffData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -66,8 +66,7 @@ export default function StaffDashboard() {
           setStaffData(data);
         }
       } catch (error) {
-        console.error('Error fetching staff data:', error);
-      } finally {
+        } finally {
         setIsLoading(false);
       }
     };
@@ -88,8 +87,7 @@ export default function StaffDashboard() {
         window.location.reload();
       }
     } catch (error) {
-      console.error('Error processing payment:', error);
-    }
+      }
   };
 
   const handleSubmitClaim = async (claimId: string) => {
@@ -105,8 +103,7 @@ export default function StaffDashboard() {
         window.location.reload();
       }
     } catch (error) {
-      console.error('Error submitting claim:', error);
-    }
+      }
   };
 
   if (isLoading) {

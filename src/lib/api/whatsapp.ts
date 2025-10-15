@@ -7,7 +7,6 @@ type SendTextPayload = {
 export const sendWhatsAppMessage = async (payload: SendTextPayload) => {
   const cfg = getApiConfig();
   if (!isWhatsAppConfigured(cfg)) {
-    console.warn("🔸 Placeholder: WhatsApp API not configured yet");
     return { success: true, note: "Connect WhatsApp API in Admin Settings." };
   }
 
@@ -40,9 +39,6 @@ export const sendWhatsAppMessage = async (payload: SendTextPayload) => {
 export const handleWhatsAppWebhook = async (_body: any) => {
   // Placeholder structure for webhook handling
   if (!isWhatsAppConfigured()) {
-    console.warn(
-      "🔸 Placeholder: WhatsApp webhook handling active without config",
-    );
     return { success: true };
   }
   // TODO: parse statuses, messages, and delivery receipts as needed

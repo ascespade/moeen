@@ -63,7 +63,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Slack notification error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -102,8 +101,7 @@ async function handleAppointmentCreated(appointmentId: string, doctorId: string,
       );
     }
   } catch (error) {
-    console.error('Error handling appointment created:', error);
-  }
+    }
 }
 
 async function handleAppointmentConfirmed(appointmentId: string, doctorId: string, patientId: string, supabase: any) {
@@ -136,8 +134,7 @@ async function handleAppointmentConfirmed(appointmentId: string, doctorId: strin
       );
     }
   } catch (error) {
-    console.error('Error handling appointment confirmed:', error);
-  }
+    }
 }
 
 async function handleAppointmentCancelled(appointmentId: string, doctorId: string, patientId: string, supabase: any) {
@@ -170,8 +167,7 @@ async function handleAppointmentCancelled(appointmentId: string, doctorId: strin
       );
     }
   } catch (error) {
-    console.error('Error handling appointment cancelled:', error);
-  }
+    }
 }
 
 async function handleAppointmentReminder(appointmentId: string, doctorId: string, patientId: string, supabase: any) {
@@ -204,8 +200,7 @@ async function handleAppointmentReminder(appointmentId: string, doctorId: string
       );
     }
   } catch (error) {
-    console.error('Error handling appointment reminder:', error);
-  }
+    }
 }
 
 async function handlePatientMessage(patientId: string, doctorId: string, message: string, channel: string, supabase: any) {
@@ -221,8 +216,7 @@ async function handlePatientMessage(patientId: string, doctorId: string, message
       await slack.sendPatientMessage(patientId, doctorId, message, channel as 'whatsapp' | 'website');
     }
   } catch (error) {
-    console.error('Error handling patient message:', error);
-  }
+    }
 }
 
 async function handleDoctorResponse(patientId: string, doctorId: string, message: string, supabase: any) {
@@ -238,14 +232,12 @@ async function handleDoctorResponse(patientId: string, doctorId: string, message
       await slack.sendDoctorResponse(patientId, doctorId, message);
     }
   } catch (error) {
-    console.error('Error handling doctor response:', error);
-  }
+    }
 }
 
 async function handleEmergencyAlert(message: string, channel: string, priority: string) {
   try {
     await slack.sendEmergencyAlert(message, channel);
   } catch (error) {
-    console.error('Error handling emergency alert:', error);
-  }
+    }
 }

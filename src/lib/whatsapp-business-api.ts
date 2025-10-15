@@ -154,7 +154,6 @@ export class WhatsAppBusinessAPI {
         };
       }
     } catch (error) {
-      console.error("WhatsApp API error:", error);
       return {
         success: false,
         error: (error as Error).message,
@@ -221,7 +220,6 @@ export class WhatsAppBusinessAPI {
         };
       }
     } catch (error) {
-      console.error("WhatsApp Template API error:", error);
       return {
         success: false,
         error: (error as Error).message,
@@ -270,7 +268,6 @@ export class WhatsAppBusinessAPI {
         };
       }
     } catch (error) {
-      console.error("WhatsApp Image API error:", error);
       return {
         success: false,
         error: (error as Error).message,
@@ -321,7 +318,6 @@ export class WhatsAppBusinessAPI {
         };
       }
     } catch (error) {
-      console.error("WhatsApp Document API error:", error);
       return {
         success: false,
         error: (error as Error).message,
@@ -352,7 +348,6 @@ export class WhatsAppBusinessAPI {
 
       return null;
     } catch (error) {
-      console.error("Error getting message status:", error);
       return null;
     }
   }
@@ -378,7 +373,6 @@ export class WhatsAppBusinessAPI {
 
       return [];
     } catch (error) {
-      console.error("Error getting templates:", error);
       return [];
     }
   }
@@ -414,7 +408,6 @@ export class WhatsAppBusinessAPI {
         };
       }
     } catch (error) {
-      console.error("Error creating template:", error);
       return {
         success: false,
         error: (error as Error).message,
@@ -509,7 +502,6 @@ export class WhatsAppBusinessAPI {
         };
       }
     } catch (error) {
-      console.error("Error getting business profile:", error);
       return {
         success: false,
         error: (error as Error).message,
@@ -547,7 +539,6 @@ export class WhatsAppBusinessAPI {
         };
       }
     } catch (error) {
-      console.error("Error updating business profile:", error);
       return {
         success: false,
         error: (error as Error).message,

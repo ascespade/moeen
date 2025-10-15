@@ -130,8 +130,6 @@ export function middleware(request: NextRequest) {
 
     return NextResponse.next();
   } catch (error) {
-    console.error("Token verification failed:", error);
-
     // Clear invalid token
     const response = pathname.startsWith("/api")
       ? NextResponse.json(

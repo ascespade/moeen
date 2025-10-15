@@ -28,7 +28,6 @@ export async function GET(request: NextRequest) {
       summary: generateLogSummary(logs),
     });
   } catch (error) {
-    console.error("Logs API error:", error);
     return NextResponse.json(
       { error: "Failed to fetch logs" },
       { status: 500 },
@@ -79,7 +78,6 @@ async function getActivityLogs(filters: {
       })) || []
     );
   } catch (error) {
-    console.error("Get activity logs error:", error);
     return [];
   }
 }

@@ -70,7 +70,6 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error("Admin users GET error:", error);
     return NextResponse.json(
       { error: "Failed to fetch users" },
       { status: 500 },
@@ -170,7 +169,6 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error("Admin users POST error:", error);
     return NextResponse.json(
       { error: "Failed to create user" },
       { status: 500 },
@@ -199,7 +197,6 @@ async function getCurrentUser(authHeader: string) {
 
     return userData;
   } catch (error) {
-    console.error("Get current user error:", error);
     return null;
   }
 }
@@ -215,6 +212,5 @@ async function logAdminAction(userId: string, action: string, details: any) {
       user_agent: "Admin Panel",
     });
   } catch (error) {
-    console.error("Log admin action error:", error);
-  }
+    }
 }

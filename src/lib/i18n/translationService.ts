@@ -65,13 +65,10 @@ class TranslationService {
           JSON.stringify(this.cache[language])
         );
       } catch (error) {
-        console.warn('Failed to store translations in localStorage:', error);
-      }
+        }
 
       return translations;
     } catch (error) {
-      console.error(`Error fetching translations for ${language}:`, error);
-      
       // Try to load from localStorage as fallback
       try {
         const cached = localStorage.getItem(`translations_${language}`);
@@ -81,8 +78,7 @@ class TranslationService {
           return parsed;
         }
       } catch (localError) {
-        console.warn('Failed to load translations from localStorage:', localError);
-      }
+        }
 
       // Return default translations
       return this.getDefaultTranslations(language);
@@ -119,7 +115,6 @@ class TranslationService {
       // Return key as fallback
       return key;
     } catch (error) {
-      console.error(`Error getting translation for key "${key}":`, error);
       return key;
     }
   }
@@ -176,8 +171,7 @@ class TranslationService {
         }),
       });
     } catch (error) {
-      console.warn('Failed to log missing translation key:', error);
-    } finally {
+      } finally {
       this.isLoggingMissing = false;
     }
   }

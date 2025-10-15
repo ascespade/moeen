@@ -53,7 +53,7 @@ interface SupervisorData {
 }
 
 export default function SupervisorDashboard() {
-  const t = useT();
+  const { t } = useT();
   const { theme } = useTheme();
   const [supervisorData, setSupervisorData] = useState<SupervisorData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -67,8 +67,7 @@ export default function SupervisorDashboard() {
           setSupervisorData(data);
         }
       } catch (error) {
-        console.error('Error fetching supervisor data:', error);
-      } finally {
+        } finally {
         setIsLoading(false);
       }
     };
@@ -89,8 +88,7 @@ export default function SupervisorDashboard() {
         window.location.reload();
       }
     } catch (error) {
-      console.error('Error generating report:', error);
-    }
+      }
   };
 
   if (isLoading) {

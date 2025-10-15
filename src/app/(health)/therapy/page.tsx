@@ -144,7 +144,6 @@ const TherapyPage: React.FC = () => {
       setSessions(mockSessions);
       setGoals(mockGoals);
     } catch (error) {
-      console.error('Error loading therapy data:', error);
       setError('فشل في تحميل بيانات العلاج');
     } finally {
       setLoading(false);

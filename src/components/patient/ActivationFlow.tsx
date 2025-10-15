@@ -29,7 +29,7 @@ interface ActivationFlowProps {
 }
 
 export default function ActivationFlow({ patientId, onActivationComplete }: ActivationFlowProps) {
-  const t = useT();
+  const { t } = useT();
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -90,8 +90,7 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
         }
       }
     } catch (error) {
-      console.error('Error completing step:', error);
-    } finally {
+      } finally {
       setIsProcessing(false);
     }
   };
@@ -109,8 +108,7 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
         onActivationComplete?.();
       }
     } catch (error) {
-      console.error('Error activating account:', error);
-    } finally {
+      } finally {
       setIsProcessing(false);
     }
   };

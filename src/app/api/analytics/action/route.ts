@@ -27,13 +27,11 @@ export async function POST(request: NextRequest) {
       });
 
       if (error) {
-        console.error("Failed to log analytics:", error);
-      }
+        }
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error processing analytics:", error);
     return NextResponse.json(
       { error: "Failed to process analytics" },
       { status: 500 },

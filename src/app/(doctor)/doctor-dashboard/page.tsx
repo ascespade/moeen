@@ -42,7 +42,7 @@ interface DoctorData {
 }
 
 export default function DoctorDashboard() {
-  const t = useT();
+  const { t } = useT();
   const { theme } = useTheme();
   const [doctorData, setDoctorData] = useState<DoctorData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -56,8 +56,7 @@ export default function DoctorDashboard() {
           setDoctorData(data);
         }
       } catch (error) {
-        console.error('Error fetching doctor data:', error);
-      } finally {
+        } finally {
         setIsLoading(false);
       }
     };
@@ -78,8 +77,7 @@ export default function DoctorDashboard() {
         window.location.reload();
       }
     } catch (error) {
-      console.error('Error starting appointment:', error);
-    }
+      }
   };
 
   if (isLoading) {

@@ -130,8 +130,7 @@ const PerformancePage: React.FC = () => {
       setMetrics(mockMetrics);
       setSystemHealth(mockSystemHealth);
     } catch (error) {
-      console.error('Error loading performance data:', error);
-    } finally {
+      } finally {
       setLoading(false);
     }
   };

@@ -135,7 +135,6 @@ export class SaudiHealthSystemIntegration {
         throw new Error("Failed to sync with Seha platform");
       }
     } catch (error) {
-      console.error("Seha sync error:", error);
       return {
         patientId,
         sehaId: "",
@@ -160,7 +159,6 @@ export class SaudiHealthSystemIntegration {
 
       return null;
     } catch (error) {
-      console.error("Error fetching Seha health record:", error);
       return null;
     }
   }
@@ -243,7 +241,6 @@ export class SaudiHealthSystemIntegration {
         remainingAmount: 0,
       };
     } catch (error) {
-      console.error("Insurance verification error:", error);
       return {
         covered: false,
         coverageType: "none",
@@ -299,7 +296,6 @@ export class SaudiHealthSystemIntegration {
 
       throw new Error("Failed to submit insurance claim");
     } catch (error) {
-      console.error("Insurance claim submission error:", error);
       throw error;
     }
   }
@@ -341,7 +337,6 @@ export class SaudiHealthSystemIntegration {
       };
       return result;
     } catch (error) {
-      console.error("Error checking claim status:", error);
       const result: {
         status: string;
         processedAt?: string;
@@ -437,11 +432,6 @@ export class SaudiHealthSystemIntegration {
     data?: any,
   ): Promise<any> {
     // In real implementation, this would make actual API calls
-    console.log(
-      `Calling Seha API: ${method} ${this.sehaApiEndpoint}${endpoint}`,
-      data,
-    );
-
     // Mock response for development
     return {
       success: true,
@@ -489,8 +479,6 @@ export class SaudiHealthSystemIntegration {
     data?: any,
   ): Promise<any> {
     // In real implementation, this would make actual API calls to insurance providers
-    console.log(`Calling ${provider.name} API: ${method} ${endpoint}`, data);
-
     // Mock response for development
     return {
       success: true,

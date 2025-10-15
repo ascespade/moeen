@@ -30,7 +30,6 @@ export async function GET(
       .single();
 
     if (error) {
-      console.error('Error fetching appointment:', error);
       return NextResponse.json(
         { error: 'Appointment not found' },
         { status: 404 }
@@ -43,7 +42,6 @@ export async function GET(
     });
 
   } catch (error) {
-    console.error('Error in GET appointment:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -124,7 +122,6 @@ export async function PATCH(
       .single();
 
     if (updateError) {
-      console.error('Error updating appointment:', updateError);
       return NextResponse.json(
         { error: 'Failed to update appointment' },
         { status: 500 }
@@ -137,7 +134,6 @@ export async function PATCH(
     });
 
   } catch (error) {
-    console.error('Error in PATCH appointment:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -174,7 +170,6 @@ export async function DELETE(
       .eq('id', id);
 
     if (deleteError) {
-      console.error('Error deleting appointment:', deleteError);
       return NextResponse.json(
         { error: 'Failed to delete appointment' },
         { status: 500 }
@@ -187,7 +182,6 @@ export async function DELETE(
     });
 
   } catch (error) {
-    console.error('Error in DELETE appointment:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

@@ -44,7 +44,6 @@ export const useAuth = (): AuthState & AuthActions => {
           setTokenState(storedToken);
         }
       } catch (error) {
-        console.error("Error initializing auth:", error);
         clearAuth();
       } finally {
         setIsLoading(false);
@@ -85,7 +84,6 @@ export const useAuth = (): AuthState & AuthActions => {
           throw new Error(data.error || "Login failed");
         }
       } catch (error) {
-        console.error("Login error:", error);
         throw error;
       }
     },
@@ -99,8 +97,7 @@ export const useAuth = (): AuthState & AuthActions => {
         method: "POST",
       });
     } catch (error) {
-      console.error("Logout API error:", error);
-    } finally {
+      } finally {
       // Clear local storage regardless of API call result
       clearAuth();
       setUserState(null);

@@ -57,7 +57,6 @@ export async function PATCH(
       .eq('id', patientId);
 
     if (updateError) {
-      console.error('Error updating activation step:', updateError);
       return NextResponse.json({ error: 'Failed to update activation step' }, { status: 500 });
     }
 
@@ -83,7 +82,6 @@ export async function PATCH(
     });
 
   } catch (error) {
-    console.error('Activation step update error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -125,7 +123,6 @@ export async function GET(
     });
 
   } catch (error) {
-    console.error('Get activation steps error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

@@ -33,8 +33,7 @@ export class AccessibilityManager {
       try {
         return { ...this.getDefaultSettings(), ...JSON.parse(saved) };
       } catch (error) {
-        console.error('Error loading accessibility settings:', error);
-      }
+        }
     }
 
     return this.getDefaultSettings();
@@ -62,8 +61,7 @@ export class AccessibilityManager {
     try {
       localStorage.setItem('accessibility-settings', JSON.stringify(this.settings));
     } catch (error) {
-      console.error('Error saving accessibility settings:', error);
-    }
+      }
   }
 
   // Apply accessibility settings to the DOM
@@ -178,8 +176,7 @@ export class AccessibilityManager {
 
     // This would integrate with Web Speech API
     // For now, we'll just set up the basic structure
-    console.log('Voice control setup would go here');
-  }
+    }
 
   // Handle focus events
   private handleFocusIn(event: FocusEvent): void {

@@ -34,7 +34,6 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
         const fetchedTranslations = await translationService.fetchTranslations(language);
         setTranslations(fetchedTranslations);
       } catch (error) {
-        console.error('Failed to load translations:', error);
         // Use cached translations as fallback
         const cached = translationService.getCachedTranslations(language);
         if (cached) {
@@ -82,7 +81,12 @@ export const useT = (): TranslationContextType => {
   if (context === undefined) {
     throw new Error('useT must be used within a TranslationProvider');
   }
-  return context;
+  return {
+    t: context.t,
+    language: context.language,
+    setLanguage: context.setLanguage,
+    isLoading: context.isLoading
+  };
 };
 
 export default useT;

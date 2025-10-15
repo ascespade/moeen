@@ -20,7 +20,7 @@ export default function ProtectedRoute({
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
   const router = useRouter();
-  const t = useT();
+  const { t } = useT();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -42,7 +42,6 @@ export default function ProtectedRoute({
 
         setIsAuthorized(true);
       } catch (error) {
-        console.error('Auth check failed:', error);
         router.push('/login');
       } finally {
         setIsLoading(false);

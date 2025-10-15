@@ -112,7 +112,6 @@ export class PrivateCenterIntegration {
 
       throw new Error("Failed to sync with MOH");
     } catch (error) {
-      console.error("MOH sync error:", error);
       return {
         success: false,
         centerData: this.getDefaultCenterData(),
@@ -143,7 +142,6 @@ export class PrivateCenterIntegration {
 
       throw new Error("Failed to submit MOH report");
     } catch (error) {
-      console.error("MOH report submission error:", error);
       return {
         success: false,
         status: "failed",
@@ -173,7 +171,6 @@ export class PrivateCenterIntegration {
 
       throw new Error("Failed to sync with SFDA");
     } catch (error) {
-      console.error("SFDA sync error:", error);
       return {
         success: false,
         accreditation: this.getDefaultAccreditation(),
@@ -221,7 +218,6 @@ export class PrivateCenterIntegration {
 
       throw new Error("Failed to submit SFDA quality report");
     } catch (error) {
-      console.error("SFDA quality report submission error:", error);
       return {
         success: false,
         status: "failed",
@@ -251,7 +247,6 @@ export class PrivateCenterIntegration {
 
       throw new Error("Failed to sync with CCHI");
     } catch (error) {
-      console.error("CCHI sync error:", error);
       return {
         success: false,
         insuranceData: this.getDefaultInsuranceData(),
@@ -289,7 +284,6 @@ export class PrivateCenterIntegration {
 
       throw new Error("Failed to submit CCHI claim");
     } catch (error) {
-      console.error("CCHI claim submission error:", error);
       return {
         success: false,
         status: "failed",
@@ -348,7 +342,6 @@ export class PrivateCenterIntegration {
         score: Math.max(0, score),
       };
     } catch (error) {
-      console.error("Center compliance validation error:", error);
       return {
         compliant: false,
         violations: ["خطأ في التحقق من الامتثال"],
@@ -391,7 +384,6 @@ export class PrivateCenterIntegration {
         complianceScore: compliance.score,
       };
     } catch (error) {
-      console.error("Center analytics error:", error);
       return {
         totalPatients: 0,
         newPatients: 0,
@@ -474,11 +466,6 @@ export class PrivateCenterIntegration {
     endpoint: string,
     data?: any,
   ): Promise<any> {
-    console.log(
-      `Calling MOH API: ${method} ${this.mohApiEndpoint}${endpoint}`,
-      data,
-    );
-
     // Mock response for development
     return {
       success: true,
@@ -491,11 +478,6 @@ export class PrivateCenterIntegration {
     endpoint: string,
     data?: any,
   ): Promise<any> {
-    console.log(
-      `Calling SFDA API: ${method} ${this.sfdApiEndpoint}${endpoint}`,
-      data,
-    );
-
     // Mock response for development
     return {
       success: true,
@@ -508,11 +490,6 @@ export class PrivateCenterIntegration {
     endpoint: string,
     data?: any,
   ): Promise<any> {
-    console.log(
-      `Calling CCHI API: ${method} ${this.cchiApiEndpoint}${endpoint}`,
-      data,
-    );
-
     // Mock response for development
     return {
       success: true,

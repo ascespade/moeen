@@ -68,7 +68,6 @@
     "critters": "^0.0.23",
     "dotenv": "^17.2.3",
     "form-data": "^4.0.0",
-    "glob": "^11.0.3",
     "googleapis": "^131.0.0",
     "jotai": "^2.15.0",
     "lucide-react": "^0.294.0",
@@ -79,6 +78,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "recharts": "^2.15.4",
+    "stripe": "^19.1.0",
     "typescript": "5.3.3",
     "uuid": "^9.0.1",
     "winston": "^3.11.0"
@@ -90,6 +90,7 @@
     "autoprefixer": "^10.4.21",
     "eslint": "8.56.0",
     "eslint-config-next": "14.0.4",
+    "glob": "^11.0.3",
     "isomorphic-dompurify": "^2.6.0",
     "playwright": "^1.56.0",
     "prettier": "^3.6.2",

@@ -176,7 +176,6 @@ const TrainingPage: React.FC = () => {
       setPrograms(mockPrograms);
       setProgress(mockProgress);
     } catch (error) {
-      console.error('Error loading training data:', error);
       setError('فشل في تحميل بيانات التدريب');
     } finally {
       setLoading(false);

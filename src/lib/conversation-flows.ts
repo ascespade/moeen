@@ -392,7 +392,6 @@ export class FlowManager {
       }
       return true;
     } catch (error) {
-      console.error('Error executing step action:', error);
       return false;
     }
   }
@@ -415,21 +414,18 @@ export class FlowManager {
       });
 
       if (!response.ok) {
-        console.error('Failed to send Slack notification:', await response.text());
+        console.error('Failed to send message:', await response.text());
       }
     } catch (error) {
-      console.error('Error sending Slack notification:', error);
-    }
+      }
   }
 
   // Execute WhatsApp send
   private async executeWhatsAppSend(step: FlowStep, context: any): Promise<void> {
     try {
       // This would integrate with the existing WhatsApp system
-      console.log('Sending WhatsApp message:', step.whatsappTemplate, context);
-    } catch (error) {
-      console.error('Error sending WhatsApp message:', error);
-    }
+      } catch (error) {
+      }
   }
 
   // Evaluate condition

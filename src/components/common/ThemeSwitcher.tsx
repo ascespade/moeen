@@ -29,8 +29,7 @@ export default function ThemeSwitcher({
       const preferences = await dynamicThemeManager.getUserPreferences();
       setTheme(preferences.theme);
     } catch (error) {
-      console.error("Failed to load preferences:", error);
-    } finally {
+      } finally {
       setIsLoading(false);
     }
   };
@@ -42,8 +41,7 @@ export default function ThemeSwitcher({
       const resolvedTheme = dynamicThemeManager.resolveThemeMode(theme);
       dynamicThemeManager.applyTheme(resolvedTheme, themeConfig);
     } catch (error) {
-      console.error("Failed to apply theme:", error);
-    }
+      }
   }, [theme]);
 
   // Load user preferences from database on mount
@@ -69,8 +67,7 @@ export default function ThemeSwitcher({
         theme: newTheme,
       });
     } catch (error) {
-      console.error("Failed to save theme preference:", error);
-    }
+      }
   };
 
   // Size classes

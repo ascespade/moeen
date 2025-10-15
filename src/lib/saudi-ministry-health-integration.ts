@@ -102,7 +102,6 @@ export class SaudiMinistryHealthIntegration {
         throw new Error("Failed to sync with Seha platform");
       }
     } catch (error) {
-      console.error("Seha sync error:", error);
       return {
         patientId,
         sehaId: "",
@@ -127,7 +126,6 @@ export class SaudiMinistryHealthIntegration {
 
       return null;
     } catch (error) {
-      console.error("Error fetching Seha health record:", error);
       return null;
     }
   }
@@ -154,7 +152,6 @@ export class SaudiMinistryHealthIntegration {
         throw new Error("Failed to sync with Shoon platform");
       }
     } catch (error) {
-      console.error("Shoon sync error:", error);
       return {
         patientId,
         shoonId: "",
@@ -172,7 +169,6 @@ export class SaudiMinistryHealthIntegration {
       );
       return response.success ? response.data : null;
     } catch (error) {
-      console.error("Error fetching Shoon patient data:", error);
       return null;
     }
   }
@@ -202,7 +198,6 @@ export class SaudiMinistryHealthIntegration {
         throw new Error("Failed to sync with Tatman platform");
       }
     } catch (error) {
-      console.error("Tatman sync error:", error);
       return {
         patientId,
         tatmanId: "",
@@ -246,7 +241,6 @@ export class SaudiMinistryHealthIntegration {
         requiresApproval: false,
       };
     } catch (error) {
-      console.error("Tatman coverage verification error:", error);
       return {
         covered: false,
         coverageAmount: 0,
@@ -296,8 +290,7 @@ export class SaudiMinistryHealthIntegration {
         results.submissionIds.sehaId = sehaResponse.data.submissionId;
       }
     } catch (error) {
-      console.error("SEHA submission error:", error);
-    }
+      }
 
     try {
       // Submit to SHOON
@@ -311,8 +304,7 @@ export class SaudiMinistryHealthIntegration {
         results.submissionIds.shoonId = shoonResponse.data.submissionId;
       }
     } catch (error) {
-      console.error("SHOON submission error:", error);
-    }
+      }
 
     try {
       // Submit to TATMAN
@@ -326,8 +318,7 @@ export class SaudiMinistryHealthIntegration {
         results.submissionIds.tatmanId = tatmanResponse.data.claimId;
       }
     } catch (error) {
-      console.error("TATMAN submission error:", error);
-    }
+      }
 
     return results;
   }
@@ -465,8 +456,6 @@ export class SaudiMinistryHealthIntegration {
     endpoint: string,
     data?: any,
   ): Promise<any> {
-    console.log(`Calling SEHA API: ${method} ${endpoint}`, data);
-
     // Mock response for development
     return {
       success: true,
@@ -512,8 +501,6 @@ export class SaudiMinistryHealthIntegration {
     endpoint: string,
     data?: any,
   ): Promise<any> {
-    console.log(`Calling SHOON API: ${method} ${endpoint}`, data);
-
     // Mock response for development
     return {
       success: true,
@@ -535,8 +522,6 @@ export class SaudiMinistryHealthIntegration {
     endpoint: string,
     data?: any,
   ): Promise<any> {
-    console.log(`Calling TATMAN API: ${method} ${endpoint}`, data);
-
     // Mock response for development
     return {
       success: true,

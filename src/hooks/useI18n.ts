@@ -20,7 +20,6 @@ export function useI18n(locale: "ar" | "en" = "ar", ns: string = "common") {
         setMessages(translations);
       })
       .catch((error) => {
-        console.error("Failed to load translations:", error);
         if (!mounted) return;
         setMessages({});
       })

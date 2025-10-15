@@ -204,8 +204,7 @@ export class PerformanceMonitor {
         try {
           callback(alert);
         } catch (error) {
-          console.error("Alert callback error:", error);
-        }
+          }
       });
     });
   }
@@ -369,8 +368,7 @@ export class PerformanceMonitor {
         });
       }
     } catch (error) {
-      console.error("Failed to log performance metrics to database:", error);
-    }
+      }
   }
 
   // Generate unique request ID

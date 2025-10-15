@@ -222,7 +222,6 @@ const FamilySupportPage: React.FC = () => {
       setSupportSessions(mockSupportSessions);
       setResources(mockResources);
     } catch (error) {
-      console.error('Error loading family support data:', error);
       setError('فشل في تحميل بيانات دعم الأسر');
     } finally {
       setLoading(false);

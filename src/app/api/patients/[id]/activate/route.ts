@@ -47,7 +47,6 @@ export async function POST(
       .eq('id', patientId);
 
     if (updateError) {
-      console.error('Error activating patient:', updateError);
       return NextResponse.json({ error: 'Failed to activate patient' }, { status: 500 });
     }
 
@@ -71,7 +70,6 @@ export async function POST(
     });
 
   } catch (error) {
-    console.error('Patient activation error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -112,7 +110,6 @@ export async function GET(
     });
 
   } catch (error) {
-    console.error('Get activation status error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

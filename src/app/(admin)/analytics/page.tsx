@@ -201,7 +201,6 @@ const AnalyticsPage: React.FC = () => {
 
       setAnalyticsData(mockData);
     } catch (error) {
-      console.error('Error loading analytics data:', error);
       setError('فشل في تحميل بيانات التحليلات');
     } finally {
       setLoading(false);

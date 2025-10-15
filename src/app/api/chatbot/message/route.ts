@@ -70,7 +70,6 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Chatbot API error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -209,7 +208,6 @@ async function handleAppointmentInquiry(userId: string | null, supabase: any) {
       .order('appointment_date', { ascending: true });
 
     if (error) {
-      console.error('Error fetching appointments:', error);
       return 'عذراً، حدث خطأ في جلب مواعيدك. يرجى المحاولة مرة أخرى.';
     }
 
@@ -229,7 +227,6 @@ async function handleAppointmentInquiry(userId: string | null, supabase: any) {
 
     return response;
   } catch (error) {
-    console.error('Error in appointment inquiry:', error);
     return 'عذراً، حدث خطأ في جلب مواعيدك. يرجى المحاولة مرة أخرى.';
   }
 }
@@ -270,7 +267,6 @@ async function getAvailableAppointments(supabase: any) {
       .limit(3);
 
     if (error) {
-      console.error('Error fetching doctors:', error);
       return [];
     }
 
@@ -291,7 +287,6 @@ async function getAvailableAppointments(supabase: any) {
 
     return suggestions;
   } catch (error) {
-    console.error('Error getting available appointments:', error);
     return [];
   }
 }
@@ -350,6 +345,5 @@ async function saveConversation(conversationId: string, userId: string | null, u
         message_type: 'text'
       });
   } catch (error) {
-    console.error('Error saving conversation:', error);
-  }
+    }
 }

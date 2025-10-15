@@ -45,7 +45,6 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
       error: null
     };
   } catch (error) {
-    console.error('Authorization error:', error);
     return { user: null, error: 'Authorization failed' };
   }
 }

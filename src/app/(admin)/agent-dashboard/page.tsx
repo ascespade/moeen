@@ -72,8 +72,7 @@ export default function AgentDashboard() {
         setLogs(logsData.logs || []);
       }
     } catch (error) {
-      console.error("Error fetching status:", error);
-    } finally {
+      } finally {
       setIsLoading(false);
     }
   };
