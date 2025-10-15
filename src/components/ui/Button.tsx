@@ -13,6 +13,12 @@ const buttonStyles = cva(
           "bg-white text-gray-900 border border-brand-border hover:bg-gray-50 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-800 dark:hover:bg-gray-800",
         ghost:
           "bg-transparent text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800",
+        outline:
+          "bg-transparent border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white",
+        brand:
+          "bg-brand-primary text-white hover:bg-brand-primary-hover",
+        error:
+          "bg-red-600 text-white hover:bg-red-700",
       },
       size: {
         sm: "h-9 px-3",

@@ -1,4 +1,6 @@
-"use client";`nimport { useState } from 'react';
+"use client";
+
+import { useState } from 'react';
 
 
 import Image from "next/image";

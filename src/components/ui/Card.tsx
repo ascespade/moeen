@@ -46,4 +46,28 @@ export function CardFooter({
   );
 }
 
+export function CardTitle({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLHeadingElement>) {
+  return (
+    <h3
+      className={clsx("text-lg font-semibold text-[var(--foreground)]", className)}
+      {...props}
+    />
+  );
+}
+
+export function CardDescription({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLParagraphElement>) {
+  return (
+    <p
+      className={clsx("text-sm text-[var(--foreground)]/60", className)}
+      {...props}
+    />
+  );
+}
+
 export default Card;

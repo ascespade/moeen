@@ -154,7 +154,7 @@ export default function SmartHeader() {
     if (isAuthenticated) {
       // Authenticated user navigation
       return [
-        { href: ROUTES.DASHBOARD, label: t("nav.dashboard", "لوحة التحكم") },
+        { href: "/", label: t("nav.dashboard", "لوحة التحكم") },
         { href: ROUTES.HEALTH.PATIENTS, label: t("nav.patients", "المرضى") },
         {
           href: ROUTES.HEALTH.APPOINTMENTS,
