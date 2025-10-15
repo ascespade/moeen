@@ -1,36 +1,57 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { ROUTES } from "@/constants/routes";
 import { getDefaultRouteForUser } from "@/lib/router";
-
+import { useT } from "@/components/providers/I18nProvider";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function LoginPage() {
-  const { loginWithCredentials, isLoading } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const { loginWithCredentials, isLoading, isAuthenticated } = useAuth();
+  const { t } = useT();
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    rememberMe: false,
+  });
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/(admin)/dashboard");
+    }
+  }, [isAuthenticated, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
     try {
-      await loginWithCredentials(email, password, rememberMe);
+      await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
       // after login, compute default route (role-aware)
       window.location.href = getDefaultRouteForUser({
         id: "temp",
-        email,
+        email: formData.email,
         role: "user",
       } as any);
     } catch (err: any) {
-      setError(err?.message || "Login failed");
+      setError(err?.message || t("auth.login.error", "فشل تسجيل الدخول"));
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   const handleQuickTestLogin = async () => {
@@ -82,12 +103,13 @@ export default function LoginPage() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="form-label">البريد الإلكتروني</label>
+                <label className="form-label">{t("auth.email", "البريد الإلكتروني")}</label>
                 <div className="relative">
                   <input
                     type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     required
                     className="form-input pr-10"
                     placeholder="you@example.com"
@@ -99,12 +121,13 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <label className="form-label">كلمة المرور</label>
+                <label className="form-label">{t("auth.password", "كلمة المرور")}</label>
                 <div className="relative">
                   <input
                     type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
                     required
                     className="form-input pr-10"
                     placeholder="••••••••"
@@ -118,11 +141,12 @@ export default function LoginPage() {
                 <label className="inline-flex items-center gap-3 text-sm font-medium">
                   <input
                     type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
+                    name="rememberMe"
+                    checked={formData.rememberMe}
+                    onChange={handleInputChange}
                     className="text-brand focus:ring-brand h-4 w-4 rounded border-gray-300 focus:ring-2"
                   />
-                  تذكرني
+                  {t("auth.rememberMe", "تذكرني")}
                 </label>
                 <Link
                   href="/forgot-password"
