@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 type BadgeVariant =
-  | "default"
+  | "primary"
   | "secondary"
   | "destructive"
   | "success"
@@ -9,12 +9,12 @@ type BadgeVariant =
   | "danger"
   | "info"
   | "outline"
-  | "brand"
+  | "primary"
   | "error";
 
 export function Badge({
   className,
-  variant = "default",
+  variant = "primary",
   ...props
 }: React.HTMLAttributes<HTMLSpanElement> & { variant?: BadgeVariant }) {
   const styles = {

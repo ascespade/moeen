@@ -141,7 +141,7 @@ export default function PatientDashboard() {
               <Button 
                 className="w-full mt-4" 
                 disabled={!patientData?.activated}
-                variant={patientData?.activated ? 'default' : 'secondary'}
+                variant={patientData?.activated ? 'primary' : 'secondary'}
               >
                 {patientData?.activated ? t('patient.actions.open_file') : t('patient.actions.file_locked')}
               </Button>
@@ -236,7 +236,7 @@ export default function PatientDashboard() {
                       {t('patient.dashboard.activation_status')}
                     </span>
                     <Badge 
-                      variant={patientData?.activated ? 'default' : 'secondary'}
+                      variant={patientData?.activated ? 'primary' : 'secondary'}
                       className={patientData?.activated ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800'}
                     >
                       {patientData?.activated ? t('common.activated') : t('common.pending')}

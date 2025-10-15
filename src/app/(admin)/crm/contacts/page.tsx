@@ -176,12 +176,12 @@ const ContactsPage: React.FC = () => {
   const getStatusBadge = (status: string) => {
     const statusMap = {
       'lead': { label: 'عميل محتمل', variant: 'secondary' as const },
-      'prospect': { label: 'عميل واعد', variant: 'default' as const },
-      'customer': { label: 'عميل', variant: 'default' as const },
+      'prospect': { label: 'عميل واعد', variant: 'primary' as const },
+      'customer': { label: 'عميل', variant: 'primary' as const },
       'inactive': { label: 'غير نشط', variant: 'destructive' as const }
     };
     
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'default' as const };
+    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'secondary' as const };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 

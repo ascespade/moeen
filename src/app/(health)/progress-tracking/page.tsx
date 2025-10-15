@@ -230,13 +230,13 @@ const ProgressTrackingPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      'active': { label: 'نشط', variant: 'default' as const },
-      'completed': { label: 'مكتمل', variant: 'default' as const },
+      'active': { label: 'نشط', variant: 'primary' as const },
+      'completed': { label: 'مكتمل', variant: 'primary' as const },
       'paused': { label: 'متوقف', variant: 'secondary' as const },
       'cancelled': { label: 'ملغي', variant: 'destructive' as const }
     };
     
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'default' as const };
+    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'primary' as const };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 

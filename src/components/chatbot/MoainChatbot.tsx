@@ -361,7 +361,7 @@ const MoainChatbot: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
               <Badge
-                variant={learningMode ? "default" : "outline"}
+                variant={learningMode ? "primary" : "outline"}
                 className="flex items-center gap-1"
               >
                 <Brain className="w-3 h-3" />

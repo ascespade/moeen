@@ -263,7 +263,7 @@ export default function AdminDashboard() {
               <Button variant="outline" size="sm">
                 تصدير التقرير
               </Button>
-              <Button variant="brand" size="sm">
+              <Button variant="primary" size="sm">
                 إعدادات
               </Button>
             </div>

@@ -320,7 +320,7 @@ export default function MedicalFilePage() {
               <Button variant="outline" size="sm">
                 تصدير التقرير
               </Button>
-              <Button variant="brand" size="sm">
+              <Button variant="primary" size="sm">
                 إضافة ملف جديد
               </Button>
             </div>
@@ -376,28 +376,28 @@ export default function MedicalFilePage() {
           </div>
           <div className="flex gap-3">
             <Button
-              variant={filter === "all" ? "brand" : "outline"}
+              variant={filter === "all" ? "primary" : "outline"}
               size="sm"
               onClick={() => setFilter("all")}
             >
               جميع الملفات
             </Button>
             <Button
-              variant={filter === "active" ? "brand" : "outline"}
+              variant={filter === "active" ? "primary" : "outline"}
               size="sm"
               onClick={() => setFilter("active")}
             >
               نشطة
             </Button>
             <Button
-              variant={filter === "blocked" ? "brand" : "outline"}
+              variant={filter === "blocked" ? "primary" : "outline"}
               size="sm"
               onClick={() => setFilter("blocked")}
             >
               محظورة
             </Button>
             <Button
-              variant={filter === "outstanding" ? "brand" : "outline"}
+              variant={filter === "outstanding" ? "primary" : "outline"}
               size="sm"
               onClick={() => setFilter("outstanding")}
             >
@@ -497,7 +497,7 @@ export default function MedicalFilePage() {
                 <Button variant="outline" size="sm" className="flex-1">
                   عرض الملف
                 </Button>
-                <Button variant="brand" size="sm" className="flex-1">
+                <Button variant="primary" size="sm" className="flex-1">
                   تحديث
                 </Button>
               </div>
@@ -529,7 +529,7 @@ export default function MedicalFilePage() {
             <p className="mb-4 text-gray-600 dark:text-gray-300">
               لا توجد ملفات طبية تطابق البحث أو الفلتر المحدد
             </p>
-            <Button variant="brand">إضافة ملف جديد</Button>
+            <Button variant="primary">إضافة ملف جديد</Button>
           </Card>
         )}
       </main>
@@ -723,7 +723,7 @@ export default function MedicalFilePage() {
                             selectedRecord.allergies.map((allergy, index) => (
                               <Badge
                                 key={index}
-                                variant="error"
+                                variant="destructive"
                                 className="text-xs"
                               >
                                 {allergy}
@@ -811,7 +811,7 @@ export default function MedicalFilePage() {
                 <Button variant="outline" className="flex-1">
                   طباعة الملف
                 </Button>
-                <Button variant="brand" className="flex-1">
+                <Button variant="primary" className="flex-1">
                   تحديث الملف
                 </Button>
               </div>

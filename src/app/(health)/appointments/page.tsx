@@ -126,7 +126,7 @@ const AppointmentsPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      'scheduled': { label: 'مجدول', variant: 'default' as const },
+      'scheduled': { label: 'مجدول', variant: 'primary' as const },
       'confirmed': { label: 'مؤكد', variant: 'secondary' as const },
       'completed': { label: 'مكتمل', variant: 'outline' as const },
       'cancelled': { label: 'ملغي', variant: 'destructive' as const },
@@ -252,7 +252,7 @@ const AppointmentsPage: React.FC = () => {
               </select>
               
               <Button
-                variant={showUpcoming ? "default" : "outline"}
+                variant={showUpcoming ? "primary" : "outline"}
                 onClick={() => setShowUpcoming(!showUpcoming)}
                 className="flex items-center gap-2"
               >

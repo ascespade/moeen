@@ -526,7 +526,7 @@ const AnalyticsPage: React.FC = () => {
                         <div key={index} className="p-4 border rounded-lg">
                           <div className="flex items-center justify-between mb-2">
                             <span className="font-medium">{item.therapist}</span>
-                            <Badge variant="default">{item.successRate}% نجاح</Badge>
+                            <Badge variant="primary">{item.successRate}% نجاح</Badge>
                           </div>
                           <div className="text-sm text-gray-600">
                             {item.sessions} جلسة

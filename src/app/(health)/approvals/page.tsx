@@ -316,7 +316,7 @@ export default function ApprovalsPage() {
               <Button variant="outline" size="sm">
                 تصدير التقرير
               </Button>
-              <Button variant="brand" size="sm">
+              <Button variant="primary" size="sm">
                 إضافة طلب موافقة
               </Button>
             </div>
@@ -368,28 +368,28 @@ export default function ApprovalsPage() {
           </div>
           <div className="flex flex-wrap gap-3">
             <Button
-              variant={filter === "all" ? "brand" : "outline"}
+              variant={filter === "all" ? "primary" : "outline"}
               size="sm"
               onClick={() => setFilter("all")}
             >
               جميع الطلبات
             </Button>
             <Button
-              variant={filter === "pending" ? "brand" : "outline"}
+              variant={filter === "pending" ? "primary" : "outline"}
               size="sm"
               onClick={() => setFilter("pending")}
             >
               قيد المراجعة
             </Button>
             <Button
-              variant={filter === "approved" ? "brand" : "outline"}
+              variant={filter === "approved" ? "primary" : "outline"}
               size="sm"
               onClick={() => setFilter("approved")}
             >
               موافق عليها
             </Button>
             <Button
-              variant={filter === "rejected" ? "brand" : "outline"}
+              variant={filter === "rejected" ? "primary" : "outline"}
               size="sm"
               onClick={() => setFilter("rejected")}
             >
@@ -401,7 +401,7 @@ export default function ApprovalsPage() {
         {/* Type Filters */}
         <div className="mb-6 flex flex-wrap gap-3">
           <Button
-            variant={typeFilter === "all" ? "brand" : "outline"}
+            variant={typeFilter === "all" ? "primary" : "outline"}
             size="sm"
             onClick={() => setTypeFilter("all")}
           >
@@ -410,7 +410,7 @@ export default function ApprovalsPage() {
           {Object.entries(requestTypeConfig).map(([type, config]) => (
             <Button
               key={type}
-              variant={typeFilter === type ? "brand" : "outline"}
+              variant={typeFilter === type ? "primary" : "outline"}
               size="sm"
               onClick={() => setTypeFilter(type as Approval["requestType"])}
             >
@@ -488,7 +488,7 @@ export default function ApprovalsPage() {
                     عرض التفاصيل
                   </Button>
                   {approval.status === "pending" && (
-                    <Button variant="brand" size="sm">
+                    <Button variant="primary" size="sm">
                       مراجعة
                     </Button>
                   )}
@@ -522,7 +522,7 @@ export default function ApprovalsPage() {
             <p className="mb-4 text-gray-600 dark:text-gray-300">
               لا توجد طلبات موافقة تطابق البحث أو الفلتر المحدد
             </p>
-            <Button variant="brand">إضافة طلب موافقة</Button>
+            <Button variant="primary">إضافة طلب موافقة</Button>
           </Card>
         )}
       </main>
@@ -711,15 +711,15 @@ export default function ApprovalsPage() {
                 </Button>
                 {selectedApproval.status === "pending" && (
                   <>
-                    <Button variant="error" className="flex-1">
+                    <Button variant="destructive" className="flex-1">
                       رفض
                     </Button>
-                    <Button variant="brand" className="flex-1">
+                    <Button variant="primary" className="flex-1">
                       موافقة
                     </Button>
                   </>
                 )}
-                <Button variant="brand" className="flex-1">
+                <Button variant="primary" className="flex-1">
                   تحديث
                 </Button>
               </div>

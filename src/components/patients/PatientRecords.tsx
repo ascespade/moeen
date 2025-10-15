@@ -519,7 +519,7 @@ const PatientRecords: React.FC = () => {
                         </label>
                         <div className="flex flex-wrap gap-2 mt-1">
                           {selectedPatient.allergies.map((allergy, index) => (
-                            <Badge key={index} variant="error">
+                            <Badge key={index} variant="destructive">
                               {allergy}
                             </Badge>
                           ))}
