@@ -24,8 +24,8 @@ export const useAuth = () => {
         storageUtils.set('auth_token', response.data.token);
         return { success: true };
       } else {
-        setError(response.error?.message || 'فشل في تسجيل الدخول');
-        return { success: false, error: response.error?.message };
+        setError(response.error || 'فشل في تسجيل الدخول');
+        return { success: false, error: response.error };
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'حدث خطأ غير متوقع';
@@ -181,7 +181,7 @@ export const usePatients = () => {
         setPatients(response.data);
         return { success: true, data: response.data };
       }
-      return { success: false, error: response.error?.message };
+      return { success: false, error: response.error };
     } catch (error) {
       return { success: false, error: error instanceof Error ? error.message : 'حدث خطأ' };
     }
@@ -194,7 +194,7 @@ export const usePatients = () => {
         addPatient(response.data);
         return { success: true, data: response.data };
       }
-      return { success: false, error: response.error?.message };
+      return { success: false, error: response.error };
     } catch (error) {
       return { success: false, error: error instanceof Error ? error.message : 'حدث خطأ' };
     }
@@ -207,7 +207,7 @@ export const usePatients = () => {
         updatePatient(id, response.data);
         return { success: true, data: response.data };
       }
-      return { success: false, error: response.error?.message };
+      return { success: false, error: response.error };
     } catch (error) {
       return { success: false, error: error instanceof Error ? error.message : 'حدث خطأ' };
     }
@@ -232,7 +232,7 @@ export const useAppointments = () => {
         setAppointments(response.data);
         return { success: true, data: response.data };
       }
-      return { success: false, error: response.error?.message };
+      return { success: false, error: response.error };
     } catch (error) {
       return { success: false, error: error instanceof Error ? error.message : 'حدث خطأ' };
     }
@@ -245,7 +245,7 @@ export const useAppointments = () => {
         addAppointment(response.data);
         return { success: true, data: response.data };
       }
-      return { success: false, error: response.error?.message };
+      return { success: false, error: response.error };
     } catch (error) {
       return { success: false, error: error instanceof Error ? error.message : 'حدث خطأ' };
     }
@@ -258,7 +258,7 @@ export const useAppointments = () => {
         updateAppointment(id, response.data);
         return { success: true, data: response.data };
       }
-      return { success: false, error: response.error?.message };
+      return { success: false, error: response.error };
     } catch (error) {
       return { success: false, error: error instanceof Error ? error.message : 'حدث خطأ' };
     }

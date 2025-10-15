@@ -4,7 +4,7 @@
  */
 
 import { z } from 'zod';
-import { VALIDATION_RULES } from '../config';
+import { VALIDATION_RULES } from '../constants';
 import { ValidationError } from '../errors';
 
 // Base Validation Schemas
