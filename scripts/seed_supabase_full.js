@@ -701,19 +701,26 @@ async function seed() {
 
     // 13) Notifications sample
     console.log("Seeding notification templates...");
-    await upsert(
-      "notifications",
-      {
+  // Insert-or-ignore for notifications (table may lack a unique constraint)
+  {
+    const title = "مرحبًا من مركز الهمم";
+    const { data: existing } = await supabase
+      .from("notifications")
+      .select("id")
+      .eq("title", title)
+      .maybeSingle();
+    if (!existing) {
+      await insert("notifications", {
         id: uuidv4(),
         user_id: null,
-        title: "مرحبًا من مركز الهمم",
+        title,
         message: "تم تهيئة النظام وتجهيز الحسابات الأساسية.",
         type: "info",
         is_read: false,
         metadata: {},
-      },
-      ["title"],
-    );
+      });
+    }
+  }
 
     // 14) WhatsApp templates
     console.log("Seeding whatsapp templates...");
@@ -737,19 +744,25 @@ async function seed() {
 
     // 15) Create basic ai_models entry
     console.log("Seeding ai_models...");
-    await upsert(
-      "ai_models",
-      {
-        id: uuidv4(),
-        name: "gemini_pro",
-        model_type: "llm",
-        api_key: null,
-        api_url: "https://api.fake-llm-provider.example",
-        configuration: {},
-        is_active: true,
-      },
-      ["name"],
-    );
+    // Insert-or-ignore for ai_models with existing enum values
+    {
+      const { data: existing } = await supabase
+        .from("ai_models")
+        .select("id")
+        .eq("name", "gemini_pro")
+        .maybeSingle();
+      if (!existing) {
+        await insert("ai_models", {
+          id: uuidv4(),
+          name: "gemini_pro",
+          model_type: "gemini_pro", // align to existing enum if present
+          api_key: null,
+          api_url: "https://api.fake-llm-provider.example",
+          configuration: {},
+          is_active: true,
+        });
+      }
+    }
 
     // Final audit
     console.log("Finalizing seeding and writing audit log...");
