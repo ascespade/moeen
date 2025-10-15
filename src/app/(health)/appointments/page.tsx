@@ -91,11 +91,9 @@ const AppointmentsPage: React.FC = () => {
       if (data.success) {
         setAppointments(data.appointments || []);
       } else {
-        console.error('Error loading appointments:', data.error);
-      }
+        }
     } catch (error) {
-      console.error('Error loading appointments:', error);
-    } finally {
+      } finally {
       setLoading(false);
     }
   };
@@ -122,7 +120,6 @@ const AppointmentsPage: React.FC = () => {
         alert('فشل في إلغاء الموعد: ' + data.error);
       }
     } catch (error) {
-      console.error('Error cancelling appointment:', error);
       alert('حدث خطأ في إلغاء الموعد');
     }
   };

@@ -37,7 +37,6 @@ export async function POST(request: NextRequest) {
       });
 
     if (error) {
-      console.error('Error logging missing translation:', error);
       return NextResponse.json(
         { error: 'Failed to log missing translation' },
         { status: 500 }
@@ -47,7 +46,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true, data });
 
   } catch (error) {
-    console.error('Missing translations API error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -72,7 +70,6 @@ export async function GET(request: NextRequest) {
     const { data, error } = await query;
 
     if (error) {
-      console.error('Error fetching missing translations:', error);
       return NextResponse.json(
         { error: 'Failed to fetch missing translations' },
         { status: 500 }
@@ -82,7 +79,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ data });
 
   } catch (error) {
-    console.error('Missing translations GET API error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

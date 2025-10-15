@@ -23,7 +23,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Slack webhook error:', error);
     return NextResponse.json(
       { error: 'Webhook processing failed' },
       { status: 500 }
@@ -35,8 +34,7 @@ async function handleSlackEvent(event: any) {
   try {
     await slack.handleSlackEvent(event);
   } catch (error) {
-    console.error('Error handling Slack event:', error);
-  }
+    }
 }
 
 export async function GET(request: NextRequest) {

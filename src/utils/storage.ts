@@ -8,7 +8,6 @@ export const storage = {
       const item = localStorage.getItem(key);
       return item ? JSON.parse(item) : defaultValue || null;
     } catch (error) {
-      console.error(`Error reading from localStorage key "${key}":`, error);
       return defaultValue || null;
     }
   },
@@ -19,8 +18,7 @@ export const storage = {
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-      console.error(`Error writing to localStorage key "${key}":`, error);
-    }
+      }
   },
 
   remove: (key: string): void => {
@@ -29,8 +27,7 @@ export const storage = {
     try {
       localStorage.removeItem(key);
     } catch (error) {
-      console.error(`Error removing from localStorage key "${key}":`, error);
-    }
+      }
   },
 
   clear: (): void => {
@@ -39,8 +36,7 @@ export const storage = {
     try {
       localStorage.clear();
     } catch (error) {
-      console.error("Error clearing localStorage:", error);
-    }
+      }
   },
 
   // Session Storage
@@ -51,7 +47,6 @@ export const storage = {
       const item = sessionStorage.getItem(key);
       return item ? JSON.parse(item) : defaultValue || null;
     } catch (error) {
-      console.error(`Error reading from sessionStorage key "${key}":`, error);
       return defaultValue || null;
     }
   },
@@ -62,8 +57,7 @@ export const storage = {
     try {
       sessionStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-      console.error(`Error writing to sessionStorage key "${key}":`, error);
-    }
+      }
   },
 
   removeSession: (key: string): void => {
@@ -72,8 +66,7 @@ export const storage = {
     try {
       sessionStorage.removeItem(key);
     } catch (error) {
-      console.error(`Error removing from sessionStorage key "${key}":`, error);
-    }
+      }
   },
 
   clearSession: (): void => {
@@ -82,8 +75,7 @@ export const storage = {
     try {
       sessionStorage.clear();
     } catch (error) {
-      console.error("Error clearing sessionStorage:", error);
-    }
+      }
   },
 };
 

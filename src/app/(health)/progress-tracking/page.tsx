@@ -222,7 +222,6 @@ const ProgressTrackingPage: React.FC = () => {
       setAssessments(mockAssessments);
       setReports(mockReports);
     } catch (error) {
-      console.error('Error loading progress data:', error);
       setError('فشل في تحميل بيانات تتبع التقدم');
     } finally {
       setLoading(false);

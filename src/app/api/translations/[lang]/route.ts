@@ -66,8 +66,6 @@ export async function GET(
     return NextResponse.json(translationObject, { headers });
 
   } catch (error) {
-    console.error('Translations API error:', error);
-    
     // Return fallback translations
     return NextResponse.json(
       getDefaultTranslations(lang),
@@ -107,8 +105,7 @@ async function logMissingTranslationKeys(requestedLang: string, missingKeys: str
         );
     }
   } catch (error) {
-    console.error('Error logging missing translations:', error);
-  }
+    }
 }
 
 function getDefaultTranslations(lang: string) {

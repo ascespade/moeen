@@ -253,7 +253,6 @@ const SecurityPage: React.FC = () => {
       setSessions(mockSessions);
       setAlerts(mockAlerts);
     } catch (error) {
-      console.error('Error loading security data:', error);
       setError('فشل في تحميل بيانات الأمان');
     } finally {
       setLoading(false);

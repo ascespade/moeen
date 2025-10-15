@@ -167,7 +167,6 @@ const ContactsPage: React.FC = () => {
       setContacts(mockContacts);
       setActivities(mockActivities);
     } catch (error) {
-      console.error('Error loading contacts:', error);
       setError('فشل في تحميل جهات الاتصال');
     } finally {
       setLoading(false);

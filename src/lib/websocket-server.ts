@@ -140,8 +140,6 @@ export class WebSocketServer {
 
   private setupEventHandlers(): void {
     this.io.on("connection", (socket) => {
-      console.log(`Client connected: ${socket.id}`);
-
       // Handle user authentication
       socket.on(
         "authenticate",
@@ -161,12 +159,11 @@ export class WebSocketServer {
               await this.joinUserRooms(socket, user);
 
               socket.emit("authenticated", { success: true, user });
-              console.log(`User authenticated: ${user.name} (${user.role})`);
+              `);
             } else {
               socket.emit("authentication_failed", { error: "Invalid token" });
             }
           } catch (error) {
-            console.error("Authentication error:", error);
             socket.emit("authentication_failed", {
               error: "Authentication failed",
             });
@@ -310,8 +307,6 @@ export class WebSocketServer {
       socket.on("disconnect", () => {
         const user = this.users.get(socket.id);
         if (user) {
-          console.log(`User disconnected: ${user.name}`);
-
           // Notify patient left if applicable
           if (user.role === "patient") {
             socket
@@ -354,7 +349,6 @@ export class WebSocketServer {
       }
       return null;
     } catch (error) {
-      console.error("User authentication error:", error);
       return null;
     }
   }
@@ -415,7 +409,6 @@ export class WebSocketServer {
 
     for (const [socketId, user] of this.users.entries()) {
       if (now.getTime() - user.lastActivity.getTime() > inactiveThreshold) {
-        console.log(`Cleaning up inactive user: ${user.name}`);
         this.users.delete(socketId);
       }
     }

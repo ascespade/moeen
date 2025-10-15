@@ -147,8 +147,6 @@ export class WhatsAppIntegration {
     this.messageQueue.push(message);
 
     // Simulate sending (in real implementation, this would call WhatsApp API)
-    console.log(`Sending WhatsApp message to ${to}: ${content}`);
-
     return messageId;
   }
 

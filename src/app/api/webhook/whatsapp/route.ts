@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { logger } from '@/lib/logger';
+
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -32,7 +34,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ status: 'success' });
   } catch (error) {
-    console.error('WhatsApp webhook error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -103,8 +104,7 @@ async function processWhatsAppMessage(message: any, value: any) {
     await processMessageWithAI(conversation.id, messageText, phoneNumber);
 
   } catch (error) {
-    console.error('Error processing WhatsApp message:', error);
-  }
+    }
 }
 
 async function processMessageWithAI(conversationId: string, messageText: string, phoneNumber: string) {
@@ -165,8 +165,7 @@ async function processMessageWithAI(conversationId: string, messageText: string,
     await sendWhatsAppMessage(phoneNumber, responseText);
 
   } catch (error) {
-    console.error('Error processing message with AI:', error);
-  }
+    }
 }
 
 async function handleAppointmentIntent(conversationId: string, messageText: string, phoneNumber: string): Promise<string> {
@@ -203,9 +202,8 @@ async function sendWhatsAppMessage(phoneNumber: string, message: string) {
     });
 
     if (!response.ok) {
-      console.error('Failed to send WhatsApp message:', await response.text());
+      logger.error('Failed to send WhatsApp message:', await response.text());
     }
   } catch (error) {
-    console.error('Error sending WhatsApp message:', error);
-  }
+    }
 }

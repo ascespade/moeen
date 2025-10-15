@@ -26,7 +26,6 @@ export async function GET(request: NextRequest) {
       .limit(limit);
 
     if (error) {
-      console.error('Error fetching messages:', error);
       return NextResponse.json(
         { error: 'Failed to fetch messages' },
         { status: 500 }
@@ -40,7 +39,6 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error in GET messages:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -76,7 +74,6 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      console.error('Error saving message:', error);
       return NextResponse.json(
         { error: 'Failed to save message' },
         { status: 500 }
@@ -89,7 +86,6 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error in POST messages:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

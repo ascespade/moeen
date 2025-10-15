@@ -117,7 +117,6 @@ class DynamicContentManager {
 
       return content;
     } catch (error) {
-      console.error("Error loading homepage content:", error);
       // Return empty content structure instead of hardcoded fallbacks
       return {
         heroSlides: [],
@@ -170,7 +169,6 @@ class DynamicContentManager {
 
       return translations;
     } catch (error) {
-      console.error("Error loading translations:", error);
       return {};
     }
   }
@@ -212,7 +210,6 @@ class DynamicContentManager {
 
       return settings;
     } catch (error) {
-      console.error("Error loading settings:", error);
       return {};
     }
   }
@@ -286,7 +283,6 @@ class DynamicContentManager {
       // Clear cache
       this.cache.clear();
     } catch (error) {
-      console.error("Error updating homepage content:", error);
       throw error;
     }
   }
@@ -314,7 +310,6 @@ class DynamicContentManager {
         }
       });
     } catch (error) {
-      console.error("Error updating translations:", error);
       throw error;
     }
   }

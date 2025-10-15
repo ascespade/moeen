@@ -163,8 +163,7 @@ export class AuditLogger {
         user_agent: userAgent,
       });
     } catch (error) {
-      console.error("Audit logging failed:", error);
-    }
+      }
   }
 }
 
@@ -208,7 +207,6 @@ export class EnhancedAuthMiddleware {
 
       return { success: true, user };
     } catch (error) {
-      console.error("Authentication error:", error);
       return { success: false, error: "Invalid token" };
     }
   }
@@ -347,8 +345,6 @@ export function secureAPI(
 
       return result;
     } catch (error) {
-      console.error("Security middleware error:", error);
-
       // Log the error
       const err = error as unknown as { message?: string; stack?: string };
       await AuditLogger.log(request, "SECURITY_ERROR", {

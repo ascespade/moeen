@@ -11,8 +11,6 @@ export async function GET(request: NextRequest) {
   const logError = (error: any, context: string) => {
     const timestamp = new Date().toISOString();
     const errorMessage = `[${timestamp}] Dashboard metrics error in ${context}: ${error.message || error}`;
-    console.error(errorMessage);
-    
     // Log to file if possible
     try {
       const fs = require('fs');
@@ -171,7 +169,6 @@ async function getSystemHealth() {
       details: service.health_status,
     }));
   } catch (error) {
-    console.error("System health error:", error);
     return [];
   }
 }
@@ -214,7 +211,6 @@ async function getSystemMetrics() {
 
     return Object.values(aggregated);
   } catch (error) {
-    console.error("System metrics error:", error);
     return [];
   }
 }
@@ -266,7 +262,6 @@ async function getSocialMediaMetrics() {
 
     return summary;
   } catch (error) {
-    console.error("Social media metrics error:", error);
     return {
       totalPosts: 0,
       platforms: {},
@@ -306,7 +301,6 @@ async function getWorkflowMetrics() {
 
     return summary;
   } catch (error) {
-    console.error("Workflow metrics error:", error);
     return {
       totalWorkflows: 0,
       validWorkflows: 0,
@@ -338,7 +332,6 @@ async function getChatbotMetrics() {
 
     return summary;
   } catch (error) {
-    console.error("Chatbot metrics error:", error);
     return {
       activeFlows: 0,
       totalNodes: 0,
@@ -471,7 +464,6 @@ async function getHealthcareMetrics() {
       }
     };
   } catch (error) {
-    console.error("Healthcare metrics error:", error);
     return {
       patients: { total: 0, active: 0, newThisMonth: 0, growthRate: 0 },
       appointments: { total: 0, today: 0, thisWeek: 0, completed: 0, cancelled: 0 },
@@ -564,7 +556,6 @@ async function getCrmMetrics() {
       }
     };
   } catch (error) {
-    console.error("CRM metrics error:", error);
     return {
       leads: { total: 0, new: 0, qualified: 0, converted: 0 },
       deals: { total: 0, won: 0, lost: 0, pipeline: 0 },

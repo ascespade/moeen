@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
 import { glob } from "glob";
+import { logger } from '@/lib/logger';
+
 
 /**
  * Validation script to check for hardcoded content violations
@@ -109,7 +111,7 @@ class DynamicContentValidator {
         });
       });
     } catch (error) {
-      console.error(`Error reading file ${filePath}:`, error);
+      logger.error(`Error reading file ${filePath}:`, error);
     }
   }
 
@@ -159,7 +161,7 @@ class DynamicContentValidator {
       ignore: ["node_modules/**", "dist/**", "build/**", "**/*.d.ts"],
     });
 
-    console.log(`🔍 Validating ${files.length} files...`);
+    logger.info(`🔍 Validating ${files.length} files...`);
 
     for (const file of files) {
       const fullPath = path.join(dirPath, file);
@@ -168,11 +170,11 @@ class DynamicContentValidator {
   }
 
   generateReport(): void {
-    console.log("\n📊 Dynamic Content Validation Report");
-    console.log("=====================================\n");
+    logger.info("\n📊 Dynamic Content Validation Report");
+    logger.info("=====================================\n");
 
     if (this.violations.length === 0) {
-      console.log(
+      logger.info(
         "✅ No violations found! All content is dynamic and database-driven.",
       );
       return;
@@ -192,29 +194,29 @@ class DynamicContentValidator {
 
     // Print violations by type
     Object.entries(violationsByType).forEach(([type, violations]) => {
-      console.log(
+      logger.info(
         `\n❌ ${type.toUpperCase()} VIOLATIONS (${violations.length}):`,
       );
-      console.log("─".repeat(50));
+      logger.info("─".repeat(50));
 
       violations.forEach((violation) => {
-        console.log(`📁 ${violation.file}:${violation.line}`);
-        console.log(`   ${violation.content}`);
-        console.log("");
+        logger.info(`📁 ${violation.file}:${violation.line}`);
+        logger.info(`   ${violation.content}`);
+        logger.info("");
       });
     });
 
-    console.log(`\n📈 Summary:`);
-    console.log(`   Total violations: ${this.violations.length}`);
-    console.log(
+    logger.info(`\n📈 Summary:`);
+    logger.info(`   Total violations: ${this.violations.length}`);
+    logger.info(
       `   Error severity: ${this.violations.filter((v) => v.severity === "error").length}`,
     );
-    console.log(
+    logger.info(
       `   Warning severity: ${this.violations.filter((v) => v.severity === "warning").length}`,
     );
 
     if (this.violations.length > 0) {
-      console.log("\n🚨 Build should be blocked due to violations!");
+      logger.info("\n🚨 Build should be blocked due to violations!");
       process.exit(1);
     }
   }
@@ -227,7 +229,7 @@ class DynamicContentValidator {
 async function main() {
   const validator = new DynamicContentValidator();
 
-  console.log("🔍 Starting dynamic content validation...");
+  logger.info("🔍 Starting dynamic content validation...");
 
   // Validate src directory
   await validator.validateDirectory("./src");
@@ -238,7 +240,7 @@ async function main() {
 
 // Run validation if this file is executed directly
 if (require.main === module) {
-  main().catch(console.error);
+  main().catch(logger.error);
 }
 
 export default DynamicContentValidator;

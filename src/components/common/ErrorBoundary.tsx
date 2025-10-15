@@ -1,6 +1,12 @@
-"use client";
+'use client';
 
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { useT } from '@/hooks/useT';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
+import { logger } from '@/lib/logger';
+
 
 interface Props {
   children: ReactNode;
@@ -10,114 +16,159 @@ interface Props {
 
 interface State {
   hasError: boolean;
-  error?: Error | undefined;
+  error?: Error;
+  errorInfo?: ErrorInfo;
 }
 
-export class ErrorBoundary extends Component<Props, State> {
+export default class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
   }
 
   static getDerivedStateFromError(error: Error): State {
-    // Update state so the next render will show the fallback UI
-    return { hasError: true, error };
+    return {
+      hasError: true,
+      error
+    };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Log the error to console in development
-    if (process.env.NODE_ENV === "development") {
-      console.error("ErrorBoundary caught an error:", error, errorInfo);
-    }
+    this.setState({
+      error,
+      errorInfo
+    });
 
-    // Call custom error handler if provided
-    if (this.props.onError) {
-      this.props.onError(error, errorInfo);
-    }
+    // Log error to external service
+    this.logError(error, errorInfo);
 
-    // In production, you might want to send this to an error reporting service
-    if (process.env.NODE_ENV === "production") {
-      // Example: send to error reporting service
-      // errorReportingService.captureException(error, { extra: errorInfo });
-    }
+    // Call custom error handler
+    this.props.onError?.(error, errorInfo);
   }
+
+  private logError = (error: Error, errorInfo: ErrorInfo) => {
+    // Send error to logging service
+    fetch('/api/errors', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        error: {
+          name: error.name,
+          message: error.message,
+          stack: error.stack
+        },
+        errorInfo: {
+          componentStack: errorInfo.componentStack
+        },
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        url: window.location.href
+      })
+    }).catch(logger.error);
+  };
+
+  private handleRetry = () => {
+    this.setState({ hasError: false, error: undefined, errorInfo: undefined });
+  };
+
+  private handleGoHome = () => {
+    window.location.href = '/';
+  };
 
   render() {
     if (this.state.hasError) {
-      // Custom fallback UI
       if (this.props.fallback) {
         return this.props.fallback;
       }
 
-      // Default fallback UI
-      return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
-          <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
-            <div className="w-16 h-16 mx-auto mb-4 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center">
-              <svg
-                className="w-8 h-8 text-red-600 dark:text-red-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
-                />
-              </svg>
-            </div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              حدث خطأ غير متوقع
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              نعتذر عن هذا الخطأ. يرجى إعادة تحميل الصفحة أو المحاولة مرة أخرى.
-            </p>
-            <div className="space-y-3">
-              <button
-                onClick={() => window.location.reload()}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
-              >
-                إعادة تحميل الصفحة
-              </button>
-              <button
-                onClick={() => window.history.back()}
-                className="w-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium py-2 px-4 rounded-lg transition-colors"
-              >
-                العودة للصفحة السابقة
-              </button>
-            </div>
-            {process.env.NODE_ENV === "development" && this.state.error && (
-              <details className="mt-4 text-left">
-                <summary className="cursor-pointer text-sm text-gray-500 dark:text-gray-400">
-                  تفاصيل الخطأ (وضع التطوير)
-                </summary>
-                <pre className="mt-2 text-xs bg-gray-100 dark:bg-gray-900 p-2 rounded overflow-auto">
-                  {this.state.error.toString()}
-                </pre>
-              </details>
-            )}
-          </div>
-        </div>
-      );
+      return <ErrorFallback 
+        error={this.state.error} 
+        onRetry={this.handleRetry}
+        onGoHome={this.handleGoHome}
+      />;
     }
 
     return this.props.children;
   }
 }
 
-// Hook version for functional components
-export const useErrorHandler = () => {
-  const handleError = (error: Error, errorInfo?: any) => {
-    console.error("Error caught by useErrorHandler:", error, errorInfo);
+interface ErrorFallbackProps {
+  error?: Error;
+  onRetry: () => void;
+  onGoHome: () => void;
+}
 
-    // In production, you might want to send this to an error reporting service
-    if (process.env.NODE_ENV === "production") {
-      // Example: send to error reporting service
-      // errorReportingService.captureException(error, { extra: errorInfo });
-    }
+function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
+  const { t } = useT();
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+      <Card className="max-w-md w-full p-8 text-center">
+        <div className="flex justify-center mb-6">
+          <div className="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center">
+            <AlertTriangle className="h-8 w-8 text-red-600" />
+          </div>
+        </div>
+        
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          {t('error.boundary.title')}
+        </h1>
+        
+        <p className="text-gray-600 dark:text-gray-400 mb-6">
+          {t('error.boundary.description')}
+        </p>
+
+        {process.env.NODE_ENV === 'development' && error && (
+          <details className="mb-6 text-left">
+            <summary className="cursor-pointer text-sm text-gray-500 dark:text-gray-400 mb-2">
+              {t('error.boundary.technical_details')}
+            </summary>
+            <pre className="text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded overflow-auto">
+              {error.message}
+              {error.stack && `\n\n${error.stack}`}
+            </pre>
+          </details>
+        )}
+
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button onClick={onRetry} className="flex-1">
+            <RefreshCw className="h-4 w-4 mr-2" />
+            {t('error.boundary.retry')}
+          </Button>
+          <Button onClick={onGoHome} variant="outline" className="flex-1">
+            <Home className="h-4 w-4 mr-2" />
+            {t('error.boundary.go_home')}
+          </Button>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+// Hook for functional components
+export function useErrorHandler() {
+  const handleError = (error: Error, errorInfo?: any) => {
+    // Log error
+    fetch('/api/errors', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        error: {
+          name: error.name,
+          message: error.message,
+          stack: error.stack
+        },
+        errorInfo,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        url: window.location.href
+      })
+    }).catch(logger.error);
   };
 
   return { handleError };
-};
+}

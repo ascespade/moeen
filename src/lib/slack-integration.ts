@@ -72,7 +72,6 @@ export class SlackIntegration {
       // Test bot token
       const botTest = await this.makeSlackRequest('auth.test');
       if (!botTest.ok) {
-        console.error('Slack bot token invalid:', botTest.error);
         return false;
       }
 
@@ -80,10 +79,8 @@ export class SlackIntegration {
       await this.loadChannels();
       await this.loadUsers();
       
-      console.log('Slack integration initialized successfully');
       return true;
     } catch (error) {
-      console.error('Failed to initialize Slack integration:', error);
       return false;
     }
   }
@@ -109,8 +106,7 @@ export class SlackIntegration {
         });
       }
     } catch (error) {
-      console.error('Error loading Slack channels:', error);
-    }
+      }
   }
 
   // Load users
@@ -139,8 +135,7 @@ export class SlackIntegration {
         });
       }
     } catch (error) {
-      console.error('Error loading Slack users:', error);
-    }
+      }
   }
 
   // Send message to Slack
@@ -165,11 +160,9 @@ export class SlackIntegration {
       if (response.ok) {
         return response.ts;
       } else {
-        console.error('Failed to send Slack message:', response.error);
         return null;
       }
     } catch (error) {
-      console.error('Error sending Slack message:', error);
       return null;
     }
   }
@@ -185,7 +178,6 @@ export class SlackIntegration {
     try {
       const channel = this.getAppointmentChannel(doctor.id);
       if (!channel) {
-        console.error('No channel found for doctor:', doctor.id);
         return;
       }
 
@@ -213,8 +205,7 @@ export class SlackIntegration {
 
       await this.sendMessage(channel, message, { blocks });
     } catch (error) {
-      console.error('Error sending appointment notification:', error);
-    }
+      }
   }
 
   // Send patient message to doctor
@@ -227,7 +218,6 @@ export class SlackIntegration {
     try {
       const doctorChannel = this.getAppointmentChannel(doctorId);
       if (!doctorChannel) {
-        console.error('No channel found for doctor:', doctorId);
         return;
       }
 
@@ -252,8 +242,7 @@ export class SlackIntegration {
 
       await this.sendMessage(doctorChannel, `رسالة من المريض`, { blocks });
     } catch (error) {
-      console.error('Error sending patient message:', error);
-    }
+      }
   }
 
   // Send doctor response to patient
@@ -266,15 +255,12 @@ export class SlackIntegration {
     try {
       // This would integrate with WhatsApp or website chatbot
       // For now, we'll just log it
-      console.log(`Doctor ${doctorId} responding to patient ${patientId}: ${response}`);
-      
       // In a real implementation, this would:
       // 1. Send via WhatsApp API if the conversation started there
       // 2. Send via website chatbot if the conversation started there
       // 3. Update the conversation thread in Slack
     } catch (error) {
-      console.error('Error sending doctor response:', error);
-    }
+      }
   }
 
   // Create appointment blocks for Slack
@@ -379,11 +365,9 @@ export class SlackIntegration {
       if (response.ok) {
         return response.channel.id;
       } else {
-        console.error('Failed to create doctor channel:', response.error);
         return null;
       }
     } catch (error) {
-      console.error('Error creating doctor channel:', error);
       return null;
     }
   }
@@ -402,11 +386,9 @@ export class SlackIntegration {
           await this.handleInteractiveMessage(event);
           break;
         default:
-          console.log('Unhandled Slack event type:', event.type);
-      }
+          }
     } catch (error) {
-      console.error('Error handling Slack event:', error);
-    }
+      }
   }
 
   // Handle incoming messages
@@ -427,8 +409,7 @@ export class SlackIntegration {
   // Handle app mentions
   private async handleAppMention(event: any): Promise<void> {
     // Handle when the bot is mentioned
-    console.log('Bot mentioned:', event.text);
-  }
+    }
 
   // Handle interactive messages (button clicks, etc.)
   private async handleInteractiveMessage(event: any): Promise<void> {
@@ -448,20 +429,17 @@ export class SlackIntegration {
   private async handleDoctorResponse(event: any): Promise<void> {
     // Extract appointment and patient info from thread context
     // Send response back to patient via appropriate channel
-    console.log('Doctor response in thread:', event.text);
-  }
+    }
 
   // Handle view appointment action
   private async handleViewAppointment(appointmentId: string): Promise<void> {
     // Show detailed appointment information
-    console.log('View appointment:', appointmentId);
-  }
+    }
 
   // Handle reply to patient action
   private async handleReplyToPatient(value: string): Promise<void> {
     // Open a dialog or thread for doctor to respond
-    console.log('Reply to patient:', value);
-  }
+    }
 
   // Make Slack API request
   private async makeSlackRequest(method: string, params: any = {}): Promise<any> {

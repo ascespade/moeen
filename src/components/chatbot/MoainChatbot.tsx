@@ -94,7 +94,6 @@ const MoainChatbot: React.FC = () => {
         setMessages([welcomeMessage]);
       }
     } catch (error) {
-      console.error('Error loading chat history:', error);
       // رسالة ترحيب في حالة الخطأ
       const welcomeMessage: ChatMessage = {
         id: "1",
@@ -177,7 +176,6 @@ const MoainChatbot: React.FC = () => {
         setMessages((prev) => [...prev, botMessage]);
       }
     } catch (error) {
-      console.error('Error sending message:', error);
       // استجابة احتياطية في حالة الخطأ
       const fallbackResponse = generateBotResponse(inputMessage);
       const botMessage: ChatMessage = {
@@ -329,7 +327,6 @@ const MoainChatbot: React.FC = () => {
         throw new Error(data.error || 'فشل في حجز الموعد');
       }
     } catch (error) {
-      console.error('Error booking appointment:', error);
       const errorMessage: ChatMessage = {
         id: Date.now().toString(),
         type: "bot",

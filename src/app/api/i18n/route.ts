@@ -87,7 +87,6 @@ export async function GET(request: Request) {
       .eq("namespace", ns);
 
     if (error) {
-      console.error("Database error:", error);
       return getFallbackMessages(locale, ns);
     }
 
@@ -101,7 +100,6 @@ export async function GET(request: Request) {
 
     return getFallbackMessages(locale, ns);
   } catch (error) {
-    console.error("Translation API error:", error);
     return getFallbackMessages(locale, ns);
   }
 }

@@ -1,4 +1,6 @@
 import { dynamicContentManager } from "../lib/dynamic-content-manager";
+import { logger } from '@/lib/logger';
+
 
 /**
  * Seed homepage content with dynamic data
@@ -6,7 +8,7 @@ import { dynamicContentManager } from "../lib/dynamic-content-manager";
  */
 async function seedHomepageContent() {
   try {
-    console.log("🌱 Seeding homepage content...");
+    logger.info("🌱 Seeding homepage content...");
 
     // Hero slides content
     const heroSlides = [
@@ -167,7 +169,7 @@ async function seedHomepageContent() {
       faqs,
     });
 
-    console.log("✅ Homepage content seeded successfully!");
+    logger.info("✅ Homepage content seeded successfully!");
 
     // Also seed translations for the homepage
     const translations = [
@@ -301,10 +303,10 @@ async function seedHomepageContent() {
 
     await dynamicContentManager.updateTranslations(translations);
 
-    console.log("✅ Translations seeded successfully!");
-    console.log("🎉 All dynamic content has been seeded!");
+    logger.info("✅ Translations seeded successfully!");
+    logger.info("🎉 All dynamic content has been seeded!");
   } catch (error) {
-    console.error("❌ Error seeding homepage content:", error);
+    logger.error("❌ Error seeding homepage content:", error);
     throw error;
   }
 }
@@ -313,11 +315,11 @@ async function seedHomepageContent() {
 if (require.main === module) {
   seedHomepageContent()
     .then(() => {
-      console.log("✅ Seeding completed successfully!");
+      logger.info("✅ Seeding completed successfully!");
       process.exit(0);
     })
     .catch((error) => {
-      console.error("❌ Seeding failed:", error);
+      logger.error("❌ Seeding failed:", error);
       process.exit(1);
     });
 }

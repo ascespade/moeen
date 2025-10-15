@@ -18,7 +18,6 @@ export async function GET(request: NextRequest) {
       summary: healthData.summary,
     });
   } catch (error) {
-    console.error("Health check error:", error);
     return NextResponse.json(
       { error: "Failed to fetch health status" },
       { status: 500 },
@@ -80,7 +79,6 @@ async function getDetailedHealthStatus() {
       summary,
     };
   } catch (error) {
-    console.error("Detailed health status error:", error);
     throw error;
   }
 }

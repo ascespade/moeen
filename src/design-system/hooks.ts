@@ -414,8 +414,7 @@ export function useDesignSystemStorage<T>(
         setValue(parsed);
       }
     } catch (error) {
-      console.warn(`Failed to load ${key} from localStorage:`, error);
-    } finally {
+      } finally {
       setIsLoading(false);
     }
   }, [key, serializer]);
@@ -426,8 +425,7 @@ export function useDesignSystemStorage<T>(
       localStorage.setItem(key, serialized);
       setValue(newValue);
     } catch (error) {
-      console.warn(`Failed to save ${key} to localStorage:`, error);
-    }
+      }
   }, [key, serializer]);
 
   const removeValue = useCallback(() => {

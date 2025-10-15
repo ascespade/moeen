@@ -145,8 +145,7 @@ const FlowsManagementPage: React.FC = () => {
       
       setFlows(mockFlows);
     } catch (error) {
-      console.error('Error loading flows:', error);
-    } finally {
+      } finally {
       setLoading(false);
     }
   };
@@ -158,8 +157,7 @@ const FlowsManagementPage: React.FC = () => {
         flow.id === flowId ? { ...flow, isActive: !flow.isActive } : flow
       ));
     } catch (error) {
-      console.error('Error toggling flow:', error);
-    }
+      }
   };
 
   const handleEditFlow = (flow: ConversationFlow) => {
@@ -174,8 +172,7 @@ const FlowsManagementPage: React.FC = () => {
       // في التطبيق الحقيقي، سيتم حذف الـ flow عبر API
       setFlows(prev => prev.filter(flow => flow.id !== flowId));
     } catch (error) {
-      console.error('Error deleting flow:', error);
-    }
+      }
   };
 
   const getStepIcon = (type: string) => {

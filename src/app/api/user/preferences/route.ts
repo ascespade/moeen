@@ -24,7 +24,6 @@ export async function GET() {
 
     if (error && error.code !== "PGRST116") {
       // PGRST116 = no rows returned
-      console.error("Error fetching user preferences:", error);
       return NextResponse.json(
         { error: "Failed to fetch preferences" },
         { status: 500 },
@@ -41,7 +40,6 @@ export async function GET() {
 
     return NextResponse.json(preferences || defaultPreferences);
   } catch (error) {
-    console.error("Error fetching user preferences:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },
@@ -115,7 +113,6 @@ export async function POST(request: NextRequest) {
     );
 
     if (error) {
-      console.error("Error saving user preference:", error);
       return NextResponse.json(
         { error: "Failed to save preference" },
         { status: 500 },
@@ -124,7 +121,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error saving user preference:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

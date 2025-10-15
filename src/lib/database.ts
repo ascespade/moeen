@@ -133,9 +133,7 @@ export class DatabaseManager {
       `);
 
       this.isConnected = true;
-      console.log("Database tables initialized successfully");
-    } catch (error) {
-      console.error("Database initialization error:", error);
+      } catch (error) {
       this.isConnected = false;
     }
   }

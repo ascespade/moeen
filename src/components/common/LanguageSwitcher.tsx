@@ -28,8 +28,7 @@ export default function LanguageSwitcher({
       const preferences = await dynamicThemeManager.getUserPreferences();
       setLanguage(preferences.language);
     } catch (error) {
-      console.error("Failed to load preferences:", error);
-    } finally {
+      } finally {
       setIsLoading(false);
     }
   };
@@ -64,8 +63,7 @@ export default function LanguageSwitcher({
       // Reload page to apply translations
       window.location.reload();
     } catch (error) {
-      console.error("Failed to save language preference:", error);
-    }
+      }
   };
 
   // Size classes

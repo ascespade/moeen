@@ -102,8 +102,7 @@ const IntegrationsPage: React.FC = () => {
       ];
       setIntegrations(mockIntegrations);
     } catch (error) {
-      console.error('Error loading integrations:', error);
-    } finally {
+      } finally {
       setLoading(false);
     }
   };

@@ -111,7 +111,6 @@ const HealthcareChatbot: React.FC = () => {
         setAppointmentSuggestions(data.appointmentSuggestions);
       }
     } catch (error) {
-      console.error('Error sending message:', error);
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         type: "bot",
@@ -165,7 +164,6 @@ const HealthcareChatbot: React.FC = () => {
         throw new Error(data.error);
       }
     } catch (error) {
-      console.error('Error booking appointment:', error);
       const errorMessage: ChatMessage = {
         id: Date.now().toString(),
         type: "bot",

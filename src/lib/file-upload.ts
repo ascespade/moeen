@@ -408,7 +408,6 @@ export async function handleFileUpload(
       },
     });
   } catch (error) {
-    console.error("File upload error:", error);
     return NextResponse.json(
       { success: false, error: "File upload failed" },
       { status: 500 },
@@ -457,7 +456,6 @@ export async function handleFileDownload(
       },
     });
   } catch (error) {
-    console.error("File download error:", error);
     return NextResponse.json(
       { success: false, error: "File download failed" },
       { status: 500 },
@@ -503,7 +501,6 @@ export async function handleFileList(
       },
     });
   } catch (error) {
-    console.error("File list error:", error);
     return NextResponse.json(
       { success: false, error: "Failed to list files" },
       { status: 500 },

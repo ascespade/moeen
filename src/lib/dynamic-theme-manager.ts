@@ -101,7 +101,6 @@ class DynamicThemeManager {
         return preferences;
       }
     } catch (error) {
-      console.error("Error loading user preferences:", error);
       // Return default preferences instead of hardcoded values
       return {
         theme: "system",
@@ -154,7 +153,6 @@ class DynamicThemeManager {
 
       return config;
     } catch (error) {
-      console.error("Error loading theme config:", error);
       // Return default theme config instead of hardcoded values
       return {
         mode: "system",
@@ -191,7 +189,6 @@ class DynamicThemeManager {
       // Clear cache
       this.cache.delete(`user_preferences_${userId}`);
     } catch (error) {
-      console.error("Error updating user preferences:", error);
       throw error;
     }
   }
@@ -219,7 +216,6 @@ class DynamicThemeManager {
       // Clear cache
       this.cache.delete("theme_config");
     } catch (error) {
-      console.error("Error updating theme config:", error);
       throw error;
     }
   }

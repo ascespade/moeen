@@ -1,4 +1,6 @@
 import { bulkInsertTranslations } from "../lib/translations-manager";
+import { logger } from '@/lib/logger';
+
 /**
  * Seed Translations Script
  * Adds all translations to the database using CUID system
@@ -1280,15 +1282,15 @@ const translations = [
  */
 export async function seedTranslations(): Promise<void> {
   try {
-    console.log("🌱 Starting to seed translations...");
-    console.log(`📊 Total translations: ${translations.length}`);
+    logger.info("🌱 Starting to seed translations...");
+    logger.info(`📊 Total translations: ${translations.length}`);
 
     await bulkInsertTranslations(translations);
 
-    console.log("✅ All translations seeded successfully!");
-    console.log(`🎯 Added ${translations.length} translations with CUID`);
+    logger.info("✅ All translations seeded successfully!");
+    logger.info(`🎯 Added ${translations.length} translations with CUID`);
   } catch (error) {
-    console.error("❌ Failed to seed translations:", error);
+    logger.error("❌ Failed to seed translations:", error);
     throw error;
   }
 }
@@ -1299,11 +1301,11 @@ export async function seedTranslations(): Promise<void> {
 if (require.main === module) {
   seedTranslations()
     .then(() => {
-      console.log("🎉 Translation seeding completed!");
+      logger.info("🎉 Translation seeding completed!");
       process.exit(0);
     })
     .catch((error) => {
-      console.error("💥 Translation seeding failed:", error);
+      logger.error("💥 Translation seeding failed:", error);
       process.exit(1);
     });
 }

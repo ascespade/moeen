@@ -58,7 +58,6 @@ export async function GET(request: NextRequest) {
     const { data: appointments, error } = await query;
 
     if (error) {
-      console.error('Error fetching appointments:', error);
       return NextResponse.json(
         { error: 'Failed to fetch appointments' },
         { status: 500 }
@@ -71,7 +70,6 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error in GET appointments:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -179,7 +177,6 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (appointmentError) {
-      console.error('Error creating appointment:', appointmentError);
       return NextResponse.json(
         { error: 'Failed to create appointment' },
         { status: 500 }
@@ -193,7 +190,6 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Appointment creation error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

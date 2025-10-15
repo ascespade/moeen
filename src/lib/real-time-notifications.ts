@@ -80,13 +80,10 @@ export class RealTimeNotificationSystem {
 
   private setupSocketHandlers() {
     this.io.on("connection", (socket) => {
-      console.log("Client connected:", socket.id);
-
       // Join user to specific rooms
       socket.on("join-room", (room: string) => {
         socket.join(room);
-        console.log(`Client ${socket.id} joined room: ${room}`);
-      });
+        });
 
       // Handle emergency alerts
       socket.on("emergency-alert", (alert: EmergencyAlert) => {
@@ -99,8 +96,7 @@ export class RealTimeNotificationSystem {
       });
 
       socket.on("disconnect", () => {
-        console.log("Client disconnected:", socket.id);
-      });
+        });
     });
   }
 
@@ -274,10 +270,8 @@ export class RealTimeNotificationSystem {
   private async sendSMS(phoneNumber: string, title: string, message: string) {
     try {
       // In real implementation, integrate with SMS provider like Twilio
-      console.log(`SMS sent to ${phoneNumber}: ${title} - ${message}`);
       return true;
     } catch (error) {
-      console.error("SMS sending failed:", error);
       return false;
     }
   }
@@ -299,10 +293,8 @@ export class RealTimeNotificationSystem {
       };
 
       await this.emailTransporter.sendMail(mailOptions);
-      console.log(`Email sent to ${to}: ${subject}`);
       return true;
     } catch (error) {
-      console.error("Email sending failed:", error);
       return false;
     }
   }
@@ -395,11 +387,7 @@ export class RealTimeNotificationSystem {
 
   private updateNotificationPreferences(socketId: string, preferences: any) {
     // Update user notification preferences
-    console.log(
-      `Updated notification preferences for ${socketId}:`,
-      preferences,
-    );
-  }
+    }
 
   // Broadcast to specific room
   broadcastToRoom(room: string, event: string, data: any) {

@@ -43,8 +43,7 @@ function ThemeLanguageSwitches() {
         if (data.language) setLanguage(data.language);
       }
     } catch (error) {
-      console.error("Failed to load preferences:", error);
-    } finally {
+      } finally {
       setIsLoading(false);
     }
   };
@@ -60,8 +59,7 @@ function ThemeLanguageSwitches() {
         body: JSON.stringify({ key, value }),
       });
     } catch (error) {
-      console.error("Failed to save preference:", error);
-    }
+      }
   };
 
   // Toggle theme function
@@ -131,8 +129,7 @@ export default function GlobalHeader() {
           if (data.language) setLanguage(data.language);
         }
       } catch (error) {
-        console.error("Failed to load language preference:", error);
-      }
+        }
     };
     loadLanguage();
   }, []);

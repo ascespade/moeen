@@ -101,7 +101,6 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (appointmentError) {
-      console.error('Error creating appointment:', appointmentError);
       return NextResponse.json(
         { error: 'Failed to create appointment' },
         { status: 500 }
@@ -114,7 +113,6 @@ export async function POST(request: NextRequest) {
         await sendWhatsAppConfirmation(patient.phone, appointment);
       }
     } catch (whatsappError) {
-      console.error('WhatsApp confirmation failed:', whatsappError);
       // لا نفشل العملية إذا فشل إرسال WhatsApp
     }
 
@@ -150,7 +148,6 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Appointment booking error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -204,7 +201,6 @@ export async function GET(request: NextRequest) {
     const { data: appointments, error } = await query;
 
     if (error) {
-      console.error('Error fetching appointments:', error);
       return NextResponse.json(
         { error: 'Failed to fetch appointments' },
         { status: 500 }
@@ -217,7 +213,6 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error in GET appointments:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -240,8 +235,6 @@ async function sendWhatsAppConfirmation(phone: string, appointment: any) {
 
 مركز الهمم للرعاية الصحية`;
 
-  console.log(`WhatsApp message to ${phone}:`, message);
-  
   // هنا يمكنك إضافة كود إرسال WhatsApp الفعلي
   // await whatsappAPI.sendMessage(phone, message);
 }
