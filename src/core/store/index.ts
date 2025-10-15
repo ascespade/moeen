@@ -253,9 +253,10 @@ export const useDataStore = create<DataState & DataActions>()(
         set((state) => {
           const index = state.patients.findIndex(p => p.id === id);
           if (index !== -1) {
-            // Only update fields that are defined and valid
+            // Only update fields that are defined and valid, excluding required fields
+            const { userId, medicalRecordNumber, emergencyContact, medicalHistory, isActivated, ...updatableFields } = patientData;
             const validUpdates = Object.fromEntries(
-              Object.entries(patientData).filter(([_, value]) => value !== undefined)
+              Object.entries(updatableFields).filter(([_, value]) => value !== undefined)
             );
             state.patients[index] = { ...state.patients[index], ...validUpdates };
           }
