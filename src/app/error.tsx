@@ -1,8 +1,8 @@
 "use client";
+import { RefreshCw, Home, Bug, AlertTriangle } from "lucide-react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { RefreshCw, Home, Bug, AlertTriangle } from "lucide-react";
 
 export default function GlobalError({
   error,
@@ -23,12 +23,7 @@ export default function GlobalError({
             height={80}
             className="mx-auto rounded mb-4"
           />
-          <h1
-            className="text-4xl font-bold"
-            style={{ color: "var(--brand-primary)" }}
-          >
-            مُعين
-          </h1>
+          <h1 className="text-4xl font-bold text-brand">مُعين</h1>
         </div>
 
         {/* Error Content */}

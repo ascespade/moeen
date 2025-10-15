@@ -2,8 +2,10 @@
 import { useEffect, useState, useCallback } from "react";
 import { Sun, Moon } from "lucide-react";
 import { useI18n } from "@/hooks/useI18n";
-// import { dynamicThemeManager, type ThemeMode } from "@/lib/dynamic-theme-manager";
-type ThemeMode = "light" | "dark" | "system";
+import {
+  dynamicThemeManager,
+  type ThemeMode,
+} from "@/lib/dynamic-theme-manager";
 
 interface ThemeSwitcherProps {
   className?: string;
@@ -20,18 +22,12 @@ export default function ThemeSwitcher({
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useI18n("ar"); // Default to Arabic for theme labels
 
-  // Load user preferences from database on mount
-  useEffect(() => {
-    loadUserPreferences();
-  }, []);
-
-  // Apply theme changes
   // Function to load user preferences from database
   const loadUserPreferences = async () => {
     try {
       setIsLoading(true);
-      // const preferences = await dynamicThemeManager.getUserPreferences();
-      // setTheme(preferences.theme);
+      const preferences = await dynamicThemeManager.getUserPreferences();
+      setTheme(preferences.theme);
     } catch (error) {
       console.error("Failed to load preferences:", error);
     } finally {
@@ -42,14 +38,20 @@ export default function ThemeSwitcher({
   // Function to apply theme to document
   const applyTheme = useCallback(async () => {
     try {
-      // const themeConfig = await dynamicThemeManager.getThemeConfig();
-      // const resolvedTheme = dynamicThemeManager.resolveThemeMode(theme);
-      // dynamicThemeManager.applyTheme(resolvedTheme, themeConfig);
+      const themeConfig = await dynamicThemeManager.getThemeConfig();
+      const resolvedTheme = dynamicThemeManager.resolveThemeMode(theme);
+      dynamicThemeManager.applyTheme(resolvedTheme, themeConfig);
     } catch (error) {
       console.error("Failed to apply theme:", error);
     }
   }, [theme]);
 
+  // Load user preferences from database on mount
+  useEffect(() => {
+    loadUserPreferences();
+  }, []);
+
+  // Apply theme changes
   useEffect(() => {
     if (!isLoading) {
       applyTheme();
@@ -60,10 +62,12 @@ export default function ThemeSwitcher({
   const toggleTheme = async () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
-    
+
     try {
       // Save to database
-      // await dynamicThemeManager.updateUserPreferences("current_user", { theme: newTheme });
+      await dynamicThemeManager.updateUserPreferences("current_user", {
+        theme: newTheme,
+      });
     } catch (error) {
       console.error("Failed to save theme preference:", error);
     }

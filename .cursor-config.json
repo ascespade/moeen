@@ -1,70 +1,114 @@
 {
   "tasks": [
     {
-      "name": "Full Project Cleanup & Readiness",
-      "description": "Fix all ESLint, TypeScript, Prettier, Tailwind, and Stylelint issues. Reorganize structure, clean garbage files, merge duplicate imports, generate barrel files, and verify the project runs correctly in dev mode.",
-      "triggers": ["onProjectOpen", "onFileSave"],
+      "name": "Enforce Dynamic Data & No Mocks",
+      "description": "Ensure all data is dynamic, sourced from the database or environment variables. Block hardcoded values, mock files, or simulated responses.",
+      "triggers": ["onProjectOpen", "onFileSave", "beforeBuild"],
       "autoRun": true,
       "persistent": true,
       "steps": [
-        "eslint . --ext .ts,.tsx,.js,.jsx --fix || true",
-        "prettier --write . || true",
-        "stylelint '**/*.{css,scss}' --fix || true",
-        "tsc --noEmit || true",
-        "npm install || true",
-        "npm audit fix || true",
-        "npm dedupe || true",
-        "node scripts/smart-clean.js || true",
-        "node scripts/reorganize-project.js || true",
-        "node scripts/generate-barrels.js || true",
-        "node scripts/fix-imports.js || true",
-        "npm run dev --dry-run || npm run dev || true"
+        "Scan for mock files (mock, fixtures, simulation, sampleData)",
+        "Scan for hardcoded arrays, objects, static strings, or default values",
+        "Check that all fetch calls use live DB services (Supabase)",
+        "Ensure UI texts (home page, headers, buttons, forms) come from translation tables or env-config",
+        "Enforce using env variables for config values",
+        "Block build if violations are found"
       ]
     },
     {
-      "name": "Reorganize Project Structure",
-      "description": "Ensure clean, centralized folder structure.",
+      "name": "Enforce Translation & Defaults",
+      "description": "Check that all frontend content uses translation keys and defaults come from DB/config. No hardcoded text or static default values.",
+      "triggers": ["onFileSave", "beforeBuild"],
+      "autoRun": true,
+      "persistent": true,
       "steps": [
-        "node scripts/reorganize-project.js",
-        "prettier --write .",
-        "eslint . --fix"
+        "Scan all components for hardcoded text strings",
+        "Ensure text comes from translation system (i18next / Supabase table)",
+        "Validate default values for forms, home page cards, banners, placeholders come from DB",
+        "Validate language switch triggers correct translations",
+        "Validate theme switch triggers correct dark/light mode classes/styles"
       ]
     },
     {
-      "name": "Smart Clean Garbage Files",
-      "description": "Safely remove non-essential files and folders.",
-      "steps": ["node scripts/smart-clean.js"]
-    },
-    {
-      "name": "Verify Dev & Deploy",
-      "description": "Run dev server and ensure build readiness.",
-      "steps": ["npm run dev"]
+      "name": "Auto-Fix Translation & Defaults",
+      "description": "Suggest or automatically replace hardcoded text with translation keys or dynamic DB-driven content.",
+      "triggers": ["onFileSave"],
+      "autoRun": true,
+      "persistent": true
     }
   ],
   "preferences": {
     "autoFix": true,
-    "maxFixIterations": 20,
+    "maxFixIterations": 10,
     "stopOnClean": true,
     "allowConfigChanges": true,
-    "allowFileReorganization": true,
     "reportFixProgress": true,
-    "failIfDevFails": true,
-    "trackPerformance": true,
-    "safeClean": true
+    "safeFileHandling": true,
+    "preventDataLoss": true,
+    "enforceDynamicData": true,
+    "enforceTranslations": true,
+    "enforceDefaultsFromDB": true,
+    "noMocksAllowed": true,
+    "detectHardcodedData": true,
+    "scanForLocalJsonMocks": true,
+    "blockBuildOnViolation": true
   },
-  "structure": {
-    "src": {
-      "components": "UI components and reusable elements",
-      "pages": "Routes and views",
-      "layouts": "Global layouts",
-      "hooks": "Custom hooks",
-      "context": "React context providers",
-      "utils": "Helper functions",
-      "styles": "CSS/SCSS styles",
-      "assets": "Images, fonts, media",
-      "config": "App configuration files"
-    },
-    "public": "Public assets and static files",
-    "scripts": "Project maintenance scripts"
+  "rules": {
+    "disallowedPatterns": [
+      "mock",
+      "fixture",
+      "simulation",
+      "sampleData",
+      "const data =",
+      "export const data =",
+      "require\\(.+\\.json\\)",
+      "import .+ from .+\\.json",
+      "[\"'][^\"']*[\"']\\s*[,;]",
+      "const.*=.*\\[.*\\]",
+      "export const.*=.*\\[.*\\]",
+      "getDefault.*\\(\\)",
+      "fallback.*=.*\\[",
+      "hardcoded.*=.*\\["
+    ],
+    "allowedDataSources": [
+      "supabase",
+      "env",
+      "process.env",
+      "i18next",
+      "translationsTable",
+      "settings",
+      "useI18n",
+      "usePageI18n",
+      "t\\(",
+      "createClient",
+      "from\\('settings'\\)",
+      "from\\('translations'\\)"
+    ],
+    "requiredImports": ["useI18n", "usePageI18n", "createClient", "I18N_KEYS"],
+    "enforcedPatterns": [
+      "t\\(I18N_KEYS\\.",
+      "usePageI18n\\(\\)",
+      "createClient\\(\\)",
+      "from\\('settings'\\)",
+      "from\\('translations'\\)"
+    ]
+  },
+  "validation": {
+    "checkHardcodedStrings": true,
+    "checkStaticArrays": true,
+    "checkMockFiles": true,
+    "checkTranslationUsage": true,
+    "checkDatabaseQueries": true,
+    "checkEnvVariables": true,
+    "enforceDynamicContent": true,
+    "blockBuildOnViolation": true
+  },
+  "autoFix": {
+    "replaceHardcodedStrings": true,
+    "convertToTranslationKeys": true,
+    "replaceStaticData": true,
+    "addDatabaseQueries": true,
+    "addMissingImports": true,
+    "suggestDynamicAlternatives": true
   }
 }

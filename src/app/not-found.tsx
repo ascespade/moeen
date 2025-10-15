@@ -1,8 +1,8 @@
 "use client";
+import { Home, ArrowLeft, Search, HelpCircle } from "lucide-react";
 
 import Link from "next/link";
 import Image from "next/image";
-import { Home, ArrowLeft, Search, HelpCircle } from "lucide-react";
 
 export default function NotFound() {
   return (
@@ -17,12 +17,7 @@ export default function NotFound() {
             height={80}
             className="mx-auto rounded mb-4"
           />
-          <h1
-            className="text-4xl font-bold"
-            style={{ color: "var(--brand-primary)" }}
-          >
-            مُعين
-          </h1>
+          <h1 className="text-4xl font-bold text-brand">مُعين</h1>
         </div>
 
         {/* 404 Content */}

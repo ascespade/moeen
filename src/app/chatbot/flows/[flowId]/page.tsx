@@ -1,12 +1,8 @@
 "use client";
-
-import { useState } from 'react';
-import { ROUTES } from '@/constants/routes';
-
-
+import { useState } from "react";
+import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
-
 
 interface Node {
   id: string;

@@ -1,0 +1,41 @@
+{
+  "n8n": {
+    "baseUrl": "http://localhost:5678",
+    "apiKey": "",
+    "webhookUrl": "http://localhost:5678/webhook"
+  },
+  "workflows": {
+    "socialMediaPosting": {
+      "enabled": true,
+      "schedule": "0 9,15,21 * * *",
+      "platforms": ["tiktok", "instagram", "linkedin", "facebook"]
+    },
+    "contentGeneration": {
+      "enabled": true,
+      "schedule": "0 8 * * *",
+      "sources": ["google-drive", "local-videos"]
+    }
+  },
+  "platforms": {
+    "tiktok": {
+      "enabled": true,
+      "apiKey": "",
+      "accessToken": ""
+    },
+    "instagram": {
+      "enabled": true,
+      "apiKey": "",
+      "accessToken": ""
+    },
+    "linkedin": {
+      "enabled": true,
+      "apiKey": "",
+      "accessToken": ""
+    },
+    "facebook": {
+      "enabled": true,
+      "apiKey": "",
+      "accessToken": ""
+    }
+  }
+}

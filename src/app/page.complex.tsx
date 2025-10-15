@@ -1,7 +1,5 @@
 "use client";
-
-// Removed unused Image import to fix type error and reduce bundle size
-import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
 import {
   Heart,
   Users,
@@ -17,6 +15,9 @@ import {
   Brain,
   Activity,
 } from "lucide-react";
+// Removed unused Image import to fix type error and reduce bundle size
+import Link from "next/link";
+
 import DirectionToggle from "@/components/common/DirectionToggle";
 
 export default function Home() {
@@ -27,7 +28,7 @@ export default function Home() {
         <div className="max-w-screen-xl mx-auto px-4 py-3">
           <nav className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center">
                 <Heart className="w-6 h-6 text-white" />
               </div>
               <span className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">
@@ -71,14 +72,14 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-blue-600/10" />
+      <section className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-white to-brown-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-amber-700/10" />
         <div className="max-w-screen-xl mx-auto px-4 py-16 md:py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight">
                 مركز الهمم
-                <span className="block text-3xl md:text-5xl bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent">
+                <span className="block text-3xl md:text-5xl bg-gradient-to-r from-orange-500 to-amber-700 bg-clip-text text-transparent">
                   للرعاية الصحية
                 </span>
               </h1>
@@ -89,7 +90,7 @@ export default function Home() {
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/register"
-                  className="px-8 h-12 inline-flex items-center justify-center gap-2 rounded-md text-white font-semibold shadow-lg bg-gradient-to-r from-orange-500 to-blue-600 hover:opacity-90 transition"
+                  className="px-8 h-12 inline-flex items-center justify-center gap-2 rounded-md text-white font-semibold shadow-lg bg-gradient-to-r from-orange-500 to-amber-700 hover:opacity-90 transition"
                 >
                   احجز موعد الآن <ArrowRight className="h-5 w-5" />
                 </Link>
@@ -102,7 +103,7 @@ export default function Home() {
               </div>
             </div>
             <div className="relative">
-              <div className="w-full h-96 bg-gradient-to-br from-orange-100 to-blue-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl flex items-center justify-center">
+              <div className="w-full h-96 bg-gradient-to-br from-orange-100 to-amber-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl flex items-center justify-center">
                 <div className="text-center">
                   <Stethoscope className="w-24 h-24 text-orange-500 mx-auto mb-4" />
                   <p className="text-gray-600 dark:text-gray-300">
@@ -171,7 +172,7 @@ export default function Home() {
                 key={i}
                 className="group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700"
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-700 rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
                   {service.icon}
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
@@ -236,7 +237,7 @@ export default function Home() {
                 key={i}
                 className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700"
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center text-white mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-700 rounded-lg flex items-center justify-center text-white mb-4">
                   {feature.icon}
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
@@ -286,7 +287,7 @@ export default function Home() {
               </div>
             </div>
             <div className="relative">
-              <div className="w-full h-96 bg-gradient-to-br from-orange-100 to-blue-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl flex items-center justify-center">
+              <div className="w-full h-96 bg-gradient-to-br from-orange-100 to-amber-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl flex items-center justify-center">
                 <div className="text-center">
                   <Users className="w-24 h-24 text-blue-500 mx-auto mb-4" />
                   <p className="text-gray-600 dark:text-gray-300">
@@ -313,7 +314,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-700 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
                 <Phone className="h-8 w-8" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
@@ -325,7 +326,7 @@ export default function Home() {
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-700 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
                 <MapPin className="h-8 w-8" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
@@ -337,7 +338,7 @@ export default function Home() {
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-700 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
                 <Clock className="h-8 w-8" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
@@ -352,7 +353,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-orange-500 to-blue-600">
+      <section className="py-16 bg-gradient-to-r from-orange-500 to-amber-700">
         <div className="max-w-screen-xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             ابدأ رحلتك نحو الشفاء
@@ -383,7 +384,7 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-blue-600 rounded-xl flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-700 rounded-xl flex items-center justify-center">
                   <Heart className="w-6 h-6 text-white" />
                 </div>
                 <span className="text-xl font-bold">مركز الهمم</span>

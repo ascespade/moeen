@@ -13,6 +13,9 @@ export const ROUTES = {
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password",
 
+  // Dashboard routes
+  DASHBOARD: "/dashboard",
+
   // Admin routes
   ADMIN: {
     DASHBOARD: "/admin/dashboard",
@@ -23,6 +26,9 @@ export const ROUTES = {
     LOGS: "/admin/logs",
     REVIEW: "/admin/review",
     FLOW: "/admin/flow",
+    NOTIFICATIONS: "/admin/notifications",
+    MESSAGES: "/admin/messages",
+    SYSTEM: "/admin/system",
   },
 
   // User routes
@@ -75,7 +81,12 @@ export const ROUTES = {
     PATIENTS: "/patients",
     PATIENT: (id: string) => `/patients/${id}`,
     INSURANCE_CLAIMS: "/insurance-claims",
+    MEDICAL_FILE: "/medical-file",
   },
+
+  // Notifications and Messages
+  NOTIFICATIONS: "/notifications",
+  MESSAGES: "/messages",
 
   // Settings
   SETTINGS: "/settings",
@@ -91,10 +102,13 @@ export const ROUTES = {
     WEBHOOKS: "/api/webhooks",
     AI: "/api/ai",
     LOGS: "/api/logs",
+    USER_PREFERENCES: "/api/user/preferences",
+    I18N: "/api/i18n",
   },
 } as const;
 
 export const PROTECTED_ROUTES = [
+  ROUTES.DASHBOARD,
   ROUTES.ADMIN.DASHBOARD,
   ROUTES.ADMIN.USERS,
   ROUTES.ADMIN.CHANNELS,
@@ -103,11 +117,30 @@ export const PROTECTED_ROUTES = [
   ROUTES.ADMIN.LOGS,
   ROUTES.ADMIN.REVIEW,
   ROUTES.ADMIN.FLOW,
+  ROUTES.ADMIN.NOTIFICATIONS,
+  ROUTES.ADMIN.MESSAGES,
+  ROUTES.ADMIN.SYSTEM,
   ROUTES.USER.DASHBOARD,
   ROUTES.USER.PROFILE,
   ROUTES.USER.SETTINGS,
   ROUTES.USER.CHANNELS,
   ROUTES.USER.CONVERSATIONS,
+  ROUTES.HEALTH.APPOINTMENTS,
+  ROUTES.HEALTH.SESSIONS,
+  ROUTES.HEALTH.PATIENTS,
+  ROUTES.HEALTH.INSURANCE_CLAIMS,
+  ROUTES.HEALTH.MEDICAL_FILE,
+  ROUTES.CHATBOT.FLOWS,
+  ROUTES.CHATBOT.TEMPLATES,
+  ROUTES.CHATBOT.INTEGRATIONS,
+  ROUTES.CHATBOT.ANALYTICS,
+  ROUTES.CRM.CONTACTS,
+  ROUTES.CRM.LEADS,
+  ROUTES.CRM.DEALS,
+  ROUTES.CRM.ACTIVITIES,
+  ROUTES.NOTIFICATIONS,
+  ROUTES.MESSAGES,
+  ROUTES.SETTINGS,
 ] as const;
 
 export const ADMIN_ROUTES = [
@@ -119,6 +152,9 @@ export const ADMIN_ROUTES = [
   ROUTES.ADMIN.LOGS,
   ROUTES.ADMIN.REVIEW,
   ROUTES.ADMIN.FLOW,
+  ROUTES.ADMIN.NOTIFICATIONS,
+  ROUTES.ADMIN.MESSAGES,
+  ROUTES.ADMIN.SYSTEM,
 ] as const;
 
 export const PUBLIC_ROUTES = [

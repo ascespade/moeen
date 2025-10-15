@@ -3,7 +3,14 @@ import fs from "fs";
 import path from "path";
 
 const root = process.cwd();
-const safeRootFolders = new Set(["src", "public", "scripts", "node_modules", ".git", "docs"]);
+const safeRootFolders = new Set([
+  "src",
+  "public",
+  "scripts",
+  "node_modules",
+  ".git",
+  "docs",
+]);
 const allowedExtensions = new Set([
   ".ts",
   ".tsx",
