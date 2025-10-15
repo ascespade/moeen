@@ -218,3 +218,127 @@ export const PUBLIC_ROUTES = [
   ROUTES.LEGAL.PRIVACY,
   ROUTES.LEGAL.TERMS,
 ] as const;
+
+// RTL-aware route translations
+export const ROUTE_TRANSLATIONS = {
+  ar: {
+    // Navigation labels
+    HOME: "الرئيسية",
+    LOGIN: "تسجيل الدخول",
+    REGISTER: "إنشاء حساب",
+    FORGOT_PASSWORD: "نسيت كلمة المرور",
+    RESET_PASSWORD: "إعادة تعيين كلمة المرور",
+    DASHBOARD: "لوحة التحكم",
+    PROFILE: "الملف الشخصي",
+    SETTINGS: "الإعدادات",
+    CHANNELS: "القنوات",
+    CONVERSATIONS: "المحادثات",
+    NOTIFICATIONS: "الإشعارات",
+    MESSAGES: "الرسائل",
+    
+    // Admin labels
+    ADMIN: "الإدارة",
+    USERS: "المستخدمون",
+    LOGS: "السجلات",
+    REVIEW: "المراجعة",
+    FLOW: "التدفق",
+    SYSTEM: "النظام",
+    ANALYTICS: "التحليلات",
+    SECURITY: "الأمان",
+    INTEGRATIONS: "التكاملات",
+    PERFORMANCE: "الأداء",
+    
+    // Health labels
+    APPOINTMENTS: "المواعيد",
+    SESSIONS: "الجلسات",
+    PATIENTS: "المرضى",
+    INSURANCE_CLAIMS: "مطالبات التأمين",
+    MEDICAL_FILE: "الملف الطبي",
+    THERAPY: "العلاج",
+    TRAINING: "التدريب",
+    FAMILY_SUPPORT: "دعم الأسرة",
+    PROGRESS_TRACKING: "تتبع التقدم",
+    
+    // CRM labels
+    CRM: "إدارة العملاء",
+    CONTACTS: "جهات الاتصال",
+    LEADS: "العملاء المحتملين",
+    DEALS: "الصفقات",
+    ACTIVITIES: "الأنشطة",
+    FLOWS: "التدفقات",
+    
+    // Marketing labels
+    FEATURES: "الميزات",
+    PRICING: "الأسعار",
+    FAQ: "الأسئلة الشائعة",
+    DOCUMENTATION: "الوثائق",
+    
+    // Info labels
+    ABOUT: "حول",
+    CONTACT: "اتصل بنا",
+    
+    // Legal labels
+    PRIVACY: "الخصوصية",
+    TERMS: "الشروط",
+  },
+  en: {
+    // Navigation labels
+    HOME: "Home",
+    LOGIN: "Login",
+    REGISTER: "Register",
+    FORGOT_PASSWORD: "Forgot Password",
+    RESET_PASSWORD: "Reset Password",
+    DASHBOARD: "Dashboard",
+    PROFILE: "Profile",
+    SETTINGS: "Settings",
+    CHANNELS: "Channels",
+    CONVERSATIONS: "Conversations",
+    NOTIFICATIONS: "Notifications",
+    MESSAGES: "Messages",
+    
+    // Admin labels
+    ADMIN: "Admin",
+    USERS: "Users",
+    LOGS: "Logs",
+    REVIEW: "Review",
+    FLOW: "Flow",
+    SYSTEM: "System",
+    ANALYTICS: "Analytics",
+    SECURITY: "Security",
+    INTEGRATIONS: "Integrations",
+    PERFORMANCE: "Performance",
+    
+    // Health labels
+    APPOINTMENTS: "Appointments",
+    SESSIONS: "Sessions",
+    PATIENTS: "Patients",
+    INSURANCE_CLAIMS: "Insurance Claims",
+    MEDICAL_FILE: "Medical File",
+    THERAPY: "Therapy",
+    TRAINING: "Training",
+    FAMILY_SUPPORT: "Family Support",
+    PROGRESS_TRACKING: "Progress Tracking",
+    
+    // CRM labels
+    CRM: "CRM",
+    CONTACTS: "Contacts",
+    LEADS: "Leads",
+    DEALS: "Deals",
+    ACTIVITIES: "Activities",
+    FLOWS: "Flows",
+    
+    // Marketing labels
+    FEATURES: "Features",
+    PRICING: "Pricing",
+    FAQ: "FAQ",
+    DOCUMENTATION: "Documentation",
+    
+    // Info labels
+    ABOUT: "About",
+    CONTACT: "Contact",
+    
+    // Legal labels
+    PRIVACY: "Privacy",
+    TERMS: "Terms",
+  },
+} as const;
