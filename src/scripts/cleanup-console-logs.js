@@ -69,7 +69,7 @@ function cleanFile(filePath) {
 }
 
 function main() {
-  logger.info('🧹 Starting logger.info cleanup...');
+  console.log('🧹 Starting console.log cleanup...');
   
   let totalFiles = 0;
   let cleanedFiles = 0;

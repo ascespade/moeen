@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import UIProvider from "@/components/providers/UIProvider";
 import I18nProvider from "@/components/providers/I18nProvider";
 import { DesignSystemProvider } from "@/components/providers/DesignSystemProvider";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata: Metadata = {
   title: "مُعين",
@@ -34,9 +35,11 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <DesignSystemProvider>
-          <I18nProvider>
-            <UIProvider>{children}</UIProvider>
-          </I18nProvider>
+          <ThemeProvider>
+            <I18nProvider>
+              <UIProvider>{children}</UIProvider>
+            </I18nProvider>
+          </ThemeProvider>
         </DesignSystemProvider>
       </body>
     </html>
