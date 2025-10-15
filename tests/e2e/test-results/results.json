@@ -112,12 +112,7 @@
     "updateSourceMethod": "patch",
     "version": "1.56.0",
     "workers": 2,
-    "webServer": {
-      "command": "npm run start",
-      "url": "http://localhost:3000",
-      "reuseExistingServer": true,
-      "timeout": 120000
-    }
+    "webServer": null
   },
   "suites": [],
   "errors": [
@@ -133,8 +128,8 @@
     }
   ],
   "stats": {
-    "startTime": "2025-10-15T00:29:14.443Z",
-    "duration": 1265.029,
+    "startTime": "2025-10-15T00:37:53.157Z",
+    "duration": 8053.65,
     "expected": 0,
     "skipped": 0,
     "unexpected": 0,

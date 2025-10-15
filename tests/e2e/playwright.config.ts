@@ -45,12 +45,14 @@ export default defineConfig({
       use: { ...devices["iPhone 12"] },
     },
   ],
-  webServer: {
-    command: "npm run start",
-    url: "http://localhost:3000",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120000,
-  },
+  webServer: process.env.USE_WEB_SERVER
+    ? {
+        command: "npm run start",
+        url: process.env.BASE_URL || "http://localhost:3000",
+        reuseExistingServer: true,
+        timeout: 120000,
+      }
+    : undefined,
   globalSetup: require.resolve("./global-setup.ts"),
   globalTeardown: require.resolve("./global-teardown.ts"),
 });
