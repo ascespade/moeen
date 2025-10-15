@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/lib/supabase/server';
 import { FlowManager } from '@/lib/conversation-flows';
 
 export async function POST(request: NextRequest) {
@@ -306,7 +306,7 @@ function extractAppointmentInfo(message: string) {
   // استخراج اسم الطبيب
   const doctorPattern = /د\.?\s*([أ-ي\s]+)/;
   const doctorMatch = message.match(doctorPattern);
-  const doctorName = doctorMatch ? doctorMatch[1].trim() : null;
+  const doctorName = doctorMatch?.[1]?.trim() || null;
   
   return {
     specialty,

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SlackIntegration } from '@/lib/slack-integration';
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/lib/supabase/server';
 
 const slack = new SlackIntegration();
 

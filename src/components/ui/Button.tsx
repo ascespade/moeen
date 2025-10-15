@@ -7,6 +7,7 @@ const buttonStyles = cva("btn", {
     variant: {
       primary: "btn-brand",
       secondary: "btn-secondary",
+      default: "btn-brand",
       ghost:
         "bg-transparent text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800",
       outline: "btn-outline",

@@ -14,7 +14,6 @@ import {
   BarChart3,
   FileText,
   Video,
-  Image,
   Plus,
   Search,
   Filter,

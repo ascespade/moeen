@@ -268,7 +268,11 @@ const AccessibilitySettings: React.FC = () => {
                   </Button>
                   <Button
                     onClick={() => {
-                      updateSettings(accessibilityManager.getDefaultSettings());
+                      updateSettings({
+                        contrast: 'normal',
+                        fontSize: 'medium',
+                        screenReader: false
+                      });
                     }}
                     variant="outline"
                     size="sm"

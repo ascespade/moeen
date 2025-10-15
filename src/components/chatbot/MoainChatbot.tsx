@@ -106,13 +106,14 @@ const MoainChatbot: React.FC = () => {
     }
   };
 
-  const handleSendMessage = async () => {
-    if (!inputMessage.trim()) return;
+  const handleSendMessage = async (message?: string) => {
+    const messageToSend = message || inputMessage;
+    if (!messageToSend.trim()) return;
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
       type: "user",
-      content: inputMessage,
+      content: messageToSend,
       timestamp: new Date(),
     };
 
@@ -128,7 +129,7 @@ const MoainChatbot: React.FC = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: inputMessage,
+          message: messageToSend,
           userId: 'current-user', // سيتم ربطه بالمستخدم المسجل
           conversationId: 'current-conversation',
           currentFlow: currentFlow,
@@ -497,7 +498,7 @@ const MoainChatbot: React.FC = () => {
                   variant="outline"
                   size="sm"
                   className="text-xs h-8 justify-start"
-                  onClick={() => handleQuickAction(option)}
+                  onClick={() => handleSendMessage(option)}
                 >
                   {option}
                 </Button>
@@ -519,7 +520,7 @@ const MoainChatbot: React.FC = () => {
               className="flex-1"
             />
             <Button
-              onClick={handleSendMessage}
+              onClick={() => handleSendMessage()}
               disabled={!inputMessage.trim() || isTyping}
               className="bg-[var(--brand-primary)] hover:brightness-95"
             >
