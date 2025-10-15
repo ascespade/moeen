@@ -79,27 +79,28 @@ export const useAuthStore = create<AuthState & AuthActions>()(
         }),
       }
     ),
-    { name: 'auth-store' }
+    { name: 'AuthStore' }
   )
 );
 
 // UI Store
 interface UIState {
+  sidebarOpen: boolean;
   theme: 'light' | 'dark' | 'system';
   language: 'ar' | 'en';
-  sidebarOpen: boolean;
   notifications: Notification[];
   modals: Record<string, boolean>;
   loading: Record<string, boolean>;
 }
 
 interface UIActions {
-  setTheme: (theme: 'light' | 'dark' | 'system') => void;
-  setLanguage: (language: 'ar' | 'en') => void;
   toggleSidebar: () => void;
   setSidebarOpen: (open: boolean) => void;
-  addNotification: (notification: Notification) => void;
+  setTheme: (theme: 'light' | 'dark' | 'system') => void;
+  setLanguage: (language: 'ar' | 'en') => void;
+  addNotification: (notification: Omit<Notification, 'id' | 'createdAt'>) => void;
   removeNotification: (id: string) => void;
+  markNotificationAsRead: (id: string) => void;
   clearNotifications: () => void;
   openModal: (modalId: string) => void;
   closeModal: (modalId: string) => void;
@@ -111,24 +112,14 @@ export const useUIStore = create<UIState & UIActions>()(
     persist(
       immer((set) => ({
         // State
+        sidebarOpen: false,
         theme: 'system',
         language: 'ar',
-        sidebarOpen: false,
         notifications: [],
         modals: {},
         loading: {},
 
         // Actions
-        setTheme: (theme) =>
-          set((state) => {
-            state.theme = theme;
-          }),
-
-        setLanguage: (language) =>
-          set((state) => {
-            state.language = language;
-          }),
-
         toggleSidebar: () =>
           set((state) => {
             state.sidebarOpen = !state.sidebarOpen;
@@ -139,14 +130,37 @@ export const useUIStore = create<UIState & UIActions>()(
             state.sidebarOpen = open;
           }),
 
+        setTheme: (theme) =>
+          set((state) => {
+            state.theme = theme;
+          }),
+
+        setLanguage: (language) =>
+          set((state) => {
+            state.language = language;
+          }),
+
         addNotification: (notification) =>
           set((state) => {
-            state.notifications.push(notification);
+            const newNotification: Notification = {
+              ...notification,
+              id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+              createdAt: new Date(),
+            };
+            state.notifications.unshift(newNotification);
           }),
 
         removeNotification: (id) =>
           set((state) => {
             state.notifications = state.notifications.filter(n => n.id !== id);
+          }),
+
+        markNotificationAsRead: (id) =>
+          set((state) => {
+            const notification = state.notifications.find(n => n.id === id);
+            if (notification) {
+              notification.isRead = true;
+            }
           }),
 
         clearNotifications: () =>
@@ -177,7 +191,7 @@ export const useUIStore = create<UIState & UIActions>()(
         }),
       }
     ),
-    { name: 'ui-store' }
+    { name: 'UIStore' }
   )
 );
 
@@ -188,239 +202,294 @@ interface DataState {
   appointments: Appointment[];
   payments: Payment[];
   insuranceClaims: InsuranceClaim[];
-  pagination: Record<string, { page: number; limit: number; total: number }>;
-  filters: Record<string, any>;
-  search: Record<string, string>;
+  notifications: Notification[];
+  isLoading: boolean;
+  error: string | null;
 }
 
 interface DataActions {
+  // Patients
   setPatients: (patients: Patient[]) => void;
   addPatient: (patient: Patient) => void;
-  updatePatient: (id: string, patient: Partial<Patient>) => void;
+  updatePatient: (id: string, patientData: Partial<Omit<Patient, 'id' | 'createdAt' | 'updatedAt'>>) => void;
   removePatient: (id: string) => void;
-  
+  getPatient: (id: string) => Patient | undefined;
+
+  // Doctors
   setDoctors: (doctors: Doctor[]) => void;
   addDoctor: (doctor: Doctor) => void;
-  updateDoctor: (id: string, doctor: Partial<Doctor>) => void;
+  updateDoctor: (id: string, doctorData: Partial<Omit<Doctor, 'id' | 'createdAt' | 'updatedAt'>>) => void;
   removeDoctor: (id: string) => void;
-  
+  getDoctor: (id: string) => Doctor | undefined;
+
+  // Appointments
   setAppointments: (appointments: Appointment[]) => void;
   addAppointment: (appointment: Appointment) => void;
-  updateAppointment: (id: string, appointment: Partial<Appointment>) => void;
+  updateAppointment: (id: string, appointmentData: Partial<Omit<Appointment, 'id' | 'createdAt' | 'updatedAt'>>) => void;
   removeAppointment: (id: string) => void;
-  
+  getAppointment: (id: string) => Appointment | undefined;
+
+  // Payments
   setPayments: (payments: Payment[]) => void;
   addPayment: (payment: Payment) => void;
-  updatePayment: (id: string, payment: Partial<Payment>) => void;
+  updatePayment: (id: string, paymentData: Partial<Omit<Payment, 'id' | 'createdAt' | 'updatedAt'>>) => void;
   removePayment: (id: string) => void;
-  
+  getPayment: (id: string) => Payment | undefined;
+
+  // Insurance Claims
   setInsuranceClaims: (claims: InsuranceClaim[]) => void;
   addInsuranceClaim: (claim: InsuranceClaim) => void;
-  updateInsuranceClaim: (id: string, claim: Partial<InsuranceClaim>) => void;
+  updateInsuranceClaim: (id: string, claimData: Partial<Omit<InsuranceClaim, 'id' | 'createdAt' | 'updatedAt'>>) => void;
   removeInsuranceClaim: (id: string) => void;
-  
-  setPagination: (key: string, pagination: { page: number; limit: number; total: number }) => void;
-  setFilter: (key: string, filter: any) => void;
-  setSearch: (key: string, search: string) => void;
-  clearData: () => void;
+  getInsuranceClaim: (id: string) => InsuranceClaim | undefined;
+
+  // Notifications
+  setNotifications: (notifications: Notification[]) => void;
+  addNotification: (notification: Notification) => void;
+  updateNotification: (id: string, notificationData: Partial<Omit<Notification, 'id' | 'createdAt' | 'updatedAt'>>) => void;
+  removeNotification: (id: string) => void;
+  getNotification: (id: string) => Notification | undefined;
+
+  // General
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
+  clearError: () => void;
 }
 
 export const useDataStore = create<DataState & DataActions>()(
   devtools(
-    immer((set) => ({
-      // State
-      patients: [],
-      doctors: [],
-      appointments: [],
-      payments: [],
-      insuranceClaims: [],
-      pagination: {},
-      filters: {},
-      search: {},
+    persist(
+      immer((set, get) => ({
+        // State
+        patients: [],
+        doctors: [],
+        appointments: [],
+        payments: [],
+        insuranceClaims: [],
+        notifications: [],
+        isLoading: false,
+        error: null,
 
-      // Patient Actions
-      setPatients: (patients) =>
-        set((state) => {
-          state.patients = patients;
-        }),
+        // Patient Actions
+        setPatients: (patients) =>
+          set((state) => {
+            state.patients = patients;
+          }),
 
-      addPatient: (patient) =>
-        set((state) => {
-          state.patients.push(patient);
-        }),
+        addPatient: (patient) =>
+          set((state) => {
+            state.patients.push(patient);
+          }),
 
-      updatePatient: (id, patientData: Partial<Omit<Patient, 'id' | 'createdAt' | 'updatedAt'>>) =>
-        set((state) => {
-          const index = state.patients.findIndex(p => p.id === id);
-          if (index !== -1) {
-            // Only update fields that are defined and valid
-            const validUpdates = Object.fromEntries(
-              Object.entries(patientData).filter(([_, value]) => value !== undefined)
-            );
-            state.patients[index] = { ...state.patients[index], ...validUpdates } as Patient;
-          }
-        }),
+        updatePatient: (id, patientData) =>
+          set((state) => {
+            const index = state.patients.findIndex(p => p.id === id);
+            if (index !== -1) {
+              const validUpdates = Object.fromEntries(
+                Object.entries(patientData).filter(([_, value]) => value !== undefined)
+              );
+              state.patients[index] = { ...state.patients[index], ...validUpdates } as Patient;
+            }
+          }),
 
-      removePatient: (id) =>
-        set((state) => {
-          state.patients = state.patients.filter(p => p.id !== id);
-        }),
+        removePatient: (id) =>
+          set((state) => {
+            state.patients = state.patients.filter(p => p.id !== id);
+          }),
 
-      // Doctor Actions
-      setDoctors: (doctors) =>
-        set((state) => {
-          state.doctors = doctors;
-        }),
+        getPatient: (id) => {
+          const state = get();
+          return state.patients.find(p => p.id === id);
+        },
 
-      addDoctor: (doctor) =>
-        set((state) => {
-          state.doctors.push(doctor);
-        }),
+        // Doctor Actions
+        setDoctors: (doctors) =>
+          set((state) => {
+            state.doctors = doctors;
+          }),
 
-      updateDoctor: (id, doctorData: Partial<Omit<Doctor, 'id' | 'createdAt' | 'updatedAt'>>) =>
-        set((state) => {
-          const index = state.doctors.findIndex(d => d.id === id);
-          if (index !== -1) {
-            const validUpdates = Object.fromEntries(
-              Object.entries(doctorData).filter(([_, value]) => value !== undefined)
-            );
-            state.doctors[index] = { ...state.doctors[index], ...validUpdates } as Doctor;
-          }
-        }),
+        addDoctor: (doctor) =>
+          set((state) => {
+            state.doctors.push(doctor);
+          }),
 
-      removeDoctor: (id) =>
-        set((state) => {
-          state.doctors = state.doctors.filter(d => d.id !== id);
-        }),
+        updateDoctor: (id, doctorData) =>
+          set((state) => {
+            const index = state.doctors.findIndex(d => d.id === id);
+            if (index !== -1) {
+              const validUpdates = Object.fromEntries(
+                Object.entries(doctorData).filter(([_, value]) => value !== undefined)
+              );
+              state.doctors[index] = { ...state.doctors[index], ...validUpdates } as Doctor;
+            }
+          }),
 
-      // Appointment Actions
-      setAppointments: (appointments) =>
-        set((state) => {
-          state.appointments = appointments;
-        }),
+        removeDoctor: (id) =>
+          set((state) => {
+            state.doctors = state.doctors.filter(d => d.id !== id);
+          }),
 
-      addAppointment: (appointment) =>
-        set((state) => {
-          state.appointments.push(appointment);
-        }),
+        getDoctor: (id) => {
+          const state = get();
+          return state.doctors.find(d => d.id === id);
+        },
 
-      updateAppointment: (id, appointmentData) =>
-        set((state) => {
-          const index = state.appointments.findIndex(a => a.id === id);
-          if (index !== -1) {
-            state.appointments[index] = { ...state.appointments[index], ...appointmentData };
-          }
-        }),
+        // Appointment Actions
+        setAppointments: (appointments) =>
+          set((state) => {
+            state.appointments = appointments;
+          }),
 
-      removeAppointment: (id) =>
-        set((state) => {
-          state.appointments = state.appointments.filter(a => a.id !== id);
-        }),
+        addAppointment: (appointment) =>
+          set((state) => {
+            state.appointments.push(appointment);
+          }),
 
-      // Payment Actions
-      setPayments: (payments) =>
-        set((state) => {
-          state.payments = payments;
-        }),
+        updateAppointment: (id, appointmentData) =>
+          set((state) => {
+            const index = state.appointments.findIndex(a => a.id === id);
+            if (index !== -1) {
+              const validUpdates = Object.fromEntries(
+                Object.entries(appointmentData).filter(([_, value]) => value !== undefined)
+              );
+              state.appointments[index] = { ...state.appointments[index], ...validUpdates } as Appointment;
+            }
+          }),
 
-      addPayment: (payment) =>
-        set((state) => {
-          state.payments.push(payment);
-        }),
+        removeAppointment: (id) =>
+          set((state) => {
+            state.appointments = state.appointments.filter(a => a.id !== id);
+          }),
 
-      updatePayment: (id, paymentData) =>
-        set((state) => {
-          const index = state.payments.findIndex(p => p.id === id);
-          if (index !== -1) {
-            state.payments[index] = { ...state.payments[index], ...paymentData };
-          }
-        }),
+        getAppointment: (id) => {
+          const state = get();
+          return state.appointments.find(a => a.id === id);
+        },
 
-      removePayment: (id) =>
-        set((state) => {
-          state.payments = state.payments.filter(p => p.id !== id);
-        }),
+        // Payment Actions
+        setPayments: (payments) =>
+          set((state) => {
+            state.payments = payments;
+          }),
 
-      // Insurance Claim Actions
-      setInsuranceClaims: (claims) =>
-        set((state) => {
-          state.insuranceClaims = claims;
-        }),
+        addPayment: (payment) =>
+          set((state) => {
+            state.payments.push(payment);
+          }),
 
-      addInsuranceClaim: (claim) =>
-        set((state) => {
-          state.insuranceClaims.push(claim);
-        }),
+        updatePayment: (id, paymentData) =>
+          set((state) => {
+            const index = state.payments.findIndex(p => p.id === id);
+            if (index !== -1) {
+              const validUpdates = Object.fromEntries(
+                Object.entries(paymentData).filter(([_, value]) => value !== undefined)
+              );
+              state.payments[index] = { ...state.payments[index], ...validUpdates } as Payment;
+            }
+          }),
 
-      updateInsuranceClaim: (id, claimData) =>
-        set((state) => {
-          const index = state.insuranceClaims.findIndex(c => c.id === id);
-          if (index !== -1) {
-            state.insuranceClaims[index] = { ...state.insuranceClaims[index], ...claimData };
-          }
-        }),
+        removePayment: (id) =>
+          set((state) => {
+            state.payments = state.payments.filter(p => p.id !== id);
+          }),
 
-      removeInsuranceClaim: (id) =>
-        set((state) => {
-          state.insuranceClaims = state.insuranceClaims.filter(c => c.id !== id);
-        }),
+        getPayment: (id) => {
+          const state = get();
+          return state.payments.find(p => p.id === id);
+        },
 
-      // Utility Actions
-      setPagination: (key, pagination) =>
-        set((state) => {
-          state.pagination[key] = pagination;
-        }),
+        // Insurance Claim Actions
+        setInsuranceClaims: (claims) =>
+          set((state) => {
+            state.insuranceClaims = claims;
+          }),
 
-      setFilter: (key, filter) =>
-        set((state) => {
-          state.filters[key] = filter;
-        }),
+        addInsuranceClaim: (claim) =>
+          set((state) => {
+            state.insuranceClaims.push(claim);
+          }),
 
-      setSearch: (key, search) =>
-        set((state) => {
-          state.search[key] = search;
-        }),
+        updateInsuranceClaim: (id, claimData) =>
+          set((state) => {
+            const index = state.insuranceClaims.findIndex(c => c.id === id);
+            if (index !== -1) {
+              const validUpdates = Object.fromEntries(
+                Object.entries(claimData).filter(([_, value]) => value !== undefined)
+              );
+              state.insuranceClaims[index] = { ...state.insuranceClaims[index], ...validUpdates } as InsuranceClaim;
+            }
+          }),
 
-      clearData: () =>
-        set((state) => {
-          state.patients = [];
-          state.doctors = [];
-          state.appointments = [];
-          state.payments = [];
-          state.insuranceClaims = [];
-          state.pagination = {};
-          state.filters = {};
-          state.search = {};
+        removeInsuranceClaim: (id) =>
+          set((state) => {
+            state.insuranceClaims = state.insuranceClaims.filter(c => c.id !== id);
+          }),
+
+        getInsuranceClaim: (id) => {
+          const state = get();
+          return state.insuranceClaims.find(c => c.id === id);
+        },
+
+        // Notification Actions
+        setNotifications: (notifications) =>
+          set((state) => {
+            state.notifications = notifications;
+          }),
+
+        addNotification: (notification) =>
+          set((state) => {
+            state.notifications.push(notification);
+          }),
+
+        updateNotification: (id, notificationData) =>
+          set((state) => {
+            const index = state.notifications.findIndex(n => n.id === id);
+            if (index !== -1) {
+              const validUpdates = Object.fromEntries(
+                Object.entries(notificationData).filter(([_, value]) => value !== undefined)
+              );
+              state.notifications[index] = { ...state.notifications[index], ...validUpdates } as Notification;
+            }
+          }),
+
+        removeNotification: (id) =>
+          set((state) => {
+            state.notifications = state.notifications.filter(n => n.id !== id);
+          }),
+
+        getNotification: (id) => {
+          const state = get();
+          return state.notifications.find(n => n.id === id);
+        },
+
+        // General Actions
+        setLoading: (loading) =>
+          set((state) => {
+            state.isLoading = loading;
+          }),
+
+        setError: (error) =>
+          set((state) => {
+            state.error = error;
+          }),
+
+        clearError: () =>
+          set((state) => {
+            state.error = null;
+          }),
+      })),
+      {
+        name: 'data-store',
+        partialize: (state) => ({
+          patients: state.patients,
+          doctors: state.doctors,
+          appointments: state.appointments,
+          payments: state.payments,
+          insuranceClaims: state.insuranceClaims,
+          notifications: state.notifications,
         }),
-    })),
-    { name: 'data-store' }
+      }
+    ),
+    { name: 'DataStore' }
   )
 );
-
-// Selectors
-export const authSelectors = {
-  user: (state: AuthState) => state.user,
-  isAuthenticated: (state: AuthState) => state.isAuthenticated,
-  isLoading: (state: AuthState) => state.isLoading,
-  error: (state: AuthState) => state.error,
-};
-
-export const uiSelectors = {
-  theme: (state: UIState) => state.theme,
-  language: (state: UIState) => state.language,
-  sidebarOpen: (state: UIState) => state.sidebarOpen,
-  notifications: (state: UIState) => state.notifications,
-  isModalOpen: (modalId: string) => (state: UIState) => state.modals[modalId] || false,
-  isLoading: (key: string) => (state: UIState) => state.loading[key] || false,
-};
-
-export const dataSelectors = {
-  patients: (state: DataState) => state.patients,
-  doctors: (state: DataState) => state.doctors,
-  appointments: (state: DataState) => state.appointments,
-  payments: (state: DataState) => state.payments,
-  insuranceClaims: (state: DataState) => state.insuranceClaims,
-  pagination: (key: string) => (state: DataState) => state.pagination[key],
-  filter: (key: string) => (state: DataState) => state.filters[key],
-  search: (key: string) => (state: DataState) => state.search[key],
-};
