@@ -1,41 +1,61 @@
+/**
+ * Payment Processing API - معالجة المدفوعات
+ * Process payments with Stripe and Moyasar integration
+ */
+
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
-import { authorize } from '@/lib/auth/authorize';
-import { stripeService } from '@/lib/payments/stripe';
-import { moyasarService } from '@/lib/payments/moyasar';
+import { ValidationHelper } from '@/core/validation';
+import { ErrorHandler } from '@/core/errors';
+import { authorize } from '@/middleware/authorize';
+import Stripe from 'stripe';
+
+const paymentSchema = z.object({
+  appointmentId: z.string().uuid('Invalid appointment ID'),
+  amount: z.number().positive('Amount must be positive'),
+  currency: z.string().default('SAR'),
+  method: z.enum(['stripe', 'moyasar', 'cash', 'bank_transfer']),
+  paymentData: z.record(z.any()).optional(),
+  description: z.string().optional(),
+  metadata: z.record(z.any()).optional(),
+});
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2023-10-16',
+});
 
 export async function POST(request: NextRequest) {
   try {
-    const { user, error: authError } = await authorize(request);
-    
-    if (authError || !user) {
+    // Authorize user
+    const authResult = await authorize(['patient', 'staff', 'admin'])(request);
+    if (!authResult.success) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { 
-      appointmentId, 
-      amount, 
-      currency = 'SAR', 
-      method = 'card',
-      provider = 'stripe',
-      metadata = {} 
-    } = await request.json();
+    const supabase = createClient();
+    const body = await request.json();
 
-    if (!appointmentId || !amount) {
-      return NextResponse.json({ 
-        error: 'Missing required fields: appointmentId, amount' 
-      }, { status: 400 });
+    // Validate input
+    const validation = await ValidationHelper.validateAsync(paymentSchema, body);
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error.message }, { status: 400 });
     }
 
-    const supabase = createClient();
+    const { appointmentId, amount, currency, method, paymentData, description, metadata } = validation.data;
 
-    // Get appointment details
+    // Verify appointment exists and get details
     const { data: appointment, error: appointmentError } = await supabase
       .from('appointments')
       .select(`
         id,
-        patient_id,
-        patients!inner(id, full_name, user_id)
+        patientId,
+        doctorId,
+        scheduledAt,
+        status,
+        paymentStatus,
+        patients(id, fullName, email),
+        doctors(id, fullName, speciality)
       `)
       .eq('id', appointmentId)
       .single();
@@ -44,62 +64,51 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Appointment not found' }, { status: 404 });
     }
 
-    // Check if user has permission to process this payment
-    if (user.role === 'patient' && appointment.patients.user_id !== user.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    if (appointment.paymentStatus === 'paid') {
+      return NextResponse.json({ error: 'Appointment already paid' }, { status: 400 });
     }
 
+    // Process payment based on method
     let paymentResult;
-
-    // Process payment based on provider
-    if (provider === 'stripe') {
-      paymentResult = await stripeService.createPaymentIntent({
-        amount,
-        currency,
-        patientId: appointment.patient_id,
-        appointmentId: appointment.id,
-        metadata: {
-          ...metadata,
-          patient_name: appointment.patients.full_name
-        }
-      });
-    } else if (provider === 'moyasar') {
-      paymentResult = await moyasarService.createPayment({
-        amount,
-        currency,
-        description: `Payment for appointment ${appointment.id}`,
-        patientId: appointment.patient_id,
-        appointmentId: appointment.id,
-        metadata: {
-          ...metadata,
-          patient_name: appointment.patients.full_name
-        }
-      });
-    } else {
-      return NextResponse.json({ error: 'Unsupported payment provider' }, { status: 400 });
+    switch (method) {
+      case 'stripe':
+        paymentResult = await processStripePayment(amount, currency, paymentData, appointment);
+        break;
+      case 'moyasar':
+        paymentResult = await processMoyasarPayment(amount, currency, paymentData, appointment);
+        break;
+      case 'cash':
+        paymentResult = await processCashPayment(amount, currency, appointment);
+        break;
+      case 'bank_transfer':
+        paymentResult = await processBankTransfer(amount, currency, appointment);
+        break;
+      default:
+        return NextResponse.json({ error: 'Invalid payment method' }, { status: 400 });
     }
 
     if (!paymentResult.success) {
-      return NextResponse.json({ 
-        error: paymentResult.error || 'Payment processing failed' 
-      }, { status: 400 });
+      return NextResponse.json({ error: paymentResult.error }, { status: 400 });
     }
 
-    // Create payment record in database
+    // Create payment record
     const { data: payment, error: paymentError } = await supabase
       .from('payments')
       .insert({
-        appointment_id: appointmentId,
+        appointmentId,
         amount,
         currency,
         method,
-        status: 'pending',
-        meta: {
-          provider,
-          payment_id: paymentResult.paymentIntentId || paymentResult.paymentId,
-          client_secret: paymentResult.clientSecret,
-          ...metadata
-        }
+        status: paymentResult.status,
+        transactionId: paymentResult.transactionId,
+        paymentData: paymentResult.paymentData,
+        description: description || `Payment for appointment ${appointmentId}`,
+        metadata: {
+          ...metadata,
+          patientId: appointment.patientId,
+          doctorId: appointment.doctorId,
+        },
+        processedBy: authResult.user.id,
       })
       .select()
       .single();
@@ -108,124 +117,146 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to create payment record' }, { status: 500 });
     }
 
-    // Log payment creation
+    // Update appointment payment status
     await supabase
-      .from('audit_logs')
-      .insert({
-        action: 'payment_created',
-        user_id: user.id,
-        resource_type: 'payment',
-        resource_id: payment.id,
-        metadata: {
-          appointment_id: appointmentId,
-          amount,
-          provider,
-          patient_name: appointment.patients.full_name
-        }
-      });
+      .from('appointments')
+      .update({ paymentStatus: paymentResult.status })
+      .eq('id', appointmentId);
+
+    // Create audit log
+    await supabase.from('audit_logs').insert({
+      action: 'payment_processed',
+      entityType: 'payment',
+      entityId: payment.id,
+      userId: authResult.user.id,
+      metadata: {
+        appointmentId,
+        amount,
+        method,
+        status: paymentResult.status,
+      },
+    });
+
+    // Send payment confirmation
+    await sendPaymentConfirmation(payment.id, appointment);
 
     return NextResponse.json({
       success: true,
-      payment: {
-        id: payment.id,
-        amount,
-        currency,
-        method,
-        status: payment.status,
-        client_secret: paymentResult.clientSecret,
-        payment_intent_id: paymentResult.paymentIntentId || paymentResult.paymentId
-      }
+      data: payment,
+      message: 'Payment processed successfully'
     });
 
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.handle(error);
   }
 }
 
-export async function PATCH(request: NextRequest) {
+async function processStripePayment(amount: number, currency: string, paymentData: any, appointment: any) {
   try {
-    const { user, error: authError } = await authorize(request);
-    
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const { paymentId, status, provider = 'stripe' } = await request.json();
-
-    if (!paymentId || !status) {
-      return NextResponse.json({ 
-        error: 'Missing required fields: paymentId, status' 
-      }, { status: 400 });
-    }
-
-    const supabase = createClient();
-
-    // Get payment record
-    const { data: payment, error: paymentError } = await supabase
-      .from('payments')
-      .select('*')
-      .eq('id', paymentId)
-      .single();
-
-    if (paymentError || !payment) {
-      return NextResponse.json({ error: 'Payment not found' }, { status: 404 });
-    }
-
-    // Update payment status
-    const { error: updateError } = await supabase
-      .from('payments')
-      .update({ 
-        status,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', paymentId);
-
-    if (updateError) {
-      return NextResponse.json({ error: 'Failed to update payment status' }, { status: 500 });
-    }
-
-    // If payment is completed, update appointment payment status
-    if (status === 'completed') {
-      await supabase
-        .from('appointments')
-        .update({ 
-          payment_status: 'paid',
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', payment.appointment_id);
-    }
-
-    // Log payment status update
-    await supabase
-      .from('audit_logs')
-      .insert({
-        action: 'payment_status_updated',
-        user_id: user.id,
-        resource_type: 'payment',
-        resource_id: paymentId,
-        metadata: {
-          old_status: payment.status,
-          new_status: status,
-          provider
-        }
-      });
-
-    return NextResponse.json({
-      success: true,
-      payment: {
-        id: paymentId,
-        status,
-        updated_at: new Date().toISOString()
-      }
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: Math.round(amount * 100), // Convert to cents
+      currency: currency.toLowerCase(),
+      description: `Payment for appointment ${appointment.id}`,
+      metadata: {
+        appointmentId: appointment.id,
+        patientId: appointment.patientId,
+        doctorId: appointment.doctorId,
+      },
+      ...paymentData,
     });
 
+    return {
+      success: true,
+      status: 'pending',
+      transactionId: paymentIntent.id,
+      paymentData: {
+        clientSecret: paymentIntent.client_secret,
+        status: paymentIntent.status,
+      },
+    };
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return {
+      success: false,
+      error: 'Stripe payment failed',
+    };
   }
+}
+
+async function processMoyasarPayment(amount: number, currency: string, paymentData: any, appointment: any) {
+  try {
+    // Moyasar API integration
+    const moyasarResponse = await fetch('https://api.moyasar.com/v1/payments', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.MOYASAR_SECRET_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount: Math.round(amount * 100), // Convert to halalas
+        currency: currency,
+        description: `Payment for appointment ${appointment.id}`,
+        metadata: {
+          appointmentId: appointment.id,
+          patientId: appointment.patientId,
+          doctorId: appointment.doctorId,
+        },
+        ...paymentData,
+      }),
+    });
+
+    const result = await moyasarResponse.json();
+
+    if (!moyasarResponse.ok) {
+      return {
+        success: false,
+        error: result.message || 'Moyasar payment failed',
+      };
+    }
+
+    return {
+      success: true,
+      status: result.status === 'paid' ? 'paid' : 'pending',
+      transactionId: result.id,
+      paymentData: result,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: 'Moyasar payment failed',
+    };
+  }
+}
+
+async function processCashPayment(amount: number, currency: string, appointment: any) {
+  // Cash payments are immediately marked as paid
+  return {
+    success: true,
+    status: 'paid',
+    transactionId: `CASH_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    paymentData: {
+      method: 'cash',
+      amount,
+      currency,
+    },
+  };
+}
+
+async function processBankTransfer(amount: number, currency: string, appointment: any) {
+  // Bank transfers are marked as pending until confirmed
+  return {
+    success: true,
+    status: 'pending',
+    transactionId: `BANK_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    paymentData: {
+      method: 'bank_transfer',
+      amount,
+      currency,
+      instructions: 'Please transfer the amount to our bank account and provide the reference number.',
+    },
+  };
+}
+
+async function sendPaymentConfirmation(paymentId: string, appointment: any) {
+  // This will be implemented in the notification system
+  console.log(`Sending payment confirmation for payment ${paymentId}`);
 }
