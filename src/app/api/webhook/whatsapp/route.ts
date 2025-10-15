@@ -137,14 +137,14 @@ async function processMessageWithAI(conversationId: string, messageText: string,
       confidence = 0.3;
     }
 
-    let responseText = matchedIntent?.response_template || 'مرحباً بك! كيف يمكنني مساعدتك؟';
+    let responseText = (matchedIntent as any)?.response_template || 'مرحباً بك! كيف يمكنني مساعدتك؟';
 
     // معالجة النية
-    if (matchedIntent?.action_type === 'appointment') {
+    if ((matchedIntent as any)?.action_type === 'appointment') {
       responseText = await handleAppointmentIntent(conversationId, messageText, phoneNumber);
-    } else if (matchedIntent?.action_type === 'cancel') {
+    } else if ((matchedIntent as any)?.action_type === 'cancel') {
       responseText = await handleCancelIntent(conversationId, messageText, phoneNumber);
-    } else if (matchedIntent?.action_type === 'reminder') {
+    } else if ((matchedIntent as any)?.action_type === 'reminder') {
       responseText = await handleReminderIntent(conversationId, messageText, phoneNumber);
     }
 
@@ -156,7 +156,7 @@ async function processMessageWithAI(conversationId: string, messageText: string,
         sender_type: 'bot',
         message_text: responseText,
         message_type: 'text',
-        intent_id: matchedIntent?.id,
+        intent_id: (matchedIntent as any)?.id,
         confidence_score: confidence,
         is_handled: true
       });

@@ -33,6 +33,25 @@ export default function LoginPage() {
     }
   };
 
+  const handleQuickTestLogin = async () => {
+    setError(null);
+    setSubmitting(true);
+    try {
+      // Use test credentials for quick login
+      await loginWithCredentials("test@moeen.com", "test123", false);
+      // Redirect to dashboard
+      window.location.href = getDefaultRouteForUser({
+        id: "test-user",
+        email: "test@moeen.com",
+        role: "user",
+      } as any);
+    } catch (err: any) {
+      setError(err?.message || "Quick test login failed");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--brand-surface)] via-white to-[var(--bg-gray-50)] p-4">
       <div className="w-full max-w-md">
@@ -131,6 +150,31 @@ export default function LoginPage() {
                 )}
               </button>
             </form>
+
+            {/* Quick Test Login Button */}
+            <div className="mt-6">
+              <button
+                type="button"
+                onClick={handleQuickTestLogin}
+                disabled={submitting || isLoading}
+                className="btn btn-outline btn-lg w-full font-semibold"
+              >
+                {submitting ? (
+                  <>
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--brand-primary)] border-t-transparent"></div>
+                    جارٍ تسجيل الدخول...
+                  </>
+                ) : (
+                  <>
+                    <span>⚡</span>
+                    تسجيل دخول سريع (اختبار)
+                  </>
+                )}
+              </button>
+              <p className="mt-2 text-center text-xs text-gray-500">
+                اختبار سريع باستخدام بيانات تجريبية
+              </p>
+            </div>
 
             <div className="border-brand mt-6 border-t pt-6">
               <p className="text-center text-sm text-gray-600 dark:text-gray-400">

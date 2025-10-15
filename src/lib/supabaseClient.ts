@@ -31,6 +31,6 @@ export function getServiceSupabase() {
   const url =
     process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
   const service =
-    process.env.SUPABASE_SERVICE_ROLE || "placeholder-service-key";
+    process.env.SUPABASE_SERVICE_ROLE_KEY || "placeholder-service-key";
   return createClient(url, service);
 }

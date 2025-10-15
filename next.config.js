@@ -45,7 +45,19 @@ const nextConfig = {
 
   // Image optimization
   images: {
-    domains: ["localhost", "your-domain.com"],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3000",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "your-domain.com",
+        pathname: "/**",
+      },
+    ],
     formats: ["image/webp", "image/avif"],
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: false,
