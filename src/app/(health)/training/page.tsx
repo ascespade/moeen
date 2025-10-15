@@ -14,7 +14,6 @@ import {
   TrendingUp,
   FileText,
   Video,
-  Image,
   Plus,
   Search,
   Filter,

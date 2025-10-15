@@ -27,6 +27,7 @@ import {
   Clock,
   TrendingUp,
   RefreshCw,
+  Calendar,
 } from "lucide-react";
 
 interface DashboardMetrics {
@@ -457,7 +458,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="text-center p-4 bg-yellow-50 rounded-lg">
                     <div className="text-2xl font-bold text-yellow-600">
-                      {metrics?.healthcare.appointments.total - (metrics?.healthcare.appointments.completed || 0) - (metrics?.healthcare.appointments.cancelled || 0) || 0}
+                      {(metrics?.healthcare?.appointments?.total || 0) - (metrics?.healthcare?.appointments?.completed || 0) - (metrics?.healthcare?.appointments?.cancelled || 0)}
                     </div>
                     <div className="text-sm text-yellow-700">معلقة</div>
                   </div>
@@ -543,8 +544,8 @@ export default function DashboardPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">
-                    {metrics?.crm.leads.total > 0 
-                      ? Math.round((metrics?.crm.leads.converted || 0) / metrics?.crm.leads.total * 100)
+                    {(metrics?.crm?.leads?.total || 0) > 0
+                      ? Math.round((metrics?.crm?.leads?.converted || 0) / (metrics?.crm?.leads?.total || 1) * 100)
                       : 0}%
                   </div>
                   <p className="text-xs text-muted-foreground">

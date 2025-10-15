@@ -14,7 +14,6 @@ import {
   MessageCircle,
   FileText,
   Video,
-  Image,
   Plus,
   Search,
   Filter,
