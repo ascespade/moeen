@@ -9,18 +9,27 @@ import { ThemeProvider } from "@/context/ThemeContext";
 export const metadata: Metadata = {
   title: "مُعين",
   description: "منصة دردشة متعددة القنوات مدعومة بالذكاء الاصطناعي",
+  other: {
+    "font-display": "swap",
+  },
 };
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
   weight: ["400", "700"],
   variable: "--font-cairo",
+  display: "swap",
+  preload: true,
+  fallback: ["system-ui", "arial"],
 });
 
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
   variable: "--font-inter",
+  display: "swap",
+  preload: true,
+  fallback: ["system-ui", "arial"],
 });
 
 export default function RootLayout({

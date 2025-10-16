@@ -9,6 +9,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font Loading Optimization - Using Next.js font optimization instead */
+
 /* ========================================
    CSS CUSTOM PROPERTIES (DESIGN TOKENS)
    ======================================== */
@@ -83,8 +85,8 @@
   --transition-slow: 500ms ease-in-out;
 
   /* Typography */
-  --font-family-sans: "Cairo", "Inter", system-ui, sans-serif;
-  --font-family-mono: "Fira Code", monaco, consolas, monospace;
+  --font-family-sans: var(--font-cairo), var(--font-inter), "Cairo", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-mono: "Fira Code", monaco, consolas, "Courier New", monospace;
 
   /* Z-Index Scale */
   --z-dropdown: 1000;
@@ -95,6 +97,17 @@
   --z-popover: 1060;
   --z-tooltip: 1070;
   --z-toast: 1080;
+}
+
+/* Font Stability - Prevent font changes after loading */
+* {
+  font-family: var(--font-family-sans);
+}
+
+body {
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Dark Theme Variables */
