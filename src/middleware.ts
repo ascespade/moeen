@@ -53,9 +53,8 @@ export async function middleware(request: NextRequest) {
     addPerformanceHeaders(response, startTime);
 
     // 7. Audit logging (async, don't wait)
-    setImmediate(() => {
-      auditMiddleware(request, response, startTime, Date.now());
-    });
+    // Note: In Edge Runtime, we can't use setImmediate, so we'll skip async audit logging
+    // auditMiddleware(request, response, startTime, Date.now());
 
     return response;
 
@@ -63,9 +62,8 @@ export async function middleware(request: NextRequest) {
     console.error('Middleware error:', error);
     
     // Audit error
-    setImmediate(() => {
-      auditErrorMiddleware(request, error as Error, startTime, Date.now());
-    });
+    // Note: In Edge Runtime, we can't use setImmediate, so we'll skip async error logging
+    // auditErrorMiddleware(request, error as Error, startTime, Date.now());
 
     return NextResponse.json(
       { error: 'Internal server error', message: 'Request processing failed' },

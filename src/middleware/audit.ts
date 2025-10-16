@@ -246,14 +246,13 @@ export async function auditMiddleware(
   
   // Log performance metrics
   if (audit.shouldLogRequest(req)) {
-    const memoryUsage = process.memoryUsage();
-    const cpuUsage = process.cpuUsage();
-    
-    await audit.logPerformance(req, {
-      duration: endTime - startTime,
-      memoryUsage,
-      cpuUsage,
-    });
+    // Note: In Edge Runtime, we can't use process.memoryUsage() or process.cpuUsage()
+    // Skip performance logging in Edge Runtime
+    // await audit.logPerformance(req, {
+    //   duration: endTime - startTime,
+    //   memoryUsage: process.memoryUsage(),
+    //   cpuUsage: process.cpuUsage(),
+    // });
   }
 }
 
