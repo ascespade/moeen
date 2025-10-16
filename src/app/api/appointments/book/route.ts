@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const bookingSchema = z.object({
   patientId: z.string().uuid('Invalid patient ID'),
@@ -24,12 +24,12 @@ const bookingSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize user
-    const authResult = await authorize(['patient', 'staff', 'admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['patient', 'staff', 'admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const body = await request.json();
 
     // Validate input
@@ -38,10 +38,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: validation.error.message }, { status: 400 });
     }
 
-    const { patientId, doctorId, scheduledAt, type, notes, duration, isVirtual, insuranceClaimId } = validation.data;
+    const { patientId, doctorId, scheduledAt, type, notes, duration, isVirtual, insuranceClaimId } = validation.data!;
 
     // Check doctor availability
-    const doctorAvailability = await checkDoctorAvailability(doctorId, scheduledAt, duration);
+    const doctorAvailability = await checkDoctorAvailability(doctorId, scheduledAt, duration!);
     if (!doctorAvailability.available) {
       return NextResponse.json({ 
         error: 'Doctor not available at this time',
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check for conflicts
-    const conflicts = await checkAppointmentConflicts(doctorId, scheduledAt, duration);
+    const conflicts = await checkAppointmentConflicts(doctorId, scheduledAt, duration!);
     if (conflicts.length > 0) {
       return NextResponse.json({ 
         error: 'Time slot conflicts with existing appointments',
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
         status: 'pending',
         paymentStatus: 'unpaid',
         insuranceClaimId,
-        createdBy: authResult.user.id,
+        createdBy: authResult.user!.id,
       })
       .select()
       .single();
@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
       action: 'appointment_created',
       entityType: 'appointment',
       entityId: appointment.id,
-      userId: authResult.user.id,
+      userId: authResult.user!.id,
       metadata: {
         patientId,
         doctorId,
@@ -131,12 +131,12 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 async function checkDoctorAvailability(doctorId: string, scheduledAt: string, duration: number) {
-  const supabase = createClient();
+  const supabase = await createClient();
   
   // Get doctor's schedule
   const { data: doctor } = await supabase
@@ -168,7 +168,7 @@ async function checkDoctorAvailability(doctorId: string, scheduledAt: string, du
 }
 
 async function checkAppointmentConflicts(doctorId: string, scheduledAt: string, duration: number) {
-  const supabase = createClient();
+  const supabase = await createClient();
   
   const startTime = new Date(scheduledAt);
   const endTime = new Date(startTime.getTime() + duration * 60000);

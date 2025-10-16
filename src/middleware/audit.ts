@@ -108,8 +108,9 @@ export class AuditMiddleware {
     req: NextRequest,
     metrics: {
       duration: number;
-      memoryUsage: NodeJS.MemoryUsage;
-      cpuUsage: NodeJS.CpuUsage;
+      highResDuration?: number;
+      memoryUsage?: NodeJS.MemoryUsage;
+      cpuUsage?: NodeJS.CpuUsage;
     }
   ): Promise<void> {
     if (!this.config.enablePerformanceLogging) return;
@@ -121,16 +122,17 @@ export class AuditMiddleware {
       pathname: req.nextUrl.pathname,
       metrics: {
         duration: metrics.duration,
-        memoryUsage: {
+        highResDuration: metrics.highResDuration || null,
+        memoryUsage: metrics.memoryUsage ? {
           rss: metrics.memoryUsage.rss,
           heapTotal: metrics.memoryUsage.heapTotal,
           heapUsed: metrics.memoryUsage.heapUsed,
           external: metrics.memoryUsage.external,
-        },
-        cpuUsage: {
+        } : null,
+        cpuUsage: metrics.cpuUsage ? {
           user: metrics.cpuUsage.user,
           system: metrics.cpuUsage.system,
-        },
+        } : null,
       },
       timestamp: new Date().toISOString(),
     };
@@ -175,7 +177,7 @@ export class AuditMiddleware {
 
   private async saveAuditLog(auditData: any): Promise<void> {
     try {
-      const supabase = createClient();
+      const supabase = await createClient();
       
       await supabase.from('audit_logs').insert({
         action: auditData.type,
@@ -201,6 +203,8 @@ export class AuditMiddleware {
 
   shouldLogResponse(req: NextRequest, response: NextResponse): boolean {
     if (!this.shouldLogRequest(req)) return false;
+    
+    const pathname = req.nextUrl.pathname;
     
     // Don't log successful health checks
     if (pathname === '/api/health' && response.status === 200) {
@@ -246,14 +250,16 @@ export async function auditMiddleware(
   
   // Log performance metrics
   if (audit.shouldLogRequest(req)) {
-    const memoryUsage = process.memoryUsage();
-    const cpuUsage = process.cpuUsage();
-    
-    await audit.logPerformance(req, {
+    // Use Web Performance API which is available in Edge Runtime
+    const performanceMetrics = {
       duration: endTime - startTime,
-      memoryUsage,
-      cpuUsage,
-    });
+      // Use performance.now() for high-resolution timing
+      highResDuration: performance.now() - startTime,
+      // Edge Runtime doesn't support process.memoryUsage or process.cpuUsage
+      // So we'll skip those metrics in middleware
+    };
+    
+    await audit.logPerformance(req, performanceMetrics);
   }
 }
 

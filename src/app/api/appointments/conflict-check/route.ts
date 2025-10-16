@@ -18,7 +18,7 @@ const conflictCheckSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const body = await request.json();
 
     // Validate input
@@ -27,10 +27,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: validation.error.message }, { status: 400 });
     }
 
-    const { doctorId, scheduledAt, duration, excludeAppointmentId } = validation.data;
+    const { doctorId, scheduledAt, duration, excludeAppointmentId } = validation.data!;
 
     const startTime = new Date(scheduledAt);
-    const endTime = new Date(startTime.getTime() + duration * 60000);
+    const endTime = new Date(startTime.getTime() + duration! * 60000);
 
     // Check for conflicts
     let query = supabase
@@ -70,6 +70,6 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }

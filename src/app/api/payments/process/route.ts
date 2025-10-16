@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 import Stripe from 'stripe';
 
 const paymentSchema = z.object({
@@ -28,12 +28,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export async function POST(request: NextRequest) {
   try {
     // Authorize user
-    const authResult = await authorize(['patient', 'staff', 'admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['patient', 'staff', 'admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const body = await request.json();
 
     // Validate input
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
           patientId: appointment.patientId,
           doctorId: appointment.doctorId,
         },
-        processedBy: authResult.user.id,
+        processedBy: authResult.user!.id,
       })
       .select()
       .single();
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
       action: 'payment_processed',
       entityType: 'payment',
       entityId: payment.id,
-      userId: authResult.user.id,
+      userId: authResult.user!.id,
       metadata: {
         appointmentId,
         amount,
@@ -147,7 +147,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 

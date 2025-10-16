@@ -125,7 +125,7 @@ export class ErrorHandler {
     try {
       // This would integrate with your Supabase client
       // const { createClient } = await import('@/lib/supabase/client');
-      // const supabase = createClient();
+      // const supabase = await createClient();
       // await supabase.from('audit_logs').insert({
       //   action: 'error_occurred',
       //   details: errorReport,

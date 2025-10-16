@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const scheduleSchema = z.object({
   type: z.enum([
@@ -33,12 +33,12 @@ const scheduleSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize user
-    const authResult = await authorize(['staff', 'admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['staff', 'admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const body = await request.json();
 
     // Validate input
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
         expiresAt,
         status: scheduledAt ? 'scheduled' : 'pending',
         templateData,
-        createdBy: authResult.user.id,
+        createdBy: authResult.user!.id,
       })
       .select()
       .single();
@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
       action: 'notification_scheduled',
       entityType: 'notification',
       entityId: notification.id,
-      userId: authResult.user.id,
+      userId: authResult.user!.id,
       metadata: {
         type,
         recipientId,
@@ -118,13 +118,13 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
     const type = searchParams.get('type');
@@ -161,12 +161,12 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 async function getRecipientInfo(recipientId: string, recipientType: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   
   let table = '';
   switch (recipientType) {

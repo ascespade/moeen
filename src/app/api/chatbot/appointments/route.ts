@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // التحقق من وجود المريض
     const { data: patient, error: patientError } = await supabase
@@ -161,7 +161,7 @@ export async function GET(request: NextRequest) {
     const patientId = searchParams.get('patientId');
     const doctorId = searchParams.get('doctorId');
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     let query = supabase
       .from('appointments')

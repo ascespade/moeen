@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const date = searchParams.get('date');
     const status = searchParams.get('status');
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     let query = supabase
       .from('appointments')
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
 
     const { patientId, doctorId, scheduledAt, type = 'consultation' } = validation.data;
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // Check if patient exists and user has permission
     const { data: patient, error: patientError } = await supabase

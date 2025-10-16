@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const createUserSchema = z.object({
   email: z.string().email('Invalid email format'),
@@ -40,12 +40,12 @@ const updateUserSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize admin only
-    const authResult = await authorize(['admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const body = await request.json();
 
     // Validate input
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
         profile,
         isActive,
         permissions: permissions || [],
-        createdBy: authResult.user.id,
+        createdBy: authResult.user!.id,
       })
       .select()
       .single();
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
       action: 'user_created',
       entityType: 'user',
       entityId: user.user.id,
-      userId: authResult.user.id,
+      userId: authResult.user!.id,
       metadata: {
         email,
         role,
@@ -126,19 +126,19 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 export async function GET(request: NextRequest) {
   try {
     // Authorize admin or supervisor
-    const authResult = await authorize(['admin', 'supervisor'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['admin', 'supervisor'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const role = searchParams.get('role');
     const isActive = searchParams.get('isActive');
@@ -185,19 +185,19 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 export async function PUT(request: NextRequest) {
   try {
     // Authorize admin only
-    const authResult = await authorize(['admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
     
@@ -220,7 +220,7 @@ export async function PUT(request: NextRequest) {
       .from('users')
       .update({
         ...updateData,
-        updatedBy: authResult.user.id,
+        updatedBy: authResult.user!.id,
         updatedAt: new Date().toISOString(),
       })
       .eq('id', userId)
@@ -236,7 +236,7 @@ export async function PUT(request: NextRequest) {
       action: 'user_updated',
       entityType: 'user',
       entityId: userId,
-      userId: authResult.user.id,
+      userId: authResult.user!.id,
       metadata: updateData,
     });
 
@@ -247,19 +247,19 @@ export async function PUT(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 export async function DELETE(request: NextRequest) {
   try {
     // Authorize admin only
-    const authResult = await authorize(['admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
     
@@ -268,7 +268,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Prevent self-deletion
-    if (userId === authResult.user.id) {
+    if (userId === authResult.user!.id) {
       return NextResponse.json({ error: 'Cannot delete your own account' }, { status: 400 });
     }
 
@@ -278,7 +278,7 @@ export async function DELETE(request: NextRequest) {
       .update({
         isActive: false,
         deletedAt: new Date().toISOString(),
-        deletedBy: authResult.user.id,
+        deletedBy: authResult.user!.id,
       })
       .eq('id', userId);
 
@@ -291,7 +291,7 @@ export async function DELETE(request: NextRequest) {
       action: 'user_deleted',
       entityType: 'user',
       entityId: userId,
-      userId: authResult.user.id,
+      userId: authResult.user!.id,
       metadata: { softDelete: true },
     });
 
@@ -301,12 +301,12 @@ export async function DELETE(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 async function createPatientProfile(userId: string, profile: any) {
-  const supabase = createClient();
+  const supabase = await createClient();
   
   const { error } = await supabase
     .from('patients')
@@ -324,7 +324,7 @@ async function createPatientProfile(userId: string, profile: any) {
 }
 
 async function createDoctorProfile(userId: string, profile: any) {
-  const supabase = createClient();
+  const supabase = await createClient();
   
   const { error } = await supabase
     .from('doctors')

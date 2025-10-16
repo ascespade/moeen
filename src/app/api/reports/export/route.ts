@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const exportSchema = z.object({
   reportId: z.string().uuid('Invalid report ID'),
@@ -20,12 +20,12 @@ const exportSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize staff, supervisor, or admin
-    const authResult = await authorize(['staff', 'supervisor', 'admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const body = await request.json();
 
     // Validate input
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
       action: 'report_exported',
       entityType: 'report',
       entityId: reportId,
-      userId: authResult.user.id,
+      userId: authResult.user!.id,
       metadata: {
         format,
         includeCharts,
@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 

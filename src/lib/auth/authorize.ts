@@ -15,7 +15,7 @@ export interface AuthResult {
 
 export async function authorize(request: NextRequest): Promise<AuthResult> {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     
     // Get session from cookies
     const { data: { session }, error: sessionError } = await supabase.auth.getSession();

@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // Generate unique filename
     const timestamp = Date.now();
@@ -149,7 +149,7 @@ export async function GET(request: NextRequest) {
     const patientId = searchParams.get('patientId');
     const type = searchParams.get('type');
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     let query = supabase
       .from('file_uploads')

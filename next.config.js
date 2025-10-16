@@ -32,9 +32,9 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: https:",
+              "img-src 'self' data: https: blob:",
               "font-src 'self'",
-              "connect-src 'self' https://api.supabase.co",
+              "connect-src 'self' https://api.supabase.co https://*.supabase.co",
               "frame-ancestors 'none'",
             ].join("; "),
           },
@@ -65,6 +65,12 @@ const nextConfig = {
 
   // Bundle analyzer
   webpack: (config, { dev, isServer }) => {
+    // Fix filesystem issues
+    config.snapshot = {
+      ...config.snapshot,
+      managedPaths: [/^(.+?[\\/]node_modules[\\/])(.+)$/],
+    };
+
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: "all",

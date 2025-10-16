@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const uploadSchema = z.object({
   patientId: z.string().uuid('Invalid patient ID'),
@@ -34,12 +34,12 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 export async function POST(request: NextRequest) {
   try {
     // Authorize user (doctors, staff, admin only)
-    const authResult = await authorize(['doctor', 'staff', 'admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['doctor', 'staff', 'admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const formData = await request.formData();
     
     const file = formData.get('file') as File;
@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
         attachments: [urlData.publicUrl],
         tags: metadata.tags || [],
         isConfidential: metadata.isConfidential,
-        uploadedBy: authResult.user.id,
+        uploadedBy: authResult.user!.id,
       })
       .select()
       .single();
@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
       action: 'medical_record_uploaded',
       entityType: 'medical_record',
       entityId: record.id,
-      userId: authResult.user.id,
+      userId: authResult.user!.id,
       metadata: {
         patientId: metadata.patientId,
         recordType: metadata.recordType,
@@ -151,13 +151,13 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const patientId = searchParams.get('patientId');
     const recordType = searchParams.get('recordType');
@@ -192,6 +192,6 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }

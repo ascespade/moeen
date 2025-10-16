@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const flowManager = new FlowManager();
 
     // تحديد الـ Flow المناسب
