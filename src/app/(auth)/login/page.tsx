@@ -34,6 +34,8 @@ export default function LoginPage() {
     try {
       await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
       // after login, compute default route (role-aware)
+      // Note: In a real app, the user role would come from the login response
+      // For now, we'll redirect to user dashboard as default
       window.location.href = getDefaultRouteForUser({
         id: "temp",
         email: formData.email,
@@ -103,9 +105,10 @@ export default function LoginPage() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="form-label">{t("auth.email", "البريد الإلكتروني")}</label>
+                <label htmlFor="email" className="form-label">{t("auth.email", "البريد الإلكتروني")}</label>
                 <div className="relative">
                   <input
+                    id="email"
                     type="email"
                     name="email"
                     value={formData.email}
@@ -121,9 +124,10 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <label className="form-label">{t("auth.password", "كلمة المرور")}</label>
+                <label htmlFor="password" className="form-label">{t("auth.password", "كلمة المرور")}</label>
                 <div className="relative">
                   <input
+                    id="password"
                     type="password"
                     name="password"
                     value={formData.password}
@@ -138,8 +142,9 @@ export default function LoginPage() {
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <label className="inline-flex items-center gap-3 text-sm font-medium">
+                <label htmlFor="rememberMe" className="inline-flex items-center gap-3 text-sm font-medium">
                   <input
+                    id="rememberMe"
                     type="checkbox"
                     name="rememberMe"
                     checked={formData.rememberMe}

@@ -2,7 +2,7 @@ import { ROUTES } from "@/constants/routes";
 export interface User {
   id: string;
   email: string;
-  role: "admin" | "user" | "doctor" | "nurse";
+  role: "admin" | "user" | "doctor" | "nurse" | "staff" | "supervisor" | "patient";
   permissions?: string[];
 }
 
@@ -18,10 +18,17 @@ export function getDefaultRouteForUser(user: User | null): string {
     case "admin":
       return ROUTES.ADMIN.DASHBOARD;
     case "doctor":
+      return "/dashboard/doctor";
     case "nurse":
+    case "staff":
+      return "/dashboard/staff";
+    case "supervisor":
+      return "/dashboard/supervisor";
+    case "patient":
+      return "/dashboard/patient";
     case "user":
     default:
-      return ROUTES.USER.DASHBOARD;
+      return "/dashboard/user";
   }
 }
 
@@ -70,9 +77,9 @@ export function getNavigationItems(user: User | null) {
 
   const baseItems = [
     { label: "لوحة التحكم", href: ROUTES.USER.DASHBOARD },
-    { label: "المواعيد", href: ROUTES.HEALTH.APPOINTMENTS },
-    { label: "المرضى", href: ROUTES.HEALTH.PATIENTS },
-    { label: "الجلسات", href: ROUTES.HEALTH.SESSIONS },
+    { label: "المواعيد", href: "/appointments" },
+    { label: "المرضى", href: "/patients" },
+    { label: "الجلسات", href: "/sessions" },
   ];
 
   if (user.role === "admin") {
