@@ -13,7 +13,11 @@ interface TabsProps {
   className?: string;
 }
 
-export default function __Tabs({ tabs, defaultTab, className = "" }: TabsProps) {
+export default function __Tabs({
+  tabs,
+  defaultTab,
+  className = "",
+}: TabsProps) {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
 
   const __activeTabContent = tabs.find((tab) => tab.id === activeTab)?.content;

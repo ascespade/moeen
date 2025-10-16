@@ -30,7 +30,12 @@ import { _useState, useEffect } from "react";
 
 import { _Badge } from "@/components/ui/Badge";
 import { _Button } from "@/components/ui/Button";
-import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import {
+  _Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
 import { _Input } from "@/components/ui/Input";
 import { _ROUTES } from "@/constants/routes";
 import { _createClient } from "@/lib/supabase/client";
@@ -225,7 +230,9 @@ export default function __PatientsPage() {
       },
     };
 
-    const __severityInfo = severityMap[severity as keyof typeof severityMap] || {
+    const __severityInfo = severityMap[
+      severity as keyof typeof severityMap
+    ] || {
       label: severity,
       variant: "primary" as const,
       color: "text-gray-600",

@@ -66,14 +66,16 @@ async function __getDetailedHealthStatus() {
       totalServices: services.length,
       healthyServices: services.filter((_s: unknown) => s.status === "healthy")
         .length,
-      unhealthyServices: services.filter((_s: unknown) => s.status === "unhealthy")
-        .length,
+      unhealthyServices: services.filter(
+        (_s: unknown) => s.status === "unhealthy",
+      ).length,
       totalErrors: services.reduce(
         (_acc: unknown, s: unknown) => acc + s.errors.count,
         0,
       ),
       averageUptime: calculateAverageUptime(services),
-      criticalIssues: services.filter((_s: unknown) => s.errors.count > 5).length,
+      criticalIssues: services.filter((_s: unknown) => s.errors.count > 5)
+        .length,
     };
 
     const __overallStatus = calculateOverallStatus(summary);

@@ -121,7 +121,8 @@ export default function __AuditLogsPage() {
       log.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
       log.resource.toLowerCase().includes(searchTerm.toLowerCase()) ||
       log.details.toLowerCase().includes(searchTerm.toLowerCase());
-    const __matchesStatus = statusFilter === "all" || log.status === statusFilter;
+    const __matchesStatus =
+      statusFilter === "all" || log.status === statusFilter;
     const matchesAction =
       actionFilter === "all" || log.action.includes(actionFilter);
     return matchesSearch && matchesStatus && matchesAction;

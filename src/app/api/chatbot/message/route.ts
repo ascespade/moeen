@@ -230,7 +230,10 @@ async function __handleAppointmentBooking(
   return "ممتاز! دعني أتحقق من المواعيد المتاحة لك. سأعرض عليك الأطباء المتاحين والأوقات المناسبة.";
 }
 
-async function __handleAppointmentInquiry(_userId: string | null, supabase: unknown) {
+async function __handleAppointmentInquiry(
+  _userId: string | null,
+  supabase: unknown,
+) {
   if (!userId) {
     return "عذراً، يجب عليك تسجيل الدخول أولاً للاستعلام عن مواعيدك.";
   }

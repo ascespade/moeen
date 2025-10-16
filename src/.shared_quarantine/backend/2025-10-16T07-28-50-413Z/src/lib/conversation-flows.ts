@@ -383,7 +383,10 @@ export class FlowManager {
   }
 
   // Execute step action (Slack notifications, WhatsApp sending, etc.)
-  async executeStepAction(_step: FlowStep, context: unknown = {}): Promise<boolean> {
+  async executeStepAction(
+    _step: FlowStep,
+    context: unknown = {},
+  ): Promise<boolean> {
     try {
       switch (step.type) {
         case "slack_notify":

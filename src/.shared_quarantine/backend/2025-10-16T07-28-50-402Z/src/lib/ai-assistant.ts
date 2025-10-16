@@ -223,7 +223,10 @@ export class HemamAssistant {
   }
 
   // Generate motivational message
-  generateMotivationalMessage(_patientName: string, milestone?: string): string {
+  generateMotivationalMessage(
+    _patientName: string,
+    milestone?: string,
+  ): string {
     const __motivationalMessages = [
       `صباح الخير يا ${patientName}، نتمنى لك أسبوعاً مليئاً بالهمة والإنجاز! تذكر أن كل خطوة، مهما كانت صغيرة، هي تقدم نحو هدفك. فريق مركز الهمم كله يدعمك.`,
       `يا ${patientName}، نحن فخورون بإصرارك وهمتك العالية. إلى الأمام دائماً!`,

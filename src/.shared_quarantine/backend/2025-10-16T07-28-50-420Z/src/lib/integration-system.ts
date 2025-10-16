@@ -304,7 +304,10 @@ export class CalendarAPI {
     return true;
   }
 
-  private calculateEndTime(_startTime: string, durationMinutes: number): string {
+  private calculateEndTime(
+    _startTime: string,
+    durationMinutes: number,
+  ): string {
     const [hoursRaw, minutesRaw] = startTime.split(":");
     const __hours = Number(hoursRaw ?? 0);
     const __minutes = Number(minutesRaw ?? 0);

@@ -159,7 +159,10 @@ export class RealTimeNotificationSystem {
   }
 
   // Appointment Notifications
-  async sendAppointmentNotification(_patientId: string, appointmentData: unknown) {
+  async sendAppointmentNotification(
+    _patientId: string,
+    appointmentData: unknown,
+  ) {
     const __notificationId = this.generateNotificationId();
 
     const notification: Notification = {
@@ -246,7 +249,8 @@ export class RealTimeNotificationSystem {
     this.notifications.set(notificationId, notification);
 
     // Send to crisis team
-    const __crisisTeamContacts = this.emergencyContacts.get("medical_team") || [];
+    const __crisisTeamContacts =
+      this.emergencyContacts.get("medical_team") || [];
     for (const contact of crisisTeamContacts) {
       await this.sendSMS(contact, notification.title, notification.message);
     }
@@ -298,7 +302,11 @@ export class RealTimeNotificationSystem {
     }
   }
 
-  private generateEmailHTML(_subject: string, text: string, data?: unknown): string {
+  private generateEmailHTML(
+    _subject: string,
+    text: string,
+    data?: unknown,
+  ): string {
     return `
       <!DOCTYPE html>
       <html dir="rtl" lang="ar">
@@ -384,7 +392,10 @@ export class RealTimeNotificationSystem {
     return `notif_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
-  private updateNotificationPreferences(_socketId: string, preferences: unknown) {
+  private updateNotificationPreferences(
+    _socketId: string,
+    preferences: unknown,
+  ) {
     // Update user notification preferences
   }
 

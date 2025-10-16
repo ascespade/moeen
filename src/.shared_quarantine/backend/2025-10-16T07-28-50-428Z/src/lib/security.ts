@@ -32,7 +32,9 @@ export class CSRFProtection {
 
   static validateToken(_request: NextRequest): boolean {
     const __tokenFromHeader = request.headers.get(this.CSRF_TOKEN_HEADER);
-    const __tokenFromCookie = request.cookies.get(this.CSRF_TOKEN_COOKIE)?.value;
+    const __tokenFromCookie = request.cookies.get(
+      this.CSRF_TOKEN_COOKIE,
+    )?.value;
 
     if (!tokenFromHeader || !tokenFromCookie) {
       return false;

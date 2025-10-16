@@ -21,7 +21,8 @@ export const __useKeyPress = (
       if (!enabled) return;
 
       const __keys = Array.isArray(targetKey) ? targetKey : [targetKey];
-      const __isTargetKey = keys.includes(event.key) || keys.includes(event.code);
+      const __isTargetKey =
+        keys.includes(event.key) || keys.includes(event.code);
 
       if (isTargetKey) {
         if (preventDefault) {
@@ -47,11 +48,17 @@ export const __useKeyPress = (
   }, [handleKeyPress, enabled]);
 };
 
-export const __useEscapeKey = (_handler: () => void, enabled: boolean = true) => {
+export const __useEscapeKey = (
+  _handler: () => void,
+  enabled: boolean = true,
+) => {
   useKeyPress("Escape", handler, { enabled });
 };
 
-export const __useEnterKey = (_handler: () => void, enabled: boolean = true) => {
+export const __useEnterKey = (
+  _handler: () => void,
+  enabled: boolean = true,
+) => {
   useKeyPress("Enter", handler, { enabled });
 };
 

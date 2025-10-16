@@ -130,4 +130,9 @@ CardFooter.displayName = "CardFooter";
 export const __CardTitle = CardHeader;
 export const __CardDescription = CardContent;
 
-export { __Card as Card, __CardHeader as CardHeader, __CardContent as CardContent, __CardFooter as CardFooter };
+export {
+  __Card as Card,
+  __CardHeader as CardHeader,
+  __CardContent as CardContent,
+  __CardFooter as CardFooter,
+};

@@ -243,7 +243,9 @@ export class DatabaseVerifier {
           new RegExp(`table_name\\s*[:=]\\s*['"]${table.name}['"]`, "gi"),
         ];
 
-        const __hasReference = patterns.some((pattern) => pattern.test(content));
+        const __hasReference = patterns.some((pattern) =>
+          pattern.test(content),
+        );
 
         if (hasReference) {
           referencedTables.push(table);

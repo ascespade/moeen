@@ -120,7 +120,10 @@ export function __extractPrefix(_id: string): string | null {
 /**
  * Generate multiple CUIDs at once
  */
-export function __generateMultipleCuid(_count: number, prefix?: string): string[] {
+export function __generateMultipleCuid(
+  _count: number,
+  prefix?: string,
+): string[] {
   return Array.from({ length: count }, () =>
     prefix ? generateDbCuid(prefix) : generateCuid(),
   );

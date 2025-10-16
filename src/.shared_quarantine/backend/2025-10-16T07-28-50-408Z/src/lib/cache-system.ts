@@ -404,7 +404,10 @@ export function __withCache(
     const __method = descriptor.value;
     const __cache = CacheManager.getInstance();
 
-    descriptor.value = async function (_request: NextRequest, ...args: unknown[]) {
+    descriptor.value = async function (
+      _request: NextRequest,
+      ...args: unknown[]
+    ) {
       const __key = keyGenerator(request);
 
       return cache.get(

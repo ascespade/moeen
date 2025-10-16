@@ -216,7 +216,10 @@ export async function __GET(_request: NextRequest) {
   }
 }
 
-async function __sendWhatsAppConfirmation(_phone: string, appointment: unknown) {
+async function __sendWhatsAppConfirmation(
+  _phone: string,
+  appointment: unknown,
+) {
   // هذا مثال لإرسال رسالة WhatsApp
   // في التطبيق الحقيقي، ستحتاج إلى تكامل مع WhatsApp Business API
 

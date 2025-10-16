@@ -102,7 +102,8 @@ export default function __ChatbotFlowsPage() {
       flow.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus =
       selectedStatus === "all" || flow.status === selectedStatus;
-    const __matchesTag = selectedTag === "all" || flow.tags.includes(selectedTag);
+    const __matchesTag =
+      selectedTag === "all" || flow.tags.includes(selectedTag);
     return matchesSearch && matchesStatus && matchesTag;
   });
 

@@ -220,7 +220,9 @@ export function __validateFileType(
   filename: string,
   allowedTypes: string[],
 ): boolean {
-  const __extension = filename.toLowerCase().substring(filename.lastIndexOf("."));
+  const __extension = filename
+    .toLowerCase()
+    .substring(filename.lastIndexOf("."));
   return allowedTypes.includes(extension);
 }
 

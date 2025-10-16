@@ -35,7 +35,8 @@ export function __usePageI18n(_locale: "ar" | "en" = "ar") {
     let namespace = DEFAULT_NAMESPACE;
 
     // Check for exact matches first
-    const __exactNs = ROUTE_NAMESPACES[pathname as keyof typeof ROUTE_NAMESPACES];
+    const __exactNs =
+      ROUTE_NAMESPACES[pathname as keyof typeof ROUTE_NAMESPACES];
     if (exactNs) {
       namespace = exactNs;
     } else {

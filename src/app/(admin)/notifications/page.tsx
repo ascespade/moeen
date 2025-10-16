@@ -28,7 +28,12 @@ import React, { useState, useEffect } from "react";
 
 import { _Badge } from "@/components/ui/Badge";
 import { _Button } from "@/components/ui/Button";
-import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import {
+  _Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
 import { _Input } from "@/components/ui/Input";
 import { _useAuth } from "@/hooks/useAuth";
 
@@ -244,7 +249,9 @@ const NotificationsPage: React.FC = () => {
       urgent: { label: "عاجل", variant: "destructive" as const },
     };
 
-    const __priorityInfo = priorityMap[priority as keyof typeof priorityMap] || {
+    const __priorityInfo = priorityMap[
+      priority as keyof typeof priorityMap
+    ] || {
       label: priority,
       variant: "primary" as const,
     };
@@ -307,7 +314,9 @@ const NotificationsPage: React.FC = () => {
     return matchesSearch && matchesType && matchesStatus && matchesPriority;
   });
 
-  const __unreadCount = notifications.filter((n) => n.status === "unread").length;
+  const __unreadCount = notifications.filter(
+    (n) => n.status === "unread",
+  ).length;
 
   if (!isAuthenticated) {
     return null;

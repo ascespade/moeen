@@ -44,7 +44,10 @@ export function __isAdminRoute(_pathname: string): boolean {
 /**
  * Check if user has permission to access a route
  */
-export function __canAccessRoute(_user: User | null, pathname: string): boolean {
+export function __canAccessRoute(
+  _user: User | null,
+  pathname: string,
+): boolean {
   if (!user) {
     return !isProtectedRoute(pathname);
   }

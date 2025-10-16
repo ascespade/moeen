@@ -306,17 +306,20 @@ async function __getSystemMetrics() {
     if (metricsError) throw metricsError;
 
     // Aggregate metrics by service
-    const __aggregated = metricsData.reduce((_acc: unknown, metric: unknown) => {
-      const __service = metric.service_name;
-      if (!acc[service]) {
-        acc[service] = {
-          service,
-          lastUpdate: metric.timestamp,
-          metrics: metric.metrics,
-        };
-      }
-      return acc;
-    }, {});
+    const __aggregated = metricsData.reduce(
+      (_acc: unknown, metric: unknown) => {
+        const __service = metric.service_name;
+        if (!acc[service]) {
+          acc[service] = {
+            service,
+            lastUpdate: metric.timestamp,
+            metrics: metric.metrics,
+          };
+        }
+        return acc;
+      },
+      {},
+    );
 
     return Object.values(aggregated);
   } catch (error) {
@@ -644,7 +647,9 @@ async function __getCrmMetrics() {
 
     const __wonDeals = deals.filter((_d: unknown) => d.status === "won").length;
 
-    const __lostDeals = deals.filter((_d: unknown) => d.status === "lost").length;
+    const __lostDeals = deals.filter(
+      (_d: unknown) => d.status === "lost",
+    ).length;
 
     const __pipelineDeals = deals.filter((_d: unknown) =>
       ["prospecting", "qualification", "proposal", "negotiation"].includes(
@@ -652,11 +657,17 @@ async function __getCrmMetrics() {
       ),
     ).length;
 
-    const __calls = activities.filter((_a: unknown) => a.type === "call").length;
+    const __calls = activities.filter(
+      (_a: unknown) => a.type === "call",
+    ).length;
 
-    const __meetings = activities.filter((_a: unknown) => a.type === "meeting").length;
+    const __meetings = activities.filter(
+      (_a: unknown) => a.type === "meeting",
+    ).length;
 
-    const __tasks = activities.filter((_a: unknown) => a.type === "task").length;
+    const __tasks = activities.filter(
+      (_a: unknown) => a.type === "task",
+    ).length;
 
     return {
       leads: {

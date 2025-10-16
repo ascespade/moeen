@@ -78,7 +78,9 @@ export function __canAccessRoute(_user: User, route: string): boolean {
  * Get navigation menu items for a user
  */
 export function __getNavigationItems(_user: User) {
-  const __baseItems = [{ label: "الرئيسية", href: ROUTES.DASHBOARD, icon: "🏠" }];
+  const __baseItems = [
+    { label: "الرئيسية", href: ROUTES.DASHBOARD, icon: "🏠" },
+  ];
 
   const roleItems: Record<
     string,

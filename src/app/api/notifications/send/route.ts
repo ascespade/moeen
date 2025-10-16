@@ -234,7 +234,9 @@ export async function __POST(_request: NextRequest) {
                 .single();
 
             if (!smsAppointmentError && smsAppointment) {
-              const __smsAppointmentDate = new Date(smsAppointment.scheduled_at);
+              const __smsAppointmentDate = new Date(
+                smsAppointment.scheduled_at,
+              );
               smsResult = await smsService.sendAppointmentConfirmation({
                 patientPhone,
                 patientName: patient.full_name,

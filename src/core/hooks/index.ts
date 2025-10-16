@@ -323,7 +323,10 @@ export const __useAppointments = () => {
   const __updateAppointmentData = useCallback(
     async (_id: string, appointmentData: unknown) => {
       try {
-        const __response = await apiClient.updateAppointment(id, appointmentData);
+        const __response = await apiClient.updateAppointment(
+          id,
+          appointmentData,
+        );
         if (response.success && response.data) {
           updateAppointment(id, response.data);
           return { success: true, data: response.data };

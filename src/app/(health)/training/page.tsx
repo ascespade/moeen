@@ -28,7 +28,12 @@ import React, { useState, useEffect } from "react";
 
 import { _Badge } from "@/components/ui/Badge";
 import { _Button } from "@/components/ui/Button";
-import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import {
+  _Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
 import { _Input } from "@/components/ui/Input";
 import { _useAuth } from "@/hooks/useAuth";
 
@@ -241,7 +246,8 @@ const TrainingPage: React.FC = () => {
 
     const matchesCategory =
       filterCategory === "all" || program.category === filterCategory;
-    const __matchesLevel = filterLevel === "all" || program.level === filterLevel;
+    const __matchesLevel =
+      filterLevel === "all" || program.level === filterLevel;
 
     return matchesSearch && matchesCategory && matchesLevel;
   });

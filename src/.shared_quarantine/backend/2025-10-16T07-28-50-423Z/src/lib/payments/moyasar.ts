@@ -29,7 +29,9 @@ export class MoyasarPaymentService {
     };
   }
 
-  async createPayment(_data: MoyasarPaymentData): Promise<MoyasarPaymentResult> {
+  async createPayment(
+    _data: MoyasarPaymentData,
+  ): Promise<MoyasarPaymentResult> {
     try {
       const __response = await fetch(`${this.config.baseUrl}/payments`, {
         method: "POST",

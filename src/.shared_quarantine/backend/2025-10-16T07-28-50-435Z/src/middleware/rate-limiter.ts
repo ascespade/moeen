@@ -69,7 +69,8 @@ async function __initRedis() {
 export async function __rateLimiter(
   request: NextRequest,
 ): Promise<NextResponse | null> {
-  const __ip = request.ip || request.headers.get("x-forwarded-for") || "unknown";
+  const __ip =
+    request.ip || request.headers.get("x-forwarded-for") || "unknown";
   const __pathname = request.nextUrl.pathname;
 
   // Find matching config

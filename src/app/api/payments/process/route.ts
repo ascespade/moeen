@@ -249,24 +249,27 @@ async function __processMoyasarPayment(
 ) {
   try {
     // Moyasar API integration
-    const __moyasarResponse = await fetch("https://api.moyasar.com/v1/payments", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.MOYASAR_SECRET_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: Math.round(amount * 100), // Convert to halalas
-        currency: currency,
-        description: `Payment for appointment ${appointment.id}`,
-        metadata: {
-          appointmentId: appointment.id,
-          patientId: appointment.patientId,
-          doctorId: appointment.doctorId,
+    const __moyasarResponse = await fetch(
+      "https://api.moyasar.com/v1/payments",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.MOYASAR_SECRET_KEY}`,
+          "Content-Type": "application/json",
         },
-        ...paymentData,
-      }),
-    });
+        body: JSON.stringify({
+          amount: Math.round(amount * 100), // Convert to halalas
+          currency: currency,
+          description: `Payment for appointment ${appointment.id}`,
+          metadata: {
+            appointmentId: appointment.id,
+            patientId: appointment.patientId,
+            doctorId: appointment.doctorId,
+          },
+          ...paymentData,
+        }),
+      },
+    );
 
     const __result = await moyasarResponse.json();
 
@@ -329,7 +332,10 @@ async function __processBankTransfer(
   };
 }
 
-async function __sendPaymentConfirmation(_paymentId: string, appointment: unknown) {
+async function __sendPaymentConfirmation(
+  _paymentId: string,
+  appointment: unknown,
+) {
   // This will be implemented in the notification system
   // // console.log(`Sending payment confirmation for payment ${paymentId}`);
 }

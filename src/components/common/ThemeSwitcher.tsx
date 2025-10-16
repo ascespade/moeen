@@ -113,7 +113,9 @@ export function __ThemeSwitcher({
   // ========================================
 
   const __renderIconOnly = () => {
-    const __currentOption = themeOptions.find((option) => option.value === theme);
+    const __currentOption = themeOptions.find(
+      (option) => option.value === theme,
+    );
     const __Icon = currentOption?.icon || Sun;
 
     return (

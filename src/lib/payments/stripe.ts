@@ -74,7 +74,9 @@ class StripePaymentService {
     }
   }
 
-  async confirmPaymentIntent(_paymentIntentId: string): Promise<StripeResponse> {
+  async confirmPaymentIntent(
+    _paymentIntentId: string,
+  ): Promise<StripeResponse> {
     try {
       if (!this.secretKey) {
         return {

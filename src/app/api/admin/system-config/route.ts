@@ -32,7 +32,10 @@ export async function __POST(_request: NextRequest) {
     const __body = await request.json();
 
     // Validate input
-    const __validation = await ValidationHelper.validateAsync(configSchema, body);
+    const __validation = await ValidationHelper.validateAsync(
+      configSchema,
+      body,
+    );
     if (!validation.success) {
       return NextResponse.json(
         { error: validation.error.message },

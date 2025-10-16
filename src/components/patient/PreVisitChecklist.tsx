@@ -139,13 +139,16 @@ export default function __PreVisitChecklist({
     }
   };
 
-  const __completedItems = checklistItems.filter((item) => item.completed).length;
+  const __completedItems = checklistItems.filter(
+    (item) => item.completed,
+  ).length;
   const __totalItems = checklistItems.length;
   const __requiredItems = checklistItems.filter((item) => item.required);
   const __completedRequiredItems = requiredItems.filter(
     (item) => item.completed,
   ).length;
-  const __allRequiredCompleted = requiredItems.length === completedRequiredItems;
+  const __allRequiredCompleted =
+    requiredItems.length === completedRequiredItems;
 
   const __groupedItems = checklistItems.reduce(
     (acc, item) => {

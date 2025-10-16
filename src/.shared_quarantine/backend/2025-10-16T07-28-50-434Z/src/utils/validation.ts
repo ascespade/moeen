@@ -80,7 +80,11 @@ export const __isPositive = (_value: number): boolean => {
   return value > 0;
 };
 
-export const __isInRange = (_value: number, min: number, max: number): boolean => {
+export const __isInRange = (
+  _value: number,
+  min: number,
+  max: number,
+): boolean => {
   return value >= min && value <= max;
 };
 
@@ -98,7 +102,10 @@ export const __matchesPattern = (_value: string, pattern: RegExp): boolean => {
 
 export const __validateForm = <T extends Record<string, any>>(
   data: T,
-  rules: Record<keyof T, (_value: unknown) => { isValid: boolean; error?: string }>,
+  rules: Record<
+    keyof T,
+    (_value: unknown) => { isValid: boolean; error?: string }
+  >,
 ): { isValid: boolean; errors: Record<keyof T, string> } => {
   const errors: Record<keyof T, string> = {} as Record<keyof T, string>;
   let isValid = true;

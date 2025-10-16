@@ -1,0 +1,258 @@
+{
+  "generatedAt": "2025-10-16T09:29:10.718Z",
+  "summary": {
+    "rounds": [
+      {
+        "round": 1,
+        "timestamp": "2025-10-16T09:25:50.977Z",
+        "qcResultsSummary": {
+          "prettier": true,
+          "eslint": true,
+          "tsc": true
+        },
+        "usageMapSummary": {
+          "filesScanned": 609
+        },
+        "candidatesCount": 223,
+        "movedCount": 200,
+        "i18n": {
+          "extracted": 0,
+          "path": "/workspace/i18n/extracted_strings.json"
+        },
+        "db": {
+          "skipped": true,
+          "reason": "Supabase env vars missing"
+        },
+        "playRes": {
+          "failed": 0
+        }
+      },
+      {
+        "round": 2,
+        "timestamp": "2025-10-16T09:26:12.723Z",
+        "qcResultsSummary": {
+          "prettier": true,
+          "eslint": true,
+          "tsc": true
+        },
+        "usageMapSummary": {
+          "filesScanned": 613
+        },
+        "candidatesCount": 27,
+        "movedCount": 4,
+        "i18n": {
+          "extracted": 0,
+          "path": "/workspace/i18n/extracted_strings.json"
+        },
+        "db": {
+          "skipped": true,
+          "reason": "Supabase env vars missing"
+        },
+        "playRes": {
+          "failed": 0
+        }
+      },
+      {
+        "round": 3,
+        "timestamp": "2025-10-16T09:26:34.737Z",
+        "qcResultsSummary": {
+          "prettier": true,
+          "eslint": true,
+          "tsc": true
+        },
+        "usageMapSummary": {
+          "filesScanned": 613
+        },
+        "candidatesCount": 27,
+        "movedCount": 4,
+        "i18n": {
+          "extracted": 0,
+          "path": "/workspace/i18n/extracted_strings.json"
+        },
+        "db": {
+          "skipped": true,
+          "reason": "Supabase env vars missing"
+        },
+        "playRes": {
+          "failed": 0
+        }
+      },
+      {
+        "round": 4,
+        "timestamp": "2025-10-16T09:26:57.055Z",
+        "qcResultsSummary": {
+          "prettier": true,
+          "eslint": true,
+          "tsc": true
+        },
+        "usageMapSummary": {
+          "filesScanned": 613
+        },
+        "candidatesCount": 27,
+        "movedCount": 4,
+        "i18n": {
+          "extracted": 0,
+          "path": "/workspace/i18n/extracted_strings.json"
+        },
+        "db": {
+          "skipped": true,
+          "reason": "Supabase env vars missing"
+        },
+        "playRes": {
+          "failed": 0
+        }
+      },
+      {
+        "round": 5,
+        "timestamp": "2025-10-16T09:27:18.078Z",
+        "qcResultsSummary": {
+          "prettier": true,
+          "eslint": true,
+          "tsc": true
+        },
+        "usageMapSummary": {
+          "filesScanned": 613
+        },
+        "candidatesCount": 27,
+        "movedCount": 4,
+        "i18n": {
+          "extracted": 0,
+          "path": "/workspace/i18n/extracted_strings.json"
+        },
+        "db": {
+          "skipped": true,
+          "reason": "Supabase env vars missing"
+        },
+        "playRes": {
+          "failed": 0
+        }
+      },
+      {
+        "round": 6,
+        "timestamp": "2025-10-16T09:27:38.980Z",
+        "qcResultsSummary": {
+          "prettier": true,
+          "eslint": true,
+          "tsc": true
+        },
+        "usageMapSummary": {
+          "filesScanned": 613
+        },
+        "candidatesCount": 27,
+        "movedCount": 4,
+        "i18n": {
+          "extracted": 0,
+          "path": "/workspace/i18n/extracted_strings.json"
+        },
+        "db": {
+          "skipped": true,
+          "reason": "Supabase env vars missing"
+        },
+        "playRes": {
+          "failed": 0
+        }
+      },
+      {
+        "round": 7,
+        "timestamp": "2025-10-16T09:28:01.102Z",
+        "qcResultsSummary": {
+          "prettier": true,
+          "eslint": true,
+          "tsc": true
+        },
+        "usageMapSummary": {
+          "filesScanned": 613
+        },
+        "candidatesCount": 27,
+        "movedCount": 4,
+        "i18n": {
+          "extracted": 0,
+          "path": "/workspace/i18n/extracted_strings.json"
+        },
+        "db": {
+          "skipped": true,
+          "reason": "Supabase env vars missing"
+        },
+        "playRes": {
+          "failed": 0
+        }
+      },
+      {
+        "round": 8,
+        "timestamp": "2025-10-16T09:28:22.402Z",
+        "qcResultsSummary": {
+          "prettier": true,
+          "eslint": true,
+          "tsc": true
+        },
+        "usageMapSummary": {
+          "filesScanned": 613
+        },
+        "candidatesCount": 27,
+        "movedCount": 4,
+        "i18n": {
+          "extracted": 0,
+          "path": "/workspace/i18n/extracted_strings.json"
+        },
+        "db": {
+          "skipped": true,
+          "reason": "Supabase env vars missing"
+        },
+        "playRes": {
+          "failed": 0
+        }
+      },
+      {
+        "round": 9,
+        "timestamp": "2025-10-16T09:28:43.383Z",
+        "qcResultsSummary": {
+          "prettier": true,
+          "eslint": true,
+          "tsc": true
+        },
+        "usageMapSummary": {
+          "filesScanned": 613
+        },
+        "candidatesCount": 27,
+        "movedCount": 4,
+        "i18n": {
+          "extracted": 0,
+          "path": "/workspace/i18n/extracted_strings.json"
+        },
+        "db": {
+          "skipped": true,
+          "reason": "Supabase env vars missing"
+        },
+        "playRes": {
+          "failed": 0
+        }
+      },
+      {
+        "round": 10,
+        "timestamp": "2025-10-16T09:29:09.214Z",
+        "qcResultsSummary": {
+          "prettier": true,
+          "eslint": true,
+          "tsc": true
+        },
+        "usageMapSummary": {
+          "filesScanned": 613
+        },
+        "candidatesCount": 27,
+        "movedCount": 4,
+        "i18n": {
+          "extracted": 0,
+          "path": "/workspace/i18n/extracted_strings.json"
+        },
+        "db": {
+          "skipped": true,
+          "reason": "Supabase env vars missing"
+        },
+        "playRes": {
+          "failed": 0
+        }
+      }
+    ],
+    "final": null
+  }
+}

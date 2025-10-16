@@ -23,7 +23,10 @@ export const __useBoolean = (_initialValue: boolean = false) => {
   const __setTrue = useCallback(() => setValue(true), []);
   const __setFalse = useCallback(() => setValue(false), []);
   const __toggle = useCallback(() => setValue((prev) => !prev), []);
-  const __setBoolean = useCallback((_newValue: boolean) => setValue(newValue), []);
+  const __setBoolean = useCallback(
+    (_newValue: boolean) => setValue(newValue),
+    [],
+  );
 
   return {
     value,

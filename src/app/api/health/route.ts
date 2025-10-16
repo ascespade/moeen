@@ -315,7 +315,9 @@ function __determineOverallStatus(
   return "healthy";
 }
 
-function __getHttpStatus(_status: "healthy" | "degraded" | "unhealthy"): number {
+function __getHttpStatus(
+  _status: "healthy" | "degraded" | "unhealthy",
+): number {
   switch (status) {
     case "healthy":
       return 200;

@@ -111,7 +111,13 @@ class EncryptionManager {
 
       const __salt = parts[0];
       const __hash = parts[1];
-      const __testHash = crypto.pbkdf2Sync(text, salt || "", 10000, 64, "sha512");
+      const __testHash = crypto.pbkdf2Sync(
+        text,
+        salt || "",
+        10000,
+        64,
+        "sha512",
+      );
 
       return hash === testHash.toString("hex");
     } catch (error) {

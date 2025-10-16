@@ -42,7 +42,10 @@ export class ActionExecutor {
     }
   }
 
-  private async createAppointment(_data: unknown, context: ConversationContext) {
+  private async createAppointment(
+    _data: unknown,
+    context: ConversationContext,
+  ) {
     const { doctorId, appointmentTime, patientId, notes } = data;
 
     if (!doctorId || !appointmentTime || !patientId) {

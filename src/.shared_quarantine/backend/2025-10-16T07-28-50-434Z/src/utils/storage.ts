@@ -87,7 +87,8 @@ export const __STORAGE_KEYS = {
 
 // Storage helpers
 export const __getUser = () => storage.get(STORAGE_KEYS.USER);
-export const __setUser = (_user: unknown) => storage.set(STORAGE_KEYS.USER, user);
+export const __setUser = (_user: unknown) =>
+  storage.set(STORAGE_KEYS.USER, user);
 export const __removeUser = () => storage.remove(STORAGE_KEYS.USER);
 
 export const __getToken = () => storage.get(STORAGE_KEYS.TOKEN);

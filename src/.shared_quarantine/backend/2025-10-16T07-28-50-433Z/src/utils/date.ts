@@ -134,7 +134,8 @@ export const __isLeapYear = (_year: number): boolean => {
 
 export const __getWeekNumber = (_date: Date): number => {
   const __firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-  const __pastDaysOfYear = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
+  const __pastDaysOfYear =
+    (date.getTime() - firstDayOfYear.getTime()) / 86400000;
   return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
 };
 

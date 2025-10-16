@@ -15,7 +15,12 @@ import {
 import React, { useState } from "react";
 
 import { _Button } from "@/components/ui/Button";
-import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import {
+  _Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
 import {
   Select,
   SelectContent,
@@ -31,7 +36,10 @@ const AccessibilitySettings: React.FC = () => {
   const { settings, updateSettings } = useAccessibility();
   const [isOpen, setIsOpen] = useState(false);
 
-  const __handleSettingChange = (_key: keyof typeof settings, value: unknown) => {
+  const __handleSettingChange = (
+    _key: keyof typeof settings,
+    value: unknown,
+  ) => {
     updateSettings({ [key]: value });
   };
 

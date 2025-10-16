@@ -6,7 +6,10 @@ import { _NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
 // Rate limiting store
-const __rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const __rateLimitStore = new Map<
+  string,
+  { count: number; resetTime: number }
+>();
 
 // Security headers
 export const __securityHeaders = {

@@ -184,7 +184,8 @@ export class FlowManager {
   ): Promise<any> {
     if (!step.actions) return null;
 
-    const results: Array<{ success: boolean; data?: unknown; error?: string }> = [];
+    const results: Array<{ success: boolean; data?: unknown; error?: string }> =
+      [];
     for (const action of step.actions) {
       const __result = await this.actionExecutor.executeAction(action, context);
       results.push(result);

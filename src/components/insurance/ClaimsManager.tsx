@@ -117,9 +117,12 @@ export default function __ClaimsManager({
 
   const __handleSubmitClaim = async (_claimId: string) => {
     try {
-      const __response = await fetch(`/api/insurance/claims/${claimId}/submit`, {
-        method: "PATCH",
-      });
+      const __response = await fetch(
+        `/api/insurance/claims/${claimId}/submit`,
+        {
+          method: "PATCH",
+        },
+      );
 
       if (response.ok) {
         fetchClaims();

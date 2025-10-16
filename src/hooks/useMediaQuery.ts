@@ -31,7 +31,9 @@ export const __useMediaQuery = (_query: string): boolean => {
 
 export const __useBreakpoint = () => {
   const __isMobile = useMediaQuery("(max-width: 768px)");
-  const __isTablet = useMediaQuery("(min-width: 769px) and (max-width: 1024px)");
+  const __isTablet = useMediaQuery(
+    "(min-width: 769px) and (max-width: 1024px)",
+  );
   const __isDesktop = useMediaQuery("(min-width: 1025px)");
   const __isLargeDesktop = useMediaQuery("(min-width: 1440px)");
 

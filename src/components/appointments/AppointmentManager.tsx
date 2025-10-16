@@ -17,7 +17,12 @@ import React, { useState, useEffect } from "react";
 
 import { _Badge } from "@/components/ui/Badge";
 import { _Button } from "@/components/ui/Button";
-import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import {
+  _Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
 import { _Input } from "@/components/ui/Input";
 import { _Label } from "@/components/ui/Label";
 import {
@@ -266,7 +271,10 @@ const AppointmentManager: React.FC = () => {
 
       {/* فلاتر */}
       <div className="flex gap-4 items-center">
-        <Select value={filter} onValueChange={(_value: unknown) => setFilter(value)}>
+        <Select
+          value={filter}
+          onValueChange={(_value: unknown) => setFilter(value)}
+        >
           <SelectTrigger className="w-48">
             <span className="text-gray-400">فلترة المواعيد</span>
           </SelectTrigger>

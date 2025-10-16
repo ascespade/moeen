@@ -205,7 +205,10 @@ class ApiClient {
     return this.get(API_ENDPOINTS.PATIENTS.GET(id));
   }
 
-  async updatePatient(_id: string, patientData: unknown): Promise<ApiResponse<any>> {
+  async updatePatient(
+    _id: string,
+    patientData: unknown,
+  ): Promise<ApiResponse<any>> {
     return this.patch(API_ENDPOINTS.PATIENTS.UPDATE(id), patientData);
   }
 
@@ -233,7 +236,10 @@ class ApiClient {
     return this.get(API_ENDPOINTS.DOCTORS.GET(id));
   }
 
-  async updateDoctor(_id: string, doctorData: unknown): Promise<ApiResponse<any>> {
+  async updateDoctor(
+    _id: string,
+    doctorData: unknown,
+  ): Promise<ApiResponse<any>> {
     return this.patch(API_ENDPOINTS.DOCTORS.UPDATE(id), doctorData);
   }
 
@@ -256,7 +262,9 @@ class ApiClient {
     return this.get(API_ENDPOINTS.APPOINTMENTS.LIST, params);
   }
 
-  async createAppointment(_appointmentData: unknown): Promise<ApiResponse<any>> {
+  async createAppointment(
+    _appointmentData: unknown,
+  ): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.APPOINTMENTS.CREATE, appointmentData);
   }
 
@@ -323,7 +331,9 @@ class ApiClient {
     return this.get(API_ENDPOINTS.NOTIFICATIONS.LIST, params);
   }
 
-  async sendNotification(_notificationData: unknown): Promise<ApiResponse<any>> {
+  async sendNotification(
+    _notificationData: unknown,
+  ): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.NOTIFICATIONS.SEND, notificationData);
   }
 

@@ -529,7 +529,9 @@ export class RealSupabaseManager {
     if (error) throw new Error(`Failed to get patient stats: ${error.message}`);
 
     const __total = (data as any[]).length;
-    const __active = (data as any[]).filter((_p: unknown) => p.created_at).length;
+    const __active = (data as any[]).filter(
+      (_p: unknown) => p.created_at,
+    ).length;
     const __newLast30Days = (data as any[]).filter((_p: unknown) => {
       const __createdAt = new Date(p.created_at as string);
       const __thirtyDaysAgo = new Date();

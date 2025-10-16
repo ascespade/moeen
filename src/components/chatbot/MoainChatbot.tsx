@@ -17,7 +17,12 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { _Badge } from "@/components/ui/Badge";
 import { _Button } from "@/components/ui/Button";
-import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import {
+  _Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
 import { _Input } from "@/components/ui/Input";
 import { _ScrollArea } from "@/components/ui/ScrollArea";
 
@@ -78,13 +83,15 @@ const MoainChatbot: React.FC = () => {
       const __data = await response.json();
 
       if (data.success && data.messages) {
-        const dbMessages: ChatMessage[] = data.messages.map((_msg: unknown) => ({
-          id: msg.id,
-          type: msg.sender_type === "user" ? "user" : "bot",
-          content: msg.message_text,
-          timestamp: new Date(msg.created_at),
-          metadata: msg.metadata,
-        }));
+        const dbMessages: ChatMessage[] = data.messages.map(
+          (_msg: unknown) => ({
+            id: msg.id,
+            type: msg.sender_type === "user" ? "user" : "bot",
+            content: msg.message_text,
+            timestamp: new Date(msg.created_at),
+            metadata: msg.metadata,
+          }),
+        );
         setMessages(dbMessages);
       } else {
         // رسالة ترحيب افتراضية إذا لم توجد محادثة

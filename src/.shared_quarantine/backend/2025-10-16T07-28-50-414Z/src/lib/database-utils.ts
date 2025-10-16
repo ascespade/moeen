@@ -132,7 +132,8 @@ export class EntityOperations {
    * Appointment operations
    */
   static appointments = {
-    create: (_data: unknown) => DatabaseUtils.createInsertData("appointment", data),
+    create: (_data: unknown) =>
+      DatabaseUtils.createInsertData("appointment", data),
     createMultiple: (_dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData("appointment", dataArray),
     findByPublicId: (_publicId: string) => QueryBuilder.wherePublicId(publicId),

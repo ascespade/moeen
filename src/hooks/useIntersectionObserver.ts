@@ -69,7 +69,9 @@ export const __useInView = (_options: UseIntersectionObserverOptions = {}) => {
   return [ref, !!entry?.isIntersecting] as const;
 };
 
-export const __useLazyLoad = (_options: UseIntersectionObserverOptions = {}) => {
+export const __useLazyLoad = (
+  _options: UseIntersectionObserverOptions = {},
+) => {
   const [ref, inView] = useInView(options);
   const [hasLoaded, setHasLoaded] = useState(false);
 

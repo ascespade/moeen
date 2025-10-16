@@ -276,7 +276,10 @@ export class AccessibilityManager {
     element.setAttribute("aria-label", label);
   }
 
-  static addAriaDescribedBy(_element: HTMLElement, descriptionId: string): void {
+  static addAriaDescribedBy(
+    _element: HTMLElement,
+    descriptionId: string,
+  ): void {
     element.setAttribute("aria-describedby", descriptionId);
   }
 

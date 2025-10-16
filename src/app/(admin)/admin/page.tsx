@@ -32,7 +32,12 @@ import {
 } from "@/components/ui/Card";
 import { _Input } from "@/components/ui/Input";
 import { _Label } from "@/components/ui/Label";
-import { _Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import {
+  _Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/Tabs";
 
 interface User {
   id: string;

@@ -123,7 +123,9 @@ describe("/api/appointments", () => {
         new Error("Database connection failed"),
       );
 
-      const __request = new NextRequest("http://localhost:3000/api/appointments");
+      const __request = new NextRequest(
+        "http://localhost:3000/api/appointments",
+      );
       const __response = await GET(request);
       const __data = await response.json();
 

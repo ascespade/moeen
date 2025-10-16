@@ -120,7 +120,9 @@ export const __useForm = <T extends Record<string, unknown>>(
       setFieldValue(field, value);
 
       if (validateOnChange) {
-        const __rule = validationRules[field as keyof typeof validationRules] as
+        const __rule = validationRules[
+          field as keyof typeof validationRules
+        ] as
           | ((_value: unknown) => { isValid: boolean; error?: string })
           | undefined;
         if (typeof rule === "function") {
@@ -148,7 +150,9 @@ export const __useForm = <T extends Record<string, unknown>>(
       setFieldTouched(field);
 
       if (validateOnBlur) {
-        const __rule = validationRules[field as keyof typeof validationRules] as
+        const __rule = validationRules[
+          field as keyof typeof validationRules
+        ] as
           | ((_value: unknown) => { isValid: boolean; error?: string })
           | undefined;
         if (typeof rule === "function") {

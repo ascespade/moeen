@@ -229,8 +229,9 @@ async function __updateChecklist(_request: NextRequest, body: unknown) {
       metadata: {
         patientId,
         appointmentId,
-        completedItems: checklistItems.filter((_item: unknown) => item.completed)
-          .length,
+        completedItems: checklistItems.filter(
+          (_item: unknown) => item.completed,
+        ).length,
         totalItems: checklistItems.length,
       },
     });
@@ -377,7 +378,10 @@ async function __createPatientFile(_patientId: string, supabase: unknown) {
   }
 }
 
-async function __sendActivationNotification(_patient: unknown, supabase: unknown) {
+async function __sendActivationNotification(
+  _patient: unknown,
+  supabase: unknown,
+) {
   // Send activation notification to patient
   await supabase.from("notifications").insert({
     type: "patient_activated",

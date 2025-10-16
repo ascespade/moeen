@@ -95,9 +95,11 @@ export async function __GET(_request: NextRequest) {
 
     const __totalAppointments = appointments?.length || 0;
     const completedAppointments =
-      appointments?.filter((_a: unknown) => a.status === "completed").length || 0;
+      appointments?.filter((_a: unknown) => a.status === "completed").length ||
+      0;
     const cancelledAppointments =
-      appointments?.filter((_a: unknown) => a.status === "cancelled").length || 0;
+      appointments?.filter((_a: unknown) => a.status === "cancelled").length ||
+      0;
     const upcomingAppointments =
       appointments?.filter(
         (_a: unknown) => a.status === "pending" || a.status === "confirmed",
@@ -118,14 +120,16 @@ export async function __GET(_request: NextRequest) {
 
     const __totalClaims = claims?.length || 0;
     const approvedClaims =
-      claims?.filter((_c: unknown) => c.claim_status === "approved").length || 0;
+      claims?.filter((_c: unknown) => c.claim_status === "approved").length ||
+      0;
     const pendingClaims =
       claims?.filter(
         (_c: unknown) =>
           c.claim_status === "pending" || c.claim_status === "submitted",
       ).length || 0;
     const rejectedClaims =
-      claims?.filter((_c: unknown) => c.claim_status === "rejected").length || 0;
+      claims?.filter((_c: unknown) => c.claim_status === "rejected").length ||
+      0;
 
     // Calculate conversion rates
     const activationRate =
@@ -184,7 +188,8 @@ export async function __GET(_request: NextRequest) {
             );
           })
           .reduce(
-            (_sum: unknown, p: unknown) => sum + parseFloat(p.amount.toString()),
+            (_sum: unknown, p: unknown) =>
+              sum + parseFloat(p.amount.toString()),
             0,
           ) || 0;
 

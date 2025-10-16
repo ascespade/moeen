@@ -16,7 +16,9 @@ export async function __GET(_request: NextRequest) {
       });
     }
 
-    const __completionData = JSON.parse(fs.readFileSync(completionFile, "utf8"));
+    const __completionData = JSON.parse(
+      fs.readFileSync(completionFile, "utf8"),
+    );
     return NextResponse.json(completionData);
   } catch (error) {
     return NextResponse.json(

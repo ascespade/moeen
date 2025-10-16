@@ -67,11 +67,14 @@ export default function __DoctorDashboard() {
 
   const __handleStartAppointment = async (_appointmentId: string) => {
     try {
-      const __response = await fetch(`/api/appointments/${appointmentId}/start`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "in_progress" }),
-      });
+      const __response = await fetch(
+        `/api/appointments/${appointmentId}/start`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: "in_progress" }),
+        },
+      );
 
       if (response.ok) {
         // Refresh data

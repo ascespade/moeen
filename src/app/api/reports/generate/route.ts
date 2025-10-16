@@ -47,7 +47,10 @@ export async function __POST(_request: NextRequest) {
     const __body = await request.json();
 
     // Validate input
-    const __validation = await ValidationHelper.validateAsync(reportSchema, body);
+    const __validation = await ValidationHelper.validateAsync(
+      reportSchema,
+      body,
+    );
     if (!validation.success) {
       return NextResponse.json(
         { error: validation.error.message },
@@ -202,7 +205,9 @@ async function __generateDashboardMetrics(
 
   // Calculate metrics
   const __totalPatients = patients.length;
-  const __activatedPatients = patients.filter((_p: unknown) => p.isActivated).length;
+  const __activatedPatients = patients.filter(
+    (_p: unknown) => p.isActivated,
+  ).length;
   const __totalAppointments = appointments.length;
   const __completedAppointments = appointments.filter(
     (_a: unknown) => a.status === "completed",
@@ -313,7 +318,11 @@ async function __generateAppointmentAnalytics(
 
   if (!appointments) return {};
 
-  const __grouped = groupDataByPeriod(appointments, "scheduledAt", groupBy || "");
+  const __grouped = groupDataByPeriod(
+    appointments,
+    "scheduledAt",
+    groupBy || "",
+  );
 
   return {
     total: appointments.length,
@@ -327,7 +336,8 @@ async function __generateAppointmentAnalytics(
     trends: grouped.map((group) => ({
       period: group.period,
       total: group.data.length,
-      completed: group.data.filter((_a: unknown) => a.status === "completed").length,
+      completed: group.data.filter((_a: unknown) => a.status === "completed")
+        .length,
     })),
   };
 }
@@ -480,7 +490,11 @@ function __calculateGrowthRate(_data: unknown[], dateField: string) {
   return firstCount > 0 ? ((secondCount - firstCount) / firstCount) * 100 : 0;
 }
 
-function __groupDataByPeriod(_data: unknown[], dateField: string, period: string) {
+function __groupDataByPeriod(
+  _data: unknown[],
+  dateField: string,
+  period: string,
+) {
   const __groups = new Map();
 
   data.forEach((item) => {
