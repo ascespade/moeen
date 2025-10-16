@@ -1,0 +1,43 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e8]: م
+      - heading "مرحباً بعودتك" [level=1] [ref=e9]
+      - paragraph [ref=e10]: سجل دخولك للوصول إلى لوحة التحكم
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - generic [ref=e15]: البريد الإلكتروني
+          - generic [ref=e16]:
+            - textbox "البريد الإلكتروني" [ref=e17]:
+              - /placeholder: you@example.com
+              - text: test@moeen.com
+            - generic:
+              - generic: 📧
+        - generic [ref=e18]:
+          - generic [ref=e19]: كلمة المرور
+          - generic [ref=e20]:
+            - textbox "كلمة المرور" [ref=e21]:
+              - /placeholder: ••••••••
+              - text: test123
+            - generic:
+              - generic: 🔒
+        - generic [ref=e22]:
+          - generic [ref=e23]:
+            - checkbox "تذكرني" [ref=e24]
+            - text: تذكرني
+          - link "نسيت كلمة المرور؟" [ref=e25] [cursor=pointer]:
+            - /url: /forgot-password
+        - button "جارٍ تسجيل الدخول..." [disabled] [ref=e26]: جارٍ تسجيل الدخول...
+      - generic [ref=e28]:
+        - button "جارٍ تسجيل الدخول..." [disabled] [ref=e29]: جارٍ تسجيل الدخول...
+        - paragraph [ref=e31]: اختبار سريع باستخدام بيانات تجريبية
+      - paragraph [ref=e33]:
+        - text: ليس لديك حساب؟
+        - link "إنشاء حساب جديد" [ref=e34] [cursor=pointer]:
+          - /url: /register
+  - alert [ref=e35]
+```

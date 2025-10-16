@@ -6,9 +6,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-
-type Theme = 'light' | 'dark' | 'system';
-type ResolvedTheme = 'light' | 'dark';
+import { Theme, ResolvedTheme, generateCSSVariables } from '@/theme';
 
 interface ThemeContextType {
   theme: Theme;
@@ -33,6 +31,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
       setThemeState(savedTheme);
     }
+    setMounted(true);
   }, []);
 
   // Resolve theme based on system preference
@@ -67,56 +66,20 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     // Set theme attribute for CSS selectors
     root.setAttribute('data-theme', resolvedTheme);
     
-    // Apply CSS variables based on theme
+    // Apply CSS classes
     if (resolvedTheme === 'dark') {
       root.classList.add('dark');
       root.classList.remove('light');
-      
-      // Apply dark mode CSS variables
-      Object.entries({
-        '--background': '#0d1117',
-        '--foreground': '#e5eef7',
-        '--brand-primary': '#E46C0A',
-        '--brand-primary-hover': '#D45F08',
-        '--brand-secondary': '#6B4E16',
-        '--brand-neutral-beige': '#2A2520',
-        '--brand-accent': '#007bff',
-        '--brand-accent-deep': '#C93C00',
-        '--brand-success': '#00b39b',
-        '--brand-warning': '#fbbf24',
-        '--brand-error': '#f87171',
-        '--brand-border': '#1f2937',
-        '--brand-surface': '#0d1117',
-        '--panel': '#111827',
-        '--focus-ring': '#007bff',
-      }).forEach(([property, value]) => {
-        root.style.setProperty(property, value);
-      });
     } else {
       root.classList.add('light');
       root.classList.remove('dark');
-      
-      // Apply light mode CSS variables
-      Object.entries({
-        '--background': '#ffffff',
-        '--foreground': '#0f172a',
-        '--brand-primary': '#E46C0A',
-        '--brand-primary-hover': '#D45F08',
-        '--brand-secondary': '#6B4E16',
-        '--brand-neutral-beige': '#F2E7DC',
-        '--brand-accent': '#007bff',
-        '--brand-accent-deep': '#C93C00',
-        '--brand-success': '#009688',
-        '--brand-warning': '#f59e0b',
-        '--brand-error': '#ef4444',
-        '--brand-border': '#e5e7eb',
-        '--brand-surface': '#f9fafb',
-        '--panel': '#ffffff',
-        '--focus-ring': '#007bff',
-      }).forEach(([property, value]) => {
-        root.style.setProperty(property, value);
-      });
     }
+
+    // Apply centralized CSS variables
+    const cssVariables = generateCSSVariables(resolvedTheme);
+    Object.entries(cssVariables).forEach(([property, value]) => {
+      root.style.setProperty(property, value);
+    });
 
     // Apply RTL support
     const direction = document.documentElement.getAttribute('dir') || 'rtl';

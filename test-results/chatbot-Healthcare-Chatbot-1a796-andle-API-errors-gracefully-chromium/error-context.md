@@ -1,0 +1,55 @@
+# Page snapshot
+
+```yaml
+- generic [active]:
+  - generic [ref=e1]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - img "معين" [ref=e6]
+        - generic [ref=e7]:
+          - heading "معين - المساعد الذكي" [level=3] [ref=e8]
+          - paragraph [ref=e9]: مركز الهمم للرعاية الصحية
+      - button [ref=e10] [cursor=pointer]:
+        - img [ref=e11]
+    - generic [ref=e17]:
+      - paragraph [ref=e18]: مرحباً! أنا معين، مساعدك الذكي في مركز الهمم للرعاية الصحية. كيف يمكنني مساعدتك اليوم؟
+      - paragraph [ref=e19]: ١٠:١٣ م
+    - generic [ref=e21]:
+      - button "حجز موعد" [ref=e22] [cursor=pointer]:
+        - img [ref=e23]
+        - text: حجز موعد
+      - button "استعلام عن موعد" [ref=e25] [cursor=pointer]:
+        - img [ref=e26]
+        - text: استعلام عن موعد
+      - button "إلغاء موعد" [ref=e29] [cursor=pointer]:
+        - img [ref=e30]
+        - text: إلغاء موعد
+      - button "معلومات المركز" [ref=e33] [cursor=pointer]:
+        - img [ref=e34]
+        - text: معلومات المركز
+    - generic [ref=e38]:
+      - textbox "اكتب رسالتك هنا..." [ref=e41]
+      - button [disabled]:
+        - img
+  - alert [ref=e42]
+  - dialog "Failed to compile" [ref=e45]:
+    - generic [ref=e46]:
+      - generic [ref=e47]:
+        - heading "Failed to compile" [level=4] [ref=e48]
+        - generic [ref=e49]:
+          - text: Next.js (14.0.4) is outdated
+          - link "(learn more)" [ref=e51] [cursor=pointer]:
+            - /url: https://nextjs.org/docs/messages/version-staleness
+      - generic [ref=e52]:
+        - generic [ref=e53]:
+          - link "./src/app/(admin)/admin/page.tsx" [ref=e54] [cursor=pointer]:
+            - text: ./src/app/(admin)/admin/page.tsx
+            - img [ref=e55]
+          - generic [ref=e59]:
+            - text: "Error: x the name `useEffect` is defined multiple times ,-[/home/ubuntu/moeen/src/app/(admin)/admin/page.tsx:4:1] 4 | 5 | \"use client\"; 6 | 7 | import { useEffect } from \"react\"; : ^^^^|^^^^ : `-- previous definition of `useEffect` here 8 | 9 | import React, { useState, useEffect } from \"react\"; : ^^^^|^^^^ : `-- `useEffect` redefined here 10 | import { 11 | Card, 12 | CardContent, `---- Import trace for requested module:"
+            - link "./src/app/(admin)/admin/page.tsx" [ref=e60] [cursor=pointer]:
+              - text: ./src/app/(admin)/admin/page.tsx
+              - img [ref=e61]
+        - contentinfo [ref=e65]:
+          - paragraph [ref=e66]: This error occurred during the build process and can only be dismissed by fixing the error.
+```

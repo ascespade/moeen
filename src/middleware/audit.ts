@@ -253,8 +253,8 @@ export async function auditMiddleware(
     // Use Web Performance API which is available in Edge Runtime
     const performanceMetrics = {
       duration: endTime - startTime,
-      // Use performance.now() for high-resolution timing
-      highResDuration: performance.now() - startTime,
+      // Use performance.now() for high-resolution timing with fallback
+      highResDuration: typeof performance !== 'undefined' ? performance.now() - startTime : endTime - startTime,
       // Edge Runtime doesn't support process.memoryUsage or process.cpuUsage
       // So we'll skip those metrics in middleware
     };

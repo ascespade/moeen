@@ -30,6 +30,8 @@ const defaultSecurityConfig: SecurityConfig = {
   allowedOrigins: [
     'http://localhost:3000',
     'https://localhost:3000',
+    'http://localhost:3002',
+    'https://localhost:3002',
     process.env.NEXT_PUBLIC_APP_URL || 'https://yourdomain.com',
   ],
   allowedMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
@@ -277,7 +279,7 @@ export async function securityMiddleware(req: NextRequest): Promise<NextResponse
 
 // Specific security configurations for different environments
 export const developmentSecurityConfig: Partial<SecurityConfig> = {
-  allowedOrigins: ['http://localhost:3000', 'https://localhost:3000'],
+  allowedOrigins: ['http://localhost:3000', 'https://localhost:3000', 'http://localhost:3002', 'https://localhost:3002'],
   enableHSTS: false, // Disable HSTS in development
 };
 

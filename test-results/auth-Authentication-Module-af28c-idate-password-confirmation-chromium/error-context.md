@@ -1,0 +1,45 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - img "مُعين" [ref=e8]
+        - heading "مُعين" [level=1] [ref=e9]
+      - heading "إنشاء حساب جديد" [level=2] [ref=e10]
+      - paragraph [ref=e11]: انضم إلى منصة الرعاية الصحية المتخصصة
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - generic [ref=e15]: الاسم الكامل
+          - textbox "الاسم الكامل" [ref=e16]:
+            - /placeholder: أدخل اسمك الكامل
+        - generic [ref=e17]:
+          - generic [ref=e18]: البريد الإلكتروني
+          - textbox "البريد الإلكتروني" [ref=e19]:
+            - /placeholder: أدخل بريدك الإلكتروني
+        - generic [ref=e20]:
+          - generic [ref=e21]: كلمة المرور
+          - textbox "كلمة المرور" [ref=e22]:
+            - /placeholder: أدخل كلمة المرور
+        - generic [ref=e23]:
+          - generic [ref=e24]: تأكيد كلمة المرور
+          - textbox "تأكيد كلمة المرور" [ref=e25]:
+            - /placeholder: أعد إدخال كلمة المرور
+        - generic [ref=e27]:
+          - checkbox "أوافق على الشروط والأحكام و سياسة الخصوصية" [ref=e28]
+          - generic [ref=e29]:
+            - text: أوافق على
+            - link "الشروط والأحكام" [ref=e30] [cursor=pointer]:
+              - /url: /terms
+            - text: و
+            - link "سياسة الخصوصية" [ref=e31] [cursor=pointer]:
+              - /url: /privacy
+        - button "إنشاء الحساب" [ref=e32] [cursor=pointer]
+      - paragraph [ref=e34]:
+        - text: لديك حساب بالفعل؟
+        - link "تسجيل الدخول" [ref=e35] [cursor=pointer]:
+          - /url: /login
+  - alert [ref=e36]
+```
