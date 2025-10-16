@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { _Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { _useState } from "react";
 
-export default function ContactPage() {
+export default function __ContactPage() {
   const [isSending, setIsSending] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -15,7 +15,7 @@ export default function ContactPage() {
     message: "",
   });
 
-  const handleChange = (
+  const __handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData({
@@ -24,7 +24,7 @@ export default function ContactPage() {
     });
   };
 
-  const submit = async (e: React.FormEvent) => {
+  const __submit = async (_e: React.FormEvent) => {
     e.preventDefault();
     setIsSending(true);
 
@@ -35,7 +35,7 @@ export default function ContactPage() {
     setIsSubmitted(true);
   };
 
-  const contactInfo = [
+  const __contactInfo = [
     {
       icon: <Mail className="h-6 w-6" />,
       title: "البريد الإلكتروني",

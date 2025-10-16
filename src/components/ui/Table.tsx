@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-export function Table({
+export function __Table({
   className,
   ...props
 }: React.HTMLAttributes<HTMLTableElement>) {
@@ -11,7 +11,7 @@ export function Table({
   );
 }
 
-export function THead({
+export function __THead({
   className,
   ...props
 }: React.HTMLAttributes<HTMLTableSectionElement>) {
@@ -23,7 +23,7 @@ export function THead({
   );
 }
 
-export function TBody({
+export function __TBody({
   className,
   ...props
 }: React.HTMLAttributes<HTMLTableSectionElement>) {
@@ -35,7 +35,7 @@ export function TBody({
   );
 }
 
-export function TR({
+export function __TR({
   className,
   ...props
 }: React.HTMLAttributes<HTMLTableRowElement>) {
@@ -47,7 +47,7 @@ export function TR({
   );
 }
 
-export function TH({
+export function __TH({
   className,
   ...props
 }: React.ThHTMLAttributes<HTMLTableCellElement>) {
@@ -62,7 +62,7 @@ export function TH({
   );
 }
 
-export function TD({
+export function __TD({
   className,
   ...props
 }: React.TdHTMLAttributes<HTMLTableCellElement>) {

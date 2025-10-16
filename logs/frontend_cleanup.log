@@ -1,0 +1,385 @@
+{
+  "agent": "FrontendCleaner",
+  "timestamp": "2025-10-16T07:41:01.342Z",
+  "mode": "dry-run",
+  "results": {
+    "totalScanned": 240,
+    "candidates": [],
+    "moved": [],
+    "skipped": [
+      {
+        "file": "src/components/accessibility/AccessibilitySettings.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/appointments/AppointmentManager.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/auth/ProtectedRoute.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/charts/AreaChart.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/charts/BarChart.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/charts/index.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/charts/LineChart.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/charts/PieChart.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/chatbot/MoainChatbot.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/DirectionToggle.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/EmptyState.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/ErrorBoundary.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/LanguageSwitcher.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/LiveDot.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/LoadingSpinner.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/OptimizedImage.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/PerformanceOptimizedImage.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/PlaceholderSquare.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/Skeleton.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/StatusBanner.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/ThemeSwitcher.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/common/ThemeToggle.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/dashboard/Charts.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/dashboard/KpiCard.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/insurance/ClaimsManager.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/LanguageSwitcher.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/layout/GlobalHeader.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/layout/SmartHeader.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/lazy/LazyComponents.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/patient/ActivationFlow.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/patient/PreVisitChecklist.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/patients/PatientRecords.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/providers/DesignSystemProvider.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/providers/I18nProvider.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/providers/UIProvider.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/settings/KeywordEditor.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/settings/SettingsTabs.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shared/AccessibleButton.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shared/DataTable.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shared/EmptyState.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shared/ErrorBoundary.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shared/Form.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shared/index.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shared/LiveRegion.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shared/LoadingSpinner.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shared/Modal.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shared/OptimizedImage.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shared/ScreenReaderOnly.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shared/Tabs.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shell/Header.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shell/HeaderSimple.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/shell/Sidebar.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ThemeSwitcher.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Badge.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Button.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Card.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Checkbox.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/DataTable.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Input.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Label.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Modal.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/ScrollArea.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Select.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Skeleton.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Switch.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Table.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Tabs.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Textarea.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Toast.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/components/ui/Tooltip.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/index.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useApi.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useAsync.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useAuth.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useClickOutside.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useCounter.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useDebounce.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useErrorHandler.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useForm.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useI18n.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useIntersectionObserver.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useKeyboardNavigation.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useKeyPress.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useLocalStorage.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useMediaQuery.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useMemoryLeakPrevention.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/usePageI18n.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/usePerformance.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/usePrevious.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useT.tsx",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useThrottle.ts",
+        "reason": "Found usage in project-wide search"
+      },
+      {
+        "file": "src/hooks/useToggle.ts",
+        "reason": "Found usage in project-wide search"
+      }
+    ],
+    "conflicts": [],
+    "warnings": [],
+    "startTime": "2025-10-16T07:40:59.808Z",
+    "endTime": null,
+    "timeTaken": 0
+  }
+}

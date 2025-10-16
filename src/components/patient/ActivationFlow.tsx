@@ -1,18 +1,19 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useT } from '@/components/providers/I18nProvider';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
-import { 
-  CheckCircle, 
-  Clock, 
-  AlertCircle, 
+import {
+  CheckCircle,
+  Clock,
+  AlertCircle,
   FileText,
   Shield,
-  CreditCard
-} from 'lucide-react';
+  CreditCard,
+} from "lucide-react";
+import { _useState } from "react";
+
+import { _useT } from "@/components/providers/I18nProvider";
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card } from "@/components/ui/Card";
 
 interface ActivationStep {
   id: string;
@@ -28,115 +29,124 @@ interface ActivationFlowProps {
   onActivationComplete?: () => void;
 }
 
-export default function ActivationFlow({ patientId, onActivationComplete }: ActivationFlowProps) {
+export default function __ActivationFlow({
+  patientId,
+  onActivationComplete,
+}: ActivationFlowProps) {
   const { t } = useT();
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
 
   const [steps, setSteps] = useState<ActivationStep[]>([
     {
-      id: 'profile_complete',
-      title: t('patient.activation.steps.profile_complete'),
-      description: t('patient.activation.steps.profile_complete_desc'),
+      id: "profile_complete",
+      title: t("patient.activation.steps.profile_complete"),
+      description: t("patient.activation.steps.profile_complete_desc"),
       completed: false,
       required: true,
-      icon: <FileText className="h-5 w-5" />
+      icon: <FileText className="h-5 w-5" />,
     },
     {
-      id: 'insurance_verified',
-      title: t('patient.activation.steps.insurance_verified'),
-      description: t('patient.activation.steps.insurance_verified_desc'),
+      id: "insurance_verified",
+      title: t("patient.activation.steps.insurance_verified"),
+      description: t("patient.activation.steps.insurance_verified_desc"),
       completed: false,
       required: true,
-      icon: <Shield className="h-5 w-5" />
+      icon: <Shield className="h-5 w-5" />,
     },
     {
-      id: 'payment_settled',
-      title: t('patient.activation.steps.payment_settled'),
-      description: t('patient.activation.steps.payment_settled_desc'),
+      id: "payment_settled",
+      title: t("patient.activation.steps.payment_settled"),
+      description: t("patient.activation.steps.payment_settled_desc"),
       completed: false,
       required: true,
-      icon: <CreditCard className="h-5 w-5" />
+      icon: <CreditCard className="h-5 w-5" />,
     },
     {
-      id: 'first_visit_completed',
-      title: t('patient.activation.steps.first_visit'),
-      description: t('patient.activation.steps.first_visit_desc'),
+      id: "first_visit_completed",
+      title: t("patient.activation.steps.first_visit"),
+      description: t("patient.activation.steps.first_visit_desc"),
       completed: false,
       required: true,
-      icon: <CheckCircle className="h-5 w-5" />
-    }
+      icon: <CheckCircle className="h-5 w-5" />,
+    },
   ]);
 
-  const handleStepComplete = async (stepId: string) => {
+  const __handleStepComplete = async (_stepId: string) => {
     setIsProcessing(true);
-    
+
     try {
-      const response = await fetch(`/api/patients/${patientId}/activation/step`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ stepId, completed: true })
-      });
+      const __response = await fetch(
+        `/api/patients/${patientId}/activation/step`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ stepId, completed: true }),
+        },
+      );
 
       if (response.ok) {
-        setSteps(prev => prev.map(step => 
-          step.id === stepId ? { ...step, completed: true } : step
-        ));
-        
+        setSteps((prev) =>
+          prev.map((step) =>
+            step.id === stepId ? { ...step, completed: true } : step,
+          ),
+        );
+
         // Move to next step
-        const currentIndex = steps.findIndex(step => step.id === stepId);
+        const __currentIndex = steps.findIndex((step) => step.id === stepId);
         if (currentIndex < steps.length - 1) {
           setCurrentStep(currentIndex + 1);
         }
       }
     } catch (error) {
-      } finally {
+    } finally {
       setIsProcessing(false);
     }
   };
 
-  const handleActivateAccount = async () => {
+  const __handleActivateAccount = async () => {
     setIsProcessing(true);
-    
+
     try {
-      const response = await fetch(`/api/patients/${patientId}/activate`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+      const __response = await fetch(`/api/patients/${patientId}/activate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
       });
 
       if (response.ok) {
         onActivationComplete?.();
       }
     } catch (error) {
-      } finally {
+    } finally {
       setIsProcessing(false);
     }
   };
 
-  const allRequiredStepsCompleted = steps
-    .filter(step => step.required)
-    .every(step => step.completed);
+  const __allRequiredStepsCompleted = steps
+    .filter((step) => step.required)
+    .every((step) => step.completed);
 
-  const progressPercentage = (steps.filter(step => step.completed).length / steps.length) * 100;
+  const progressPercentage =
+    (steps.filter((step) => step.completed).length / steps.length) * 100;
 
   return (
     <Card className="p-6">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          {t('patient.activation.title')}
+          {t("patient.activation.title")}
         </h2>
         <p className="text-gray-600 dark:text-gray-400">
-          {t('patient.activation.description')}
+          {t("patient.activation.description")}
         </p>
-        
+
         {/* Progress Bar */}
         <div className="mt-4">
           <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
-            <span>{t('patient.activation.progress')}</span>
+            <span>{t("patient.activation.progress")}</span>
             <span>{Math.round(progressPercentage)}%</span>
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-            <div 
+            <div
               className="bg-blue-600 h-2 rounded-full transition-all duration-300"
               style={{ width: `${progressPercentage}%` }}
             />
@@ -147,14 +157,14 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
       {/* Steps */}
       <div className="space-y-4">
         {steps.map((step, index) => (
-          <div 
+          <div
             key={step.id}
             className={`flex items-start p-4 rounded-lg border ${
-              step.completed 
-                ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800'
+              step.completed
+                ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800"
                 : index === currentStep
-                ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800'
-                : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
+                  ? "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800"
+                  : "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
             }`}
           >
             <div className="flex-shrink-0 mr-4">
@@ -166,7 +176,7 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
                 <AlertCircle className="h-6 w-6 text-gray-400" />
               )}
             </div>
-            
+
             <div className="flex-1">
               <div className="flex items-center justify-between">
                 <h3 className="font-medium text-gray-900 dark:text-white">
@@ -175,21 +185,24 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
                 <div className="flex items-center space-x-2">
                   {step.required && (
                     <Badge variant="outline" className="text-xs">
-                      {t('common.required')}
+                      {t("common.required")}
                     </Badge>
                   )}
                   {step.completed && (
-                    <Badge variant="primary" className="bg-green-100 text-green-800">
-                      {t('common.completed')}
+                    <Badge
+                      variant="primary"
+                      className="bg-green-100 text-green-800"
+                    >
+                      {t("common.completed")}
                     </Badge>
                   )}
                 </div>
               </div>
-              
+
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 {step.description}
               </p>
-              
+
               {index === currentStep && !step.completed && (
                 <div className="mt-3">
                   <Button
@@ -197,7 +210,9 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
                     onClick={() => handleStepComplete(step.id)}
                     disabled={isProcessing}
                   >
-                    {isProcessing ? t('common.processing') : t('patient.activation.complete_step')}
+                    {isProcessing
+                      ? t("common.processing")
+                      : t("patient.activation.complete_step")}
                   </Button>
                 </div>
               )}
@@ -211,14 +226,16 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
         <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
           <div className="text-center">
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              {t('patient.activation.ready_to_activate')}
+              {t("patient.activation.ready_to_activate")}
             </p>
             <Button
               onClick={handleActivateAccount}
               disabled={isProcessing}
               className="px-8"
             >
-              {isProcessing ? t('common.activating') : t('patient.activation.activate_account')}
+              {isProcessing
+                ? t("common.activating")
+                : t("patient.activation.activate_account")}
             </Button>
           </div>
         </div>

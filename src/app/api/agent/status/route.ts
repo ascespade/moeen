@@ -1,12 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-const LOG_DIR = "/home/ubuntu/workspace/projects/moeen/logs";
+import { _NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+const __LOG_DIR = "/home/ubuntu/workspace/projects/moeen/logs";
+
+export async function __GET(_request: NextRequest) {
   try {
-    const statusFile = path.join(LOG_DIR, "agent-status.json");
+    const __statusFile = path.join(LOG_DIR, "agent-status.json");
 
     if (!fs.existsSync(statusFile)) {
       return NextResponse.json({
@@ -18,7 +19,7 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const statusData = JSON.parse(fs.readFileSync(statusFile, "utf8"));
+    const __statusData = JSON.parse(fs.readFileSync(statusFile, "utf8"));
     return NextResponse.json(statusData);
   } catch (error) {
     return NextResponse.json(

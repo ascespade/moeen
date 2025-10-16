@@ -1,16 +1,17 @@
 /**
  * Language Switcher Component
  * مكون تبديل اللغة
- * 
+ *
  * Enhanced language switcher with RTL support
  * مبدل لغة محسن مع دعم RTL
  */
 
 "use client";
 
-import { useLanguage } from "@/design-system/hooks";
-import { Languages, Globe } from "lucide-react";
-import { useState } from "react";
+import { _Languages, Globe } from "lucide-react";
+import { _useState } from "react";
+
+import { _useLanguage } from "@/design-system/hooks";
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -19,16 +20,23 @@ interface LanguageSwitcherProps {
   variant?: "button" | "dropdown" | "toggle";
 }
 
-export default function LanguageSwitcher({
+export default function __LanguageSwitcher({
   className = "",
   showLabel = true,
   size = "md",
   variant = "dropdown",
 }: LanguageSwitcherProps) {
-  const { language, toggleLanguage, setArabic, setEnglish, isLoading, direction } = useLanguage();
+  const {
+    language,
+    toggleLanguage,
+    setArabic,
+    setEnglish,
+    isLoading,
+    direction,
+  } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
 
-  const getSizeClasses = (size: string) => {
+  const __getSizeClasses = (_size: string) => {
     switch (size) {
       case "sm":
         return "h-8 w-8";
@@ -43,11 +51,13 @@ export default function LanguageSwitcher({
 
   if (isLoading) {
     return (
-      <div className={`animate-pulse bg-gray-200 rounded-md ${getSizeClasses(size)} ${className}`} />
+      <div
+        className={`animate-pulse bg-gray-200 rounded-md ${getSizeClasses(size)} ${className}`}
+      />
     );
   }
 
-  const getIconSize = (size: string) => {
+  const __getIconSize = (_size: string) => {
     switch (size) {
       case "sm":
         return "h-4 w-4";
@@ -60,7 +70,7 @@ export default function LanguageSwitcher({
     }
   };
 
-  const getLanguageLabel = (currentLanguage: string) => {
+  const __getLanguageLabel = (_currentLanguage: string) => {
     switch (currentLanguage) {
       case "ar":
         return "العربية";
@@ -71,7 +81,7 @@ export default function LanguageSwitcher({
     }
   };
 
-  const getLanguageFlag = (currentLanguage: string) => {
+  const __getLanguageFlag = (_currentLanguage: string) => {
     switch (currentLanguage) {
       case "ar":
         return "🇸🇦";
@@ -112,9 +122,10 @@ export default function LanguageSwitcher({
           onClick={setArabic}
           className={`
             flex items-center gap-2 px-3 py-2 rounded-md transition-colors duration-150
-            ${language === "ar" 
-              ? "bg-brand-primary text-white" 
-              : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            ${
+              language === "ar"
+                ? "bg-brand-primary text-white"
+                : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
             }
           `}
           aria-label="العربية"
@@ -126,9 +137,10 @@ export default function LanguageSwitcher({
           onClick={setEnglish}
           className={`
             flex items-center gap-2 px-3 py-2 rounded-md transition-colors duration-150
-            ${language === "en" 
-              ? "bg-brand-primary text-white" 
-              : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            ${
+              language === "en"
+                ? "bg-brand-primary text-white"
+                : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
             }
           `}
           aria-label="English"
@@ -165,7 +177,12 @@ export default function LanguageSwitcher({
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
@@ -176,13 +193,15 @@ export default function LanguageSwitcher({
             className="fixed inset-0 z-10"
             onClick={() => setIsOpen(false)}
           />
-          
+
           {/* Dropdown */}
-          <div className={`
+          <div
+            className={`
             absolute top-full z-20 mt-1 w-48 rounded-lg border border-gray-200 dark:border-gray-700 
             bg-white dark:bg-gray-900 shadow-lg
-            ${direction === 'rtl' ? 'right-0' : 'left-0'}
-          `}>
+            ${direction === "rtl" ? "right-0" : "left-0"}
+          `}
+          >
             <div className="py-1">
               <button
                 onClick={() => {
@@ -191,9 +210,10 @@ export default function LanguageSwitcher({
                 }}
                 className={`
                   w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors duration-150
-                  ${language === "ar" 
-                    ? "bg-brand-primary text-white" 
-                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  ${
+                    language === "ar"
+                      ? "bg-brand-primary text-white"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800"
                   }
                 `}
                 dir="rtl"
@@ -204,7 +224,7 @@ export default function LanguageSwitcher({
                   <span className="text-xs opacity-75">Arabic</span>
                 </div>
               </button>
-              
+
               <button
                 onClick={() => {
                   setEnglish();
@@ -212,9 +232,10 @@ export default function LanguageSwitcher({
                 }}
                 className={`
                   w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors duration-150
-                  ${language === "en" 
-                    ? "bg-brand-primary text-white" 
-                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  ${
+                    language === "en"
+                      ? "bg-brand-primary text-white"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800"
                   }
                 `}
                 dir="ltr"

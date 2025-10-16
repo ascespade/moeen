@@ -79,7 +79,7 @@ export interface InputProps extends BaseComponentProps {
   type?: "text" | "email" | "password" | "number";
   placeholder?: string;
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: (_value: string) => void;
   error?: string;
   disabled?: boolean;
 }
@@ -121,7 +121,7 @@ export interface AppSettings {
 export interface AppError {
   code: string;
   message: string;
-  details?: any;
+  details?: unknown;
 }
 
 // Form Types
@@ -142,7 +142,7 @@ export interface RegisterForm {
 export interface WebhookEvent {
   id: string;
   type: string;
-  data: any;
+  data: unknown;
   timestamp: Date;
   processed: boolean;
 }

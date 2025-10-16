@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-export function Tooltip({
+export function __Tooltip({
   label,
   children,
 }: {

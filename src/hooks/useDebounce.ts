@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
+import { _useState, useEffect, useCallback } from "react";
 // Debounce hooks
 
-export const useDebounce = <T>(value: T, delay: number): T => {
+export const __useDebounce = <T>(_value: T, delay: number): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
-    const handler = setTimeout(() => {
+    const __handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
 
@@ -17,7 +17,7 @@ export const useDebounce = <T>(value: T, delay: number): T => {
   return debouncedValue;
 };
 
-export const useDebouncedCallback = <T extends (...args: any[]) => any>(
+export const __useDebouncedCallback = <T extends (...args: unknown[]) => any>(
   callback: T,
   delay: number,
 ): T => {
@@ -25,13 +25,13 @@ export const useDebouncedCallback = <T extends (...args: any[]) => any>(
     null,
   );
 
-  const debouncedCallback = useCallback(
+  const __debouncedCallback = useCallback(
     (...args: Parameters<T>) => {
       if (debounceTimer) {
         clearTimeout(debounceTimer);
       }
 
-      const newTimer = setTimeout(() => {
+      const __newTimer = setTimeout(() => {
         callback(...args);
       }, delay);
 
@@ -51,15 +51,15 @@ export const useDebouncedCallback = <T extends (...args: any[]) => any>(
   return debouncedCallback as T;
 };
 
-export const useDebouncedValue = <T>(
+export const __useDebouncedValue = <T>(
   initialValue: T,
   delay: number,
-): [T, (value: T) => void, T] => {
+): [T, (_value: T) => void, T] => {
   const [value, setValue] = useState<T>(initialValue);
   const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);
 
   useEffect(() => {
-    const handler = setTimeout(() => {
+    const __handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
 

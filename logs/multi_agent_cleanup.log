@@ -1,0 +1,53 @@
+{
+  "coordinator": "Multi-Agent Cleanup",
+  "timestamp": "2025-10-16T07:41:02.649Z",
+  "mode": "dry-run",
+  "parallel": false,
+  "agents": [
+    "frontend",
+    "backend",
+    "shared"
+  ],
+  "results": {
+    "startTime": "2025-10-16T07:40:59.344Z",
+    "endTime": null,
+    "timeTaken": 0,
+    "agents": {
+      "frontend": {
+        "success": true,
+        "timeTaken": 2015,
+        "filesScanned": 240,
+        "filesMoved": 0,
+        "filesSkipped": 92,
+        "conflicts": [],
+        "warnings": [],
+        "output": "🚀 FrontendCleaner Agent Starting...\n📁 Scope: src/app, src/components, src/hooks, src/styles\n🔍 Mode: DRY RUN\n\n📊 Step 1: Building import graph...\n🔍 Building import graph...\n📁 Found 240 files to analyze\n🎯 Identified 148 entry points\n📊 Import graph contains 240 files\n✅ Import graph built with 240 files\n\n🔍 Step 2: Detecting unused files...\n✅ Found 92 candidate files for quarantine\n\n🔎 Step 3: Verifying candidates with project-wide search...\n✅ Verified 0 files after search verification\n\n🛡️ Step 4: Running safety checks...\n✅ 0 files passed safety checks\n\n📊 Step 6: Generating report...\n✅ Report written to /home/ubuntu/moeen/logs/frontend_cleanup.log\n\n📝 Step 7: Updating usage map...\n✅ Usage map updated\n✅ FrontendCleaner completed successfully\n\n📊 FrontendCleaner Summary:\n  📁 Total files scanned: 240\n  🎯 Candidates identified: 92\n  📦 Files moved: 0\n  ⏭️ Files skipped: 92\n  ⚠️ Warnings: 0\n  ⏱️ Time taken: 1.54s\n"
+      },
+      "backend": {
+        "success": true,
+        "timeTaken": 693,
+        "filesScanned": 93,
+        "filesMoved": 0,
+        "filesSkipped": 74,
+        "conflicts": [],
+        "warnings": [],
+        "output": "🚀 BackendCleaner Agent Starting...\n📁 Scope: src/app/api, src/lib, src/middleware, src/types, src/utils, src/config, src/constants, supabase, migrations\n🔍 Mode: DRY RUN\n⚡ Force: DISABLED\n\n📊 Step 1: Analyzing backend files...\n📁 Found 93 backend files to analyze\n✅ Backend analysis completed\n\n🔍 Step 2: Detecting unused files...\n✅ Found 1 candidate files for quarantine\n\n🔎 Step 3: Verifying candidates with project-wide search...\n✅ Verified 0 files after search verification\n\n🛡️ Step 4: Running safety checks...\n✅ 0 files passed safety checks\n\n📊 Step 6: Generating report...\n✅ Report written to /home/ubuntu/moeen/logs/backend_cleanup.log\n\n📝 Step 7: Updating usage map...\n✅ Usage map updated\n✅ BackendCleaner completed successfully\n\n📊 BackendCleaner Summary:\n  📁 Total files scanned: 93\n  🎯 Candidates identified: 74\n  📦 Files moved: 0\n  ⏭️ Files skipped: 74\n  ⚠️ Warnings: 0\n  ⏱️ Time taken: 0.20s\n"
+      },
+      "shared": {
+        "success": true,
+        "timeTaken": 593,
+        "filesScanned": 54,
+        "filesMoved": 0,
+        "filesSkipped": 4,
+        "conflicts": [],
+        "warnings": [],
+        "output": "🚀 SharedVerifier Agent Starting...\n📁 Scope: src/types, src/utils, src/constants, src/config, src/lib, src/hooks, src/context, src/core\n🔍 Mode: DRY RUN\n\n📊 Step 1: Analyzing shared files...\n📁 Found 54 shared files to analyze\n✅ Shared analysis completed\n\n🔍 Step 2: Detecting unused files...\n✅ Found 0 candidate files for quarantine\n\n🔎 Step 3: Verifying candidates with project-wide search...\n✅ Verified 0 files after search verification\n\n🛡️ Step 4: Running safety checks...\n✅ 0 files passed safety checks\n\n📊 Step 6: Generating report...\n✅ Report written to /home/ubuntu/moeen/logs/shared_cleanup.log\n\n📝 Step 7: Updating usage map...\n✅ Usage map updated\n✅ SharedVerifier completed successfully\n\n📊 SharedVerifier Summary:\n  📁 Total files scanned: 54\n  🎯 Candidates identified: 4\n  📦 Files moved: 0\n  ⏭️ Files skipped: 4\n  ⚠️ Warnings: 0\n  ⏱️ Time taken: 0.48s\n"
+      }
+    },
+    "totalFilesScanned": 387,
+    "totalFilesMoved": 0,
+    "totalFilesSkipped": 170,
+    "conflicts": [],
+    "warnings": []
+  }
+}

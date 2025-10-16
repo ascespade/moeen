@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-require('dotenv').config({ path: '.env.local' });
-const { createClient } = require('@supabase/supabase-js');
-const fs = require('fs');
-const path = require('path');
+require("dotenv").config({ path: ".env.local" });
+const { createClient } = require("@supabase/supabase-js");
+const fs = require("fs");
+const path = require("path");
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.error('❌ Missing Supabase credentials');
+  console.error("❌ Missing Supabase credentials");
   process.exit(1);
 }
 
@@ -23,32 +23,32 @@ async function executeSQL(sql) {
   try {
     // Try using the REST API directly
     const response = await fetch(`${supabaseUrl}/rest/v1/rpc/exec_sql`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${supabaseServiceKey}`,
-        'apikey': supabaseServiceKey
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${supabaseServiceKey}`,
+        apikey: supabaseServiceKey,
       },
-      body: JSON.stringify({ sql_query: sql })
+      body: JSON.stringify({ sql_query: sql }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('❌ HTTP Error:', response.status, errorText);
+      console.error("❌ HTTP Error:", response.status, errorText);
       return false;
     }
 
     const data = await response.json();
     return true;
   } catch (err) {
-    console.error('❌ Exception:', err.message);
+    console.error("❌ Exception:", err.message);
     return false;
   }
 }
 
 async function createBasicTables() {
-  console.log('🏗️  Creating basic healthcare tables...');
-  
+  console.log("🏗️  Creating basic healthcare tables...");
+
   const basicSchema = `
     -- Enable necessary extensions
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -315,17 +315,17 @@ async function createBasicTables() {
 
   const success = await executeSQL(basicSchema);
   if (success) {
-    console.log('✅ Basic tables created successfully');
+    console.log("✅ Basic tables created successfully");
     return true;
   } else {
-    console.log('❌ Failed to create basic tables');
+    console.log("❌ Failed to create basic tables");
     return false;
   }
 }
 
 async function createIndexes() {
-  console.log('📊 Creating performance indexes...');
-  
+  console.log("📊 Creating performance indexes...");
+
   const indexesSQL = `
     -- Create performance indexes
     CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
@@ -350,17 +350,17 @@ async function createIndexes() {
 
   const success = await executeSQL(indexesSQL);
   if (success) {
-    console.log('✅ Indexes created successfully');
+    console.log("✅ Indexes created successfully");
     return true;
   } else {
-    console.log('❌ Failed to create indexes');
+    console.log("❌ Failed to create indexes");
     return false;
   }
 }
 
 async function createTriggers() {
-  console.log('⚡ Creating triggers...');
-  
+  console.log("⚡ Creating triggers...");
+
   const triggersSQL = `
     -- Create trigger function for updated_at
     CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -395,65 +395,65 @@ async function createTriggers() {
 
   const success = await executeSQL(triggersSQL);
   if (success) {
-    console.log('✅ Triggers created successfully');
+    console.log("✅ Triggers created successfully");
     return true;
   } else {
-    console.log('❌ Failed to create triggers');
+    console.log("❌ Failed to create triggers");
     return false;
   }
 }
 
 async function main() {
-  console.log('🚀 Starting healthcare system migration...');
-  
+  console.log("🚀 Starting healthcare system migration...");
+
   // Test connection first
   try {
     const { data, error } = await supabase
-      .from('users')
-      .select('count')
+      .from("users")
+      .select("count")
       .limit(1);
-    
+
     if (error) {
-      console.log('⚠️  Users table not found (expected for new database)');
+      console.log("⚠️  Users table not found (expected for new database)");
     } else {
-      console.log('✅ Database connection successful');
+      console.log("✅ Database connection successful");
     }
   } catch (err) {
-    console.error('❌ Database connection failed:', err.message);
+    console.error("❌ Database connection failed:", err.message);
     return;
   }
 
   // Create basic tables
   const tablesSuccess = await createBasicTables();
   if (!tablesSuccess) {
-    console.error('❌ Failed to create basic tables. Stopping migration.');
+    console.error("❌ Failed to create basic tables. Stopping migration.");
     return;
   }
 
   // Wait a bit between operations
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   // Create indexes
   const indexesSuccess = await createIndexes();
   if (!indexesSuccess) {
-    console.error('⚠️  Failed to create indexes, but continuing...');
+    console.error("⚠️  Failed to create indexes, but continuing...");
   }
 
   // Wait a bit between operations
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   // Create triggers
   const triggersSuccess = await createTriggers();
   if (!triggersSuccess) {
-    console.error('⚠️  Failed to create triggers, but continuing...');
+    console.error("⚠️  Failed to create triggers, but continuing...");
   }
 
-  console.log('\n🎉 Migration completed!');
-  console.log('📋 Summary:');
-  console.log('✅ Basic healthcare tables created');
-  console.log('✅ Performance indexes added');
-  console.log('✅ Triggers configured');
-  console.log('\n🔍 You can now test the application with: npm run dev');
+  console.log("\n🎉 Migration completed!");
+  console.log("📋 Summary:");
+  console.log("✅ Basic healthcare tables created");
+  console.log("✅ Performance indexes added");
+  console.log("✅ Triggers configured");
+  console.log("\n🔍 You can now test the application with: npm run dev");
 }
 
 main().catch(console.error);

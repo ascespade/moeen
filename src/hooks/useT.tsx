@@ -3,39 +3,53 @@
  * React hook for accessing translations with automatic re-rendering
  */
 
-import { useState, useEffect, useCallback, useContext, createContext } from 'react';
-import translationService from '@/lib/i18n/translationService';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+  createContext,
+} from "react";
+
+import translationService from "@/lib/i18n/translationService";
 
 interface TranslationContextType {
   language: string;
-  setLanguage: (lang: string) => void;
-  t: (key: string) => string;
+  setLanguage: (_lang: string) => void;
+  t: (_key: string) => string;
   isLoading: boolean;
 }
 
-const TranslationContext = createContext<TranslationContextType | undefined>(undefined);
+const __TranslationContext = createContext<TranslationContextType | undefined>(
+  undefined,
+);
 
-export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<string>('ar');
+export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [language, setLanguageState] = useState<string>("ar");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [translations, setTranslations] = useState<{ [key: string]: string }>({});
+  const [translations, setTranslations] = useState<{ [key: string]: string }>(
+    {},
+  );
 
   // Load language from localStorage on mount
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') || 'ar';
+    const __savedLanguage = localStorage.getItem("language") || "ar";
     setLanguageState(savedLanguage);
   }, []);
 
   // Load translations when language changes
   useEffect(() => {
-    const loadTranslations = async () => {
+    const __loadTranslations = async () => {
       setIsLoading(true);
       try {
-        const fetchedTranslations = await translationService.fetchTranslations(language);
+        const fetchedTranslations =
+          await translationService.fetchTranslations(language);
         setTranslations(fetchedTranslations);
       } catch (error) {
         // Use cached translations as fallback
-        const cached = translationService.getCachedTranslations(language);
+        const __cached = translationService.getCachedTranslations(language);
         if (cached) {
           setTranslations(cached);
         }
@@ -47,20 +61,23 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
     loadTranslations();
   }, [language]);
 
-  const setLanguage = useCallback((lang: string) => {
+  const __setLanguage = useCallback((_lang: string) => {
     setLanguageState(lang);
-    localStorage.setItem('language', lang);
+    localStorage.setItem("language", lang);
   }, []);
 
-  const t = useCallback((key: string): string => {
-    // Return cached translation if available
-    if (translations[key]) {
-      return translations[key] as string;
-    }
+  const __t = useCallback(
+    (_key: string): string => {
+      // Return cached translation if available
+      if (translations[key]) {
+        return translations[key] as string;
+      }
 
-    // Return key as fallback
-    return key;
-  }, [translations]);
+      // Return key as fallback
+      return key;
+    },
+    [translations],
+  );
 
   const value: TranslationContextType = {
     language,
@@ -76,22 +93,22 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
   );
 };
 
-export const useT = (): TranslationContextType => {
-  const context = useContext(TranslationContext);
+export const __useT = (): TranslationContextType => {
+  const __context = useContext(TranslationContext);
   if (context === undefined) {
     // Return a fallback function during static generation or when not in provider
     return {
-      t: (key: string) => key,
-      language: 'ar',
+      t: (_key: string) => key,
+      language: "ar",
       setLanguage: () => {},
-      isLoading: false
+      isLoading: false,
     };
   }
   return {
     t: context.t,
     language: context.language,
     setLanguage: context.setLanguage,
-    isLoading: context.isLoading
+    isLoading: context.isLoading,
   };
 };
 

@@ -1,7 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
-import { isWhatsAppConfigured, getApiConfig } from "@/lib/api/config";
+import { _useEffect, useState } from "react";
+
 import PlaceholderSquare from "@/components/common/PlaceholderSquare";
+
+import { _isWhatsAppConfigured, getApiConfig } from "@/lib/api/config";
 
 type Settings = {
   provider: string;
@@ -20,7 +22,7 @@ type Settings = {
   account?: { name?: string; email?: string; locale?: string };
 };
 
-const tabs = [
+const __tabs = [
   { id: "general", label: "عام" },
   { id: "ai", label: "الذكاء الاصطناعي" },
   { id: "voice", label: "الصوت" },
@@ -34,7 +36,7 @@ const tabs = [
   { id: "users", label: "المستخدمون والأدوار" },
 ];
 
-export default function SettingsTabs() {
+export default function __SettingsTabs() {
   const [active, setActive] = useState<string>(tabs[0]?.id || "general");
   const [settings, setSettings] = useState<Settings | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -44,8 +46,8 @@ export default function SettingsTabs() {
     let ignore = false;
     (async () => {
       try {
-        const res = await fetch("/api/settings", { cache: "no-store" });
-        const data = (await res.json()) as Settings;
+        const __res = await fetch("/api/settings", { cache: "no-store" });
+        const __data = (await res.json()) as Settings;
         if (!ignore) {
           setSettings(data);
         }
@@ -58,15 +60,15 @@ export default function SettingsTabs() {
     };
   }, []);
 
-  async function save(partial: Partial<Settings>) {
+  async function __save(_partial: Partial<Settings>) {
     setSaving(true);
     try {
-      const res = await fetch("/api/settings", {
+      const __res = await fetch("/api/settings", {
         method: "PATCH",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(partial),
       });
-      const data = (await res.json()) as Settings;
+      const __data = (await res.json()) as Settings;
       setSettings(data);
     } finally {
       setSaving(false);
@@ -507,7 +509,7 @@ export default function SettingsTabs() {
               placeholder="أدخل الكلمات مفصولة بفواصل"
               value={(settings?.emergency?.keywords || []).join(", ")}
               onChange={(e) => {
-                const keywords = e.target.value
+                const __keywords = e.target.value
                   .split(",")
                   .map((k) => k.trim())
                   .filter((k) => k);

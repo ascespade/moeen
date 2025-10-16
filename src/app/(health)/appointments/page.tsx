@@ -1,27 +1,28 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { Input } from "@/components/ui/Input";
-import { 
-  Calendar, 
-  Clock, 
-  User, 
-  Phone, 
-  MapPin, 
+import {
+  Calendar,
+  Clock,
+  User,
+  Phone,
+  MapPin,
   Plus,
   Search,
   Filter,
   MoreVertical,
   Edit,
   Trash2,
-  Eye
+  Eye,
 } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { _useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { _Input } from "@/components/ui/Input";
+import { _useAuth } from "@/hooks/useAuth";
 
 interface Appointment {
   id: string;
@@ -36,7 +37,7 @@ interface Appointment {
   updated_at: string;
   public_id: string;
   appointment_type: string;
-  priority: 'low' | 'medium' | 'high' | 'urgent';
+  priority: "low" | "medium" | "high" | "urgent";
   therapy_type?: string;
   goals?: string[];
   completed_goals?: string[];
@@ -62,7 +63,7 @@ interface Appointment {
 
 const AppointmentsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
-  const router = useRouter();
+  const __router = useRouter();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -70,9 +71,12 @@ const AppointmentsPage: React.FC = () => {
   const [showUpcoming, setShowUpcoming] = useState(true);
   const [filterType, setFilterType] = useState<string>("all");
   const [filterPriority, setFilterPriority] = useState<string>("all");
-  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+  const [selectedAppointment, setSelectedAppointment] =
+    useState<Appointment | null>(null);
   const [showDetails, setShowDetails] = useState(false);
-  const [viewMode, setViewMode] = useState<'list' | 'calendar' | 'timeline'>('list');
+  const [viewMode, setViewMode] = useState<"list" | "calendar" | "timeline">(
+    "list",
+  );
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -82,81 +86,92 @@ const AppointmentsPage: React.FC = () => {
     loadAppointments();
   }, [isAuthenticated, router]);
 
-  const loadAppointments = async () => {
+  const __loadAppointments = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/appointments?patientId=current-user');
-      const data = await response.json();
-      
+      const __response = await fetch("/api/appointments?patientId=current-user");
+      const __data = await response.json();
+
       if (data.success) {
         setAppointments(data.appointments || []);
       } else {
-        }
+      }
     } catch (error) {
-      } finally {
+    } finally {
       setLoading(false);
     }
   };
 
-  const handleCancelAppointment = async (appointmentId: string) => {
-    if (!confirm('هل أنت متأكد من إلغاء هذا الموعد؟')) return;
+  const __handleCancelAppointment = async (_appointmentId: string) => {
+    if (!confirm("هل أنت متأكد من إلغاء هذا الموعد؟")) return;
 
     try {
-      const response = await fetch(`/api/appointments/${appointmentId}`, {
-        method: 'PATCH',
+      const __response = await fetch(`/api/appointments/${appointmentId}`, {
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          status: 'cancelled'
+          status: "cancelled",
         }),
       });
 
-      const data = await response.json();
-      
+      const __data = await response.json();
+
       if (data.success) {
         loadAppointments(); // إعادة تحميل المواعيد
       } else {
-        alert('فشل في إلغاء الموعد: ' + data.error);
+        alert("فشل في إلغاء الموعد: " + data.error);
       }
     } catch (error) {
-      alert('حدث خطأ في إلغاء الموعد');
+      alert("حدث خطأ في إلغاء الموعد");
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    const statusConfig = {
-      'scheduled': { label: 'مجدول', variant: 'primary' as const },
-      'confirmed': { label: 'مؤكد', variant: 'secondary' as const },
-      'completed': { label: 'مكتمل', variant: 'outline' as const },
-      'cancelled': { label: 'ملغي', variant: 'destructive' as const },
-      'no_show': { label: 'لم يحضر', variant: 'destructive' as const }
+  const __getStatusBadge = (_status: string) => {
+    const __statusConfig = {
+      scheduled: { label: "مجدول", variant: "primary" as const },
+      confirmed: { label: "مؤكد", variant: "secondary" as const },
+      completed: { label: "مكتمل", variant: "outline" as const },
+      cancelled: { label: "ملغي", variant: "destructive" as const },
+      no_show: { label: "لم يحضر", variant: "destructive" as const },
     };
 
-    const config = statusConfig[status as keyof typeof statusConfig] || { label: status, variant: 'outline' as const };
-    
-    return (
-      <Badge variant={config.variant}>
-        {config.label}
-      </Badge>
-    );
+    const __config = statusConfig[status as keyof typeof statusConfig] || {
+      label: status,
+      variant: "outline" as const,
+    };
+
+    return <Badge variant={config.variant}>{config.label}</Badge>;
   };
 
-  const filteredAppointments = appointments.filter(appointment => {
-    const matchesSearch = appointment.doctors?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         appointment.doctors?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         appointment.doctors?.specialty?.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesStatus = statusFilter === 'all' || appointment.status === statusFilter;
-    
-    const isUpcoming = new Date(appointment.appointment_date) >= new Date();
-    const matchesTimeFilter = showUpcoming ? isUpcoming : !isUpcoming;
-    
+  const __filteredAppointments = appointments.filter((appointment) => {
+    const matchesSearch =
+      appointment.doctors?.first_name
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      appointment.doctors?.last_name
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      appointment.doctors?.specialty
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
+    const matchesStatus =
+      statusFilter === "all" || appointment.status === statusFilter;
+
+    const __isUpcoming = new Date(appointment.appointment_date) >= new Date();
+    const __matchesTimeFilter = showUpcoming ? isUpcoming : !isUpcoming;
+
     return matchesSearch && matchesStatus && matchesTimeFilter;
   });
 
-  const upcomingAppointments = appointments.filter(apt => new Date(apt.appointment_date) >= new Date());
-  const pastAppointments = appointments.filter(apt => new Date(apt.appointment_date) < new Date());
+  const __upcomingAppointments = appointments.filter(
+    (apt) => new Date(apt.appointment_date) >= new Date(),
+  );
+  const __pastAppointments = appointments.filter(
+    (apt) => new Date(apt.appointment_date) < new Date(),
+  );
 
   if (!isAuthenticated) {
     return null;
@@ -171,8 +186,8 @@ const AppointmentsPage: React.FC = () => {
             <h1 className="text-3xl font-bold text-gray-900">مواعيدي</h1>
             <p className="text-gray-600 mt-2">إدارة مواعيدك الطبية</p>
           </div>
-          <Button 
-            onClick={() => router.push('/chatbot')}
+          <Button
+            onClick={() => router.push("/chatbot")}
             className="bg-[var(--brand-primary)] hover:brightness-95"
           >
             <Plus className="w-4 h-4 mr-2" />
@@ -187,33 +202,44 @@ const AppointmentsPage: React.FC = () => {
               <div className="flex items-center">
                 <Calendar className="h-8 w-8 text-[var(--brand-primary)]" />
                 <div className="mr-4">
-                  <p className="text-sm font-medium text-gray-600">المواعيد القادمة</p>
-                  <p className="text-2xl font-bold">{upcomingAppointments.length}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <Clock className="h-8 w-8 text-green-500" />
-                <div className="mr-4">
-                  <p className="text-sm font-medium text-gray-600">المواعيد المكتملة</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    المواعيد القادمة
+                  </p>
                   <p className="text-2xl font-bold">
-                    {appointments.filter(apt => apt.status === 'completed').length}
+                    {upcomingAppointments.length}
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center">
+                <Clock className="h-8 w-8 text-green-500" />
+                <div className="mr-4">
+                  <p className="text-sm font-medium text-gray-600">
+                    المواعيد المكتملة
+                  </p>
+                  <p className="text-2xl font-bold">
+                    {
+                      appointments.filter((apt) => apt.status === "completed")
+                        .length
+                    }
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
                 <User className="h-8 w-8 text-blue-500" />
                 <div className="mr-4">
-                  <p className="text-sm font-medium text-gray-600">إجمالي المواعيد</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    إجمالي المواعيد
+                  </p>
                   <p className="text-2xl font-bold">{appointments.length}</p>
                 </div>
               </div>
@@ -237,7 +263,7 @@ const AppointmentsPage: React.FC = () => {
                 />
               </div>
             </div>
-            
+
             <div className="flex gap-2">
               <select
                 value={statusFilter}
@@ -250,14 +276,14 @@ const AppointmentsPage: React.FC = () => {
                 <option value="completed">مكتمل</option>
                 <option value="cancelled">ملغي</option>
               </select>
-              
+
               <Button
                 variant={showUpcoming ? "primary" : "outline"}
                 onClick={() => setShowUpcoming(!showUpcoming)}
                 className="flex items-center gap-2"
               >
                 <Filter className="w-4 h-4" />
-                {showUpcoming ? 'القادمة' : 'السابقة'}
+                {showUpcoming ? "القادمة" : "السابقة"}
               </Button>
             </div>
           </div>
@@ -273,12 +299,14 @@ const AppointmentsPage: React.FC = () => {
         <Card>
           <CardContent className="p-12 text-center">
             <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد مواعيد</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              لا توجد مواعيد
+            </h3>
             <p className="text-gray-600 mb-4">
-              {showUpcoming ? 'لا توجد مواعيد قادمة' : 'لا توجد مواعيد سابقة'}
+              {showUpcoming ? "لا توجد مواعيد قادمة" : "لا توجد مواعيد سابقة"}
             </p>
-            <Button 
-              onClick={() => router.push('/chatbot')}
+            <Button
+              onClick={() => router.push("/chatbot")}
               className="bg-[var(--brand-primary)] hover:brightness-95"
             >
               حجز موعد جديد
@@ -288,7 +316,10 @@ const AppointmentsPage: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {filteredAppointments.map((appointment) => (
-            <Card key={appointment.id} className="hover:shadow-md transition-shadow">
+            <Card
+              key={appointment.id}
+              className="hover:shadow-md transition-shadow"
+            >
               <CardContent className="p-6">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -304,33 +335,40 @@ const AppointmentsPage: React.FC = () => {
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold">
-                          د. {appointment.doctors?.first_name} {appointment.doctors?.last_name}
+                          د. {appointment.doctors?.first_name}{" "}
+                          {appointment.doctors?.last_name}
                         </h3>
-                        <p className="text-gray-600">{appointment.doctors?.specialty}</p>
+                        <p className="text-gray-600">
+                          {appointment.doctors?.specialty}
+                        </p>
                       </div>
                     </div>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4 text-gray-500" />
                         <span className="text-sm text-gray-600">
-                          {new Date(appointment.appointment_date).toLocaleDateString('ar-SA')}
+                          {new Date(
+                            appointment.appointment_date,
+                          ).toLocaleDateString("ar-SA")}
                         </span>
                       </div>
-                      
+
                       <div className="flex items-center gap-2">
                         <Clock className="w-4 h-4 text-gray-500" />
                         <span className="text-sm text-gray-600">
                           {appointment.appointment_time}
                         </span>
                       </div>
-                      
+
                       <div className="flex items-center gap-2">
                         <span className="text-sm text-gray-600">المدة:</span>
-                        <span className="text-sm font-medium">{appointment.duration} دقيقة</span>
+                        <span className="text-sm font-medium">
+                          {appointment.duration} دقيقة
+                        </span>
                       </div>
                     </div>
-                    
+
                     {appointment.notes && (
                       <div className="bg-gray-50 p-3 rounded-lg">
                         <p className="text-sm text-gray-700">
@@ -339,11 +377,11 @@ const AppointmentsPage: React.FC = () => {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     {getStatusBadge(appointment.status)}
-                    
-                    {appointment.status === 'scheduled' && (
+
+                    {appointment.status === "scheduled" && (
                       <Button
                         variant="outline"
                         size="sm"

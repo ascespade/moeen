@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
+import { _useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 interface Integration {
   id: string;
@@ -65,11 +66,11 @@ const mockIntegrations: Integration[] = [
   },
 ];
 
-export default function ChatbotIntegrationsPage() {
+export default function __ChatbotIntegrationsPage() {
   const [showConnectModal, setShowConnectModal] = useState<string | null>(null);
   const [webhookTest, setWebhookTest] = useState<Record<string, boolean>>({});
 
-  const getStatusColor = (status: Integration["status"]) => {
+  const __getStatusColor = (_status: Integration["status"]) => {
     switch (status) {
       case "connected":
         return "bg-green-100 text-green-800";
@@ -82,7 +83,7 @@ export default function ChatbotIntegrationsPage() {
     }
   };
 
-  const getStatusText = (status: Integration["status"]) => {
+  const __getStatusText = (_status: Integration["status"]) => {
     switch (status) {
       case "connected":
         return "متصل";
@@ -95,15 +96,15 @@ export default function ChatbotIntegrationsPage() {
     }
   };
 
-  const handleConnect = (integrationId: string) => {
+  const __handleConnect = (_integrationId: string) => {
     setShowConnectModal(integrationId);
   };
 
-  const handleDisconnect = (integrationId: string) => {
+  const __handleDisconnect = (_integrationId: string) => {
     // Simulate disconnect
-    };
+  };
 
-  const handleTestWebhook = (integrationId: string) => {
+  const __handleTestWebhook = (_integrationId: string) => {
     setWebhookTest((prev) => ({ ...prev, [integrationId]: true }));
     // Simulate webhook test
     setTimeout(() => {

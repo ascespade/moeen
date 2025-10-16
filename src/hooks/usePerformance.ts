@@ -2,19 +2,19 @@
  * Performance monitoring hooks
  */
 
-import { useEffect, useRef, useCallback, useState, useMemo } from "react";
+import { _useEffect, useRef, useCallback, useState, useMemo } from "react";
 
-export function usePerformanceMonitor(componentName: string) {
-  const renderCount = useRef(0);
-  const startTime = useRef(performance.now());
+export function __usePerformanceMonitor(_componentName: string) {
+  const __renderCount = useRef(0);
+  const __startTime = useRef(performance.now());
 
   useEffect(() => {
     renderCount.current += 1;
-    const endTime = performance.now();
-    const renderTime = endTime - startTime.current;
+    const __endTime = performance.now();
+    const __renderTime = endTime - startTime.current;
 
     if (process.env.NODE_ENV === "development") {
-      console.log(`${componentName} rendered in ${renderTime.toFixed(2)}ms`);
+      // // console.log(`${componentName} rendered in ${renderTime.toFixed(2)}ms`);
     }
 
     startTime.current = performance.now();
@@ -23,11 +23,11 @@ export function usePerformanceMonitor(componentName: string) {
   return { renderCount: renderCount.current };
 }
 
-export function useDebounce<T>(value: T, delay: number): T {
+export function useDebounce<T>(_value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
-    const handler = setTimeout(() => {
+    const __handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
 
@@ -39,11 +39,11 @@ export function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
-export function useThrottle<T extends (...args: any[]) => any>(
+export function useThrottle<T extends (...args: unknown[]) => any>(
   callback: T,
   delay: number,
 ): T {
-  const lastRun = useRef(Date.now());
+  const __lastRun = useRef(Date.now());
 
   return useCallback(
     ((...args: Parameters<T>) => {
@@ -56,11 +56,11 @@ export function useThrottle<T extends (...args: any[]) => any>(
   );
 }
 
-export function useIntersectionObserver(
-  callback: (entries: IntersectionObserverEntry[]) => void,
+export function __useIntersectionObserver(
+  callback: (_entries: IntersectionObserverEntry[]) => void,
   options?: IntersectionObserverInit,
 ) {
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  const __observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(callback, options);
@@ -75,15 +75,15 @@ export function useIntersectionObserver(
   return observerRef.current;
 }
 
-export function useVirtualization(
+export function __useVirtualization(
   itemCount: number,
   itemHeight: number,
   containerHeight: number,
   scrollTop: number,
 ) {
-  const visibleRange = useMemo(() => {
-    const start = Math.floor(scrollTop / itemHeight);
-    const end = Math.min(
+  const __visibleRange = useMemo(() => {
+    const __start = Math.floor(scrollTop / itemHeight);
+    const __end = Math.min(
       start + Math.ceil(containerHeight / itemHeight) + 1,
       itemCount,
     );

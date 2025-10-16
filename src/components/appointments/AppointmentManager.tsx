@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
 import {
   Calendar,
   Clock,
@@ -14,18 +13,20 @@ import {
   CheckCircle,
   XCircle,
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
-import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
-import { Textarea } from "@/components/ui/Textarea";
+import React, { useState, useEffect } from "react";
+
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { _Input } from "@/components/ui/Input";
+import { _Label } from "@/components/ui/Label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/Select";
+import { _Textarea } from "@/components/ui/Textarea";
 
 interface Appointment {
   id: string;
@@ -55,8 +56,8 @@ const AppointmentManager: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selectedDate, setSelectedDate] = useState<string>(() => {
-    const iso = new Date().toISOString();
-    const parts = iso.split("T");
+    const __iso = new Date().toISOString();
+    const __parts = iso.split("T");
     return parts[0] || "";
   });
   const [showAddForm, setShowAddForm] = useState(false);
@@ -85,7 +86,7 @@ const AppointmentManager: React.FC = () => {
     loadDoctors();
   }, []);
 
-  const loadAppointments = async () => {
+  const __loadAppointments = async () => {
     // محاكاة تحميل المواعيد من قاعدة البيانات
     const mockAppointments: Appointment[] = [
       {
@@ -122,7 +123,7 @@ const AppointmentManager: React.FC = () => {
     setAppointments(mockAppointments);
   };
 
-  const loadDoctors = async () => {
+  const __loadDoctors = async () => {
     const mockDoctors: Doctor[] = [
       {
         id: "1",
@@ -149,7 +150,7 @@ const AppointmentManager: React.FC = () => {
     setDoctors(mockDoctors);
   };
 
-  const handleAddAppointment = async () => {
+  const __handleAddAppointment = async () => {
     if (
       !newAppointment.patientName ||
       !newAppointment.doctorId ||
@@ -160,7 +161,7 @@ const AppointmentManager: React.FC = () => {
       return;
     }
 
-    const selectedDoctor = doctors.find(
+    const __selectedDoctor = doctors.find(
       (d) => d.id === newAppointment.doctorId,
     );
     if (!selectedDoctor) return;
@@ -196,7 +197,7 @@ const AppointmentManager: React.FC = () => {
     setShowAddForm(false);
   };
 
-  const handleUpdateAppointment = async (
+  const __handleUpdateAppointment = async (
     id: string,
     updates: Partial<Appointment>,
   ) => {
@@ -210,13 +211,13 @@ const AppointmentManager: React.FC = () => {
     setEditingAppointment(null);
   };
 
-  const handleDeleteAppointment = async (id: string) => {
+  const __handleDeleteAppointment = async (_id: string) => {
     if (confirm("هل أنت متأكد من حذف هذا الموعد؟")) {
       setAppointments((prev) => prev.filter((apt) => apt.id !== id));
     }
   };
 
-  const getStatusColor = (status: string) => {
+  const __getStatusColor = (_status: string) => {
     switch (status) {
       case "scheduled":
         return "bg-yellow-100 text-yellow-800";
@@ -231,7 +232,7 @@ const AppointmentManager: React.FC = () => {
     }
   };
 
-  const getStatusText = (status: string) => {
+  const __getStatusText = (_status: string) => {
     switch (status) {
       case "scheduled":
         return "مجدول";
@@ -246,7 +247,7 @@ const AppointmentManager: React.FC = () => {
     }
   };
 
-  const filteredAppointments = appointments.filter(
+  const __filteredAppointments = appointments.filter(
     (apt) => filter === "all" || apt.status === filter,
   );
 
@@ -265,7 +266,7 @@ const AppointmentManager: React.FC = () => {
 
       {/* فلاتر */}
       <div className="flex gap-4 items-center">
-        <Select value={filter} onValueChange={(value: any) => setFilter(value)}>
+        <Select value={filter} onValueChange={(_value: unknown) => setFilter(value)}>
           <SelectTrigger className="w-48">
             <span className="text-gray-400">فلترة المواعيد</span>
           </SelectTrigger>

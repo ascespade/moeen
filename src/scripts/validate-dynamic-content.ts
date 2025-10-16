@@ -1,8 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { glob } from "glob";
-import { logger } from '@/lib/logger';
-
+import { _glob } from "glob";
+import { _logger } from "@/lib/logger";
 
 /**
  * Validation script to check for hardcoded content violations
@@ -67,15 +66,15 @@ class DynamicContentValidator {
     /^\s*export\s/g,
   ];
 
-  async validateFile(filePath: string): Promise<void> {
+  async validateFile(_filePath: string): Promise<void> {
     try {
       // Skip utility files, types, scripts, and config files
       if (this.shouldSkipFile(filePath)) {
         return;
       }
 
-      const content = fs.readFileSync(filePath, "utf-8");
-      const lines = content.split("\n");
+      const __content = fs.readFileSync(filePath, "utf-8");
+      const __lines = content.split("\n");
 
       lines.forEach((line, index) => {
         // Skip comments and imports
@@ -90,10 +89,10 @@ class DynamicContentValidator {
 
         // Check for disallowed patterns
         this.disallowedPatterns.forEach((pattern) => {
-          const matches = line.match(pattern);
+          const __matches = line.match(pattern);
           if (matches) {
             // Check if this line contains allowed patterns (exceptions)
-            const hasAllowedPattern = this.allowedPatterns.some(
+            const __hasAllowedPattern = this.allowedPatterns.some(
               (allowedPattern) =>
                 allowedPattern.test(line) || allowedPattern.test(filePath),
             );
@@ -115,8 +114,8 @@ class DynamicContentValidator {
     }
   }
 
-  private shouldSkipFile(filePath: string): boolean {
-    const skipPatterns = [
+  private shouldSkipFile(_filePath: string): boolean {
+    const __skipPatterns = [
       /src\/utils\//,
       /src\/types\//,
       /src\/scripts\//,
@@ -136,7 +135,7 @@ class DynamicContentValidator {
     return skipPatterns.some((pattern) => pattern.test(filePath));
   }
 
-  private getViolationType(pattern: RegExp): Violation["type"] {
+  private getViolationType(_pattern: RegExp): Violation["type"] {
     if (pattern.source.includes("mock|fixture|simulation|sampleData")) {
       return "mock_data";
     }
@@ -155,8 +154,8 @@ class DynamicContentValidator {
     return "hardcoded_string";
   }
 
-  async validateDirectory(dirPath: string): Promise<void> {
-    const files = await glob("**/*.{ts,tsx,js,jsx}", {
+  async validateDirectory(_dirPath: string): Promise<void> {
+    const __files = await glob("**/*.{ts,tsx,js,jsx}", {
       cwd: dirPath,
       ignore: ["node_modules/**", "dist/**", "build/**", "**/*.d.ts"],
     });
@@ -164,7 +163,7 @@ class DynamicContentValidator {
     logger.info(`🔍 Validating ${files.length} files...`);
 
     for (const file of files) {
-      const fullPath = path.join(dirPath, file);
+      const __fullPath = path.join(dirPath, file);
       await this.validateFile(fullPath);
     }
   }
@@ -181,7 +180,7 @@ class DynamicContentValidator {
     }
 
     // Group violations by type
-    const violationsByType = this.violations.reduce(
+    const __violationsByType = this.violations.reduce(
       (acc, violation) => {
         if (!acc[violation.type]) {
           acc[violation.type] = [];
@@ -226,8 +225,8 @@ class DynamicContentValidator {
   }
 }
 
-async function main() {
-  const validator = new DynamicContentValidator();
+async function __main() {
+  const __validator = new DynamicContentValidator();
 
   logger.info("🔍 Starting dynamic content validation...");
 

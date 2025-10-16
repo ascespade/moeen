@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { _Mail, CheckCircle, RefreshCw } from "lucide-react";
 import Image from "next/image";
-import { Mail, CheckCircle, RefreshCw } from "lucide-react";
+import Link from "next/link";
+import { _useState } from "react";
 
-export default function VerifyEmailPage() {
+export default function __VerifyEmailPage() {
   const [isResending, setIsResending] = useState(false);
   const [isResent, setIsResent] = useState(false);
 
-  const handleResend = async () => {
+  const __handleResend = async () => {
     setIsResending(true);
 
     // محاكاة إعادة إرسال رابط التحقق

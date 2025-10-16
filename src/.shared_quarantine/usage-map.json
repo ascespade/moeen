@@ -1,0 +1,3499 @@
+{
+  "agentUpdates": {
+    "FrontendCleaner": {
+      "lastRun": "2025-10-16T07:41:01.346Z",
+      "status": "dry-run",
+      "movedFiles": [],
+      "pid": 1437488
+    },
+    "SharedVerifier": {
+      "lastRun": "2025-10-16T07:41:17.840Z",
+      "status": "dry-run",
+      "movedFiles": [],
+      "pid": 1438254
+    },
+    "MultiAgentCoordinator": {
+      "lastRun": "2025-10-16T07:41:02.652Z",
+      "status": "dry-run",
+      "movedFiles": [],
+      "pid": 1437475
+    },
+    "BackendCleaner": {
+      "lastRun": "2025-10-16T07:41:06.643Z",
+      "status": "dry-run",
+      "movedFiles": [],
+      "pid": 1438046
+    }
+  },
+  "fileReferences": {},
+  "lastUpdated": "2025-10-16T07:41:17.840Z",
+  "version": "1.0.0",
+  "backend": {
+    "unusedUtilities": [
+      {
+        "path": "/home/ubuntu/moeen/src/lib/accessibility.ts",
+        "relativePath": "src/lib",
+        "fileName": "accessibility.ts",
+        "size": 10134,
+        "exports": [
+          {
+            "name": "AccessibilityManager",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "accessibilityManager",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "useAccessibility",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/ai-assistant.ts",
+        "relativePath": "src/lib",
+        "fileName": "ai-assistant.ts",
+        "size": 9782,
+        "exports": [
+          {
+            "name": "HemamAssistant",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/analytics-stubs.ts",
+        "relativePath": "src/lib",
+        "fileName": "analytics-stubs.ts",
+        "size": 256,
+        "exports": [
+          {
+            "name": "trackEvent",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "trackPage",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/api/config.ts",
+        "relativePath": "src/lib/api",
+        "fileName": "config.ts",
+        "size": 2057,
+        "exports": [
+          {
+            "name": "getApiConfig",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isWhatsAppConfigured",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isAIConfigured",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/api/whatsapp.ts",
+        "relativePath": "src/lib/api",
+        "fileName": "whatsapp.ts",
+        "size": 1298,
+        "exports": [
+          {
+            "name": "sendWhatsAppMessage",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "handleWhatsAppWebhook",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [
+          {
+            "name": "getApiConfig",
+            "source": "./config",
+            "type": "named"
+          },
+          {
+            "name": "isWhatsAppConfigured",
+            "source": "./config",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/auth/authorize.ts",
+        "relativePath": "src/lib/auth",
+        "fileName": "authorize.ts",
+        "size": 1948,
+        "exports": [
+          {
+            "name": "authorize",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "requireRole",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "requireAuth",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/auth/roles.ts",
+        "relativePath": "src/lib/auth",
+        "fileName": "roles.ts",
+        "size": 333,
+        "exports": [
+          {
+            "name": "canViewAdmin",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "canWriteConversations",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "canReadOnly",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/cache/redis.ts",
+        "relativePath": "src/lib/cache",
+        "fileName": "redis.ts",
+        "size": 4129,
+        "exports": [
+          {
+            "name": "cached",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "cache",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "CACHE_KEYS",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/cache-system.ts",
+        "relativePath": "src/lib",
+        "fileName": "cache-system.ts",
+        "size": 10333,
+        "exports": [
+          {
+            "name": "MemoryCache",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "CacheKeys",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "CacheManager",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "withCache",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "cache",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/centralized-theme.ts",
+        "relativePath": "src/lib",
+        "fileName": "centralized-theme.ts",
+        "size": 15656,
+        "exports": [
+          {
+            "name": "BRAND_COLORS",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "TYPOGRAPHY",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "SPACING",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "BORDER_RADIUS",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "SHADOWS",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "Z_INDEX",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "ANIMATION",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "COMPONENT_CLASSES",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getSystemTheme",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "resolveTheme",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "generateCSSVariables",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "applyThemeToDocument",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "applyLanguageToDocument",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "getStoredTheme",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "storeTheme",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "getStoredLanguage",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "storeLanguage",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "CENTRALIZED_THEME",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/conversation-flows/ActionExecutor.ts",
+        "relativePath": "src/lib/conversation-flows",
+        "fileName": "ActionExecutor.ts",
+        "size": 7493,
+        "exports": [
+          {
+            "name": "ActionExecutor",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [
+          {
+            "name": "FlowAction",
+            "source": "./types",
+            "type": "named"
+          },
+          {
+            "name": "ConversationContext",
+            "source": "./types",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/conversation-flows/FlowManager.ts",
+        "relativePath": "src/lib/conversation-flows",
+        "fileName": "FlowManager.ts",
+        "size": 6434,
+        "exports": [
+          {
+            "name": "FlowManager",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [
+          {
+            "name": "ConversationFlow",
+            "source": "./types",
+            "type": "named"
+          },
+          {
+            "name": "FlowStep",
+            "source": "./types",
+            "type": "named"
+          },
+          {
+            "name": "ConversationContext",
+            "source": "./types",
+            "type": "named"
+          },
+          {
+            "name": "FlowAction",
+            "source": "./types",
+            "type": "named"
+          },
+          {
+            "name": "IntentAnalyzer",
+            "source": "./IntentAnalyzer",
+            "type": "named"
+          },
+          {
+            "name": "ActionExecutor",
+            "source": "./ActionExecutor",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/conversation-flows/IntentAnalyzer.ts",
+        "relativePath": "src/lib/conversation-flows",
+        "fileName": "IntentAnalyzer.ts",
+        "size": 5791,
+        "exports": [
+          {
+            "name": "IntentAnalyzer",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [
+          {
+            "name": "Intent",
+            "source": "./types",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/conversation-flows/index.ts",
+        "relativePath": "src/lib/conversation-flows",
+        "fileName": "index.ts",
+        "size": 228,
+        "exports": [],
+        "imports": [
+          {
+            "name": "FlowManager",
+            "source": "./FlowManager",
+            "type": "named"
+          },
+          {
+            "name": "IntentAnalyzer",
+            "source": "./IntentAnalyzer",
+            "type": "named"
+          },
+          {
+            "name": "ActionExecutor",
+            "source": "./ActionExecutor",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/conversation-flows/types.ts",
+        "relativePath": "src/lib/conversation-flows",
+        "fileName": "types.ts",
+        "size": 1336,
+        "exports": [],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/conversation-flows.ts",
+        "relativePath": "src/lib",
+        "fileName": "conversation-flows.ts",
+        "size": 15489,
+        "exports": [
+          {
+            "name": "FlowManager",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/cuid.ts",
+        "relativePath": "src/lib",
+        "fileName": "cuid.ts",
+        "size": 5053,
+        "exports": [
+          {
+            "name": "generateCuid",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "generateDbCuid",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "cuid",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isValidCuid",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "extractPrefix",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "generateMultipleCuid",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "generateProductionCuid",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "generatePublicId",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "generateShortId",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "cuidEntity",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/database/connection-pool.ts",
+        "relativePath": "src/lib/database",
+        "fileName": "connection-pool.ts",
+        "size": 4966,
+        "exports": [
+          {
+            "name": "connectionPool",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [
+          {
+            "name": "logger",
+            "source": "../monitoring/logger",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/database-utils.ts",
+        "relativePath": "src/lib",
+        "fileName": "database-utils.ts",
+        "size": 6737,
+        "exports": [
+          {
+            "name": "DatabaseUtils",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "QueryBuilder",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "EntityOperations",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "DatabaseValidation",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "MigrationHelpers",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/database.ts",
+        "relativePath": "src/lib",
+        "fileName": "database.ts",
+        "size": 10306,
+        "exports": [
+          {
+            "name": "DatabaseManager",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/deployment/docker.ts",
+        "relativePath": "src/lib/deployment",
+        "fileName": "docker.ts",
+        "size": 10528,
+        "exports": [],
+        "imports": [
+          {
+            "name": "logger",
+            "source": "../monitoring/logger",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/dynamic-content-manager.ts",
+        "relativePath": "src/lib",
+        "fileName": "dynamic-content-manager.ts",
+        "size": 7776,
+        "exports": [
+          {
+            "name": "dynamicContentManager",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [
+          {
+            "name": "createClient",
+            "source": "./supabase/client",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/error-handler.ts",
+        "relativePath": "src/lib",
+        "fileName": "error-handler.ts",
+        "size": 5252,
+        "exports": [
+          {
+            "name": "ErrorHandler",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "errorHandler",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/errors/api-errors.ts",
+        "relativePath": "src/lib/errors",
+        "fileName": "api-errors.ts",
+        "size": 3350,
+        "exports": [
+          {
+            "name": "APIError",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "ValidationError",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "AuthenticationError",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "AuthorizationError",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "NotFoundError",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "ConflictError",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "RateLimitError",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "ExternalServiceError",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "DatabaseError",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "PaymentError",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "InsuranceError",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "formatErrorResponse",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "logError",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "handleAPIError",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/file-upload.ts",
+        "relativePath": "src/lib",
+        "fileName": "file-upload.ts",
+        "size": 14829,
+        "exports": [
+          {
+            "name": "ALLOWED_FILE_TYPES",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "MAX_FILE_SIZES",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "FileUploadHandler",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "LocalFileStorage",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "handleFileUpload",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "handleFileDownload",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "handleFileList",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "fileUploadHandler",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [
+          {
+            "name": "realDB",
+            "source": "./supabase-real",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/i18n/translationService.ts",
+        "relativePath": "src/lib/i18n",
+        "fileName": "translationService.ts",
+        "size": 7899,
+        "exports": [
+          {
+            "name": "translationService",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/insurance/providers.ts",
+        "relativePath": "src/lib/insurance",
+        "fileName": "providers.ts",
+        "size": 6630,
+        "exports": [
+          {
+            "name": "InsuranceProviderService",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "insuranceService",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/integration-system.ts",
+        "relativePath": "src/lib",
+        "fileName": "integration-system.ts",
+        "size": 11990,
+        "exports": [
+          {
+            "name": "EHRSystem",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "CalendarAPI",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "CommunicationAutomation",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "DoctorsDashboard",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/logger/index.ts",
+        "relativePath": "src/lib/logger",
+        "fileName": "index.ts",
+        "size": 8506,
+        "exports": [
+          {
+            "name": "Logger",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "logger",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "apiLogger",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "authLogger",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "securityLogger",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "performanceLogger",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/logger.ts",
+        "relativePath": "src/lib",
+        "fileName": "logger.ts",
+        "size": 2367,
+        "exports": [
+          {
+            "name": "logger",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/monitoring/logger.ts",
+        "relativePath": "src/lib/monitoring",
+        "fileName": "logger.ts",
+        "size": 5688,
+        "exports": [
+          {
+            "name": "logger",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "logError",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "logWarn",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "logInfo",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "logDebug",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "logTrace",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/notifications/email.ts",
+        "relativePath": "src/lib/notifications",
+        "fileName": "email.ts",
+        "size": 7315,
+        "exports": [
+          {
+            "name": "EmailNotificationService",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "emailService",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/notifications/sms.ts",
+        "relativePath": "src/lib/notifications",
+        "fileName": "sms.ts",
+        "size": 4184,
+        "exports": [
+          {
+            "name": "SMSNotificationService",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "smsService",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/optimization/performance.ts",
+        "relativePath": "src/lib/optimization",
+        "fileName": "performance.ts",
+        "size": 6701,
+        "exports": [
+          {
+            "name": "performanceMonitor",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "measurePerformance",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "QueryOptimizer",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "MemoryOptimizer",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "CacheOptimizer",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "BundleOptimizer",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "ResponseOptimizer",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [
+          {
+            "name": "logger",
+            "source": "../monitoring/logger",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/payments/moyasar.ts",
+        "relativePath": "src/lib/payments",
+        "fileName": "moyasar.ts",
+        "size": 4373,
+        "exports": [
+          {
+            "name": "MoyasarPaymentService",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "moyasarService",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/payments/stripe.ts",
+        "relativePath": "src/lib/payments",
+        "fileName": "stripe.ts",
+        "size": 4007,
+        "exports": [
+          {
+            "name": "StripePaymentService",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "stripeService",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/performance-monitor.ts",
+        "relativePath": "src/lib",
+        "fileName": "performance-monitor.ts",
+        "size": 13041,
+        "exports": [
+          {
+            "name": "PerformanceMonitor",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "withPerformanceMonitoring",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "performanceMonitor",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [
+          {
+            "name": "realDB",
+            "source": "./supabase-real",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/performance-optimizations.ts",
+        "relativePath": "src/lib",
+        "fileName": "performance-optimizations.ts",
+        "size": 1456,
+        "exports": [
+          {
+            "name": "optimizeMemory",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "lazyLoadComponent",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "optimizeImage",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "debounce",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "throttle",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/performance.ts",
+        "relativePath": "src/lib",
+        "fileName": "performance.ts",
+        "size": 2520,
+        "exports": [
+          {
+            "name": "PerformanceMonitor",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/private-center-integration.ts",
+        "relativePath": "src/lib",
+        "fileName": "private-center-integration.ts",
+        "size": 13156,
+        "exports": [
+          {
+            "name": "PrivateCenterIntegration",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "privateCenterIntegration",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/rate-limiter.ts",
+        "relativePath": "src/lib",
+        "fileName": "rate-limiter.ts",
+        "size": 1999,
+        "exports": [
+          {
+            "name": "authRateLimiter",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "apiRateLimiter",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "uploadRateLimiter",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/responsive-design.ts",
+        "relativePath": "src/lib",
+        "fileName": "responsive-design.ts",
+        "size": 7789,
+        "exports": [
+          {
+            "name": "breakpoints",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "useScreenSize",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "responsive",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "mobilePatterns",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "touchFriendly",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "accessibility",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "rtl",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "performance",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "darkMode",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "print",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "useResponsive",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "ResponsiveWrapper",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/router.ts",
+        "relativePath": "src/lib",
+        "fileName": "router.ts",
+        "size": 2109,
+        "exports": [
+          {
+            "name": "getDefaultRouteForUser",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "isProtectedRoute",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "isAdminRoute",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "canAccessRoute",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "getNavigationItems",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/saudi-health-integration.ts",
+        "relativePath": "src/lib",
+        "fileName": "saudi-health-integration.ts",
+        "size": 13654,
+        "exports": [
+          {
+            "name": "SaudiHealthSystemIntegration",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "saudiHealthSystem",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/saudi-ministry-health-integration.ts",
+        "relativePath": "src/lib",
+        "fileName": "saudi-ministry-health-integration.ts",
+        "size": 14563,
+        "exports": [
+          {
+            "name": "SaudiMinistryHealthIntegration",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "ministryHealthIntegration",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/security/encryption.ts",
+        "relativePath": "src/lib/security",
+        "fileName": "encryption.ts",
+        "size": 5745,
+        "exports": [
+          {
+            "name": "encryption",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "SENSITIVE_FIELDS",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "encryptPassword",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "verifyPassword",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "encryptSensitiveField",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "decryptSensitiveField",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [
+          {
+            "name": "logger",
+            "source": "../monitoring/logger",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/security.ts",
+        "relativePath": "src/lib",
+        "fileName": "security.ts",
+        "size": 6403,
+        "exports": [
+          {
+            "name": "CSRFProtection",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "RateLimiter",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "InputSanitizer",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "securityHeaders",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "PasswordValidator",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "SessionSecurity",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/slack-integration.ts",
+        "relativePath": "src/lib",
+        "fileName": "slack-integration.ts",
+        "size": 13662,
+        "exports": [
+          {
+            "name": "SlackIntegration",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/supabase/client.ts",
+        "relativePath": "src/lib/supabase",
+        "fileName": "client.ts",
+        "size": 479,
+        "exports": [
+          {
+            "name": "createClient",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "createServerClient",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/supabase/server.ts",
+        "relativePath": "src/lib/supabase",
+        "fileName": "server.ts",
+        "size": 786,
+        "exports": [
+          {
+            "name": "createClient",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/supabase-real.ts",
+        "relativePath": "src/lib",
+        "fileName": "supabase-real.ts",
+        "size": 16527,
+        "exports": [
+          {
+            "name": "supabase",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "supabaseAdmin",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "RealSupabaseManager",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "realDB",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/supabase.ts",
+        "relativePath": "src/lib",
+        "fileName": "supabase.ts",
+        "size": 10751,
+        "exports": [
+          {
+            "name": "supabase",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "supabaseAdmin",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "SupabaseDatabaseManager",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "db",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/supabaseClient.ts",
+        "relativePath": "src/lib",
+        "fileName": "supabaseClient.ts",
+        "size": 1249,
+        "exports": [
+          {
+            "name": "getBrowserSupabase",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "getServerSupabase",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "getServiceSupabase",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/testing/test-utils.ts",
+        "relativePath": "src/lib/testing",
+        "fileName": "test-utils.ts",
+        "size": 8788,
+        "exports": [
+          {
+            "name": "testUtils",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "createTestData",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "cleanupTestData",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [
+          {
+            "name": "logger",
+            "source": "../monitoring/logger",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/translations-manager.ts",
+        "relativePath": "src/lib",
+        "fileName": "translations-manager.ts",
+        "size": 5058,
+        "exports": [
+          {
+            "name": "addTranslation",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "addMultipleTranslations",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "getTranslations",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "updateTranslation",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "deleteTranslation",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "bulkInsertTranslations",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "getAllTranslationsForLocale",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "searchTranslations",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [
+          {
+            "name": "cuid",
+            "source": "./cuid",
+            "type": "named"
+          },
+          {
+            "name": "getServerSupabase",
+            "source": "./supabaseClient",
+            "type": "named"
+          }
+        ],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/utils.ts",
+        "relativePath": "src/lib",
+        "fileName": "utils.ts",
+        "size": 118,
+        "exports": [
+          {
+            "name": "cn",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/validation/schemas.ts",
+        "relativePath": "src/lib/validation",
+        "fileName": "schemas.ts",
+        "size": 6475,
+        "exports": [
+          {
+            "name": "userSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "loginSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "patientSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "patientUpdateSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "doctorSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "appointmentSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "appointmentUpdateSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "paymentSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "insuranceClaimSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "claimUpdateSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "translationSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "reportSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "apiResponseSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "paginationSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "searchSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "fileUploadSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "medicalRecordSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "notificationSchema",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "validateData",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "validateQueryParams",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/validation/security.ts",
+        "relativePath": "src/lib/validation",
+        "fileName": "security.ts",
+        "size": 6074,
+        "exports": [
+          {
+            "name": "sanitizeInput",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "escapeSqlString",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "securitySchemas",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "validateRateLimit",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "sanitizeObject",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "validateCSRFToken",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "validateFileType",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "validateCSPHeader",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/validation.ts",
+        "relativePath": "src/lib",
+        "fileName": "validation.ts",
+        "size": 4763,
+        "exports": [
+          {
+            "name": "sanitizeHtml",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "sanitizeText",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "validationSchemas",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "validateRequest",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "generateCSRFToken",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "validateCSRFToken",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/whatsapp-business-api.ts",
+        "relativePath": "src/lib",
+        "fileName": "whatsapp-business-api.ts",
+        "size": 13102,
+        "exports": [
+          {
+            "name": "WhatsAppBusinessAPI",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "whatsappAPI",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/lib/whatsapp-integration.ts",
+        "relativePath": "src/lib",
+        "fileName": "whatsapp-integration.ts",
+        "size": 12650,
+        "exports": [
+          {
+            "name": "WhatsAppIntegration",
+            "type": "class",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/utils/api-client.ts",
+        "relativePath": "src/utils",
+        "fileName": "api-client.ts",
+        "size": 2090,
+        "exports": [
+          {
+            "name": "ApiClient",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "apiClient",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/utils/api.ts",
+        "relativePath": "src/utils",
+        "fileName": "api.ts",
+        "size": 4734,
+        "exports": [
+          {
+            "name": "ApiError",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "api",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "addRequestInterceptor",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "addResponseInterceptor",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "buildQueryString",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "buildUrl",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "handleApiError",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "withRetry",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/utils/date.ts",
+        "relativePath": "src/utils",
+        "fileName": "date.ts",
+        "size": 5309,
+        "exports": [
+          {
+            "name": "addDays",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "addHours",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "addMinutes",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "addSeconds",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "startOfDay",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "endOfDay",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "startOfWeek",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "endOfWeek",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "startOfMonth",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "endOfMonth",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "startOfYear",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "endOfYear",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isSameDay",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isSameWeek",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isSameMonth",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isSameYear",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isToday",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isYesterday",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isTomorrow",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isPast",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isFuture",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getDaysInMonth",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getDaysInYear",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isLeapYear",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getWeekNumber",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getQuarter",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getAge",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getTimeAgo",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/utils/format.ts",
+        "relativePath": "src/utils",
+        "fileName": "format.ts",
+        "size": 2643,
+        "exports": [
+          {
+            "name": "formatDate",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "formatRelativeTime",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "formatNumber",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "formatCurrency",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "formatFileSize",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "formatPhoneNumber",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "truncateText",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "capitalizeFirst",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "formatInitials",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/utils/index.ts",
+        "relativePath": "src/utils",
+        "fileName": "index.ts",
+        "size": 186,
+        "exports": [],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/utils/storage.ts",
+        "relativePath": "src/utils",
+        "fileName": "storage.ts",
+        "size": 3352,
+        "exports": [
+          {
+            "name": "storage",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "STORAGE_KEYS",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getUser",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "setUser",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "removeUser",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getToken",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "setToken",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "removeToken",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getRefreshToken",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "setRefreshToken",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "removeRefreshToken",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getTheme",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "setTheme",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getLanguage",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "setLanguage",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "getSettings",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "setSettings",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "clearAuth",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/utils/string.ts",
+        "relativePath": "src/utils",
+        "fileName": "string.ts",
+        "size": 5169,
+        "exports": [
+          {
+            "name": "slugify",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "camelCase",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "pascalCase",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "kebabCase",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "snakeCase",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "titleCase",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "sentenceCase",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "truncate",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "truncateWords",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "stripHtml",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "escapeHtml",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "unescapeHtml",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "removeAccents",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "generateRandomString",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "generateRandomId",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "maskEmail",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "maskPhone",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "maskCreditCard",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "highlightText",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "escapeRegex",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "pluralize",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "ordinal",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "initials",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "capitalize",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "capitalizeWords",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/utils/validation.ts",
+        "relativePath": "src/utils",
+        "fileName": "validation.ts",
+        "size": 3061,
+        "exports": [
+          {
+            "name": "isValidEmail",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isValidPassword",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isValidPhoneNumber",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isValidUrl",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isValidUuid",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isNotEmpty",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isNumeric",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isInteger",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isPositive",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "isInRange",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "hasMinLength",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "hasMaxLength",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "matchesPattern",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "validateForm",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": true,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": false
+      }
+    ],
+    "unusedMiddleware": [
+      {
+        "path": "/home/ubuntu/moeen/src/middleware/audit.ts",
+        "relativePath": "src/middleware",
+        "fileName": "audit.ts",
+        "size": 8011,
+        "exports": [
+          {
+            "name": "AuditMiddleware",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "createAuditMiddleware",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "auditMiddleware",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "auditErrorMiddleware",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "developmentAuditConfig",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "productionAuditConfig",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "stagingAuditConfig",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": true,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/middleware/auth.ts",
+        "relativePath": "src/middleware",
+        "fileName": "auth.ts",
+        "size": 1585,
+        "exports": [
+          {
+            "name": "authMiddleware",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": true,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/middleware/rate-limiter.ts",
+        "relativePath": "src/middleware",
+        "fileName": "rate-limiter.ts",
+        "size": 5869,
+        "exports": [
+          {
+            "name": "rateLimiter",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": true,
+        "isApiRoute": false,
+        "isModule": false
+      },
+      {
+        "path": "/home/ubuntu/moeen/src/middleware/security.ts",
+        "relativePath": "src/middleware",
+        "fileName": "security.ts",
+        "size": 11001,
+        "exports": [
+          {
+            "name": "SecurityMiddleware",
+            "type": "class",
+            "isDefault": false
+          },
+          {
+            "name": "createSecurityMiddleware",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "securityMiddleware",
+            "type": "function",
+            "isDefault": false
+          },
+          {
+            "name": "developmentSecurityConfig",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "productionSecurityConfig",
+            "type": "variable",
+            "isDefault": false
+          },
+          {
+            "name": "stagingSecurityConfig",
+            "type": "variable",
+            "isDefault": false
+          }
+        ],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": true,
+        "isApiRoute": false,
+        "isModule": false
+      }
+    ],
+    "unusedApiRoutes": [],
+    "duplicateFunctions": [
+      {
+        "name": "validateCSRFToken",
+        "files": [
+          {
+            "path": "/home/ubuntu/moeen/src/lib/validation/security.ts",
+            "relativePath": "src/lib/validation",
+            "fileName": "security.ts",
+            "size": 6074,
+            "exports": [
+              {
+                "name": "sanitizeInput",
+                "type": "function",
+                "isDefault": false
+              },
+              {
+                "name": "escapeSqlString",
+                "type": "function",
+                "isDefault": false
+              },
+              {
+                "name": "securitySchemas",
+                "type": "variable",
+                "isDefault": false
+              },
+              {
+                "name": "validateRateLimit",
+                "type": "function",
+                "isDefault": false
+              },
+              {
+                "name": "sanitizeObject",
+                "type": "function",
+                "isDefault": false
+              },
+              {
+                "name": "validateCSRFToken",
+                "type": "function",
+                "isDefault": false
+              },
+              {
+                "name": "validateFileType",
+                "type": "function",
+                "isDefault": false
+              },
+              {
+                "name": "validateCSPHeader",
+                "type": "function",
+                "isDefault": false
+              }
+            ],
+            "imports": [],
+            "isUtility": true,
+            "isMiddleware": false,
+            "isApiRoute": false,
+            "isModule": false
+          },
+          {
+            "path": "/home/ubuntu/moeen/src/lib/validation.ts",
+            "relativePath": "src/lib",
+            "fileName": "validation.ts",
+            "size": 4763,
+            "exports": [
+              {
+                "name": "sanitizeHtml",
+                "type": "function",
+                "isDefault": false
+              },
+              {
+                "name": "sanitizeText",
+                "type": "function",
+                "isDefault": false
+              },
+              {
+                "name": "validationSchemas",
+                "type": "variable",
+                "isDefault": false
+              },
+              {
+                "name": "validateRequest",
+                "type": "function",
+                "isDefault": false
+              },
+              {
+                "name": "generateCSRFToken",
+                "type": "function",
+                "isDefault": false
+              },
+              {
+                "name": "validateCSRFToken",
+                "type": "function",
+                "isDefault": false
+              }
+            ],
+            "imports": [],
+            "isUtility": true,
+            "isMiddleware": false,
+            "isApiRoute": false,
+            "isModule": false
+          }
+        ],
+        "count": 2
+      }
+    ],
+    "orphanedModules": [
+      {
+        "path": "/home/ubuntu/moeen/scripts/admin-module.js",
+        "relativePath": "scripts",
+        "fileName": "admin-module.js",
+        "size": 12665,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/advanced-monitoring.js",
+        "relativePath": "scripts",
+        "fileName": "advanced-monitoring.js",
+        "size": 9853,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/analyze-bundle.js",
+        "relativePath": "scripts",
+        "fileName": "analyze-bundle.js",
+        "size": 1834,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/apply-migration-direct.js",
+        "relativePath": "scripts",
+        "fileName": "apply-migration-direct.js",
+        "size": 2129,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/apply-migrations-supabase.js",
+        "relativePath": "scripts",
+        "fileName": "apply-migrations-supabase.js",
+        "size": 3312,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/apply-supabase-migrations.js",
+        "relativePath": "scripts",
+        "fileName": "apply-supabase-migrations.js",
+        "size": 2129,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/backfill-public-ids.js",
+        "relativePath": "scripts",
+        "fileName": "backfill-public-ids.js",
+        "size": 2249,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/continuous-ai-loop.js",
+        "relativePath": "scripts",
+        "fileName": "continuous-ai-loop.js",
+        "size": 15920,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/create-all-tables.js",
+        "relativePath": "scripts",
+        "fileName": "create-all-tables.js",
+        "size": 14899,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/create-missing-tables.js",
+        "relativePath": "scripts",
+        "fileName": "create-missing-tables.js",
+        "size": 9798,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/create-tables-direct.js",
+        "relativePath": "scripts",
+        "fileName": "create-tables-direct.js",
+        "size": 1775,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/create-tables-supabase.js",
+        "relativePath": "scripts",
+        "fileName": "create-tables-supabase.js",
+        "size": 5985,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/cuid-standalone.js",
+        "relativePath": "scripts",
+        "fileName": "cuid-standalone.js",
+        "size": 517,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/cursor-agent-monitor.js",
+        "relativePath": "scripts",
+        "fileName": "cursor-agent-monitor.js",
+        "size": 4594,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/cursor-agent.js",
+        "relativePath": "scripts",
+        "fileName": "cursor-agent.js",
+        "size": 4918,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/enhance_chatbot_flows.js",
+        "relativePath": "scripts",
+        "fileName": "enhance_chatbot_flows.js",
+        "size": 28506,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/enhanced-run-all.js",
+        "relativePath": "scripts",
+        "fileName": "enhanced-run-all.js",
+        "size": 1984,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/enhancements.js",
+        "relativePath": "scripts",
+        "fileName": "enhancements.js",
+        "size": 15931,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/file-cleanup.js",
+        "relativePath": "scripts",
+        "fileName": "file-cleanup.js",
+        "size": 7595,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/fix-imports.js",
+        "relativePath": "scripts",
+        "fileName": "fix-imports.js",
+        "size": 1114,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/generate-barrels.js",
+        "relativePath": "scripts",
+        "fileName": "generate-barrels.js",
+        "size": 776,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/generate-final-report.js",
+        "relativePath": "scripts",
+        "fileName": "generate-final-report.js",
+        "size": 7231,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/generate-migration-script.js",
+        "relativePath": "scripts",
+        "fileName": "generate-migration-script.js",
+        "size": 1633,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/hemmam-center-ai-integration.js",
+        "relativePath": "scripts",
+        "fileName": "hemmam-center-ai-integration.js",
+        "size": 20040,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/master-ai-controller.js",
+        "relativePath": "scripts",
+        "fileName": "master-ai-controller.js",
+        "size": 11771,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/ml-learning-engine.js",
+        "relativePath": "scripts",
+        "fileName": "ml-learning-engine.js",
+        "size": 15221,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/n8n-workflow-manager.js",
+        "relativePath": "scripts",
+        "fileName": "n8n-workflow-manager.js",
+        "size": 15718,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/reorganize-project.js",
+        "relativePath": "scripts",
+        "fileName": "reorganize-project.js",
+        "size": 394,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/rewrite-client-directive.js",
+        "relativePath": "scripts",
+        "fileName": "rewrite-client-directive.js",
+        "size": 1684,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/run-all.js",
+        "relativePath": "scripts",
+        "fileName": "run-all.js",
+        "size": 6390,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/run-migrations.js",
+        "relativePath": "scripts",
+        "fileName": "run-migrations.js",
+        "size": 1627,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/sandbox-testing.js",
+        "relativePath": "scripts",
+        "fileName": "sandbox-testing.js",
+        "size": 13474,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/seed_supabase_full.js",
+        "relativePath": "scripts",
+        "fileName": "seed_supabase_full.js",
+        "size": 21409,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/self-healing.js",
+        "relativePath": "scripts",
+        "fileName": "self-healing.js",
+        "size": 15346,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/smart-clean.js",
+        "relativePath": "scripts",
+        "fileName": "smart-clean.js",
+        "size": 1256,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/social-media-automation.js",
+        "relativePath": "scripts",
+        "fileName": "social-media-automation.js",
+        "size": 13476,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/test-after-migration.js",
+        "relativePath": "scripts",
+        "fileName": "test-after-migration.js",
+        "size": 3935,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/test-connection.js",
+        "relativePath": "scripts",
+        "fileName": "test-connection.js",
+        "size": 1123,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/test-database.js",
+        "relativePath": "scripts",
+        "fileName": "test-database.js",
+        "size": 1808,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/validate-schema.js",
+        "relativePath": "scripts",
+        "fileName": "validate-schema.js",
+        "size": 1747,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/validate-structure.js",
+        "relativePath": "scripts",
+        "fileName": "validate-structure.js",
+        "size": 2181,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      },
+      {
+        "path": "/home/ubuntu/moeen/scripts/verification.js",
+        "relativePath": "scripts",
+        "fileName": "verification.js",
+        "size": 15778,
+        "exports": [],
+        "imports": [],
+        "isUtility": false,
+        "isMiddleware": false,
+        "isApiRoute": false,
+        "isModule": true
+      }
+    ],
+    "totalFiles": 133,
+    "totalSize": 1038951
+  }
+}

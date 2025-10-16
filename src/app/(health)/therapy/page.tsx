@@ -1,15 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { Input } from "@/components/ui/Input";
-import { 
-  Activity, 
-  Calendar, 
-  Clock, 
-  User, 
+import {
+  Activity,
+  Calendar,
+  Clock,
+  User,
   Target,
   TrendingUp,
   FileText,
@@ -24,11 +19,17 @@ import {
   AlertCircle,
   Heart,
   Brain,
-  Zap
+  Zap,
 } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { _useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { _Input } from "@/components/ui/Input";
+import { _useAuth } from "@/hooks/useAuth";
 
 interface TherapySession {
   id: string;
@@ -68,13 +69,13 @@ interface TherapyGoal {
   description: string;
   target_date: string;
   progress_percentage: number;
-  status: 'active' | 'completed' | 'paused';
+  status: "active" | "completed" | "paused";
   created_at: string;
 }
 
 const TherapyPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
-  const router = useRouter();
+  const __router = useRouter();
   const [sessions, setSessions] = useState<TherapySession[]>([]);
   const [goals, setGoals] = useState<TherapyGoal[]>([]);
   const [loading, setLoading] = useState(true);
@@ -91,7 +92,7 @@ const TherapyPage: React.FC = () => {
     loadTherapyData();
   }, [isAuthenticated, router]);
 
-  const loadTherapyData = async () => {
+  const __loadTherapyData = async () => {
     try {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
@@ -117,15 +118,15 @@ const TherapyPage: React.FC = () => {
             last_name: "محمد",
             age: 8,
             condition: "شلل دماغي",
-            avatar: "/logo.png"
+            avatar: "/logo.png",
           },
           therapists: {
             first_name: "د. فاطمة",
             last_name: "العلي",
             specialty: "العلاج الطبيعي للأطفال",
-            avatar: "/logo.png"
-          }
-        }
+            avatar: "/logo.png",
+          },
+        },
       ];
 
       const mockGoals: TherapyGoal[] = [
@@ -137,55 +138,64 @@ const TherapyPage: React.FC = () => {
           target_date: "2024-03-15",
           progress_percentage: 65,
           status: "active",
-          created_at: "2024-01-01T00:00:00Z"
-        }
+          created_at: "2024-01-01T00:00:00Z",
+        },
       ];
 
       setSessions(mockSessions);
       setGoals(mockGoals);
     } catch (error) {
-      setError('فشل في تحميل بيانات العلاج');
+      setError("فشل في تحميل بيانات العلاج");
     } finally {
       setLoading(false);
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    const statusMap = {
-      'scheduled': { label: 'مجدولة', variant: 'primary' as const },
-      'in_progress': { label: 'جارية', variant: 'secondary' as const },
-      'completed': { label: 'مكتملة', variant: 'primary' as const },
-      'cancelled': { label: 'ملغية', variant: 'destructive' as const }
+  const __getStatusBadge = (_status: string) => {
+    const __statusMap = {
+      scheduled: { label: "مجدولة", variant: "primary" as const },
+      in_progress: { label: "جارية", variant: "secondary" as const },
+      completed: { label: "مكتملة", variant: "primary" as const },
+      cancelled: { label: "ملغية", variant: "destructive" as const },
     };
-    
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'primary' as const };
+
+    const __statusInfo = statusMap[status as keyof typeof statusMap] || {
+      label: status,
+      variant: "primary" as const,
+    };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 
-  const getTherapyTypeIcon = (type: string) => {
+  const __getTherapyTypeIcon = (_type: string) => {
     switch (type) {
-      case 'العلاج الطبيعي':
+      case "العلاج الطبيعي":
         return <Activity className="w-4 h-4 text-blue-500" />;
-      case 'العلاج الوظيفي':
+      case "العلاج الوظيفي":
         return <Target className="w-4 h-4 text-green-500" />;
-      case 'علاج النطق':
+      case "علاج النطق":
         return <Heart className="w-4 h-4 text-red-500" />;
-      case 'العلاج النفسي':
+      case "العلاج النفسي":
         return <Brain className="w-4 h-4 text-purple-500" />;
       default:
         return <Zap className="w-4 h-4 text-gray-500" />;
     }
   };
 
-  const filteredSessions = sessions.filter(session => {
-    const matchesSearch = 
-      session.patients?.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      session.patients?.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  const __filteredSessions = sessions.filter((session) => {
+    const matchesSearch =
+      session.patients?.first_name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      session.patients?.last_name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
       session.therapy_type.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesType = filterType === "all" || session.therapy_type === filterType;
-    const matchesStatus = filterStatus === "all" || session.status === filterStatus;
-    
+
+    const matchesType =
+      filterType === "all" || session.therapy_type === filterType;
+    const matchesStatus =
+      filterStatus === "all" || session.status === filterStatus;
+
     return matchesSearch && matchesType && matchesStatus;
   });
 
@@ -199,11 +209,15 @@ const TherapyPage: React.FC = () => {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">جلسات العلاج والتأهيل</h1>
-            <p className="text-gray-600 mt-2">إدارة جلسات العلاج الطبيعي والتأهيل لذوي الاحتياجات الخاصة</p>
+            <h1 className="text-3xl font-bold text-gray-900">
+              جلسات العلاج والتأهيل
+            </h1>
+            <p className="text-gray-600 mt-2">
+              إدارة جلسات العلاج الطبيعي والتأهيل لذوي الاحتياجات الخاصة
+            </p>
           </div>
-          <Button 
-            onClick={() => router.push('/therapy/new')}
+          <Button
+            onClick={() => router.push("/therapy/new")}
             className="bg-[var(--brand-primary)] hover:brightness-95"
           >
             <Plus className="w-4 h-4 mr-2" />
@@ -252,17 +266,19 @@ const TherapyPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">إجمالي الجلسات</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              إجمالي الجلسات
+            </CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{sessions.length}</div>
             <p className="text-xs text-muted-foreground">
-              {sessions.filter(s => s.status === 'completed').length} مكتملة
+              {sessions.filter((s) => s.status === "completed").length} مكتملة
             </p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">الجلسات اليوم</CardTitle>
@@ -270,27 +286,33 @@ const TherapyPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {sessions.filter(s => 
-                new Date(s.session_date).toDateString() === new Date().toDateString()
-              ).length}
+              {
+                sessions.filter(
+                  (s) =>
+                    new Date(s.session_date).toDateString() ===
+                    new Date().toDateString(),
+                ).length
+              }
             </div>
             <p className="text-xs text-muted-foreground">جلسات مجدولة</p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">الأهداف النشطة</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              الأهداف النشطة
+            </CardTitle>
             <Target className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {goals.filter(g => g.status === 'active').length}
+              {goals.filter((g) => g.status === "active").length}
             </div>
             <p className="text-xs text-muted-foreground">أهداف قيد التنفيذ</p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">معدل الإنجاز</CardTitle>
@@ -298,9 +320,15 @@ const TherapyPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {goals.length > 0 
-                ? Math.round(goals.reduce((acc, goal) => acc + goal.progress_percentage, 0) / goals.length)
-                : 0}%
+              {goals.length > 0
+                ? Math.round(
+                    goals.reduce(
+                      (acc, goal) => acc + goal.progress_percentage,
+                      0,
+                    ) / goals.length,
+                  )
+                : 0}
+              %
             </div>
             <p className="text-xs text-muted-foreground">متوسط التقدم</p>
           </CardContent>
@@ -317,10 +345,12 @@ const TherapyPage: React.FC = () => {
           <Card>
             <CardContent className="p-12 text-center">
               <Activity className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد جلسات علاج</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                لا توجد جلسات علاج
+              </h3>
               <p className="text-gray-600 mb-4">ابدأ بإنشاء جلسة علاج جديدة</p>
-              <Button 
-                onClick={() => router.push('/therapy/new')}
+              <Button
+                onClick={() => router.push("/therapy/new")}
                 className="bg-[var(--brand-primary)] hover:brightness-95"
               >
                 إنشاء جلسة جديدة
@@ -329,7 +359,10 @@ const TherapyPage: React.FC = () => {
           </Card>
         ) : (
           filteredSessions.map((session) => (
-            <Card key={session.id} className="hover:shadow-md transition-shadow">
+            <Card
+              key={session.id}
+              className="hover:shadow-md transition-shadow"
+            >
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-4">
@@ -345,10 +378,12 @@ const TherapyPage: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold">
-                        {session.patients?.first_name} {session.patients?.last_name}
+                        {session.patients?.first_name}{" "}
+                        {session.patients?.last_name}
                       </h3>
                       <p className="text-sm text-gray-600">
-                        العمر: {session.patients?.age} سنة | {session.patients?.condition}
+                        العمر: {session.patients?.age} سنة |{" "}
+                        {session.patients?.condition}
                       </p>
                     </div>
                   </div>
@@ -363,7 +398,9 @@ const TherapyPage: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   <div className="flex items-center gap-2">
                     {getTherapyTypeIcon(session.therapy_type)}
-                    <span className="text-sm font-medium">{session.therapy_type}</span>
+                    <span className="text-sm font-medium">
+                      {session.therapy_type}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-gray-500" />
@@ -371,7 +408,9 @@ const TherapyPage: React.FC = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-gray-500" />
-                    <span className="text-sm">{session.session_time} ({session.duration} دقيقة)</span>
+                    <span className="text-sm">
+                      {session.session_time} ({session.duration} دقيقة)
+                    </span>
                   </div>
                 </div>
 
@@ -390,7 +429,11 @@ const TherapyPage: React.FC = () => {
                   <h4 className="text-sm font-semibold mb-2">الأنشطة:</h4>
                   <div className="flex flex-wrap gap-2">
                     {session.activities.map((activity, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs">
+                      <Badge
+                        key={index}
+                        variant="secondary"
+                        className="text-xs"
+                      >
                         {activity}
                       </Badge>
                     ))}
@@ -399,7 +442,9 @@ const TherapyPage: React.FC = () => {
 
                 {session.progress_notes && (
                   <div className="mb-4">
-                    <h4 className="text-sm font-semibold mb-2">ملاحظات التقدم:</h4>
+                    <h4 className="text-sm font-semibold mb-2">
+                      ملاحظات التقدم:
+                    </h4>
                     <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg">
                       {session.progress_notes}
                     </p>
@@ -416,7 +461,8 @@ const TherapyPage: React.FC = () => {
                       className="rounded-full"
                     />
                     <span className="text-sm text-gray-600">
-                      {session.therapists?.first_name} {session.therapists?.last_name}
+                      {session.therapists?.first_name}{" "}
+                      {session.therapists?.last_name}
                     </span>
                   </div>
                   <div className="flex gap-2">

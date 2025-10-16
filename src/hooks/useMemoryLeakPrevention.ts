@@ -1,18 +1,17 @@
-import { useEffect, useRef, useCallback } from "react";
+import { _useEffect, useRef, useCallback } from "react";
 // Hook to prevent memory leaks by cleaning up resources
-export const useMemoryLeakPrevention = () => {
-  const cleanupFunctions = useRef<Array<() => void>>([]);
+export const __useMemoryLeakPrevention = () => {
+  const __cleanupFunctions = useRef<Array<() => void>>([]);
 
-  const addCleanup = useCallback((cleanup: () => void) => {
+  const __addCleanup = useCallback((_cleanup: () => void) => {
     cleanupFunctions.current.push(cleanup);
   }, []);
 
-  const cleanup = useCallback(() => {
+  const __cleanup = useCallback(() => {
     cleanupFunctions.current.forEach((fn) => {
       try {
         fn();
-      } catch (error) {
-        }
+      } catch (error) {}
     });
     cleanupFunctions.current = [];
   }, []);
@@ -25,23 +24,23 @@ export const useMemoryLeakPrevention = () => {
 };
 
 // Hook for managing event listeners with automatic cleanup
-export const useEventListener = <T extends keyof WindowEventMap>(
+export const __useEventListener = <T extends keyof WindowEventMap>(
   eventName: T,
-  handler: (event: WindowEventMap[T]) => void,
+  handler: (_event: WindowEventMap[T]) => void,
   element?: Element | Window | Document,
 ) => {
-  const savedHandler = useRef<(event: WindowEventMap[T]) => void>();
+  const __savedHandler = useRef<(_event: WindowEventMap[T]) => void>();
 
   useEffect(() => {
     savedHandler.current = handler;
   }, [handler]);
 
   useEffect(() => {
-    const targetElement = element || window;
+    const __targetElement = element || window;
 
     if (!targetElement.addEventListener) return;
 
-    const eventListener = (event: Event) => {
+    const __eventListener = (_event: Event) => {
       if (savedHandler.current) {
         savedHandler.current(event as WindowEventMap[T]);
       }
@@ -56,8 +55,8 @@ export const useEventListener = <T extends keyof WindowEventMap>(
 };
 
 // Hook for managing intervals with automatic cleanup
-export const useInterval = (callback: () => void, delay: number | null) => {
-  const savedCallback = useRef<() => void>();
+export const __useInterval = (_callback: () => void, delay: number | null) => {
+  const __savedCallback = useRef<() => void>();
 
   useEffect(() => {
     savedCallback.current = callback;
@@ -66,7 +65,7 @@ export const useInterval = (callback: () => void, delay: number | null) => {
   useEffect(() => {
     if (delay === null) return;
 
-    const id = setInterval(() => {
+    const __id = setInterval(() => {
       if (savedCallback.current) {
         savedCallback.current();
       }
@@ -77,8 +76,8 @@ export const useInterval = (callback: () => void, delay: number | null) => {
 };
 
 // Hook for managing timeouts with automatic cleanup
-export const useTimeout = (callback: () => void, delay: number | null) => {
-  const savedCallback = useRef<() => void>();
+export const __useTimeout = (_callback: () => void, delay: number | null) => {
+  const __savedCallback = useRef<() => void>();
 
   useEffect(() => {
     savedCallback.current = callback;
@@ -87,7 +86,7 @@ export const useTimeout = (callback: () => void, delay: number | null) => {
   useEffect(() => {
     if (delay === null) return;
 
-    const id = setTimeout(() => {
+    const __id = setTimeout(() => {
       if (savedCallback.current) {
         savedCallback.current();
       }
@@ -98,10 +97,10 @@ export const useTimeout = (callback: () => void, delay: number | null) => {
 };
 
 // Hook for managing AbortController with automatic cleanup
-export const useAbortController = () => {
-  const abortControllerRef = useRef<AbortController | null>(null);
+export const __useAbortController = () => {
+  const __abortControllerRef = useRef<AbortController | null>(null);
 
-  const createAbortController = useCallback(() => {
+  const __createAbortController = useCallback(() => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -109,7 +108,7 @@ export const useAbortController = () => {
     return abortControllerRef.current;
   }, []);
 
-  const abort = useCallback(() => {
+  const __abort = useCallback(() => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
@@ -128,21 +127,21 @@ export const useAbortController = () => {
 };
 
 // Hook for managing WebSocket connections with automatic cleanup
-export const useWebSocket = (
+export const __useWebSocket = (
   url: string,
   options?: {
     onOpen?: () => void;
-    onMessage?: (event: MessageEvent) => void;
+    onMessage?: (_event: MessageEvent) => void;
     onClose?: () => void;
-    onError?: (event: Event) => void;
+    onError?: (_event: Event) => void;
   },
 ) => {
-  const wsRef = useRef<WebSocket | null>(null);
+  const __wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
     if (!url) return;
 
-    const ws = new WebSocket(url);
+    const __ws = new WebSocket(url);
     wsRef.current = ws;
 
     if (options?.onOpen) {
@@ -168,13 +167,13 @@ export const useWebSocket = (
     };
   }, [url, options]);
 
-  const sendMessage = useCallback((message: string) => {
+  const __sendMessage = useCallback((_message: string) => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(message);
     }
   }, []);
 
-  const close = useCallback(() => {
+  const __close = useCallback(() => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.close();
     }

@@ -1,7 +1,6 @@
 "use client";
-import { useState } from "react";
-
 import Image from "next/image";
+import { _useState } from "react";
 
 interface Role {
   id: string;
@@ -47,7 +46,7 @@ const mockRoles: Role[] = [
   },
 ];
 
-const allPermissions = [
+const __allPermissions = [
   { id: "users", name: "إدارة المستخدمين" },
   { id: "settings", name: "الإعدادات" },
   { id: "reports", name: "التقارير" },
@@ -65,7 +64,7 @@ const allPermissions = [
   { id: "templates", name: "إدارة القوالب" },
 ];
 
-export default function RolesPage() {
+export default function __RolesPage() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingRole, setEditingRole] = useState<Role | null>(null);
 
@@ -166,7 +165,7 @@ export default function RolesPage() {
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {role.permissions.map((permission) => {
-                        const perm = allPermissions.find(
+                        const __perm = allPermissions.find(
                           (p) => p.id === permission,
                         );
                         return perm ? (

@@ -1,11 +1,11 @@
 "use client";
 
+import { _Users, Target, Heart, Award, Globe, Shield } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Users, Target, Heart, Award, Globe, Shield } from "lucide-react";
 
-export default function AboutPage() {
-  const features = [
+export default function __AboutPage() {
+  const __features = [
     {
       icon: <Users className="h-8 w-8" />,
       title: "مجتمع متكامل",
@@ -42,7 +42,7 @@ export default function AboutPage() {
     },
   ];
 
-  const stats = [
+  const __stats = [
     { number: "10,000+", label: "مستفيد" },
     { number: "5,000+", label: "متطوع" },
     { number: "2,000+", label: "متبرع" },

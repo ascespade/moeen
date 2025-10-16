@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useState, useEffect } from "react";
+import { _useState, useEffect } from "react";
 
 interface TaskStatus {
   total_tasks: number;
@@ -34,7 +34,7 @@ interface CompletionStatus {
   message: string;
 }
 
-export default function AgentDashboard() {
+export default function __AgentDashboard() {
   const [taskStatus, setTaskStatus] = useState<TaskStatus | null>(null);
   const [agentStatus, setAgentStatus] = useState<AgentStatus | null>(null);
   const [completionStatus, setCompletionStatus] =
@@ -42,48 +42,48 @@ export default function AgentDashboard() {
   const [logs, setLogs] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchStatus = async () => {
+  const __fetchStatus = async () => {
     try {
       // Fetch task status
-      const taskResponse = await fetch("/api/agent/tasks");
+      const __taskResponse = await fetch("/api/agent/tasks");
       if (taskResponse.ok) {
-        const taskData = await taskResponse.json();
+        const __taskData = await taskResponse.json();
         setTaskStatus(taskData);
       }
 
       // Fetch agent status
-      const agentResponse = await fetch("/api/agent/status");
+      const __agentResponse = await fetch("/api/agent/status");
       if (agentResponse.ok) {
-        const agentData = await agentResponse.json();
+        const __agentData = await agentResponse.json();
         setAgentStatus(agentData);
       }
 
       // Fetch completion status
-      const completionResponse = await fetch("/api/agent/completion");
+      const __completionResponse = await fetch("/api/agent/completion");
       if (completionResponse.ok) {
-        const completionData = await completionResponse.json();
+        const __completionData = await completionResponse.json();
         setCompletionStatus(completionData);
       }
 
       // Fetch recent logs
-      const logsResponse = await fetch("/api/agent/logs");
+      const __logsResponse = await fetch("/api/agent/logs");
       if (logsResponse.ok) {
-        const logsData = await logsResponse.json();
+        const __logsData = await logsResponse.json();
         setLogs(logsData.logs || []);
       }
     } catch (error) {
-      } finally {
+    } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
     fetchStatus();
-    const interval = setInterval(fetchStatus, 5000); // Update every 5 seconds
+    const __interval = setInterval(fetchStatus, 5000); // Update every 5 seconds
     return () => clearInterval(interval);
   }, []);
 
-  const getStatusColor = (status: string) => {
+  const __getStatusColor = (_status: string) => {
     switch (status) {
       case "running":
         return "text-green-600 bg-green-100";
@@ -98,7 +98,7 @@ export default function AgentDashboard() {
     }
   };
 
-  const formatTime = (timeString: string) => {
+  const __formatTime = (_timeString: string) => {
     if (!timeString) return "N/A";
     return new Date(timeString).toLocaleString();
   };

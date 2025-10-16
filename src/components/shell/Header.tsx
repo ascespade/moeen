@@ -1,13 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Sun, Moon, Languages } from "lucide-react";
-import { useT } from "@/components/providers/I18nProvider";
-import { useTheme, useLanguage } from "@/design-system/hooks";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { _Sun, Moon, Languages } from "lucide-react";
 import Link from "next/link";
+import { _useEffect, useState } from "react";
 
-export default function Header() {
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { _useT } from "@/components/providers/I18nProvider";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { _useTheme, useLanguage } from "@/design-system/hooks";
+
+export default function __Header() {
   const { theme, isLoading: themeLoading } = useTheme();
   const { language, direction, isLoading: languageLoading } = useLanguage();
   const [notif, setNotif] = useState(3);
@@ -17,7 +18,7 @@ export default function Header() {
 
   // Close dropdowns when clicking outside
   useEffect(() => {
-    const handleClickOutside = () => {
+    const __handleClickOutside = () => {
       setShowNotifDropdown(false);
       setShowUserDropdown(false);
     };
@@ -67,17 +68,10 @@ export default function Header() {
 
           <div className="flex items-center gap-2 justify-self-end">
             {/* Theme Switcher */}
-            <ThemeSwitcher 
-              showLabel={true}
-              size="md"
-            />
+            <ThemeSwitcher showLabel={true} size="md" />
 
             {/* Language Switcher */}
-            <LanguageSwitcher 
-              variant="dropdown"
-              showLabel={true}
-              size="md"
-            />
+            <LanguageSwitcher variant="dropdown" showLabel={true} size="md" />
 
             <div className="hs-dropdown [--trigger:hover] relative inline-flex">
               <button

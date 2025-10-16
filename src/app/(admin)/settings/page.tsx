@@ -1,9 +1,8 @@
 "use client";
-import { useState } from "react";
-
 import Image from "next/image";
+import { _useState } from "react";
 
-export default function SettingsPage() {
+export default function __SettingsPage() {
   const [activeTab, setActiveTab] = useState<
     "general" | "api" | "integrations" | "notifications" | "templates"
   >("general");

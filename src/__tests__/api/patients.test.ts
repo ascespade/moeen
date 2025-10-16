@@ -1,15 +1,15 @@
-import { NextRequest } from "next/server";
-import { GET, POST } from "@/app/api/patients/route";
-import { realDB } from "@/lib/supabase-real";
-import { whatsappAPI } from "@/lib/whatsapp-business-api";
+import { _NextRequest } from "next/server";
+import { _GET, POST } from "@/app/api/patients/route";
+import { _realDB } from "@/lib/supabase-real";
+import { _whatsappAPI } from "@/lib/whatsapp-business-api";
 // Comprehensive API Tests for Patients
 
 // Mock dependencies
 jest.mock("@/lib/supabase-real");
 jest.mock("@/lib/whatsapp-business-api");
 
-const mockRealDB = realDB as jest.Mocked<typeof realDB>;
-const mockWhatsappAPI = whatsappAPI as jest.Mocked<typeof whatsappAPI>;
+const __mockRealDB = realDB as jest.Mocked<typeof realDB>;
+const __mockWhatsappAPI = whatsappAPI as jest.Mocked<typeof whatsappAPI>;
 
 describe("/api/patients", () => {
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe("/api/patients", () => {
 
   describe("GET /api/patients", () => {
     it("should return patients with pagination", async () => {
-      const mockPatients = [
+      const __mockPatients = [
         {
           id: "1",
           name: "أحمد محمد",
@@ -37,7 +37,7 @@ describe("/api/patients", () => {
         },
       ];
 
-      const mockPatientDetails = [
+      const __mockPatientDetails = [
         {
           id: "1",
           name: "أحمد محمد",
@@ -48,7 +48,7 @@ describe("/api/patients", () => {
         },
       ];
 
-      const mockAppointments = [
+      const __mockAppointments = [
         {
           id: "1",
           appointment_date: "2024-01-20",
@@ -60,11 +60,11 @@ describe("/api/patients", () => {
       mockRealDB.getPatient.mockResolvedValue(mockPatientDetails[0]);
       mockRealDB.getAppointments.mockResolvedValue(mockAppointments);
 
-      const request = new NextRequest(
+      const __request = new NextRequest(
         "http://localhost:3000/api/patients?page=1&limit=20&search=أحمد",
       );
-      const response = await GET(request);
-      const data = await response.json();
+      const __response = await GET(request);
+      const __data = await response.json();
 
       expect(response.status).toBe(200);
       expect(data.success).toBe(true);
@@ -78,7 +78,7 @@ describe("/api/patients", () => {
     });
 
     it("should handle search functionality", async () => {
-      const mockPatients = [
+      const __mockPatients = [
         {
           id: "1",
           name: "أحمد محمد",
@@ -96,10 +96,10 @@ describe("/api/patients", () => {
       });
       mockRealDB.getAppointments.mockResolvedValue([]);
 
-      const request = new NextRequest(
+      const __request = new NextRequest(
         "http://localhost:3000/api/patients?search=أحمد",
       );
-      const response = await GET(request);
+      const __response = await GET(request);
 
       expect(mockRealDB.searchUsers).toHaveBeenCalledWith("أحمد", "patient");
       expect(response.status).toBe(200);
@@ -110,9 +110,9 @@ describe("/api/patients", () => {
         new Error("Database connection failed"),
       );
 
-      const request = new NextRequest("http://localhost:3000/api/patients");
-      const response = await GET(request);
-      const data = await response.json();
+      const __request = new NextRequest("http://localhost:3000/api/patients");
+      const __response = await GET(request);
+      const __data = await response.json();
 
       expect(response.status).toBe(500);
       expect(data.success).toBe(false);
@@ -122,7 +122,7 @@ describe("/api/patients", () => {
 
   describe("POST /api/patients", () => {
     it("should create a new patient successfully", async () => {
-      const patientData = {
+      const __patientData = {
         name: "أحمد محمد",
         age: 25,
         phone: "+966501234567",
@@ -147,13 +147,13 @@ describe("/api/patients", () => {
         assigned_doctor_id: "doctor-1",
       };
 
-      const mockUser = {
+      const __mockUser = {
         id: "user-1",
         name: "أحمد محمد",
         phone: "+966501234567",
       };
 
-      const mockPatient = {
+      const __mockPatient = {
         id: "user-1",
         status: "active",
       };
@@ -162,7 +162,7 @@ describe("/api/patients", () => {
       mockRealDB.createPatient.mockResolvedValue(mockPatient);
       mockWhatsappAPI.sendTextMessage.mockResolvedValue({ success: true });
 
-      const request = new NextRequest("http://localhost:3000/api/patients", {
+      const __request = new NextRequest("http://localhost:3000/api/patients", {
         method: "POST",
         body: JSON.stringify(patientData),
         headers: {
@@ -170,8 +170,8 @@ describe("/api/patients", () => {
         },
       });
 
-      const response = await POST(request);
-      const data = await response.json();
+      const __response = await POST(request);
+      const __data = await response.json();
 
       expect(response.status).toBe(200);
       expect(data.success).toBe(true);
@@ -198,13 +198,13 @@ describe("/api/patients", () => {
     });
 
     it("should validate required fields", async () => {
-      const invalidData = {
+      const __invalidData = {
         name: "أحمد محمد",
         // Missing age and phone
         email: "ahmed@example.com",
       };
 
-      const request = new NextRequest("http://localhost:3000/api/patients", {
+      const __request = new NextRequest("http://localhost:3000/api/patients", {
         method: "POST",
         body: JSON.stringify(invalidData),
         headers: {
@@ -212,8 +212,8 @@ describe("/api/patients", () => {
         },
       });
 
-      const response = await POST(request);
-      const data = await response.json();
+      const __response = await POST(request);
+      const __data = await response.json();
 
       expect(response.status).toBe(400);
       expect(data.success).toBe(false);
@@ -221,19 +221,19 @@ describe("/api/patients", () => {
     });
 
     it("should handle WhatsApp API failures gracefully", async () => {
-      const patientData = {
+      const __patientData = {
         name: "أحمد محمد",
         age: 25,
         phone: "+966501234567",
       };
 
-      const mockUser = {
+      const __mockUser = {
         id: "user-1",
         name: "أحمد محمد",
         phone: "+966501234567",
       };
 
-      const mockPatient = {
+      const __mockPatient = {
         id: "user-1",
         status: "active",
       };
@@ -244,7 +244,7 @@ describe("/api/patients", () => {
         new Error("WhatsApp API failed"),
       );
 
-      const request = new NextRequest("http://localhost:3000/api/patients", {
+      const __request = new NextRequest("http://localhost:3000/api/patients", {
         method: "POST",
         body: JSON.stringify(patientData),
         headers: {
@@ -252,8 +252,8 @@ describe("/api/patients", () => {
         },
       });
 
-      const response = await POST(request);
-      const data = await response.json();
+      const __response = await POST(request);
+      const __data = await response.json();
 
       expect(response.status).toBe(200);
       expect(data.success).toBe(true);
@@ -261,7 +261,7 @@ describe("/api/patients", () => {
     });
 
     it("should handle database creation errors", async () => {
-      const patientData = {
+      const __patientData = {
         name: "أحمد محمد",
         age: 25,
         phone: "+966501234567",
@@ -269,7 +269,7 @@ describe("/api/patients", () => {
 
       mockRealDB.createUser.mockRejectedValue(new Error("Database error"));
 
-      const request = new NextRequest("http://localhost:3000/api/patients", {
+      const __request = new NextRequest("http://localhost:3000/api/patients", {
         method: "POST",
         body: JSON.stringify(patientData),
         headers: {
@@ -277,8 +277,8 @@ describe("/api/patients", () => {
         },
       });
 
-      const response = await POST(request);
-      const data = await response.json();
+      const __response = await POST(request);
+      const __data = await response.json();
 
       expect(response.status).toBe(500);
       expect(data.success).toBe(false);

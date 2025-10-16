@@ -1,10 +1,10 @@
 "use client";
 
-import { useT } from "@/components/providers/I18nProvider";
+import { _useT } from "@/components/providers/I18nProvider";
 
-export default function FeaturesPage() {
+export default function __FeaturesPage() {
   const { t } = useT();
-  const features = [
+  const __features = [
     {
       title: t("home.features.unifiedChat", "دردشة موحّدة"),
       desc: t(

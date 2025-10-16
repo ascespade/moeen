@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { _useState } from "react";
 
-export default function ResetPasswordPage() {
+import { _ROUTES } from "@/constants/routes";
+
+export default function __ResetPasswordPage() {
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
@@ -13,7 +14,7 @@ export default function ResetPasswordPage() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const __handleInputChange = (_e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -29,7 +30,7 @@ export default function ResetPasswordPage() {
     }
   };
 
-  const validateForm = () => {
+  const __validateForm = () => {
     const newErrors: Record<string, string> = {};
 
     if (!formData.password) {
@@ -48,7 +49,7 @@ export default function ResetPasswordPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const __handleSubmit = async (_e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {

@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+import { _useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 interface Flow {
   id: string;
@@ -61,13 +62,13 @@ const mockFlows: Flow[] = [
   },
 ];
 
-export default function ChatbotFlowsPage() {
+export default function __ChatbotFlowsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [selectedTag, setSelectedTag] = useState<string>("all");
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const getStatusColor = (status: Flow["status"]) => {
+  const __getStatusColor = (_status: Flow["status"]) => {
     switch (status) {
       case "draft":
         return "bg-yellow-100 text-yellow-800";
@@ -80,7 +81,7 @@ export default function ChatbotFlowsPage() {
     }
   };
 
-  const getStatusText = (status: Flow["status"]) => {
+  const __getStatusText = (_status: Flow["status"]) => {
     switch (status) {
       case "draft":
         return "مسودة";
@@ -93,15 +94,15 @@ export default function ChatbotFlowsPage() {
     }
   };
 
-  const allTags = Array.from(new Set(mockFlows.flatMap((flow) => flow.tags)));
+  const __allTags = Array.from(new Set(mockFlows.flatMap((flow) => flow.tags)));
 
-  const filteredFlows = mockFlows.filter((flow) => {
+  const __filteredFlows = mockFlows.filter((flow) => {
     const matchesSearch =
       flow.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       flow.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus =
       selectedStatus === "all" || flow.status === selectedStatus;
-    const matchesTag = selectedTag === "all" || flow.tags.includes(selectedTag);
+    const __matchesTag = selectedTag === "all" || flow.tags.includes(selectedTag);
     return matchesSearch && matchesStatus && matchesTag;
   });
 

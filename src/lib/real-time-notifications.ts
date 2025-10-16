@@ -1,7 +1,7 @@
-import { Server } from "socket.io";
-// Real-time Notifications System
-import { Server } from "socket.io";
 import nodemailer from "nodemailer";
+import { _Server } from "socket.io";
+// Real-time Notifications System
+import { _Server } from "socket.io";
 
 export interface NotificationConfig {
   email: {
@@ -27,7 +27,7 @@ export interface Notification {
   recipient: string;
   title: string;
   message: string;
-  data?: any;
+  data?: unknown;
   sent: boolean;
   createdAt: Date;
   sentAt?: Date;
@@ -48,7 +48,7 @@ export class RealTimeNotificationSystem {
   private notifications: Map<string, Notification> = new Map();
   private emergencyContacts: Map<string, string[]> = new Map();
 
-  constructor(io: Server, config: NotificationConfig) {
+  constructor(_io: Server, config: NotificationConfig) {
     this.io = io;
 
     // Initialize email transporter
@@ -81,28 +81,27 @@ export class RealTimeNotificationSystem {
   private setupSocketHandlers() {
     this.io.on("connection", (socket) => {
       // Join user to specific rooms
-      socket.on("join-room", (room: string) => {
+      socket.on("join-room", (_room: string) => {
         socket.join(room);
-        });
+      });
 
       // Handle emergency alerts
-      socket.on("emergency-alert", (alert: EmergencyAlert) => {
+      socket.on("emergency-alert", (_alert: EmergencyAlert) => {
         this.handleEmergencyAlert(alert);
       });
 
       // Handle notification preferences
-      socket.on("notification-preferences", (preferences: any) => {
+      socket.on("notification-preferences", (_preferences: unknown) => {
         this.updateNotificationPreferences(socket.id, preferences);
       });
 
-      socket.on("disconnect", () => {
-        });
+      socket.on("disconnect", () => {});
     });
   }
 
   // Emergency Alert System
-  async handleEmergencyAlert(alert: EmergencyAlert) {
-    const notificationId = this.generateNotificationId();
+  async handleEmergencyAlert(_alert: EmergencyAlert) {
+    const __notificationId = this.generateNotificationId();
 
     const notification: Notification = {
       id: notificationId,
@@ -137,7 +136,7 @@ export class RealTimeNotificationSystem {
     return notificationId;
   }
 
-  private async sendEmergencyNotifications(notification: Notification) {
+  private async sendEmergencyNotifications(_notification: Notification) {
     const medicalTeamContacts =
       this.emergencyContacts.get("medical_team") || [];
 
@@ -160,8 +159,8 @@ export class RealTimeNotificationSystem {
   }
 
   // Appointment Notifications
-  async sendAppointmentNotification(patientId: string, appointmentData: any) {
-    const notificationId = this.generateNotificationId();
+  async sendAppointmentNotification(_patientId: string, appointmentData: unknown) {
+    const __notificationId = this.generateNotificationId();
 
     const notification: Notification = {
       id: notificationId,
@@ -198,8 +197,8 @@ export class RealTimeNotificationSystem {
   }
 
   // Reminder Notifications
-  async sendReminderNotification(patientId: string, reminderData: any) {
-    const notificationId = this.generateNotificationId();
+  async sendReminderNotification(_patientId: string, reminderData: unknown) {
+    const __notificationId = this.generateNotificationId();
 
     const notification: Notification = {
       id: notificationId,
@@ -229,8 +228,8 @@ export class RealTimeNotificationSystem {
   }
 
   // Crisis Intervention Notifications
-  async sendCrisisNotification(patientId: string, crisisData: any) {
-    const notificationId = this.generateNotificationId();
+  async sendCrisisNotification(_patientId: string, crisisData: unknown) {
+    const __notificationId = this.generateNotificationId();
 
     const notification: Notification = {
       id: notificationId,
@@ -247,7 +246,7 @@ export class RealTimeNotificationSystem {
     this.notifications.set(notificationId, notification);
 
     // Send to crisis team
-    const crisisTeamContacts = this.emergencyContacts.get("medical_team") || [];
+    const __crisisTeamContacts = this.emergencyContacts.get("medical_team") || [];
     for (const contact of crisisTeamContacts) {
       await this.sendSMS(contact, notification.title, notification.message);
     }
@@ -267,7 +266,7 @@ export class RealTimeNotificationSystem {
   }
 
   // SMS Sending
-  private async sendSMS(phoneNumber: string, title: string, message: string) {
+  private async sendSMS(_phoneNumber: string, title: string, message: string) {
     try {
       // In real implementation, integrate with SMS provider like Twilio
       return true;
@@ -281,10 +280,10 @@ export class RealTimeNotificationSystem {
     to: string,
     subject: string,
     text: string,
-    data?: any,
+    data?: unknown,
   ) {
     try {
-      const mailOptions = {
+      const __mailOptions = {
         from: "noreply@alhemam.sa",
         to,
         subject,
@@ -299,7 +298,7 @@ export class RealTimeNotificationSystem {
     }
   }
 
-  private generateEmailHTML(subject: string, text: string, data?: any): string {
+  private generateEmailHTML(_subject: string, text: string, data?: unknown): string {
     return `
       <!DOCTYPE html>
       <html dir="rtl" lang="ar">
@@ -336,7 +335,7 @@ export class RealTimeNotificationSystem {
   }
 
   // Notification Management
-  getNotification(notificationId: string): Notification | undefined {
+  getNotification(_notificationId: string): Notification | undefined {
     return this.notifications.get(notificationId);
   }
 
@@ -344,13 +343,13 @@ export class RealTimeNotificationSystem {
     return Array.from(this.notifications.values());
   }
 
-  getNotificationsByType(type: string): Notification[] {
+  getNotificationsByType(_type: string): Notification[] {
     return Array.from(this.notifications.values()).filter(
       (n) => n.type === type,
     );
   }
 
-  getNotificationsByPriority(priority: string): Notification[] {
+  getNotificationsByPriority(_priority: string): Notification[] {
     return Array.from(this.notifications.values()).filter(
       (n) => n.priority === priority,
     );
@@ -358,7 +357,7 @@ export class RealTimeNotificationSystem {
 
   // Analytics
   getNotificationStats() {
-    const notifications = Array.from(this.notifications.values());
+    const __notifications = Array.from(this.notifications.values());
     return {
       total: notifications.length,
       sent: notifications.filter((n) => n.sent).length,
@@ -385,17 +384,17 @@ export class RealTimeNotificationSystem {
     return `notif_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
-  private updateNotificationPreferences(socketId: string, preferences: any) {
+  private updateNotificationPreferences(_socketId: string, preferences: unknown) {
     // Update user notification preferences
-    }
+  }
 
   // Broadcast to specific room
-  broadcastToRoom(room: string, event: string, data: any) {
+  broadcastToRoom(_room: string, event: string, data: unknown) {
     this.io.to(room).emit(event, data);
   }
 
   // Broadcast to all connected clients
-  broadcastToAll(event: string, data: any) {
+  broadcastToAll(_event: string, data: unknown) {
     this.io.emit(event, data);
   }
 }

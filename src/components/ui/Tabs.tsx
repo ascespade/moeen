@@ -1,14 +1,14 @@
 import clsx from "clsx";
-import { useState, createContext, useContext } from "react";
+import { _useState, createContext, useContext } from "react";
 
 interface TabsContextValue {
   value: string;
-  onValueChange: (value: string) => void;
+  onValueChange: (_value: string) => void;
 }
 
-const TabsContext = createContext<TabsContextValue | undefined>(undefined);
+const __TabsContext = createContext<TabsContextValue | undefined>(undefined);
 
-export function Tabs({
+export function __Tabs({
   defaultValue,
   value,
   onValueChange,
@@ -17,11 +17,11 @@ export function Tabs({
 }: React.HTMLAttributes<HTMLDivElement> & {
   defaultValue?: string;
   value?: string;
-  onValueChange?: (value: string) => void;
+  onValueChange?: (_value: string) => void;
 }) {
   const [internalValue, setInternalValue] = useState(defaultValue || "");
-  const currentValue = value !== undefined ? value : internalValue;
-  const handleValueChange = onValueChange || setInternalValue;
+  const __currentValue = value !== undefined ? value : internalValue;
+  const __handleValueChange = onValueChange || setInternalValue;
 
   return (
     <TabsContext.Provider
@@ -32,7 +32,7 @@ export function Tabs({
   );
 }
 
-export function TabsList({
+export function __TabsList({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
@@ -47,19 +47,19 @@ export function TabsList({
   );
 }
 
-export function TabsTrigger({
+export function __TabsTrigger({
   value,
   className,
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
   value: string;
 }) {
-  const context = useContext(TabsContext);
+  const __context = useContext(TabsContext);
   if (!context) {
     throw new Error("TabsTrigger must be used within a Tabs component");
   }
 
-  const isActive = context.value === value;
+  const __isActive = context.value === value;
 
   return (
     <button
@@ -76,14 +76,14 @@ export function TabsTrigger({
   );
 }
 
-export function TabsContent({
+export function __TabsContent({
   value,
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & {
   value: string;
 }) {
-  const context = useContext(TabsContext);
+  const __context = useContext(TabsContext);
   if (!context) {
     throw new Error("TabsContent must be used within a Tabs component");
   }

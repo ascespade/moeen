@@ -1,23 +1,24 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useT } from '@/components/providers/I18nProvider';
-import { useTheme } from '@/context/ThemeContext';
-import ProtectedRoute from '@/components/auth/ProtectedRoute';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { 
-  Users, 
-  TrendingUp, 
-  AlertTriangle, 
+import {
+  Users,
+  TrendingUp,
+  AlertTriangle,
   CheckCircle,
   Clock,
   FileText,
   BarChart3,
-  Settings
-} from 'lucide-react';
+  Settings,
+} from "lucide-react";
+import { _useState, useEffect } from "react";
+
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { _useT } from "@/components/providers/I18nProvider";
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card } from "@/components/ui/Card";
+import { _useTheme } from "@/context/ThemeContext";
 
 interface SupervisorData {
   id: string;
@@ -39,7 +40,7 @@ interface SupervisorData {
   };
   alerts: Array<{
     id: string;
-    type: 'warning' | 'error' | 'info';
+    type: "warning" | "error" | "info";
     message: string;
     timestamp: string;
   }>;
@@ -48,26 +49,28 @@ interface SupervisorData {
     name: string;
     type: string;
     generatedAt: string;
-    status: 'ready' | 'processing' | 'failed';
+    status: "ready" | "processing" | "failed";
   }>;
 }
 
-export default function SupervisorDashboard() {
+export default function __SupervisorDashboard() {
   const { t } = useT();
   const { theme } = useTheme();
-  const [supervisorData, setSupervisorData] = useState<SupervisorData | null>(null);
+  const [supervisorData, setSupervisorData] = useState<SupervisorData | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchSupervisorData = async () => {
+    const __fetchSupervisorData = async () => {
       try {
-        const response = await fetch('/api/supervisor/me');
+        const __response = await fetch("/api/supervisor/me");
         if (response.ok) {
-          const data = await response.json();
+          const __data = await response.json();
           setSupervisorData(data);
         }
       } catch (error) {
-        } finally {
+      } finally {
         setIsLoading(false);
       }
     };
@@ -75,20 +78,19 @@ export default function SupervisorDashboard() {
     fetchSupervisorData();
   }, []);
 
-  const handleGenerateReport = async (reportType: string) => {
+  const __handleGenerateReport = async (_reportType: string) => {
     try {
-      const response = await fetch('/api/reports/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: reportType })
+      const __response = await fetch("/api/reports/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: reportType }),
       });
-      
+
       if (response.ok) {
         // Refresh data
         window.location.reload();
       }
-    } catch (error) {
-      }
+    } catch (error) {}
   };
 
   if (isLoading) {
@@ -100,16 +102,16 @@ export default function SupervisorDashboard() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['supervisor', 'admin']}>
+    <ProtectedRoute allowedRoles={["supervisor", "admin"]}>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              {t('supervisor.dashboard.welcome')}, {supervisorData?.fullName}
+              {t("supervisor.dashboard.welcome")}, {supervisorData?.fullName}
             </h1>
             <p className="mt-2 text-gray-600 dark:text-gray-400">
-              {t('supervisor.dashboard.subtitle')} - {supervisorData?.role}
+              {t("supervisor.dashboard.subtitle")} - {supervisorData?.role}
             </p>
           </div>
 
@@ -120,7 +122,7 @@ export default function SupervisorDashboard() {
                 <Users className="h-8 w-8 text-blue-600 mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('supervisor.dashboard.total_patients')}
+                    {t("supervisor.dashboard.total_patients")}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
                     {supervisorData?.systemMetrics?.totalPatients || 0}
@@ -134,7 +136,7 @@ export default function SupervisorDashboard() {
                 <Clock className="h-8 w-8 text-green-600 mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('supervisor.dashboard.total_appointments')}
+                    {t("supervisor.dashboard.total_appointments")}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
                     {supervisorData?.systemMetrics?.totalAppointments || 0}
@@ -148,7 +150,7 @@ export default function SupervisorDashboard() {
                 <TrendingUp className="h-8 w-8 text-purple-600 mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('supervisor.dashboard.revenue')}
+                    {t("supervisor.dashboard.revenue")}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
                     {supervisorData?.systemMetrics?.revenue || 0} SAR
@@ -162,7 +164,7 @@ export default function SupervisorDashboard() {
                 <FileText className="h-8 w-8 text-orange-600 mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('supervisor.dashboard.claims_processed')}
+                    {t("supervisor.dashboard.claims_processed")}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
                     {supervisorData?.systemMetrics?.claimsProcessed || 0}
@@ -178,12 +180,13 @@ export default function SupervisorDashboard() {
             <div className="lg:col-span-2">
               <Card className="p-6">
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                  {t('supervisor.dashboard.staff_performance')}
+                  {t("supervisor.dashboard.staff_performance")}
                 </h2>
-                {supervisorData?.staffActivity && supervisorData.staffActivity.length > 0 ? (
+                {supervisorData?.staffActivity &&
+                supervisorData.staffActivity.length > 0 ? (
                   <div className="space-y-4">
                     {supervisorData.staffActivity.map((staff) => (
-                      <div 
+                      <div
                         key={staff.id}
                         className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
                       >
@@ -205,7 +208,7 @@ export default function SupervisorDashboard() {
                         <div className="flex items-center space-x-4">
                           <div className="text-center">
                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                              {t('supervisor.dashboard.tasks')}
+                              {t("supervisor.dashboard.tasks")}
                             </p>
                             <p className="font-medium text-gray-900 dark:text-white">
                               {staff.completedTasks}/{staff.todayTasks}
@@ -213,17 +216,26 @@ export default function SupervisorDashboard() {
                           </div>
                           <div className="text-center">
                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                              {t('supervisor.dashboard.efficiency')}
+                              {t("supervisor.dashboard.efficiency")}
                             </p>
                             <p className="font-medium text-gray-900 dark:text-white">
                               {staff.efficiency}%
                             </p>
                           </div>
-                          <Badge 
-                            variant={staff.efficiency >= 80 ? 'primary' : staff.efficiency >= 60 ? 'secondary' : 'destructive'}
+                          <Badge
+                            variant={
+                              staff.efficiency >= 80
+                                ? "primary"
+                                : staff.efficiency >= 60
+                                  ? "secondary"
+                                  : "destructive"
+                            }
                           >
-                            {staff.efficiency >= 80 ? t('common.excellent') : 
-                             staff.efficiency >= 60 ? t('common.good') : t('common.needs_improvement')}
+                            {staff.efficiency >= 80
+                              ? t("common.excellent")
+                              : staff.efficiency >= 60
+                                ? t("common.good")
+                                : t("common.needs_improvement")}
                           </Badge>
                         </div>
                       </div>
@@ -231,7 +243,7 @@ export default function SupervisorDashboard() {
                   </div>
                 ) : (
                   <p className="text-gray-600 dark:text-gray-400 text-center py-8">
-                    {t('supervisor.dashboard.no_staff_data')}
+                    {t("supervisor.dashboard.no_staff_data")}
                   </p>
                 )}
               </Card>
@@ -242,24 +254,30 @@ export default function SupervisorDashboard() {
               {/* System Alerts */}
               <Card className="p-6">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-                  {t('supervisor.dashboard.system_alerts')}
+                  {t("supervisor.dashboard.system_alerts")}
                 </h3>
                 {supervisorData?.alerts && supervisorData.alerts.length > 0 ? (
                   <div className="space-y-3">
                     {supervisorData.alerts.slice(0, 5).map((alert) => (
-                      <div 
+                      <div
                         key={alert.id}
                         className={`flex items-start p-3 rounded-lg ${
-                          alert.type === 'error' ? 'bg-red-50 dark:bg-red-900/20' :
-                          alert.type === 'warning' ? 'bg-yellow-50 dark:bg-yellow-900/20' :
-                          'bg-blue-50 dark:bg-blue-900/20'
+                          alert.type === "error"
+                            ? "bg-red-50 dark:bg-red-900/20"
+                            : alert.type === "warning"
+                              ? "bg-yellow-50 dark:bg-yellow-900/20"
+                              : "bg-blue-50 dark:bg-blue-900/20"
                         }`}
                       >
-                        <AlertTriangle className={`h-4 w-4 mt-0.5 mr-3 ${
-                          alert.type === 'error' ? 'text-red-600' :
-                          alert.type === 'warning' ? 'text-yellow-600' :
-                          'text-blue-600'
-                        }`} />
+                        <AlertTriangle
+                          className={`h-4 w-4 mt-0.5 mr-3 ${
+                            alert.type === "error"
+                              ? "text-red-600"
+                              : alert.type === "warning"
+                                ? "text-yellow-600"
+                                : "text-blue-600"
+                          }`}
+                        />
                         <div className="flex-1">
                           <p className="text-sm text-gray-900 dark:text-white">
                             {alert.message}
@@ -273,7 +291,7 @@ export default function SupervisorDashboard() {
                   </div>
                 ) : (
                   <p className="text-gray-600 dark:text-gray-400 text-center py-4">
-                    {t('supervisor.dashboard.no_alerts')}
+                    {t("supervisor.dashboard.no_alerts")}
                   </p>
                 )}
               </Card>
@@ -281,51 +299,57 @@ export default function SupervisorDashboard() {
               {/* Reports */}
               <Card className="p-6">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-                  {t('supervisor.dashboard.reports')}
+                  {t("supervisor.dashboard.reports")}
                 </h3>
                 <div className="space-y-3">
-                  <Button 
-                    className="w-full justify-start" 
-                    onClick={() => handleGenerateReport('daily')}
+                  <Button
+                    className="w-full justify-start"
+                    onClick={() => handleGenerateReport("daily")}
                   >
                     <BarChart3 className="h-4 w-4 mr-2" />
-                    {t('supervisor.actions.daily_report')}
+                    {t("supervisor.actions.daily_report")}
                   </Button>
-                  <Button 
-                    className="w-full justify-start" variant="outline"
-                    onClick={() => handleGenerateReport('monthly')}
+                  <Button
+                    className="w-full justify-start"
+                    variant="outline"
+                    onClick={() => handleGenerateReport("monthly")}
                   >
                     <FileText className="h-4 w-4 mr-2" />
-                    {t('supervisor.actions.monthly_report')}
+                    {t("supervisor.actions.monthly_report")}
                   </Button>
-                  <Button 
-                    className="w-full justify-start" variant="outline"
-                    onClick={() => handleGenerateReport('staff_performance')}
+                  <Button
+                    className="w-full justify-start"
+                    variant="outline"
+                    onClick={() => handleGenerateReport("staff_performance")}
                   >
                     <Users className="h-4 w-4 mr-2" />
-                    {t('supervisor.actions.staff_report')}
+                    {t("supervisor.actions.staff_report")}
                   </Button>
                 </div>
-                
-                {supervisorData?.reports && supervisorData.reports.length > 0 && (
-                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
-                      {t('supervisor.dashboard.recent_reports')}
-                    </h4>
-                    <div className="space-y-2">
-                      {supervisorData.reports.slice(0, 3).map((report) => (
-                        <div key={report.id} className="flex items-center justify-between text-sm">
-                          <span className="text-gray-600 dark:text-gray-400">
-                            {report.name}
-                          </span>
-                          <Badge variant="outline">
-                            {t(`report.status.${report.status}`)}
-                          </Badge>
-                        </div>
-                      ))}
+
+                {supervisorData?.reports &&
+                  supervisorData.reports.length > 0 && (
+                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                      <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
+                        {t("supervisor.dashboard.recent_reports")}
+                      </h4>
+                      <div className="space-y-2">
+                        {supervisorData.reports.slice(0, 3).map((report) => (
+                          <div
+                            key={report.id}
+                            className="flex items-center justify-between text-sm"
+                          >
+                            <span className="text-gray-600 dark:text-gray-400">
+                              {report.name}
+                            </span>
+                            <Badge variant="outline">
+                              {t(`report.status.${report.status}`)}
+                            </Badge>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </Card>
             </div>
           </div>

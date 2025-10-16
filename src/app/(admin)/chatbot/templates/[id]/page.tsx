@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+import { _useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 interface Template {
   id: string;
@@ -33,7 +34,7 @@ const mockTemplate: Template = {
   usageCount: 45,
 };
 
-export default function TemplateEditorPage({
+export default function __TemplateEditorPage({
   params,
 }: {
   params: { id: string };
@@ -45,11 +46,11 @@ export default function TemplateEditorPage({
     {},
   );
 
-  const handleContentChange = (newContent: string) => {
+  const __handleContentChange = (_newContent: string) => {
     setTemplate((prev) => ({ ...prev, content: newContent }));
   };
 
-  const handleVariableAdd = (newVariable: string) => {
+  const __handleVariableAdd = (_newVariable: string) => {
     if (newVariable && !template.variables.includes(newVariable)) {
       setTemplate((prev) => ({
         ...prev,
@@ -58,29 +59,29 @@ export default function TemplateEditorPage({
     }
   };
 
-  const handleVariableRemove = (variableToRemove: string) => {
+  const __handleVariableRemove = (_variableToRemove: string) => {
     setTemplate((prev) => ({
       ...prev,
       variables: prev.variables.filter((v) => v !== variableToRemove),
     }));
   };
 
-  const generatePreview = () => {
+  const __generatePreview = () => {
     let preview = template.content;
     template.variables.forEach((variable) => {
-      const value = testVariables[variable] || `{{${variable}}}`;
+      const __value = testVariables[variable] || `{{${variable}}}`;
       preview = preview.replace(new RegExp(`{{${variable}}}`, "g"), value);
     });
     return preview;
   };
 
-  const handleSave = () => {
+  const __handleSave = () => {
     // Simulate save
     setIsEditing(false);
     // Show success message
   };
 
-  const handleTest = () => {
+  const __handleTest = () => {
     // Initialize test variables
     const initialTestVars: Record<string, string> = {};
     template.variables.forEach((variable) => {
@@ -222,7 +223,7 @@ export default function TemplateEditorPage({
                     />
                     <button
                       onClick={() => {
-                        const input = document.querySelector(
+                        const __input = document.querySelector(
                           'input[placeholder="إضافة متغير جديد"]',
                         ) as HTMLInputElement;
                         if (input?.value) {

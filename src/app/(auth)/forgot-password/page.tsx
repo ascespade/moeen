@@ -1,16 +1,17 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { _useState } from "react";
 
-export default function ForgotPasswordPage() {
+import { _ROUTES } from "@/constants/routes";
+
+export default function __ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const __handleSubmit = async (_e: React.FormEvent) => {
     e.preventDefault();
 
     if (!email.trim()) {

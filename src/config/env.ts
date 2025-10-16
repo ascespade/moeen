@@ -1,5 +1,5 @@
 // Environment configuration
-export const env = {
+export const __env = {
   // App
   NODE_ENV: process.env.NODE_ENV || "development",
   APP_NAME: process.env.NEXT_PUBLIC_APP_NAME || "Mu3een",
@@ -10,8 +10,12 @@ export const env = {
   API_URL: process.env.NEXT_PUBLIC_API_URL || "/api",
   API_TIMEOUT: parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT || "10000"),
 
-  // Database
-  DATABASE_URL: process.env.DATABASE_URL,
+  // Supabase
+  NEXT_PUBLIC_SUPABASE_URL:
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    "https://socwpqzcalgvpzjwavgh.supabase.co",
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
 
   // Authentication
   JWT_SECRET: process.env.JWT_SECRET,
@@ -65,10 +69,15 @@ export const env = {
 } as const;
 
 // Validate required environment variables
-export const validateEnv = () => {
-  const requiredVars = ["JWT_SECRET", "DATABASE_URL"];
+export const __validateEnv = () => {
+  const __requiredVars = [
+    "JWT_SECRET",
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+  ];
 
-  const missingVars = requiredVars.filter((varName) => !process.env[varName]);
+  const __missingVars = requiredVars.filter((varName) => !process.env[varName]);
 
   if (missingVars.length > 0) {
     throw new Error(
@@ -78,8 +87,8 @@ export const validateEnv = () => {
 };
 
 // Environment-specific configurations
-export const getConfig = () => {
-  const baseConfig = {
+export const __getConfig = () => {
+  const __baseConfig = {
     app: {
       name: env.APP_NAME,
       version: env.APP_VERSION,

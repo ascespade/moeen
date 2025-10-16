@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
 import {
   User,
   Phone,
@@ -15,17 +14,19 @@ import {
   Download,
   Eye,
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
-import { Badge } from "@/components/ui/Badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import React, { useState, useEffect } from "react";
+
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { _Input } from "@/components/ui/Input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/Select";
+import { _Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 interface Patient {
   id: string;
@@ -120,7 +121,7 @@ const PatientRecords: React.FC = () => {
     loadMedicalRecords();
   }, []);
 
-  const loadPatients = async () => {
+  const __loadPatients = async () => {
     // محاكاة تحميل المرضى من قاعدة البيانات
     const mockPatients: Patient[] = [
       {
@@ -181,7 +182,7 @@ const PatientRecords: React.FC = () => {
     setPatients(mockPatients);
   };
 
-  const loadMedicalRecords = async () => {
+  const __loadMedicalRecords = async () => {
     // محاكاة تحميل السجلات الطبية
     const mockRecords: MedicalRecord[] = [
       {
@@ -212,7 +213,7 @@ const PatientRecords: React.FC = () => {
     setMedicalRecords(mockRecords);
   };
 
-  const handleAddPatient = async () => {
+  const __handleAddPatient = async () => {
     if (!newPatient.name || !newPatient.phone) {
       alert("يرجى ملء الحقول المطلوبة");
       return;
@@ -253,7 +254,7 @@ const PatientRecords: React.FC = () => {
     setShowAddPatient(false);
   };
 
-  const handleAddRecord = async () => {
+  const __handleAddRecord = async () => {
     if (!selectedPatient || !newRecord.date || !newRecord.doctorName) {
       alert("يرجى ملء الحقول المطلوبة");
       return;
@@ -279,7 +280,7 @@ const PatientRecords: React.FC = () => {
     setShowAddRecord(false);
   };
 
-  const getStatusColor = (status: string) => {
+  const __getStatusColor = (_status: string) => {
     switch (status) {
       case "active":
         return "bg-green-100 text-green-800";
@@ -292,7 +293,7 @@ const PatientRecords: React.FC = () => {
     }
   };
 
-  const getStatusText = (status: string) => {
+  const __getStatusText = (_status: string) => {
     switch (status) {
       case "active":
         return "نشط";
@@ -305,7 +306,7 @@ const PatientRecords: React.FC = () => {
     }
   };
 
-  const filteredPatients = patients.filter((patient) => {
+  const __filteredPatients = patients.filter((patient) => {
     const matchesSearch =
       patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       patient.phone.includes(searchTerm) ||
@@ -315,7 +316,7 @@ const PatientRecords: React.FC = () => {
     return matchesSearch && matchesFilter;
   });
 
-  const patientRecords = selectedPatient
+  const __patientRecords = selectedPatient
     ? medicalRecords.filter((record) => record.patientId === selectedPatient.id)
     : [];
 
@@ -345,7 +346,7 @@ const PatientRecords: React.FC = () => {
         </div>
         <Select
           value={filterStatus}
-          onValueChange={(value: any) => setFilterStatus(value)}
+          onValueChange={(_value: unknown) => setFilterStatus(value)}
         >
           <SelectTrigger className="w-48">
             <span className="text-gray-400">فلترة الحالة</span>
@@ -734,7 +735,7 @@ const PatientRecords: React.FC = () => {
                   </label>
                   <Select
                     value={newPatient.gender}
-                    onValueChange={(value: any) =>
+                    onValueChange={(_value: unknown) =>
                       setNewPatient((prev) => ({ ...prev, gender: value }))
                     }
                   >

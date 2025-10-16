@@ -1,9 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getServerSupabase } from "@/lib/supabaseClient";
+import { _NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+import { _getServerSupabase } from "@/lib/supabaseClient";
+
+export async function __GET() {
   try {
-    const supabase = await getServerSupabase();
+    const __supabase = await getServerSupabase();
 
     // Get current user
     const {
@@ -31,7 +32,7 @@ export async function GET() {
     }
 
     // Return default preferences if none exist
-    const defaultPreferences = {
+    const __defaultPreferences = {
       theme: "light",
       language: "ar",
       timezone: "Asia/Riyadh",
@@ -47,9 +48,9 @@ export async function GET() {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function __POST(_request: NextRequest) {
   try {
-    const supabase = await getServerSupabase();
+    const __supabase = await getServerSupabase();
 
     // Get current user
     const {
@@ -71,7 +72,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate key
-    const validKeys = [
+    const __validKeys = [
       "theme",
       "language",
       "timezone",

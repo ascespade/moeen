@@ -1,245 +1,162 @@
-interface InsuranceProvider {
+/**
+ * Insurance Providers
+ * Manages insurance provider integrations and claim processing
+ */
+
+export interface InsuranceProvider {
   id: string;
   name: string;
   code: string;
   apiEndpoint: string;
-  apiKey: string;
-  supportedOperations: string[];
   isActive: boolean;
+  supportedClaimTypes: string[];
 }
 
-interface ClaimData {
+export interface ClaimData {
   patientId: string;
-  appointmentId: string;
-  provider: string;
+  providerId: string;
+  claimType: string;
   amount: number;
   description: string;
-  diagnosis?: string;
-  treatment?: string;
-  attachments?: string[];
+  attachments: string[];
 }
 
-interface ClaimResult {
+export interface ClaimResponse {
   success: boolean;
   claimId?: string;
-  status?: string;
   error?: string;
-  referenceNumber?: string;
+  message?: string;
 }
 
-export class InsuranceProviderService {
+class InsuranceProviderManager {
   private providers: Map<string, InsuranceProvider> = new Map();
 
-  constructor() {
-    this.initializeProviders();
+  registerProvider(_provider: InsuranceProvider): void {
+    this.providers.set(provider.id, provider);
   }
 
-  private initializeProviders() {
-    const providers: InsuranceProvider[] = [
-      {
-        id: 'seha',
-        name: 'SEHA',
-        code: 'SEHA',
-        apiEndpoint: process.env.SEHA_API_ENDPOINT || 'https://api.seha.sa/v1',
-        apiKey: process.env.SEHA_API_KEY || '',
-        supportedOperations: ['verify_member', 'create_claim', 'check_status'],
-        isActive: true
-      },
-      {
-        id: 'shoon',
-        name: 'SHOON',
-        code: 'SHOON',
-        apiEndpoint: process.env.SHOON_API_ENDPOINT || 'https://api.shoon.sa/v1',
-        apiKey: process.env.SHOON_API_KEY || '',
-        supportedOperations: ['verify_member', 'create_claim', 'check_status'],
-        isActive: true
-      },
-      {
-        id: 'tatman',
-        name: 'TATMAN',
-        code: 'TATMAN',
-        apiEndpoint: process.env.TATMAN_API_ENDPOINT || 'https://api.tatman.sa/v1',
-        apiKey: process.env.TATMAN_API_KEY || '',
-        supportedOperations: ['verify_member', 'create_claim', 'check_status'],
-        isActive: true
-      }
-    ];
-
-    providers.forEach(provider => {
-      this.providers.set(provider.code, provider);
-    });
+  getProvider(_id: string): InsuranceProvider | null {
+    return this.providers.get(id) || null;
   }
 
-  async verifyMember(providerCode: string, memberId: string, dateOfBirth: string): Promise<ClaimResult> {
-    const provider = this.providers.get(providerCode);
-    if (!provider || !provider.isActive) {
-      return { success: false, error: 'Provider not found or inactive' };
+  getAllProviders(): InsuranceProvider[] {
+    return Array.from(this.providers.values());
+  }
+
+  async submitClaim(
+    providerId: string,
+    claimData: ClaimData,
+  ): Promise<ClaimResponse> {
+    const __provider = this.getProvider(providerId);
+    if (!provider) {
+      return {
+        success: false,
+        error: "Insurance provider not found",
+      };
+    }
+
+    if (!provider.isActive) {
+      return {
+        success: false,
+        error: "Insurance provider is not active",
+      };
+    }
+
+    if (!provider.supportedClaimTypes.includes(claimData.claimType)) {
+      return {
+        success: false,
+        error: "Claim type not supported by this provider",
+      };
     }
 
     try {
-      const response = await fetch(`${provider.apiEndpoint}/members/verify`, {
-        method: 'POST',
+      // Simulate API call to insurance provider
+      const __response = await fetch(`${provider.apiEndpoint}/claims`, {
+        method: "POST",
         headers: {
-          'Authorization': `Bearer ${provider.apiKey}`,
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.INSURANCE_API_KEY}`,
         },
-        body: JSON.stringify({
-          member_id: memberId,
-          date_of_birth: dateOfBirth
-        })
+        body: JSON.stringify(claimData),
       });
 
-      const result = await response.json();
-
       if (!response.ok) {
-        return {
-          success: false,
-          error: result.message || 'Member verification failed'
-        };
+        throw new Error(`Insurance API error: ${response.statusText}`);
       }
 
+      const __result = await response.json();
       return {
         success: true,
-        status: result.status,
-        referenceNumber: result.member_id
+        claimId: result.claimId,
+        message: "Claim submitted successfully",
       };
     } catch (error) {
+      // // console.error("Insurance claim submission error:", error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Verification failed'
+        error: "Failed to submit claim to insurance provider",
       };
     }
   }
 
-  async createClaim(providerCode: string, claimData: ClaimData): Promise<ClaimResult> {
-    const provider = this.providers.get(providerCode);
-    if (!provider || !provider.isActive) {
-      return { success: false, error: 'Provider not found or inactive' };
-    }
+  async checkClaimStatus(
+    providerId: string,
+    claimId: string,
+  ): Promise<{
+    status: string;
+    amount?: number;
+    processedDate?: string;
+  } | null> {
+    const __provider = this.getProvider(providerId);
+    if (!provider) return null;
 
     try {
-      const response = await fetch(`${provider.apiEndpoint}/claims`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${provider.apiKey}`,
-          'Content-Type': 'application/json'
+      const __response = await fetch(
+        `${provider.apiEndpoint}/claims/${claimId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.INSURANCE_API_KEY}`,
+          },
         },
-        body: JSON.stringify({
-          patient_id: claimData.patientId,
-          appointment_id: claimData.appointmentId,
-          amount: claimData.amount,
-          description: claimData.description,
-          diagnosis: claimData.diagnosis,
-          treatment: claimData.treatment,
-          attachments: claimData.attachments
-        })
-      });
+      );
 
-      const result = await response.json();
+      if (!response.ok) return null;
 
-      if (!response.ok) {
-        return {
-          success: false,
-          error: result.message || 'Claim creation failed'
-        };
-      }
-
-      return {
-        success: true,
-        claimId: result.claim_id,
-        status: result.status,
-        referenceNumber: result.reference_number
-      };
+      return await response.json();
     } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Claim creation failed'
-      };
+      // // console.error("Insurance claim status check error:", error);
+      return null;
     }
-  }
-
-  async checkClaimStatus(providerCode: string, claimId: string): Promise<ClaimResult> {
-    const provider = this.providers.get(providerCode);
-    if (!provider || !provider.isActive) {
-      return { success: false, error: 'Provider not found or inactive' };
-    }
-
-    try {
-      const response = await fetch(`${provider.apiEndpoint}/claims/${claimId}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${provider.apiKey}`
-        }
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        return {
-          success: false,
-          error: result.message || 'Status check failed'
-        };
-      }
-
-      return {
-        success: true,
-        claimId: result.claim_id,
-        status: result.status,
-        referenceNumber: result.reference_number
-      };
-    } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Status check failed'
-      };
-    }
-  }
-
-  async submitClaim(providerCode: string, claimId: string): Promise<ClaimResult> {
-    const provider = this.providers.get(providerCode);
-    if (!provider || !provider.isActive) {
-      return { success: false, error: 'Provider not found or inactive' };
-    }
-
-    try {
-      const response = await fetch(`${provider.apiEndpoint}/claims/${claimId}/submit`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${provider.apiKey}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        return {
-          success: false,
-          error: result.message || 'Claim submission failed'
-        };
-      }
-
-      return {
-        success: true,
-        claimId: result.claim_id,
-        status: result.status,
-        referenceNumber: result.reference_number
-      };
-    } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Claim submission failed'
-      };
-    }
-  }
-
-  getProviders(): InsuranceProvider[] {
-    return Array.from(this.providers.values()).filter(p => p.isActive);
-  }
-
-  getProvider(code: string): InsuranceProvider | undefined {
-    return this.providers.get(code);
   }
 }
 
-export const insuranceService = new InsuranceProviderService();
+// Create global insurance manager
+export const __insuranceManager = new InsuranceProviderManager();
+
+// Register default providers
+insuranceManager.registerProvider({
+  id: "tawuniya",
+  name: "Tawuniya Insurance",
+  code: "TAW",
+  apiEndpoint: "https://api.tawuniya.com",
+  isActive: true,
+  supportedClaimTypes: ["medical", "dental", "pharmacy"],
+});
+
+insuranceManager.registerProvider({
+  id: "bupa",
+  name: "Bupa Arabia",
+  code: "BUPA",
+  apiEndpoint: "https://api.bupa.com.sa",
+  isActive: true,
+  supportedClaimTypes: ["medical", "dental", "pharmacy", "emergency"],
+});
+
+insuranceManager.registerProvider({
+  id: "axa",
+  name: "AXA Cooperative Insurance",
+  code: "AXA",
+  apiEndpoint: "https://api.axa.com.sa",
+  isActive: true,
+  supportedClaimTypes: ["medical", "dental", "pharmacy"],
+});

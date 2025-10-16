@@ -1,14 +1,17 @@
 #!/usr/bin/env node
-require("dotenv").config({ path: '.env.local' });
+require("dotenv").config({ path: ".env.local" });
 const { createClient } = require("@supabase/supabase-js");
 
 async function testDatabaseSetup() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
+  const supabaseKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
 
   if (!supabaseUrl || !supabaseKey) {
     console.error("❌ Missing Supabase environment variables");
-    console.error("Required: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY");
+    console.error(
+      "Required: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY",
+    );
     process.exit(1);
   }
 
@@ -21,9 +24,9 @@ async function testDatabaseSetup() {
     // Test basic connection
     console.log("\n1️⃣ Testing basic connection...");
     const { data: healthData, error: healthError } = await supabase
-      .from('settings')
-      .select('key, value')
-      .eq('key', 'app_name')
+      .from("settings")
+      .select("key, value")
+      .eq("key", "app_name")
       .single();
 
     if (healthError) {
@@ -41,19 +44,19 @@ async function testDatabaseSetup() {
     // Test core tables
     console.log("\n2️⃣ Testing core tables...");
     const tables = [
-      'users',
-      'patients', 
-      'doctors',
-      'appointments',
-      'sessions',
-      'insurance_claims'
+      "users",
+      "patients",
+      "doctors",
+      "appointments",
+      "sessions",
+      "insurance_claims",
     ];
 
     for (const table of tables) {
       try {
         const { data, error } = await supabase
           .from(table)
-          .select('count')
+          .select("count")
           .limit(1);
 
         if (error) {
@@ -69,17 +72,17 @@ async function testDatabaseSetup() {
     // Test chatbot tables
     console.log("\n3️⃣ Testing chatbot tables...");
     const chatbotTables = [
-      'chatbot_flows',
-      'chatbot_intents',
-      'chatbot_conversations',
-      'chatbot_messages'
+      "chatbot_flows",
+      "chatbot_intents",
+      "chatbot_conversations",
+      "chatbot_messages",
     ];
 
     for (const table of chatbotTables) {
       try {
         const { data, error } = await supabase
           .from(table)
-          .select('count')
+          .select("count")
           .limit(1);
 
         if (error) {
@@ -94,17 +97,13 @@ async function testDatabaseSetup() {
 
     // Test CRM tables
     console.log("\n4️⃣ Testing CRM tables...");
-    const crmTables = [
-      'crm_leads',
-      'crm_deals',
-      'crm_activities'
-    ];
+    const crmTables = ["crm_leads", "crm_deals", "crm_activities"];
 
     for (const table of crmTables) {
       try {
         const { data, error } = await supabase
           .from(table)
-          .select('count')
+          .select("count")
           .limit(1);
 
         if (error) {
@@ -121,9 +120,9 @@ async function testDatabaseSetup() {
     console.log("\n5️⃣ Testing authentication...");
     try {
       const { data: testUser, error: userError } = await supabase
-        .from('users')
-        .select('id, email, name, role')
-        .eq('email', 'test@moeen.com')
+        .from("users")
+        .select("id, email, name, role")
+        .eq("email", "test@moeen.com")
         .single();
 
       if (userError) {
@@ -139,15 +138,15 @@ async function testDatabaseSetup() {
     console.log("\n6️⃣ Testing chatbot intents...");
     try {
       const { data: intents, error: intentsError } = await supabase
-        .from('chatbot_intents')
-        .select('name, action_type, keywords')
-        .eq('is_active', true);
+        .from("chatbot_intents")
+        .select("name, action_type, keywords")
+        .eq("is_active", true);
 
       if (intentsError) {
         console.log(`❌ Chatbot intents error: ${intentsError.message}`);
       } else {
         console.log(`✅ Found ${intents.length} active chatbot intents`);
-        intents.forEach(intent => {
+        intents.forEach((intent) => {
           console.log(`   - ${intent.name} (${intent.action_type})`);
         });
       }
@@ -162,7 +161,6 @@ async function testDatabaseSetup() {
     console.log("3. Run: npm run dev to start the application");
 
     return true;
-
   } catch (error) {
     console.error("❌ Database test failed:", error.message);
     return false;

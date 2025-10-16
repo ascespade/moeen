@@ -1,7 +1,7 @@
 // Centralized translation keys for the application
 // This ensures consistency and makes it easier to manage translations
 
-export const I18N_KEYS = {
+export const __I18N_KEYS = {
   // Common actions and labels
   COMMON: {
     SAVE: "common.save",

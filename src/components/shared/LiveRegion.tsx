@@ -5,7 +5,7 @@ interface LiveRegionProps {
   politeness?: "polite" | "assertive";
 }
 
-export function LiveRegion({
+export function __LiveRegion({
   message,
   politeness = "polite",
 }: LiveRegionProps) {

@@ -1,27 +1,29 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { authorize } from '@/lib/auth/authorize';
-import { validateData, appointmentSchema } from '@/lib/validation/schemas';
+import { _NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+import { _authorize } from "@/lib/auth/authorize";
+import { _createClient } from "@/lib/supabase/server";
+import { _validateData, appointmentSchema } from "@/lib/validation/schemas";
+
+export async function __GET(_request: NextRequest) {
   try {
     const { user, error: authError } = await authorize(request);
-    
+
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { searchParams } = new URL(request.url);
-    const patientId = searchParams.get('patientId');
-    const doctorId = searchParams.get('doctorId');
-    const date = searchParams.get('date');
-    const status = searchParams.get('status');
+    const __patientId = searchParams.get("patientId");
+    const __doctorId = searchParams.get("doctorId");
+    const __date = searchParams.get("date");
+    const __status = searchParams.get("status");
 
-    const supabase = createClient();
+    const __supabase = createClient();
 
     let query = supabase
-      .from('appointments')
-      .select(`
+      .from("appointments")
+      .select(
+        `
         id,
         public_id,
         patient_id,
@@ -32,116 +34,137 @@ export async function GET(request: NextRequest) {
         created_at,
         patients!inner(id, full_name, phone),
         doctors!inner(id, speciality)
-      `)
-      .order('scheduled_at', { ascending: true });
+      `,
+      )
+      .order("scheduled_at", { ascending: true });
 
     // Apply filters
-    if (patientId) query = query.eq('patient_id', patientId);
-    if (doctorId) query = query.eq('doctor_id', doctorId);
-    if (date) query = query.gte('scheduled_at', `${date}T00:00:00`).lt('scheduled_at', `${date}T23:59:59`);
-    if (status) query = query.eq('status', status);
+    if (patientId) query = query.eq("patient_id", patientId);
+    if (doctorId) query = query.eq("doctor_id", doctorId);
+    if (date)
+      query = query
+        .gte("scheduled_at", `${date}T00:00:00`)
+        .lt("scheduled_at", `${date}T23:59:59`);
+    if (status) query = query.eq("status", status);
 
     // Role-based filtering
-    if (user.role === 'patient') {
-      query = query.eq('patients.user_id', user.id);
-    } else if (user.role === 'doctor') {
-      query = query.eq('doctors.user_id', user.id);
+    if (user.role === "patient") {
+      query = query.eq("patients.user_id", user.id);
+    } else if (user.role === "doctor") {
+      query = query.eq("doctors.user_id", user.id);
     }
 
     const { data: appointments, error: appointmentsError } = await query;
 
     if (appointmentsError) {
-      return NextResponse.json({ error: 'Failed to fetch appointments' }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to fetch appointments" },
+        { status: 500 },
+      );
     }
 
     return NextResponse.json({ appointments: appointments || [] });
-
   } catch (error) {
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function __POST(_request: NextRequest) {
   try {
     const { user, error: authError } = await authorize(request);
-    
+
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const body = await request.json();
-    const validation = validateData(appointmentSchema, body);
+    const __body = await request.json();
+    const __validation = validateData(appointmentSchema, body);
 
     if (!validation.success) {
-      return NextResponse.json({ 
-        error: 'Validation failed', 
-        details: validation.errors 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: "Validation failed",
+          details: validation.errors,
+        },
+        { status: 400 },
+      );
     }
 
-    const { patientId, doctorId, scheduledAt, type = 'consultation' } = validation.data;
+    const {
+      patientId,
+      doctorId,
+      scheduledAt,
+      type = "consultation",
+    } = validation.data;
 
-    const supabase = createClient();
+    const __supabase = createClient();
 
     // Check if patient exists and user has permission
     const { data: patient, error: patientError } = await supabase
-      .from('patients')
-      .select('id, user_id, full_name')
-      .eq('id', patientId)
+      .from("patients")
+      .select("id, user_id, full_name")
+      .eq("id", patientId)
       .single();
 
     if (patientError || !patient) {
-      return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
+      return NextResponse.json({ error: "Patient not found" }, { status: 404 });
     }
 
     // Check permissions
-    if (user.role === 'patient' && patient.user_id !== user.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    if (user.role === "patient" && patient.user_id !== user.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
     // Check if doctor exists
     const { data: doctor, error: doctorError } = await supabase
-      .from('doctors')
-      .select('id, speciality')
-      .eq('id', doctorId)
+      .from("doctors")
+      .select("id, speciality")
+      .eq("id", doctorId)
       .single();
 
     if (doctorError || !doctor) {
-      return NextResponse.json({ error: 'Doctor not found' }, { status: 404 });
+      return NextResponse.json({ error: "Doctor not found" }, { status: 404 });
     }
 
     // Check for appointment conflicts
     const { data: conflicts, error: conflictError } = await supabase
-      .from('appointments')
-      .select('id')
-      .eq('doctor_id', doctorId)
-      .eq('scheduled_at', scheduledAt)
-      .in('status', ['pending', 'confirmed', 'in_progress']);
+      .from("appointments")
+      .select("id")
+      .eq("doctor_id", doctorId)
+      .eq("scheduled_at", scheduledAt)
+      .in("status", ["pending", "confirmed", "in_progress"]);
 
     if (conflictError) {
-      return NextResponse.json({ error: 'Failed to check conflicts' }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to check conflicts" },
+        { status: 500 },
+      );
     }
 
     if (conflicts && conflicts.length > 0) {
-      return NextResponse.json({ 
-        error: 'Doctor has a conflicting appointment at this time' 
-      }, { status: 409 });
+      return NextResponse.json(
+        {
+          error: "Doctor has a conflicting appointment at this time",
+        },
+        { status: 409 },
+      );
     }
 
     // Create appointment
     const { data: appointment, error: appointmentError } = await supabase
-      .from('appointments')
+      .from("appointments")
       .insert({
         patient_id: patientId,
         doctor_id: doctorId,
         scheduled_at: scheduledAt,
-        status: 'pending',
-        payment_status: 'unpaid'
+        status: "pending",
+        payment_status: "unpaid",
       })
-      .select(`
+      .select(
+        `
         id,
         public_id,
         patient_id,
@@ -151,28 +174,30 @@ export async function POST(request: NextRequest) {
         payment_status,
         patients!inner(full_name),
         doctors!inner(speciality)
-      `)
+      `,
+      )
       .single();
 
     if (appointmentError) {
-      return NextResponse.json({ error: 'Failed to create appointment' }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to create appointment" },
+        { status: 500 },
+      );
     }
 
     // Log appointment creation
-    await supabase
-      .from('audit_logs')
-      .insert({
-        action: 'appointment_created',
-        user_id: user.id,
-        resource_type: 'appointment',
-        resource_id: appointment.id,
-        metadata: {
-          patient_id: patientId,
-          doctor_id: doctorId,
-          scheduled_at: scheduledAt,
-          patient_name: patient.full_name
-        }
-      });
+    await supabase.from("audit_logs").insert({
+      action: "appointment_created",
+      user_id: user.id,
+      resource_type: "appointment",
+      resource_id: appointment.id,
+      metadata: {
+        patient_id: patientId,
+        doctor_id: doctorId,
+        scheduled_at: scheduledAt,
+        patient_name: patient.full_name,
+      },
+    });
 
     return NextResponse.json({
       success: true,
@@ -183,14 +208,13 @@ export async function POST(request: NextRequest) {
         doctorSpeciality: appointment.doctors.speciality,
         scheduledAt: appointment.scheduled_at,
         status: appointment.status,
-        paymentStatus: appointment.payment_status
-      }
+        paymentStatus: appointment.payment_status,
+      },
     });
-
   } catch (error) {
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }

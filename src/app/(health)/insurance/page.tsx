@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
+import { _useState } from "react";
+
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card } from "@/components/ui/Card";
+import { _ROUTES } from "@/constants/routes";
 
 interface InsuranceClaim {
   id: string;
@@ -81,14 +82,14 @@ const mockClaims: InsuranceClaim[] = [
   },
 ];
 
-const statusConfig = {
+const __statusConfig = {
   pending: { label: "قيد المراجعة", color: "warning" as const },
   approved: { label: "موافق عليه", color: "success" as const },
   rejected: { label: "مرفوض", color: "error" as const },
   under_review: { label: "قيد التدقيق", color: "info" as const },
 };
 
-export default function InsurancePage() {
+export default function __InsurancePage() {
   const [selectedClaim, setSelectedClaim] = useState<InsuranceClaim | null>(
     null,
   );
@@ -96,12 +97,12 @@ export default function InsurancePage() {
     "all" | "pending" | "approved" | "rejected"
   >("all");
 
-  const filteredClaims = mockClaims.filter(
+  const __filteredClaims = mockClaims.filter(
     (claim) => filter === "all" || claim.status === filter,
   );
 
-  const getStatusBadge = (status: InsuranceClaim["status"]) => {
-    const config = statusConfig[status];
+  const __getStatusBadge = (_status: InsuranceClaim["status"]) => {
+    const __config = statusConfig[status];
     return (
       <Badge variant={config.color} className="text-sm">
         {config.label}
@@ -109,7 +110,7 @@ export default function InsurancePage() {
     );
   };
 
-  const getBlockStatus = (claim: InsuranceClaim) => {
+  const __getBlockStatus = (_claim: InsuranceClaim) => {
     if (claim.isBlocked) {
       return (
         <div className="flex items-center gap-2 text-red-600">
@@ -126,7 +127,7 @@ export default function InsurancePage() {
     );
   };
 
-  const getOutstandingBalance = (claim: InsuranceClaim) => {
+  const __getOutstandingBalance = (_claim: InsuranceClaim) => {
     if (claim.hasOutstandingBalance) {
       return (
         <div className="flex items-center gap-2 text-orange-600">

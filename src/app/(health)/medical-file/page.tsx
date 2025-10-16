@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { Input } from "@/components/ui/Input";
 import Image from "next/image";
+import { _useState } from "react";
+
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card } from "@/components/ui/Card";
+import { _Input } from "@/components/ui/Input";
 
 interface MedicalRecord {
   id: string;
@@ -176,21 +177,21 @@ const mockRecords: MedicalRecord[] = [
   },
 ];
 
-const insuranceStatusConfig = {
+const __insuranceStatusConfig = {
   active: { label: "نشط", color: "success" as const },
   expired: { label: "منتهي الصلاحية", color: "error" as const },
   pending: { label: "قيد المراجعة", color: "warning" as const },
   rejected: { label: "مرفوض", color: "error" as const },
 };
 
-const treatmentStatusConfig = {
+const __treatmentStatusConfig = {
   active: { label: "نشط", color: "success" as const },
   completed: { label: "مكتمل", color: "info" as const },
   paused: { label: "متوقف", color: "warning" as const },
   cancelled: { label: "ملغي", color: "error" as const },
 };
 
-export default function MedicalFilePage() {
+export default function __MedicalFilePage() {
   const [selectedRecord, setSelectedRecord] = useState<MedicalRecord | null>(
     null,
   );
@@ -199,7 +200,7 @@ export default function MedicalFilePage() {
     "all" | "active" | "blocked" | "outstanding"
   >("all");
 
-  const filteredRecords = mockRecords.filter((record) => {
+  const __filteredRecords = mockRecords.filter((record) => {
     const matchesSearch =
       record.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       record.patientId.toLowerCase().includes(searchTerm.toLowerCase());
@@ -216,10 +217,10 @@ export default function MedicalFilePage() {
     return matchesSearch;
   });
 
-  const getInsuranceStatusBadge = (
+  const __getInsuranceStatusBadge = (
     status: MedicalRecord["insuranceStatus"],
   ) => {
-    const config = insuranceStatusConfig[status];
+    const __config = insuranceStatusConfig[status];
     return (
       <Badge variant={config.color} className="text-xs">
         {config.label}
@@ -227,10 +228,10 @@ export default function MedicalFilePage() {
     );
   };
 
-  const getTreatmentStatusBadge = (
+  const __getTreatmentStatusBadge = (
     status: MedicalRecord["treatmentPlan"][0]["status"],
   ) => {
-    const config = treatmentStatusConfig[status];
+    const __config = treatmentStatusConfig[status];
     return (
       <Badge variant={config.color} className="text-xs">
         {config.label}
@@ -238,7 +239,7 @@ export default function MedicalFilePage() {
     );
   };
 
-  const getBlockStatus = (record: MedicalRecord) => {
+  const __getBlockStatus = (_record: MedicalRecord) => {
     if (record.isBlocked) {
       return (
         <div className="flex items-center gap-2 text-red-600">
@@ -260,7 +261,7 @@ export default function MedicalFilePage() {
     );
   };
 
-  const getOutstandingBalance = (record: MedicalRecord) => {
+  const __getOutstandingBalance = (_record: MedicalRecord) => {
     if (record.hasOutstandingBalance) {
       return (
         <div className="flex items-center gap-2 text-orange-600">
@@ -279,11 +280,11 @@ export default function MedicalFilePage() {
     );
   };
 
-  const calculateAge = (dateOfBirth: string) => {
-    const today = new Date();
-    const birthDate = new Date(dateOfBirth);
+  const __calculateAge = (_dateOfBirth: string) => {
+    const __today = new Date();
+    const __birthDate = new Date(dateOfBirth);
     let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
+    const __monthDiff = today.getMonth() - birthDate.getMonth();
     if (
       monthDiff < 0 ||
       (monthDiff === 0 && today.getDate() < birthDate.getDate())

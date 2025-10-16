@@ -7,6 +7,7 @@ This directory contains the complete database schema, seed data, and migration s
 ## 🏗️ Database Architecture
 
 ### **Core Features:**
+
 - **25+ Tables** with complete relationships
 - **30+ Indexes** for optimal performance
 - **Row Level Security (RLS)** for data protection
@@ -19,6 +20,7 @@ This directory contains the complete database schema, seed data, and migration s
 - **CRM Integration**
 
 ### **Database Structure:**
+
 ```
 database/
 ├── schema/
@@ -39,11 +41,13 @@ database/
 ## 🚀 Quick Start
 
 ### **Prerequisites:**
+
 - PostgreSQL 12+ or Supabase
 - Bash shell (Linux/macOS/WSL)
 - Database credentials
 
 ### **1. Set Environment Variables:**
+
 ```bash
 export DB_HOST="localhost"
 export DB_PORT="5432"
@@ -53,6 +57,7 @@ export DB_PASSWORD="your_password"
 ```
 
 ### **2. Run Complete Migration:**
+
 ```bash
 # Make scripts executable
 chmod +x database/migrations/*.sh
@@ -62,6 +67,7 @@ chmod +x database/migrations/*.sh
 ```
 
 ### **3. Validate Schema:**
+
 ```bash
 # Validate database schema
 ./database/migrations/validate_schema.sh
@@ -72,69 +78,83 @@ chmod +x database/migrations/*.sh
 ### **Core Tables:**
 
 #### **Users & Authentication:**
+
 - `users` - User accounts with roles
 - `roles` - Role definitions and permissions
 
 #### **Healthcare Entities:**
+
 - `patients` - Patient profiles and medical info
 - `doctors` - Doctor profiles and specialties
 - `appointments` - Appointment scheduling and management
 
 #### **Medical Records:**
+
 - `medical_records` - Medical documentation
 - `file_uploads` - File management system
 
 #### **Financial:**
+
 - `payments` - Payment processing
 - `insurance_claims` - Insurance claim management
 
 #### **Communication:**
+
 - `notifications` - System notifications
 - `notification_templates` - Message templates
 
 #### **System Administration:**
+
 - `audit_logs` - Activity logging
 - `system_settings` - Configuration
 - `system_metrics` - Performance monitoring
 
 #### **Internationalization:**
+
 - `languages` - Supported languages
 - `translations` - Multi-language content
 
 #### **Reports & Analytics:**
+
 - `reports` - Generated reports
 - `system_metrics` - Performance data
 
 #### **Chatbot System:**
+
 - `chatbot_flows` - Conversation flows
 - `chatbot_conversations` - Chat sessions
 - `chatbot_messages` - Individual messages
 
 #### **CRM Integration:**
+
 - `crm_leads` - Lead management
 - `crm_activities` - Activity tracking
 
 ### **Key Features:**
 
 #### **🔒 Security:**
+
 - Row Level Security (RLS) policies
 - Encrypted sensitive data
 - Audit logging for all changes
 - Role-based access control
 
 #### **🌍 Internationalization:**
+
 - Arabic and English support
 - RTL layout support
 - Dynamic translation system
 - Cultural date/time formatting
 
 #### **📈 Performance:**
+
 - Optimized indexes
 - Query performance monitoring
 - Connection pooling
 - Caching strategies
 
 #### **🔍 Compliance:**
+
 - HIPAA-ready data protection
 - GDPR compliance features
 - Complete audit trail
@@ -143,6 +163,7 @@ chmod +x database/migrations/*.sh
 ## 🛠️ Migration Scripts
 
 ### **1. Complete Migration (`run_all_migrations.sh`):**
+
 - Creates complete database schema
 - Inserts all seed data
 - Validates schema integrity
@@ -150,11 +171,13 @@ chmod +x database/migrations/*.sh
 - Provides detailed logging
 
 ### **2. Rollback (`rollback_migration.sh`):**
+
 - Restores from backup
 - Drops all tables (destructive)
 - Safe rollback options
 
 ### **3. Validation (`validate_schema.sh`):**
+
 - Validates table structure
 - Checks data integrity
 - Verifies RLS policies
@@ -164,6 +187,7 @@ chmod +x database/migrations/*.sh
 ## 📝 Seed Data
 
 ### **Sample Data Includes:**
+
 - **10 Users** (Admin, Supervisor, Staff, Doctors, Patients)
 - **3 Doctors** (Internal Medicine, Pediatrics, Cardiology)
 - **4 Patients** (Various medical conditions)
@@ -178,6 +202,7 @@ chmod +x database/migrations/*.sh
 ## 🔧 Configuration
 
 ### **Environment Variables:**
+
 ```bash
 # Database Connection
 DB_HOST=localhost
@@ -193,6 +218,7 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_key
 ```
 
 ### **Database Settings:**
+
 - **Character Set:** UTF-8
 - **Collation:** Arabic/English
 - **Timezone:** Asia/Riyadh
@@ -201,35 +227,41 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_key
 ## 📊 Performance Optimization
 
 ### **Indexes:**
+
 - Primary key indexes
 - Foreign key indexes
 - Search optimization indexes
 - Composite indexes for complex queries
 
 ### **Views:**
+
 - `patient_dashboard` - Patient overview
 - `doctor_dashboard` - Doctor overview
 - `appointment_details` - Appointment details
 
 ### **Functions:**
+
 - `update_updated_at_column()` - Auto-update timestamps
 - Custom functions for complex operations
 
 ## 🔍 Monitoring & Maintenance
 
 ### **Audit Logging:**
+
 - All user actions logged
 - Data changes tracked
 - Security events monitored
 - Performance metrics collected
 
 ### **Backup Strategy:**
+
 - Automated daily backups
 - Point-in-time recovery
 - Cross-region replication
 - Encryption at rest
 
 ### **Health Checks:**
+
 - Database connectivity
 - Query performance
 - Index usage
@@ -240,6 +272,7 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_key
 ### **Common Issues:**
 
 #### **1. Connection Failed:**
+
 ```bash
 # Check PostgreSQL service
 sudo systemctl status postgresql
@@ -249,12 +282,14 @@ psql -h localhost -U postgres -d postgres
 ```
 
 #### **2. Permission Denied:**
+
 ```bash
 # Grant permissions
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE moeen_healthcare TO your_user;"
 ```
 
 #### **3. Migration Failed:**
+
 ```bash
 # Check logs
 tail -f database/migrations/migration_*.log
@@ -265,6 +300,7 @@ tail -f database/migrations/migration_*.log
 ```
 
 #### **4. Validation Errors:**
+
 ```bash
 # Run validation
 ./database/migrations/validate_schema.sh
@@ -276,21 +312,25 @@ psql $DATABASE_URL -c "SELECT * FROM information_schema.tables WHERE table_schem
 ## 📚 Additional Resources
 
 ### **Documentation:**
+
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 - [Supabase Documentation](https://supabase.com/docs)
 - [Healthcare Data Standards](https://www.hl7.org/)
 
 ### **Security:**
+
 - [OWASP Database Security](https://owasp.org/www-project-database-security/)
 - [HIPAA Compliance Guide](https://www.hhs.gov/hipaa/for-professionals/security/index.html)
 
 ### **Performance:**
+
 - [PostgreSQL Performance Tuning](https://wiki.postgresql.org/wiki/Performance_Optimization)
 - [Database Indexing Best Practices](https://use-the-index-luke.com/)
 
 ## 🤝 Support
 
 For issues or questions:
+
 1. Check the logs first
 2. Review this documentation
 3. Run validation scripts

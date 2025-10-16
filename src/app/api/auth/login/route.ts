@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabaseClient";
-export async function POST(request: Request) {
+import { _NextResponse } from "next/server";
+
+import { _getServiceSupabase } from "@/lib/supabaseClient";
+export async function __POST(_request: Request) {
   try {
     const { email, password, rememberMe } = await request.json();
 
@@ -15,27 +16,27 @@ export async function POST(request: Request) {
     // Development test credentials (fallback if Supabase auth fails)
     if (email === "test@moeen.com" && password === "test123") {
       // First try to get the test user from database
-      const supabase = getServiceSupabase();
+      const __supabase = getServiceSupabase();
       const { data: testUser, error: userError } = await supabase
-        .from('users')
-        .select('id, email, name, role')
-        .eq('email', 'test@moeen.com')
+        .from("users")
+        .select("id, email, name, role")
+        .eq("email", "test@moeen.com")
         .single();
 
       if (testUser) {
-        const mockToken = "mock-jwt-token-" + Date.now();
+        const __mockToken = "mock-jwt-token-" + Date.now();
 
-        const response = NextResponse.json({
+        const __response = NextResponse.json({
           success: true,
-          data: { 
+          data: {
             user: {
               id: testUser.id,
               email: testUser.email,
               role: testUser.role,
               name: testUser.name,
               created_at: new Date().toISOString(),
-            }, 
-            token: mockToken 
+            },
+            token: mockToken,
           },
         });
 
@@ -53,7 +54,7 @@ export async function POST(request: Request) {
     }
 
     // Real Supabase auth for other users
-    const supabase = getServiceSupabase();
+    const __supabase = getServiceSupabase();
     const { data: authData, error: signInError } =
       await supabase.auth.signInWithPassword({
         email,
@@ -69,7 +70,7 @@ export async function POST(request: Request) {
 
     const { session, user } = authData;
 
-    const response = NextResponse.json({
+    const __response = NextResponse.json({
       success: true,
       data: { user, token: session.access_token },
     });

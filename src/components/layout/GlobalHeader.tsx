@@ -1,13 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Sun, Moon, Languages } from "lucide-react";
+import { _Sun, Moon, Languages } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ROUTES } from "@/constants/routes";
-import { useI18n } from "@/hooks/useI18n";
+import { _useEffect, useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
+import { _useI18n } from "@/hooks/useI18n";
 
 // Theme and Language Switches Component
-function ThemeLanguageSwitches() {
+function __ThemeLanguageSwitches() {
   const [theme, setTheme] = useState<string>("light");
   const [language, setLanguage] = useState<string>("ar");
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +21,7 @@ function ThemeLanguageSwitches() {
 
   // Apply theme and language changes
   useEffect(() => {
-    const html = document.documentElement;
+    const __html = document.documentElement;
     html.setAttribute("data-theme", theme);
     html.setAttribute("lang", language);
     html.setAttribute("dir", language === "ar" ? "rtl" : "ltr");
@@ -33,23 +34,23 @@ function ThemeLanguageSwitches() {
   }, [theme, language, isLoading]);
 
   // Function to load user preferences from database
-  const loadUserPreferences = async () => {
+  const __loadUserPreferences = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/user/preferences");
+      const __response = await fetch("/api/user/preferences");
       if (response.ok) {
-        const data = await response.json();
+        const __data = await response.json();
         if (data.theme) setTheme(data.theme);
         if (data.language) setLanguage(data.language);
       }
     } catch (error) {
-      } finally {
+    } finally {
       setIsLoading(false);
     }
   };
 
   // Function to save preferences to database
-  const saveUserPreference = async (key: string, value: string) => {
+  const __saveUserPreference = async (_key: string, value: string) => {
     try {
       await fetch("/api/user/preferences", {
         method: "POST",
@@ -58,18 +59,17 @@ function ThemeLanguageSwitches() {
         },
         body: JSON.stringify({ key, value }),
       });
-    } catch (error) {
-      }
+    } catch (error) {}
   };
 
   // Toggle theme function
-  const toggleTheme = () => {
+  const __toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
   // Toggle language function - reload page to apply translations
-  const toggleLanguage = () => {
-    const newLanguage = language === "ar" ? "en" : "ar";
+  const __toggleLanguage = () => {
+    const __newLanguage = language === "ar" ? "en" : "ar";
     setLanguage(newLanguage);
     // Save preference and reload page to apply translations
     saveUserPreference("language", newLanguage).then(() => {
@@ -115,21 +115,20 @@ function ThemeLanguageSwitches() {
 }
 
 // Main Header Component
-export default function GlobalHeader() {
+export default function __GlobalHeader() {
   const [language, setLanguage] = useState<string>("ar");
   const { t } = useI18n(language as "ar" | "en");
 
   // Load language preference on mount
   useEffect(() => {
-    const loadLanguage = async () => {
+    const __loadLanguage = async () => {
       try {
-        const response = await fetch("/api/user/preferences");
+        const __response = await fetch("/api/user/preferences");
         if (response.ok) {
-          const data = await response.json();
+          const __data = await response.json();
           if (data.language) setLanguage(data.language);
         }
-      } catch (error) {
-        }
+      } catch (error) {}
     };
     loadLanguage();
   }, []);

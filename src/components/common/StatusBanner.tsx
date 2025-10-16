@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { _useState } from "react";
+
 import LiveDot from "./LiveDot";
 
-export default function StatusBanner() {
+export default function __StatusBanner() {
   const [visible, setVisible] = useState(false);
   // Toggle this to simulate maintenance or critical notice
   if (!visible) return null;

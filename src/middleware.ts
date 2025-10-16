@@ -3,31 +3,32 @@
  * Combines all middleware components for comprehensive request handling
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { rateLimiter as rateLimitMiddleware } from './middleware/rate-limiter';
-import { securityMiddleware } from './middleware/security';
-import { auditMiddleware, auditErrorMiddleware } from './middleware/audit';
-import { authorize } from './lib/auth/authorize';
+import { _NextRequest, NextResponse } from "next/server";
+
+import { _authorize } from "./lib/auth/authorize";
+import { _auditMiddleware, auditErrorMiddleware } from "./middleware/audit";
+import { _rateLimiter as rateLimitMiddleware } from "./middleware/rate-limiter";
+import { _securityMiddleware } from "./middleware/security";
 
 // Performance monitoring
-const performanceStart = new Map<string, number>();
+const __performanceStart = new Map<string, number>();
 
-export async function middleware(request: NextRequest) {
-  const startTime = Date.now();
-  const requestId = `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  
+export async function __middleware(_request: NextRequest) {
+  const __startTime = Date.now();
+  const __requestId = `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
   // Store start time for performance monitoring
   performanceStart.set(requestId, startTime);
 
   try {
     // 1. Security middleware (CORS, CSP, security headers)
-    const securityResponse = await securityMiddleware(request);
+    const __securityResponse = await securityMiddleware(request);
     if (securityResponse) {
       return securityResponse;
     }
 
     // 2. Rate limiting
-    const rateLimitResponse = await rateLimitMiddleware(request);
+    const __rateLimitResponse = await rateLimitMiddleware(request);
     if (rateLimitResponse) {
       return rateLimitResponse;
     }
@@ -35,24 +36,27 @@ export async function middleware(request: NextRequest) {
     // 3. Authentication and authorization for protected routes
     if (isProtectedRoute(request.nextUrl.pathname)) {
       try {
-        const authResult = await authorize(request);
+        const __authResult = await authorize(request);
         if (authResult.error || !authResult.user) {
           return NextResponse.json(
-            { error: 'Unauthorized', message: 'Authentication required' },
-            { status: 401 }
+            { error: "Unauthorized", message: "Authentication required" },
+            { status: 401 },
           );
         }
       } catch (error) {
-        console.error('Auth middleware error:', error);
+        // // console.error("Auth middleware error:", error);
         return NextResponse.json(
-          { error: 'Authentication failed', message: 'Unable to verify authentication' },
-          { status: 401 }
+          {
+            error: "Authentication failed",
+            message: "Unable to verify authentication",
+          },
+          { status: 401 },
         );
       }
     }
 
     // 4. Continue with the request
-    const response = NextResponse.next();
+    const __response = NextResponse.next();
 
     // 5. Add security headers to response
     addSecurityHeaders(response);
@@ -65,70 +69,78 @@ export async function middleware(request: NextRequest) {
     // auditMiddleware(request, response, startTime, Date.now());
 
     return response;
-
   } catch (error) {
-    console.error('Middleware error:', error);
-    
+    // // console.error("Middleware error:", error);
+
     // Audit error
     // Note: In Edge Runtime, we can't use setImmediate, so we'll skip async error logging
     // auditErrorMiddleware(request, error as Error, startTime, Date.now());
 
     return NextResponse.json(
-      { error: 'Internal server error', message: 'Request processing failed' },
-      { status: 500 }
+      { error: "Internal server error", message: "Request processing failed" },
+      { status: 500 },
     );
   }
 }
 
-function isProtectedRoute(pathname: string): boolean {
-  const protectedRoutes = [
-    '/api/admin',
-    '/api/patients',
-    '/api/doctors',
-    '/api/appointments',
-    '/api/medical-records',
-    '/api/payments',
-    '/api/insurance',
-    '/api/notifications',
-    '/api/reports',
-    '/api/chatbot',
+function __isProtectedRoute(_pathname: string): boolean {
+  const __protectedRoutes = [
+    "/api/admin",
+    "/api/patients",
+    "/api/doctors",
+    "/api/appointments",
+    "/api/medical-records",
+    "/api/payments",
+    "/api/insurance",
+    "/api/notifications",
+    "/api/reports",
+    "/api/chatbot",
   ];
 
   // Skip auth for public API routes
-  const publicRoutes = [
-    '/api/auth/login',
-    '/api/auth/register',
-    '/api/auth/forgot-password',
-    '/api/auth/reset-password',
-    '/api/health',
-    '/api/test',
+  const __publicRoutes = [
+    "/api/auth/login",
+    "/api/auth/register",
+    "/api/auth/forgot-password",
+    "/api/auth/reset-password",
+    "/api/health",
+    "/api/test",
   ];
 
-  if (publicRoutes.some(route => pathname.startsWith(route))) {
+  if (publicRoutes.some((route) => pathname.startsWith(route))) {
     return false;
   }
 
-  return protectedRoutes.some(route => pathname.startsWith(route));
+  return protectedRoutes.some((route) => pathname.startsWith(route));
 }
 
-function addSecurityHeaders(response: NextResponse): void {
+function __addSecurityHeaders(_response: NextResponse): void {
   // Additional security headers
-  response.headers.set('X-Request-ID', `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('X-Frame-Options', 'DENY');
-  response.headers.set('X-XSS-Protection', '1; mode=block');
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  response.headers.set(
+    "X-Request-ID",
+    `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+  );
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-XSS-Protection", "1; mode=block");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=()",
+  );
 }
 
-function addPerformanceHeaders(response: NextResponse, startTime: number): void {
-  const duration = Date.now() - startTime;
-  response.headers.set('X-Response-Time', `${duration}ms`);
-  response.headers.set('X-Processed-At', new Date().toISOString());
+function __addPerformanceHeaders(
+  response: NextResponse,
+  startTime: number,
+): void {
+  const __duration = Date.now() - startTime;
+  response.headers.set("X-Response-Time", `${duration}ms`);
+  response.headers.set("X-Processed-At", new Date().toISOString());
 }
 
 // Configure which paths the middleware should run on
-export const config = {
+export const __config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
@@ -137,14 +149,14 @@ export const config = {
      * - favicon.ico (favicon file)
      * - public folder
      */
-    '/((?!_next/static|_next/image|favicon.ico|public/).*)',
+    "/((?!_next/static|_next/image|favicon.ico|public/).*)",
   ],
 };
 
 // Export individual middleware functions for testing
 export {
   rateLimitMiddleware,
-  securityMiddleware,
-  auditMiddleware,
+  _securityMiddleware as securityMiddleware,
+  _auditMiddleware as auditMiddleware,
   auditErrorMiddleware,
 };

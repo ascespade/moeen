@@ -163,7 +163,7 @@ Object.defineProperty(window, "matchMedia", {
 });
 
 // Mock localStorage
-const localStorageMock = {
+const __localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
@@ -174,7 +174,7 @@ Object.defineProperty(window, "localStorage", {
 });
 
 // Mock sessionStorage
-const sessionStorageMock = {
+const __sessionStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
@@ -202,7 +202,7 @@ global.Headers = jest.fn(() => ({
 
 // Mock Request
 global.Request = jest.fn(() => ({
-  url: "http://localhost:3000",
+  url: "https://socwpqzcalgvpzjwavgh.supabase.co",
   method: "GET",
   headers: new Headers(),
   json: jest.fn(() => Promise.resolve({})),

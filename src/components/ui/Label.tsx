@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-export function Label({
+export function __Label({
   className,
   ...props
 }: React.LabelHTMLAttributes<HTMLLabelElement>) {

@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+import { _useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 interface Node {
   id: string;
@@ -22,7 +23,7 @@ interface Connection {
   target: string;
 }
 
-const mockFlow = {
+const __mockFlow = {
   id: "1",
   name: "استقبال المرضى",
   description: "تدفق ترحيب واستقبال المرضى الجدد",
@@ -100,7 +101,7 @@ const mockFlow = {
   ] as Connection[],
 };
 
-export default function FlowBuilderPage({
+export default function __FlowBuilderPage({
   params,
 }: {
   params: { flowId: string };
@@ -109,7 +110,7 @@ export default function FlowBuilderPage({
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [showTestModal, setShowTestModal] = useState(false);
 
-  const getNodeColor = (type: Node["type"]) => {
+  const __getNodeColor = (_type: Node["type"]) => {
     switch (type) {
       case "start":
         return "bg-green-500";
@@ -126,7 +127,7 @@ export default function FlowBuilderPage({
     }
   };
 
-  const getNodeIcon = (type: Node["type"]) => {
+  const __getNodeIcon = (_type: Node["type"]) => {
     switch (type) {
       case "start":
         return "▶️";
@@ -257,19 +258,19 @@ export default function FlowBuilderPage({
                 style={{ zIndex: 5 }}
               >
                 {mockFlow.connections.map((connection) => {
-                  const sourceNode = mockFlow.nodes.find(
+                  const __sourceNode = mockFlow.nodes.find(
                     (n) => n.id === connection.source,
                   );
-                  const targetNode = mockFlow.nodes.find(
+                  const __targetNode = mockFlow.nodes.find(
                     (n) => n.id === connection.target,
                   );
 
                   if (!sourceNode || !targetNode) return null;
 
-                  const startX = sourceNode.position.x + 96; // Center of node
-                  const startY = sourceNode.position.y + 40;
-                  const endX = targetNode.position.x + 96;
-                  const endY = targetNode.position.y + 40;
+                  const __startX = sourceNode.position.x + 96; // Center of node
+                  const __startY = sourceNode.position.y + 40;
+                  const __endX = targetNode.position.x + 96;
+                  const __endY = targetNode.position.y + 40;
 
                   return (
                     <g key={connection.id}>

@@ -3,12 +3,14 @@
 ## Getting Started - البداية
 
 ### Prerequisites - المتطلبات
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 - Git
 - Supabase account
 
 ### Installation - التثبيت
+
 ```bash
 # Clone the repository
 git clone <repository-url>
@@ -60,6 +62,7 @@ src/
 ## Coding Standards - معايير البرمجة
 
 ### TypeScript Guidelines
+
 ```typescript
 // Use strict typing
 interface User {
@@ -70,10 +73,10 @@ interface User {
 
 // Use enums for constants
 enum UserRole {
-  PATIENT = 'patient',
-  DOCTOR = 'doctor',
-  STAFF = 'staff',
-  ADMIN = 'admin'
+  PATIENT = "patient",
+  DOCTOR = "doctor",
+  STAFF = "staff",
+  ADMIN = "admin",
 }
 
 // Use generics for reusable components
@@ -85,6 +88,7 @@ interface ApiResponse<T> {
 ```
 
 ### Component Guidelines
+
 ```typescript
 // Use functional components with TypeScript
 interface ButtonProps {
@@ -114,42 +118,43 @@ export const Button: React.FC<ButtonProps> = ({
 ```
 
 ### API Guidelines
+
 ```typescript
 // Use the base API handler
 export const GET = createApiHandler(
   async (req: NextRequest, context: any) => {
     const supabase = await baseApiHandler.getSupabaseClient();
-    const { data, error } = await supabase
-      .from('users')
-      .select('*');
-    
+    const { data, error } = await supabase.from("users").select("*");
+
     if (error) {
       throw ErrorFactory.createDatabaseError(error.message);
     }
-    
+
     return baseApiHandler.createSuccessResponse(data);
   },
   {
-    method: 'GET',
+    method: "GET",
     auth: true,
-    roles: ['admin', 'staff'],
-  }
+    roles: ["admin", "staff"],
+  },
 );
 ```
 
 ## State Management - إدارة الحالة
 
 ### Using Zustand Store
+
 ```typescript
 // Access store in components
 const { user, isAuthenticated, login, logout } = useAuthStore();
 
 // Update state
-const updateUser = useAuthStore(state => state.updateUser);
-updateUser({ name: 'New Name' });
+const updateUser = useAuthStore((state) => state.updateUser);
+updateUser({ name: "New Name" });
 ```
 
 ### Using Custom Hooks
+
 ```typescript
 // Use custom hooks for data fetching
 const { patients, fetchPatients, createPatient } = usePatients();
@@ -163,86 +168,88 @@ useEffect(() => {
 ## API Development - تطوير API
 
 ### Creating API Routes
+
 ```typescript
 // src/app/api/users/route.ts
-import { createApiHandler } from '@/core';
-import { userSchemas } from '@/core/validation';
+import { createApiHandler } from "@/core";
+import { userSchemas } from "@/core/validation";
 
 export const GET = createApiHandler(
   async (req: NextRequest, context: any) => {
     const supabase = await baseApiHandler.getSupabaseClient();
     const { data, error } = await supabase
-      .from('users')
-      .select('*')
+      .from("users")
+      .select("*")
       .range(
         context.validatedQuery.page * context.validatedQuery.limit,
-        (context.validatedQuery.page + 1) * context.validatedQuery.limit - 1
+        (context.validatedQuery.page + 1) * context.validatedQuery.limit - 1,
       );
-    
+
     if (error) {
       throw ErrorFactory.createDatabaseError(error.message);
     }
-    
+
     return baseApiHandler.createPaginatedResponse(
       data,
       context.validatedQuery.page,
       context.validatedQuery.limit,
-      data.length
+      data.length,
     );
   },
   {
-    method: 'GET',
+    method: "GET",
     auth: true,
-    roles: ['admin', 'staff'],
+    roles: ["admin", "staff"],
     validation: {
       query: userSchemas.query,
     },
-  }
+  },
 );
 ```
 
 ### Error Handling
+
 ```typescript
 // Use error factory for consistent errors
-throw ErrorFactory.createValidationError('Email is required', 'email');
-throw ErrorFactory.createNotFoundError('User not found');
-throw ErrorFactory.createBusinessLogicError('Appointment conflict detected');
+throw ErrorFactory.createValidationError("Email is required", "email");
+throw ErrorFactory.createNotFoundError("User not found");
+throw ErrorFactory.createBusinessLogicError("Appointment conflict detected");
 ```
 
 ## Database Operations - عمليات قاعدة البيانات
 
 ### Using Supabase Client
+
 ```typescript
 // Get client
 const supabase = await baseApiHandler.getSupabaseClient();
 
 // Query data
 const { data, error } = await supabase
-  .from('users')
-  .select('id, email, name')
-  .eq('role', 'patient')
-  .order('created_at', { ascending: false });
+  .from("users")
+  .select("id, email, name")
+  .eq("role", "patient")
+  .order("created_at", { ascending: false });
 
 // Insert data
-const { data, error } = await supabase
-  .from('appointments')
-  .insert({
-    patient_id: patientId,
-    doctor_id: doctorId,
-    scheduled_at: scheduledAt,
-    status: 'scheduled'
-  });
+const { data, error } = await supabase.from("appointments").insert({
+  patient_id: patientId,
+  doctor_id: doctorId,
+  scheduled_at: scheduledAt,
+  status: "scheduled",
+});
 
 // Update data
 const { data, error } = await supabase
-  .from('appointments')
-  .update({ status: 'confirmed' })
-  .eq('id', appointmentId);
+  .from("appointments")
+  .update({ status: "confirmed" })
+  .eq("id", appointmentId);
 ```
 
 ## Component Development - تطوير المكونات
 
 ### Creating UI Components
+
 ```typescript
 // src/components/ui/Input.tsx
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -279,20 +286,22 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 ```
 
 ### Using Design System
+
 ```typescript
 // Use design system tokens
-import { colors, typography, spacing } from '@/core/design-system';
+import { colors, typography, spacing } from "@/core/design-system";
 
 const styles = {
-  container: 'bg-white rounded-lg shadow-md p-6',
-  title: 'text-2xl font-bold text-gray-900 mb-4',
-  button: 'bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600',
+  container: "bg-white rounded-lg shadow-md p-6",
+  title: "text-2xl font-bold text-gray-900 mb-4",
+  button: "bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600",
 };
 ```
 
 ## Testing - الاختبار
 
 ### Unit Testing
+
 ```typescript
 // src/components/__tests__/Button.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -314,17 +323,18 @@ describe('Button', () => {
 ```
 
 ### API Testing
+
 ```typescript
 // src/app/api/__tests__/users.test.ts
-import { GET } from '../users/route';
-import { NextRequest } from 'next/server';
+import { GET } from "../users/route";
+import { NextRequest } from "next/server";
 
-describe('/api/users', () => {
-  it('returns users list', async () => {
-    const request = new NextRequest('http://localhost:3000/api/users');
+describe("/api/users", () => {
+  it("returns users list", async () => {
+    const request = new NextRequest("http://localhost:3000/api/users");
     const response = await GET(request, {});
     const data = await response.json();
-    
+
     expect(response.status).toBe(200);
     expect(data.success).toBe(true);
     expect(Array.isArray(data.data)).toBe(true);
@@ -335,6 +345,7 @@ describe('/api/users', () => {
 ## Deployment - النشر
 
 ### Environment Setup
+
 ```bash
 # Production environment variables
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
@@ -344,6 +355,7 @@ DATABASE_URL=your_database_url
 ```
 
 ### Build and Deploy
+
 ```bash
 # Build the application
 npm run build
@@ -360,6 +372,7 @@ npm run migrate
 ### Common Issues
 
 #### 1. **Build Errors**
+
 ```bash
 # Clear Next.js cache
 rm -rf .next
@@ -367,46 +380,53 @@ npm run build
 ```
 
 #### 2. **Database Connection Issues**
+
 - Check Supabase credentials
 - Verify network connectivity
 - Check RLS policies
 
 #### 3. **Authentication Issues**
+
 - Verify JWT configuration
 - Check token expiration
 - Validate user permissions
 
 ### Debug Mode
+
 ```typescript
 // Enable debug logging
-const debug = process.env.NODE_ENV === 'development';
+const debug = process.env.NODE_ENV === "development";
 
 if (debug) {
-  console.log('Debug info:', { user, data, error });
+  console.log("Debug info:", { user, data, error });
 }
 ```
 
 ## Best Practices - أفضل الممارسات
 
 ### 1. **Code Organization**
+
 - Keep components small and focused
 - Use custom hooks for reusable logic
 - Separate concerns properly
 - Follow naming conventions
 
 ### 2. **Performance**
+
 - Use React.memo for expensive components
 - Implement proper loading states
 - Optimize database queries
 - Use pagination for large datasets
 
 ### 3. **Security**
+
 - Validate all inputs
 - Use parameterized queries
 - Implement proper error handling
 - Follow OWASP guidelines
 
 ### 4. **Accessibility**
+
 - Use semantic HTML
 - Provide proper ARIA labels
 - Ensure keyboard navigation
@@ -415,12 +435,14 @@ if (debug) {
 ## Resources - الموارد
 
 ### Documentation
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Supabase Documentation](https://supabase.com/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs)
 
 ### Tools
+
 - [VS Code](https://code.visualstudio.com/)
 - [Supabase Studio](https://supabase.com/dashboard)
 - [Vercel Dashboard](https://vercel.com/dashboard)
@@ -429,6 +451,7 @@ if (debug) {
 ## Support - الدعم
 
 For questions and support:
+
 - Create an issue in the repository
 - Contact the development team
 - Check the documentation

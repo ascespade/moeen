@@ -1,4 +1,4 @@
-import { HemamAssistant } from "@/lib/ai-assistant";
+import { _HemamAssistant } from "@/lib/ai-assistant";
 describe("HemamAssistant", () => {
   let assistant: HemamAssistant;
 
@@ -8,27 +8,27 @@ describe("HemamAssistant", () => {
 
   describe("Crisis Detection", () => {
     test("should detect crisis keywords", () => {
-      const crisisMessage = "أريد أن أموت";
-      const crisisLevel = assistant.analyzeCrisisLevel(crisisMessage);
+      const __crisisMessage = "أريد أن أموت";
+      const __crisisLevel = assistant.analyzeCrisisLevel(crisisMessage);
       expect(crisisLevel).toBe("crisis");
     });
 
     test("should detect urgent keywords", () => {
-      const urgentMessage = "هذا أمر طارئ";
-      const crisisLevel = assistant.analyzeCrisisLevel(urgentMessage);
+      const __urgentMessage = "هذا أمر طارئ";
+      const __crisisLevel = assistant.analyzeCrisisLevel(urgentMessage);
       expect(crisisLevel).toBe("urgent");
     });
 
     test("should return normal for regular messages", () => {
-      const normalMessage = "مرحبا، كيف حالك؟";
-      const crisisLevel = assistant.analyzeCrisisLevel(normalMessage);
+      const __normalMessage = "مرحبا، كيف حالك؟";
+      const __crisisLevel = assistant.analyzeCrisisLevel(normalMessage);
       expect(crisisLevel).toBe("normal");
     });
   });
 
   describe("Empathetic Responses", () => {
     test("should generate empathetic response for normal messages", () => {
-      const context = {
+      const __context = {
         userId: "test-user",
         sessionId: "test-session",
         userType: "new_beneficiary" as const,
@@ -37,7 +37,7 @@ describe("HemamAssistant", () => {
         emergencyLevel: "normal" as const,
       };
 
-      const response = assistant.generateEmpatheticResponse(
+      const __response = assistant.generateEmpatheticResponse(
         context,
         "أحتاج مساعدة",
       );
@@ -45,7 +45,7 @@ describe("HemamAssistant", () => {
     });
 
     test("should generate crisis response for crisis messages", () => {
-      const context = {
+      const __context = {
         userId: "test-user",
         sessionId: "test-session",
         userType: "new_beneficiary" as const,
@@ -54,7 +54,7 @@ describe("HemamAssistant", () => {
         emergencyLevel: "crisis" as const,
       };
 
-      const response = assistant.generateEmpatheticResponse(
+      const __response = assistant.generateEmpatheticResponse(
         context,
         "أريد أن أموت",
       );
@@ -65,13 +65,13 @@ describe("HemamAssistant", () => {
 
   describe("Motivational Messages", () => {
     test("should generate motivational message", () => {
-      const message = assistant.generateMotivationalMessage("أحمد");
+      const __message = assistant.generateMotivationalMessage("أحمد");
       expect(message).toContain("أحمد");
       expect(message).toContain("مركز الهمم");
     });
 
     test("should generate milestone celebration", () => {
-      const message = assistant.generateMotivationalMessage(
+      const __message = assistant.generateMotivationalMessage(
         "فاطمة",
         "إكمال 10 جلسات",
       );
@@ -83,7 +83,7 @@ describe("HemamAssistant", () => {
 
   describe("Proactive Care", () => {
     test("should generate proactive care message", () => {
-      const message = assistant.generateProactiveCareMessage(
+      const __message = assistant.generateProactiveCareMessage(
         "سارة",
         "تمارين التنفس",
       );
@@ -95,7 +95,7 @@ describe("HemamAssistant", () => {
 
   describe("Family Notifications", () => {
     test("should generate family notification", () => {
-      const message = assistant.generateFamilyNotification(
+      const __message = assistant.generateFamilyNotification(
         "أحمد",
         "appointment",
         "10:00 صباحاً",
@@ -108,8 +108,8 @@ describe("HemamAssistant", () => {
 
   describe("Accessibility", () => {
     test("should generate accessible response", () => {
-      const options = ["حجز موعد", "معلومات", "دعم"];
-      const response = assistant.generateAccessibleResponse(options);
+      const __options = ["حجز موعد", "معلومات", "دعم"];
+      const __response = assistant.generateAccessibleResponse(options);
       expect(response).toContain("1️⃣");
       expect(response).toContain("2️⃣");
       expect(response).toContain("3️⃣");

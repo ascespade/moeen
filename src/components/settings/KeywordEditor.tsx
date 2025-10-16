@@ -1,22 +1,22 @@
 "use client";
-import { useState } from "react";
-export default function KeywordEditor({
+import { _useState } from "react";
+export default function __KeywordEditor({
   keywords,
   onChange,
 }: {
   keywords: string[];
-  onChange: (kw: string[]) => void;
+  onChange: (_kw: string[]) => void;
 }) {
   const [value, setValue] = useState("");
 
-  function add() {
-    const v = value.trim();
+  function __add() {
+    const __v = value.trim();
     if (!v) return;
     onChange(Array.from(new Set([...(keywords || []), v])));
     setValue("");
   }
 
-  function remove(k: string) {
+  function __remove(_k: string) {
     onChange((keywords || []).filter((x) => x !== k));
   }
 

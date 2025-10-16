@@ -7,7 +7,7 @@ type PlaceholderSquareProps = {
   docsLink?: string;
 };
 
-export default function PlaceholderSquare({
+export default function __PlaceholderSquare({
   title,
   description,
   steps = [],

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { _useMemo, useState } from "react";
 export type Column<T> = { key: keyof T; header: string };
 
 export function DataTable<T extends Record<string, unknown>>({
@@ -16,22 +16,22 @@ export function DataTable<T extends Record<string, unknown>>({
     dir: "asc" | "desc";
   } | null>(null);
 
-  const sorted = useMemo(() => {
+  const __sorted = useMemo(() => {
     if (!sort) return data;
     return [...data].sort((a, b) => {
-      const av = a[sort.key];
-      const bv = b[sort.key];
+      const __av = a[sort.key];
+      const __bv = b[sort.key];
       if (av < bv) return sort.dir === "asc" ? -1 : 1;
       if (av > bv) return sort.dir === "asc" ? 1 : -1;
       return 0;
     });
   }, [data, sort]);
 
-  const start = (page - 1) * pageSize;
-  const pageData = sorted.slice(start, start + pageSize);
-  const pages = Math.max(1, Math.ceil(sorted.length / pageSize));
+  const __start = (page - 1) * pageSize;
+  const __pageData = sorted.slice(start, start + pageSize);
+  const __pages = Math.max(1, Math.ceil(sorted.length / pageSize));
 
-  const toggleSort = (key: keyof T) =>
+  const __toggleSort = (_key: keyof T) =>
     setSort((prev) =>
       !prev || prev.key !== key
         ? { key, dir: "asc" }

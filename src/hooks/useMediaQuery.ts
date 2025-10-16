@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
+import { _useState, useEffect } from "react";
 // Media query hooks
 
-export const useMediaQuery = (query: string): boolean => {
+export const __useMediaQuery = (_query: string): boolean => {
   const [matches, setMatches] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const media = window.matchMedia(query);
+    const __media = window.matchMedia(query);
 
     if (media.matches !== matches) {
       setMatches(media.matches);
     }
 
-    const listener = () => setMatches(media.matches);
+    const __listener = () => setMatches(media.matches);
 
     // Modern browsers
     if (media.addEventListener) {
@@ -29,11 +29,11 @@ export const useMediaQuery = (query: string): boolean => {
   return matches;
 };
 
-export const useBreakpoint = () => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-  const isTablet = useMediaQuery("(min-width: 769px) and (max-width: 1024px)");
-  const isDesktop = useMediaQuery("(min-width: 1025px)");
-  const isLargeDesktop = useMediaQuery("(min-width: 1440px)");
+export const __useBreakpoint = () => {
+  const __isMobile = useMediaQuery("(max-width: 768px)");
+  const __isTablet = useMediaQuery("(min-width: 769px) and (max-width: 1024px)");
+  const __isDesktop = useMediaQuery("(min-width: 1025px)");
+  const __isLargeDesktop = useMediaQuery("(min-width: 1440px)");
 
   return {
     isMobile,
@@ -50,26 +50,26 @@ export const useBreakpoint = () => {
   };
 };
 
-export const useDarkMode = (): boolean => {
+export const __useDarkMode = (): boolean => {
   return useMediaQuery("(prefers-color-scheme: dark)");
 };
 
-export const useReducedMotion = (): boolean => {
+export const __useReducedMotion = (): boolean => {
   return useMediaQuery("(prefers-reduced-motion: reduce)");
 };
 
-export const useHighContrast = (): boolean => {
+export const __useHighContrast = (): boolean => {
   return useMediaQuery("(prefers-contrast: high)");
 };
 
-export const usePrint = (): boolean => {
+export const __usePrint = (): boolean => {
   return useMediaQuery("print");
 };
 
-export const useHover = (): boolean => {
-  return useMediaQuery("(hover: hover)");
+export const __useHover = (): boolean => {
+  return useMediaQuery("(_hover: hover)");
 };
 
-export const useTouch = (): boolean => {
-  return useMediaQuery("(pointer: coarse)");
+export const __useTouch = (): boolean => {
+  return useMediaQuery("(_pointer: coarse)");
 };

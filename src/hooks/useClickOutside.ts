@@ -1,16 +1,16 @@
-import { useEffect, useRef } from "react";
+import { _useEffect, useRef } from "react";
 // Click outside hook
 
-export const useClickOutside = <T extends HTMLElement = HTMLDivElement>(
+export const __useClickOutside = <T extends HTMLElement = HTMLDivElement>(
   handler: () => void,
   enabled: boolean = true,
 ) => {
-  const ref = useRef<T>(null);
+  const __ref = useRef<T>(null);
 
   useEffect(() => {
     if (!enabled) return;
 
-    const handleClickOutside = (event: Event) => {
+    const __handleClickOutside = (_event: Event) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         handler();
       }

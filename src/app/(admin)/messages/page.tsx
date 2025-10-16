@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
 import Image from "next/image";
+import { _useState } from "react";
 
 interface Message {
   id: string;
@@ -51,14 +51,14 @@ const mockMessages: Message[] = [
   },
 ];
 
-export default function MessagesPage() {
+export default function __MessagesPage() {
   const [filter, setFilter] = useState<
     "all" | "sent" | "delivered" | "read" | "failed"
   >("all");
   const [channelFilter, setChannelFilter] = useState<string>("all");
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const getChannelIcon = (channel: Message["channel"]) => {
+  const __getChannelIcon = (_channel: Message["channel"]) => {
     switch (channel) {
       case "whatsapp":
         return "📱";
@@ -73,7 +73,7 @@ export default function MessagesPage() {
     }
   };
 
-  const getChannelText = (channel: Message["channel"]) => {
+  const __getChannelText = (_channel: Message["channel"]) => {
     switch (channel) {
       case "whatsapp":
         return "واتساب";
@@ -88,7 +88,7 @@ export default function MessagesPage() {
     }
   };
 
-  const getStatusColor = (status: Message["status"]) => {
+  const __getStatusColor = (_status: Message["status"]) => {
     switch (status) {
       case "sent":
         return "bg-blue-100 text-blue-800";
@@ -103,7 +103,7 @@ export default function MessagesPage() {
     }
   };
 
-  const getStatusText = (status: Message["status"]) => {
+  const __getStatusText = (_status: Message["status"]) => {
     switch (status) {
       case "sent":
         return "مرسل";
@@ -118,7 +118,7 @@ export default function MessagesPage() {
     }
   };
 
-  const getPriorityColor = (priority: Message["priority"]) => {
+  const __getPriorityColor = (_priority: Message["priority"]) => {
     switch (priority) {
       case "high":
         return "bg-red-100 text-red-800";
@@ -131,8 +131,8 @@ export default function MessagesPage() {
     }
   };
 
-  const filteredMessages = mockMessages.filter((message) => {
-    const matchesFilter = filter === "all" || message.status === filter;
+  const __filteredMessages = mockMessages.filter((message) => {
+    const __matchesFilter = filter === "all" || message.status === filter;
     const matchesChannel =
       channelFilter === "all" || message.channel === channelFilter;
     return matchesFilter && matchesChannel;

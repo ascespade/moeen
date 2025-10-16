@@ -1,15 +1,29 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { Send, Bot, User, Calendar, Phone, Mail, MapPin, Clock, MessageCircle, Settings, Brain, X } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
-import { Badge } from "@/components/ui/Badge";
-import { ScrollArea } from "@/components/ui/ScrollArea";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
+import {
+  Send,
+  Bot,
+  User,
+  Calendar,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  MessageCircle,
+  Settings,
+  Brain,
+  X,
+} from "lucide-react";
 import Image from "next/image";
+import { _useRouter } from "next/navigation";
+import React, { useState, useEffect, useRef } from "react";
+
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { _Input } from "@/components/ui/Input";
+import { _ScrollArea } from "@/components/ui/ScrollArea";
+import { _useAuth } from "@/hooks/useAuth";
 
 interface ChatMessage {
   id: string;
@@ -33,13 +47,15 @@ interface AppointmentSuggestion {
 
 const HealthcareChatbot: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
-  const router = useRouter();
+  const __router = useRouter();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [appointmentSuggestions, setAppointmentSuggestions] = useState<AppointmentSuggestion[]>([]);
+  const [appointmentSuggestions, setAppointmentSuggestions] = useState<
+    AppointmentSuggestion[]
+  >([]);
   const [isMinimized, setIsMinimized] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const __messagesEndRef = useRef<HTMLDivElement>(null);
 
   // تحميل الرسائل المحفوظة
   useEffect(() => {
@@ -51,23 +67,24 @@ const HealthcareChatbot: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  const scrollToBottom = () => {
+  const __scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const loadChatHistory = async () => {
+  const __loadChatHistory = async () => {
     const mockMessages: ChatMessage[] = [
       {
         id: "1",
         type: "bot",
-        content: "مرحباً! أنا معين، مساعدك الذكي في مركز الهمم للرعاية الصحية. كيف يمكنني مساعدتك اليوم؟",
+        content:
+          "مرحباً! أنا معين، مساعدك الذكي في مركز الهمم للرعاية الصحية. كيف يمكنني مساعدتك اليوم؟",
         timestamp: new Date(),
       },
     ];
     setMessages(mockMessages);
   };
 
-  const handleSendMessage = async () => {
+  const __handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
     const userMessage: ChatMessage = {
@@ -83,20 +100,20 @@ const HealthcareChatbot: React.FC = () => {
 
     try {
       // إرسال الرسالة إلى API
-      const response = await fetch('/api/chatbot/message', {
-        method: 'POST',
+      const __response = await fetch("/api/chatbot/message", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           message: inputMessage,
           userId: user?.id,
-          conversationId: 'current-conversation'
+          conversationId: "current-conversation",
         }),
       });
 
-      const data = await response.json();
-      
+      const __data = await response.json();
+
       const botResponse: ChatMessage = {
         id: (Date.now() + 1).toString(),
         type: "bot",
@@ -106,7 +123,7 @@ const HealthcareChatbot: React.FC = () => {
       };
 
       setMessages((prev) => [...prev, botResponse]);
-      
+
       if (data.appointmentSuggestions) {
         setAppointmentSuggestions(data.appointmentSuggestions);
       }
@@ -123,28 +140,31 @@ const HealthcareChatbot: React.FC = () => {
     }
   };
 
-  const handleQuickAction = (action: string) => {
+  const __handleQuickAction = (_action: string) => {
     setInputMessage(action);
     handleSendMessage();
   };
 
-  const handleAppointmentBooking = async (suggestion: AppointmentSuggestion, slot: string) => {
+  const __handleAppointmentBooking = async (
+    suggestion: AppointmentSuggestion,
+    slot: string,
+  ) => {
     try {
-      const response = await fetch('/api/chatbot/appointments', {
-        method: 'POST',
+      const __response = await fetch("/api/chatbot/appointments", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           doctorId: suggestion.id,
           appointmentTime: slot,
           patientId: user?.id,
-          conversationId: 'current-conversation'
+          conversationId: "current-conversation",
         }),
       });
 
-      const data = await response.json();
-      
+      const __data = await response.json();
+
       if (data.success) {
         const confirmationMessage: ChatMessage = {
           id: Date.now().toString(),
@@ -154,9 +174,9 @@ const HealthcareChatbot: React.FC = () => {
           metadata: {
             appointmentId: data.appointmentId,
             doctorName: suggestion.doctorName,
-            appointmentDate: new Date().toISOString().split('T')[0],
-            appointmentTime: slot
-          }
+            appointmentDate: new Date().toISOString().split("T")[0],
+            appointmentTime: slot,
+          },
         };
         setMessages((prev) => [...prev, confirmationMessage]);
         setAppointmentSuggestions([]);
@@ -167,14 +187,15 @@ const HealthcareChatbot: React.FC = () => {
       const errorMessage: ChatMessage = {
         id: Date.now().toString(),
         type: "bot",
-        content: "عذراً، لم يتم حجز الموعد. يرجى المحاولة مرة أخرى أو الاتصال بنا.",
+        content:
+          "عذراً، لم يتم حجز الموعد. يرجى المحاولة مرة أخرى أو الاتصال بنا.",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
     }
   };
 
-  const quickActions = [
+  const __quickActions = [
     { text: "حجز موعد", icon: Calendar, action: "أريد حجز موعد" },
     { text: "استعلام عن موعد", icon: Clock, action: "أريد الاستعلام عن موعدي" },
     { text: "إلغاء موعد", icon: X, action: "أريد إلغاء موعدي" },
@@ -250,19 +271,25 @@ const HealthcareChatbot: React.FC = () => {
               </div>
             </div>
           ))}
-          
+
           {isTyping && (
             <div className="flex justify-start">
               <div className="bg-gray-100 rounded-2xl px-4 py-2">
                 <div className="flex space-x-1">
                   <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div
+                    className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                    style={{ animationDelay: "0.1s" }}
+                  ></div>
+                  <div
+                    className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                    style={{ animationDelay: "0.2s" }}
+                  ></div>
                 </div>
               </div>
             </div>
           )}
-          
+
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
@@ -276,8 +303,12 @@ const HealthcareChatbot: React.FC = () => {
               <Card key={suggestion.id} className="p-3">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h5 className="font-medium text-sm">{suggestion.doctorName}</h5>
-                    <p className="text-xs text-gray-600">{suggestion.specialty}</p>
+                    <h5 className="font-medium text-sm">
+                      {suggestion.doctorName}
+                    </h5>
+                    <p className="text-xs text-gray-600">
+                      {suggestion.specialty}
+                    </p>
                   </div>
                 </div>
                 <div className="mt-2 flex flex-wrap gap-1">
@@ -325,7 +356,7 @@ const HealthcareChatbot: React.FC = () => {
             onChange={(e) => setInputMessage(e.target.value)}
             placeholder="اكتب رسالتك هنا..."
             className="flex-1"
-            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+            onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
           />
           <Button
             onClick={handleSendMessage}

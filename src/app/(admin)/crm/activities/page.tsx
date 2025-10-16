@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
+import { _useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 interface Activity {
   id: string;
@@ -61,14 +62,14 @@ const mockActivities: Activity[] = [
   },
 ];
 
-export default function CRMActivitiesPage() {
+export default function __CRMActivitiesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState<string>("all");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const getTypeIcon = (type: Activity["type"]) => {
+  const __getTypeIcon = (_type: Activity["type"]) => {
     switch (type) {
       case "call":
         return "📞";
@@ -85,7 +86,7 @@ export default function CRMActivitiesPage() {
     }
   };
 
-  const getTypeText = (type: Activity["type"]) => {
+  const __getTypeText = (_type: Activity["type"]) => {
     switch (type) {
       case "call":
         return "مكالمة";
@@ -102,7 +103,7 @@ export default function CRMActivitiesPage() {
     }
   };
 
-  const getStatusColor = (status: Activity["status"]) => {
+  const __getStatusColor = (_status: Activity["status"]) => {
     switch (status) {
       case "pending":
         return "bg-yellow-100 text-yellow-800";
@@ -115,7 +116,7 @@ export default function CRMActivitiesPage() {
     }
   };
 
-  const getStatusText = (status: Activity["status"]) => {
+  const __getStatusText = (_status: Activity["status"]) => {
     switch (status) {
       case "pending":
         return "معلق";
@@ -128,7 +129,7 @@ export default function CRMActivitiesPage() {
     }
   };
 
-  const getPriorityColor = (priority: Activity["priority"]) => {
+  const __getPriorityColor = (_priority: Activity["priority"]) => {
     switch (priority) {
       case "high":
         return "text-red-600";
@@ -141,7 +142,7 @@ export default function CRMActivitiesPage() {
     }
   };
 
-  const getPriorityText = (priority: Activity["priority"]) => {
+  const __getPriorityText = (_priority: Activity["priority"]) => {
     switch (priority) {
       case "high":
         return "عالي";
@@ -154,7 +155,7 @@ export default function CRMActivitiesPage() {
     }
   };
 
-  const filteredActivities = mockActivities.filter((activity) => {
+  const __filteredActivities = mockActivities.filter((activity) => {
     const matchesSearch =
       activity.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       activity.description.toLowerCase().includes(searchTerm.toLowerCase()) ||

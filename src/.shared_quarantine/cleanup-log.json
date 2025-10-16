@@ -1,0 +1,98 @@
+[
+  {
+    "agent": "FrontendCleaner",
+    "timestamp": "2025-10-16T07:28:49.413Z",
+    "mode": "execute",
+    "filesMoved": 0,
+    "filesSkipped": 92,
+    "timeTaken": 0
+  },
+  {
+    "agent": "FrontendCleaner",
+    "timestamp": "2025-10-16T07:29:29.215Z",
+    "mode": "dry-run",
+    "filesMoved": 0,
+    "filesSkipped": 92,
+    "timeTaken": 0
+  },
+  {
+    "agent": "FrontendCleaner",
+    "timestamp": "2025-10-16T07:40:26.720Z",
+    "mode": "dry-run",
+    "filesMoved": 0,
+    "filesSkipped": 92,
+    "timeTaken": 0
+  },
+  {
+    "agent": "SharedVerifier",
+    "timestamp": "2025-10-16T07:40:27.820Z",
+    "mode": "dry-run",
+    "filesMoved": 0,
+    "filesSkipped": 4,
+    "timeTaken": 0
+  },
+  {
+    "coordinator": "Multi-Agent Cleanup",
+    "timestamp": "2025-10-16T07:40:27.834Z",
+    "mode": "dry-run",
+    "parallel": false,
+    "agents": ["frontend", "backend", "shared"],
+    "totalFilesScanned": 294,
+    "totalFilesMoved": 0,
+    "totalFilesSkipped": 96,
+    "timeTaken": 0
+  },
+  {
+    "agent": "FrontendCleaner",
+    "timestamp": "2025-10-16T07:41:01.348Z",
+    "mode": "dry-run",
+    "filesMoved": 0,
+    "filesSkipped": 92,
+    "timeTaken": 0
+  },
+  {
+    "agent": "BackendCleaner",
+    "timestamp": "2025-10-16T07:41:02.036Z",
+    "mode": "dry-run",
+    "force": false,
+    "filesMoved": 0,
+    "filesSkipped": 74,
+    "timeTaken": 0
+  },
+  {
+    "agent": "SharedVerifier",
+    "timestamp": "2025-10-16T07:41:02.641Z",
+    "mode": "dry-run",
+    "filesMoved": 0,
+    "filesSkipped": 4,
+    "timeTaken": 0
+  },
+  {
+    "coordinator": "Multi-Agent Cleanup",
+    "timestamp": "2025-10-16T07:41:02.654Z",
+    "mode": "dry-run",
+    "parallel": false,
+    "agents": ["frontend", "backend", "shared"],
+    "totalFilesScanned": 387,
+    "totalFilesMoved": 0,
+    "totalFilesSkipped": 170,
+    "timeTaken": 0
+  },
+  {
+    "agent": "BackendCleaner",
+    "timestamp": "2025-10-16T07:41:06.645Z",
+    "mode": "dry-run",
+    "force": false,
+    "filesMoved": 0,
+    "filesSkipped": 74,
+    "timeTaken": 0
+  },
+  {
+    "agent": "SharedVerifier",
+    "timestamp": "2025-10-16T07:41:17.841Z",
+    "mode": "dry-run",
+    "filesMoved": 0,
+    "filesSkipped": 4,
+    "timeTaken": 0
+  }
+]

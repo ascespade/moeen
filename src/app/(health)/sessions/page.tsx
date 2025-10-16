@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
-
 import Image from "next/image";
+import { _useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 interface Session {
   id: string;
@@ -55,11 +55,11 @@ const mockSessions: Session[] = [
   },
 ];
 
-export default function SessionsPage() {
+export default function __SessionsPage() {
   const [viewMode, setViewMode] = useState<"table" | "cards">("cards");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
 
-  const getStatusColor = (status: Session["status"]) => {
+  const __getStatusColor = (_status: Session["status"]) => {
     switch (status) {
       case "upcoming":
         return "bg-blue-100 text-blue-800";
@@ -74,7 +74,7 @@ export default function SessionsPage() {
     }
   };
 
-  const getStatusText = (status: Session["status"]) => {
+  const __getStatusText = (_status: Session["status"]) => {
     switch (status) {
       case "upcoming":
         return "قادمة";

@@ -1,10 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { _NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+import { _createClient } from "@/lib/supabase/server";
+
+export async function __GET(_request: NextRequest) {
   try {
-    const supabase = createClient();
-    const today = new Date().toISOString().split('T')[0];
+    const __supabase = createClient();
+    const __today = new Date().toISOString().split("T")[0];
 
     // جلب إحصائيات المواعيد
     const [
@@ -13,61 +14,56 @@ export async function GET(request: NextRequest) {
       pendingAppointmentsResult,
       completedAppointmentsResult,
       totalPatientsResult,
-      totalDoctorsResult
+      totalDoctorsResult,
     ] = await Promise.all([
       // إجمالي المواعيد
-      supabase
-        .from('appointments')
-        .select('id', { count: 'exact' }),
-      
+      supabase.from("appointments").select("id", { count: "exact" }),
+
       // مواعيد اليوم
       supabase
-        .from('appointments')
-        .select('id', { count: 'exact' })
-        .eq('appointment_date', today),
-      
+        .from("appointments")
+        .select("id", { count: "exact" })
+        .eq("appointment_date", today),
+
       // المواعيد المعلقة
       supabase
-        .from('appointments')
-        .select('id', { count: 'exact' })
-        .in('status', ['scheduled', 'confirmed']),
-      
+        .from("appointments")
+        .select("id", { count: "exact" })
+        .in("status", ["scheduled", "confirmed"]),
+
       // المواعيد المكتملة
       supabase
-        .from('appointments')
-        .select('id', { count: 'exact' })
-        .eq('status', 'completed'),
-      
+        .from("appointments")
+        .select("id", { count: "exact" })
+        .eq("status", "completed"),
+
       // إجمالي المرضى
-      supabase
-        .from('patients')
-        .select('id', { count: 'exact' }),
-      
+      supabase.from("patients").select("id", { count: "exact" }),
+
       // إجمالي الأطباء
       supabase
-        .from('doctors')
-        .select('id', { count: 'exact' })
-        .eq('is_active', true)
+        .from("doctors")
+        .select("id", { count: "exact" })
+        .eq("is_active", true),
     ]);
 
-    const stats = {
+    const __stats = {
       totalAppointments: totalAppointmentsResult.count || 0,
       todayAppointments: todayAppointmentsResult.count || 0,
       pendingAppointments: pendingAppointmentsResult.count || 0,
       completedAppointments: completedAppointmentsResult.count || 0,
       totalPatients: totalPatientsResult.count || 0,
-      totalDoctors: totalDoctorsResult.count || 0
+      totalDoctors: totalDoctorsResult.count || 0,
     };
 
     return NextResponse.json({
       success: true,
-      stats
+      stats,
     });
-
   } catch (error) {
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }

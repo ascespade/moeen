@@ -2,9 +2,7 @@ require("@rushstack/eslint-patch/modern-module-resolution");
 
 module.exports = {
   root: true,
-  extends: [
-    "next/core-web-vitals"
-  ],
+  extends: ["next/core-web-vitals"],
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint", "prettier"],
   ignorePatterns: [
@@ -23,33 +21,43 @@ module.exports = {
   ],
   rules: {
     // TypeScript specific rules
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-non-null-assertion": "warn",
-    
+
     // React specific rules
     "react/no-unescaped-entities": "off",
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-key": "error",
-    
+
     // General rules
-    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-console": ["warn", { allow: ["warn", "error"] }],
     "no-debugger": "error",
     "no-unused-vars": "off", // Use TypeScript version instead
     "prefer-const": "error",
     "no-var": "error",
-    
+
     // Import rules
-    "import/order": ["warn", {
-      "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
-      "newlines-between": "always",
-      "alphabetize": { "order": "asc", "caseInsensitive": true }
-    }],
-    
+    "import/order": [
+      "warn",
+      {
+        groups: [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+        ],
+        "newlines-between": "always",
+        alphabetize: { order: "asc", caseInsensitive: true },
+      },
+    ],
+
     // Prettier integration
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
   },
   overrides: [
     // Node scripts are not part of the Next.js runtime
@@ -59,7 +67,7 @@ module.exports = {
       rules: {
         "@next/next/no-assign-module-variable": "off",
         "@typescript-eslint/no-var-requires": "off",
-        "no-console": "off"
+        "no-console": "off",
       },
     },
     // Allow <img> in this specialized component
@@ -86,8 +94,8 @@ module.exports = {
       files: ["src/app/api/**/*.ts"],
       rules: {
         "@typescript-eslint/no-explicit-any": "off", // API routes often need any for request bodies
-        "no-console": "off" // API routes may need console for debugging
-      }
+        "no-console": "off", // API routes may need console for debugging
+      },
     },
     // Test files
     {
@@ -95,13 +103,13 @@ module.exports = {
       env: { jest: true },
       rules: {
         "@typescript-eslint/no-explicit-any": "off",
-        "no-console": "off"
-      }
-    }
+        "no-console": "off",
+      },
+    },
   ],
   env: {
     browser: true,
     es2022: true,
-    node: true
-  }
+    node: true,
+  },
 };

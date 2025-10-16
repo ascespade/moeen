@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+import { _useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 interface Template {
   id: string;
@@ -88,7 +89,7 @@ const mockTemplates: Template[] = [
   },
 ];
 
-export default function ChatbotTemplatesPage() {
+export default function __ChatbotTemplatesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedLanguage, setSelectedLanguage] = useState<string>("all");
@@ -98,7 +99,7 @@ export default function ChatbotTemplatesPage() {
     null,
   );
 
-  const getStatusColor = (status: Template["status"]) => {
+  const __getStatusColor = (_status: Template["status"]) => {
     switch (status) {
       case "draft":
         return "bg-gray-100 text-gray-800";
@@ -111,7 +112,7 @@ export default function ChatbotTemplatesPage() {
     }
   };
 
-  const getStatusText = (status: Template["status"]) => {
+  const __getStatusText = (_status: Template["status"]) => {
     switch (status) {
       case "draft":
         return "مسودة";
@@ -124,14 +125,14 @@ export default function ChatbotTemplatesPage() {
     }
   };
 
-  const allCategories = Array.from(
+  const __allCategories = Array.from(
     new Set(mockTemplates.map((t) => t.category)),
   );
-  const allLanguages = Array.from(
+  const __allLanguages = Array.from(
     new Set(mockTemplates.map((t) => t.language)),
   );
 
-  const filteredTemplates = mockTemplates.filter((template) => {
+  const __filteredTemplates = mockTemplates.filter((template) => {
     const matchesSearch =
       template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       template.description.toLowerCase().includes(searchTerm.toLowerCase());

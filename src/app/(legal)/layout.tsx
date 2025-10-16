@@ -5,11 +5,10 @@ export const metadata: Metadata = {
   description: "الشروط والأحكام وسياسة الخصوصية",
 };
 
-export default function LegalLayout({
+export default function __LegalLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return children;
 }
-

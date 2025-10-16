@@ -1,0 +1,130 @@
+{
+  "name": "SharedVerifier Agent Configuration",
+  "version": "1.0.0",
+  "description": "Configuration for the multi-agent cleanup system",
+
+  "agents": {
+    "frontend": {
+      "enabled": true,
+      "script": "scripts/agents/frontend-cleaner.js",
+      "scope": ["src/app", "src/components", "src/hooks", "src/context"],
+      "fileTypes": [".tsx", ".jsx", ".ts", ".js"],
+      "timeout": 300000,
+      "retries": 3
+    },
+    "backend": {
+      "enabled": true,
+      "script": "scripts/agents/backend-cleaner.js",
+      "scope": ["src/lib", "src/middleware", "src/utils", "scripts"],
+      "fileTypes": [".ts", ".js", ".mjs"],
+      "timeout": 300000,
+      "retries": 3
+    },
+    "shared": {
+      "enabled": true,
+      "script": "scripts/agents/shared-verifier.js",
+      "scope": ["public", "src/lib/utils.ts", "src/styles"],
+      "fileTypes": [
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".gif",
+        ".svg",
+        ".webp",
+        ".ico",
+        ".css"
+      ],
+      "timeout": 300000,
+      "retries": 3
+    }
+  },
+
+  "quarantine": {
+    "baseDir": "src/.shared_quarantine",
+    "subdirs": {
+      "frontend": "frontend",
+      "backend": "backend",
+      "shared": "shared"
+    },
+    "preserveStructure": true,
+    "createBackups": true
+  },
+
+  "verification": {
+    "assetReferenceCheck": {
+      "enabled": true,
+      "checkCss": true,
+      "checkTsx": true,
+      "checkHtml": false
+    },
+    "utilityUsageCheck": {
+      "enabled": true,
+      "focusFiles": ["src/lib/utils.ts"],
+      "scanAllFiles": true
+    },
+    "falsePositiveDetection": {
+      "enabled": true,
+      "checkDynamicImports": true,
+      "checkStringReferences": true,
+      "checkRouteFiles": true
+    }
+  },
+
+  "namingConventions": {
+    "files": "kebab-case",
+    "directories": "lowercase",
+    "reactComponents": "UpperCamelCase",
+    "enforceStrictly": false,
+    "autoFix": false
+  },
+
+  "safety": {
+    "dryRun": false,
+    "requireConfirmation": false,
+    "maxFilesPerRun": 1000,
+    "backupBeforeMove": true,
+    "generateRollbackScript": true
+  },
+
+  "logging": {
+    "level": "info",
+    "file": "logs/cleanup-agents.log",
+    "maxSize": "10MB",
+    "maxFiles": 5,
+    "includeTimestamps": true
+  },
+
+  "performance": {
+    "maxConcurrentAgents": 1,
+    "fileProcessingBatchSize": 100,
+    "memoryLimit": "512MB",
+    "enableCaching": true
+  },
+
+  "integration": {
+    "npmScripts": {
+      "cleanup:frontend": "node scripts/agents/frontend-cleaner.js",
+      "cleanup:backend": "node scripts/agents/backend-cleaner.js",
+      "cleanup:shared": "node scripts/agents/shared-verifier.js",
+      "cleanup:all": "node scripts/agents/run-cleanup-agents.js"
+    },
+    "automation": {
+      "enabled": true,
+      "schedule": "0 2 * * 0",
+      "autoStart": false,
+      "notifyOnCompletion": true
+    }
+  },
+
+  "exclusions": {
+    "files": ["*.d.ts", "*.config.js", "*.config.ts", "next-env.d.ts"],
+    "directories": ["node_modules", ".git", ".next", "dist", "build"],
+    "patterns": [
+      "**/test/**",
+      "**/tests/**",
+      "**/__tests__/**",
+      "**/*.test.*",
+      "**/*.spec.*"
+    ]
+  }
+}

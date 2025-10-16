@@ -1,23 +1,24 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useT } from '@/components/providers/I18nProvider';
-import { useTheme } from '@/context/ThemeContext';
-import ProtectedRoute from '@/components/auth/ProtectedRoute';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { 
-  UserPlus, 
-  Users, 
-  CreditCard, 
-  FileText, 
+import {
+  UserPlus,
+  Users,
+  CreditCard,
+  FileText,
   Clock,
   CheckCircle,
   AlertCircle,
-  Upload
-} from 'lucide-react';
+  Upload,
+} from "lucide-react";
+import { _useState, useEffect } from "react";
+
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { _useT } from "@/components/providers/I18nProvider";
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card } from "@/components/ui/Card";
+import { _useTheme } from "@/context/ThemeContext";
 
 interface StaffData {
   id: string;
@@ -27,7 +28,7 @@ interface StaffData {
     id: string;
     patientName: string;
     time: string;
-    status: 'pending' | 'completed';
+    status: "pending" | "completed";
   }>;
   pendingPayments: Array<{
     id: string;
@@ -41,7 +42,7 @@ interface StaffData {
     patientName: string;
     provider: string;
     amount: number;
-    status: 'draft' | 'submitted';
+    status: "draft" | "submitted";
   }>;
   recentActivity: Array<{
     id: string;
@@ -51,22 +52,22 @@ interface StaffData {
   }>;
 }
 
-export default function StaffDashboard() {
+export default function __StaffDashboard() {
   const { t } = useT();
   const { theme } = useTheme();
   const [staffData, setStaffData] = useState<StaffData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchStaffData = async () => {
+    const __fetchStaffData = async () => {
       try {
-        const response = await fetch('/api/staff/me');
+        const __response = await fetch("/api/staff/me");
         if (response.ok) {
-          const data = await response.json();
+          const __data = await response.json();
           setStaffData(data);
         }
       } catch (error) {
-        } finally {
+      } finally {
         setIsLoading(false);
       }
     };
@@ -74,36 +75,34 @@ export default function StaffDashboard() {
     fetchStaffData();
   }, []);
 
-  const handleProcessPayment = async (paymentId: string) => {
+  const __handleProcessPayment = async (_paymentId: string) => {
     try {
-      const response = await fetch(`/api/payments/${paymentId}/process`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'completed' })
+      const __response = await fetch(`/api/payments/${paymentId}/process`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "completed" }),
       });
-      
+
       if (response.ok) {
         // Refresh data
         window.location.reload();
       }
-    } catch (error) {
-      }
+    } catch (error) {}
   };
 
-  const handleSubmitClaim = async (claimId: string) => {
+  const __handleSubmitClaim = async (_claimId: string) => {
     try {
-      const response = await fetch(`/api/insurance/claims/${claimId}/submit`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'submitted' })
+      const __response = await fetch(`/api/insurance/claims/${claimId}/submit`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "submitted" }),
       });
-      
+
       if (response.ok) {
         // Refresh data
         window.location.reload();
       }
-    } catch (error) {
-      }
+    } catch (error) {}
   };
 
   if (isLoading) {
@@ -115,16 +114,16 @@ export default function StaffDashboard() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['staff', 'supervisor', 'admin']}>
+    <ProtectedRoute allowedRoles={["staff", "supervisor", "admin"]}>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              {t('staff.dashboard.welcome')}, {staffData?.fullName}
+              {t("staff.dashboard.welcome")}, {staffData?.fullName}
             </h1>
             <p className="mt-2 text-gray-600 dark:text-gray-400">
-              {t('staff.dashboard.subtitle')} - {staffData?.role}
+              {t("staff.dashboard.subtitle")} - {staffData?.role}
             </p>
           </div>
 
@@ -135,7 +134,7 @@ export default function StaffDashboard() {
                 <UserPlus className="h-8 w-8 text-blue-600 mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('staff.dashboard.today_registrations')}
+                    {t("staff.dashboard.today_registrations")}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
                     {staffData?.todayRegistrations?.length || 0}
@@ -149,7 +148,7 @@ export default function StaffDashboard() {
                 <CreditCard className="h-8 w-8 text-green-600 mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('staff.dashboard.pending_payments')}
+                    {t("staff.dashboard.pending_payments")}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
                     {staffData?.pendingPayments?.length || 0}
@@ -163,7 +162,7 @@ export default function StaffDashboard() {
                 <FileText className="h-8 w-8 text-orange-600 mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('staff.dashboard.pending_claims')}
+                    {t("staff.dashboard.pending_claims")}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
                     {staffData?.pendingClaims?.length || 0}
@@ -177,7 +176,7 @@ export default function StaffDashboard() {
                 <Clock className="h-8 w-8 text-purple-600 mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('staff.dashboard.today_activity')}
+                    {t("staff.dashboard.today_activity")}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
                     {staffData?.recentActivity?.length || 0}
@@ -193,18 +192,19 @@ export default function StaffDashboard() {
             <div className="lg:col-span-2">
               <Card className="p-6">
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                  {t('staff.dashboard.pending_tasks')}
+                  {t("staff.dashboard.pending_tasks")}
                 </h2>
-                
+
                 {/* Pending Payments */}
                 <div className="mb-6">
                   <h3 className="font-medium text-gray-900 dark:text-white mb-3">
-                    {t('staff.dashboard.pending_payments')}
+                    {t("staff.dashboard.pending_payments")}
                   </h3>
-                  {staffData?.pendingPayments && staffData.pendingPayments.length > 0 ? (
+                  {staffData?.pendingPayments &&
+                  staffData.pendingPayments.length > 0 ? (
                     <div className="space-y-3">
                       {staffData.pendingPayments.map((payment) => (
-                        <div 
+                        <div
                           key={payment.id}
                           className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
                         >
@@ -221,13 +221,13 @@ export default function StaffDashboard() {
                           </div>
                           <div className="flex items-center space-x-2">
                             <Badge variant="outline">
-                              {t('payment.status.pending')}
+                              {t("payment.status.pending")}
                             </Badge>
                             <Button
                               size="sm"
                               onClick={() => handleProcessPayment(payment.id)}
                             >
-                              {t('staff.actions.process_payment')}
+                              {t("staff.actions.process_payment")}
                             </Button>
                           </div>
                         </div>
@@ -235,7 +235,7 @@ export default function StaffDashboard() {
                     </div>
                   ) : (
                     <p className="text-gray-600 dark:text-gray-400 text-center py-4">
-                      {t('staff.dashboard.no_pending_payments')}
+                      {t("staff.dashboard.no_pending_payments")}
                     </p>
                   )}
                 </div>
@@ -243,12 +243,13 @@ export default function StaffDashboard() {
                 {/* Pending Claims */}
                 <div>
                   <h3 className="font-medium text-gray-900 dark:text-white mb-3">
-                    {t('staff.dashboard.pending_claims')}
+                    {t("staff.dashboard.pending_claims")}
                   </h3>
-                  {staffData?.pendingClaims && staffData.pendingClaims.length > 0 ? (
+                  {staffData?.pendingClaims &&
+                  staffData.pendingClaims.length > 0 ? (
                     <div className="space-y-3">
                       {staffData.pendingClaims.map((claim) => (
-                        <div 
+                        <div
                           key={claim.id}
                           className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
                         >
@@ -271,7 +272,7 @@ export default function StaffDashboard() {
                               size="sm"
                               onClick={() => handleSubmitClaim(claim.id)}
                             >
-                              {t('staff.actions.submit_claim')}
+                              {t("staff.actions.submit_claim")}
                             </Button>
                           </div>
                         </div>
@@ -279,7 +280,7 @@ export default function StaffDashboard() {
                     </div>
                   ) : (
                     <p className="text-gray-600 dark:text-gray-400 text-center py-4">
-                      {t('staff.dashboard.no_pending_claims')}
+                      {t("staff.dashboard.no_pending_claims")}
                     </p>
                   )}
                 </div>
@@ -291,24 +292,24 @@ export default function StaffDashboard() {
               {/* Quick Actions */}
               <Card className="p-6">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-                  {t('staff.dashboard.quick_actions')}
+                  {t("staff.dashboard.quick_actions")}
                 </h3>
                 <div className="space-y-3">
                   <Button className="w-full justify-start">
                     <UserPlus className="h-4 w-4 mr-2" />
-                    {t('staff.actions.register_patient')}
+                    {t("staff.actions.register_patient")}
                   </Button>
                   <Button className="w-full justify-start" variant="outline">
                     <Users className="h-4 w-4 mr-2" />
-                    {t('staff.actions.view_patients')}
+                    {t("staff.actions.view_patients")}
                   </Button>
                   <Button className="w-full justify-start" variant="outline">
                     <Upload className="h-4 w-4 mr-2" />
-                    {t('staff.actions.upload_claims')}
+                    {t("staff.actions.upload_claims")}
                   </Button>
                   <Button className="w-full justify-start" variant="outline">
                     <FileText className="h-4 w-4 mr-2" />
-                    {t('staff.actions.generate_reports')}
+                    {t("staff.actions.generate_reports")}
                   </Button>
                 </div>
               </Card>
@@ -316,12 +317,16 @@ export default function StaffDashboard() {
               {/* Recent Activity */}
               <Card className="p-6">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-                  {t('staff.dashboard.recent_activity')}
+                  {t("staff.dashboard.recent_activity")}
                 </h3>
-                {staffData?.recentActivity && staffData.recentActivity.length > 0 ? (
+                {staffData?.recentActivity &&
+                staffData.recentActivity.length > 0 ? (
                   <div className="space-y-3">
                     {staffData.recentActivity.slice(0, 5).map((activity) => (
-                      <div key={activity.id} className="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div
+                        key={activity.id}
+                        className="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
+                      >
                         <div className="flex-shrink-0">
                           <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
                         </div>
@@ -338,7 +343,7 @@ export default function StaffDashboard() {
                   </div>
                 ) : (
                   <p className="text-gray-600 dark:text-gray-400 text-center py-4">
-                    {t('staff.dashboard.no_recent_activity')}
+                    {t("staff.dashboard.no_recent_activity")}
                   </p>
                 )}
               </Card>

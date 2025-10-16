@@ -90,7 +90,7 @@
 
 /* Dyslexia Support */
 .dyslexia-support {
-  font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
+  font-family: "OpenDyslexic", "Comic Sans MS", sans-serif !important;
   letter-spacing: 0.1em !important;
   line-height: 1.6 !important;
 }
@@ -166,7 +166,7 @@
   .visual-only {
     display: none !important;
   }
-  
+
   /* Ensure all interactive elements are accessible */
   button,
   [role="button"],
@@ -177,7 +177,7 @@
     min-height: 44px !important;
     min-width: 44px !important;
   }
-  
+
   /* Improve focus visibility */
   *:focus {
     outline: 3px solid #0066cc !important;
@@ -267,7 +267,7 @@ input:invalid:focus {
 }
 
 .loading::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -281,8 +281,12 @@ input:invalid:focus {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* RTL Support */
@@ -314,27 +318,27 @@ input:invalid:focus {
   .no-print {
     display: none !important;
   }
-  
+
   .print-only {
     display: block !important;
   }
-  
+
   * {
     background: transparent !important;
     color: black !important;
     box-shadow: none !important;
     text-shadow: none !important;
   }
-  
+
   a,
   a:visited {
     text-decoration: underline;
   }
-  
+
   a[href]:after {
     content: " (" attr(href) ")";
   }
-  
+
   abbr[title]:after {
     content: " (" attr(title) ")";
   }
@@ -354,7 +358,7 @@ input:invalid:focus {
     background-color: #1a1a1a;
     color: #ffffff;
   }
-  
+
   .auto-dark input,
   .auto-dark select,
   .auto-dark textarea {
@@ -369,7 +373,7 @@ input:invalid:focus {
   .no-images {
     background-image: none !important;
   }
-  
+
   .no-images img {
     display: none !important;
   }

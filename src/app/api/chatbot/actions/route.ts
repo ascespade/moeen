@@ -3,65 +3,77 @@
  * Enhanced chatbot with appointment booking, notification sending, and reminder actions
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
-import { ValidationHelper } from '@/core/validation';
-import { ErrorHandler } from '@/core/errors';
-import { authorize, requireRole } from '@/lib/auth/authorize';
-// import { FlowManager, IntentAnalyzer, ActionExecutor } from '@/lib/conversation-flows';
+import { _NextRequest, NextResponse } from "next/server";
+import { _z } from "zod";
 
-const actionSchema = z.object({
+import { _ErrorHandler } from "@/core/errors";
+import { _ValidationHelper } from "@/core/validation";
+import { _authorize, requireRole } from "@/lib/auth/authorize";
+import { _createClient } from "@/lib/supabase/server";
+// import { _FlowManager, IntentAnalyzer, ActionExecutor } from '@/lib/conversation-flows';
+
+const __actionSchema = z.object({
   action: z.enum([
-    'create_appointment',
-    'send_notification',
-    'send_reminder',
-    'update_patient',
-    'send_email',
-    'send_sms',
-    'get_patient_info',
-    'get_appointment_info',
-    'cancel_appointment',
-    'reschedule_appointment',
-    'check_availability',
-    'get_medical_records',
-    'schedule_reminder',
-    'update_payment_status',
-    'create_insurance_claim'
+    "create_appointment",
+    "send_notification",
+    "send_reminder",
+    "update_patient",
+    "send_email",
+    "send_sms",
+    "get_patient_info",
+    "get_appointment_info",
+    "cancel_appointment",
+    "reschedule_appointment",
+    "check_availability",
+    "get_medical_records",
+    "schedule_reminder",
+    "update_payment_status",
+    "create_insurance_claim",
   ]),
   parameters: z.record(z.any()),
   context: z.record(z.any()).optional(),
-  userId: z.string().uuid('Invalid user ID'),
+  userId: z.string().uuid("Invalid user ID"),
   conversationId: z.string().optional(),
 });
 
-export async function POST(request: NextRequest) {
+export async function __POST(_request: NextRequest) {
   try {
     // Authorize user
     const { user: authUser, error: authError } = await authorize(request);
-    if (authError || !authUser || !requireRole(['patient', 'doctor', 'staff', 'admin'])(authUser)) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (
+      authError ||
+      !authUser ||
+      !requireRole(["patient", "doctor", "staff", "admin"])(authUser)
+    ) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const supabase = createClient();
-    const body = await request.json();
+    const __supabase = createClient();
+    const __body = await request.json();
 
     // Validate input
-    const validation = await ValidationHelper.validateAsync(actionSchema, body);
+    const __validation = await ValidationHelper.validateAsync(actionSchema, body);
     if (!validation.success) {
-      return NextResponse.json({ error: validation.error.message }, { status: 400 });
+      return NextResponse.json(
+        { error: validation.error.message },
+        { status: 400 },
+      );
     }
 
-    const { action, parameters, context, userId, conversationId } = validation.data;
+    const { action, parameters, context, userId, conversationId } =
+      validation.data;
 
     // Initialize chatbot components - temporarily disabled
-    // const intentAnalyzer = new IntentAnalyzer();
-    // const actionExecutor = new ActionExecutor(supabase);
-    // const flowManager = new FlowManager(intentAnalyzer, actionExecutor);
+    // const __intentAnalyzer = new IntentAnalyzer();
+    // const __actionExecutor = new ActionExecutor(supabase);
+    // const __flowManager = new FlowManager(intentAnalyzer, actionExecutor);
 
     // Execute the action - temporarily disabled
-    const result = { success: true, data: { message: 'Chatbot actions temporarily disabled' } };
-    // const result = await flowManager.executeAction(action, parameters, {
+    const __result = {
+      success: true,
+      data: { message: "Chatbot actions temporarily disabled" },
+    };
+    // const __result = await flowManager.executeAction(action, parameters, {
     //   userId: authUser.id,
     //   userRole: authUser.role,
     //   conversationId,
@@ -69,13 +81,13 @@ export async function POST(request: NextRequest) {
     // });
 
     // Log the action
-    await supabase.from('chatbot_actions').insert({
+    await supabase.from("chatbot_actions").insert({
       action,
       parameters,
       context,
       userId: authUser.id,
       conversationId,
-      result: result.success ? 'success' : 'error',
+      result: result.success ? "success" : "error",
       errorMessage: null,
       executedAt: new Date().toISOString(),
     });
@@ -84,48 +96,59 @@ export async function POST(request: NextRequest) {
       success: result.success,
       data: result.data,
     });
-
   } catch (error) {
     return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function __GET(_request: NextRequest) {
   try {
     // Authorize user
     const { user: authUser, error: authError } = await authorize(request);
-    if (authError || !authUser || !requireRole(['patient', 'doctor', 'staff', 'admin'])(authUser)) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (
+      authError ||
+      !authUser ||
+      !requireRole(["patient", "doctor", "staff", "admin"])(authUser)
+    ) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const __supabase = createClient();
     const { searchParams } = new URL(request.url);
-    const conversationId = searchParams.get('conversationId');
-    const action = searchParams.get('action');
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '20');
+    const __conversationId = searchParams.get("conversationId");
+    const __action = searchParams.get("action");
+    const __page = parseInt(searchParams.get("page") || "1");
+    const __limit = parseInt(searchParams.get("limit") || "20");
 
     let query = supabase
-      .from('chatbot_actions')
-      .select(`
+      .from("chatbot_actions")
+      .select(
+        `
         *,
         user:users(id, email, fullName, role)
-      `)
-      .eq('userId', authUser.id)
-      .order('executedAt', { ascending: false })
-      .range(((page || 1) - 1) * (limit || 20), (page || 1) * (limit || 20) - 1);
+      `,
+      )
+      .eq("userId", authUser.id)
+      .order("executedAt", { ascending: false })
+      .range(
+        ((page || 1) - 1) * (limit || 20),
+        (page || 1) * (limit || 20) - 1,
+      );
 
     if (conversationId) {
-      query = query.eq('conversationId', conversationId);
+      query = query.eq("conversationId", conversationId);
     }
     if (action) {
-      query = query.eq('action', action);
+      query = query.eq("action", action);
     }
 
     const { data: actions, error, count } = await query;
 
     if (error) {
-      return NextResponse.json({ error: 'Failed to fetch chatbot actions' }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to fetch chatbot actions" },
+        { status: 500 },
+      );
     }
 
     return NextResponse.json({
@@ -138,7 +161,6 @@ export async function GET(request: NextRequest) {
         pages: Math.ceil((count || 0) / (limit || 20)),
       },
     });
-
   } catch (error) {
     return ErrorHandler.getInstance().handle(error as Error);
   }
@@ -147,7 +169,7 @@ export async function GET(request: NextRequest) {
 // Enhanced ActionExecutor with more actions - temporarily disabled
 /*
 export class EnhancedActionExecutor extends ActionExecutor {
-  async executeAction(action: string, parameters: any, context: any) {
+  async executeAction(_action: string, parameters: unknown, context: unknown) {
     switch (action) {
       case 'create_appointment':
         return await this.createAppointment(parameters, context);
@@ -187,7 +209,7 @@ export class EnhancedActionExecutor extends ActionExecutor {
     }
   }
 
-  async getPatientInfo(parameters: any, context: any) {
+  async getPatientInfo(_parameters: unknown, context: unknown) {
     try {
       const { patientId } = parameters;
       
@@ -227,7 +249,7 @@ export class EnhancedActionExecutor extends ActionExecutor {
     }
   }
 
-  async getAppointmentInfo(parameters: any, context: any) {
+  async getAppointmentInfo(_parameters: unknown, context: unknown) {
     try {
       const { appointmentId } = parameters;
       
@@ -265,7 +287,7 @@ export class EnhancedActionExecutor extends ActionExecutor {
     }
   }
 
-  async cancelAppointment(parameters: any, context: any) {
+  async cancelAppointment(_parameters: unknown, context: unknown) {
     try {
       const { appointmentId, reason } = parameters;
       
@@ -297,7 +319,7 @@ export class EnhancedActionExecutor extends ActionExecutor {
     }
   }
 
-  async rescheduleAppointment(parameters: any, context: any) {
+  async rescheduleAppointment(_parameters: unknown, context: unknown) {
     try {
       const { appointmentId, newDate, reason } = parameters;
       
@@ -329,13 +351,13 @@ export class EnhancedActionExecutor extends ActionExecutor {
     }
   }
 
-  async checkAvailability(parameters: any, context: any) {
+  async checkAvailability(_parameters: unknown, context: unknown) {
     try {
       const { doctorId, date, duration = 30 } = parameters;
       
       // This would integrate with the availability API
-      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/appointments/availability?doctorId=${doctorId}&date=${date}&duration=${duration}`);
-      const data = await response.json();
+      const __response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/appointments/availability?doctorId=${doctorId}&date=${date}&duration=${duration}`);
+      const __data = await response.json();
 
       if (!response.ok) {
         return {
@@ -357,7 +379,7 @@ export class EnhancedActionExecutor extends ActionExecutor {
     }
   }
 
-  async getMedicalRecords(parameters: any, context: any) {
+  async getMedicalRecords(_parameters: unknown, context: unknown) {
     try {
       const { patientId, recordType } = parameters;
       
@@ -393,7 +415,7 @@ export class EnhancedActionExecutor extends ActionExecutor {
     }
   }
 
-  async scheduleReminder(parameters: any, context: any) {
+  async scheduleReminder(_parameters: unknown, context: unknown) {
     try {
       const { appointmentId, reminderTime, message } = parameters;
       
@@ -429,7 +451,7 @@ export class EnhancedActionExecutor extends ActionExecutor {
     }
   }
 
-  async updatePaymentStatus(parameters: any, context: any) {
+  async updatePaymentStatus(_parameters: unknown, context: unknown) {
     try {
       const { paymentId, status, notes } = parameters;
       
@@ -461,7 +483,7 @@ export class EnhancedActionExecutor extends ActionExecutor {
     }
   }
 
-  async createInsuranceClaim(parameters: any, context: any) {
+  async createInsuranceClaim(_parameters: unknown, context: unknown) {
     try {
       const { appointmentId, provider, policyNumber, memberId, claimAmount, diagnosis, treatment } = parameters;
       

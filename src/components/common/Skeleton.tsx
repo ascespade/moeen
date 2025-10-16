@@ -1,4 +1,4 @@
-export function Skeleton({ className = "" }: { className?: string }) {
+export function __Skeleton({ className = "" }: { className?: string }) {
   return (
     <div
       className={`animate-pulse rounded-md bg-gray-200 dark:bg-gray-700 ${className}`}
@@ -6,7 +6,7 @@ export function Skeleton({ className = "" }: { className?: string }) {
   );
 }
 
-export function ChartSkeleton() {
+export function __ChartSkeleton() {
   return (
     <div className="p-4">
       <Skeleton className="h-5 w-32 mb-4" />

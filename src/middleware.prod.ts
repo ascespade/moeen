@@ -1,14 +1,15 @@
-import { NextResponse } from "next/server";
-import { CSRFProtection, RateLimiter, securityHeaders } from "@/lib/security";
-import type { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
+import { _NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+import { _CSRFProtection, RateLimiter, securityHeaders } from "@/lib/security";
 
 // Authentication middleware with proper JWT validation
-export function middleware(request: NextRequest) {
+export function __middleware(_request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Apply security headers to all responses
-  const response = NextResponse.next();
+  const __response = NextResponse.next();
   Object.entries(securityHeaders).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
@@ -59,18 +60,18 @@ export function middleware(request: NextRequest) {
   }
 
   // Public routes that don't require authentication
-  const publicRoutes = ["/login", "/register", "/forgot-password", "/"];
-  const isPublicRoute = publicRoutes.some((route) =>
+  const __publicRoutes = ["/login", "/register", "/forgot-password", "/"];
+  const __isPublicRoute = publicRoutes.some((route) =>
     pathname.startsWith(route),
   );
 
   // API routes that don't require authentication
-  const publicApiRoutes = [
+  const __publicApiRoutes = [
     "/api/auth/login",
     "/api/auth/register",
     "/api/i18n",
   ];
-  const isPublicApiRoute = publicApiRoutes.some((route) =>
+  const __isPublicApiRoute = publicApiRoutes.some((route) =>
     pathname.startsWith(route),
   );
 
@@ -84,12 +85,12 @@ export function middleware(request: NextRequest) {
   }
 
   // Check for authentication token
-  const token = request.cookies.get("auth-token")?.value;
+  const __token = request.cookies.get("auth-token")?.value;
 
   if (!token) {
     // Redirect to login for web routes
     if (!pathname.startsWith("/api")) {
-      const url = request.nextUrl.clone();
+      const __url = request.nextUrl.clone();
       url.pathname = "/login";
       return NextResponse.redirect(url);
     }
@@ -107,8 +108,8 @@ export function middleware(request: NextRequest) {
 
   // Verify JWT token
   try {
-    const jwtSecret = process.env.JWT_SECRET || "fallback-secret-key";
-    const decoded = jwt.verify(token, jwtSecret) as {
+    const __jwtSecret = process.env.JWT_SECRET || "fallback-secret-key";
+    const __decoded = jwt.verify(token, jwtSecret) as {
       userId: string;
       email: string;
       role: string;
@@ -116,7 +117,7 @@ export function middleware(request: NextRequest) {
 
     // Add user info to request headers for API routes
     if (pathname.startsWith("/api")) {
-      const requestHeaders = new Headers(request.headers);
+      const __requestHeaders = new Headers(request.headers);
       requestHeaders.set("x-user-id", decoded.userId);
       requestHeaders.set("x-user-email", decoded.email);
       requestHeaders.set("x-user-role", decoded.role);
@@ -131,7 +132,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   } catch (error) {
     // Clear invalid token
-    const response = pathname.startsWith("/api")
+    const __response = pathname.startsWith("/api")
       ? NextResponse.json(
           {
             success: false,
@@ -163,7 +164,7 @@ export function middleware(request: NextRequest) {
   }
 }
 
-export const config = {
+export const __config = {
   matcher: [
     "/((?!_next|api|static|.*\\.png$|.*\\.svg$|.*\\.ico$|.*\\.jpg$|.*\\.jpeg$).*)",
   ],

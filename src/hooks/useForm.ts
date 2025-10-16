@@ -1,5 +1,6 @@
-import { useState, useCallback, useRef, useEffect } from "react";
-import { validateForm } from "@/utils/validation";
+import { _useState, useCallback, useRef, useEffect } from "react";
+
+import { _validateForm } from "@/utils/validation";
 // Form hooks
 
 // removed unused FormField interface
@@ -16,14 +17,14 @@ interface FormState<T> {
 interface FormOptions<T> {
   initialValues: T;
   validationRules?: Partial<
-    Record<keyof T, (value: unknown) => { isValid: boolean; error?: string }>
+    Record<keyof T, (_value: unknown) => { isValid: boolean; error?: string }>
   >;
-  onSubmit?: (values: T) => void | Promise<void>;
+  onSubmit?: (_values: T) => void | Promise<void>;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
 }
 
-export const useForm = <T extends Record<string, unknown>>(
+export const __useForm = <T extends Record<string, unknown>>(
   options: FormOptions<T>,
 ) => {
   const {
@@ -43,17 +44,17 @@ export const useForm = <T extends Record<string, unknown>>(
     isDirty: false,
   });
 
-  const initialValuesRef = useRef(initialValues);
+  const __initialValuesRef = useRef(initialValues);
 
   // Validate form
-  const validate = useCallback(() => {
+  const __validate = useCallback(() => {
     if (Object.keys(validationRules).length === 0) {
       return { isValid: true, errors: {} };
     }
 
-    const rules = validationRules as Record<
+    const __rules = validationRules as Record<
       keyof T,
-      (value: unknown) => { isValid: boolean; error?: string }
+      (_value: unknown) => { isValid: boolean; error?: string }
     >;
     return validateForm(state.values, rules);
   }, [state.values, validationRules]);
@@ -76,7 +77,7 @@ export const useForm = <T extends Record<string, unknown>>(
   }, [state.values]);
 
   // Set field value
-  const setFieldValue = useCallback((field: keyof T, value: unknown) => {
+  const __setFieldValue = useCallback((_field: keyof T, value: unknown) => {
     setState((prev) => ({
       ...prev,
       values: { ...prev.values, [field]: value },
@@ -85,7 +86,7 @@ export const useForm = <T extends Record<string, unknown>>(
   }, []);
 
   // Set field error
-  const setFieldError = useCallback((field: keyof T, error: string) => {
+  const __setFieldError = useCallback((_field: keyof T, error: string) => {
     setState((prev) => ({
       ...prev,
       errors: { ...prev.errors, [field]: error },
@@ -93,7 +94,7 @@ export const useForm = <T extends Record<string, unknown>>(
   }, []);
 
   // Clear field error
-  const clearFieldError = useCallback((field: keyof T) => {
+  const __clearFieldError = useCallback((_field: keyof T) => {
     setState((prev) => {
       const newErrors: Partial<Record<keyof T, string>> = { ...prev.errors };
       // Remove the error for this field if it exists
@@ -103,8 +104,8 @@ export const useForm = <T extends Record<string, unknown>>(
   }, []);
 
   // Set field touched
-  const setFieldTouched = useCallback(
-    (field: keyof T, touched: boolean = true) => {
+  const __setFieldTouched = useCallback(
+    (_field: keyof T, touched: boolean = true) => {
       setState((prev) => ({
         ...prev,
         touched: { ...prev.touched, [field]: touched },
@@ -114,16 +115,16 @@ export const useForm = <T extends Record<string, unknown>>(
   );
 
   // Handle field change
-  const handleChange = useCallback(
-    (field: keyof T) => (value: unknown) => {
+  const __handleChange = useCallback(
+    (_field: keyof T) => (_value: unknown) => {
       setFieldValue(field, value);
 
       if (validateOnChange) {
-        const rule = validationRules[field as keyof typeof validationRules] as
-          | ((value: unknown) => { isValid: boolean; error?: string })
+        const __rule = validationRules[field as keyof typeof validationRules] as
+          | ((_value: unknown) => { isValid: boolean; error?: string })
           | undefined;
         if (typeof rule === "function") {
-          const result = rule(value);
+          const __result = rule(value);
           if (!result.isValid) {
             setFieldError(field, result.error || "Invalid value");
           } else {
@@ -142,16 +143,16 @@ export const useForm = <T extends Record<string, unknown>>(
   );
 
   // Handle field blur
-  const handleBlur = useCallback(
-    (field: keyof T) => () => {
+  const __handleBlur = useCallback(
+    (_field: keyof T) => () => {
       setFieldTouched(field);
 
       if (validateOnBlur) {
-        const rule = validationRules[field as keyof typeof validationRules] as
-          | ((value: unknown) => { isValid: boolean; error?: string })
+        const __rule = validationRules[field as keyof typeof validationRules] as
+          | ((_value: unknown) => { isValid: boolean; error?: string })
           | undefined;
         if (typeof rule === "function") {
-          const result = rule(state.values[field]);
+          const __result = rule(state.values[field]);
           if (!result.isValid) {
             setFieldError(field, result.error || "Invalid value");
           } else {
@@ -171,7 +172,7 @@ export const useForm = <T extends Record<string, unknown>>(
   );
 
   // Reset form
-  const reset = useCallback(() => {
+  const __reset = useCallback(() => {
     setState({
       values: initialValues,
       errors: {},
@@ -184,7 +185,7 @@ export const useForm = <T extends Record<string, unknown>>(
   }, [initialValues]);
 
   // Submit form
-  const handleSubmit = useCallback(
+  const __handleSubmit = useCallback(
     async (e?: React.FormEvent) => {
       e?.preventDefault();
 
@@ -195,7 +196,7 @@ export const useForm = <T extends Record<string, unknown>>(
       try {
         await onSubmit(state.values);
       } catch (error) {
-        } finally {
+      } finally {
         setState((prev) => ({ ...prev, isSubmitting: false }));
       }
     },
@@ -203,8 +204,8 @@ export const useForm = <T extends Record<string, unknown>>(
   );
 
   // Get field props
-  const getFieldProps = useCallback(
-    (field: keyof T) => ({
+  const __getFieldProps = useCallback(
+    (_field: keyof T) => ({
       value: state.values[field],
       onChange: handleChange(field),
       onBlur: handleBlur(field),

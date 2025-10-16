@@ -244,16 +244,19 @@ system_metrics (id, metric_key, metric_value, meta, recorded_at)
 ### From Previous Version - من الإصدار السابق
 
 1. **Update dependencies**:
+
    ```bash
    npm ci
    ```
 
 2. **Apply database migrations**:
+
    ```bash
    # Apply migrations in supabase/migrations/
    ```
 
 3. **Update environment variables**:
+
    ```bash
    # Add new environment variables if needed
    ```
@@ -350,6 +353,7 @@ npm run test:a11y
 ### v3.0.0 (2025-10-15)
 
 #### Added
+
 - Role-based access control system
 - Dynamic translation system with database support
 - Light/Dark theme system with RTL compatibility
@@ -361,6 +365,7 @@ npm run test:a11y
 - Accessibility improvements
 
 #### Changed
+
 - Updated design system with solid brand colors
 - Reduced gradients for cleaner appearance
 - Improved RTL support throughout
@@ -368,6 +373,7 @@ npm run test:a11y
 - Updated component architecture
 
 #### Fixed
+
 - RTL layout issues
 - Theme persistence problems
 - Chart rendering in RTL mode
@@ -375,6 +381,7 @@ npm run test:a11y
 - Accessibility issues
 
 #### Removed
+
 - Hardcoded color values
 - Static translation files
 - Unused gradient styles

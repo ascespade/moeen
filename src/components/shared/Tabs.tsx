@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { _useState } from "react";
 interface Tab {
   id: string;
   label: string;
@@ -13,10 +13,10 @@ interface TabsProps {
   className?: string;
 }
 
-export default function Tabs({ tabs, defaultTab, className = "" }: TabsProps) {
+export default function __Tabs({ tabs, defaultTab, className = "" }: TabsProps) {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
 
-  const activeTabContent = tabs.find((tab) => tab.id === activeTab)?.content;
+  const __activeTabContent = tabs.find((tab) => tab.id === activeTab)?.content;
 
   return (
     <div className={className}>

@@ -1,0 +1,108 @@
+{
+  "name": "BackendCleaner",
+  "id": "agent-backend-002",
+  "description": "يفحص backend (api routes, controllers, services, seeds, mock data) وينقل الملفات/بيانات الاختبار إلى src/.quarantine/backend_cleaner/<timestamp>/ بدون حذف نهائي.",
+  "scope": ["src/app/api/", "src/lib/", "src/scripts/"],
+  "preconditions": [
+    "الاتصال بقاعدة البيانات (read-only) إن أمكن لفحص الاعتماد الحقيقية",
+    "ملف env محلي متوفر للبيئات dev/test إن لزم"
+  ],
+  "tasks": [
+    {
+      "step": 1,
+      "action": "scanApiRoutes",
+      "detail": "يجمع كل ملفات routes/controllers/services ويبني خريطة الاعتمادية بينهم."
+    },
+    {
+      "step": 2,
+      "action": "findMockData",
+      "detail": "يبحث عن أدلة وملفات تتضمن كلمات مفتاحية: mock, seed, fixture, sample, test-data."
+    },
+    {
+      "step": 3,
+      "action": "crossCheckDbUsage",
+      "detail": "يتحقق إن كانت الوظائف المزعومة تستخدم بيانات حقيقية من DB أو مجرد ملفات محلية."
+    },
+    {
+      "step": 4,
+      "action": "verifyNoSideEffects",
+      "detail": "يتأكد أن نقل الملف لا يسبب كسر في الوظائف (يحلل الاستيرادات المتأثرة)."
+    },
+    {
+      "step": 5,
+      "action": "quarantineMove",
+      "detail": "ينقل الملفات والـ seed scripts إلى src/.shared_quarantine/backend/<timestamp>/ ويضيف إدخال لسجل cleanup-log.txt."
+    },
+    {
+      "step": 6,
+      "action": "reportAndDocs",
+      "detail": "ينشئ backend_cleanup.log ويتضمن: list of moved files, reason, suggested replacements if any."
+    }
+  ],
+  "conflictResolution": {
+    "onApiShared": "يتحقق من usage-map وإذا ملف مشارك مع Agent آخر يسجّل كـ 'needs review' ولا يحذفه.",
+    "onDbDependence": "إذا وظيفة تتطلب بيانات حقيقية ولم تُثبت فالملف يُعلّم 'dangerous' ويجب مراجعة يدويّة."
+  },
+  "outputs": {
+    "quarantineDir": "src/.shared_quarantine/backend/<timestamp>/",
+    "report": "logs/backend_cleanup.log",
+    "logEntry": "append to src/.shared_quarantine/cleanup-log.json",
+    "usageMap": "src/.shared_quarantine/backend/<timestamp>/usage-map.json"
+  },
+  "settings": {
+    "maxFileSize": 10485760,
+    "excludePatterns": [
+      "node_modules/**",
+      ".git/**",
+      ".next/**",
+      "dist/**",
+      "build/**",
+      ".shared_quarantine/**"
+    ],
+    "includePatterns": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.json",
+      "**/*.sql"
+    ],
+    "keywords": {
+      "test": ["test", "spec", "describe", "it", "expect"],
+      "mock": ["mock", "stub", "spy", "fake", "dummy"],
+      "seed": ["seed", "fixture", "sample", "demo", "placeholder"],
+      "temporary": ["temp", "temporary", "backup", "old", "deprecated"]
+    },
+    "riskThresholds": {
+      "safe": 80,
+      "needsReview": 50,
+      "dangerous": 20
+    },
+    "databaseTables": [
+      "users",
+      "patients",
+      "doctors",
+      "appointments",
+      "sessions",
+      "insurance_claims",
+      "conversations",
+      "messages",
+      "chatbot_conversations",
+      "chatbot_messages",
+      "chatbot_intents",
+      "crm_leads",
+      "crm_deals",
+      "crm_activities",
+      "settings",
+      "translations",
+      "audit_logs",
+      "file_uploads",
+      "notifications",
+      "notification_templates",
+      "system_settings",
+      "system_metrics",
+      "reports",
+      "languages"
+    ]
+  }
+}

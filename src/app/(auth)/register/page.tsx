@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { _useState } from "react";
 
-export default function RegisterPage() {
+import { _ROUTES } from "@/constants/routes";
+
+export default function __RegisterPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,7 +17,7 @@ export default function RegisterPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const __handleInputChange = (_e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -32,7 +33,7 @@ export default function RegisterPage() {
     }
   };
 
-  const validateForm = () => {
+  const __validateForm = () => {
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
@@ -63,7 +64,7 @@ export default function RegisterPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const __handleSubmit = async (_e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {

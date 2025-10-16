@@ -1,4 +1,4 @@
-import { whatsappAPI } from "@/lib/whatsapp-business-api";
+import { _whatsappAPI } from "@/lib/whatsapp-business-api";
 // Mock fetch for testing
 global.fetch = jest.fn();
 
@@ -9,7 +9,7 @@ describe("WhatsAppBusinessAPI", () => {
 
   describe("Text Messages", () => {
     test("should send text message successfully", async () => {
-      const mockResponse = {
+      const __mockResponse = {
         ok: true,
         json: () =>
           Promise.resolve({
@@ -18,7 +18,7 @@ describe("WhatsAppBusinessAPI", () => {
       };
       (fetch as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await whatsappAPI.sendTextMessage(
+      const __result = await whatsappAPI.sendTextMessage(
         "+966501234567",
         "مرحبا",
       );
@@ -39,7 +39,7 @@ describe("WhatsAppBusinessAPI", () => {
     });
 
     test("should handle text message failure", async () => {
-      const mockResponse = {
+      const __mockResponse = {
         ok: false,
         json: () =>
           Promise.resolve({
@@ -48,7 +48,7 @@ describe("WhatsAppBusinessAPI", () => {
       };
       (fetch as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await whatsappAPI.sendTextMessage(
+      const __result = await whatsappAPI.sendTextMessage(
         "+966501234567",
         "مرحبا",
       );
@@ -60,7 +60,7 @@ describe("WhatsAppBusinessAPI", () => {
 
   describe("Template Messages", () => {
     test("should send template message successfully", async () => {
-      const mockResponse = {
+      const __mockResponse = {
         ok: true,
         json: () =>
           Promise.resolve({
@@ -69,7 +69,7 @@ describe("WhatsAppBusinessAPI", () => {
       };
       (fetch as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await whatsappAPI.sendTemplateMessage(
+      const __result = await whatsappAPI.sendTemplateMessage(
         "+966501234567",
         "appointment_confirmation",
         "ar",
@@ -81,7 +81,7 @@ describe("WhatsAppBusinessAPI", () => {
     });
 
     test("should handle template message failure", async () => {
-      const mockResponse = {
+      const __mockResponse = {
         ok: false,
         json: () =>
           Promise.resolve({
@@ -90,7 +90,7 @@ describe("WhatsAppBusinessAPI", () => {
       };
       (fetch as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await whatsappAPI.sendTemplateMessage(
+      const __result = await whatsappAPI.sendTemplateMessage(
         "+966501234567",
         "invalid_template",
         "ar",
@@ -103,7 +103,7 @@ describe("WhatsAppBusinessAPI", () => {
 
   describe("Media Messages", () => {
     test("should send image message successfully", async () => {
-      const mockResponse = {
+      const __mockResponse = {
         ok: true,
         json: () =>
           Promise.resolve({
@@ -112,7 +112,7 @@ describe("WhatsAppBusinessAPI", () => {
       };
       (fetch as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await whatsappAPI.sendImageMessage(
+      const __result = await whatsappAPI.sendImageMessage(
         "+966501234567",
         "https://example.com/image.jpg",
         "صورة توضيحية",
@@ -123,7 +123,7 @@ describe("WhatsAppBusinessAPI", () => {
     });
 
     test("should send document message successfully", async () => {
-      const mockResponse = {
+      const __mockResponse = {
         ok: true,
         json: () =>
           Promise.resolve({
@@ -132,7 +132,7 @@ describe("WhatsAppBusinessAPI", () => {
       };
       (fetch as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await whatsappAPI.sendDocumentMessage(
+      const __result = await whatsappAPI.sendDocumentMessage(
         "+966501234567",
         "https://example.com/doc.pdf",
         "document.pdf",
@@ -146,7 +146,7 @@ describe("WhatsAppBusinessAPI", () => {
 
   describe("Message Status", () => {
     test("should get message status successfully", async () => {
-      const mockResponse = {
+      const __mockResponse = {
         ok: true,
         json: () =>
           Promise.resolve({
@@ -156,7 +156,7 @@ describe("WhatsAppBusinessAPI", () => {
       };
       (fetch as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await whatsappAPI.getMessageStatus("msg_123");
+      const __result = await whatsappAPI.getMessageStatus("msg_123");
 
       expect(result).toEqual({
         status: "delivered",
@@ -165,7 +165,7 @@ describe("WhatsAppBusinessAPI", () => {
     });
 
     test("should handle message status failure", async () => {
-      const mockResponse = {
+      const __mockResponse = {
         ok: false,
         json: () =>
           Promise.resolve({
@@ -174,7 +174,7 @@ describe("WhatsAppBusinessAPI", () => {
       };
       (fetch as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await whatsappAPI.getMessageStatus("invalid_msg");
+      const __result = await whatsappAPI.getMessageStatus("invalid_msg");
 
       expect(result).toBeNull();
     });
@@ -182,7 +182,7 @@ describe("WhatsAppBusinessAPI", () => {
 
   describe("Templates", () => {
     test("should get templates successfully", async () => {
-      const mockResponse = {
+      const __mockResponse = {
         ok: true,
         json: () =>
           Promise.resolve({
@@ -198,14 +198,14 @@ describe("WhatsAppBusinessAPI", () => {
       };
       (fetch as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await whatsappAPI.getTemplates();
+      const __result = await whatsappAPI.getTemplates();
 
       expect(result).toHaveLength(1);
       expect(result[0].name).toBe("appointment_confirmation");
     });
 
     test("should create template successfully", async () => {
-      const mockResponse = {
+      const __mockResponse = {
         ok: true,
         json: () =>
           Promise.resolve({
@@ -214,7 +214,7 @@ describe("WhatsAppBusinessAPI", () => {
       };
       (fetch as jest.Mock).mockResolvedValue(mockResponse);
 
-      const template = {
+      const __template = {
         name: "test_template",
         category: "UTILITY" as const,
         language: "ar",
@@ -226,7 +226,7 @@ describe("WhatsAppBusinessAPI", () => {
         ],
       };
 
-      const result = await whatsappAPI.createTemplate(template);
+      const __result = await whatsappAPI.createTemplate(template);
 
       expect(result.success).toBe(true);
       expect(result.templateId).toBe("template_123");
@@ -235,7 +235,7 @@ describe("WhatsAppBusinessAPI", () => {
 
   describe("Webhook Processing", () => {
     test("should process webhook event", () => {
-      const webhookEvent = {
+      const __webhookEvent = {
         object: "whatsapp_business_account",
         entry: [
           {
@@ -279,7 +279,7 @@ describe("WhatsAppBusinessAPI", () => {
         ],
       };
 
-      const result = whatsappAPI.processWebhookEvent(webhookEvent);
+      const __result = whatsappAPI.processWebhookEvent(webhookEvent);
 
       expect(result.messages).toHaveLength(1);
       expect(result.messages[0].from).toBe("966501234567");
@@ -296,7 +296,7 @@ describe("WhatsAppBusinessAPI", () => {
     test("should verify webhook with correct token", () => {
       process.env.WHATSAPP_VERIFY_TOKEN = "test_token";
 
-      const result = whatsappAPI.verifyWebhook(
+      const __result = whatsappAPI.verifyWebhook(
         "subscribe",
         "test_token",
         "challenge_123",
@@ -307,7 +307,7 @@ describe("WhatsAppBusinessAPI", () => {
     test("should reject webhook with incorrect token", () => {
       process.env.WHATSAPP_VERIFY_TOKEN = "test_token";
 
-      const result = whatsappAPI.verifyWebhook(
+      const __result = whatsappAPI.verifyWebhook(
         "subscribe",
         "wrong_token",
         "challenge_123",
@@ -318,7 +318,7 @@ describe("WhatsAppBusinessAPI", () => {
 
   describe("Business Profile", () => {
     test("should get business profile successfully", async () => {
-      const mockResponse = {
+      const __mockResponse = {
         ok: true,
         json: () =>
           Promise.resolve({
@@ -329,26 +329,26 @@ describe("WhatsAppBusinessAPI", () => {
       };
       (fetch as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await whatsappAPI.getBusinessProfile();
+      const __result = await whatsappAPI.getBusinessProfile();
 
       expect(result.success).toBe(true);
       expect(result.profile).toBeDefined();
     });
 
     test("should update business profile successfully", async () => {
-      const mockResponse = {
+      const __mockResponse = {
         ok: true,
         json: () => Promise.resolve({}),
       };
       (fetch as jest.Mock).mockResolvedValue(mockResponse);
 
-      const profileData = {
+      const __profileData = {
         messaging_product: "whatsapp",
         about: "مركز الهمم - الحلول الرقمية المتكاملة",
         address: "جدة، حي الصفا، شارع الأمير محمد بن عبدالعزيز",
       };
 
-      const result = await whatsappAPI.updateBusinessProfile(profileData);
+      const __result = await whatsappAPI.updateBusinessProfile(profileData);
 
       expect(result.success).toBe(true);
     });

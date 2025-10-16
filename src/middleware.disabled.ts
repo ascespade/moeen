@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { _NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(_request: NextRequest) {
+export function __middleware(__request: NextRequest) {
   return NextResponse.next();
 }
 
-export const config = {
+export const __config = {
   matcher: [
     "/((?!_next|api|static|.*\\.png$|.*\\.svg$|.*\\.ico$|.*\\.jpg$|.*\\.jpeg$).*)",
   ],

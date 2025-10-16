@@ -4,7 +4,7 @@ export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
   // Extends all div attributes
 }
 
-export function ScrollArea({ className, ...props }: ScrollAreaProps) {
+export function __ScrollArea({ className, ...props }: ScrollAreaProps) {
   return (
     <div
       className={clsx(

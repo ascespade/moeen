@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+import { _useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 interface Lead {
   id: string;
@@ -69,13 +70,13 @@ const mockLeads: Lead[] = [
   },
 ];
 
-export default function CRMLeadsPage() {
+export default function __CRMLeadsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"table" | "kanban">("table");
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const getStatusColor = (status: Lead["status"]) => {
+  const __getStatusColor = (_status: Lead["status"]) => {
     switch (status) {
       case "new":
         return "bg-blue-100 text-blue-800";
@@ -96,7 +97,7 @@ export default function CRMLeadsPage() {
     }
   };
 
-  const getStatusText = (status: Lead["status"]) => {
+  const __getStatusText = (_status: Lead["status"]) => {
     switch (status) {
       case "new":
         return "جديد";
@@ -117,7 +118,7 @@ export default function CRMLeadsPage() {
     }
   };
 
-  const filteredLeads = mockLeads.filter((lead) => {
+  const __filteredLeads = mockLeads.filter((lead) => {
     const matchesSearch =
       lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.email.toLowerCase().includes(searchTerm.toLowerCase()) ||

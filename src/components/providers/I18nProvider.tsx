@@ -1,15 +1,16 @@
 "use client";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { _createContext, useContext, useEffect, useMemo, useState } from "react";
+
 import useI18n from "@/hooks/useI18n";
 
 type Ctx = {
-  t: (k: string, f?: string) => string;
+  t: (_k: string, f?: string) => string;
   locale: "ar" | "en";
   loading: boolean;
 };
-const I18nCtx = createContext<Ctx | null>(null);
+const __I18nCtx = createContext<Ctx | null>(null);
 
-export function I18nProvider({
+export function __I18nProvider({
   locale: localeProp,
   ns = "common",
   children,
@@ -32,15 +33,15 @@ export function I18nProvider({
   }, [localeProp]);
 
   const { t, loading } = useI18n(resolvedLocale, ns);
-  const value = useMemo(
+  const __value = useMemo(
     () => ({ t, locale: resolvedLocale, loading }),
     [t, resolvedLocale, loading],
   );
   return <I18nCtx.Provider value={value}>{children}</I18nCtx.Provider>;
 }
 
-export function useT() {
-  const ctx = useContext(I18nCtx);
+export function __useT() {
+  const __ctx = useContext(I18nCtx);
   if (!ctx) throw new Error("useT must be used within I18nProvider");
   return ctx;
 }

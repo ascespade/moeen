@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+import { _useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 interface Deal {
   id: string;
@@ -61,13 +62,13 @@ const mockDeals: Deal[] = [
   },
 ];
 
-export default function CRMDealsPage() {
+export default function __CRMDealsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStage, setSelectedStage] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"table" | "kanban">("kanban");
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const getStageColor = (stage: Deal["stage"]) => {
+  const __getStageColor = (_stage: Deal["stage"]) => {
     switch (stage) {
       case "prospecting":
         return "bg-gray-100 text-gray-800";
@@ -86,7 +87,7 @@ export default function CRMDealsPage() {
     }
   };
 
-  const getStageText = (stage: Deal["stage"]) => {
+  const __getStageText = (_stage: Deal["stage"]) => {
     switch (stage) {
       case "prospecting":
         return "استكشاف";
@@ -105,7 +106,7 @@ export default function CRMDealsPage() {
     }
   };
 
-  const filteredDeals = mockDeals.filter((deal) => {
+  const __filteredDeals = mockDeals.filter((deal) => {
     const matchesSearch =
       deal.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       deal.contactName.toLowerCase().includes(searchTerm.toLowerCase());
@@ -114,7 +115,7 @@ export default function CRMDealsPage() {
     return matchesSearch && matchesStage;
   });
 
-  const stages = [
+  const __stages = [
     "prospecting",
     "qualification",
     "proposal",

@@ -59,22 +59,20 @@ The theme system provides comprehensive light/dark theme support with RTL compat
 ### Basic Usage - الاستخدام الأساسي
 
 ```tsx
-import { useTheme } from '@/context/ThemeContext';
-import ThemeSwitcher from '@/components/ThemeSwitcher';
+import { useTheme } from "@/context/ThemeContext";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 function MyComponent() {
   const { theme, isDark, isLight, isSystem, toggleTheme } = useTheme();
-  
+
   return (
     <div>
       <h1>Current theme: {theme}</h1>
-      <p>Is dark mode: {isDark ? 'Yes' : 'No'}</p>
-      
+      <p>Is dark mode: {isDark ? "Yes" : "No"}</p>
+
       <ThemeSwitcher />
-      
-      <button onClick={toggleTheme}>
-        Toggle Theme
-      </button>
+
+      <button onClick={toggleTheme}>Toggle Theme</button>
     </div>
   );
 }
@@ -83,20 +81,22 @@ function MyComponent() {
 ### Advanced Usage - الاستخدام المتقدم
 
 ```tsx
-import { useTheme } from '@/context/ThemeContext';
+import { useTheme } from "@/context/ThemeContext";
 
 function AdvancedComponent() {
   const { theme, setTheme, resolvedTheme } = useTheme();
-  
+
   // Set specific theme
-  const handleSetLight = () => setTheme('light');
-  const handleSetDark = () => setTheme('dark');
-  const handleSetSystem = () => setTheme('system');
-  
+  const handleSetLight = () => setTheme("light");
+  const handleSetDark = () => setTheme("dark");
+  const handleSetSystem = () => setTheme("system");
+
   return (
     <div>
-      <h1>Theme: {theme} (Resolved: {resolvedTheme})</h1>
-      
+      <h1>
+        Theme: {theme} (Resolved: {resolvedTheme})
+      </h1>
+
       <div className="theme-controls">
         <button onClick={handleSetLight}>Light</button>
         <button onClick={handleSetDark}>Dark</button>
@@ -135,12 +135,12 @@ function AdvancedComponent() {
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
-  --brand-primary: #E46C0A;
-  --brand-primary-hover: #D45F08;
-  --brand-secondary: #6B4E16;
-  --brand-neutral-beige: #F2E7DC;
+  --brand-primary: #e46c0a;
+  --brand-primary-hover: #d45f08;
+  --brand-secondary: #6b4e16;
+  --brand-neutral-beige: #f2e7dc;
   --brand-accent: #007bff;
-  --brand-accent-deep: #C93C00;
+  --brand-accent-deep: #c93c00;
   --brand-success: #009688;
   --brand-warning: #f59e0b;
   --brand-error: #ef4444;
@@ -157,12 +157,12 @@ function AdvancedComponent() {
 [data-theme="dark"] {
   --background: #0d1117;
   --foreground: #e5eef7;
-  --brand-primary: #E46C0A;
-  --brand-primary-hover: #D45F08;
-  --brand-secondary: #6B4E16;
-  --brand-neutral-beige: #2A2520;
+  --brand-primary: #e46c0a;
+  --brand-primary-hover: #d45f08;
+  --brand-secondary: #6b4e16;
+  --brand-neutral-beige: #2a2520;
   --brand-accent: #007bff;
-  --brand-accent-deep: #C93C00;
+  --brand-accent-deep: #c93c00;
   --brand-success: #00b39b;
   --brand-warning: #fbbf24;
   --brand-error: #f87171;
@@ -192,12 +192,12 @@ function AdvancedComponent() {
 ```tsx
 // Use brand colors in components
 const brandColors = {
-  primary: 'var(--brand-primary)',
-  secondary: 'var(--brand-secondary)',
-  accent: 'var(--brand-accent)',
-  success: 'var(--brand-success)',
-  warning: 'var(--brand-warning)',
-  error: 'var(--brand-error)',
+  primary: "var(--brand-primary)",
+  secondary: "var(--brand-secondary)",
+  accent: "var(--brand-accent)",
+  success: "var(--brand-success)",
+  warning: "var(--brand-warning)",
+  error: "var(--brand-error)",
 };
 ```
 
@@ -209,8 +209,8 @@ const brandColors = {
 // Automatic RTL detection and application
 useEffect(() => {
   const root = document.documentElement;
-  const direction = root.getAttribute('dir') || 'rtl';
-  root.setAttribute('dir', direction);
+  const direction = root.getAttribute("dir") || "rtl";
+  root.setAttribute("dir", direction);
 }, []);
 ```
 
@@ -220,7 +220,7 @@ useEffect(() => {
 /* Use logical properties for RTL support */
 .my-component {
   margin-inline-start: 1rem; /* margin-left in LTR, margin-right in RTL */
-  margin-inline-end: 1rem;   /* margin-right in LTR, margin-left in RTL */
+  margin-inline-end: 1rem; /* margin-right in LTR, margin-left in RTL */
   padding-inline-start: 0.5rem;
   padding-inline-end: 0.5rem;
   text-align: start; /* left in LTR, right in RTL */
@@ -231,7 +231,7 @@ useEffect(() => {
 
 ```tsx
 // Charts automatically adapt to RTL
-const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+const isRTL = document.documentElement.getAttribute("dir") === "rtl";
 
 <AreaChart
   data={data}
@@ -239,7 +239,7 @@ const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
     right: isRTL ? 30 : 30,
     left: isRTL ? 30 : 0,
   }}
-/>
+/>;
 ```
 
 ## Theme Switching - تبديل الثيم
@@ -247,7 +247,7 @@ const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 ### ThemeSwitcher Component - مكون مبدل الثيم
 
 ```tsx
-import ThemeSwitcher from '@/components/ThemeSwitcher';
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 function Header() {
   return (
@@ -270,12 +270,9 @@ function Header() {
 ```tsx
 function CustomThemeSwitcher() {
   const { theme, setTheme } = useTheme();
-  
+
   return (
-    <select 
-      value={theme} 
-      onChange={(e) => setTheme(e.target.value as Theme)}
-    >
+    <select value={theme} onChange={(e) => setTheme(e.target.value as Theme)}>
       <option value="light">Light</option>
       <option value="dark">Dark</option>
       <option value="system">System</option>
@@ -290,8 +287,8 @@ function CustomThemeSwitcher() {
 
 ```tsx
 // Theme preference is automatically saved
-const savedTheme = localStorage.getItem('theme') as Theme;
-if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
+const savedTheme = localStorage.getItem("theme") as Theme;
+if (savedTheme && ["light", "dark", "system"].includes(savedTheme)) {
   setThemeState(savedTheme);
 }
 ```
@@ -300,8 +297,8 @@ if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
 
 ```tsx
 // Listen for system theme changes
-const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-mediaQuery.addEventListener('change', updateResolvedTheme);
+const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+mediaQuery.addEventListener("change", updateResolvedTheme);
 ```
 
 ## Performance - الأداء
@@ -319,15 +316,18 @@ Object.entries(themeVariables).forEach(([property, value]) => {
 
 ```tsx
 // Memoized theme values
-const value = useMemo(() => ({
-  theme,
-  resolvedTheme,
-  setTheme,
-  toggleTheme,
-  isDark: resolvedTheme === 'dark',
-  isLight: resolvedTheme === 'light',
-  isSystem: theme === 'system',
-}), [theme, resolvedTheme]);
+const value = useMemo(
+  () => ({
+    theme,
+    resolvedTheme,
+    setTheme,
+    toggleTheme,
+    isDark: resolvedTheme === "dark",
+    isLight: resolvedTheme === "light",
+    isSystem: theme === "system",
+  }),
+  [theme, resolvedTheme],
+);
 ```
 
 ## Accessibility - إمكانية الوصول
@@ -363,13 +363,13 @@ const value = useMemo(() => ({
 // Test component with different themes
 function TestThemes() {
   const { theme, setTheme } = useTheme();
-  
+
   return (
     <div>
       <h1>Current theme: {theme}</h1>
-      <button onClick={() => setTheme('light')}>Light</button>
-      <button onClick={() => setTheme('dark')}>Dark</button>
-      <button onClick={() => setTheme('system')}>System</button>
+      <button onClick={() => setTheme("light")}>Light</button>
+      <button onClick={() => setTheme("dark")}>Dark</button>
+      <button onClick={() => setTheme("system")}>System</button>
     </div>
   );
 }
@@ -381,9 +381,9 @@ function TestThemes() {
 // Test RTL layout
 function TestRTL() {
   useEffect(() => {
-    document.documentElement.setAttribute('dir', 'rtl');
+    document.documentElement.setAttribute("dir", "rtl");
   }, []);
-  
+
   return <div>RTL Test Content</div>;
 }
 ```
@@ -416,14 +416,14 @@ function TestRTL() {
 
 ```tsx
 // Enable theme debugging
-if (process.env.NODE_ENV === 'development') {
-  console.log('Theme debug:', {
+if (process.env.NODE_ENV === "development") {
+  console.log("Theme debug:", {
     theme,
     resolvedTheme,
     isDark,
     isLight,
     isSystem,
-    direction: document.documentElement.getAttribute('dir')
+    direction: document.documentElement.getAttribute("dir"),
   });
 }
 ```
@@ -434,12 +434,24 @@ if (process.env.NODE_ENV === 'development') {
 
 ```css
 /* Before */
-.light-theme { background: white; color: black; }
-.dark-theme { background: black; color: white; }
+.light-theme {
+  background: white;
+  color: black;
+}
+.dark-theme {
+  background: black;
+  color: white;
+}
 
 /* After */
-:root { --background: white; --foreground: black; }
-[data-theme="dark"] { --background: black; --foreground: white; }
+:root {
+  --background: white;
+  --foreground: black;
+}
+[data-theme="dark"] {
+  --background: black;
+  --foreground: white;
+}
 ```
 
 ### From Inline Styles - من الأنماط المضمنة

@@ -1,0 +1,476 @@
+{
+  "timestamp": "2025-10-16T07:28:51.608Z",
+  "agent": "shared",
+  "summary": {
+    "totalFilesVerified": 16,
+    "totalSizeRecovered": 446428,
+    "assetReferences": 0,
+    "utilityUsage": 0,
+    "crossAgentConflicts": 0,
+    "falsePositives": 88,
+    "needsReview": 0
+  },
+  "details": {
+    "assetReferences": {},
+    "utilityUsage": {},
+    "crossAgentConflicts": [],
+    "falsePositives": [
+      {
+        "type": "dynamic-import",
+        "file": "/home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-417Z/src/lib/error-handler.ts",
+        "module": "@/lib/supabase/client",
+        "reason": "Dynamic import detected - may be used at runtime"
+      },
+      {
+        "type": "require-call",
+        "file": "/home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-428Z/src/lib/security.ts",
+        "module": "crypto",
+        "reason": "Require call detected - may be used at runtime"
+      },
+      {
+        "type": "require-call",
+        "file": "/home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-430Z/src/lib/supabaseClient.ts",
+        "module": "@supabase/supabase-js",
+        "reason": "Require call detected - may be used at runtime"
+      },
+      {
+        "type": "dynamic-import",
+        "file": "/home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-435Z/src/middleware/rate-limiter.ts",
+        "module": "redis",
+        "reason": "Dynamic import detected - may be used at runtime"
+      },
+      {
+        "type": "require-call",
+        "file": "/home/ubuntu/moeen/src/app/api/dashboard/metrics/route.ts",
+        "module": "fs",
+        "reason": "Require call detected - may be used at runtime"
+      },
+      {
+        "type": "require-call",
+        "file": "/home/ubuntu/moeen/src/app/api/dashboard/metrics/route.ts",
+        "module": "path",
+        "reason": "Require call detected - may be used at runtime"
+      },
+      {
+        "type": "require-call",
+        "file": "/home/ubuntu/moeen/src/scripts/agents/modules/db-verifier.ts",
+        "module": "fs",
+        "reason": "Require call detected - may be used at runtime"
+      },
+      {
+        "type": "dynamic-import",
+        "file": "/home/ubuntu/moeen/src/components/lazy/LazyComponents.tsx",
+        "module": "@/components/appointments/AppointmentManager",
+        "reason": "Dynamic import detected - may be used at runtime"
+      },
+      {
+        "type": "dynamic-import",
+        "file": "/home/ubuntu/moeen/src/components/lazy/LazyComponents.tsx",
+        "module": "@/components/dashboard/Charts",
+        "reason": "Dynamic import detected - may be used at runtime"
+      },
+      {
+        "type": "dynamic-import",
+        "file": "/home/ubuntu/moeen/src/components/lazy/LazyComponents.tsx",
+        "module": "@/components/chatbot/MoainChatbot",
+        "reason": "Dynamic import detected - may be used at runtime"
+      },
+      {
+        "type": "dynamic-import",
+        "file": "/home/ubuntu/moeen/src/components/lazy/LazyComponents.tsx",
+        "module": "@/components/shared/DataTable",
+        "reason": "Dynamic import detected - may be used at runtime"
+      },
+      {
+        "type": "dynamic-import",
+        "file": "/home/ubuntu/moeen/src/components/lazy/LazyComponents.tsx",
+        "module": "@/components/shared/Modal",
+        "reason": "Dynamic import detected - may be used at runtime"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/admin/audit-logs/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/admin/channels/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/admin/dashboard/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/admin/logs/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/admin/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/admin/roles/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/admin/users/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/agent-dashboard/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/analytics/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/chatbot/analytics/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/chatbot/flows/[flowId]/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/chatbot/flows/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/chatbot/integrations/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/chatbot/templates/[id]/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/chatbot/templates/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/conversations/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/crm/activities/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/crm/contacts/[id]/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/crm/contacts/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/crm/dashboard/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/crm/deals/kanban/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/crm/deals/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/crm/flows/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/crm/leads/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/flow/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/integrations/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/layout.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/messages/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/notifications/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/performance/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/profile/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/review/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/security/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(admin)/settings/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(auth)/forgot-password/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(auth)/layout.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(auth)/login/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(auth)/register/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(auth)/reset-password/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(auth)/verify-email/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(doctor)/doctor-dashboard/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/appointments/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/approvals/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/family-support/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/insurance/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/insurance-claims/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/layout.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/medical-file/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/patients/[id]/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/patients/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/progress-tracking/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/sessions/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/therapy/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(health)/training/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(info)/about/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(info)/contact/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(info)/layout.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(legal)/layout.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(legal)/privacy/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(legal)/terms/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(marketing)/faq/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(marketing)/features/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(marketing)/pricing/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(patient)/patient-dashboard/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(public)/chatbot/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(staff)/staff-dashboard/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/(supervisor)/supervisor-dashboard/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/dashboard/doctor/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/dashboard/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/dashboard/patient/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/dashboard/staff/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/dashboard/supervisor/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/layout.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/uikit/guidelines/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      },
+      {
+        "type": "route-file",
+        "file": "/home/ubuntu/moeen/src/app/uikit/page.tsx",
+        "reason": "Next.js route file - used by framework"
+      }
+    ],
+    "needsReview": [],
+    "verifiedUnused": [],
+    "totalFilesVerified": 16,
+    "totalSizeRecovered": 446428
+  }
+}

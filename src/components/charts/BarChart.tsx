@@ -3,9 +3,9 @@
  * RTL-compatible bar chart with brand colors and theme support
  */
 
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   BarChart as RechartsBarChart,
   Bar,
@@ -15,11 +15,12 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
-} from 'recharts';
-import { useTheme } from '@/context/ThemeContext';
+} from "recharts";
+
+import { _useTheme } from "@/context/ThemeContext";
 
 interface BarChartProps {
-  data: any[];
+  data: unknown[];
   dataKey: string;
   xAxisKey: string;
   bars?: Array<{
@@ -41,7 +42,7 @@ export const BarChart: React.FC<BarChartProps> = ({
   xAxisKey,
   bars = [],
   height = 300,
-  className = '',
+  className = "",
   showGrid = true,
   showLegend = true,
   showTooltip = true,
@@ -50,15 +51,18 @@ export const BarChart: React.FC<BarChartProps> = ({
   const { isDark } = useTheme();
 
   // Default bars if none provided
-  const defaultBars = bars.length > 0 ? bars : [
-    {
-      dataKey: dataKey,
-      color: 'var(--brand-primary)',
-      name: 'Value',
-    },
-  ];
+  const defaultBars =
+    bars.length > 0
+      ? bars
+      : [
+          {
+            dataKey: dataKey,
+            color: "var(--brand-primary)",
+            name: "Value",
+          },
+        ];
 
-  const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+  const __isRTL = document.documentElement.getAttribute("dir") === "rtl";
 
   return (
     <div className={`w-full ${className}`} style={{ height }}>
@@ -71,49 +75,49 @@ export const BarChart: React.FC<BarChartProps> = ({
             left: isRTL ? 30 : 0,
             bottom: 20,
           }}
-          layout={horizontal ? 'horizontal' : 'vertical'}
+          layout={horizontal ? "horizontal" : "vertical"}
         >
           {showGrid && (
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke={isDark ? '#374151' : '#e5e7eb'}
+              stroke={isDark ? "#374151" : "#e5e7eb"}
             />
           )}
           <XAxis
             dataKey={horizontal ? dataKey : xAxisKey}
-            tick={{ fontSize: 12, fill: isDark ? '#9ca3af' : '#6b7280' }}
-            axisLine={{ stroke: isDark ? '#374151' : '#e5e7eb' }}
-            tickLine={{ stroke: isDark ? '#374151' : '#e5e7eb' }}
+            tick={{ fontSize: 12, fill: isDark ? "#9ca3af" : "#6b7280" }}
+            axisLine={{ stroke: isDark ? "#374151" : "#e5e7eb" }}
+            tickLine={{ stroke: isDark ? "#374151" : "#e5e7eb" }}
             reversed={isRTL && !horizontal}
-            type={horizontal ? 'number' : 'category'}
+            type={horizontal ? "number" : "category"}
           />
           <YAxis
             dataKey={horizontal ? xAxisKey : dataKey}
-            tick={{ fontSize: 12, fill: isDark ? '#9ca3af' : '#6b7280' }}
-            axisLine={{ stroke: isDark ? '#374151' : '#e5e7eb' }}
-            tickLine={{ stroke: isDark ? '#374151' : '#e5e7eb' }}
-            orientation={isRTL ? 'right' : 'left'}
-            type={horizontal ? 'category' : 'number'}
+            tick={{ fontSize: 12, fill: isDark ? "#9ca3af" : "#6b7280" }}
+            axisLine={{ stroke: isDark ? "#374151" : "#e5e7eb" }}
+            tickLine={{ stroke: isDark ? "#374151" : "#e5e7eb" }}
+            orientation={isRTL ? "right" : "left"}
+            type={horizontal ? "category" : "number"}
           />
           {showTooltip && (
             <Tooltip
               contentStyle={{
-                backgroundColor: isDark ? '#1f2937' : '#ffffff',
-                border: `1px solid ${isDark ? '#374151' : '#e5e7eb'}`,
-                borderRadius: '8px',
-                color: isDark ? '#e5eef7' : '#0f172a',
+                backgroundColor: isDark ? "#1f2937" : "#ffffff",
+                border: `1px solid ${isDark ? "#374151" : "#e5e7eb"}`,
+                borderRadius: "8px",
+                color: isDark ? "#e5eef7" : "#0f172a",
               }}
               labelStyle={{
-                color: isDark ? '#9ca3af' : '#6b7280',
-                fontSize: '12px',
+                color: isDark ? "#9ca3af" : "#6b7280",
+                fontSize: "12px",
               }}
             />
           )}
           {showLegend && (
             <Legend
               wrapperStyle={{
-                color: isDark ? '#e5eef7' : '#0f172a',
-                fontSize: '12px',
+                color: isDark ? "#e5eef7" : "#0f172a",
+                fontSize: "12px",
               }}
             />
           )}

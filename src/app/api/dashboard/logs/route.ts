@@ -2,20 +2,21 @@
 // Activity logs API endpoint for dashboard
 // Provides real-time logs and activity monitoring
 
-import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabaseClient";
+import { _NextRequest, NextResponse } from "next/server";
 
-const supabase = getServiceSupabase();
+import { _getServiceSupabase } from "@/lib/supabaseClient";
 
-export async function GET(request: NextRequest) {
+const __supabase = getServiceSupabase();
+
+export async function __GET(_request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const service = searchParams.get("service");
-    const level = searchParams.get("level");
-    const limit = parseInt(searchParams.get("limit") || "100");
-    const hours = parseInt(searchParams.get("hours") || "24");
+    const __service = searchParams.get("service");
+    const __level = searchParams.get("level");
+    const __limit = parseInt(searchParams.get("limit") || "100");
+    const __hours = parseInt(searchParams.get("hours") || "24");
 
-    const logs = await getActivityLogs({
+    const __logs = await getActivityLogs({
       service,
       level,
       limit,
@@ -35,7 +36,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function getActivityLogs(filters: {
+async function __getActivityLogs(_filters: {
   service?: string | null;
   level?: string | null;
   limit: number;
@@ -65,7 +66,7 @@ async function getActivityLogs(filters: {
     if (error) throw error;
 
     return (
-      data?.map((log: any) => ({
+      data?.map((_log: unknown) => ({
         id: log.id,
         timestamp: log.timestamp,
         service: log.service_name,
@@ -82,8 +83,8 @@ async function getActivityLogs(filters: {
   }
 }
 
-function generateLogSummary(logs: any[]) {
-  const summary = {
+function __generateLogSummary(_logs: unknown[]) {
+  const __summary = {
     total: logs.length,
     byLevel: {} as Record<string, number>,
     byService: {} as Record<string, number>,

@@ -1,18 +1,18 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { _createClient } from "@supabase/supabase-js";
+import { _NextRequest, NextResponse } from "next/server";
 
-const supabase = createClient(
+const __supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
 
 // GET /api/chatbot/flows - جلب جميع التدفقات
-export async function GET(request: NextRequest) {
+export async function __GET(_request: NextRequest) {
   try {
     const { data: flows, error } = await supabase
-      .from('chatbot_flows')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .from("chatbot_flows")
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
@@ -20,24 +20,27 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ flows });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 
 // POST /api/chatbot/flows - إنشاء تدفق جديد
-export async function POST(request: NextRequest) {
+export async function __POST(_request: NextRequest) {
   try {
-    const body = await request.json();
-    const { name, description, status = 'draft', created_by } = body;
+    const __body = await request.json();
+    const { name, description, status = "draft", created_by } = body;
 
     const { data: flow, error } = await supabase
-      .from('chatbot_flows')
+      .from("chatbot_flows")
       .insert({
         name,
         description,
         status,
         created_by,
-        public_id: `FLOW-${Date.now()}`
+        public_id: `FLOW-${Date.now()}`,
       })
       .select()
       .single();
@@ -48,6 +51,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ flow }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

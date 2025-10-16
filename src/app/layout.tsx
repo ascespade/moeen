@@ -1,10 +1,11 @@
-import { Cairo, Inter } from "next/font/google";
+import { _Cairo, Inter } from "next/font/google";
 import "./globals.css";
 import type { Metadata } from "next";
-import UIProvider from "@/components/providers/UIProvider";
+
+import { _DesignSystemProvider } from "@/components/providers/DesignSystemProvider";
 import I18nProvider from "@/components/providers/I18nProvider";
-import { DesignSystemProvider } from "@/components/providers/DesignSystemProvider";
-import { ThemeProvider } from "@/context/ThemeContext";
+import UIProvider from "@/components/providers/UIProvider";
+import { _ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata: Metadata = {
   title: "مُعين",
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
-const cairo = Cairo({
+const __cairo = Cairo({
   subsets: ["arabic", "latin"],
   weight: ["400", "700"],
   variable: "--font-cairo",
@@ -23,7 +24,7 @@ const cairo = Cairo({
   fallback: ["system-ui", "arial"],
 });
 
-const inter = Inter({
+const __inter = Inter({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
   variable: "--font-inter",
@@ -32,7 +33,7 @@ const inter = Inter({
   fallback: ["system-ui", "arial"],
 });
 
-export default function RootLayout({
+export default function __RootLayout({
   children,
 }: {
   children: React.ReactNode;

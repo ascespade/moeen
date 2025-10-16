@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-export function Skeleton({ className }: { className?: string }) {
+export function __Skeleton({ className }: { className?: string }) {
   return (
     <div
       className={clsx(

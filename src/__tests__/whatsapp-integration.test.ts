@@ -1,4 +1,4 @@
-import { WhatsAppIntegration } from "@/lib/whatsapp-integration";
+import { _WhatsAppIntegration } from "@/lib/whatsapp-integration";
 describe("WhatsAppIntegration", () => {
   let whatsapp: WhatsAppIntegration;
 
@@ -8,7 +8,7 @@ describe("WhatsAppIntegration", () => {
 
   describe("Contact Management", () => {
     test("should add contact", () => {
-      const contact = {
+      const __contact = {
         phone: "+966501234567",
         name: "أحمد محمد",
         isPatient: true,
@@ -19,7 +19,7 @@ describe("WhatsAppIntegration", () => {
       };
 
       whatsapp.addContact(contact);
-      const retrievedContact = whatsapp.getContact("+966501234567");
+      const __retrievedContact = whatsapp.getContact("+966501234567");
 
       expect(retrievedContact).toBeDefined();
       expect(retrievedContact?.name).toBe("أحمد محمد");
@@ -27,7 +27,7 @@ describe("WhatsAppIntegration", () => {
     });
 
     test("should update contact", () => {
-      const contact = {
+      const __contact = {
         phone: "+966501234567",
         name: "أحمد محمد",
         isPatient: true,
@@ -38,20 +38,20 @@ describe("WhatsAppIntegration", () => {
       };
 
       whatsapp.addContact(contact);
-      const updated = whatsapp.updateContact("+966501234567", {
+      const __updated = whatsapp.updateContact("+966501234567", {
         name: "أحمد محمد الأحمد",
       });
 
       expect(updated).toBe(true);
 
-      const retrievedContact = whatsapp.getContact("+966501234567");
+      const __retrievedContact = whatsapp.getContact("+966501234567");
       expect(retrievedContact?.name).toBe("أحمد محمد الأحمد");
     });
   });
 
   describe("Message Processing", () => {
     test("should process text message", async () => {
-      const response = await whatsapp.processIncomingMessage(
+      const __response = await whatsapp.processIncomingMessage(
         "+966501234567",
         "مرحبا",
         "text",
@@ -60,7 +60,7 @@ describe("WhatsAppIntegration", () => {
     });
 
     test("should process audio message", async () => {
-      const response = await whatsapp.processIncomingMessage(
+      const __response = await whatsapp.processIncomingMessage(
         "+966501234567",
         "",
         "audio",
@@ -69,7 +69,7 @@ describe("WhatsAppIntegration", () => {
     });
 
     test("should process image message", async () => {
-      const response = await whatsapp.processIncomingMessage(
+      const __response = await whatsapp.processIncomingMessage(
         "+966501234567",
         "",
         "image",
@@ -80,7 +80,7 @@ describe("WhatsAppIntegration", () => {
 
   describe("Template Messages", () => {
     test("should send appointment confirmation", async () => {
-      const result = await whatsapp.sendTemplateMessage(
+      const __result = await whatsapp.sendTemplateMessage(
         "appointment_confirmation",
         "+966501234567",
         { name: "أحمد", date: "2024-01-20", time: "10:00" },
@@ -89,7 +89,7 @@ describe("WhatsAppIntegration", () => {
     });
 
     test("should send motivational message", async () => {
-      const result = await whatsapp.sendMotivationalMessage(
+      const __result = await whatsapp.sendMotivationalMessage(
         "+966501234567",
         "أحمد",
       );
@@ -97,7 +97,7 @@ describe("WhatsAppIntegration", () => {
     });
 
     test("should send milestone celebration", async () => {
-      const result = await whatsapp.sendMilestoneCelebration(
+      const __result = await whatsapp.sendMilestoneCelebration(
         "+966501234567",
         "أحمد",
         "إكمال 10 جلسات",
@@ -106,7 +106,7 @@ describe("WhatsAppIntegration", () => {
     });
 
     test("should send exercise reminder", async () => {
-      const result = await whatsapp.sendExerciseReminder(
+      const __result = await whatsapp.sendExerciseReminder(
         "+966501234567",
         "أحمد",
         "تمارين التنفس",
@@ -115,14 +115,14 @@ describe("WhatsAppIntegration", () => {
     });
 
     test("should send crisis support", async () => {
-      const result = await whatsapp.sendCrisisSupport("+966501234567");
+      const __result = await whatsapp.sendCrisisSupport("+966501234567");
       expect(result).toBeDefined();
     });
   });
 
   describe("Family Notifications", () => {
     test("should notify family member", async () => {
-      const result = await whatsapp.notifyFamilyMember(
+      const __result = await whatsapp.notifyFamilyMember(
         "+966501234568",
         "أحمد",
         "appointment",
@@ -134,7 +134,7 @@ describe("WhatsAppIntegration", () => {
 
   describe("Message Statistics", () => {
     test("should get message stats", () => {
-      const stats = whatsapp.getMessageStats();
+      const __stats = whatsapp.getMessageStats();
       expect(stats).toHaveProperty("totalMessages");
       expect(stats).toHaveProperty("sentMessages");
       expect(stats).toHaveProperty("deliveredMessages");
@@ -145,17 +145,17 @@ describe("WhatsAppIntegration", () => {
 
   describe("Accessibility Features", () => {
     test("should generate accessible response", () => {
-      const options = ["حجز موعد", "معلومات", "دعم"];
-      const response = whatsapp.generateAccessibleResponse(options);
+      const __options = ["حجز موعد", "معلومات", "دعم"];
+      const __response = whatsapp.generateAccessibleResponse(options);
       expect(response).toContain("1️⃣");
       expect(response).toContain("2️⃣");
       expect(response).toContain("3️⃣");
     });
 
     test("should generate multilingual response", () => {
-      const arabicText = "مرحبا";
-      const englishText = "Hello";
-      const response = whatsapp.generateMultilingualResponse(
+      const __arabicText = "مرحبا";
+      const __englishText = "Hello";
+      const __response = whatsapp.generateMultilingualResponse(
         arabicText,
         englishText,
         "ar",

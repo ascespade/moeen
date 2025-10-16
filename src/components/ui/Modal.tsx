@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useRef } from "react";
 import clsx from "clsx";
+import { _useEffect, useRef } from "react";
 
 export interface ModalProps {
   open: boolean;
@@ -9,8 +9,8 @@ export interface ModalProps {
   children?: React.ReactNode;
 }
 
-export function Modal({ open, onClose, title, children }: ModalProps) {
-  const dialogRef = useRef<HTMLDivElement | null>(null);
+export function __Modal({ open, onClose, title, children }: ModalProps) {
+  const __dialogRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (open) document.documentElement.style.overflow = "hidden";
     return () => {
@@ -20,13 +20,13 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
 
   useEffect(() => {
     if (!open) return;
-    const dialog = dialogRef.current;
+    const __dialog = dialogRef.current;
     if (!dialog) return;
-    const focusable = dialog.querySelector<HTMLElement>(
+    const __focusable = dialog.querySelector<HTMLElement>(
       "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
     );
     focusable?.focus();
-    const onKey = (e: KeyboardEvent) => {
+    const __onKey = (_e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", onKey);

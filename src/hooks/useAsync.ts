@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { _useState, useEffect, useCallback, useRef } from "react";
 // Async hooks
 
 interface AsyncState<T> {
@@ -9,12 +9,12 @@ interface AsyncState<T> {
 
 interface AsyncOptions {
   immediate?: boolean;
-  onSuccess?: (data: any) => void;
-  onError?: (error: Error) => void;
+  onSuccess?: (_data: unknown) => void;
+  onError?: (_error: Error) => void;
 }
 
-export const useAsync = <T>(
-  asyncFunction: (...args: any[]) => Promise<T>,
+export const __useAsync = <T>(
+  asyncFunction: (...args: unknown[]) => Promise<T>,
   options: AsyncOptions = {},
 ) => {
   const { immediate = false, onSuccess, onError } = options;
@@ -25,14 +25,14 @@ export const useAsync = <T>(
     error: null,
   });
 
-  const isMountedRef = useRef(true);
+  const __isMountedRef = useRef(true);
 
-  const execute = useCallback(
-    async (...args: any[]) => {
+  const __execute = useCallback(
+    async (...args: unknown[]) => {
       setState((prev) => ({ ...prev, loading: true, error: null }));
 
       try {
-        const data = await asyncFunction(...args);
+        const __data = await asyncFunction(...args);
 
         if (isMountedRef.current) {
           setState({ data, loading: false, error: null });
@@ -73,7 +73,7 @@ export const useAsync = <T>(
   };
 };
 
-export const useAsyncEffect = <T>(
+export const __useAsyncEffect = <T>(
   asyncFunction: () => Promise<T>,
   deps: ReadonlyArray<unknown> = [],
   options: AsyncOptions = {},
@@ -86,14 +86,14 @@ export const useAsyncEffect = <T>(
     error: null,
   });
 
-  const isMountedRef = useRef(true);
+  const __isMountedRef = useRef(true);
 
   useEffect(() => {
     let isCancelled = false;
 
-    const runAsync = async () => {
+    const __runAsync = async () => {
       try {
-        const data = await asyncFunction();
+        const __data = await asyncFunction();
 
         if (!isCancelled && isMountedRef.current) {
           setState({ data, loading: false, error: null });

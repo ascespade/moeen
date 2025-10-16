@@ -1,0 +1,542 @@
+{
+  "sessionId": "2025-10-16T07-28-47-451Z",
+  "timestamp": "2025-10-16T07:28:51.624Z",
+  "status": "completed",
+  "agents": {
+    "frontend": {
+      "status": "completed",
+      "report": null,
+      "execution": {
+        "agent": "FrontendCleaner",
+        "success": true,
+        "code": 0,
+        "stdout": "🚀 FrontendCleaner Agent Starting...\n📁 Scope: src/app, src/components, src/hooks, src/styles\n🔍 Mode: EXECUTE\n\n📊 Step 1: Building import graph...\n🔍 Building import graph...\n📁 Found 240 files to analyze\n🎯 Identified 148 entry points\n📊 Import graph contains 240 files\n✅ Import graph built with 240 files\n\n🔍 Step 2: Detecting unused files...\n✅ Found 92 candidate files for quarantine\n\n🔎 Step 3: Verifying candidates with project-wide search...\n✅ Verified 0 files after search verification\n\n🛡️ Step 4: Running safety checks...\n✅ 0 files passed safety checks\n\n📦 Step 5: No files to quarantine\n\n📊 Step 6: Generating report...\n✅ Report written to /home/ubuntu/moeen/logs/frontend_cleanup.log\n\n📝 Step 7: Updating usage map...\n✅ Usage map updated\n✅ FrontendCleaner completed successfully\n\n📊 FrontendCleaner Summary:\n  📁 Total files scanned: 240\n  🎯 Candidates identified: 92\n  📦 Files moved: 0\n  ⏭️ Files skipped: 92\n  ⚠️ Warnings: 0\n  ⏱️ Time taken: 1.50s\n",
+        "stderr": "",
+        "duration": 1975
+      }
+    },
+    "backend": {
+      "status": "completed",
+      "report": null,
+      "execution": {
+        "agent": "BackendCleaner",
+        "success": true,
+        "code": 0,
+        "stdout": "\u001b[32minfo\u001b[39m: 🔍 Starting BackendCleaner agent... {\"timestamp\":\"2025-10-16T07:28:49.687Z\"}\n\u001b[32minfo\u001b[39m: ✅ Quarantine system initialized {\"timestamp\":\"2025-10-16T07:28:49.699Z\"}\n\u001b[32minfo\u001b[39m: 🔒 Lock acquired by backend {\"timestamp\":\"2025-10-16T07:28:49.701Z\"}\n\u001b[32minfo\u001b[39m: 📁 Scanning backend files... {\"timestamp\":\"2025-10-16T07:28:49.701Z\"}\n\u001b[33mwarn\u001b[39m: ⚠️ Could not analyze /home/ubuntu/moeen/src/lib/real-time-notifications.ts: {\"timestamp\":\"2025-10-16T07:28:49.948Z\"}\n\u001b[33mwarn\u001b[39m: ⚠️ Could not analyze /home/ubuntu/moeen/src/lib/security-enhanced.ts: {\"timestamp\":\"2025-10-16T07:28:49.979Z\"}\n\u001b[33mwarn\u001b[39m: ⚠️ Could not analyze /home/ubuntu/moeen/src/lib/websocket-server.ts: {\"timestamp\":\"2025-10-16T07:28:50.038Z\"}\n\u001b[32minfo\u001b[39m: 🔗 Analyzing dependencies... {\"timestamp\":\"2025-10-16T07:28:50.389Z\"}\n\u001b[32minfo\u001b[39m: 🔍 Finding duplicate functions... {\"timestamp\":\"2025-10-16T07:28:50.391Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moving unused files to quarantine... {\"timestamp\":\"2025-10-16T07:28:50.392Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/accessibility.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-392Z/src/lib/accessibility.ts {\"timestamp\":\"2025-10-16T07:28:50.401Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/ai-assistant.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-402Z/src/lib/ai-assistant.ts {\"timestamp\":\"2025-10-16T07:28:50.403Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/analytics-stubs.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-403Z/src/lib/analytics-stubs.ts {\"timestamp\":\"2025-10-16T07:28:50.404Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/api/config.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-404Z/src/lib/api/config.ts {\"timestamp\":\"2025-10-16T07:28:50.405Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/api/whatsapp.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-405Z/src/lib/api/whatsapp.ts {\"timestamp\":\"2025-10-16T07:28:50.406Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/auth/authorize.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-406Z/src/lib/auth/authorize.ts {\"timestamp\":\"2025-10-16T07:28:50.407Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/auth/roles.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-407Z/src/lib/auth/roles.ts {\"timestamp\":\"2025-10-16T07:28:50.408Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/cache/redis.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-408Z/src/lib/cache/redis.ts {\"timestamp\":\"2025-10-16T07:28:50.408Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/cache-system.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-408Z/src/lib/cache-system.ts {\"timestamp\":\"2025-10-16T07:28:50.409Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/centralized-theme.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-409Z/src/lib/centralized-theme.ts {\"timestamp\":\"2025-10-16T07:28:50.410Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/conversation-flows/ActionExecutor.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-410Z/src/lib/conversation-flows/ActionExecutor.ts {\"timestamp\":\"2025-10-16T07:28:50.411Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/conversation-flows/FlowManager.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-411Z/src/lib/conversation-flows/FlowManager.ts {\"timestamp\":\"2025-10-16T07:28:50.411Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/conversation-flows/IntentAnalyzer.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-411Z/src/lib/conversation-flows/IntentAnalyzer.ts {\"timestamp\":\"2025-10-16T07:28:50.412Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/conversation-flows/index.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-412Z/src/lib/conversation-flows/index.ts {\"timestamp\":\"2025-10-16T07:28:50.412Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/conversation-flows/types.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-412Z/src/lib/conversation-flows/types.ts {\"timestamp\":\"2025-10-16T07:28:50.413Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/conversation-flows.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-413Z/src/lib/conversation-flows.ts {\"timestamp\":\"2025-10-16T07:28:50.413Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/cuid.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-413Z/src/lib/cuid.ts {\"timestamp\":\"2025-10-16T07:28:50.413Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/database/connection-pool.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-414Z/src/lib/database/connection-pool.ts {\"timestamp\":\"2025-10-16T07:28:50.414Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/database-utils.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-414Z/src/lib/database-utils.ts {\"timestamp\":\"2025-10-16T07:28:50.415Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/database.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-415Z/src/lib/database.ts {\"timestamp\":\"2025-10-16T07:28:50.416Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/deployment/docker.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-416Z/src/lib/deployment/docker.ts {\"timestamp\":\"2025-10-16T07:28:50.417Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/dynamic-content-manager.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-417Z/src/lib/dynamic-content-manager.ts {\"timestamp\":\"2025-10-16T07:28:50.417Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/error-handler.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-417Z/src/lib/error-handler.ts {\"timestamp\":\"2025-10-16T07:28:50.418Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/errors/api-errors.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-418Z/src/lib/errors/api-errors.ts {\"timestamp\":\"2025-10-16T07:28:50.418Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/file-upload.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-418Z/src/lib/file-upload.ts {\"timestamp\":\"2025-10-16T07:28:50.419Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/i18n/translationService.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-419Z/src/lib/i18n/translationService.ts {\"timestamp\":\"2025-10-16T07:28:50.419Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/insurance/providers.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-419Z/src/lib/insurance/providers.ts {\"timestamp\":\"2025-10-16T07:28:50.419Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/integration-system.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-420Z/src/lib/integration-system.ts {\"timestamp\":\"2025-10-16T07:28:50.420Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/logger/index.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-420Z/src/lib/logger/index.ts {\"timestamp\":\"2025-10-16T07:28:50.420Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/logger.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-420Z/src/lib/logger.ts {\"timestamp\":\"2025-10-16T07:28:50.421Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/monitoring/logger.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-421Z/src/lib/monitoring/logger.ts {\"timestamp\":\"2025-10-16T07:28:50.421Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/notifications/email.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-421Z/src/lib/notifications/email.ts {\"timestamp\":\"2025-10-16T07:28:50.422Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/notifications/sms.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-422Z/src/lib/notifications/sms.ts {\"timestamp\":\"2025-10-16T07:28:50.422Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/optimization/performance.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-422Z/src/lib/optimization/performance.ts {\"timestamp\":\"2025-10-16T07:28:50.423Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/payments/moyasar.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-423Z/src/lib/payments/moyasar.ts {\"timestamp\":\"2025-10-16T07:28:50.423Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/payments/stripe.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-424Z/src/lib/payments/stripe.ts {\"timestamp\":\"2025-10-16T07:28:50.424Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/performance-monitor.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-424Z/src/lib/performance-monitor.ts {\"timestamp\":\"2025-10-16T07:28:50.424Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/performance-optimizations.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-425Z/src/lib/performance-optimizations.ts {\"timestamp\":\"2025-10-16T07:28:50.425Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/performance.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-425Z/src/lib/performance.ts {\"timestamp\":\"2025-10-16T07:28:50.425Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/private-center-integration.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-425Z/src/lib/private-center-integration.ts {\"timestamp\":\"2025-10-16T07:28:50.426Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/rate-limiter.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-426Z/src/lib/rate-limiter.ts {\"timestamp\":\"2025-10-16T07:28:50.426Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/responsive-design.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-426Z/src/lib/responsive-design.ts {\"timestamp\":\"2025-10-16T07:28:50.426Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/router.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-426Z/src/lib/router.ts {\"timestamp\":\"2025-10-16T07:28:50.427Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/saudi-health-integration.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-427Z/src/lib/saudi-health-integration.ts {\"timestamp\":\"2025-10-16T07:28:50.427Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/saudi-ministry-health-integration.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-427Z/src/lib/saudi-ministry-health-integration.ts {\"timestamp\":\"2025-10-16T07:28:50.427Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/security/encryption.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-427Z/src/lib/security/encryption.ts {\"timestamp\":\"2025-10-16T07:28:50.428Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/security.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-428Z/src/lib/security.ts {\"timestamp\":\"2025-10-16T07:28:50.428Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/slack-integration.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-428Z/src/lib/slack-integration.ts {\"timestamp\":\"2025-10-16T07:28:50.428Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/supabase/client.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-428Z/src/lib/supabase/client.ts {\"timestamp\":\"2025-10-16T07:28:50.429Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/supabase/server.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-429Z/src/lib/supabase/server.ts {\"timestamp\":\"2025-10-16T07:28:50.429Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/supabase-real.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-429Z/src/lib/supabase-real.ts {\"timestamp\":\"2025-10-16T07:28:50.429Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/supabase.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-429Z/src/lib/supabase.ts {\"timestamp\":\"2025-10-16T07:28:50.430Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/supabaseClient.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-430Z/src/lib/supabaseClient.ts {\"timestamp\":\"2025-10-16T07:28:50.430Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/testing/test-utils.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-430Z/src/lib/testing/test-utils.ts {\"timestamp\":\"2025-10-16T07:28:50.430Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/translations-manager.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-430Z/src/lib/translations-manager.ts {\"timestamp\":\"2025-10-16T07:28:50.431Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/utils.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-431Z/src/lib/utils.ts {\"timestamp\":\"2025-10-16T07:28:50.431Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/validation/schemas.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-431Z/src/lib/validation/schemas.ts {\"timestamp\":\"2025-10-16T07:28:50.431Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/validation/security.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-431Z/src/lib/validation/security.ts {\"timestamp\":\"2025-10-16T07:28:50.431Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/validation.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-432Z/src/lib/validation.ts {\"timestamp\":\"2025-10-16T07:28:50.432Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/whatsapp-business-api.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-432Z/src/lib/whatsapp-business-api.ts {\"timestamp\":\"2025-10-16T07:28:50.432Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/lib/whatsapp-integration.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-432Z/src/lib/whatsapp-integration.ts {\"timestamp\":\"2025-10-16T07:28:50.432Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/utils/api-client.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-432Z/src/utils/api-client.ts {\"timestamp\":\"2025-10-16T07:28:50.433Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/utils/api.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-433Z/src/utils/api.ts {\"timestamp\":\"2025-10-16T07:28:50.433Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/utils/date.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-433Z/src/utils/date.ts {\"timestamp\":\"2025-10-16T07:28:50.433Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/utils/format.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-433Z/src/utils/format.ts {\"timestamp\":\"2025-10-16T07:28:50.434Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/utils/index.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-434Z/src/utils/index.ts {\"timestamp\":\"2025-10-16T07:28:50.434Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/utils/storage.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-434Z/src/utils/storage.ts {\"timestamp\":\"2025-10-16T07:28:50.434Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/utils/string.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-434Z/src/utils/string.ts {\"timestamp\":\"2025-10-16T07:28:50.434Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/utils/validation.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-434Z/src/utils/validation.ts {\"timestamp\":\"2025-10-16T07:28:50.435Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/middleware/audit.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-435Z/src/middleware/audit.ts {\"timestamp\":\"2025-10-16T07:28:50.435Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/middleware/auth.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-435Z/src/middleware/auth.ts {\"timestamp\":\"2025-10-16T07:28:50.435Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/middleware/rate-limiter.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-435Z/src/middleware/rate-limiter.ts {\"timestamp\":\"2025-10-16T07:28:50.436Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/src/middleware/security.ts -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-436Z/src/middleware/security.ts {\"timestamp\":\"2025-10-16T07:28:50.436Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/admin-module.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-437Z/scripts/admin-module.js {\"timestamp\":\"2025-10-16T07:28:50.437Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/advanced-monitoring.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-437Z/scripts/advanced-monitoring.js {\"timestamp\":\"2025-10-16T07:28:50.437Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/analyze-bundle.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-438Z/scripts/analyze-bundle.js {\"timestamp\":\"2025-10-16T07:28:50.438Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/apply-migration-direct.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-438Z/scripts/apply-migration-direct.js {\"timestamp\":\"2025-10-16T07:28:50.438Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/apply-migrations-supabase.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-438Z/scripts/apply-migrations-supabase.js {\"timestamp\":\"2025-10-16T07:28:50.438Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/apply-supabase-migrations.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-438Z/scripts/apply-supabase-migrations.js {\"timestamp\":\"2025-10-16T07:28:50.439Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/backfill-public-ids.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-439Z/scripts/backfill-public-ids.js {\"timestamp\":\"2025-10-16T07:28:50.439Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/continuous-ai-loop.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-439Z/scripts/continuous-ai-loop.js {\"timestamp\":\"2025-10-16T07:28:50.439Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/create-all-tables.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-439Z/scripts/create-all-tables.js {\"timestamp\":\"2025-10-16T07:28:50.439Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/create-missing-tables.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-440Z/scripts/create-missing-tables.js {\"timestamp\":\"2025-10-16T07:28:50.440Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/create-tables-direct.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-440Z/scripts/create-tables-direct.js {\"timestamp\":\"2025-10-16T07:28:50.440Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/create-tables-supabase.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-440Z/scripts/create-tables-supabase.js {\"timestamp\":\"2025-10-16T07:28:50.440Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/cuid-standalone.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-440Z/scripts/cuid-standalone.js {\"timestamp\":\"2025-10-16T07:28:50.441Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/cursor-agent-monitor.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-441Z/scripts/cursor-agent-monitor.js {\"timestamp\":\"2025-10-16T07:28:50.441Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/cursor-agent.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-441Z/scripts/cursor-agent.js {\"timestamp\":\"2025-10-16T07:28:50.441Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/enhance_chatbot_flows.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-441Z/scripts/enhance_chatbot_flows.js {\"timestamp\":\"2025-10-16T07:28:50.442Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/enhanced-run-all.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-442Z/scripts/enhanced-run-all.js {\"timestamp\":\"2025-10-16T07:28:50.442Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/enhancements.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-442Z/scripts/enhancements.js {\"timestamp\":\"2025-10-16T07:28:50.443Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/file-cleanup.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-443Z/scripts/file-cleanup.js {\"timestamp\":\"2025-10-16T07:28:50.443Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/fix-imports.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-443Z/scripts/fix-imports.js {\"timestamp\":\"2025-10-16T07:28:50.443Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/generate-barrels.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-443Z/scripts/generate-barrels.js {\"timestamp\":\"2025-10-16T07:28:50.444Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/generate-final-report.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-444Z/scripts/generate-final-report.js {\"timestamp\":\"2025-10-16T07:28:50.444Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/generate-migration-script.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-444Z/scripts/generate-migration-script.js {\"timestamp\":\"2025-10-16T07:28:50.444Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/hemmam-center-ai-integration.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-444Z/scripts/hemmam-center-ai-integration.js {\"timestamp\":\"2025-10-16T07:28:50.444Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/master-ai-controller.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-444Z/scripts/master-ai-controller.js {\"timestamp\":\"2025-10-16T07:28:50.445Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/ml-learning-engine.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-445Z/scripts/ml-learning-engine.js {\"timestamp\":\"2025-10-16T07:28:50.445Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/n8n-workflow-manager.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-445Z/scripts/n8n-workflow-manager.js {\"timestamp\":\"2025-10-16T07:28:50.445Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/reorganize-project.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-446Z/scripts/reorganize-project.js {\"timestamp\":\"2025-10-16T07:28:50.446Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/rewrite-client-directive.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-446Z/scripts/rewrite-client-directive.js {\"timestamp\":\"2025-10-16T07:28:50.446Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/run-all.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-446Z/scripts/run-all.js {\"timestamp\":\"2025-10-16T07:28:50.446Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/run-migrations.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-446Z/scripts/run-migrations.js {\"timestamp\":\"2025-10-16T07:28:50.446Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/sandbox-testing.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-447Z/scripts/sandbox-testing.js {\"timestamp\":\"2025-10-16T07:28:50.447Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/seed_supabase_full.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-447Z/scripts/seed_supabase_full.js {\"timestamp\":\"2025-10-16T07:28:50.447Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/self-healing.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-447Z/scripts/self-healing.js {\"timestamp\":\"2025-10-16T07:28:50.447Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/smart-clean.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-447Z/scripts/smart-clean.js {\"timestamp\":\"2025-10-16T07:28:50.448Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/social-media-automation.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-448Z/scripts/social-media-automation.js {\"timestamp\":\"2025-10-16T07:28:50.448Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/test-after-migration.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-448Z/scripts/test-after-migration.js {\"timestamp\":\"2025-10-16T07:28:50.448Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/test-connection.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-448Z/scripts/test-connection.js {\"timestamp\":\"2025-10-16T07:28:50.448Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/test-database.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-448Z/scripts/test-database.js {\"timestamp\":\"2025-10-16T07:28:50.449Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/validate-schema.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-449Z/scripts/validate-schema.js {\"timestamp\":\"2025-10-16T07:28:50.449Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/validate-structure.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-449Z/scripts/validate-structure.js {\"timestamp\":\"2025-10-16T07:28:50.449Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/scripts/verification.js -> /home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-449Z/scripts/verification.js {\"timestamp\":\"2025-10-16T07:28:50.450Z\"}\n\u001b[31merror\u001b[39m: ❌ Failed to log cleanup action: Cannot read properties of undefined (reading 'push') {\"stack\":\"TypeError: Cannot read properties of undefined (reading 'push')\\n    at SharedInfrastructure.logCleanupAction (/home/ubuntu/moeen/scripts/agents/shared-infrastructure.js:211:20)\\n    at async BackendCleaner.moveUnusedFiles (/home/ubuntu/moeen/scripts/agents/backend-cleaner.js:422:5)\\n    at async BackendCleaner.run (/home/ubuntu/moeen/scripts/agents/backend-cleaner.js:55:7)\",\"timestamp\":\"2025-10-16T07:28:50.451Z\"}\n\u001b[32minfo\u001b[39m: 📊 Moved 115 files (770.32 KB) {\"timestamp\":\"2025-10-16T07:28:50.451Z\"}\n\u001b[32minfo\u001b[39m: 📝 Usage map updated by backend {\"timestamp\":\"2025-10-16T07:28:50.452Z\"}\n\u001b[31merror\u001b[39m: ❌ Failed to log cleanup action: Cannot read properties of undefined (reading 'push') {\"stack\":\"TypeError: Cannot read properties of undefined (reading 'push')\\n    at SharedInfrastructure.logCleanupAction (/home/ubuntu/moeen/scripts/agents/shared-infrastructure.js:211:20)\\n    at async BackendCleaner.run (/home/ubuntu/moeen/scripts/agents/backend-cleaner.js:61:7)\",\"timestamp\":\"2025-10-16T07:28:50.453Z\"}\n\u001b[32minfo\u001b[39m: ✅ BackendCleaner completed successfully {\"timestamp\":\"2025-10-16T07:28:50.453Z\"}\n\u001b[32minfo\u001b[39m: 🔓 Lock released by backend {\"timestamp\":\"2025-10-16T07:28:50.454Z\"}\nBackendCleaner completed successfully\n",
+        "stderr": "",
+        "duration": 1032
+      }
+    },
+    "shared": {
+      "status": "completed",
+      "report": {
+        "timestamp": "2025-10-16T07:28:51.608Z",
+        "agent": "shared",
+        "summary": {
+          "totalFilesVerified": 16,
+          "totalSizeRecovered": 446428,
+          "assetReferences": 0,
+          "utilityUsage": 0,
+          "crossAgentConflicts": 0,
+          "falsePositives": 88,
+          "needsReview": 0
+        },
+        "details": {
+          "assetReferences": {},
+          "utilityUsage": {},
+          "crossAgentConflicts": [],
+          "falsePositives": [
+            {
+              "type": "dynamic-import",
+              "file": "/home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-417Z/src/lib/error-handler.ts",
+              "module": "@/lib/supabase/client",
+              "reason": "Dynamic import detected - may be used at runtime"
+            },
+            {
+              "type": "require-call",
+              "file": "/home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-428Z/src/lib/security.ts",
+              "module": "crypto",
+              "reason": "Require call detected - may be used at runtime"
+            },
+            {
+              "type": "require-call",
+              "file": "/home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-430Z/src/lib/supabaseClient.ts",
+              "module": "@supabase/supabase-js",
+              "reason": "Require call detected - may be used at runtime"
+            },
+            {
+              "type": "dynamic-import",
+              "file": "/home/ubuntu/moeen/src/.shared_quarantine/backend/2025-10-16T07-28-50-435Z/src/middleware/rate-limiter.ts",
+              "module": "redis",
+              "reason": "Dynamic import detected - may be used at runtime"
+            },
+            {
+              "type": "require-call",
+              "file": "/home/ubuntu/moeen/src/app/api/dashboard/metrics/route.ts",
+              "module": "fs",
+              "reason": "Require call detected - may be used at runtime"
+            },
+            {
+              "type": "require-call",
+              "file": "/home/ubuntu/moeen/src/app/api/dashboard/metrics/route.ts",
+              "module": "path",
+              "reason": "Require call detected - may be used at runtime"
+            },
+            {
+              "type": "require-call",
+              "file": "/home/ubuntu/moeen/src/scripts/agents/modules/db-verifier.ts",
+              "module": "fs",
+              "reason": "Require call detected - may be used at runtime"
+            },
+            {
+              "type": "dynamic-import",
+              "file": "/home/ubuntu/moeen/src/components/lazy/LazyComponents.tsx",
+              "module": "@/components/appointments/AppointmentManager",
+              "reason": "Dynamic import detected - may be used at runtime"
+            },
+            {
+              "type": "dynamic-import",
+              "file": "/home/ubuntu/moeen/src/components/lazy/LazyComponents.tsx",
+              "module": "@/components/dashboard/Charts",
+              "reason": "Dynamic import detected - may be used at runtime"
+            },
+            {
+              "type": "dynamic-import",
+              "file": "/home/ubuntu/moeen/src/components/lazy/LazyComponents.tsx",
+              "module": "@/components/chatbot/MoainChatbot",
+              "reason": "Dynamic import detected - may be used at runtime"
+            },
+            {
+              "type": "dynamic-import",
+              "file": "/home/ubuntu/moeen/src/components/lazy/LazyComponents.tsx",
+              "module": "@/components/shared/DataTable",
+              "reason": "Dynamic import detected - may be used at runtime"
+            },
+            {
+              "type": "dynamic-import",
+              "file": "/home/ubuntu/moeen/src/components/lazy/LazyComponents.tsx",
+              "module": "@/components/shared/Modal",
+              "reason": "Dynamic import detected - may be used at runtime"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/admin/audit-logs/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/admin/channels/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/admin/dashboard/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/admin/logs/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/admin/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/admin/roles/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/admin/users/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/agent-dashboard/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/analytics/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/chatbot/analytics/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/chatbot/flows/[flowId]/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/chatbot/flows/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/chatbot/integrations/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/chatbot/templates/[id]/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/chatbot/templates/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/conversations/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/crm/activities/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/crm/contacts/[id]/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/crm/contacts/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/crm/dashboard/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/crm/deals/kanban/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/crm/deals/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/crm/flows/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/crm/leads/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/flow/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/integrations/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/layout.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/messages/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/notifications/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/performance/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/profile/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/review/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/security/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(admin)/settings/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(auth)/forgot-password/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(auth)/layout.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(auth)/login/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(auth)/register/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(auth)/reset-password/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(auth)/verify-email/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(doctor)/doctor-dashboard/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/appointments/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/approvals/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/family-support/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/insurance/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/insurance-claims/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/layout.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/medical-file/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/patients/[id]/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/patients/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/progress-tracking/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/sessions/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/therapy/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(health)/training/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(info)/about/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(info)/contact/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(info)/layout.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(legal)/layout.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(legal)/privacy/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(legal)/terms/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(marketing)/faq/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(marketing)/features/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(marketing)/pricing/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(patient)/patient-dashboard/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(public)/chatbot/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(staff)/staff-dashboard/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/(supervisor)/supervisor-dashboard/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/dashboard/doctor/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/dashboard/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/dashboard/patient/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/dashboard/staff/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/dashboard/supervisor/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/layout.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/uikit/guidelines/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            },
+            {
+              "type": "route-file",
+              "file": "/home/ubuntu/moeen/src/app/uikit/page.tsx",
+              "reason": "Next.js route file - used by framework"
+            }
+          ],
+          "needsReview": [],
+          "verifiedUnused": [],
+          "totalFilesVerified": 16,
+          "totalSizeRecovered": 446428
+        }
+      },
+      "execution": {
+        "agent": "SharedVerifier",
+        "success": true,
+        "code": 0,
+        "stdout": "\u001b[32minfo\u001b[39m: 🔍 Starting SharedVerifier agent... {\"timestamp\":\"2025-10-16T07:28:50.670Z\"}\n\u001b[32minfo\u001b[39m: ✅ Quarantine system initialized {\"timestamp\":\"2025-10-16T07:28:50.680Z\"}\n\u001b[32minfo\u001b[39m: 🔒 Lock acquired by shared {\"timestamp\":\"2025-10-16T07:28:50.682Z\"}\n\u001b[32minfo\u001b[39m: 📋 Parsing usage maps from other agents... {\"timestamp\":\"2025-10-16T07:28:50.682Z\"}\n\u001b[32minfo\u001b[39m: 📊 Frontend findings: 0 entries {\"timestamp\":\"2025-10-16T07:28:50.684Z\"}\n\u001b[32minfo\u001b[39m: 📊 Backend findings: 7 entries {\"timestamp\":\"2025-10-16T07:28:50.684Z\"}\n\u001b[32minfo\u001b[39m: 🖼️ Checking asset references... {\"timestamp\":\"2025-10-16T07:28:50.684Z\"}\n\u001b[32minfo\u001b[39m: 📸 Assets snapshot created: /home/ubuntu/moeen/src/.shared_quarantine/assets-snapshot.json {\"timestamp\":\"2025-10-16T07:28:51.427Z\"}\n\u001b[32minfo\u001b[39m: 📊 Found 18 assets, verified 0 references {\"timestamp\":\"2025-10-16T07:28:51.427Z\"}\n\u001b[32minfo\u001b[39m: 🔧 Checking utility usage... {\"timestamp\":\"2025-10-16T07:28:51.427Z\"}\n\u001b[33mwarn\u001b[39m: ⚠️ src/lib/utils.ts not found {\"timestamp\":\"2025-10-16T07:28:51.428Z\"}\n\u001b[33mwarn\u001b[39m: ⚠️ Could not analyze utility file /home/ubuntu/moeen/src/lib/real-time-notifications.ts: {\"timestamp\":\"2025-10-16T07:28:51.431Z\"}\n\u001b[33mwarn\u001b[39m: ⚠️ Could not analyze utility file /home/ubuntu/moeen/src/lib/security-enhanced.ts: {\"timestamp\":\"2025-10-16T07:28:51.432Z\"}\n\u001b[33mwarn\u001b[39m: ⚠️ Could not analyze utility file /home/ubuntu/moeen/src/lib/websocket-server.ts: {\"timestamp\":\"2025-10-16T07:28:51.436Z\"}\n\u001b[32minfo\u001b[39m: 🔍 Detecting false positives... {\"timestamp\":\"2025-10-16T07:28:51.436Z\"}\n\u001b[32minfo\u001b[39m: 🤝 Resolving cross-agent conflicts... {\"timestamp\":\"2025-10-16T07:28:51.597Z\"}\n\u001b[32minfo\u001b[39m: 📊 Found 0 cross-agent conflicts {\"timestamp\":\"2025-10-16T07:28:51.597Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moving verified unused files to quarantine... {\"timestamp\":\"2025-10-16T07:28:51.597Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/banner.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-598Z/public/banner.jpg {\"timestamp\":\"2025-10-16T07:28:51.599Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/favicon-temp.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-599Z/public/favicon-temp.jpg {\"timestamp\":\"2025-10-16T07:28:51.600Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/favicon.ico -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-600Z/public/favicon.ico {\"timestamp\":\"2025-10-16T07:28:51.601Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/gallery-1.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-601Z/public/gallery-1.jpg {\"timestamp\":\"2025-10-16T07:28:51.601Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/gallery-2.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-601Z/public/gallery-2.jpg {\"timestamp\":\"2025-10-16T07:28:51.602Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/gallery-3.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-602Z/public/gallery-3.jpg {\"timestamp\":\"2025-10-16T07:28:51.602Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/gallery-4.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-602Z/public/gallery-4.jpg {\"timestamp\":\"2025-10-16T07:28:51.603Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/gallery-5.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-603Z/public/gallery-5.jpg {\"timestamp\":\"2025-10-16T07:28:51.603Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/gallery-6.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-603Z/public/gallery-6.jpg {\"timestamp\":\"2025-10-16T07:28:51.603Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/hemam-logo.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-603Z/public/hemam-logo.jpg {\"timestamp\":\"2025-10-16T07:28:51.604Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/hero-1.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-604Z/public/hero-1.jpg {\"timestamp\":\"2025-10-16T07:28:51.604Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/hero-2.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-604Z/public/hero-2.jpg {\"timestamp\":\"2025-10-16T07:28:51.605Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/hero-3.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-605Z/public/hero-3.jpg {\"timestamp\":\"2025-10-16T07:28:51.605Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/testimonial-1.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-605Z/public/testimonial-1.jpg {\"timestamp\":\"2025-10-16T07:28:51.605Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/testimonial-2.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-606Z/public/testimonial-2.jpg {\"timestamp\":\"2025-10-16T07:28:51.606Z\"}\n\u001b[32minfo\u001b[39m: 📦 Moved /home/ubuntu/moeen/public/testimonial-3.jpg -> /home/ubuntu/moeen/src/.shared_quarantine/shared/2025-10-16T07-28-51-606Z/public/testimonial-3.jpg {\"timestamp\":\"2025-10-16T07:28:51.606Z\"}\n\u001b[31merror\u001b[39m: ❌ Failed to log cleanup action: Cannot read properties of undefined (reading 'push') {\"stack\":\"TypeError: Cannot read properties of undefined (reading 'push')\\n    at SharedInfrastructure.logCleanupAction (/home/ubuntu/moeen/scripts/agents/shared-infrastructure.js:211:20)\\n    at async SharedVerifier.quarantineMove (/home/ubuntu/moeen/scripts/agents/shared-verifier.js:668:7)\\n    at async SharedVerifier.run (/home/ubuntu/moeen/scripts/agents/shared-verifier.js:55:7)\",\"timestamp\":\"2025-10-16T07:28:51.607Z\"}\n\u001b[32minfo\u001b[39m: 📊 Moved 16 files (435.96 KB) {\"timestamp\":\"2025-10-16T07:28:51.607Z\"}\n\u001b[32minfo\u001b[39m: 📊 Generating verification summary... {\"timestamp\":\"2025-10-16T07:28:51.607Z\"}\n\u001b[31merror\u001b[39m: ❌ Failed to generate rollback script: Cannot read properties of undefined (reading 'filter') {\"stack\":\"TypeError: Cannot read properties of undefined (reading 'filter')\\n    at SharedInfrastructure.generateRollbackScript (/home/ubuntu/moeen/scripts/agents/shared-infrastructure.js:285:43)\\n    at async SharedVerifier.generateSummary (/home/ubuntu/moeen/scripts/agents/shared-verifier.js:733:28)\\n    at async SharedVerifier.run (/home/ubuntu/moeen/scripts/agents/shared-verifier.js:58:7)\",\"timestamp\":\"2025-10-16T07:28:51.609Z\"}\n\u001b[31merror\u001b[39m: ❌ Summary generation failed: Cannot read properties of undefined (reading 'filter') {\"stack\":\"TypeError: Cannot read properties of undefined (reading 'filter')\\n    at SharedInfrastructure.generateRollbackScript (/home/ubuntu/moeen/scripts/agents/shared-infrastructure.js:285:43)\\n    at async SharedVerifier.generateSummary (/home/ubuntu/moeen/scripts/agents/shared-verifier.js:733:28)\\n    at async SharedVerifier.run (/home/ubuntu/moeen/scripts/agents/shared-verifier.js:58:7)\",\"timestamp\":\"2025-10-16T07:28:51.610Z\"}\n\u001b[32minfo\u001b[39m: ✅ SharedVerifier completed successfully {\"timestamp\":\"2025-10-16T07:28:51.610Z\"}\n\u001b[32minfo\u001b[39m: 🔓 Lock released by shared {\"timestamp\":\"2025-10-16T07:28:51.610Z\"}\nSharedVerifier completed successfully\n",
+        "stderr": "",
+        "duration": 1153
+      }
+    }
+  },
+  "summary": {
+    "totalAgents": 3,
+    "successfulAgents": 3,
+    "failedAgents": 0,
+    "totalFilesMoved": 30,
+    "totalSizeRecovered": 307200,
+    "executionTime": 4160
+  },
+  "quarantine": {
+    "location": "/home/ubuntu/moeen/src/.shared_quarantine",
+    "rollbackScript": "logs/rollback-2025-10-16T07-28-47-451Z.sh",
+    "usageMap": "/home/ubuntu/moeen/src/.shared_quarantine/usage-map.json",
+    "cleanupLog": "/home/ubuntu/moeen/src/.shared_quarantine/cleanup-log.json"
+  },
+  "recommendations": [
+    {
+      "type": "success",
+      "message": "All agents completed successfully. Review the final report and rollback script."
+    },
+    {
+      "type": "info",
+      "message": "Use the rollback script to restore any moved files if needed."
+    }
+  ]
+}

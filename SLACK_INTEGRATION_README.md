@@ -7,22 +7,26 @@
 ## الميزات الرئيسية
 
 ### 1. إشعارات المواعيد التلقائية
+
 - إشعارات فورية عند حجز موعد جديد
 - تأكيد المواعيد عبر Slack
 - تذكيرات المواعيد
 - إشعارات إلغاء المواعيد
 
 ### 2. التواصل بين الأطباء والمرضى
+
 - إرسال استفسارات المرضى للطاقم الطبي عبر Slack
 - ردود الأطباء على استفسارات المرضى
 - تتبع المحادثات في threads منفصلة
 
 ### 3. نظام الطوارئ
+
 - تنبيهات فورية للحالات الطارئة
 - إشعارات في قناة الطوارئ المخصصة
 - ربط مع أرقام الطوارئ
 
 ### 4. إدارة الـ Flows
+
 - واجهة إدارة سيناريوهات المحادثة
 - تخصيص الـ Flows حسب الحاجة
 - دعم Slack notifications في الـ Flows
@@ -91,31 +95,31 @@ src/
 ### 1. إرسال إشعار موعد جديد
 
 ```typescript
-await fetch('/api/slack/notify', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+await fetch("/api/slack/notify", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    type: 'appointment_created',
-    appointmentId: 'apt-123',
-    doctorId: 'doc-456',
-    patientId: 'pat-789'
-  })
+    type: "appointment_created",
+    appointmentId: "apt-123",
+    doctorId: "doc-456",
+    patientId: "pat-789",
+  }),
 });
 ```
 
 ### 2. إرسال رسالة مريض للطبيب
 
 ```typescript
-await fetch('/api/slack/notify', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+await fetch("/api/slack/notify", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    type: 'patient_message',
-    patientId: 'pat-123',
-    doctorId: 'doc-456',
-    message: 'سؤال من المريض',
-    channel: 'whatsapp'
-  })
+    type: "patient_message",
+    patientId: "pat-123",
+    doctorId: "doc-456",
+    message: "سؤال من المريض",
+    channel: "whatsapp",
+  }),
 });
 ```
 
@@ -123,23 +127,23 @@ await fetch('/api/slack/notify', {
 
 ```typescript
 const flow = {
-  id: 'custom_flow',
-  name: 'Flow مخصص',
+  id: "custom_flow",
+  name: "Flow مخصص",
   steps: [
     {
-      id: 'step1',
-      type: 'question',
-      content: 'ما هو سؤالك؟',
-      nextStep: 'notify_doctor'
+      id: "step1",
+      type: "question",
+      content: "ما هو سؤالك؟",
+      nextStep: "notify_doctor",
     },
     {
-      id: 'notify_doctor',
-      type: 'slack_notify',
-      content: 'تم إرسال السؤال للطبيب',
-      slackChannel: 'general',
-      notificationType: 'general'
-    }
-  ]
+      id: "notify_doctor",
+      type: "slack_notify",
+      content: "تم إرسال السؤال للطبيب",
+      slackChannel: "general",
+      notificationType: "general",
+    },
+  ],
 };
 ```
 
@@ -169,6 +173,7 @@ const flow = {
 ## الدعم الفني
 
 للحصول على الدعم الفني أو الإبلاغ عن مشاكل:
+
 - إنشاء issue في GitHub
 - التواصل عبر Slack في قناة #tech-support
 - إرسال بريد إلكتروني إلى: tech@hemamcenter.com

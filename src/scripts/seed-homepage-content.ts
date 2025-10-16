@@ -1,17 +1,16 @@
-import { dynamicContentManager } from "../lib/dynamic-content-manager";
-import { logger } from '@/lib/logger';
-
+import { _dynamicContentManager } from "../lib/dynamic-content-manager";
+import { _logger } from "@/lib/logger";
 
 /**
  * Seed homepage content with dynamic data
  * This replaces all hardcoded content with database-driven content
  */
-async function seedHomepageContent() {
+async function __seedHomepageContent() {
   try {
     logger.info("🌱 Seeding homepage content...");
 
     // Hero slides content
-    const heroSlides = [
+    const __heroSlides = [
       {
         id: 1,
         title: "مرحباً بك في مُعين",
@@ -45,7 +44,7 @@ async function seedHomepageContent() {
     ];
 
     // Services content
-    const services = [
+    const __services = [
       {
         id: 1,
         title: "إدارة المواعيد",
@@ -97,7 +96,7 @@ async function seedHomepageContent() {
     ];
 
     // Testimonials content
-    const testimonials = [
+    const __testimonials = [
       {
         id: 1,
         name: "د. أحمد محمد",
@@ -125,7 +124,7 @@ async function seedHomepageContent() {
     ];
 
     // Gallery images content
-    const galleryImages = [
+    const __galleryImages = [
       { id: 1, src: "/logo.jpg", alt: "عيادة حديثة" },
       { id: 2, src: "/logo.jpg", alt: "معدات طبية" },
       { id: 3, src: "/logo.jpg", alt: "فريق العمل" },
@@ -135,7 +134,7 @@ async function seedHomepageContent() {
     ];
 
     // FAQ content
-    const faqs = [
+    const __faqs = [
       {
         id: 1,
         question: "كيف يمكنني حجز موعد؟",
@@ -172,7 +171,7 @@ async function seedHomepageContent() {
     logger.info("✅ Homepage content seeded successfully!");
 
     // Also seed translations for the homepage
-    const translations = [
+    const __translations = [
       // Arabic translations
       {
         locale: "ar",

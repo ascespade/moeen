@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
+import { _useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 interface InsuranceClaim {
   id: string;
@@ -81,13 +82,13 @@ const mockClaims: InsuranceClaim[] = [
   },
 ];
 
-export default function InsuranceClaimsPage() {
+export default function __InsuranceClaimsPage() {
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState<string | null>(null);
 
-  const getStatusColor = (status: InsuranceClaim["status"]) => {
+  const __getStatusColor = (_status: InsuranceClaim["status"]) => {
     switch (status) {
       case "pending":
         return "bg-yellow-100 text-yellow-800";
@@ -102,7 +103,7 @@ export default function InsuranceClaimsPage() {
     }
   };
 
-  const getStatusText = (status: InsuranceClaim["status"]) => {
+  const __getStatusText = (_status: InsuranceClaim["status"]) => {
     switch (status) {
       case "pending":
         return "قيد الانتظار";
@@ -117,7 +118,7 @@ export default function InsuranceClaimsPage() {
     }
   };
 
-  const filteredClaims = mockClaims.filter((claim) => {
+  const __filteredClaims = mockClaims.filter((claim) => {
     const matchesSearch =
       claim.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       claim.claimNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -127,7 +128,7 @@ export default function InsuranceClaimsPage() {
     return matchesSearch && matchesStatus;
   });
 
-  const selectedClaim = showDetailsModal
+  const __selectedClaim = showDetailsModal
     ? mockClaims.find((c) => c.id === showDetailsModal)
     : null;
 

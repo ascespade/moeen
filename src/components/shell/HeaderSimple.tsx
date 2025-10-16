@@ -1,16 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Sun, Moon, Languages } from "lucide-react";
+import { _Sun, Moon, Languages } from "lucide-react";
 import Image from "next/image";
+import { _useEffect, useState } from "react";
 
-export default function HeaderSimple() {
+export default function __HeaderSimple() {
   const [theme, setTheme] = useState<string>("light");
   const [dir, setDir] = useState<"rtl" | "ltr">("rtl");
   const [showThemeDropdown, setShowThemeDropdown] = useState(false);
   const [showLangDropdown, setShowLangDropdown] = useState(false);
 
   useEffect(() => {
-    const html = document.documentElement;
+    const __html = document.documentElement;
     html.setAttribute("data-theme", theme);
     html.setAttribute("dir", dir);
     html.setAttribute("lang", dir === "rtl" ? "ar" : "en");
@@ -20,7 +20,7 @@ export default function HeaderSimple() {
 
   // Close dropdowns when clicking outside
   useEffect(() => {
-    const handleClickOutside = () => {
+    const __handleClickOutside = () => {
       setShowThemeDropdown(false);
       setShowLangDropdown(false);
     };

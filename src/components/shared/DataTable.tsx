@@ -5,19 +5,19 @@ interface Column {
   label: string;
   sortable?: boolean;
   sortDirection?: "asc" | "desc" | "none";
-  render?: (value: any, row: any) => React.ReactNode;
+  render?: (_value: unknown, row: unknown) => React.ReactNode;
 }
 
 interface DataTableProps {
   columns: Column[];
-  data: any[];
-  onSort?: (key: string) => void;
-  onFilter?: (filters: Record<string, any>) => void;
+  data: unknown[];
+  onSort?: (_key: string) => void;
+  onFilter?: (_filters: Record<string, any>) => void;
   caption?: string;
   className?: string;
 }
 
-export function DataTable({
+export function __DataTable({
   columns,
   data,
   onSort,

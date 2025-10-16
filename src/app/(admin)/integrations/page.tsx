@@ -1,14 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { 
-  Plug, 
-  Settings, 
-  CheckCircle, 
-  XCircle, 
+import {
+  Plug,
+  Settings,
+  CheckCircle,
+  XCircle,
   AlertCircle,
   RefreshCw,
   ExternalLink,
@@ -20,26 +16,31 @@ import {
   Calendar,
   Database,
   Cloud,
-  Shield
+  Shield,
 } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
+import { _useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { _useAuth } from "@/hooks/useAuth";
 
 interface Integration {
   id: string;
   name: string;
   description: string;
-  type: 'api' | 'webhook' | 'oauth' | 'database' | 'email' | 'sms' | 'calendar';
-  status: 'active' | 'inactive' | 'error' | 'pending';
+  type: "api" | "webhook" | "oauth" | "database" | "email" | "sms" | "calendar";
+  status: "active" | "inactive" | "error" | "pending";
   provider: string;
   last_sync: string;
-  config: any;
+  config: unknown;
   health_score: number;
 }
 
 const IntegrationsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
-  const router = useRouter();
+  const __router = useRouter();
   const [integrations, setIntegrations] = useState<Integration[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -51,7 +52,7 @@ const IntegrationsPage: React.FC = () => {
     loadIntegrations();
   }, [isAuthenticated, router]);
 
-  const loadIntegrations = async () => {
+  const __loadIntegrations = async () => {
     try {
       setLoading(true);
       const mockIntegrations: Integration[] = [
@@ -64,7 +65,7 @@ const IntegrationsPage: React.FC = () => {
           provider: "Meta",
           last_sync: "2024-01-15T10:30:00Z",
           health_score: 95,
-          config: { api_key: "***", phone_number: "+966501234567" }
+          config: { api_key: "***", phone_number: "+966501234567" },
         },
         {
           id: "2",
@@ -75,7 +76,7 @@ const IntegrationsPage: React.FC = () => {
           provider: "Slack",
           last_sync: "2024-01-15T09:45:00Z",
           health_score: 88,
-          config: { webhook_url: "***", channel: "#alhemam-center" }
+          config: { webhook_url: "***", channel: "#alhemam-center" },
         },
         {
           id: "3",
@@ -86,7 +87,7 @@ const IntegrationsPage: React.FC = () => {
           provider: "Google",
           last_sync: "2024-01-15T08:20:00Z",
           health_score: 92,
-          config: { calendar_id: "primary", sync_direction: "bidirectional" }
+          config: { calendar_id: "primary", sync_direction: "bidirectional" },
         },
         {
           id: "4",
@@ -97,34 +98,45 @@ const IntegrationsPage: React.FC = () => {
           provider: "Twilio",
           last_sync: "2024-01-14T15:30:00Z",
           health_score: 45,
-          config: { account_sid: "***", auth_token: "***" }
-        }
+          config: { account_sid: "***", auth_token: "***" },
+        },
       ];
       setIntegrations(mockIntegrations);
     } catch (error) {
-      } finally {
+    } finally {
       setLoading(false);
     }
   };
 
-  const getStatusIcon = (status: string) => {
+  const __getStatusIcon = (_status: string) => {
     switch (status) {
-      case 'active': return <CheckCircle className="w-4 h-4 text-green-500" />;
-      case 'error': return <XCircle className="w-4 h-4 text-red-500" />;
-      case 'pending': return <AlertCircle className="w-4 h-4 text-yellow-500" />;
-      default: return <XCircle className="w-4 h-4 text-gray-500" />;
+      case "active":
+        return <CheckCircle className="w-4 h-4 text-green-500" />;
+      case "error":
+        return <XCircle className="w-4 h-4 text-red-500" />;
+      case "pending":
+        return <AlertCircle className="w-4 h-4 text-yellow-500" />;
+      default:
+        return <XCircle className="w-4 h-4 text-gray-500" />;
     }
   };
 
-  const getTypeIcon = (type: string) => {
+  const __getTypeIcon = (_type: string) => {
     switch (type) {
-      case 'api': return <Globe className="w-4 h-4 text-blue-500" />;
-      case 'webhook': return <Plug className="w-4 h-4 text-purple-500" />;
-      case 'oauth': return <Key className="w-4 h-4 text-green-500" />;
-      case 'sms': return <Phone className="w-4 h-4 text-orange-500" />;
-      case 'email': return <Mail className="w-4 h-4 text-red-500" />;
-      case 'calendar': return <Calendar className="w-4 h-4 text-indigo-500" />;
-      default: return <Settings className="w-4 h-4 text-gray-500" />;
+      case "api":
+        return <Globe className="w-4 h-4 text-blue-500" />;
+      case "webhook":
+        return <Plug className="w-4 h-4 text-purple-500" />;
+      case "oauth":
+        return <Key className="w-4 h-4 text-green-500" />;
+      case "sms":
+        return <Phone className="w-4 h-4 text-orange-500" />;
+      case "email":
+        return <Mail className="w-4 h-4 text-red-500" />;
+      case "calendar":
+        return <Calendar className="w-4 h-4 text-indigo-500" />;
+      default:
+        return <Settings className="w-4 h-4 text-gray-500" />;
     }
   };
 
@@ -134,41 +146,66 @@ const IntegrationsPage: React.FC = () => {
     <div className="container mx-auto px-4 py-8" dir="rtl">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">التكاملات الخارجية</h1>
-        <p className="text-gray-600 mt-2">إدارة التكاملات مع الخدمات الخارجية</p>
+        <p className="text-gray-600 mt-2">
+          إدارة التكاملات مع الخدمات الخارجية
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {integrations.map((integration) => (
-          <Card key={integration.id} className="hover:shadow-md transition-shadow">
+          <Card
+            key={integration.id}
+            className="hover:shadow-md transition-shadow"
+          >
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   {getTypeIcon(integration.type)}
                   <div>
-                    <CardTitle className="text-lg">{integration.name}</CardTitle>
-                    <p className="text-sm text-gray-600">{integration.provider}</p>
+                    <CardTitle className="text-lg">
+                      {integration.name}
+                    </CardTitle>
+                    <p className="text-sm text-gray-600">
+                      {integration.provider}
+                    </p>
                   </div>
                 </div>
                 {getStatusIcon(integration.status)}
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-700 mb-4">{integration.description}</p>
-              
+              <p className="text-sm text-gray-700 mb-4">
+                {integration.description}
+              </p>
+
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
                   <span>الحالة:</span>
-                  <Badge variant={integration.status === 'active' ? 'primary' : 'secondary'}>
-                    {integration.status === 'active' ? 'نشط' : 'غير نشط'}
+                  <Badge
+                    variant={
+                      integration.status === "active" ? "primary" : "secondary"
+                    }
+                  >
+                    {integration.status === "active" ? "نشط" : "غير نشط"}
                   </Badge>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>آخر مزامنة:</span>
-                  <span>{new Date(integration.last_sync).toLocaleDateString('ar-SA')}</span>
+                  <span>
+                    {new Date(integration.last_sync).toLocaleDateString(
+                      "ar-SA",
+                    )}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>صحة الاتصال:</span>
-                  <span className={integration.health_score > 80 ? 'text-green-600' : 'text-red-600'}>
+                  <span
+                    className={
+                      integration.health_score > 80
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }
+                  >
                     {integration.health_score}%
                   </span>
                 </div>
@@ -193,4 +230,3 @@ const IntegrationsPage: React.FC = () => {
 };
 
 export default IntegrationsPage;
-

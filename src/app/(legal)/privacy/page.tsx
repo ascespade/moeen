@@ -1,8 +1,8 @@
 "use client";
 
-import { useT } from "@/components/providers/I18nProvider";
+import { _useT } from "@/components/providers/I18nProvider";
 
-export default function PrivacyPage() {
+export default function __PrivacyPage() {
   const { t } = useT();
   return (
     <div className="mx-auto max-w-screen-md px-4 py-12">

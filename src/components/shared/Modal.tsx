@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { _useEffect } from "react";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -9,7 +9,7 @@ interface ModalProps {
   showCloseButton?: boolean;
 }
 
-export default function Modal({
+export default function __Modal({
   isOpen,
   onClose,
   title,
@@ -30,7 +30,7 @@ export default function Modal({
   }, [isOpen]);
 
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
+    const __handleEscape = (_e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onClose();
       }
@@ -47,7 +47,7 @@ export default function Modal({
 
   if (!isOpen) return null;
 
-  const sizeClasses = {
+  const __sizeClasses = {
     sm: "max-w-md",
     md: "max-w-2xl",
     lg: "max-w-4xl",

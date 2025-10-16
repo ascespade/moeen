@@ -2,14 +2,15 @@
 // System health API endpoint for dashboard
 // Provides detailed health status of all services
 
-import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabaseClient";
+import { _NextRequest, NextResponse } from "next/server";
 
-const supabase = getServiceSupabase();
+import { _getServiceSupabase } from "@/lib/supabaseClient";
 
-export async function GET(request: NextRequest) {
+const __supabase = getServiceSupabase();
+
+export async function __GET(_request: NextRequest) {
   try {
-    const healthData = await getDetailedHealthStatus();
+    const __healthData = await getDetailedHealthStatus();
 
     return NextResponse.json({
       timestamp: new Date().toISOString(),
@@ -25,7 +26,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function getDetailedHealthStatus() {
+async function __getDetailedHealthStatus() {
   try {
     // Get health data from multiple sources
     const [systemHealth, recentMetrics, errorLogs] = await Promise.all([
@@ -34,12 +35,12 @@ async function getDetailedHealthStatus() {
       getRecentErrors(),
     ]);
 
-    const services = systemHealth.map((service: any) => {
-      const recentMetric = recentMetrics.find(
-        (m: any) => m.service_name === service.service_name,
+    const __services = systemHealth.map((_service: unknown) => {
+      const __recentMetric = recentMetrics.find(
+        (_m: unknown) => m.service_name === service.service_name,
       );
-      const recentErrors = errorLogs.filter(
-        (e: any) => e.service_name === service.service_name,
+      const __recentErrors = errorLogs.filter(
+        (_e: unknown) => e.service_name === service.service_name,
       );
 
       return {
@@ -61,17 +62,21 @@ async function getDetailedHealthStatus() {
       };
     });
 
-    const summary = {
+    const __summary = {
       totalServices: services.length,
-      healthyServices: services.filter((s: any) => s.status === "healthy").length,
-      unhealthyServices: services.filter((s: any) => s.status === "unhealthy")
+      healthyServices: services.filter((_s: unknown) => s.status === "healthy")
         .length,
-      totalErrors: services.reduce((acc: any, s: any) => acc + s.errors.count, 0),
+      unhealthyServices: services.filter((_s: unknown) => s.status === "unhealthy")
+        .length,
+      totalErrors: services.reduce(
+        (_acc: unknown, s: unknown) => acc + s.errors.count,
+        0,
+      ),
       averageUptime: calculateAverageUptime(services),
-      criticalIssues: services.filter((s: any) => s.errors.count > 5).length,
+      criticalIssues: services.filter((_s: unknown) => s.errors.count > 5).length,
     };
 
-    const overallStatus = calculateOverallStatus(summary);
+    const __overallStatus = calculateOverallStatus(summary);
 
     return {
       overallStatus,
@@ -83,7 +88,7 @@ async function getDetailedHealthStatus() {
   }
 }
 
-async function getSystemHealthData() {
+async function __getSystemHealthData() {
   const { data, error } = await supabase
     .from("system_health")
     .select("*")
@@ -94,7 +99,7 @@ async function getSystemHealthData() {
   return data || [];
 }
 
-async function getRecentMetrics() {
+async function __getRecentMetrics() {
   const { data, error } = await supabase
     .from("system_metrics")
     .select("*")
@@ -105,7 +110,7 @@ async function getRecentMetrics() {
   return data || [];
 }
 
-async function getRecentErrors() {
+async function __getRecentErrors() {
   const { data, error } = await supabase
     .from("error_logs")
     .select("*")
@@ -117,20 +122,20 @@ async function getRecentErrors() {
   return data || [];
 }
 
-function calculateUptime(lastCheck: string) {
-  const now = new Date();
-  const lastCheckDate = new Date(lastCheck);
-  const diffMs = now.getTime() - lastCheckDate.getTime();
-  const diffHours = diffMs / (1000 * 60 * 60);
+function __calculateUptime(_lastCheck: string) {
+  const __now = new Date();
+  const __lastCheckDate = new Date(lastCheck);
+  const __diffMs = now.getTime() - lastCheckDate.getTime();
+  const __diffHours = diffMs / (1000 * 60 * 60);
 
   if (diffHours < 1) return "99.9%";
   if (diffHours < 24) return `${(99.9 - (diffHours / 24) * 0.1).toFixed(1)}%`;
   return "99.0%";
 }
 
-function calculateAverageUptime(services: any[]) {
-  const uptimes = services.map((s) => {
-    const uptimeStr = s.uptime.replace("%", "");
+function __calculateAverageUptime(_services: unknown[]) {
+  const __uptimes = services.map((s) => {
+    const __uptimeStr = s.uptime.replace("%", "");
     return parseFloat(uptimeStr);
   });
 
@@ -139,16 +144,16 @@ function calculateAverageUptime(services: any[]) {
   return `${average.toFixed(1)}%`;
 }
 
-function getErrorTypes(errors: any[]) {
-  const types: any = {};
+function __getErrorTypes(_errors: unknown[]) {
+  const types: unknown = {};
   errors.forEach((error) => {
-    const type = error.error_type || "unknown";
+    const __type = error.error_type || "unknown";
     types[type] = (types[type] || 0) + 1;
   });
   return types;
 }
 
-function calculateOverallStatus(summary: any) {
+function __calculateOverallStatus(_summary: unknown) {
   const healthPercentage =
     (summary.healthyServices / summary.totalServices) * 100;
 

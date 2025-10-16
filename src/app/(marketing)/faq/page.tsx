@@ -1,10 +1,10 @@
 "use client";
 
-import { useT } from "@/components/providers/I18nProvider";
+import { _useT } from "@/components/providers/I18nProvider";
 
-export default function FAQPage() {
+export default function __FAQPage() {
   const { t } = useT();
-  const faqs = [
+  const __faqs = [
     {
       q: t("faq.q1", "هل تدعمون RTL؟"),
       a: t("faq.a1", "نعم، دعم كامل للعربية مع تبديل تلقائي للاتجاه."),

@@ -1,6 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
-import { api, ApiError } from "@/utils/api";
-import { ApiResponse } from "@/types";
+import { _useState, useEffect, useCallback } from "react";
+
+import { _ApiResponse } from "@/types";
+
+import { _api, ApiError } from "@/utils/api";
 // API hooks
 
 interface UseApiState<T> {
@@ -10,7 +12,7 @@ interface UseApiState<T> {
   refetch: () => Promise<void>;
 }
 
-export const useApi = <T = any>(
+export const __useApi = <T = any>(
   endpoint: string,
   options?: RequestInit,
   immediate: boolean = true,
@@ -19,12 +21,12 @@ export const useApi = <T = any>(
   const [loading, setLoading] = useState(immediate);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = useCallback(async () => {
+  const __fetchData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.get<T>(endpoint, options);
-      const payload = response as unknown as ApiResponse<T>;
+      const __response = await api.get<T>(endpoint, options);
+      const __payload = response as unknown as ApiResponse<T>;
       setData(
         (payload && "data" in payload
           ? payload.data
@@ -53,7 +55,7 @@ export const useApi = <T = any>(
   };
 };
 
-export const useApiPost = <T = any, D = any>(
+export const __useApiPost = <T = any, D = any>(
   endpoint: string,
   options?: RequestInit,
 ) => {
@@ -61,13 +63,13 @@ export const useApiPost = <T = any, D = any>(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const execute = useCallback(
+  const __execute = useCallback(
     async (requestData?: D) => {
       try {
         setLoading(true);
         setError(null);
-        const response = await api.post<T>(endpoint, requestData, options);
-        const payload = response as unknown as ApiResponse<T>;
+        const __response = await api.post<T>(endpoint, requestData, options);
+        const __payload = response as unknown as ApiResponse<T>;
         setData(
           (payload && "data" in payload
             ? payload.data
@@ -94,7 +96,7 @@ export const useApiPost = <T = any, D = any>(
   };
 };
 
-export const useApiPut = <T = any, D = any>(
+export const __useApiPut = <T = any, D = any>(
   endpoint: string,
   options?: RequestInit,
 ) => {
@@ -102,13 +104,13 @@ export const useApiPut = <T = any, D = any>(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const execute = useCallback(
+  const __execute = useCallback(
     async (requestData?: D) => {
       try {
         setLoading(true);
         setError(null);
-        const response = await api.put<T>(endpoint, requestData, options);
-        const payload = response as unknown as ApiResponse<T>;
+        const __response = await api.put<T>(endpoint, requestData, options);
+        const __payload = response as unknown as ApiResponse<T>;
         setData(
           (payload && "data" in payload
             ? payload.data
@@ -135,7 +137,7 @@ export const useApiPut = <T = any, D = any>(
   };
 };
 
-export const useApiDelete = <T = any>(
+export const __useApiDelete = <T = any>(
   endpoint: string,
   options?: RequestInit,
 ) => {
@@ -143,12 +145,12 @@ export const useApiDelete = <T = any>(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const execute = useCallback(async () => {
+  const __execute = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.delete<T>(endpoint, options);
-      const payload = response as unknown as ApiResponse<T>;
+      const __response = await api.delete<T>(endpoint, options);
+      const __payload = response as unknown as ApiResponse<T>;
       setData(
         (payload && "data" in payload
           ? payload.data

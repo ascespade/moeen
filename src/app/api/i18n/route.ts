@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getServerSupabase } from "@/lib/supabaseClient";
+import { _NextRequest, NextResponse } from "next/server";
+
+import { _getServerSupabase } from "@/lib/supabaseClient";
 
 // Fallback messages when database is not available
-function getFallbackMessages(locale: string, ns: string) {
+function __getFallbackMessages(_locale: string, ns: string) {
   const fallbackMessages: Record<
     string,
     Record<string, Record<string, string>>
@@ -73,13 +74,13 @@ function getFallbackMessages(locale: string, ns: string) {
   });
 }
 
-export async function GET(request: Request) {
+export async function __GET(_request: Request) {
   const { searchParams } = new URL(request.url);
-  const locale = searchParams.get("locale") || "ar";
-  const ns = searchParams.get("ns") || "common";
+  const __locale = searchParams.get("locale") || "ar";
+  const __ns = searchParams.get("ns") || "common";
 
   try {
-    const supabase = await getServerSupabase();
+    const __supabase = await getServerSupabase();
     const { data, error } = await supabase
       .from("translations")
       .select("key, value")

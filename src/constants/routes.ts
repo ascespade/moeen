@@ -1,220 +1,118 @@
-// Route constants
-export const ROUTES = {
-  AUTH: {
-    LOGIN: "/login",
-    REGISTER: "/register",
-    FORGOT_PASSWORD: "/forgot-password",
-    RESET_PASSWORD: "/reset-password",
-  },
+/**
+ * Application routes constants
+ */
+
+export const __ROUTES = {
   // Public routes
   HOME: "/",
   LOGIN: "/login",
   REGISTER: "/register",
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password",
+  UNAUTHORIZED: "/unauthorized",
+  NOT_FOUND: "/404",
 
   // Dashboard routes
   DASHBOARD: "/dashboard",
+  ADMIN_DASHBOARD: "/admin/dashboard",
+  DOCTOR_DASHBOARD: "/doctor/dashboard",
+  THERAPIST_DASHBOARD: "/therapist/dashboard",
+  PATIENT_DASHBOARD: "/patient/dashboard",
+  FAMILY_DASHBOARD: "/family/dashboard",
+
+  // Patient management
+  PATIENTS: "/patients",
+  PATIENT_DETAILS: "/patients/[id]",
+  PATIENT_EDIT: "/patients/[id]/edit",
+  PATIENT_CREATE: "/patients/create",
+
+  // Appointment management
+  APPOINTMENTS: "/appointments",
+  APPOINTMENT_DETAILS: "/appointments/[id]",
+  APPOINTMENT_EDIT: "/appointments/[id]/edit",
+  APPOINTMENT_CREATE: "/appointments/create",
+
+  // Session management
+  SESSIONS: "/sessions",
+  SESSION_DETAILS: "/sessions/[id]",
+  SESSION_EDIT: "/sessions/[id]/edit",
+  SESSION_CREATE: "/sessions/create",
+
+  // Medical records
+  MEDICAL_RECORDS: "/medical-records",
+  MEDICAL_RECORD_DETAILS: "/medical-records/[id]",
+  MEDICAL_RECORD_EDIT: "/medical-records/[id]/edit",
+  MEDICAL_RECORD_CREATE: "/medical-records/create",
+
+  // Reports
+  REPORTS: "/reports",
+  REPORT_DETAILS: "/reports/[id]",
+  REPORT_CREATE: "/reports/create",
 
   // Admin routes
-  ADMIN: {
-    DASHBOARD: "/admin/dashboard",
-    USERS: "/admin/users",
-    CHANNELS: "/admin/channels",
-    CONVERSATIONS: "/admin/conversations",
-    SETTINGS: "/admin/settings",
-    LOGS: "/admin/logs",
-    REVIEW: "/admin/review",
-    FLOW: "/admin/flow",
-    NOTIFICATIONS: "/admin/notifications",
-    MESSAGES: "/admin/messages",
-    SYSTEM: "/admin/system",
-    ANALYTICS: "/admin/analytics",
-    SECURITY: "/admin/security",
-    INTEGRATIONS: "/admin/integrations",
-    PERFORMANCE: "/admin/performance",
-  },
+  ADMIN_USERS: "/admin/users",
+  ADMIN_SETTINGS: "/admin/settings",
+  ADMIN_ANALYTICS: "/admin/analytics",
 
-  // User routes
-  USER: {
-    DASHBOARD: "/dashboard",
-    PROFILE: "/profile",
-    SETTINGS: "/settings",
-    CHANNELS: "/channels",
-    CONVERSATIONS: "/conversations",
-  },
-
-  // Channel routes
-  CHANNEL: {
-    LIST: "/channels",
-    CREATE: "/channels/create",
-    VIEW: (id: string) => `/channels/${id}`,
-    EDIT: (id: string) => `/channels/${id}/edit`,
-    SETTINGS: (id: string) => `/channels/${id}/settings`,
-  },
-
-  // Conversation routes
-  CONVERSATION: {
-    LIST: "/conversations",
-    VIEW: (id: string) => `/conversations/${id}`,
-  },
-
-  // Chatbot routes
-  CHATBOT: {
-    FLOWS: "/chatbot/flows",
-    FLOW: (id: string) => `/chatbot/flows/${id}`,
-    TEMPLATES: "/chatbot/templates",
-    TEMPLATE: (id: string) => `/chatbot/templates/${id}`,
-    INTEGRATIONS: "/chatbot/integrations",
-    ANALYTICS: "/chatbot/analytics",
-  },
-
-  // CRM routes
-  CRM: {
-    DASHBOARD: "/crm/dashboard",
-    CONTACTS: "/crm/contacts",
-    CONTACT: (id: string) => `/crm/contacts/${id}`,
-    LEADS: "/crm/leads",
-    DEALS: "/crm/deals",
-    ACTIVITIES: "/crm/activities",
-    FLOWS: "/crm/flows",
-  },
-
-  // Healthcare routes
-  HEALTH: {
-    APPOINTMENTS: "/appointments",
-    SESSIONS: "/sessions",
-    PATIENTS: "/patients",
-    PATIENT: (id: string) => `/patients/${id}`,
-    INSURANCE_CLAIMS: "/insurance-claims",
-    MEDICAL_FILE: "/medical-file",
-    APPROVALS: "/approvals",
-    INSURANCE: "/insurance",
-    THERAPY: "/therapy",
-    TRAINING: "/training",
-    FAMILY_SUPPORT: "/family-support",
-    PROGRESS_TRACKING: "/progress-tracking",
-  },
-
-  // Marketing routes
-  MARKETING: {
-    FEATURES: "/features",
-    PRICING: "/pricing",
-    FAQ: "/faq",
-    DOCUMENTATION: "/project-documentation",
-  },
-
-  // Info routes
-  INFO: {
-    ABOUT: "/about",
-    CONTACT: "/contact",
-  },
-
-  // Legal routes
-  LEGAL: {
-    PRIVACY: "/privacy",
-    TERMS: "/terms",
-  },
-
-  // Notifications and Messages
-  NOTIFICATIONS: "/notifications",
-  MESSAGES: "/messages",
+  // Profile
+  PROFILE: "/profile",
+  PROFILE_EDIT: "/profile/edit",
+  PROFILE_SETTINGS: "/profile/settings",
 
   // Settings
   SETTINGS: "/settings",
+  NOTIFICATIONS: "/settings/notifications",
+  PREFERENCES: "/settings/preferences",
 
   // API routes
   API: {
-    AUTH: "/api/auth",
-    USERS: "/api/users",
-    CHANNELS: "/api/channels",
-    MESSAGES: "/api/messages",
-    CONVERSATIONS: "/api/conversations",
-    SETTINGS: "/api/settings",
-    WEBHOOKS: "/api/webhooks",
-    AI: "/api/ai",
-    LOGS: "/api/logs",
-    USER_PREFERENCES: "/api/user/preferences",
-    I18N: "/api/i18n",
+    AUTH: {
+      LOGIN: "/api/auth/login",
+      REGISTER: "/api/auth/register",
+      LOGOUT: "/api/auth/logout",
+      REFRESH: "/api/auth/refresh",
+      FORGOT_PASSWORD: "/api/auth/forgot-password",
+      RESET_PASSWORD: "/api/auth/reset-password",
+    },
+    PATIENTS: {
+      LIST: "/api/patients",
+      CREATE: "/api/patients",
+      GET: "/api/patients/[id]",
+      UPDATE: "/api/patients/[id]",
+      DELETE: "/api/patients/[id]",
+    },
+    APPOINTMENTS: {
+      LIST: "/api/appointments",
+      CREATE: "/api/appointments",
+      GET: "/api/appointments/[id]",
+      UPDATE: "/api/appointments/[id]",
+      DELETE: "/api/appointments/[id]",
+    },
+    SESSIONS: {
+      LIST: "/api/sessions",
+      CREATE: "/api/sessions",
+      GET: "/api/sessions/[id]",
+      UPDATE: "/api/sessions/[id]",
+      DELETE: "/api/sessions/[id]",
+    },
+    MEDICAL_RECORDS: {
+      LIST: "/api/medical-records",
+      CREATE: "/api/medical-records",
+      GET: "/api/medical-records/[id]",
+      UPDATE: "/api/medical-records/[id]",
+      DELETE: "/api/medical-records/[id]",
+    },
+    REPORTS: {
+      LIST: "/api/reports",
+      CREATE: "/api/reports",
+      GET: "/api/reports/[id]",
+      UPDATE: "/api/reports/[id]",
+      DELETE: "/api/reports/[id]",
+    },
+    HEALTH: "/api/health",
+    ANALYTICS: "/api/analytics",
   },
 } as const;
 
-export const PROTECTED_ROUTES = [
-  ROUTES.DASHBOARD,
-  ROUTES.ADMIN.DASHBOARD,
-  ROUTES.ADMIN.USERS,
-  ROUTES.ADMIN.CHANNELS,
-  ROUTES.ADMIN.CONVERSATIONS,
-  ROUTES.ADMIN.SETTINGS,
-  ROUTES.ADMIN.LOGS,
-  ROUTES.ADMIN.REVIEW,
-  ROUTES.ADMIN.FLOW,
-  ROUTES.ADMIN.NOTIFICATIONS,
-  ROUTES.ADMIN.MESSAGES,
-  ROUTES.ADMIN.SYSTEM,
-  ROUTES.ADMIN.ANALYTICS,
-  ROUTES.ADMIN.SECURITY,
-  ROUTES.ADMIN.INTEGRATIONS,
-  ROUTES.ADMIN.PERFORMANCE,
-  ROUTES.USER.DASHBOARD,
-  ROUTES.USER.PROFILE,
-  ROUTES.USER.SETTINGS,
-  ROUTES.USER.CHANNELS,
-  ROUTES.USER.CONVERSATIONS,
-  ROUTES.HEALTH.APPOINTMENTS,
-  ROUTES.HEALTH.SESSIONS,
-  ROUTES.HEALTH.PATIENTS,
-  ROUTES.HEALTH.INSURANCE_CLAIMS,
-  ROUTES.HEALTH.MEDICAL_FILE,
-  ROUTES.HEALTH.THERAPY,
-  ROUTES.HEALTH.TRAINING,
-  ROUTES.HEALTH.FAMILY_SUPPORT,
-  ROUTES.HEALTH.PROGRESS_TRACKING,
-  ROUTES.CHATBOT.FLOWS,
-  ROUTES.CHATBOT.TEMPLATES,
-  ROUTES.CHATBOT.INTEGRATIONS,
-  ROUTES.CHATBOT.ANALYTICS,
-  ROUTES.CRM.DASHBOARD,
-  ROUTES.CRM.CONTACTS,
-  ROUTES.CRM.LEADS,
-  ROUTES.CRM.DEALS,
-  ROUTES.CRM.ACTIVITIES,
-  ROUTES.CRM.FLOWS,
-  ROUTES.NOTIFICATIONS,
-  ROUTES.MESSAGES,
-  ROUTES.SETTINGS,
-] as const;
-
-export const ADMIN_ROUTES = [
-  ROUTES.ADMIN.DASHBOARD,
-  ROUTES.ADMIN.USERS,
-  ROUTES.ADMIN.CHANNELS,
-  ROUTES.ADMIN.CONVERSATIONS,
-  ROUTES.ADMIN.SETTINGS,
-  ROUTES.ADMIN.LOGS,
-  ROUTES.ADMIN.REVIEW,
-  ROUTES.ADMIN.FLOW,
-  ROUTES.ADMIN.NOTIFICATIONS,
-  ROUTES.ADMIN.MESSAGES,
-  ROUTES.ADMIN.SYSTEM,
-  ROUTES.ADMIN.ANALYTICS,
-  ROUTES.ADMIN.SECURITY,
-  ROUTES.ADMIN.INTEGRATIONS,
-  ROUTES.ADMIN.PERFORMANCE,
-] as const;
-
-export const PUBLIC_ROUTES = [
-  ROUTES.HOME,
-  ROUTES.LOGIN,
-  ROUTES.REGISTER,
-  ROUTES.FORGOT_PASSWORD,
-  ROUTES.RESET_PASSWORD,
-  ROUTES.MARKETING.FEATURES,
-  ROUTES.MARKETING.PRICING,
-  ROUTES.MARKETING.FAQ,
-  ROUTES.MARKETING.DOCUMENTATION,
-  ROUTES.INFO.ABOUT,
-  ROUTES.INFO.CONTACT,
-  ROUTES.LEGAL.PRIVACY,
-  ROUTES.LEGAL.TERMS,
-] as const;
+export type RouteKey = keyof typeof ROUTES;
+export type ApiRouteKey = keyof typeof ROUTES.API;

@@ -27,17 +27,15 @@ The system supports five distinct user roles:
 #### Usage - الاستخدام
 
 ```tsx
-import { useT } from '@/hooks/useT';
+import { useT } from "@/hooks/useT";
 
 function MyComponent() {
   const { t, language, setLanguage } = useT();
-  
+
   return (
     <div>
-      <h1>{t('dashboard.title')}</h1>
-      <button onClick={() => setLanguage('en')}>
-        {t('language.english')}
-      </button>
+      <h1>{t("dashboard.title")}</h1>
+      <button onClick={() => setLanguage("en")}>{t("language.english")}</button>
     </div>
   );
 }
@@ -53,12 +51,12 @@ function MyComponent() {
 #### Usage - الاستخدام
 
 ```tsx
-import { useTheme } from '@/context/ThemeContext';
-import ThemeSwitcher from '@/components/ThemeSwitcher';
+import { useTheme } from "@/context/ThemeContext";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 function MyComponent() {
   const { theme, isDark, toggleTheme } = useTheme();
-  
+
   return (
     <div>
       <ThemeSwitcher />
@@ -80,11 +78,11 @@ RTL-compatible charts with brand colors and theme support:
 #### Usage - الاستخدام
 
 ```tsx
-import { AreaChart, BarChart, PieChart, LineChart } from '@/components/charts';
+import { AreaChart, BarChart, PieChart, LineChart } from "@/components/charts";
 
 const data = [
-  { month: 'Jan', patients: 100, revenue: 5000 },
-  { month: 'Feb', patients: 120, revenue: 6000 },
+  { month: "Jan", patients: 100, revenue: 5000 },
+  { month: "Feb", patients: 120, revenue: 6000 },
 ];
 
 <AreaChart
@@ -92,10 +90,10 @@ const data = [
   dataKey="patients"
   xAxisKey="month"
   areas={[
-    { dataKey: 'patients', color: 'var(--brand-primary)', name: 'Patients' },
-    { dataKey: 'revenue', color: 'var(--brand-accent)', name: 'Revenue' }
+    { dataKey: "patients", color: "var(--brand-primary)", name: "Patients" },
+    { dataKey: "revenue", color: "var(--brand-accent)", name: "Revenue" },
   ]}
-/>
+/>;
 ```
 
 ### 5. Design System - نظام التصميم
@@ -115,14 +113,17 @@ const data = [
 ## API Endpoints - نقاط النهاية
 
 ### Dashboard Metrics
+
 - `GET /api/dashboard/metrics` - System health and metrics
 - `GET /api/dashboard/health` - Health check endpoint
 
 ### Translations
+
 - `GET /api/translations/[lang]` - Get translations for language
 - `POST /api/translations/missing` - Log missing translation keys
 
 ### Healthcare
+
 - `GET /api/healthcare/patients` - Patient management
 - `GET /api/healthcare/appointments` - Appointment management
 
@@ -145,17 +146,20 @@ const data = [
 ## Setup Instructions - تعليمات الإعداد
 
 1. **Install dependencies**:
+
    ```bash
    npm ci
    ```
 
 2. **Set up environment variables**:
+
    ```bash
    cp .env.local.example .env.local
    # Edit .env.local with your configuration
    ```
 
 3. **Run database migrations**:
+
    ```bash
    # Migrations are in supabase/migrations/
    # Apply them through Supabase dashboard or CLI

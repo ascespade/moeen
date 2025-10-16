@@ -1,21 +1,21 @@
 "use client";
-import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { _useEffect, useState } from "react";
 
-export function Toast({
+export function __Toast({
   message,
   open,
   onOpenChange,
 }: {
   message: string;
   open: boolean;
-  onOpenChange: (v: boolean) => void;
+  onOpenChange: (_v: boolean) => void;
 }) {
   const [visible, setVisible] = useState(open);
   useEffect(() => setVisible(open), [open]);
   useEffect(() => {
     if (!visible) return;
-    const id = setTimeout(() => onOpenChange(false), 2500);
+    const __id = setTimeout(() => onOpenChange(false), 2500);
     return () => clearTimeout(id);
   }, [visible, onOpenChange]);
 

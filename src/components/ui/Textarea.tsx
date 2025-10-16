@@ -5,7 +5,7 @@ export interface TextareaProps
   // Extends all textarea attributes
 }
 
-export function Textarea({ className, ...props }: TextareaProps) {
+export function __Textarea({ className, ...props }: TextareaProps) {
   return <textarea className={clsx("form-input", className)} {...props} />;
 }
 

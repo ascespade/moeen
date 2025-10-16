@@ -1,14 +1,14 @@
-import { useEffect, useCallback } from "react";
+import { _useEffect, useCallback } from "react";
 
-export function useKeyboardNavigation() {
-  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+export function __useKeyboardNavigation() {
+  const __handleKeyDown = useCallback((_event: KeyboardEvent) => {
     // Global keyboard shortcuts
     switch (event.key) {
       case "/":
         if (!event.ctrlKey && !event.metaKey && !event.altKey) {
           event.preventDefault();
           // Focus search input
-          const searchInput = document.querySelector(
+          const __searchInput = document.querySelector(
             '[data-testid="search-input"]',
           ) as HTMLInputElement;
           searchInput?.focus();
@@ -17,11 +17,11 @@ export function useKeyboardNavigation() {
 
       case "Escape":
         // Close modals, dropdowns, etc.
-        const activeModal = document.querySelector(
+        const __activeModal = document.querySelector(
           '[data-testid="modal"]:not([hidden])',
         );
         if (activeModal) {
-          const closeButton = activeModal.querySelector(
+          const __closeButton = activeModal.querySelector(
             '[data-testid="close-button"]',
           ) as HTMLButtonElement;
           closeButton?.click();
@@ -43,10 +43,10 @@ export function useKeyboardNavigation() {
         // Enhanced tab navigation
         if (event.shiftKey) {
           // Shift+Tab - focus previous element
-          const focusableElements = document.querySelectorAll(
+          const __focusableElements = document.querySelectorAll(
             'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
           );
-          const currentIndex = Array.from(focusableElements).indexOf(
+          const __currentIndex = Array.from(focusableElements).indexOf(
             document.activeElement as Element,
           );
           if (currentIndex > 0) {
@@ -54,10 +54,10 @@ export function useKeyboardNavigation() {
           }
         } else {
           // Tab - focus next element
-          const focusableElements = document.querySelectorAll(
+          const __focusableElements = document.querySelectorAll(
             'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
           );
-          const currentIndex = Array.from(focusableElements).indexOf(
+          const __currentIndex = Array.from(focusableElements).indexOf(
             document.activeElement as Element,
           );
           if (currentIndex < focusableElements.length - 1) {

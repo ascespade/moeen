@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
 import {
   Send,
   Bot,
@@ -14,11 +13,13 @@ import {
   Settings,
   Brain,
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
-import { Badge } from "@/components/ui/Badge";
-import { ScrollArea } from "@/components/ui/ScrollArea";
+import React, { useState, useEffect, useRef } from "react";
+
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { _Input } from "@/components/ui/Input";
+import { _ScrollArea } from "@/components/ui/ScrollArea";
 
 interface ChatMessage {
   id: string;
@@ -52,7 +53,7 @@ const MoainChatbot: React.FC = () => {
   const [currentFlow, setCurrentFlow] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState<string | null>(null);
   const [flowOptions, setFlowOptions] = useState<string[]>([]);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const __messagesEndRef = useRef<HTMLDivElement>(null);
 
   // تحميل الرسائل المحفوظة
   useEffect(() => {
@@ -64,23 +65,25 @@ const MoainChatbot: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  const scrollToBottom = () => {
+  const __scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const loadChatHistory = async () => {
+  const __loadChatHistory = async () => {
     try {
       // جلب تاريخ المحادثة من قاعدة البيانات
-      const response = await fetch('/api/chatbot/messages?conversationId=current-conversation');
-      const data = await response.json();
-      
+      const __response = await fetch(
+        "/api/chatbot/messages?conversationId=current-conversation",
+      );
+      const __data = await response.json();
+
       if (data.success && data.messages) {
-        const dbMessages: ChatMessage[] = data.messages.map((msg: any) => ({
+        const dbMessages: ChatMessage[] = data.messages.map((_msg: unknown) => ({
           id: msg.id,
-          type: msg.sender_type === 'user' ? 'user' : 'bot',
+          type: msg.sender_type === "user" ? "user" : "bot",
           content: msg.message_text,
           timestamp: new Date(msg.created_at),
-          metadata: msg.metadata
+          metadata: msg.metadata,
         }));
         setMessages(dbMessages);
       } else {
@@ -88,7 +91,8 @@ const MoainChatbot: React.FC = () => {
         const welcomeMessage: ChatMessage = {
           id: "1",
           type: "bot",
-          content: "مرحباً! أنا معين، مساعدك الذكي في مركز الهمم. كيف يمكنني مساعدتك اليوم؟",
+          content:
+            "مرحباً! أنا معين، مساعدك الذكي في مركز الهمم. كيف يمكنني مساعدتك اليوم؟",
           timestamp: new Date(),
         };
         setMessages([welcomeMessage]);
@@ -98,15 +102,16 @@ const MoainChatbot: React.FC = () => {
       const welcomeMessage: ChatMessage = {
         id: "1",
         type: "bot",
-        content: "مرحباً! أنا معين، مساعدك الذكي في مركز الهمم. كيف يمكنني مساعدتك اليوم؟",
+        content:
+          "مرحباً! أنا معين، مساعدك الذكي في مركز الهمم. كيف يمكنني مساعدتك اليوم؟",
         timestamp: new Date(),
       };
       setMessages([welcomeMessage]);
     }
   };
 
-  const handleSendMessage = async (message?: string) => {
-    const messageToSend = message || inputMessage;
+  const __handleSendMessage = async (message?: string) => {
+    const __messageToSend = message || inputMessage;
     if (!messageToSend.trim()) return;
 
     const userMessage: ChatMessage = {
@@ -122,33 +127,33 @@ const MoainChatbot: React.FC = () => {
 
     try {
       // إرسال الرسالة إلى API
-      const response = await fetch('/api/chatbot/message', {
-        method: 'POST',
+      const __response = await fetch("/api/chatbot/message", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           message: messageToSend,
-          userId: 'current-user', // سيتم ربطه بالمستخدم المسجل
-          conversationId: 'current-conversation',
+          userId: "current-user", // سيتم ربطه بالمستخدم المسجل
+          conversationId: "current-conversation",
           currentFlow: currentFlow,
-          currentStep: currentStep
+          currentStep: currentStep,
         }),
       });
 
-      const data = await response.json();
-      
+      const __data = await response.json();
+
       if (data.message) {
         const botMessage: ChatMessage = {
           id: (Date.now() + 1).toString(),
           type: "bot",
           content: data.message,
           timestamp: new Date(),
-          metadata: data.metadata
+          metadata: data.metadata,
         };
 
         setMessages((prev) => [...prev, botMessage]);
-        
+
         // تحديث حالة الـ Flow
         if (data.metadata?.flow) {
           setCurrentFlow(data.metadata.flow);
@@ -159,31 +164,33 @@ const MoainChatbot: React.FC = () => {
         if (data.metadata?.options) {
           setFlowOptions(data.metadata.options);
         }
-        
+
         if (data.appointmentSuggestions) {
           setAppointmentSuggestions(data.appointmentSuggestions);
         }
       } else {
         // استجابة احتياطية
-        const fallbackResponse = generateBotResponse(inputMessage);
+        const __fallbackResponse = generateBotResponse(inputMessage);
         const botMessage: ChatMessage = {
           id: (Date.now() + 1).toString(),
           type: "bot",
           content: fallbackResponse.content,
           timestamp: new Date(),
-          metadata: fallbackResponse.metadata
+          metadata: fallbackResponse.metadata,
         };
         setMessages((prev) => [...prev, botMessage]);
       }
     } catch (error) {
       // استجابة احتياطية في حالة الخطأ
-      const fallbackResponse = generateBotResponse(inputMessage);
+      const __fallbackResponse = generateBotResponse(inputMessage);
       const botMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         type: "bot",
-        content: fallbackResponse.content || "عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.",
+        content:
+          fallbackResponse.content ||
+          "عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.",
         timestamp: new Date(),
-        metadata: fallbackResponse.metadata
+        metadata: fallbackResponse.metadata,
       };
       setMessages((prev) => [...prev, botMessage]);
     } finally {
@@ -191,8 +198,8 @@ const MoainChatbot: React.FC = () => {
     }
   };
 
-  const generateBotResponse = (userInput: string) => {
-    const input = userInput.toLowerCase();
+  const __generateBotResponse = (_userInput: string) => {
+    const __input = userInput.toLowerCase();
 
     // تحليل نية المستخدم
     if (
@@ -288,26 +295,26 @@ const MoainChatbot: React.FC = () => {
     };
   };
 
-  const handleAppointmentSelect = async (
+  const __handleAppointmentSelect = async (
     appointment: AppointmentSuggestion,
     time: string,
   ) => {
     try {
-      const response = await fetch('/api/chatbot/appointments', {
-        method: 'POST',
+      const __response = await fetch("/api/chatbot/appointments", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           doctorId: appointment.id,
           appointmentTime: time,
-          patientId: 'current-user', // سيتم ربطه بالمستخدم المسجل
-          conversationId: 'current-conversation'
+          patientId: "current-user", // سيتم ربطه بالمستخدم المسجل
+          conversationId: "current-conversation",
         }),
       });
 
-      const data = await response.json();
-      
+      const __data = await response.json();
+
       if (data.success) {
         const confirmationMessage: ChatMessage = {
           id: Date.now().toString(),
@@ -324,20 +331,21 @@ const MoainChatbot: React.FC = () => {
         setMessages((prev) => [...prev, confirmationMessage]);
         setAppointmentSuggestions([]);
       } else {
-        throw new Error(data.error || 'فشل في حجز الموعد');
+        throw new Error(data.error || "فشل في حجز الموعد");
       }
     } catch (error) {
       const errorMessage: ChatMessage = {
         id: Date.now().toString(),
         type: "bot",
-        content: "عذراً، لم يتم حجز الموعد. يرجى المحاولة مرة أخرى أو الاتصال بنا.",
+        content:
+          "عذراً، لم يتم حجز الموعد. يرجى المحاولة مرة أخرى أو الاتصال بنا.",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const __handleKeyPress = (_e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();

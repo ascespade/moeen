@@ -1,17 +1,18 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useAuth } from "@/hooks/useAuth";
-import { ROUTES } from "@/constants/routes";
-import { getDefaultRouteForUser } from "@/lib/router";
-import { useT } from "@/components/providers/I18nProvider";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { _useRouter } from "next/navigation";
+import { _useState, useEffect } from "react";
 
-export default function LoginPage() {
+import { _useT } from "@/components/providers/I18nProvider";
+import { _ROUTES } from "@/constants/routes";
+import { _useAuth } from "@/hooks/useAuth";
+import { _getDefaultRouteForUser } from "@/lib/router";
+
+export default function __LoginPage() {
   const { loginWithCredentials, isLoading, isAuthenticated } = useAuth();
   const { t } = useT();
-  const router = useRouter();
+  const __router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -27,26 +28,30 @@ export default function LoginPage() {
     }
   }, [isAuthenticated, isLoading, router]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const __handleSubmit = async (_e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
     try {
-      await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
+      await loginWithCredentials(
+        formData.email,
+        formData.password,
+        formData.rememberMe,
+      );
       // after login, compute default route (role-aware)
       window.location.href = getDefaultRouteForUser({
         id: "temp",
         email: formData.email,
         role: "user",
       } as any);
-    } catch (err: any) {
+    } catch (_err: unknown) {
       setError(err?.message || t("auth.login.error", "فشل تسجيل الدخول"));
     } finally {
       setSubmitting(false);
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const __handleInputChange = (_e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -54,7 +59,7 @@ export default function LoginPage() {
     }));
   };
 
-  const handleQuickTestLogin = async () => {
+  const __handleQuickTestLogin = async () => {
     setError(null);
     setSubmitting(true);
     try {
@@ -66,7 +71,7 @@ export default function LoginPage() {
         email: "test@moeen.com",
         role: "user",
       } as any);
-    } catch (err: any) {
+    } catch (_err: unknown) {
       setError(err?.message || "Quick test login failed");
     } finally {
       setSubmitting(false);
@@ -103,7 +108,9 @@ export default function LoginPage() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="form-label">{t("auth.email", "البريد الإلكتروني")}</label>
+                <label className="form-label">
+                  {t("auth.email", "البريد الإلكتروني")}
+                </label>
                 <div className="relative">
                   <input
                     type="email"
@@ -121,7 +128,9 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <label className="form-label">{t("auth.password", "كلمة المرور")}</label>
+                <label className="form-label">
+                  {t("auth.password", "كلمة المرور")}
+                </label>
                 <div className="relative">
                   <input
                     type="password"

@@ -1,6 +1,6 @@
+import { _ImageIcon } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
-import { ImageIcon } from "lucide-react";
+import { _useState } from "react";
 
 interface OptimizedImageProps {
   src: string;
@@ -17,7 +17,7 @@ interface OptimizedImageProps {
   style?: React.CSSProperties;
 }
 
-export function OptimizedImage({
+export function __OptimizedImage({
   src,
   alt,
   width,
@@ -48,7 +48,7 @@ export function OptimizedImage({
     );
   }
 
-  const imageProps = {
+  const __imageProps = {
     src,
     alt,
     priority,
@@ -84,7 +84,7 @@ export function OptimizedImage({
 }
 
 // Preset configurations for common use cases
-export const ImagePresets = {
+export const __ImagePresets = {
   avatar: {
     width: 40,
     height: 40,
@@ -119,7 +119,7 @@ export const ImagePresets = {
 };
 
 // Convenience components for common use cases
-export function AvatarImage(
+export function __AvatarImage(
   props: Omit<
     OptimizedImageProps,
     "width" | "height" | "className" | "quality"
@@ -128,7 +128,7 @@ export function AvatarImage(
   return <OptimizedImage {...ImagePresets.avatar} {...props} />;
 }
 
-export function ThumbnailImage(
+export function __ThumbnailImage(
   props: Omit<
     OptimizedImageProps,
     "width" | "height" | "className" | "quality"
@@ -137,7 +137,7 @@ export function ThumbnailImage(
   return <OptimizedImage {...ImagePresets.thumbnail} {...props} />;
 }
 
-export function HeroImage(
+export function __HeroImage(
   props: Omit<
     OptimizedImageProps,
     "width" | "height" | "className" | "quality" | "priority"
@@ -146,7 +146,7 @@ export function HeroImage(
   return <OptimizedImage {...ImagePresets.hero} {...props} />;
 }
 
-export function CardImage(
+export function __CardImage(
   props: Omit<
     OptimizedImageProps,
     "width" | "height" | "className" | "quality"
@@ -155,7 +155,7 @@ export function CardImage(
   return <OptimizedImage {...ImagePresets.card} {...props} />;
 }
 
-export function GalleryImage(
+export function __GalleryImage(
   props: Omit<
     OptimizedImageProps,
     "width" | "height" | "className" | "quality"

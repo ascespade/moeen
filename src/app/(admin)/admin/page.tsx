@@ -4,19 +4,6 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import {
   Users,
   Settings,
@@ -32,6 +19,20 @@ import {
   Clock,
   RefreshCw,
 } from "lucide-react";
+import React, { useState, useEffect } from "react";
+
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
+import { _Input } from "@/components/ui/Input";
+import { _Label } from "@/components/ui/Label";
+import { _Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 interface User {
   id: string;
@@ -63,7 +64,7 @@ interface SecurityEvent {
   success: boolean;
 }
 
-export default function AdminPage() {
+export default function __AdminPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [configs, setConfigs] = useState<SystemConfig[]>([]);
   const [securityEvents, setSecurityEvents] = useState<SecurityEvent[]>([]);
@@ -84,7 +85,7 @@ export default function AdminPage() {
     loadAdminData();
   }, []);
 
-  const loadAdminData = async () => {
+  const __loadAdminData = async () => {
     try {
       setLoading(true);
       const [usersRes, configsRes, eventsRes] = await Promise.all([
@@ -115,10 +116,10 @@ export default function AdminPage() {
     }
   };
 
-  const handleCreateUser = async (e: React.FormEvent) => {
+  const __handleCreateUser = async (_e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/admin/users", {
+      const __response = await fetch("/api/admin/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newUser),
@@ -133,9 +134,9 @@ export default function AdminPage() {
     }
   };
 
-  const handleUpdateUserStatus = async (userId: string, status: string) => {
+  const __handleUpdateUserStatus = async (_userId: string, status: string) => {
     try {
-      const response = await fetch(`/api/admin/users/${userId}`, {
+      const __response = await fetch(`/api/admin/users/${userId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
@@ -149,9 +150,9 @@ export default function AdminPage() {
     }
   };
 
-  const handleUpdateConfig = async (config: SystemConfig) => {
+  const __handleUpdateConfig = async (_config: SystemConfig) => {
     try {
-      const response = await fetch(`/api/admin/configs/${config.id}`, {
+      const __response = await fetch(`/api/admin/configs/${config.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ value: config.value }),
@@ -166,8 +167,8 @@ export default function AdminPage() {
     }
   };
 
-  const getRoleBadge = (role: string) => {
-    const colors = {
+  const __getRoleBadge = (_role: string) => {
+    const __colors = {
       admin: "bg-red-100 text-red-800",
       manager: "bg-blue-100 text-blue-800",
       supervisor: "bg-purple-100 text-purple-800",
@@ -181,8 +182,8 @@ export default function AdminPage() {
     );
   };
 
-  const getStatusBadge = (status: string) => {
-    const colors = {
+  const __getStatusBadge = (_status: string) => {
+    const __colors = {
       active: "bg-green-100 text-green-800",
       inactive: "bg-yellow-100 text-yellow-800",
       suspended: "bg-red-100 text-red-800",

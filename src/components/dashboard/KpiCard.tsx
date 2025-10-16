@@ -1,6 +1,6 @@
 type Props = { title: string; value: string; hint?: string };
 
-export default function KpiCard({ title, value, hint }: Props) {
+export default function __KpiCard({ title, value, hint }: Props) {
   return (
     <div className="rounded-xl border p-4 bg-white/60 dark:bg-white/5">
       <div className="text-sm text-gray-500">{title}</div>

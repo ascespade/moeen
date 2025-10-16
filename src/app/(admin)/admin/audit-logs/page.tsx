@@ -1,7 +1,6 @@
 "use client";
-import { useState } from "react";
-
 import Image from "next/image";
+import { _useState } from "react";
 
 interface AuditLog {
   id: string;
@@ -75,13 +74,13 @@ const mockAuditLogs: AuditLog[] = [
   },
 ];
 
-export default function AuditLogsPage() {
+export default function __AuditLogsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [actionFilter, setActionFilter] = useState<string>("all");
-  const [dateRange, setDateRange] = useState<string>("today");
+  const [_dateRange, _setDateRange] = useState<string>("today");
 
-  const getStatusColor = (status: AuditLog["status"]) => {
+  const __getStatusColor = (_status: AuditLog["status"]) => {
     switch (status) {
       case "success":
         return "bg-green-100 text-green-800";
@@ -94,7 +93,7 @@ export default function AuditLogsPage() {
     }
   };
 
-  const getStatusText = (status: AuditLog["status"]) => {
+  const __getStatusText = (_status: AuditLog["status"]) => {
     switch (status) {
       case "success":
         return "نجح";
@@ -107,7 +106,7 @@ export default function AuditLogsPage() {
     }
   };
 
-  const getActionIcon = (action: string) => {
+  const __getActionIcon = (_action: string) => {
     if (action.includes("تسجيل دخول")) return "🔐";
     if (action.includes("إنشاء")) return "➕";
     if (action.includes("تحديث")) return "✏️";
@@ -116,19 +115,19 @@ export default function AuditLogsPage() {
     return "📋";
   };
 
-  const filteredLogs = mockAuditLogs.filter((log) => {
+  const __filteredLogs = mockAuditLogs.filter((log) => {
     const matchesSearch =
       log.user.toLowerCase().includes(searchTerm.toLowerCase()) ||
       log.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
       log.resource.toLowerCase().includes(searchTerm.toLowerCase()) ||
       log.details.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === "all" || log.status === statusFilter;
+    const __matchesStatus = statusFilter === "all" || log.status === statusFilter;
     const matchesAction =
       actionFilter === "all" || log.action.includes(actionFilter);
     return matchesSearch && matchesStatus && matchesAction;
   });
 
-  const allActions = Array.from(
+  const __allActions = Array.from(
     new Set(mockAuditLogs.map((log) => log.action.split(" ")[0])),
   );
 

@@ -1,29 +1,44 @@
 /**
  * Design System Provider
  * مزود نظام التصميم
- * 
+ *
  * Provides design system context to the entire application
  * يوفر سياق نظام التصميم للتطبيق بأكمله
  */
 
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { useTheme, useLanguage } from "@/design-system/hooks";
-import { applyTheme, generateThemeVariables } from "@/design-system/utils";
-import { DesignSystemConfig, Theme, Language, Direction } from "@/design-system/types";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+
+import { _useTheme, useLanguage } from "@/design-system/hooks";
+import { _applyTheme, generateThemeVariables } from "@/design-system/utils";
+
+import {
+  DesignSystemConfig,
+  Theme,
+  Language,
+  Direction,
+} from "@/design-system/types";
 
 interface DesignSystemContextValue {
   theme: Theme;
   language: Language;
   direction: Direction;
   config: DesignSystemConfig;
-  updateTheme: (theme: Theme) => void;
-  updateLanguage: (language: Language) => void;
+  updateTheme: (_theme: Theme) => void;
+  updateLanguage: (_language: Language) => void;
   isLoading: boolean;
 }
 
-const DesignSystemContext = createContext<DesignSystemContextValue | null>(null);
+const __DesignSystemContext = createContext<DesignSystemContextValue | null>(
+  null,
+);
 
 interface DesignSystemProviderProps {
   children: ReactNode;
@@ -32,7 +47,7 @@ interface DesignSystemProviderProps {
   config?: Partial<DesignSystemConfig>;
 }
 
-export function DesignSystemProvider({
+export function __DesignSystemProvider({
   children,
   defaultTheme = "light",
   defaultLanguage = "ar",
@@ -257,24 +272,24 @@ export function DesignSystemProvider({
     if (!themeLoading && !languageLoading) {
       // Apply theme
       applyTheme(theme);
-      
+
       // Apply language and direction
-      const root = document.documentElement;
+      const __root = document.documentElement;
       root.setAttribute("lang", language);
       root.setAttribute("dir", direction);
-      
+
       setIsInitialized(true);
     }
   }, [theme, language, direction, themeLoading, languageLoading]);
 
   // Update theme function
-  const updateTheme = (newTheme: Theme) => {
+  const __updateTheme = (_newTheme: Theme) => {
     applyTheme(newTheme);
   };
 
   // Update language function
-  const updateLanguage = (newLanguage: Language) => {
-    const root = document.documentElement;
+  const __updateLanguage = (_newLanguage: Language) => {
+    const __root = document.documentElement;
     root.setAttribute("lang", newLanguage);
     root.setAttribute("dir", newLanguage === "ar" ? "rtl" : "ltr");
   };
@@ -297,10 +312,12 @@ export function DesignSystemProvider({
 }
 
 // Hook to use design system context
-export function useDesignSystem(): DesignSystemContextValue {
-  const context = useContext(DesignSystemContext);
+export function __useDesignSystem(): DesignSystemContextValue {
+  const __context = useContext(DesignSystemContext);
   if (!context) {
-    throw new Error("useDesignSystem must be used within a DesignSystemProvider");
+    throw new Error(
+      "useDesignSystem must be used within a DesignSystemProvider",
+    );
   }
   return context;
 }

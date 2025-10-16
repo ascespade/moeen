@@ -3,27 +3,29 @@
  * Accessible theme toggle with translations and RTL support
  */
 
-'use client';
+"use client";
 
-import React from 'react';
-import { useTheme } from '@/context/ThemeContext';
-import { useT } from '@/components/providers/I18nProvider';
+import React from "react";
+
+import { _useT } from "@/components/providers/I18nProvider";
+import { _useTheme } from "@/context/ThemeContext";
 
 interface ThemeSwitcherProps {
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   showLabel?: boolean;
 }
 
 export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
-  className = '',
-  size = 'md',
+  className = "",
+  size = "md",
   showLabel = true,
 }) => {
-  const { theme, resolvedTheme, toggleTheme, isDark, isLight, isSystem } = useTheme();
+  const { theme, resolvedTheme, toggleTheme, isDark, isLight, isSystem } =
+    useTheme();
   const { t } = useT();
 
-  const getIcon = () => {
+  const __getIcon = () => {
     if (isSystem) {
       return (
         <svg
@@ -42,7 +44,7 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
         </svg>
       );
     }
-    
+
     if (isDark) {
       return (
         <svg
@@ -61,7 +63,7 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
         </svg>
       );
     }
-    
+
     return (
       <svg
         className="w-5 h-5"
@@ -80,22 +82,22 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
     );
   };
 
-  const getLabel = () => {
-    if (isSystem) return t('theme.system');
-    if (isDark) return t('theme.dark');
-    return t('theme.light');
+  const __getLabel = () => {
+    if (isSystem) return t("theme.system");
+    if (isDark) return t("theme.dark");
+    return t("theme.light");
   };
 
-  const getAriaLabel = () => {
-    if (isSystem) return t('theme.system');
-    if (isDark) return t('theme.dark');
-    return t('theme.light');
+  const __getAriaLabel = () => {
+    if (isSystem) return t("theme.system");
+    if (isDark) return t("theme.dark");
+    return t("theme.light");
   };
 
-  const sizeClasses = {
-    sm: 'px-2 py-1 text-sm',
-    md: 'px-3 py-2 text-base',
-    lg: 'px-4 py-3 text-lg',
+  const __sizeClasses = {
+    sm: "px-2 py-1 text-sm",
+    md: "px-3 py-2 text-base",
+    lg: "px-4 py-3 text-lg",
   };
 
   return (
@@ -115,11 +117,7 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
       title={getAriaLabel()}
     >
       {getIcon()}
-      {showLabel && (
-        <span className="font-medium">
-          {getLabel()}
-        </span>
-      )}
+      {showLabel && <span className="font-medium">{getLabel()}</span>}
     </button>
   );
 };

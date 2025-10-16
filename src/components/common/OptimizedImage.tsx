@@ -1,15 +1,15 @@
 "use client";
 
 import Image, { ImageProps } from "next/image";
-import { useState } from "react";
+import { _useState } from "react";
 
-interface OptimizedImageProps extends Omit<ImageProps, 'src'> {
+interface OptimizedImageProps extends Omit<ImageProps, "src"> {
   src: string;
   fallback?: string;
   alt: string;
 }
 
-export default function OptimizedImage({
+export default function __OptimizedImage({
   src,
   fallback = "/logo.png",
   alt,
@@ -18,7 +18,7 @@ export default function OptimizedImage({
   const [imageSrc, setImageSrc] = useState(src);
   const [imageError, setImageError] = useState(false);
 
-  const handleError = () => {
+  const __handleError = () => {
     if (!imageError && fallback) {
       setImageSrc(fallback);
       setImageError(true);

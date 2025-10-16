@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { _useState, useRef, useEffect } from "react";
 
 interface PerformanceOptimizedImageProps {
   src: string;
@@ -12,7 +12,7 @@ interface PerformanceOptimizedImageProps {
   priority?: boolean;
 }
 
-export function PerformanceOptimizedImage({
+export function __PerformanceOptimizedImage({
   src,
   alt,
   width,
@@ -24,12 +24,12 @@ export function PerformanceOptimizedImage({
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
   const [hasError, setHasError] = useState(false);
-  const imgRef = useRef<HTMLImageElement>(null);
+  const __imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     if (priority || isInView) return;
 
-    const observer = new IntersectionObserver(
+    const __observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -48,11 +48,11 @@ export function PerformanceOptimizedImage({
     return () => observer.disconnect();
   }, [priority, isInView]);
 
-  const handleLoad = () => {
+  const __handleLoad = () => {
     setIsLoaded(true);
   };
 
-  const handleError = () => {
+  const __handleError = () => {
     setHasError(true);
   };
 

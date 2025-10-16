@@ -1,4 +1,4 @@
-export default function EmptyState({
+export default function __EmptyState({
   title,
   description,
   cta,

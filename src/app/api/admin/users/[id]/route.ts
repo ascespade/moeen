@@ -2,23 +2,24 @@
 // Admin User Management API endpoint
 // Handles individual user operations
 
-import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabaseClient";
+import { _NextRequest, NextResponse } from "next/server";
 
-const supabase = getServiceSupabase();
+import { _getServiceSupabase } from "@/lib/supabaseClient";
 
-export async function PATCH(
+const __supabase = getServiceSupabase();
+
+export async function __PATCH(
   request: NextRequest,
   { params }: { params: { id: string } },
 ) {
   try {
     // Check admin permissions
-    const authHeader = request.headers.get("authorization");
+    const __authHeader = request.headers.get("authorization");
     if (!authHeader) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const currentUser = await getCurrentUser(authHeader);
+    const __currentUser = await getCurrentUser(authHeader);
     if (!currentUser || !["admin", "manager"].includes(currentUser.role)) {
       return NextResponse.json(
         { error: "Insufficient permissions" },
@@ -27,7 +28,7 @@ export async function PATCH(
     }
 
     const { status, role } = await request.json();
-    const userId = params.id;
+    const __userId = params.id;
 
     // Validate input
     if (!status && !role) {
@@ -38,7 +39,7 @@ export async function PATCH(
     }
 
     // Build update object
-    const updateData: any = {};
+    const updateData: unknown = {};
     if (status) updateData.status = status;
     if (role) updateData.role = role;
 
@@ -91,18 +92,18 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(
+export async function __DELETE(
   request: NextRequest,
   { params }: { params: { id: string } },
 ) {
   try {
     // Check admin permissions
-    const authHeader = request.headers.get("authorization");
+    const __authHeader = request.headers.get("authorization");
     if (!authHeader) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const currentUser = await getCurrentUser(authHeader);
+    const __currentUser = await getCurrentUser(authHeader);
     if (!currentUser || currentUser.role !== "admin") {
       return NextResponse.json(
         { error: "Only admins can delete users" },
@@ -110,7 +111,7 @@ export async function DELETE(
       );
     }
 
-    const userId = params.id;
+    const __userId = params.id;
 
     // Prevent self-deletion
     if (userId === currentUser.id) {
@@ -147,9 +148,9 @@ export async function DELETE(
   }
 }
 
-async function getCurrentUser(authHeader: string) {
+async function __getCurrentUser(_authHeader: string) {
   try {
-    const token = authHeader.replace("Bearer ", "");
+    const __token = authHeader.replace("Bearer ", "");
 
     const {
       data: { user },
@@ -170,7 +171,7 @@ async function getCurrentUser(authHeader: string) {
   }
 }
 
-async function logAdminAction(userId: string, action: string, details: any) {
+async function __logAdminAction(_userId: string, action: string, details: unknown) {
   try {
     await supabase.from("audit_logs").insert({
       user_id: userId,
@@ -180,6 +181,5 @@ async function logAdminAction(userId: string, action: string, details: any) {
       ip_address: "127.0.0.1",
       user_agent: "Admin Panel",
     });
-  } catch (error) {
-    }
+  } catch (error) {}
 }

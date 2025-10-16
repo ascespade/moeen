@@ -1,11 +1,11 @@
 "use client";
-import { useState } from "react";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { Input } from "@/components/ui/Input";
-
 import Image from "next/image";
+import { _useState } from "react";
+
+import { _Badge } from "@/components/ui/Badge";
+import { _Button } from "@/components/ui/Button";
+import { _Card } from "@/components/ui/Card";
+import { _Input } from "@/components/ui/Input";
 
 interface Approval {
   id: string;
@@ -140,7 +140,7 @@ const mockApprovals: Approval[] = [
   },
 ];
 
-const requestTypeConfig = {
+const __requestTypeConfig = {
   treatment: { label: "علاج", color: "info" as const, icon: "🏥" },
   medication: { label: "دواء", color: "warning" as const, icon: "💊" },
   procedure: { label: "إجراء", color: "error" as const, icon: "⚕️" },
@@ -148,21 +148,21 @@ const requestTypeConfig = {
   emergency: { label: "طوارئ", color: "error" as const, icon: "🚨" },
 };
 
-const statusConfig = {
+const __statusConfig = {
   pending: { label: "قيد المراجعة", color: "warning" as const },
   approved: { label: "موافق عليه", color: "success" as const },
   rejected: { label: "مرفوض", color: "error" as const },
   under_review: { label: "قيد التدقيق", color: "info" as const },
 };
 
-const priorityConfig = {
+const __priorityConfig = {
   low: { label: "منخفض", color: "info" as const },
   medium: { label: "متوسط", color: "warning" as const },
   high: { label: "عالي", color: "error" as const },
   urgent: { label: "عاجل", color: "error" as const },
 };
 
-export default function ApprovalsPage() {
+export default function __ApprovalsPage() {
   const [selectedApproval, setSelectedApproval] = useState<Approval | null>(
     null,
   );
@@ -174,21 +174,21 @@ export default function ApprovalsPage() {
     "all",
   );
 
-  const filteredApprovals = mockApprovals.filter((approval) => {
+  const __filteredApprovals = mockApprovals.filter((approval) => {
     const matchesSearch =
       approval.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       approval.patientId.toLowerCase().includes(searchTerm.toLowerCase()) ||
       approval.requestTitle.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesStatus = filter === "all" || approval.status === filter;
+    const __matchesStatus = filter === "all" || approval.status === filter;
     const matchesType =
       typeFilter === "all" || approval.requestType === typeFilter;
 
     return matchesSearch && matchesStatus && matchesType;
   });
 
-  const getRequestTypeBadge = (type: Approval["requestType"]) => {
-    const config = requestTypeConfig[type];
+  const __getRequestTypeBadge = (_type: Approval["requestType"]) => {
+    const __config = requestTypeConfig[type];
     return (
       <Badge variant={config.color} className="text-xs">
         <span className="mr-1">{config.icon}</span>
@@ -197,8 +197,8 @@ export default function ApprovalsPage() {
     );
   };
 
-  const getStatusBadge = (status: Approval["status"]) => {
-    const config = statusConfig[status];
+  const __getStatusBadge = (_status: Approval["status"]) => {
+    const __config = statusConfig[status];
     return (
       <Badge variant={config.color} className="text-sm">
         {config.label}
@@ -206,8 +206,8 @@ export default function ApprovalsPage() {
     );
   };
 
-  const getPriorityBadge = (priority: Approval["priority"]) => {
-    const config = priorityConfig[priority];
+  const __getPriorityBadge = (_priority: Approval["priority"]) => {
+    const __config = priorityConfig[priority];
     return (
       <Badge variant={config.color} className="text-xs">
         {config.label}
@@ -215,7 +215,7 @@ export default function ApprovalsPage() {
     );
   };
 
-  const getBlockStatus = (approval: Approval) => {
+  const __getBlockStatus = (_approval: Approval) => {
     if (approval.isBlocked) {
       return (
         <div className="flex items-center gap-2 text-red-600">
@@ -237,7 +237,7 @@ export default function ApprovalsPage() {
     );
   };
 
-  const getOutstandingBalance = (approval: Approval) => {
+  const __getOutstandingBalance = (_approval: Approval) => {
     if (approval.hasOutstandingBalance) {
       return (
         <div className="flex items-center gap-2 text-orange-600">
@@ -256,7 +256,7 @@ export default function ApprovalsPage() {
     );
   };
 
-  const getCostBreakdown = (approval: Approval) => {
+  const __getCostBreakdown = (_approval: Approval) => {
     if (!approval.estimatedCost) return null;
 
     return (

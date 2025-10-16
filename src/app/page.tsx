@@ -1,12 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
-import { ROUTES } from "@/constants/routes";
-
 import Image from "next/image";
 import Link from "next/link";
+import { _useState, useEffect } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 // Hero Slider Data
-const heroSlides = [
+const __heroSlides = [
   {
     id: 1,
     title: "مرحباً بك في مُعين",
@@ -40,7 +40,7 @@ const heroSlides = [
 ];
 
 // Services Data
-const services = [
+const __services = [
   {
     id: 1,
     title: "إدارة المواعيد",
@@ -92,7 +92,7 @@ const services = [
 ];
 
 // Testimonials Data
-const testimonials = [
+const __testimonials = [
   {
     id: 1,
     name: "د. أحمد العتيبي",
@@ -121,7 +121,7 @@ const testimonials = [
 ];
 
 // Gallery Data
-const galleryImages = [
+const __galleryImages = [
   { id: 1, src: "/gallery-1.jpg", alt: "مركز العلاج الطبيعي" },
   { id: 2, src: "/gallery-2.jpg", alt: "قاعة العلاج الوظيفي" },
   { id: 3, src: "/gallery-3.jpg", alt: "عيادة العلاج النفسي" },
@@ -131,7 +131,7 @@ const galleryImages = [
 ];
 
 // FAQ Data
-const faqs = [
+const __faqs = [
   {
     id: 1,
     question: "كيف يمكنني حجز موعد؟",
@@ -151,13 +151,13 @@ const faqs = [
   },
 ];
 
-export default function HomePage() {
+export default function __HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Auto-slide functionality
   useEffect(() => {
-    const timer = setInterval(() => {
+    const __timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
     }, 5000);
     return () => clearInterval(timer);

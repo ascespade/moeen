@@ -1,0 +1,152 @@
+{
+  "timestamp": "2025-10-16T07:28:51.426Z",
+  "totalAssets": 18,
+  "usedAssets": 2,
+  "unusedAssets": 16,
+  "assets": [
+    {
+      "path": "public/about-image.jpg",
+      "name": "about-image.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": true,
+      "referenceCount": 1
+    },
+    {
+      "path": "public/banner.jpg",
+      "name": "banner.jpg",
+      "size": 66766,
+      "hash": "aeb317a94600b2fa6f4aeef0e3ca1918aa29ee8ec5ff9cce2f05dd44842d5301",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/favicon-temp.jpg",
+      "name": "favicon-temp.jpg",
+      "size": 3931,
+      "hash": "55ac04a7efbc7aa2fbd281107f4c6ad82965cbae069c2983d6dc39f41a521ed6",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/favicon.ico",
+      "name": "favicon.ico",
+      "size": 3931,
+      "hash": "55ac04a7efbc7aa2fbd281107f4c6ad82965cbae069c2983d6dc39f41a521ed6",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/gallery-1.jpg",
+      "name": "gallery-1.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/gallery-2.jpg",
+      "name": "gallery-2.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/gallery-3.jpg",
+      "name": "gallery-3.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/gallery-4.jpg",
+      "name": "gallery-4.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/gallery-5.jpg",
+      "name": "gallery-5.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/gallery-6.jpg",
+      "name": "gallery-6.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/hemam-logo.jpg",
+      "name": "hemam-logo.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/hero-1.jpg",
+      "name": "hero-1.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/hero-2.jpg",
+      "name": "hero-2.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/hero-3.jpg",
+      "name": "hero-3.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/logo.png",
+      "name": "logo.png",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": true,
+      "referenceCount": 36
+    },
+    {
+      "path": "public/testimonial-1.jpg",
+      "name": "testimonial-1.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/testimonial-2.jpg",
+      "name": "testimonial-2.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    },
+    {
+      "path": "public/testimonial-3.jpg",
+      "name": "testimonial-3.jpg",
+      "size": 28600,
+      "hash": "0881db661eef73b3640e049d4b640d6dde6c99eb5731eae5df3848d126e1d015",
+      "isUsed": false,
+      "referenceCount": 0
+    }
+  ]
+}

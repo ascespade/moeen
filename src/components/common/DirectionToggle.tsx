@@ -1,17 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
-export default function DirectionToggle() {
+import { _useEffect, useState } from "react";
+export default function __DirectionToggle() {
   const [dir, setDir] = useState<"rtl" | "ltr">("rtl");
 
   useEffect(() => {
-    const html = document.documentElement;
-    const current = (html.getAttribute("dir") as "rtl" | "ltr") || "rtl";
+    const __html = document.documentElement;
+    const __current = (html.getAttribute("dir") as "rtl" | "ltr") || "rtl";
     setDir(current);
   }, []);
 
-  const toggle = () => {
-    const html = document.documentElement;
-    const next = dir === "rtl" ? "ltr" : "rtl";
+  const __toggle = () => {
+    const __html = document.documentElement;
+    const __next = dir === "rtl" ? "ltr" : "rtl";
     html.setAttribute("dir", next);
     html.setAttribute("lang", next === "rtl" ? "ar" : "en");
     setDir(next);

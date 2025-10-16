@@ -1,0 +1,313 @@
+{
+  "agent": "BackendCleaner",
+  "timestamp": "2025-10-16T07:41:06.641Z",
+  "mode": "dry-run",
+  "force": false,
+  "results": {
+    "totalScanned": 93,
+    "candidates": [],
+    "moved": [],
+    "skipped": [
+      {
+        "file": "src/app/api/admin/system-config/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/admin/users/[id]/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/admin/users/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/agent/completion/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/agent/logs/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/agent/status/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/agent/tasks/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/analytics/action/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/analytics/metrics/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/appointments/[id]/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/appointments/availability/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/appointments/book/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/appointments/conflict-check/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/appointments/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/audit-logs/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/auth/login/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/auth/logout/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/auth/me/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/chatbot/appointments/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/chatbot/config/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/chatbot/conversations/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/chatbot/flows/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/chatbot/intents/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/chatbot/message/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/chatbot/messages/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/crm/contacts/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/crm/leads/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/crm/stats/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/dashboard/health/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/dashboard/logs/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/dashboard/metrics/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/doctors/availability/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/doctors/me/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/errors/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/health/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/healthcare/appointments/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/healthcare/patients/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/i18n/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/insurance/claims/[id]/submit/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/insurance/claims/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/medical-records/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/medical-records/upload/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/notifications/schedule/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/notifications/send/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/notifications/templates/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/patients/[id]/activate/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/patients/[id]/activation/step/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/patients/journey/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/patients/me/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/patients/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/payments/process/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/payments/webhook/stripe/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/reports/dashboard-metrics/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/reports/export/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/slack/notify/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/slack/webhook/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/test/endpoints/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/test/health/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/translations/[lang]/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/translations/missing/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/upload/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/user/preferences/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/webhook/whatsapp/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/webhooks/payments/moyasar/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/app/api/webhooks/payments/stripe/route.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/types/shims.d.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "supabase/migrations/001_basic_tables_simple.sql",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "supabase/migrations/001_create_core_tables_fixed.sql",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "migrations/001_create_roles_users.sql",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "migrations/002_patients_doctors_appointments.sql",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "migrations/003_insurance_payments_claims.sql",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "migrations/004_translations.sql",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "migrations/005_reports_metrics.sql",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/constants/index.ts",
+        "reason": "Found usage in project-wide search"
+      }
+    ],
+    "conflicts": [],
+    "warnings": [],
+    "startTime": "2025-10-16T07:41:06.450Z",
+    "timeTaken": 0
+  }
+}

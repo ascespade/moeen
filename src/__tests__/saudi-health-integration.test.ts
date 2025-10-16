@@ -1,12 +1,12 @@
-import { saudiHealthSystem } from "@/lib/saudi-health-integration";
+import { _saudiHealthSystem } from "@/lib/saudi-health-integration";
 describe("SaudiHealthSystemIntegration", () => {
   describe("Data Validation", () => {
     test("should validate Saudi National ID", () => {
-      const validNationalId = "1234567890";
-      const invalidNationalId = "123456789";
+      const __validNationalId = "1234567890";
+      const __invalidNationalId = "123456789";
 
       // This would test the private method through public interface
-      const validPatient = {
+      const __validPatient = {
         nationalId: validNationalId,
         fullName: "أحمد محمد",
         dateOfBirth: "1990-01-01",
@@ -14,7 +14,7 @@ describe("SaudiHealthSystemIntegration", () => {
         email: "ahmed@example.com",
       };
 
-      const invalidPatient = {
+      const __invalidPatient = {
         nationalId: invalidNationalId,
         fullName: "أحمد محمد",
         dateOfBirth: "1990-01-01",
@@ -23,7 +23,7 @@ describe("SaudiHealthSystemIntegration", () => {
       };
 
       // Test validation through the validatePatientData method
-      const validResult = saudiHealthSystem.validatePatientData(validPatient);
+      const __validResult = saudiHealthSystem.validatePatientData(validPatient);
       const invalidResult =
         saudiHealthSystem.validatePatientData(invalidPatient);
 
@@ -32,10 +32,10 @@ describe("SaudiHealthSystemIntegration", () => {
     });
 
     test("should validate Saudi phone number", () => {
-      const validPhone = "+966501234567";
-      const invalidPhone = "+1234567890";
+      const __validPhone = "+966501234567";
+      const __invalidPhone = "+1234567890";
 
-      const validPatient = {
+      const __validPatient = {
         nationalId: "1234567890",
         fullName: "أحمد محمد",
         dateOfBirth: "1990-01-01",
@@ -43,7 +43,7 @@ describe("SaudiHealthSystemIntegration", () => {
         email: "ahmed@example.com",
       };
 
-      const invalidPatient = {
+      const __invalidPatient = {
         nationalId: "1234567890",
         fullName: "أحمد محمد",
         dateOfBirth: "1990-01-01",
@@ -51,7 +51,7 @@ describe("SaudiHealthSystemIntegration", () => {
         email: "ahmed@example.com",
       };
 
-      const validResult = saudiHealthSystem.validatePatientData(validPatient);
+      const __validResult = saudiHealthSystem.validatePatientData(validPatient);
       const invalidResult =
         saudiHealthSystem.validatePatientData(invalidPatient);
 
@@ -60,10 +60,10 @@ describe("SaudiHealthSystemIntegration", () => {
     });
 
     test("should validate email", () => {
-      const validEmail = "ahmed@example.com";
-      const invalidEmail = "invalid-email";
+      const __validEmail = "ahmed@example.com";
+      const __invalidEmail = "invalid-email";
 
-      const validPatient = {
+      const __validPatient = {
         nationalId: "1234567890",
         fullName: "أحمد محمد",
         dateOfBirth: "1990-01-01",
@@ -71,7 +71,7 @@ describe("SaudiHealthSystemIntegration", () => {
         email: validEmail,
       };
 
-      const invalidPatient = {
+      const __invalidPatient = {
         nationalId: "1234567890",
         fullName: "أحمد محمد",
         dateOfBirth: "1990-01-01",
@@ -79,7 +79,7 @@ describe("SaudiHealthSystemIntegration", () => {
         email: invalidEmail,
       };
 
-      const validResult = saudiHealthSystem.validatePatientData(validPatient);
+      const __validResult = saudiHealthSystem.validatePatientData(validPatient);
       const invalidResult =
         saudiHealthSystem.validatePatientData(invalidPatient);
 
@@ -90,7 +90,7 @@ describe("SaudiHealthSystemIntegration", () => {
 
   describe("Insurance Integration", () => {
     test("should get insurance providers", () => {
-      const providers = saudiHealthSystem.getInsuranceProviders();
+      const __providers = saudiHealthSystem.getInsuranceProviders();
       expect(providers.length).toBeGreaterThan(0);
       expect(providers[0]).toHaveProperty("id");
       expect(providers[0]).toHaveProperty("name");
@@ -98,13 +98,13 @@ describe("SaudiHealthSystemIntegration", () => {
     });
 
     test("should get insurance provider by code", () => {
-      const provider = saudiHealthSystem.getInsuranceProvider("tawuniya");
+      const __provider = saudiHealthSystem.getInsuranceProvider("tawuniya");
       expect(provider).toBeDefined();
       expect(provider?.name).toBe("التعاونية");
     });
 
     test("should verify insurance coverage", async () => {
-      const coverage = await saudiHealthSystem.verifyInsuranceCoverage(
+      const __coverage = await saudiHealthSystem.verifyInsuranceCoverage(
         "1234567890",
         "tawuniya",
       );
@@ -115,7 +115,7 @@ describe("SaudiHealthSystemIntegration", () => {
     });
 
     test("should submit insurance claim", async () => {
-      const claim = await saudiHealthSystem.submitInsuranceClaim({
+      const __claim = await saudiHealthSystem.submitInsuranceClaim({
         patientId: "patient-1",
         nationalId: "1234567890",
         providerCode: "tawuniya",
@@ -134,7 +134,7 @@ describe("SaudiHealthSystemIntegration", () => {
     });
 
     test("should check claim status", async () => {
-      const status = await saudiHealthSystem.checkClaimStatus(
+      const __status = await saudiHealthSystem.checkClaimStatus(
         "CL123456",
         "tawuniya",
       );
@@ -144,7 +144,7 @@ describe("SaudiHealthSystemIntegration", () => {
 
   describe("Seha Integration", () => {
     test("should sync with Seha", async () => {
-      const integration = await saudiHealthSystem.syncWithSeha(
+      const __integration = await saudiHealthSystem.syncWithSeha(
         "patient-1",
         "1234567890",
       );

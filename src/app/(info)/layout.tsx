@@ -5,11 +5,10 @@ export const metadata: Metadata = {
   description: "معلومات عن منصة الرعاية الصحية",
 };
 
-export default function InfoLayout({
+export default function __InfoLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return children;
 }
-

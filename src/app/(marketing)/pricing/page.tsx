@@ -1,10 +1,10 @@
 "use client";
 
-import { useT } from "@/components/providers/I18nProvider";
+import { _useT } from "@/components/providers/I18nProvider";
 
-export default function PricingPage() {
+export default function __PricingPage() {
   const { t } = useT();
-  const tiers = [
+  const __tiers = [
     {
       name: t("pricing.basic", "أساسي"),
       price: t("pricing.free", "مجاني"),

@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+import { _useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 interface Patient {
   id: string;
@@ -107,7 +108,7 @@ const mockDocuments: Document[] = [
   },
 ];
 
-export default function PatientDetailsPage({
+export default function __PatientDetailsPage({
   params,
 }: {
   params: { id: string };
@@ -117,7 +118,7 @@ export default function PatientDetailsPage({
   >("info");
   const [showEditModal, setShowEditModal] = useState(false);
 
-  const getStatusColor = (status: Patient["status"]) => {
+  const __getStatusColor = (_status: Patient["status"]) => {
     switch (status) {
       case "active":
         return "bg-green-100 text-green-800";
@@ -130,7 +131,7 @@ export default function PatientDetailsPage({
     }
   };
 
-  const getStatusText = (status: Patient["status"]) => {
+  const __getStatusText = (_status: Patient["status"]) => {
     switch (status) {
       case "active":
         return "نشط";
@@ -143,7 +144,7 @@ export default function PatientDetailsPage({
     }
   };
 
-  const getSessionStatusColor = (status: Session["status"]) => {
+  const __getSessionStatusColor = (_status: Session["status"]) => {
     switch (status) {
       case "completed":
         return "bg-green-100 text-green-800";
@@ -156,7 +157,7 @@ export default function PatientDetailsPage({
     }
   };
 
-  const getSessionStatusText = (status: Session["status"]) => {
+  const __getSessionStatusText = (_status: Session["status"]) => {
     switch (status) {
       case "completed":
         return "مكتملة";

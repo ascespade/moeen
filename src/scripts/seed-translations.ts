@@ -1,5 +1,5 @@
-import { bulkInsertTranslations } from "../lib/translations-manager";
-import { logger } from '@/lib/logger';
+import { _bulkInsertTranslations } from "../lib/translations-manager";
+import { _logger } from "@/lib/logger";
 
 /**
  * Seed Translations Script
@@ -7,7 +7,7 @@ import { logger } from '@/lib/logger';
  */
 
 // Comprehensive translations data
-const translations = [
+const __translations = [
   // Conversations
   {
     locale: "ar" as const,
@@ -1280,7 +1280,7 @@ const translations = [
 /**
  * Seed all translations to the database
  */
-export async function seedTranslations(): Promise<void> {
+export async function __seedTranslations(): Promise<void> {
   try {
     logger.info("🌱 Starting to seed translations...");
     logger.info(`📊 Total translations: ${translations.length}`);

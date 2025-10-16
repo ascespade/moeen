@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
+import { _useState } from "react";
+
+import { _ROUTES } from "@/constants/routes";
 
 interface AnalyticsData {
   totalMessages: number;
@@ -82,7 +83,7 @@ const mockAnalytics: AnalyticsData = {
   ],
 };
 
-export default function ChatbotAnalyticsPage() {
+export default function __ChatbotAnalyticsPage() {
   const [selectedPeriod, setSelectedPeriod] = useState<
     "day" | "week" | "month" | "year"
   >("month");
@@ -90,13 +91,13 @@ export default function ChatbotAnalyticsPage() {
     "messages" | "users" | "satisfaction"
   >("messages");
 
-  const getGrowthColor = (growth: number) => {
+  const __getGrowthColor = (_growth: number) => {
     if (growth > 0) return "text-green-600";
     if (growth < 0) return "text-red-600";
     return "text-gray-600";
   };
 
-  const getGrowthIcon = (growth: number) => {
+  const __getGrowthIcon = (_growth: number) => {
     if (growth > 0) return "↗️";
     if (growth < 0) return "↘️";
     return "➡️";

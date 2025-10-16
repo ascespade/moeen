@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
-import { Languages } from "lucide-react";
-import { useI18n } from "@/hooks/useI18n";
-import { CENTRALIZED_THEME } from "@/lib/centralized-theme";
+import { _Languages } from "lucide-react";
+import { _useEffect, useState, useCallback } from "react";
+
+import { _useI18n } from "@/hooks/useI18n";
+import { _CENTRALIZED_THEME } from "@/lib/centralized-theme";
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -11,7 +12,7 @@ interface LanguageSwitcherProps {
   variant?: "button" | "dropdown";
 }
 
-export default function LanguageSwitcher({
+export default function __LanguageSwitcher({
   className = "",
   showLabel = true,
   size = "md",
@@ -22,23 +23,23 @@ export default function LanguageSwitcher({
   const { t } = useI18n(language);
 
   // Function to load user preferences from database
-  const loadUserPreferences = async () => {
+  const __loadUserPreferences = async () => {
     try {
       setIsLoading(true);
       // Get user preferences from localStorage
-      const preferences = {
-        language: localStorage.getItem('moeen-language') || 'ar',
-        theme: localStorage.getItem('moeen-theme') || 'light'
+      const __preferences = {
+        language: localStorage.getItem("moeen-language") || "ar",
+        theme: localStorage.getItem("moeen-theme") || "light",
       };
       setLanguage(preferences.language);
     } catch (error) {
-      } finally {
+    } finally {
       setIsLoading(false);
     }
   };
 
   // Function to apply language to document
-  const applyLanguage = useCallback(() => {
+  const __applyLanguage = useCallback(() => {
     CENTRALIZED_THEME.applyLanguageToDocument(language);
   }, [language]);
 
@@ -55,35 +56,34 @@ export default function LanguageSwitcher({
   }, [language, isLoading, applyLanguage]);
 
   // Toggle language function - reload page to apply translations
-  const toggleLanguage = async () => {
-    const newLanguage = language === "ar" ? "en" : "ar";
+  const __toggleLanguage = async () => {
+    const __newLanguage = language === "ar" ? "en" : "ar";
     setLanguage(newLanguage);
 
     try {
       // Save to database
       // Update user preferences in localStorage
-      localStorage.setItem('moeen-language', newLanguage);
+      localStorage.setItem("moeen-language", newLanguage);
       // Note: In a real app, you would update the database here
       // Reload page to apply translations
       window.location.reload();
-    } catch (error) {
-      }
+    } catch (error) {}
   };
 
   // Size classes
-  const sizeClasses = {
+  const __sizeClasses = {
     sm: "h-8 px-2",
     md: "h-9 px-3",
     lg: "h-10 px-4",
   };
 
-  const iconSizes = {
+  const __iconSizes = {
     sm: "h-4 w-4",
     md: "h-4 w-4",
     lg: "h-5 w-5",
   };
 
-  const textSizes = {
+  const __textSizes = {
     sm: "text-sm",
     md: "text-sm",
     lg: "text-base",

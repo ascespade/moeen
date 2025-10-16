@@ -3,9 +3,9 @@
  * RTL-compatible area chart with brand colors and theme support
  */
 
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   AreaChart as RechartsAreaChart,
   Area,
@@ -15,11 +15,12 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
-} from 'recharts';
-import { useTheme } from '@/context/ThemeContext';
+} from "recharts";
+
+import { _useTheme } from "@/context/ThemeContext";
 
 interface AreaChartProps {
-  data: any[];
+  data: unknown[];
   dataKey: string;
   xAxisKey: string;
   areas?: Array<{
@@ -40,7 +41,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
   xAxisKey,
   areas = [],
   height = 300,
-  className = '',
+  className = "",
   showGrid = true,
   showLegend = true,
   showTooltip = true,
@@ -48,15 +49,18 @@ export const AreaChart: React.FC<AreaChartProps> = ({
   const { isDark } = useTheme();
 
   // Default areas if none provided
-  const defaultAreas = areas.length > 0 ? areas : [
-    {
-      dataKey: dataKey,
-      color: 'var(--brand-primary)',
-      name: 'Value',
-    },
-  ];
+  const defaultAreas =
+    areas.length > 0
+      ? areas
+      : [
+          {
+            dataKey: dataKey,
+            color: "var(--brand-primary)",
+            name: "Value",
+          },
+        ];
 
-  const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+  const __isRTL = document.documentElement.getAttribute("dir") === "rtl";
 
   return (
     <div className={`w-full ${className}`} style={{ height }}>
@@ -73,41 +77,41 @@ export const AreaChart: React.FC<AreaChartProps> = ({
           {showGrid && (
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke={isDark ? '#374151' : '#e5e7eb'}
+              stroke={isDark ? "#374151" : "#e5e7eb"}
             />
           )}
           <XAxis
             dataKey={xAxisKey}
-            tick={{ fontSize: 12, fill: isDark ? '#9ca3af' : '#6b7280' }}
-            axisLine={{ stroke: isDark ? '#374151' : '#e5e7eb' }}
-            tickLine={{ stroke: isDark ? '#374151' : '#e5e7eb' }}
+            tick={{ fontSize: 12, fill: isDark ? "#9ca3af" : "#6b7280" }}
+            axisLine={{ stroke: isDark ? "#374151" : "#e5e7eb" }}
+            tickLine={{ stroke: isDark ? "#374151" : "#e5e7eb" }}
             reversed={isRTL}
           />
           <YAxis
-            tick={{ fontSize: 12, fill: isDark ? '#9ca3af' : '#6b7280' }}
-            axisLine={{ stroke: isDark ? '#374151' : '#e5e7eb' }}
-            tickLine={{ stroke: isDark ? '#374151' : '#e5e7eb' }}
-            orientation={isRTL ? 'right' : 'left'}
+            tick={{ fontSize: 12, fill: isDark ? "#9ca3af" : "#6b7280" }}
+            axisLine={{ stroke: isDark ? "#374151" : "#e5e7eb" }}
+            tickLine={{ stroke: isDark ? "#374151" : "#e5e7eb" }}
+            orientation={isRTL ? "right" : "left"}
           />
           {showTooltip && (
             <Tooltip
               contentStyle={{
-                backgroundColor: isDark ? '#1f2937' : '#ffffff',
-                border: `1px solid ${isDark ? '#374151' : '#e5e7eb'}`,
-                borderRadius: '8px',
-                color: isDark ? '#e5eef7' : '#0f172a',
+                backgroundColor: isDark ? "#1f2937" : "#ffffff",
+                border: `1px solid ${isDark ? "#374151" : "#e5e7eb"}`,
+                borderRadius: "8px",
+                color: isDark ? "#e5eef7" : "#0f172a",
               }}
               labelStyle={{
-                color: isDark ? '#9ca3af' : '#6b7280',
-                fontSize: '12px',
+                color: isDark ? "#9ca3af" : "#6b7280",
+                fontSize: "12px",
               }}
             />
           )}
           {showLegend && (
             <Legend
               wrapperStyle={{
-                color: isDark ? '#e5eef7' : '#0f172a',
-                fontSize: '12px',
+                color: isDark ? "#e5eef7" : "#0f172a",
+                fontSize: "12px",
               }}
             />
           )}

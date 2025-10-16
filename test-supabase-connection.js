@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-require('dotenv').config({ path: '.env.local' });
+require("dotenv").config({ path: ".env.local" });
 const { createClient } = require("@supabase/supabase-js");
 
 async function testConnection() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  console.log('Environment variables:');
-  console.log('SUPABASE_URL:', supabaseUrl ? 'Set' : 'Missing');
-  console.log('SERVICE_KEY:', supabaseKey ? 'Set' : 'Missing');
+  console.log("Environment variables:");
+  console.log("SUPABASE_URL:", supabaseUrl ? "Set" : "Missing");
+  console.log("SERVICE_KEY:", supabaseKey ? "Set" : "Missing");
 
   if (!supabaseUrl || !supabaseKey) {
     console.error("❌ Missing Supabase environment variables");

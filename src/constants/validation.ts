@@ -1,5 +1,5 @@
 // Validation constants
-export const VALIDATION_RULES = {
+export const __VALIDATION_RULES = {
   EMAIL: {
     PATTERN: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     MESSAGE: "Please enter a valid email address",
@@ -55,12 +55,12 @@ export const VALIDATION_RULES = {
   },
 } as const;
 
-export const VALIDATION_MESSAGES = {
+export const __VALIDATION_MESSAGES = {
   REQUIRED: "This field is required",
-  MIN_LENGTH: (min: number) => `Must be at least ${min} characters long`,
-  MAX_LENGTH: (max: number) => `Must be no more than ${max} characters long`,
-  MIN_VALUE: (min: number) => `Must be at least ${min}`,
-  MAX_VALUE: (max: number) => `Must be no more than ${max}`,
+  MIN_LENGTH: (_min: number) => `Must be at least ${min} characters long`,
+  MAX_LENGTH: (_max: number) => `Must be no more than ${max} characters long`,
+  MIN_VALUE: (_min: number) => `Must be at least ${min}`,
+  MAX_VALUE: (_max: number) => `Must be no more than ${max}`,
   INVALID_EMAIL: "Please enter a valid email address",
   INVALID_PASSWORD: "Password does not meet requirements",
   INVALID_PHONE: "Please enter a valid phone number",
@@ -79,19 +79,19 @@ export const VALIDATION_MESSAGES = {
   INVALID_INTEGER: "Please enter a valid integer",
   INVALID_POSITIVE_NUMBER: "Please enter a positive number",
   INVALID_NEGATIVE_NUMBER: "Please enter a negative number",
-  INVALID_RANGE: (min: number, max: number) =>
+  INVALID_RANGE: (_min: number, max: number) =>
     `Must be between ${min} and ${max}`,
   INVALID_PATTERN: "Please enter a valid value",
   INVALID_FILE_TYPE: "Please select a valid file type",
-  INVALID_FILE_SIZE: (maxSize: string) =>
+  INVALID_FILE_SIZE: (_maxSize: string) =>
     `File size must be less than ${maxSize}`,
-  INVALID_IMAGE_DIMENSIONS: (width: number, height: number) =>
+  INVALID_IMAGE_DIMENSIONS: (_width: number, height: number) =>
     `Image must be ${width}x${height} pixels`,
-  INVALID_IMAGE_ASPECT_RATIO: (ratio: string) =>
+  INVALID_IMAGE_ASPECT_RATIO: (_ratio: string) =>
     `Image aspect ratio must be ${ratio}`,
 } as const;
 
-export const FILE_VALIDATION = {
+export const __FILE_VALIDATION = {
   IMAGE: {
     ALLOWED_TYPES: ["image/jpeg", "image/png", "image/gif", "image/webp"],
     MAX_SIZE: 5 * 1024 * 1024, // 5MB

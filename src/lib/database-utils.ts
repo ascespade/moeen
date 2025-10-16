@@ -1,268 +1,304 @@
 /**
- * Database Utilities for CUID and Query Management
- * Provides helper functions for database operations with CUID support
+ * Database utility functions using Supabase
+ * Helper functions for common database operations
  */
 
-import { generatePublicId, cuidEntity } from "@/lib/cuid";
+import { _Database } from "@/types/supabase";
 
-/**
- * Database helper functions for CUID generation and management
- */
+import { _getServiceSupabase } from "./supabaseClient";
+
+type Tables = Database["public"]["Tables"];
+
 export class DatabaseUtils {
-  /**
-   * Generate public_id for a specific entity type
-   */
-  static generateEntityId(entityType: keyof typeof cuidEntity): string {
-    return cuidEntity[entityType]("");
+  private supabase;
+
+  constructor() {
+    this.supabase = getServiceSupabase();
   }
 
-  /**
-   * Generate public_id for multiple entities
-   */
-  static generateMultipleEntityIds(
-    entityType: keyof typeof cuidEntity,
-    count: number,
-  ): string[] {
-    return Array.from({ length: count }, () => cuidEntity[entityType](""));
+  // Generic CRUD operations
+  async createRecord<T extends keyof Tables>(
+    table: T,
+    data: Tables[T]["Insert"],
+  ): Promise<Tables[T]["Row"]> {
+    const { data: result, error } = await this.supabase
+      .from(table)
+      .insert([data])
+      .select()
+      .single();
+
+    if (error) throw new Error(`Failed to create ${table}: ${error.message}`);
+    return result;
   }
 
-  /**
-   * Validate if a string is a valid public_id format
-   */
-  static isValidPublicId(id: string): boolean {
-    return /^[a-z]+_[a-z0-9]{25}$/.test(id);
+  async getRecord<T extends keyof Tables>(
+    table: T,
+    id: string,
+  ): Promise<Tables[T]["Row"]> {
+    const { data, error } = await this.supabase
+      .from(table)
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) throw new Error(`Failed to get ${table}: ${error.message}`);
+    return data;
   }
 
-  /**
-   * Extract entity type from public_id
-   */
-  static extractEntityType(publicId: string): string | null {
-    const match = publicId.match(/^([a-z]+)_/);
-    return match && typeof match[1] === "string" ? (match[1] as string) : null;
+  async updateRecord<T extends keyof Tables>(
+    table: T,
+    id: string,
+    updates: Tables[T]["Update"],
+  ): Promise<Tables[T]["Row"]> {
+    const { data, error } = await this.supabase
+      .from(table)
+      .update({ ...updates, updated_at: new Date().toISOString() })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw new Error(`Failed to update ${table}: ${error.message}`);
+    return data;
   }
 
-  /**
-   * Create database insert data with auto-generated public_id
-   */
-  static createInsertData<T extends Record<string, any>>(
-    entityType: keyof typeof cuidEntity,
-    data: Omit<T, "id" | "public_id">,
-  ): T {
-    return {
-      ...data,
-      public_id: cuidEntity[entityType](""),
-    } as unknown as T;
+  async deleteRecord<T extends keyof Tables>(
+    table: T,
+    id: string,
+  ): Promise<void> {
+    const { error } = await this.supabase.from(table).delete().eq("id", id);
+
+    if (error) throw new Error(`Failed to delete ${table}: ${error.message}`);
   }
 
-  /**
-   * Create multiple insert records with auto-generated public_ids
-   */
-  static createMultipleInsertData<T extends Record<string, any>>(
-    entityType: keyof typeof cuidEntity,
-    dataArray: Array<Omit<T, "id" | "public_id">>,
-  ): T[] {
-    return dataArray.map((data) => this.createInsertData(entityType, data));
-  }
-}
+  // Search and filter operations
+  async searchRecords<T extends keyof Tables>(
+    table: T,
+    filters: Record<string, any> = {},
+    options: {
+      limit?: number;
+      offset?: number;
+      orderBy?: string;
+      orderDirection?: "asc" | "desc";
+    } = {},
+  ): Promise<Tables[T]["Row"][]> {
+    let query = this.supabase.from(table).select("*");
 
-/**
- * Query builder helpers for common database operations
- */
-export class QueryBuilder {
-  /**
-   * Build WHERE clause for public_id lookup
-   */
-  static wherePublicId(publicId: string): { public_id: string } {
-    return { public_id: publicId };
-  }
-
-  /**
-   * Build WHERE clause for multiple public_ids
-   */
-  static wherePublicIds(publicIds: string[]): { public_id: { in: string[] } } {
-    return { public_id: { in: publicIds } };
-  }
-
-  /**
-   * Build pagination parameters
-   */
-  static paginate(
-    page: number = 1,
-    limit: number = 20,
-  ): {
-    offset: number;
-    limit: number;
-  } {
-    return {
-      offset: (page - 1) * limit,
-      limit,
-    };
-  }
-
-  /**
-   * Build sorting parameters
-   */
-  static sortBy(
-    field: string,
-    direction: "asc" | "desc" = "desc",
-  ): {
-    orderBy: { [key: string]: "asc" | "desc" };
-  } {
-    return {
-      orderBy: { [field]: direction },
-    };
-  }
-}
-
-/**
- * Entity-specific database operations
- */
-export class EntityOperations {
-  /**
-   * Patient operations
-   */
-  static patients = {
-    create: (data: any) => DatabaseUtils.createInsertData("patient", data),
-    createMultiple: (dataArray: any[]) =>
-      DatabaseUtils.createMultipleInsertData("patient", dataArray),
-    findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
-  };
-
-  /**
-   * Appointment operations
-   */
-  static appointments = {
-    create: (data: any) => DatabaseUtils.createInsertData("appointment", data),
-    createMultiple: (dataArray: any[]) =>
-      DatabaseUtils.createMultipleInsertData("appointment", dataArray),
-    findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
-  };
-
-  /**
-   * Session operations
-   */
-  static sessions = {
-    create: (data: any) => DatabaseUtils.createInsertData("session", data),
-    createMultiple: (dataArray: any[]) =>
-      DatabaseUtils.createMultipleInsertData("session", dataArray),
-    findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
-  };
-
-  /**
-   * Chatbot flow operations
-   */
-  static chatbotFlows = {
-    create: (data: any) => DatabaseUtils.createInsertData("flow", data),
-    createMultiple: (dataArray: any[]) =>
-      DatabaseUtils.createMultipleInsertData("flow", dataArray),
-    findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
-  };
-
-  /**
-   * CRM lead operations
-   */
-  static crmLeads = {
-    create: (data: any) => DatabaseUtils.createInsertData("lead", data),
-    createMultiple: (dataArray: any[]) =>
-      DatabaseUtils.createMultipleInsertData("lead", dataArray),
-    findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
-  };
-
-  /**
-   * CRM deal operations
-   */
-  static crmDeals = {
-    create: (data: any) => DatabaseUtils.createInsertData("deal", data),
-    createMultiple: (dataArray: any[]) =>
-      DatabaseUtils.createMultipleInsertData("deal", dataArray),
-    findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
-  };
-}
-
-/**
- * Database validation helpers
- */
-export class DatabaseValidation {
-  /**
-   * Validate required fields for entity creation
-   */
-  static validateRequiredFields<T extends Record<string, any>>(
-    data: T,
-    requiredFields: (keyof T)[],
-  ): { isValid: boolean; errors: string[] } {
-    const errors: string[] = [];
-
-    for (const field of requiredFields) {
-      if (
-        !data[field] ||
-        (typeof data[field] === "string" && data[field].trim() === "")
-      ) {
-        errors.push(`Field '${String(field)}' is required`);
+    // Apply filters
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        if (Array.isArray(value)) {
+          query = query.in(key, value);
+        } else if (typeof value === "string" && value.includes("%")) {
+          query = query.ilike(key, value);
+        } else {
+          query = query.eq(key, value);
+        }
       }
+    });
+
+    // Apply ordering
+    if (options.orderBy) {
+      query = query.order(options.orderBy, {
+        ascending: options.orderDirection !== "desc",
+      });
     }
 
-    return {
-      isValid: errors.length === 0,
-      errors,
-    };
+    // Apply pagination
+    if (options.limit) {
+      query = query.limit(options.limit);
+    }
+
+    if (options.offset) {
+      query = query.range(
+        options.offset,
+        options.offset + (options.limit || 10) - 1,
+      );
+    }
+
+    const { data, error } = await query;
+
+    if (error) throw new Error(`Failed to search ${table}: ${error.message}`);
+    return data || [];
   }
 
-  /**
-   * Validate public_id format
-   */
-  static validatePublicId(publicId: string): boolean {
-    return DatabaseUtils.isValidPublicId(publicId);
+  // Count records
+  async countRecords<T extends keyof Tables>(
+    table: T,
+    filters: Record<string, any> = {},
+  ): Promise<number> {
+    let query = this.supabase
+      .from(table)
+      .select("*", { count: "exact", head: true });
+
+    // Apply filters
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        if (Array.isArray(value)) {
+          query = query.in(key, value);
+        } else if (typeof value === "string" && value.includes("%")) {
+          query = query.ilike(key, value);
+        } else {
+          query = query.eq(key, value);
+        }
+      }
+    });
+
+    const { count, error } = await query;
+
+    if (error) throw new Error(`Failed to count ${table}: ${error.message}`);
+    return count || 0;
   }
 
-  /**
-   * Validate email format
-   */
-  static validateEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // Batch operations
+  async createBatch<T extends keyof Tables>(
+    table: T,
+    records: Tables[T]["Insert"][],
+  ): Promise<Tables[T]["Row"][]> {
+    const { data, error } = await this.supabase
+      .from(table)
+      .insert(records)
+      .select();
+
+    if (error)
+      throw new Error(`Failed to create batch ${table}: ${error.message}`);
+    return data || [];
+  }
+
+  async updateBatch<T extends keyof Tables>(
+    table: T,
+    updates: Array<{ id: string; data: Tables[T]["Update"] }>,
+  ): Promise<Tables[T]["Row"][]> {
+    const results: Tables[T]["Row"][] = [];
+
+    for (const update of updates) {
+      const __result = await this.updateRecord(table, update.id, update.data);
+      results.push(result);
+    }
+
+    return results;
+  }
+
+  // Transaction-like operations
+  async executeTransaction<T>(
+    operations: Array<() => Promise<T>>,
+  ): Promise<T[]> {
+    const results: T[] = [];
+
+    try {
+      for (const operation of operations) {
+        const __result = await operation();
+        results.push(result);
+      }
+      return results;
+    } catch (error) {
+      // In a real transaction, you would rollback here
+      throw new Error(`Transaction failed: ${error}`);
+    }
+  }
+
+  // Audit logging
+  async logAuditEvent(_event: {
+    user_id?: string;
+    action: string;
+    table_name: string;
+    record_id: string;
+    old_values?: unknown;
+    new_values?: unknown;
+    ip_address?: string;
+    user_agent?: string;
+  }): Promise<void> {
+    const { error } = await this.supabase.from("audit_logs").insert([
+      {
+        ...event,
+        created_at: new Date().toISOString(),
+      },
+    ]);
+
+    if (error) {
+      // // console.error("Failed to log audit event:", error);
+      // Don't throw error for audit logging failures
+    }
+  }
+
+  // Data validation helpers
+  validateEmail(_email: string): boolean {
+    const __emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
-  /**
-   * Validate phone number format (Saudi format)
-   */
-  static validatePhone(phone: string): boolean {
-    const phoneRegex = /^(\+966|966|0)?[5-9][0-9]{8}$/;
+  validatePhone(_phone: string): boolean {
+    const __phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
     return phoneRegex.test(phone.replace(/\s/g, ""));
   }
-}
 
-/**
- * Database migration helpers
- */
-export class MigrationHelpers {
-  /**
-   * Generate backfill data for existing records
-   */
-  static generateBackfillData(
-    entityType: keyof typeof cuidEntity,
-    existingRecords: Array<{ id: string }>,
-  ): Array<{ id: string; public_id: string }> {
-    return existingRecords.map((record) => ({
-      id: record.id,
-      public_id: cuidEntity[entityType](""),
-    }));
+  validateUUID(_uuid: string): boolean {
+    const uuidRegex =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(uuid);
   }
 
-  /**
-   * Create migration log entry
-   */
-  static createMigrationLog(
-    migrationName: string,
-    status: "started" | "completed" | "failed",
-    details?: any,
-  ) {
-    return {
-      migration: migrationName,
-      status,
-      timestamp: new Date().toISOString(),
-      details,
-    };
+  // Data sanitization
+  sanitizeString(_input: string): string {
+    return input.trim().replace(/[<>]/g, "");
+  }
+
+  sanitizeObject<T extends Record<string, any>>(_obj: T): T {
+    const __sanitized = { ...obj };
+
+    Object.keys(sanitized).forEach((key) => {
+      if (typeof sanitized[key] === "string") {
+        sanitized[key] = this.sanitizeString(sanitized[key]);
+      }
+    });
+
+    return sanitized;
+  }
+
+  // Date utilities
+  formatDate(_date: Date | string): string {
+    const __d = typeof date === "string" ? new Date(date) : date;
+    return d.toISOString().split("T")[0];
+  }
+
+  formatDateTime(_date: Date | string): string {
+    const __d = typeof date === "string" ? new Date(date) : date;
+    return d.toISOString();
+  }
+
+  addDays(_date: Date | string, days: number): string {
+    const __d = typeof date === "string" ? new Date(date) : date;
+    d.setDate(d.getDate() + days);
+    return d.toISOString();
+  }
+
+  // Pagination helpers
+  calculatePagination(_page: number, limit: number) {
+    const __offset = (page - 1) * limit;
+    return { offset, limit };
+  }
+
+  calculateTotalPages(_total: number, limit: number): number {
+    return Math.ceil(total / limit);
+  }
+
+  // Error handling
+  handleDatabaseError(_error: unknown): string {
+    if (error.code === "23505") {
+      return "Record already exists";
+    }
+    if (error.code === "23503") {
+      return "Referenced record not found";
+    }
+    if (error.code === "23502") {
+      return "Required field is missing";
+    }
+    if (error.code === "42501") {
+      return "Insufficient permissions";
+    }
+    return error.message || "Database operation failed";
   }
 }
 
-export default DatabaseUtils;
+// Export default instance
+export const __dbUtils = new DatabaseUtils();
+export default dbUtils;

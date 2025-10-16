@@ -1,5 +1,4 @@
 "use client";
-import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   MessagesSquare,
@@ -8,10 +7,12 @@ import {
   Settings,
   Users,
 } from "lucide-react";
-import { useT } from "@/components/providers/I18nProvider";
 import Link from "next/link";
+import { _usePathname } from "next/navigation";
 
-const adminItems = [
+import { _useT } from "@/components/providers/I18nProvider";
+
+const __adminItems = [
   {
     href: "/dashboard",
     label: "nav.dashboard",
@@ -35,7 +36,7 @@ const adminItems = [
   },
   { href: "/users", label: "nav.users", icon: <Users className="h-4 w-4" /> },
 ];
-const staffItems = [
+const __staffItems = [
   {
     href: "/dashboard",
     label: "nav.dashboard",
@@ -47,7 +48,7 @@ const staffItems = [
     icon: <MessagesSquare className="h-4 w-4" />,
   },
 ];
-const viewerItems = [
+const __viewerItems = [
   {
     href: "/dashboard",
     label: "nav.dashboard",
@@ -60,9 +61,9 @@ const viewerItems = [
   },
 ];
 
-export default function Sidebar() {
-  const pathname = usePathname();
-  const role = "admin";
+export default function __Sidebar() {
+  const __pathname = usePathname();
+  const __role = "admin";
   const items =
     role === "admin" ? adminItems : role === "staff" ? staffItems : viewerItems;
   const { t } = useT();

@@ -1,0 +1,33 @@
+{
+  "agent": "SharedVerifier",
+  "timestamp": "2025-10-16T07:41:17.837Z",
+  "mode": "dry-run",
+  "results": {
+    "totalScanned": 54,
+    "candidates": [],
+    "moved": [],
+    "skipped": [
+      {
+        "file": "src/types/shims.d.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/constants/index.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/hooks/index.ts",
+        "reason": "Protected file pattern"
+      },
+      {
+        "file": "src/core/index.ts",
+        "reason": "Protected file pattern"
+      }
+    ],
+    "conflicts": [],
+    "warnings": [],
+    "startTime": "2025-10-16T07:41:17.354Z",
+    "endTime": null,
+    "timeTaken": 0
+  }
+}

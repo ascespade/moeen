@@ -1,17 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
+import { _useEffect, useState } from "react";
 type Mode = "light" | "dark" | "system";
 
-export default function ThemeToggle() {
+export default function __ThemeToggle() {
   const [mode, setMode] = useState<Mode>("light");
 
   useEffect(() => {
-    const saved = (localStorage.getItem("theme-mode") as Mode) || "light";
+    const __saved = (localStorage.getItem("theme-mode") as Mode) || "light";
     applyMode(saved);
   }, []);
 
-  const applyMode = (m: Mode) => {
-    const html = document.documentElement;
+  const __applyMode = (_m: Mode) => {
+    const __html = document.documentElement;
     if (m === "system") {
       html.removeAttribute("data-theme");
     } else {

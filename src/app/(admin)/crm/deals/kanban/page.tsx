@@ -1,4 +1,4 @@
-export default function DealsKanbanPage() {
+export default function __DealsKanbanPage() {
   return (
     <main className="container-app py-8">
       <h1 className="text-brand mb-4 text-2xl font-bold">

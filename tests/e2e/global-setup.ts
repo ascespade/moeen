@@ -285,7 +285,9 @@ async function verifySetup() {
       .select("*")
       .eq("name", "test_admin");
     if (!roles || roles.length === 0) {
-      console.warn("⚠️ Test roles not created; continuing without strict role checks");
+      console.warn(
+        "⚠️ Test roles not created; continuing without strict role checks",
+      );
     }
 
     const { data: users } = await supabase
@@ -314,7 +316,10 @@ async function verifySetup() {
 
     console.log("✅ Test setup verification completed");
   } catch (error) {
-    console.warn("⚠️ Test setup verification encountered issues but will continue:", error);
+    console.warn(
+      "⚠️ Test setup verification encountered issues but will continue:",
+      error,
+    );
   }
 }
 

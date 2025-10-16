@@ -6,7 +6,7 @@
  * CSS مركزي لمكونات وأدوات نظام التصميم
  */
 
-@import './centralized.css';
+@import "./centralized.css";
 
 /* ========================================
    DESIGN SYSTEM COMPONENTS
@@ -18,23 +18,23 @@
 }
 
 .ds-button-primary {
-  @apply bg-brand-primary text-white border-none hover:bg-brand-primary-hover hover:transform hover:-translate-y-0.5 hover:shadow-md focus:ring-brand-primary;
+  @apply bg-orange-500 text-white border-none hover:bg-orange-600 hover:transform hover:-translate-y-0.5 hover:shadow-md focus:ring-orange-500;
 }
 
 .ds-button-secondary {
-  @apply bg-neutral-50 text-neutral-900 border border-neutral-200 hover:bg-neutral-100 hover:transform hover:-translate-y-0.5 focus:ring-brand-primary;
+  @apply bg-neutral-50 text-neutral-900 border border-neutral-200 hover:bg-neutral-100 hover:transform hover:-translate-y-0.5 focus:ring-orange-500;
 }
 
 .ds-button-outline {
-  @apply bg-transparent text-brand-primary border border-brand-primary hover:bg-brand-primary hover:text-white hover:transform hover:-translate-y-0.5 focus:ring-brand-primary;
+  @apply bg-transparent text-orange-500 border border-orange-500 hover:bg-orange-500 hover:text-white hover:transform hover:-translate-y-0.5 focus:ring-orange-500;
 }
 
 .ds-button-ghost {
-  @apply bg-transparent text-neutral-700 border-none hover:bg-neutral-100 hover:text-neutral-900 focus:ring-brand-primary;
+  @apply bg-transparent text-neutral-700 border-none hover:bg-neutral-100 hover:text-neutral-900 focus:ring-orange-500;
 }
 
 .ds-button-danger {
-  @apply bg-brand-error text-white border-none hover:bg-red-600 hover:transform hover:-translate-y-0.5 hover:shadow-md focus:ring-brand-error;
+  @apply bg-red-500 text-white border-none hover:bg-red-600 hover:transform hover:-translate-y-0.5 hover:shadow-md focus:ring-red-500;
 }
 
 /* Button Sizes */
@@ -64,7 +64,7 @@
 }
 
 .ds-card-outlined {
-  @apply bg-transparent border-2 border-neutral-200 rounded-lg transition-all duration-200 hover:border-brand-primary hover:bg-neutral-50;
+  @apply bg-transparent border-2 border-neutral-200 rounded-lg transition-all duration-200 hover:border-orange-500 hover:bg-neutral-50;
 }
 
 .ds-card-filled {
@@ -90,7 +90,7 @@
 }
 
 .ds-input:focus {
-  @apply border-brand-primary ring-brand-primary;
+  @apply border-orange-500 ring-orange-500;
 }
 
 .ds-input:disabled {
@@ -98,11 +98,11 @@
 }
 
 .ds-input-error {
-  @apply border-brand-error focus:border-brand-error focus:ring-brand-error;
+  @apply border-red-500 focus:border-red-500 focus:ring-red-500;
 }
 
 .ds-input-success {
-  @apply border-brand-success focus:border-brand-success focus:ring-brand-success;
+  @apply border-green-500 focus:border-green-500 focus:ring-green-500;
 }
 
 /* Input Sizes */
@@ -319,7 +319,7 @@
   --brand-surface: #0d1117;
   --panel: #111827;
   --brand-border: #1f2937;
-  
+
   /* Brand colors adjustments for dark mode */
   --brand-primary: #f58220;
   --brand-primary-hover: #c25e0f;
@@ -519,11 +519,11 @@
    ======================================== */
 
 .ds-focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2;
+  @apply focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2;
 }
 
 .ds-focus-ring-inset {
-  @apply focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-inset;
+  @apply focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-inset;
 }
 
 /* ========================================
@@ -539,7 +539,7 @@
 }
 
 .ds-focus-visible {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2;
 }
 
 /* ========================================
@@ -550,15 +550,15 @@
   .ds-print-hidden {
     @apply hidden;
   }
-  
+
   .ds-print-visible {
     @apply block;
   }
-  
+
   .ds-print-text-black {
     @apply text-black;
   }
-  
+
   .ds-print-bg-white {
     @apply bg-white;
   }

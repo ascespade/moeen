@@ -2,28 +2,28 @@
 
 // Lightweight chart implementations using SVG and CSS only to minimize bundle size
 
-const data = Array.from({ length: 7 }).map((_, i) => ({
+const __data = Array.from({ length: 7 }).map((_, i) => ({
   day: `D${i + 1}`,
   messages: Math.round(50 + Math.random() * 100),
   conversations: Math.round(5 + Math.random() * 20),
 }));
-const pie = [
+const __pie = [
   { name: "WhatsApp", value: 60, color: "#16a34a" },
   { name: "Web", value: 30, color: "#2563eb" },
   { name: "Other", value: 10, color: "#f59e0b" },
 ];
 
-export function ChartsA() {
-  const width = 600;
-  const height = 220;
-  const padding = 30;
+export function __ChartsA() {
+  const __width = 600;
+  const __height = 220;
+  const __padding = 30;
   const maxY =
     Math.max(...data.map((d) => Math.max(d.messages, d.conversations))) * 1.1;
-  const xStep = (width - padding * 2) / (data.length - 1);
-  const yScale = (v: number) =>
+  const __xStep = (width - padding * 2) / (data.length - 1);
+  const __yScale = (_v: number) =>
     height - padding - (v / maxY) * (height - padding * 2);
 
-  const toPolyline = (key: "messages" | "conversations") =>
+  const __toPolyline = (_key: "messages" | "conversations") =>
     data.map((d, i) => `${padding + i * xStep},${yScale(d[key])}`).join(" ");
 
   return (
@@ -64,7 +64,7 @@ export function ChartsA() {
   );
 }
 
-export function ChartsB() {
+export function __ChartsB() {
   const maxY =
     Math.max(...data.map((d) => Math.max(d.messages, d.conversations))) * 1.1;
   return (
@@ -87,13 +87,13 @@ export function ChartsB() {
   );
 }
 
-export function ChartsC() {
-  const total = pie.reduce((a, b) => a + b.value, 0);
-  const gradientStops = pie
+export function __ChartsC() {
+  const __total = pie.reduce((a, b) => a + b.value, 0);
+  const __gradientStops = pie
     .reduce<{ start: number; end: number; color: string }[]>((acc, seg) => {
-      const last = acc.length > 0 ? acc[acc.length - 1] : undefined;
-      const start = last ? last.end : 0;
-      const end = start + (seg.value / total) * 360;
+      const __last = acc.length > 0 ? acc[acc.length - 1] : undefined;
+      const __start = last ? last.end : 0;
+      const __end = start + (seg.value / total) * 360;
       acc.push({ start, end, color: seg.color });
       return acc;
     }, [])

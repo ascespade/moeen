@@ -96,7 +96,7 @@ export interface Session {
   session_time: string;
   type: string;
   notes?: string;
-  exercises?: any; // JSONB
+  exercises?: unknown; // JSONB
   completed: boolean;
   created_at: string;
   updated_at: string;
@@ -134,7 +134,7 @@ export interface ChatbotNode {
   flow_id: string;
   type: "start" | "message" | "question" | "condition" | "action" | "end";
   name: string;
-  content?: any; // JSONB
+  content?: unknown; // JSONB
   position_x: number;
   position_y: number;
   created_at: string;
@@ -147,7 +147,7 @@ export interface ChatbotEdge {
   flow_id: string;
   from_node_id: string;
   to_node_id: string;
-  condition?: any; // JSONB
+  condition?: unknown; // JSONB
   created_at: string;
   updated_at: string;
 }
@@ -220,7 +220,7 @@ export interface Notification {
   title: string;
   message: string;
   read: boolean;
-  data?: any; // JSONB
+  data?: unknown; // JSONB
   created_at: string;
   updated_at: string;
 }
@@ -244,8 +244,8 @@ export interface AuditLog {
   action: string;
   resource_type: string;
   resource_id: string;
-  old_values?: any; // JSONB
-  new_values?: any; // JSONB
+  old_values?: unknown; // JSONB
+  new_values?: unknown; // JSONB
   ip_address?: string;
   user_agent?: string;
   created_at: string;
@@ -254,7 +254,7 @@ export interface AuditLog {
 export interface Setting {
   id: string;
   key: string;
-  value: any; // JSONB
+  value: unknown; // JSONB
   description?: string;
   category: string;
   created_at: string;
