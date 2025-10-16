@@ -159,7 +159,7 @@ export class AuditMiddleware {
     const remoteAddr = req.headers.get('x-remote-addr');
     
     if (forwarded) {
-      return forwarded.split(',')[0].trim();
+      return forwarded.split(',')[0]?.trim() || '';
     }
     
     if (realIP) {
@@ -203,7 +203,7 @@ export class AuditMiddleware {
     if (!this.shouldLogRequest(req)) return false;
     
     // Don't log successful health checks
-    if (pathname === '/api/health' && response.status === 200) {
+    if (req.nextUrl.pathname === '/api/health' && response.status === 200) {
       return false;
     }
     

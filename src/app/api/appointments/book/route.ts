@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { authorize, requireRole } from '@/lib/auth/authorize';
 
 const bookingSchema = z.object({
   patientId: z.string().uuid('Invalid patient ID'),
@@ -24,8 +24,8 @@ const bookingSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize user
-    const authResult = await authorize(['patient', 'staff', 'admin'])(request);
-    if (!authResult.success) {
+    const { user: authUser, error: authError } = await authorize(request);
+    if (authError || !authUser || !requireRole(['patient', 'staff', 'admin'])(authUser)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     const { patientId, doctorId, scheduledAt, type, notes, duration, isVirtual, insuranceClaimId } = validation.data;
 
     // Check doctor availability
-    const doctorAvailability = await checkDoctorAvailability(doctorId, scheduledAt, duration);
+    const doctorAvailability = await checkDoctorAvailability(doctorId, scheduledAt, duration || 30);
     if (!doctorAvailability.available) {
       return NextResponse.json({ 
         error: 'Doctor not available at this time',
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check for conflicts
-    const conflicts = await checkAppointmentConflicts(doctorId, scheduledAt, duration);
+    const conflicts = await checkAppointmentConflicts(doctorId, scheduledAt, duration || 30);
     if (conflicts.length > 0) {
       return NextResponse.json({ 
         error: 'Time slot conflicts with existing appointments',
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
         status: 'pending',
         paymentStatus: 'unpaid',
         insuranceClaimId,
-        createdBy: authResult.user.id,
+        createdBy: authUser.id,
       })
       .select()
       .single();
@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
       action: 'appointment_created',
       entityType: 'appointment',
       entityId: appointment.id,
-      userId: authResult.user.id,
+      userId: authUser.id,
       metadata: {
         patientId,
         doctorId,
@@ -131,7 +131,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 

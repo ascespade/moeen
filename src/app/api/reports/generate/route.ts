@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { authorize, requireRole } from '@/lib/auth/authorize';
 
 const reportSchema = z.object({
   type: z.enum([
@@ -33,8 +33,8 @@ const reportSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize user (staff, supervisor, admin only)
-    const authResult = await authorize(['staff', 'supervisor', 'admin'])(request);
-    if (!authResult.success) {
+    const { user: authUser, error: authError } = await authorize(request);
+    if (authError || !authUser || !requireRole(['staff', 'supervisor', 'admin'])(authUser)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -56,13 +56,13 @@ export async function POST(request: NextRequest) {
         reportData = await generateDashboardMetrics(supabase, dateRange, filters);
         break;
       case 'patient_statistics':
-        reportData = await generatePatientStatistics(supabase, dateRange, filters, groupBy);
+        reportData = await generatePatientStatistics(supabase, dateRange, filters, groupBy || "");
         break;
       case 'appointment_analytics':
-        reportData = await generateAppointmentAnalytics(supabase, dateRange, filters, groupBy);
+        reportData = await generateAppointmentAnalytics(supabase, dateRange, filters, groupBy || "");
         break;
       case 'revenue_report':
-        reportData = await generateRevenueReport(supabase, dateRange, filters, groupBy);
+        reportData = await generateRevenueReport(supabase, dateRange, filters, groupBy || "");
         break;
       case 'insurance_claims':
         reportData = await generateInsuranceClaimsReport(supabase, dateRange, filters);
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
       .insert({
         type,
         payload: reportData,
-        generatedBy: authResult.user.id,
+        generatedBy: authUser.id,
         dateRange,
         filters,
         format,
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
       action: 'report_generated',
       entityType: 'report',
       entityId: savedReport.id,
-      userId: authResult.user.id,
+      userId: authUser.id,
       metadata: {
         type,
         dateRange,
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
@@ -201,7 +201,7 @@ async function generatePatientStatistics(supabase: any, dateRange: any, filters:
   if (!patients) return {};
 
   // Group by specified period
-  const grouped = groupDataByPeriod(patients, 'createdAt', groupBy);
+  const grouped = groupDataByPeriod(patients, 'createdAt', groupBy || "");
 
   // Calculate statistics
   const stats = {
@@ -239,7 +239,7 @@ async function generateAppointmentAnalytics(supabase: any, dateRange: any, filte
 
   if (!appointments) return {};
 
-  const grouped = groupDataByPeriod(appointments, 'scheduledAt', groupBy);
+  const grouped = groupDataByPeriod(appointments, 'scheduledAt', groupBy || "");
 
   return {
     total: appointments.length,
@@ -273,7 +273,7 @@ async function generateRevenueReport(supabase: any, dateRange: any, filters: any
   if (!payments) return {};
 
   const paidPayments = payments.filter(p => p.status === 'paid');
-  const grouped = groupDataByPeriod(paidPayments, 'createdAt', groupBy);
+  const grouped = groupDataByPeriod(paidPayments, 'createdAt', groupBy || "");
 
   return {
     totalRevenue: paidPayments.reduce((sum, p) => sum + (p.amount || 0), 0),
@@ -327,12 +327,12 @@ async function generateDoctorWorkloadReport(supabase: any, dateRange: any, filte
 
 // Helper functions
 function generateDailyBreakdown(appointments: any[], payments: any[], startDate: string, endDate: string) {
-  const days = [];
+  const days: Array<{ date: string; appointments: number; revenue: number }> = [];
   const current = new Date(startDate);
   const end = new Date(endDate);
 
   while (current <= end) {
-    const dateStr = current.toISOString().split('T')[0];
+    const dateStr = current.toISOString().split('T')[0] || '';
     const dayAppointments = appointments.filter(a => 
       a.scheduledAt?.startsWith(dateStr)
     );

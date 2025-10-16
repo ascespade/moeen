@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
         page,
         limit,
         total: count || 0,
-        pages: Math.ceil((count || 0) / limit)
+        pages: Math.ceil((count || 0) / (limit || 20))
       }
     });
   } catch (error) {

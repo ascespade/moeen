@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { authorize, requireRole } from '@/lib/auth/authorize';
 
 const uploadSchema = z.object({
   patientId: z.string().uuid('Invalid patient ID'),
@@ -34,8 +34,8 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 export async function POST(request: NextRequest) {
   try {
     // Authorize user (doctors, staff, admin only)
-    const authResult = await authorize(['doctor', 'staff', 'admin'])(request);
-    if (!authResult.success) {
+    const { user: authUser, error: authError } = await authorize(request);
+    if (authError || !authUser || !requireRole(['doctor', 'staff', 'admin'])(authUser)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
         attachments: [urlData.publicUrl],
         tags: metadata.tags || [],
         isConfidential: metadata.isConfidential,
-        uploadedBy: authResult.user.id,
+        uploadedBy: authUser.id,
       })
       .select()
       .single();
@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
       action: 'medical_record_uploaded',
       entityType: 'medical_record',
       entityId: record.id,
-      userId: authResult.user.id,
+      userId: authUser.id,
       metadata: {
         patientId: metadata.patientId,
         recordType: metadata.recordType,
@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
@@ -192,6 +192,6 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }

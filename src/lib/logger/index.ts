@@ -125,12 +125,12 @@ export class Logger {
   private logToConsole(logEntry: LogEntry): void {
     const timestamp = logEntry.timestamp.toISOString();
     const level = logEntry.level.toUpperCase().padEnd(5);
-    const module = logEntry.module ? `[${logEntry.module}]` : '';
+    const moduleName = logEntry.module ? `[${logEntry.module}]` : '';
     const functionName = logEntry.function ? `[${logEntry.function}]` : '';
     const context = logEntry.context ? JSON.stringify(logEntry.context) : '';
     const error = logEntry.error ? `\nError: ${logEntry.error.stack}` : '';
 
-    const logMessage = `${timestamp} ${level} ${module}${functionName} ${logEntry.message} ${context}${error}`;
+    const logMessage = `${timestamp} ${level} ${moduleName}${functionName} ${logEntry.message} ${context}${error}`;
 
     switch (logEntry.level) {
       case LogLevel.ERROR:
@@ -217,9 +217,9 @@ export class Logger {
     const match = callerLine.match(/at\s+(.+?)\s+\((.+?):\d+:\d+\)/);
     if (match) {
       const fullPath = match[2];
-      const module = fullPath.split('/').pop()?.replace('.ts', '') || 'unknown';
-      const functionName = match[1].split('.').pop() || 'unknown';
-      return { module, function: functionName };
+      const moduleName = fullPath?.split('/').pop()?.replace('.ts', '') || 'unknown';
+      const functionName = match[1]?.split('.').pop() || 'unknown';
+      return { module: moduleName, function: functionName };
     }
 
     return { module: 'unknown', function: 'unknown' };
@@ -280,7 +280,8 @@ export class Logger {
       this.warn('Authentication Failed', {
         userId,
         action,
-      }, error);
+        error: error?.message || 'Unknown error',
+      });
     }
   }
 
@@ -321,4 +322,4 @@ export const performanceLogger = new Logger({
 });
 
 // Export log levels for use in other modules
-export { LogLevel };
+// export { LogLevel };

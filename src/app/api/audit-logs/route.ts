@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { authorize, requireRole } from '@/lib/auth/authorize';
 
 const auditQuerySchema = z.object({
   action: z.string().optional(),
@@ -23,8 +23,8 @@ const auditQuerySchema = z.object({
 export async function GET(request: NextRequest) {
   try {
     // Authorize supervisor or admin
-    const authResult = await authorize(['supervisor', 'admin'])(request);
-    if (!authResult.success) {
+    const { user: authUser, error: authError } = await authorize(request);
+    if (authError || !authUser || !requireRole(['supervisor', 'admin'])(authUser)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
         user:users(id, email, fullName, role)
       `)
       .order('createdAt', { ascending: false })
-      .range((page - 1) * limit, page * limit - 1);
+      .range(((page || 1) - 1) * (limit || 20), (page || 1) * (limit || 20) - 1);
 
     if (action) {
       query = query.eq('action', action);
@@ -85,11 +85,11 @@ export async function GET(request: NextRequest) {
         page,
         limit,
         total: count || 0,
-        pages: Math.ceil((count || 0) / limit),
+        pages: Math.ceil((count || 0) / (limit || 20)),
       },
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }

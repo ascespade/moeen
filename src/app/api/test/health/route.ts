@@ -9,7 +9,12 @@ import { createClient } from '@/lib/supabase/server';
 export async function GET(request: NextRequest) {
   try {
     const supabase = createClient();
-    const healthChecks = {
+    const healthChecks: {
+      timestamp: string;
+      status: string;
+      services: Record<string, any>;
+      errors: string[];
+    } = {
       timestamp: new Date().toISOString(),
       status: 'healthy',
       services: {},

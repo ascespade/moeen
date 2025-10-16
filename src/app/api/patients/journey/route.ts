@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { authorize, requireRole } from '@/lib/auth/authorize';
 
 const activationSchema = z.object({
   patientId: z.string().uuid('Invalid patient ID'),
@@ -50,15 +50,15 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 async function activatePatient(request: NextRequest, body: any) {
   try {
     // Authorize staff, supervisor, or admin
-    const authResult = await authorize(['staff', 'supervisor', 'admin'])(request);
-    if (!authResult.success) {
+    const { user: authUser, error: authError } = await authorize(request);
+    if (authError || !authUser || !requireRole(['staff', 'supervisor', 'admin'])(authUser)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -94,7 +94,7 @@ async function activatePatient(request: NextRequest, body: any) {
         activationDate: new Date().toISOString(),
         activationReason,
         activationNotes: notes,
-        activatedBy: authResult.user.id,
+        activatedBy: authUser.id,
       })
       .eq('id', patientId)
       .select()
@@ -112,7 +112,7 @@ async function activatePatient(request: NextRequest, body: any) {
       action: 'patient_activated',
       entityType: 'patient',
       entityId: patientId,
-      userId: authResult.user.id,
+      userId: authUser.id,
       metadata: {
         activationReason,
         notes,
@@ -129,15 +129,15 @@ async function activatePatient(request: NextRequest, body: any) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 async function updateChecklist(request: NextRequest, body: any) {
   try {
     // Authorize patient, staff, or admin
-    const authResult = await authorize(['patient', 'staff', 'admin'])(request);
-    if (!authResult.success) {
+    const { user: authUser, error: authError } = await authorize(request);
+    if (authError || !authUser || !requireRole(['patient', 'staff', 'admin'])(authUser)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -171,7 +171,7 @@ async function updateChecklist(request: NextRequest, body: any) {
         checklistItems,
         completedAt: checklistItems.every((item: any) => item.completed) ? 
           new Date().toISOString() : null,
-        updatedBy: authResult.user.id,
+        updatedBy: authUser.id,
       })
       .select()
       .single();
@@ -185,7 +185,7 @@ async function updateChecklist(request: NextRequest, body: any) {
       action: 'checklist_updated',
       entityType: 'patient_checklist',
       entityId: checklist.id,
-      userId: authResult.user.id,
+      userId: authUser.id,
       metadata: {
         patientId,
         appointmentId,
@@ -201,15 +201,15 @@ async function updateChecklist(request: NextRequest, body: any) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 async function requestFileAccess(request: NextRequest, body: any) {
   try {
     // Authorize patient, staff, or admin
-    const authResult = await authorize(['patient', 'staff', 'admin'])(request);
-    if (!authResult.success) {
+    const { user: authUser, error: authError } = await authorize(request);
+    if (authError || !authUser || !requireRole(['patient', 'staff', 'admin'])(authUser)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -283,7 +283,7 @@ async function requestFileAccess(request: NextRequest, body: any) {
       action: 'file_access_requested',
       entityType: 'patient_file',
       entityId: patientId,
-      userId: authResult.user.id,
+      userId: authUser.id,
       metadata: {
         fileType,
         accessReason,
@@ -303,7 +303,7 @@ async function requestFileAccess(request: NextRequest, body: any) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 

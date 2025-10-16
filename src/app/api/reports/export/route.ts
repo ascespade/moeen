@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { authorize, requireRole } from '@/lib/auth/authorize';
 
 const exportSchema = z.object({
   reportId: z.string().uuid('Invalid report ID'),
@@ -20,8 +20,8 @@ const exportSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize staff, supervisor, or admin
-    const authResult = await authorize(['staff', 'supervisor', 'admin'])(request);
-    if (!authResult.success) {
+    const { user: authUser, error: authError } = await authorize(request);
+    if (authError || !authUser || !requireRole(['staff', 'supervisor', 'admin'])(authUser)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
         filename = `report_${reportId}.csv`;
         break;
       case 'pdf':
-        exportData = await generatePDF(report.payload, includeCharts);
+        exportData = await generatePDF(report.payload, includeCharts || false);
         mimeType = 'application/pdf';
         filename = `report_${reportId}.pdf`;
         break;
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
       action: 'report_exported',
       entityType: 'report',
       entityId: reportId,
-      userId: authResult.user.id,
+      userId: authUser.id,
       metadata: {
         format,
         includeCharts,
@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 

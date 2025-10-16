@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Generate time slots
-    const slots = generateTimeSlots(schedule.startTime, schedule.endTime, duration);
+    const slots = generateTimeSlots(schedule.startTime, schedule.endTime, duration || 30);
     
     // Check existing appointments
     const { data: existingAppointments } = await supabase
@@ -67,9 +67,10 @@ export async function GET(request: NextRequest) {
       .in('status', ['pending', 'confirmed', 'in_progress']);
 
     // Filter out occupied slots
+    const slotDuration = duration || 30;
     const availableSlots = slots.filter(slot => {
       const slotStart = new Date(`${date}T${slot.time}`);
-      const slotEnd = new Date(slotStart.getTime() + duration * 60000);
+      const slotEnd = new Date(slotStart.getTime() + slotDuration * 60000);
       
       return !existingAppointments?.some(apt => {
         const aptStart = new Date(apt.scheduledAt);
@@ -91,12 +92,12 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
-function generateTimeSlots(startTime: string, endTime: string, duration: number) {
-  const slots = [];
+function generateTimeSlots(startTime: string, endTime: string, duration: number): { time: string; available: boolean }[] {
+  const slots: { time: string; available: boolean }[] = [];
   const start = timeToMinutes(startTime);
   const end = timeToMinutes(endTime);
   
@@ -111,7 +112,7 @@ function generateTimeSlots(startTime: string, endTime: string, duration: number)
 }
 
 function timeToMinutes(time: string): number {
-  const [hours, minutes] = time.split(':').map(Number);
+  const [hours = 0, minutes = 0] = time.split(':').map(Number);
   return hours * 60 + minutes;
 }
 

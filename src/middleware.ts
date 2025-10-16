@@ -4,10 +4,10 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { rateLimitMiddleware } from './middleware/rate-limiter';
+import { rateLimiter as rateLimitMiddleware } from './middleware/rate-limiter';
 import { securityMiddleware } from './middleware/security';
 import { auditMiddleware, auditErrorMiddleware } from './middleware/audit';
-import { authorize } from './middleware/authorize';
+import { authorize } from './lib/auth/authorize';
 
 // Performance monitoring
 const performanceStart = new Map<string, number>();
@@ -34,8 +34,8 @@ export async function middleware(request: NextRequest) {
 
     // 3. Authentication and authorization for protected routes
     if (isProtectedRoute(request.nextUrl.pathname)) {
-      const authResult = await authorize()(request);
-      if (!authResult.success) {
+      const authResult = await authorize(request);
+      if (authResult.error || !authResult.user) {
         return NextResponse.json(
           { error: 'Unauthorized', message: 'Authentication required' },
           { status: 401 }

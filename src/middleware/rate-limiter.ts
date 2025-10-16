@@ -64,23 +64,23 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
     // Reset or create new entry
     requestCounts.set(key, {
       count: 1,
-      resetTime: now + config.windowMs,
+      resetTime: now + (config?.windowMs || 60000),
     });
     return null; // Allow request
   }
 
-  if (current.count >= config.maxRequests) {
+  if (current.count >= (config?.maxRequests || 100)) {
     // Rate limit exceeded
     return NextResponse.json(
       { 
-        error: config.message,
+        error: config?.message || 'Rate limit exceeded',
         retryAfter: Math.ceil((current.resetTime - now) / 1000),
       },
       { 
         status: 429,
         headers: {
           'Retry-After': Math.ceil((current.resetTime - now) / 1000).toString(),
-          'X-RateLimit-Limit': config.maxRequests.toString(),
+          'X-RateLimit-Limit': (config?.maxRequests || 100).toString(),
           'X-RateLimit-Remaining': '0',
           'X-RateLimit-Reset': new Date(current.resetTime).toISOString(),
         },
@@ -94,8 +94,8 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
 
   // Add rate limit headers
   const response = NextResponse.next();
-  response.headers.set('X-RateLimit-Limit', config.maxRequests.toString());
-  response.headers.set('X-RateLimit-Remaining', (config.maxRequests - current.count).toString());
+  response.headers.set('X-RateLimit-Limit', (config?.maxRequests || 100).toString());
+  response.headers.set('X-RateLimit-Remaining', ((config?.maxRequests || 100) - current.count).toString());
   response.headers.set('X-RateLimit-Reset', new Date(current.resetTime).toISOString());
 
   return null; // Allow request

@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { authorize, requireRole } from '@/lib/auth/authorize';
 import Stripe from 'stripe';
 
 const paymentSchema = z.object({
@@ -28,8 +28,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export async function POST(request: NextRequest) {
   try {
     // Authorize user
-    const authResult = await authorize(['patient', 'staff', 'admin'])(request);
-    if (!authResult.success) {
+    const { user: authUser, error: authError } = await authorize(request);
+    if (authError || !authUser || !requireRole(['patient', 'staff', 'admin'])(authUser)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
     }
 
     const { appointmentId, amount, currency, method, paymentData, description, metadata } = validation.data;
+    const currencyCode = currency || "SAR";
 
     // Verify appointment exists and get details
     const { data: appointment, error: appointmentError } = await supabase
@@ -72,16 +73,16 @@ export async function POST(request: NextRequest) {
     let paymentResult;
     switch (method) {
       case 'stripe':
-        paymentResult = await processStripePayment(amount, currency, paymentData, appointment);
+        paymentResult = await processStripePayment(amount, currencyCode, paymentData, appointment);
         break;
       case 'moyasar':
-        paymentResult = await processMoyasarPayment(amount, currency, paymentData, appointment);
+        paymentResult = await processMoyasarPayment(amount, currencyCode, paymentData, appointment);
         break;
       case 'cash':
-        paymentResult = await processCashPayment(amount, currency, appointment);
+        paymentResult = await processCashPayment(amount, currencyCode, appointment);
         break;
       case 'bank_transfer':
-        paymentResult = await processBankTransfer(amount, currency, appointment);
+        paymentResult = await processBankTransfer(amount, currencyCode, appointment);
         break;
       default:
         return NextResponse.json({ error: 'Invalid payment method' }, { status: 400 });
@@ -108,7 +109,7 @@ export async function POST(request: NextRequest) {
           patientId: appointment.patientId,
           doctorId: appointment.doctorId,
         },
-        processedBy: authResult.user.id,
+        processedBy: authUser.id,
       })
       .select()
       .single();
@@ -128,7 +129,7 @@ export async function POST(request: NextRequest) {
       action: 'payment_processed',
       entityType: 'payment',
       entityId: payment.id,
-      userId: authResult.user.id,
+      userId: authUser.id,
       metadata: {
         appointmentId,
         amount,
@@ -147,7 +148,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 

@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { authorize, requireRole } from '@/lib/auth/authorize';
 
 const configSchema = z.object({
   key: z.string().min(1, 'Configuration key required'),
@@ -22,8 +22,8 @@ const configSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize admin only
-    const authResult = await authorize(['admin'])(request);
-    if (!authResult.success) {
+    const { user: authUser, error: authError } = await authorize(request);
+    if (authError || !authUser || !requireRole(['admin'])(authUser)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
         description,
         isPublic,
         category,
-        updatedBy: authResult.user.id,
+        updatedBy: authUser.id,
       })
       .select()
       .single();
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
@@ -100,6 +100,6 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }

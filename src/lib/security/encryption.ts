@@ -38,15 +38,13 @@ class EncryptionManager {
     try {
       const encryptionKey = key ? Buffer.from(key, 'hex') : Buffer.from(this.masterKey, 'hex');
       const iv = this.generateIV();
-      const cipher = crypto.createCipher(this.config.algorithm, encryptionKey);
+      const cipher = crypto.createCipher(this.config.algorithm, new Uint8Array(encryptionKey));
       
       let encrypted = cipher.update(text, 'utf8', 'hex');
       encrypted += cipher.final('hex');
       
-      const authTag = cipher.getAuthTag();
-      
-      // Combine IV, authTag, and encrypted data
-      const result = iv.toString('hex') + ':' + authTag.toString('hex') + ':' + encrypted;
+      // Combine IV and encrypted data
+      const result = iv.toString('hex') + ':' + encrypted;
       
       logger.debug('Data encrypted successfully', {
         algorithm: this.config.algorithm,
@@ -65,16 +63,14 @@ class EncryptionManager {
       const encryptionKey = key ? Buffer.from(key, 'hex') : Buffer.from(this.masterKey, 'hex');
       const parts = encryptedText.split(':');
       
-      if (parts.length !== 3) {
+      if (parts.length !== 2) {
         throw new Error('Invalid encrypted data format');
       }
       
-      const iv = Buffer.from(parts[0], 'hex');
-      const authTag = Buffer.from(parts[1], 'hex');
-      const encrypted = parts[2];
+      const iv = Buffer.from(parts[0] || '', 'hex');
+      const encrypted = parts[1] || '';
       
-      const decipher = crypto.createDecipher(this.config.algorithm, encryptionKey);
-      decipher.setAuthTag(authTag);
+      const decipher = crypto.createDecipher(this.config.algorithm, new Uint8Array(encryptionKey));
       
       let decrypted = decipher.update(encrypted, 'hex', 'utf8');
       decrypted += decipher.final('utf8');
@@ -105,7 +101,7 @@ class EncryptionManager {
       
       const salt = parts[0];
       const hash = parts[1];
-      const testHash = crypto.pbkdf2Sync(text, salt, 10000, 64, 'sha512');
+      const testHash = crypto.pbkdf2Sync(text, salt || '', 10000, 64, 'sha512');
       
       return hash === testHash.toString('hex');
     } catch (error) {

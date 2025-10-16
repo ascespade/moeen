@@ -76,10 +76,10 @@ class TestUtils {
 
     const patient = {
       id: `patient_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      userId: user.id,
-      fullName: user.profile.fullName,
-      email: user.email,
-      phone: user.profile.phone,
+      userId: user?.id || '',
+      fullName: user?.profile?.fullName || '',
+      email: user?.email || '',
+      phone: user?.profile?.phone || '',
       medicalRecordNumber: `MR${Date.now()}${Math.random().toString(36).substr(2, 4)}`,
       isActivated: true,
       insuranceProvider: 'tawuniya',
@@ -106,10 +106,10 @@ class TestUtils {
 
     const doctor = {
       id: `doctor_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      userId: user.id,
-      fullName: user.profile.fullName,
-      email: user.email,
-      phone: user.profile.phone,
+      userId: user?.id || '',
+      fullName: user?.profile?.fullName || '',
+      email: user?.email || '',
+      phone: user?.profile?.phone || '',
       speciality: 'General Practice',
       licenseNumber: `DR${Date.now()}${Math.random().toString(36).substr(2, 4)}`,
       schedule: {

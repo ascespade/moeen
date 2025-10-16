@@ -145,7 +145,7 @@ export class FileUploadHandler {
   async calculateChecksum(file: File): Promise<string> {
     const buffer = await file.arrayBuffer();
     const hash = createHash("sha256");
-    hash.update(Buffer.from(buffer));
+    hash.update(new Uint8Array(buffer));
     return hash.digest("hex");
   }
 

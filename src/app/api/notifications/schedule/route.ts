@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { authorize, requireRole } from '@/lib/auth/authorize';
 
 const scheduleSchema = z.object({
   type: z.enum([
@@ -33,8 +33,8 @@ const scheduleSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize user
-    const authResult = await authorize(['staff', 'admin'])(request);
-    if (!authResult.success) {
+    const { user: authUser, error: authError } = await authorize(request);
+    if (authError || !authUser || !requireRole(['staff', 'admin'])(authUser)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate notification content
-    const content = await generateNotificationContent(type, templateData, customMessage, recipient);
+    const content = await generateNotificationContent(type, templateData, customMessage || '', recipient || '');
 
     // Create notification record
     const { data: notification, error: notificationError } = await supabase
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
         expiresAt,
         status: scheduledAt ? 'scheduled' : 'pending',
         templateData,
-        createdBy: authResult.user.id,
+        createdBy: authUser.id,
       })
       .select()
       .single();
@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
       action: 'notification_scheduled',
       entityType: 'notification',
       entityId: notification.id,
-      userId: authResult.user.id,
+      userId: authUser.id,
       metadata: {
         type,
         recipientId,
@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
@@ -161,7 +161,7 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
