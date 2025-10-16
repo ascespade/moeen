@@ -84,6 +84,10 @@ export default function AdminPage() {
     loadAdminData();
   }, []);
 
+  useEffect(() => {
+    document.title = "Admin Panel - مُعين";
+  }, []);
+
   const loadAdminData = async () => {
     try {
       setLoading(true);
@@ -243,7 +247,7 @@ export default function AdminPage() {
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card>
+          <Card data-testid="admin-summary-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Users</CardTitle>
               <Users className="h-4 w-4 text-blue-600" />
@@ -256,7 +260,7 @@ export default function AdminPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card data-testid="admin-summary-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 System Configs
@@ -271,7 +275,7 @@ export default function AdminPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card data-testid="admin-summary-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Security Events
@@ -284,7 +288,7 @@ export default function AdminPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card data-testid="admin-summary-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Failed Logins
@@ -324,6 +328,7 @@ export default function AdminPage() {
                     {users.map((user) => (
                       <div
                         key={user.id}
+                        data-testid="user-item"
                         className="flex items-center justify-between p-3 border rounded-lg"
                       >
                         <div className="flex items-center gap-3">
@@ -452,7 +457,7 @@ export default function AdminPage() {
               <CardContent>
                 <div className="space-y-4">
                   {configs.map((config) => (
-                    <div key={config.id} className="p-4 border rounded-lg">
+                    <div key={config.id} data-testid="config-item" className="p-4 border rounded-lg">
                       <div className="flex items-center justify-between mb-2">
                         <div>
                           <div className="font-medium">{config.key}</div>

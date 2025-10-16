@@ -13,7 +13,7 @@ test.describe("Dashboard", () => {
 
   test("should display dashboard header and navigation", async ({ page }) => {
     // Check page title
-    await expect(page).toHaveTitle(/Dashboard/);
+    await expect(page).toHaveTitle(/Dashboard - مُعين/);
 
     // Check header elements
     await expect(page.locator("h1")).toContainText("System Dashboard");

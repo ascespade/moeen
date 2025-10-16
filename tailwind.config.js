@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const { BRAND_COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS, BREAKPOINTS, Z_INDEX, ANIMATION, RTL } = require('./src/design-system/tokens');
+const { DESIGN_TOKENS } = require('./src/design-system/unified');
 
 module.exports = {
   content: [
@@ -11,26 +11,38 @@ module.exports = {
   theme: {
     extend: {
       // Font families from design system
-      fontFamily: TYPOGRAPHY.fontFamily,
+      fontFamily: DESIGN_TOKENS.typography.fontFamily,
       
       // Spacing from design system
-      spacing: SPACING,
+      spacing: DESIGN_TOKENS.spacing,
       
       // Container configuration
       container: {
         center: true,
         padding: {
-          DEFAULT: SPACING[4],
-          sm: SPACING[4],
-          md: SPACING[5],
-          lg: SPACING[6],
-          xl: SPACING[8],
+          DEFAULT: DESIGN_TOKENS.spacing[4],
+          sm: DESIGN_TOKENS.spacing[4],
+          md: DESIGN_TOKENS.spacing[5],
+          lg: DESIGN_TOKENS.spacing[6],
+          xl: DESIGN_TOKENS.spacing[8],
         },
-        screens: BREAKPOINTS,
+        screens: {
+          sm: '640px',
+          md: '768px',
+          lg: '1024px',
+          xl: '1280px',
+          '2xl': '1536px',
+        },
       },
       
       // Breakpoints from design system
-      screens: BREAKPOINTS,
+      screens: {
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px',
+      },
       // Colors from design system
       colors: {
         // Brand colors (Solid brand colors)
@@ -54,10 +66,9 @@ module.exports = {
         panel: "var(--panel)",
         
         // Design system color palettes (Solid brand colors)
-        orange: BRAND_COLORS.primary,
-        brown: BRAND_COLORS.secondary,
-        beige: BRAND_COLORS.neutral_beige,
-        neutral: BRAND_COLORS.neutral,
+        orange: DESIGN_TOKENS.colors.primary,
+        brown: DESIGN_TOKENS.colors.secondary,
+        neutral: DESIGN_TOKENS.colors.neutral,
         
         // Legacy color mappings - map to orange (primary)
         blue: {
@@ -98,26 +109,24 @@ module.exports = {
         },
       },
       // Typography from design system
-      fontSize: TYPOGRAPHY.fontSize,
-      fontWeight: TYPOGRAPHY.fontWeight,
-      letterSpacing: TYPOGRAPHY.letterSpacing,
-      lineHeight: TYPOGRAPHY.lineHeight,
+      fontSize: DESIGN_TOKENS.typography.fontSize,
+      fontWeight: DESIGN_TOKENS.typography.fontWeight,
+      lineHeight: DESIGN_TOKENS.typography.lineHeight,
       
       // Border radius from design system
-      borderRadius: BORDER_RADIUS,
+      borderRadius: DESIGN_TOKENS.borderRadius,
       
       // Shadows from design system
-      boxShadow: SHADOWS,
+      boxShadow: DESIGN_TOKENS.shadows,
       
       // Z-index from design system
-      zIndex: Z_INDEX,
+      zIndex: DESIGN_TOKENS.zIndex,
       
       // Animation from design system
       animation: {
         "fade-in-up": "fadeInUp 0.6s ease-out",
         "slide-in-right": "slideInRight 0.6s ease-out",
         "pulse-soft": "pulse 2s infinite",
-        ...ANIMATION.duration,
       },
       
       // Keyframes

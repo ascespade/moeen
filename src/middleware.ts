@@ -86,6 +86,7 @@ function isProtectedRoute(pathname: string): boolean {
     '/api/notifications',
     '/api/reports',
     '/api/chatbot',
+    '/dashboard',
   ];
 
   return protectedRoutes.some(route => pathname.startsWith(route));
