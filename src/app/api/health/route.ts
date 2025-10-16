@@ -127,7 +127,7 @@ async function checkDatabase(): Promise<ServiceStatus> {
   const startTime = Date.now();
   
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from('users')
       .select('id')
@@ -161,7 +161,7 @@ async function checkStorage(): Promise<ServiceStatus> {
   const startTime = Date.now();
   
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data, error } = await supabase.storage
       .from('medical-files')
       .list('', { limit: 1 });
@@ -194,7 +194,7 @@ async function checkAuth(): Promise<ServiceStatus> {
   const startTime = Date.now();
   
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data, error } = await supabase.auth.getSession();
     
     const responseTime = Date.now() - startTime;

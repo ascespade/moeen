@@ -85,7 +85,7 @@ export default function PatientsPage() {
   const [selectedPatient, setSelectedPatient] = useState<PatientWithStats | null>(null);
   const [showDetails, setShowDetails] = useState(false);
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Load patients from database
   useEffect(() => {

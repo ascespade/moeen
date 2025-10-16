@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const auditQuerySchema = z.object({
   action: z.string().optional(),
@@ -23,12 +23,12 @@ const auditQuerySchema = z.object({
 export async function GET(request: NextRequest) {
   try {
     // Authorize supervisor or admin
-    const authResult = await authorize(['supervisor', 'admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['supervisor', 'admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     
     const validation = ValidationHelper.validate(auditQuerySchema, {
@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: validation.error.message }, { status: 400 });
     }
 
-    const { action, entityType, userId, startDate, endDate, page, limit } = validation.data;
+    const { action, entityType, userId, startDate, endDate, page, limit } = validation.data!;
 
     let query = supabase
       .from('audit_logs')
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
         user:users(id, email, fullName, role)
       `)
       .order('createdAt', { ascending: false })
-      .range((page - 1) * limit, page * limit - 1);
+      .range((page! - 1) * limit, page! * limit - 1);
 
     if (action) {
       query = query.eq('action', action);
@@ -90,6 +90,6 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }

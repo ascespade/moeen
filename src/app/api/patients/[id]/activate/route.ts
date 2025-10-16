@@ -18,7 +18,7 @@ export async function POST(
       return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const patientId = params.id;
 
     // Check if patient exists
@@ -88,7 +88,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const patientId = params.id;
 
     // Get patient activation status

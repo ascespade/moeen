@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const claimSchema = z.object({
   appointmentId: z.string().uuid('Invalid appointment ID'),
@@ -34,12 +34,12 @@ const updateClaimSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize staff, supervisor, or admin
-    const authResult = await authorize(['staff', 'supervisor', 'admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const body = await request.json();
 
     // Validate input
@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
         priority,
         claimReference,
         status: 'draft',
-        createdBy: authResult.user.id,
+        createdBy: authResult.user!.id,
       })
       .select()
       .single();
@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
       action: 'insurance_claim_created',
       entityType: 'insurance_claim',
       entityId: claim.id,
-      userId: authResult.user.id,
+      userId: authResult.user!.id,
       metadata: {
         appointmentId,
         provider,
@@ -155,19 +155,19 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 export async function GET(request: NextRequest) {
   try {
     // Authorize staff, supervisor, or admin
-    const authResult = await authorize(['staff', 'supervisor', 'admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
     const provider = searchParams.get('provider');
@@ -218,19 +218,19 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 export async function PUT(request: NextRequest) {
   try {
     // Authorize supervisor or admin only
-    const authResult = await authorize(['supervisor', 'admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['supervisor', 'admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const claimId = searchParams.get('claimId');
     
@@ -253,7 +253,7 @@ export async function PUT(request: NextRequest) {
       .from('insurance_claims')
       .update({
         ...updateData,
-        updatedBy: authResult.user.id,
+        updatedBy: authResult.user!.id,
         updatedAt: new Date().toISOString(),
       })
       .eq('id', claimId)
@@ -269,7 +269,7 @@ export async function PUT(request: NextRequest) {
       action: 'insurance_claim_updated',
       entityType: 'insurance_claim',
       entityId: claimId,
-      userId: authResult.user.id,
+      userId: authResult.user!.id,
       metadata: updateData,
     });
 
@@ -280,7 +280,7 @@ export async function PUT(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 

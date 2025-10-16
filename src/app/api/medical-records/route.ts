@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '20');
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     let query = supabase
       .from('medical_records')
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
 
     const { patientId, recordType, title, content, attachments = [] } = validation.data;
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // Check if patient exists and user has permission
     const { data: patient, error: patientError } = await supabase

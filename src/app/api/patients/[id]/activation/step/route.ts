@@ -13,7 +13,7 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const patientId = params.id;
     const { stepId, completed } = await request.json();
 
@@ -100,7 +100,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const patientId = params.id;
 
     // Get patient activation steps

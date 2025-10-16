@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // Get patient details
     const { data: patient, error: patientError } = await supabase

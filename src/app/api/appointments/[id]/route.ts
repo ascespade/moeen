@@ -14,7 +14,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const appointmentId = params.id;
 
     const { data: appointment, error: appointmentError } = await supabase
@@ -97,7 +97,7 @@ export async function PATCH(
       }, { status: 400 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const appointmentId = params.id;
 
     // Get current appointment

@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const configSchema = z.object({
   key: z.string().min(1, 'Configuration key required'),
@@ -22,12 +22,12 @@ const configSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize admin only
-    const authResult = await authorize(['admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const body = await request.json();
 
     // Validate input
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
         description,
         isPublic,
         category,
-        updatedBy: authResult.user.id,
+        updatedBy: authResult.user!.id,
       })
       .select()
       .single();
@@ -64,13 +64,13 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category');
     const isPublic = searchParams.get('isPublic') === 'true';
@@ -100,6 +100,6 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }

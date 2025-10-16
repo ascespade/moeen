@@ -278,7 +278,7 @@ const translationKeys = {
 };
 
 async function seedTranslations() {
-  const supabase = createClient();
+  const supabase = await createClient();
   
   try {
     logger.info('🌱 Starting comprehensive translation seeding...');

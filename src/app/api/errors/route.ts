@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   try {
     const errorData = await request.json();
     
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // Store error in database
     const { error } = await supabase
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50');
     const offset = parseInt(searchParams.get('offset') || '0');
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     const { data: errors, error } = await supabase
       .from('error_logs')

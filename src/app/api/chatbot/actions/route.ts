@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { authorize } from '@/middleware/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 import { FlowManager, IntentAnalyzer, ActionExecutor } from '@/lib/conversation-flows';
 
 const actionSchema = z.object({
@@ -38,12 +38,12 @@ const actionSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize user
-    const authResult = await authorize(['patient', 'doctor', 'staff', 'admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['patient', 'doctor', 'staff', 'admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const body = await request.json();
 
     // Validate input
@@ -61,8 +61,8 @@ export async function POST(request: NextRequest) {
 
     // Execute the action
     const result = await flowManager.executeAction(action, parameters, {
-      userId: authResult.user.id,
-      userRole: authResult.user.role,
+      userId: authResult.user!.id,
+      userRole: authResult.user!.role,
       conversationId,
       ...context,
     });
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
       action,
       parameters,
       context,
-      userId: authResult.user.id,
+      userId: authResult.user!.id,
       conversationId,
       result: result.success ? 'success' : 'error',
       errorMessage: result.error,
@@ -87,19 +87,19 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
 export async function GET(request: NextRequest) {
   try {
     // Authorize user
-    const authResult = await authorize(['patient', 'doctor', 'staff', 'admin'])(request);
-    if (!authResult.success) {
+    const authResult = await requireAuth(['patient', 'doctor', 'staff', 'admin'])(request);
+    if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const conversationId = searchParams.get('conversationId');
     const action = searchParams.get('action');
@@ -112,7 +112,7 @@ export async function GET(request: NextRequest) {
         *,
         user:users(id, email, fullName, role)
       `)
-      .eq('userId', authResult.user.id)
+      .eq('userId', authResult.user!.id)
       .order('executedAt', { ascending: false })
       .range((page - 1) * limit, page * limit - 1);
 
@@ -141,7 +141,7 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 

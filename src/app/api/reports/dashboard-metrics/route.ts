@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     const startDate = searchParams.get('startDate');
     const endDate = searchParams.get('endDate');
 
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // Calculate date range
     const end = endDate ? new Date(endDate) : new Date();

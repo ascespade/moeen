@@ -17,7 +17,7 @@ const availabilitySchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     
     const validation = ValidationHelper.validate(availabilitySchema, {
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: validation.error.message }, { status: 400 });
     }
 
-    const { doctorId, date, duration } = validation.data;
+    const { doctorId, date, duration } = validation.data!;
 
     // Get doctor's schedule
     const { data: doctor, error: doctorError } = await supabase
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Generate time slots
-    const slots = generateTimeSlots(schedule.startTime, schedule.endTime, duration);
+    const slots = generateTimeSlots(schedule.startTime, schedule.endTime, duration!);
     
     // Check existing appointments
     const { data: existingAppointments } = await supabase
@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
     // Filter out occupied slots
     const availableSlots = slots.filter(slot => {
       const slotStart = new Date(`${date}T${slot.time}`);
-      const slotEnd = new Date(slotStart.getTime() + duration * 60000);
+      const slotEnd = new Date(slotStart.getTime() + duration! * 60000);
       
       return !existingAppointments?.some(apt => {
         const aptStart = new Date(apt.scheduledAt);
@@ -91,12 +91,12 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.handle(error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
-function generateTimeSlots(startTime: string, endTime: string, duration: number) {
-  const slots = [];
+function generateTimeSlots(startTime: string, endTime: string, duration: number): Array<{time: string, available: boolean}> {
+  const slots: Array<{time: string, available: boolean}> = [];
   const start = timeToMinutes(startTime);
   const end = timeToMinutes(endTime);
   
@@ -112,7 +112,7 @@ function generateTimeSlots(startTime: string, endTime: string, duration: number)
 
 function timeToMinutes(time: string): number {
   const [hours, minutes] = time.split(':').map(Number);
-  return hours * 60 + minutes;
+  return (hours || 0) * 60 + (minutes || 0);
 }
 
 function minutesToTime(minutes: number): string {
