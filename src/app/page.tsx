@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ROUTES } from "@/constants/routes";
-
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -194,6 +194,7 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="flex items-center gap-3">
+              <ThemeSwitcher size="sm" />
               <Link href={ROUTES.LOGIN} className="btn btn-outline">
                 تسجيل الدخول
               </Link>

@@ -1,12 +1,7 @@
-/* Import centralized styles */
-@import url("../styles/centralized.css");
-
-/* Import design system styles */
-@import url("../styles/design-system.css");
+/* Import unified styling system */
+@import url("../styles/unified.css");
 
 /* Import accessibility styles */
 @import url("../styles/accessibility.css");
 
 /* Additional global overrides if needed */
-
-/* This file should be minimal and only contain overrides */

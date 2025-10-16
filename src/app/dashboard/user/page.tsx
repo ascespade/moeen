@@ -1,10 +1,3 @@
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Dashboard - مُعين",
-  description: "User dashboard for healthcare management",
-};
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -33,6 +26,10 @@ export default function UserDashboard() {
       return;
     }
   }, [isAuthenticated, isLoading, router]);
+
+  useEffect(() => {
+    document.title = "Dashboard - مُعين";
+  }, []);
 
   if (isLoading) {
     return (

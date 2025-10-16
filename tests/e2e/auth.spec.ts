@@ -42,14 +42,14 @@ test.describe('Authentication Module', () => {
       await page.getByRole('button', { name: /تسجيل الدخول/ }).click();
 
       // Should redirect to dashboard
-      await page.waitForURL('/dashboard');
+      await page.waitForURL('/dashboard/user');
     });
 
     test('should handle quick test login', async ({ page }) => {
       await page.getByRole('button', { name: /تسجيل دخول سريع/ }).click();
       
       // Should redirect to dashboard
-      await page.waitForURL('/dashboard');
+      await page.waitForURL('/dashboard/user');
     });
 
     test('should show loading state during submission', async ({ page }) => {
@@ -59,7 +59,7 @@ test.describe('Authentication Module', () => {
       await page.getByRole('button', { name: /تسجيل الدخول/ }).click();
       
       // Check loading state
-      await expect(page.getByText('جارٍ تسجيل الدخول...')).toBeVisible();
+      await expect(page.getByRole('button', { name: 'جارٍ تسجيل الدخول...' }).first()).toBeVisible();
     });
 
     test('should navigate to forgot password page', async ({ page }) => {

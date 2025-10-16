@@ -1,10 +1,9 @@
 import { Cairo, Inter } from "next/font/google";
-import "./globals.css";
+import "../styles/unified.css";
 import type { Metadata } from "next";
 import UIProvider from "@/components/providers/UIProvider";
 import I18nProvider from "@/components/providers/I18nProvider";
-import { DesignSystemProvider } from "@/components/providers/DesignSystemProvider";
-import { ThemeProvider } from "@/context/ThemeContext";
+import { UnifiedThemeProvider } from "@/context/UnifiedThemeProvider";
 
 export const metadata: Metadata = {
   title: "مُعين",
@@ -34,13 +33,11 @@ export default function RootLayout({
         className={`${cairo.variable} ${inter.variable} antialiased`}
         suppressHydrationWarning
       >
-        <DesignSystemProvider>
-          <ThemeProvider>
-            <I18nProvider>
-              <UIProvider>{children}</UIProvider>
-            </I18nProvider>
-          </ThemeProvider>
-        </DesignSystemProvider>
+        <UnifiedThemeProvider>
+          <I18nProvider>
+            <UIProvider>{children}</UIProvider>
+          </I18nProvider>
+        </UnifiedThemeProvider>
       </body>
     </html>
   );
