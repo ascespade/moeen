@@ -109,7 +109,7 @@ export default function PatientsPage() {
 
         // Transform data to include stats
         const patientsWithStats: PatientWithStats[] = (patientsData || []).map(
-          (patient) => ({
+          (patient: any) => ({
             ...patient,
             name: `${patient.first_name} ${patient.last_name}`,
             age: patient.date_of_birth

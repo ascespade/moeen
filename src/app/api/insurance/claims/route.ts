@@ -155,7 +155,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+        return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -218,7 +218,7 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+        return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -280,7 +280,7 @@ export async function PUT(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+        return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -297,7 +297,7 @@ async function submitToInsuranceProvider(claim: any, provider: string) {
       other: null,
     };
 
-    const endpoint = providerEndpoints[provider];
+    const endpoint = (providerEndpoints as any)[provider];
     
     if (!endpoint) {
       return {

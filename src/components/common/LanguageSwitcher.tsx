@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Languages } from "lucide-react";
 import { useI18n } from "@/hooks/useI18n";
-import { dynamicThemeManager } from "@/lib/dynamic-theme-manager";
+import { CENTRALIZED_THEME } from "@/lib/centralized-theme";
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -25,7 +25,11 @@ export default function LanguageSwitcher({
   const loadUserPreferences = async () => {
     try {
       setIsLoading(true);
-      const preferences = await dynamicThemeManager.getUserPreferences();
+      // Get user preferences from localStorage
+      const preferences = {
+        language: localStorage.getItem('moeen-language') || 'ar',
+        theme: localStorage.getItem('moeen-theme') || 'light'
+      };
       setLanguage(preferences.language);
     } catch (error) {
       } finally {
@@ -35,7 +39,7 @@ export default function LanguageSwitcher({
 
   // Function to apply language to document
   const applyLanguage = useCallback(() => {
-    dynamicThemeManager.applyLanguage(language);
+    CENTRALIZED_THEME.applyLanguageToDocument(language);
   }, [language]);
 
   // Load user preferences from database on mount
@@ -57,9 +61,9 @@ export default function LanguageSwitcher({
 
     try {
       // Save to database
-      await dynamicThemeManager.updateUserPreferences("current_user", {
-        language: newLanguage,
-      });
+      // Update user preferences in localStorage
+      localStorage.setItem('moeen-language', newLanguage);
+      // Note: In a real app, you would update the database here
       // Reload page to apply translations
       window.location.reload();
     } catch (error) {

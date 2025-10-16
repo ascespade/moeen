@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useT } from '@/hooks/useT';
+import { useT } from '@/components/providers/I18nProvider';
 import { useTheme } from '@/context/ThemeContext';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { Card } from '@/components/ui/Card';
@@ -54,7 +54,12 @@ export default function PatientDashboard() {
   useEffect(() => {
     const fetchPatientData = async () => {
       try {
-        const response = await fetch('/api/patients/me');
+        const response = await fetch('/api/patients/me', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
+            'Content-Type': 'application/json',
+          },
+        });
         if (response.ok) {
           const data = await response.json();
           setPatientData(data);

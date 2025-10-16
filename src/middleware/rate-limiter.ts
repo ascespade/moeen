@@ -1,9 +1,10 @@
 /**
  * Rate Limiter Middleware - حد معدل الطلبات
- * Rate limiting for API endpoints
+ * Rate limiting for API endpoints with Redis support
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { logger } from '@/lib/logger';
 
 interface RateLimitConfig {
   windowMs: number;
@@ -39,9 +40,33 @@ const rateLimitConfigs: Record<string, RateLimitConfig> = {
   },
 };
 
+// In-memory fallback for when Redis is not available
 const requestCounts = new Map<string, { count: number; resetTime: number }>();
 
-export function rateLimiter(request: NextRequest): NextResponse | null {
+// Redis client (will be initialized if REDIS_URL is available)
+let redisClient: any = null;
+
+// Initialize Redis client if available
+async function initRedis() {
+  if (redisClient) return redisClient;
+  
+  try {
+    const { createClient } = await import('redis');
+    const redisUrl = process.env.REDIS_URL;
+    
+    if (redisUrl) {
+      redisClient = createClient({ url: redisUrl });
+      await redisClient.connect();
+      logger.info('Redis connected for rate limiting');
+    }
+  } catch (error) {
+    logger.warn('Redis not available, using in-memory rate limiting', error);
+  }
+  
+  return redisClient;
+}
+
+export async function rateLimiter(request: NextRequest): Promise<NextResponse | null> {
   const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
   const pathname = request.nextUrl.pathname;
   
@@ -57,7 +82,60 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
   }
 
   const now = Date.now();
-  const key = `${ip}:${pathname}`;
+  const key = `rate_limit:${ip}:${pathname}`;
+  
+  try {
+    const redis = await initRedis();
+    
+    if (redis) {
+      // Use Redis for distributed rate limiting
+      const current = await redis.get(key);
+      const resetTime = now + (config?.windowMs || 60000);
+      
+      if (!current) {
+        // First request in window
+        await redis.setEx(key, Math.ceil((config?.windowMs || 60000) / 1000), '1');
+        return null; // Allow request
+      }
+      
+      const count = parseInt(current);
+      if (count >= (config?.maxRequests || 100)) {
+        // Rate limit exceeded
+        const ttl = await redis.ttl(key);
+        return NextResponse.json(
+          { 
+            error: config?.message || 'Rate limit exceeded',
+            retryAfter: ttl,
+          },
+          { 
+            status: 429,
+            headers: {
+              'Retry-After': ttl.toString(),
+              'X-RateLimit-Limit': (config?.maxRequests || 100).toString(),
+              'X-RateLimit-Remaining': '0',
+              'X-RateLimit-Reset': new Date(now + ttl * 1000).toISOString(),
+            },
+          }
+        );
+      }
+      
+      // Increment count
+      await redis.incr(key);
+      
+      // Add rate limit headers
+      const response = NextResponse.next();
+      const remaining = (config?.maxRequests || 100) - count - 1;
+      response.headers.set('X-RateLimit-Limit', (config?.maxRequests || 100).toString());
+      response.headers.set('X-RateLimit-Remaining', remaining.toString());
+      response.headers.set('X-RateLimit-Reset', new Date(resetTime).toISOString());
+      
+      return null; // Allow request
+    }
+  } catch (error) {
+    logger.warn('Redis rate limiting failed, falling back to in-memory', error);
+  }
+  
+  // Fallback to in-memory rate limiting
   const current = requestCounts.get(key);
 
   if (!current || now > current.resetTime) {
@@ -110,3 +188,6 @@ setInterval(() => {
     }
   }
 }, 5 * 60 * 1000); // Clean up every 5 minutes
+
+// Export for use in main middleware
+export { rateLimiter as rateLimitMiddleware };

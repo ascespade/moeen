@@ -34,10 +34,18 @@ export async function middleware(request: NextRequest) {
 
     // 3. Authentication and authorization for protected routes
     if (isProtectedRoute(request.nextUrl.pathname)) {
-      const authResult = await authorize(request);
-      if (authResult.error || !authResult.user) {
+      try {
+        const authResult = await authorize(request);
+        if (authResult.error || !authResult.user) {
+          return NextResponse.json(
+            { error: 'Unauthorized', message: 'Authentication required' },
+            { status: 401 }
+          );
+        }
+      } catch (error) {
+        console.error('Auth middleware error:', error);
         return NextResponse.json(
-          { error: 'Unauthorized', message: 'Authentication required' },
+          { error: 'Authentication failed', message: 'Unable to verify authentication' },
           { status: 401 }
         );
       }
@@ -85,6 +93,20 @@ function isProtectedRoute(pathname: string): boolean {
     '/api/reports',
     '/api/chatbot',
   ];
+
+  // Skip auth for public API routes
+  const publicRoutes = [
+    '/api/auth/login',
+    '/api/auth/register',
+    '/api/auth/forgot-password',
+    '/api/auth/reset-password',
+    '/api/health',
+    '/api/test',
+  ];
+
+  if (publicRoutes.some(route => pathname.startsWith(route))) {
+    return false;
+  }
 
   return protectedRoutes.some(route => pathname.startsWith(route));
 }

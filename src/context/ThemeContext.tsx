@@ -1,184 +1,295 @@
 /**
- * Theme Context - سياق الثيم
- * Provides theme management with RTL compatibility and persistence
+ * THEME CONTEXT - سياق الثيم
+ * ==========================
+ * 
+ * React context for managing theme state across the application
+ * سياق React لإدارة حالة الثيم في التطبيق
  */
 
-'use client';
+"use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { 
+  Theme, 
+  ResolvedTheme, 
+  Language, 
+  Direction,
+  CENTRALIZED_THEME,
+  resolveTheme,
+  applyThemeToDocument,
+  applyLanguageToDocument,
+  getStoredTheme,
+  storeTheme,
+  getStoredLanguage,
+  storeLanguage,
+  getSystemTheme
+} from '@/lib/centralized-theme';
 
-type Theme = 'light' | 'dark' | 'system';
-type ResolvedTheme = 'light' | 'dark';
+// ========================================
+// CONTEXT TYPES - أنواع السياق
+// ========================================
 
-interface ThemeContextType {
+interface ThemeContextValue {
+  // Theme state - حالة الثيم
   theme: Theme;
   resolvedTheme: ResolvedTheme;
   setTheme: (theme: Theme) => void;
+  
+  // Language state - حالة اللغة
+  language: Language;
+  direction: Direction;
+  setLanguage: (language: Language) => void;
+  
+  // Loading state - حالة التحميل
+  isLoading: boolean;
+  
+  // Theme utilities - أدوات الثيم
   toggleTheme: () => void;
   isDark: boolean;
   isLight: boolean;
   isSystem: boolean;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+// ========================================
+// CONTEXT CREATION - إنشاء السياق
+// ========================================
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<Theme>('system');
-  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>('light');
-  const [mounted, setMounted] = useState(false);
+const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-  // Load theme from localStorage on mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme;
-    if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
-      setThemeState(savedTheme);
-    }
-  }, []);
+// ========================================
+// PROVIDER PROPS - خصائص المزود
+// ========================================
 
-  // Resolve theme based on system preference
-  useEffect(() => {
-    const resolveTheme = (): ResolvedTheme => {
-      if (theme === 'system') {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      return theme as ResolvedTheme;
-    };
+interface ThemeProviderProps {
+  children: ReactNode;
+  defaultTheme?: Theme;
+  defaultLanguage?: Language;
+  enableSystemTheme?: boolean;
+  enableLanguageSwitching?: boolean;
+  enableThemeTransition?: boolean;
+}
 
-    const updateResolvedTheme = () => {
-      setResolvedTheme(resolveTheme());
-    };
+// ========================================
+// THEME PROVIDER - مزود الثيم
+// ========================================
 
-    // Initial resolution
-    updateResolvedTheme();
+export function ThemeProvider({
+  children,
+  defaultTheme = 'light',
+  defaultLanguage = 'ar',
+  enableSystemTheme = true,
+  enableLanguageSwitching = true,
+  enableThemeTransition = true,
+}: ThemeProviderProps) {
+  // State management - إدارة الحالة
+  const [theme, setThemeState] = useState<Theme>(defaultTheme);
+  const [language, setLanguageState] = useState<Language>(defaultLanguage);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-    // Listen for system theme changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    mediaQuery.addEventListener('change', updateResolvedTheme);
+  // Resolved theme - الثيم المحلول
+  const resolvedTheme = resolveTheme(theme);
+  const direction: Direction = language === 'ar' ? 'rtl' : 'ltr';
 
-    return () => {
-      mediaQuery.removeEventListener('change', updateResolvedTheme);
-    };
-  }, [theme]);
+  // Computed values - القيم المحسوبة
+  const isDark = resolvedTheme === 'dark';
+  const isLight = resolvedTheme === 'light';
+  const isSystem = theme === 'system';
 
-  // Apply theme to document and CSS variables
-  useEffect(() => {
-    const root = document.documentElement;
-    
-    // Set theme attribute for CSS selectors
-    root.setAttribute('data-theme', resolvedTheme);
-    
-    // Apply CSS variables based on theme
-    if (resolvedTheme === 'dark') {
-      root.classList.add('dark');
-      root.classList.remove('light');
-      
-      // Apply dark mode CSS variables
-      Object.entries({
-        '--background': '#0d1117',
-        '--foreground': '#e5eef7',
-        '--brand-primary': '#E46C0A',
-        '--brand-primary-hover': '#D45F08',
-        '--brand-secondary': '#6B4E16',
-        '--brand-neutral-beige': '#2A2520',
-        '--brand-accent': '#007bff',
-        '--brand-accent-deep': '#C93C00',
-        '--brand-success': '#00b39b',
-        '--brand-warning': '#fbbf24',
-        '--brand-error': '#f87171',
-        '--brand-border': '#1f2937',
-        '--brand-surface': '#0d1117',
-        '--panel': '#111827',
-        '--focus-ring': '#007bff',
-      }).forEach(([property, value]) => {
-        root.style.setProperty(property, value);
-      });
-    } else {
-      root.classList.add('light');
-      root.classList.remove('dark');
-      
-      // Apply light mode CSS variables
-      Object.entries({
-        '--background': '#ffffff',
-        '--foreground': '#0f172a',
-        '--brand-primary': '#E46C0A',
-        '--brand-primary-hover': '#D45F08',
-        '--brand-secondary': '#6B4E16',
-        '--brand-neutral-beige': '#F2E7DC',
-        '--brand-accent': '#007bff',
-        '--brand-accent-deep': '#C93C00',
-        '--brand-success': '#009688',
-        '--brand-warning': '#f59e0b',
-        '--brand-error': '#ef4444',
-        '--brand-border': '#e5e7eb',
-        '--brand-surface': '#f9fafb',
-        '--panel': '#ffffff',
-        '--focus-ring': '#007bff',
-      }).forEach(([property, value]) => {
-        root.style.setProperty(property, value);
-      });
-    }
+  // ========================================
+  // THEME FUNCTIONS - دوال الثيم
+  // ========================================
 
-    // Apply RTL support
-    const direction = document.documentElement.getAttribute('dir') || 'rtl';
-    root.setAttribute('dir', direction);
-    
-  }, [resolvedTheme]);
-
-  const setTheme = useCallback((newTheme: Theme) => {
+  const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    localStorage.setItem('theme', newTheme);
-  }, []);
+    storeTheme(newTheme);
+    
+    if (enableThemeTransition) {
+      // Apply theme with transition
+      applyThemeToDocument(resolveTheme(newTheme));
+    }
+  };
 
-  const toggleTheme = useCallback(() => {
-    if (theme === 'light') {
-      setTheme('dark');
-    } else if (theme === 'dark') {
+  const setLanguage = (newLanguage: Language) => {
+    setLanguageState(newLanguage);
+    storeLanguage(newLanguage);
+    applyLanguageToDocument(newLanguage);
+  };
+
+  const toggleTheme = () => {
+    if (isDark) {
+      setTheme('light');
+    } else if (isLight) {
       setTheme('system');
     } else {
-      setTheme('light');
+      setTheme('dark');
     }
-  }, [theme, setTheme]);
+  };
 
-  const value: ThemeContextType = {
+  // ========================================
+  // EFFECTS - التأثيرات
+  // ========================================
+
+  // Initialize theme and language - تهيئة الثيم واللغة
+  useEffect(() => {
+    const initializeTheme = async () => {
+      try {
+        // Get stored preferences - الحصول على التفضيلات المحفوظة
+        const storedTheme = getStoredTheme();
+        const storedLanguage = getStoredLanguage();
+        
+        // Set initial theme - تعيين الثيم الأولي
+        if (storedTheme) {
+          setThemeState(storedTheme);
+        }
+        
+        // Set initial language - تعيين اللغة الأولية
+        if (storedLanguage) {
+          setLanguageState(storedLanguage);
+        }
+        
+        // Apply initial theme - تطبيق الثيم الأولي
+        const initialTheme = storedTheme || defaultTheme;
+        const resolvedInitialTheme = resolveTheme(initialTheme);
+        applyThemeToDocument(resolvedInitialTheme);
+        
+        // Apply initial language - تطبيق اللغة الأولية
+        const initialLanguage = storedLanguage || defaultLanguage;
+        applyLanguageToDocument(initialLanguage);
+        
+        setIsInitialized(true);
+      } catch (error) {
+        console.error('Failed to initialize theme:', error);
+        // Fallback to defaults - العودة للقيم الافتراضية
+        applyThemeToDocument(resolveTheme(defaultTheme));
+        applyLanguageToDocument(defaultLanguage);
+        setIsInitialized(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeTheme();
+  }, [defaultTheme, defaultLanguage]);
+
+  // Apply theme changes - تطبيق تغييرات الثيم
+  useEffect(() => {
+    if (isInitialized) {
+      applyThemeToDocument(resolvedTheme);
+    }
+  }, [resolvedTheme, isInitialized]);
+
+  // Apply language changes - تطبيق تغييرات اللغة
+  useEffect(() => {
+    if (isInitialized) {
+      applyLanguageToDocument(language);
+    }
+  }, [language, isInitialized]);
+
+  // Listen for system theme changes - الاستماع لتغييرات ثيم النظام
+  useEffect(() => {
+    if (!enableSystemTheme || theme !== 'system') return;
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    const handleChange = () => {
+      if (theme === 'system') {
+        applyThemeToDocument(getSystemTheme());
+      }
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, [theme, enableSystemTheme]);
+
+  // ========================================
+  // CONTEXT VALUE - قيمة السياق
+  // ========================================
+
+  const contextValue: ThemeContextValue = {
+    // Theme state
+    theme,
+    resolvedTheme,
+    setTheme,
+    
+    // Language state
+    language,
+    direction,
+    setLanguage,
+    
+    // Loading state
+    isLoading,
+    
+    // Theme utilities
+    toggleTheme,
+    isDark,
+    isLight,
+    isSystem,
+  };
+
+  // ========================================
+  // RENDER - العرض
+  // ========================================
+
+  return (
+    <ThemeContext.Provider value={contextValue}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+// ========================================
+// HOOKS - الخطافات
+// ========================================
+
+/**
+ * Use theme context hook
+ * خطاف استخدام سياق الثيم
+ */
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  
+  return context;
+}
+
+/**
+ * Use theme hook (simplified)
+ * خطاف استخدام الثيم (مبسط)
+ */
+export function useThemeState() {
+  const { theme, resolvedTheme, setTheme, toggleTheme, isDark, isLight, isSystem } = useTheme();
+  
+  return {
     theme,
     resolvedTheme,
     setTheme,
     toggleTheme,
-    isDark: resolvedTheme === 'dark',
-    isLight: resolvedTheme === 'light',
-    isSystem: theme === 'system',
+    isDark,
+    isLight,
+    isSystem,
   };
+}
 
-  // Prevent hydration mismatch by not rendering until mounted
-  if (!mounted) {
-    return (
-      <ThemeContext.Provider value={{
-        theme: 'system',
-        resolvedTheme: 'light',
-        setTheme: () => {},
-        toggleTheme: () => {},
-        isDark: false,
-        isLight: true,
-        isSystem: true,
-      }}>
-        {children}
-      </ThemeContext.Provider>
-    );
-  }
+/**
+ * Use language hook
+ * خطاف استخدام اللغة
+ */
+export function useLanguage() {
+  const { language, direction, setLanguage } = useTheme();
+  
+  return {
+    language,
+    direction,
+    setLanguage,
+  };
+}
 
-  return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
-  );
-};
+// ========================================
+// EXPORTS - التصدير
+// ========================================
 
-export const useTheme = (): ThemeContextType => {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-};
-
-export default useTheme;
+export default ThemeProvider;

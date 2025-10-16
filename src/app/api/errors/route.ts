@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { logger } from '@/lib/logger';
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,7 +22,12 @@ export async function POST(request: NextRequest) {
       });
 
     if (error) {
-      }
+      logger.error('Failed to store error log:', error);
+      return NextResponse.json(
+        { error: 'Failed to store error log' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({ success: true });
 

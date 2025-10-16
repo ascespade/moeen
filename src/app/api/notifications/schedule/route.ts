@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+        return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -161,7 +161,7 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+        return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -230,7 +230,7 @@ async function generateNotificationContent(type: string, templateData: any, cust
     },
   };
 
-  return templates[type] || {
+  return (templates as any)[type] || {
     title: 'إشعار',
     message: customMessage || 'لديك إشعار جديد',
   };

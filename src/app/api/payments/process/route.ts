@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (!paymentResult.success) {
-      return NextResponse.json({ error: paymentResult.error }, { status: 400 });
+      return NextResponse.json({ error: (paymentResult as any).error }, { status: 400 });
     }
 
     // Create payment record
@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+        return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

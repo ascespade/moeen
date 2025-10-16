@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 import { authorize, requireRole } from '@/lib/auth/authorize';
 
 const bookingSchema = z.object({
@@ -131,7 +132,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -186,5 +187,5 @@ async function checkAppointmentConflicts(doctorId: string, scheduledAt: string, 
 
 async function sendAppointmentConfirmation(appointmentId: string) {
   // This will be implemented in the notification system
-  console.log(`Sending appointment confirmation for ${appointmentId}`);
+  logger.info(`Sending appointment confirmation for ${appointmentId}`);
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useT } from '@/hooks/useT';
+import { useT } from '@/components/providers/I18nProvider';
 import { useTheme } from '@/context/ThemeContext';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { Card } from '@/components/ui/Card';

@@ -1,7 +1,6 @@
 export * from "./useApi";
 export * from "./useAsync";
 export * from "./useAuth";
-export * from "./useBrandColorFromLogo";
 export * from "./useClickOutside";
 export * from "./useCounter";
 export * from "./useDebounce";

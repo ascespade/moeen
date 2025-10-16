@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { useTheme } from '@/context/ThemeContext';
-import { useT } from '@/hooks/useT';
+import { useT } from '@/components/providers/I18nProvider';
 
 interface ThemeSwitcherProps {
   className?: string;

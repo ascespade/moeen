@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+        return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -153,12 +153,12 @@ async function generateDashboardMetrics(supabase: any, dateRange: any, filters: 
 
   // Calculate metrics
   const totalPatients = patients.length;
-  const activatedPatients = patients.filter(p => p.isActivated).length;
+  const activatedPatients = patients.filter((p: any) => p.isActivated).length;
   const totalAppointments = appointments.length;
-  const completedAppointments = appointments.filter(a => a.status === 'completed').length;
+  const completedAppointments = appointments.filter((a: any) => a.status === 'completed').length;
   const totalRevenue = payments
-    .filter(p => p.status === 'paid')
-    .reduce((sum, p) => sum + (p.amount || 0), 0);
+    .filter((p: any) => p.status === 'paid')
+    .reduce((sum: any, p: any) => sum + (p.amount || 0), 0);
 
   // Daily breakdown
   const dailyStats = generateDailyBreakdown(appointments, payments, startDate, endDate);
@@ -206,14 +206,14 @@ async function generatePatientStatistics(supabase: any, dateRange: any, filters:
   // Calculate statistics
   const stats = {
     total: patients.length,
-    activated: patients.filter(p => p.isActivated).length,
-    pending: patients.filter(p => !p.isActivated).length,
+    activated: patients.filter((p: any) => p.isActivated).length,
+    pending: patients.filter((p: any) => !p.isActivated).length,
     byInsurance: groupByField(patients, 'insuranceProvider'),
     byAgeGroup: calculateAgeGroups(patients),
     activationTrend: grouped.map(group => ({
       period: group.period,
       total: group.data.length,
-      activated: group.data.filter(p => p.isActivated).length,
+      activated: group.data.filter((p: any) => p.isActivated).length,
     })),
   };
 
@@ -245,11 +245,11 @@ async function generateAppointmentAnalytics(supabase: any, dateRange: any, filte
     total: appointments.length,
     byStatus: groupByField(appointments, 'status'),
     byType: groupByField(appointments, 'type'),
-    averageDuration: appointments.reduce((sum, apt) => sum + (apt.duration || 30), 0) / appointments.length,
+    averageDuration: appointments.reduce((sum: any, apt: any) => sum + (apt.duration || 30), 0) / appointments.length,
     trends: grouped.map(group => ({
       period: group.period,
       total: group.data.length,
-      completed: group.data.filter(a => a.status === 'completed').length,
+      completed: group.data.filter((a: any) => a.status === 'completed').length,
     })),
   };
 }

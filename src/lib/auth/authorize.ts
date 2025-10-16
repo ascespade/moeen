@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { logger } from '@/lib/logger';
 
 export interface User {
   id: string;
@@ -45,6 +46,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
       error: null
     };
   } catch (error) {
+    logger.error('Authorization error:', error);
     return { user: null, error: 'Authorization failed' };
   }
 }

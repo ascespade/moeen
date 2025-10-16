@@ -1,6 +1,8 @@
 import clsx from "clsx";
+import { COMPONENT_CLASSES } from "@/lib/centralized-theme";
 
 type BadgeVariant =
+  | "default"
   | "primary"
   | "secondary"
   | "destructive"
@@ -9,28 +11,26 @@ type BadgeVariant =
   | "danger"
   | "info"
   | "outline"
-  | "primary"
+  | "brand"
   | "error";
 
 export function Badge({
   className,
-  variant = "primary",
+  variant = "default",
   ...props
 }: React.HTMLAttributes<HTMLSpanElement> & { variant?: BadgeVariant }) {
   const styles = {
-    default:
-      "badge bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200",
-    secondary: "badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200",
-    destructive: "badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
-    success: "badge badge-success",
-    warning: "badge badge-warning",
-    danger: "badge badge-error",
-    info: "badge badge-info",
-    outline:
-      "badge bg-transparent text-gray-700 border border-[var(--brand-border)] dark:text-gray-200 dark:border-gray-800",
-    brand:
-      "badge bg-[var(--brand-primary)] text-white border border-transparent",
-    error: "badge badge-error",
+    default: `${COMPONENT_CLASSES.badge} bg-brand-surface text-foreground`,
+    primary: COMPONENT_CLASSES['badge-brand'],
+    secondary: `${COMPONENT_CLASSES.badge} bg-brand-surface text-foreground border border-brand-border`,
+    destructive: `${COMPONENT_CLASSES.badge} bg-brand-error/10 text-brand-error`,
+    success: COMPONENT_CLASSES['badge-success'],
+    warning: COMPONENT_CLASSES['badge-warning'],
+    danger: COMPONENT_CLASSES['badge-error'],
+    info: COMPONENT_CLASSES['badge-info'],
+    outline: `${COMPONENT_CLASSES.badge} bg-transparent text-foreground border border-brand-border`,
+    brand: `${COMPONENT_CLASSES.badge} bg-brand-primary text-white`,
+    error: COMPONENT_CLASSES['badge-error'],
   } as const;
 
   return <span className={clsx(styles[variant], className)} {...props} />;

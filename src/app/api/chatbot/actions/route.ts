@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 
     const { action, parameters, context, userId, conversationId } = validation.data;
 
-    // Initialize chatbot components
+    // Initialize chatbot components - temporarily disabled
     // const intentAnalyzer = new IntentAnalyzer();
     // const actionExecutor = new ActionExecutor(supabase);
     // const flowManager = new FlowManager(intentAnalyzer, actionExecutor);
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -140,7 +140,7 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

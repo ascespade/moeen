@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useT } from "@/components/providers/I18nProvider";
 
 export default function DashboardPage() {
@@ -10,35 +10,38 @@ export default function DashboardPage() {
   const router = useRouter();
   const { t } = useT();
 
-  // Redirect based on user role - moved to single useEffect
+  // Memoize the redirect logic to prevent unnecessary re-renders
+  const redirectPath = useMemo(() => {
+    if (!isLoading && isAuthenticated && user) {
+      switch (user.role) {
+        case "doctor":
+          return "/doctor-dashboard";
+        case "patient":
+          return "/patient-dashboard";
+        case "staff":
+          return "/dashboard/staff";
+        case "supervisor":
+          return "/dashboard/supervisor";
+        case "admin":
+          return "/admin/dashboard";
+        default:
+          return "/patient-dashboard";
+      }
+    }
+    return null;
+  }, [isAuthenticated, isLoading, user]);
+
+  // Single useEffect for all redirects
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       router.push("/login");
       return;
     }
 
-    if (!isLoading && isAuthenticated && user) {
-      switch (user.role) {
-        case "doctor":
-          router.push("/dashboard/doctor");
-          break;
-        case "patient":
-          router.push("/dashboard/patient");
-          break;
-        case "staff":
-          router.push("/dashboard/staff");
-          break;
-        case "supervisor":
-          router.push("/dashboard/supervisor");
-          break;
-        case "admin":
-          router.push("/dashboard/admin");
-          break;
-        default:
-          router.push("/dashboard/patient");
-      }
+    if (redirectPath) {
+      router.push(redirectPath);
     }
-  }, [isAuthenticated, isLoading, router, user]);
+  }, [isLoading, isAuthenticated, redirectPath, router]);
 
   if (isLoading) {
     return (
@@ -64,3 +67,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+

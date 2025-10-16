@@ -32,10 +32,12 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "img-src 'self' data: https: http:",
-              "font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com",
-              "connect-src 'self' https://api.supabase.co https://socwpqzcalgvpzjwavgh.supabase.co",
+              "img-src 'self' data: https: http: blob:",
+              "font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com data:",
+              "connect-src 'self' https://api.supabase.co https://socwpqzcalgvpzjwavgh.supabase.co ws: wss:",
               "frame-ancestors 'none'",
+              "object-src 'none'",
+              "base-uri 'self'",
             ].join("; "),
           },
         ],
@@ -53,6 +55,12 @@ const nextConfig = {
         pathname: "/**",
       },
       {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3001",
+        pathname: "/**",
+      },
+      {
         protocol: "https",
         hostname: "your-domain.com",
         pathname: "/**",
@@ -61,6 +69,7 @@ const nextConfig = {
     formats: ["image/webp", "image/avif"],
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: false,
+    unoptimized: process.env.NODE_ENV === "development",
   },
 
   // Bundle analyzer

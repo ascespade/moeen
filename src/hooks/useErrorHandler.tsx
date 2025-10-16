@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
-import { useT } from '@/hooks/useT';
+import { useT } from '@/components/providers/I18nProvider';
 // import { toast } from '@/components/ui/Toast';
 // import { logger } from '@/lib/logger';
 

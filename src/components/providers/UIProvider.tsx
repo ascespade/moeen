@@ -2,10 +2,10 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { atom } from "jotai";
-import useBrandColorFromLogo from "@/hooks/useBrandColorFromLogo";
+import { CENTRALIZED_THEME, type Theme, type ResolvedTheme, type Language } from "@/lib/centralized-theme";
 
-export type AppTheme = "light" | "dark";
-export type AppLang = "ar" | "en";
+export type AppTheme = ResolvedTheme;
+export type AppLang = Language;
 export type AppRole = "admin" | "staff" | "viewer";
 
 // Jotai atoms for global state
@@ -24,13 +24,12 @@ export default function UIProvider({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  useBrandColorFromLogo("/hemam-logo.jpg");
 
   useEffect(() => {
-    const html = document.documentElement;
+    // Apply language based on pathname using centralized system
     const isEnglish = pathname?.startsWith("/en");
-    html.setAttribute("lang", isEnglish ? "en" : "ar");
-    html.setAttribute("dir", isEnglish ? "ltr" : "rtl");
+    const language: Language = isEnglish ? "en" : "ar";
+    CENTRALIZED_THEME.applyLanguageToDocument(language);
   }, [pathname]);
 
   return <div>{children}</div>;

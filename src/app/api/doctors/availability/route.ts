@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Generate available time slots for each doctor
-    const availableSlots = doctors?.map(doctor => {
+    const availableSlots = doctors?.map((doctor: any) => {
       const schedule = doctor.schedule || {};
       const workingHours = schedule.workingHours || { start: '09:00', end: '17:00' };
       const breaks = schedule.breaks || [];
@@ -103,7 +103,7 @@ export async function GET(request: NextRequest) {
         });
 
         // Check if slot is already booked
-        const isBooked = appointments?.some(apt => 
+        const isBooked = appointments?.some((apt: any) => 
           apt.doctor_id === doctor.id && 
           new Date(apt.scheduled_at).getTime() === time.getTime()
         );

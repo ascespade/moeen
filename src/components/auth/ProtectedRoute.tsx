@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useT } from '@/hooks/useT';
+import { useT } from '@/components/providers/I18nProvider';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 interface ProtectedRouteProps {
@@ -25,7 +25,18 @@ export default function ProtectedRoute({
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('/api/auth/me');
+        const token = localStorage.getItem('token');
+        if (!token) {
+          router.push('/login');
+          return;
+        }
+
+        const response = await fetch('/api/auth/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
         
         if (!response.ok) {
           router.push('/login');

@@ -62,13 +62,14 @@ export async function GET(request: NextRequest) {
     return response;
     
   } catch (error) {
-    logger.error('Health check failed', { error: error.message });
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    logger.error('Health check failed', { error: errorMessage });
     
     const errorResponse = {
       status: 'unhealthy',
       timestamp: new Date().toISOString(),
       error: 'Health check failed',
-      message: error.message,
+      message: errorMessage,
     };
     
     return NextResponse.json(errorResponse, { status: 503 });
@@ -138,7 +139,7 @@ async function checkDatabase(): Promise<ServiceStatus> {
     if (error) {
       return {
         status: 'unhealthy',
-        error: error.message,
+        error: error instanceof Error ? error.message : 'Unknown error',
         lastChecked: new Date().toISOString(),
       };
     }
@@ -151,7 +152,7 @@ async function checkDatabase(): Promise<ServiceStatus> {
   } catch (error) {
     return {
       status: 'unhealthy',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error',
       lastChecked: new Date().toISOString(),
     };
   }
@@ -171,7 +172,7 @@ async function checkStorage(): Promise<ServiceStatus> {
     if (error) {
       return {
         status: 'unhealthy',
-        error: error.message,
+        error: error instanceof Error ? error.message : 'Unknown error',
         lastChecked: new Date().toISOString(),
       };
     }
@@ -184,7 +185,7 @@ async function checkStorage(): Promise<ServiceStatus> {
   } catch (error) {
     return {
       status: 'unhealthy',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error',
       lastChecked: new Date().toISOString(),
     };
   }
@@ -202,7 +203,7 @@ async function checkAuth(): Promise<ServiceStatus> {
     if (error) {
       return {
         status: 'unhealthy',
-        error: error.message,
+        error: error instanceof Error ? error.message : 'Unknown error',
         lastChecked: new Date().toISOString(),
       };
     }
@@ -215,7 +216,7 @@ async function checkAuth(): Promise<ServiceStatus> {
   } catch (error) {
     return {
       status: 'unhealthy',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error',
       lastChecked: new Date().toISOString(),
     };
   }
@@ -245,7 +246,7 @@ async function checkAPI(): Promise<ServiceStatus> {
   } catch (error) {
     return {
       status: 'unhealthy',
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error',
       lastChecked: new Date().toISOString(),
     };
   }

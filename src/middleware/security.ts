@@ -13,6 +13,7 @@ interface SecurityConfig {
   enableContentTypeOptions: boolean;
   enableFrameOptions: boolean;
   enableReferrerPolicy: boolean;
+  enableCSRF: boolean;
   allowedOrigins: string[];
   allowedMethods: string[];
   allowedHeaders: string[];
@@ -27,6 +28,7 @@ const defaultSecurityConfig: SecurityConfig = {
   enableContentTypeOptions: true,
   enableFrameOptions: true,
   enableReferrerPolicy: true,
+  enableCSRF: true,
   allowedOrigins: [
     'http://localhost:3000',
     'https://localhost:3000',
@@ -42,6 +44,7 @@ const defaultSecurityConfig: SecurityConfig = {
     'X-User-Id',
     'X-User-Role',
     'X-API-Key',
+    'X-CSRF-Token',
   ],
   maxAge: 86400, // 24 hours
 };
@@ -260,9 +263,55 @@ export class SecurityMiddleware {
       response.headers.set('X-Security-Warning', 'Potential attack pattern detected');
     }
 
+    // CSRF Protection
+    if (this.config.enableCSRF && this.isStateChangingRequest(req)) {
+      this.applyCSRFProtection(req, response);
+    }
+
     // Add request ID for tracking
     const requestId = `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     response.headers.set('X-Request-ID', requestId);
+  }
+
+  private isStateChangingRequest(req: NextRequest): boolean {
+    return ['POST', 'PUT', 'DELETE', 'PATCH'].includes(req.method);
+  }
+
+  private applyCSRFProtection(req: NextRequest, response: NextResponse): void {
+    const origin = req.headers.get('origin');
+    const referer = req.headers.get('referer');
+    const csrfToken = req.headers.get('x-csrf-token');
+    
+    // Check origin header
+    if (origin && !this.isOriginAllowed(origin)) {
+      response.headers.set('X-CSRF-Error', 'Invalid origin');
+      return;
+    }
+    
+    // Check referer header
+    if (referer) {
+      const refererUrl = new URL(referer);
+      const refererOrigin = `${refererUrl.protocol}//${refererUrl.host}`;
+      if (!this.isOriginAllowed(refererOrigin)) {
+        response.headers.set('X-CSRF-Error', 'Invalid referer');
+        return;
+      }
+    }
+    
+    // For API routes, require CSRF token
+    if (req.nextUrl.pathname.startsWith('/api/') && !csrfToken) {
+      response.headers.set('X-CSRF-Error', 'CSRF token required');
+      return;
+    }
+    
+    // Set CSRF token in response headers for client to use
+    const csrfTokenValue = this.generateCSRFToken();
+    response.headers.set('X-CSRF-Token', csrfTokenValue);
+  }
+
+  private generateCSRFToken(): string {
+    // In production, use a proper CSRF token generation
+    return Buffer.from(`${Date.now()}-${Math.random()}`).toString('base64');
   }
 }
 

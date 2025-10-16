@@ -42,9 +42,17 @@ export const useAuth = (): AuthState & AuthActions => {
         if (storedUser && storedToken) {
           setUserState(storedUser);
           setTokenState(storedToken);
+        } else {
+          // Clear any invalid data
+          clearAuth();
+          setUserState(null);
+          setTokenState(null);
         }
       } catch (error) {
+        console.error('Auth initialization error:', error);
         clearAuth();
+        setUserState(null);
+        setTokenState(null);
       } finally {
         setIsLoading(false);
       }
@@ -90,6 +98,19 @@ export const useAuth = (): AuthState & AuthActions => {
     [login],
   );
 
+  // Helper function to get auth headers for API calls
+  const getAuthHeaders = useCallback(() => {
+    if (token) {
+      return {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      };
+    }
+    return {
+      'Content-Type': 'application/json',
+    };
+  }, [token]);
+
   const logout = useCallback(async () => {
     try {
       // Call logout API to clear server-side session
@@ -125,6 +146,7 @@ export const useAuth = (): AuthState & AuthActions => {
     loginWithCredentials,
     logout,
     updateUser,
+    getAuthHeaders,
   };
 };
 

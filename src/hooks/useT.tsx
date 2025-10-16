@@ -79,16 +79,13 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
 export const useT = (): TranslationContextType => {
   const context = useContext(TranslationContext);
   if (context === undefined) {
-    // Return a fallback function during static generation
-    if (typeof window === 'undefined') {
-      return {
-        t: (key: string) => key,
-        language: 'ar',
-        setLanguage: () => {},
-        isLoading: false
-      };
-    }
-    throw new Error('useT must be used within a TranslationProvider');
+    // Return a fallback function during static generation or when not in provider
+    return {
+      t: (key: string) => key,
+      language: 'ar',
+      setLanguage: () => {},
+      isLoading: false
+    };
   }
   return {
     t: context.t,

@@ -34,12 +34,12 @@ async function getDetailedHealthStatus() {
       getRecentErrors(),
     ]);
 
-    const services = systemHealth.map((service) => {
+    const services = systemHealth.map((service: any) => {
       const recentMetric = recentMetrics.find(
-        (m) => m.service_name === service.service_name,
+        (m: any) => m.service_name === service.service_name,
       );
       const recentErrors = errorLogs.filter(
-        (e) => e.service_name === service.service_name,
+        (e: any) => e.service_name === service.service_name,
       );
 
       return {
@@ -63,12 +63,12 @@ async function getDetailedHealthStatus() {
 
     const summary = {
       totalServices: services.length,
-      healthyServices: services.filter((s) => s.status === "healthy").length,
-      unhealthyServices: services.filter((s) => s.status === "unhealthy")
+      healthyServices: services.filter((s: any) => s.status === "healthy").length,
+      unhealthyServices: services.filter((s: any) => s.status === "unhealthy")
         .length,
-      totalErrors: services.reduce((acc, s) => acc + s.errors.count, 0),
+      totalErrors: services.reduce((acc: any, s: any) => acc + s.errors.count, 0),
       averageUptime: calculateAverageUptime(services),
-      criticalIssues: services.filter((s) => s.errors.count > 5).length,
+      criticalIssues: services.filter((s: any) => s.errors.count > 5).length,
     };
 
     const overallStatus = calculateOverallStatus(summary);
@@ -140,7 +140,7 @@ function calculateAverageUptime(services: any[]) {
 }
 
 function getErrorTypes(errors: any[]) {
-  const types = {};
+  const types: any = {};
   errors.forEach((error) => {
     const type = error.error_type || "unknown";
     types[type] = (types[type] || 0) + 1;

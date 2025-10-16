@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
       const slotStart = new Date(`${date}T${slot.time}`);
       const slotEnd = new Date(slotStart.getTime() + slotDuration * 60000);
       
-      return !existingAppointments?.some(apt => {
+      return !existingAppointments?.some((apt: any) => {
         const aptStart = new Date(apt.scheduledAt);
         const aptEnd = new Date(aptStart.getTime() + apt.duration * 60000);
         
@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
