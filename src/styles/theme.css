@@ -184,7 +184,7 @@
 }
 
 .btn-primary {
-  @apply bg-brand-primary text-white hover:bg-brand-primary-hover focus:ring-2 focus:ring-brand-primary focus:ring-offset-2;
+  @apply bg-blue-600 text-white hover:bg-blue-600-hover focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
 }
 
 .btn-secondary {
@@ -206,7 +206,7 @@
 
 /* Input component */
 .input {
-  @apply w-full px-3 py-2 border border-border rounded-md bg-panel text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent;
+  @apply w-full px-3 py-2 border border-border rounded-md bg-panel text-text-primary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
 }
 
 .input-error {

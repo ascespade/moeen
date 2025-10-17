@@ -1,6 +1,6 @@
 {
-  "timestamp": "2025-10-17T14:09:05.987Z",
-  "status": "stopped",
-  "isMonitoring": false,
-  "lastCheck": "2025-10-17T14:09:05.987Z"
+  "timestamp": "2025-10-17T17:49:46.523Z",
+  "status": "monitoring",
+  "isMonitoring": true,
+  "lastCheck": "2025-10-17T17:49:46.523Z"
 }
