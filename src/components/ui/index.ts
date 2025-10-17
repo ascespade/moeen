@@ -31,11 +31,11 @@ export { ScrollArea } from './ScrollArea';
 export { DataTable } from './DataTable';
 
 // Loading & Skeleton
-export { LoadingSpinner } from './LoadingSpinner';
-export { Skeleton } from './Skeleton';
+export { default as LoadingSpinner } from './LoadingSpinner';
+export { default as Skeleton } from './Skeleton';
 
 // Theme
-export { ThemeSwitch } from './ThemeSwitch';
+export { default as ThemeSwitch } from './ThemeSwitch';
 
 /**
  * Usage Examples:

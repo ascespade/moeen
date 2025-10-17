@@ -11,4 +11,4 @@ export function Skeleton({ className }: { className?: string }) {
   );
 }
 
-export default Skeleton;
+export { Skeleton };
