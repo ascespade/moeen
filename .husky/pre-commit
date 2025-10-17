@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+
+# Check TypeScript
+echo "📝 Checking TypeScript..."
+npx tsc --noEmit || {
+  echo "❌ TypeScript errors found! Fix them before committing."
+  exit 1
+}
+
+# Check ESLint
+echo "⚡ Checking ESLint..."
+npx eslint src --ext .ts,.tsx --max-warnings=0 || {
+  echo "⚠️  ESLint warnings found! Fix them before committing."
+  exit 1
+}
+
+echo "✅ All checks passed!"
