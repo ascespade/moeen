@@ -9,8 +9,8 @@ import { createClient as createServiceClient } from '@supabase/supabase-js';
 
 // Helper to extract IP address
 function getClientIP(request: NextRequest): string {
-  const forwarded = request.headers.get('x-forwarded-for');
-  const realIP = request.headers.get('x-real-ip');
+  const forwarded: string | null = request.headers.get('x-forwarded-for');
+  const realIP: string | null = request.headers.get('x-real-ip');
   
   if (forwarded) {
     return forwarded!.split(',')[0].trim();
