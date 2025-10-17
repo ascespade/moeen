@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 
 export function useTranslation(namespace: string = 'common') {
@@ -8,11 +8,7 @@ export function useTranslation(namespace: string = 'common') {
   const [locale, setLocale] = useState<string>('ar');
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    loadTranslations();
-  }, [locale, namespace]);
-
-  async function loadTranslations() {
+  const loadTranslations = useCallback(async () => {
     setIsLoading(true);
     try {
       const supabase = createClient();
@@ -39,11 +35,15 @@ export function useTranslation(namespace: string = 'common') {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [locale, namespace]);
 
-  const t = (key: string, fallback?: string) => {
+  useEffect(() => {
+    loadTranslations();
+  }, [loadTranslations]);
+
+  const t = useCallback((key: string, fallback?: string) => {
     return translations[key] || fallback || key;
-  };
+  }, [translations]);
 
   return { t, locale, setLocale, isLoading };
 }

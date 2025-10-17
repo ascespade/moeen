@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 
 interface TranslationContextType {
@@ -17,11 +17,7 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
   const [locale, setLocale] = useState<string>('ar');
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    loadTranslations();
-  }, [locale]);
-
-  async function loadTranslations() {
+  const loadTranslations = useCallback(async () => {
     setIsLoading(true);
     try {
       const supabase = createClient();
@@ -48,7 +44,11 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [locale]);
+
+  useEffect(() => {
+    loadTranslations();
+  }, [loadTranslations]);
 
   const t = (key: string, fallback?: string) => {
     return translations[key] || fallback || key;
