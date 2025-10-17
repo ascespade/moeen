@@ -104,4 +104,3 @@ export function TabsContent({
 }
 
 export default Tabs;
-export { Tabs };

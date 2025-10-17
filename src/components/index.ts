@@ -65,12 +65,10 @@ export { default as MoainChatbot } from './chatbot/MoainChatbot';
 // ============================================
 export { default as UIProvider } from './providers/UIProvider';
 export { default as I18nProvider } from './providers/I18nProvider';
-export { default as DesignSystemProvider } from './providers/DesignSystemProvider';
 
 // ============================================
 // SHARED - مشتركة
 // ============================================
-export { default as Form } from './shared/Form';
 export { default as DataTable } from './shared/DataTable';
 export { default as Modal } from './shared/Modal';
 export { default as Tabs } from './shared/Tabs';

@@ -26,7 +26,7 @@ export { Tooltip } from './Tooltip';
 export { Tabs } from './Tabs';
 export { Select } from './Select';
 export { Checkbox } from './Checkbox';
-export { Switch } from './Switch';
+export { default as Switch } from './Switch';
 export { ScrollArea } from './ScrollArea';
 export { DataTable } from './DataTable';
 
