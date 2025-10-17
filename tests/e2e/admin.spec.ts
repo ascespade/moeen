@@ -50,7 +50,7 @@ test.describe("Admin Module", () => {
     await page.click("text=User Management");
 
     // Check user management sections
-    await expect(page.locator("text=Users")).toBeVisible();
+    await expect(page.locator("text=Users").first()).toBeVisible();
     await expect(page.locator("text=Manage system users")).toBeVisible();
     await expect(page.locator("text=Create New User")).toBeVisible();
 

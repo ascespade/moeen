@@ -34,6 +34,16 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
 
+  /* Global setup and teardown */
+  globalSetup: require.resolve('./tests/global-setup.ts'),
+  globalTeardown: require.resolve('./tests/global-teardown.ts'),
+
+  /* Environment variables for tests */
+  env: {
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+  },
+
   /* Configure projects for major browsers */
   projects: [
     {
