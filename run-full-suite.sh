@@ -12,6 +12,26 @@ MODULE_TARGET_PERCENT=${MODULE_TARGET_PERCENT:-90}
 PLAYWRIGHT_WORKERS_PER_MODULE=${PLAYWRIGHT_WORKERS_PER_MODULE:-2}
 PLAYWRIGHT_TIMEOUT_MS=${PLAYWRIGHT_TIMEOUT_MS:-60000}
 MODULES=(auth users patients appointments billing notifications dashboard admin files reports settings integration payments)
+
+# Map module name to Playwright grep pattern (broad match)
+pattern_for_module(){
+  case "$1" in
+    auth) echo "Authentication Module|Login Module|Supabase Integration Tests|auth|login" ;;
+    users) echo "Admin Module|users|user management|Admin Users" ;;
+    patients) echo "Medical Records Module|Healthcare Patients|patients page|patient" ;;
+    appointments) echo "Appointments Module|Healthcare Appointments|appointments" ;;
+    billing) echo "Payments Module|billing|payment" ;;
+    notifications) echo "Notifications Module|notifications" ;;
+    dashboard) echo "Dashboard|System Health Tests|navigation" ;;
+    admin) echo "Admin Module|admin panel" ;;
+    files) echo "File Cleanup System|upload documents|files" ;;
+    reports) echo "Report|Lighthouse Performance Tests|Performance Tests" ;;
+    settings) echo "Settings Module|settings" ;;
+    integration) echo "Supabase Integration Tests|Chatbot & AI Module|integration|Chatbot System" ;;
+    payments) echo "Payments Module|payment" ;;
+    *) echo "$1" ;;
+  esac
+}
 log(){ echo "[$(date -u +"%Y-%m-%dT%H:%M:%SZ")] $*"; }
 # helper
 retry(){ local n=0; local max=${3:-3}; local delay=2; until [ $n -ge $max ]; do "$@" && break; n=$((n+1)); sleep $delay; delay=$((delay*3)); done; [ $n -lt $max ]; }
@@ -43,7 +63,8 @@ for module in "${MODULES[@]}"; do
     if command -v supawright >/dev/null 2>&1; then supawright seed --module="$module" --test-id="auto-$module-$attempts" || true; elif [ -f scripts/supawright-runner.js ]; then node scripts/supawright-runner.js seed "$module" || true; fi
     # run tests
     log "Running module $module attempt $attempts";
-    npx playwright test --config=playwright-auto.config.ts --grep "$module" --workers=${PLAYWRIGHT_WORKERS_PER_MODULE} --timeout=${PLAYWRIGHT_TIMEOUT_MS} --reporter=json="$reportJson" || true
+    PATTERN="$(pattern_for_module "$module")"
+    npx playwright test --config=playwright-auto.config.ts --grep "$PATTERN" --workers=${PLAYWRIGHT_WORKERS_PER_MODULE} --timeout=${PLAYWRIGHT_TIMEOUT_MS} --reporter=json="$reportJson" || true
     node scripts/ci/analyze-playwright-report.js "$reportJson" || true
     percent=$(node -e "try{const d=require('fs').readFileSync('$outdir/analysis.json','utf8'); console.log(JSON.parse(d).percent||0);}catch(e){console.log(0)}")
     echo "{\"time\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"module\":\"$module\",\"attempt\":$attempts,\"percent\":$percent,\"status\":\"$([ $percent -ge ${MODULE_TARGET_PERCENT} ] && echo ok || echo retrying)\"}" | tee -a tmp/progress.log
