@@ -35,7 +35,7 @@ export { LoadingSpinner, LoadingScreen } from './LoadingSpinner';
 export { Skeleton } from './Skeleton';
 
 // Theme
-export { default as ThemeSwitch } from './ThemeSwitch';
+export { default as ThemeSwitch, default as ThemeToggle, default as ThemeSwitcher } from './ThemeSwitch';
 
 /**
  * Usage Examples:
