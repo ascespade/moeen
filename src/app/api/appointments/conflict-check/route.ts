@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
+import { getClientInfo } from '@/lib/utils/request-helpers';
 
 const conflictCheckSchema = z.object({
   doctorId: z.string().uuid('Invalid doctor ID'),
@@ -17,6 +18,9 @@ const conflictCheckSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const startTime = Date.now();
+  const { ipAddress, userAgent } = getClientInfo(request);
+  
   try {
     const supabase = await createClient();
     const body = await request.json();
@@ -52,6 +56,24 @@ export async function POST(request: NextRequest) {
     }
 
     const hasConflicts = conflicts && conflicts.length > 0;
+
+    // Log conflict check
+    await supabase.from('audit_logs').insert({
+      action: 'appointment_conflict_checked',
+      resourceType: 'appointment',
+      ipAddress,
+      userAgent,
+      status: 'success',
+      severity: 'info',
+      metadata: {
+        doctorId,
+        scheduledAt,
+        duration,
+        hasConflicts,
+        conflictCount: conflicts?.length || 0,
+      },
+      durationMs: Date.now() - startTime,
+    });
 
     return NextResponse.json({
       success: true,

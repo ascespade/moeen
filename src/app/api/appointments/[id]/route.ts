@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { authorize } from '@/lib/auth/authorize';
 import { validateData, appointmentUpdateSchema } from '@/lib/validation/schemas';
+import { getClientInfo } from '@/lib/utils/request-helpers';
 
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const startTime = Date.now();
+  const { ipAddress, userAgent } = getClientInfo(request);
+  
   try {
     const { user, error: authError } = await authorize(request);
     
@@ -47,6 +51,20 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
+    // Log appointment view
+    const supabase2 = await createClient();
+    await supabase2.from('audit_logs').insert({
+      action: 'appointment_viewed',
+      user_id: user.id,
+      resource_type: 'appointment',
+      resource_id: appointmentId,
+      ip_address: ipAddress,
+      user_agent: userAgent,
+      status: 'success',
+      severity: 'info',
+      duration_ms: Date.now() - startTime
+    });
+
     return NextResponse.json({
       appointment: {
         id: appointment.id,
@@ -80,6 +98,9 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const startTime = Date.now();
+  const { ipAddress, userAgent } = getClientInfo(request);
+  
   try {
     const { user, error: authError } = await authorize(request);
     
@@ -126,12 +147,14 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    // Update appointment
+    // Update appointment with tracking
     const { data: appointment, error: updateError } = await supabase
       .from('appointments')
       .update({
         ...validation.data,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
+        updated_by: user.id,
+        last_activity_at: new Date().toISOString()
       })
       .eq('id', appointmentId)
       .select(`
@@ -151,7 +174,7 @@ export async function PATCH(
       return NextResponse.json({ error: 'Failed to update appointment' }, { status: 500 });
     }
 
-    // Log appointment update
+    // Log appointment update with full tracking
     await supabase
       .from('audit_logs')
       .insert({
@@ -159,11 +182,17 @@ export async function PATCH(
         user_id: user.id,
         resource_type: 'appointment',
         resource_id: appointmentId,
+        ip_address: ipAddress,
+        user_agent: userAgent,
+        status: 'success',
+        severity: 'info',
         metadata: {
           old_status: currentAppointment.status,
           new_status: appointment.status,
-          patient_name: appointment.patients.full_name
-        }
+          patient_name: appointment.patients.full_name,
+          changes: validation.data
+        },
+        duration_ms: Date.now() - startTime
       });
 
     return NextResponse.json({

@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
+import { getClientInfo } from '@/lib/utils/request-helpers';
 
 const availabilitySchema = z.object({
   doctorId: z.string().uuid('Invalid doctor ID'),
@@ -16,6 +17,9 @@ const availabilitySchema = z.object({
 });
 
 export async function GET(request: NextRequest) {
+  const startTime = Date.now();
+  const { ipAddress, userAgent } = getClientInfo(request);
+  
   try {
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -77,6 +81,23 @@ export async function GET(request: NextRequest) {
         
         return (slotStart < aptEnd && slotEnd > aptStart);
       });
+    });
+
+    // Log availability check
+    await supabase.from('audit_logs').insert({
+      action: 'appointment_availability_checked',
+      resourceType: 'appointment',
+      ipAddress,
+      userAgent,
+      status: 'success',
+      severity: 'info',
+      metadata: {
+        doctorId,
+        date,
+        duration,
+        availableSlotsCount: availableSlots.length,
+      },
+      durationMs: Date.now() - startTime,
     });
 
     return NextResponse.json({
