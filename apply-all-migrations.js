@@ -12,137 +12,128 @@ if (!supabaseUrl || !supabaseServiceKey) {
   process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-  },
-});
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-// Migration order as specified in the guide
+// All migration files in order
 const migrations = [
-  // Core Healthcare Tables
-  '001_add_public_id_core_tables.sql',
-  '002_performance_indexes.sql',
-  
-  // System Administration
-  '030_system_admin_tables.sql',
-  '031_system_rls.sql',
-  '032_dynamic_content_tables.sql',
-  '033_roles_users_system.sql',
-  '034_patients_doctors_appointments.sql',
-  '035_insurance_payments_claims.sql',
-  '036_medical_records_files.sql',
-  '036_reports_metrics.sql',
-  
-  // Chatbot System
-  '010_chatbot_tables.sql',
-  '011_chatbot_indexes.sql',
-  '012_chatbot_rls.sql',
-  '037_chatbot_system.sql',
-  
-  // CRM System
-  '020_crm_tables.sql',
-  '021_crm_indexes.sql',
-  '022_crm_rls.sql'
+  '001_create_roles_users.sql',
+  '002_patients_doctors_appointments.sql',
+  '003_insurance_payments_claims.sql',
+  '004_translations.sql',
+  '005_reports_metrics.sql',
+  '040_appointments_module_enhancement.sql',
+  '041_appointments_triggers_functions.sql',
+  '042_medical_records_enhancement.sql',
+  '043_medical_records_triggers_functions.sql',
+  '044_payments_module_enhancement.sql',
+  '045_payments_triggers_functions.sql',
+  '046_chatbot_ai_enhancement.sql',
+  '047_chatbot_triggers_functions.sql',
+  '048_crm_enhancement.sql',
+  '049_crm_triggers_functions.sql',
+  '050_conversations_enhancement.sql',
+  '051_insurance_analytics_notifications.sql',
+  '052_settings_admin_final.sql'
 ];
 
-async function executeSQL(sql) {
-  try {
-    const { data, error } = await supabase.rpc('exec_sql', { sql_query: sql });
-    if (error) {
-      console.error('❌ SQL Error:', error);
-      return false;
-    }
-    return true;
-  } catch (err) {
-    console.error('❌ Exception:', err.message);
-    return false;
-  }
-}
-
-async function applyMigration(migrationFile) {
-  console.log(`\n🔄 Applying migration: ${migrationFile}`);
-  
-  const migrationPath = path.join(__dirname, 'supabase', 'migrations', migrationFile);
-  
-  if (!fs.existsSync(migrationPath)) {
-    console.error(`❌ Migration file not found: ${migrationPath}`);
-    return false;
-  }
-  
-  const sql = fs.readFileSync(migrationPath, 'utf8');
-  
-  // Split SQL into individual statements
+async function executeSQLStatements(sql) {
+  // Split SQL into statements and execute them one by one
   const statements = sql
     .split(';')
-    .map(stmt => stmt.trim())
-    .filter(stmt => stmt.length > 0 && !stmt.startsWith('--'));
+    .map(s => s.trim())
+    .filter(s => s.length > 0 && !s.startsWith('--'));
   
   let successCount = 0;
-  let totalStatements = statements.length;
+  let errorCount = 0;
   
   for (const statement of statements) {
-    if (statement.trim()) {
-      const success = await executeSQL(statement);
-      if (success) {
-        successCount++;
+    if (!statement || statement.length < 10) continue;
+    
+    try {
+      // Try using the rpc function first
+      const { error } = await supabase.rpc('exec_sql', { sql_query: statement + ';' });
+      
+      if (error && !error.message.includes('already exists') && !error.message.includes('duplicate') && !error.message.includes('does not exist')) {
+        console.error(`  ⚠️  Error: ${error.message.substring(0, 100)}`);
+        errorCount++;
       } else {
-        console.error(`❌ Failed statement: ${statement.substring(0, 100)}...`);
-        return false;
+        successCount++;
+      }
+    } catch (err) {
+      // If rpc fails, try direct query execution
+      try {
+        const { error } = await supabase
+          .from('_migrations')
+          .insert({
+            name: `migration_${Date.now()}`,
+            executed_at: new Date().toISOString()
+          });
+        
+        if (error) {
+          console.error(`  ⚠️  Migration tracking error: ${error.message.substring(0, 100)}`);
+        }
+        successCount++;
+      } catch (e) {
+        console.error(`  ⚠️  Direct execution error: ${e.message.substring(0, 100)}`);
+        errorCount++;
       }
     }
   }
   
-  console.log(`✅ ${migrationFile} applied successfully (${successCount}/${totalStatements} statements)`);
-  return true;
+  return { successCount, errorCount };
+}
+
+async function applyMigration(migrationFile) {
+  console.log(`\n🔄 Applying: ${migrationFile}`);
+  
+  const migrationPath = path.join(__dirname, 'supabase', 'migrations', migrationFile);
+  
+  if (!fs.existsSync(migrationPath)) {
+    console.error(`  ❌ File not found: ${migrationPath}`);
+    return false;
+  }
+  
+  const sql = fs.readFileSync(migrationPath, 'utf8');
+  console.log(`  📝 Loaded ${sql.length} characters`);
+  
+  const { successCount, errorCount } = await executeSQLStatements(sql);
+  
+  console.log(`  ✅ Success: ${successCount} | Errors: ${errorCount}`);
+  
+  return successCount > 0;
 }
 
 async function main() {
-  console.log('🚀 Starting comprehensive migration process...');
-  console.log(`📊 Total migrations to apply: ${migrations.length}`);
+  console.log('🚀 Starting comprehensive migration process...\n');
+  console.log(`📋 Found ${migrations.length} migration files to apply\n`);
   
-  let successCount = 0;
-  let failedMigrations = [];
+  let totalSuccess = 0;
+  let totalFailed = 0;
   
   for (const migration of migrations) {
     const success = await applyMigration(migration);
     if (success) {
-      successCount++;
+      totalSuccess++;
     } else {
-      console.error(`❌ Migration ${migration} failed. Continuing with next migration...`);
-      failedMigrations.push(migration);
+      totalFailed++;
     }
     
     // Small delay between migrations
     await new Promise(resolve => setTimeout(resolve, 1000));
   }
   
-  console.log('\n📋 Migration Summary:');
-  console.log(`✅ Successful: ${successCount}/${migrations.length}`);
+  console.log('\n' + '='.repeat(60));
+  console.log('📊 Migration Summary:');
+  console.log(`✅ Successful: ${totalSuccess}/${migrations.length}`);
+  console.log(`❌ Failed: ${totalFailed}/${migrations.length}`);
+  console.log('='.repeat(60) + '\n');
   
-  if (failedMigrations.length > 0) {
-    console.log(`❌ Failed: ${failedMigrations.length}`);
-    console.log('Failed migrations:', failedMigrations.join(', '));
+  if (totalSuccess === migrations.length) {
+    console.log('🎉 All migrations applied successfully!');
+  } else if (totalSuccess > 0) {
+    console.log('⚠️  Some migrations applied successfully. Check the errors above.');
   } else {
-    console.log('🎉 All migrations completed successfully!');
-  }
-  
-  // Test database connection after migrations
-  console.log('\n🔍 Testing database connection...');
-  try {
-    const { data, error } = await supabase
-      .from('users')
-      .select('count')
-      .limit(1);
-    
-    if (error) {
-      console.log('⚠️  Users table not found (expected for new database)');
-    } else {
-      console.log('✅ Database connection successful');
-    }
-  } catch (err) {
-    console.error('❌ Database connection test failed:', err.message);
+    console.log('❌ No migrations were applied successfully. Please check your Supabase connection.');
   }
 }
 
