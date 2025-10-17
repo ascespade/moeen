@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-    const testResults = {
+    const testResults: any = {
       timestamp: new Date().toISOString(),
       totalTests: 0,
       passed: 0,
@@ -43,13 +43,13 @@ export async function GET(request: NextRequest) {
           },
         });
 
-        const result = {
+        const result: any = {
           name: endpoint.name,
           url: endpoint.url,
           method: endpoint.method,
           status: response.status,
           success: response.ok,
-          responseTime: Date.now(),
+          responseTime: 0,
         };
 
         if (response.ok) {
@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
           method: endpoint.method,
           status: 'ERROR',
           success: false,
-          error: error.message,
+          error: (error as any).message,
         });
       }
     }
@@ -91,7 +91,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       timestamp: new Date().toISOString(),
       status: 'error',
-      error: error.message,
-    }, { status: Number(status) });
+      error: (error as any).message,
+    }, { status: 500 });
   }
 }

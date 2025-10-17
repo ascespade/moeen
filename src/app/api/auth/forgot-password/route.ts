@@ -10,11 +10,13 @@ import { z } from 'zod';
 
 // Helper to extract IP address
 function getClientIP(request: NextRequest): string {
-  const forwarded = request.headers.get('x-forwarded-for');
+  const forwarded = request.headers.get('x-forwarded-for') || '';
   const realIP = request.headers.get('x-real-ip');
   
   if (forwarded) {
-    return forwarded.split(',')[0].trim();
+    const first = forwarded.split(',')[0] || '';
+    const trimmed = first.trim();
+    if (trimmed) return trimmed;
   }
   if (realIP) {
     return realIP;

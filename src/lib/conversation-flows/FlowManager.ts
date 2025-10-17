@@ -152,7 +152,8 @@ export class FlowManager {
 
     // Execute actions if this step has them
     if (currentStep.actions) {
-      this.executeStepActions(currentStep.actions, userMessage);
+      // Fire and forget for side-effects; errors are logged elsewhere
+      void this.executeStepActions(currentStep.actions, userMessage);
     }
 
     // Return next step
@@ -164,11 +165,11 @@ export class FlowManager {
   }
 
   async executeStepAction(step: FlowStep, context: ConversationContext): Promise<any> {
-    if (!step.actions) return null;
+    if (!step.actions || step.actions.length === 0) return null;
 
     const results: Array<{ success: boolean; data?: any; error?: string }> = [];
     for (const action of step.actions) {
-      const result = await this.actionExecutor.executeStepAction(action, context);
+      const result = await this.actionExecutor.executeAction(action, context);
       results.push(result);
     }
 

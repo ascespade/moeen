@@ -16,9 +16,9 @@ const paymentSchema = z.object({
   amount: z.number().positive('Amount must be positive'),
   currency: z.string().default('SAR'),
   method: z.enum(['stripe', 'moyasar', 'cash', 'bank_transfer']),
-  paymentData: z.record(z.any()).optional(),
+  paymentData: z.record(z.any()).optional().default({}),
   description: z.string().optional(),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.any()).optional().default({}),
 });
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = await createClient();
+    const supabase = createClient();
     const body = await request.json();
 
     // Validate input

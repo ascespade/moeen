@@ -156,12 +156,14 @@ export class AuditMiddleware {
   }
 
   private getClientIP(req: NextRequest): string {
-    const forwarded = req.headers.get('x-forwarded-for');
+    const forwarded = req.headers.get('x-forwarded-for') || '';
     const realIP = req.headers.get('x-real-ip');
     const remoteAddr = req.headers.get('x-remote-addr');
     
     if (forwarded) {
-      return forwarded.split(',')[0].trim();
+      const first = forwarded.split(',')[0] || '';
+      const trimmed = first.trim();
+      if (trimmed) return trimmed;
     }
     
     if (realIP) {

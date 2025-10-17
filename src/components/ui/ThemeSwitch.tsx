@@ -43,8 +43,8 @@ export default function ThemeSwitch({
     },
   ];
 
-  const currentTheme = themes.find((t) => t.value === theme) || themes[0];
-  const CurrentIcon = currentTheme.icon;
+  const currentTheme = themes.find((t) => t.value === theme) ?? themes[0];
+  const CurrentIcon = (currentTheme as typeof themes[number]).icon;
 
   const sizeClasses = {
     sm: "h-8 w-8 text-sm",
@@ -72,7 +72,7 @@ export default function ThemeSwitch({
       >
         <CurrentIcon className={iconSizes[size]} />
         {showLabel && (
-          <span className="mr-2 hidden sm:inline text-[var(--text-primary)]">{currentTheme.label}</span>
+          <span className="mr-2 hidden sm:inline text-[var(--text-primary)]">{(currentTheme as typeof themes[number]).label}</span>
         )}
       </Button>
     );
@@ -112,7 +112,7 @@ export default function ThemeSwitch({
         className="flex items-center space-x-2"
       >
         <CurrentIcon className={iconSizes[size]} />
-        {showLabel && <span>{currentTheme.label}</span>}
+        {showLabel && <span>{(currentTheme as typeof themes[number]).label}</span>}
       </Button>
 
       {isOpen && (

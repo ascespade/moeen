@@ -24,7 +24,7 @@ const scheduleSchema = z.object({
   recipientType: z.enum(['patient', 'doctor', 'staff']),
   channels: z.array(z.enum(['email', 'sms', 'push', 'in_app'])).min(1),
   scheduledAt: z.string().datetime().optional(),
-  templateData: z.record(z.any()).optional(),
+  templateData: z.record(z.any()).optional().default({}),
   customMessage: z.string().optional(),
   priority: z.enum(['low', 'normal', 'high', 'urgent']).default('normal'),
   expiresAt: z.string().datetime().optional(),
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = await createClient();
+    const supabase = createClient();
     const body = await request.json();
 
     // Validate input
@@ -165,7 +165,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function getRecipientInfo(recipientId: string, recipientType: string) {
+async function getRecipientInfo(recipientId: string, recipientType: 'patient' | 'doctor' | 'staff') {
   const supabase = await createClient();
   
   let table = '';

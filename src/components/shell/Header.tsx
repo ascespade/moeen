@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Sun, Moon, Languages } from "lucide-react";
 import { useT } from "@/components/providers/I18nProvider";
 import { useTheme } from "@/core/theme";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeSwitcher from "@/components/common/ThemeSwitcher";
+import LanguageSwitcher from "@/components/common/LanguageSwitcher";
 import Link from "next/link";
 
 export default function Header() {
@@ -68,17 +68,10 @@ export default function Header() {
 
           <div className="flex items-center gap-2 justify-self-end">
             {/* Theme Switcher */}
-            <ThemeSwitcher 
-              
-              size="md"
-            />
+            <ThemeSwitcher size="md" />
 
             {/* Language Switcher */}
-            <LanguageSwitcher 
-              variant="dropdown"
-              
-              size="md"
-            />
+            <LanguageSwitcher variant="dropdown" size="md" />
 
             <div className="hs-dropdown [--trigger:hover] relative inline-flex">
               <button

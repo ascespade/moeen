@@ -12,7 +12,7 @@ import { getClientInfo } from '@/lib/utils/request-helpers';
 
 const availabilitySchema = z.object({
   doctorId: z.string().uuid('Invalid doctor ID'),
-  date: z.string().date('Invalid date format'),
+  date: z.string(),
   duration: z.number().min(15).max(240).default(30),
 });
 

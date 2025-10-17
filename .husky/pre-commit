@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run lint/tsc only if code files are staged; allow committing artifacts/logs
+STAGED_FILES=$(git diff --cached --name-only)
+echo "$STAGED_FILES" | grep -E '^src/|^package\.json$|^tsconfig\.json$|^playwright\..*\.ts$|\.tsx?$' >/dev/null 2>&1
+SHOULD_CHECK=$?
+if [ $SHOULD_CHECK -eq 0 ]; then
+  echo "Running ESLint and TypeScript checks for staged code changes..."
+  npm run -s lint && npx tsc -p tsconfig.json --noEmit
+else
+  echo "No code changes staged; skipping lint/tsc."
+fi

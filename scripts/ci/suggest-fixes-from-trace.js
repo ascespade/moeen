@@ -1,0 +1,2 @@
+#!/usr/bin/env node
+const fs=require('fs'); const p=process.argv[2]; if(!p||!fs.existsSync(p)){process.exit(0);} const d=JSON.parse(fs.readFileSync(p,'utf8')); let inc=false; function walk(s){if(s.tests){for(const t of s.tests){if(t.status!=='passed'&&t.errors){for(const e of t.errors){const m=String(e.message||''); if(m.includes('Timeout')||m.includes('waitForURL')) inc=true;}}}} if(s.suites)for(const ss of s.suites)walk(ss);} if(d.suites)for(const s of d.suites) walk(s); process.exit(inc?2:0);

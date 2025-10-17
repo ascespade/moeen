@@ -29,8 +29,8 @@ const actionSchema = z.object({
     'update_payment_status',
     'create_insurance_claim'
   ]),
-  parameters: z.record(z.any()),
-  context: z.record(z.any()).optional(),
+  parameters: z.record(z.any()).default({}),
+  context: z.record(z.any()).optional().default({}),
   userId: z.string().uuid('Invalid user ID'),
   conversationId: z.string().optional(),
 });
@@ -328,12 +328,15 @@ export async function POST(request: NextRequest) {
     const flowManager = new FlowManager();
 
     // Execute the action
-    const result = await flowManager.executeStepAction(action, parameters, {
-      userId: userId,
-      userRole: 'patient',
-      conversationId,
-      ...context,
-    });
+    const result = await (actionExecutor as any).executeAction(
+      { type: action as any, data: parameters },
+      {
+        userId,
+        conversationId: conversationId || '',
+        data: context || {},
+        history: [],
+      } as any
+    );
 
     return NextResponse.json(result);
   } catch (error: any) {

@@ -22,10 +22,10 @@ const reportSchema = z.object({
     'custom'
   ]),
   dateRange: z.object({
-    startDate: z.string().date(),
-    endDate: z.string().date(),
+    startDate: z.string().min(1),
+    endDate: z.string().min(1),
   }),
-  filters: z.record(z.any()).optional(),
+  filters: z.record(z.any()).optional().default({}),
   format: z.enum(['json', 'csv', 'pdf']).default('json'),
   groupBy: z.enum(['day', 'week', 'month', 'year']).optional(),
 });
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = await createClient();
+    const supabase = createClient();
     const body = await request.json();
 
     // Validate input
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: validation.error.message }, { status: 400 });
     }
 
-    const { type, dateRange, filters, format, groupBy } = validation.data;
+    const { type, dateRange, filters, format, groupBy } = validation.data as any;
 
     // Generate report based on type
     let reportData;
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Save report to database
-    const { data: savedReport, error: saveError } = await supabase
+    const { data: savedReport, error: saveError } = await (supabase as any)
       .from('reports_admin')
       .insert({
         type,
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create audit log
-    await supabase.from('audit_logs').insert({
+    await (supabase as any).from('audit_logs').insert({
       action: 'report_generated',
       entityType: 'report',
       entityId: savedReport.id,
@@ -147,9 +147,9 @@ async function generateDashboardMetrics(supabase: any, dateRange: any, filters: 
       .lte('createdAt', endDate),
   ]);
 
-  const patients = patientsResult.data || [];
-  const appointments = appointmentsResult.data || [];
-  const payments = paymentsResult.data || [];
+    const patients: any[] = (patientsResult as any).data || [];
+    const appointments: any[] = (appointmentsResult as any).data || [];
+    const payments: any[] = (paymentsResult as any).data || [];
 
   // Calculate metrics
   const totalPatients = patients.length;

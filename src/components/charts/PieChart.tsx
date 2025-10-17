@@ -71,7 +71,11 @@ export const PieChart: React.FC<PieChartProps> = ({
             cx="50%"
             cy="50%"
             labelLine={false}
-            label={labelKey ? ({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%` : false}
+            label={labelKey ? ((params: any) => {
+              const name = params.name as string;
+              const percent = Number(params.percent || 0);
+              return `${name} ${(percent * 100).toFixed(0)}%`;
+            }) : false}
             outerRadius={outerRadius}
             innerRadius={innerRadius}
             fill="#8884d8"

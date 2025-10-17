@@ -270,11 +270,8 @@ export class ValidationHelper {
       return { success: true, data: validatedData };
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const validationError = new ValidationError(
-          error.issues.map(err => `${err.path.join('.')}: ${err.message}`).join(', '),
-          undefined,
-          context
-        );
+        const message = error.issues.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        const validationError = new ValidationError(message as any, undefined as any, context);
         return { success: false, error: validationError };
       }
       throw error;
@@ -291,16 +288,13 @@ export class ValidationHelper {
       return { success: true, data: result };
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const validationError = new ValidationError(
-          error.issues.map(err => `${err.path.join('.')}: ${err.message}`).join(', '),
-          undefined,
-          context
-        );
+        const message = error.issues.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        const validationError = new ValidationError(message as any, undefined as any, context);
         return { success: false, error: validationError };
       }
       return {
         success: false,
-        error: new ValidationError('Unknown validation error'),
+        error: new ValidationError('Unknown validation error' as any),
       };
     }
   }

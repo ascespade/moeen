@@ -66,7 +66,7 @@ export interface DesignTokens {
   };
   borderRadius: Record<string, string>;
   shadows: Record<string, string>;
-  zIndex: Record<string, number>;
+  zIndex: Record<string, number | string>;
 }
 
 class ThemeManager {
@@ -322,32 +322,32 @@ class ThemeManager {
       '--focus': brand.focus,
       
       // Neutral Colors - الألوان المحايدة
-      ...Object.entries(this.designTokens.colors.neutral).reduce((acc, [key, value]) => {
+      ...Object.entries(this.designTokens.colors.neutral).reduce((acc: Record<string, string>, [key, value]) => {
         acc[`--neutral-${key}`] = value;
         return acc;
       }, {} as Record<string, string>),
       
       // Spacing - المسافات
-      ...Object.entries(this.designTokens.spacing).reduce((acc, [key, value]) => {
+      ...Object.entries(this.designTokens.spacing).reduce((acc: Record<string, string>, [key, value]) => {
         acc[`--space-${key}`] = value;
         return acc;
       }, {} as Record<string, string>),
       
       // Border Radius - نصف قطر الحدود
-      ...Object.entries(this.designTokens.borderRadius).reduce((acc, [key, value]) => {
+      ...Object.entries(this.designTokens.borderRadius).reduce((acc: Record<string, string>, [key, value]) => {
         acc[`--radius-${key}`] = value;
         return acc;
       }, {} as Record<string, string>),
       
       // Shadows - الظلال
-      ...Object.entries(this.designTokens.shadows).reduce((acc, [key, value]) => {
+      ...Object.entries(this.designTokens.shadows).reduce((acc: Record<string, string>, [key, value]) => {
         acc[`--shadow-${key}`] = value;
         return acc;
       }, {} as Record<string, string>),
       
       // Z-Index - ترتيب الطبقات
-      ...Object.entries(this.designTokens.zIndex).reduce((acc, [key, value]) => {
-        acc[`--z-${key}`] = value.toString();
+      ...Object.entries(this.designTokens.zIndex).reduce((acc: Record<string, string>, [key, value]) => {
+        acc[`--z-${key}`] = String(value);
         return acc;
       }, {} as Record<string, string>),
     };

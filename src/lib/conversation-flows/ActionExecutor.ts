@@ -1,6 +1,5 @@
-
-// Add missing methods to ActionExecutor
-interface ActionExecutor {
+// Contract for the executor (kept for documentation purposes)
+interface ActionExecutorContract {
   createAppointment(data: any): Promise<any>;
   sendNotification(data: any): Promise<any>;
   sendReminder(data: any): Promise<any>;

@@ -4,7 +4,7 @@
  */
 
 import crypto from 'crypto';
-import { logger } from '../monitoring/logger';
+import { logger } from '../logger';
 
 interface EncryptionConfig {
   algorithm: string;
@@ -36,17 +36,19 @@ class EncryptionManager {
 
   encrypt(text: string, key?: string): string {
     try {
-      const encryptionKey = key ? Buffer.from(key || "" || "", 'hex') : Buffer.from(this.masterKey || "" || "", 'hex');
+      const encryptionKey = key ? Buffer.from(key, 'hex') : Buffer.from(this.masterKey, 'hex');
       const iv = this.generateIV();
-      const cipher = crypto.createCipher(this.config.algorithm, encryptionKey);
-      
-      let encrypted = cipher.update(text, 'utf8', 'hex');
-      encrypted += cipher.final('hex');
-      
-      const authTag = cipher.getAuthTag?.();
-      
+      const cipher = crypto.createCipheriv(this.config.algorithm, encryptionKey, iv);
+
+      const encrypted = Buffer.concat([
+        cipher.update(text, 'utf8'),
+        cipher.final(),
+      ]);
+
+      const authTag = cipher.getAuthTag();
+
       // Combine IV, authTag, and encrypted data
-      const result = iv.toString('hex') + ':' + authTag.toString('hex') + ':' + encrypted;
+      const result = `${iv.toString('hex')}:${authTag.toString('hex')}:${encrypted.toString('hex')}`;
       
       logger.debug('Data encrypted successfully', {
         algorithm: this.config.algorithm,
@@ -62,22 +64,24 @@ class EncryptionManager {
 
   decrypt(encryptedText: string, key?: string): string {
     try {
-      const encryptionKey = key ? Buffer.from(key || "" || "", 'hex') : Buffer.from(this.masterKey || "" || "", 'hex');
+      const encryptionKey = key ? Buffer.from(key, 'hex') : Buffer.from(this.masterKey, 'hex');
       const parts = encryptedText.split(':');
       
       if (parts.length !== 3) {
         throw new Error('Invalid encrypted data format');
       }
       
-      const iv = Buffer.from(parts[0] || "" || "", 'hex');
-      const authTag = Buffer.from(parts[1] || "" || "", 'hex');
+      const iv = Buffer.from(parts[0], 'hex');
+      const authTag = Buffer.from(parts[1], 'hex');
       const encrypted = parts[2];
       
-      const decipher = crypto.createDecipher(this.config.algorithm, encryptionKey);
-      decipher.setAuthTag?.(authTag);
-      
-      let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-      decrypted += decipher.final('utf8');
+      const decipher = crypto.createDecipheriv(this.config.algorithm, encryptionKey, iv);
+      decipher.setAuthTag(authTag);
+
+      const decrypted = Buffer.concat([
+        decipher.update(Buffer.from(encrypted, 'hex')),
+        decipher.final(),
+      ]).toString('utf8');
       
       logger.debug('Data decrypted successfully', {
         algorithm: this.config.algorithm,

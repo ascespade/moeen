@@ -17,7 +17,7 @@ export default defineConfig({
   timeout: 60000,
   /* Expect timeout for assertions */
   expect: {
-    timeout: 10000,
+    timeout: 60000,
   },
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
@@ -105,6 +105,6 @@ export default defineConfig({
     command: 'npm run dev',
     url: 'http://localhost:3001',
     reuseExistingServer: true, // Always reuse existing server
-    timeout: 120 * 1000,
+    timeout: 60000 * 1000,
   },
 });

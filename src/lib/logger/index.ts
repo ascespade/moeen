@@ -62,8 +62,8 @@ export class Logger {
     this.log(LogLevel.ERROR, message, context, error);
   }
 
-  warn(message: string, context?: Record<string, any>): void {
-    this.log(LogLevel.WARN, message, context);
+  warn(message: string, context?: Record<string, any>, error?: Error): void {
+    this.log(LogLevel.WARN, message, context, error);
   }
 
   info(message: string, context?: Record<string, any>): void {
@@ -111,7 +111,7 @@ export class Logger {
 
     // Remote logging
     if (this.config.enableRemote) {
-      this.logToRemote(logEntry);
+      this.logToRemote(logEntry).catch(() => {});
     }
   }
 
@@ -214,11 +214,11 @@ export class Logger {
     }
 
     // Extract module and function name from stack trace
-    const match = callerLine.match(/at\s+(.+?)\s+\((.+?):\d+:\d+\)/);
+    const match = callerLine.match(/at\s+(.+?)\s+\((.+?):\d+:\d+\)/) || callerLine.match(/at\s+([^\s]+)\s+\(([^)]+)\)/);
     if (match) {
-      const fullPath = match[2];
-      const moduleName = fullPath.split('/').pop()?.replace('.ts', '') || 'unknown';
-      const functionName = match[1].split('.').pop() || 'unknown';
+      const fullPath = match[2] || '';
+      const moduleName = (fullPath.split('/').pop() || '').replace(/\.(ts|js)x?$/, '') || 'unknown';
+      const functionName = (match[1] || '').split('.').pop() || 'unknown';
       return { module: moduleName, function: functionName };
     }
 

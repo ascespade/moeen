@@ -20,38 +20,38 @@ export async function GET() {
     // Test database connection
     try {
       const dbStart = Date.now();
-      const supabase = await createClient();
+      const supabase = createClient();
       const { data, error } = await supabase
         .from('users')
         .select('count')
         .limit(1);
       
-      const responseTime = Date.now() - dbStart;
+      const dbResponseTime = Date.now() - dbStart;
       
       if (error) {
         healthCheck.services.database = { 
           status: 'unhealthy', 
-          responseTime: responseTime,
+          responseTime: dbResponseTime,
           error: error.message 
-        };
+        } as any;
         healthCheck.errors.push(`Database error: ${error.message}`);
       } else {
         healthCheck.services.database = { 
           status: 'healthy', 
-          responseTime: responseTime 
-        };
+          responseTime: dbResponseTime 
+        } as any;
       }
     } catch (error: any) {
       healthCheck.services.database = { 
-        status: 'unhealthy', responseTime: responseTime, error: error.message 
-      };
+        status: 'unhealthy', responseTime: 0, error: (error as any).message 
+      } as any;
       healthCheck.errors.push(`Database connection failed: ${error.message}`);
     }
 
     // Test auth service
     try {
       const authStart = Date.now();
-      const supabase = await createClient();
+      const supabase = createClient();
       const { data, error } = await supabase.auth.getSession();
       
       const authTime = Date.now() - authStart;
@@ -61,25 +61,25 @@ export async function GET() {
           status: 'unhealthy', 
           responseTime: authTime,
           error: error.message 
-        };
+        } as any;
         healthCheck.errors.push(`Auth error: ${error.message}`);
       } else {
         healthCheck.services.auth = { 
           status: 'healthy', 
           responseTime: authTime 
-        };
+        } as any;
       }
     } catch (error: any) {
       healthCheck.services.auth = { 
-        status: 'unhealthy', responseTime: responseTime, error: error.message 
-      };
+        status: 'unhealthy', responseTime: 0, error: (error as any).message 
+      } as any;
       healthCheck.errors.push(`Auth service failed: ${error.message}`);
     }
 
     // Test storage service
     try {
       const storageStart = Date.now();
-      const supabase = await createClient();
+      const supabase = createClient();
       const { data, error } = await supabase.storage.listBuckets();
       
       const storageTime = Date.now() - storageStart;
@@ -89,18 +89,18 @@ export async function GET() {
           status: 'unhealthy', 
           responseTime: storageTime,
           error: error.message 
-        };
+        } as any;
         healthCheck.errors.push(`Storage error: ${error.message}`);
       } else {
         healthCheck.services.storage = { 
           status: 'healthy', 
           responseTime: storageTime 
-        };
+        } as any;
       }
     } catch (error: any) {
       healthCheck.services.storage = { 
-        status: 'unhealthy', responseTime: responseTime, error: error.message 
-      };
+        status: 'unhealthy', responseTime: 0, error: (error as any).message 
+      } as any;
       healthCheck.errors.push(`Storage service failed: ${error.message}`);
     }
 
