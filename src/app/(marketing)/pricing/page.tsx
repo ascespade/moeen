@@ -2,6 +2,7 @@
 
 import { useT } from "@/components/providers/I18nProvider";
 
+
 export default function PricingPage() {
   const { t } = useT();
   const tiers = [

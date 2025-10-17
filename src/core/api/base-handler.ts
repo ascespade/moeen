@@ -3,6 +3,7 @@
  * Unified API request handler with error handling and validation
  */
 
+import { log } from '@/lib/monitoring/logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { ErrorHandler, ErrorFactory } from '../errors';
 import { ValidationHelper } from '../validation';

@@ -2,6 +2,7 @@
 
 import { useT } from "@/components/providers/I18nProvider";
 
+
 export default function FeaturesPage() {
   const { t } = useT();
   const features = [

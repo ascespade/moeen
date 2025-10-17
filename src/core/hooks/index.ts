@@ -3,6 +3,7 @@
  * Centralized custom hooks for common functionality
  */
 
+import { log } from '@/lib/monitoring/logger';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuthStore, useUIStore, useDataStore } from '../store';
 import { apiClient } from '../api/client';

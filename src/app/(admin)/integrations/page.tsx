@@ -54,55 +54,89 @@ const IntegrationsPage: React.FC = () => {
   const loadIntegrations = async () => {
     try {
       setLoading(true);
-      const mockIntegrations: Integration[] = [
+      
+      // Load API keys from settings
+      const apiKeysRaw = localStorage.getItem('api_keys_config');
+      const apiKeys = apiKeysRaw ? JSON.parse(apiKeysRaw) : [];
+      
+      // Build integrations based on configured API keys
+      const integrations: Integration[] = [
         {
-          id: "1",
+          id: "supabase",
+          name: "Supabase Database",
+          description: "قاعدة البيانات الرئيسية - PostgreSQL + Realtime",
+          type: "database",
+          status: apiKeys.find((k: any) => k.id === 'supabase_anon')?.key_value ? "active" : "inactive",
+          provider: "Supabase",
+          last_sync: new Date().toISOString(),
+          health_score: apiKeys.find((k: any) => k.id === 'supabase_anon')?.key_value ? 98 : 0,
+          config: { 
+            url: apiKeys.find((k: any) => k.id === 'supabase_url')?.key_value || 'غير مُعد',
+            status: apiKeys.find((k: any) => k.id === 'supabase_anon')?.status || 'inactive'
+          }
+        },
+        {
+          id: "whatsapp",
           name: "WhatsApp Business API",
-          description: "تكامل مع واتساب لإرسال الرسائل والتذكيرات",
+          description: "تكامل مع واتساب لإرسال الرسائل والتذكيرات التلقائية",
           type: "api",
-          status: "active",
+          status: apiKeys.find((k: any) => k.id === 'whatsapp_token')?.key_value ? "active" : "inactive",
           provider: "Meta",
-          last_sync: "2024-01-15T10:30:00Z",
-          health_score: 95,
-          config: { api_key: "***", phone_number: "+966501234567" }
+          last_sync: new Date().toISOString(),
+          health_score: apiKeys.find((k: any) => k.id === 'whatsapp_token')?.status === 'active' ? 95 : 0,
+          config: { 
+            phone_number: apiKeys.find((k: any) => k.id === 'whatsapp_phone')?.key_value || 'غير مُعد',
+            token_status: apiKeys.find((k: any) => k.id === 'whatsapp_token')?.status || 'inactive'
+          }
         },
         {
-          id: "2",
-          name: "Slack Integration",
-          description: "تكامل مع سلاك لإشعارات الفريق",
-          type: "webhook",
-          status: "active",
-          provider: "Slack",
-          last_sync: "2024-01-15T09:45:00Z",
-          health_score: 88,
-          config: { webhook_url: "***", channel: "#alhemam-center" }
-        },
-        {
-          id: "3",
+          id: "google",
           name: "Google Calendar",
-          description: "مزامنة المواعيد مع تقويم جوجل",
+          description: "مزامنة المواعيد تلقائياً مع تقويم جوجل",
           type: "oauth",
-          status: "active",
+          status: apiKeys.find((k: any) => k.id === 'google_client_id')?.key_value ? "active" : "inactive",
           provider: "Google",
-          last_sync: "2024-01-15T08:20:00Z",
-          health_score: 92,
-          config: { calendar_id: "primary", sync_direction: "bidirectional" }
+          last_sync: new Date().toISOString(),
+          health_score: apiKeys.find((k: any) => k.id === 'google_client_id')?.key_value ? 92 : 0,
+          config: { 
+            client_id: apiKeys.find((k: any) => k.id === 'google_client_id')?.key_value ? 'مُعد' : 'غير مُعد',
+            calendar_sync: 'bidirectional'
+          }
         },
         {
-          id: "4",
-          name: "SMS Gateway",
-          description: "إرسال الرسائل النصية للمرضى",
-          type: "sms",
-          status: "error",
-          provider: "Twilio",
-          last_sync: "2024-01-14T15:30:00Z",
-          health_score: 45,
-          config: { account_sid: "***", auth_token: "***" }
-        }
+          id: "stripe",
+          name: "Stripe Payments",
+          description: "معالجة الدفعات الإلكترونية والاشتراكات",
+          type: "api",
+          status: apiKeys.find((k: any) => k.id === 'stripe_secret')?.key_value ? "active" : "inactive",
+          provider: "Stripe",
+          last_sync: new Date().toISOString(),
+          health_score: apiKeys.find((k: any) => k.id === 'stripe_secret')?.status === 'active' ? 94 : 0,
+          config: { 
+            public_key: apiKeys.find((k: any) => k.id === 'stripe_public')?.key_value ? 'مُعد' : 'غير مُعد',
+            webhooks: 'enabled'
+          }
+        },
+        {
+          id: "smtp",
+          name: "Email / SMTP",
+          description: "إرسال الإشعارات والتقارير عبر البريد الإلكتروني",
+          type: "email",
+          status: apiKeys.find((k: any) => k.id === 'smtp_host')?.key_value ? "active" : "inactive",
+          provider: "SMTP",
+          last_sync: new Date().toISOString(),
+          health_score: apiKeys.find((k: any) => k.id === 'smtp_host')?.key_value ? 88 : 0,
+          config: { 
+            host: apiKeys.find((k: any) => k.id === 'smtp_host')?.key_value || 'غير مُعد',
+            port: '587'
+          }
+        },
       ];
-      setIntegrations(mockIntegrations);
+      
+      setIntegrations(integrations);
     } catch (error) {
-      } finally {
+      console.error('Error loading integrations:', error);
+    } finally {
       setLoading(false);
     }
   };
@@ -175,13 +209,23 @@ const IntegrationsPage: React.FC = () => {
               </div>
 
               <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="flex-1">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="flex-1"
+                  onClick={() => router.push('/settings/api-keys')}
+                >
                   <Settings className="w-4 h-4 mr-1" />
                   إعدادات
                 </Button>
-                <Button variant="outline" size="sm" className="flex-1">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="flex-1"
+                  onClick={() => loadIntegrations()}
+                >
                   <RefreshCw className="w-4 h-4 mr-1" />
-                  اختبار
+                  تحديث
                 </Button>
               </div>
             </CardContent>
