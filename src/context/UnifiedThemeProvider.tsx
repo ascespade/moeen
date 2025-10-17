@@ -7,7 +7,22 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { Theme, ResolvedTheme, applyThemeToDocument, detectSystemTheme } from '@/design-system/unified';
+import { ThemeMode as Theme, ResolvedTheme } from '@/core/theme';
+
+// Helper functions
+const applyThemeToDocument = (theme: ResolvedTheme) => {
+  if (typeof document !== 'undefined') {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }
+};
+
+const detectSystemTheme = (): ResolvedTheme => {
+  if (typeof window !== 'undefined' && window.matchMedia) {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  return 'light';
+};
 
 // ========================================
 // TYPES - الأنواع

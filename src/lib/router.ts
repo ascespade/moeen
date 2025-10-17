@@ -2,7 +2,7 @@ import { ROUTES } from "@/constants/routes";
 export interface User {
   id: string;
   email: string;
-  role: "admin" | "user" | "doctor" | "nurse" | "staff" | "supervisor" | "patient";
+  role: "admin" | "user" | "doctor" | "nurse" | "staff" | "supervisor" | "patient" | "agent" | "manager" | "demo";
   permissions?: string[];
 }
 
@@ -26,9 +26,13 @@ export function getDefaultRouteForUser(user: User | null): string {
       return "/dashboard/supervisor";
     case "patient":
       return "/dashboard/patient";
+    case "agent":
+    case "manager":
+    case "demo":
+      return "/dashboard";
     case "user":
     default:
-      return "/dashboard/user";
+      return "/dashboard";
   }
 }
 

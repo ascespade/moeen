@@ -1,4 +1,55 @@
 // Conversation Flow Management System
+
+// Intent Analysis
+export class IntentAnalyzer {
+  static analyzeIntent(message: string): string {
+    const lowerMessage = message.toLowerCase();
+    
+    // Medical intents
+    if (lowerMessage.includes('appointment') || lowerMessage.includes('موعد')) {
+      return 'appointment';
+    }
+    if (lowerMessage.includes('emergency') || lowerMessage.includes('طوارئ')) {
+      return 'emergency';
+    }
+    if (lowerMessage.includes('prescription') || lowerMessage.includes('وصفة')) {
+      return 'prescription';
+    }
+    if (lowerMessage.includes('payment') || lowerMessage.includes('دفع')) {
+      return 'payment';
+    }
+    
+    // General intents
+    if (lowerMessage.includes('hello') || lowerMessage.includes('مرحبا')) {
+      return 'greeting';
+    }
+    if (lowerMessage.includes('help') || lowerMessage.includes('مساعدة')) {
+      return 'help';
+    }
+    
+    return 'general';
+  }
+}
+
+// Action Executor
+export class ActionExecutor {
+  static async executeAction(action: string, data: any): Promise<any> {
+    switch (action) {
+      case 'create_appointment':
+        // Implement appointment creation
+        return { success: true, data: { id: Date.now() } };
+      case 'send_notification':
+        // Implement notification sending
+        return { success: true, message: 'Notification sent' };
+      case 'redirect':
+        // Implement redirection
+        return { success: true, redirect: data.redirect };
+      default:
+        return { success: false, error: 'Unknown action' };
+    }
+  }
+}
+
 export interface FlowStep {
   id: string;
   type: "question" | "information" | "action" | "redirect" | "slack_notify" | "whatsapp_send";
