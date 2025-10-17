@@ -409,6 +409,15 @@ const server = http.createServer(async (req, res) => {
   } else if (req.url === '/api/stop-all-tests' && req.method === 'POST') {
     // Stop all tests
     handleStopAllTests(req, res);
+  } else if (req.url === '/api/system-stats') {
+    // REAL system statistics
+    handleSystemStats(req, res);
+  } else if (req.url === '/api/logs/test-runner') {
+    // REAL test runner logs
+    handleLogs(req, res, 'test-runner');
+  } else if (req.url === '/api/logs/dashboard') {
+    // REAL dashboard logs
+    handleLogs(req, res, 'dashboard');
   } else if (req.url === '/system-status.json') {
     const statusPath = path.join(__dirname, 'system-status.json');
     fs.readFile(statusPath, (err, data) => {

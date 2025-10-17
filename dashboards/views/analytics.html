@@ -1,0 +1,359 @@
+<!-- Analytics View - REAL TEST ANALYTICS -->
+<div class="view-container">
+    <div class="view-header">
+        <h2>📊 Test Analytics</h2>
+        <p>Real test performance and coverage analytics</p>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="metric-label">Test Files</div>
+            <div class="metric-value" id="metricFiles">-</div>
+            <div class="metric-trend">Total in project</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Total Tests</div>
+            <div class="metric-value" id="metricTests">-</div>
+            <div class="metric-trend">Discovered</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Avg Tests/File</div>
+            <div class="metric-value" id="metricAvg">-</div>
+            <div class="metric-trend">Average</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Total Size</div>
+            <div class="metric-value" id="metricSize">-</div>
+            <div class="metric-trend">All test files</div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-row">
+        <div class="chart-card">
+            <h3>Tests by Category</h3>
+            <div class="category-list" id="categoryList"></div>
+        </div>
+        <div class="chart-card">
+            <h3>Tests by Framework</h3>
+            <div class="framework-list" id="frameworkList"></div>
+        </div>
+    </div>
+
+    <!-- Top Files -->
+    <div class="section-card">
+        <h3>📈 Top Test Files by Test Count</h3>
+        <div class="top-files-list" id="topFilesList"></div>
+    </div>
+
+    <!-- Test Distribution -->
+    <div class="section-card">
+        <h3>📦 File Size Distribution</h3>
+        <div class="size-distribution" id="sizeDistribution"></div>
+    </div>
+</div>
+
+<style>
+.metrics-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.metric-card {
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+}
+
+.metric-label {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.metric-value {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-500), var(--secondary-500));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.metric-trend {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+}
+
+.charts-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.chart-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.chart-card h3 {
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.125rem;
+}
+
+.category-list, .framework-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.category-item, .framework-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.category-name, .framework-name {
+    width: 120px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.category-bar, .framework-bar {
+    flex: 1;
+    height: 32px;
+    background: var(--bg-tertiary);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-600), var(--primary-500));
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    color: white;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    transition: width 0.5s ease;
+}
+
+.top-files-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.top-file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-600);
+}
+
+.file-info {
+    flex: 1;
+}
+
+.file-name-display {
+    font-family: monospace;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.file-path-display {
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+.file-test-count {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-500);
+}
+
+.size-distribution {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.size-bucket {
+    padding: 1rem;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.size-bucket-label {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    margin-bottom: 0.5rem;
+}
+
+.size-bucket-count {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+</style>
+
+<script>
+async function loadAnalytics() {
+    try {
+        const response = await fetch('/real-test-status.json');
+        const data = await response.json();
+        
+        const files = data.testFiles || [];
+        
+        // Update metrics
+        document.getElementById('metricFiles').textContent = files.length;
+        document.getElementById('metricTests').textContent = data.totalTests || 0;
+        
+        const avgTests = files.length > 0 ? (data.totalTests / files.length).toFixed(1) : 0;
+        document.getElementById('metricAvg').textContent = avgTests;
+        
+        const totalSize = files.reduce((sum, f) => sum + (f.size || 0), 0);
+        document.getElementById('metricSize').textContent = formatBytes(totalSize);
+        
+        // Analyze by category
+        const byCategory = {};
+        const byFramework = {};
+        
+        files.forEach(file => {
+            const category = getCategory(file.path);
+            const framework = detectFramework(file.path);
+            
+            byCategory[category] = (byCategory[category] || 0) + file.testCount;
+            byFramework[framework] = (byFramework[framework] || 0) + file.testCount;
+        });
+        
+        renderCategoryChart(byCategory, data.totalTests);
+        renderFrameworkChart(byFramework, data.totalTests);
+        renderTopFiles(files);
+        renderSizeDistribution(files);
+        
+    } catch (error) {
+        console.error('Error loading analytics:', error);
+    }
+}
+
+function renderCategoryChart(data, total) {
+    const container = document.getElementById('categoryList');
+    const sorted = Object.entries(data).sort((a, b) => b[1] - a[1]);
+    
+    container.innerHTML = sorted.map(([name, count]) => {
+        const percentage = ((count / total) * 100).toFixed(1);
+        return `
+            <div class="category-item">
+                <div class="category-name">${name}</div>
+                <div class="category-bar">
+                    <div class="bar-fill" style="width: ${percentage}%">
+                        ${count} tests (${percentage}%)
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderFrameworkChart(data, total) {
+    const container = document.getElementById('frameworkList');
+    const sorted = Object.entries(data).sort((a, b) => b[1] - a[1]);
+    
+    container.innerHTML = sorted.map(([name, count]) => {
+        const percentage = ((count / total) * 100).toFixed(1);
+        return `
+            <div class="framework-item">
+                <div class="framework-name">${name}</div>
+                <div class="framework-bar">
+                    <div class="bar-fill" style="width: ${percentage}%">
+                        ${count} tests (${percentage}%)
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderTopFiles(files) {
+    const container = document.getElementById('topFilesList');
+    const sorted = files.sort((a, b) => b.testCount - a.testCount).slice(0, 10);
+    
+    container.innerHTML = sorted.map(file => `
+        <div class="top-file-item">
+            <div class="file-info">
+                <div class="file-name-display">${file.path.split('/').pop()}</div>
+                <div class="file-path-display">${file.path}</div>
+            </div>
+            <div class="file-test-count">${file.testCount}</div>
+        </div>
+    `).join('');
+}
+
+function renderSizeDistribution(files) {
+    const container = document.getElementById('sizeDistribution');
+    
+    const buckets = {
+        'Small (< 5KB)': files.filter(f => f.size < 5120).length,
+        'Medium (5-10KB)': files.filter(f => f.size >= 5120 && f.size < 10240).length,
+        'Large (10-20KB)': files.filter(f => f.size >= 10240 && f.size < 20480).length,
+        'Very Large (> 20KB)': files.filter(f => f.size >= 20480).length
+    };
+    
+    container.innerHTML = Object.entries(buckets).map(([label, count]) => `
+        <div class="size-bucket">
+            <div class="size-bucket-label">${label}</div>
+            <div class="size-bucket-count">${count}</div>
+        </div>
+    `).join('');
+}
+
+function getCategory(path) {
+    if (path.includes('/e2e/')) return 'E2E';
+    if (path.includes('/__tests__/')) return 'Unit';
+    if (path.includes('/integration/')) return 'Integration';
+    if (path.includes('/performance/')) return 'Performance';
+    if (path.includes('/accessibility/')) return 'Accessibility';
+    return 'Other';
+}
+
+function detectFramework(path) {
+    if (path.includes('playwright') || path.includes('.spec.')) return 'Playwright';
+    if (path.includes('jest') || path.includes('/__tests__/')) return 'Jest';
+    if (path.includes('vitest')) return 'Vitest';
+    return 'Other';
+}
+
+function formatBytes(bytes) {
+    if (!bytes) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+}
+
+loadAnalytics();
+setInterval(loadAnalytics, 10000);
+</script>
+

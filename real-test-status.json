@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-10-17T20:15:26.186Z",
+  "timestamp": "2025-10-17T20:21:09.462Z",
   "totalTests": 443,
   "passedTests": 0,
   "failedTests": 0,
   "skippedTests": 0,
-  "duration": 1358,
+  "duration": 1146,
   "testFiles": [
     {
       "path": "/tests/accessibility/accessibility.test.ts",
@@ -253,6 +253,6 @@
       "size": 4962
     }
   ],
-  "lastRun": "2025-10-17T20:15:24.827Z",
+  "lastRun": "2025-10-17T20:21:08.316Z",
   "isRunning": false
 }
