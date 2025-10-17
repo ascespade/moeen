@@ -161,3 +161,4 @@ export function ThemeSwitch({
     </div>
   );
 }
+export default ThemeSwitch;
