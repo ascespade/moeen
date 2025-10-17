@@ -293,7 +293,7 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 export const useLocalStorage = <T>(key: string, initialValue: T) => {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
-      const item = storageUtils.get<T>(key);
+      const item = storageUtils.get(key);
       return item !== null ? item : initialValue;
     } catch (error) {
       console.error(`Error reading localStorage key "${key}":`, error);
