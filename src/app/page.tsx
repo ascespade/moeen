@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ROUTES } from "@/constants/routes";
-import { ThemeSwitch as ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { ThemeSwitch as ThemeSwitcher } from '@/components/ui';
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useT } from "@/components/providers/I18nProvider";
 import Image from "next/image";
