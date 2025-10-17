@@ -8,10 +8,12 @@ import { NextRequest } from 'next/server';
 /**
  * Extract client IP address from request
  */
-export function getClientIP(request: NextRequest): string {
-  const forwarded = request?.headers?.get('x-forwarded-for');
-  const realIP = request?.headers?.get('x-real-ip');
-  const remoteAddr = request?.headers?.get('x-remote-addr');
+export function getClientIP(request: NextRequest | undefined): string {
+  if (!request) return '127.0.0.1';
+  
+  const forwarded = request.headers?.get('x-forwarded-for');
+  const realIP = request.headers?.get('x-real-ip');
+  const remoteAddr = request.headers?.get('x-remote-addr');
   
   if (forwarded) {
     return forwarded.split(',')[0].trim();
