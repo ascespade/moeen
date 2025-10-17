@@ -1,0 +1,487 @@
+[2025-10-17T16:49:59Z] FULL-SUITE RUN STARTED
+[2025-10-17T16:49:59Z] Branch: auto/test-fixes-20251017T164913Z
+[2025-10-17T16:49:59Z] Mode: No-DB (DB connection timeout)
+[2025-10-17T16:49:59Z] Modules: 13 (auth, users, patients, appointments, billing, notifications, dashboard, admin, files, reports, settings, integration, payments)
+[2025-10-17T16:49:59Z] Config: 6 attempts/module, 90% target, 60s timeout
+[2025-10-17T16:51:30.314Z] 🚀 STARTING AGGRESSIVE FULL TEST SUITE
+[2025-10-17T16:51:30.316Z] 📋 Testing 13 modules
+[2025-10-17T16:51:30.316Z] ⚙️  Config: 6 attempts, 90% target, 60000ms timeout
+{"time":"2025-10-17T16:51:30.316Z","module":"auth","status":"started","attempt":0}
+{"time":"2025-10-17T16:51:30.316Z","module":"auth","attempt":1,"status":"running"}
+[2025-10-17T16:51:30.316Z] [auth] Running Playwright test (attempt 1)
+[2025-10-17T16:51:36.557Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:51:36.557Z","module":"auth","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:51:36.558Z] [auth] Applying auto-fixes...
+[2025-10-17T16:51:42.093Z] [auth] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:51:44.095Z","module":"auth","attempt":2,"status":"running"}
+[2025-10-17T16:51:44.095Z] [auth] Running Playwright test (attempt 2)
+[2025-10-17T16:51:50.337Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:51:50.337Z","module":"auth","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:51:50.337Z] [auth] Applying auto-fixes...
+[2025-10-17T16:51:56.153Z] [auth] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:51:58.156Z","module":"auth","attempt":3,"status":"running"}
+[2025-10-17T16:51:58.156Z] [auth] Running Playwright test (attempt 3)
+[2025-10-17T16:52:04.333Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:52:04.333Z","module":"auth","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:52:04.333Z] [auth] Applying auto-fixes...
+[2025-10-17T16:52:09.676Z] [auth] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:52:11.678Z","module":"auth","attempt":4,"status":"running"}
+[2025-10-17T16:52:11.679Z] [auth] Running Playwright test (attempt 4)
+[2025-10-17T16:52:17.745Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:52:17.745Z","module":"auth","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:52:17.745Z] [auth] Applying auto-fixes...
+[2025-10-17T16:52:23.153Z] [auth] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:52:25.155Z","module":"auth","attempt":5,"status":"running"}
+[2025-10-17T16:52:25.156Z] [auth] Running Playwright test (attempt 5)
+[2025-10-17T16:52:31.312Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:52:31.312Z","module":"auth","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:52:31.312Z] [auth] Applying auto-fixes...
+[2025-10-17T16:52:36.853Z] [auth] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:52:38.855Z","module":"auth","attempt":6,"status":"running"}
+[2025-10-17T16:52:38.855Z] [auth] Running Playwright test (attempt 6)
+[2025-10-17T16:52:44.969Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:52:44.969Z","module":"auth","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T16:52:44.969Z","module":"auth","status":"failed","percent":0,"attempts":6,"duration":"74.65s"}
+{"time":"2025-10-17T16:52:44.969Z","module":"users","status":"started","attempt":0}
+{"time":"2025-10-17T16:52:44.969Z","module":"users","attempt":1,"status":"running"}
+[2025-10-17T16:52:44.969Z] [users] Running Playwright test (attempt 1)
+[2025-10-17T16:52:51.029Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:52:51.029Z","module":"users","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:52:51.029Z] [users] Applying auto-fixes...
+[2025-10-17T16:52:56.610Z] [users] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:52:58.612Z","module":"users","attempt":2,"status":"running"}
+[2025-10-17T16:52:58.612Z] [users] Running Playwright test (attempt 2)
+[2025-10-17T16:53:04.741Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:53:04.741Z","module":"users","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:53:04.741Z] [users] Applying auto-fixes...
+[2025-10-17T16:53:09.994Z] [users] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:53:11.996Z","module":"users","attempt":3,"status":"running"}
+[2025-10-17T16:53:11.996Z] [users] Running Playwright test (attempt 3)
+[2025-10-17T16:53:18.101Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:53:18.101Z","module":"users","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:53:18.101Z] [users] Applying auto-fixes...
+[2025-10-17T16:53:23.718Z] [users] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:53:25.720Z","module":"users","attempt":4,"status":"running"}
+[2025-10-17T16:53:25.720Z] [users] Running Playwright test (attempt 4)
+[2025-10-17T16:53:31.768Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:53:31.768Z","module":"users","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:53:31.768Z] [users] Applying auto-fixes...
+[2025-10-17T16:53:37.072Z] [users] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:53:39.075Z","module":"users","attempt":5,"status":"running"}
+[2025-10-17T16:53:39.076Z] [users] Running Playwright test (attempt 5)
+[2025-10-17T16:53:45.209Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:53:45.209Z","module":"users","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:53:45.209Z] [users] Applying auto-fixes...
+[2025-10-17T16:53:50.905Z] [users] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:53:52.907Z","module":"users","attempt":6,"status":"running"}
+[2025-10-17T16:53:52.908Z] [users] Running Playwright test (attempt 6)
+[2025-10-17T16:53:59.237Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:53:59.237Z","module":"users","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T16:53:59.237Z","module":"users","status":"failed","percent":0,"attempts":6,"duration":"74.27s"}
+{"time":"2025-10-17T16:53:59.237Z","module":"patients","status":"started","attempt":0}
+{"time":"2025-10-17T16:53:59.238Z","module":"patients","attempt":1,"status":"running"}
+[2025-10-17T16:53:59.238Z] [patients] Running Playwright test (attempt 1)
+[2025-10-17T16:54:05.414Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:54:05.414Z","module":"patients","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:54:05.414Z] [patients] Applying auto-fixes...
+[2025-10-17T16:54:11.030Z] [patients] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:54:13.032Z","module":"patients","attempt":2,"status":"running"}
+[2025-10-17T16:54:13.032Z] [patients] Running Playwright test (attempt 2)
+[2025-10-17T16:54:19.217Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:54:19.217Z","module":"patients","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:54:19.217Z] [patients] Applying auto-fixes...
+[2025-10-17T16:54:25.106Z] [patients] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:54:27.108Z","module":"patients","attempt":3,"status":"running"}
+[2025-10-17T16:54:27.108Z] [patients] Running Playwright test (attempt 3)
+[2025-10-17T16:54:33.413Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:54:33.414Z","module":"patients","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:54:33.414Z] [patients] Applying auto-fixes...
+[2025-10-17T16:54:39.017Z] [patients] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:54:41.019Z","module":"patients","attempt":4,"status":"running"}
+[2025-10-17T16:54:41.020Z] [patients] Running Playwright test (attempt 4)
+[2025-10-17T16:54:47.116Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:54:47.116Z","module":"patients","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:54:47.117Z] [patients] Applying auto-fixes...
+[2025-10-17T16:54:52.413Z] [patients] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:54:54.414Z","module":"patients","attempt":5,"status":"running"}
+[2025-10-17T16:54:54.415Z] [patients] Running Playwright test (attempt 5)
+[2025-10-17T16:55:00.841Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:55:00.841Z","module":"patients","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:55:00.841Z] [patients] Applying auto-fixes...
+[2025-10-17T16:55:06.269Z] [patients] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:55:08.272Z","module":"patients","attempt":6,"status":"running"}
+[2025-10-17T16:55:08.272Z] [patients] Running Playwright test (attempt 6)
+[2025-10-17T16:55:14.325Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:55:14.326Z","module":"patients","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T16:55:14.326Z","module":"patients","status":"failed","percent":0,"attempts":6,"duration":"75.09s"}
+{"time":"2025-10-17T16:55:14.326Z","module":"appointments","status":"started","attempt":0}
+{"time":"2025-10-17T16:55:14.326Z","module":"appointments","attempt":1,"status":"running"}
+[2025-10-17T16:55:14.326Z] [appointments] Running Playwright test (attempt 1)
+[2025-10-17T16:55:20.669Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:55:20.670Z","module":"appointments","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:55:20.670Z] [appointments] Applying auto-fixes...
+[2025-10-17T16:55:26.254Z] [appointments] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:55:28.255Z","module":"appointments","attempt":2,"status":"running"}
+[2025-10-17T16:55:28.255Z] [appointments] Running Playwright test (attempt 2)
+[2025-10-17T16:55:34.501Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:55:34.501Z","module":"appointments","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:55:34.502Z] [appointments] Applying auto-fixes...
+[2025-10-17T16:55:40.169Z] [appointments] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:55:42.172Z","module":"appointments","attempt":3,"status":"running"}
+[2025-10-17T16:55:42.173Z] [appointments] Running Playwright test (attempt 3)
+[2025-10-17T16:55:48.429Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:55:48.429Z","module":"appointments","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:55:48.429Z] [appointments] Applying auto-fixes...
+[2025-10-17T16:55:53.896Z] [appointments] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:55:55.897Z","module":"appointments","attempt":4,"status":"running"}
+[2025-10-17T16:55:55.897Z] [appointments] Running Playwright test (attempt 4)
+[2025-10-17T16:56:02.065Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:56:02.066Z","module":"appointments","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:56:02.066Z] [appointments] Applying auto-fixes...
+[2025-10-17T16:56:07.781Z] [appointments] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:56:09.783Z","module":"appointments","attempt":5,"status":"running"}
+[2025-10-17T16:56:09.784Z] [appointments] Running Playwright test (attempt 5)
+[2025-10-17T16:56:15.904Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:56:15.904Z","module":"appointments","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:56:15.904Z] [appointments] Applying auto-fixes...
+[2025-10-17T16:56:21.503Z] [appointments] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:56:23.506Z","module":"appointments","attempt":6,"status":"running"}
+[2025-10-17T16:56:23.506Z] [appointments] Running Playwright test (attempt 6)
+[2025-10-17T16:56:29.549Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:56:29.549Z","module":"appointments","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T16:56:29.549Z","module":"appointments","status":"failed","percent":0,"attempts":6,"duration":"75.22s"}
+{"time":"2025-10-17T16:56:29.549Z","module":"billing","status":"started","attempt":0}
+{"time":"2025-10-17T16:56:29.549Z","module":"billing","attempt":1,"status":"running"}
+[2025-10-17T16:56:29.549Z] [billing] Running Playwright test (attempt 1)
+[2025-10-17T16:56:35.941Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:56:35.941Z","module":"billing","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:56:35.942Z] [billing] Applying auto-fixes...
+[2025-10-17T16:56:41.825Z] [billing] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:56:43.827Z","module":"billing","attempt":2,"status":"running"}
+[2025-10-17T16:56:43.827Z] [billing] Running Playwright test (attempt 2)
+[2025-10-17T16:56:50.333Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:56:50.334Z","module":"billing","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:56:50.334Z] [billing] Applying auto-fixes...
+[2025-10-17T16:56:56.009Z] [billing] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:56:58.011Z","module":"billing","attempt":3,"status":"running"}
+[2025-10-17T16:56:58.011Z] [billing] Running Playwright test (attempt 3)
+[2025-10-17T16:57:04.456Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:57:04.456Z","module":"billing","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:57:04.456Z] [billing] Applying auto-fixes...
+[2025-10-17T16:57:10.338Z] [billing] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:57:12.340Z","module":"billing","attempt":4,"status":"running"}
+[2025-10-17T16:57:12.340Z] [billing] Running Playwright test (attempt 4)
+[2025-10-17T16:57:18.617Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:57:18.617Z","module":"billing","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:57:18.617Z] [billing] Applying auto-fixes...
+[2025-10-17T16:57:24.025Z] [billing] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:57:26.027Z","module":"billing","attempt":5,"status":"running"}
+[2025-10-17T16:57:26.027Z] [billing] Running Playwright test (attempt 5)
+[2025-10-17T16:57:32.165Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:57:32.165Z","module":"billing","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:57:32.165Z] [billing] Applying auto-fixes...
+[2025-10-17T16:57:37.669Z] [billing] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:57:39.672Z","module":"billing","attempt":6,"status":"running"}
+[2025-10-17T16:57:39.673Z] [billing] Running Playwright test (attempt 6)
+[2025-10-17T16:57:45.886Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:57:45.886Z","module":"billing","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T16:57:45.886Z","module":"billing","status":"failed","percent":0,"attempts":6,"duration":"76.34s"}
+{"time":"2025-10-17T16:57:45.886Z","module":"notifications","status":"started","attempt":0}
+{"time":"2025-10-17T16:57:45.886Z","module":"notifications","attempt":1,"status":"running"}
+[2025-10-17T16:57:45.886Z] [notifications] Running Playwright test (attempt 1)
+[2025-10-17T16:57:52.097Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:57:52.097Z","module":"notifications","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:57:52.097Z] [notifications] Applying auto-fixes...
+[2025-10-17T16:57:57.512Z] [notifications] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:57:59.514Z","module":"notifications","attempt":2,"status":"running"}
+[2025-10-17T16:57:59.514Z] [notifications] Running Playwright test (attempt 2)
+[2025-10-17T16:58:05.600Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:58:05.601Z","module":"notifications","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:58:05.601Z] [notifications] Applying auto-fixes...
+[2025-10-17T16:58:10.925Z] [notifications] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:58:12.928Z","module":"notifications","attempt":3,"status":"running"}
+[2025-10-17T16:58:12.928Z] [notifications] Running Playwright test (attempt 3)
+[2025-10-17T16:58:19.032Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:58:19.032Z","module":"notifications","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:58:19.032Z] [notifications] Applying auto-fixes...
+[2025-10-17T16:58:24.844Z] [notifications] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:58:26.847Z","module":"notifications","attempt":4,"status":"running"}
+[2025-10-17T16:58:26.847Z] [notifications] Running Playwright test (attempt 4)
+[2025-10-17T16:58:33.397Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:58:33.397Z","module":"notifications","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:58:33.397Z] [notifications] Applying auto-fixes...
+[2025-10-17T16:58:38.920Z] [notifications] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:58:40.922Z","module":"notifications","attempt":5,"status":"running"}
+[2025-10-17T16:58:40.922Z] [notifications] Running Playwright test (attempt 5)
+[2025-10-17T16:58:47.344Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:58:47.345Z","module":"notifications","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:58:47.345Z] [notifications] Applying auto-fixes...
+[2025-10-17T16:58:52.892Z] [notifications] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:58:54.894Z","module":"notifications","attempt":6,"status":"running"}
+[2025-10-17T16:58:54.894Z] [notifications] Running Playwright test (attempt 6)
+[2025-10-17T16:59:01.213Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:59:01.213Z","module":"notifications","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T16:59:01.213Z","module":"notifications","status":"failed","percent":0,"attempts":6,"duration":"75.33s"}
+{"time":"2025-10-17T16:59:01.213Z","module":"dashboard","status":"started","attempt":0}
+{"time":"2025-10-17T16:59:01.213Z","module":"dashboard","attempt":1,"status":"running"}
+[2025-10-17T16:59:01.213Z] [dashboard] Running Playwright test (attempt 1)
+[2025-10-17T16:59:07.465Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:59:07.465Z","module":"dashboard","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:59:07.465Z] [dashboard] Applying auto-fixes...
+[2025-10-17T16:59:12.897Z] [dashboard] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:59:14.900Z","module":"dashboard","attempt":2,"status":"running"}
+[2025-10-17T16:59:14.901Z] [dashboard] Running Playwright test (attempt 2)
+[2025-10-17T16:59:21.248Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:59:21.249Z","module":"dashboard","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:59:21.249Z] [dashboard] Applying auto-fixes...
+[2025-10-17T16:59:26.614Z] [dashboard] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:59:28.616Z","module":"dashboard","attempt":3,"status":"running"}
+[2025-10-17T16:59:28.616Z] [dashboard] Running Playwright test (attempt 3)
+[2025-10-17T16:59:34.837Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:59:34.837Z","module":"dashboard","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:59:34.837Z] [dashboard] Applying auto-fixes...
+[2025-10-17T16:59:40.561Z] [dashboard] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:59:42.562Z","module":"dashboard","attempt":4,"status":"running"}
+[2025-10-17T16:59:42.562Z] [dashboard] Running Playwright test (attempt 4)
+[2025-10-17T16:59:49.041Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T16:59:49.041Z","module":"dashboard","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T16:59:49.041Z] [dashboard] Applying auto-fixes...
+[2025-10-17T16:59:54.774Z] [dashboard] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T16:59:56.776Z","module":"dashboard","attempt":5,"status":"running"}
+[2025-10-17T16:59:56.776Z] [dashboard] Running Playwright test (attempt 5)
+[2025-10-17T17:00:03.057Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:00:03.057Z","module":"dashboard","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:00:03.057Z] [dashboard] Applying auto-fixes...
+[2025-10-17T17:00:08.481Z] [dashboard] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:00:10.483Z","module":"dashboard","attempt":6,"status":"running"}
+[2025-10-17T17:00:10.483Z] [dashboard] Running Playwright test (attempt 6)
+[2025-10-17T17:00:16.979Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:00:16.980Z","module":"dashboard","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T17:00:16.980Z","module":"dashboard","status":"failed","percent":0,"attempts":6,"duration":"75.77s"}
+{"time":"2025-10-17T17:00:16.980Z","module":"admin","status":"started","attempt":0}
+{"time":"2025-10-17T17:00:16.980Z","module":"admin","attempt":1,"status":"running"}
+[2025-10-17T17:00:16.980Z] [admin] Running Playwright test (attempt 1)
+[2025-10-17T17:00:23.333Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:00:23.333Z","module":"admin","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:00:23.333Z] [admin] Applying auto-fixes...
+[2025-10-17T17:00:28.641Z] [admin] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:00:30.643Z","module":"admin","attempt":2,"status":"running"}
+[2025-10-17T17:00:30.643Z] [admin] Running Playwright test (attempt 2)
+[2025-10-17T17:00:36.812Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:00:36.812Z","module":"admin","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:00:36.812Z] [admin] Applying auto-fixes...
+[2025-10-17T17:00:42.481Z] [admin] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:00:44.483Z","module":"admin","attempt":3,"status":"running"}
+[2025-10-17T17:00:44.484Z] [admin] Running Playwright test (attempt 3)
+[2025-10-17T17:00:50.802Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:00:50.802Z","module":"admin","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:00:50.802Z] [admin] Applying auto-fixes...
+[2025-10-17T17:00:56.238Z] [admin] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:00:58.241Z","module":"admin","attempt":4,"status":"running"}
+[2025-10-17T17:00:58.241Z] [admin] Running Playwright test (attempt 4)
+[2025-10-17T17:01:04.510Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:01:04.510Z","module":"admin","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:01:04.510Z] [admin] Applying auto-fixes...
+[2025-10-17T17:01:10.327Z] [admin] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:01:12.330Z","module":"admin","attempt":5,"status":"running"}
+[2025-10-17T17:01:12.330Z] [admin] Running Playwright test (attempt 5)
+[2025-10-17T17:01:18.637Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:01:18.637Z","module":"admin","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:01:18.637Z] [admin] Applying auto-fixes...
+[2025-10-17T17:01:24.249Z] [admin] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:01:26.252Z","module":"admin","attempt":6,"status":"running"}
+[2025-10-17T17:01:26.252Z] [admin] Running Playwright test (attempt 6)
+[2025-10-17T17:01:32.401Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:01:32.401Z","module":"admin","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T17:01:32.401Z","module":"admin","status":"failed","percent":0,"attempts":6,"duration":"75.42s"}
+{"time":"2025-10-17T17:01:32.401Z","module":"files","status":"started","attempt":0}
+{"time":"2025-10-17T17:01:32.401Z","module":"files","attempt":1,"status":"running"}
+[2025-10-17T17:01:32.401Z] [files] Running Playwright test (attempt 1)
+[2025-10-17T17:01:38.785Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:01:38.785Z","module":"files","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:01:38.785Z] [files] Applying auto-fixes...
+[2025-10-17T17:01:44.401Z] [files] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:01:46.403Z","module":"files","attempt":2,"status":"running"}
+[2025-10-17T17:01:46.403Z] [files] Running Playwright test (attempt 2)
+[2025-10-17T17:01:52.729Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:01:52.729Z","module":"files","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:01:52.730Z] [files] Applying auto-fixes...
+[2025-10-17T17:01:58.649Z] [files] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:02:00.651Z","module":"files","attempt":3,"status":"running"}
+[2025-10-17T17:02:00.651Z] [files] Running Playwright test (attempt 3)
+[2025-10-17T17:02:07.318Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:02:07.318Z","module":"files","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:02:07.318Z] [files] Applying auto-fixes...
+[2025-10-17T17:02:13.015Z] [files] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:02:15.017Z","module":"files","attempt":4,"status":"running"}
+[2025-10-17T17:02:15.017Z] [files] Running Playwright test (attempt 4)
+[2025-10-17T17:02:21.254Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:02:21.254Z","module":"files","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:02:21.254Z] [files] Applying auto-fixes...
+[2025-10-17T17:02:26.677Z] [files] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:02:28.679Z","module":"files","attempt":5,"status":"running"}
+[2025-10-17T17:02:28.680Z] [files] Running Playwright test (attempt 5)
+[2025-10-17T17:02:35.013Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:02:35.014Z","module":"files","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:02:35.014Z] [files] Applying auto-fixes...
+[2025-10-17T17:02:40.357Z] [files] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:02:42.360Z","module":"files","attempt":6,"status":"running"}
+[2025-10-17T17:02:42.360Z] [files] Running Playwright test (attempt 6)
+[2025-10-17T17:02:49.166Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:02:49.167Z","module":"files","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T17:02:49.167Z","module":"files","status":"failed","percent":0,"attempts":6,"duration":"76.77s"}
+{"time":"2025-10-17T17:02:49.167Z","module":"reports","status":"started","attempt":0}
+{"time":"2025-10-17T17:02:49.167Z","module":"reports","attempt":1,"status":"running"}
+[2025-10-17T17:02:49.167Z] [reports] Running Playwright test (attempt 1)
+[2025-10-17T17:02:56.154Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:02:56.154Z","module":"reports","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:02:56.154Z] [reports] Applying auto-fixes...
+[2025-10-17T17:03:02.162Z] [reports] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:03:04.164Z","module":"reports","attempt":2,"status":"running"}
+[2025-10-17T17:03:04.164Z] [reports] Running Playwright test (attempt 2)
+[2025-10-17T17:03:10.293Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:03:10.293Z","module":"reports","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:03:10.293Z] [reports] Applying auto-fixes...
+[2025-10-17T17:03:15.964Z] [reports] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:03:17.967Z","module":"reports","attempt":3,"status":"running"}
+[2025-10-17T17:03:17.967Z] [reports] Running Playwright test (attempt 3)
+[2025-10-17T17:03:24.389Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:03:24.389Z","module":"reports","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:03:24.389Z] [reports] Applying auto-fixes...
+[2025-10-17T17:03:30.003Z] [reports] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:03:32.006Z","module":"reports","attempt":4,"status":"running"}
+[2025-10-17T17:03:32.006Z] [reports] Running Playwright test (attempt 4)
+[2025-10-17T17:03:38.441Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:03:38.441Z","module":"reports","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:03:38.441Z] [reports] Applying auto-fixes...
+[2025-10-17T17:03:44.089Z] [reports] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:03:46.090Z","module":"reports","attempt":5,"status":"running"}
+[2025-10-17T17:03:46.091Z] [reports] Running Playwright test (attempt 5)
+[2025-10-17T17:03:52.724Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:03:52.725Z","module":"reports","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:03:52.725Z] [reports] Applying auto-fixes...
+[2025-10-17T17:03:58.595Z] [reports] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:04:00.597Z","module":"reports","attempt":6,"status":"running"}
+[2025-10-17T17:04:00.598Z] [reports] Running Playwright test (attempt 6)
+[2025-10-17T17:04:07.149Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:04:07.150Z","module":"reports","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T17:04:07.150Z","module":"reports","status":"failed","percent":0,"attempts":6,"duration":"77.98s"}
+{"time":"2025-10-17T17:04:07.150Z","module":"settings","status":"started","attempt":0}
+{"time":"2025-10-17T17:04:07.150Z","module":"settings","attempt":1,"status":"running"}
+[2025-10-17T17:04:07.150Z] [settings] Running Playwright test (attempt 1)
+[2025-10-17T17:04:13.717Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:04:13.717Z","module":"settings","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:04:13.717Z] [settings] Applying auto-fixes...
+[2025-10-17T17:04:19.489Z] [settings] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:04:21.492Z","module":"settings","attempt":2,"status":"running"}
+[2025-10-17T17:04:21.492Z] [settings] Running Playwright test (attempt 2)
+[2025-10-17T17:04:27.993Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:04:27.993Z","module":"settings","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:04:27.993Z] [settings] Applying auto-fixes...
+[2025-10-17T17:04:33.610Z] [settings] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:04:35.612Z","module":"settings","attempt":3,"status":"running"}
+[2025-10-17T17:04:35.612Z] [settings] Running Playwright test (attempt 3)
+[2025-10-17T17:04:42.010Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:04:42.010Z","module":"settings","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:04:42.010Z] [settings] Applying auto-fixes...
+[2025-10-17T17:04:47.566Z] [settings] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:04:49.568Z","module":"settings","attempt":4,"status":"running"}
+[2025-10-17T17:04:49.568Z] [settings] Running Playwright test (attempt 4)
+[2025-10-17T17:04:55.869Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:04:55.869Z","module":"settings","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:04:55.869Z] [settings] Applying auto-fixes...
+[2025-10-17T17:05:01.759Z] [settings] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:05:03.761Z","module":"settings","attempt":5,"status":"running"}
+[2025-10-17T17:05:03.761Z] [settings] Running Playwright test (attempt 5)
+[2025-10-17T17:05:10.342Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:05:10.342Z","module":"settings","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:05:10.342Z] [settings] Applying auto-fixes...
+[2025-10-17T17:05:16.189Z] [settings] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:05:18.192Z","module":"settings","attempt":6,"status":"running"}
+[2025-10-17T17:05:18.192Z] [settings] Running Playwright test (attempt 6)
+[2025-10-17T17:05:25.197Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:05:25.197Z","module":"settings","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T17:05:25.198Z","module":"settings","status":"failed","percent":0,"attempts":6,"duration":"78.05s"}
+{"time":"2025-10-17T17:05:25.198Z","module":"integration","status":"started","attempt":0}
+{"time":"2025-10-17T17:05:25.198Z","module":"integration","attempt":1,"status":"running"}
+[2025-10-17T17:05:25.198Z] [integration] Running Playwright test (attempt 1)
+[2025-10-17T17:05:31.817Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:05:31.818Z","module":"integration","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:05:31.818Z] [integration] Applying auto-fixes...
+[2025-10-17T17:05:38.005Z] [integration] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:05:40.008Z","module":"integration","attempt":2,"status":"running"}
+[2025-10-17T17:05:40.009Z] [integration] Running Playwright test (attempt 2)
+[2025-10-17T17:05:46.838Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:05:46.838Z","module":"integration","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:05:46.838Z] [integration] Applying auto-fixes...
+[2025-10-17T17:05:52.950Z] [integration] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:05:54.952Z","module":"integration","attempt":3,"status":"running"}
+[2025-10-17T17:05:54.952Z] [integration] Running Playwright test (attempt 3)
+[2025-10-17T17:06:01.316Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:06:01.316Z","module":"integration","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:06:01.316Z] [integration] Applying auto-fixes...
+[2025-10-17T17:06:07.148Z] [integration] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:06:09.151Z","module":"integration","attempt":4,"status":"running"}
+[2025-10-17T17:06:09.151Z] [integration] Running Playwright test (attempt 4)
+[2025-10-17T17:06:15.665Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:06:15.665Z","module":"integration","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:06:15.665Z] [integration] Applying auto-fixes...
+[2025-10-17T17:06:21.510Z] [integration] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:06:23.512Z","module":"integration","attempt":5,"status":"running"}
+[2025-10-17T17:06:23.513Z] [integration] Running Playwright test (attempt 5)
+[2025-10-17T17:06:29.969Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:06:29.969Z","module":"integration","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:06:29.969Z] [integration] Applying auto-fixes...
+[2025-10-17T17:06:35.604Z] [integration] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:06:37.606Z","module":"integration","attempt":6,"status":"running"}
+[2025-10-17T17:06:37.606Z] [integration] Running Playwright test (attempt 6)
+[2025-10-17T17:06:44.041Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:06:44.041Z","module":"integration","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T17:06:44.041Z","module":"integration","status":"failed","percent":0,"attempts":6,"duration":"78.84s"}
+{"time":"2025-10-17T17:06:44.041Z","module":"payments","status":"started","attempt":0}
+{"time":"2025-10-17T17:06:44.042Z","module":"payments","attempt":1,"status":"running"}
+[2025-10-17T17:06:44.042Z] [payments] Running Playwright test (attempt 1)
+[2025-10-17T17:06:50.397Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:06:50.397Z","module":"payments","attempt":1,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:06:50.397Z] [payments] Applying auto-fixes...
+[2025-10-17T17:06:56.029Z] [payments] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:06:58.031Z","module":"payments","attempt":2,"status":"running"}
+[2025-10-17T17:06:58.031Z] [payments] Running Playwright test (attempt 2)
+[2025-10-17T17:07:04.394Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:07:04.394Z","module":"payments","attempt":2,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:07:04.395Z] [payments] Applying auto-fixes...
+[2025-10-17T17:07:10.049Z] [payments] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:07:12.052Z","module":"payments","attempt":3,"status":"running"}
+[2025-10-17T17:07:12.052Z] [payments] Running Playwright test (attempt 3)
+[2025-10-17T17:07:18.391Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:07:18.391Z","module":"payments","attempt":3,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:07:18.391Z] [payments] Applying auto-fixes...
+[2025-10-17T17:07:24.258Z] [payments] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:07:26.261Z","module":"payments","attempt":4,"status":"running"}
+[2025-10-17T17:07:26.261Z] [payments] Running Playwright test (attempt 4)
+[2025-10-17T17:07:32.701Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:07:32.701Z","module":"payments","attempt":4,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:07:32.701Z] [payments] Applying auto-fixes...
+[2025-10-17T17:07:38.237Z] [payments] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:07:40.239Z","module":"payments","attempt":5,"status":"running"}
+[2025-10-17T17:07:40.239Z] [payments] Running Playwright test (attempt 5)
+[2025-10-17T17:07:46.449Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:07:46.449Z","module":"payments","attempt":5,"percent":0,"passed":0,"total":0,"status":"retry"}
+[2025-10-17T17:07:46.449Z] [payments] Applying auto-fixes...
+[2025-10-17T17:07:51.862Z] [payments] ⚠️  Auto-fix error: Command failed: npx eslint . --fix --quiet
+{"time":"2025-10-17T17:07:53.864Z","module":"payments","attempt":6,"status":"running"}
+[2025-10-17T17:07:53.864Z] [payments] Running Playwright test (attempt 6)
+[2025-10-17T17:08:00.157Z] ⚠️  Error analyzing report: EISDIR: illegal operation on a directory, read
+{"time":"2025-10-17T17:08:00.158Z","module":"payments","attempt":6,"percent":0,"passed":0,"total":0,"status":"retry"}
+{"time":"2025-10-17T17:08:00.158Z","module":"payments","status":"failed","percent":0,"attempts":6,"duration":"76.12s"}
+[2025-10-17T17:08:00.158Z] 
+[2025-10-17T17:08:00.158Z] ═══════════════════════════════════════════════════════
+[2025-10-17T17:08:00.158Z] 📊 FINAL SUMMARY
+[2025-10-17T17:08:00.158Z] ═══════════════════════════════════════════════════════
+[2025-10-17T17:08:00.158Z] ✅ Successful: 0/13
+[2025-10-17T17:08:00.158Z] ❌ Failed: 13/13
+[2025-10-17T17:08:00.158Z] ⏭️  Skipped: 0/13
+[2025-10-17T17:08:00.158Z] 📈 Average Success: 0%
+[2025-10-17T17:08:00.158Z] ⏱️  Total Duration: 989.84s
+[2025-10-17T17:08:00.158Z] 📄 Report: test-reports/final-report-1760720880158.json
+[2025-10-17T17:08:00.158Z] ═══════════════════════════════════════════════════════
