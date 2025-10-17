@@ -10,4 +10,3 @@ export function Textarea({ className, ...props }: TextareaProps) {
 }
 
 export default Textarea;
-export { Textarea };
