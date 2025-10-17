@@ -7,7 +7,6 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
-import ThemeManager, { ThemeMode, ResolvedTheme } from './ThemeManager';
 
 // ========================================
 // TYPES - الأنواع
