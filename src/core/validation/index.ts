@@ -179,7 +179,7 @@ export const paymentSchemas = {
     amount: baseSchemas.positiveNumber,
     currency: z.string().length(3).default('SAR'),
     method: z.enum(['cash', 'card', 'bank_transfer', 'insurance', 'wallet']),
-    metadata: z.record(z.any()).optional(),
+    metadata: z.record(z.string(), z.any()).optional(),
   }),
   
   update: z.object({
@@ -191,7 +191,7 @@ export const paymentSchemas = {
   process: z.object({
     paymentId: baseSchemas.id,
     gateway: z.enum(['stripe', 'moyasar']),
-    gatewayData: z.record(z.any()),
+    gatewayData: z.record(z.string(), z.any()),
   }),
 } as const;
 
@@ -226,7 +226,7 @@ export const fileUploadSchemas = {
     file: z.any(), // File object
     type: z.enum(['medical_record', 'insurance_claim', 'profile', 'other']),
     patientId: baseSchemas.id.optional(),
-    metadata: z.record(z.any()).optional(),
+    metadata: z.record(z.string(), z.any()).optional(),
   }),
   
   query: z.object({
@@ -246,7 +246,7 @@ export const notificationSchemas = {
     message: baseSchemas.nonEmptyString,
     channels: z.array(z.enum(['email', 'sms', 'push', 'in_app'])),
     priority: z.enum(['low', 'medium', 'high', 'urgent']).optional(),
-    metadata: z.record(z.any()).optional(),
+    metadata: z.record(z.string(), z.any()).optional(),
   }),
   
   query: z.object({
