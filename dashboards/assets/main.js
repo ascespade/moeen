@@ -674,19 +674,49 @@ async function loadDevelopmentView() {
 }
 
 async function loadSystemView() {
-    document.getElementById('contentView').innerHTML = '<iframe src="/simple" style="width:100%;height:calc(100vh - 250px);border:none;border-radius:12px;"></iframe>';
+    await loadViewFromFile('system-monitor');
 }
 
 async function loadAnalyticsView() {
-    document.getElementById('contentView').innerHTML = '<div class="placeholder">Analytics view coming soon...</div>';
+    await loadViewFromFile('analytics');
 }
 
 async function loadTestsView() {
-    document.getElementById('contentView').innerHTML = '<div class="placeholder">Test explorer coming soon...</div>';
+    await loadViewFromFile('test-explorer');
 }
 
 async function loadLogsView() {
-    document.getElementById('contentView').innerHTML = '<div class="placeholder">Live logs coming soon...</div>';
+    await loadViewFromFile('live-logs');
+}
+
+async function loadViewFromFile(viewName) {
+    const contentView = document.getElementById('contentView');
+    contentView.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>Loading...</p></div>';
+    
+    try {
+        const response = await fetch(`/dashboards/views/${viewName}.html`);
+        if (!response.ok) throw new Error('View not found');
+        
+        const html = await response.text();
+        contentView.innerHTML = html;
+        
+        // Execute scripts in the loaded content
+        const scripts = contentView.querySelectorAll('script');
+        scripts.forEach(oldScript => {
+            const newScript = document.createElement('script');
+            newScript.textContent = oldScript.textContent;
+            oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
+        
+    } catch (error) {
+        console.error(`Error loading ${viewName}:`, error);
+        contentView.innerHTML = `
+            <div style="text-align: center; padding: 4rem; color: var(--text-tertiary);">
+                <h2>View not available</h2>
+                <p style="margin: 1rem 0;">The ${viewName} view is currently unavailable.</p>
+            </div>
+        `;
+    }
 }
 
 function stopAllTests() {

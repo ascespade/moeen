@@ -1,0 +1,352 @@
+<!-- System Monitor View - REAL DATA ONLY -->
+<div class="view-container">
+    <div class="view-header">
+        <h2>⚙️ System Monitor</h2>
+        <p>Real-time system resource monitoring</p>
+    </div>
+
+    <!-- System Stats Grid -->
+    <div class="system-stats-grid">
+        <div class="system-stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/>
+                </svg>
+            </div>
+            <div class="stat-info">
+                <h3 id="cpuUsage">-</h3>
+                <p>CPU Usage</p>
+                <div class="mini-chart" id="cpuChart"></div>
+            </div>
+        </div>
+
+        <div class="system-stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+            </div>
+            <div class="stat-info">
+                <h3 id="memoryUsage">-</h3>
+                <p>Memory Usage</p>
+                <div class="mini-chart" id="memoryChart"></div>
+            </div>
+        </div>
+
+        <div class="system-stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+            </div>
+            <div class="stat-info">
+                <h3 id="uptime">-</h3>
+                <p>System Uptime</p>
+                <small id="uptimeDetail">-</small>
+            </div>
+        </div>
+
+        <div class="system-stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                </svg>
+            </div>
+            <div class="stat-info">
+                <h3 id="diskUsage">-</h3>
+                <p>Disk Usage</p>
+                <small id="diskDetail">-</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Running Processes -->
+    <div class="section-card">
+        <div class="section-header">
+            <h3>🔄 Running Processes</h3>
+            <button class="btn-refresh" onclick="refreshSystemData()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+                </svg>
+                Refresh
+            </button>
+        </div>
+        <div class="process-list" id="processList">
+            <div class="loading-state">Loading processes...</div>
+        </div>
+    </div>
+
+    <!-- Network Activity -->
+    <div class="section-card">
+        <div class="section-header">
+            <h3>🌐 Network Activity</h3>
+        </div>
+        <div class="network-stats">
+            <div class="network-stat">
+                <span class="label">Requests/min</span>
+                <span class="value" id="requestsPerMin">-</span>
+            </div>
+            <div class="network-stat">
+                <span class="label">Active Connections</span>
+                <span class="value" id="activeConnections">-</span>
+            </div>
+            <div class="network-stat">
+                <span class="label">Data Transfer</span>
+                <span class="value" id="dataTransfer">-</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.view-container {
+    padding: 2rem;
+}
+
+.view-header {
+    margin-bottom: 2rem;
+}
+
+.view-header h2 {
+    font-size: 1.75rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.view-header p {
+    color: var(--text-tertiary);
+}
+
+.system-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.system-stat-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1.25rem;
+    transition: var(--transition);
+}
+
+.system-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.system-stat-card .stat-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-info h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.stat-info p {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-info small {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+.mini-chart {
+    height: 30px;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    margin-top: 0.5rem;
+}
+
+.section-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-header h3 {
+    font-size: 1.125rem;
+    color: var(--text-primary);
+}
+
+.btn-refresh {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.875rem;
+}
+
+.btn-refresh:hover {
+    background: var(--primary-600);
+    border-color: var(--primary-600);
+    color: white;
+}
+
+.process-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.process-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-600);
+}
+
+.process-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: monospace;
+    font-size: 0.875rem;
+}
+
+.process-stats {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+}
+
+.network-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.network-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+}
+
+.network-stat .label {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+}
+
+.network-stat .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.loading-state {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-tertiary);
+}
+</style>
+
+<script>
+// Load REAL system data
+async function loadSystemMonitor() {
+    try {
+        const response = await fetch('/api/system-stats');
+        const data = await response.json();
+        
+        // Update stats with REAL data
+        document.getElementById('cpuUsage').textContent = data.cpu?.usage || '0%';
+        document.getElementById('memoryUsage').textContent = data.memory?.usage || '0%';
+        document.getElementById('uptime').textContent = formatUptime(data.uptime);
+        document.getElementById('uptimeDetail').textContent = data.uptimeDetail || '-';
+        document.getElementById('diskUsage').textContent = data.disk?.usage || '0%';
+        document.getElementById('diskDetail').textContent = data.disk?.detail || '-';
+        
+        // Network stats
+        document.getElementById('requestsPerMin').textContent = data.network?.requestsPerMin || '0';
+        document.getElementById('activeConnections').textContent = data.network?.activeConnections || '0';
+        document.getElementById('dataTransfer').textContent = data.network?.dataTransfer || '0 MB';
+        
+        // Update process list with REAL processes
+        renderProcessList(data.processes || []);
+        
+    } catch (error) {
+        console.error('Error loading system data:', error);
+    }
+}
+
+function renderProcessList(processes) {
+    const container = document.getElementById('processList');
+    
+    if (!processes || processes.length === 0) {
+        container.innerHTML = '<div class="loading-state">No processes found</div>';
+        return;
+    }
+    
+    container.innerHTML = processes.map(proc => `
+        <div class="process-item">
+            <span class="process-name">${proc.name}</span>
+            <div class="process-stats">
+                <span>PID: ${proc.pid}</span>
+                <span>CPU: ${proc.cpu}%</span>
+                <span>Memory: ${proc.memory}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function formatUptime(seconds) {
+    if (!seconds) return '-';
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    return `${days}d ${hours}h ${mins}m`;
+}
+
+function refreshSystemData() {
+    loadSystemMonitor();
+}
+
+// Auto-refresh every 5 seconds
+setInterval(loadSystemMonitor, 5000);
+loadSystemMonitor();
+</script>
+

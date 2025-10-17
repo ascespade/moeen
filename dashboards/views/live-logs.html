@@ -1,0 +1,419 @@
+<!-- Live Logs View - REAL LOG STREAMING -->
+<div class="view-container">
+    <div class="view-header">
+        <div>
+            <h2>📜 Live Logs</h2>
+            <p>Real-time log streaming from all services</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="clearLogs()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                </svg>
+                Clear
+            </button>
+            <button class="btn btn-primary" onclick="toggleAutoScroll()" id="autoScrollBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                </svg>
+                Auto-scroll: ON
+            </button>
+        </div>
+    </div>
+
+    <!-- Log Source Filters -->
+    <div class="log-filters">
+        <button class="filter-btn active" data-source="all" onclick="filterBySource('all')">
+            All Logs
+        </button>
+        <button class="filter-btn" data-source="test-runner" onclick="filterBySource('test-runner')">
+            Test Runner
+        </button>
+        <button class="filter-btn" data-source="dashboard" onclick="filterBySource('dashboard')">
+            Dashboard Server
+        </button>
+        <button class="filter-btn" data-source="background" onclick="filterBySource('background')">
+            Background Monitor
+        </button>
+    </div>
+
+    <!-- Log Level Filters -->
+    <div class="log-level-filters">
+        <label class="level-checkbox">
+            <input type="checkbox" checked data-level="error" onchange="filterLogs()">
+            <span class="level-badge error">ERROR</span>
+        </label>
+        <label class="level-checkbox">
+            <input type="checkbox" checked data-level="warn" onchange="filterLogs()">
+            <span class="level-badge warn">WARN</span>
+        </label>
+        <label class="level-checkbox">
+            <input type="checkbox" checked data-level="info" onchange="filterLogs()">
+            <span class="level-badge info">INFO</span>
+        </label>
+        <label class="level-checkbox">
+            <input type="checkbox" checked data-level="debug" onchange="filterLogs()">
+            <span class="level-badge debug">DEBUG</span>
+        </label>
+    </div>
+
+    <!-- Logs Container -->
+    <div class="logs-window" id="logsWindow">
+        <div class="logs-content" id="logsContent">
+            <!-- Logs will be appended here -->
+        </div>
+    </div>
+
+    <!-- Log Stats -->
+    <div class="log-stats">
+        <span>Total: <strong id="totalLogs">0</strong></span>
+        <span>Errors: <strong id="errorCount" class="error-text">0</strong></span>
+        <span>Warnings: <strong id="warnCount" class="warn-text">0</strong></span>
+        <span>Auto-updating every 2s</span>
+    </div>
+</div>
+
+<style>
+.header-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.log-filters {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.875rem;
+}
+
+.filter-btn:hover {
+    background: var(--bg-secondary);
+    border-color: var(--primary-600);
+}
+
+.filter-btn.active {
+    background: var(--primary-600);
+    border-color: var(--primary-600);
+    color: white;
+}
+
+.log-level-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.level-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.level-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.level-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.level-badge.error {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--danger-500);
+}
+
+.level-badge.warn {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--warning-500);
+}
+
+.level-badge.info {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--primary-500);
+}
+
+.level-badge.debug {
+    background: rgba(148, 163, 184, 0.2);
+    color: var(--text-tertiary);
+}
+
+.logs-window {
+    background: #000;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    height: 600px;
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+    padding: 1rem;
+}
+
+.logs-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.log-entry {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.log-entry:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.log-timestamp {
+    color: #64748b;
+    flex-shrink: 0;
+}
+
+.log-source {
+    color: #8b5cf6;
+    flex-shrink: 0;
+    width: 120px;
+    font-weight: 600;
+}
+
+.log-level {
+    flex-shrink: 0;
+    width: 60px;
+    font-weight: 700;
+}
+
+.log-level.error {
+    color: #ef4444;
+}
+
+.log-level.warn {
+    color: #f59e0b;
+}
+
+.log-level.info {
+    color: #3b82f6;
+}
+
+.log-level.debug {
+    color: #94a3b8;
+}
+
+.log-message {
+    color: #e2e8f0;
+    flex: 1;
+}
+
+.log-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+}
+
+.log-stats strong {
+    color: var(--text-primary);
+}
+
+.error-text {
+    color: var(--danger-500) !important;
+}
+
+.warn-text {
+    color: var(--warning-500) !important;
+}
+
+.logs-window::-webkit-scrollbar {
+    width: 8px;
+}
+
+.logs-window::-webkit-scrollbar-track {
+    background: #000;
+}
+
+.logs-window::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+
+.logs-window::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+</style>
+
+<script>
+let allLogs = [];
+let autoScroll = true;
+let currentSource = 'all';
+
+async function loadLiveLogs() {
+    try {
+        // Load logs from different sources
+        const logs = await fetchRealLogs();
+        allLogs = logs;
+        
+        filterLogs();
+        updateLogStats();
+        
+    } catch (error) {
+        console.error('Error loading logs:', error);
+    }
+}
+
+async function fetchRealLogs() {
+    const logs = [];
+    
+    // Fetch test runner logs
+    try {
+        const response = await fetch('/api/logs/test-runner');
+        const data = await response.json();
+        logs.push(...(data.logs || []).map(log => ({...log, source: 'test-runner'})));
+    } catch (e) {
+        console.error('Error fetching test runner logs:', e);
+    }
+    
+    // Fetch dashboard logs
+    try {
+        const response = await fetch('/api/logs/dashboard');
+        const data = await response.json();
+        logs.push(...(data.logs || []).map(log => ({...log, source: 'dashboard'})));
+    } catch (e) {
+        console.error('Error fetching dashboard logs:', e);
+    }
+    
+    // Sort by timestamp
+    logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    
+    return logs.slice(0, 500); // Keep last 500 logs
+}
+
+function filterLogs() {
+    const enabledLevels = Array.from(document.querySelectorAll('input[data-level]:checked'))
+        .map(input => input.dataset.level);
+    
+    let filtered = allLogs;
+    
+    // Filter by source
+    if (currentSource !== 'all') {
+        filtered = filtered.filter(log => log.source === currentSource);
+    }
+    
+    // Filter by level
+    filtered = filtered.filter(log => enabledLevels.includes(log.level));
+    
+    renderLogs(filtered);
+}
+
+function renderLogs(logs) {
+    const container = document.getElementById('logsContent');
+    
+    if (logs.length === 0) {
+        container.innerHTML = `
+            <div style="color: #64748b; text-align: center; padding: 2rem;">
+                No logs matching current filters
+            </div>
+        `;
+        return;
+    }
+    
+    const html = logs.map(log => `
+        <div class="log-entry" data-level="${log.level}" data-source="${log.source}">
+            <span class="log-timestamp">${formatLogTime(log.timestamp)}</span>
+            <span class="log-source">${log.source}</span>
+            <span class="log-level ${log.level}">${log.level.toUpperCase()}</span>
+            <span class="log-message">${escapeHtml(log.message)}</span>
+        </div>
+    `).join('');
+    
+    container.innerHTML = html;
+    
+    if (autoScroll) {
+        const logsWindow = document.getElementById('logsWindow');
+        logsWindow.scrollTop = logsWindow.scrollHeight;
+    }
+}
+
+function filterBySource(source) {
+    currentSource = source;
+    
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.source === source);
+    });
+    
+    filterLogs();
+}
+
+function updateLogStats() {
+    document.getElementById('totalLogs').textContent = allLogs.length;
+    document.getElementById('errorCount').textContent = allLogs.filter(l => l.level === 'error').length;
+    document.getElementById('warnCount').textContent = allLogs.filter(l => l.level === 'warn').length;
+}
+
+function clearLogs() {
+    allLogs = [];
+    filterLogs();
+    updateLogStats();
+    showToast('Logs cleared', 'info');
+}
+
+function toggleAutoScroll() {
+    autoScroll = !autoScroll;
+    document.getElementById('autoScrollBtn').innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 5v14M19 12l-7 7-7-7"/>
+        </svg>
+        Auto-scroll: ${autoScroll ? 'ON' : 'OFF'}
+    `;
+    
+    if (autoScroll) {
+        const logsWindow = document.getElementById('logsWindow');
+        logsWindow.scrollTop = logsWindow.scrollHeight;
+    }
+}
+
+function formatLogTime(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString('en-US', { 
+        hour12: false, 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit',
+        fractionalSecondDigits: 3
+    });
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Auto-refresh logs
+setInterval(loadLiveLogs, 2000);
+loadLiveLogs();
+</script>
+

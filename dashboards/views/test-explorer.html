@@ -1,0 +1,383 @@
+<!-- Test Explorer View - REAL TEST FILES BROWSER -->
+<div class="view-container">
+    <div class="view-header">
+        <div>
+            <h2>🧪 Test Explorer</h2>
+            <p>Browse and explore real test files in your project</p>
+        </div>
+        <button class="btn btn-primary" onclick="scanTestFiles()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.35-4.35"/>
+            </svg>
+            Scan Files
+        </button>
+    </div>
+
+    <!-- Test Statistics -->
+    <div class="test-stats-row">
+        <div class="test-stat-box">
+            <div class="stat-value" id="totalTestFiles">-</div>
+            <div class="stat-label">Test Files</div>
+        </div>
+        <div class="test-stat-box">
+            <div class="stat-value" id="totalTestCases">-</div>
+            <div class="stat-label">Test Cases</div>
+        </div>
+        <div class="test-stat-box">
+            <div class="stat-value" id="totalDescribeBlocks">-</div>
+            <div class="stat-label">Describe Blocks</div>
+        </div>
+        <div class="test-stat-box">
+            <div class="stat-value" id="totalSize">-</div>
+            <div class="stat-label">Total Size</div>
+        </div>
+    </div>
+
+    <!-- Filter and Search -->
+    <div class="filter-bar">
+        <input type="text" id="searchInput" placeholder="Search test files..." class="search-input">
+        <select id="frameworkFilter" class="filter-select">
+            <option value="">All Frameworks</option>
+            <option value="Playwright">Playwright</option>
+            <option value="Jest">Jest</option>
+            <option value="Vitest">Vitest</option>
+        </select>
+        <select id="categoryFilter" class="filter-select">
+            <option value="">All Categories</option>
+            <option value="e2e">E2E Tests</option>
+            <option value="unit">Unit Tests</option>
+            <option value="integration">Integration Tests</option>
+        </select>
+    </div>
+
+    <!-- Test Files Tree -->
+    <div class="test-files-container" id="testFilesContainer">
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading test files...</p>
+        </div>
+    </div>
+</div>
+
+<style>
+.test-stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.test-stat-box {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.test-stat-box .stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-500), var(--secondary-500));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.test-stat-box .stat-label {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+}
+
+.filter-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-600);
+}
+
+.filter-select {
+    padding: 0.75rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.test-files-container {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    min-height: 400px;
+}
+
+.test-file-card {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary-600);
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.test-file-card:hover {
+    transform: translateX(-4px);
+    box-shadow: var(--shadow-md);
+    border-left-color: var(--primary-500);
+}
+
+.test-file-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.test-file-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.file-icon {
+    font-size: 1.5rem;
+}
+
+.file-name {
+    font-family: monospace;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.file-path {
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-top: 0.25rem;
+}
+
+.test-file-badges {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.badge.framework {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--primary-500);
+}
+
+.badge.tests {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--success-500);
+}
+
+.test-file-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-primary);
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.detail-label {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+.detail-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+</style>
+
+<script>
+let allTestFiles = [];
+
+async function loadTestExplorer() {
+    try {
+        const response = await fetch('/real-test-status.json');
+        const data = await response.json();
+        
+        allTestFiles = data.testFiles || [];
+        
+        // Update statistics
+        document.getElementById('totalTestFiles').textContent = allTestFiles.length;
+        document.getElementById('totalTestCases').textContent = data.totalTests || 0;
+        
+        const totalDescribes = allTestFiles.reduce((sum, f) => sum + (f.describeBlocks || 0), 0);
+        document.getElementById('totalDescribeBlocks').textContent = totalDescribes;
+        
+        const totalBytes = allTestFiles.reduce((sum, f) => sum + (f.size || 0), 0);
+        document.getElementById('totalSize').textContent = formatBytes(totalBytes);
+        
+        renderTestFiles(allTestFiles);
+        
+    } catch (error) {
+        console.error('Error loading test files:', error);
+        document.getElementById('testFilesContainer').innerHTML = `
+            <div class="loading-state">
+                <p>Error loading test files. Click "Scan Files" to discover tests.</p>
+            </div>
+        `;
+    }
+}
+
+function renderTestFiles(files) {
+    const container = document.getElementById('testFilesContainer');
+    
+    if (!files || files.length === 0) {
+        container.innerHTML = `
+            <div class="loading-state">
+                <p>No test files found. Click "Scan Files" to discover tests.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = files.map(file => {
+        const fileName = file.path.split('/').pop();
+        const framework = detectFramework(file.path);
+        
+        return `
+            <div class="test-file-card" onclick="viewTestFile('${file.path}')">
+                <div class="test-file-header">
+                    <div class="test-file-title">
+                        <span class="file-icon">📄</span>
+                        <div>
+                            <div class="file-name">${fileName}</div>
+                            <div class="file-path">${file.path}</div>
+                        </div>
+                    </div>
+                    <div class="test-file-badges">
+                        <span class="badge framework">${framework}</span>
+                        <span class="badge tests">${file.testCount} tests</span>
+                    </div>
+                </div>
+                
+                <div class="test-file-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Test Cases</span>
+                        <span class="detail-value">${file.testCount || 0}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Describe Blocks</span>
+                        <span class="detail-value">${file.describeBlocks || 0}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">File Size</span>
+                        <span class="detail-value">${formatBytes(file.size)}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Category</span>
+                        <span class="detail-value">${getCategory(file.path)}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function detectFramework(path) {
+    if (path.includes('playwright') || path.includes('e2e')) return 'Playwright';
+    if (path.includes('jest') || path.includes('__tests__')) return 'Jest';
+    if (path.includes('vitest')) return 'Vitest';
+    return 'Unknown';
+}
+
+function getCategory(path) {
+    if (path.includes('/e2e/')) return 'E2E';
+    if (path.includes('/__tests__/')) return 'Unit';
+    if (path.includes('/integration/')) return 'Integration';
+    if (path.includes('/performance/')) return 'Performance';
+    return 'Other';
+}
+
+function formatBytes(bytes) {
+    if (!bytes) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+}
+
+async function scanTestFiles() {
+    showToast('Scanning test files...', 'info');
+    await discoverTests();
+    setTimeout(loadTestExplorer, 1000);
+}
+
+function viewTestFile(path) {
+    showToast(`Opening ${path.split('/').pop()}`, 'info');
+    // In real implementation, this would open the file
+}
+
+// Search and filter
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('searchInput');
+    const frameworkFilter = document.getElementById('frameworkFilter');
+    const categoryFilter = document.getElementById('categoryFilter');
+    
+    [searchInput, frameworkFilter, categoryFilter].forEach(el => {
+        if (el) {
+            el.addEventListener('input', filterTestFiles);
+        }
+    });
+});
+
+function filterTestFiles() {
+    const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+    const framework = document.getElementById('frameworkFilter')?.value || '';
+    const category = document.getElementById('categoryFilter')?.value || '';
+    
+    const filtered = allTestFiles.filter(file => {
+        const matchesSearch = file.path.toLowerCase().includes(searchTerm);
+        const matchesFramework = !framework || detectFramework(file.path) === framework;
+        const matchesCategory = !category || getCategory(file.path).toLowerCase() === category;
+        
+        return matchesSearch && matchesFramework && matchesCategory;
+    });
+    
+    renderTestFiles(filtered);
+}
+
+loadTestExplorer();
+</script>
+
