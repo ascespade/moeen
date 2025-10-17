@@ -15,7 +15,8 @@
     "test:stop": "./stop-module-testing.sh",
     "test:e2e": "playwright test --config=playwright-auto.config.ts",
     "test:e2e:headed": "playwright test --config=playwright-auto.config.ts --headed",
-    "test:e2e:debug": "playwright test --config=playwright-auto.config.ts --debug"
+    "test:e2e:debug": "playwright test --config=playwright-auto.config.ts --debug",
+    "test:full-suite": "./run-full-suite.sh"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
