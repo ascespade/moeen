@@ -36,4 +36,3 @@ export function Toast({
 }
 
 export default Toast;
-export { Toast };
