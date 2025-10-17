@@ -69,3 +69,4 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
 }
 
 export default Modal;
+export { Modal };

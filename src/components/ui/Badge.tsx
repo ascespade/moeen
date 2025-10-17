@@ -37,3 +37,4 @@ export function Badge({
 }
 
 export default Badge;
+export { Badge };
