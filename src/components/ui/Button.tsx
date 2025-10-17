@@ -6,7 +6,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '@/core/utils';
+import { cn } from '@/lib/cn';
 import { Loader2 } from 'lucide-react';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

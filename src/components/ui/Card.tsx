@@ -6,7 +6,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '@/core/utils';
+import { cn } from '@/lib/cn';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'elevated' | 'outlined' | 'filled';
