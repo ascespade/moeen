@@ -111,10 +111,10 @@ export default function LoginPage() {
             <span className="text-2xl font-bold text-white">م</span>
           </div>
           <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-            مرحباً بعودتك
+            {t("auth.welcomeBack", "مرحباً بعودتك")}
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            سجل دخولك للوصول إلى لوحة التحكم
+            {t("auth.loginMessage", "سجل دخولك للوصول إلى لوحة التحكم")}
           </p>
         </div>
 
@@ -213,7 +213,7 @@ export default function LoginPage() {
                 </div>
                 <div className="relative flex justify-center text-sm">
                   <span className="bg-white dark:bg-gray-800 px-4 text-gray-500">
-                    تسجيل دخول سريع للاختبار
+                    {t("auth.quickTest", "تسجيل دخول سريع للاختبار")}
                   </span>
                 </div>
               </div>
@@ -237,18 +237,18 @@ export default function LoginPage() {
               </div>
 
               <p className="mt-3 text-center text-xs text-gray-500">
-                ⚡ اختبر النظام بحسابات تجريبية جاهزة
+                ⚡ {t("auth.testMessage", "اختبر النظام بحسابات تجريبية جاهزة")}
               </p>
             </div>
 
             <div className="border-brand mt-6 border-t pt-6">
               <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-                ليس لديك حساب؟{" "}
+                {t("auth.noAccount", "ليس لديك حساب؟")}{" "}
                 <Link
                   href={ROUTES.REGISTER}
                   className="text-brand font-medium transition-colors hover:text-[var(--brand-primary-hover)]"
                 >
-                  إنشاء حساب جديد
+                  {t("auth.createAccount", "إنشاء حساب جديد")}
                 </Link>
               </p>
             </div>
