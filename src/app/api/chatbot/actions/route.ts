@@ -29,8 +29,8 @@ const actionSchema = z.object({
     'update_payment_status',
     'create_insurance_claim'
   ]),
-  parameters: z.record(z.any()),
-  context: z.record(z.any()).optional(),
+  parameters: z.record(z.string(), z.any()),
+  context: z.record(z.string(), z.any()).optional(),
   userId: z.string().uuid('Invalid user ID'),
   conversationId: z.string().optional(),
 });

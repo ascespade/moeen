@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
   
   try {
-    const body = await request.json();
+    const body = await request.json().catch(() => null);
 
     // Get client info
     const ipAddress = getClientIP(request) || '127.0.0.1';

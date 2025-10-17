@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
   
   try {
-    const body = await request.json();
+    const body = await request.json().catch(() => null);
     if (!body) {
       return NextResponse.json(
         { success: false, error: "Request body is required" },

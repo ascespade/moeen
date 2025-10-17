@@ -43,8 +43,8 @@ export default function ThemeSwitch({
     },
   ];
 
-  const currentTheme = themes.find((t) => t.value === theme) || themes[0];
-  const CurrentIcon = currentTheme.icon;
+  const currentTheme = themes.find((t) => t.value === theme) ?? themes[0];
+  const CurrentIcon = currentTheme?.icon ?? Sun;
 
   const sizeClasses = {
     sm: "h-8 w-8 text-sm",

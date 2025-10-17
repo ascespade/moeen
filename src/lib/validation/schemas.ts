@@ -10,7 +10,8 @@ export const userSchema = z.object({
 
 export const loginSchema = z.object({
   email: z.string().email('Invalid email format'),
-  password: z.string().min(1, 'Password is required')
+  password: z.string().min(1, 'Password is required'),
+  rememberMe: z.boolean().optional()
 });
 
 // Patient validation schemas
@@ -20,7 +21,7 @@ export const patientSchema = z.object({
   phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number format'),
   insuranceProvider: z.string().optional(),
   insuranceNumber: z.string().optional(),
-  meta: z.record(z.any()).optional()
+  meta: z.record(z.string(), z.any()).optional()
 });
 
 export const patientUpdateSchema = patientSchema.partial();
@@ -29,8 +30,8 @@ export const patientUpdateSchema = patientSchema.partial();
 export const doctorSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
   speciality: z.string().min(2, 'Speciality must be at least 2 characters'),
-  schedule: z.record(z.any()).optional(),
-  meta: z.record(z.any()).optional()
+  schedule: z.record(z.string(), z.any()).optional(),
+  meta: z.record(z.string(), z.any()).optional()
 });
 
 // Appointment validation schemas
