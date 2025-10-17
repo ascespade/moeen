@@ -13,7 +13,7 @@ interface ThemeSwitchProps {
   className?: string;
 }
 
-export default function ThemeSwitch({
+export function ThemeSwitch({
   variant = "dropdown",
   size = "md",
   showLabel = true,
