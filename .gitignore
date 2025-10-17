@@ -1,31 +1,112 @@
-# Dependencies
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# ================================================================
+# 🚫 .gitignore - Professional Configuration
+# ================================================================
+# Updated: 2025-01-17
+# Project: Moeen Healthcare Platform
+# ================================================================
 
-# Next.js
+# ================================================================
+# 📦 DEPENDENCIES & PACKAGE MANAGERS
+# ================================================================
+node_modules/
+.pnp
+.pnp.js
+jspm_packages/
+bower_components/
+
+# Yarn
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+yarn-error.log*
+yarn-debug.log*
+.yarn-integrity
+
+# NPM
+npm-debug.log*
+.npm
+package-lock.json
+
+# PNPM
+pnpm-debug.log*
+.pnpm-store/
+
+# ================================================================
+# ⚛️ NEXT.JS / REACT
+# ================================================================
 .next/
 out/
 build/
 dist/
+.vercel
+.turbo
 
-# Environment variables
+# Next.js cache
+.next/cache/
+.next/static/
+
+# Next.js auto-generated files
+next-env.d.ts
+
+# ================================================================
+# 🔧 TYPESCRIPT / JAVASCRIPT
+# ================================================================
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+.tsbuildinfo
+
+# ESLint
+.eslintcache
+
+# ================================================================
+# 🌍 ENVIRONMENT VARIABLES & SECRETS
+# ================================================================
 .env
 .env.local
+.env.development
 .env.development.local
+.env.test
 .env.test.local
+.env.production
 .env.production.local
+.env*.local
 
-# Testing
+# Supabase local
+.supabase/
+
+# ================================================================
+# 🧪 TESTING & COVERAGE
+# ================================================================
+coverage/
+.nyc_output/
 test-results/
 playwright-report/
+playwright/.cache/
 test-reports/
-coverage/
+*.lcov
+.jest-cache/
 
-# Logs
+# Playwright
+playwright/.auth/
+playwright-report/
+test-results/
+downloads/
+videos/
+traces/
+
+# ================================================================
+# 📝 LOGS & TEMPORARY FILES
+# ================================================================
 *.log
 logs/
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
 
 # Runtime data
 pids/
@@ -33,110 +114,174 @@ pids/
 *.seed
 *.pid.lock
 
-# Coverage directory used by tools like istanbul
-coverage/
-
-# nyc test coverage
-.nyc_output
-
-# Dependency directories
-node_modules/
-jspm_packages/
-
-# Optional npm cache directory
-.npm
-
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# dotenv environment variables file
-.env
-
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
-
-# next.js build output
-.next
-
-# nuxt.js build output
-.nuxt
-
-# vuepress build output
-.vuepress/dist
-
-# Serverless directories
-.serverless
-
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/
-
-# TernJS port file
-.tern-port
-
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
-
 # Temporary files
 *.tmp
 *.temp
-temp/
-tmp/
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# IDE files
-.vscode/
-.idea/
 *.swp
 *.swo
 *~
+temp/
+tmp/
+.temp/
+.tmp/
 
-# Database files
+# ================================================================
+# 🖥️ OPERATING SYSTEMS
+# ================================================================
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ================================================================
+# 💻 IDEs & EDITORS
+# ================================================================
+
+# VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
+
+# JetBrains (WebStorm, IntelliJ, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.idea_modules/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ================================================================
+# 🗄️ DATABASES
+# ================================================================
 *.db
 *.sqlite
 *.sqlite3
-
-# Session files
+*.db-shm
+*.db-wal
 *.session.sql
+.dbconfig
 
-# Test artifacts
-test-results/
-playwright-report/
-test-reports/
-coverage/
+# PostgreSQL
+*.pgsql
 
-# Build artifacts
+# MongoDB
+*.mongo
+
+# ================================================================
+# 📦 BUILD & BUNDLE OUTPUTS
+# ================================================================
 build/
 dist/
 out/
+.output/
+*.bundle.js
+*.bundle.js.map
 
-# Cache directories
+# Webpack
+.webpack/
+
+# Parcel
 .cache/
 .parcel-cache/
-.next/
 
-# Log files
-*.log
-logs/
+# Rollup
+.rollup.cache/
 
-# Temporary scripts
+# ================================================================
+# 🔐 CERTIFICATES & KEYS
+# ================================================================
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+.certificates/
+
+# ================================================================
+# 📊 ANALYTICS & MONITORING
+# ================================================================
+.sentry/
+.lighthouseci/
+
+# ================================================================
+# 🎨 ASSETS & MEDIA (LARGE FILES)
+# ================================================================
+# Uncomment if you don't want to track large media files
+# *.mp4
+# *.mov
+# *.avi
+# *.mkv
+# *.zip
+# *.tar.gz
+# *.rar
+
+# ================================================================
+# 🧹 PROJECT-SPECIFIC TEMPORARY FILES
+# ================================================================
+# Custom scripts (temporary)
 arabic_keyboard_converter.py
 auto-test-runner.js
 keyboard_mapper.py
@@ -146,17 +291,66 @@ extract-arabic-text.js
 create-test-users.js
 update-test-users.js
 
-# Generated files
+# Generated JSON files (temporary)
 arabic-texts.json
 
-# Theme test pages
+# Theme test pages (development only)
 src/app/theme-test/
 
-# Package lock changes (keep package.json)
-package-lock.json
-# TypeScript build info
-tsconfig.tsbuildinfo
-*.tsbuildinfo
+# ================================================================
+# 🔄 CACHE DIRECTORIES
+# ================================================================
+.cache/
+.parcel-cache/
+.npm/
+.eslintcache
+.stylelintcache
+.prettiercache
+*.cache
 
-# Next.js types
-next-env.d.ts
+# ================================================================
+# 📱 MOBILE / NATIVE
+# ================================================================
+# React Native
+.expo/
+.expo-shared/
+
+# ================================================================
+# 🐳 DOCKER
+# ================================================================
+.dockerignore
+docker-compose.override.yml
+
+# ================================================================
+# ☁️ CLOUD & DEPLOYMENT
+# ================================================================
+.vercel
+.netlify
+.serverless/
+
+# ================================================================
+# 📚 DOCUMENTATION (BUILD OUTPUTS)
+# ================================================================
+.docusaurus/
+.vuepress/dist
+
+# ================================================================
+# 🔍 MISC
+# ================================================================
+# Lock files (optional - uncomment if you don't want to track)
+# yarn.lock
+# pnpm-lock.yaml
+
+# Misc
+.fusebox/
+.dynamodb/
+.tern-port
+.vscode-test
+*.tgz
+.node_repl_history
+
+# ================================================================
+# ✅ ALLOWED FILES (EXCEPTIONS)
+# ================================================================
+# If you need to track specific files in ignored directories:
+# !path/to/important-file.ext
