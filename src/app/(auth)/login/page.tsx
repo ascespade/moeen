@@ -30,6 +30,23 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    // Client-side validation
+    if (!formData.email) {
+      setError(t("auth.email.required", "البريد الإلكتروني مطلوب"));
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setError(t("auth.email.invalid", "البريد الإلكتروني غير صحيح"));
+      return;
+    }
+
+    if (!formData.password) {
+      setError(t("auth.password.required", "كلمة المرور مطلوبة"));
+      return;
+    }
+
     setSubmitting(true);
     try {
       await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
@@ -113,7 +130,6 @@ export default function LoginPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    required
                     className="form-input pr-10"
                     placeholder="you@example.com"
                   />
@@ -132,7 +148,6 @@ export default function LoginPage() {
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    required
                     className="form-input pr-10"
                     placeholder="••••••••"
                   />

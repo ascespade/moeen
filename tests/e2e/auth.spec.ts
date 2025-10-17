@@ -14,7 +14,7 @@ test.describe('Authentication Module', () => {
       
       // Check form elements
       await expect(page.getByLabel('البريد الإلكتروني')).toBeVisible();
-      await expect(page.getByLabel('كلمة المرور')).toBeVisible();
+      await expect(page.getByLabel('كلمة المرور').first()).toBeVisible();
       await expect(page.getByLabel('تذكرني')).toBeVisible();
       await expect(page.getByRole('button', { name: /تسجيل الدخول/ })).toBeVisible();
       await expect(page.getByRole('button', { name: /تسجيل دخول سريع/ })).toBeVisible();
@@ -85,7 +85,7 @@ test.describe('Authentication Module', () => {
       // Check form elements
       await expect(page.getByLabel('الاسم الكامل')).toBeVisible();
       await expect(page.getByLabel('البريد الإلكتروني')).toBeVisible();
-      await expect(page.getByLabel('كلمة المرور')).toBeVisible();
+      await expect(page.getByLabel('كلمة المرور').first()).toBeVisible();
       await expect(page.getByLabel('تأكيد كلمة المرور')).toBeVisible();
       await expect(page.getByLabel('أوافق على')).toBeVisible();
       await expect(page.getByRole('button', { name: /إنشاء الحساب/ })).toBeVisible();
@@ -109,14 +109,14 @@ test.describe('Authentication Module', () => {
     });
 
     test('should validate password length', async ({ page }) => {
-      await page.getByLabel('كلمة المرور').fill('123');
+      await page.getByLabel('كلمة المرور').first().fill('123');
       await page.getByRole('button', { name: /إنشاء الحساب/ }).click();
 
       await expect(page.getByText('كلمة المرور يجب أن تكون 6 أحرف على الأقل')).toBeVisible();
     });
 
     test('should validate password confirmation', async ({ page }) => {
-      await page.getByLabel('كلمة المرور').fill('password123');
+      await page.getByLabel('كلمة المرور').first().fill('password123');
       await page.getByLabel('تأكيد كلمة المرور').fill('different123');
       await page.getByRole('button', { name: /إنشاء الحساب/ }).click();
 
@@ -127,7 +127,7 @@ test.describe('Authentication Module', () => {
       // Fill valid form
       await page.getByLabel('الاسم الكامل').fill('John Doe');
       await page.getByLabel('البريد الإلكتروني').fill('john@example.com');
-      await page.getByLabel('كلمة المرور').fill('password123');
+      await page.getByLabel('كلمة المرور').first().fill('password123');
       await page.getByLabel('تأكيد كلمة المرور').fill('password123');
       await page.getByLabel('أوافق على').check();
 
@@ -231,7 +231,7 @@ test.describe('Authentication Module', () => {
       // Fill registration form
       await page.getByLabel('الاسم الكامل').fill('Test User');
       await page.getByLabel('البريد الإلكتروني').fill('testuser@example.com');
-      await page.getByLabel('كلمة المرور').fill('password123');
+      await page.getByLabel('كلمة المرور').first().fill('password123');
       await page.getByLabel('تأكيد كلمة المرور').fill('password123');
       await page.getByLabel('أوافق على').check();
       

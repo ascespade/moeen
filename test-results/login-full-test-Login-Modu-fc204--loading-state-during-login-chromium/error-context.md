@@ -1,0 +1,50 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e8]: م
+      - heading "مرحباً بعودتك" [level=1] [ref=e9]
+      - paragraph [ref=e10]: سجل دخولك للوصول إلى لوحة التحكم
+    - generic [ref=e12]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: ⚠️
+        - paragraph [ref=e16]: Too many login attempts, please try again later
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - text: البريد الإلكتروني
+          - generic [ref=e19]:
+            - textbox "البريد الإلكتروني" [ref=e20]:
+              - /placeholder: you@example.com
+              - text: testlogin-1760661114334@example.com
+            - generic:
+              - generic: 📧
+        - generic [ref=e21]:
+          - text: كلمة المرور
+          - generic [ref=e22]:
+            - textbox "كلمة المرور" [ref=e23]:
+              - /placeholder: ••••••••
+              - text: SecurePassword123!
+            - generic:
+              - generic: 🔒
+        - generic [ref=e24]:
+          - generic [ref=e25]:
+            - checkbox "تذكرني" [ref=e26]
+            - text: تذكرني
+          - link "نسيت كلمة المرور؟" [ref=e27] [cursor=pointer]:
+            - /url: /forgot-password
+        - button "🔑 تسجيل الدخول" [ref=e28] [cursor=pointer]:
+          - generic [ref=e29]: 🔑
+          - text: تسجيل الدخول
+      - generic [ref=e30]:
+        - button "⚡ تسجيل دخول سريع (اختبار)" [ref=e31] [cursor=pointer]:
+          - generic [ref=e32]: ⚡
+          - text: تسجيل دخول سريع (اختبار)
+        - paragraph [ref=e33]: اختبار سريع باستخدام بيانات تجريبية
+      - paragraph [ref=e35]:
+        - text: ليس لديك حساب؟
+        - link "إنشاء حساب جديد" [ref=e36] [cursor=pointer]:
+          - /url: /register
+  - alert [ref=e37]
+```

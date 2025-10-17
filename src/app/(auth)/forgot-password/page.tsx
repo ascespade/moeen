@@ -27,13 +27,22 @@ export default function ForgotPasswordPage() {
     setError("");
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      setIsSuccess(true);
+      // Real API call
+      const response = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setIsSuccess(true);
+      } else {
+        setError(data.error || "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور.");
+      }
     } catch (error) {
-      setError(
-        "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. حاول مرة أخرى.",
-      );
+      setError("حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. حاول مرة أخرى.");
     } finally {
       setIsLoading(false);
     }

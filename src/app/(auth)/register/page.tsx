@@ -73,9 +73,37 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Call registration API
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+        }),
+      });
 
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        // Handle validation errors
+        if (data.errors && Array.isArray(data.errors)) {
+          const newErrors: Record<string, string> = {};
+          data.errors.forEach((error: { field: string; message: string }) => {
+            newErrors[error.field] = error.message;
+          });
+          setErrors(newErrors);
+        } else {
+          setErrors({ general: data.message || "حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى." });
+        }
+        return;
+      }
+
+      // Success - show success message
       setSuccess(true);
       setFormData({
         name: "",
@@ -85,7 +113,8 @@ export default function RegisterPage() {
         agreeToTerms: false,
       });
     } catch (error) {
-      setErrors({ general: "حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى." });
+      console.error('Registration error:', error);
+      setErrors({ general: "حدث خطأ أثناء الاتصال بالخادم. حاول مرة أخرى." });
     } finally {
       setIsLoading(false);
     }
