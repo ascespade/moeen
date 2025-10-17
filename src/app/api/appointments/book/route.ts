@@ -9,6 +9,7 @@ import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
 import { requireAuth } from '@/lib/auth/authorize';
+import { getClientInfo } from '@/lib/utils/request-helpers';
 
 const bookingSchema = z.object({
   patientId: z.string().uuid('Invalid patient ID'),
@@ -22,6 +23,9 @@ const bookingSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const startTime = Date.now();
+  const { ipAddress, userAgent } = getClientInfo(request);
+  
   try {
     // Authorize user
     const authResult = await requireAuth(['patient', 'staff', 'admin'])(request);
@@ -84,7 +88,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Doctor not found' }, { status: 404 });
     }
 
-    // Create appointment
+    // Create appointment with full tracking
     const { data: appointment, error: appointmentError } = await supabase
       .from('appointments')
       .insert({
@@ -99,6 +103,8 @@ export async function POST(request: NextRequest) {
         paymentStatus: 'unpaid',
         insuranceClaimId,
         createdBy: authResult.user!.id,
+        bookingSource: 'web',
+        lastActivityAt: new Date().toISOString(),
       })
       .select()
       .single();
@@ -107,18 +113,26 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to create appointment' }, { status: 500 });
     }
 
-    // Create audit log
+    // Create audit log with full tracking
     await supabase.from('audit_logs').insert({
       action: 'appointment_created',
       entityType: 'appointment',
       entityId: appointment.id,
       userId: authResult.user!.id,
+      ipAddress,
+      userAgent,
+      status: 'success',
+      severity: 'info',
       metadata: {
         patientId,
         doctorId,
         scheduledAt,
         type,
+        duration,
+        isVirtual,
+        bookingSource: 'web',
       },
+      durationMs: Date.now() - startTime,
     });
 
     // Send confirmation notification

@@ -2,8 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { authorize } from '@/lib/auth/authorize';
 import { validateData, appointmentSchema } from '@/lib/validation/schemas';
+import { getClientInfo } from '@/lib/utils/request-helpers';
 
 export async function GET(request: NextRequest) {
+  const startTime = Date.now();
+  const { ipAddress, userAgent } = getClientInfo(request);
+  
   try {
     const { user, error: authError } = await authorize(request);
     
@@ -51,8 +55,37 @@ export async function GET(request: NextRequest) {
     const { data: appointments, error: appointmentsError } = await query;
 
     if (appointmentsError) {
+      // Log error
+      await supabase.from('audit_logs').insert({
+        action: 'appointments_fetch_failed',
+        user_id: user.id,
+        resource_type: 'appointment',
+        ip_address: ipAddress,
+        user_agent: userAgent,
+        status: 'failed',
+        severity: 'error',
+        error_message: appointmentsError.message,
+        duration_ms: Date.now() - startTime
+      });
+      
       return NextResponse.json({ error: 'Failed to fetch appointments' }, { status: 500 });
     }
+
+    // Log successful fetch
+    await supabase.from('audit_logs').insert({
+      action: 'appointments_fetched',
+      user_id: user.id,
+      resource_type: 'appointment',
+      ip_address: ipAddress,
+      user_agent: userAgent,
+      status: 'success',
+      severity: 'info',
+      metadata: {
+        count: appointments?.length || 0,
+        filters: { patientId, doctorId, date, status }
+      },
+      duration_ms: Date.now() - startTime
+    });
 
     return NextResponse.json({ appointments: appointments || [] });
 
@@ -65,6 +98,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const startTime = Date.now();
+  const { ipAddress, userAgent } = getClientInfo(request);
+  
   try {
     const { user, error: authError } = await authorize(request);
     
@@ -131,7 +167,7 @@ export async function POST(request: NextRequest) {
       }, { status: 409 });
     }
 
-    // Create appointment
+    // Create appointment with tracking
     const { data: appointment, error: appointmentError } = await supabase
       .from('appointments')
       .insert({
@@ -139,7 +175,11 @@ export async function POST(request: NextRequest) {
         doctor_id: doctorId,
         scheduled_at: scheduledAt,
         status: 'pending',
-        payment_status: 'unpaid'
+        payment_status: 'unpaid',
+        booking_source: 'web',
+        type: type || 'consultation',
+        created_by: user.id,
+        last_activity_at: new Date().toISOString()
       })
       .select(`
         id,
@@ -158,7 +198,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to create appointment' }, { status: 500 });
     }
 
-    // Log appointment creation
+    // Log appointment creation with full tracking
     await supabase
       .from('audit_logs')
       .insert({
@@ -166,12 +206,19 @@ export async function POST(request: NextRequest) {
         user_id: user.id,
         resource_type: 'appointment',
         resource_id: appointment.id,
+        ip_address: ipAddress,
+        user_agent: userAgent,
+        status: 'success',
+        severity: 'info',
         metadata: {
           patient_id: patientId,
           doctor_id: doctorId,
           scheduled_at: scheduledAt,
-          patient_name: patient.full_name
-        }
+          patient_name: patient.full_name,
+          booking_source: 'web',
+          type: type || 'consultation'
+        },
+        duration_ms: Date.now() - startTime
       });
 
     return NextResponse.json({
