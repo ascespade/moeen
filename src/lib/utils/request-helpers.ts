@@ -16,7 +16,7 @@ export function getUserAgent(request: NextRequest | undefined): string {
   return request.headers?.get('user-agent') || 'Unknown';
 }
 
-export function getClientInfo(request: NextRequest) {
+export function getClientInfo(request: NextRequest | undefined) {
   return {
     ipAddress: getClientIP(request),
     userAgent: getUserAgent(request),

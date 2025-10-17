@@ -108,6 +108,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { ipAddress, userAgent } = getClientInfo(request);
     const body = await request.json();
     const validation = validateData(appointmentSchema, body);
 
