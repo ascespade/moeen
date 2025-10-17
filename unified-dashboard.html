@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Testing Dashboard | لوحة التحكم الموحدة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #020617;
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+            border-left: 2px solid rgba(59, 130, 246, 0.2);
+            height: 100vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(280px);
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            right: 280px;
+            top: 1rem;
+            z-index: 1001;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #3b82f6;
+            padding: 0.75rem 1rem;
+            border-radius: 8px 0 0 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.25rem;
+        }
+
+        .sidebar.collapsed + .sidebar-toggle {
+            right: 0;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(59, 130, 246, 0.4);
+            transform: scale(1.05);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .sidebar-logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .sidebar-logo-text h2 {
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar-logo-text p {
+            font-size: 0.7rem;
+            color: #64748b;
+        }
+
+        .sidebar-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .sidebar-section-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #64748b;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: #94a3b8;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-item::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1));
+            transition: width 0.3s ease;
+        }
+
+        .sidebar-item:hover::before {
+            width: 100%;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+            color: #3b82f6;
+            transform: translateX(-5px);
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+            border-color: rgba(59, 130, 246, 0.5);
+            color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .sidebar-item-icon {
+            font-size: 1.5rem;
+            width: 32px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .sidebar-item-content {
+            flex: 1;
+            z-index: 1;
+        }
+
+        .sidebar-item-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.125rem;
+        }
+
+        .sidebar-item-subtitle {
+            font-size: 0.7rem;
+            color: #64748b;
+        }
+
+        .sidebar-item-badge {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            z-index: 1;
+        }
+
+        .sidebar-item-badge.live {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        .sidebar-item-badge.new {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .sidebar-add-btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-right: 280px;
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            height: 100vh;
+            transition: margin-right 0.3s ease;
+        }
+
+        .sidebar.collapsed ~ .main-content {
+            margin-right: 0;
+        }
+
+        /* Top Actions Bar */
+        .top-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            color: #3b82f6;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+        }
+
+        .action-btn.primary:hover {
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .action-btn.danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        .action-btn.danger:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .action-btn.success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+
+        /* Dashboard Content Frame */
+        .dashboard-frame {
+            width: 100%;
+            height: calc(100vh - 200px);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 15px;
+            background: rgba(15, 23, 42, 0.5);
+            overflow: hidden;
+        }
+
+        .dashboard-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Stats Summary */
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-card-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 1.5rem;
+            color: #64748b;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(59, 130, 246, 0.2);
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(59, 130, 246, 0.5);
+        }
+
+        /* Modal for Test Discovery */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #0f172a;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #ef4444;
+        }
+
+        .test-file-item {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .test-file-path {
+            font-family: monospace;
+            font-size: 0.875rem;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .test-file-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">🚀</div>
+            <div class="sidebar-logo-text">
+                <h2>لوحة التحكم</h2>
+                <p>Testing Dashboard</p>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">
+                <span>📊</span> Dashboards
+            </div>
+            <a href="#" class="sidebar-item active" onclick="loadDashboard('/modules', 'modules')">
+                <span class="sidebar-item-icon">🔥</span>
+                <div class="sidebar-item-content">
+                    <div class="sidebar-item-title">Modules Testing</div>
+                    <div class="sidebar-item-subtitle">13 modules, 50+ tests each</div>
+                </div>
+                <span class="sidebar-item-badge live">LIVE</span>
+            </a>
+
+            <a href="#" class="sidebar-item" onclick="loadDashboard('/dev', 'dev')">
+                <span class="sidebar-item-icon">💻</span>
+                <div class="sidebar-item-content">
+                    <div class="sidebar-item-title">Development</div>
+                    <div class="sidebar-item-subtitle">Resources & processes</div>
+                </div>
+            </a>
+
+            <a href="#" class="sidebar-item" onclick="loadDashboard('/', 'enterprise')">
+                <span class="sidebar-item-icon">🏥</span>
+                <div class="sidebar-item-content">
+                    <div class="sidebar-item-title">Healthcare</div>
+                    <div class="sidebar-item-subtitle">Main application</div>
+                </div>
+            </a>
+
+            <a href="#" class="sidebar-item" onclick="loadDashboard('/simple', 'simple')">
+                <span class="sidebar-item-icon">📝</span>
+                <div class="sidebar-item-content">
+                    <div class="sidebar-item-title">Simple Monitor</div>
+                    <div class="sidebar-item-subtitle">Background agent</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">
+                <span>⚙️</span> System
+            </div>
+            <a href="#" class="sidebar-item" onclick="showSystemStatus()">
+                <span class="sidebar-item-icon">📡</span>
+                <div class="sidebar-item-content">
+                    <div class="sidebar-item-title">System Status</div>
+                    <div class="sidebar-item-subtitle">Check all services</div>
+                </div>
+            </a>
+
+            <a href="#" class="sidebar-item" onclick="showLogs()">
+                <span class="sidebar-item-icon">📜</span>
+                <div class="sidebar-item-content">
+                    <div class="sidebar-item-title">View Logs</div>
+                    <div class="sidebar-item-subtitle">Real-time logs</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <button class="sidebar-add-btn" onclick="showAddDashboard()">
+                <span>➕</span>
+                <span>Add New Dashboard</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Sidebar Toggle -->
+    <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
+        ☰
+    </button>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Actions -->
+        <div class="top-actions">
+            <button class="action-btn primary" onclick="discoverTests()">
+                <span>🔍</span>
+                <span>Discover Tests</span>
+                <span id="discoveryStatus"></span>
+            </button>
+            <button class="action-btn success" onclick="refreshCurrentDashboard()">
+                <span>🔄</span>
+                <span>Refresh Dashboard</span>
+            </button>
+            <button class="action-btn" onclick="exportData()">
+                <span>📥</span>
+                <span>Export Data</span>
+            </button>
+            <button class="action-btn danger" onclick="stopAllTests()">
+                <span>⏹️</span>
+                <span>Stop All Tests</span>
+            </button>
+        </div>
+
+        <!-- Stats Summary -->
+        <div class="stats-summary" id="statsSummary">
+            <div class="stat-card">
+                <div class="stat-card-value" id="totalTests">-</div>
+                <div class="stat-card-label">Total Tests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-value" id="passedTests">-</div>
+                <div class="stat-card-label">Passed Tests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-value" id="failedTests">-</div>
+                <div class="stat-card-label">Failed Tests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-value" id="modulesRunning">-</div>
+                <div class="stat-card-label">Modules Running</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Frame -->
+        <div class="dashboard-frame">
+            <iframe id="dashboardFrame" src="/modules"></iframe>
+        </div>
+    </div>
+
+    <!-- Test Discovery Modal -->
+    <div class="modal" id="testDiscoveryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔍 Test Files Discovery</h2>
+                <button class="modal-close" onclick="closeModal('testDiscoveryModal')">✕</button>
+            </div>
+            <div id="testDiscoveryResults">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDashboard = 'modules';
+
+        // Toggle Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        // Load Dashboard
+        function loadDashboard(url, name) {
+            currentDashboard = name;
+            document.getElementById('dashboardFrame').src = url;
+            
+            // Update active state
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.sidebar-item').classList.add('active');
+            
+            // Update stats
+            updateStats();
+        }
+
+        // Refresh Current Dashboard
+        function refreshCurrentDashboard() {
+            const iframe = document.getElementById('dashboardFrame');
+            iframe.src = iframe.src;
+            updateStats();
+        }
+
+        // Update Stats
+        async function updateStats() {
+            try {
+                if (currentDashboard === 'modules') {
+                    const response = await fetch('/modules-status.json');
+                    const data = await response.json();
+                    
+                    const totalTests = data.modules.reduce((sum, m) => sum + m.testsRun, 0);
+                    const passedTests = data.modules.reduce((sum, m) => sum + m.testsPassed, 0);
+                    const failedTests = data.modules.reduce((sum, m) => sum + m.testsFailed, 0);
+                    const modulesRunning = data.modules.filter(m => m.status !== 'error').length;
+                    
+                    document.getElementById('totalTests').textContent = totalTests;
+                    document.getElementById('passedTests').textContent = passedTests;
+                    document.getElementById('failedTests').textContent = failedTests;
+                    document.getElementById('modulesRunning').textContent = modulesRunning;
+                }
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
+        }
+
+        // Discover Tests - Real file system scan
+        async function discoverTests() {
+            const statusEl = document.getElementById('discoveryStatus');
+            statusEl.textContent = '⏳';
+            
+            try {
+                const response = await fetch('/api/discover-tests');
+                const data = await response.json();
+                
+                // Show modal with results
+                document.getElementById('testDiscoveryModal').classList.add('active');
+                
+                const resultsHtml = `
+                    <h3 style="margin-bottom: 1rem; color: #3b82f6;">
+                        Found ${data.testFiles.length} test files
+                    </h3>
+                    ${data.testFiles.map(file => `
+                        <div class="test-file-item">
+                            <div class="test-file-path">📄 ${file.path}</div>
+                            <div class="test-file-stats">
+                                <span>Tests: ${file.testCount || 0}</span>
+                                <span>Size: ${(file.size / 1024).toFixed(2)} KB</span>
+                                <span>Modified: ${new Date(file.modified).toLocaleString('ar-SA')}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                `;
+                
+                document.getElementById('testDiscoveryResults').innerHTML = resultsHtml;
+                statusEl.textContent = '✅';
+                
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2000);
+            } catch (error) {
+                console.error('Error discovering tests:', error);
+                statusEl.textContent = '❌';
+                alert('Error discovering tests. Check console for details.');
+            }
+        }
+
+        // Close Modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Show Add Dashboard
+        function showAddDashboard() {
+            alert('Feature coming soon: Add custom dashboard');
+        }
+
+        // Show System Status
+        function showSystemStatus() {
+            alert('Feature coming soon: System status page');
+        }
+
+        // Show Logs
+        function showLogs() {
+            alert('Feature coming soon: Live logs viewer');
+        }
+
+        // Export Data
+        function exportData() {
+            alert('Feature coming soon: Export test data');
+        }
+
+        // Stop All Tests
+        function stopAllTests() {
+            if (confirm('Are you sure you want to stop all running tests?')) {
+                fetch('/api/stop-all-tests', { method: 'POST' })
+                    .then(() => alert('All tests stopped'))
+                    .catch(error => alert('Error stopping tests'));
+            }
+        }
+
+        // Auto-update stats every 3 seconds
+        setInterval(updateStats, 3000);
+        
+        // Initial stats load
+        updateStats();
+    </script>
+</body>
+</html>
+
+

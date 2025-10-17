@@ -128,6 +128,44 @@ async function handleMetrics(req, res) {
   }
 }
 
+async function handleRecentAppointments(req, res) {
+  try {
+    // Get recent appointments with patient and doctor info
+    const result = await queryDatabase(`
+      SELECT 
+        a.id,
+        a.appointment_date,
+        a.status,
+        a.created_at
+      FROM appointments a
+      ORDER BY a.appointment_date DESC
+      LIMIT 10
+    `);
+    
+    if (result.success) {
+      const appointments = result.data.map((apt, index) => ({
+        id: apt.id || `APT-${index + 1}`,
+        patient: `مريض ${index + 1}`,
+        doctor: `طبيب ${index + 1}`,
+        date: new Date(apt.appointment_date).toLocaleDateString('ar-EG'),
+        status: apt.status === 'completed' ? 'مكتمل' : 
+                apt.status === 'cancelled' ? 'ملغي' : 
+                apt.status === 'confirmed' ? 'مؤكد' : 'مجدول'
+      }));
+      
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, appointments }));
+    } else {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, appointments: [] }));
+    }
+  } catch (error) {
+    console.error('Recent appointments error:', error);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ success: false, error: error.message, appointments: [] }));
+  }
+}
+
 async function handleDashboardMetrics(req, res) {
   try {
     const metrics = {
@@ -238,7 +276,63 @@ const server = http.createServer(async (req, res) => {
   }
 
   // Route handling
-  if (req.url === '/' || req.url === '/dashboard') {
+  if (req.url === '/' || req.url === '/dashboard' || req.url === '/dash') {
+    // Professional unified dashboard
+    const dashboardPath = path.join(__dirname, 'dashboards', 'index.html');
+    fs.readFile(dashboardPath, (err, data) => {
+      if (err) {
+        // Fallback to enterprise dashboard
+        const fallbackPath = path.join(__dirname, 'enterprise-dashboard.html');
+        fs.readFile(fallbackPath, (err2, data2) => {
+          if (err2) {
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Error loading dashboard');
+            return;
+          }
+          res.writeHead(200, { 'Content-Type': 'text/html' });
+          res.end(data2);
+        });
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(data);
+    });
+  } else if (req.url.startsWith('/dashboards/')) {
+    // Serve dashboard assets
+    const filePath = path.join(__dirname, req.url);
+    const extname = path.extname(filePath);
+    const contentTypes = {
+      '.html': 'text/html',
+      '.css': 'text/css',
+      '.js': 'application/javascript',
+      '.json': 'application/json',
+      '.png': 'image/png',
+      '.jpg': 'image/jpeg',
+      '.svg': 'image/svg+xml'
+    };
+    const contentType = contentTypes[extname] || 'text/plain';
+    
+    fs.readFile(filePath, (err, data) => {
+      if (err) {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('File not found');
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': contentType });
+      res.end(data);
+    });
+  } else if (req.url === '/enterprise') {
+    const dashboardPath = path.join(__dirname, 'enterprise-dashboard.html');
+    fs.readFile(dashboardPath, (err, data) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Error loading dashboard');
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(data);
+    });
+  } else if (req.url === '/simple' || req.url === '/simple-dashboard') {
     const dashboardPath = path.join(__dirname, 'progress-dashboard.html');
     fs.readFile(dashboardPath, (err, data) => {
       if (err) {
@@ -249,6 +343,72 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(200, { 'Content-Type': 'text/html' });
       res.end(data);
     });
+  } else if (req.url === '/dev' || req.url === '/dev-dashboard') {
+    const dashboardPath = path.join(__dirname, 'dev-dashboard.html');
+    fs.readFile(dashboardPath, (err, data) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Error loading dashboard');
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(data);
+    });
+  } else if (req.url === '/modules' || req.url === '/modules-dashboard') {
+    const dashboardPath = path.join(__dirname, 'modules-dashboard.html');
+    fs.readFile(dashboardPath, (err, data) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Error loading dashboard');
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(data);
+    });
+  } else if (req.url === '/real-test-status.json') {
+    // REAL test status - NO SIMULATION
+    const statusPath = path.join(__dirname, 'real-test-status.json');
+    fs.readFile(statusPath, (err, data) => {
+      if (err) {
+        const defaultStatus = {
+          timestamp: new Date().toISOString(),
+          totalTests: 0,
+          passedTests: 0,
+          failedTests: 0,
+          skippedTests: 0,
+          duration: 0,
+          testFiles: [],
+          lastRun: null,
+          isRunning: false
+        };
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(defaultStatus));
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(data);
+    });
+  } else if (req.url === '/modules-status.json') {
+    const statusPath = path.join(__dirname, 'modules-status.json');
+    fs.readFile(statusPath, (err, data) => {
+      if (err) {
+        const defaultStatus = {
+          timestamp: new Date().toISOString(),
+          modules: []
+        };
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(defaultStatus));
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(data);
+    });
+  } else if (req.url === '/api/discover-tests') {
+    // Test discovery API
+    handleTestDiscovery(req, res);
+  } else if (req.url === '/api/stop-all-tests' && req.method === 'POST') {
+    // Stop all tests
+    handleStopAllTests(req, res);
   } else if (req.url === '/system-status.json') {
     const statusPath = path.join(__dirname, 'system-status.json');
     fs.readFile(statusPath, (err, data) => {
@@ -274,6 +434,8 @@ const server = http.createServer(async (req, res) => {
     await handleDashboardMetrics(req, res);
   } else if (req.url === '/api/dashboard/health') {
     await handleHealth(req, res);
+  } else if (req.url === '/api/dashboard/appointments') {
+    await handleRecentAppointments(req, res);
   } else {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('404 Not Found');
@@ -290,12 +452,12 @@ server.listen(PORT, HOST, () => {
 ║  🌐 Network URL:   http://${HOST}:${PORT}                      ║
 ║                                                            ║
 ║  📝 Endpoints:                                             ║
-║     GET  /                        - Dashboard              ║
-║     GET  /dashboard               - Dashboard              ║
+║     GET  /                        - Enterprise Dashboard   ║
+║     GET  /dev                     - Dev/Testing Dashboard  ║
+║     GET  /simple                  - Simple Dashboard       ║
 ║     GET  /api/health              - Health Check           ║
 ║     GET  /api/metrics             - System Metrics         ║
 ║     GET  /api/dashboard/metrics   - Dashboard Metrics      ║
-║     GET  /api/dashboard/health    - Dashboard Health       ║
 ║     GET  /system-status.json      - Monitor Status         ║
 ║                                                            ║
 ║  🗄️  Database: ${DB_CONFIG.connectionString ? 'Configured' : 'Not configured'}                           ║
@@ -347,6 +509,41 @@ server.on('error', (err) => {
     process.exit(1);
   }
 });
+
+// Test Discovery Handler
+async function handleTestDiscovery(req, res) {
+  try {
+    const TestDiscovery = require('./test-discovery-api');
+    const discovery = new TestDiscovery();
+    const results = await discovery.discoverTests();
+    
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(results));
+  } catch (error) {
+    console.error('Test discovery error:', error);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: error.message, testFiles: [] }));
+  }
+}
+
+// Stop All Tests Handler
+async function handleStopAllTests(req, res) {
+  try {
+    const { exec } = require('child_process');
+    exec('pkill -f "modules-test-runner"', (error) => {
+      if (error && error.code !== 1) { // code 1 means no process found
+        console.error('Error stopping tests:', error);
+      }
+    });
+    
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ success: true, message: 'Stop signal sent' }));
+  } catch (error) {
+    console.error('Error in stop all tests:', error);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: error.message }));
+  }
+}
 
 module.exports = server;
 

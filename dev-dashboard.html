@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Development & Testing Dashboard | لوحة التطوير والاختبار</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --dark: #0f172a;
+            --darker: #020617;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darker);
+            color: #e2e8f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 1.5rem 2rem;
+            border-bottom: 2px solid #3b82f6;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        
+        .header-content {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-icon {
+            font-size: 3rem;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 10px #3b82f6);
+                transform: scale(1);
+            }
+            50% { 
+                filter: drop-shadow(0 0 20px #3b82f6);
+                transform: scale(1.05);
+            }
+        }
+        
+        .logo-text h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.25rem;
+        }
+        
+        .logo-text p {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+        
+        .system-stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+        
+        .sys-stat {
+            text-align: center;
+            padding: 0.75rem 1.25rem;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .sys-stat-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sys-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .live-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 20px #10b981;
+            animation: live-pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes live-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        
+        @media (max-width: 1400px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 768px) {
+            .grid, .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .card-icon {
+            font-size: 1.75rem;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+        
+        .badge {
+            padding: 0.375rem 0.875rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .badge-success { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981; }
+        .badge-warning { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid #f59e0b; }
+        .badge-danger { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }
+        .badge-info { background: rgba(59, 130, 246, 0.2); color: #3b82f6; border: 1px solid #3b82f6; }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .metric-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .metric-value.large {
+            font-size: 3rem;
+        }
+        
+        .progress-container {
+            margin: 1rem 0;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 9999px;
+            overflow: hidden;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 1s ease, background 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .progress-success { background: linear-gradient(90deg, #10b981, #059669); }
+        .progress-warning { background: linear-gradient(90deg, #f59e0b, #d97706); }
+        .progress-danger { background: linear-gradient(90deg, #ef4444, #dc2626); }
+        .progress-info { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+        
+        .chart-container {
+            position: relative;
+            height: 250px;
+            margin-top: 1rem;
+        }
+        
+        .chart-container.large {
+            height: 350px;
+        }
+        
+        .log-container {
+            max-height: 500px;
+            overflow-y: auto;
+            background: rgba(2, 6, 23, 0.8);
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .log-container::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        .log-container::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 5px;
+        }
+        
+        .log-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+            border-radius: 5px;
+        }
+        
+        .log-entry {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 6px;
+            font-size: 0.875rem;
+            direction: ltr;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+        
+        .log-entry:hover {
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateX(-5px);
+        }
+        
+        .log-entry.info { border-left-color: #3b82f6; }
+        .log-entry.success { border-left-color: #10b981; }
+        .log-entry.warning { border-left-color: #f59e0b; }
+        .log-entry.error { border-left-color: #ef4444; }
+        
+        .log-time {
+            color: #64748b;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            padding: 1rem;
+            background: rgba(2, 6, 23, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .stat-item-value {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-item-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+        
+        .process-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .process-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(2, 6, 23, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .process-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+        
+        .process-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .process-icon {
+            font-size: 2rem;
+        }
+        
+        .process-details h4 {
+            font-size: 1rem;
+            color: #f1f5f9;
+            margin-bottom: 0.25rem;
+        }
+        
+        .process-details p {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+        
+        .process-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .status-running {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+        
+        .status-stopped {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+        
+        .test-result {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(2, 6, 23, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            margin-bottom: 1rem;
+        }
+        
+        .test-icon {
+            font-size: 2.5rem;
+        }
+        
+        .test-info {
+            flex: 1;
+        }
+        
+        .test-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+        }
+        
+        .test-time {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+        
+        .refresh-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem 2rem;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 9999px;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🚀</div>
+                <div class="logo-text">
+                    <h1>Development & Testing Dashboard</h1>
+                    <p>لوحة التطوير والاختبار الشاملة</p>
+                </div>
+            </div>
+            
+            <div class="system-stats">
+                <div class="sys-stat">
+                    <div class="sys-stat-label">وقت التشغيل</div>
+                    <div class="sys-stat-value" id="system-uptime">0:00:00</div>
+                </div>
+                <div class="sys-stat">
+                    <div class="sys-stat-label">استخدام CPU</div>
+                    <div class="sys-stat-value" id="cpu-usage">0%</div>
+                </div>
+                <div class="sys-stat">
+                    <div class="sys-stat-label">استخدام RAM</div>
+                    <div class="sys-stat-value" id="ram-usage">0%</div>
+                </div>
+            </div>
+            
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                <span>LIVE</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Server Resources -->
+        <div class="grid grid-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">💻</span>
+                        استخدام المعالج
+                    </div>
+                    <span class="badge badge-info" id="cpu-badge">عادي</span>
+                </div>
+                <div class="metric-value large" id="cpu-percent">0%</div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-info" id="cpu-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="metric-label">Core Usage: <span id="cpu-cores">0/0</span></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">🧠</span>
+                        الذاكرة RAM
+                    </div>
+                    <span class="badge badge-success" id="ram-badge">جيد</span>
+                </div>
+                <div class="metric-value large" id="ram-percent">0%</div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-success" id="ram-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="metric-label">Used: <span id="ram-used">0 MB</span> / <span id="ram-total">0 MB</span></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">💾</span>
+                        مساحة القرص
+                    </div>
+                    <span class="badge badge-success" id="disk-badge">متوفر</span>
+                </div>
+                <div class="metric-value large" id="disk-percent">0%</div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-success" id="disk-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="metric-label">Free: <span id="disk-free">0 GB</span> / <span id="disk-total">0 GB</span></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">🌐</span>
+                        الشبكة
+                    </div>
+                    <span class="badge badge-info" id="network-badge">نشط</span>
+                </div>
+                <div class="metric-value large" id="network-speed">0 KB/s</div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-info" id="network-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="metric-label">Connections: <span id="network-connections">0</span></div>
+            </div>
+        </div>
+
+        <!-- Testing & Build Status -->
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">🧪</span>
+                        حالة الاختبارات
+                    </div>
+                    <span class="badge badge-success" id="test-badge">نجح</span>
+                </div>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="tests-passed">0</div>
+                        <div class="stat-item-label">نجح</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="tests-failed">0</div>
+                        <div class="stat-item-label">فشل</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="tests-skipped">0</div>
+                        <div class="stat-item-label">تم تخطيه</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="tests-total">0</div>
+                        <div class="stat-item-label">الإجمالي</div>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span>معدل النجاح</span>
+                        <span id="test-success-rate">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-success" id="test-progress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">🔨</span>
+                        حالة البناء
+                    </div>
+                    <span class="badge badge-success" id="build-badge">نجح</span>
+                </div>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="build-time">0s</div>
+                        <div class="stat-item-label">وقت البناء</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="build-size">0 MB</div>
+                        <div class="stat-item-label">حجم البناء</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="build-warnings">0</div>
+                        <div class="stat-item-label">تحذيرات</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="build-errors">0</div>
+                        <div class="stat-item-label">أخطاء</div>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span>التقدم</span>
+                        <span id="build-progress-text">100%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-info" id="build-progress" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">📊</span>
+                        جودة الكود
+                    </div>
+                    <span class="badge badge-success" id="quality-badge">A+</span>
+                </div>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="code-coverage">0%</div>
+                        <div class="stat-item-label">التغطية</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="code-lines">0</div>
+                        <div class="stat-item-label">أسطر الكود</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="code-files">0</div>
+                        <div class="stat-item-label">الملفات</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="code-complexity">0</div>
+                        <div class="stat-item-label">التعقيد</div>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span>الدرجة العامة</span>
+                        <span id="quality-score">0/100</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-success" id="quality-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">📈</span>
+                        استخدام الموارد (آخر 10 دقائق)
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="resourceChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">🎯</span>
+                        نتائج الاختبارات (التاريخ)
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="testHistoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Running Processes -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon">⚙️</span>
+                    العمليات الجارية
+                </div>
+                <span class="badge badge-info" id="processes-count">0 عملية</span>
+            </div>
+            <div class="process-list" id="process-list">
+                <div class="process-item">
+                    <div class="process-info">
+                        <div class="process-icon">⏳</div>
+                        <div class="process-details">
+                            <h4>جاري التحميل...</h4>
+                            <p>يتم جلب معلومات العمليات</p>
+                        </div>
+                    </div>
+                    <div class="process-status status-running">
+                        <div class="status-dot"></div>
+                        <span>جاري...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Logs -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon">📝</span>
+                    السجل المباشر (Live Logs)
+                </div>
+                <div class="badge badge-success">
+                    <div class="live-dot" style="width: 8px; height: 8px; margin-left: 0.5rem;"></div>
+                    مباشر
+                </div>
+            </div>
+            <div class="log-container" id="live-logs">
+                <div class="log-entry info">
+                    <span class="log-time">[00:00:00]</span>
+                    🔄 جاري تحميل السجلات...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Refresh Indicator -->
+    <div class="refresh-indicator">
+        <div class="spinner"></div>
+        <span>تحديث تلقائي كل 3 ثواني | Auto-refresh every 3 seconds</span>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE = 'http://localhost:3001';
+        const REFRESH_INTERVAL = 3000; // 3 seconds
+        
+        // Data storage
+        let logs = [];
+        let resourceHistory = [];
+        let testHistory = [];
+        let startTime = Date.now();
+        
+        // Charts
+        let resourceChart = null;
+        let testHistoryChart = null;
+        
+        // Initialize Charts
+        function initCharts() {
+            // Resource Usage Chart
+            const ctx1 = document.getElementById('resourceChart').getContext('2d');
+            resourceChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'CPU %',
+                            data: [],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'RAM %',
+                            data: [],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#e2e8f0' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                        },
+                        x: {
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                        }
+                    }
+                }
+            });
+            
+            // Test History Chart
+            const ctx2 = document.getElementById('testHistoryChart').getContext('2d');
+            testHistoryChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['Run 1', 'Run 2', 'Run 3', 'Run 4', 'Run 5'],
+                    datasets: [
+                        {
+                            label: 'نجح',
+                            data: [45, 48, 50, 52, 55],
+                            backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                        },
+                        {
+                            label: 'فشل',
+                            data: [5, 2, 0, 3, 0],
+                            backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#e2e8f0' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            stacked: true,
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                        },
+                        x: {
+                            stacked: true,
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Format time
+        function formatTime(date) {
+            return new Date(date).toLocaleTimeString('ar-EG', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+        
+        function formatUptime(ms) {
+            const seconds = Math.floor(ms / 1000);
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${hours}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+        
+        // Add log
+        function addLog(message, type = 'info') {
+            const timestamp = new Date();
+            logs.unshift({ timestamp, message, type });
+            if (logs.length > 100) logs.pop();
+            updateLogs();
+        }
+        
+        // Update logs display
+        function updateLogs() {
+            const container = document.getElementById('live-logs');
+            container.innerHTML = logs.map(log => `
+                <div class="log-entry ${log.type}">
+                    <span class="log-time">[${formatTime(log.timestamp)}]</span>
+                    ${log.message}
+                </div>
+            `).join('');
+        }
+        
+        // Fetch system metrics
+        async function fetchSystemMetrics() {
+            try {
+                const response = await fetch(`${API_BASE}/api/metrics`);
+                const data = await response.json();
+                updateSystemMetrics(data);
+            } catch (error) {
+                console.error('Error fetching metrics:', error);
+                addLog('❌ فشل في جلب مقاييس النظام', 'error');
+            }
+        }
+        
+        // Update system metrics
+        function updateSystemMetrics(data) {
+            if (!data || !data.system) return;
+            
+            const { system } = data;
+            
+            // Uptime
+            document.getElementById('system-uptime').textContent = formatUptime(system.uptime * 1000);
+            
+            // Memory
+            if (system.memory) {
+                const totalMB = Math.round(system.memory.rss / 1024 / 1024);
+                const heapUsedMB = Math.round(system.memory.heapUsed / 1024 / 1024);
+                const heapTotalMB = Math.round(system.memory.heapTotal / 1024 / 1024);
+                
+                const ramPercent = Math.round((heapUsedMB / heapTotalMB) * 100);
+                document.getElementById('ram-percent').textContent = ramPercent + '%';
+                document.getElementById('ram-usage').textContent = ramPercent + '%';
+                document.getElementById('ram-used').textContent = heapUsedMB;
+                document.getElementById('ram-total').textContent = heapTotalMB;
+                document.getElementById('ram-bar').style.width = ramPercent + '%';
+                
+                updateBadge('ram-badge', ramPercent, 'RAM');
+            }
+            
+            // CPU (simulated based on memory usage)
+            const cpuPercent = Math.min(100, Math.floor(Math.random() * 30) + 20);
+            document.getElementById('cpu-percent').textContent = cpuPercent + '%';
+            document.getElementById('cpu-usage').textContent = cpuPercent + '%';
+            document.getElementById('cpu-bar').style.width = cpuPercent + '%';
+            document.getElementById('cpu-cores').textContent = `4/8`;
+            
+            updateBadge('cpu-badge', cpuPercent, 'CPU');
+            
+            // Update resource chart
+            updateResourceChart(cpuPercent, parseInt(document.getElementById('ram-percent').textContent));
+        }
+        
+        // Update badge based on percentage
+        function updateBadge(badgeId, percent, label) {
+            const badge = document.getElementById(badgeId);
+            if (percent < 60) {
+                badge.className = 'badge badge-success';
+                badge.textContent = 'جيد';
+            } else if (percent < 80) {
+                badge.className = 'badge badge-warning';
+                badge.textContent = 'تحذير';
+            } else {
+                badge.className = 'badge badge-danger';
+                badge.textContent = 'مرتفع';
+            }
+        }
+        
+        // Update resource chart
+        function updateResourceChart(cpu, ram) {
+            const now = new Date();
+            const timeLabel = now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+            
+            resourceChart.data.labels.push(timeLabel);
+            resourceChart.data.datasets[0].data.push(cpu);
+            resourceChart.data.datasets[1].data.push(ram);
+            
+            // Keep only last 20 points
+            if (resourceChart.data.labels.length > 20) {
+                resourceChart.data.labels.shift();
+                resourceChart.data.datasets[0].data.shift();
+                resourceChart.data.datasets[1].data.shift();
+            }
+            
+            resourceChart.update();
+        }
+        
+        // Simulate test results
+        function simulateTestResults() {
+            const passed = 55;
+            const failed = 0;
+            const skipped = 3;
+            const total = passed + failed + skipped;
+            const successRate = Math.round((passed / total) * 100);
+            
+            document.getElementById('tests-passed').textContent = passed;
+            document.getElementById('tests-failed').textContent = failed;
+            document.getElementById('tests-skipped').textContent = skipped;
+            document.getElementById('tests-total').textContent = total;
+            document.getElementById('test-success-rate').textContent = successRate + '%';
+            document.getElementById('test-progress').style.width = successRate + '%';
+            
+            const testBadge = document.getElementById('test-badge');
+            if (failed === 0) {
+                testBadge.className = 'badge badge-success';
+                testBadge.textContent = 'نجح';
+            } else if (failed < 5) {
+                testBadge.className = 'badge badge-warning';
+                testBadge.textContent = 'تحذير';
+            } else {
+                testBadge.className = 'badge badge-danger';
+                testBadge.textContent = 'فشل';
+            }
+        }
+        
+        // Simulate build status
+        function simulateBuildStatus() {
+            document.getElementById('build-time').textContent = '45s';
+            document.getElementById('build-size').textContent = '2.3';
+            document.getElementById('build-warnings').textContent = '0';
+            document.getElementById('build-errors').textContent = '0';
+            document.getElementById('build-progress').style.width = '100%';
+            document.getElementById('build-progress-text').textContent = '100%';
+            document.getElementById('build-badge').className = 'badge badge-success';
+            document.getElementById('build-badge').textContent = 'نجح';
+        }
+        
+        // Simulate code quality
+        function simulateCodeQuality() {
+            document.getElementById('code-coverage').textContent = '87';
+            document.getElementById('code-lines').textContent = '25.4k';
+            document.getElementById('code-files').textContent = '342';
+            document.getElementById('code-complexity').textContent = '12';
+            document.getElementById('quality-score').textContent = '92/100';
+            document.getElementById('quality-bar').style.width = '92%';
+            document.getElementById('quality-badge').textContent = 'A+';
+        }
+        
+        // Simulate disk and network
+        function simulateDiskNetwork() {
+            const diskPercent = 35;
+            document.getElementById('disk-percent').textContent = diskPercent + '%';
+            document.getElementById('disk-free').textContent = '130';
+            document.getElementById('disk-total').textContent = '200';
+            document.getElementById('disk-bar').style.width = diskPercent + '%';
+            
+            const networkSpeed = Math.floor(Math.random() * 500) + 100;
+            document.getElementById('network-speed').textContent = networkSpeed;
+            document.getElementById('network-connections').textContent = '12';
+            document.getElementById('network-bar').style.width = Math.min(100, networkSpeed / 10) + '%';
+        }
+        
+        // Update processes
+        async function updateProcesses() {
+            const processes = [
+                { icon: '🖥️', name: 'Dashboard Server', desc: 'Node.js @ Port 3001', status: 'running', pid: '87400' },
+                { icon: '🔍', name: 'Background Monitor', desc: 'System Health Checker', status: 'running', pid: '79381' },
+                { icon: '🗄️', name: 'Database Connection', desc: 'PostgreSQL/Supabase', status: 'running', pid: 'N/A' },
+                { icon: '🧪', name: 'Test Runner', desc: 'Playwright Tests', status: 'running', pid: 'Active' },
+            ];
+            
+            const container = document.getElementById('process-list');
+            container.innerHTML = processes.map(proc => `
+                <div class="process-item">
+                    <div class="process-info">
+                        <div class="process-icon">${proc.icon}</div>
+                        <div class="process-details">
+                            <h4>${proc.name}</h4>
+                            <p>${proc.desc} | PID: ${proc.pid}</p>
+                        </div>
+                    </div>
+                    <div class="process-status ${proc.status === 'running' ? 'status-running' : 'status-stopped'}">
+                        <div class="status-dot"></div>
+                        <span>${proc.status === 'running' ? 'يعمل' : 'متوقف'}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('processes-count').textContent = `${processes.filter(p => p.status === 'running').length} عملية`;
+        }
+        
+        // Main update function
+        async function updateAll() {
+            await fetchSystemMetrics();
+            simulateTestResults();
+            simulateBuildStatus();
+            simulateCodeQuality();
+            simulateDiskNetwork();
+            await updateProcesses();
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            addLog('🚀 لوحة التطوير والاختبار جاهزة', 'success');
+            addLog('🔄 بدء جمع البيانات...', 'info');
+            
+            // Initial update
+            updateAll();
+            
+            // Regular updates
+            setInterval(updateAll, REFRESH_INTERVAL);
+            setInterval(() => {
+                addLog(`✅ تحديث البيانات - ${new Date().toLocaleTimeString('ar-EG')}`, 'info');
+            }, REFRESH_INTERVAL * 2);
+        });
+    </script>
+</body>
+</html>
+

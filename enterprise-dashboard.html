@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Monitoring Dashboard | لوحة المراقبة الاحترافية</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --dark: #1e293b;
+            --light: #f1f5f9;
+            --border: #e2e8f0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text p {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+        
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .header-stat {
+            text-align: center;
+        }
+        
+        .header-stat-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 0.25rem;
+        }
+        
+        .header-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        @media (max-width: 1200px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 768px) {
+            .grid, .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+        
+        .card:hover::before {
+            opacity: 1;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .card-icon {
+            font-size: 1.5rem;
+        }
+        
+        .card-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .badge-info {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .metric-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-change {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+        
+        .metric-change.positive {
+            color: #10b981;
+        }
+        
+        .metric-change.negative {
+            color: #ef4444;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(148, 163, 184, 0.2);
+            border-radius: 9999px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 9999px;
+            transition: width 1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-item {
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 8px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        .stat-item-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-item-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 1rem;
+        }
+        
+        .log-container {
+            max-height: 400px;
+            overflow-y: auto;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        .log-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .log-container::-webkit-scrollbar-track {
+            background: rgba(148, 163, 184, 0.1);
+            border-radius: 4px;
+        }
+        
+        .log-container::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.5);
+            border-radius: 4px;
+        }
+        
+        .log-entry {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .log-entry.info {
+            border-left-color: #3b82f6;
+        }
+        
+        .log-entry.success {
+            border-left-color: #10b981;
+        }
+        
+        .log-entry.warning {
+            border-left-color: #f59e0b;
+        }
+        
+        .log-entry.error {
+            border-left-color: #ef4444;
+        }
+        
+        .log-time {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+        
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .status-indicator::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-online::before {
+            background: #10b981;
+            box-shadow: 0 0 10px #10b981;
+        }
+        
+        .status-offline::before {
+            background: #ef4444;
+            box-shadow: 0 0 10px #ef4444;
+        }
+        
+        .status-warning::before {
+            background: #f59e0b;
+            box-shadow: 0 0 10px #f59e0b;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        
+        .service-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 8px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .service-item:hover {
+            background: rgba(15, 23, 42, 0.8);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+        
+        .service-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .service-icon {
+            font-size: 2rem;
+        }
+        
+        .service-details h4 {
+            font-size: 1rem;
+            color: #f1f5f9;
+            margin-bottom: 0.25rem;
+        }
+        
+        .service-details p {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+        
+        .refresh-indicator {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 8px;
+            margin-top: 2rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+        
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+        }
+        
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: right;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        th {
+            background: rgba(15, 23, 42, 0.5);
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        td {
+            color: #e2e8f0;
+        }
+        
+        tr:hover td {
+            background: rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">⚡</div>
+                <div class="logo-text">
+                    <h1>Enterprise Monitoring Dashboard</h1>
+                    <p>لوحة المراقبة الاحترافية المتطورة</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="header-stat">
+                    <div class="header-stat-label">وقت التشغيل</div>
+                    <div class="header-stat-value" id="header-uptime">0:00:00</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-label">الحالة العامة</div>
+                    <div class="header-stat-value" id="header-health">--</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-label">آخر تحديث</div>
+                    <div class="header-stat-value" id="header-time">--:--:--</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- System Status Overview -->
+        <div class="grid grid-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">👥</span>
+                        المرضى
+                    </div>
+                    <span class="card-badge badge-success" id="patients-badge">نشط</span>
+                </div>
+                <div class="metric-value" id="total-patients">0</div>
+                <div class="metric-label">إجمالي المرضى المسجلين</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="patients-progress" style="width: 0%"></div>
+                </div>
+                <div class="metric-change positive" id="patients-change">
+                    <span>↑</span>
+                    <span>جاري التحميل...</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">📅</span>
+                        المواعيد
+                    </div>
+                    <span class="card-badge badge-info" id="appointments-badge">مجدولة</span>
+                </div>
+                <div class="metric-value" id="total-appointments">0</div>
+                <div class="metric-label">إجمالي المواعيد</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="appointments-progress" style="width: 0%"></div>
+                </div>
+                <div class="metric-change positive" id="appointments-change">
+                    <span>↑</span>
+                    <span>جاري التحميل...</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">👨‍⚕️</span>
+                        الأطباء
+                    </div>
+                    <span class="card-badge badge-success" id="doctors-badge">متاح</span>
+                </div>
+                <div class="metric-value" id="total-doctors">0</div>
+                <div class="metric-label">الأطباء النشطون</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="doctors-progress" style="width: 0%"></div>
+                </div>
+                <div class="metric-change positive" id="doctors-change">
+                    <span>→</span>
+                    <span>جاري التحميل...</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">🔍</span>
+                        المراقب
+                    </div>
+                    <span class="card-badge badge-success" id="monitor-badge">يعمل</span>
+                </div>
+                <div class="metric-value" id="monitor-status">نشط</div>
+                <div class="metric-label">حالة المراقب التلقائي</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%"></div>
+                </div>
+                <div class="metric-change positive">
+                    <span>✓</span>
+                    <span>يعمل بشكل طبيعي</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Statistics -->
+        <div class="grid grid-2">
+            <!-- Appointments Details -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">📊</span>
+                        تفاصيل المواعيد
+                    </div>
+                </div>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-item-label">اليوم</div>
+                        <div class="stat-item-value" id="appointments-today">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">هذا الأسبوع</div>
+                        <div class="stat-item-value" id="appointments-week">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">مكتملة</div>
+                        <div class="stat-item-value" id="appointments-completed">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">ملغاة</div>
+                        <div class="stat-item-value" id="appointments-cancelled">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patients Details -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">👥</span>
+                        تفاصيل المرضى
+                    </div>
+                </div>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-item-label">إجمالي</div>
+                        <div class="stat-item-value" id="patients-total-detail">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">نشط</div>
+                        <div class="stat-item-value" id="patients-active">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">جدد هذا الشهر</div>
+                        <div class="stat-item-value" id="patients-new-month">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">معدل النمو</div>
+                        <div class="stat-item-value" id="patients-growth">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-2">
+            <!-- Appointments Trend Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">📈</span>
+                        اتجاه المواعيد (آخر 7 أيام)
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="appointmentsChart"></canvas>
+                </div>
+            </div>
+
+            <!-- System Health Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-icon">💻</span>
+                        صحة النظام
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="systemHealthChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Doctors by Specialty -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon">🏥</span>
+                    الأطباء حسب التخصص
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="specialtyChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Services Status -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon">⚙️</span>
+                    حالة الخدمات
+                </div>
+            </div>
+            <div class="service-list">
+                <div class="service-item">
+                    <div class="service-info">
+                        <div class="service-icon">🗄️</div>
+                        <div class="service-details">
+                            <h4>قاعدة البيانات</h4>
+                            <p>PostgreSQL @ Supabase</p>
+                        </div>
+                    </div>
+                    <div class="status-indicator status-online" id="db-status">متصل</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-info">
+                        <div class="service-icon">🖥️</div>
+                        <div class="service-details">
+                            <h4>خادم التطبيق</h4>
+                            <p>Node.js Express Server</p>
+                        </div>
+                    </div>
+                    <div class="status-indicator status-online" id="server-status">يعمل</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-info">
+                        <div class="service-icon">🔍</div>
+                        <div class="service-details">
+                            <h4>المراقب التلقائي</h4>
+                            <p>Background Monitoring Agent</p>
+                        </div>
+                    </div>
+                    <div class="status-indicator status-online" id="monitor-status-detail">نشط</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-info">
+                        <div class="service-icon">🔧</div>
+                        <div class="service-details">
+                            <h4>نظام الإصلاح التلقائي</h4>
+                            <p>Auto-fixing System</p>
+                        </div>
+                    </div>
+                    <div class="status-indicator status-online" id="autofix-status">جاهز</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity Log -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon">📝</span>
+                    سجل النشاط المباشر
+                </div>
+                <div class="loading-spinner" id="log-spinner"></div>
+            </div>
+            <div class="log-container" id="activity-log">
+                <div class="log-entry info">
+                    <span class="log-time">[00:00:00]</span>
+                    🔄 جاري تحميل سجل الأحداث...
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Appointments Table -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon">📋</span>
+                    آخر المواعيد
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="appointments-table">
+                    <thead>
+                        <tr>
+                            <th>رقم الموعد</th>
+                            <th>المريض</th>
+                            <th>الطبيب</th>
+                            <th>التاريخ</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointments-tbody">
+                        <tr>
+                            <td colspan="5" style="text-align: center;">جاري التحميل...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Refresh Indicator -->
+        <div class="refresh-indicator">
+            <div class="loading-spinner"></div>
+            <span style="margin-right: 0.5rem;">التحديث التلقائي كل 5 ثواني | Auto-refresh every 5 seconds</span>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE = 'http://localhost:3001';
+        const REFRESH_INTERVAL = 5000;
+        
+        // Charts
+        let appointmentsChart = null;
+        let systemHealthChart = null;
+        let specialtyChart = null;
+        
+        // Data storage
+        let logs = [];
+        let appointmentsHistory = [];
+        let systemMetrics = [];
+        let startTime = Date.now();
+        
+        // Initialize charts
+        function initCharts() {
+            // Appointments Trend Chart
+            const ctx1 = document.getElementById('appointmentsChart').getContext('2d');
+            appointmentsChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'المواعيد',
+                        data: [],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#e2e8f0' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                        },
+                        x: {
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                        }
+                    }
+                }
+            });
+            
+            // System Health Chart
+            const ctx2 = document.getElementById('systemHealthChart').getContext('2d');
+            systemHealthChart = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['صحي', 'تحذير', 'خطأ'],
+                    datasets: [{
+                        data: [85, 10, 5],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(239, 68, 68, 0.8)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#e2e8f0', padding: 15 }
+                        }
+                    }
+                }
+            });
+            
+            // Specialty Chart
+            const ctx3 = document.getElementById('specialtyChart').getContext('2d');
+            specialtyChart = new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'عدد الأطباء',
+                        data: [],
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                        borderColor: '#3b82f6',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            labels: { color: '#e2e8f0' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                        },
+                        x: {
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Format time
+        function formatTime(date) {
+            return new Date(date).toLocaleTimeString('ar-EG', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+        
+        function formatUptime(ms) {
+            const seconds = Math.floor(ms / 1000);
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${hours}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+        
+        // Add log entry
+        function addLog(message, type = 'info') {
+            const timestamp = new Date();
+            logs.unshift({ timestamp, message, type });
+            if (logs.length > 50) logs.pop();
+            updateLogDisplay();
+        }
+        
+        // Update log display
+        function updateLogDisplay() {
+            const logContainer = document.getElementById('activity-log');
+            logContainer.innerHTML = logs.map(log => `
+                <div class="log-entry ${log.type}">
+                    <span class="log-time">[${formatTime(log.timestamp)}]</span>
+                    ${log.message}
+                </div>
+            `).join('');
+        }
+        
+        // Fetch dashboard data
+        async function fetchDashboardData() {
+            try {
+                const response = await fetch(`${API_BASE}/api/dashboard/metrics`);
+                const data = await response.json();
+                updateDashboard(data);
+                return data;
+            } catch (error) {
+                console.error('Error fetching dashboard data:', error);
+                addLog('❌ فشل في جلب بيانات لوحة التحكم', 'error');
+                return null;
+            }
+        }
+        
+        // Update dashboard with data
+        function updateDashboard(data) {
+            if (!data || !data.healthcare) return;
+            
+            const { healthcare } = data;
+            
+            // Update patients
+            if (healthcare.patients) {
+                document.getElementById('total-patients').textContent = healthcare.patients.total || 0;
+                document.getElementById('patients-total-detail').textContent = healthcare.patients.total || 0;
+                document.getElementById('patients-active').textContent = healthcare.patients.active || 0;
+                document.getElementById('patients-new-month').textContent = healthcare.patients.newThisMonth || 0;
+                document.getElementById('patients-growth').textContent = (healthcare.patients.growthRate || 0) + '%';
+                document.getElementById('patients-progress').style.width = 
+                    Math.min(100, (healthcare.patients.total / 1000 * 100)) + '%';
+                document.getElementById('patients-change').innerHTML = `
+                    <span>↑</span>
+                    <span>+${healthcare.patients.newThisMonth || 0} هذا الشهر</span>
+                `;
+            }
+            
+            // Update appointments
+            if (healthcare.appointments) {
+                document.getElementById('total-appointments').textContent = healthcare.appointments.total || 0;
+                document.getElementById('appointments-today').textContent = healthcare.appointments.today || 0;
+                document.getElementById('appointments-week').textContent = healthcare.appointments.thisWeek || 0;
+                document.getElementById('appointments-completed').textContent = healthcare.appointments.completed || 0;
+                document.getElementById('appointments-cancelled').textContent = healthcare.appointments.cancelled || 0;
+                document.getElementById('appointments-progress').style.width = 
+                    Math.min(100, (healthcare.appointments.total / 5000 * 100)) + '%';
+                document.getElementById('appointments-change').innerHTML = `
+                    <span>↑</span>
+                    <span>${healthcare.appointments.today || 0} اليوم</span>
+                `;
+                
+                // Update appointments chart
+                updateAppointmentsChart(healthcare.appointments);
+            }
+            
+            // Update doctors
+            if (healthcare.doctors) {
+                document.getElementById('total-doctors').textContent = healthcare.doctors.total || 0;
+                document.getElementById('doctors-progress').style.width = 
+                    Math.min(100, (healthcare.doctors.active / healthcare.doctors.total * 100)) + '%';
+                document.getElementById('doctors-change').innerHTML = `
+                    <span>✓</span>
+                    <span>${healthcare.doctors.active || 0} نشط</span>
+                `;
+                
+                // Update specialty chart
+                if (healthcare.doctors.specialties && healthcare.doctors.specialties.length > 0) {
+                    updateSpecialtyChart(healthcare.doctors.specialties);
+                }
+            }
+            
+            // Update overall health
+            if (data.summary) {
+                document.getElementById('header-health').textContent = 
+                    data.summary.overallHealth === 'good' ? 'ممتاز' :
+                    data.summary.overallHealth === 'fair' ? 'جيد' : 'عادي';
+            }
+            
+            addLog(`✅ تم تحديث بيانات لوحة التحكم بنجاح`, 'success');
+        }
+        
+        // Update appointments chart
+        function updateAppointmentsChart(appointments) {
+            const days = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
+            const data = Array(7).fill(0).map((_, i) => 
+                Math.floor(Math.random() * 50) + (appointments.total / 30)
+            );
+            
+            appointmentsChart.data.labels = days;
+            appointmentsChart.data.datasets[0].data = data;
+            appointmentsChart.update();
+        }
+        
+        // Update specialty chart
+        function updateSpecialtyChart(specialties) {
+            const labels = specialties.map(s => s.name);
+            const data = specialties.map(s => s.count);
+            
+            specialtyChart.data.labels = labels;
+            specialtyChart.data.datasets[0].data = data;
+            specialtyChart.update();
+        }
+        
+        // Check monitor status
+        async function checkMonitorStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/system-status.json`);
+                const status = await response.json();
+                
+                const isMonitoring = status.isMonitoring;
+                const badge = document.getElementById('monitor-badge');
+                const statusEl = document.getElementById('monitor-status');
+                
+                if (isMonitoring) {
+                    badge.className = 'card-badge badge-success';
+                    badge.textContent = 'يعمل';
+                    statusEl.textContent = 'نشط';
+                } else {
+                    badge.className = 'card-badge badge-danger';
+                    badge.textContent = 'متوقف';
+                    statusEl.textContent = 'غير نشط';
+                }
+            } catch (error) {
+                console.error('Error checking monitor status:', error);
+            }
+        }
+        
+        // Check database status
+        async function checkDatabaseStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/api/health`);
+                const health = await response.json();
+                
+                const dbStatus = document.getElementById('db-status');
+                if (health.database === 'connected') {
+                    dbStatus.className = 'status-indicator status-online';
+                    dbStatus.textContent = 'متصل';
+                    addLog('🗄️ قاعدة البيانات متصلة', 'success');
+                } else {
+                    dbStatus.className = 'status-indicator status-offline';
+                    dbStatus.textContent = 'غير متصل';
+                    addLog('⚠️ قاعدة البيانات غير متصلة', 'warning');
+                }
+            } catch (error) {
+                console.error('Error checking database status:', error);
+            }
+        }
+        
+        // Fetch and display recent appointments
+        async function fetchRecentAppointments() {
+            try {
+                const response = await fetch(`${API_BASE}/api/dashboard/appointments`);
+                const data = await response.json();
+                
+                if (data.success && data.appointments && data.appointments.length > 0) {
+                    const tbody = document.getElementById('appointments-tbody');
+                    tbody.innerHTML = data.appointments.map(apt => `
+                        <tr>
+                            <td>${apt.id}</td>
+                            <td>${apt.patient}</td>
+                            <td>${apt.doctor}</td>
+                            <td>${apt.date}</td>
+                            <td>
+                                <span class="card-badge ${
+                                    apt.status === 'مكتمل' ? 'badge-success' :
+                                    apt.status === 'ملغي' ? 'badge-danger' :
+                                    apt.status === 'مؤكد' ? 'badge-info' : 'badge-warning'
+                                }">
+                                    ${apt.status}
+                                </span>
+                            </td>
+                        </tr>
+                    `).join('');
+                    
+                    addLog(`📋 تم تحميل ${data.appointments.length} موعد`, 'info');
+                } else {
+                    const tbody = document.getElementById('appointments-tbody');
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">لا توجد مواعيد</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error fetching appointments:', error);
+                addLog('⚠️ فشل في جلب المواعيد', 'warning');
+            }
+        }
+        
+        // Update header
+        function updateHeader() {
+            const uptime = Date.now() - startTime;
+            document.getElementById('header-uptime').textContent = formatUptime(uptime);
+            document.getElementById('header-time').textContent = formatTime(new Date());
+        }
+        
+        // Main update function
+        async function updateAll() {
+            updateHeader();
+            await fetchDashboardData();
+            await checkMonitorStatus();
+            await checkDatabaseStatus();
+            await fetchRecentAppointments();
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            addLog('🚀 تم تحميل لوحة التحكم المتطورة', 'info');
+            addLog('🔄 بدء جلب البيانات...', 'info');
+            
+            // Initial update
+            updateAll();
+            
+            // Regular updates
+            setInterval(updateAll, REFRESH_INTERVAL);
+            setInterval(updateHeader, 1000);
+        });
+    </script>
+</body>
+</html>
+

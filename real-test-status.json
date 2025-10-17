@@ -1,0 +1,258 @@
+{
+  "timestamp": "2025-10-17T20:06:42.894Z",
+  "totalTests": 443,
+  "passedTests": 0,
+  "failedTests": 0,
+  "skippedTests": 0,
+  "duration": 30303,
+  "testFiles": [
+    {
+      "path": "/tests/accessibility/accessibility.test.ts",
+      "testCount": 10,
+      "describeBlocks": 1,
+      "size": 5419
+    },
+    {
+      "path": "/tests/chatbot.spec.ts",
+      "testCount": 10,
+      "describeBlocks": 4,
+      "size": 5383
+    },
+    {
+      "path": "/tests/crm.spec.ts",
+      "testCount": 13,
+      "describeBlocks": 4,
+      "size": 5840
+    },
+    {
+      "path": "/tests/e2e/admin.spec.ts",
+      "testCount": 15,
+      "describeBlocks": 1,
+      "size": 8927
+    },
+    {
+      "path": "/tests/e2e/appointments.spec.ts",
+      "testCount": 14,
+      "describeBlocks": 6,
+      "size": 13898
+    },
+    {
+      "path": "/tests/e2e/auth.spec.ts",
+      "testCount": 27,
+      "describeBlocks": 6,
+      "size": 12924
+    },
+    {
+      "path": "/tests/e2e/automation.spec.ts",
+      "testCount": 18,
+      "describeBlocks": 11,
+      "size": 11795
+    },
+    {
+      "path": "/tests/e2e/chatbot.spec.ts",
+      "testCount": 16,
+      "describeBlocks": 1,
+      "size": 11471
+    },
+    {
+      "path": "/tests/e2e/dashboard.spec.ts",
+      "testCount": 11,
+      "describeBlocks": 1,
+      "size": 6943
+    },
+    {
+      "path": "/tests/e2e/login-full-test.spec.ts",
+      "testCount": 13,
+      "describeBlocks": 2,
+      "size": 10299
+    },
+    {
+      "path": "/tests/e2e/medical-records.spec.ts",
+      "testCount": 7,
+      "describeBlocks": 5,
+      "size": 3326
+    },
+    {
+      "path": "/tests/e2e/payments.spec.ts",
+      "testCount": 3,
+      "describeBlocks": 1,
+      "size": 1121
+    },
+    {
+      "path": "/tests/e2e/remaining-modules.spec.ts",
+      "testCount": 8,
+      "describeBlocks": 6,
+      "size": 2581
+    },
+    {
+      "path": "/tests/e2e/supabase-integration.spec.ts",
+      "testCount": 13,
+      "describeBlocks": 8,
+      "size": 14349
+    },
+    {
+      "path": "/tests/e2e/system-health.spec.ts",
+      "testCount": 4,
+      "describeBlocks": 1,
+      "size": 1233
+    },
+    {
+      "path": "/tests/healthcare.spec.ts",
+      "testCount": 17,
+      "describeBlocks": 4,
+      "size": 7396
+    },
+    {
+      "path": "/tests/lighthouse/lighthouse.test.ts",
+      "testCount": 5,
+      "describeBlocks": 1,
+      "size": 3602
+    },
+    {
+      "path": "/tests/navigation.spec.ts",
+      "testCount": 6,
+      "describeBlocks": 1,
+      "size": 1565
+    },
+    {
+      "path": "/tests/performance/performance.test.ts",
+      "testCount": 11,
+      "describeBlocks": 1,
+      "size": 6478
+    },
+    {
+      "path": "/src/__tests__/ai-assistant.test.ts",
+      "testCount": 10,
+      "describeBlocks": 7,
+      "size": 3958
+    },
+    {
+      "path": "/src/__tests__/api/appointments.test.ts",
+      "testCount": 10,
+      "describeBlocks": 4,
+      "size": 11130
+    },
+    {
+      "path": "/src/__tests__/api/auth/login.test.ts",
+      "testCount": 6,
+      "describeBlocks": 1,
+      "size": 4661
+    },
+    {
+      "path": "/src/__tests__/api/patients.test.ts",
+      "testCount": 7,
+      "describeBlocks": 3,
+      "size": 8457
+    },
+    {
+      "path": "/src/__tests__/auth/forgot-password.test.tsx",
+      "testCount": 9,
+      "describeBlocks": 1,
+      "size": 4945
+    },
+    {
+      "path": "/src/__tests__/auth/login.test.tsx",
+      "testCount": 9,
+      "describeBlocks": 1,
+      "size": 7150
+    },
+    {
+      "path": "/src/__tests__/auth/register.test.tsx",
+      "testCount": 10,
+      "describeBlocks": 1,
+      "size": 7707
+    },
+    {
+      "path": "/src/__tests__/auth/reset-password.test.tsx",
+      "testCount": 11,
+      "describeBlocks": 1,
+      "size": 6607
+    },
+    {
+      "path": "/src/__tests__/saudi-health-integration.test.ts",
+      "testCount": 10,
+      "describeBlocks": 4,
+      "size": 5885
+    },
+    {
+      "path": "/src/__tests__/whatsapp-business-api.test.ts",
+      "testCount": 15,
+      "describeBlocks": 9,
+      "size": 9995
+    },
+    {
+      "path": "/src/__tests__/whatsapp-integration.test.ts",
+      "testCount": 14,
+      "describeBlocks": 7,
+      "size": 4962
+    },
+    {
+      "path": "/src/__tests__/ai-assistant.test.ts",
+      "testCount": 10,
+      "describeBlocks": 7,
+      "size": 3958
+    },
+    {
+      "path": "/src/__tests__/api/appointments.test.ts",
+      "testCount": 10,
+      "describeBlocks": 4,
+      "size": 11130
+    },
+    {
+      "path": "/src/__tests__/api/auth/login.test.ts",
+      "testCount": 6,
+      "describeBlocks": 1,
+      "size": 4661
+    },
+    {
+      "path": "/src/__tests__/api/patients.test.ts",
+      "testCount": 7,
+      "describeBlocks": 3,
+      "size": 8457
+    },
+    {
+      "path": "/src/__tests__/auth/forgot-password.test.tsx",
+      "testCount": 9,
+      "describeBlocks": 1,
+      "size": 4945
+    },
+    {
+      "path": "/src/__tests__/auth/login.test.tsx",
+      "testCount": 9,
+      "describeBlocks": 1,
+      "size": 7150
+    },
+    {
+      "path": "/src/__tests__/auth/register.test.tsx",
+      "testCount": 10,
+      "describeBlocks": 1,
+      "size": 7707
+    },
+    {
+      "path": "/src/__tests__/auth/reset-password.test.tsx",
+      "testCount": 11,
+      "describeBlocks": 1,
+      "size": 6607
+    },
+    {
+      "path": "/src/__tests__/saudi-health-integration.test.ts",
+      "testCount": 10,
+      "describeBlocks": 4,
+      "size": 5885
+    },
+    {
+      "path": "/src/__tests__/whatsapp-business-api.test.ts",
+      "testCount": 15,
+      "describeBlocks": 9,
+      "size": 9995
+    },
+    {
+      "path": "/src/__tests__/whatsapp-integration.test.ts",
+      "testCount": 14,
+      "describeBlocks": 7,
+      "size": 4962
+    }
+  ],
+  "lastRun": "2025-10-17T20:06:12.591Z",
+  "isRunning": false
+}
