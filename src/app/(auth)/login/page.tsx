@@ -73,24 +73,34 @@ export default function LoginPage() {
     }));
   };
 
-  const handleQuickTestLogin = async () => {
+  const handleQuickTestLogin = async (role: string, email: string, password: string) => {
     setError(null);
     setSubmitting(true);
     try {
-      // Use test credentials for quick login
-      await loginWithCredentials("test@moeen.com", "test123", false);
-      // Redirect to dashboard
-      window.location.href = getDefaultRouteForUser({
-        id: "test-user",
-        email: "test@moeen.com",
-        role: "user",
-      } as any);
+      await loginWithCredentials(email, password, false);
+      // Redirect based on role
+      const routes: Record<string, string> = {
+        admin: '/dashboard',
+        supervisor: '/supervisor-dashboard',
+        patient: '/patient-dashboard',
+        staff: '/staff-dashboard',
+        doctor: '/doctor-dashboard',
+      };
+      window.location.href = routes[role] || '/dashboard';
     } catch (err: any) {
-      setError(err?.message || "Quick test login failed");
+      setError(err?.message || `فشل تسجيل دخول ${role}`);
     } finally {
       setSubmitting(false);
     }
   };
+
+  const testAccounts = [
+    { role: 'manager', email: 'admin@moeen.com', password: 'admin123', label: '👨‍💼 مدير', color: 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg shadow-red-500/50', route: '/dashboard' },
+    { role: 'supervisor', email: 'supervisor@moeen.com', password: 'super123', label: '👔 مشرف', color: 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 shadow-lg shadow-purple-500/50', route: '/supervisor-dashboard' },
+    { role: 'agent', email: 'test@moeen.com', password: 'test123', label: '🏥 مريض', color: 'bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 shadow-lg shadow-green-500/50', route: '/dashboard/user' },
+    { role: 'agent', email: 'user@moeen.com', password: 'user123', label: '👨‍⚕️ موظف', color: 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg shadow-blue-500/50', route: '/staff-dashboard' },
+    { role: 'agent', email: 'doctor@moeen.com', password: 'doctor123', label: '⚕️ طبيب', color: 'bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 shadow-lg shadow-orange-500/50', route: '/doctor-dashboard' },
+  ];
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--brand-surface)] via-white to-[var(--bg-gray-50)] p-4">
@@ -195,28 +205,39 @@ export default function LoginPage() {
               </button>
             </form>
 
-            {/* Quick Test Login Button */}
-            <div className="mt-6">
-              <button
-                type="button"
-                onClick={handleQuickTestLogin}
-                disabled={submitting || isLoading}
-                className="btn btn-outline btn-lg w-full font-semibold"
-              >
-                {submitting ? (
-                  <>
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--brand-primary)] border-t-transparent"></div>
-                    جارٍ تسجيل الدخول...
-                  </>
-                ) : (
-                  <>
-                    <span>⚡</span>
-                    تسجيل دخول سريع (اختبار)
-                  </>
-                )}
-              </button>
-              <p className="mt-2 text-center text-xs text-gray-500">
-                اختبار سريع باستخدام بيانات تجريبية
+            {/* Quick Test Login Buttons */}
+            <div className="mt-6 space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="bg-white dark:bg-gray-800 px-4 text-gray-500">
+                    تسجيل دخول سريع للاختبار
+                  </span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {testAccounts.map((account, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => handleQuickTestLogin(account.role, account.email, account.password)}
+                    disabled={submitting || isLoading}
+                    className={`${account.color} text-white px-4 py-4 rounded-xl font-bold text-sm transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex flex-col items-center justify-center gap-2 relative overflow-hidden group`}
+                  >
+                    {/* Shine effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                    
+                    <span className="text-2xl relative z-10">{account.label.split(' ')[0]}</span>
+                    <span className="text-xs font-medium relative z-10">{account.label.split(' ')[1]}</span>
+                  </button>
+                ))}
+              </div>
+
+              <p className="mt-3 text-center text-xs text-gray-500">
+                ⚡ اختبر النظام بحسابات تجريبية جاهزة
               </p>
             </div>
 
