@@ -1,20 +1,13 @@
 import { NextRequest } from 'next/server';
 
 export function getClientIP(request: NextRequest | undefined): string {
-  if (!request) return '127.0.0.1';
-  
   try {
-    const headers = request.headers;
-    if (!headers || !headers.get) return '127.0.0.1';
-    
-    const forwarded = headers.get('x-forwarded-for');
-    const realIP = headers.get('x-real-ip');
-    
-    if (forwarded) return forwarded.split(',')[0].trim();
-    if (realIP) return realIP;
-  } catch {}
-  
-  return '127.0.0.1';
+    return request?.headers?.get('x-forwarded-for')?.split(',')[0]?.trim() || 
+           request?.headers?.get('x-real-ip') || 
+           '127.0.0.1';
+  } catch {
+    return '127.0.0.1';
+  }
 }
 
 export function getUserAgent(request: NextRequest | undefined): string {
