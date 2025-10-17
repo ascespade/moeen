@@ -27,19 +27,19 @@ export const BRAND_COLORS = {
     hover: '#D45F08',
   },
   
-  // Secondary Brown - البني الثانوي (Solid brand colors)
+  // Secondary Orange - البرتقالي الثانوي (Solid brand colors)
   secondary: {
-    50: '#fdf8f6',
-    100: '#f2e8e5',
-    200: '#eaddd7',
-    300: '#e0cec7',
-    400: '#d2bab0',
-    500: '#6B4E16', // Solid secondary brown
-    600: '#5A4213',
-    700: '#493610',
-    800: '#382A0D',
-    900: '#271E0A',
-    DEFAULT: '#6B4E16', // Solid secondary brown
+    50: '#fff7ed',
+    100: '#ffedd5',
+    200: '#fed7aa',
+    300: '#fdba74',
+    400: '#fb923c',
+    500: '#FFA500', // Solid secondary orange
+    600: '#FF8C00',
+    700: '#FF7300',
+    800: '#E66500',
+    900: '#CC5A00',
+    DEFAULT: '#FFA500', // Solid secondary orange
   },
 
   // Neutral Beige - البيج المحايد

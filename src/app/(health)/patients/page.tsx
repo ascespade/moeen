@@ -85,13 +85,12 @@ export default function PatientsPage() {
   const [selectedPatient, setSelectedPatient] = useState<PatientWithStats | null>(null);
   const [showDetails, setShowDetails] = useState(false);
 
-  const supabase = await createClient();
-
   // Load patients from database
   useEffect(() => {
     const loadPatients = async () => {
       try {
         setLoading(true);
+        const supabase = createClient();
 
         // Get patients with their appointment statistics
         const { data: patientsData, error: patientsError } = await supabase
@@ -135,7 +134,7 @@ export default function PatientsPage() {
     };
 
     loadPatients();
-  }, [supabase]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Filter patients based on search and status
   const filteredPatients = patients.filter((patient) => {

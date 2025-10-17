@@ -30,7 +30,16 @@ export async function POST(request: NextRequest) {
     // Validate input
     if (!email || !password) {
       return NextResponse.json(
-        { success: false, error: "Email and password are required" },
+        { success: false, error: "البريد الإلكتروني وكلمة المرور مطلوبان" },
+        { status: 400 },
+      );
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { success: false, error: "البريد الإلكتروني غير صحيح" },
         { status: 400 },
       );
     }
@@ -41,45 +50,6 @@ export async function POST(request: NextRequest) {
 
     // Real Supabase authentication
     const supabase = await createClient();
-    
-    // Check if account is locked
-    const { data: userCheck } = await supabase
-      .from('users')
-      .select('id, email, locked_until, failed_login_attempts')
-      .eq('email', email)
-      .single();
-
-    if (userCheck && userCheck.locked_until) {
-      const lockedUntil = new Date(userCheck.locked_until);
-      if (lockedUntil > new Date()) {
-        const minutesLeft = Math.ceil((lockedUntil.getTime() - Date.now()) / 60000);
-        
-        // Log failed attempt
-        await supabase.from('audit_logs').insert({
-          user_id: userCheck.id,
-          action: 'login_blocked_locked_account',
-          resource_type: 'user',
-          resource_id: userCheck.id,
-          ip_address: ipAddress,
-          user_agent: userAgent,
-          status: 'failed',
-          severity: 'warning',
-          metadata: {
-            locked_until: userCheck.locked_until,
-            minutes_remaining: minutesLeft
-          }
-        });
-
-        return NextResponse.json(
-          { 
-            success: false, 
-            error: `الحساب مقفل. حاول مرة أخرى بعد ${minutesLeft} دقيقة`,
-            lockedUntil: userCheck.locked_until
-          },
-          { status: 423 } // Locked
-        );
-      }
-    }
 
     const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
       email,
@@ -87,22 +57,64 @@ export async function POST(request: NextRequest) {
     });
 
     if (signInError || !authData?.session) {
-      // Increment failed login attempts using database function
-      const supabaseAdmin = createServiceClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        {
-          auth: {
-            autoRefreshToken: false,
-            persistSession: false
-          }
-        }
-      );
+      // Try to get user for logging only (don't reveal if user exists)
+      const { data: userCheck } = await supabase
+        .from('users')
+        .select('id, locked_until, failed_login_attempts')
+        .eq('email', email)
+        .single();
 
-      try {
-        await supabaseAdmin.rpc('increment_failed_login_attempts', { user_email: email });
-      } catch (err) {
-        console.error('Error incrementing failed login attempts:', err);
+      // Check if account is locked (only if user exists)
+      if (userCheck && userCheck.locked_until) {
+        const lockedUntil = new Date(userCheck.locked_until);
+        if (lockedUntil > new Date()) {
+          const minutesLeft = Math.ceil((lockedUntil.getTime() - Date.now()) / 60000);
+          
+          // Log failed attempt
+          await supabase.from('audit_logs').insert({
+            user_id: userCheck.id,
+            action: 'login_blocked_locked_account',
+            resource_type: 'user',
+            resource_id: userCheck.id,
+            ip_address: ipAddress,
+            user_agent: userAgent,
+            status: 'failed',
+            severity: 'warning',
+            metadata: {
+              locked_until: userCheck.locked_until,
+              minutes_remaining: minutesLeft
+            }
+          });
+
+          return NextResponse.json(
+            { 
+              success: false, 
+              error: `الحساب مقفل. حاول مرة أخرى بعد ${minutesLeft} دقيقة`,
+              lockedUntil: userCheck.locked_until
+            },
+            { status: 423 } // Locked
+          );
+        }
+      }
+
+      // Increment failed login attempts only if user exists
+      if (userCheck) {
+        const supabaseAdmin = createServiceClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.SUPABASE_SERVICE_ROLE_KEY!,
+          {
+            auth: {
+              autoRefreshToken: false,
+              persistSession: false
+            }
+          }
+        );
+
+        try {
+          await supabaseAdmin.rpc('increment_failed_login_attempts', { user_email: email });
+        } catch (err) {
+          console.error('Error incrementing failed login attempts:', err);
+        }
       }
 
       // Log failed login attempt
@@ -123,9 +135,10 @@ export async function POST(request: NextRequest) {
         duration_ms: Date.now() - startTime
       });
 
+      // Always return same message for security
       return NextResponse.json(
         { success: false, error: "بيانات الدخول غير صحيحة" },
-        { status: 401 },
+        { status: 401 }, // Always 401 for security
       );
     }
 

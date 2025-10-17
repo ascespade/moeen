@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { ROUTES } from "@/constants/routes";
 import { getDefaultRouteForUser } from "@/lib/router";
 import { useT } from "@/components/providers/I18nProvider";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,6 +12,7 @@ export default function LoginPage() {
   const { loginWithCredentials, isLoading, isAuthenticated } = useAuth();
   const { t } = useT();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,6 +20,7 @@ export default function LoginPage() {
   });
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -49,15 +51,12 @@ export default function LoginPage() {
 
     setSubmitting(true);
     try {
-      await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
-      // after login, compute default route (role-aware)
-      // Note: In a real app, the user role would come from the login response
-      // For now, we'll redirect to user dashboard as default
-      window.location.href = getDefaultRouteForUser({
-        id: "temp",
-        email: formData.email,
-        role: "user",
-      } as any);
+      const result = await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
+      if (result.success) {
+        // Get redirect URL from query params or default to dashboard
+        const redirectUrl = searchParams.get('redirect') || "/dashboard";
+        router.push(redirectUrl);
+      }
     } catch (err: any) {
       setError(err?.message || t("auth.login.error", "فشل تسجيل الدخول"));
     } finally {
@@ -71,26 +70,46 @@ export default function LoginPage() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+    setError(null);
+    
+    // Real-time email validation
+    if (name === 'email') {
+      if (value && !/\S+@\S+\.\S+/.test(value)) {
+        setEmailError('البريد الإلكتروني غير صحيح');
+      } else {
+        setEmailError(null);
+      }
+    }
   };
 
-  const handleQuickTestLogin = async () => {
+  const handleQuickTestLogin = async (role: string, email: string, password: string) => {
     setError(null);
     setSubmitting(true);
     try {
-      // Use test credentials for quick login
-      await loginWithCredentials("test@moeen.com", "test123", false);
-      // Redirect to dashboard
-      window.location.href = getDefaultRouteForUser({
-        id: "test-user",
-        email: "test@moeen.com",
-        role: "user",
-      } as any);
+      await loginWithCredentials(email, password, false);
+      // Redirect based on role
+      const routes: Record<string, string> = {
+        admin: '/dashboard',
+        supervisor: '/supervisor-dashboard',
+        patient: '/patient-dashboard',
+        staff: '/staff-dashboard',
+        doctor: '/doctor-dashboard',
+      };
+      window.location.href = routes[role] || '/dashboard';
     } catch (err: any) {
-      setError(err?.message || "Quick test login failed");
+      setError(err?.message || `فشل تسجيل دخول ${role}`);
     } finally {
       setSubmitting(false);
     }
   };
+
+  const testAccounts = [
+    { role: 'manager', email: 'admin@moeen.com', password: 'admin123', label: '👨‍💼 مدير', color: 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg shadow-red-500/50', route: '/dashboard' },
+    { role: 'supervisor', email: 'supervisor@moeen.com', password: 'super123', label: '👔 مشرف', color: 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 shadow-lg shadow-purple-500/50', route: '/supervisor-dashboard' },
+    { role: 'agent', email: 'test@moeen.com', password: 'test123', label: '🏥 مريض', color: 'bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 shadow-lg shadow-green-500/50', route: '/dashboard/user' },
+    { role: 'agent', email: 'user@moeen.com', password: 'user123', label: '👨‍⚕️ موظف', color: 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg shadow-blue-500/50', route: '/staff-dashboard' },
+    { role: 'agent', email: 'doctor@moeen.com', password: 'doctor123', label: '⚕️ طبيب', color: 'bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 shadow-lg shadow-orange-500/50', route: '/doctor-dashboard' },
+  ];
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--brand-surface)] via-white to-[var(--bg-gray-50)] p-4">
@@ -101,10 +120,10 @@ export default function LoginPage() {
             <span className="text-2xl font-bold text-white">م</span>
           </div>
           <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-            مرحباً بعودتك
+            {t("auth.welcomeBack", "مرحباً بعودتك")}
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            سجل دخولك للوصول إلى لوحة التحكم
+            {t("auth.loginMessage", "سجل دخولك للوصول إلى لوحة التحكم")}
           </p>
         </div>
 
@@ -137,6 +156,9 @@ export default function LoginPage() {
                     <span className="text-sm text-gray-400">📧</span>
                   </div>
                 </div>
+                {emailError && (
+                  <p className="mt-1 text-sm text-red-600">{emailError}</p>
+                )}
               </div>
 
               <div>
@@ -195,39 +217,50 @@ export default function LoginPage() {
               </button>
             </form>
 
-            {/* Quick Test Login Button */}
-            <div className="mt-6">
-              <button
-                type="button"
-                onClick={handleQuickTestLogin}
-                disabled={submitting || isLoading}
-                className="btn btn-outline btn-lg w-full font-semibold"
-              >
-                {submitting ? (
-                  <>
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--brand-primary)] border-t-transparent"></div>
-                    جارٍ تسجيل الدخول...
-                  </>
-                ) : (
-                  <>
-                    <span>⚡</span>
-                    تسجيل دخول سريع (اختبار)
-                  </>
-                )}
-              </button>
-              <p className="mt-2 text-center text-xs text-gray-500">
-                اختبار سريع باستخدام بيانات تجريبية
+            {/* Quick Test Login Buttons */}
+            <div className="mt-6 space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="bg-white dark:bg-gray-800 px-4 text-gray-500">
+                    {t("auth.quickTest", "تسجيل دخول سريع للاختبار")}
+                  </span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {testAccounts.map((account, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => handleQuickTestLogin(account.role, account.email, account.password)}
+                    disabled={submitting || isLoading}
+                    className={`${account.color} text-white px-4 py-4 rounded-xl font-bold text-sm transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex flex-col items-center justify-center gap-2 relative overflow-hidden group`}
+                  >
+                    {/* Shine effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                    
+                    <span className="text-2xl relative z-10">{account.label.split(' ')[0]}</span>
+                    <span className="text-xs font-medium relative z-10">{account.label.split(' ')[1]}</span>
+                  </button>
+                ))}
+              </div>
+
+              <p className="mt-3 text-center text-xs text-gray-500">
+                ⚡ {t("auth.testMessage", "اختبر النظام بحسابات تجريبية جاهزة")}
               </p>
             </div>
 
             <div className="border-brand mt-6 border-t pt-6">
               <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-                ليس لديك حساب؟{" "}
+                {t("auth.noAccount", "ليس لديك حساب؟")}{" "}
                 <Link
                   href={ROUTES.REGISTER}
                   className="text-brand font-medium transition-colors hover:text-[var(--brand-primary-hover)]"
                 >
-                  إنشاء حساب جديد
+                  {t("auth.createAccount", "إنشاء حساب جديد")}
                 </Link>
               </p>
             </div>
