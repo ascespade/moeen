@@ -81,7 +81,7 @@ export { default as ScreenReaderOnly } from './shared/ScreenReaderOnly';
 // ============================================
 // LAZY LOADED - التحميل الكسول
 // ============================================
-export { default as LazyComponents } from './lazy/LazyComponents';
+// LazyComponents removed - not needed with app router
 
 /**
  * USAGE EXAMPLES:

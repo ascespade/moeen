@@ -70,3 +70,4 @@ export function TD({
 }
 
 export default Table;
+export { Table };
