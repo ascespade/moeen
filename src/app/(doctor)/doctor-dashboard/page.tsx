@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useT } from '@/hooks/useT';
-import { useTheme } from '@/context/ThemeContext';
+import { useTheme } from '@/core/theme';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';

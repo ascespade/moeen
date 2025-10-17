@@ -6,17 +6,8 @@
  * to ensure consistency across the entire application.
  */
 
-// Design Tokens
-export * from './tokens';
-
-// Components
-export * from './components';
-
-// Utilities
-export * from './utils';
-
-// Hooks
-export * from './hooks';
-
 // Types
 export * from './types';
+
+// Re-export from core theme system
+export { useTheme, useThemeAware, useDesignTokens, useThemeColors } from '@/core/theme';

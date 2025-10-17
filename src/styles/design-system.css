@@ -18,23 +18,23 @@
 }
 
 .ds-button-primary {
-  @apply bg-brand-primary text-white border-none hover:bg-brand-primary-hover hover:transform hover:-translate-y-0.5 hover:shadow-md focus:ring-brand-primary;
+  @apply bg-blue-600 text-white border-none hover:bg-blue-700 hover:transform hover:-translate-y-0.5 hover:shadow-md focus:ring-blue-500;
 }
 
 .ds-button-secondary {
-  @apply bg-neutral-50 text-neutral-900 border border-neutral-200 hover:bg-neutral-100 hover:transform hover:-translate-y-0.5 focus:ring-brand-primary;
+  @apply bg-neutral-50 text-neutral-900 border border-neutral-200 hover:bg-neutral-100 hover:transform hover:-translate-y-0.5 focus:ring-blue-500;
 }
 
 .ds-button-outline {
-  @apply bg-transparent text-brand-primary border border-brand-primary hover:bg-brand-primary hover:text-white hover:transform hover:-translate-y-0.5 focus:ring-brand-primary;
+  @apply bg-transparent text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white hover:transform hover:-translate-y-0.5 focus:ring-blue-500;
 }
 
 .ds-button-ghost {
-  @apply bg-transparent text-neutral-700 border-none hover:bg-neutral-100 hover:text-neutral-900 focus:ring-brand-primary;
+  @apply bg-transparent text-neutral-700 border-none hover:bg-neutral-100 hover:text-neutral-900 focus:ring-blue-500;
 }
 
 .ds-button-danger {
-  @apply bg-brand-error text-white border-none hover:bg-red-600 hover:transform hover:-translate-y-0.5 hover:shadow-md focus:ring-brand-error;
+  @apply bg-red-600 text-white border-none hover:bg-red-700 hover:transform hover:-translate-y-0.5 hover:shadow-md focus:ring-red-500;
 }
 
 /* Button Sizes */
@@ -64,7 +64,7 @@
 }
 
 .ds-card-outlined {
-  @apply bg-transparent border-2 border-neutral-200 rounded-lg transition-all duration-200 hover:border-brand-primary hover:bg-neutral-50;
+  @apply bg-transparent border-2 border-neutral-200 rounded-lg transition-all duration-200 hover:border-blue-500 hover:bg-neutral-50;
 }
 
 .ds-card-filled {
@@ -90,7 +90,7 @@
 }
 
 .ds-input:focus {
-  @apply border-brand-primary ring-brand-primary;
+  @apply border-blue-500 ring-blue-500;
 }
 
 .ds-input:disabled {
@@ -339,7 +339,7 @@
 }
 
 [data-theme="dark"] .ds-card-outlined {
-  @apply bg-transparent border-gray-700 hover:border-brand-primary hover:bg-gray-800;
+  @apply bg-transparent border-gray-700 hover:border-blue-500 hover:bg-gray-800;
 }
 
 [data-theme="dark"] .ds-card-filled {
@@ -351,7 +351,7 @@
 }
 
 [data-theme="dark"] .ds-input:focus {
-  @apply border-brand-primary ring-brand-primary;
+  @apply border-blue-500 ring-blue-500;
 }
 
 [data-theme="dark"] .ds-input:disabled {
@@ -519,11 +519,11 @@
    ======================================== */
 
 .ds-focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
 }
 
 .ds-focus-ring-inset {
-  @apply focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-inset;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset;
 }
 
 /* ========================================
@@ -539,7 +539,7 @@
 }
 
 .ds-focus-visible {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2;
 }
 
 /* ========================================

@@ -6,7 +6,7 @@
 
 "use client";
 
-import { useTheme } from '@/context/UnifiedThemeProvider';
+import { useTheme } from '@/core/theme';
 
 interface ThemeSwitcherProps {
   className?: string;
