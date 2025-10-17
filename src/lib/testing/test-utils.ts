@@ -74,6 +74,8 @@ class TestUtils {
       this.testData.users.find(u => u.id === userId) : 
       await this.createTestUser('patient');
 
+    if (!user) throw new Error('User not found for patient creation');
+
     const patient = {
       id: `patient_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       userId: user.id,
@@ -103,6 +105,8 @@ class TestUtils {
     const user = userId ? 
       this.testData.users.find(u => u.id === userId) : 
       await this.createTestUser('doctor');
+
+    if (!user) throw new Error('User not found for doctor creation');
 
     const doctor = {
       id: `doctor_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,

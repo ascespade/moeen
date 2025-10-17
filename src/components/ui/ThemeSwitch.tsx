@@ -72,7 +72,7 @@ export default function ThemeSwitch({
       >
         <CurrentIcon className={iconSizes[size]} />
         {showLabel && (
-          <span className="mr-2 hidden sm:inline text-[var(--text-primary)]">{currentTheme.label}</span>
+          <span className="mr-2 hidden sm:inline text-[var(--text-primary)]">{currentTheme?.label || 'Theme'}</span>
         )}
       </Button>
     );
@@ -112,7 +112,7 @@ export default function ThemeSwitch({
         className="flex items-center space-x-2"
       >
         <CurrentIcon className={iconSizes[size]} />
-        {showLabel && <span>{currentTheme.label}</span>}
+        {showLabel && <span>{currentTheme?.label || 'Theme'}</span>}
       </Button>
 
       {isOpen && (
