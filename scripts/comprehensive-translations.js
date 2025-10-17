@@ -309,11 +309,11 @@ async function seedAllTranslations() {
         const { error } = await supabase
           .from('translations')
           .upsert({
-            lang_code: lang,
+            locale: lang,
             key: key,
             value: value,
             namespace: key.split('.')[0]
-          }, { onConflict: 'lang_code,key,namespace' });
+          }, { onConflict: 'locale,key,namespace' });
         
         if (error) errorCount++;
         else successCount++;
