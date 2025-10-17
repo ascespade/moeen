@@ -13,6 +13,8 @@ export async function GET(request: NextRequest) {
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    
+    const { ipAddress, userAgent } = getClientInfo(request);
 
     const { searchParams } = new URL(request.url);
     const patientId = searchParams.get('patientId');
