@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useEffect } from "react";
 import EmptyState from "@/components/common/EmptyState";
-import { Skeleton } from "@/components/common/Skeleton";
+import { Skeleton } from '@/components/ui';
 
 type UserRow = { id: string; email: string; role: "admin" | "staff" | "viewer"; status: "active" | "suspended" };
 
