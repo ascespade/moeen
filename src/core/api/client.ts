@@ -5,7 +5,7 @@
 
 import { API_ENDPOINTS, ERROR_CODES } from '../constants';
 import { ErrorHandler, ExternalServiceError } from '../errors';
-import { storageUtils } from '../utils';
+import { storageUtils } from '../utils/index';
 import { ApiResponse } from '../types';
 
 export interface ApiRequestConfig {

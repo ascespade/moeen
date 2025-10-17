@@ -6,7 +6,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuthStore, useUIStore, useDataStore } from '../store';
 import { apiClient } from '../api/client';
-import { storageUtils, debounce } from '../utils';
+import { storageUtils, debounce } from '../utils/index';
 import { ApiResponse } from '../types';
 
 // Auth Hooks
