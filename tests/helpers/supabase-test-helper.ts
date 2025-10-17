@@ -48,12 +48,30 @@ export class SupabaseTestHelper {
   async createTestUser(userData: {
     email: string;
     name: string;
+    password?: string;
     role?: string;
     status?: string;
   }): Promise<TestUser> {
+    // First create user in auth.users using Supabase Auth
+    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
+      email: userData.email,
+      password: userData.password || 'TestPassword123!',
+      email_confirm: true,
+      user_metadata: {
+        name: userData.name,
+        role: userData.role || 'agent'
+      }
+    });
+
+    if (authError) {
+      throw new Error(`Failed to create auth user: ${authError.message}`);
+    }
+
+    // Then create user in users table
     const { data, error } = await supabase
       .from('users')
       .insert({
+        id: authData.user.id,
         email: userData.email,
         name: userData.name,
         role: userData.role || 'agent',
@@ -298,6 +316,29 @@ export class SupabaseTestHelper {
       totalAuditLogs: auditLogsResult.count || 0,
       recentUsers: recentUsersResult.count || 0
     };
+  }
+
+  /**
+   * Clear rate limiting cache (for testing purposes)
+   */
+  async clearRateLimit(): Promise<void> {
+    try {
+      // Call the clear rate limit API
+      const response = await fetch('http://localhost:3001/api/test/clear-rate-limit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (response.ok) {
+        console.log('Rate limiting cache cleared for testing');
+      } else {
+        console.warn('Failed to clear rate limiting cache via API');
+      }
+    } catch (error) {
+      console.warn('Failed to clear rate limiting cache:', error);
+    }
   }
 }
 

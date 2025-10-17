@@ -13,6 +13,10 @@ async function globalSetup(config: FullConfig) {
     // Clean up any existing test data
     console.log('🧹 Cleaning up existing test data...');
     await testHelper.cleanup();
+    
+    // Clear rate limiting cache
+    console.log('🔄 Clearing rate limiting cache...');
+    await testHelper.clearRateLimit();
 
     // Verify database connection
     console.log('🔌 Verifying database connection...');
@@ -25,7 +29,7 @@ async function globalSetup(config: FullConfig) {
     const page = await browser.newPage();
     
     try {
-      await page.goto('http://localhost:3002', { timeout: 30000 });
+      await page.goto('http://localhost:3001', { timeout: 30000 });
       console.log('✅ Application is running and accessible');
     } catch (error) {
       console.error('❌ Application is not accessible:', error);

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3002",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3002",
     "lint": "next lint",
@@ -14,11 +14,14 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:debug": "playwright test --debug",
+    "test:e2e:auto": "node auto-test-runner.js",
+    "test:e2e:auto-config": "playwright test --config=playwright-auto.config.ts",
     "test:all": "npm run test && npm run test:e2e",
     "test:auth": "jest --testPathPattern=auth",
     "test:auth:e2e": "playwright test --grep='Authentication Module'",
     "playwright:install": "playwright install",
-    "playwright:report": "playwright show-report"
+    "playwright:report": "playwright show-report",
+    "test:auto": "npm run test:e2e:auto"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
