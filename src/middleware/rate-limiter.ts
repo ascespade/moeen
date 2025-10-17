@@ -50,20 +50,16 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
   const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
   const pathname = request.nextUrl.pathname;
   
-  // Find matching config
-  let config: RateLimitConfig = rateLimitConfigs.default;
-  
-  // Check if path matches any specific config
-  if (rateLimitConfigs[pathname]) {
-    config = rateLimitConfigs[pathname];
-  } else {
-    for (const [path, pathConfig] of Object.entries(rateLimitConfigs)) {
-      if (path !== 'default' && pathname.startsWith(path)) {
-        config = pathConfig;
-        break;
+  // Find matching config - always defaults to 'default' config
+  const config: RateLimitConfig = rateLimitConfigs[pathname] || 
+    (() => {
+      for (const [path, pathConfig] of Object.entries(rateLimitConfigs)) {
+        if (path !== 'default' && pathname.startsWith(path)) {
+          return pathConfig;
+        }
       }
-    }
-  }
+      return rateLimitConfigs.default;
+    })();
 
   const now = Date.now();
   const key = `${ip}:${pathname}`;
