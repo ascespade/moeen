@@ -6,7 +6,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rateLimiter as rateLimitMiddleware } from './middleware/rate-limiter';
 import { securityMiddleware } from './middleware/security';
-import { auditMiddleware, auditErrorMiddleware } from './middleware/audit';
 import { authorize } from '@/lib/auth/authorize';
 
 // Performance monitoring
