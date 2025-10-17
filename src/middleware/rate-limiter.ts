@@ -62,7 +62,7 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
     }
   }
   
-  const config: RateLimitConfig = foundConfig ?? rateLimitConfigs.default;
+  const config = (foundConfig ?? rateLimitConfigs.default) as RateLimitConfig;
 
   const now = Date.now();
   const key = `${ip}:${pathname}`;

@@ -10,8 +10,8 @@ import { z } from 'zod';
 
 // Helper to extract IP address
 function getClientIP(request: NextRequest): string {
-  const forwarded = request.headers.get('x-forwarded-for');
-  const realIP = request.headers.get('x-real-ip');
+  const forwarded = request?.headers?.get('x-forwarded-for');
+  const realIP = request?.headers?.get('x-real-ip');
   
   if (forwarded) {
     return forwarded.split(',')[0].trim();
@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
   
   try {
     const body = await request.json().catch(() => ({}));
+    if (!body || typeof body !== "object") return NextResponse.json({ error: "Invalid body" }, { status: 400 });
     
     // Get client info
     const ipAddress = getClientIP(request) || '127.0.0.1';
