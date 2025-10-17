@@ -7,11 +7,13 @@ export const useTheme = () => ({
   isLight: true,
   isSystem: false,
   resolvedTheme: 'light' as 'light' | 'dark',
-  isLoading: false
+  isLoading: false,
+  getThemeClass: () => 'light',
+  getThemeValue: () => 'light'
 });
 
-export const useThemeAware = useTheme;
-export const useDesignTokens = () => ({});
+export const useThemeAware = () => ({ resolvedTheme: 'light' as 'light' | 'dark' });
+export const useDesignTokens = () => ({ colors: {} });
 export const useThemeColors = () => ({});
 export const ThemeProvider = ({ children }: any) => children;
 
