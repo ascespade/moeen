@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { ROUTES } from "@/constants/routes";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -165,19 +166,21 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
-      {/* Navigation */}
-      <nav className="nav sticky top-0 z-50">
-        <div className="container-app py-4">
+      {/* Navigation - Enhanced Header */}
+      <nav className="nav sticky top-0 z-50 shadow-md">
+        <div className="container-app py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Image
                 src="/logo.png"
                 alt="مُعين"
-                width={50}
-                height={50}
+                width={60}
+                height={60}
                 className="rounded-lg"
               />
-              <h1 className="text-brand text-2xl font-bold">مُعين</h1>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] bg-clip-text text-transparent">
+                مُعين
+              </h1>
             </div>
             <div className="hidden items-center gap-6 md:flex">
               <Link href="#services" className="nav-link">
@@ -194,6 +197,7 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="flex items-center gap-3">
+              <LanguageSwitcher />
               <ThemeSwitcher size="sm" />
               <Link href={ROUTES.LOGIN} className="btn btn-outline">
                 تسجيل الدخول

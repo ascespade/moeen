@@ -134,7 +134,7 @@ export default function PatientsPage() {
     };
 
     loadPatients();
-  }, [supabase]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Filter patients based on search and status
   const filteredPatients = patients.filter((patient) => {
