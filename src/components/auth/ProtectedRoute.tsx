@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useT } from '@/hooks/useT';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { LoadingSpinner } from '@/components/ui';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -64,7 +64,7 @@ export default function ProtectedRoute({
     return fallback || (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">
+          <h1 className="text-2xl font-bold text-brand-error mb-4">
             {t('auth.unauthorized')}
           </h1>
           <p className="text-gray-600 mb-4">
@@ -72,7 +72,7 @@ export default function ProtectedRoute({
           </p>
           <button
             onClick={() => router.push('/login')}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="px-4 py-2 bg-brand-primary text-white rounded hover:bg-blue-700"
           >
             {t('auth.back_to_login')}
           </button>

@@ -98,7 +98,7 @@ export default function InsuranceClaimsPage() {
       case "under-review":
         return "bg-blue-100 text-blue-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
     }
   };
 
@@ -170,7 +170,7 @@ export default function InsuranceClaimsPage() {
         {/* Stats Cards */}
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-blue-600">
+            <div className="mb-2 text-3xl font-bold text-brand-primary">
               {mockClaims.length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
@@ -184,13 +184,13 @@ export default function InsuranceClaimsPage() {
             <div className="text-gray-600 dark:text-gray-300">قيد الانتظار</div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
+            <div className="mb-2 text-3xl font-bold text-brand-success">
               {mockClaims.filter((c) => c.status === "approved").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">موافق عليها</div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-red-600">
+            <div className="mb-2 text-3xl font-bold text-brand-error">
               {mockClaims.filter((c) => c.status === "rejected").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">مرفوضة</div>
@@ -242,7 +242,7 @@ export default function InsuranceClaimsPage() {
         <div className="card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 dark:bg-gray-800">
+              <thead className="bg-surface dark:bg-gray-800">
                 <tr>
                   <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                     رقم المطالبة
@@ -271,7 +271,7 @@ export default function InsuranceClaimsPage() {
                 {filteredClaims.map((claim) => (
                   <tr
                     key={claim.id}
-                    className="hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="hover:bg-surface dark:hover:bg-gray-800"
                   >
                     <td className="whitespace-nowrap px-6 py-4">
                       <div className="text-sm font-medium text-gray-900 dark:text-white">
@@ -320,7 +320,7 @@ export default function InsuranceClaimsPage() {
                           تعديل
                         </button>
                         {claim.status === "pending" && (
-                          <button className="text-green-600 hover:text-green-700">
+                          <button className="text-brand-success hover:text-green-700">
                             موافقة
                           </button>
                         )}
@@ -336,7 +336,7 @@ export default function InsuranceClaimsPage() {
         {/* Empty State */}
         {filteredClaims.length === 0 && (
           <div className="py-12 text-center">
-            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
+            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-surface">
               <span className="text-4xl">📋</span>
             </div>
             <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
@@ -441,7 +441,7 @@ export default function InsuranceClaimsPage() {
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
                 >
                   إلغاء
                 </button>
@@ -600,7 +600,7 @@ export default function InsuranceClaimsPage() {
             <div className="flex gap-3 pt-6">
               <button
                 onClick={() => setShowDetailsModal(null)}
-                className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
               >
                 إغلاق
               </button>

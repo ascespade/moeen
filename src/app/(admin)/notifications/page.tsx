@@ -208,19 +208,19 @@ const NotificationsPage: React.FC = () => {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'appointment':
-        return <Calendar className="w-4 h-4 text-blue-500" />;
+        return <Calendar className="w-4 h-4 text-brand-primary" />;
       case 'reminder':
-        return <Clock className="w-4 h-4 text-orange-500" />;
+        return <Clock className="w-4 h-4 text-brand-primary" />;
       case 'success':
-        return <CheckCircle className="w-4 h-4 text-green-500" />;
+        return <CheckCircle className="w-4 h-4 text-brand-success" />;
       case 'warning':
-        return <AlertCircle className="w-4 h-4 text-yellow-500" />;
+        return <AlertCircle className="w-4 h-4 text-brand-warning" />;
       case 'error':
-        return <AlertCircle className="w-4 h-4 text-red-500" />;
+        return <AlertCircle className="w-4 h-4 text-brand-error" />;
       case 'system':
         return <Settings className="w-4 h-4 text-gray-500" />;
       default:
-        return <Info className="w-4 h-4 text-blue-500" />;
+        return <Info className="w-4 h-4 text-brand-primary" />;
     }
   };
 
@@ -319,7 +319,7 @@ const NotificationsPage: React.FC = () => {
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
-                <Bell className="w-5 h-5 text-blue-500" />
+                <Bell className="w-5 h-5 text-brand-primary" />
                 <div>
                   <div className="text-2xl font-bold">{notifications.length}</div>
                   <div className="text-sm text-gray-600">إجمالي الإشعارات</div>
@@ -331,7 +331,7 @@ const NotificationsPage: React.FC = () => {
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
-                <BellRing className="w-5 h-5 text-orange-500" />
+                <BellRing className="w-5 h-5 text-brand-primary" />
                 <div>
                   <div className="text-2xl font-bold">{unreadCount}</div>
                   <div className="text-sm text-gray-600">غير مقروء</div>
@@ -343,7 +343,7 @@ const NotificationsPage: React.FC = () => {
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-green-500" />
+                <Calendar className="w-5 h-5 text-brand-success" />
                 <div>
                   <div className="text-2xl font-bold">
                     {notifications.filter(n => n.type === 'appointment').length}
@@ -438,8 +438,8 @@ const NotificationsPage: React.FC = () => {
                 key={notification.id} 
                 className={`cursor-pointer transition-colors ${
                   notification.status === 'unread' 
-                    ? 'border-l-4 border-l-blue-500 bg-blue-50' 
-                    : 'hover:bg-gray-50'
+                    ? 'border-l-4 border-l-blue-500 bg-surface' 
+                    : 'hover:bg-surface'
                 }`}
                 onClick={() => {
                   setSelectedNotification(notification);
@@ -458,7 +458,7 @@ const NotificationsPage: React.FC = () => {
                         <div className="flex items-center gap-2 mb-2">
                           <h3 className="text-lg font-semibold">{notification.title}</h3>
                           {notification.status === 'unread' && (
-                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <div className="w-2 h-2 bg-surface0 rounded-full"></div>
                           )}
                         </div>
                         <p className="text-gray-700 mb-3">{notification.message}</p>

@@ -197,7 +197,7 @@ const AppointmentsPage: React.FC = () => {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Clock className="h-8 w-8 text-green-500" />
+                <Clock className="h-8 w-8 text-brand-success" />
                 <div className="mr-4">
                   <p className="text-sm font-medium text-gray-600">المواعيد المكتملة</p>
                   <p className="text-2xl font-bold">
@@ -211,7 +211,7 @@ const AppointmentsPage: React.FC = () => {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
-                <User className="h-8 w-8 text-blue-500" />
+                <User className="h-8 w-8 text-brand-primary" />
                 <div className="mr-4">
                   <p className="text-sm font-medium text-gray-600">إجمالي المواعيد</p>
                   <p className="text-2xl font-bold">{appointments.length}</p>
@@ -332,7 +332,7 @@ const AppointmentsPage: React.FC = () => {
                     </div>
                     
                     {appointment.notes && (
-                      <div className="bg-gray-50 p-3 rounded-lg">
+                      <div className="bg-surface p-3 rounded-lg">
                         <p className="text-sm text-gray-700">
                           <strong>ملاحظات:</strong> {appointment.notes}
                         </p>
@@ -348,7 +348,7 @@ const AppointmentsPage: React.FC = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => handleCancelAppointment(appointment.id)}
-                        className="text-red-600 hover:text-red-700"
+                        className="text-brand-error hover:text-red-700"
                       >
                         <Trash2 className="w-4 h-4 mr-1" />
                         إلغاء

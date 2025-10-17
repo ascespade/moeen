@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ROUTES } from "@/constants/routes";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { ThemeSwitch as ThemeSwitcher } from "@/components/ThemeSwitcher";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import Image from "next/image";
 import Link from "next/link";
@@ -48,39 +48,39 @@ const services = [
     description: "نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية",
     icon: "📅",
     color: "text-[var(--brand-primary)]",
-    bgColor: "bg-blue-50",
+    bgColor: "bg-surface",
   },
   {
     id: 2,
     title: "إدارة المرضى",
     description: "ملفات مرضى شاملة مع سجل طبي مفصل",
     icon: "👤",
-    color: "text-green-600",
-    bgColor: "bg-green-50",
+    color: "text-brand-success",
+    bgColor: "bg-surface",
   },
   {
     id: 3,
     title: "المطالبات التأمينية",
     description: "إدارة وتتبع المطالبات التأمينية بسهولة",
     icon: "📋",
-    color: "text-orange-600",
-    bgColor: "bg-purple-50",
+    color: "text-brand-primary",
+    bgColor: "bg-surface",
   },
   {
     id: 4,
     title: "الشات بوت الذكي",
     description: "مساعد ذكي للرد على استفسارات المرضى",
     icon: "🤖",
-    color: "text-orange-600",
-    bgColor: "bg-orange-50",
+    color: "text-brand-primary",
+    bgColor: "bg-surface",
   },
   {
     id: 5,
     title: "إدارة الموظفين",
     description: "تتبع ساعات العمل والأداء للموظفين",
     icon: "👨‍⚕️",
-    color: "text-red-600",
-    bgColor: "bg-red-50",
+    color: "text-brand-error",
+    bgColor: "bg-surface",
   },
   {
     id: 6,
@@ -88,7 +88,7 @@ const services = [
     description: "تقارير شاملة وإحصائيات مفصلة",
     icon: "📊",
     color: "text-indigo-600",
-    bgColor: "bg-orange-50",
+    bgColor: "bg-surface",
   },
 ];
 
@@ -476,7 +476,7 @@ export default function HomePage() {
               </p>
               <a
                 href="https://wa.me/966501234567"
-                className="font-semibold text-green-600 hover:text-green-700"
+                className="font-semibold text-brand-success hover:text-green-700"
               >
                 +966 50 123 4567
               </a>

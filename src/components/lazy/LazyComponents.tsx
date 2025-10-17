@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 
 // Lazy load heavy components
 export const LazyCalendar = dynamic(
@@ -30,7 +30,7 @@ export const LazyFlowBuilder = dynamic(
 export const LazyDataTable = dynamic(
   () => import("@/components/shared/DataTable"),
   {
-    loading: () => <div className="h-64 bg-gray-100 animate-pulse rounded" />,
+    loading: () => <div className="h-64 bg-surface animate-pulse rounded" />,
     ssr: false,
   },
 );

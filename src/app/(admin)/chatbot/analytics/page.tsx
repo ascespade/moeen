@@ -91,8 +91,8 @@ export default function ChatbotAnalyticsPage() {
   >("messages");
 
   const getGrowthColor = (growth: number) => {
-    if (growth > 0) return "text-green-600";
-    if (growth < 0) return "text-red-600";
+    if (growth > 0) return "text-brand-success";
+    if (growth < 0) return "text-brand-error";
     return "text-gray-600";
   };
 
@@ -148,22 +148,22 @@ export default function ChatbotAnalyticsPage() {
         {/* Key Metrics */}
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-blue-600">
+            <div className="mb-2 text-3xl font-bold text-brand-primary">
               {mockAnalytics.totalMessages.toLocaleString()}
             </div>
             <div className="mb-2 text-gray-600 dark:text-gray-300">
               إجمالي الرسائل
             </div>
-            <div className="text-sm text-green-600">+12.5% من الشهر الماضي</div>
+            <div className="text-sm text-brand-success">+12.5% من الشهر الماضي</div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
+            <div className="mb-2 text-3xl font-bold text-brand-success">
               {mockAnalytics.totalUsers.toLocaleString()}
             </div>
             <div className="mb-2 text-gray-600 dark:text-gray-300">
               إجمالي المستخدمين
             </div>
-            <div className="text-sm text-green-600">+8.3% من الشهر الماضي</div>
+            <div className="text-sm text-brand-success">+8.3% من الشهر الماضي</div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-purple-600">
@@ -172,16 +172,16 @@ export default function ChatbotAnalyticsPage() {
             <div className="mb-2 text-gray-600 dark:text-gray-300">
               متوسط وقت الاستجابة
             </div>
-            <div className="text-sm text-green-600">-0.5ث من الشهر الماضي</div>
+            <div className="text-sm text-brand-success">-0.5ث من الشهر الماضي</div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-orange-600">
+            <div className="mb-2 text-3xl font-bold text-brand-primary">
               {mockAnalytics.satisfactionRate}/5
             </div>
             <div className="mb-2 text-gray-600 dark:text-gray-300">
               معدل الرضا
             </div>
-            <div className="text-sm text-green-600">+0.2 من الشهر الماضي</div>
+            <div className="text-sm text-brand-success">+0.2 من الشهر الماضي</div>
           </div>
         </div>
 
@@ -197,7 +197,7 @@ export default function ChatbotAnalyticsPage() {
                   className={`rounded-lg px-3 py-1 text-sm ${
                     selectedMetric === "messages"
                       ? "bg-[var(--brand-primary)] text-white"
-                      : "bg-gray-100 text-gray-600"
+                      : "bg-surface text-gray-600"
                   }`}
                 >
                   الرسائل
@@ -207,7 +207,7 @@ export default function ChatbotAnalyticsPage() {
                   className={`rounded-lg px-3 py-1 text-sm ${
                     selectedMetric === "users"
                       ? "bg-[var(--brand-primary)] text-white"
-                      : "bg-gray-100 text-gray-600"
+                      : "bg-surface text-gray-600"
                   }`}
                 >
                   المستخدمين
@@ -248,10 +248,10 @@ export default function ChatbotAnalyticsPage() {
                     <div
                       className={`h-2 rounded-full ${
                         sentiment.sentiment === "إيجابي"
-                          ? "bg-green-500"
+                          ? "bg-brand-success"
                           : sentiment.sentiment === "محايد"
-                            ? "bg-yellow-500"
-                            : "bg-red-500"
+                            ? "bg-brand-warning"
+                            : "bg-brand-error"
                       }`}
                       style={{ width: `${sentiment.percentage}%` }}
                     ></div>
@@ -271,7 +271,7 @@ export default function ChatbotAnalyticsPage() {
             {mockAnalytics.topFlows.map((flow, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between rounded-lg bg-gray-50 p-4 dark:bg-gray-800"
+                className="flex items-center justify-between rounded-lg bg-surface p-4 dark:bg-gray-800"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--brand-primary)] text-sm font-semibold text-white">

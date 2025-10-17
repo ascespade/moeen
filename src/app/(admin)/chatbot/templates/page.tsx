@@ -101,13 +101,13 @@ export default function ChatbotTemplatesPage() {
   const getStatusColor = (status: Template["status"]) => {
     switch (status) {
       case "draft":
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
       case "approved":
         return "bg-green-100 text-green-800";
       case "pending":
         return "bg-yellow-100 text-yellow-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
     }
   };
 
@@ -183,7 +183,7 @@ export default function ChatbotTemplatesPage() {
         {/* Stats Cards */}
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-blue-600">
+            <div className="mb-2 text-3xl font-bold text-brand-primary">
               {mockTemplates.length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
@@ -191,7 +191,7 @@ export default function ChatbotTemplatesPage() {
             </div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
+            <div className="mb-2 text-3xl font-bold text-brand-success">
               {mockTemplates.filter((t) => t.status === "approved").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">موافق عليها</div>
@@ -295,7 +295,7 @@ export default function ChatbotTemplatesPage() {
         <div className="card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 dark:bg-gray-800">
+              <thead className="bg-surface dark:bg-gray-800">
                 <tr>
                   <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                     القالب
@@ -324,7 +324,7 @@ export default function ChatbotTemplatesPage() {
                 {filteredTemplates.map((template) => (
                   <tr
                     key={template.id}
-                    className="hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="hover:bg-surface dark:hover:bg-gray-800"
                   >
                     <td className="px-6 py-4">
                       <div>
@@ -377,7 +377,7 @@ export default function ChatbotTemplatesPage() {
                         >
                           تعديل
                         </Link>
-                        <button className="text-green-600 hover:text-green-700">
+                        <button className="text-brand-success hover:text-green-700">
                           نسخ
                         </button>
                       </div>
@@ -392,7 +392,7 @@ export default function ChatbotTemplatesPage() {
         {/* Empty State */}
         {filteredTemplates.length === 0 && (
           <div className="py-12 text-center">
-            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
+            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-surface">
               <span className="text-4xl">📝</span>
             </div>
             <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
@@ -493,7 +493,7 @@ export default function ChatbotTemplatesPage() {
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
                 >
                   إلغاء
                 </button>
@@ -531,7 +531,7 @@ export default function ChatbotTemplatesPage() {
                 </p>
               </div>
 
-              <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+              <div className="rounded-lg bg-surface p-4 dark:bg-gray-800">
                 <h5 className="mb-2 font-medium">المعاينة:</h5>
                 <p className="text-gray-700 dark:text-gray-300">
                   {showPreviewModal.preview}
@@ -555,7 +555,7 @@ export default function ChatbotTemplatesPage() {
               <div className="flex gap-3 pt-4">
                 <button
                   onClick={() => setShowPreviewModal(null)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
                 >
                   إغلاق
                 </button>

@@ -109,20 +109,20 @@ const IntegrationsPage: React.FC = () => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'active': return <CheckCircle className="w-4 h-4 text-green-500" />;
-      case 'error': return <XCircle className="w-4 h-4 text-red-500" />;
-      case 'pending': return <AlertCircle className="w-4 h-4 text-yellow-500" />;
+      case 'active': return <CheckCircle className="w-4 h-4 text-brand-success" />;
+      case 'error': return <XCircle className="w-4 h-4 text-brand-error" />;
+      case 'pending': return <AlertCircle className="w-4 h-4 text-brand-warning" />;
       default: return <XCircle className="w-4 h-4 text-gray-500" />;
     }
   };
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'api': return <Globe className="w-4 h-4 text-blue-500" />;
+      case 'api': return <Globe className="w-4 h-4 text-brand-primary" />;
       case 'webhook': return <Plug className="w-4 h-4 text-purple-500" />;
-      case 'oauth': return <Key className="w-4 h-4 text-green-500" />;
-      case 'sms': return <Phone className="w-4 h-4 text-orange-500" />;
-      case 'email': return <Mail className="w-4 h-4 text-red-500" />;
+      case 'oauth': return <Key className="w-4 h-4 text-brand-success" />;
+      case 'sms': return <Phone className="w-4 h-4 text-brand-primary" />;
+      case 'email': return <Mail className="w-4 h-4 text-brand-error" />;
       case 'calendar': return <Calendar className="w-4 h-4 text-indigo-500" />;
       default: return <Settings className="w-4 h-4 text-gray-500" />;
     }
@@ -168,7 +168,7 @@ const IntegrationsPage: React.FC = () => {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>صحة الاتصال:</span>
-                  <span className={integration.health_score > 80 ? 'text-green-600' : 'text-red-600'}>
+                  <span className={integration.health_score > 80 ? 'text-brand-success' : 'text-brand-error'}>
                     {integration.health_score}%
                   </span>
                 </div>

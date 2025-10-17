@@ -17,7 +17,7 @@ export function THead({
 }: React.HTMLAttributes<HTMLTableSectionElement>) {
   return (
     <thead
-      className={clsx("bg-gray-50 dark:bg-gray-800", className)}
+      className={clsx("bg-surface dark:bg-gray-800", className)}
       {...props}
     />
   );
@@ -41,7 +41,7 @@ export function TR({
 }: React.HTMLAttributes<HTMLTableRowElement>) {
   return (
     <tr
-      className={clsx("hover:bg-gray-50 dark:hover:bg-gray-800", className)}
+      className={clsx("hover:bg-surface dark:hover:bg-gray-800", className)}
       {...props}
     />
   );

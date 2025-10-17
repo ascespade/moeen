@@ -77,7 +77,7 @@ export function ChartsB() {
             title={`Messages: ${d.messages}`}
           />
           <div
-            className="w-3 bg-green-600/80 rounded-sm"
+            className="w-3 bg-brand-success/80 rounded-sm"
             style={{ height: `${(d.conversations / maxY) * 100}%` }}
             title={`Conversations: ${d.conversations}`}
           />

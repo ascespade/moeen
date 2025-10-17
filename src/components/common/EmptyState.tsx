@@ -9,7 +9,7 @@ export default function EmptyState({
 }) {
   return (
     <div className="rounded-xl border p-8 text-center text-gray-600">
-      <div className="mx-auto h-12 w-12 rounded-full bg-gray-100 mb-3" />
+      <div className="mx-auto h-12 w-12 rounded-full bg-surface mb-3" />
       <div className="text-lg font-medium">{title}</div>
       {description && (
         <div className="text-sm text-gray-500 mt-1">{description}</div>

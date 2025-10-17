@@ -104,7 +104,7 @@ export default function RolesPage() {
       <main className="container-app py-8">
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-blue-600">
+            <div className="mb-2 text-3xl font-bold text-brand-primary">
               {mockRoles.length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
@@ -112,7 +112,7 @@ export default function RolesPage() {
             </div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
+            <div className="mb-2 text-3xl font-bold text-brand-success">
               {mockRoles.reduce((sum, r) => sum + r.userCount, 0)}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
@@ -128,7 +128,7 @@ export default function RolesPage() {
             </div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-orange-600">4</div>
+            <div className="mb-2 text-3xl font-bold text-brand-primary">4</div>
             <div className="text-gray-600 dark:text-gray-300">أدوار نشطة</div>
           </div>
         </div>
@@ -158,7 +158,7 @@ export default function RolesPage() {
                         </span>
                         <button
                           onClick={() => setEditingRole(role)}
-                          className="rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-gray-50"
+                          className="rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-surface"
                         >
                           تعديل
                         </button>
@@ -192,7 +192,7 @@ export default function RolesPage() {
                 {allPermissions.map((permission) => (
                   <div
                     key={permission.id}
-                    className="flex items-center gap-2 rounded-lg bg-gray-50 p-2 dark:bg-gray-800"
+                    className="flex items-center gap-2 rounded-lg bg-surface p-2 dark:bg-gray-800"
                   >
                     <input
                       type="checkbox"
@@ -267,7 +267,7 @@ export default function RolesPage() {
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
                 >
                   إلغاء
                 </button>

@@ -128,12 +128,12 @@ export default function ClaimsManager({ patientId, onClaimUpdate }: ClaimsManage
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'draft': return 'bg-gray-100 text-gray-800';
+      case 'draft': return 'bg-surface text-gray-800';
       case 'submitted': return 'bg-blue-100 text-blue-800';
       case 'approved': return 'bg-green-100 text-green-800';
       case 'rejected': return 'bg-red-100 text-red-800';
       case 'under_review': return 'bg-yellow-100 text-yellow-800';
-      default: return 'bg-gray-100 text-gray-800';
+      default: return 'bg-surface text-gray-800';
     }
   };
 
@@ -211,7 +211,7 @@ export default function ClaimsManager({ patientId, onClaimUpdate }: ClaimsManage
 
       {/* Create Claim Form */}
       {showCreateForm && (
-        <Card className="p-4 mb-6 bg-blue-50 dark:bg-blue-900/20">
+        <Card className="p-4 mb-6 bg-surface dark:bg-blue-900/20">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             {t('insurance.claims.create_new')}
           </h3>
@@ -301,7 +301,7 @@ export default function ClaimsManager({ patientId, onClaimUpdate }: ClaimsManage
           filteredClaims.map((claim) => (
             <div
               key={claim.id}
-              className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
+              className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-surface dark:hover:bg-gray-800"
             >
               <div className="flex items-center">
                 <div className="flex-shrink-0 mr-4">

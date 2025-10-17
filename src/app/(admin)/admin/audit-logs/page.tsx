@@ -90,7 +90,7 @@ export default function AuditLogsPage() {
       case "warning":
         return "bg-yellow-100 text-yellow-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
     }
   };
 
@@ -157,7 +157,7 @@ export default function AuditLogsPage() {
       <main className="container-app py-8">
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-blue-600">
+            <div className="mb-2 text-3xl font-bold text-brand-primary">
               {mockAuditLogs.length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
@@ -165,13 +165,13 @@ export default function AuditLogsPage() {
             </div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
+            <div className="mb-2 text-3xl font-bold text-brand-success">
               {mockAuditLogs.filter((l) => l.status === "success").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">نجح</div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-red-600">
+            <div className="mb-2 text-3xl font-bold text-brand-error">
               {mockAuditLogs.filter((l) => l.status === "failed").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">فشل</div>
@@ -241,7 +241,7 @@ export default function AuditLogsPage() {
         <div className="card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 dark:bg-gray-800">
+              <thead className="bg-surface dark:bg-gray-800">
                 <tr>
                   <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                     المستخدم
@@ -270,7 +270,7 @@ export default function AuditLogsPage() {
                 {filteredLogs.map((log) => (
                   <tr
                     key={log.id}
-                    className="hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="hover:bg-surface dark:hover:bg-gray-800"
                   >
                     <td className="whitespace-nowrap px-6 py-4">
                       <div className="flex items-center">
@@ -328,7 +328,7 @@ export default function AuditLogsPage() {
 
         {filteredLogs.length === 0 && (
           <div className="py-12 text-center">
-            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
+            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-surface">
               <span className="text-4xl">📋</span>
             </div>
             <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">

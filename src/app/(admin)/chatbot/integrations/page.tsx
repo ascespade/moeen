@@ -27,7 +27,7 @@ const mockIntegrations: Integration[] = [
     lastSync: "2024-01-15 14:30",
     messageCount: 1247,
     icon: "📱",
-    color: "text-green-600",
+    color: "text-brand-success",
   },
   {
     id: "2",
@@ -39,7 +39,7 @@ const mockIntegrations: Integration[] = [
     lastSync: "2024-01-15 14:25",
     messageCount: 892,
     icon: "🌐",
-    color: "text-blue-600",
+    color: "text-brand-primary",
   },
   {
     id: "3",
@@ -49,7 +49,7 @@ const mockIntegrations: Integration[] = [
     description: "تكامل مع تيليجرام للرسائل",
     messageCount: 0,
     icon: "✈️",
-    color: "text-blue-500",
+    color: "text-brand-primary",
   },
   {
     id: "4",
@@ -74,11 +74,11 @@ export default function ChatbotIntegrationsPage() {
       case "connected":
         return "bg-green-100 text-green-800";
       case "disconnected":
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
       case "error":
         return "bg-red-100 text-red-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
     }
   };
 
@@ -147,7 +147,7 @@ export default function ChatbotIntegrationsPage() {
         {/* Stats Cards */}
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-blue-600">
+            <div className="mb-2 text-3xl font-bold text-brand-primary">
               {mockIntegrations.length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
@@ -155,13 +155,13 @@ export default function ChatbotIntegrationsPage() {
             </div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
+            <div className="mb-2 text-3xl font-bold text-brand-success">
               {mockIntegrations.filter((i) => i.status === "connected").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">متصلة</div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-red-600">
+            <div className="mb-2 text-3xl font-bold text-brand-error">
               {mockIntegrations.filter((i) => i.status === "error").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">خطأ</div>
@@ -223,7 +223,7 @@ export default function ChatbotIntegrationsPage() {
                 {integration.webhookUrl && (
                   <div className="flex justify-between">
                     <span>Webhook:</span>
-                    <span className="rounded bg-gray-100 px-2 py-1 font-mono text-xs dark:bg-gray-800">
+                    <span className="rounded bg-surface px-2 py-1 font-mono text-xs dark:bg-gray-800">
                       {integration.webhookUrl.split("/").pop()}
                     </span>
                   </div>
@@ -235,7 +235,7 @@ export default function ChatbotIntegrationsPage() {
                   <>
                     <button
                       onClick={() => handleTestWebhook(integration.id)}
-                      className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-gray-50"
+                      className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-surface"
                       disabled={webhookTest[integration.id]}
                     >
                       {webhookTest[integration.id]
@@ -244,7 +244,7 @@ export default function ChatbotIntegrationsPage() {
                     </button>
                     <button
                       onClick={() => handleDisconnect(integration.id)}
-                      className="rounded-lg border border-red-300 px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50"
+                      className="rounded-lg border border-red-300 px-3 py-2 text-sm text-brand-error transition-colors hover:bg-surface"
                     >
                       قطع الاتصال
                     </button>
@@ -301,7 +301,7 @@ export default function ChatbotIntegrationsPage() {
                 <p className="mb-3 text-sm text-gray-600 dark:text-gray-300">
                   {integration.description}
                 </p>
-                <button className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-gray-50">
+                <button className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-surface">
                   إضافة
                 </button>
               </div>
@@ -348,7 +348,7 @@ export default function ChatbotIntegrationsPage() {
                 />
               </div>
 
-              <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+              <div className="rounded-lg border border-blue-200 bg-surface p-4">
                 <p className="text-sm text-blue-800">
                   <strong>ملاحظة:</strong> قم بإعداد Webhook في منصة التكامل
                   لتوجيه الرسائل إلى الرابط أعلاه.
@@ -358,7 +358,7 @@ export default function ChatbotIntegrationsPage() {
               <div className="flex gap-3 pt-4">
                 <button
                   onClick={() => setShowConnectModal(null)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
                 >
                   إلغاء
                 </button>

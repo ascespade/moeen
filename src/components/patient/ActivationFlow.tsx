@@ -137,7 +137,7 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
             <div 
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              className="bg-brand-primary h-2 rounded-full transition-all duration-300"
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
@@ -151,17 +151,17 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
             key={step.id}
             className={`flex items-start p-4 rounded-lg border ${
               step.completed 
-                ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800'
+                ? 'bg-surface dark:bg-green-900/20 border-green-200 dark:border-green-800'
                 : index === currentStep
-                ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800'
-                : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
+                ? 'bg-surface dark:bg-blue-900/20 border-blue-200 dark:border-blue-800'
+                : 'bg-surface dark:bg-gray-800 border-gray-200 dark:border-gray-700'
             }`}
           >
             <div className="flex-shrink-0 mr-4">
               {step.completed ? (
-                <CheckCircle className="h-6 w-6 text-green-600" />
+                <CheckCircle className="h-6 w-6 text-brand-success" />
               ) : index === currentStep ? (
-                <Clock className="h-6 w-6 text-blue-600" />
+                <Clock className="h-6 w-6 text-brand-primary" />
               ) : (
                 <AlertCircle className="h-6 w-6 text-gray-400" />
               )}

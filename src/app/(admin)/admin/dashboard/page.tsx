@@ -174,18 +174,18 @@ const mockStaffWorkHours: StaffWorkHours[] = [
 ];
 
 const activityTypeConfig = {
-  appointment: { icon: "📅", color: "blue", bg: "bg-blue-50" },
-  claim: { icon: "📋", color: "green", bg: "bg-green-50" },
-  patient: { icon: "👤", color: "red", bg: "bg-red-50" },
-  staff: { icon: "👨‍⚕️", color: "purple", bg: "bg-purple-50" },
-  payment: { icon: "💰", color: "green", bg: "bg-green-50" },
+  appointment: { icon: "📅", color: "blue", bg: "bg-surface" },
+  claim: { icon: "📋", color: "green", bg: "bg-surface" },
+  patient: { icon: "👤", color: "red", bg: "bg-surface" },
+  staff: { icon: "👨‍⚕️", color: "purple", bg: "bg-surface" },
+  payment: { icon: "💰", color: "green", bg: "bg-surface" },
 } as const;
 
 const statusConfig = {
-  success: { color: "text-green-600", bg: "bg-green-50" },
-  warning: { color: "text-yellow-600", bg: "bg-yellow-50" },
-  error: { color: "text-red-600", bg: "bg-red-50" },
-  info: { color: "text-orange-600", bg: "bg-orange-50" },
+  success: { color: "text-brand-success", bg: "bg-surface" },
+  warning: { color: "text-yellow-600", bg: "bg-surface" },
+  error: { color: "text-brand-error", bg: "bg-surface" },
+  info: { color: "text-brand-primary", bg: "bg-surface" },
 };
 
 export default function AdminDashboard() {
@@ -212,8 +212,8 @@ export default function AdminDashboard() {
   const getOnDutyStatus = (staff: StaffWorkHours) => {
     if (staff.isOnDuty) {
       return (
-        <div className="flex items-center gap-2 text-green-600">
-          <span className="h-2 w-2 animate-pulse rounded-full bg-green-500"></span>
+        <div className="flex items-center gap-2 text-brand-success">
+          <span className="h-2 w-2 animate-pulse rounded-full bg-brand-success"></span>
           <span className="text-sm font-medium">في الخدمة</span>
         </div>
       );
@@ -281,18 +281,18 @@ export default function AdminDashboard() {
             <div className="mb-2 text-gray-600 dark:text-gray-300">
               إجمالي المرضى
             </div>
-            <div className="text-sm text-green-600">
+            <div className="text-sm text-brand-success">
               {mockStats.activePatients} نشط • {mockStats.blockedPatients} محظور
             </div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
+            <div className="mb-2 text-3xl font-bold text-brand-success">
               {mockStats.totalAppointments.toLocaleString()}
             </div>
             <div className="mb-2 text-gray-600 dark:text-gray-300">
               إجمالي المواعيد
             </div>
-            <div className="text-sm text-blue-600">
+            <div className="text-sm text-brand-primary">
               {mockStats.completedAppointments} مكتمل •{" "}
               {mockStats.pendingAppointments} قيد الانتظار
             </div>
@@ -304,18 +304,18 @@ export default function AdminDashboard() {
             <div className="mb-2 text-gray-600 dark:text-gray-300">
               إجمالي الإيرادات
             </div>
-            <div className="text-sm text-green-600">
+            <div className="text-sm text-brand-success">
               {mockStats.monthlyRevenue.toLocaleString()} ريال هذا الشهر
             </div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-orange-600">
+            <div className="mb-2 text-3xl font-bold text-brand-primary">
               {mockStats.totalStaff}
             </div>
             <div className="mb-2 text-gray-600 dark:text-gray-300">
               إجمالي الموظفين
             </div>
-            <div className="text-sm text-blue-600">
+            <div className="text-sm text-brand-primary">
               {mockStats.activeStaff} نشط • {mockStats.onDutyStaff} في الخدمة
               الآن
             </div>
@@ -337,7 +337,7 @@ export default function AdminDashboard() {
                 <span className="text-gray-600 dark:text-gray-300">
                   موافق عليها:
                 </span>
-                <span className="font-semibold text-green-600">
+                <span className="font-semibold text-brand-success">
                   {mockStats.approvedClaims}
                 </span>
               </div>
@@ -353,7 +353,7 @@ export default function AdminDashboard() {
                 <span className="text-gray-600 dark:text-gray-300">
                   مرفوضة:
                 </span>
-                <span className="font-semibold text-red-600">
+                <span className="font-semibold text-brand-error">
                   {mockStats.rejectedClaims}
                 </span>
               </div>
@@ -375,13 +375,13 @@ export default function AdminDashboard() {
                 <span className="text-gray-600 dark:text-gray-300">
                   مكتملة:
                 </span>
-                <span className="font-semibold text-green-600">
+                <span className="font-semibold text-brand-success">
                   {mockStats.completedSessions.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600 dark:text-gray-300">قادمة:</span>
-                <span className="font-semibold text-blue-600">
+                <span className="font-semibold text-brand-primary">
                   {mockStats.upcomingSessions.toLocaleString()}
                 </span>
               </div>
@@ -395,7 +395,7 @@ export default function AdminDashboard() {
                 <span className="text-gray-600 dark:text-gray-300">
                   معدل إكمال المواعيد:
                 </span>
-                <span className="font-semibold text-green-600">
+                <span className="font-semibold text-brand-success">
                   {Math.round(
                     (mockStats.completedAppointments /
                       mockStats.totalAppointments) *
@@ -408,7 +408,7 @@ export default function AdminDashboard() {
                 <span className="text-gray-600 dark:text-gray-300">
                   معدل الموافقة على المطالبات:
                 </span>
-                <span className="font-semibold text-green-600">
+                <span className="font-semibold text-brand-success">
                   {Math.round(
                     (mockStats.approvedClaims / mockStats.totalClaims) * 100,
                   )}
@@ -419,7 +419,7 @@ export default function AdminDashboard() {
                 <span className="text-gray-600 dark:text-gray-300">
                   معدل إكمال الجلسات:
                 </span>
-                <span className="font-semibold text-green-600">
+                <span className="font-semibold text-brand-success">
                   {Math.round(
                     (mockStats.completedSessions / mockStats.totalSessions) *
                       100,
@@ -444,7 +444,7 @@ export default function AdminDashboard() {
               {mockRecentActivities.map((activity) => (
                 <div
                   key={activity.id}
-                  className="flex items-start gap-3 rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  className="flex items-start gap-3 rounded-lg p-3 hover:bg-surface dark:hover:bg-gray-800"
                 >
                   {getActivityIcon(activity.type)}
                   <div className="flex-1">
@@ -497,7 +497,7 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                     <div className="text-center">
-                      <div className="font-semibold text-blue-600">
+                      <div className="font-semibold text-brand-primary">
                         {staff.thisWeekHours}س
                       </div>
                       <div className="text-gray-600 dark:text-gray-300">
@@ -505,7 +505,7 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                     <div className="text-center">
-                      <div className="font-semibold text-green-600">
+                      <div className="font-semibold text-brand-success">
                         {staff.thisMonthHours}س
                       </div>
                       <div className="text-gray-600 dark:text-gray-300">

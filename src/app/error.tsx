@@ -12,7 +12,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-surface dark:bg-gray-900 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full text-center">
         {/* Logo */}
         <div className="mb-8">
@@ -29,7 +29,7 @@ export default function GlobalError({
         {/* Error Content */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
           <div className="w-20 h-20 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-6">
-            <AlertTriangle className="w-10 h-10 text-red-600 dark:text-red-400" />
+            <AlertTriangle className="w-10 h-10 text-brand-error dark:text-red-400" />
           </div>
 
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
@@ -40,7 +40,7 @@ export default function GlobalError({
           </p>
 
           {error.message && (
-            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 mb-6">
+            <div className="bg-surface dark:bg-gray-700 rounded-lg p-4 mb-6">
               <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">
                 {error.message}
               </p>
@@ -58,7 +58,7 @@ export default function GlobalError({
             </button>
             <Link
               href="/"
-              className="inline-flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              className="inline-flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-lg hover:bg-surface dark:hover:bg-gray-700 transition-colors"
             >
               <Home className="w-5 h-5" />
               العودة للرئيسية
@@ -66,14 +66,14 @@ export default function GlobalError({
           </div>
 
           {/* Help Section */}
-          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
+          <div className="bg-surface dark:bg-gray-700 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               إذا استمر الخطأ
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
               <Link
                 href="/contact"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-600 transition-colors"
               >
                 <Bug className="w-5 h-5 text-[var(--brand-primary)]" />
                 <span className="text-gray-700 dark:text-gray-300">
@@ -82,7 +82,7 @@ export default function GlobalError({
               </Link>
               <Link
                 href="/faq"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-600 transition-colors"
               >
                 <AlertTriangle className="w-5 h-5 text-[var(--brand-primary)]" />
                 <span className="text-gray-700 dark:text-gray-300">
@@ -94,7 +94,7 @@ export default function GlobalError({
 
           {/* Error Details */}
           {error.digest && (
-            <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+            <div className="mt-6 p-4 bg-surface dark:bg-gray-700 rounded-lg">
               <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
                 معرف الخطأ:
               </h4>

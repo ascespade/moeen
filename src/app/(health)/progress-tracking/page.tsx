@@ -243,23 +243,23 @@ const ProgressTrackingPage: React.FC = () => {
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'الحركة':
-        return <Activity className="w-4 h-4 text-blue-500" />;
+        return <Activity className="w-4 h-4 text-brand-primary" />;
       case 'التواصل':
-        return <Heart className="w-4 h-4 text-red-500" />;
+        return <Heart className="w-4 h-4 text-brand-error" />;
       case 'الإدراك':
         return <Brain className="w-4 h-4 text-purple-500" />;
       case 'الاستقلالية':
-        return <Zap className="w-4 h-4 text-yellow-500" />;
+        return <Zap className="w-4 h-4 text-brand-warning" />;
       default:
         return <Target className="w-4 h-4 text-gray-500" />;
     }
   };
 
   const getProgressColor = (percentage: number) => {
-    if (percentage >= 80) return "bg-green-500";
-    if (percentage >= 60) return "bg-yellow-500";
-    if (percentage >= 40) return "bg-orange-500";
-    return "bg-red-500";
+    if (percentage >= 80) return "bg-brand-success";
+    if (percentage >= 60) return "bg-brand-warning";
+    if (percentage >= 40) return "bg-brand-primary";
+    return "bg-brand-error";
   };
 
   const filteredGoals = goals.filter(goal => {
@@ -388,7 +388,7 @@ const ProgressTrackingPage: React.FC = () => {
 
       {/* Tabs */}
       <div className="mb-6">
-        <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+        <div className="flex space-x-1 bg-surface p-1 rounded-lg">
           <button
             onClick={() => setActiveTab('goals')}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
@@ -452,7 +452,7 @@ const ProgressTrackingPage: React.FC = () => {
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-4">
-                          <div className="p-3 bg-blue-50 rounded-lg">
+                          <div className="p-3 bg-surface rounded-lg">
                             {getCategoryIcon(goal.category)}
                           </div>
                           <div>
@@ -490,11 +490,11 @@ const ProgressTrackingPage: React.FC = () => {
                         <h4 className="text-sm font-semibold mb-3">المراحل:</h4>
                         <div className="space-y-2">
                           {goal.milestones.map((milestone) => (
-                            <div key={milestone.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div key={milestone.id} className="flex items-center justify-between p-3 bg-surface rounded-lg">
                               <div className="flex items-center gap-3">
                                 <div className={`w-3 h-3 rounded-full ${
-                                  milestone.status === 'completed' ? 'bg-green-500' :
-                                  milestone.status === 'in_progress' ? 'bg-yellow-500' :
+                                  milestone.status === 'completed' ? 'bg-brand-success' :
+                                  milestone.status === 'in_progress' ? 'bg-brand-warning' :
                                   'bg-gray-300'
                                 }`}></div>
                                 <div>
@@ -565,14 +565,14 @@ const ProgressTrackingPage: React.FC = () => {
                           </p>
                         </div>
                         <div className="text-right">
-                          <div className="text-2xl font-bold text-blue-600">{assessment.percentage}%</div>
+                          <div className="text-2xl font-bold text-brand-primary">{assessment.percentage}%</div>
                           <p className="text-sm text-gray-600">{assessment.score}/{assessment.max_score}</p>
                         </div>
                       </div>
 
                       <div className="mb-4">
                         <h4 className="text-sm font-semibold mb-2">الملاحظات:</h4>
-                        <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg">
+                        <p className="text-sm text-gray-700 bg-surface p-3 rounded-lg">
                           {assessment.notes}
                         </p>
                       </div>
@@ -633,23 +633,23 @@ const ProgressTrackingPage: React.FC = () => {
                           </p>
                         </div>
                         <div className="text-right">
-                          <div className="text-2xl font-bold text-green-600">{report.overall_progress}%</div>
+                          <div className="text-2xl font-bold text-brand-success">{report.overall_progress}%</div>
                           <p className="text-sm text-gray-600">التقدم العام</p>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div className="text-center p-3 bg-blue-50 rounded-lg">
-                          <div className="text-xl font-bold text-blue-600">{report.goals_achieved}</div>
+                        <div className="text-center p-3 bg-surface rounded-lg">
+                          <div className="text-xl font-bold text-brand-primary">{report.goals_achieved}</div>
                           <div className="text-sm text-blue-700">أهداف محققة</div>
                           <div className="text-xs text-gray-600">من أصل {report.total_goals}</div>
                         </div>
-                        <div className="text-center p-3 bg-green-50 rounded-lg">
-                          <div className="text-xl font-bold text-green-600">{report.sessions_completed}</div>
+                        <div className="text-center p-3 bg-surface rounded-lg">
+                          <div className="text-xl font-bold text-brand-success">{report.sessions_completed}</div>
                           <div className="text-sm text-green-700">جلسات مكتملة</div>
                           <div className="text-xs text-gray-600">من أصل {report.total_sessions}</div>
                         </div>
-                        <div className="text-center p-3 bg-purple-50 rounded-lg">
+                        <div className="text-center p-3 bg-surface rounded-lg">
                           <div className="text-xl font-bold text-purple-600">
                             {Math.round((report.goals_achieved / report.total_goals) * 100)}%
                           </div>

@@ -229,7 +229,7 @@ export default function AdminPage() {
       manager: "bg-blue-100 text-blue-800",
       supervisor: "bg-purple-100 text-purple-800",
       agent: "bg-green-100 text-green-800",
-      demo: "bg-gray-100 text-gray-800",
+      demo: "bg-surface text-gray-800",
     };
     return (
       <Badge className={colors[role as keyof typeof colors] || colors.demo}>
@@ -268,8 +268,8 @@ export default function AdminPage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <AlertTriangle className="h-8 w-8 text-red-500 mx-auto mb-4" />
-          <p className="text-red-600 mb-4">Error: {error}</p>
+          <AlertTriangle className="h-8 w-8 text-brand-error mx-auto mb-4" />
+          <p className="text-brand-error mb-4">Error: {error}</p>
           <Button onClick={loadAdminData}>Retry</Button>
         </div>
       </div>
@@ -303,7 +303,7 @@ export default function AdminPage() {
           <Card data-testid="admin-summary-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-              <Users className="h-4 w-4 text-blue-600" />
+              <Users className="h-4 w-4 text-brand-primary" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{users.length}</div>
@@ -318,7 +318,7 @@ export default function AdminPage() {
               <CardTitle className="text-sm font-medium">
                 System Configs
               </CardTitle>
-              <Settings className="h-4 w-4 text-green-600" />
+              <Settings className="h-4 w-4 text-brand-success" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{configs.length}</div>
@@ -333,7 +333,7 @@ export default function AdminPage() {
               <CardTitle className="text-sm font-medium">
                 Security Events
               </CardTitle>
-              <Shield className="h-4 w-4 text-red-600" />
+              <Shield className="h-4 w-4 text-brand-error" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{securityEvents.length}</div>
@@ -346,7 +346,7 @@ export default function AdminPage() {
               <CardTitle className="text-sm font-medium">
                 Failed Logins
               </CardTitle>
-              <Lock className="h-4 w-4 text-orange-600" />
+              <Lock className="h-4 w-4 text-brand-primary" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
@@ -522,7 +522,7 @@ export default function AdminPage() {
                           </div>
                         </div>
                         {config.isSecret && (
-                          <Key className="h-4 w-4 text-yellow-500" />
+                          <Key className="h-4 w-4 text-brand-warning" />
                         )}
                       </div>
                       <div className="flex items-center gap-2">
@@ -574,9 +574,9 @@ export default function AdminPage() {
                     >
                       <div className="flex items-center gap-3">
                         {event.success ? (
-                          <CheckCircle className="h-5 w-5 text-green-500" />
+                          <CheckCircle className="h-5 w-5 text-brand-success" />
                         ) : (
-                          <AlertTriangle className="h-5 w-5 text-red-500" />
+                          <AlertTriangle className="h-5 w-5 text-brand-error" />
                         )}
                         <div>
                           <div className="font-medium">{event.action}</div>

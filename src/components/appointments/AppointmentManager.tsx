@@ -227,7 +227,7 @@ const AppointmentManager: React.FC = () => {
       case "cancelled":
         return "bg-red-100 text-red-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
     }
   };
 
@@ -360,7 +360,7 @@ const AppointmentManager: React.FC = () => {
                     variant="outline"
                     size="sm"
                     onClick={() => handleDeleteAppointment(appointment.id)}
-                    className="text-red-600 hover:text-red-700"
+                    className="text-brand-error hover:text-red-700"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>

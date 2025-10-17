@@ -262,13 +262,13 @@ const SecurityPage: React.FC = () => {
   const getEventIcon = (type: string) => {
     switch (type) {
       case 'login':
-        return <CheckCircle className="w-4 h-4 text-green-500" />;
+        return <CheckCircle className="w-4 h-4 text-brand-success" />;
       case 'logout':
         return <XCircle className="w-4 h-4 text-gray-500" />;
       case 'failed_login':
-        return <AlertTriangle className="w-4 h-4 text-red-500" />;
+        return <AlertTriangle className="w-4 h-4 text-brand-error" />;
       case 'password_change':
-        return <Key className="w-4 h-4 text-blue-500" />;
+        return <Key className="w-4 h-4 text-brand-primary" />;
       case 'data_access':
         return <Database className="w-4 h-4 text-purple-500" />;
       default:
@@ -278,10 +278,10 @@ const SecurityPage: React.FC = () => {
 
   const getRiskBadge = (level: string) => {
     const riskMap = {
-      'low': { label: 'منخفض', variant: 'primary' as const, color: 'text-green-600' },
+      'low': { label: 'منخفض', variant: 'primary' as const, color: 'text-brand-success' },
       'medium': { label: 'متوسط', variant: 'secondary' as const, color: 'text-yellow-600' },
-      'high': { label: 'عالي', variant: 'primary' as const, color: 'text-orange-600' },
-      'critical': { label: 'حرج', variant: 'destructive' as const, color: 'text-red-600' }
+      'high': { label: 'عالي', variant: 'primary' as const, color: 'text-brand-primary' },
+      'critical': { label: 'حرج', variant: 'destructive' as const, color: 'text-brand-error' }
     };
     
     const riskInfo = riskMap[level as keyof typeof riskMap] || { label: level, variant: 'primary' as const, color: 'text-gray-600' };
@@ -316,9 +316,9 @@ const SecurityPage: React.FC = () => {
 
   const getDeviceIcon = (device: string) => {
     if (device.includes('Windows') || device.includes('macOS') || device.includes('Linux')) {
-      return <Monitor className="w-4 h-4 text-blue-500" />;
+      return <Monitor className="w-4 h-4 text-brand-primary" />;
     } else if (device.includes('Android') || device.includes('iOS')) {
-      return <Smartphone className="w-4 h-4 text-green-500" />;
+      return <Smartphone className="w-4 h-4 text-brand-success" />;
     } else {
       return <Globe className="w-4 h-4 text-gray-500" />;
     }
@@ -424,7 +424,7 @@ const SecurityPage: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg mb-6">
+        <div className="flex space-x-1 bg-surface p-1 rounded-lg mb-6">
           <button
             onClick={() => setSelectedTab('events')}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
@@ -646,7 +646,7 @@ const SecurityPage: React.FC = () => {
                       <div className="flex items-start justify-between">
                         <div className="flex items-start gap-4">
                           <div className="p-2 bg-white rounded-full">
-                            <AlertTriangle className="w-4 h-4 text-red-500" />
+                            <AlertTriangle className="w-4 h-4 text-brand-error" />
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-2">

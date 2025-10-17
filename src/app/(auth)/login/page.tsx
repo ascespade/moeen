@@ -112,7 +112,7 @@ export default function LoginPage() {
   ];
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--brand-surface)] via-white to-[var(--bg-gray-50)] p-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--brand-surface)] via-white to-[var(--bg-surface)] p-4">
       <div className="w-full max-w-md">
         {/* Logo and Header */}
         <div className="mb-8 text-center">
@@ -157,7 +157,7 @@ export default function LoginPage() {
                   </div>
                 </div>
                 {emailError && (
-                  <p className="mt-1 text-sm text-red-600">{emailError}</p>
+                  <p className="mt-1 text-sm text-brand-error">{emailError}</p>
                 )}
               </div>
 

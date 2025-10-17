@@ -113,13 +113,13 @@ export default function TemplateEditorPage({
             <div className="flex items-center gap-3">
               <button
                 onClick={handleTest}
-                className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
               >
                 اختبار
               </button>
               <button
                 onClick={() => setIsEditing(!isEditing)}
-                className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
               >
                 {isEditing ? "عرض" : "تعديل"}
               </button>
@@ -193,13 +193,13 @@ export default function TemplateEditorPage({
                 {template.variables.map((variable, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between rounded-lg bg-gray-50 p-2 dark:bg-gray-800"
+                    className="flex items-center justify-between rounded-lg bg-surface p-2 dark:bg-gray-800"
                   >
                     <span className="text-sm font-medium">{variable}</span>
                     {isEditing && (
                       <button
                         onClick={() => handleVariableRemove(variable)}
-                        className="text-sm text-red-500 hover:text-red-700"
+                        className="text-sm text-brand-error hover:text-red-700"
                       >
                         حذف
                       </button>
@@ -246,10 +246,10 @@ export default function TemplateEditorPage({
               <div className="mb-6 flex items-center justify-between">
                 <h3 className="text-lg font-semibold">محتوى القالب</h3>
                 <div className="flex gap-2">
-                  <button className="rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-gray-50">
+                  <button className="rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-surface">
                     نسخ
                   </button>
-                  <button className="rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-gray-50">
+                  <button className="rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-surface">
                     استيراد
                   </button>
                 </div>
@@ -309,14 +309,14 @@ export default function TemplateEditorPage({
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+                  <div className="rounded-lg bg-surface p-4 dark:bg-gray-800">
                     <h4 className="mb-2 font-semibold">المحتوى الحالي:</h4>
                     <p className="whitespace-pre-wrap text-gray-700 dark:text-gray-300">
                       {template.content}
                     </p>
                   </div>
 
-                  <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
+                  <div className="rounded-lg bg-surface p-4 dark:bg-blue-900/20">
                     <h4 className="mb-2 font-semibold text-blue-800 dark:text-blue-300">
                       المعاينة:
                     </h4>
@@ -331,14 +331,14 @@ export default function TemplateEditorPage({
               <div className="flex gap-3 border-t border-gray-200 pt-6 dark:border-gray-700">
                 <button
                   onClick={handleTest}
-                  className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
                 >
                   اختبار القالب
                 </button>
-                <button className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50">
+                <button className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface">
                   نسخ القالب
                 </button>
-                <button className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50">
+                <button className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface">
                   تصدير
                 </button>
                 {isEditing && (
@@ -370,7 +370,7 @@ export default function TemplateEditorPage({
             </div>
 
             <div className="space-y-4">
-              <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+              <div className="rounded-lg bg-surface p-4 dark:bg-gray-800">
                 <h4 className="mb-2 font-semibold">المعاينة المباشرة:</h4>
                 <p className="whitespace-pre-wrap text-gray-700 dark:text-gray-300">
                   {generatePreview()}
@@ -405,7 +405,7 @@ export default function TemplateEditorPage({
               <div className="flex gap-3 pt-4">
                 <button
                   onClick={() => setShowTestModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
                 >
                   إغلاق
                 </button>

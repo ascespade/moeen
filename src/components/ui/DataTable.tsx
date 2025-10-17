@@ -41,7 +41,7 @@ export function DataTable<T extends Record<string, unknown>>({
   return (
     <div className="border border-brand-border rounded-xl overflow-hidden">
       <table className="min-w-full text-sm">
-        <thead className="bg-gray-50 dark:bg-gray-800">
+        <thead className="bg-surface dark:bg-gray-800">
           <tr>
             {columns.map((c) => (
               <th key={String(c.key)} className="px-4 py-3 text-start">
@@ -60,7 +60,7 @@ export function DataTable<T extends Record<string, unknown>>({
           {pageData.map((row, i) => (
             <tr
               key={i}
-              className="border-t border-brand-border hover:bg-gray-50 dark:hover:bg-gray-800"
+              className="border-t border-brand-border hover:bg-surface dark:hover:bg-gray-800"
             >
               {columns.map((c) => (
                 <td key={String(c.key)} className="px-4 py-3">
@@ -71,7 +71,7 @@ export function DataTable<T extends Record<string, unknown>>({
           ))}
         </tbody>
       </table>
-      <div className="px-4 py-3 bg-gray-50 dark:bg-gray-800 flex items-center justify-between">
+      <div className="px-4 py-3 bg-surface dark:bg-gray-800 flex items-center justify-between">
         <span className="text-sm text-gray-600 dark:text-gray-400">
           {start + 1}-{Math.min(start + pageSize, sorted.length)} من{" "}
           {sorted.length}

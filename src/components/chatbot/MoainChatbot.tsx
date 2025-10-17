@@ -345,7 +345,7 @@ const MoainChatbot: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50" dir="rtl">
+    <div className="flex flex-col h-screen bg-surface" dir="rtl">
       {/* Header */}
       <Card className="rounded-none border-b">
         <CardHeader className="pb-3">

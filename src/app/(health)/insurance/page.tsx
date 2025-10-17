@@ -112,15 +112,15 @@ export default function InsurancePage() {
   const getBlockStatus = (claim: InsuranceClaim) => {
     if (claim.isBlocked) {
       return (
-        <div className="flex items-center gap-2 text-red-600">
-          <span className="h-2 w-2 rounded-full bg-red-500"></span>
+        <div className="flex items-center gap-2 text-brand-error">
+          <span className="h-2 w-2 rounded-full bg-brand-error"></span>
           <span className="text-sm font-medium">محظور</span>
         </div>
       );
     }
     return (
-      <div className="flex items-center gap-2 text-green-600">
-        <span className="h-2 w-2 rounded-full bg-green-500"></span>
+      <div className="flex items-center gap-2 text-brand-success">
+        <span className="h-2 w-2 rounded-full bg-brand-success"></span>
         <span className="text-sm font-medium">نشط</span>
       </div>
     );
@@ -129,8 +129,8 @@ export default function InsurancePage() {
   const getOutstandingBalance = (claim: InsuranceClaim) => {
     if (claim.hasOutstandingBalance) {
       return (
-        <div className="flex items-center gap-2 text-orange-600">
-          <span className="h-2 w-2 rounded-full bg-orange-500"></span>
+        <div className="flex items-center gap-2 text-brand-primary">
+          <span className="h-2 w-2 rounded-full bg-brand-primary"></span>
           <span className="text-sm font-medium">
             رصيد مستحق: {claim.outstandingAmount?.toLocaleString()} ريال
           </span>
@@ -138,8 +138,8 @@ export default function InsurancePage() {
       );
     }
     return (
-      <div className="flex items-center gap-2 text-green-600">
-        <span className="h-2 w-2 rounded-full bg-green-500"></span>
+      <div className="flex items-center gap-2 text-brand-success">
+        <span className="h-2 w-2 rounded-full bg-brand-success"></span>
         <span className="text-sm font-medium">لا يوجد رصيد مستحق</span>
       </div>
     );
@@ -192,7 +192,7 @@ export default function InsurancePage() {
             </div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
+            <div className="mb-2 text-3xl font-bold text-brand-success">
               {mockClaims.filter((c) => c.status === "approved").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
@@ -206,7 +206,7 @@ export default function InsurancePage() {
             <div className="text-gray-600 dark:text-gray-300">قيد المراجعة</div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-red-600">
+            <div className="mb-2 text-3xl font-bold text-brand-error">
               {mockClaims.filter((c) => c.isBlocked).length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
@@ -447,7 +447,7 @@ export default function InsurancePage() {
                     <label className="text-sm text-gray-600 dark:text-gray-300">
                       سبب الرفض
                     </label>
-                    <p className="font-medium text-red-600">
+                    <p className="font-medium text-brand-error">
                       {selectedClaim.rejectionReason}
                     </p>
                   </div>

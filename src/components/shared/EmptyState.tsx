@@ -20,7 +20,7 @@ export default function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className={`py-12 text-center ${className}`}>
-      <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+      <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-surface dark:bg-gray-800">
         <span className="text-4xl">{icon}</span>
       </div>
       <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">

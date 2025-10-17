@@ -165,11 +165,11 @@ const TherapyPage: React.FC = () => {
   const getTherapyTypeIcon = (type: string) => {
     switch (type) {
       case 'العلاج الطبيعي':
-        return <Activity className="w-4 h-4 text-blue-500" />;
+        return <Activity className="w-4 h-4 text-brand-primary" />;
       case 'العلاج الوظيفي':
-        return <Target className="w-4 h-4 text-green-500" />;
+        return <Target className="w-4 h-4 text-brand-success" />;
       case 'علاج النطق':
-        return <Heart className="w-4 h-4 text-red-500" />;
+        return <Heart className="w-4 h-4 text-brand-error" />;
       case 'العلاج النفسي':
         return <Brain className="w-4 h-4 text-purple-500" />;
       default:
@@ -341,7 +341,7 @@ const TherapyPage: React.FC = () => {
                         height={48}
                         className="rounded-full"
                       />
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-brand-success rounded-full border-2 border-white"></div>
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold">
@@ -400,7 +400,7 @@ const TherapyPage: React.FC = () => {
                 {session.progress_notes && (
                   <div className="mb-4">
                     <h4 className="text-sm font-semibold mb-2">ملاحظات التقدم:</h4>
-                    <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg">
+                    <p className="text-sm text-gray-700 bg-surface p-3 rounded-lg">
                       {session.progress_notes}
                     </p>
                   </div>

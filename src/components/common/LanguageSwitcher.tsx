@@ -89,7 +89,7 @@ export default function LanguageSwitcher({
     return (
       <div className={`relative ${className}`}>
         <select
-          className={`inline-flex items-center gap-2 rounded-md border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 ${sizeClasses[size]} ${textSizes[size]}`}
+          className={`inline-flex items-center gap-2 rounded-md border border-gray-200 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 ${sizeClasses[size]} ${textSizes[size]}`}
           value={language}
           onChange={(e) => {
             setLanguage(e.target.value as "ar" | "en");
@@ -107,7 +107,7 @@ export default function LanguageSwitcher({
 
   return (
     <button
-      className={`inline-flex items-center gap-2 rounded-md border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 ${sizeClasses[size]} ${className}`}
+      className={`inline-flex items-center gap-2 rounded-md border border-gray-200 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 ${sizeClasses[size]} ${className}`}
       onClick={toggleLanguage}
       disabled={isLoading}
       title={language === "ar" ? "Switch to English" : "التبديل إلى العربية"}

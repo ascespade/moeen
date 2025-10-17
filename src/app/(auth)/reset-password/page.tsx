@@ -121,7 +121,7 @@ export default function ResetPasswordPage() {
         {/* Form */}
         <div className="card p-8">
           {errors.general && (
-            <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+            <div className="mb-6 rounded-lg border border-red-200 bg-surface p-4 text-red-700">
               {errors.general}
             </div>
           )}
@@ -148,7 +148,7 @@ export default function ResetPasswordPage() {
                 disabled={isLoading}
               />
               {errors.password && (
-                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+                <p className="mt-1 text-sm text-brand-error">{errors.password}</p>
               )}
               <p className="mt-1 text-xs text-gray-500">
                 يجب أن تكون كلمة المرور 6 أحرف على الأقل
@@ -176,14 +176,14 @@ export default function ResetPasswordPage() {
                 disabled={isLoading}
               />
               {errors.confirmPassword && (
-                <p className="mt-1 text-sm text-red-600">
+                <p className="mt-1 text-sm text-brand-error">
                   {errors.confirmPassword}
                 </p>
               )}
             </div>
 
             {/* Password Requirements */}
-            <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+            <div className="rounded-lg border border-blue-200 bg-surface p-4">
               <h4 className="mb-2 text-sm font-semibold text-blue-800">
                 متطلبات كلمة المرور:
               </h4>

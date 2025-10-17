@@ -46,7 +46,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     
     const variants = {
       default: 'border-gray-300 focus-visible:ring-gray-500',
-      filled: 'border-gray-300 bg-gray-50 focus-visible:ring-gray-500',
+      filled: 'border-gray-300 bg-surface focus-visible:ring-gray-500',
       outlined: 'border-2 border-gray-300 focus-visible:ring-gray-500',
     };
 
@@ -61,7 +61,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label className="block text-sm font-medium text-gray-700 mb-1">
             {label}
-            {props.required && <span className="text-red-500 ml-1">*</span>}
+            {props.required && <span className="text-brand-error ml-1">*</span>}
           </label>
         )}
         
@@ -108,9 +108,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {(error || success) && (
             <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
               {error ? (
-                <AlertCircle className="h-4 w-4 text-red-500" />
+                <AlertCircle className="h-4 w-4 text-brand-error" />
               ) : (
-                <CheckCircle className="h-4 w-4 text-green-500" />
+                <CheckCircle className="h-4 w-4 text-brand-success" />
               )}
             </div>
           )}
@@ -118,8 +118,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         
         {(error || success || helperText) && (
           <div className="mt-1 text-sm">
-            {error && <p className="text-red-600">{error}</p>}
-            {success && <p className="text-green-600">{success}</p>}
+            {error && <p className="text-brand-error">{error}</p>}
+            {success && <p className="text-brand-success">{success}</p>}
             {helperText && !error && !success && <p className="text-gray-500">{helperText}</p>}
           </div>
         )}

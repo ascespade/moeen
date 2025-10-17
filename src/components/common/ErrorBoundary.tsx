@@ -104,11 +104,11 @@ function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
   const { t } = useT();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-surface dark:bg-gray-900 px-4">
       <Card className="max-w-md w-full p-8 text-center">
         <div className="flex justify-center mb-6">
           <div className="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center">
-            <AlertTriangle className="h-8 w-8 text-red-600" />
+            <AlertTriangle className="h-8 w-8 text-brand-error" />
           </div>
         </div>
         
@@ -125,7 +125,7 @@ function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
             <summary className="cursor-pointer text-sm text-gray-500 dark:text-gray-400 mb-2">
               {t('error.boundary.technical_details')}
             </summary>
-            <pre className="text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded overflow-auto">
+            <pre className="text-xs text-brand-error dark:text-red-400 bg-surface dark:bg-red-900/20 p-3 rounded overflow-auto">
               {error.message}
               {error.stack && `\n\n${error.stack}`}
             </pre>
