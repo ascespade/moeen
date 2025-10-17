@@ -5,7 +5,7 @@
 
 import { createClient } from '@/lib/supabase/server';
 
-export enum LogLevel {
+enum LogLevel {
   ERROR = 'error',
   WARN = 'warn',
   INFO = 'info',

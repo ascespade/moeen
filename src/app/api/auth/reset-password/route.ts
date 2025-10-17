@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     if (!validation.success) {
       return NextResponse.json({
         success: false,
-        errors: validation.error.errors.map(err => ({
+        errors: validation.error.issues.map(err => ({
           field: err.path[0],
           message: err.message
         }))

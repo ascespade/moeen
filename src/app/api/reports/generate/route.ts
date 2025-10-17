@@ -328,8 +328,8 @@ async function generateDoctorWorkloadReport(supabase: any, dateRange: any, filte
 // Helper functions
 function generateDailyBreakdown(appointments: any[], payments: any[], startDate: string, endDate: string) {
   const days = [];
-  const current = new Date(startDate);
-  const end = new Date(endDate);
+  const current = new Date(startDate || new Date());
+  const end = new Date(endDate || new Date());
 
   while (current <= end) {
     const dateStr = current.toISOString().split('T')[0];
@@ -358,7 +358,7 @@ function calculateGrowthRate(data: any[], dateField: string) {
   if (data.length < 2) return 0;
   
   const sorted = data.sort((a, b) => 
-    new Date(a[dateField]).getTime() - new Date(b[dateField]).getTime()
+    new Date(a[dateField] || new Date()).getTime() - new Date(b[dateField] || new Date()).getTime()
   );
   
   const firstHalf = sorted.slice(0, Math.floor(sorted.length / 2));
@@ -374,7 +374,7 @@ function groupDataByPeriod(data: any[], dateField: string, period: string) {
   const groups = new Map();
   
   data.forEach(item => {
-    const date = new Date(item[dateField]);
+    const date = new Date(item[dateField] || new Date());
     let key;
     
     switch (period) {
@@ -382,7 +382,7 @@ function groupDataByPeriod(data: any[], dateField: string, period: string) {
         key = date.toISOString().split('T')[0];
         break;
       case 'week':
-        const weekStart = new Date(date);
+        const weekStart = new Date(date || new Date());
         weekStart.setDate(date.getDate() - date.getDay());
         key = weekStart.toISOString().split('T')[0];
         break;

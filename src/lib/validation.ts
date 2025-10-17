@@ -126,7 +126,7 @@ export function validateRequest<T>(schema: z.ZodSchema<T>) {
     } catch (error) {
       if (error instanceof z.ZodError) {
         throw new Error(
-          `Validation error: ${error.errors.map((e) => e.message).join(", ")}`,
+          `Validation error: ${error.issues.map((e) => e.message).join(", ")}`,
         );
       }
       throw error;

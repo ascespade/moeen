@@ -1,3 +1,12 @@
+
+// Add missing methods to ActionExecutor
+interface ActionExecutor {
+  createAppointment(data: any): Promise<any>;
+  sendNotification(data: any): Promise<any>;
+  sendReminder(data: any): Promise<any>;
+  updatePatient(data: any): Promise<any>;
+  sendEmail(data: any): Promise<any>;
+}
 import { FlowAction, ConversationContext } from './types';
 import { createClient } from '@/lib/supabase/server';
 import { emailService } from '@/lib/notifications/email';

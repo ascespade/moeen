@@ -39,13 +39,13 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Get client info
-    const ipAddress = getClientIP(request);
+    const ipAddress = getClientIP(request) || '127.0.0.1';
     const userAgent = request.headers.get('user-agent') || 'Unknown';
 
     // Validate input
     const validation = registerSchema.safeParse(body);
     if (!validation.success) {
-      const errors = validation.error.errors.map(err => ({
+      const errors = validation.error.issues.map(err => ({
         field: err.path[0],
         message: err.message
       }));

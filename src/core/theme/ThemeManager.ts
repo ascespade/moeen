@@ -73,7 +73,7 @@ class ThemeManager {
   private static instance: ThemeManager;
   private currentTheme: ThemeMode = 'system';
   private resolvedTheme: ResolvedTheme = 'light';
-  private isInitialized = false;
+  private _isInitialized = false;
   private listeners: Set<(theme: ResolvedTheme) => void> = new Set();
   
   // Design Tokens - رموز التصميم
@@ -236,7 +236,7 @@ class ThemeManager {
     // Listen for system theme changes
     this.setupSystemThemeListener();
     
-    this.isInitialized = true;
+    this._isInitialized = true;
   }
 
   private resolveTheme(): ResolvedTheme {
@@ -413,7 +413,7 @@ class ThemeManager {
   }
 
   public isInitialized(): boolean {
-    return this.isInitialized;
+    return this._isInitialized;
   }
 }
 

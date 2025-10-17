@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
     if (!validation.success) {
       return NextResponse.json({ 
         error: 'Invalid configuration data',
-        details: validation.error.errors 
+        details: validation.error.issues 
       }, { status: 400 });
     }
 
@@ -200,7 +200,7 @@ export async function PUT(request: NextRequest) {
     if (!validation.success) {
       return NextResponse.json({ 
         error: 'Invalid configuration data',
-        details: validation.error.errors 
+        details: validation.error.issues 
       }, { status: 400 });
     }
 

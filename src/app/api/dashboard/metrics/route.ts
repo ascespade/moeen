@@ -366,7 +366,7 @@ function calculateErrorRate(systemMetrics: any[]) {
   if (systemMetrics.length === 0) return 0;
 
   const totalErrors = systemMetrics.reduce((acc, metric) => {
-    return acc + (metric.metrics?.errors || 0);
+    return acc + (metric.metrics?.issues || 0);
   }, 0);
 
   const totalOperations = systemMetrics.reduce((acc, metric) => {

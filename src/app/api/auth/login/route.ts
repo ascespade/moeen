@@ -25,7 +25,14 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
   
   try {
-    const { email, password, rememberMe } = await request.json();
+    const body = await request.json();
+    if (!body) {
+      return NextResponse.json(
+        { success: false, error: "Request body is required" },
+        { status: 400 }
+      );
+    }
+    const { email, password, rememberMe } = body || {};
 
     // Validate input
     if (!email || !password) {
@@ -45,7 +52,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get client info
-    const ipAddress = getClientIP(request);
+    const ipAddress = getClientIP(request) || '127.0.0.1';
     const userAgent = request.headers.get('user-agent') || 'Unknown';
 
     // Real Supabase authentication

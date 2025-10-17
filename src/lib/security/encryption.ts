@@ -36,14 +36,14 @@ class EncryptionManager {
 
   encrypt(text: string, key?: string): string {
     try {
-      const encryptionKey = key ? Buffer.from(key, 'hex') : Buffer.from(this.masterKey, 'hex');
+      const encryptionKey = key ? Buffer.from(key || "" || "", 'hex') : Buffer.from(this.masterKey || "" || "", 'hex');
       const iv = this.generateIV();
       const cipher = crypto.createCipher(this.config.algorithm, encryptionKey);
       
       let encrypted = cipher.update(text, 'utf8', 'hex');
       encrypted += cipher.final('hex');
       
-      const authTag = cipher.getAuthTag();
+      const authTag = cipher.getAuthTag?.();
       
       // Combine IV, authTag, and encrypted data
       const result = iv.toString('hex') + ':' + authTag.toString('hex') + ':' + encrypted;
@@ -62,19 +62,19 @@ class EncryptionManager {
 
   decrypt(encryptedText: string, key?: string): string {
     try {
-      const encryptionKey = key ? Buffer.from(key, 'hex') : Buffer.from(this.masterKey, 'hex');
+      const encryptionKey = key ? Buffer.from(key || "" || "", 'hex') : Buffer.from(this.masterKey || "" || "", 'hex');
       const parts = encryptedText.split(':');
       
       if (parts.length !== 3) {
         throw new Error('Invalid encrypted data format');
       }
       
-      const iv = Buffer.from(parts[0], 'hex');
-      const authTag = Buffer.from(parts[1], 'hex');
+      const iv = Buffer.from(parts[0] || "" || "", 'hex');
+      const authTag = Buffer.from(parts[1] || "" || "", 'hex');
       const encrypted = parts[2];
       
       const decipher = crypto.createDecipher(this.config.algorithm, encryptionKey);
-      decipher.setAuthTag(authTag);
+      decipher.setAuthTag?.(authTag);
       
       let decrypted = decipher.update(encrypted, 'hex', 'utf8');
       decrypted += decipher.final('utf8');

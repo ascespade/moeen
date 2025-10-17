@@ -8,8 +8,8 @@ import { createClient } from '@/lib/supabase/server';
 
 // Helper to extract IP address
 function getClientIP(request: NextRequest): string {
-  const forwarded = request.headers.get('x-forwarded-for');
-  const realIP = request.headers.get('x-real-ip');
+  const forwarded = request?.headers?.get('x-forwarded-for');
+  const realIP = request?.headers?.get('x-real-ip');
   
   if (forwarded) {
     return forwarded.split(',')[0].trim();
@@ -47,7 +47,7 @@ export async function trackUserActivity(
 
     if (user) {
       const ipAddress = getClientIP(request);
-      const userAgent = request.headers.get('user-agent') || 'Unknown';
+      const userAgent = request?.headers?.get('user-agent') || 'Unknown';
 
       // Update user activity in database (non-blocking)
       supabase
