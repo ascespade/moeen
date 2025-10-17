@@ -25,14 +25,8 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
   
   try {
-    const body = await request.json().catch(() => null);
-    if (!body) {
-      return NextResponse.json(
-        { success: false, error: "Request body is required" },
-        { status: 400 }
-      );
-    }
-    const { email, password, rememberMe } = body || {};
+    const body = await request.json().catch(() => ({}));
+    const { email, password, rememberMe } = body;
 
     // Validate input
     if (!email || !password) {
