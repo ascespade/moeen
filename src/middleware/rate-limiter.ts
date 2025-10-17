@@ -51,15 +51,18 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
   const pathname = request.nextUrl.pathname;
   
   // Find matching config - always defaults to 'default' config
-  const config: RateLimitConfig = rateLimitConfigs[pathname] || 
-    (() => {
-      for (const [path, pathConfig] of Object.entries(rateLimitConfigs)) {
-        if (path !== 'default' && pathname.startsWith(path)) {
-          return pathConfig;
-        }
+  let foundConfig: RateLimitConfig | undefined = rateLimitConfigs[pathname];
+  
+  if (!foundConfig) {
+    for (const [path, pathConfig] of Object.entries(rateLimitConfigs)) {
+      if (path !== 'default' && pathname.startsWith(path)) {
+        foundConfig = pathConfig;
+        break;
       }
-      return rateLimitConfigs.default;
-    })();
+    }
+  }
+  
+  const config: RateLimitConfig = foundConfig || rateLimitConfigs.default;
 
   const now = Date.now();
   const key = `${ip}:${pathname}`;
