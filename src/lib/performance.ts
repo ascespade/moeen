@@ -1,3 +1,4 @@
+import logger from '@/lib/monitoring/logger';
 import { logger } from '@/lib/logger';
 
 export class PerformanceMonitor {

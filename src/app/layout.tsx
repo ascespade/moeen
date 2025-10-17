@@ -1,47 +1,39 @@
-import { Cairo, Inter } from "next/font/google";
-import "../styles/theme.css";
-import type { Metadata } from "next";
-import UIProvider from "@/components/providers/UIProvider";
-import I18nProvider from "@/components/providers/I18nProvider";
-import { ThemeProvider } from "@/core/theme";
-import { TranslationProvider } from "@/context/TranslationProvider";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { generateMetadata as genMeta, pageMetadata, generateStructuredData } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
-  title: "مُعين",
-  description: "منصة دردشة متعددة القنوات مدعومة بالذكاء الاصطناعي",
-};
+const inter = Inter({ subsets: ['latin'] });
 
-const cairo = Cairo({
-  subsets: ["arabic", "latin"],
-  weight: ["400", "700"],
-  variable: "--font-cairo",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-inter",
-});
+export const metadata: Metadata = genMeta(pageMetadata.home);
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const structuredData = generateStructuredData('website');
+
   return (
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
-      <body
-        className={`${cairo.variable} ${inter.variable} antialiased`}
-        suppressHydrationWarning
-      >
-        <ThemeProvider defaultTheme="system">
-          <TranslationProvider>
-            <I18nProvider>
-              <UIProvider>{children}</UIProvider>
-            </I18nProvider>
-          </TranslationProvider>
-        </ThemeProvider>
-      </body>
+    <html lang="ar" dir="rtl">
+      <head>
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        
+        {/* Favicon */}
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        
+        {/* Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+        
+        {/* Theme Color */}
+        <meta name="theme-color" content="#4F46E5" />
+      </head>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

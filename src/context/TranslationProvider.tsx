@@ -1,4 +1,5 @@
 'use client';
+import logger from '@/lib/monitoring/logger';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';

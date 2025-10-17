@@ -3,6 +3,7 @@
  * Handle Stripe webhook events for payment status updates
  */
 
+import { log } from '@/lib/monitoring/logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import Stripe from 'stripe';

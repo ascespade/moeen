@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { ROUTES } from "@/constants/routes";
 import { getDefaultRouteForUser } from "@/lib/router";
@@ -8,7 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function LoginPage() {
+function LoginForm() {
   const { loginWithCredentials, isLoading, isAuthenticated } = useAuth();
   const { t } = useT();
   const router = useRouter();
@@ -268,5 +268,17 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-brand-primary"></div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   );
 }

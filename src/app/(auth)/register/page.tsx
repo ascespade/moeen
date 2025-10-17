@@ -1,8 +1,12 @@
 "use client";
 import { useState } from "react";
+
 import { ROUTES } from "@/constants/routes";
+
 import Link from "next/link";
+
 import Image from "next/image";
+
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({

@@ -1,4 +1,5 @@
 'use client';
+import { log } from '@/lib/monitoring/logger';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useT } from '@/hooks/useT';

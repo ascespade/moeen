@@ -3,6 +3,7 @@
  * Real Supabase password update - no mocks
  */
 
+import { log } from '@/lib/monitoring/logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
