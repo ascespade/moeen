@@ -37,7 +37,7 @@
     "isomorphic-dompurify": "^2.29.0",
     "jotai": "^2.15.0",
     "lucide-react": "^0.546.0",
-    "next": "14.0.4",
+    "next": "^14.2.32",
     "postcss": "^8",
     "react": "^18",
     "react-dom": "^18",
