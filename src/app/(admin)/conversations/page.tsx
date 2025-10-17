@@ -93,7 +93,7 @@ export default function ConversationsPage() {
           <section className="card grid grid-rows-[1fr_auto]">
             <div className="p-4 overflow-y-auto max-h-[60dvh] space-y-3">
               {active?.messages.map((m) => (
-                <div key={m.id} className={`max-w-[85%] rounded-lg p-3 ${m.from === "customer" ? "bg-gray-100" : m.from === "agent" ? "bg-[var(--brand-accent)]/10" : "bg-[var(--brand-success)]/10"}`}>
+                <div key={m.id} className={`max-w-[85%] rounded-lg p-3 ${m.from === "customer" ? "bg-surface" : m.from === "agent" ? "bg-[var(--brand-accent)]/10" : "bg-[var(--brand-success)]/10"}`}>
                   <div className="text-xs text-gray-500 mb-1">{m.from} • {new Date(m.ts).toLocaleTimeString()}</div>
                   <div>{m.text}</div>
                 </div>

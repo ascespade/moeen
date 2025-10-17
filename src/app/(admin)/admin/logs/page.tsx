@@ -41,7 +41,7 @@ export default function LogsAdminPage() {
       ) : (
       <div className="overflow-x-auto rounded-xl border">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 dark:bg-white/5">
+          <thead className="bg-surface dark:bg-white/5">
             <tr>
               <th className="text-start p-3">النوع</th>
               <th className="text-start p-3">الوقت</th>

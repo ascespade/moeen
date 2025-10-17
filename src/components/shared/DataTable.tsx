@@ -40,7 +40,7 @@ export function DataTable({
           {caption ||
             `Table with ${data.length} rows and ${columns.length} columns`}
         </caption>
-        <thead className="bg-gray-50">
+        <thead className="bg-surface">
           <tr role="row">
             {columns.map((column) => (
               <th
@@ -79,7 +79,7 @@ export function DataTable({
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {data.map((row, index) => (
-            <tr key={row.id || index} role="row" className="hover:bg-gray-50">
+            <tr key={row.id || index} role="row" className="hover:bg-surface">
               {columns.map((column) => (
                 <td
                   key={column.key}

@@ -286,9 +286,9 @@ const PatientRecords: React.FC = () => {
       case "inactive":
         return "bg-yellow-100 text-yellow-800";
       case "archived":
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
     }
   };
 
@@ -371,9 +371,9 @@ const PatientRecords: React.FC = () => {
                 {filteredPatients.map((patient) => (
                   <div
                     key={patient.id}
-                    className={`p-4 border-b cursor-pointer hover:bg-gray-50 ${
+                    className={`p-4 border-b cursor-pointer hover:bg-surface ${
                       selectedPatient?.id === patient.id
-                        ? "bg-blue-50 border-blue-200"
+                        ? "bg-surface border-blue-200"
                         : ""
                     }`}
                     onClick={() => setSelectedPatient(patient)}

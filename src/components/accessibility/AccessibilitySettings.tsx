@@ -287,7 +287,7 @@ const AccessibilitySettings: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm">
                     {settings.keyboardNavigation ? (
-                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <CheckCircle className="w-4 h-4 text-brand-success" />
                     ) : (
                       <AlertCircle className="w-4 h-4 text-gray-400" />
                     )}
@@ -295,7 +295,7 @@ const AccessibilitySettings: React.FC = () => {
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     {settings.screenReader ? (
-                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <CheckCircle className="w-4 h-4 text-brand-success" />
                     ) : (
                       <AlertCircle className="w-4 h-4 text-gray-400" />
                     )}
@@ -303,7 +303,7 @@ const AccessibilitySettings: React.FC = () => {
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     {settings.voiceControl ? (
-                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <CheckCircle className="w-4 h-4 text-brand-success" />
                     ) : (
                       <AlertCircle className="w-4 h-4 text-gray-400" />
                     )}

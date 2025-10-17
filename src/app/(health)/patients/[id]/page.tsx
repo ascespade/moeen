@@ -126,7 +126,7 @@ export default function PatientDetailsPage({
       case "blocked":
         return "bg-red-100 text-red-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
     }
   };
 
@@ -152,7 +152,7 @@ export default function PatientDetailsPage({
       case "upcoming":
         return "bg-blue-100 text-blue-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
     }
   };
 
@@ -195,7 +195,7 @@ export default function PatientDetailsPage({
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setShowEditModal(true)}
-                className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
               >
                 تعديل البيانات
               </button>
@@ -220,7 +220,7 @@ export default function PatientDetailsPage({
               </div>
             </div>
             <div className="text-center">
-              <div className="mb-2 text-3xl font-bold text-green-600">
+              <div className="mb-2 text-3xl font-bold text-brand-success">
                 {mockSessions.filter((s) => s.status === "completed").length}
               </div>
               <div className="text-gray-600 dark:text-gray-300">
@@ -228,7 +228,7 @@ export default function PatientDetailsPage({
               </div>
             </div>
             <div className="text-center">
-              <div className="mb-2 text-3xl font-bold text-blue-600">
+              <div className="mb-2 text-3xl font-bold text-brand-primary">
                 {mockDocuments.length}
               </div>
               <div className="text-gray-600 dark:text-gray-300">الوثائق</div>
@@ -463,7 +463,7 @@ export default function PatientDetailsPage({
                     >
                       <div className="mb-2 flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100">
-                          <span className="font-semibold text-red-600">
+                          <span className="font-semibold text-brand-error">
                             PDF
                           </span>
                         </div>
@@ -501,7 +501,7 @@ export default function PatientDetailsPage({
                   </button>
                 </div>
                 <div className="py-8 text-center">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-surface">
                     <span className="text-2xl">👥</span>
                   </div>
                   <p className="text-gray-500">لا توجد أقارب مسجلين</p>
@@ -664,7 +664,7 @@ export default function PatientDetailsPage({
                 <button
                   type="button"
                   onClick={() => setShowEditModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
                 >
                   إلغاء
                 </button>

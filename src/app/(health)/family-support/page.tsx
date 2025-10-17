@@ -242,13 +242,13 @@ const FamilySupportPage: React.FC = () => {
   const getResourceIcon = (type: string) => {
     switch (type) {
       case 'document':
-        return <FileText className="w-4 h-4 text-blue-500" />;
+        return <FileText className="w-4 h-4 text-brand-primary" />;
       case 'video':
-        return <Video className="w-4 h-4 text-red-500" />;
+        return <Video className="w-4 h-4 text-brand-error" />;
       case 'link':
-        return <BookOpen className="w-4 h-4 text-green-500" />;
+        return <BookOpen className="w-4 h-4 text-brand-success" />;
       case 'guide':
-        return <Lightbulb className="w-4 h-4 text-yellow-500" />;
+        return <Lightbulb className="w-4 h-4 text-brand-warning" />;
       default:
         return <FileText className="w-4 h-4 text-gray-500" />;
     }
@@ -258,10 +258,10 @@ const FamilySupportPage: React.FC = () => {
     switch (relationship) {
       case 'أم':
       case 'أب':
-        return <Heart className="w-4 h-4 text-red-500" />;
+        return <Heart className="w-4 h-4 text-brand-error" />;
       case 'أخ':
       case 'أخت':
-        return <Users className="w-4 h-4 text-blue-500" />;
+        return <Users className="w-4 h-4 text-brand-primary" />;
       case 'جد':
       case 'جدة':
         return <Shield className="w-4 h-4 text-purple-500" />;
@@ -374,7 +374,7 @@ const FamilySupportPage: React.FC = () => {
 
       {/* Tabs */}
       <div className="mb-6">
-        <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+        <div className="flex space-x-1 bg-surface p-1 rounded-lg">
           <button
             onClick={() => setActiveTab('members')}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
@@ -446,7 +446,7 @@ const FamilySupportPage: React.FC = () => {
                               height={48}
                               className="rounded-full"
                             />
-                            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-blue-500 rounded-full border-2 border-white flex items-center justify-center">
+                            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-brand-primary rounded-full border-2 border-white flex items-center justify-center">
                               {getRelationshipIcon(member.relationship)}
                             </div>
                           </div>
@@ -494,7 +494,7 @@ const FamilySupportPage: React.FC = () => {
                       {member.notes && (
                         <div className="mb-4">
                           <h4 className="text-sm font-semibold mb-2">ملاحظات:</h4>
-                          <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg">
+                          <p className="text-sm text-gray-700 bg-surface p-3 rounded-lg">
                             {member.notes}
                           </p>
                         </div>
@@ -600,7 +600,7 @@ const FamilySupportPage: React.FC = () => {
                       {session.follow_up_notes && (
                         <div className="mb-4">
                           <h4 className="text-sm font-semibold mb-2">ملاحظات المتابعة:</h4>
-                          <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg">
+                          <p className="text-sm text-gray-700 bg-surface p-3 rounded-lg">
                             {session.follow_up_notes}
                           </p>
                         </div>
@@ -651,7 +651,7 @@ const FamilySupportPage: React.FC = () => {
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-4">
-                          <div className="p-3 bg-blue-50 rounded-lg">
+                          <div className="p-3 bg-surface rounded-lg">
                             {getResourceIcon(resource.type)}
                           </div>
                           <div>

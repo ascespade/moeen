@@ -201,16 +201,16 @@ const TrainingPage: React.FC = () => {
       'متقدم': { color: 'bg-red-100 text-red-800' }
     };
     
-    const levelInfo = levelMap[level as keyof typeof levelMap] || { color: 'bg-gray-100 text-gray-800' };
+    const levelInfo = levelMap[level as keyof typeof levelMap] || { color: 'bg-surface text-gray-800' };
     return <Badge className={levelInfo.color}>{level}</Badge>;
   };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'المهارات الحياتية':
-        return <BookOpen className="w-4 h-4 text-blue-500" />;
+        return <BookOpen className="w-4 h-4 text-brand-primary" />;
       case 'التأهيل المهني':
-        return <GraduationCap className="w-4 h-4 text-green-500" />;
+        return <GraduationCap className="w-4 h-4 text-brand-success" />;
       case 'التكنولوجيا':
         return <Award className="w-4 h-4 text-purple-500" />;
       default:
@@ -369,7 +369,7 @@ const TrainingPage: React.FC = () => {
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-4">
-                    <div className="p-3 bg-blue-50 rounded-lg">
+                    <div className="p-3 bg-surface rounded-lg">
                       {getCategoryIcon(program.category)}
                     </div>
                     <div>

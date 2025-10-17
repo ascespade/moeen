@@ -31,7 +31,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
     default: 'border-gray-200',
     elevated: 'border-gray-200 shadow-md',
     outlined: 'border-2 border-gray-300',
-    filled: 'border-gray-200 bg-gray-50',
+    filled: 'border-gray-200 bg-surface',
   };
   
   const paddings = {

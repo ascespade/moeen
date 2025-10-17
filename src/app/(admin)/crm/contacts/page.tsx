@@ -188,13 +188,13 @@ const ContactsPage: React.FC = () => {
   const getActivityIcon = (type: string) => {
     switch (type) {
       case 'call':
-        return <Phone className="w-4 h-4 text-blue-500" />;
+        return <Phone className="w-4 h-4 text-brand-primary" />;
       case 'email':
-        return <Mail className="w-4 h-4 text-green-500" />;
+        return <Mail className="w-4 h-4 text-brand-success" />;
       case 'meeting':
         return <Calendar className="w-4 h-4 text-purple-500" />;
       case 'note':
-        return <MessageCircle className="w-4 h-4 text-orange-500" />;
+        return <MessageCircle className="w-4 h-4 text-brand-primary" />;
       default:
         return <Activity className="w-4 h-4 text-gray-500" />;
     }
@@ -367,7 +367,7 @@ const ContactsPage: React.FC = () => {
                       key={contact.id}
                       className={`p-4 border rounded-lg cursor-pointer transition-colors ${
                         selectedContact?.id === contact.id 
-                          ? 'border-[var(--brand-primary)] bg-blue-50' 
+                          ? 'border-[var(--brand-primary)] bg-surface' 
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                       onClick={() => setSelectedContact(contact)}
@@ -493,7 +493,7 @@ const ContactsPage: React.FC = () => {
                   {selectedContact.notes && (
                     <div className="pt-4 border-t">
                       <h4 className="text-sm font-semibold mb-2">ملاحظات:</h4>
-                      <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg">
+                      <p className="text-sm text-gray-700 bg-surface p-3 rounded-lg">
                         {selectedContact.notes}
                       </p>
                     </div>
@@ -538,7 +538,7 @@ const ContactsPage: React.FC = () => {
                         </p>
                       ) : (
                         contactActivities.map((activity) => (
-                          <div key={activity.id} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                          <div key={activity.id} className="flex items-start gap-3 p-3 bg-surface rounded-lg">
                             <div className="p-2 bg-white rounded-full">
                               {getActivityIcon(activity.type)}
                             </div>

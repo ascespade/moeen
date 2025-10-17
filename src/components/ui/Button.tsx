@@ -36,9 +36,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const variants = {
       primary: 'bg-primary-500 text-white hover:bg-primary-600 focus-visible:ring-primary-500',
       secondary: 'bg-secondary-500 text-white hover:bg-secondary-600 focus-visible:ring-secondary-500',
-      outline: 'border border-gray-300 bg-transparent hover:bg-gray-50 focus-visible:ring-gray-500',
-      ghost: 'hover:bg-gray-100 focus-visible:ring-gray-500',
-      destructive: 'bg-red-500 text-white hover:bg-red-600 focus-visible:ring-red-500',
+      outline: 'border border-gray-300 bg-transparent hover:bg-surface focus-visible:ring-gray-500',
+      ghost: 'hover:bg-surface focus-visible:ring-gray-500',
+      destructive: 'bg-brand-error text-white hover:bg-brand-error focus-visible:ring-red-500',
       link: 'text-primary-500 underline-offset-4 hover:underline focus-visible:ring-primary-500',
     };
     

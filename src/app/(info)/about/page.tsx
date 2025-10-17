@@ -50,7 +50,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-surface dark:bg-gray-900">
       {/* Header */}
       <header className="bg-white shadow-sm dark:bg-gray-800">
         <div className="mx-auto max-w-screen-xl px-4 py-6">
@@ -161,7 +161,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission Section */}
-      <section className="bg-gray-100 py-20 dark:bg-gray-800">
+      <section className="bg-surface py-20 dark:bg-gray-800">
         <div className="mx-auto max-w-screen-xl px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
@@ -218,7 +218,7 @@ export default function AboutPage() {
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Link
               href="/register"
-              className="rounded-lg bg-white px-8 py-3 font-semibold text-[var(--brand-primary)] transition-colors hover:bg-gray-100"
+              className="rounded-lg bg-white px-8 py-3 font-semibold text-[var(--brand-primary)] transition-colors hover:bg-surface"
             >
               انضم الآن
             </Link>

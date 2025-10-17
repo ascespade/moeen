@@ -20,7 +20,7 @@ export default function VerifyEmailPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
+    <div className="flex min-h-screen items-center justify-center bg-surface p-4 dark:bg-gray-900">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <Image
@@ -41,7 +41,7 @@ export default function VerifyEmailPage() {
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
           <div className="text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
-              <Mail className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+              <Mail className="h-8 w-8 text-brand-primary dark:text-blue-400" />
             </div>
 
             <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
@@ -52,7 +52,7 @@ export default function VerifyEmailPage() {
               على الرابط لتفعيل حسابك.
             </p>
 
-            <div className="mb-6 rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+            <div className="mb-6 rounded-lg bg-surface p-4 dark:bg-gray-700">
               <h4 className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 لم تجد الرسالة؟
               </h4>

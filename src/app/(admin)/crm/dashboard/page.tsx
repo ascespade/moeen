@@ -139,7 +139,7 @@ const CRMDashboard: React.FC = () => {
     const statusConfig = {
       'scheduled': { label: 'مجدول', variant: 'primary' as const, color: 'bg-blue-100 text-blue-800' },
       'confirmed': { label: 'مؤكد', variant: 'secondary' as const, color: 'bg-green-100 text-green-800' },
-      'completed': { label: 'مكتمل', variant: 'outline' as const, color: 'bg-gray-100 text-gray-800' },
+      'completed': { label: 'مكتمل', variant: 'outline' as const, color: 'bg-surface text-gray-800' },
       'cancelled': { label: 'ملغي', variant: 'destructive' as const, color: 'bg-red-100 text-red-800' },
       'no_show': { label: 'لم يحضر', variant: 'destructive' as const, color: 'bg-orange-100 text-orange-800' }
     };
@@ -147,7 +147,7 @@ const CRMDashboard: React.FC = () => {
     const config = statusConfig[status as keyof typeof statusConfig] || { 
       label: status, 
       variant: 'outline' as const, 
-      color: 'bg-gray-100 text-gray-800' 
+      color: 'bg-surface text-gray-800' 
     };
     
     return (
@@ -241,7 +241,7 @@ const CRMDashboard: React.FC = () => {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Clock className="h-8 w-8 text-green-500" />
+                <Clock className="h-8 w-8 text-brand-success" />
                 <div className="mr-4">
                   <p className="text-sm font-medium text-gray-600">مواعيد اليوم</p>
                   <p className="text-2xl font-bold">{stats.todayAppointments}</p>
@@ -253,7 +253,7 @@ const CRMDashboard: React.FC = () => {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Activity className="h-8 w-8 text-blue-500" />
+                <Activity className="h-8 w-8 text-brand-primary" />
                 <div className="mr-4">
                   <p className="text-sm font-medium text-gray-600">في الانتظار</p>
                   <p className="text-2xl font-bold">{stats.pendingAppointments}</p>
@@ -265,7 +265,7 @@ const CRMDashboard: React.FC = () => {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
-                <CheckCircle className="h-8 w-8 text-green-600" />
+                <CheckCircle className="h-8 w-8 text-brand-success" />
                 <div className="mr-4">
                   <p className="text-sm font-medium text-gray-600">مكتملة</p>
                   <p className="text-2xl font-bold">{stats.completedAppointments}</p>
@@ -399,7 +399,7 @@ const CRMDashboard: React.FC = () => {
                     </div>
                     
                     {appointment.notes && (
-                      <div className="mt-4 bg-gray-50 p-3 rounded-lg">
+                      <div className="mt-4 bg-surface p-3 rounded-lg">
                         <p className="text-sm text-gray-700">
                           <strong>ملاحظات:</strong> {appointment.notes}
                         </p>
@@ -417,7 +417,7 @@ const CRMDashboard: React.FC = () => {
                             variant="outline"
                             size="sm"
                             onClick={() => handleStatusUpdate(appointment.id, 'confirmed')}
-                            className="text-green-600 hover:text-green-700"
+                            className="text-brand-success hover:text-green-700"
                           >
                             <CheckCircle className="w-4 h-4 mr-1" />
                             تأكيد
@@ -426,7 +426,7 @@ const CRMDashboard: React.FC = () => {
                             variant="outline"
                             size="sm"
                             onClick={() => handleStatusUpdate(appointment.id, 'cancelled')}
-                            className="text-red-600 hover:text-red-700"
+                            className="text-brand-error hover:text-red-700"
                           >
                             <XCircle className="w-4 h-4 mr-1" />
                             إلغاء
@@ -439,7 +439,7 @@ const CRMDashboard: React.FC = () => {
                           variant="outline"
                           size="sm"
                           onClick={() => handleStatusUpdate(appointment.id, 'completed')}
-                          className="text-blue-600 hover:text-blue-700"
+                          className="text-brand-primary hover:text-blue-700"
                         >
                           <CheckCircle className="w-4 h-4 mr-1" />
                           إكمال

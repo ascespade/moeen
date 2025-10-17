@@ -86,13 +86,13 @@ export default function AgentDashboard() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "running":
-        return "text-green-600 bg-green-100";
+        return "text-brand-success bg-green-100";
       case "completed":
-        return "text-blue-600 bg-blue-100";
+        return "text-brand-primary bg-blue-100";
       case "failed":
-        return "text-red-600 bg-red-100";
+        return "text-brand-error bg-red-100";
       case "stopped":
-        return "text-gray-600 bg-gray-100";
+        return "text-gray-600 bg-surface";
       default:
         return "text-yellow-600 bg-yellow-100";
     }
@@ -171,7 +171,7 @@ export default function AgentDashboard() {
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div
-                    className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                    className="bg-brand-primary h-2 rounded-full transition-all duration-300"
                     style={{ width: `${taskStatus.progress_percentage}%` }}
                   ></div>
                 </div>
@@ -247,7 +247,7 @@ export default function AgentDashboard() {
         <div className="mt-6 text-center">
           <button
             onClick={fetchStatus}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-brand-primary hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary"
           >
             🔄 Refresh Status
           </button>

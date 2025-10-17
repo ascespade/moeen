@@ -7,7 +7,7 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { LoadingSpinner } from '@/components/ui';
 import { 
   Users, 
   TrendingUp, 
@@ -101,7 +101,7 @@ export default function SupervisorDashboard() {
 
   return (
     <ProtectedRoute allowedRoles={['supervisor', 'admin']}>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-surface dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
@@ -117,7 +117,7 @@ export default function SupervisorDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <Card className="p-6">
               <div className="flex items-center">
-                <Users className="h-8 w-8 text-blue-600 mr-4" />
+                <Users className="h-8 w-8 text-brand-primary mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     {t('supervisor.dashboard.total_patients')}
@@ -131,7 +131,7 @@ export default function SupervisorDashboard() {
 
             <Card className="p-6">
               <div className="flex items-center">
-                <Clock className="h-8 w-8 text-green-600 mr-4" />
+                <Clock className="h-8 w-8 text-brand-success mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     {t('supervisor.dashboard.total_appointments')}
@@ -159,7 +159,7 @@ export default function SupervisorDashboard() {
 
             <Card className="p-6">
               <div className="flex items-center">
-                <FileText className="h-8 w-8 text-orange-600 mr-4" />
+                <FileText className="h-8 w-8 text-brand-primary mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     {t('supervisor.dashboard.claims_processed')}
@@ -190,7 +190,7 @@ export default function SupervisorDashboard() {
                         <div className="flex items-center">
                           <div className="flex-shrink-0">
                             <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
-                              <Users className="h-5 w-5 text-blue-600" />
+                              <Users className="h-5 w-5 text-brand-primary" />
                             </div>
                           </div>
                           <div className="ml-4">
@@ -250,15 +250,15 @@ export default function SupervisorDashboard() {
                       <div 
                         key={alert.id}
                         className={`flex items-start p-3 rounded-lg ${
-                          alert.type === 'error' ? 'bg-red-50 dark:bg-red-900/20' :
-                          alert.type === 'warning' ? 'bg-yellow-50 dark:bg-yellow-900/20' :
-                          'bg-blue-50 dark:bg-blue-900/20'
+                          alert.type === 'error' ? 'bg-surface dark:bg-red-900/20' :
+                          alert.type === 'warning' ? 'bg-surface dark:bg-yellow-900/20' :
+                          'bg-surface dark:bg-blue-900/20'
                         }`}
                       >
                         <AlertTriangle className={`h-4 w-4 mt-0.5 mr-3 ${
-                          alert.type === 'error' ? 'text-red-600' :
+                          alert.type === 'error' ? 'text-brand-error' :
                           alert.type === 'warning' ? 'text-yellow-600' :
-                          'text-blue-600'
+                          'text-brand-primary'
                         }`} />
                         <div className="flex-1">
                           <p className="text-sm text-gray-900 dark:text-white">

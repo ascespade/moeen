@@ -70,7 +70,7 @@ export default function CRMDealsPage() {
   const getStageColor = (stage: Deal["stage"]) => {
     switch (stage) {
       case "prospecting":
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
       case "qualification":
         return "bg-blue-100 text-blue-800";
       case "proposal":
@@ -82,7 +82,7 @@ export default function CRMDealsPage() {
       case "closed-lost":
         return "bg-red-100 text-red-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
     }
   };
 
@@ -172,7 +172,7 @@ export default function CRMDealsPage() {
       <main className="container-app py-8">
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-blue-600">
+            <div className="mb-2 text-3xl font-bold text-brand-primary">
               {mockDeals.length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
@@ -180,7 +180,7 @@ export default function CRMDealsPage() {
             </div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
+            <div className="mb-2 text-3xl font-bold text-brand-success">
               {mockDeals.filter((d) => d.stage === "closed-won").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">مكتملة</div>
@@ -195,7 +195,7 @@ export default function CRMDealsPage() {
             </div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-orange-600">
+            <div className="mb-2 text-3xl font-bold text-brand-primary">
               {Math.round(
                 mockDeals.reduce((sum, d) => sum + d.probability, 0) /
                   mockDeals.length,
@@ -252,7 +252,7 @@ export default function CRMDealsPage() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             {stages.map((stage) => (
               <div key={stage} className="space-y-4">
-                <div className="rounded-lg bg-gray-100 p-4 dark:bg-gray-800">
+                <div className="rounded-lg bg-surface p-4 dark:bg-gray-800">
                   <h3 className="font-semibold text-gray-900 dark:text-white">
                     {getStageText(stage as Deal["stage"])}
                   </h3>
@@ -300,7 +300,7 @@ export default function CRMDealsPage() {
                           <button className="flex-1 rounded bg-[var(--brand-primary)] px-2 py-1 text-xs text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
                             عرض
                           </button>
-                          <button className="rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-gray-50">
+                          <button className="rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-surface">
                             تحريك
                           </button>
                         </div>
@@ -314,7 +314,7 @@ export default function CRMDealsPage() {
           <div className="card overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 dark:bg-gray-800">
+                <thead className="bg-surface dark:bg-gray-800">
                   <tr>
                     <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                       الصفقة
@@ -343,7 +343,7 @@ export default function CRMDealsPage() {
                   {filteredDeals.map((deal) => (
                     <tr
                       key={deal.id}
-                      className="hover:bg-gray-50 dark:hover:bg-gray-800"
+                      className="hover:bg-surface dark:hover:bg-gray-800"
                     >
                       <td className="px-6 py-4">
                         <div>
@@ -405,7 +405,7 @@ export default function CRMDealsPage() {
 
         {filteredDeals.length === 0 && (
           <div className="py-12 text-center">
-            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
+            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-surface">
               <span className="text-4xl">💼</span>
             </div>
             <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
@@ -491,7 +491,7 @@ export default function CRMDealsPage() {
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
                 >
                   إلغاء
                 </button>

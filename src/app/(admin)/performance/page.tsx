@@ -137,26 +137,26 @@ const PerformancePage: React.FC = () => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'good': return <CheckCircle className="w-4 h-4 text-green-500" />;
-      case 'warning': return <AlertTriangle className="w-4 h-4 text-yellow-500" />;
-      case 'critical': return <AlertTriangle className="w-4 h-4 text-red-500" />;
+      case 'good': return <CheckCircle className="w-4 h-4 text-brand-success" />;
+      case 'warning': return <AlertTriangle className="w-4 h-4 text-brand-warning" />;
+      case 'critical': return <AlertTriangle className="w-4 h-4 text-brand-error" />;
       default: return <Activity className="w-4 h-4 text-gray-500" />;
     }
   };
 
   const getTrendIcon = (trend: string) => {
     switch (trend) {
-      case 'up': return <TrendingUp className="w-4 h-4 text-red-500" />;
-      case 'down': return <TrendingDown className="w-4 h-4 text-green-500" />;
+      case 'up': return <TrendingUp className="w-4 h-4 text-brand-error" />;
+      case 'down': return <TrendingDown className="w-4 h-4 text-brand-success" />;
       default: return <Activity className="w-4 h-4 text-gray-500" />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'good': return 'text-green-600';
+      case 'good': return 'text-brand-success';
       case 'warning': return 'text-yellow-600';
-      case 'critical': return 'text-red-600';
+      case 'critical': return 'text-brand-error';
       default: return 'text-gray-600';
     }
   };
@@ -190,7 +190,7 @@ const PerformancePage: React.FC = () => {
               <div className="text-2xl font-bold">{systemHealth.cpu_usage}%</div>
               <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                 <div 
-                  className="bg-blue-500 h-2 rounded-full"
+                  className="bg-brand-primary h-2 rounded-full"
                   style={{ width: `${systemHealth.cpu_usage}%` }}
                 ></div>
               </div>
@@ -206,7 +206,7 @@ const PerformancePage: React.FC = () => {
               <div className="text-2xl font-bold">{systemHealth.memory_usage}%</div>
               <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                 <div 
-                  className="bg-green-500 h-2 rounded-full"
+                  className="bg-brand-success h-2 rounded-full"
                   style={{ width: `${systemHealth.memory_usage}%` }}
                 ></div>
               </div>
@@ -222,7 +222,7 @@ const PerformancePage: React.FC = () => {
               <div className="text-2xl font-bold">{systemHealth.disk_usage}%</div>
               <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                 <div 
-                  className="bg-purple-500 h-2 rounded-full"
+                  className="bg-surface0 h-2 rounded-full"
                   style={{ width: `${systemHealth.disk_usage}%` }}
                 ></div>
               </div>
@@ -263,8 +263,8 @@ const PerformancePage: React.FC = () => {
               <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
                 <div 
                   className={`h-2 rounded-full ${
-                    metric.status === 'good' ? 'bg-green-500' :
-                    metric.status === 'warning' ? 'bg-yellow-500' : 'bg-red-500'
+                    metric.status === 'good' ? 'bg-brand-success' :
+                    metric.status === 'warning' ? 'bg-brand-warning' : 'bg-brand-error'
                   }`}
                   style={{ width: `${Math.min((metric.value / metric.threshold) * 100, 100)}%` }}
                 ></div>

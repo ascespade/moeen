@@ -110,11 +110,11 @@ export default function PreVisitChecklist({
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'documents': return 'text-blue-600 bg-blue-100 dark:bg-blue-900/20';
-      case 'payment': return 'text-green-600 bg-green-100 dark:bg-green-900/20';
-      case 'health': return 'text-red-600 bg-red-100 dark:bg-red-900/20';
+      case 'documents': return 'text-brand-primary bg-blue-100 dark:bg-blue-900/20';
+      case 'payment': return 'text-brand-success bg-green-100 dark:bg-green-900/20';
+      case 'health': return 'text-brand-error bg-red-100 dark:bg-red-900/20';
       case 'appointment': return 'text-purple-600 bg-purple-100 dark:bg-purple-900/20';
-      default: return 'text-gray-600 bg-gray-100 dark:bg-gray-900/20';
+      default: return 'text-gray-600 bg-surface dark:bg-gray-900/20';
     }
   };
 
@@ -165,7 +165,7 @@ export default function PreVisitChecklist({
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
             <div 
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              className="bg-brand-primary h-2 rounded-full transition-all duration-300"
               style={{ width: `${(completedItems / totalItems) * 100}%` }}
             />
           </div>
@@ -189,8 +189,8 @@ export default function PreVisitChecklist({
                   key={item.id}
                   className={`flex items-start p-4 rounded-lg border ${
                     item.completed 
-                      ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800'
-                      : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
+                      ? 'bg-surface dark:bg-green-900/20 border-green-200 dark:border-green-800'
+                      : 'bg-surface dark:bg-gray-800 border-gray-200 dark:border-gray-700'
                   }`}
                 >
                   <Checkbox
@@ -212,7 +212,7 @@ export default function PreVisitChecklist({
                           </Badge>
                         )}
                         {item.completed && (
-                          <CheckCircle className="h-4 w-4 text-green-600" />
+                          <CheckCircle className="h-4 w-4 text-brand-success" />
                         )}
                       </div>
                     </div>
@@ -236,7 +236,7 @@ export default function PreVisitChecklist({
               {t('patient.checklist.required_completed')}: {completedRequiredItems}/{requiredItems.length}
             </p>
             {!allRequiredCompleted && (
-              <p className="text-sm text-orange-600 dark:text-orange-400 mt-1">
+              <p className="text-sm text-brand-primary dark:text-orange-400 mt-1">
                 {t('patient.checklist.required_warning')}
               </p>
             )}

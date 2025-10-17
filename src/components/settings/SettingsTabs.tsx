@@ -83,7 +83,7 @@ export default function SettingsTabs() {
         {tabs.map((t) => (
           <button
             key={t.id}
-            className={`h-9 px-3 rounded-md border whitespace-nowrap ${active === t.id ? "bg-gray-900 text-white" : "hover:bg-gray-100 dark:hover:bg-white/10"}`}
+            className={`h-9 px-3 rounded-md border whitespace-nowrap ${active === t.id ? "bg-gray-900 text-white" : "hover:bg-surface dark:hover:bg-white/10"}`}
             onClick={() => setActive(t.id)}
           >
             {t.label}

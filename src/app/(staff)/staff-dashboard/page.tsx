@@ -7,7 +7,7 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 import { 
   UserPlus, 
   Users, 
@@ -116,7 +116,7 @@ export default function StaffDashboard() {
 
   return (
     <ProtectedRoute allowedRoles={['staff', 'supervisor', 'admin']}>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-surface dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
@@ -132,7 +132,7 @@ export default function StaffDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <Card className="p-6">
               <div className="flex items-center">
-                <UserPlus className="h-8 w-8 text-blue-600 mr-4" />
+                <UserPlus className="h-8 w-8 text-brand-primary mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     {t('staff.dashboard.today_registrations')}
@@ -146,7 +146,7 @@ export default function StaffDashboard() {
 
             <Card className="p-6">
               <div className="flex items-center">
-                <CreditCard className="h-8 w-8 text-green-600 mr-4" />
+                <CreditCard className="h-8 w-8 text-brand-success mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     {t('staff.dashboard.pending_payments')}
@@ -160,7 +160,7 @@ export default function StaffDashboard() {
 
             <Card className="p-6">
               <div className="flex items-center">
-                <FileText className="h-8 w-8 text-orange-600 mr-4" />
+                <FileText className="h-8 w-8 text-brand-primary mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     {t('staff.dashboard.pending_claims')}
@@ -209,7 +209,7 @@ export default function StaffDashboard() {
                           className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
                         >
                           <div className="flex items-center">
-                            <CreditCard className="h-5 w-5 text-green-600 mr-3" />
+                            <CreditCard className="h-5 w-5 text-brand-success mr-3" />
                             <div>
                               <p className="font-medium text-gray-900 dark:text-white">
                                 {payment.patientName}
@@ -253,7 +253,7 @@ export default function StaffDashboard() {
                           className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
                         >
                           <div className="flex items-center">
-                            <FileText className="h-5 w-5 text-orange-600 mr-3" />
+                            <FileText className="h-5 w-5 text-brand-primary mr-3" />
                             <div>
                               <p className="font-medium text-gray-900 dark:text-white">
                                 {claim.patientName}
@@ -321,9 +321,9 @@ export default function StaffDashboard() {
                 {staffData?.recentActivity && staffData.recentActivity.length > 0 ? (
                   <div className="space-y-3">
                     {staffData.recentActivity.slice(0, 5).map((activity) => (
-                      <div key={activity.id} className="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={activity.id} className="flex items-start space-x-3 p-3 bg-surface dark:bg-gray-800 rounded-lg">
                         <div className="flex-shrink-0">
-                          <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
+                          <div className="w-2 h-2 bg-brand-primary rounded-full mt-2"></div>
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm text-gray-900 dark:text-white">

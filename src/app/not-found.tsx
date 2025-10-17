@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-surface dark:bg-gray-900 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full text-center">
         {/* Logo */}
         <div className="mb-8">
@@ -43,7 +43,7 @@ export default function NotFound() {
             </Link>
             <button
               onClick={() => window.history.back()}
-              className="inline-flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              className="inline-flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-lg hover:bg-surface dark:hover:bg-gray-700 transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
               العودة للخلف
@@ -51,14 +51,14 @@ export default function NotFound() {
           </div>
 
           {/* Help Section */}
-          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
+          <div className="bg-surface dark:bg-gray-700 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               هل تحتاج مساعدة؟
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
               <Link
                 href="/contact"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-600 transition-colors"
               >
                 <HelpCircle className="w-5 h-5 text-[var(--brand-primary)]" />
                 <span className="text-gray-700 dark:text-gray-300">
@@ -67,7 +67,7 @@ export default function NotFound() {
               </Link>
               <Link
                 href="/faq"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-600 transition-colors"
               >
                 <Search className="w-5 h-5 text-[var(--brand-primary)]" />
                 <span className="text-gray-700 dark:text-gray-300">

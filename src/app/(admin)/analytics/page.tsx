@@ -208,14 +208,14 @@ const AnalyticsPage: React.FC = () => {
   };
 
   const getGrowthIcon = (rate: number) => {
-    if (rate > 0) return <TrendingUp className="w-4 h-4 text-green-500" />;
-    if (rate < 0) return <TrendingDown className="w-4 h-4 text-red-500" />;
+    if (rate > 0) return <TrendingUp className="w-4 h-4 text-brand-success" />;
+    if (rate < 0) return <TrendingDown className="w-4 h-4 text-brand-error" />;
     return <Activity className="w-4 h-4 text-gray-500" />;
   };
 
   const getGrowthColor = (rate: number) => {
-    if (rate > 0) return "text-green-600";
-    if (rate < 0) return "text-red-600";
+    if (rate > 0) return "text-brand-success";
+    if (rate < 0) return "text-brand-error";
     return "text-gray-600";
   };
 
@@ -262,7 +262,7 @@ const AnalyticsPage: React.FC = () => {
         </div>
 
         {/* View Tabs */}
-        <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+        <div className="flex space-x-1 bg-surface p-1 rounded-lg">
           <button
             onClick={() => setSelectedView('overview')}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
@@ -474,7 +474,7 @@ const AnalyticsPage: React.FC = () => {
                           <div className="flex items-center gap-2">
                             <div className="w-32 bg-gray-200 rounded-full h-2">
                               <div 
-                                className="bg-green-500 h-2 rounded-full"
+                                className="bg-brand-success h-2 rounded-full"
                                 style={{ width: `${(item.count / analyticsData.overview.totalPatients) * 100}%` }}
                               ></div>
                             </div>
@@ -557,7 +557,7 @@ const AnalyticsPage: React.FC = () => {
                           <div className="flex items-center gap-2">
                             <div className="w-32 bg-gray-200 rounded-full h-2">
                               <div 
-                                className="bg-blue-500 h-2 rounded-full"
+                                className="bg-surface0 h-2 rounded-full"
                                 style={{ width: `${(item.count / analyticsData.overview.totalAppointments) * 100}%` }}
                               ></div>
                             </div>
@@ -582,7 +582,7 @@ const AnalyticsPage: React.FC = () => {
                           <div className="flex items-center gap-2">
                             <div className="w-32 bg-gray-200 rounded-full h-2">
                               <div 
-                                className="bg-purple-500 h-2 rounded-full"
+                                className="bg-surface0 h-2 rounded-full"
                                 style={{ width: `${(item.count / Math.max(...analyticsData.appointmentAnalytics.byTime.map(t => t.count))) * 100}%` }}
                               ></div>
                             </div>
@@ -602,7 +602,7 @@ const AnalyticsPage: React.FC = () => {
                     <CardTitle className="text-sm">معدل عدم الحضور</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-red-600">
+                    <div className="text-2xl font-bold text-brand-error">
                       {analyticsData.appointmentAnalytics.noShowRate}%
                     </div>
                   </CardContent>
@@ -624,7 +624,7 @@ const AnalyticsPage: React.FC = () => {
                     <CardTitle className="text-sm">معدل الإنجاز</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-green-600">
+                    <div className="text-2xl font-bold text-brand-success">
                       {Math.round((analyticsData.overview.completedAppointments / analyticsData.overview.totalAppointments) * 100)}%
                     </div>
                   </CardContent>

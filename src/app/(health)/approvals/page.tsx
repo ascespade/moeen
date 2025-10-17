@@ -218,8 +218,8 @@ export default function ApprovalsPage() {
   const getBlockStatus = (approval: Approval) => {
     if (approval.isBlocked) {
       return (
-        <div className="flex items-center gap-2 text-red-600">
-          <span className="h-2 w-2 rounded-full bg-red-500"></span>
+        <div className="flex items-center gap-2 text-brand-error">
+          <span className="h-2 w-2 rounded-full bg-brand-error"></span>
           <span className="text-sm font-medium">محظور</span>
           {approval.blockReason && (
             <span className="text-xs text-gray-500">
@@ -230,8 +230,8 @@ export default function ApprovalsPage() {
       );
     }
     return (
-      <div className="flex items-center gap-2 text-green-600">
-        <span className="h-2 w-2 rounded-full bg-green-500"></span>
+      <div className="flex items-center gap-2 text-brand-success">
+        <span className="h-2 w-2 rounded-full bg-brand-success"></span>
         <span className="text-sm font-medium">نشط</span>
       </div>
     );
@@ -240,8 +240,8 @@ export default function ApprovalsPage() {
   const getOutstandingBalance = (approval: Approval) => {
     if (approval.hasOutstandingBalance) {
       return (
-        <div className="flex items-center gap-2 text-orange-600">
-          <span className="h-2 w-2 rounded-full bg-orange-500"></span>
+        <div className="flex items-center gap-2 text-brand-primary">
+          <span className="h-2 w-2 rounded-full bg-brand-primary"></span>
           <span className="text-sm font-medium">
             رصيد مستحق: {approval.outstandingAmount?.toLocaleString()} ريال
           </span>
@@ -249,8 +249,8 @@ export default function ApprovalsPage() {
       );
     }
     return (
-      <div className="flex items-center gap-2 text-green-600">
-        <span className="h-2 w-2 rounded-full bg-green-500"></span>
+      <div className="flex items-center gap-2 text-brand-success">
+        <span className="h-2 w-2 rounded-full bg-brand-success"></span>
         <span className="text-sm font-medium">لا يوجد رصيد مستحق</span>
       </div>
     );
@@ -270,7 +270,7 @@ export default function ApprovalsPage() {
           </span>
         </div>
         {approval.insuranceCoverage && (
-          <div className="flex justify-between text-green-600">
+          <div className="flex justify-between text-brand-success">
             <span>التغطية التأمينية:</span>
             <span className="font-medium">
               -{approval.insuranceCoverage.toLocaleString()} ريال
@@ -342,13 +342,13 @@ export default function ApprovalsPage() {
             <div className="text-gray-600 dark:text-gray-300">قيد المراجعة</div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
+            <div className="mb-2 text-3xl font-bold text-brand-success">
               {mockApprovals.filter((a) => a.status === "approved").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">موافق عليها</div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-red-600">
+            <div className="mb-2 text-3xl font-bold text-brand-error">
               {mockApprovals.filter((a) => a.status === "rejected").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">مرفوضة</div>
@@ -607,7 +607,7 @@ export default function ApprovalsPage() {
                 {/* Description */}
                 <div>
                   <h4 className="mb-3 font-semibold">وصف الطلب</h4>
-                  <p className="rounded-lg bg-gray-50 p-4 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                  <p className="rounded-lg bg-surface p-4 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
                     {selectedApproval.description}
                   </p>
                 </div>
@@ -616,7 +616,7 @@ export default function ApprovalsPage() {
                 {selectedApproval.estimatedCost && (
                   <div>
                     <h4 className="mb-3 font-semibold">معلومات التكلفة</h4>
-                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+                    <div className="rounded-lg bg-surface p-4 dark:bg-gray-800">
                       {getCostBreakdown(selectedApproval)}
                     </div>
                   </div>
@@ -665,7 +665,7 @@ export default function ApprovalsPage() {
                   selectedApproval.rejectionReason && (
                     <div>
                       <h4 className="mb-3 font-semibold">سبب الرفض</h4>
-                      <p className="rounded-lg bg-red-50 p-4 text-red-600 dark:bg-red-900/20">
+                      <p className="rounded-lg bg-surface p-4 text-brand-error dark:bg-red-900/20">
                         {selectedApproval.rejectionReason}
                       </p>
                     </div>
@@ -675,7 +675,7 @@ export default function ApprovalsPage() {
                 {selectedApproval.notes && (
                   <div>
                     <h4 className="mb-3 font-semibold">ملاحظات</h4>
-                    <p className="rounded-lg bg-blue-50 p-4 text-gray-700 dark:bg-blue-900/20 dark:text-gray-300">
+                    <p className="rounded-lg bg-surface p-4 text-gray-700 dark:bg-blue-900/20 dark:text-gray-300">
                       {selectedApproval.notes}
                     </p>
                   </div>

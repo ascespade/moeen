@@ -47,7 +47,7 @@ export default function SettingsPage() {
                   className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-right transition-colors ${
                     activeTab === tab.id
                       ? "bg-[var(--brand-primary)] text-white"
-                      : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                      : "text-gray-700 hover:bg-surface dark:text-gray-300 dark:hover:bg-gray-800"
                   }`}
                 >
                   <span className="text-lg">{tab.icon}</span>
@@ -142,7 +142,7 @@ export default function SettingsPage() {
                           defaultValue="AIzaSyB..."
                           className="flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                         />
-                        <button className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50">
+                        <button className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface">
                           تحديث
                         </button>
                       </div>
@@ -157,7 +157,7 @@ export default function SettingsPage() {
                           defaultValue="sk-..."
                           className="flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                         />
-                        <button className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50">
+                        <button className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface">
                           تحديث
                         </button>
                       </div>
@@ -172,7 +172,7 @@ export default function SettingsPage() {
                           defaultValue="EAA..."
                           className="flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                         />
-                        <button className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50">
+                        <button className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface">
                           تحديث
                         </button>
                       </div>
@@ -223,7 +223,7 @@ export default function SettingsPage() {
                               integration.status === "connected"
                                 ? "bg-green-100 text-green-800"
                                 : integration.status === "disconnected"
-                                  ? "bg-gray-100 text-gray-800"
+                                  ? "bg-surface text-gray-800"
                                   : "bg-red-100 text-red-800"
                             }`}
                           >
@@ -233,7 +233,7 @@ export default function SettingsPage() {
                                 ? "غير متصل"
                                 : "خطأ"}
                           </span>
-                          <button className="rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-gray-50">
+                          <button className="rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-surface">
                             {integration.status === "connected"
                               ? "إعدادات"
                               : "اتصال"}

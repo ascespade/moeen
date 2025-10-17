@@ -74,9 +74,9 @@ export default function ChatbotFlowsPage() {
       case "published":
         return "bg-green-100 text-green-800";
       case "archived":
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
     }
   };
 
@@ -144,7 +144,7 @@ export default function ChatbotFlowsPage() {
         {/* Stats Cards */}
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-blue-600">
+            <div className="mb-2 text-3xl font-bold text-brand-primary">
               {mockFlows.length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
@@ -152,7 +152,7 @@ export default function ChatbotFlowsPage() {
             </div>
           </div>
           <div className="card p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
+            <div className="mb-2 text-3xl font-bold text-brand-success">
               {mockFlows.filter((f) => f.status === "published").length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">منشورة</div>
@@ -259,7 +259,7 @@ export default function ChatbotFlowsPage() {
                   {flow.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-600"
+                      className="rounded-full bg-surface px-2 py-1 text-xs text-gray-600"
                     >
                       {tag}
                     </span>
@@ -291,10 +291,10 @@ export default function ChatbotFlowsPage() {
                 >
                   فتح المحرر
                 </Link>
-                <button className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50">
+                <button className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface">
                   نسخ
                 </button>
-                <button className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50">
+                <button className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface">
                   أرشفة
                 </button>
               </div>
@@ -305,7 +305,7 @@ export default function ChatbotFlowsPage() {
         {/* Empty State */}
         {filteredFlows.length === 0 && (
           <div className="py-12 text-center">
-            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
+            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-surface">
               <span className="text-4xl">🤖</span>
             </div>
             <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
@@ -382,7 +382,7 @@ export default function ChatbotFlowsPage() {
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
                 >
                   إلغاء
                 </button>

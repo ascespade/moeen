@@ -112,17 +112,17 @@ export default function FlowBuilderPage({
   const getNodeColor = (type: Node["type"]) => {
     switch (type) {
       case "start":
-        return "bg-green-500";
+        return "bg-brand-success";
       case "message":
-        return "bg-blue-500";
+        return "bg-brand-primary";
       case "condition":
-        return "bg-yellow-500";
+        return "bg-brand-warning";
       case "action":
-        return "bg-purple-500";
+        return "bg-surface0";
       case "end":
-        return "bg-red-500";
+        return "bg-brand-error";
       default:
-        return "bg-gray-500";
+        return "bg-surface0";
     }
   };
 
@@ -168,7 +168,7 @@ export default function FlowBuilderPage({
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setShowTestModal(true)}
-                className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
               >
                 اختبار
               </button>
@@ -186,7 +186,7 @@ export default function FlowBuilderPage({
       <div className="flex h-[calc(100vh-80px)]">
         {/* Canvas */}
         <div className="relative flex-1 overflow-hidden">
-          <div className="absolute inset-0 bg-gray-50 dark:bg-gray-800">
+          <div className="absolute inset-0 bg-surface dark:bg-gray-800">
             {/* Grid Background */}
             <div className="absolute inset-0 opacity-20">
               <svg width="100%" height="100%">
@@ -305,7 +305,7 @@ export default function FlowBuilderPage({
             <div className="p-2 text-xs font-semibold text-gray-600 dark:text-gray-300">
               خريطة التدفق
             </div>
-            <div className="relative h-24 w-full rounded bg-gray-50 dark:bg-gray-700">
+            <div className="relative h-24 w-full rounded bg-surface dark:bg-gray-700">
               {mockFlow.nodes.map((node) => (
                 <div
                   key={node.id}
@@ -428,7 +428,7 @@ export default function FlowBuilderPage({
                 هل أنت متأكد من نشر هذا التدفق؟ سيصبح متاحاً للاستخدام فوراً.
               </p>
 
-              <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4">
+              <div className="rounded-lg border border-yellow-200 bg-surface p-4">
                 <p className="text-sm text-yellow-800">
                   ⚠️ تأكد من اختبار التدفق قبل النشر للتأكد من عمله بشكل صحيح.
                 </p>
@@ -437,7 +437,7 @@ export default function FlowBuilderPage({
               <div className="flex gap-3 pt-4">
                 <button
                   onClick={() => setShowPublishModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
                 >
                   إلغاء
                 </button>
@@ -468,7 +468,7 @@ export default function FlowBuilderPage({
             </div>
 
             <div className="space-y-4">
-              <div className="h-64 overflow-y-auto rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+              <div className="h-64 overflow-y-auto rounded-lg bg-surface p-4 dark:bg-gray-800">
                 <div className="space-y-3">
                   <div className="flex justify-end">
                     <div className="max-w-xs rounded-lg bg-[var(--brand-primary)] p-3 text-white">
@@ -514,7 +514,7 @@ export default function FlowBuilderPage({
               <div className="flex gap-3 pt-4">
                 <button
                   onClick={() => setShowTestModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
                 >
                   إغلاق
                 </button>

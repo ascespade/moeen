@@ -33,7 +33,7 @@ export default function UserDashboard() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--brand-surface)] via-white to-[var(--bg-gray-50)]">
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--brand-surface)] via-white to-[var(--bg-surface)]">
         <div className="text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] shadow-lg">
             <span className="text-2xl font-bold text-white">م</span>
@@ -57,7 +57,7 @@ export default function UserDashboard() {
       value: "3",
       change: "+2 هذا الأسبوع",
       icon: Calendar,
-      color: "text-blue-600",
+      color: "text-brand-primary",
       bgColor: "bg-blue-100"
     },
     {
@@ -65,7 +65,7 @@ export default function UserDashboard() {
       value: "12",
       change: "تم تحديث 2 ملف",
       icon: FileText,
-      color: "text-green-600",
+      color: "text-brand-success",
       bgColor: "bg-green-100"
     },
     {
@@ -73,7 +73,7 @@ export default function UserDashboard() {
       value: "5",
       change: "3 جديدة",
       icon: Bell,
-      color: "text-orange-600",
+      color: "text-brand-primary",
       bgColor: "bg-orange-100"
     },
     {
@@ -111,7 +111,7 @@ export default function UserDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--brand-surface)] via-white to-[var(--bg-gray-50)]">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--brand-surface)] via-white to-[var(--bg-surface)]">
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -193,10 +193,10 @@ export default function UserDashboard() {
               <CardContent>
                 <div className="space-y-4">
                   {recentActivities.map((activity) => (
-                    <div key={activity.id} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+                    <div key={activity.id} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-800">
                       <div className="flex-shrink-0">
                         <div className="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
-                          <CheckCircle className="h-4 w-4 text-blue-600" />
+                          <CheckCircle className="h-4 w-4 text-brand-primary" />
                         </div>
                       </div>
                       <div className="flex-1 min-w-0">

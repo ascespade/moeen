@@ -52,7 +52,7 @@ export default function HeaderSimple() {
             {/* Theme Toggle */}
             <div className="relative">
               <button
-                className="inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                className="inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowThemeDropdown(!showThemeDropdown);
@@ -71,7 +71,7 @@ export default function HeaderSimple() {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <button
-                    className="w-full rounded-md px-3 py-2 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800"
                     onClick={() => {
                       setTheme("light");
                       setShowThemeDropdown(false);
@@ -80,7 +80,7 @@ export default function HeaderSimple() {
                     وضع نهاري
                   </button>
                   <button
-                    className="w-full rounded-md px-3 py-2 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800"
                     onClick={() => {
                       setTheme("dark");
                       setShowThemeDropdown(false);
@@ -94,7 +94,7 @@ export default function HeaderSimple() {
 
             {/* Direction Toggle */}
             <button
-              className="h-9 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+              className="h-9 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
               onClick={() => setDir(dir === "rtl" ? "ltr" : "rtl")}
             >
               {dir === "rtl" ? "RTL" : "LTR"}
@@ -103,7 +103,7 @@ export default function HeaderSimple() {
             {/* Language Dropdown */}
             <div className="relative">
               <button
-                className="inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                className="inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowLangDropdown(!showLangDropdown);
@@ -118,13 +118,13 @@ export default function HeaderSimple() {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <button
-                    className="w-full rounded-md px-3 py-2 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800"
                     onClick={() => setShowLangDropdown(false)}
                   >
                     العربية
                   </button>
                   <button
-                    className="w-full rounded-md px-3 py-2 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800"
                     onClick={() => setShowLangDropdown(false)}
                   >
                     English

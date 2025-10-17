@@ -241,8 +241,8 @@ export default function MedicalFilePage() {
   const getBlockStatus = (record: MedicalRecord) => {
     if (record.isBlocked) {
       return (
-        <div className="flex items-center gap-2 text-red-600">
-          <span className="h-2 w-2 rounded-full bg-red-500"></span>
+        <div className="flex items-center gap-2 text-brand-error">
+          <span className="h-2 w-2 rounded-full bg-brand-error"></span>
           <span className="text-sm font-medium">محظور</span>
           {record.blockReason && (
             <span className="text-xs text-gray-500">
@@ -253,8 +253,8 @@ export default function MedicalFilePage() {
       );
     }
     return (
-      <div className="flex items-center gap-2 text-green-600">
-        <span className="h-2 w-2 rounded-full bg-green-500"></span>
+      <div className="flex items-center gap-2 text-brand-success">
+        <span className="h-2 w-2 rounded-full bg-brand-success"></span>
         <span className="text-sm font-medium">نشط</span>
       </div>
     );
@@ -263,8 +263,8 @@ export default function MedicalFilePage() {
   const getOutstandingBalance = (record: MedicalRecord) => {
     if (record.hasOutstandingBalance) {
       return (
-        <div className="flex items-center gap-2 text-orange-600">
-          <span className="h-2 w-2 rounded-full bg-orange-500"></span>
+        <div className="flex items-center gap-2 text-brand-primary">
+          <span className="h-2 w-2 rounded-full bg-brand-primary"></span>
           <span className="text-sm font-medium">
             رصيد مستحق: {record.outstandingAmount?.toLocaleString()} ريال
           </span>
@@ -272,8 +272,8 @@ export default function MedicalFilePage() {
       );
     }
     return (
-      <div className="flex items-center gap-2 text-green-600">
-        <span className="h-2 w-2 rounded-full bg-green-500"></span>
+      <div className="flex items-center gap-2 text-brand-success">
+        <span className="h-2 w-2 rounded-full bg-brand-success"></span>
         <span className="text-sm font-medium">لا يوجد رصيد مستحق</span>
       </div>
     );
@@ -340,7 +340,7 @@ export default function MedicalFilePage() {
             </div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-green-600">
+            <div className="mb-2 text-3xl font-bold text-brand-success">
               {
                 mockRecords.filter(
                   (r) => !r.isBlocked && !r.hasOutstandingBalance,
@@ -350,13 +350,13 @@ export default function MedicalFilePage() {
             <div className="text-gray-600 dark:text-gray-300">ملفات نشطة</div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-red-600">
+            <div className="mb-2 text-3xl font-bold text-brand-error">
               {mockRecords.filter((r) => r.isBlocked).length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">ملفات محظورة</div>
           </Card>
           <Card className="p-6 text-center">
-            <div className="mb-2 text-3xl font-bold text-orange-600">
+            <div className="mb-2 text-3xl font-bold text-brand-primary">
               {mockRecords.filter((r) => r.hasOutstandingBalance).length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">رصيد مستحق</div>

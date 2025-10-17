@@ -178,15 +178,15 @@ const FlowsManagementPage: React.FC = () => {
   const getStepIcon = (type: string) => {
     switch (type) {
       case 'question':
-        return <MessageCircle className="w-4 h-4 text-blue-500" />;
+        return <MessageCircle className="w-4 h-4 text-brand-primary" />;
       case 'information':
-        return <Bot className="w-4 h-4 text-green-500" />;
+        return <Bot className="w-4 h-4 text-brand-success" />;
       case 'action':
-        return <Zap className="w-4 h-4 text-yellow-500" />;
+        return <Zap className="w-4 h-4 text-brand-warning" />;
       case 'slack_notify':
         return <Settings className="w-4 h-4 text-purple-500" />;
       case 'whatsapp_send':
-        return <MessageCircle className="w-4 h-4 text-green-600" />;
+        return <MessageCircle className="w-4 h-4 text-brand-success" />;
       default:
         return <ArrowRight className="w-4 h-4 text-gray-500" />;
     }
@@ -279,7 +279,7 @@ const FlowsManagementPage: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleToggleFlow(flow.id)}
-                      className={flow.isActive ? "text-red-600" : "text-green-600"}
+                      className={flow.isActive ? "text-brand-error" : "text-brand-success"}
                     >
                       {flow.isActive ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                     </Button>
@@ -294,7 +294,7 @@ const FlowsManagementPage: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleDeleteFlow(flow.id)}
-                      className="text-red-600 hover:text-red-700"
+                      className="text-brand-error hover:text-red-700"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>

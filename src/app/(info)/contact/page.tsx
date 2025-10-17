@@ -64,7 +64,7 @@ export default function ContactPage() {
 
   if (isSubmitted) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
+      <div className="flex min-h-screen items-center justify-center bg-surface p-4 dark:bg-gray-900">
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <Image
@@ -85,7 +85,7 @@ export default function ContactPage() {
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
             <div className="text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900">
-                <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
+                <CheckCircle className="h-8 w-8 text-brand-success dark:text-green-400" />
               </div>
               <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
                 رسالتك في الطريق
@@ -107,7 +107,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-surface dark:bg-gray-900">
       {/* Header */}
       <header className="bg-white shadow-sm dark:bg-gray-800">
         <div className="mx-auto max-w-screen-xl px-4 py-6">
@@ -300,7 +300,7 @@ export default function ContactPage() {
               </form>
             </div>
 
-            <div className="rounded-xl bg-gray-100 p-8 dark:bg-gray-800">
+            <div className="rounded-xl bg-surface p-8 dark:bg-gray-800">
               <h3 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
                 معلومات التواصل
               </h3>

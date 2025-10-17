@@ -74,7 +74,7 @@ export default function ForgotPasswordPage() {
                 setIsSuccess(false);
                 setEmail("");
               }}
-              className="w-full rounded-lg border border-gray-300 px-6 py-3 text-gray-700 transition-colors hover:bg-gray-50"
+              className="w-full rounded-lg border border-gray-300 px-6 py-3 text-gray-700 transition-colors hover:bg-surface"
             >
               إرسال رابط آخر
             </button>

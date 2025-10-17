@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ROUTES } from "@/constants/routes";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { ThemeSwitch as ThemeSwitcher } from "@/components/ThemeSwitcher";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useT } from "@/components/providers/I18nProvider";
 import Image from "next/image";
@@ -46,39 +46,39 @@ const getServices = (t: any) => [
     description: t('home.service.appointments.desc'),
     icon: "📅",
     color: "text-[var(--brand-primary)]",
-    bgColor: "bg-blue-50",
+    bgColor: "bg-surface",
   },
   {
     id: 2,
     title: t('home.service.patients'),
     description: t('home.service.patients.desc'),
     icon: "👤",
-    color: "text-green-600",
-    bgColor: "bg-green-50",
+    color: "text-brand-success",
+    bgColor: "bg-surface",
   },
   {
     id: 3,
     title: t('home.service.insurance'),
     description: t('home.service.insurance.desc'),
     icon: "📋",
-    color: "text-orange-600",
-    bgColor: "bg-purple-50",
+    color: "text-brand-primary",
+    bgColor: "bg-surface",
   },
   {
     id: 4,
     title: t('home.service.chatbot'),
     description: t('home.service.chatbot.desc'),
     icon: "🤖",
-    color: "text-orange-600",
-    bgColor: "bg-orange-50",
+    color: "text-brand-primary",
+    bgColor: "bg-surface",
   },
   {
     id: 5,
     title: t('home.service.staff'),
     description: t('home.service.staff.desc'),
     icon: "👨‍⚕️",
-    color: "text-red-600",
-    bgColor: "bg-red-50",
+    color: "text-brand-error",
+    bgColor: "bg-surface",
   },
   {
     id: 6,
@@ -86,7 +86,7 @@ const getServices = (t: any) => [
     description: t('home.service.analytics.desc'),
     icon: "📊",
     color: "text-indigo-600",
-    bgColor: "bg-orange-50",
+    bgColor: "bg-surface",
   },
 ];
 
@@ -309,7 +309,7 @@ export default function HomePage() {
               </p>
               <a
                 href="https://wa.me/966501234567"
-                className="font-semibold text-green-600 hover:text-green-700"
+                className="font-semibold text-brand-success hover:text-green-700"
               >
                 +966 50 123 4567
               </a>

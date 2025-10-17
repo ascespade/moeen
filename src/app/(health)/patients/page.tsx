@@ -159,7 +159,7 @@ export default function PatientsPage() {
       case "blocked":
         return "bg-red-100 text-red-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-surface text-gray-800";
     }
   };
 
@@ -178,9 +178,9 @@ export default function PatientsPage() {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      'active': { label: 'نشط', variant: 'primary' as const, color: 'text-green-600' },
+      'active': { label: 'نشط', variant: 'primary' as const, color: 'text-brand-success' },
       'inactive': { label: 'غير نشط', variant: 'secondary' as const, color: 'text-gray-600' },
-      'blocked': { label: 'محظور', variant: 'destructive' as const, color: 'text-red-600' }
+      'blocked': { label: 'محظور', variant: 'destructive' as const, color: 'text-brand-error' }
     };
     
     const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'primary' as const, color: 'text-gray-600' };
@@ -189,9 +189,9 @@ export default function PatientsPage() {
 
   const getSeverityBadge = (severity: string) => {
     const severityMap = {
-      'mild': { label: 'خفيف', variant: 'primary' as const, color: 'text-green-600' },
+      'mild': { label: 'خفيف', variant: 'primary' as const, color: 'text-brand-success' },
       'moderate': { label: 'متوسط', variant: 'secondary' as const, color: 'text-yellow-600' },
-      'severe': { label: 'شديد', variant: 'destructive' as const, color: 'text-red-600' }
+      'severe': { label: 'شديد', variant: 'destructive' as const, color: 'text-brand-error' }
     };
     
     const severityInfo = severityMap[severity as keyof typeof severityMap] || { label: severity, variant: 'primary' as const, color: 'text-gray-600' };
@@ -199,10 +199,10 @@ export default function PatientsPage() {
   };
 
   const getProgressColor = (percentage: number) => {
-    if (percentage >= 80) return "bg-green-500";
-    if (percentage >= 60) return "bg-yellow-500";
-    if (percentage >= 40) return "bg-orange-500";
-    return "bg-red-500";
+    if (percentage >= 80) return "bg-brand-success";
+    if (percentage >= 60) return "bg-brand-warning";
+    if (percentage >= 40) return "bg-brand-primary";
+    return "bg-brand-error";
   };
 
   if (loading) {
@@ -220,7 +220,7 @@ export default function PatientsPage() {
     return (
       <div className="min-h-screen bg-[var(--brand-surface)] flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-600 text-xl mb-4">⚠️</div>
+          <div className="text-brand-error text-xl mb-4">⚠️</div>
           <p className="text-gray-600">{error}</p>
           <button
             onClick={() => window.location.reload()}
@@ -269,7 +269,7 @@ export default function PatientsPage() {
                 placeholder="البحث بالاسم، الهاتف، أو البريد الإلكتروني..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
               />
             </div>
 
@@ -281,7 +281,7 @@ export default function PatientsPage() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value as any)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent"
               >
                 <option value="all">جميع الحالات</option>
                 <option value="active">نشط</option>
@@ -304,7 +304,7 @@ export default function PatientsPage() {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                      <span className="text-blue-600 font-semibold text-lg">
+                      <span className="text-brand-primary font-semibold text-lg">
                         {patient.first_name.charAt(0)}
                       </span>
                     </div>
@@ -341,13 +341,13 @@ export default function PatientsPage() {
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="text-center">
-                    <div className="text-lg font-semibold text-blue-600">
+                    <div className="text-lg font-semibold text-brand-primary">
                       {patient.totalSessions}
                     </div>
                     <div className="text-xs text-gray-500">الجلسات</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-lg font-semibold text-green-600">
+                    <div className="text-lg font-semibold text-brand-success">
                       {patient.lastVisit === "لم يتم تحديد موعد" ? "0" : "1"}
                     </div>
                     <div className="text-xs text-gray-500">آخر زيارة</div>
@@ -364,7 +364,7 @@ export default function PatientsPage() {
                   </Link>
                   <Link
                     href={`${ROUTES.HEALTH.APPOINTMENTS}?patient=${patient.public_id}`}
-                    className="flex-1 bg-green-600 text-white text-center py-2 px-3 rounded-lg hover:bg-green-700 transition-colors text-sm"
+                    className="flex-1 bg-brand-success text-white text-center py-2 px-3 rounded-lg hover:bg-green-700 transition-colors text-sm"
                   >
                     حجز موعد
                   </Link>

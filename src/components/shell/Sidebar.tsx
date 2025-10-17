@@ -118,7 +118,7 @@ export default function Sidebar() {
               مركز الهمم
             </span>
           </div>
-          <div className="text-xs text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full inline-block">
+          <div className="text-xs text-gray-500 bg-surface dark:bg-gray-800 px-2 py-1 rounded-full inline-block">
             Mu&apos;ayin
           </div>
         </div>
@@ -150,7 +150,7 @@ export default function Sidebar() {
             <div className="font-semibold text-gray-900 dark:text-white">
               مستخدم تجريبي
             </div>
-            <button className="text-gray-500 hover:text-blue-600 transition-colors">
+            <button className="text-gray-500 hover:text-brand-primary transition-colors">
               تسجيل الخروج
             </button>
           </div>
