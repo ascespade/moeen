@@ -29,9 +29,9 @@ export default defineConfig({
   
   /* تقارير الاختبارات */
   reporter: [
-    ['html', { outputFolder: 'test-results/html-report' }],
-    ['json', { outputFile: 'test-results/results.json' }],
-    ['junit', { outputFile: 'test-results/results.xml' }],
+    ['html', { outputFolder: 'playwright-report' }],
+    ['json', { outputFile: 'playwright-results.json' }],
+    ['junit', { outputFile: 'playwright-results.xml' }],
     ['list'], // تقرير مبسط في الكونسول
   ],
   

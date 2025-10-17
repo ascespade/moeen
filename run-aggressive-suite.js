@@ -96,13 +96,23 @@ function runPlaywrightTest(module, testFile, outDir, attempt) {
   log(`[${module}] Running Playwright test (attempt ${attempt})`);
   
   try {
-    const cmd = `npx playwright test ${testFile} --config=playwright-auto.config.ts --workers=${CONFIG.WORKERS} --timeout=${CONFIG.TIMEOUT_MS} --reporter=json --output=${reportFile}`;
+    const cmd = `npx playwright test ${testFile} --config=playwright-auto.config.ts --workers=${CONFIG.WORKERS} --timeout=${CONFIG.TIMEOUT_MS}`;
     
     execSync(cmd, {
       stdio: 'pipe',
       timeout: CONFIG.TIMEOUT_MS * 2,
-      env: { ...process.env, NODE_ENV: 'test' }
+      env: { 
+        ...process.env, 
+        NODE_ENV: 'test',
+        PWTEST_BLOB_DO_NOT_REMOVE: '1'
+      }
     });
+    
+    // Copy the generated report
+    const generatedReport = 'playwright-results.json';
+    if (fs.existsSync(generatedReport)) {
+      fs.copyFileSync(generatedReport, reportFile);
+    }
     
     return reportFile;
   } catch (error) {
