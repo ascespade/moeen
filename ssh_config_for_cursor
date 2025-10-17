@@ -1,0 +1,10 @@
+Host dev-server
+    HostName 44.225.129.112
+    User dev
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    ForwardAgent yes
+    LocalForward 8080 localhost:8080
+    LocalForward 3000 localhost:3000
