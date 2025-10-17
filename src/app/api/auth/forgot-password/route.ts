@@ -10,17 +10,15 @@ import { z } from 'zod';
 
 // Helper to extract IP address
 function getClientIP(request: NextRequest): string {
-  const forwarded = request?.headers?.get('x-forwarded-for');
-  const realIP = request?.headers?.get('x-real-ip');
-  
-  if (forwarded) {
-    return forwarded?.split(',')[0].trim() ?? '127.0.0.1';
-  }
-  if (realIP) {
-    return realIP!;
-  }
+  try {
+    const forwarded = request.headers.get('x-forwarded-for');
+    if (forwarded) return forwarded.split(',')[0].trim();
+  } catch {}
+  try {
+    const realIP = request.headers.get('x-real-ip');
+    if (realIP) return realIP;
+  } catch {}
   return '127.0.0.1';
-}
 
 const forgotPasswordSchema = z.object({
   email: z.string().email('البريد الإلكتروني غير صحيح'),
