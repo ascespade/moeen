@@ -31,8 +31,8 @@ export { ScrollArea } from './ScrollArea';
 export { DataTable } from './DataTable';
 
 // Loading & Skeleton
-export { default as LoadingSpinner } from './LoadingSpinner';
-export { default as Skeleton } from './Skeleton';
+export { LoadingSpinner, LoadingScreen } from './LoadingSpinner';
+export { Skeleton } from './Skeleton';
 
 // Theme
 export { default as ThemeSwitch } from './ThemeSwitch';
