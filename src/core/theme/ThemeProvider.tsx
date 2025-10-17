@@ -171,7 +171,7 @@ export function useThemeAware() {
     // Utility functions
     getThemeClass: (lightClass: string, darkClass: string) => 
       isDark ? darkClass : lightClass,
-    getThemeValue: <T>(lightValue: T, darkValue: T) => 
+    getThemeValue: <T,>(lightValue: T, darkValue: T) => 
       isDark ? darkValue : lightValue,
   };
 }

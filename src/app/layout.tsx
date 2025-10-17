@@ -3,7 +3,7 @@ import "../styles/theme.css";
 import type { Metadata } from "next";
 import UIProvider from "@/components/providers/UIProvider";
 import I18nProvider from "@/components/providers/I18nProvider";
-import { UnifiedThemeProvider } from "@/context/UnifiedThemeProvider";
+import { ThemeProvider } from "@/core/theme";
 import { TranslationProvider } from "@/context/TranslationProvider";
 
 export const metadata: Metadata = {
@@ -34,13 +34,13 @@ export default function RootLayout({
         className={`${cairo.variable} ${inter.variable} antialiased`}
         suppressHydrationWarning
       >
-        <UnifiedThemeProvider>
+        <ThemeProvider defaultTheme="system">
           <TranslationProvider>
             <I18nProvider>
               <UIProvider>{children}</UIProvider>
             </I18nProvider>
           </TranslationProvider>
-        </UnifiedThemeProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

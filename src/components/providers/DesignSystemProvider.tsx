@@ -9,8 +9,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { useTheme, useLanguage } from "@/design-system/hooks";
-import { applyTheme, generateThemeVariables } from "@/design-system/utils";
+import { useTheme } from "@/core/theme";
 import { DesignSystemConfig, Theme, Language, Direction } from "@/design-system/types";
 
 interface DesignSystemContextValue {
@@ -39,7 +38,8 @@ export function DesignSystemProvider({
   config: customConfig,
 }: DesignSystemProviderProps) {
   const { theme, isLoading: themeLoading } = useTheme();
-  const { language, direction, isLoading: languageLoading } = useLanguage();
+  const [language, setLanguage] = useState<Language>(defaultLanguage);
+  const [direction, setDirection] = useState<Direction>(defaultLanguage === "ar" ? "rtl" : "ltr");
   const [isInitialized, setIsInitialized] = useState(false);
 
   // Default configuration

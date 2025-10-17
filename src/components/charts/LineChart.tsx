@@ -16,7 +16,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts';
-import { useTheme } from '@/context/ThemeContext';
+import { useTheme } from '@/core/theme';
 
 interface LineChartProps {
   data: any[];

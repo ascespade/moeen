@@ -2,14 +2,15 @@
 import { useEffect, useState } from "react";
 import { Sun, Moon, Languages } from "lucide-react";
 import { useT } from "@/components/providers/I18nProvider";
-import { useTheme, useLanguage } from "@/design-system/hooks";
+import { useTheme } from "@/core/theme";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import Link from "next/link";
 
 export default function Header() {
   const { theme, isLoading: themeLoading } = useTheme();
-  const { language, direction, isLoading: languageLoading } = useLanguage();
+  const [language, setLanguage] = useState("ar");
+  const [direction, setDirection] = useState("rtl");
   const [notif, setNotif] = useState(3);
   const [showNotifDropdown, setShowNotifDropdown] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);

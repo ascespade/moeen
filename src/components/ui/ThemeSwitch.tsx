@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useTheme } from "@/context/ThemeContext";
+import { useTheme } from "@/core/theme";
 import { Sun, Moon, Monitor, Check } from "lucide-react";
 import { Button } from "./Button";
 import { Card } from "./Card";
