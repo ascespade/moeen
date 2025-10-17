@@ -5,7 +5,6 @@ import { validateData, appointmentSchema } from '@/lib/validation/schemas';
 
 export async function GET(request: NextRequest) {
   const startTime = Date.now();
-  const { ipAddress, userAgent } = getClientInfo(request);
   
   try {
     const { user, error: authError } = await authorize(request);
@@ -98,7 +97,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
-  const { ipAddress, userAgent } = getClientInfo(request);
   
   try {
     const { user, error: authError } = await authorize(request);
