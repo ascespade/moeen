@@ -5,7 +5,7 @@ export const userSchema = z.object({
   email: z.string().email('Invalid email format'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   role: z.enum(['patient', 'doctor', 'staff', 'supervisor', 'admin']),
-  meta: z.record(z.any()).optional()
+  meta: z.record(z.string(), z.any()).optional()
 });
 
 export const loginSchema = z.object({
@@ -53,7 +53,7 @@ export const paymentSchema = z.object({
   currency: z.string().length(3, 'Currency must be 3 characters').optional(),
   method: z.enum(['cash', 'card', 'bank_transfer', 'insurance']),
   status: z.enum(['pending', 'completed', 'failed', 'refunded']).optional(),
-  meta: z.record(z.any()).optional()
+  meta: z.record(z.string(), z.any()).optional()
 });
 
 // Insurance claim validation schemas
@@ -69,7 +69,7 @@ export const insuranceClaimSchema = z.object({
 
 export const claimUpdateSchema = z.object({
   status: z.enum(['draft', 'submitted', 'approved', 'rejected', 'under_review']).optional(),
-  claimPayload: z.record(z.any()).optional()
+  claimPayload: z.record(z.string(), z.any()).optional()
 });
 
 // Translation validation schemas
@@ -82,7 +82,7 @@ export const translationSchema = z.object({
 // Report validation schemas
 export const reportSchema = z.object({
   type: z.string().min(2, 'Report type must be at least 2 characters'),
-  payload: z.record(z.any()).optional(),
+  payload: z.record(z.string(), z.any()).optional(),
   generatedAt: z.string().datetime().optional()
 });
 
@@ -105,7 +105,7 @@ export const paginationSchema = z.object({
 // Search validation schemas
 export const searchSchema = z.object({
   query: z.string().min(1, 'Search query is required'),
-  filters: z.record(z.any()).optional(),
+  filters: z.record(z.string(), z.any()).optional(),
   pagination: paginationSchema.optional()
 });
 
@@ -134,7 +134,7 @@ export const notificationSchema = z.object({
   patientId: z.string().uuid(),
   appointmentId: z.string().uuid().optional(),
   channels: z.array(z.enum(['email', 'sms', 'both'])).default(['email']),
-  notificationData: z.record(z.any()).optional(),
+  notificationData: z.record(z.string(), z.any()).optional(),
   customMessage: z.string().optional()
 });
 
