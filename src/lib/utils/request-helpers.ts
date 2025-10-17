@@ -5,10 +5,10 @@ export function getClientIP(request: NextRequest | undefined): string {
   
   try {
     const headers = request.headers;
-    if (!headers) return '127.0.0.1';
+    if (!headers || !headers.get) return '127.0.0.1';
     
-    const forwarded = headers.get?.('x-forwarded-for');
-    const realIP = headers.get?.('x-real-ip');
+    const forwarded = headers.get('x-forwarded-for');
+    const realIP = headers.get('x-real-ip');
     
     if (forwarded) return forwarded.split(',')[0].trim();
     if (realIP) return realIP;

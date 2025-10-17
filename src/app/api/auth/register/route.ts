@@ -13,11 +13,11 @@ function getClientIP(request: NextRequest): string {
   const forwarded = request?.headers?.get('x-forwarded-for');
   const realIP = request?.headers?.get('x-real-ip');
   
-  if (forwarded && typeof forwarded === 'string') {
+  if (forwarded) {
     return forwarded?.split(',')[0].trim() ?? '127.0.0.1';
   }
-  if (realIP && typeof realIP === 'string') {
-    return realIP;
+  if (realIP) {
+    return realIP!;
   }
   return '127.0.0.1';
 }
