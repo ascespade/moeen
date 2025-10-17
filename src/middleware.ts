@@ -32,14 +32,25 @@ export async function middleware(request: NextRequest) {
       return rateLimitResponse;
     }
 
-    // 3. Authentication and authorization for protected routes
-    if (isProtectedRoute(request.nextUrl.pathname)) {
+    // 3. Authentication and authorization for protected API routes only
+    if (isProtectedApiRoute(request.nextUrl.pathname)) {
       const { user, error } = await authorize(request);
       if (error || !user) {
         return NextResponse.json(
           { error: 'Unauthorized', message: 'Authentication required' },
           { status: 401 }
         );
+      }
+    }
+    
+    // 4. Redirect unauthenticated users from dashboard pages (client-side routes)
+    if (isDashboardRoute(request.nextUrl.pathname)) {
+      const { user, error } = await authorize(request);
+      if (error || !user) {
+        const url = request.nextUrl.clone();
+        url.pathname = '/login';
+        url.searchParams.set('redirect', request.nextUrl.pathname);
+        return NextResponse.redirect(url);
       }
     }
 
@@ -74,8 +85,8 @@ export async function middleware(request: NextRequest) {
   }
 }
 
-function isProtectedRoute(pathname: string): boolean {
-  const protectedRoutes = [
+function isProtectedApiRoute(pathname: string): boolean {
+  const protectedApiRoutes = [
     '/api/admin',
     '/api/patients',
     '/api/doctors',
@@ -86,10 +97,19 @@ function isProtectedRoute(pathname: string): boolean {
     '/api/notifications',
     '/api/reports',
     '/api/chatbot',
-    '/dashboard',
   ];
 
-  return protectedRoutes.some(route => pathname.startsWith(route));
+  return protectedApiRoutes.some(route => pathname.startsWith(route));
+}
+
+function isDashboardRoute(pathname: string): boolean {
+  return pathname.startsWith('/dashboard') || 
+         pathname.startsWith('/(admin)') ||
+         pathname.startsWith('/(health)') ||
+         pathname.startsWith('/(doctor)') ||
+         pathname.startsWith('/(patient)') ||
+         pathname.startsWith('/(staff)') ||
+         pathname.startsWith('/(supervisor)');
 }
 
 function addSecurityHeaders(response: NextResponse): void {
