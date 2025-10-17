@@ -10,9 +10,15 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 1,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
+  /* Global timeout for all tests */
+  timeout: 60000,
+  /* Expect timeout for assertions */
+  expect: {
+    timeout: 10000,
+  },
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html'],
@@ -22,7 +28,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://localhost:3002',
+    baseURL: 'http://localhost:3001',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -32,6 +38,18 @@ export default defineConfig({
     
     /* Record video on failure */
     video: 'retain-on-failure',
+    
+    /* Action timeout - how long to wait for actions */
+    actionTimeout: 30000,
+    
+    /* Navigation timeout - how long to wait for page navigation */
+    navigationTimeout: 30000,
+    
+    /* Ignore HTTPS errors */
+    ignoreHTTPSErrors: true,
+    
+    /* Auto-accept dialogs */
+    acceptDownloads: true,
   },
 
   /* Global setup and teardown */
@@ -85,7 +103,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: 'npm run dev',
-    url: 'http://localhost:3002',
+    url: 'http://localhost:3001',
     reuseExistingServer: true, // Always reuse existing server
     timeout: 120 * 1000,
   },

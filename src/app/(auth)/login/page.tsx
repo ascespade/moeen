@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { ROUTES } from "@/constants/routes";
 import { getDefaultRouteForUser } from "@/lib/router";
 import { useT } from "@/components/providers/I18nProvider";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,6 +12,7 @@ export default function LoginPage() {
   const { loginWithCredentials, isLoading, isAuthenticated } = useAuth();
   const { t } = useT();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,6 +20,7 @@ export default function LoginPage() {
   });
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -49,15 +51,12 @@ export default function LoginPage() {
 
     setSubmitting(true);
     try {
-      await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
-      // after login, compute default route (role-aware)
-      // Note: In a real app, the user role would come from the login response
-      // For now, we'll redirect to user dashboard as default
-      window.location.href = getDefaultRouteForUser({
-        id: "temp",
-        email: formData.email,
-        role: "user",
-      } as any);
+      const result = await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
+      if (result.success) {
+        // Get redirect URL from query params or default to dashboard
+        const redirectUrl = searchParams.get('redirect') || "/dashboard";
+        router.push(redirectUrl);
+      }
     } catch (err: any) {
       setError(err?.message || t("auth.login.error", "فشل تسجيل الدخول"));
     } finally {
@@ -71,6 +70,16 @@ export default function LoginPage() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+    setError(null);
+    
+    // Real-time email validation
+    if (name === 'email') {
+      if (value && !/\S+@\S+\.\S+/.test(value)) {
+        setEmailError('البريد الإلكتروني غير صحيح');
+      } else {
+        setEmailError(null);
+      }
+    }
   };
 
   const handleQuickTestLogin = async (role: string, email: string, password: string) => {
@@ -147,6 +156,9 @@ export default function LoginPage() {
                     <span className="text-sm text-gray-400">📧</span>
                   </div>
                 </div>
+                {emailError && (
+                  <p className="mt-1 text-sm text-red-600">{emailError}</p>
+                )}
               </div>
 
               <div>

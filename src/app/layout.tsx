@@ -1,9 +1,10 @@
 import { Cairo, Inter } from "next/font/google";
-import "../styles/unified.css";
+import "../styles/theme.css";
 import type { Metadata } from "next";
 import UIProvider from "@/components/providers/UIProvider";
 import I18nProvider from "@/components/providers/I18nProvider";
 import { UnifiedThemeProvider } from "@/context/UnifiedThemeProvider";
+import { TranslationProvider } from "@/context/TranslationProvider";
 
 export const metadata: Metadata = {
   title: "مُعين",
@@ -34,9 +35,11 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <UnifiedThemeProvider>
-          <I18nProvider>
-            <UIProvider>{children}</UIProvider>
-          </I18nProvider>
+          <TranslationProvider>
+            <I18nProvider>
+              <UIProvider>{children}</UIProvider>
+            </I18nProvider>
+          </TranslationProvider>
         </UnifiedThemeProvider>
       </body>
     </html>
