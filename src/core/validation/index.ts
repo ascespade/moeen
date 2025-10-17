@@ -191,7 +191,7 @@ export const paymentSchemas = {
   process: z.object({
     paymentId: baseSchemas.id,
     gateway: z.enum(['stripe', 'moyasar']),
-    gatewayData: z.record(z.string(), z.any()),
+    gatewayData: z.record(z.any()),
   }),
 } as const;
 
@@ -216,7 +216,7 @@ export const insuranceSchemas = {
   
   submit: z.object({
     claimId: baseSchemas.id,
-    providerData: z.record(z.any()),
+    providerData: z.record(z.string(), z.any()),
   }),
 } as const;
 
@@ -375,9 +375,6 @@ export const validateQuery = <T>(
     }
     
     req.validatedQuery = validation.data;
-    next();
-  };
-};ata;
     next();
   };
 };
