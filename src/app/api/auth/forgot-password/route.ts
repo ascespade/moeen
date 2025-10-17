@@ -31,9 +31,15 @@ export async function POST(request: NextRequest) {
   
   try {
     const body = await request.json();
+    if (!body) {
+      return NextResponse.json(
+        { success: false, error: "Request body is required" },
+        { status: 400 }
+      );
+    }
     
     // Get client info
-    const ipAddress = getClientIP(request);
+    const ipAddress = getClientIP(request) || '127.0.0.1';
     const userAgent = request.headers.get('user-agent') || 'Unknown';
     
     // Validate input
@@ -41,7 +47,7 @@ export async function POST(request: NextRequest) {
     if (!validation.success) {
       return NextResponse.json({
         success: false,
-        errors: validation.error.errors.map(err => ({
+        errors: validation.error.issues.map(err => ({
           field: err.path[0],
           message: err.message
         }))

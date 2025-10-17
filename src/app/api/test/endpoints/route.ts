@@ -92,6 +92,6 @@ export async function GET(request: NextRequest) {
       timestamp: new Date().toISOString(),
       status: 'error',
       error: error.message,
-    }, { status: 500 });
+    }, { status: Number(status) });
   }
 }

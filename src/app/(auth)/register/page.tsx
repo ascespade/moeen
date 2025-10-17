@@ -91,9 +91,9 @@ export default function RegisterPage() {
 
       if (!response.ok || !data.success) {
         // Handle validation errors
-        if (data.errors && Array.isArray(data.errors)) {
+        if (data.issues && Array.isArray(data.issues)) {
           const newErrors: Record<string, string> = {};
-          data.errors.forEach((error: { field: string; message: string }) => {
+          data.issues.forEach((error: { field: string; message: string }) => {
             newErrors[error.field] = error.message;
           });
           setErrors(newErrors);

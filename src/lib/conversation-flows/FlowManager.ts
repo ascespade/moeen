@@ -168,7 +168,7 @@ export class FlowManager {
 
     const results: Array<{ success: boolean; data?: any; error?: string }> = [];
     for (const action of step.actions) {
-      const result = await this.actionExecutor.executeAction(action, context);
+      const result = await this.actionExecutor.executeStepAction(action, context);
       results.push(result);
     }
 

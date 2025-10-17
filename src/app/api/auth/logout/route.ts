@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get client info
-    const ipAddress = getClientIP(request);
+    const ipAddress = getClientIP(request) || '127.0.0.1';
     const userAgent = request.headers.get('user-agent') || 'Unknown';
 
     // Get user profile for complete tracking

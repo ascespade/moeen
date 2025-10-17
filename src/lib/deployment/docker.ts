@@ -7,7 +7,7 @@ import { writeFileSync } from 'fs';
 import { join } from 'path';
 import { logger } from '../monitoring/logger';
 
-export class DockerConfigGenerator {
+class DockerConfigGenerator {
   static generateDockerfile(): string {
     return `# Multi-stage build for production
 FROM node:18-alpine AS base

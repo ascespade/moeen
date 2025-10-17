@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
         hasConflicts,
         conflictCount: conflicts?.length || 0,
       },
-      durationMs: Date.now() - startTime,
+      durationMs: Date.now() - startTime.getTime(),
     });
 
     return NextResponse.json({

@@ -1,0 +1,62 @@
+{
+  "timestamp": "2025-10-17T14:09:05.846Z",
+  "modules": {
+    "staff": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:34.876Z"
+    },
+    "patients": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:17.214Z"
+    },
+    "insurance": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:18.882Z"
+    },
+    "payments": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:23.143Z"
+    },
+    "appointments": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:18.141Z"
+    },
+    "analytics": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:17.145Z"
+    },
+    "doctors": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:17.822Z"
+    },
+    "chatbot": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:17.306Z"
+    },
+    "settings": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:23.125Z"
+    },
+    "notifications": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:18.503Z"
+    },
+    "medical-records": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:18.945Z"
+    },
+    "reports": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:18.597Z"
+    },
+    "auth": {
+      "passed": false,
+      "timestamp": "2025-10-17T14:07:34.927Z"
+    }
+  },
+  "summary": {
+    "total": 13,
+    "passed": 0,
+    "failed": 13
+  }
+}
