@@ -1,12 +1,13 @@
-
 "use client";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { atom } from "jotai";
 import useBrandColorFromLogo from "@/hooks/useBrandColorFromLogo";
 
-
 // Jotai atoms for global state
+export const themeAtom = atom<"light" | "dark">("light");
+export const sidebarOpenAtom = atom<boolean>(false);
+export const notificationsAtom = atom<any[]>([]);
 
 declare global {
   interface Window {
@@ -14,6 +15,7 @@ declare global {
   }
 }
 
+export function UIProvider({
   children,
 }: {
   children: React.ReactNode;
@@ -28,30 +30,12 @@ declare global {
     html.setAttribute("dir", isEnglish ? "ltr" : "rtl");
   }, [pathname]);
 
-  return <div>{children}</div>;
+  useEffect(() => {
+    // Initialize HSStaticMethods if available
+    if (typeof window !== "undefined" && window.HSStaticMethods?.autoInit) {
+      window.HSStaticMethods.autoInit();
+    }
+  }, []);
+
+  return <>{children}</>;
 }
-
-
-// Exports
-
-// Exports
-
-// Exports
-
-// Exports
-
-// Exports
-
-// Exports
-
-// Exports
-
-// Exports
-
-// Exports
-export type AppTheme = "light" | "dark";
-export type AppLang = "ar" | "en";
-export type AppRole = "admin" | "staff" | "viewer";
-export const themeAtom = atom<AppTheme>("light");
-export const langAtom = atom<AppLang>("ar");
-export default function UIProvider({

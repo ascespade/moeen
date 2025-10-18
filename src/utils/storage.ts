@@ -1,5 +1,6 @@
 
 // Storage utilities
+export const storage = {
   // Local Storage
   get: <T = any>(key: string, defaultValue?: T): T | null => {
     if (typeof window === "undefined") return defaultValue || null;

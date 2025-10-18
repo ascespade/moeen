@@ -1,6 +1,7 @@
-export interface TextareaProps
 import clsx from "clsx";
+import React from "react";
 
+export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   // Extends all textarea attributes
 }

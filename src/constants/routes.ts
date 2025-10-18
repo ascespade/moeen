@@ -1,5 +1,6 @@
 
 // Route constants
+export const ROUTES = {
   AUTH: {
     LOGIN: "/login",
     REGISTER: "/register",
@@ -124,6 +125,8 @@
     I18N: "/api/i18n",
   },
 } as const;
+
+export const PROTECTED_ROUTES = [
   ROUTES.DASHBOARD,
   ROUTES.ADMIN.DASHBOARD,
   ROUTES.ADMIN.USERS,
@@ -168,6 +171,8 @@
   ROUTES.MESSAGES,
   ROUTES.SETTINGS,
 ] as const;
+
+export const ADMIN_ROUTES = [
   ROUTES.ADMIN.DASHBOARD,
   ROUTES.ADMIN.USERS,
   ROUTES.ADMIN.CHANNELS,
@@ -184,6 +189,8 @@
   ROUTES.ADMIN.INTEGRATIONS,
   ROUTES.ADMIN.PERFORMANCE,
 ] as const;
+
+export const PUBLIC_ROUTES = [
   ROUTES.HOME,
   ROUTES.LOGIN,
   ROUTES.REGISTER,
@@ -198,8 +205,3 @@
   ROUTES.LEGAL.PRIVACY,
   ROUTES.LEGAL.TERMS,
 ] as const;
-// Exports
-export const ROUTES = {
-export const PROTECTED_ROUTES = [
-export const ADMIN_ROUTES = [
-export const PUBLIC_ROUTES = [

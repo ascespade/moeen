@@ -1,7 +1,8 @@
-export function DataTable<T extends Record<string, unknown>>({
-export type Column<T> = { key: keyof T; header: string };
 import { useMemo, useState } from "react";
 
+export type Column<T> = { key: keyof T; header: string };
+
+export function DataTable<T extends Record<string, unknown>>({
   data,
   columns,
   pageSize = 10,
@@ -28,88 +29,85 @@ import { useMemo, useState } from "react";
   }, [data, sort]);
 
   const start = (page - 1) * pageSize;
-  const pageData = sorted.slice(start, start + pageSize);
-  const pages = Math.max(1, Math.ceil(sorted.length / pageSize));
+  const end = start + pageSize;
+  const paginated = sorted.slice(start, end);
+  const totalPages = Math.ceil(data.length / pageSize);
 
-  const toggleSort = (key: keyof T) =>
-    setSort((prev) =>
-      !prev || prev.key !== key
-        ? { key, dir: "asc" }
-        : { key, dir: prev.dir === "asc" ? "desc" : "asc" },
+  const handleSort = (key: keyof T) => {
+    setSort(prev => 
+      prev?.key === key 
+        ? { key, dir: prev.dir === "asc" ? "desc" : "asc" }
+        : { key, dir: "asc" }
     );
+  };
 
   return (
-    <div className="border border-brand-border rounded-xl overflow-hidden">
-      <table className="min-w-full text-sm">
-        <thead className="bg-surface dark:bg-gray-800">
-          <tr>
-            {columns.map((c) => (
-              <th key={String(c.key)} className="px-4 py-3 text-start">
-                <button
-                  onClick={() => toggleSort(c.key)}
-                  className="flex items-center gap-1 hover:text-brand-primary"
+    <div className="space-y-4">
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              {columns.map((column) => (
+                <th
+                  key={String(column.key)}
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleSort(column.key)}
                 >
-                  {c.header}
-                  {sort?.key === c.key && (sort.dir === "asc" ? "↑" : "↓")}
-                </button>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {pageData.map((row, i) => (
-            <tr
-              key={i}
-              className="border-t border-brand-border hover:bg-surface dark:hover:bg-gray-800"
-            >
-              {columns.map((c) => (
-                <td key={String(c.key)} className="px-4 py-3">
-                  {String(row[c.key])}
-                </td>
+                  <div className="flex items-center space-x-1">
+                    <span>{column.header}</span>
+                    {sort?.key === column.key && (
+                      <span className="text-gray-400">
+                        {sort.dir === "asc" ? "↑" : "↓"}
+                      </span>
+                    )}
+                  </div>
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="px-4 py-3 bg-surface dark:bg-gray-800 flex items-center justify-between">
-        <span className="text-sm text-gray-600 dark:text-gray-400">
-          {start + 1}-{Math.min(start + pageSize, sorted.length)} من{" "}
-          {sorted.length}
-        </span>
-        <div className="flex gap-1">
-          <button
-            onClick={() => setPage(1)}
-            disabled={page === 1}
-            className="px-2 py-1 text-sm border rounded disabled:opacity-50"
-          >
-            «
-          </button>
-          <button
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={page === 1}
-            className="px-2 py-1 text-sm border rounded disabled:opacity-50"
-          >
-            ‹
-          </button>
-          <span className="px-2 py-1 text-sm">
-            {page} / {pages}
-          </span>
-          <button
-            onClick={() => setPage((p) => Math.min(pages, p + 1))}
-            disabled={page === pages}
-            className="px-2 py-1 text-sm border rounded disabled:opacity-50"
-          >
-            ›
-          </button>
-          <button
-            onClick={() => setPage(pages)}
-            disabled={page === pages}
-            className="px-2 py-1 text-sm border rounded disabled:opacity-50"
-          >
-            »
-          </button>
-        </div>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {paginated.map((row, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                {columns.map((column) => (
+                  <td
+                    key={String(column.key)}
+                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                  >
+                    {String(row[column.key] || "")}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+      
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-gray-700">
+            Showing {start + 1} to {Math.min(end, data.length)} of {data.length} results
+          </div>
+          <div className="flex space-x-2">
+            <button
+              onClick={() => setPage(prev => Math.max(1, prev - 1))}
+              disabled={page === 1}
+              className="px-3 py-1 text-sm border rounded disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <span className="px-3 py-1 text-sm">
+              Page {page} of {totalPages}
+            </span>
+            <button
+              onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
+              disabled={page === totalPages}
+              className="px-3 py-1 text-sm border rounded disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

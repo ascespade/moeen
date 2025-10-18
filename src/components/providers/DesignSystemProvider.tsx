@@ -1,10 +1,9 @@
-
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 // Design System Types
-
+interface DesignSystemConfig {
   theme: Theme;
   language: Language;
   direction: Direction;
@@ -18,6 +17,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
   focusVisible: boolean;
 }
 
+interface DesignSystemState {
   // Current values
   theme: Theme;
   language: Language;
@@ -31,39 +31,32 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
   highContrast: boolean;
   focusVisible: boolean;
   
-  // Loading states
-  themeLoading: boolean;
-  languageLoading: boolean;
-  
-  // Initialization
-  isInitialized: boolean;
-  
-  // Update functions
-  updateTheme: (theme: Theme) => void;
-  updateLanguage: (language: Language) => void;
-  updateDirection: (direction: Direction) => void;
-  updateSpacing: (spacing: Spacing) => void;
-  updateFontSize: (fontSize: 'small' | 'medium' | 'large') => void;
-  updateBorderRadius: (borderRadius: 'none' | 'small' | 'medium' | 'large') => void;
-  updateShadows: (shadows: 'none' | 'small' | 'medium' | 'large') => void;
-  toggleAnimations: () => void;
-  toggleReducedMotion: () => void;
-  toggleHighContrast: () => void;
-  toggleFocusVisible: () => void;
-  
-  // Reset function
-  resetToDefaults: () => void;
+  // Actions
+  setTheme: (theme: Theme) => void;
+  setLanguage: (language: Language) => void;
+  setDirection: (direction: Direction) => void;
+  setSpacing: (spacing: Spacing) => void;
+  setFontSize: (fontSize: 'small' | 'medium' | 'large') => void;
+  setBorderRadius: (borderRadius: 'none' | 'small' | 'medium' | 'large') => void;
+  setShadows: (shadows: 'none' | 'small' | 'medium' | 'large') => void;
+  setAnimations: (animations: boolean) => void;
+  setReducedMotion: (reducedMotion: boolean) => void;
+  setHighContrast: (highContrast: boolean) => void;
+  setFocusVisible: (focusVisible: boolean) => void;
+  reset: () => void;
 }
 
-// Create context
-const DesignSystemContext = createContext<DesignSystemContextValue | undefined>(undefined);
+type Theme = 'light' | 'dark' | 'auto';
+type Language = 'en' | 'ar';
+type Direction = 'ltr' | 'rtl';
+type Spacing = 'compact' | 'comfortable' | 'spacious';
 
 // Default configuration
 const defaultConfig: DesignSystemConfig = {
-  theme: 'system',
-  language: 'ar',
-  direction: 'rtl',
-  spacing: 'normal',
+  theme: 'light',
+  language: 'en',
+  direction: 'ltr',
+  spacing: 'comfortable',
   fontSize: 'medium',
   borderRadius: 'medium',
   shadows: 'medium',
@@ -73,230 +66,180 @@ const defaultConfig: DesignSystemConfig = {
   focusVisible: true,
 };
 
+// Create context
+const DesignSystemContext = createContext<DesignSystemState | undefined>(undefined);
+
 // Provider component
 interface DesignSystemProviderProps {
   children: ReactNode;
-  initialConfig?: Partial<DesignSystemConfig>;
+  config?: Partial<DesignSystemConfig>;
 }
 
-  children, 
-  initialConfig = {} 
-}: DesignSystemProviderProps) {
-  // State management
-  const [config, setConfig] = useState<DesignSystemConfig>({
-    ...defaultConfig,
-    ...initialConfig,
+export function DesignSystemProvider({ children, config = {} }: DesignSystemProviderProps) {
+  const [state, setState] = useState<DesignSystemState>(() => {
+    const mergedConfig = { ...defaultConfig, ...config };
+    
+    return {
+      ...mergedConfig,
+      setTheme: (theme: Theme) => setState(prev => ({ ...prev, theme })),
+      setLanguage: (language: Language) => setState(prev => ({ ...prev, language })),
+      setDirection: (direction: Direction) => setState(prev => ({ ...prev, direction })),
+      setSpacing: (spacing: Spacing) => setState(prev => ({ ...prev, spacing })),
+      setFontSize: (fontSize: 'small' | 'medium' | 'large') => setState(prev => ({ ...prev, fontSize })),
+      setBorderRadius: (borderRadius: 'none' | 'small' | 'medium' | 'large') => setState(prev => ({ ...prev, borderRadius })),
+      setShadows: (shadows: 'none' | 'small' | 'medium' | 'large') => setState(prev => ({ ...prev, shadows })),
+      setAnimations: (animations: boolean) => setState(prev => ({ ...prev, animations })),
+      setReducedMotion: (reducedMotion: boolean) => setState(prev => ({ ...prev, reducedMotion })),
+      setHighContrast: (highContrast: boolean) => setState(prev => ({ ...prev, highContrast })),
+      setFocusVisible: (focusVisible: boolean) => setState(prev => ({ ...prev, focusVisible })),
+      reset: () => setState(prev => ({ ...prev, ...defaultConfig })),
+    };
   });
-  
-  const [themeLoading, setThemeLoading] = useState(false);
-  const [languageLoading, setLanguageLoading] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
 
-  // Initialize design system
+  // Apply theme to document
   useEffect(() => {
-    if (!themeLoading && !languageLoading) {
-      // Apply theme
-      // applyTheme(theme);
+    const root = document.documentElement;
+    
+    // Apply theme
+    root.setAttribute('data-theme', state.theme);
+    
+    // Apply language and direction
+    root.setAttribute('lang', state.language);
+    root.setAttribute('dir', state.direction);
+    
+    // Apply spacing
+    root.setAttribute('data-spacing', state.spacing);
+    
+    // Apply fontSize
+    root.setAttribute('data-font-size', state.fontSize);
+    
+    // Apply borderRadius
+    root.setAttribute('data-border-radius', state.borderRadius);
+    
+    // Apply shadows
+    root.setAttribute('data-shadows', state.shadows);
+    
+    // Apply animations
+    root.setAttribute('data-animations', state.animations.toString());
+    
+    // Apply reduced motion
+    root.setAttribute('data-reduced-motion', state.reducedMotion.toString());
+    
+    // Apply high contrast
+    root.setAttribute('data-high-contrast', state.highContrast.toString());
+    
+    // Apply focus visible
+    root.setAttribute('data-focus-visible', state.focusVisible.toString());
+    
+  }, [state]);
+
+  // Handle system preferences
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      setState(prev => ({ ...prev, reducedMotion: e.matches }));
+    };
+    
+    mediaQuery.addEventListener('change', handleChange);
+    setState(prev => ({ ...prev, reducedMotion: mediaQuery.matches }));
+    
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  // Handle system theme preference
+  useEffect(() => {
+    if (state.theme === 'auto') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const handleChange = (e: MediaQueryListEvent) => {
+        const root = document.documentElement;
+        root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+      };
       
-      // Apply language and direction
-      const root = document.documentElement;
-      root.setAttribute("lang", config.language);
-      root.setAttribute("dir", config.direction);
+      mediaQuery.addEventListener('change', handleChange);
+      handleChange(mediaQuery);
       
-      // Apply spacing
-      root.setAttribute("data-spacing", config.spacing);
-      
-      // Apply font size
-      root.setAttribute("data-font-size", config.fontSize);
-      
-      // Apply border radius
-      root.setAttribute("data-border-radius", config.borderRadius);
-      
-      // Apply shadows
-      root.setAttribute("data-shadows", config.shadows);
-      
-      // Apply accessibility settings
-      root.setAttribute("data-animations", config.animations.toString());
-      root.setAttribute("data-reduced-motion", config.reducedMotion.toString());
-      root.setAttribute("data-high-contrast", config.highContrast.toString());
-      root.setAttribute("data-focus-visible", config.focusVisible.toString());
-      
-      setIsInitialized(true);
+      return () => mediaQuery.removeEventListener('change', handleChange);
     }
-  }, [config, themeLoading, languageLoading]);
-
-  // Update theme function
-  const updateTheme = (newTheme: Theme) => {
-    // applyTheme(newTheme);
-    setConfig(prev => ({ ...prev, theme: newTheme }));
-  };
-
-  // Update language function
-  const updateLanguage = (newLanguage: Language) => {
-    const root = document.documentElement;
-    root.setAttribute("lang", newLanguage);
-    setConfig(prev => ({ ...prev, language: newLanguage }));
-  };
-
-  // Update direction function
-  const updateDirection = (newDirection: Direction) => {
-    const root = document.documentElement;
-    root.setAttribute("dir", newDirection);
-    setConfig(prev => ({ ...prev, direction: newDirection }));
-  };
-
-  // Update spacing function
-  const updateSpacing = (newSpacing: Spacing) => {
-    const root = document.documentElement;
-    root.setAttribute("data-spacing", newSpacing);
-    setConfig(prev => ({ ...prev, spacing: newSpacing }));
-  };
-
-  // Update font size function
-  const updateFontSize = (newFontSize: 'small' | 'medium' | 'large') => {
-    const root = document.documentElement;
-    root.setAttribute("data-font-size", newFontSize);
-    setConfig(prev => ({ ...prev, fontSize: newFontSize }));
-  };
-
-  // Update border radius function
-  const updateBorderRadius = (newBorderRadius: 'none' | 'small' | 'medium' | 'large') => {
-    const root = document.documentElement;
-    root.setAttribute("data-border-radius", newBorderRadius);
-    setConfig(prev => ({ ...prev, borderRadius: newBorderRadius }));
-  };
-
-  // Update shadows function
-  const updateShadows = (newShadows: 'none' | 'small' | 'medium' | 'large') => {
-    const root = document.documentElement;
-    root.setAttribute("data-shadows", newShadows);
-    setConfig(prev => ({ ...prev, shadows: newShadows }));
-  };
-
-  // Toggle animations
-  const toggleAnimations = () => {
-    const root = document.documentElement;
-    const newValue = !config.animations;
-    root.setAttribute("data-animations", newValue.toString());
-    setConfig(prev => ({ ...prev, animations: newValue }));
-  };
-
-  // Toggle reduced motion
-  const toggleReducedMotion = () => {
-    const root = document.documentElement;
-    const newValue = !config.reducedMotion;
-    root.setAttribute("data-reduced-motion", newValue.toString());
-    setConfig(prev => ({ ...prev, reducedMotion: newValue }));
-  };
-
-  // Toggle high contrast
-  const toggleHighContrast = () => {
-    const root = document.documentElement;
-    const newValue = !config.highContrast;
-    root.setAttribute("data-high-contrast", newValue.toString());
-    setConfig(prev => ({ ...prev, highContrast: newValue }));
-  };
-
-  // Toggle focus visible
-  const toggleFocusVisible = () => {
-    const root = document.documentElement;
-    const newValue = !config.focusVisible;
-    root.setAttribute("data-focus-visible", newValue.toString());
-    setConfig(prev => ({ ...prev, focusVisible: newValue }));
-  };
-
-  // Reset to defaults
-  const resetToDefaults = () => {
-    setConfig(defaultConfig);
-    const root = document.documentElement;
-    root.setAttribute("lang", defaultConfig.language);
-    root.setAttribute("dir", defaultConfig.direction);
-    root.setAttribute("data-spacing", defaultConfig.spacing);
-    root.setAttribute("data-font-size", defaultConfig.fontSize);
-    root.setAttribute("data-border-radius", defaultConfig.borderRadius);
-    root.setAttribute("data-shadows", defaultConfig.shadows);
-    root.setAttribute("data-animations", defaultConfig.animations.toString());
-    root.setAttribute("data-reduced-motion", defaultConfig.reducedMotion.toString());
-    root.setAttribute("data-high-contrast", defaultConfig.highContrast.toString());
-    root.setAttribute("data-focus-visible", defaultConfig.focusVisible.toString());
-  };
-
-  // Context value
-  const value: DesignSystemContextValue = {
-    // Current values
-    theme: config.theme,
-    language: config.language,
-    direction: config.direction,
-    spacing: config.spacing,
-    fontSize: config.fontSize,
-    borderRadius: config.borderRadius,
-    shadows: config.shadows,
-    animations: config.animations,
-    reducedMotion: config.reducedMotion,
-    highContrast: config.highContrast,
-    focusVisible: config.focusVisible,
-    
-    // Loading states
-    themeLoading,
-    languageLoading,
-    
-    // Initialization
-    isInitialized,
-    
-    // Update functions
-    updateTheme,
-    updateLanguage,
-    updateDirection,
-    updateSpacing,
-    updateFontSize,
-    updateBorderRadius,
-    updateShadows,
-    toggleAnimations,
-    toggleReducedMotion,
-    toggleHighContrast,
-    toggleFocusVisible,
-    
-    // Reset function
-    resetToDefaults,
-  };
+  }, [state.theme]);
 
   return (
-    <DesignSystemContext.Provider value={value}>
+    <DesignSystemContext.Provider value={state}>
       {children}
     </DesignSystemContext.Provider>
   );
 }
 
-// Hook to use design system context
+// Hook to use design system
+export function useDesignSystem() {
   const context = useContext(DesignSystemContext);
-  if (!context) {
-    throw new Error("useDesignSystem must be used within a DesignSystemProvider");
+  if (context === undefined) {
+    throw new Error('useDesignSystem must be used within a DesignSystemProvider');
   }
   return context;
 }
 
-// Exports
+// Hook to use theme
+export function useTheme() {
+  const { theme, setTheme } = useDesignSystem();
+  return { theme, setTheme };
+}
 
-// Exports
+// Hook to use language
+export function useLanguage() {
+  const { language, setLanguage } = useDesignSystem();
+  return { language, setLanguage };
+}
 
-// Exports
+// Hook to use direction
+export function useDirection() {
+  const { direction, setDirection } = useDesignSystem();
+  return { direction, setDirection };
+}
 
-// Exports
+// Hook to use spacing
+export function useSpacing() {
+  const { spacing, setSpacing } = useDesignSystem();
+  return { spacing, setSpacing };
+}
 
-// Exports
+// Hook to use fontSize
+export function useFontSize() {
+  const { fontSize, setFontSize } = useDesignSystem();
+  return { fontSize, setFontSize };
+}
 
-// Exports
+// Hook to use borderRadius
+export function useBorderRadius() {
+  const { borderRadius, setBorderRadius } = useDesignSystem();
+  return { borderRadius, setBorderRadius };
+}
 
-// Exports
+// Hook to use shadows
+export function useShadows() {
+  const { shadows, setShadows } = useDesignSystem();
+  return { shadows, setShadows };
+}
 
-// Exports
+// Hook to use animations
+export function useAnimations() {
+  const { animations, setAnimations } = useDesignSystem();
+  return { animations, setAnimations };
+}
 
-// Exports
-export type Theme = 'light' | 'dark' | 'system';
-export type Language = 'ar' | 'en';
-export type Direction = 'rtl' | 'ltr';
-export type Spacing = 'compact' | 'normal' | 'comfortable';
-export interface DesignSystemConfig {
-export interface DesignSystemContextValue {
-export function DesignSystemProvider({ 
-export function useDesignSystem(): DesignSystemContextValue {
+// Hook to use reduced motion
+export function useReducedMotion() {
+  const { reducedMotion, setReducedMotion } = useDesignSystem();
+  return { reducedMotion, setReducedMotion };
+}
+
+// Hook to use high contrast
+export function useHighContrast() {
+  const { highContrast, setHighContrast } = useDesignSystem();
+  return { highContrast, setHighContrast };
+}
+
+// Hook to use focus visible
+export function useFocusVisible() {
+  const { focusVisible, setFocusVisible } = useDesignSystem();
+  return { focusVisible, setFocusVisible };
+}

@@ -1,5 +1,7 @@
 import clsx from "clsx";
+import React from "react";
 
+export function Table({
   className,
   ...props
 }: React.HTMLAttributes<HTMLTableElement>) {
@@ -10,6 +12,7 @@ import clsx from "clsx";
   );
 }
 
+export function THead({
   className,
   ...props
 }: React.HTMLAttributes<HTMLTableSectionElement>) {
@@ -21,6 +24,7 @@ import clsx from "clsx";
   );
 }
 
+export function TBody({
   className,
   ...props
 }: React.HTMLAttributes<HTMLTableSectionElement>) {
@@ -32,6 +36,7 @@ import clsx from "clsx";
   );
 }
 
+export function TR({
   className,
   ...props
 }: React.HTMLAttributes<HTMLTableRowElement>) {
@@ -43,6 +48,7 @@ import clsx from "clsx";
   );
 }
 
+export function TH({
   className,
   ...props
 }: React.ThHTMLAttributes<HTMLTableCellElement>) {
@@ -57,19 +63,11 @@ import clsx from "clsx";
   );
 }
 
+export function TD({
   className,
   ...props
 }: React.TdHTMLAttributes<HTMLTableCellElement>) {
   return <td className={clsx("px-4 py-3", className)} {...props} />;
 }
 
-
-
-// Exports
-export function Table({
-export function THead({
-export function TBody({
-export function TR({
-export function TH({
-export function TD({
 export default Table;

@@ -1,6 +1,7 @@
 import { ApiResponse } from "@/types";
 // API utilities
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
+export class ApiError extends Error {
   constructor(
     message: string,
     public status: number,

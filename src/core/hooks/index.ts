@@ -9,6 +9,7 @@ import { useAuthStore, useUIStore, useDataStore } from '../store';
 import { storageUtils, debounce } from '../utils/index';
 import { ApiResponse } from '../types';
 // Auth Hooks
+export const useAuth = () => {
   const { user, isAuthenticated, isLoading, error, login, logout, setLoading, setError, updateUser } = useAuthStore();
   const loginUser = useCallback(async (credentials: { email: string; password: string }) => {
     setLoading(true);
@@ -63,6 +64,7 @@ import { ApiResponse } from '../types';
   };
 };
 // UI Hooks
+export const useTheme = () => {
   const { theme, setTheme } = useUIStore();
   const toggleTheme = useCallback(() => {
     setTheme(theme === 'light' ? 'dark' : 'light');
@@ -75,6 +77,8 @@ import { ApiResponse } from '../types';
     isLight: theme === 'light',
   };
 };
+
+export const useLanguage = () => {
   const { language, setLanguage } = useUIStore();
   const toggleLanguage = useCallback(() => {
     setLanguage(language === 'ar' ? 'en' : 'ar');
@@ -87,6 +91,8 @@ import { ApiResponse } from '../types';
     isLTR: language === 'en',
   };
 };
+
+export const useSidebar = () => {
   const { sidebarOpen, toggleSidebar, setSidebarOpen } = useUIStore();
   return {
     sidebarOpen,
@@ -94,6 +100,7 @@ import { ApiResponse } from '../types';
     setSidebarOpen,
   };
 };
+export const useNotifications = () => {
   const { notifications, addNotification, removeNotification, clearNotifications } = useUIStore();
   const showNotification = useCallback((notification: Omit<typeof notifications[0], 'id' | 'createdAt'>) => {
     const newNotification = {
@@ -114,6 +121,8 @@ import { ApiResponse } from '../types';
     clearNotifications,
   };
 };
+
+export const useModal = (modalId: string) => {
   const { modals, openModal, closeModal } = useUIStore();
   const isOpen = modals[modalId] || false;
   const open = useCallback(() => openModal(modalId), [modalId, openModal]);
@@ -126,6 +135,8 @@ import { ApiResponse } from '../types';
     toggle,
   };
 };
+
+export const useLoading = (key: string) => {
   const { loading, setLoading } = useUIStore();
   const isLoading = loading[key] || false;
   const startLoading = useCallback(() => setLoading(key, true), [key, setLoading]);

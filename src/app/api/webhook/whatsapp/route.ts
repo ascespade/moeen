@@ -1,171 +1,242 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { logger } from '@/lib/logger';
+
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
+
 // POST /api/webhook/whatsapp - استقبال رسائل WhatsApp
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    
     // التحقق من صحة الطلب
     const verifyToken = request.headers.get('x-verify-token');
     if (verifyToken !== process.env.WHATSAPP_VERIFY_TOKEN) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    
     // معالجة رسائل WhatsApp
     if (body.object === 'whatsapp_business_account') {
-      // Optimized: Consider using flatMap or other methods instead of nested loops
+      for (const entry of body.entry) {
+        for (const change of entry.changes) {
+          if (change.field === 'messages') {
+            for (const message of change.value.messages || []) {
               await processWhatsAppMessage(message, change.value);
             }
           }
         }
       }
     }
+    
     return NextResponse.json({ status: 'success' });
   } catch (error) {
+    logger.error('WhatsApp webhook error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
-// GET /api/webhook/whatsapp - التحقق من webhook
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const mode = searchParams.get('hub.mode');
-  const token = searchParams.get('hub.verify_token');
-  const challenge = searchParams.get('hub.challenge');
-  if (mode === 'subscribe' && token === process.env.WHATSAPP_VERIFY_TOKEN) {
-    return new NextResponse(challenge);
-  }
-  return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-}
+
+// معالجة رسالة WhatsApp
 async function processWhatsAppMessage(message: any, value: any) {
   try {
-    const phoneNumber = message.from;
-    const messageText = message.text?.body || '';
-    const messageId = message.id;
-    // البحث عن محادثة موجودة أو إنشاء جديدة
-    let { data: conversation } = await supabase
-      .from('chatbot_conversations')
+    const { from, text, type, timestamp } = message;
+    
+    // حفظ الرسالة في قاعدة البيانات
+    const { error } = await supabase
+      .from('whatsapp_messages')
+      .insert({
+        from_number: from,
+        message_text: text?.body || '',
+        message_type: type,
+        timestamp: new Date(parseInt(timestamp) * 1000).toISOString(),
+        raw_data: message,
+      });
+      
+    if (error) {
+      logger.error('Error saving WhatsApp message:', error);
+      return;
+    }
+    
+    // معالجة الرسالة حسب النوع
+    if (type === 'text' && text?.body) {
+      await handleTextMessage(from, text.body);
+    } else if (type === 'button') {
+      await handleButtonMessage(from, message.button);
+    } else if (type === 'interactive') {
+      await handleInteractiveMessage(from, message.interactive);
+    }
+    
+  } catch (error) {
+    logger.error('Error processing WhatsApp message:', error);
+  }
+}
+
+// معالجة الرسائل النصية
+async function handleTextMessage(from: string, text: string) {
+  try {
+    // البحث عن محادثة موجودة
+    const { data: conversation } = await supabase
+      .from('whatsapp_conversations')
       .select('*')
-      .eq('whatsapp_number', phoneNumber)
-      .eq('conversation_state', 'active')
+      .eq('phone_number', from)
+      .eq('status', 'active')
       .single();
-    if (!conversation) {
-      // إنشاء محادثة جديدة
-      const { data: newConversation } = await supabase
-        .from('chatbot_conversations')
-        .insert({
-          whatsapp_number: phoneNumber,
-          customer_name: value.contacts?.[0]?.profile?.name || 'مجهول',
-          conversation_state: 'active',
-          context_data: {}
+      
+    if (conversation) {
+      // تحديث المحادثة الموجودة
+      await supabase
+        .from('whatsapp_conversations')
+        .update({
+          last_message: text,
+          last_message_at: new Date().toISOString(),
+          message_count: conversation.message_count + 1,
         })
-        .select()
-        .single();
-      conversation = newConversation;
+        .eq('id', conversation.id);
+    } else {
+      // إنشاء محادثة جديدة
+      await supabase
+        .from('whatsapp_conversations')
+        .insert({
+          phone_number: from,
+          status: 'active',
+          last_message: text,
+          last_message_at: new Date().toISOString(),
+          message_count: 1,
+        });
     }
-    // حفظ الرسالة
-    await supabase
-      .from('chatbot_messages')
-      .insert({
-        conversation_id: conversation.id,
-        whatsapp_message_id: messageId,
-        sender_type: 'customer',
-        message_text: messageText,
-        message_type: 'text',
-        is_handled: false
-      });
-    // تحديث آخر رسالة
-    await supabase
-      .from('chatbot_conversations')
-      .update({ last_message_at: new Date().toISOString() })
-      .eq('id', conversation.id);
-    // معالجة الرسالة بواسطة AI
-    await processMessageWithAI(conversation.id, messageText, phoneNumber);
-  } catch (error) {}
+    
+    // معالجة الأوامر الخاصة
+    if (text.startsWith('/')) {
+      await handleCommand(from, text);
+    }
+    
+  } catch (error) {
+    logger.error('Error handling text message:', error);
+  }
 }
-async function processMessageWithAI(conversationId: string, messageText: string, phoneNumber: string) {
+
+// معالجة رسائل الأزرار
+async function handleButtonMessage(from: string, button: any) {
   try {
-    // البحث عن النية المناسبة
-    const { data: intents } = await supabase
-      .from('chatbot_intents')
-      .select('*')
-      .eq('is_active', true)
-      .order('priority', { ascending: true });
-    let matchedIntent = null;
-    let confidence = 0;
-    // البحث عن تطابق في الكلمات المفتاحية
-    // Optimized: Consider using flatMap or other methods instead of nested loops
-        if (messageText.toLowerCase().includes(keyword.toLowerCase())) {
-          matchedIntent = intent;
-          confidence = 0.8;
-          break;
-        }
-      }
-      if (matchedIntent) break;
-    }
-    // إذا لم يتم العثور على نية، استخدم النية العامة
-    if (!matchedIntent) {
-      matchedIntent = intents?.find(i => i.action_type === 'general') || intents?.[0];
-      confidence = 0.3;
-    }
-    let responseText = (matchedIntent as any)?.response_template || 'مرحباً بك! كيف يمكنني مساعدتك؟';
-    // معالجة النية
-    if ((matchedIntent as any)?.action_type === 'appointment') {
-      responseText = await handleAppointmentIntent(conversationId, messageText, phoneNumber);
-    } else if ((matchedIntent as any)?.action_type === 'cancel') {
-      responseText = await handleCancelIntent(conversationId, messageText, phoneNumber);
-    } else if ((matchedIntent as any)?.action_type === 'reminder') {
-      responseText = await handleReminderIntent(conversationId, messageText, phoneNumber);
-    }
-    // حفظ رد البوت
+    const { text, payload } = button;
+    
+    // حفظ تفاعل الزر
     await supabase
-      .from('chatbot_messages')
+      .from('whatsapp_interactions')
       .insert({
-        conversation_id: conversationId,
-        sender_type: 'bot',
-        message_text: responseText,
-        message_type: 'text',
-        intent_id: (matchedIntent as any)?.id,
-        confidence_score: confidence,
-        is_handled: true
+        phone_number: from,
+        interaction_type: 'button',
+        button_text: text,
+        button_payload: payload,
+        timestamp: new Date().toISOString(),
       });
-    // إرسال الرد عبر WhatsApp API
-    await sendWhatsAppMessage(phoneNumber, responseText);
-  } catch (error) {}
-}
-async function handleAppointmentIntent(conversationId: string, messageText: string, phoneNumber: string): Promise<string> {
-  // منطق حجز المواعيد
-  return 'أهلاً بك! سأساعدك في حجز موعد جديد. ما نوع الخدمة التي تحتاجها؟\n1️⃣ العلاج الطبيعي\n2️⃣ العلاج النفسي\n3️⃣ العلاج الوظيفي\n4️⃣ الاستشارات الأسرية';
-}
-async function handleCancelIntent(conversationId: string, messageText: string, phoneNumber: string): Promise<string> {
-  // منطق إلغاء المواعيد
-  return 'أفهم أنك تريد إلغاء موعدك. يرجى إرسال رقم الموعد أو اسمك ورقم هاتفك لتتمكن من إلغاء الموعد.';
-}
-async function handleReminderIntent(conversationId: string, messageText: string, phoneNumber: string): Promise<string> {
-  // منطق تذكير المواعيد
-  return 'سأتحقق من موعدك القادم. يرجى إرسال اسمك ورقم هاتفك للتحقق من موعدك.';
-}
-async function sendWhatsAppMessage(phoneNumber: string, message: string) {
-  try {
-    const response = await fetch(`https://graph.facebook.com/v18.0/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.WHATSAPP_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        messaging_product: 'whatsapp',
-        to: phoneNumber,
-        type: 'text',
-        text: {
-          body: message
-        }
-      })
-    });
-    if (!response.ok) {
-      logger.error('Failed to send WhatsApp message:', await response.text());
+      
+    // معالجة الأزرار حسب النوع
+    if (payload === 'book_appointment') {
+      await handleBookAppointment(from);
+    } else if (payload === 'view_services') {
+      await handleViewServices(from);
+    } else if (payload === 'contact_support') {
+      await handleContactSupport(from);
     }
-  } catch (error) {}
+    
+  } catch (error) {
+    logger.error('Error handling button message:', error);
+  }
+}
+
+// معالجة الرسائل التفاعلية
+async function handleInteractiveMessage(from: string, interactive: any) {
+  try {
+    const { type, list_reply, button_reply } = interactive;
+    
+    if (type === 'list_reply' && list_reply) {
+      await handleListReply(from, list_reply);
+    } else if (type === 'button_reply' && button_reply) {
+      await handleButtonReply(from, button_reply);
+    }
+    
+  } catch (error) {
+    logger.error('Error handling interactive message:', error);
+  }
+}
+
+// معالجة الأوامر
+async function handleCommand(from: string, command: string) {
+  try {
+    const [cmd, ...args] = command.split(' ');
+    
+    switch (cmd) {
+      case '/start':
+        await sendWelcomeMessage(from);
+        break;
+      case '/help':
+        await sendHelpMessage(from);
+        break;
+      case '/appointment':
+        await handleBookAppointment(from);
+        break;
+      case '/services':
+        await handleViewServices(from);
+        break;
+      case '/contact':
+        await handleContactSupport(from);
+        break;
+      default:
+        await sendUnknownCommandMessage(from);
+    }
+    
+  } catch (error) {
+    logger.error('Error handling command:', error);
+  }
+}
+
+// إرسال رسالة ترحيب
+async function sendWelcomeMessage(from: string) {
+  // Implementation for sending welcome message
+  logger.info(`Sending welcome message to ${from}`);
+}
+
+// إرسال رسالة مساعدة
+async function sendHelpMessage(from: string) {
+  // Implementation for sending help message
+  logger.info(`Sending help message to ${from}`);
+}
+
+// معالجة حجز موعد
+async function handleBookAppointment(from: string) {
+  // Implementation for booking appointment
+  logger.info(`Handling appointment booking for ${from}`);
+}
+
+// معالجة عرض الخدمات
+async function handleViewServices(from: string) {
+  // Implementation for viewing services
+  logger.info(`Handling view services for ${from}`);
+}
+
+// معالجة التواصل مع الدعم
+async function handleContactSupport(from: string) {
+  // Implementation for contact support
+  logger.info(`Handling contact support for ${from}`);
+}
+
+// إرسال رسالة أمر غير معروف
+async function sendUnknownCommandMessage(from: string) {
+  // Implementation for unknown command message
+  logger.info(`Sending unknown command message to ${from}`);
+}
+
+// معالجة رد القائمة
+async function handleListReply(from: string, listReply: any) {
+  // Implementation for list reply
+  logger.info(`Handling list reply for ${from}:`, listReply);
+}
+
+// معالجة رد الزر
+async function handleButtonReply(from: string, buttonReply: any) {
+  // Implementation for button reply
+  logger.info(`Handling button reply for ${from}:`, buttonReply);
 }

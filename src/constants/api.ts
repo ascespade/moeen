@@ -1,5 +1,6 @@
 
 // API constants
+export const API_ENDPOINTS = {
   // Auth
   AUTH: {
     LOGIN: "/auth/login",

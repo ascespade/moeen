@@ -3,7 +3,9 @@
  * Core Constants - الثوابت الأساسية
  * Centralized application constants
  */
+
 // API Endpoints
+export const API_ENDPOINTS = {
   // Authentication
   AUTH: {
     LOGIN: '/api/auth/login',
@@ -79,14 +81,18 @@
     MEDICAL_RECORDS: '/api/medical-records',
   },
 } as const;
+
 // User Roles
+export const USER_ROLES = {
   PATIENT: 'patient',
   DOCTOR: 'doctor',
   STAFF: 'staff',
   SUPERVISOR: 'supervisor',
   ADMIN: 'admin',
 } as const;
+
 // Appointment Status
+export const APPOINTMENT_STATUS = {
   SCHEDULED: 'scheduled',
   CONFIRMED: 'confirmed',
   IN_PROGRESS: 'in_progress',
@@ -94,26 +100,34 @@
   CANCELLED: 'cancelled',
   NO_SHOW: 'no_show',
 } as const;
+
 // Payment Status
+export const PAYMENT_STATUS = {
   PENDING: 'pending',
   PAID: 'paid',
   PARTIAL: 'partial',
   REFUNDED: 'refunded',
   CANCELLED: 'cancelled',
 } as const;
+
 // Payment Methods
+export const PAYMENT_METHODS = {
   CASH: 'cash',
   CARD: 'card',
   BANK_TRANSFER: 'bank_transfer',
   INSURANCE: 'insurance',
   WALLET: 'wallet',
 } as const;
+
 // Insurance Providers
+export const INSURANCE_PROVIDERS = {
   SEHA: 'SEHA',
   SHOON: 'SHOON',
   TATMAN: 'TATMAN',
 } as const;
+
 // Claim Status
+export const CLAIM_STATUS = {
   DRAFT: 'draft',
   SUBMITTED: 'submitted',
   UNDER_REVIEW: 'under_review',
@@ -121,25 +135,33 @@
   REJECTED: 'rejected',
   CANCELLED: 'cancelled',
 } as const;
+
 // Notification Types
+export const NOTIFICATION_TYPES = {
   APPOINTMENT_REMINDER: 'appointment_reminder',
   PAYMENT_CONFIRMATION: 'payment_confirmation',
   INSURANCE_UPDATE: 'insurance_update',
   SYSTEM_ALERT: 'system_alert',
 } as const;
+
 // Notification Channels
+export const NOTIFICATION_CHANNELS = {
   EMAIL: 'email',
   SMS: 'sms',
   PUSH: 'push',
   IN_APP: 'in_app',
 } as const;
+
 // File Types
+export const FILE_TYPES = {
   MEDICAL_RECORD: 'medical_record',
   INSURANCE_CLAIM: 'insurance_claim',
   PROFILE: 'profile',
   OTHER: 'other',
 } as const;
+
 // Allowed File Extensions
+export const ALLOWED_FILE_EXTENSIONS = [
   '.jpg',
   '.jpeg',
   '.png',
@@ -149,7 +171,9 @@
   '.docx',
   '.txt',
 ] as const;
+
 // MIME Types
+export const MIME_TYPES = {
   'image/jpeg': '.jpg',
   'image/png': '.png',
   'image/gif': '.gif',
@@ -158,25 +182,33 @@
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '.docx',
   'text/plain': '.txt',
 } as const;
+
 // Pagination
+export const PAGINATION = {
   DEFAULT_PAGE: 1,
   DEFAULT_LIMIT: 20,
   MAX_LIMIT: 100,
 } as const;
+
 // Time Constants
+export const TIME_CONSTANTS = {
   APPOINTMENT_DURATION: 30, // minutes
   REMINDER_TIME: 24, // hours before appointment
   SESSION_TIMEOUT: 3600000, // 1 hour in milliseconds
   RATE_LIMIT_WINDOW: 900000, // 15 minutes in milliseconds
 } as const;
+
 // Validation Rules
+export const VALIDATION_RULES = {
   PASSWORD_MIN_LENGTH: 8,
   PHONE_LENGTH: 9,
   MEDICAL_RECORD_LENGTH: 10,
   LICENSE_NUMBER_LENGTH: 8,
   MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
 } as const;
+
 // Error Codes
+export const ERROR_CODES = {
   VALIDATION_ERROR: 'VALIDATION_ERROR',
   AUTHENTICATION_ERROR: 'AUTHENTICATION_ERROR',
   AUTHORIZATION_ERROR: 'AUTHORIZATION_ERROR',
@@ -188,7 +220,9 @@
   EXTERNAL_SERVICE_ERROR: 'EXTERNAL_SERVICE_ERROR',
   BUSINESS_LOGIC_ERROR: 'BUSINESS_LOGIC_ERROR',
 } as const;
+
 // Success Messages
+export const SUCCESS_MESSAGES = {
   CREATED: 'تم الإنشاء بنجاح',
   UPDATED: 'تم التحديث بنجاح',
   DELETED: 'تم الحذف بنجاح',
@@ -201,7 +235,9 @@
   CONFIRMED: 'تم التأكيد بنجاح',
   CANCELLED: 'تم الإلغاء بنجاح',
 } as const;
+
 // Error Messages
+export const ERROR_MESSAGES = {
   REQUIRED: 'هذا الحقل مطلوب',
   INVALID_EMAIL: 'البريد الإلكتروني غير صحيح',
   INVALID_PHONE: 'رقم الهاتف غير صحيح',
@@ -221,7 +257,9 @@
   PATIENT_NOT_ACTIVATED: 'المريض غير مفعل',
   INSUFFICIENT_PERMISSIONS: 'صلاحيات غير كافية',
 } as const;
+
 // Regular Expressions
+export const REGEX_PATTERNS = {
   EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   PHONE: /^(\+966|0)?[5-9][0-9]{8}$/,
   PASSWORD: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
@@ -232,7 +270,9 @@
   DATE: /^\d{4}-\d{2}-\d{2}$/,
   DATETIME: /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?$/,
 } as const;
+
 // Local Storage Keys
+export const STORAGE_KEYS = {
   AUTH_TOKEN: 'auth_token',
   REFRESH_TOKEN: 'refresh_token',
   USER_DATA: 'user_data',
@@ -242,7 +282,9 @@
   CART: 'cart',
   RECENT_SEARCHES: 'recent_searches',
 } as const;
+
 // Query Keys for React Query
+export const QUERY_KEYS = {
   USERS: 'users',
   PATIENTS: 'patients',
   DOCTORS: 'doctors',
@@ -253,7 +295,9 @@
   REPORTS: 'reports',
   DASHBOARD_METRICS: 'dashboard_metrics',
 } as const;
+
 // Feature Flags
+export const FEATURE_FLAGS = {
   CHATBOT_ENABLED: 'chatbot_enabled',
   PAYMENT_ENABLED: 'payment_enabled',
   INSURANCE_ENABLED: 'insurance_enabled',
@@ -261,26 +305,3 @@
   ANALYTICS_ENABLED: 'analytics_enabled',
   MAINTENANCE_MODE: 'maintenance_mode',
 } as const;
-// Exports
-export const API_ENDPOINTS = {
-export const USER_ROLES = {
-export const APPOINTMENT_STATUS = {
-export const PAYMENT_STATUS = {
-export const PAYMENT_METHODS = {
-export const INSURANCE_PROVIDERS = {
-export const CLAIM_STATUS = {
-export const NOTIFICATION_TYPES = {
-export const NOTIFICATION_CHANNELS = {
-export const FILE_TYPES = {
-export const ALLOWED_FILE_EXTENSIONS = [
-export const MIME_TYPES = {
-export const PAGINATION = {
-export const TIME_CONSTANTS = {
-export const VALIDATION_RULES = {
-export const ERROR_CODES = {
-export const SUCCESS_MESSAGES = {
-export const ERROR_MESSAGES = {
-export const REGEX_PATTERNS = {
-export const STORAGE_KEYS = {
-export const QUERY_KEYS = {
-export const FEATURE_FLAGS = {

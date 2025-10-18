@@ -104,23 +104,25 @@ beforeEach(() => {
   (global.fetch as jest.Mock).mockClear();
 });
 // Global test utilities
+export const mockUser = {
   id: 'test-user-id',
   email: 'test@example.com',
   name: 'Test User',
   role: 'user',
   created_at: new Date().toISOString(),
 };
+
+export const mockToken = 'mock-jwt-token-123456789';
+
+export const mockAuthResponse = {
   success: true,
   data: {
     user: mockUser,
     token: mockToken,
   },
 };
+
+export const mockErrorResponse = {
   success: false,
   error: 'Authentication failed',
 };
-// Exports
-export const mockUser = {
-export const mockToken = 'mock-jwt-token-123456789';
-export const mockAuthResponse = {
-export const mockErrorResponse = {

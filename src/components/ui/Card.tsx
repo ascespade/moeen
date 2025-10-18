@@ -1,4 +1,3 @@
-
 /**
  * Card Component - مكون البطاقة
  * Unified card component with multiple variants
@@ -9,6 +8,7 @@
 import React, { forwardRef } from 'react';
 import { cn } from '@/lib/cn';
 
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'elevated' | 'outlined' | 'filled';
   padding?: 'none' | 'sm' | 'md' | 'lg';
   hover?: boolean;
@@ -30,23 +30,20 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
   const variants = {
     default: 'border-gray-200',
     elevated: 'border-gray-200 shadow-md',
-    outlined: 'border-2 border-gray-300',
-    filled: 'border-gray-200 bg-surface',
+    outlined: 'border-gray-300 shadow-none',
+    filled: 'border-gray-200 bg-gray-50',
   };
   
   const paddings = {
-    none: '',
+    none: 'p-0',
     sm: 'p-3',
-    md: 'p-6',
-    lg: 'p-8',
+    md: 'p-4',
+    lg: 'p-6',
   };
   
-  const interactiveClasses = clickable 
-    ? 'cursor-pointer transition-all duration-200 hover:shadow-md active:scale-[0.98]'
-    : hover
-    ? 'transition-shadow duration-200 hover:shadow-md'
-    : '';
-
+  const hoverClasses = hover ? 'hover:shadow-md transition-shadow duration-200' : '';
+  const clickableClasses = clickable ? 'cursor-pointer hover:bg-gray-50 transition-colors duration-200' : '';
+  
   return (
     <div
       ref={ref}
@@ -54,7 +51,8 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
         baseClasses,
         variants[variant],
         paddings[padding],
-        interactiveClasses,
+        hoverClasses,
+        clickableClasses,
         className
       )}
       {...props}
@@ -64,6 +62,8 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
 
 Card.displayName = 'Card';
 
+// Card sub-components
+interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   subtitle?: string;
   action?: React.ReactNode;
@@ -79,7 +79,7 @@ const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
       {(title || subtitle || action) && (
         <div className="flex items-center justify-between">
           <div>
-            {title && <h3 className="text-lg font-semibold leading-none tracking-tight">{title}</h3>}
+            {title && <h3 className="text-lg font-semibold">{title}</h3>}
             {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
           </div>
           {action && <div>{action}</div>}
@@ -92,6 +92,7 @@ const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
 
 CardHeader.displayName = 'CardHeader';
 
+interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
   ({ className, ...props }, ref) => (
@@ -105,6 +106,7 @@ const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
 
 CardContent.displayName = 'CardContent';
 
+interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
   ({ className, ...props }, ref) => (
@@ -118,14 +120,4 @@ const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
 
 CardFooter.displayName = 'CardFooter';
 
-// Legacy exports for backward compatibility
-
-
-// Exports
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
-export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
-export const CardTitle = CardHeader;
-export const CardDescription = CardContent;
 export { Card, CardHeader, CardContent, CardFooter };

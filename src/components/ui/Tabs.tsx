@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext } from "react";
 
 interface TabsContextValue {
   value: string;
@@ -8,6 +8,7 @@ interface TabsContextValue {
 
 const TabsContext = createContext<TabsContextValue | undefined>(undefined);
 
+export function Tabs({
   defaultValue,
   value,
   onValueChange,
@@ -31,6 +32,7 @@ const TabsContext = createContext<TabsContextValue | undefined>(undefined);
   );
 }
 
+export function TabsList({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
@@ -45,6 +47,7 @@ const TabsContext = createContext<TabsContextValue | undefined>(undefined);
   );
 }
 
+export function TabsTrigger({
   value,
   className,
   ...props
@@ -73,6 +76,7 @@ const TabsContext = createContext<TabsContextValue | undefined>(undefined);
   );
 }
 
+export function TabsContent({
   value,
   className,
   ...props
@@ -99,11 +103,4 @@ const TabsContext = createContext<TabsContextValue | undefined>(undefined);
   );
 }
 
-
-
-// Exports
-export function Tabs({
-export function TabsList({
-export function TabsTrigger({
-export function TabsContent({
 export default Tabs;

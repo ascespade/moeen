@@ -1,6 +1,6 @@
-
 "use client";
 import { ReactNode } from "react";
+
 interface FormFieldProps {
   label: string;
   error?: string;
@@ -9,6 +9,7 @@ interface FormFieldProps {
   className?: string;
 }
 
+export function FormField({
   label,
   error,
   required,
@@ -34,7 +35,12 @@ interface FormGroupProps {
   className?: string;
 }
 
-  return <div className={`space-y-4 ${className}`}>{children}</div>;
+export function FormGroup({ children, className = "" }: FormGroupProps) {
+  return (
+    <div className={`space-y-4 ${className}`}>
+      {children}
+    </div>
+  );
 }
 
 interface FormRowProps {
@@ -42,8 +48,9 @@ interface FormRowProps {
   className?: string;
 }
 
+export function FormRow({ children, className = "" }: FormRowProps) {
   return (
-    <div className={`grid grid-cols-1 gap-4 md:grid-cols-2 ${className}`}>
+    <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${className}`}>
       {children}
     </div>
   );
@@ -54,18 +61,10 @@ interface FormActionsProps {
   className?: string;
 }
 
+export function FormActions({ children, className = "" }: FormActionsProps) {
   return (
-    <div
-      className={`flex gap-3 border-t border-gray-200 pt-6 dark:border-gray-700 ${className}`}
-    >
+    <div className={`flex justify-end space-x-2 ${className}`}>
       {children}
     </div>
   );
 }
-
-
-// Exports
-export function FormField({
-export function FormGroup({ children, className = "" }: FormGroupProps) {
-export function FormRow({ children, className = "" }: FormRowProps) {
-export function FormActions({ children, className = "" }: FormActionsProps) {

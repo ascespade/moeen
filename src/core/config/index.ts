@@ -4,25 +4,33 @@
  * Centralized configuration management
  */
 import { SystemConfig } from '../types';
+
 // Environment Configuration
+export const ENV = {
   NODE_ENV: process.env.NODE_ENV || 'development',
   IS_DEVELOPMENT: process.env.NODE_ENV === 'development',
   IS_PRODUCTION: process.env.NODE_ENV === 'production',
   IS_TEST: process.env.NODE_ENV === 'test',
 } as const;
+
 // Database Configuration
+export const DATABASE_CONFIG = {
   URL: process.env.DATABASE_URL || '',
   MAX_CONNECTIONS: parseInt(process.env.DB_MAX_CONNECTIONS || '10'),
   CONNECTION_TIMEOUT: parseInt(process.env.DB_CONNECTION_TIMEOUT || '30000'),
   QUERY_TIMEOUT: parseInt(process.env.DB_QUERY_TIMEOUT || '10000'),
 } as const;
+
 // Supabase Configuration
+export const SUPABASE_CONFIG = {
   URL: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
   ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
   SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
   BUCKET_NAME: process.env.SUPABASE_BUCKET_NAME || 'medical-documents',
 } as const;
+
 // API Configuration
+export const API_CONFIG = {
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || '/api',
   TIMEOUT: parseInt(process.env.API_TIMEOUT || '30000'),
   RATE_LIMIT: {
@@ -34,7 +42,9 @@ import { SystemConfig } from '../types';
     CREDENTIALS: true,
   },
 } as const;
+
 // Authentication Configuration
+export const AUTH_CONFIG = {
   JWT_SECRET: process.env.JWT_SECRET || '',
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '24h',
   REFRESH_TOKEN_EXPIRES_IN: process.env.REFRESH_TOKEN_EXPIRES_IN || '7d',
@@ -43,7 +53,9 @@ import { SystemConfig } from '../types';
   MAX_LOGIN_ATTEMPTS: parseInt(process.env.MAX_LOGIN_ATTEMPTS || '5'),
   LOCKOUT_DURATION: parseInt(process.env.LOCKOUT_DURATION || '900000'), // 15 minutes
 } as const;
+
 // Payment Configuration
+export const PAYMENT_CONFIG = {
   STRIPE: {
     SECRET_KEY: process.env.STRIPE_SECRET_KEY || '',
     PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
@@ -59,7 +71,9 @@ import { SystemConfig } from '../types';
   MIN_AMOUNT: 1,
   MAX_AMOUNT: 100000,
 } as const;
+
 // Insurance Configuration
+export const INSURANCE_CONFIG = {
   PROVIDERS: {
     SEHA: {
       API_URL: process.env.SEHA_API_URL || '',
@@ -80,7 +94,9 @@ import { SystemConfig } from '../types';
   CLAIM_TIMEOUT: parseInt(process.env.INSURANCE_CLAIM_TIMEOUT || '86400000'), // 24 hours
   RETRY_ATTEMPTS: parseInt(process.env.INSURANCE_RETRY_ATTEMPTS || '3'),
 } as const;
+
 // Notification Configuration
+export const NOTIFICATION_CONFIG = {
   EMAIL: {
     PROVIDER: process.env.EMAIL_PROVIDER || 'smtp',
     SMTP_HOST: process.env.SMTP_HOST || '',
@@ -104,7 +120,9 @@ import { SystemConfig } from '../types';
   BATCH_SIZE: parseInt(process.env.NOTIFICATION_BATCH_SIZE || '100'),
   RETRY_ATTEMPTS: parseInt(process.env.NOTIFICATION_RETRY_ATTEMPTS || '3'),
 } as const;
+
 // File Upload Configuration
+export const UPLOAD_CONFIG = {
   MAX_FILE_SIZE: parseInt(process.env.MAX_FILE_SIZE || '10485760'), // 10MB
   ALLOWED_TYPES: process.env.ALLOWED_FILE_TYPES?.split(',') || [
     'image/jpeg',
@@ -118,7 +136,9 @@ import { SystemConfig } from '../types';
   STORAGE_PATH: process.env.UPLOAD_STORAGE_PATH || 'uploads',
   CDN_URL: process.env.CDN_URL || '',
 } as const;
+
 // Security Configuration
+export const SECURITY_CONFIG = {
   ENCRYPTION_KEY: process.env.ENCRYPTION_KEY || '',
   HASH_ROUNDS: parseInt(process.env.HASH_ROUNDS || '12'),
   CORS_ORIGINS: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'],
@@ -134,7 +154,9 @@ import { SystemConfig } from '../types';
     'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;",
   },
 } as const;
+
 // Application Configuration
+export const APP_CONFIG = {
   NAME: 'مركز الحمام الطبي',
   VERSION: '1.0.0',
   DESCRIPTION: 'منصة طبية متكاملة لإدارة المرضى والمواعيد',
@@ -148,7 +170,9 @@ import { SystemConfig } from '../types';
   TIME_FORMAT: 'HH:mm',
   DATETIME_FORMAT: 'DD/MM/YYYY HH:mm',
 } as const;
+
 // Default System Configuration
+export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [
   {
     id: 'app-name',
     key: 'app_name',
@@ -200,16 +224,3 @@ import { SystemConfig } from '../types';
     updatedAt: new Date(),
   },
 ];
-// Exports
-export const ENV = {
-export const DATABASE_CONFIG = {
-export const SUPABASE_CONFIG = {
-export const API_CONFIG = {
-export const AUTH_CONFIG = {
-export const PAYMENT_CONFIG = {
-export const INSURANCE_CONFIG = {
-export const NOTIFICATION_CONFIG = {
-export const UPLOAD_CONFIG = {
-export const SECURITY_CONFIG = {
-export const APP_CONFIG = {
-export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [

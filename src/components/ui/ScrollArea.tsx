@@ -1,6 +1,7 @@
-export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
 import clsx from "clsx";
+import React from "react";
 
+export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
   // Extends all div attributes
 }
 

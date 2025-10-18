@@ -1,9 +1,10 @@
-export async function GET(
 import { NextRequest, NextResponse } from 'next/server';
 import { authorize } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
 import { getClientInfo } from '@/lib/utils/request-helpers';
 import { validateData, appointmentUpdateSchema } from '@/lib/validation/schemas';
+
+export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
