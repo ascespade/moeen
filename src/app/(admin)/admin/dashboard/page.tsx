@@ -73,10 +73,8 @@ const mockStats: DashboardStats = {
   completedSessions: 14234,
   upcomingSessions: 1444,
 };
-}
 
 const mockRecentActivities: RecentActivity[] = [
-  {
   {
     id: "1",
     type: "appointment",
