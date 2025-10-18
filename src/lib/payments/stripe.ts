@@ -1,22 +1,18 @@
 import Stripe from 'stripe';
-
 const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2023-10-16',
 }) : null;
-
   amount: number;
   currency: string;
   patientId: string;
   appointmentId: string;
   metadata?: Record<string, string>;
 }
-
   success: boolean;
   paymentIntentId?: string;
   clientSecret?: string;
   error?: string;
 }
-
   async createPaymentIntent(data: PaymentIntentData): Promise<PaymentResult> {
     if (!stripe) {
       return {
@@ -24,7 +20,6 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
         error: 'Stripe not configured'
       };
     }
-    
     try {
       const paymentIntent = await stripe.paymentIntents.create({
         amount: Math.round(data.amount * 100), // Convert to cents
@@ -38,7 +33,6 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
           enabled: true,
         },
       });
-
       return {
         success: true,
         paymentIntentId: paymentIntent.id,
@@ -51,7 +45,6 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
       };
     }
   }
-
   async confirmPayment(paymentIntentId: string): Promise<PaymentResult> {
     if (!stripe) {
       return {
@@ -59,17 +52,14 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
         error: 'Stripe not configured'
       };
     }
-    
     try {
       const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-      
       if (paymentIntent.status === 'succeeded') {
         return {
           success: true,
           paymentIntentId: paymentIntent.id
         };
       }
-
       return {
         success: false,
         error: `Payment not completed. Status: ${paymentIntent.status}`
@@ -81,7 +71,6 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
       };
     }
   }
-
   async refundPayment(paymentIntentId: string, amount?: number): Promise<PaymentResult> {
     if (!stripe) {
       return {
@@ -89,13 +78,11 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
         error: 'Stripe not configured'
       };
     }
-    
     try {
       const refund = await stripe.refunds.create({
         payment_intent: paymentIntentId,
         amount: amount ? Math.round(amount * 100) : undefined
       });
-
       return {
         success: true,
         paymentIntentId: refund.payment_intent as string
@@ -107,7 +94,6 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
       };
     }
   }
-
   async handleWebhook(payload: string, signature: string): Promise<PaymentResult> {
     if (!stripe) {
       return {
@@ -115,14 +101,12 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
         error: 'Stripe not configured'
       };
     }
-    
     try {
       const event = stripe.webhooks.constructEvent(
         payload,
         signature,
         process.env.STRIPE_WEBHOOK_SECRET!
       );
-
       switch (event.type) {
         case 'payment_intent.succeeded':
           const paymentIntent = event.data.object as Stripe.PaymentIntent;
@@ -130,14 +114,12 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
             success: true,
             paymentIntentId: paymentIntent.id
           };
-        
         case 'payment_intent.payment_failed':
           const failedPayment = event.data.object as Stripe.PaymentIntent;
           return {
             success: false,
             error: `Payment failed: ${failedPayment.last_payment_error?.message}`
           };
-        
         default:
           return {
             success: true,
@@ -152,8 +134,6 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
     }
   }
 }
-
-
 // Exports
 export interface PaymentIntentData {
 export interface PaymentResult {

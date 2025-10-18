@@ -1,20 +1,15 @@
 import { createClient } from "@supabase/supabase-js";
-
 // Supabase Integration for Hemam Center
-
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
-
 // Client for client-side operations
-
 // Admin client for server-side operations
   auth: {
     autoRefreshToken: false,
     persistSession: false,
   },
 });
-
 // Database Types
   id: string;
   national_id: string;
@@ -38,7 +33,6 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
   updated_at: string;
   status: "active" | "inactive" | "suspended";
 }
-
   id: string;
   national_id: string;
   name: string;
@@ -52,7 +46,6 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
   created_at: string;
   status: "active" | "inactive";
 }
-
   id: string;
   patient_id: string;
   doctor_id: string;
@@ -72,7 +65,6 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   patient_id: string;
   doctor_id: string;
@@ -85,7 +77,6 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
   insurance_claim_number?: string;
   created_at: string;
 }
-
   id: string;
   patient_id: string;
   appointment_id?: string;
@@ -98,7 +89,6 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
   processed_at?: string;
   rejection_reason?: string;
 }
-
 // Supabase Database Manager
   // Patient Management
   async createPatient(
@@ -109,34 +99,28 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       .insert([patientData])
       .select()
       .single();
-
     if (error) throw new Error(`Failed to create patient: ${error.message}`);
     return data;
   }
-
   async getPatient(patientId: string) {
     const { data, error } = await supabaseAdmin
       .from("patients")
       .select("*")
       .eq("id", patientId)
       .single();
-
     if (error) throw new Error(`Failed to get patient: ${error.message}`);
     return data;
   }
-
   async getPatientByNationalId(nationalId: string) {
     const { data, error } = await supabaseAdmin
       .from("patients")
       .select("*")
       .eq("national_id", nationalId)
       .single();
-
     if (error)
       throw new Error(`Failed to get patient by national ID: ${error.message}`);
     return data;
   }
-
   async updatePatient(patientId: string, updates: Partial<Patient>) {
     const { data, error } = await supabaseAdmin
       .from("patients")
@@ -144,11 +128,9 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       .eq("id", patientId)
       .select()
       .single();
-
     if (error) throw new Error(`Failed to update patient: ${error.message}`);
     return data;
   }
-
   async searchPatients(searchTerm: string) {
     const { data, error } = await supabaseAdmin
       .from("patients")
@@ -157,11 +139,9 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
         `name.ilike.%${searchTerm}%,national_id.ilike.%${searchTerm}%,phone.ilike.%${searchTerm}%`,
       )
       .order("created_at", { ascending: false });
-
     if (error) throw new Error(`Failed to search patients: ${error.message}`);
     return data;
   }
-
   // Doctor Management
   async createDoctor(doctorData: Omit<Doctor, "id" | "created_at">) {
     const { data, error } = await supabaseAdmin
@@ -169,34 +149,28 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       .insert([doctorData])
       .select()
       .single();
-
     if (error) throw new Error(`Failed to create doctor: ${error.message}`);
     return data;
   }
-
   async getDoctor(doctorId: string) {
     const { data, error } = await supabaseAdmin
       .from("doctors")
       .select("*")
       .eq("id", doctorId)
       .single();
-
     if (error) throw new Error(`Failed to get doctor: ${error.message}`);
     return data;
   }
-
   async getDoctorsBySpecialty(specialty: string) {
     const { data, error } = await supabaseAdmin
       .from("doctors")
       .select("*")
       .eq("specialty", specialty)
       .eq("status", "active");
-
     if (error)
       throw new Error(`Failed to get doctors by specialty: ${error.message}`);
     return data;
   }
-
   // Appointment Management
   async createAppointment(
     appointmentData: Omit<Appointment, "id" | "created_at" | "updated_at">,
@@ -206,12 +180,10 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       .insert([appointmentData])
       .select()
       .single();
-
     if (error)
       throw new Error(`Failed to create appointment: ${error.message}`);
     return data;
   }
-
   async getAppointments(
     filters: {
       patientId?: string;
@@ -225,20 +197,16 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       patients!appointments_patient_id_fkey(name, phone),
       doctors!appointments_doctor_id_fkey(name, specialty)
     `);
-
     if (filters.patientId) query = query.eq("patient_id", filters.patientId);
     if (filters.doctorId) query = query.eq("doctor_id", filters.doctorId);
     if (filters.date) query = query.eq("appointment_date", filters.date);
     if (filters.status) query = query.eq("status", filters.status);
-
     const { data, error } = await query.order("appointment_date", {
       ascending: true,
     });
-
     if (error) throw new Error(`Failed to get appointments: ${error.message}`);
     return data;
   }
-
   async updateAppointment(
     appointmentId: string,
     updates: Partial<Appointment>,
@@ -249,12 +217,10 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       .eq("id", appointmentId)
       .select()
       .single();
-
     if (error)
       throw new Error(`Failed to update appointment: ${error.message}`);
     return data;
   }
-
   // Session Management
   async createSession(sessionData: Omit<Session, "id" | "created_at">) {
     const { data, error } = await supabaseAdmin
@@ -262,11 +228,9 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       .insert([sessionData])
       .select()
       .single();
-
     if (error) throw new Error(`Failed to create session: ${error.message}`);
     return data;
   }
-
   async getSessions(patientId: string) {
     const { data, error } = await supabaseAdmin
       .from("sessions")
@@ -278,11 +242,9 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       )
       .eq("patient_id", patientId)
       .order("session_date", { ascending: false });
-
     if (error) throw new Error(`Failed to get sessions: ${error.message}`);
     return data;
   }
-
   // Insurance Claims
   async createInsuranceClaim(
     claimData: Omit<InsuranceClaim, "id" | "submitted_at">,
@@ -297,24 +259,20 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       ])
       .select()
       .single();
-
     if (error)
       throw new Error(`Failed to create insurance claim: ${error.message}`);
     return data;
   }
-
   async getInsuranceClaims(patientId: string) {
     const { data, error } = await supabaseAdmin
       .from("insurance_claims")
       .select("*")
       .eq("patient_id", patientId)
       .order("submitted_at", { ascending: false });
-
     if (error)
       throw new Error(`Failed to get insurance claims: ${error.message}`);
     return data;
   }
-
   async updateInsuranceClaim(
     claimId: string,
     updates: Partial<InsuranceClaim>,
@@ -325,20 +283,16 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       .eq("id", claimId)
       .select()
       .single();
-
     if (error)
       throw new Error(`Failed to update insurance claim: ${error.message}`);
     return data;
   }
-
   // Analytics
   async getPatientStats() {
     const { data, error } = await supabaseAdmin
       .from("patients")
       .select("id, created_at, status");
-
     if (error) throw new Error(`Failed to get patient stats: ${error.message}`);
-
     const total = data.length;
     const active = data.filter((p) => p.status === "active").length;
     const newLast30Days = data.filter((p) => {
@@ -347,18 +301,14 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       return createdAt >= thirtyDaysAgo;
     }).length;
-
     return { total, active, newLast30Days };
   }
-
   async getAppointmentStats() {
     const { data, error } = await supabaseAdmin
       .from("appointments")
       .select("status, appointment_date, created_at");
-
     if (error)
       throw new Error(`Failed to get appointment stats: ${error.message}`);
-
     const total = data.length;
     const completed = data.filter((a) => a.status === "completed").length;
     const cancelled = data.filter((a) => a.status === "cancelled").length;
@@ -366,10 +316,8 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       const appointmentDate = new Date(a.appointment_date);
       return appointmentDate >= new Date() && a.status === "scheduled";
     }).length;
-
     return { total, completed, cancelled, upcoming };
   }
-
   // Health Check
   async healthCheck() {
     try {
@@ -377,9 +325,7 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
         .from("patients")
         .select("id")
         .limit(1);
-
       if (error) throw error;
-
       return {
         status: "healthy",
         connected: true,
@@ -396,9 +342,6 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
     }
   }
 }
-
-
-
 // Exports
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {

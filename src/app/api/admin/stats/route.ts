@@ -80,8 +80,7 @@ export async function GET(request: NextRequest) {
         };
       }
     } catch (error) {
-      console.log('Appointments table not found, using default stats');
-    }
+      }
 
     // Get system configuration
     let systemConfig = {
@@ -116,8 +115,7 @@ export async function GET(request: NextRequest) {
         });
       }
     } catch (error) {
-      console.log('System config table not found, using default config');
-    }
+      }
 
     const stats = {
       users: {

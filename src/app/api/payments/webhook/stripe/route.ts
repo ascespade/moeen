@@ -48,8 +48,7 @@ export async function POST(request: NextRequest) {
         await handlePaymentCanceled(event.data.object as Stripe.PaymentIntent, supabase);
         break;
       default:
-        console.log(`Unhandled event type: ${event.type}`);
-    }
+        }
 
     return NextResponse.json({ received: true });
 
@@ -108,8 +107,7 @@ async function handlePaymentSucceeded(paymentIntent: Stripe.PaymentIntent, supab
     },
   });
 
-  console.log(`Payment succeeded for appointment ${appointmentId}`);
-}
+  }
 
 async function handlePaymentFailed(paymentIntent: Stripe.PaymentIntent, supabase: any) {
   const appointmentId = paymentIntent.metadata?.appointmentId;
@@ -150,8 +148,7 @@ async function handlePaymentFailed(paymentIntent: Stripe.PaymentIntent, supabase
     },
   });
 
-  console.log(`Payment failed for appointment ${appointmentId}`);
-}
+  }
 
 async function handlePaymentCanceled(paymentIntent: Stripe.PaymentIntent, supabase: any) {
   const appointmentId = paymentIntent.metadata?.appointmentId;
@@ -191,5 +188,4 @@ async function handlePaymentCanceled(paymentIntent: Stripe.PaymentIntent, supaba
     },
   });
 
-  console.log(`Payment canceled for appointment ${appointmentId}`);
-}
+  }

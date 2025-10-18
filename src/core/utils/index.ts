@@ -2,7 +2,6 @@
 /**
  * Core utilities export
  */
-
 // Storage utilities
   get: (key: string) => {
     try {
@@ -37,7 +36,6 @@
     }
   },
 };
-
 // Debounce utility
   fn: T,
   delay: number
@@ -48,8 +46,6 @@
     timeoutId = setTimeout(() => fn(...args), delay);
   };
 };
-
-
 // Exports
 export { cn, cva } from '@/lib/cn';
 export type { VariantProps } from '@/lib/cn';

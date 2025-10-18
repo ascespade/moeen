@@ -3,14 +3,12 @@
  * Admin User Management API - إدارة المستخدمين
  * Manage users, roles, and system configuration
  */
-
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
 import { requireAuth } from '@/lib/auth/authorize';
-
 const createUserSchema = z.object({
   email: z.string().email('Invalid email format'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
@@ -24,7 +22,6 @@ const createUserSchema = z.object({
   isActive: z.boolean().default(true),
   permissions: z.array(z.string()).optional(),
 });
-
 const updateUserSchema = z.object({
   email: z.string().email().optional(),
   role: z.enum(['patient', 'doctor', 'staff', 'supervisor', 'admin']).optional(),
@@ -37,47 +34,38 @@ const updateUserSchema = z.object({
   isActive: z.boolean().optional(),
   permissions: z.array(z.string()).optional(),
 });
-
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
     const supabase = await createClient();
     const body = await request.json();
-
     // Validate input
     const validation = await ValidationHelper.validateAsync(createUserSchema, body);
     if (!validation.success) {
       return NextResponse.json({ error: validation.error.message }, { status: 400 });
     }
-
     const { email, password, role, profile, isActive, permissions } = validation.data;
-
     // Check if user already exists
     const { data: existingUser } = await supabase
       .from('users')
       .select('id')
       .eq('email', email)
       .single();
-
     if (existingUser) {
       return NextResponse.json({ error: 'User already exists' }, { status: 409 });
     }
-
     // Create user account
     const { data: user, error: userError } = await supabase.auth.admin.createUser({
       email,
       password,
       email_confirm: true,
     });
-
     if (userError) {
       return NextResponse.json({ error: 'Failed to create user account' }, { status: 500 });
     }
-
     // Create user profile
     const { data: userProfile, error: profileError } = await supabase
       .from('users')
@@ -92,20 +80,17 @@ const updateUserSchema = z.object({
       })
       .select()
       .single();
-
     if (profileError) {
       // Clean up auth user if profile creation fails
       await supabase.auth.admin.deleteUser(user.user.id);
       return NextResponse.json({ error: 'Failed to create user profile' }, { status: 500 });
     }
-
     // Create role-specific profile
     if (role === 'patient') {
       await createPatientProfile(user.user.id, profile);
     } else if (role === 'doctor') {
       await createDoctorProfile(user.user.id, profile);
     }
-
     // Create audit log
     await supabase.from('audit_logs').insert({
       action: 'user_created',
@@ -118,32 +103,27 @@ const updateUserSchema = z.object({
         isActive,
       },
     });
-
     return NextResponse.json({
       success: true,
       data: userProfile,
       message: 'User created successfully'
     });
-
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
 }
-
   try {
     // Authorize admin or supervisor
     const authResult = await requireAuth(['admin', 'supervisor'])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const role = searchParams.get('role');
     const isActive = searchParams.get('isActive');
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '20');
-
     let query = supabase
       .from('users')
       .select(`
@@ -158,20 +138,16 @@ const updateUserSchema = z.object({
       `)
       .order('createdAt', { ascending: false })
       .range((page - 1) * limit, page * limit - 1);
-
     if (role) {
       query = query.eq('role', role);
     }
     if (isActive !== null) {
       query = query.eq('isActive', isActive === 'true');
     }
-
     const { data: users, error, count } = await query;
-
     if (error) {
       return NextResponse.json({ error: 'Failed to fetch users' }, { status: 500 });
     }
-
     return NextResponse.json({
       success: true,
       data: users,
@@ -182,37 +158,29 @@ const updateUserSchema = z.object({
         pages: Math.ceil((count || 0) / limit),
       },
     });
-
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
 }
-
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
-    
     if (!userId) {
       return NextResponse.json({ error: 'User ID required' }, { status: 400 });
     }
-
     const body = await request.json();
-
     // Validate input
     const validation = await ValidationHelper.validateAsync(updateUserSchema, body);
     if (!validation.success) {
       return NextResponse.json({ error: validation.error.message }, { status: 400 });
     }
-
     const updateData = validation.data;
-
     // Update user profile
     const { data: updatedUser, error: updateError } = await supabase
       .from('users')
@@ -224,11 +192,9 @@ const updateUserSchema = z.object({
       .eq('id', userId)
       .select()
       .single();
-
     if (updateError) {
       return NextResponse.json({ error: 'Failed to update user' }, { status: 500 });
     }
-
     // Create audit log
     await supabase.from('audit_logs').insert({
       action: 'user_updated',
@@ -237,38 +203,31 @@ const updateUserSchema = z.object({
       userId: authResult.user!.id,
       metadata: updateData,
     });
-
     return NextResponse.json({
       success: true,
       data: updatedUser,
       message: 'User updated successfully'
     });
-
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
 }
-
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
-    
     if (!userId) {
       return NextResponse.json({ error: 'User ID required' }, { status: 400 });
     }
-
     // Prevent self-deletion
     if (userId === authResult.user!.id) {
       return NextResponse.json({ error: 'Cannot delete your own account' }, { status: 400 });
     }
-
     // Soft delete user
     const { error: updateError } = await supabase
       .from('users')
@@ -278,11 +237,9 @@ const updateUserSchema = z.object({
         deletedBy: authResult.user!.id,
       })
       .eq('id', userId);
-
     if (updateError) {
       return NextResponse.json({ error: 'Failed to delete user' }, { status: 500 });
     }
-
     // Create audit log
     await supabase.from('audit_logs').insert({
       action: 'user_deleted',
@@ -291,20 +248,16 @@ const updateUserSchema = z.object({
       userId: authResult.user!.id,
       metadata: { softDelete: true },
     });
-
     return NextResponse.json({
       success: true,
       message: 'User deleted successfully'
     });
-
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
 }
-
 async function createPatientProfile(userId: string, profile: any) {
   const supabase = await createClient();
-  
   const { error } = await supabase
     .from('patients')
     .insert({
@@ -316,13 +269,10 @@ async function createPatientProfile(userId: string, profile: any) {
       medicalRecordNumber: `MR${Date.now()}${Math.random().toString(36).substr(2, 4).toUpperCase()}`,
       isActivated: false,
     });
-
   return error;
 }
-
 async function createDoctorProfile(userId: string, profile: any) {
   const supabase = await createClient();
-  
   const { error } = await supabase
     .from('doctors')
     .insert({
@@ -341,10 +291,8 @@ async function createDoctorProfile(userId: string, profile: any) {
         6: { isWorking: false, startTime: '09:00', endTime: '17:00' }, // Saturday
       },
     });
-
   return error;
 }
-
 // Exports
 export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {

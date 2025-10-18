@@ -3,30 +3,25 @@
  * Core Configuration - التكوين الأساسي للنظام
  * Centralized configuration management
  */
-
 import { SystemConfig } from '../types';
-
 // Environment Configuration
   NODE_ENV: process.env.NODE_ENV || 'development',
   IS_DEVELOPMENT: process.env.NODE_ENV === 'development',
   IS_PRODUCTION: process.env.NODE_ENV === 'production',
   IS_TEST: process.env.NODE_ENV === 'test',
 } as const;
-
 // Database Configuration
   URL: process.env.DATABASE_URL || '',
   MAX_CONNECTIONS: parseInt(process.env.DB_MAX_CONNECTIONS || '10'),
   CONNECTION_TIMEOUT: parseInt(process.env.DB_CONNECTION_TIMEOUT || '30000'),
   QUERY_TIMEOUT: parseInt(process.env.DB_QUERY_TIMEOUT || '10000'),
 } as const;
-
 // Supabase Configuration
   URL: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
   ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
   SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
   BUCKET_NAME: process.env.SUPABASE_BUCKET_NAME || 'medical-documents',
 } as const;
-
 // API Configuration
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || '/api',
   TIMEOUT: parseInt(process.env.API_TIMEOUT || '30000'),
@@ -39,7 +34,6 @@ import { SystemConfig } from '../types';
     CREDENTIALS: true,
   },
 } as const;
-
 // Authentication Configuration
   JWT_SECRET: process.env.JWT_SECRET || '',
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '24h',
@@ -49,7 +43,6 @@ import { SystemConfig } from '../types';
   MAX_LOGIN_ATTEMPTS: parseInt(process.env.MAX_LOGIN_ATTEMPTS || '5'),
   LOCKOUT_DURATION: parseInt(process.env.LOCKOUT_DURATION || '900000'), // 15 minutes
 } as const;
-
 // Payment Configuration
   STRIPE: {
     SECRET_KEY: process.env.STRIPE_SECRET_KEY || '',
@@ -66,7 +59,6 @@ import { SystemConfig } from '../types';
   MIN_AMOUNT: 1,
   MAX_AMOUNT: 100000,
 } as const;
-
 // Insurance Configuration
   PROVIDERS: {
     SEHA: {
@@ -88,7 +80,6 @@ import { SystemConfig } from '../types';
   CLAIM_TIMEOUT: parseInt(process.env.INSURANCE_CLAIM_TIMEOUT || '86400000'), // 24 hours
   RETRY_ATTEMPTS: parseInt(process.env.INSURANCE_RETRY_ATTEMPTS || '3'),
 } as const;
-
 // Notification Configuration
   EMAIL: {
     PROVIDER: process.env.EMAIL_PROVIDER || 'smtp',
@@ -113,7 +104,6 @@ import { SystemConfig } from '../types';
   BATCH_SIZE: parseInt(process.env.NOTIFICATION_BATCH_SIZE || '100'),
   RETRY_ATTEMPTS: parseInt(process.env.NOTIFICATION_RETRY_ATTEMPTS || '3'),
 } as const;
-
 // File Upload Configuration
   MAX_FILE_SIZE: parseInt(process.env.MAX_FILE_SIZE || '10485760'), // 10MB
   ALLOWED_TYPES: process.env.ALLOWED_FILE_TYPES?.split(',') || [
@@ -128,7 +118,6 @@ import { SystemConfig } from '../types';
   STORAGE_PATH: process.env.UPLOAD_STORAGE_PATH || 'uploads',
   CDN_URL: process.env.CDN_URL || '',
 } as const;
-
 // Security Configuration
   ENCRYPTION_KEY: process.env.ENCRYPTION_KEY || '',
   HASH_ROUNDS: parseInt(process.env.HASH_ROUNDS || '12'),
@@ -145,7 +134,6 @@ import { SystemConfig } from '../types';
     'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;",
   },
 } as const;
-
 // Application Configuration
   NAME: 'مركز الحمام الطبي',
   VERSION: '1.0.0',
@@ -160,8 +148,6 @@ import { SystemConfig } from '../types';
   TIME_FORMAT: 'HH:mm',
   DATETIME_FORMAT: 'DD/MM/YYYY HH:mm',
 } as const;
-
-
 // Default System Configuration
   {
     id: 'app-name',
@@ -214,8 +200,6 @@ import { SystemConfig } from '../types';
     updatedAt: new Date(),
   },
 ];
-
-
 // Exports
 export const ENV = {
 export const DATABASE_CONFIG = {

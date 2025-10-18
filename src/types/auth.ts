@@ -1,5 +1,4 @@
 import { BaseEntity } from './common';
-
 // Authentication types
   email: string;
   name: string;
@@ -9,19 +8,14 @@ import { BaseEntity } from './common';
   last_login?: string;
   login_count: number;
 }
-
-
   email: string;
   password: string;
   rememberMe?: boolean;
 }
-
   user: User;
   token: string;
   refreshToken: string;
 }
-
-
 // Exports
 export interface User extends BaseEntity {
 export type UserRole = 'admin' | 'doctor' | 'nurse' | 'staff' | 'supervisor' | 'patient' | 'agent' | 'manager' | 'demo';

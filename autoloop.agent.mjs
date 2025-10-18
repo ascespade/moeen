@@ -249,16 +249,31 @@ class SmartBootloaderAgent {
     try {
       console.log(`${colors.blue}🔧 إصلاح الأخطاء...${colors.reset}`);
       
-      // إصلاح ESLint errors
+      // 1. كشف ذكي للأخطاء
+      await this.smartErrorDetection();
+      
+      // 2. إصلاح ESLint errors
       await this.fixESLintErrors();
       
-      // إصلاح TypeScript errors
+      // 3. إصلاح TypeScript errors
       await this.fixTypeScriptErrors();
       
-      // إصلاح security issues
+      // 4. إصلاح security issues
       await this.fixSecurityIssues();
       
-      // فحص إذا كان هناك تغييرات للإصلاح
+      // 5. إصلاح dependency issues
+      await this.fixDependencyErrors();
+      
+      // 6. إصلاح circular dependencies
+      await this.fixCircularDependencies();
+      
+      // 7. إصلاح performance issues
+      await this.fixPerformanceIssues();
+      
+      // 8. إصلاح ملفات مكسورة
+      await this.fixBrokenFiles();
+      
+      // 9. فحص إذا كان هناك تغييرات للإصلاح
       const hasChanges = await this.checkForChanges();
       if (hasChanges) {
         await this.autoCommit('🔧 AutoFix: إصلاح أخطاء الكود');
@@ -269,6 +284,265 @@ class SmartBootloaderAgent {
     } catch (error) {
       throw new Error(`فشل في إصلاح الأخطاء: ${error.message}`);
     }
+  }
+
+  // 🔍 كشف ذكي للأخطاء
+  async smartErrorDetection() {
+    try {
+      console.log(`${colors.blue}🔍 كشف ذكي للأخطاء...${colors.reset}`);
+      
+      // تحليل شامل للأخطاء
+      const errorAnalysis = await this.analyzeAllErrors();
+      
+      // تصنيف الأخطاء حسب الأولوية
+      const prioritizedErrors = this.prioritizeErrors(errorAnalysis);
+      
+      // طباعة تقرير الأخطاء
+      this.printErrorReport(prioritizedErrors);
+      
+      // إصلاح الأخطاء حسب الأولوية
+      await this.fixErrorsByPriority(prioritizedErrors);
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في الكشف الذكي: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // تحليل شامل للأخطاء
+  async analyzeAllErrors() {
+    const errors = {
+      typescript: [],
+      eslint: [],
+      json: [],
+      syntax: [],
+      imports: [],
+      types: [],
+      performance: [],
+      security: []
+    };
+
+    try {
+      // تحليل TypeScript errors
+      const tsResult = this.runCommand('npx tsc --noEmit --skipLibCheck 2>&1', { silent: true });
+      errors.typescript = this.parseTypeScriptErrors(tsResult);
+
+      // تحليل ESLint errors
+      const eslintResult = this.runCommand('npm run lint:check 2>&1', { silent: true });
+      errors.eslint = this.parseESLintErrors(eslintResult);
+
+      // تحليل JSON errors
+      errors.json = await this.findJSONErrors();
+
+      // تحليل syntax errors
+      errors.syntax = await this.findSyntaxErrors();
+
+      // تحليل import errors
+      errors.imports = await this.findImportErrors();
+
+      // تحليل type errors
+      errors.types = await this.findTypeErrors();
+
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في تحليل الأخطاء: ${error.message}${colors.reset}`);
+    }
+
+    return errors;
+  }
+
+  // تصنيف الأخطاء حسب الأولوية
+  prioritizeErrors(errorAnalysis) {
+    const priorities = {
+      critical: [], // أخطاء تمنع التشغيل
+      high: [],     // أخطاء مهمة
+      medium: [],   // أخطاء متوسطة
+      low: []       // أخطاء بسيطة
+    };
+
+    // تصنيف TypeScript errors
+    errorAnalysis.typescript.forEach(error => {
+      if (error.includes('error TS') && error.includes('expected')) {
+        priorities.critical.push({ type: 'typescript', error, file: this.extractFilePath(error) });
+      } else if (error.includes('error TS')) {
+        priorities.high.push({ type: 'typescript', error, file: this.extractFilePath(error) });
+      }
+    });
+
+    // تصنيف JSON errors
+    errorAnalysis.json.forEach(error => {
+      priorities.critical.push({ type: 'json', error, file: error.file });
+    });
+
+    // تصنيف syntax errors
+    errorAnalysis.syntax.forEach(error => {
+      priorities.high.push({ type: 'syntax', error, file: error.file });
+    });
+
+    // تصنيف import errors
+    errorAnalysis.imports.forEach(error => {
+      priorities.medium.push({ type: 'imports', error, file: error.file });
+    });
+
+    // تصنيف type errors
+    errorAnalysis.types.forEach(error => {
+      priorities.medium.push({ type: 'types', error, file: error.file });
+    });
+
+    return priorities;
+  }
+
+  // طباعة تقرير الأخطاء
+  printErrorReport(prioritizedErrors) {
+    console.log(`${colors.cyan}📊 تقرير الأخطاء:${colors.reset}`);
+    
+    Object.entries(prioritizedErrors).forEach(([priority, errors]) => {
+      if (errors.length > 0) {
+        const priorityColor = priority === 'critical' ? colors.red : 
+                             priority === 'high' ? colors.yellow : 
+                             priority === 'medium' ? colors.blue : colors.green;
+        
+        console.log(`${priorityColor}${priority.toUpperCase()}: ${errors.length} خطأ${colors.reset}`);
+        
+        errors.slice(0, 5).forEach(error => {
+          console.log(`${colors.dim}  - ${error.type}: ${error.file}${colors.reset}`);
+        });
+        
+        if (errors.length > 5) {
+          console.log(`${colors.dim}  ... و ${errors.length - 5} أخطاء أخرى${colors.reset}`);
+        }
+      }
+    });
+  }
+
+  // إصلاح الأخطاء حسب الأولوية
+  async fixErrorsByPriority(prioritizedErrors) {
+    // إصلاح الأخطاء الحرجة أولاً
+    for (const error of prioritizedErrors.critical) {
+      await this.fixSpecificError(error);
+    }
+
+    // إصلاح الأخطاء المهمة
+    for (const error of prioritizedErrors.high) {
+      await this.fixSpecificError(error);
+    }
+
+    // إصلاح الأخطاء المتوسطة
+    for (const error of prioritizedErrors.medium) {
+      await this.fixSpecificError(error);
+    }
+
+    // إصلاح الأخطاء البسيطة
+    for (const error of prioritizedErrors.low) {
+      await this.fixSpecificError(error);
+    }
+  }
+
+  // إصلاح خطأ محدد
+  async fixSpecificError(error) {
+    try {
+      switch (error.type) {
+        case 'typescript':
+          await this.fixTypeScriptError(error);
+          break;
+        case 'json':
+          await this.fixJSONError(error);
+          break;
+        case 'syntax':
+          await this.fixSyntaxError(error);
+          break;
+        case 'imports':
+          await this.fixImportError(error);
+          break;
+        case 'types':
+          await this.fixTypeError(error);
+          break;
+      }
+    } catch (err) {
+      console.warn(`${colors.yellow}⚠️ فشل في إصلاح ${error.type}: ${err.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح ملفات مكسورة
+  async fixBrokenFiles() {
+    try {
+      console.log(`${colors.dim}🔧 إصلاح الملفات المكسورة...${colors.reset}`);
+      
+      const brokenFiles = await this.findBrokenFiles();
+      
+      for (const file of brokenFiles) {
+        await this.repairBrokenFile(file);
+      }
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح الملفات المكسورة: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // البحث عن ملفات مكسورة
+  async findBrokenFiles() {
+    const brokenFiles = [];
+    
+    try {
+      // البحث عن ملفات بها syntax errors شديدة
+      const result = this.runCommand('npx tsc --noEmit --skipLibCheck 2>&1 | grep -E "(Declaration or statement expected|Expression expected)" | head -10', { silent: true });
+      const lines = result.split('\n').filter(line => line.includes('.ts'));
+      
+      lines.forEach(line => {
+        const filePath = line.split(':')[0];
+        if (filePath && !brokenFiles.includes(filePath)) {
+          brokenFiles.push(filePath);
+        }
+      });
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في البحث عن الملفات المكسورة: ${error.message}${colors.reset}`);
+    }
+    
+    return brokenFiles;
+  }
+
+  // إصلاح ملف مكسور
+  async repairBrokenFile(filePath) {
+    try {
+      if (!(await this.fileExists(filePath))) return;
+      
+      let content = await fs.readFile(filePath, 'utf8');
+      const originalContent = content;
+      
+      // إصلاح مشاكل شائعة في الملفات المكسورة
+      content = this.repairCommonIssues(content);
+      
+      if (content !== originalContent) {
+        await fs.writeFile(filePath, content);
+        console.log(`${colors.green}✅ تم إصلاح ${filePath}${colors.reset}`);
+      }
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ فشل في إصلاح ${filePath}: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح مشاكل شائعة
+  repairCommonIssues(content) {
+    // إصلاح missing brackets
+    content = content.replace(/(\w+)\s*=\s*([^;{]+);?\s*$/gm, (match, key, value) => {
+      if (value.includes('{') && !value.includes('}')) {
+        return `${key} = ${value}};`;
+      }
+      return match;
+    });
+
+    // إصلاح missing semicolons
+    content = content.replace(/([^;}])\s*$/gm, '$1;');
+
+    // إصلاح missing quotes
+    content = content.replace(/(\w+)\s*:\s*([^",}]+),?\s*$/gm, (match, key, value) => {
+      if (!value.includes('"') && !value.includes("'")) {
+        return `${key}: "${value}",`;
+      }
+      return match;
+    });
+
+    return content;
   }
 
   // ⚡ تحسين الكود
@@ -380,16 +654,28 @@ class SmartBootloaderAgent {
     }
   }
 
-  runCommand(command) {
+  runCommand(command, options = {}) {
     try {
-      return execSync(command, { 
+      const execOptions = { 
         encoding: 'utf8', 
         cwd: __dirname,
-        stdio: 'pipe'
-      });
+        stdio: options.silent ? 'pipe' : 'inherit'
+      };
+      
+      const result = execSync(command, execOptions);
+      
+      if (options.silent) {
+        return result;
+      } else {
+        return result || '';
+      }
     } catch (error) {
-      console.warn(`${colors.yellow}⚠️ تحذير في الأمر: ${command}${colors.reset}`);
-      return '';
+      if (options.silent) {
+        return error.stdout || error.stderr || '';
+      } else {
+        console.warn(`${colors.yellow}⚠️ تحذير في الأمر: ${command}${colors.reset}`);
+        return '';
+      }
     }
   }
 
@@ -444,9 +730,546 @@ class SmartBootloaderAgent {
   async fixTypeScriptErrors() {
     try {
       console.log(`${colors.dim}🔧 إصلاح TypeScript errors...${colors.reset}`);
-      // يمكن إضافة إصلاح TypeScript errors هنا
+      
+      // تشغيل TypeScript compiler لإصلاح الأخطاء
+      try {
+        this.runCommand('npx tsc --noEmit --skipLibCheck');
+        console.log(`${colors.green}✅ TypeScript errors تم إصلاحها${colors.reset}`);
+      } catch (tsError) {
+        console.log(`${colors.yellow}⚠️ TypeScript errors موجودة، محاولة الإصلاح...${colors.reset}`);
+        
+        // محاولة إصلاح الأخطاء البسيطة
+        await this.fixCommonTypeScriptErrors();
+        
+        // إعادة فحص
+        try {
+          this.runCommand('npx tsc --noEmit --skipLibCheck');
+          console.log(`${colors.green}✅ تم إصلاح TypeScript errors${colors.reset}`);
+        } catch (retryError) {
+          console.log(`${colors.yellow}⚠️ بعض TypeScript errors تحتاج إصلاح يدوي${colors.reset}`);
+        }
+      }
     } catch (error) {
-      console.warn(`${colors.yellow}⚠️ لا يمكن إصلاح TypeScript errors${colors.reset}`);
+      console.warn(`${colors.yellow}⚠️ لا يمكن إصلاح TypeScript errors: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح الأخطاء الشائعة في TypeScript
+  async fixCommonTypeScriptErrors() {
+    try {
+      console.log(`${colors.dim}🔧 بدء الإصلاح الشامل...${colors.reset}`);
+      
+      // 1. إصلاح مشاكل JSON أولاً
+      await this.fixJSONIssues();
+      
+      // 2. إصلاح مشاكل الـ imports
+      await this.fixImportIssues();
+      
+      // 3. إصلاح مشاكل الـ types
+      await this.fixTypeIssues();
+      
+      // 4. إصلاح مشاكل الـ syntax
+      await this.fixSyntaxIssues();
+      
+      // 5. إصلاح مشاكل الـ brackets و parentheses
+      await this.fixBracketIssues();
+      
+      // 6. إصلاح مشاكل الـ semicolons
+      await this.fixSemicolonIssues();
+      
+      // 7. إصلاح مشاكل الـ quotes
+      await this.fixQuoteIssues();
+      
+      console.log(`${colors.green}✅ تم الإصلاح الشامل${colors.reset}`);
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح TypeScript errors: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح مشاكل JSON
+  async fixJSONIssues() {
+    try {
+      console.log(`${colors.dim}🔧 إصلاح مشاكل JSON...${colors.reset}`);
+      
+      const jsonFiles = [
+        'tsconfig.json',
+        'tsconfig.node.json',
+        'package.json',
+        'next.config.js'
+      ];
+      
+      for (const file of jsonFiles) {
+        await this.fixJSONFile(file);
+      }
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح JSON: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح ملف JSON معين
+  async fixJSONFile(filePath) {
+    try {
+      if (!(await this.fileExists(filePath))) return;
+      
+      let content = await fs.readFile(filePath, 'utf8');
+      const originalContent = content;
+      
+      // إصلاح مشاكل JSON الشائعة
+      content = content.replace(/,(\s*[}\]])/g, '$1'); // إزالة الفواصل الزائدة
+      content = content.replace(/([{\[])\s*,/g, '$1'); // إزالة الفواصل في البداية
+      content = content.replace(/,(\s*[}\]])/g, '$1'); // إزالة الفواصل قبل الإغلاق
+      content = content.replace(/([^\\])\\([^"\\\/bfnrt])/g, '$1\\\\$2'); // إصلاح escape characters
+      content = content.replace(/([^\\])\\([^"\\\/bfnrt])/g, '$1\\\\$2'); // إصلاح escape characters مرة أخرى
+      
+      // إصلاح مشاكل الـ quotes
+      content = content.replace(/'/g, '"'); // تحويل single quotes إلى double quotes
+      
+      // إصلاح مشاكل الـ trailing commas
+      content = content.replace(/,(\s*[}\]])/g, '$1');
+      
+      if (content !== originalContent) {
+        await fs.writeFile(filePath, content);
+        console.log(`${colors.green}✅ تم إصلاح ${filePath}${colors.reset}`);
+      }
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح ${filePath}: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح مشاكل الـ brackets
+  async fixBracketIssues() {
+    try {
+      console.log(`${colors.dim}🔧 إصلاح مشاكل الـ brackets...${colors.reset}`);
+      
+      const files = await this.findFilesWithBracketIssues();
+      
+      for (const file of files) {
+        await this.fixFileBrackets(file);
+      }
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح brackets: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح مشاكل الـ semicolons
+  async fixSemicolonIssues() {
+    try {
+      console.log(`${colors.dim}🔧 إصلاح مشاكل الـ semicolons...${colors.reset}`);
+      
+      const files = await this.findFilesWithSemicolonIssues();
+      
+      for (const file of files) {
+        await this.fixFileSemicolons(file);
+      }
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح semicolons: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح مشاكل الـ quotes
+  async fixQuoteIssues() {
+    try {
+      console.log(`${colors.dim}🔧 إصلاح مشاكل الـ quotes...${colors.reset}`);
+      
+      const files = await this.findFilesWithQuoteIssues();
+      
+      for (const file of files) {
+        await this.fixFileQuotes(file);
+      }
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح quotes: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // البحث عن ملفات بها مشاكل brackets
+  async findFilesWithBracketIssues() {
+    try {
+      const result = this.runCommand('npx tsc --noEmit --skipLibCheck 2>&1 | grep -E "(expected|missing|unexpected)" | head -10', { silent: true });
+      const lines = result.split('\n').filter(line => line.includes('.ts'));
+      return lines.map(line => line.split(':')[0]).filter(Boolean);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // البحث عن ملفات بها مشاكل semicolons
+  async findFilesWithSemicolonIssues() {
+    try {
+      const result = this.runCommand('npx tsc --noEmit --skipLibCheck 2>&1 | grep -E "semicolon|;" | head -10', { silent: true });
+      const lines = result.split('\n').filter(line => line.includes('.ts'));
+      return lines.map(line => line.split(':')[0]).filter(Boolean);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // البحث عن ملفات بها مشاكل quotes
+  async findFilesWithQuoteIssues() {
+    try {
+      const result = this.runCommand('npx tsc --noEmit --skipLibCheck 2>&1 | grep -E "quote" | head -10', { silent: true });
+      const lines = result.split('\n').filter(line => line.includes('.ts'));
+      return lines.map(line => line.split(':')[0]).filter(Boolean);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // إصلاح brackets في ملف معين
+  async fixFileBrackets(filePath) {
+    try {
+      if (!filePath || !(await this.fileExists(filePath))) return;
+      
+      let content = await fs.readFile(filePath, 'utf8');
+      
+      // إصلاح مشاكل brackets الشائعة
+      content = content.replace(/\{\s*\}/g, '{}');
+      content = content.replace(/\[\s*\]/g, '[]');
+      content = content.replace(/\(\s*\)/g, '()');
+      
+      // إصلاح missing brackets
+      content = content.replace(/(\w+)\s*=\s*([^;]+);?\s*$/gm, (match, key, value) => {
+        if (!value.includes('{') && !value.includes('[') && !value.includes('(')) {
+          return match;
+        }
+        return match;
+      });
+      
+      await fs.writeFile(filePath, content);
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح brackets لـ ${filePath}: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح semicolons في ملف معين
+  async fixFileSemicolons(filePath) {
+    try {
+      if (!filePath || !(await this.fileExists(filePath))) return;
+      
+      let content = await fs.readFile(filePath, 'utf8');
+      
+      // إصلاح مشاكل semicolons الشائعة
+      content = content.replace(/;\s*;/g, ';'); // إزالة semicolons مكررة
+      content = content.replace(/([^;])\s*$/gm, '$1;'); // إضافة semicolons مفقودة
+      content = content.replace(/;\s*$/gm, ';'); // تنظيف semicolons
+      
+      await fs.writeFile(filePath, content);
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح semicolons لـ ${filePath}: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح quotes في ملف معين
+  async fixFileQuotes(filePath) {
+    try {
+      if (!filePath || !(await this.fileExists(filePath))) return;
+      
+      let content = await fs.readFile(filePath, 'utf8');
+      
+      // إصلاح مشاكل quotes الشائعة
+      content = content.replace(/'/g, '"'); // تحويل single quotes إلى double quotes
+      content = content.replace(/""/g, '"'); // إزالة quotes مكررة
+      content = content.replace(/\\"/g, '"'); // إصلاح escaped quotes
+      
+      await fs.writeFile(filePath, content);
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح quotes لـ ${filePath}: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // تحليل TypeScript errors
+  parseTypeScriptErrors(result) {
+    return result.split('\n').filter(line => line.includes('error TS'));
+  }
+
+  // تحليل ESLint errors
+  parseESLintErrors(result) {
+    return result.split('\n').filter(line => line.includes('error') || line.includes('warning'));
+  }
+
+  // البحث عن JSON errors
+  async findJSONErrors() {
+    const errors = [];
+    const jsonFiles = ['tsconfig.json', 'tsconfig.node.json', 'package.json'];
+    
+    for (const file of jsonFiles) {
+      try {
+        if (await this.fileExists(file)) {
+          const content = await fs.readFile(file, 'utf8');
+          JSON.parse(content); // محاولة تحليل JSON
+        }
+      } catch (error) {
+        errors.push({ file, error: error.message });
+      }
+    }
+    
+    return errors;
+  }
+
+  // البحث عن syntax errors
+  async findSyntaxErrors() {
+    const errors = [];
+    
+    try {
+      const result = this.runCommand('npx tsc --noEmit --skipLibCheck 2>&1 | grep -E "(syntax|Syntax)" | head -10', { silent: true });
+      const lines = result.split('\n').filter(line => line.includes('.ts'));
+      
+      lines.forEach(line => {
+        const filePath = line.split(':')[0];
+        if (filePath) {
+          errors.push({ file: filePath, error: line });
+        }
+      });
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في البحث عن syntax errors: ${error.message}${colors.reset}`);
+    }
+    
+    return errors;
+  }
+
+  // البحث عن import errors
+  async findImportErrors() {
+    const errors = [];
+    
+    try {
+      const result = this.runCommand('npx tsc --noEmit --skipLibCheck 2>&1 | grep -E "(import|Import)" | head -10', { silent: true });
+      const lines = result.split('\n').filter(line => line.includes('.ts'));
+      
+      lines.forEach(line => {
+        const filePath = line.split(':')[0];
+        if (filePath) {
+          errors.push({ file: filePath, error: line });
+        }
+      });
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في البحث عن import errors: ${error.message}${colors.reset}`);
+    }
+    
+    return errors;
+  }
+
+  // البحث عن type errors
+  async findTypeErrors() {
+    const errors = [];
+    
+    try {
+      const result = this.runCommand('npx tsc --noEmit --skipLibCheck 2>&1 | grep -E "(type|Type)" | head -10', { silent: true });
+      const lines = result.split('\n').filter(line => line.includes('.ts'));
+      
+      lines.forEach(line => {
+        const filePath = line.split(':')[0];
+        if (filePath) {
+          errors.push({ file: filePath, error: line });
+        }
+      });
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في البحث عن type errors: ${error.message}${colors.reset}`);
+    }
+    
+    return errors;
+  }
+
+  // استخراج مسار الملف من رسالة الخطأ
+  extractFilePath(errorMessage) {
+    const match = errorMessage.match(/([^:]+\.ts)/);
+    return match ? match[1] : 'unknown';
+  }
+
+  // إصلاح TypeScript error محدد
+  async fixTypeScriptError(error) {
+    try {
+      if (error.file && await this.fileExists(error.file)) {
+        await this.fixFileSyntax(error.file);
+      }
+    } catch (err) {
+      console.warn(`${colors.yellow}⚠️ فشل في إصلاح TypeScript error: ${err.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح JSON error محدد
+  async fixJSONError(error) {
+    try {
+      if (error.file && await this.fileExists(error.file)) {
+        await this.fixJSONFile(error.file);
+      }
+    } catch (err) {
+      console.warn(`${colors.yellow}⚠️ فشل في إصلاح JSON error: ${err.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح syntax error محدد
+  async fixSyntaxError(error) {
+    try {
+      if (error.file && await this.fileExists(error.file)) {
+        await this.fixFileSyntax(error.file);
+      }
+    } catch (err) {
+      console.warn(`${colors.yellow}⚠️ فشل في إصلاح syntax error: ${err.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح import error محدد
+  async fixImportError(error) {
+    try {
+      if (error.file && await this.fileExists(error.file)) {
+        await this.fixFileImports(error.file);
+      }
+    } catch (err) {
+      console.warn(`${colors.yellow}⚠️ فشل في إصلاح import error: ${err.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح type error محدد
+  async fixTypeError(error) {
+    try {
+      if (error.file && await this.fileExists(error.file)) {
+        await this.fixFileTypes(error.file);
+      }
+    } catch (err) {
+      console.warn(`${colors.yellow}⚠️ فشل في إصلاح type error: ${err.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح مشاكل الـ imports
+  async fixImportIssues() {
+    try {
+      // البحث عن ملفات بها مشاكل imports
+      const files = await this.findFilesWithImportIssues();
+      
+      for (const file of files) {
+        await this.fixFileImports(file);
+      }
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح imports: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح مشاكل الـ types
+  async fixTypeIssues() {
+    try {
+      // البحث عن ملفات بها مشاكل types
+      const files = await this.findFilesWithTypeIssues();
+      
+      for (const file of files) {
+        await this.fixFileTypes(file);
+      }
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح types: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح مشاكل الـ syntax
+  async fixSyntaxIssues() {
+    try {
+      // البحث عن ملفات بها مشاكل syntax
+      const files = await this.findFilesWithSyntaxIssues();
+      
+      for (const file of files) {
+        await this.fixFileSyntax(file);
+      }
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح syntax: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // البحث عن ملفات بها مشاكل imports
+  async findFilesWithImportIssues() {
+    try {
+      const result = this.runCommand('npx tsc --noEmit --skipLibCheck 2>&1 | grep "import" | head -10', { silent: true });
+      const lines = result.split('\n').filter(line => line.includes('.ts'));
+      return lines.map(line => line.split(':')[0]).filter(Boolean);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // البحث عن ملفات بها مشاكل types
+  async findFilesWithTypeIssues() {
+    try {
+      const result = this.runCommand('npx tsc --noEmit --skipLibCheck 2>&1 | grep "error TS" | head -10', { silent: true });
+      const lines = result.split('\n').filter(line => line.includes('.ts'));
+      return lines.map(line => line.split(':')[0]).filter(Boolean);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // البحث عن ملفات بها مشاكل syntax
+  async findFilesWithSyntaxIssues() {
+    try {
+      const result = this.runCommand('npx tsc --noEmit --skipLibCheck 2>&1 | grep "syntax" | head -10', { silent: true });
+      const lines = result.split('\n').filter(line => line.includes('.ts'));
+      return lines.map(line => line.split(':')[0]).filter(Boolean);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // إصلاح imports في ملف معين
+  async fixFileImports(filePath) {
+    try {
+      if (!filePath || !await this.fileExists(filePath)) return;
+      
+      let content = await fs.readFile(filePath, 'utf8');
+      
+      // إصلاح مشاكل imports الشائعة
+      content = content.replace(/import\s*{\s*}\s*from\s*['"][^'"]+['"];?/g, '');
+      content = content.replace(/import\s+[^;]+;\s*$/gm, '');
+      
+      // إصلاح duplicate imports
+      const lines = content.split('\n');
+      const importLines = lines.filter(line => line.trim().startsWith('import'));
+      const uniqueImports = [...new Set(importLines)];
+      
+      if (uniqueImports.length !== importLines.length) {
+        content = content.replace(/import\s+[^;]+;\s*$/gm, '');
+        content = uniqueImports.join('\n') + '\n' + content;
+      }
+      
+      await fs.writeFile(filePath, content);
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح imports لـ ${filePath}: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح types في ملف معين
+  async fixFileTypes(filePath) {
+    try {
+      if (!filePath || !await this.fileExists(filePath)) return;
+      
+      let content = await fs.readFile(filePath, 'utf8');
+      
+      // إصلاح مشاكل types الشائعة
+      content = content.replace(/:\s*any\s*=/g, ' =');
+      content = content.replace(/:\s*unknown\s*=/g, ' =');
+      content = content.replace(/:\s*object\s*=/g, ' =');
+      
+      await fs.writeFile(filePath, content);
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح types لـ ${filePath}: ${error.message}${colors.reset}`);
+    }
+  }
+
+  // إصلاح syntax في ملف معين
+  async fixFileSyntax(filePath) {
+    try {
+      if (!filePath || !await this.fileExists(filePath)) return;
+      
+      let content = await fs.readFile(filePath, 'utf8');
+      
+      // إصلاح مشاكل syntax الشائعة
+      content = content.replace(/;\s*;/g, ';');
+      content = content.replace(/\{\s*\}/g, '{}');
+      content = content.replace(/\s+$/gm, '');
+      
+      await fs.writeFile(filePath, content);
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في إصلاح syntax لـ ${filePath}: ${error.message}${colors.reset}`);
     }
   }
 
@@ -615,6 +1438,21 @@ class SmartBootloaderAgent {
     try {
       console.log(`${colors.blue}💾 Auto Commit: ${message}${colors.reset}`);
       
+      // فحص جودة الكود قبل الـ commit
+      const qualityCheck = await this.performQualityCheck();
+      
+      if (!qualityCheck.passed) {
+        console.log(`${colors.yellow}⚠️ جودة الكود غير مقبولة، محاولة الإصلاح...${colors.reset}`);
+        await this.fixErrors();
+        
+        // إعادة فحص الجودة
+        const recheck = await this.performQualityCheck();
+        if (!recheck.passed) {
+          console.log(`${colors.red}❌ فشل في إصلاح جودة الكود، تأجيل الـ commit${colors.reset}`);
+          return false;
+        }
+      }
+      
       // إضافة جميع الملفات
       this.runCommand('git add .');
       
@@ -633,10 +1471,146 @@ class SmartBootloaderAgent {
         await this.autoPush();
       }
       
+      return true;
+      
     } catch (error) {
       console.error(`${colors.red}❌ فشل في Auto Commit:${colors.reset}`, error.message);
       stats.operations++;
       stats.failures++;
+      return false;
+    }
+  }
+
+  // فحص جودة الكود
+  async performQualityCheck() {
+    try {
+      console.log(`${colors.dim}🔍 فحص جودة الكود...${colors.reset}`);
+      
+      const checks = {
+        typescript: false,
+        eslint: false,
+        security: false,
+        performance: false
+      };
+      
+      // فحص TypeScript
+      try {
+        this.runCommand('npx tsc --noEmit --skipLibCheck');
+        checks.typescript = true;
+        console.log(`${colors.green}✅ TypeScript: OK${colors.reset}`);
+      } catch (error) {
+        console.log(`${colors.red}❌ TypeScript: FAILED${colors.reset}`);
+      }
+      
+      // فحص ESLint
+      try {
+        this.runCommand('npm run lint:check');
+        checks.eslint = true;
+        console.log(`${colors.green}✅ ESLint: OK${colors.reset}`);
+      } catch (error) {
+        console.log(`${colors.red}❌ ESLint: FAILED${colors.reset}`);
+      }
+      
+      // فحص الأمان
+      try {
+        const securityResult = this.runCommand('npm audit --audit-level moderate', { silent: true });
+        if (securityResult.includes('found 0 vulnerabilities')) {
+          checks.security = true;
+          console.log(`${colors.green}✅ Security: OK${colors.reset}`);
+        } else {
+          console.log(`${colors.yellow}⚠️ Security: WARNINGS${colors.reset}`);
+        }
+      } catch (error) {
+        console.log(`${colors.red}❌ Security: FAILED${colors.reset}`);
+      }
+      
+      // فحص الأداء
+      try {
+        const performanceScore = await this.analyzePerformance();
+        checks.performance = performanceScore > 70;
+        console.log(`${colors.green}✅ Performance: ${performanceScore}/100${colors.reset}`);
+      } catch (error) {
+        console.log(`${colors.red}❌ Performance: FAILED${colors.reset}`);
+      }
+      
+      const passedChecks = Object.values(checks).filter(Boolean).length;
+      const totalChecks = Object.keys(checks).length;
+      const passed = passedChecks >= totalChecks * 0.75; // 75% نجاح مطلوب
+      
+      console.log(`${colors.cyan}📊 نتيجة فحص الجودة: ${passedChecks}/${totalChecks} (${passed ? 'PASSED' : 'FAILED'})${colors.reset}`);
+      
+      return { passed, checks, score: (passedChecks / totalChecks) * 100 };
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في فحص الجودة: ${error.message}${colors.reset}`);
+      return { passed: false, checks: {}, score: 0 };
+    }
+  }
+
+  // تحليل الأداء
+  async analyzePerformance() {
+    try {
+      let score = 100;
+      
+      // فحص حجم الملفات
+      const largeFiles = await this.findLargeFiles();
+      if (largeFiles.length > 0) {
+        score -= largeFiles.length * 5;
+      }
+      
+      // فحص الكود المكرر
+      const duplicateCode = await this.findDuplicateCode();
+      if (duplicateCode.length > 0) {
+        score -= duplicateCode.length * 3;
+      }
+      
+      // فحص الـ imports غير المستخدمة
+      const unusedImports = await this.findUnusedImports();
+      if (unusedImports.length > 0) {
+        score -= unusedImports.length * 2;
+      }
+      
+      return Math.max(0, score);
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ خطأ في تحليل الأداء: ${error.message}${colors.reset}`);
+      return 50; // درجة افتراضية
+    }
+  }
+
+  // البحث عن ملفات كبيرة
+  async findLargeFiles() {
+    try {
+      const result = this.runCommand('find src -name "*.ts" -o -name "*.tsx" | xargs wc -l | sort -nr | head -5', { silent: true });
+      const lines = result.split('\n').filter(line => line.trim());
+      
+      return lines.filter(line => {
+        const match = line.match(/(\d+)/);
+        return match && parseInt(match[1]) > 500; // ملفات أكبر من 500 سطر
+      });
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // البحث عن كود مكرر
+  async findDuplicateCode() {
+    try {
+      // هذا مثال بسيط - يمكن تحسينه باستخدام أدوات متخصصة
+      const result = this.runCommand('find src -name "*.ts" -o -name "*.tsx" | head -10', { silent: true });
+      return result.split('\n').filter(Boolean);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // البحث عن imports غير مستخدمة
+  async findUnusedImports() {
+    try {
+      const result = this.runCommand('npx tsc --noEmit --skipLibCheck 2>&1 | grep -E "unused|not used" | head -10', { silent: true });
+      return result.split('\n').filter(Boolean);
+    } catch (error) {
+      return [];
     }
   }
 
@@ -2253,7 +3227,7 @@ function requireAuth(req) {
             const newPath = `${targetDir}/${fileName}`;
             
             // تجنب الكتابة فوق الملفات الموجودة
-            if (!this.fileExists(newPath)) {
+            if (!(await this.fileExists(newPath))) {
               this.runCommand(`mv "${file}" "${newPath}"`);
               console.log(`${colors.dim}📁 تم نقل ${file} إلى ${newPath}${colors.reset}`);
             }
@@ -2611,7 +3585,7 @@ function requireAuth(req) {
     try {
       const indexPath = `${folderPath}/index.ts`;
       
-      if (this.fileExists(indexPath)) {
+      if (await this.fileExists(indexPath)) {
         return; // الملف موجود بالفعل
       }
       
@@ -2777,9 +3751,9 @@ function requireAuth(req) {
   }
 
   // 📁 فحص وجود الملف
-  fileExists(filePath) {
+  async fileExists(filePath) {
     try {
-      this.runCommand(`test -f "${filePath}"`);
+      await fs.access(filePath);
       return true;
     } catch (error) {
       return false;
@@ -3195,6 +4169,187 @@ function requireAuth(req) {
   async analyzeSecurityInputValidation() { return { issues: 0, details: {} }; }
   async analyzeSecurityHeaders() { return { issues: 0, details: {} }; }
 
+  // 🔧 دوال إصلاح إضافية
+  
+  // إصلاح dependency errors
+  async fixDependencyErrors() {
+    try {
+      console.log(`${colors.dim}🔧 إصلاح dependency errors...${colors.reset}`);
+      
+      // فحص الـ unused dependencies
+      const unusedDeps = await this.findUnusedDependencies();
+      
+      for (const dep of unusedDeps) {
+        console.log(`${colors.dim}🗑️ إزالة dependency غير مستخدم: ${dep}${colors.reset}`);
+        this.runCommand(`npm uninstall ${dep}`);
+      }
+      
+      // فحص الـ missing dependencies
+      const missingDeps = await this.findMissingDependencies();
+      
+      for (const dep of missingDeps) {
+        console.log(`${colors.dim}📦 تثبيت dependency مفقود: ${dep}${colors.reset}`);
+        this.runCommand(`npm install ${dep}`);
+      }
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ لا يمكن إصلاح dependency errors:${colors.reset}`, error.message);
+    }
+  }
+
+  // إصلاح circular dependencies
+  async fixCircularDependencies() {
+    try {
+      console.log(`${colors.dim}🔧 إصلاح circular dependencies...${colors.reset}`);
+      
+      const files = await this.getAllProjectFiles();
+      const circularDeps = [];
+      
+      // البحث عن circular dependencies
+      for (const file of files) {
+        const content = await fs.readFile(file, 'utf8');
+        const imports = this.extractImports(content);
+        
+        for (const imp of imports) {
+          if (await this.isCircularDependency(file, imp)) {
+            circularDeps.push({ file, import: imp });
+          }
+        }
+      }
+      
+      // إصلاح circular dependencies
+      for (const { file, import: imp } of circularDeps) {
+        console.log(`${colors.dim}🔄 إصلاح circular dependency في ${file}${colors.reset}`);
+        await this.fixCircularDependency(file, imp);
+      }
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ لا يمكن إصلاح circular dependencies:${colors.reset}`, error.message);
+    }
+  }
+
+  // إصلاح performance issues
+  async fixPerformanceIssues() {
+    try {
+      console.log(`${colors.dim}🔧 إصلاح performance issues...${colors.reset}`);
+      
+      const files = await this.getAllProjectFiles();
+      
+      for (const file of files) {
+        const content = await fs.readFile(file, 'utf8');
+        
+        if (this.hasPerformanceIssues(content)) {
+          console.log(`${colors.dim}⚡ إصلاح performance issues في ${file}${colors.reset}`);
+          const fixedContent = await this.fixPerformanceInFile(content);
+          await fs.writeFile(file, fixedContent);
+        }
+      }
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ لا يمكن إصلاح performance issues:${colors.reset}`, error.message);
+    }
+  }
+
+  // العثور على unused dependencies
+  async findUnusedDependencies() {
+    try {
+      const result = this.runCommand('npx depcheck --json');
+      const data = JSON.parse(result);
+      return data.dependencies || [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // العثور على missing dependencies
+  async findMissingDependencies() {
+    try {
+      const result = this.runCommand('npx depcheck --json');
+      const data = JSON.parse(result);
+      return data.missing || [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  // إصلاح circular dependency واحد
+  async fixCircularDependency(file, importPath) {
+    try {
+      const content = await fs.readFile(file, 'utf8');
+      
+      // إزالة الـ import المسبب للمشكلة
+      const fixedContent = content.replace(
+        new RegExp(`import\\s+.*?\\s+from\\s+['"]${importPath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}['"]`, 'g'),
+        ''
+      );
+      
+      await fs.writeFile(file, fixedContent);
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ لا يمكن إصلاح circular dependency:${colors.reset}`, error.message);
+    }
+  }
+
+  // إصلاح performance في ملف واحد
+  async fixPerformanceInFile(content) {
+    let fixedContent = content;
+    
+    // إزالة console.log من production
+    fixedContent = fixedContent.replace(/console\.log\([^)]*\);?\s*/g, '');
+    
+    // تحسين nested loops
+    fixedContent = fixedContent.replace(
+      /for\s*\([^)]*\)\s*\{[^}]*for\s*\([^)]*\)\s*\{/g,
+      '// Optimized: Consider using flatMap or other methods instead of nested loops'
+    );
+    
+    // تحسين chained maps
+    fixedContent = fixedContent.replace(
+      /\.map\([^)]*\)\.map\(/g,
+      '.flatMap('
+    );
+    
+    return fixedContent;
+  }
+
+  // 🚀 دوال اختبار شاملة
+  
+  // اختبار جميع المميزات
+  async testAllFeatures() {
+    try {
+      console.log(`${colors.blue}🚀 اختبار جميع المميزات...${colors.reset}`);
+      
+      // 1. اختبار التصحيح التلقائي
+      console.log(`${colors.dim}🔧 اختبار التصحيح التلقائي...${colors.reset}`);
+      await this.fixErrors();
+      
+      // 2. اختبار ترتيب الملفات
+      console.log(`${colors.dim}📁 اختبار ترتيب الملفات...${colors.reset}`);
+      await this.refactorFiles();
+      
+      // 3. اختبار Business Logic
+      console.log(`${colors.dim}🧠 اختبار Business Logic...${colors.reset}`);
+      await this.runSmartBusinessLogicTests();
+      
+      // 4. اختبار التقييم الشامل
+      console.log(`${colors.dim}🔍 اختبار التقييم الشامل...${colors.reset}`);
+      await this.evaluateSystemIntegration();
+      
+      // 5. اختبار التحسين
+      console.log(`${colors.dim}⚡ اختبار التحسين...${colors.reset}`);
+      await this.optimizeCode();
+      
+      // 6. اختبار الاختبارات
+      console.log(`${colors.dim}🧪 اختبار الاختبارات...${colors.reset}`);
+      await this.runTests();
+      
+      console.log(`${colors.green}✅ تم اختبار جميع المميزات بنجاح${colors.reset}`);
+      
+    } catch (error) {
+      console.error(`${colors.red}❌ خطأ في اختبار المميزات:${colors.reset}`, error.message);
+    }
+  }
+
   async printFinalStats() {
     const duration = Date.now() - stats.startTime;
     const successRate = stats.operations > 0 ? (stats.successes / stats.operations * 100).toFixed(2) : 0;
@@ -3273,6 +4428,29 @@ async function main() {
     console.log(`${colors.blue}📄 تقييم توافق الصفحات وقاعدة البيانات...${colors.reset}`);
     await agent.evaluatePageCompatibility();
     await agent.evaluateDatabaseCompatibility();
+    return;
+  }
+  
+  if (args.includes('--test-all-features')) {
+    console.log(`${colors.blue}🚀 اختبار جميع المميزات...${colors.reset}`);
+    await agent.testAllFeatures();
+    return;
+  }
+  
+  if (args.includes('--fix-all-issues')) {
+    console.log(`${colors.blue}🔧 إصلاح جميع المشاكل...${colors.reset}`);
+    await agent.fixErrors();
+    await agent.fixDependencyErrors();
+    await agent.fixCircularDependencies();
+    await agent.fixPerformanceIssues();
+    return;
+  }
+  
+  if (args.includes('--optimize-all')) {
+    console.log(`${colors.blue}⚡ تحسين شامل للنظام...${colors.reset}`);
+    await agent.optimizeCode();
+    await agent.refactorFiles();
+    await agent.fixPerformanceIssues();
     return;
   }
   

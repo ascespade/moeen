@@ -2,48 +2,35 @@
 /**
  * Performance monitoring hooks
  */
-
 import logger from '@/lib/monitoring/logger';
 import { useEffect, useRef, useCallback, useState, useMemo } from "react";
-
   const renderCount = useRef(0);
   const startTime = useRef(performance.now());
-
   useEffect(() => {
     renderCount.current += 1;
     const endTime = performance.now();
     const renderTime = endTime - startTime.current;
-
-    if (process.env.NODE_ENV === "development") {
-      console.log(`${componentName} rendered in ${renderTime.toFixed(2)}ms`);
+    if (process.env.NODE_ENV === "development") {}ms`);
     }
-
     startTime.current = performance.now();
   });
-
   return { renderCount: renderCount.current };
 }
-
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
-
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
-
     return () => {
       clearTimeout(handler);
     };
   }, [value, delay]);
-
   return debouncedValue;
 }
-
   callback: T,
   delay: number,
 ): T {
   const lastRun = useRef(Date.now());
-
   return useCallback(
     ((...args: Parameters<T>) => {
       if (Date.now() - lastRun.current >= delay) {
@@ -54,25 +41,20 @@ import { useEffect, useRef, useCallback, useState, useMemo } from "react";
     [callback, delay],
   );
 }
-
   callback: (entries: IntersectionObserverEntry[]) => void,
   options?: IntersectionObserverInit,
 ) {
   const observerRef = useRef<IntersectionObserver | null>(null);
-
   useEffect(() => {
     observerRef.current = new IntersectionObserver(callback, options);
-
     return () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
     };
   }, [callback, options]);
-
   return observerRef.current;
 }
-
   itemCount: number,
   itemHeight: number,
   containerHeight: number,
@@ -84,18 +66,14 @@ import { useEffect, useRef, useCallback, useState, useMemo } from "react";
       start + Math.ceil(containerHeight / itemHeight) + 1,
       itemCount,
     );
-
     return {
       start: Math.max(0, start),
       end: Math.min(end, itemCount),
       totalHeight: itemCount * itemHeight,
     };
   }, [itemCount, itemHeight, containerHeight, scrollTop]);
-
   return visibleRange;
 }
-
-
 // Exports
 export function usePerformanceMonitor(componentName: string) {
 export function useDebounce<T>(value: T, delay: number): T {

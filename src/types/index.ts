@@ -8,7 +8,6 @@
   createdAt: Date;
   updatedAt: Date;
 }
-
   id: string;
   name: string;
   description?: string;
@@ -17,7 +16,6 @@
   createdAt: Date;
   updatedAt: Date;
 }
-
   id: string;
   content: string;
   channelId: string;
@@ -26,7 +24,6 @@
   edited?: boolean;
   deleted?: boolean;
 }
-
   id: string;
   participants: string[];
   lastMessage?: Message;
@@ -34,19 +31,16 @@
   createdAt: Date;
   updatedAt: Date;
 }
-
   success: boolean;
   data?: T;
   error?: string;
   message?: string;
 }
-
   page: number;
   limit: number;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
 }
-
   pagination: {
     page: number;
     limit: number;
@@ -54,19 +48,16 @@
     totalPages: number;
   };
 }
-
 // Component Props Types
   className?: string;
   children?: React.ReactNode;
 }
-
   variant?: "primary" | "secondary" | "danger" | "ghost";
   size?: "sm" | "md" | "lg";
   disabled?: boolean;
   loading?: boolean;
   onClick?: () => void;
 }
-
   type?: "text" | "email" | "password" | "number";
   placeholder?: string;
   value?: string;
@@ -74,14 +65,12 @@
   error?: string;
   disabled?: boolean;
 }
-
 // Dashboard Types
   totalUsers: number;
   totalChannels: number;
   totalMessages: number;
   activeUsers: number;
 }
-
   labels: string[];
   datasets: {
     label: string;
@@ -90,7 +79,6 @@
     borderColor?: string;
   }[];
 }
-
 // Settings Types
   theme: "light" | "dark" | "system";
   language: string;
@@ -104,25 +92,21 @@
     allowDirectMessages: boolean;
   };
 }
-
 // Error Types
   code: string;
   message: string;
   details?: any;
 }
-
 // Form Types
   email: string;
   password: string;
   rememberMe?: boolean;
 }
-
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
-
 // Webhook Types
   id: string;
   type: string;
@@ -130,8 +114,6 @@
   timestamp: Date;
   processed: boolean;
 }
-
-
 // Exports
 export interface User {
 export interface Channel {

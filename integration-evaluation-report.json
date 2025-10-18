@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-18T04:30:14.428Z",
+  "timestamp": "2025-10-18T05:11:48.058Z",
   "overallScore": 66.66666666666667,
   "evaluations": {
     "systemIntegration": {
@@ -7,109 +7,42 @@
       "maxScore": 100,
       "issues": [
         {
-          "type": "circular_dependency",
-          "severity": "high",
-          "message": "تم العثور على 2 dependency دائري",
-          "files": [
-            {
-              "file": "src/lib/monitoring/logger.ts",
-              "import": "@/lib/monitoring/logger",
-              "circularWith": "@/lib/monitoring/logger"
-            },
-            {
-              "file": "src/core/hooks/index.ts",
-              "import": "../api/client",
-              "circularWith": "../utils/index"
-            }
-          ]
-        },
-        {
-          "type": "low_cohesion",
-          "severity": "medium",
-          "message": "الـ cohesion منخفض: 97.2%",
-          "recommendation": "يُنصح بتحسين ترابط الوحدات"
-        },
-        {
           "type": "missing_error_handling",
           "severity": "high",
-          "message": "نسبة معالجة الأخطاء منخفضة: 0.2%",
+          "message": "نسبة معالجة الأخطاء منخفضة: 0.0%",
           "recommendation": "يُنصح بإضافة معالجة أخطاء شاملة"
-        },
-        {
-          "type": "performance_bottlenecks",
-          "severity": "medium",
-          "message": "تم العثور على 7 bottleneck في الأداء",
-          "files": [
-            "src/lib/notifications/email.ts",
-            "src/lib/notifications/sms.ts",
-            "src/hooks/usePerformance.ts",
-            "src/app/api/payments/webhook/stripe/route.ts",
-            "src/app/api/webhook/whatsapp/route.ts",
-            "src/app/api/admin/stats/route.ts",
-            "src/app/api/appointments/book/route.ts"
-          ]
         }
       ],
-      "recommendations": [
-        {
-          "type": "fix_circular_dependencies",
-          "priority": "high",
-          "recommendation": "إصلاح الـ circular dependencies لتجنب مشاكل التحميل"
-        },
-        {
-          "type": "improve_cohesion",
-          "priority": "medium",
-          "recommendation": "تحسين ترابط الوحدات بتجميع الوظائف المتشابهة"
-        }
-      ],
+      "recommendations": [],
       "details": {
         "dependencies": {
-          "total": 742,
-          "circularDependencies": [
-            {
-              "file": "src/lib/monitoring/logger.ts",
-              "import": "@/lib/monitoring/logger",
-              "circularWith": "@/lib/monitoring/logger"
-            },
-            {
-              "file": "src/core/hooks/index.ts",
-              "import": "../api/client",
-              "circularWith": "../utils/index"
-            }
-          ],
+          "total": 0,
+          "circularDependencies": [],
           "unusedDependencies": [],
           "missingDependencies": []
         },
         "coupling": {
-          "averageCoupling": 2.3106172087942927,
-          "tightCoupling": 0.2465277777777778,
-          "totalFiles": 288
+          "averageCoupling": null,
+          "tightCoupling": null,
+          "totalFiles": 0
         },
         "cohesion": {
-          "averageCohesion": 0.04137789409560136,
-          "lowCohesion": 0.9722222222222222,
-          "totalFiles": 288
+          "averageCohesion": null,
+          "lowCohesion": null,
+          "totalFiles": 0
         },
         "interfaces": {
-          "totalInterfaces": 110,
+          "totalInterfaces": 0,
           "inconsistentInterfaces": []
         },
         "errorHandling": {
-          "totalFunctions": 639,
-          "functionsWithErrorHandling": 1,
-          "missingErrorHandling": 0.9984350547730829
+          "totalFunctions": 0,
+          "functionsWithErrorHandling": 0,
+          "missingErrorHandling": 1
         },
         "performance": {
-          "totalFiles": 288,
-          "bottlenecks": [
-            "src/lib/notifications/email.ts",
-            "src/lib/notifications/sms.ts",
-            "src/hooks/usePerformance.ts",
-            "src/app/api/payments/webhook/stripe/route.ts",
-            "src/app/api/webhook/whatsapp/route.ts",
-            "src/app/api/admin/stats/route.ts",
-            "src/app/api/appointments/book/route.ts"
-          ]
+          "totalFiles": 0,
+          "bottlenecks": []
         }
       }
     },
@@ -264,43 +197,13 @@
   "criticalIssues": [
     {
       "category": "systemIntegration",
-      "type": "circular_dependency",
-      "severity": "high",
-      "message": "تم العثور على 2 dependency دائري",
-      "files": [
-        {
-          "file": "src/lib/monitoring/logger.ts",
-          "import": "@/lib/monitoring/logger",
-          "circularWith": "@/lib/monitoring/logger"
-        },
-        {
-          "file": "src/core/hooks/index.ts",
-          "import": "../api/client",
-          "circularWith": "../utils/index"
-        }
-      ]
-    },
-    {
-      "category": "systemIntegration",
       "type": "missing_error_handling",
       "severity": "high",
-      "message": "نسبة معالجة الأخطاء منخفضة: 0.2%",
+      "message": "نسبة معالجة الأخطاء منخفضة: 0.0%",
       "recommendation": "يُنصح بإضافة معالجة أخطاء شاملة"
     }
   ],
   "recommendations": [
-    {
-      "category": "systemIntegration",
-      "type": "fix_circular_dependencies",
-      "priority": "high",
-      "recommendation": "إصلاح الـ circular dependencies لتجنب مشاكل التحميل"
-    },
-    {
-      "category": "systemIntegration",
-      "type": "improve_cohesion",
-      "priority": "medium",
-      "recommendation": "تحسين ترابط الوحدات بتجميع الوظائف المتشابهة"
-    },
     {
       "category": "pageCompatibility",
       "type": "page_optimization",

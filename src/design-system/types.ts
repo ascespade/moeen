@@ -4,8 +4,6 @@
  * Basic types for design system compatibility
  * أنواع أساسية لتوافق نظام التصميم
  */
-
-
   theme: Theme;
   language: Language;
   direction: Direction;
@@ -13,8 +11,6 @@
   fontSize: 'sm' | 'base' | 'lg' | 'xl';
   spacing: 'compact' | 'normal' | 'relaxed';
 }
-
-
 // Exports
 export type Theme = 'light' | 'dark' | 'system';
 export type Language = 'ar' | 'en';

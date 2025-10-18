@@ -3,7 +3,6 @@
  * Core Types - الأنواع الأساسية للنظام
  * Centralized type definitions for the entire application
  */
-
 // Base Entity Types
   id: string;
   createdAt: Date;
@@ -11,7 +10,6 @@
   createdBy?: string;
   updatedBy?: string;
 }
-
 // User & Authentication Types
   email: string;
   role: UserRole;
@@ -20,7 +18,6 @@
   profile: UserProfile;
   preferences: UserPreferences;
 }
-
   firstName: string;
   lastName: string;
   phone?: string;
@@ -29,14 +26,11 @@
   gender?: 'male' | 'female' | 'other';
   address?: Address;
 }
-
   language: 'ar' | 'en';
   theme: 'light' | 'dark' | 'system';
   notifications: NotificationSettings;
   privacy: PrivacySettings;
 }
-
-
 // Patient Types
   userId: string;
   medicalRecordNumber: string;
@@ -47,13 +41,11 @@
   isActivated: boolean;
   activationDate?: Date;
 }
-
   name: string;
   relationship: string;
   phone: string;
   email?: string;
 }
-
   id: string;
   condition: string;
   diagnosis: string;
@@ -62,7 +54,6 @@
   doctor: string;
   attachments: string[];
 }
-
 // Doctor Types
   userId: string;
   speciality: string;
@@ -73,23 +64,19 @@
   rating: number;
   isAvailable: boolean;
 }
-
   degree: string;
   institution: string;
   year: number;
   specialization?: string;
 }
-
   workingDays: number[];
   workingHours: TimeRange;
   breaks: TimeRange[];
   vacationDays: Date[];
 }
-
   start: string; // HH:MM format
   end: string;   // HH:MM format
 }
-
 // Appointment Types
   patientId: string;
   doctorId: string;
@@ -104,8 +91,6 @@
   followUpRequired: boolean;
   followUpDate?: Date;
 }
-
-
 // Payment Types
   appointmentId: string;
   amount: number;
@@ -117,8 +102,6 @@
   refundAmount?: number;
   refundReason?: string;
 }
-
-
 // Insurance Types
   patientId: string;
   appointmentId: string;
@@ -132,8 +115,6 @@
   rejectionReason?: string;
   documents: string[];
 }
-
-
 // Notification Types
   userId: string;
   type: NotificationType;
@@ -145,8 +126,6 @@
   channels: NotificationChannel[];
   metadata?: any;
 }
-
-
 // System Types
   key: string;
   value: any;
@@ -154,7 +133,6 @@
   description?: string;
   isPublic: boolean;
 }
-
   action: string;
   resourceType: string;
   resourceId: string;
@@ -163,7 +141,6 @@
   ipAddress?: string;
   userAgent?: string;
 }
-
 // API Response Types
   success: boolean;
   data?: T;
@@ -171,7 +148,6 @@
   message?: string;
   pagination?: PaginationInfo;
 }
-
   page: number;
   limit: number;
   total: number;
@@ -179,7 +155,6 @@
   hasNext: boolean;
   hasPrev: boolean;
 }
-
 // Form Types
   name: string;
   label: string;
@@ -189,17 +164,14 @@
   options?: SelectOption[];
   validation?: ValidationRule[];
 }
-
   value: string;
   label: string;
   disabled?: boolean;
 }
-
   type: 'required' | 'email' | 'min' | 'max' | 'pattern';
   value?: any;
   message: string;
 }
-
 // UI Types
   name: string;
   colors: ColorPalette;
@@ -207,7 +179,6 @@
   spacing: Spacing;
   borderRadius: BorderRadius;
 }
-
   primary: string;
   secondary: string;
   success: string;
@@ -220,7 +191,6 @@
   textSecondary: string;
   border: string;
 }
-
   fontFamily: string;
   fontSize: {
     xs: string;
@@ -243,7 +213,6 @@
     relaxed: number;
   };
 }
-
   xs: string;
   sm: string;
   md: string;
@@ -251,15 +220,12 @@
   xl: string;
   '2xl': string;
 }
-
   sm: string;
   md: string;
   lg: string;
   full: string;
 }
-
 // Utility Types
-
   street: string;
   city: string;
   state: string;
@@ -270,32 +236,35 @@
     lng: number;
   };
 }
-
   id: string;
   medications: Medication[];
   instructions: string;
   validUntil: Date;
   doctorId: string;
 }
-
   name: string;
   dosage: string;
   frequency: string;
   duration: string;
   instructions: string;
 }
-
   email: boolean;
   sms: boolean;
   push: boolean;
   inApp: boolean;
 }
-
   profileVisibility: 'public' | 'private' | 'contacts_only';
   dataSharing: boolean;
   marketingEmails: boolean;
 }
-
+// Exports
+// Exports
+// Exports
+// Exports
+// Exports
+// Exports
+// Exports
+// Exports
 // Exports
 export interface BaseEntity {
 export interface User extends BaseEntity {

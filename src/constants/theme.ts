@@ -4,7 +4,6 @@
   DARK: "dark",
   SYSTEM: "system",
 } as const;
-
   LIGHT: {
     primary: "#3b82f6",
     secondary: "#6b7280",
@@ -32,14 +31,11 @@
     shadow: "rgba(0, 0, 0, 0.3)",
   },
 } as const;
-
   SANS: ["Inter", "system-ui", "sans-serif"],
   SERIF: ["Georgia", "Times New Roman", "serif"],
   MONO: ["Fira Code", "Monaco", "Consolas", "monospace"],
 } as const;
-
 // FONT_SIZES moved to ui.ts to avoid duplication
-
   0: "0",
   1: "0.25rem",
   2: "0.5rem",
@@ -59,7 +55,6 @@
   56: "14rem",
   64: "16rem",
 } as const;
-
   NONE: "0",
   SM: "0.125rem",
   DEFAULT: "0.25rem",
@@ -70,7 +65,6 @@
   "3XL": "1.5rem",
   FULL: "9999px",
 } as const;
-
   NONE: "none",
   SM: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
   DEFAULT: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
@@ -80,12 +74,10 @@
   "2XL": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
   INNER: "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
 } as const;
-
   FAST: "150ms",
   NORMAL: "300ms",
   SLOW: "500ms",
 } as const;
-
   LINEAR: "linear",
   EASE_IN: "ease-in",
   EASE_OUT: "ease-out",
@@ -93,8 +85,6 @@
   BOUNCE: "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
   SMOOTH: "cubic-bezier(0.4, 0, 0.2, 1)",
 } as const;
-
-
 // Exports
 export const THEMES = {
 export const THEME_COLORS = {

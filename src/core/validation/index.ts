@@ -3,11 +3,9 @@
  * Core Validation - التحقق من البيانات الأساسي
  * Centralized validation system
  */
-
 import { z } from 'zod';
 import { REGEX_PATTERNS } from '../constants';
 import { ValidationError } from '../errors';
-
 // Base Validation Schemas
   id: z.string().uuid('معرف غير صحيح'),
   email: z.string().email('البريد الإلكتروني غير صحيح'),
@@ -20,7 +18,6 @@ import { ValidationError } from '../errors';
   medicalRecordNumber: z.string().regex(REGEX_PATTERNS.MEDICAL_RECORD, 'رقم الملف الطبي غير صحيح'),
   licenseNumber: z.string().regex(REGEX_PATTERNS.LICENSE_NUMBER, 'رقم الترخيص غير صحيح'),
 } as const;
-
 // User Validation Schemas
   create: z.object({
     email: baseSchemas.email,
@@ -34,7 +31,6 @@ import { ValidationError } from '../errors';
       gender: z.enum(['male', 'female', 'other']).optional(),
     }),
   }),
-  
   update: z.object({
     email: baseSchemas.email.optional(),
     profile: z.object({
@@ -49,13 +45,11 @@ import { ValidationError } from '../errors';
       theme: z.enum(['light', 'dark', 'system']).optional(),
     }).optional(),
   }),
-  
   login: z.object({
     email: baseSchemas.email,
     password: z.string().min(1, 'كلمة المرور مطلوبة'),
   }),
 } as const;
-
 // Patient Validation Schemas
   create: z.object({
     userId: baseSchemas.id,
@@ -69,7 +63,6 @@ import { ValidationError } from '../errors';
       email: baseSchemas.email.optional(),
     }),
   }),
-  
   update: z.object({
     medicalRecordNumber: baseSchemas.medicalRecordNumber.optional(),
     insuranceProvider: z.string().optional(),
@@ -81,13 +74,11 @@ import { ValidationError } from '../errors';
       email: baseSchemas.email.optional(),
     }).optional(),
   }),
-  
   activate: z.object({
     isActivated: z.boolean(),
     activationNotes: z.string().optional(),
   }),
 } as const;
-
 // Doctor Validation Schemas
   create: z.object({
     userId: baseSchemas.id,
@@ -112,7 +103,6 @@ import { ValidationError } from '../errors';
       })).optional(),
     }),
   }),
-  
   update: z.object({
     speciality: baseSchemas.nonEmptyString.optional(),
     licenseNumber: baseSchemas.licenseNumber.optional(),
@@ -136,7 +126,6 @@ import { ValidationError } from '../errors';
     }).optional(),
   }),
 } as const;
-
 // Appointment Validation Schemas
   create: z.object({
     patientId: baseSchemas.id,
@@ -146,7 +135,6 @@ import { ValidationError } from '../errors';
     type: z.enum(['consultation', 'follow_up', 'emergency', 'routine_checkup']),
     notes: z.string().optional(),
   }),
-  
   update: z.object({
     scheduledAt: baseSchemas.date.optional(),
     duration: z.number().int().min(15).max(240).optional(),
@@ -157,7 +145,6 @@ import { ValidationError } from '../errors';
     followUpRequired: z.boolean().optional(),
     followUpDate: baseSchemas.date.optional(),
   }),
-  
   query: z.object({
     patientId: baseSchemas.id.optional(),
     doctorId: baseSchemas.id.optional(),
@@ -167,7 +154,6 @@ import { ValidationError } from '../errors';
     limit: z.number().int().min(1).max(100).optional(),
   }),
 } as const;
-
 // Payment Validation Schemas
   create: z.object({
     appointmentId: baseSchemas.id,
@@ -176,20 +162,17 @@ import { ValidationError } from '../errors';
     method: z.enum(['cash', 'card', 'bank_transfer', 'insurance', 'wallet']),
     metadata: z.record(z.string(), z.any()).optional(),
   }),
-  
   update: z.object({
     status: z.enum(['pending', 'paid', 'partial', 'refunded', 'cancelled']).optional(),
     refundAmount: baseSchemas.positiveNumber.optional(),
     refundReason: z.string().optional(),
   }),
-  
   process: z.object({
     paymentId: baseSchemas.id,
     gateway: z.enum(['stripe', 'moyasar']),
     gatewayData: z.record(z.string(), z.any()),
   }),
 } as const;
-
 // Insurance Validation Schemas
   create: z.object({
     patientId: baseSchemas.id,
@@ -201,19 +184,16 @@ import { ValidationError } from '../errors';
     treatment: z.string().optional(),
     documents: z.array(z.string()).optional(),
   }),
-  
   update: z.object({
     status: z.enum(['draft', 'submitted', 'under_review', 'approved', 'rejected', 'cancelled']).optional(),
     rejectionReason: z.string().optional(),
     documents: z.array(z.string()).optional(),
   }),
-  
   submit: z.object({
     claimId: baseSchemas.id,
     providerData: z.record(z.string(), z.any()),
   }),
 } as const;
-
 // File Upload Validation Schemas
   upload: z.object({
     file: z.any(), // File object
@@ -221,7 +201,6 @@ import { ValidationError } from '../errors';
     patientId: baseSchemas.id.optional(),
     metadata: z.record(z.string(), z.any()).optional(),
   }),
-  
   query: z.object({
     patientId: baseSchemas.id.optional(),
     type: z.enum(['medical_record', 'insurance_claim', 'profile', 'other']).optional(),
@@ -229,7 +208,6 @@ import { ValidationError } from '../errors';
     limit: z.number().int().min(1).max(100).optional(),
   }),
 } as const;
-
 // Notification Validation Schemas
   send: z.object({
     userId: baseSchemas.id,
@@ -240,7 +218,6 @@ import { ValidationError } from '../errors';
     priority: z.enum(['low', 'medium', 'high', 'urgent']).optional(),
     metadata: z.record(z.string(), z.any()).optional(),
   }),
-  
   query: z.object({
     userId: baseSchemas.id.optional(),
     type: z.enum(['appointment_reminder', 'payment_confirmation', 'insurance_update', 'system_alert']).optional(),
@@ -249,7 +226,6 @@ import { ValidationError } from '../errors';
     limit: z.number().int().min(1).max(100).optional(),
   }),
 } as const;
-
 // Validation Helper Functions
   public static validate<T>(
     schema: z.ZodSchema<T>,
@@ -271,7 +247,6 @@ import { ValidationError } from '../errors';
       throw error;
     }
   }
-
   public static async validateAsync<T>(
     schema: z.ZodSchema<T>,
     data: unknown,
@@ -295,14 +270,12 @@ import { ValidationError } from '../errors';
       };
     }
   }
-
   public static validateQueryParams<T>(
     schema: z.ZodSchema<T>,
     searchParams: URLSearchParams,
     context?: Record<string, any>
   ): { success: true; data: T } | { success: false; error: ValidationError } {
     const params: Record<string, any> = {};
-    
     for (const [key, value] of searchParams.entries()) {
       // Try to parse as number
       if (!isNaN(Number(value))) {
@@ -317,10 +290,8 @@ import { ValidationError } from '../errors';
         params[key] = value;
       }
     }
-
     return this.validate(schema, params, context);
   }
-
   public static validateRequestBody<T>(
     schema: z.ZodSchema<T>,
     body: unknown,
@@ -329,45 +300,38 @@ import { ValidationError } from '../errors';
     return this.validate(schema, body, context);
   }
 }
-
 // Middleware for API Routes
   schema: z.ZodSchema<T>,
   context?: Record<string, any>
 ) => {
   return (req: any, res: any, next: any) => {
     const validation = ValidationHelper.validateRequestBody(schema, req.body, context);
-    
     if (!validation.success) {
       return res.status(validation.error.statusCode).json({
         success: false,
         error: validation.error.toJSON(),
       });
     }
-    
     req.validatedData = validation.data;
     next();
   };
 };
-
   schema: z.ZodSchema<T>,
   context?: Record<string, any>
 ) => {
   return (req: any, res: any, next: any) => {
     const searchParams = new URLSearchParams(req.url.split('?')[1] || '');
     const validation = ValidationHelper.validateQueryParams(schema, searchParams, context);
-    
     if (!validation.success) {
       return res.status(validation.error.statusCode).json({
         success: false,
         error: validation.error.toJSON(),
       });
     }
-    
     req.validatedQuery = validation.data;
     next();
   };
 };
-
 // Exports
 export const baseSchemas = {
 export const userSchemas = {

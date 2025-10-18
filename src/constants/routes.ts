@@ -12,10 +12,8 @@
   REGISTER: "/register",
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password",
-
   // Dashboard routes
   DASHBOARD: "/dashboard",
-
   // Admin routes
   ADMIN: {
     DASHBOARD: "/admin/dashboard",
@@ -34,7 +32,6 @@
     INTEGRATIONS: "/admin/integrations",
     PERFORMANCE: "/admin/performance",
   },
-
   // User routes
   USER: {
     DASHBOARD: "/dashboard",
@@ -43,7 +40,6 @@
     CHANNELS: "/channels",
     CONVERSATIONS: "/conversations",
   },
-
   // Channel routes
   CHANNEL: {
     LIST: "/channels",
@@ -52,13 +48,11 @@
     EDIT: (id: string) => `/channels/${id}/edit`,
     SETTINGS: (id: string) => `/channels/${id}/settings`,
   },
-
   // Conversation routes
   CONVERSATION: {
     LIST: "/conversations",
     VIEW: (id: string) => `/conversations/${id}`,
   },
-
   // Chatbot routes
   CHATBOT: {
     FLOWS: "/chatbot/flows",
@@ -68,7 +62,6 @@
     INTEGRATIONS: "/chatbot/integrations",
     ANALYTICS: "/chatbot/analytics",
   },
-
   // CRM routes
   CRM: {
     DASHBOARD: "/crm/dashboard",
@@ -79,7 +72,6 @@
     ACTIVITIES: "/crm/activities",
     FLOWS: "/crm/flows",
   },
-
   // Healthcare routes
   HEALTH: {
     APPOINTMENTS: "/appointments",
@@ -95,7 +87,6 @@
     FAMILY_SUPPORT: "/family-support",
     PROGRESS_TRACKING: "/progress-tracking",
   },
-
   // Marketing routes
   MARKETING: {
     FEATURES: "/features",
@@ -103,26 +94,21 @@
     FAQ: "/faq",
     DOCUMENTATION: "/project-documentation",
   },
-
   // Info routes
   INFO: {
     ABOUT: "/about",
     CONTACT: "/contact",
   },
-
   // Legal routes
   LEGAL: {
     PRIVACY: "/privacy",
     TERMS: "/terms",
   },
-
   // Notifications and Messages
   NOTIFICATIONS: "/notifications",
   MESSAGES: "/messages",
-
   // Settings
   SETTINGS: "/settings",
-
   // API routes
   API: {
     AUTH: "/api/auth",
@@ -138,7 +124,6 @@
     I18N: "/api/i18n",
   },
 } as const;
-
   ROUTES.DASHBOARD,
   ROUTES.ADMIN.DASHBOARD,
   ROUTES.ADMIN.USERS,
@@ -183,7 +168,6 @@
   ROUTES.MESSAGES,
   ROUTES.SETTINGS,
 ] as const;
-
   ROUTES.ADMIN.DASHBOARD,
   ROUTES.ADMIN.USERS,
   ROUTES.ADMIN.CHANNELS,
@@ -200,7 +184,6 @@
   ROUTES.ADMIN.INTEGRATIONS,
   ROUTES.ADMIN.PERFORMANCE,
 ] as const;
-
   ROUTES.HOME,
   ROUTES.LOGIN,
   ROUTES.REGISTER,
@@ -215,8 +198,6 @@
   ROUTES.LEGAL.PRIVACY,
   ROUTES.LEGAL.TERMS,
 ] as const;
-
-
 // Exports
 export const ROUTES = {
 export const PROTECTED_ROUTES = [

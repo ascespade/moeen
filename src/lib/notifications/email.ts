@@ -144,12 +144,6 @@ export class EmailNotificationService {
 
       // In production, this would integrate with an email service like SendGrid, AWS SES, etc.
       if (process.env.NODE_ENV === 'development') {
-        console.log('Email would be sent:', {
-          to: emailData.to,
-          subject,
-          html,
-          text
-        });
         return { success: true };
       }
 

@@ -1,18 +1,15 @@
 import { ROUTES } from "@/constants/routes";
-
   id: string;
   email: string;
   role: "admin" | "user" | "doctor" | "nurse" | "staff" | "supervisor" | "patient" | "agent" | "manager" | "demo" | "moderator";
   permissions?: string[];
 }
-
 /**
  * Get the default route for a user based on their role
  */
   if (!user) {
     return ROUTES.LOGIN;
   }
-
   switch (user.role) {
     case "admin":
       return ROUTES.ADMIN.DASHBOARD;
@@ -34,7 +31,6 @@ import { ROUTES } from "@/constants/routes";
       return "/dashboard";
   }
 }
-
 /**
  * Check if a route requires authentication
  */
@@ -42,27 +38,22 @@ import { ROUTES } from "@/constants/routes";
     pathname,
   );
 }
-
 /**
  * Check if a route requires admin privileges
  */
   return pathname.startsWith("/admin");
 }
-
 /**
  * Check if user has permission to access a route
  */
   if (!user) {
     return !isProtectedRoute(pathname);
   }
-
   if (isAdminRoute(pathname)) {
     return user.role === "admin";
   }
-
   return true;
 }
-
 /**
  * Get navigation items based on user role
  */
@@ -73,14 +64,12 @@ import { ROUTES } from "@/constants/routes";
       { label: "إنشاء حساب", href: ROUTES.REGISTER },
     ];
   }
-
   const baseItems = [
     { label: "لوحة التحكم", href: ROUTES.USER.DASHBOARD },
     { label: "المواعيد", href: "/appointments" },
     { label: "المرضى", href: "/patients" },
     { label: "الجلسات", href: "/sessions" },
   ];
-
   if (user.role === "admin") {
     return [
       ...baseItems,
@@ -89,11 +78,8 @@ import { ROUTES } from "@/constants/routes";
       { label: "الإعدادات", href: ROUTES.ADMIN.SETTINGS },
     ];
   }
-
   return baseItems;
 }
-
-
 // Exports
 export interface User {
 export function getDefaultRouteForUser(user: User | null): string {

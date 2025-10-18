@@ -1,16 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { ApiResponse } from "@/types";
 import { api, ApiError } from "@/utils/api";
-
 // API hooks
-
 interface UseApiState<T> {
   data: T | null;
   loading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
 }
-
   endpoint: string,
   options?: RequestInit,
   immediate: boolean = true,
@@ -18,7 +15,6 @@ interface UseApiState<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(immediate);
   const [error, setError] = useState<string | null>(null);
-
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
@@ -38,13 +34,11 @@ interface UseApiState<T> {
       setLoading(false);
     }
   }, [endpoint, options]);
-
   useEffect(() => {
     if (immediate) {
       fetchData();
     }
   }, [fetchData, immediate]);
-
   return {
     data,
     loading,
@@ -52,14 +46,12 @@ interface UseApiState<T> {
     refetch: fetchData,
   };
 };
-
   endpoint: string,
   options?: RequestInit,
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
   const execute = useCallback(
     async (requestData?: D) => {
       try {
@@ -84,7 +76,6 @@ interface UseApiState<T> {
     },
     [endpoint, options],
   );
-
   return {
     data,
     loading,
@@ -92,14 +83,12 @@ interface UseApiState<T> {
     execute,
   };
 };
-
   endpoint: string,
   options?: RequestInit,
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
   const execute = useCallback(
     async (requestData?: D) => {
       try {
@@ -124,7 +113,6 @@ interface UseApiState<T> {
     },
     [endpoint, options],
   );
-
   return {
     data,
     loading,
@@ -132,14 +120,12 @@ interface UseApiState<T> {
     execute,
   };
 };
-
   endpoint: string,
   options?: RequestInit,
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
   const execute = useCallback(async () => {
     try {
       setLoading(true);
@@ -161,7 +147,6 @@ interface UseApiState<T> {
       setLoading(false);
     }
   }, [endpoint, options]);
-
   return {
     data,
     loading,
@@ -169,8 +154,6 @@ interface UseApiState<T> {
     execute,
   };
 };
-
-
 // Exports
 export const useApi = <T = any>(
 export const useApiPost = <T = any, D = any>(

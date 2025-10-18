@@ -4,23 +4,18 @@ import { authorize } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
 import { getClientInfo } from '@/lib/utils/request-helpers';
 import { validateData, appointmentUpdateSchema } from '@/lib/validation/schemas';
-
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   const startTime = Date.now();
   const { ipAddress, userAgent } = getClientInfo(request);
-  
   try {
     const { user, error: authError } = await authorize(request);
-    
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
     const supabase = await createClient();
     const appointmentId = params.id;
-
     const { data: appointment, error: appointmentError } = await supabase
       .from('appointments')
       .select(`
@@ -38,11 +33,9 @@ import { validateData, appointmentUpdateSchema } from '@/lib/validation/schemas'
       `)
       .eq('id', appointmentId)
       .single();
-
     if (appointmentError || !appointment) {
       return NextResponse.json({ error: 'Appointment not found' }, { status: 404 });
     }
-
     // Check permissions
     if (user.role === 'patient' && appointment.patients.user_id !== user.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
@@ -50,7 +43,6 @@ import { validateData, appointmentUpdateSchema } from '@/lib/validation/schemas'
     if (user.role === 'doctor' && appointment.doctors.user_id !== user.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
-
     // Log appointment view
     const supabase2 = await createClient();
     await supabase2.from('audit_logs').insert({
@@ -64,7 +56,6 @@ import { validateData, appointmentUpdateSchema } from '@/lib/validation/schemas'
       severity: 'info',
       duration_ms: Date.now() - startTime
     });
-
     return NextResponse.json({
       appointment: {
         id: appointment.id,
@@ -85,7 +76,6 @@ import { validateData, appointmentUpdateSchema } from '@/lib/validation/schemas'
         updatedAt: appointment.updated_at
       }
     });
-
   } catch (error) {
     return NextResponse.json(
       { error: 'Internal server error' },
@@ -93,34 +83,27 @@ import { validateData, appointmentUpdateSchema } from '@/lib/validation/schemas'
     );
   }
 }
-
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   const startTime = Date.now();
   const { ipAddress, userAgent } = getClientInfo(request);
-  
   try {
     const { user, error: authError } = await authorize(request);
-    
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
     const body = await request.json();
     const validation = validateData(appointmentUpdateSchema, body);
-
     if (!validation.success) {
-      return NextResponse.json({ 
-        error: 'Validation failed', 
-        details: validation.errors 
+      return NextResponse.json({
+        error: 'Validation failed',
+        details: validation.errors
       }, { status: 400 });
     }
-
     const supabase = await createClient();
     const appointmentId = params.id;
-
     // Get current appointment
     const { data: currentAppointment, error: getError } = await supabase
       .from('appointments')
@@ -134,11 +117,9 @@ export async function PATCH(
       `)
       .eq('id', appointmentId)
       .single();
-
     if (getError || !currentAppointment) {
       return NextResponse.json({ error: 'Appointment not found' }, { status: 404 });
     }
-
     // Check permissions
     if (user.role === 'patient' && currentAppointment.patients.user_id !== user.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
@@ -146,7 +127,6 @@ export async function PATCH(
     if (user.role === 'doctor' && currentAppointment.doctors.user_id !== user.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
-
     // Update appointment with tracking
     const { data: appointment, error: updateError } = await supabase
       .from('appointments')
@@ -169,11 +149,9 @@ export async function PATCH(
         doctors!inner(speciality)
       `)
       .single();
-
     if (updateError) {
       return NextResponse.json({ error: 'Failed to update appointment' }, { status: 500 });
     }
-
     // Log appointment update with full tracking
     await supabase
       .from('audit_logs')
@@ -194,7 +172,6 @@ export async function PATCH(
         },
         duration_ms: Date.now() - startTime
       });
-
     return NextResponse.json({
       success: true,
       appointment: {
@@ -207,7 +184,6 @@ export async function PATCH(
         paymentStatus: appointment.payment_status
       }
     });
-
   } catch (error) {
     return NextResponse.json(
       { error: 'Internal server error' },

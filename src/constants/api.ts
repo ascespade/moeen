@@ -11,7 +11,6 @@
     FORGOT_PASSWORD: "/auth/forgot-password",
     RESET_PASSWORD: "/auth/reset-password",
   },
-
   // Users
   USERS: {
     LIST: "/users",
@@ -21,7 +20,6 @@
     DELETE: (id: string) => `/users/${id}`,
     SEARCH: "/users/search",
   },
-
   // Channels
   CHANNELS: {
     LIST: "/channels",
@@ -33,7 +31,6 @@
     LEAVE: (id: string) => `/channels/${id}/leave`,
     MEMBERS: (id: string) => `/channels/${id}/members`,
   },
-
   // Messages
   MESSAGES: {
     LIST: (channelId: string) => `/channels/${channelId}/messages`,
@@ -43,7 +40,6 @@
     DELETE: (id: string) => `/messages/${id}`,
     SEARCH: "/messages/search",
   },
-
   // Conversations
   CONVERSATIONS: {
     LIST: "/conversations",
@@ -52,7 +48,6 @@
     UPDATE: (id: string) => `/conversations/${id}`,
     DELETE: (id: string) => `/conversations/${id}`,
   },
-
   // Settings
   SETTINGS: {
     GET: "/settings",
@@ -61,7 +56,6 @@
     NOTIFICATIONS: "/settings/notifications",
     PRIVACY: "/settings/privacy",
   },
-
   // Webhooks
   WEBHOOKS: {
     LIST: "/webhooks",
@@ -71,7 +65,6 @@
     DELETE: (id: string) => `/webhooks/${id}`,
     TEST: (id: string) => `/webhooks/${id}/test`,
   },
-
   // AI
   AI: {
     CHAT: "/ai/chat",
@@ -79,7 +72,6 @@
     TRANSLATE: "/ai/translate",
     SUMMARIZE: "/ai/summarize",
   },
-
   // Logs
   LOGS: {
     LIST: "/logs",
@@ -87,7 +79,6 @@
     SEARCH: "/logs/search",
     EXPORT: "/logs/export",
   },
-
   // Dashboard
   DASHBOARD: {
     STATS: "/dashboard/stats",
@@ -95,7 +86,6 @@
     ACTIVITY: "/dashboard/activity",
   },
 } as const;
-
   OK: 200,
   CREATED: 201,
   NO_CONTENT: 204,
@@ -110,19 +100,15 @@
   BAD_GATEWAY: 502,
   SERVICE_UNAVAILABLE: 503,
 } as const;
-
   DEFAULT: 10000,
   UPLOAD: 30000,
   DOWNLOAD: 60000,
   LONG_RUNNING: 120000,
 } as const;
-
   DEFAULT_PAGE: 1,
   DEFAULT_LIMIT: 20,
   MAX_LIMIT: 100,
 } as const;
-
-
 // Exports
 export const API_ENDPOINTS = {
 export const HTTP_STATUS = {

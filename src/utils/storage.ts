@@ -3,7 +3,6 @@
   // Local Storage
   get: <T = any>(key: string, defaultValue?: T): T | null => {
     if (typeof window === "undefined") return defaultValue || null;
-
     try {
       const item = localStorage.getItem(key);
       return item ? JSON.parse(item) : defaultValue || null;
@@ -11,38 +10,27 @@
       return defaultValue || null;
     }
   },
-
   set: <T = any>(key: string, value: T): void => {
     if (typeof window === "undefined") return;
-
     try {
       localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      }
+    } catch (error) {}
   },
-
   remove: (key: string): void => {
     if (typeof window === "undefined") return;
-
     try {
       localStorage.removeItem(key);
-    } catch (error) {
-      }
+    } catch (error) {}
   },
-
   clear: (): void => {
     if (typeof window === "undefined") return;
-
     try {
       localStorage.clear();
-    } catch (error) {
-      }
+    } catch (error) {}
   },
-
   // Session Storage
   getSession: <T = any>(key: string, defaultValue?: T): T | null => {
     if (typeof window === "undefined") return defaultValue || null;
-
     try {
       const item = sessionStorage.getItem(key);
       return item ? JSON.parse(item) : defaultValue || null;
@@ -50,35 +38,25 @@
       return defaultValue || null;
     }
   },
-
   setSession: <T = any>(key: string, value: T): void => {
     if (typeof window === "undefined") return;
-
     try {
       sessionStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      }
+    } catch (error) {}
   },
-
   removeSession: (key: string): void => {
     if (typeof window === "undefined") return;
-
     try {
       sessionStorage.removeItem(key);
-    } catch (error) {
-      }
+    } catch (error) {}
   },
-
   clearSession: (): void => {
     if (typeof window === "undefined") return;
-
     try {
       sessionStorage.clear();
-    } catch (error) {
-      }
+    } catch (error) {}
   },
 };
-
 // Specific storage keys
   USER: "user",
   TOKEN: "token",
@@ -89,26 +67,25 @@
   RECENT_CHANNELS: "recentChannels",
   DRAFT_MESSAGES: "draftMessages",
 } as const;
-
 // Storage helpers
-
   storage.set(STORAGE_KEYS.TOKEN, token);
-
   storage.set(STORAGE_KEYS.REFRESH_TOKEN, token);
   storage.remove(STORAGE_KEYS.REFRESH_TOKEN);
-
   storage.set(STORAGE_KEYS.THEME, theme);
-
   storage.set(STORAGE_KEYS.LANGUAGE, language);
-
   storage.set(STORAGE_KEYS.SETTINGS, settings);
-
   removeUser();
   removeToken();
   removeRefreshToken();
 };
-
-
+// Exports
+// Exports
+// Exports
+// Exports
+// Exports
+// Exports
+// Exports
+// Exports
 // Exports
 export const storage = {
 export const STORAGE_KEYS = {

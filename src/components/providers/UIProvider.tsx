@@ -33,6 +33,22 @@ declare global {
 
 
 // Exports
+
+// Exports
+
+// Exports
+
+// Exports
+
+// Exports
+
+// Exports
+
+// Exports
+
+// Exports
+
+// Exports
 export type AppTheme = "light" | "dark";
 export type AppLang = "ar" | "en";
 export type AppRole = "admin" | "staff" | "viewer";

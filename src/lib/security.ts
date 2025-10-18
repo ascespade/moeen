@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-
 // Browser-compatible crypto functions
 const getCrypto = () => {
   if (typeof window !== "undefined" && window.crypto) {
@@ -12,11 +11,9 @@ const getCrypto = () => {
   const crypto = require("crypto");
   return crypto;
 };
-
 // CSRF token generation and validation
   private static readonly CSRF_TOKEN_HEADER = "x-csrf-token";
   private static readonly CSRF_TOKEN_COOKIE = "csrf-token";
-
   static generateToken(): string {
     const crypto = getCrypto();
     if (crypto.randomBytes) {
@@ -29,18 +26,14 @@ const getCrypto = () => {
       "",
     );
   }
-
   static validateToken(request: NextRequest): boolean {
     const tokenFromHeader = request.headers.get(this.CSRF_TOKEN_HEADER);
     const tokenFromCookie = request.cookies.get(this.CSRF_TOKEN_COOKIE)?.value;
-
     if (!tokenFromHeader || !tokenFromCookie) {
       return false;
     }
-
     return tokenFromHeader === tokenFromCookie;
   }
-
   static setCSRFToken(response: NextResponse): void {
     const token = this.generateToken();
     response.cookies.set(this.CSRF_TOKEN_COOKIE, token, {
@@ -52,7 +45,6 @@ const getCrypto = () => {
     });
   }
 }
-
 // Rate limiting
   private static readonly requests = new Map<
     string,
@@ -60,36 +52,29 @@ const getCrypto = () => {
   >();
   private static readonly WINDOW_MS = 15 * 60 * 1000; // 15 minutes
   private static readonly MAX_REQUESTS = 100; // Max requests per window
-
   static isRateLimited(ip: string): boolean {
     const now = Date.now();
     const userRequests = this.requests.get(ip);
-
     if (!userRequests || now > userRequests.resetTime) {
       this.requests.set(ip, { count: 1, resetTime: now + this.WINDOW_MS });
       return false;
     }
-
     if (userRequests.count >= this.MAX_REQUESTS) {
       return true;
     }
-
     userRequests.count++;
     return false;
   }
-
   static getRemainingRequests(ip: string): number {
     const userRequests = this.requests.get(ip);
     if (!userRequests) return this.MAX_REQUESTS;
     return Math.max(0, this.MAX_REQUESTS - userRequests.count);
   }
-
   static getResetTime(ip: string): number {
     const userRequests = this.requests.get(ip);
     return userRequests?.resetTime || Date.now() + this.WINDOW_MS;
   }
 }
-
 // Input sanitization
   static sanitizeString(input: string): string {
     return input
@@ -98,11 +83,9 @@ const getCrypto = () => {
       .replace(/javascript:/gi, "") // Remove javascript: protocol
       .replace(/on\w+=/gi, ""); // Remove event handlers
   }
-
   static sanitizeEmail(email: string): string {
     return this.sanitizeString(email).toLowerCase();
   }
-
   static sanitizeHTML(html: string): string {
     // Basic HTML sanitization - in production, use a proper library like DOMPurify
     return html
@@ -111,7 +94,6 @@ const getCrypto = () => {
       .replace(/on\w+="[^"]*"/gi, "");
   }
 }
-
 // Security headers
   "X-Frame-Options": "DENY",
   "X-Content-Type-Options": "nosniff",
@@ -130,38 +112,30 @@ const getCrypto = () => {
     "form-action 'self'",
   ].join("; "),
 };
-
 // Password validation
   static validate(password: string): { isValid: boolean; errors: string[] } {
     const errors: string[] = [];
-
     if (password.length < 8) {
       errors.push("Password must be at least 8 characters long");
     }
-
     if (!/[A-Z]/.test(password)) {
       errors.push("Password must contain at least one uppercase letter");
     }
-
     if (!/[a-z]/.test(password)) {
       errors.push("Password must contain at least one lowercase letter");
     }
-
     if (!/\d/.test(password)) {
       errors.push("Password must contain at least one number");
     }
-
     if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
       errors.push("Password must contain at least one special character");
     }
-
     return {
       isValid: errors.length === 0,
       errors,
     };
   }
 }
-
 // Session security
   static generateSessionId(): string {
     const crypto = getCrypto();
@@ -175,7 +149,6 @@ const getCrypto = () => {
       "",
     );
   }
-
   static hashSessionId(sessionId: string): string {
     const crypto = getCrypto();
     if (crypto.createHash) {
@@ -201,7 +174,6 @@ const getCrypto = () => {
         return Math.abs(hash).toString(16);
       });
   }
-
   static validateSessionId(
     sessionId: string,
     hashedSessionId: string,
@@ -209,8 +181,6 @@ const getCrypto = () => {
     return this.hashSessionId(sessionId) === hashedSessionId;
   }
 }
-
-
 // Exports
 export class CSRFProtection {
 export class RateLimiter {

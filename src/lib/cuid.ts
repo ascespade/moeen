@@ -3,16 +3,12 @@
  * CUID (Collision-resistant Unique Identifier) Generator
  * A centralized system for generating unique IDs across the application
  */
-
 // Production CUID using @paralleldrive/cuid2
 import { createId } from "@paralleldrive/cuid2";
-
 // CUID alphabet (base 36 with custom characters for URL safety)
 const ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyz";
-
 // Counter for uniqueness
 let counter = 0;
-
 /**
  * Generate a random string of specified length
  */
@@ -23,16 +19,13 @@ function randomString(length: number): string {
   }
   return result;
 }
-
 /**
  * Get current timestamp in base 36
  */
 function timestamp(): string {
   return Date.now().toString(36);
 }
-
 // Note: pid() omitted intentionally to avoid unused symbol; timestamp/counter ensure uniqueness
-
 /**
  * Get hostname hash (simulated for browser environment)
  */
@@ -49,28 +42,23 @@ function hostname(): string {
   }
   return "00";
 }
-
 /**
  * Generate a CUID (Legacy implementation for backward compatibility)
  * Format: c + timestamp + counter + random + hostname
  */
   counter++;
-
   const timestampPart = timestamp();
   const counterPart = counter.toString(36);
   const randomPart = randomString(4);
   const hostnamePart = hostname();
-
   return `c${timestampPart}${counterPart}${randomPart}${hostnamePart}`;
 }
-
 /**
  * Generate a CUID for database records
  * Includes prefix for easy identification
  */
   return `${prefix}_${generateCuid()}`;
 }
-
 /**
  * Generate CUID for specific entity types
  */
@@ -78,41 +66,33 @@ function hostname(): string {
   user: () => generateDbCuid("usr"),
   userRole: () => generateDbCuid("rol"),
   userSession: () => generateDbCuid("ses"),
-
   // Content related
   translation: () => generateDbCuid("trn"),
   conversation: () => generateDbCuid("cnv"),
   message: () => generateDbCuid("msg"),
   channel: () => generateDbCuid("chn"),
-
   // System related
   setting: () => generateDbCuid("set"),
   log: () => generateDbCuid("log"),
   notification: () => generateDbCuid("ntf"),
-
   // Generic
   generic: () => generateDbCuid("gen"),
-
   // Custom prefix
   custom: (prefix: string) => generateDbCuid(prefix),
 };
-
 /**
  * Validate CUID format
  */
   const cuidRegex = /^c[a-z0-9]{24}$/;
   const dbCuidRegex = /^[a-z]+_[a-z0-9]{25}$/;
-
   return cuidRegex.test(id) || dbCuidRegex.test(id);
 }
-
 /**
  * Extract prefix from CUID
  */
   const match = id.match(/^([a-z]+)_/);
   return match && typeof match[1] === "string" ? match[1] : null;
 }
-
 /**
  * Generate multiple CUIDs at once
  */
@@ -120,16 +100,13 @@ function hostname(): string {
     prefix ? generateDbCuid(prefix) : generateCuid(),
   );
 }
-
 // ===== PRODUCTION CUID IMPLEMENTATION =====
-
 /**
  * Generate a production-grade CUID using @paralleldrive/cuid2
  * This is the recommended method for new implementations
  */
   return createId();
 }
-
 /**
  * Generate a public ID with prefix for API use
  * @param prefix - Prefix for the ID (default: 'pub')
@@ -137,14 +114,12 @@ function hostname(): string {
  */
   return `${prefix}_${createId()}`;
 }
-
 /**
  * Generate a short ID (last 8 characters)
  * @returns Short ID string
  */
   return createId().slice(-8);
 }
-
 /**
  * Entity-specific CUID generators for all database tables
  */
@@ -154,7 +129,6 @@ function hostname(): string {
   session: () => generatePublicId("ses"),
   claim: () => generatePublicId("clm"),
   doctor: () => generatePublicId("doc"),
-
   // Chatbot entities
   flow: () => generatePublicId("flw"),
   node: () => generatePublicId("nod"),
@@ -163,29 +137,22 @@ function hostname(): string {
   message: () => generatePublicId("msg"),
   template: () => generatePublicId("tpl"),
   integration: () => generatePublicId("int"),
-
   // CRM entities
   lead: () => generatePublicId("led"),
   deal: () => generatePublicId("del"),
   activity: () => generatePublicId("act"),
   contact: () => generatePublicId("cnt"),
-
   // System entities
   notification: () => generatePublicId("ntf"),
   audit: () => generatePublicId("aud"),
   role: () => generatePublicId("rol"),
   setting: () => generatePublicId("set"),
   user: () => generatePublicId("usr"),
-
   // Generic
   generic: () => generatePublicId("gen"),
-
   // Custom prefix
   custom: (prefix: string) => generatePublicId(prefix),
 };
-
-
-
 // Exports
 export function generateCuid(): string {
 export function generateDbCuid(prefix: string = "db"): string {

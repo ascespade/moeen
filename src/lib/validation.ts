@@ -1,19 +1,16 @@
 import DOMPurify from "isomorphic-dompurify";
 import { z } from "zod";
-
 // Sanitization helpers
   return DOMPurify.sanitize(html, {
     ALLOWED_TAGS: ["b", "i", "em", "strong", "p", "br"],
     ALLOWED_ATTR: [],
   });
 }
-
   return text
     .replace(/[<>]/g, "") // Remove potential HTML tags
     .trim()
     .slice(0, 1000); // Limit length
 }
-
 // Enhanced validation schemas
   patient: z.object({
     full_name: z
@@ -58,7 +55,6 @@ import { z } from "zod";
         allergies ? sanitizeText(allergies) : undefined,
       ),
   }),
-
   appointment: z.object({
     patient_id: z.string().uuid("Invalid patient ID"),
     doctor_id: z.string().uuid("Invalid doctor ID"),
@@ -86,7 +82,6 @@ import { z } from "zod";
       .optional()
       .transform((notes) => (notes ? sanitizeText(notes) : undefined)),
   }),
-
   user: z.object({
     email: z
       .string()
@@ -107,13 +102,11 @@ import { z } from "zod";
       .transform(sanitizeText),
     role: z.enum(["admin", "doctor", "therapist", "patient", "family_member"]),
   }),
-
   // CSRF token validation
   csrf: z.object({
     token: z.string().min(1, "CSRF token is required"),
   }),
 };
-
 // Validation middleware
   return async (request: Request): Promise<T> => {
     try {
@@ -129,22 +122,17 @@ import { z } from "zod";
     }
   };
 }
-
 // CSRF protection
   return (
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15)
   );
 }
-
   token: string,
   sessionToken: string,
 ): boolean {
   return token === sessionToken && token.length > 0;
 }
-
-
-
 // Exports
 export function sanitizeHtml(html: string): string {
 export function sanitizeText(text: string): string {

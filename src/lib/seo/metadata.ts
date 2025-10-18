@@ -3,9 +3,7 @@
  * SEO Metadata Generator
  * Professional metadata for all pages
  */
-
 import { Metadata } from 'next';
-
 interface PageMetadata {
   title: string;
   description: string;
@@ -13,11 +11,9 @@ interface PageMetadata {
   image?: string;
   noIndex?: boolean;
 }
-
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://moeen.sa';
 const appName = 'معين - Moeen';
 const defaultImage = `${baseUrl}/og-image.png`;
-
 /**
  * Generate complete metadata for a page
  */
@@ -28,14 +24,11 @@ const defaultImage = `${baseUrl}/og-image.png`;
     image = defaultImage,
     noIndex = false,
   } = config;
-
   const fullTitle = title.includes(appName) ? title : `${title} | ${appName}`;
-
   return {
     title: fullTitle,
     description,
     keywords: [...keywords, 'معين', 'مركز صحي', 'عيادة', 'تطبيب', 'مواعيد'].join(', '),
-    
     // Open Graph
     openGraph: {
       title: fullTitle,
@@ -53,7 +46,6 @@ const defaultImage = `${baseUrl}/og-image.png`;
       locale: 'ar_SA',
       type: 'website',
     },
-
     // Twitter Card
     twitter: {
       card: 'summary_large_image',
@@ -62,7 +54,6 @@ const defaultImage = `${baseUrl}/og-image.png`;
       images: [image],
       creator: '@moeen_health',
     },
-
     // Robots
     robots: {
       index: !noIndex,
@@ -72,7 +63,6 @@ const defaultImage = `${baseUrl}/og-image.png`;
         follow: !noIndex,
       },
     },
-
     // Additional
     alternates: {
       canonical: baseUrl,
@@ -81,14 +71,12 @@ const defaultImage = `${baseUrl}/og-image.png`;
         'en-US': `${baseUrl}/en`,
       },
     },
-
     // App links
     appleWebApp: {
       capable: true,
       title: appName,
       statusBarStyle: 'default',
     },
-
     // Verification
     verification: {
       google: 'your-google-verification-code',
@@ -96,7 +84,6 @@ const defaultImage = `${baseUrl}/og-image.png`;
     },
   };
 }
-
 /**
  * Predefined metadata for common pages
  */
@@ -105,113 +92,95 @@ const defaultImage = `${baseUrl}/og-image.png`;
     description: 'نظام متكامل لإدارة المراكز الصحية والعيادات - حجز المواعيد، السجلات الطبية، إدارة المرضى',
     keywords: ['نظام صحي', 'عيادات', 'مواعيد', 'سجلات طبية', 'مركز صحي'],
   },
-
   login: {
     title: 'تسجيل الدخول',
     description: 'سجل دخولك للوصول إلى لوحة التحكم في معين',
     noIndex: true,
   },
-
   register: {
     title: 'إنشاء حساب جديد',
     description: 'انضم إلى معين - نظام إدارة المراكز الصحية',
     noIndex: true,
   },
-
   dashboard: {
     title: 'لوحة التحكم',
     description: 'لوحة التحكم الرئيسية - معين',
     noIndex: true,
   },
-
   appointments: {
     title: 'المواعيد',
     description: 'إدارة وحجز المواعيد الطبية',
     keywords: ['مواعيد طبية', 'حجز موعد', 'عيادة'],
   },
-
   patients: {
     title: 'المرضى',
     description: 'إدارة بيانات المرضى والسجلات الطبية',
     keywords: ['مرضى', 'سجلات طبية', 'ملفات طبية'],
     noIndex: true,
   },
-
   doctors: {
     title: 'الأطباء',
     description: 'إدارة الأطباء ومواعيد العمل',
     keywords: ['أطباء', 'أخصائيون', 'عيادات'],
   },
-
   insurance: {
     title: 'التأمين الصحي',
     description: 'إدارة شركات التأمين والمطالبات',
     keywords: ['تأمين صحي', 'مطالبات', 'تغطية'],
   },
-
   reports: {
     title: 'التقارير والإحصائيات',
     description: 'تقارير وإحصائيات مفصلة عن المركز الصحي',
     keywords: ['تقارير', 'إحصائيات', 'تحليلات'],
     noIndex: true,
   },
-
   settings: {
     title: 'الإعدادات',
     description: 'إعدادات النظام والتخصيص',
     noIndex: true,
   },
-
   about: {
     title: 'من نحن',
     description: 'تعرف على معين - نظام إدارة المراكز الصحية',
     keywords: ['من نحن', 'معين', 'نظام صحي'],
   },
-
   contact: {
     title: 'اتصل بنا',
     description: 'تواصل معنا للاستفسارات والدعم الفني',
     keywords: ['اتصل بنا', 'دعم فني', 'استفسارات'],
   },
-
   features: {
     title: 'المميزات',
     description: 'اكتشف مميزات معين لإدارة المراكز الصحية',
     keywords: ['مميزات', 'خصائص', 'نظام صحي'],
   },
-
   pricing: {
     title: 'الأسعار والباقات',
     description: 'اختر الباقة المناسبة لمركزك الصحي',
     keywords: ['أسعار', 'باقات', 'اشتراكات'],
   },
-
   faq: {
     title: 'الأسئلة الشائعة',
     description: 'إجابات عن الأسئلة الأكثر شيوعاً حول معين',
     keywords: ['أسئلة', 'استفسارات', 'مساعدة'],
   },
-
   privacy: {
     title: 'سياسة الخصوصية',
     description: 'سياسة الخصوصية وحماية البيانات',
     keywords: ['خصوصية', 'حماية بيانات', 'سرية'],
   },
-
   terms: {
     title: 'شروط الاستخدام',
     description: 'شروط وأحكام استخدام معين',
     keywords: ['شروط', 'أحكام', 'استخدام'],
   },
 };
-
 /**
  * Generate JSON-LD structured data
  */
   const baseData = {
     '@context': 'https://schema.org',
   };
-
   switch (type) {
     case 'organization':
       return {
@@ -228,7 +197,6 @@ const defaultImage = `${baseUrl}/og-image.png`;
           availableLanguage: ['Arabic', 'English'],
         },
       };
-
     case 'website':
       return {
         ...baseData,
@@ -241,7 +209,6 @@ const defaultImage = `${baseUrl}/og-image.png`;
           'query-input': 'required name=search_term_string',
         },
       };
-
     case 'healthClinic':
       return {
         ...baseData,
@@ -255,18 +222,14 @@ const defaultImage = `${baseUrl}/og-image.png`;
         },
         medicalSpecialty: 'General Practice',
       };
-
     default:
       return baseData;
   }
 }
-
   generateMetadata,
   pageMetadata,
   generateStructuredData,
 };
-
-
 // Exports
 export function generateMetadata(config: PageMetadata): Metadata {
 export const pageMetadata = {

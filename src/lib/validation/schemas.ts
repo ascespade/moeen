@@ -1,17 +1,14 @@
 import { z } from 'zod';
-
 // User validation schemas
   email: z.string().email('Invalid email format'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   role: z.enum(['patient', 'doctor', 'staff', 'supervisor', 'admin']),
   meta: z.record(z.string(), z.any()).optional()
 });
-
   email: z.string().email('Invalid email format'),
   password: z.string().min(1, 'Password is required'),
   rememberMe: z.boolean().optional()
 });
-
 // Patient validation schemas
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
   dob: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format (YYYY-MM-DD)'),
@@ -20,15 +17,12 @@ import { z } from 'zod';
   insuranceNumber: z.string().optional(),
   meta: z.record(z.string(), z.any()).optional()
 });
-
-
 // Doctor validation schemas
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
   speciality: z.string().min(2, 'Speciality must be at least 2 characters'),
   schedule: z.record(z.string(), z.any()).optional(),
   meta: z.record(z.string(), z.any()).optional()
 });
-
 // Appointment validation schemas
   patientId: z.string().uuid('Invalid patient ID format'),
   doctorId: z.string().uuid('Invalid doctor ID format'),
@@ -37,8 +31,6 @@ import { z } from 'zod';
   status: z.enum(['pending', 'confirmed', 'in_progress', 'completed', 'cancelled', 'no_show']).optional(),
   paymentStatus: z.enum(['unpaid', 'paid', 'pending', 'refunded']).optional()
 });
-
-
 // Payment validation schemas
   appointmentId: z.string().uuid('Invalid appointment ID format'),
   amount: z.number().positive('Amount must be positive'),
@@ -47,7 +39,6 @@ import { z } from 'zod';
   status: z.enum(['pending', 'completed', 'failed', 'refunded']).optional(),
   meta: z.record(z.string(), z.any()).optional()
 });
-
 // Insurance claim validation schemas
   patientId: z.string().uuid('Invalid patient ID format'),
   appointmentId: z.string().uuid('Invalid appointment ID format'),
@@ -57,50 +48,42 @@ import { z } from 'zod';
   diagnosis: z.string().optional(),
   treatment: z.string().optional()
 });
-
   status: z.enum(['draft', 'submitted', 'approved', 'rejected', 'under_review']).optional(),
   claimPayload: z.record(z.string(), z.any()).optional()
 });
-
 // Translation validation schemas
   langCode: z.string().length(2, 'Language code must be 2 characters'),
   key: z.string().min(1, 'Translation key is required'),
   value: z.string().min(1, 'Translation value is required')
 });
-
 // Report validation schemas
   type: z.string().min(2, 'Report type must be at least 2 characters'),
   payload: z.record(z.string(), z.any()).optional(),
   generatedAt: z.string().datetime().optional()
 });
-
 // API response validation schemas
   success: z.boolean(),
   data: z.any().optional(),
   error: z.string().optional(),
   message: z.string().optional()
 });
-
 // Pagination validation schemas
   page: z.number().int().positive().optional(),
   limit: z.number().int().positive().max(100).optional(),
   sortBy: z.string().optional(),
   sortOrder: z.enum(['asc', 'desc']).optional()
 });
-
 // Search validation schemas
   query: z.string().min(1, 'Search query is required'),
   filters: z.record(z.string(), z.any()).optional(),
   pagination: paginationSchema.optional()
 });
-
 // File upload validation schemas
   filename: z.string().min(1, 'Filename is required'),
   mimetype: z.string().min(1, 'MIME type is required'),
   size: z.number().positive('File size must be positive').max(10 * 1024 * 1024, 'File size must be less than 10MB'),
   buffer: z.instanceof(Buffer)
 });
-
 // Medical record validation schemas
   patientId: z.string().uuid(),
   recordType: z.enum(['diagnosis', 'treatment', 'prescription', 'lab_result', 'xray', 'note', 'other']),
@@ -108,9 +91,7 @@ import { z } from 'zod';
   content: z.string().optional(),
   attachments: z.array(z.string()).optional()
 });
-
 // Appointment update validation schemas (using partial schema from above)
-
 // Notification validation schemas
   type: z.enum(['appointment_confirmation', 'payment_confirmation', 'appointment_reminder', 'insurance_claim_update']),
   patientId: z.string().uuid(),
@@ -119,7 +100,6 @@ import { z } from 'zod';
   notificationData: z.record(z.string(), z.any()).optional(),
   customMessage: z.string().optional()
 });
-
 // Validation helper functions
   try {
     const validatedData = schema.parse(data);
@@ -137,9 +117,7 @@ import { z } from 'zod';
     };
   }
 }
-
   const params: Record<string, any> = {};
-  
   for (const [key, value] of searchParams.entries()) {
     // Try to parse as number
     if (!isNaN(Number(value))) {
@@ -150,10 +128,16 @@ import { z } from 'zod';
       params[key] = value;
     }
   }
-  
   return validateData(schema, params);
 }
-
+// Exports
+// Exports
+// Exports
+// Exports
+// Exports
+// Exports
+// Exports
+// Exports
 // Exports
 export const userSchema = z.object({
 export const loginSchema = z.object({

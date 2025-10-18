@@ -1,7 +1,6 @@
 
 // Database type definitions
 // These types match the database schema defined in the migrations
-
   id: string;
   user_id: string;
   theme: "light" | "dark" | "system";
@@ -13,7 +12,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   locale: string;
   namespace: string;
@@ -22,7 +20,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   email: string;
   password_hash?: string;
@@ -35,7 +32,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   bio?: string;
   specialization?: string;
@@ -45,7 +41,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   public_id: string;
   name: string;
@@ -57,7 +52,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   public_id: string;
   name: string;
@@ -67,7 +61,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   public_id: string;
   patient_id: string;
@@ -80,7 +73,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   public_id: string;
   patient_id: string;
@@ -94,7 +86,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   public_id: string;
   patient_id: string;
@@ -107,7 +98,6 @@
   created_at: string;
   updated_at: string;
 }
-
 // Chatbot related types
   id: string;
   public_id: string;
@@ -118,7 +108,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   public_id: string;
   flow_id: string;
@@ -130,7 +119,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   public_id: string;
   flow_id: string;
@@ -140,7 +128,6 @@
   created_at: string;
   updated_at: string;
 }
-
 // CRM related types
   id: string;
   public_id: string;
@@ -162,7 +149,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   public_id: string;
   name: string;
@@ -182,7 +168,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   public_id: string;
   type: "call" | "email" | "meeting" | "task" | "note";
@@ -196,7 +181,6 @@
   created_at: string;
   updated_at: string;
 }
-
 // System types
   id: string;
   public_id: string;
@@ -209,7 +193,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   public_id: string;
   sender_id: string;
@@ -220,7 +203,6 @@
   created_at: string;
   updated_at: string;
 }
-
   id: string;
   public_id: string;
   user_id?: string;
@@ -233,7 +215,6 @@
   user_agent?: string;
   created_at: string;
 }
-
   id: string;
   key: string;
   value: any; // JSONB
@@ -242,14 +223,12 @@
   created_at: string;
   updated_at: string;
 }
-
 // API Response types
   success: boolean;
   data?: T;
   error?: string;
   message?: string;
 }
-
   success: boolean;
   data: T[];
   pagination: {
@@ -259,20 +238,16 @@
     total_pages: number;
   };
 }
-
   theme: string;
   language: string;
   timezone: string;
   notifications_enabled: boolean;
 }
-
   locale: string;
   ns: string;
   messages: Record<string, string>;
   source: "database" | "fallback";
 }
-
-
 // Exports
 export interface UserPreferences {
 export interface Translation {

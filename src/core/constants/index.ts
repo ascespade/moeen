@@ -3,7 +3,6 @@
  * Core Constants - الثوابت الأساسية
  * Centralized application constants
  */
-
 // API Endpoints
   // Authentication
   AUTH: {
@@ -13,7 +12,6 @@
     REFRESH: '/api/auth/refresh',
     ME: '/api/auth/me',
   },
-  
   // Users
   USERS: {
     LIST: '/api/users',
@@ -22,7 +20,6 @@
     UPDATE: (id: string) => `/api/users/${id}`,
     DELETE: (id: string) => `/api/users/${id}`,
   },
-  
   // Patients
   PATIENTS: {
     LIST: '/api/patients',
@@ -32,7 +29,6 @@
     DELETE: (id: string) => `/api/patients/${id}`,
     ACTIVATE: (id: string) => `/api/patients/${id}/activate`,
   },
-  
   // Doctors
   DOCTORS: {
     LIST: '/api/doctors',
@@ -42,7 +38,6 @@
     DELETE: (id: string) => `/api/doctors/${id}`,
     AVAILABILITY: '/api/doctors/availability',
   },
-  
   // Appointments
   APPOINTMENTS: {
     LIST: '/api/appointments',
@@ -51,7 +46,6 @@
     UPDATE: (id: string) => `/api/appointments/${id}`,
     DELETE: (id: string) => `/api/appointments/${id}`,
   },
-  
   // Payments
   PAYMENTS: {
     LIST: '/api/payments',
@@ -60,21 +54,18 @@
     UPDATE: (id: string) => `/api/payments/${id}`,
     PROCESS: '/api/payments/process',
   },
-  
   // Insurance
   INSURANCE: {
     CLAIMS: '/api/insurance/claims',
     CLAIM: (id: string) => `/api/insurance/claims/${id}`,
     SUBMIT: (id: string) => `/api/insurance/claims/${id}/submit`,
   },
-  
   // Notifications
   NOTIFICATIONS: {
     LIST: '/api/notifications',
     SEND: '/api/notifications/send',
     MARK_READ: (id: string) => `/api/notifications/${id}/read`,
   },
-  
   // Reports
   REPORTS: {
     DASHBOARD_METRICS: '/api/reports/dashboard-metrics',
@@ -82,14 +73,12 @@
     APPOINTMENTS: '/api/reports/appointments',
     PAYMENTS: '/api/reports/payments',
   },
-  
   // File Upload
   UPLOAD: {
     FILE: '/api/upload',
     MEDICAL_RECORDS: '/api/medical-records',
   },
 } as const;
-
 // User Roles
   PATIENT: 'patient',
   DOCTOR: 'doctor',
@@ -97,7 +86,6 @@
   SUPERVISOR: 'supervisor',
   ADMIN: 'admin',
 } as const;
-
 // Appointment Status
   SCHEDULED: 'scheduled',
   CONFIRMED: 'confirmed',
@@ -106,7 +94,6 @@
   CANCELLED: 'cancelled',
   NO_SHOW: 'no_show',
 } as const;
-
 // Payment Status
   PENDING: 'pending',
   PAID: 'paid',
@@ -114,7 +101,6 @@
   REFUNDED: 'refunded',
   CANCELLED: 'cancelled',
 } as const;
-
 // Payment Methods
   CASH: 'cash',
   CARD: 'card',
@@ -122,13 +108,11 @@
   INSURANCE: 'insurance',
   WALLET: 'wallet',
 } as const;
-
 // Insurance Providers
   SEHA: 'SEHA',
   SHOON: 'SHOON',
   TATMAN: 'TATMAN',
 } as const;
-
 // Claim Status
   DRAFT: 'draft',
   SUBMITTED: 'submitted',
@@ -137,28 +121,24 @@
   REJECTED: 'rejected',
   CANCELLED: 'cancelled',
 } as const;
-
 // Notification Types
   APPOINTMENT_REMINDER: 'appointment_reminder',
   PAYMENT_CONFIRMATION: 'payment_confirmation',
   INSURANCE_UPDATE: 'insurance_update',
   SYSTEM_ALERT: 'system_alert',
 } as const;
-
 // Notification Channels
   EMAIL: 'email',
   SMS: 'sms',
   PUSH: 'push',
   IN_APP: 'in_app',
 } as const;
-
 // File Types
   MEDICAL_RECORD: 'medical_record',
   INSURANCE_CLAIM: 'insurance_claim',
   PROFILE: 'profile',
   OTHER: 'other',
 } as const;
-
 // Allowed File Extensions
   '.jpg',
   '.jpeg',
@@ -169,7 +149,6 @@
   '.docx',
   '.txt',
 ] as const;
-
 // MIME Types
   'image/jpeg': '.jpg',
   'image/png': '.png',
@@ -179,20 +158,17 @@
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '.docx',
   'text/plain': '.txt',
 } as const;
-
 // Pagination
   DEFAULT_PAGE: 1,
   DEFAULT_LIMIT: 20,
   MAX_LIMIT: 100,
 } as const;
-
 // Time Constants
   APPOINTMENT_DURATION: 30, // minutes
   REMINDER_TIME: 24, // hours before appointment
   SESSION_TIMEOUT: 3600000, // 1 hour in milliseconds
   RATE_LIMIT_WINDOW: 900000, // 15 minutes in milliseconds
 } as const;
-
 // Validation Rules
   PASSWORD_MIN_LENGTH: 8,
   PHONE_LENGTH: 9,
@@ -200,7 +176,6 @@
   LICENSE_NUMBER_LENGTH: 8,
   MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
 } as const;
-
 // Error Codes
   VALIDATION_ERROR: 'VALIDATION_ERROR',
   AUTHENTICATION_ERROR: 'AUTHENTICATION_ERROR',
@@ -213,7 +188,6 @@
   EXTERNAL_SERVICE_ERROR: 'EXTERNAL_SERVICE_ERROR',
   BUSINESS_LOGIC_ERROR: 'BUSINESS_LOGIC_ERROR',
 } as const;
-
 // Success Messages
   CREATED: 'تم الإنشاء بنجاح',
   UPDATED: 'تم التحديث بنجاح',
@@ -227,7 +201,6 @@
   CONFIRMED: 'تم التأكيد بنجاح',
   CANCELLED: 'تم الإلغاء بنجاح',
 } as const;
-
 // Error Messages
   REQUIRED: 'هذا الحقل مطلوب',
   INVALID_EMAIL: 'البريد الإلكتروني غير صحيح',
@@ -248,7 +221,6 @@
   PATIENT_NOT_ACTIVATED: 'المريض غير مفعل',
   INSUFFICIENT_PERMISSIONS: 'صلاحيات غير كافية',
 } as const;
-
 // Regular Expressions
   EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   PHONE: /^(\+966|0)?[5-9][0-9]{8}$/,
@@ -260,7 +232,6 @@
   DATE: /^\d{4}-\d{2}-\d{2}$/,
   DATETIME: /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?$/,
 } as const;
-
 // Local Storage Keys
   AUTH_TOKEN: 'auth_token',
   REFRESH_TOKEN: 'refresh_token',
@@ -271,7 +242,6 @@
   CART: 'cart',
   RECENT_SEARCHES: 'recent_searches',
 } as const;
-
 // Query Keys for React Query
   USERS: 'users',
   PATIENTS: 'patients',
@@ -283,7 +253,6 @@
   REPORTS: 'reports',
   DASHBOARD_METRICS: 'dashboard_metrics',
 } as const;
-
 // Feature Flags
   CHATBOT_ENABLED: 'chatbot_enabled',
   PAYMENT_ENABLED: 'payment_enabled',
@@ -292,7 +261,6 @@
   ANALYTICS_ENABLED: 'analytics_enabled',
   MAINTENANCE_MODE: 'maintenance_mode',
 } as const;
-
 // Exports
 export const API_ENDPOINTS = {
 export const USER_ROLES = {

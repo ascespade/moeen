@@ -3,21 +3,16 @@
  * Core Hooks - الخطافات الأساسية
  * Centralized custom hooks for common functionality
  */
-
 import { log } from '@/lib/monitoring/logger';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuthStore, useUIStore, useDataStore } from '../store';
-import { apiClient } from '../api/client';
 import { storageUtils, debounce } from '../utils/index';
 import { ApiResponse } from '../types';
-
 // Auth Hooks
   const { user, isAuthenticated, isLoading, error, login, logout, setLoading, setError, updateUser } = useAuthStore();
-  
   const loginUser = useCallback(async (credentials: { email: string; password: string }) => {
     setLoading(true);
     setError(null);
-    
     try {
       const response = await apiClient.login(credentials);
       if (response.success && response.data) {
@@ -36,13 +31,11 @@ import { ApiResponse } from '../types';
       setLoading(false);
     }
   }, [login, setLoading, setError]);
-
   const logoutUser = useCallback(() => {
     logout();
     storageUtils.remove('auth_token');
     storageUtils.remove('refresh_token');
   }, [logout]);
-
   const refreshUser = useCallback(async () => {
     setLoading(true);
     try {
@@ -58,7 +51,6 @@ import { ApiResponse } from '../types';
       setLoading(false);
     }
   }, [updateUser, setLoading]);
-
   return {
     user,
     isAuthenticated,
@@ -70,14 +62,11 @@ import { ApiResponse } from '../types';
     updateUser,
   };
 };
-
 // UI Hooks
   const { theme, setTheme } = useUIStore();
-  
   const toggleTheme = useCallback(() => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   }, [theme, setTheme]);
-
   return {
     theme,
     setTheme,
@@ -86,13 +75,10 @@ import { ApiResponse } from '../types';
     isLight: theme === 'light',
   };
 };
-
   const { language, setLanguage } = useUIStore();
-  
   const toggleLanguage = useCallback(() => {
     setLanguage(language === 'ar' ? 'en' : 'ar');
   }, [language, setLanguage]);
-
   return {
     language,
     setLanguage,
@@ -101,18 +87,14 @@ import { ApiResponse } from '../types';
     isLTR: language === 'en',
   };
 };
-
   const { sidebarOpen, toggleSidebar, setSidebarOpen } = useUIStore();
-  
   return {
     sidebarOpen,
     toggleSidebar,
     setSidebarOpen,
   };
 };
-
   const { notifications, addNotification, removeNotification, clearNotifications } = useUIStore();
-  
   const showNotification = useCallback((notification: Omit<typeof notifications[0], 'id' | 'createdAt'>) => {
     const newNotification = {
       ...notification,
@@ -120,13 +102,11 @@ import { ApiResponse } from '../types';
       createdAt: new Date(),
     };
     addNotification(newNotification);
-    
     // Auto remove after 5 seconds
     setTimeout(() => {
       removeNotification(newNotification.id);
     }, 5000);
   }, [addNotification, removeNotification]);
-
   return {
     notifications,
     showNotification,
@@ -134,15 +114,11 @@ import { ApiResponse } from '../types';
     clearNotifications,
   };
 };
-
   const { modals, openModal, closeModal } = useUIStore();
-  
   const isOpen = modals[modalId] || false;
-  
   const open = useCallback(() => openModal(modalId), [modalId, openModal]);
   const close = useCallback(() => closeModal(modalId), [modalId, closeModal]);
   const toggle = useCallback(() => isOpen ? close() : open(), [isOpen, open, close]);
-  
   return {
     isOpen,
     open,
@@ -150,24 +126,18 @@ import { ApiResponse } from '../types';
     toggle,
   };
 };
-
   const { loading, setLoading } = useUIStore();
-  
   const isLoading = loading[key] || false;
-  
   const startLoading = useCallback(() => setLoading(key, true), [key, setLoading]);
   const stopLoading = useCallback(() => setLoading(key, false), [key, setLoading]);
-  
   return {
     isLoading,
     startLoading,
     stopLoading,
   };
 };
-
 // Data Hooks
   const { patients, setPatients, addPatient, updatePatient, removePatient } = useDataStore();
-  
   const fetchPatients = useCallback(async (params?: any) => {
     try {
       const response = await apiClient.getPatients(params);
@@ -180,7 +150,6 @@ import { ApiResponse } from '../types';
       return { success: false, error: error instanceof Error ? error.message : 'حدث خطأ' };
     }
   }, [setPatients]);
-
   const createPatient = useCallback(async (patientData: any) => {
     try {
       const response = await apiClient.createPatient(patientData);
@@ -193,7 +162,6 @@ import { ApiResponse } from '../types';
       return { success: false, error: error instanceof Error ? error.message : 'حدث خطأ' };
     }
   }, [addPatient]);
-
   const updatePatientData = useCallback(async (id: string, patientData: any) => {
     try {
       const response = await apiClient.updatePatient(id, patientData);
@@ -206,7 +174,6 @@ import { ApiResponse } from '../types';
       return { success: false, error: error instanceof Error ? error.message : 'حدث خطأ' };
     }
   }, [updatePatient]);
-
   return {
     patients,
     fetchPatients,
@@ -215,9 +182,7 @@ import { ApiResponse } from '../types';
     removePatient,
   };
 };
-
   const { appointments, setAppointments, addAppointment, updateAppointment, removeAppointment } = useDataStore();
-  
   const fetchAppointments = useCallback(async (params?: any) => {
     try {
       const response = await apiClient.getAppointments(params);
@@ -230,7 +195,6 @@ import { ApiResponse } from '../types';
       return { success: false, error: error instanceof Error ? error.message : 'حدث خطأ' };
     }
   }, [setAppointments]);
-
   const createAppointment = useCallback(async (appointmentData: any) => {
     try {
       const response = await apiClient.createAppointment(appointmentData);
@@ -243,7 +207,6 @@ import { ApiResponse } from '../types';
       return { success: false, error: error instanceof Error ? error.message : 'حدث خطأ' };
     }
   }, [addAppointment]);
-
   const updateAppointmentData = useCallback(async (id: string, appointmentData: any) => {
     try {
       const response = await apiClient.updateAppointment(id, appointmentData);
@@ -256,7 +219,6 @@ import { ApiResponse } from '../types';
       return { success: false, error: error instanceof Error ? error.message : 'حدث خطأ' };
     }
   }, [updateAppointment]);
-
   return {
     appointments,
     fetchAppointments,
@@ -265,23 +227,18 @@ import { ApiResponse } from '../types';
     removeAppointment,
   };
 };
-
 // Utility Hooks
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
-
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
-
     return () => {
       clearTimeout(handler);
     };
   }, [value, delay]);
-
   return debouncedValue;
 };
-
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       const item = storageUtils.get(key);
@@ -291,7 +248,6 @@ import { ApiResponse } from '../types';
       return initialValue;
     }
   });
-
   const setValue = useCallback((value: T | ((val: T) => T)) => {
     try {
       const valueToStore = value instanceof Function ? value(storedValue) : value;
@@ -301,22 +257,18 @@ import { ApiResponse } from '../types';
       console.error(`Error setting localStorage key "${key}":`, error);
     }
   }, [key, storedValue]);
-
   return [storedValue, setValue] as const;
 };
-
   asyncFunction: () => Promise<T>,
   immediate = true
 ) => {
   const [status, setStatus] = useState<'idle' | 'pending' | 'success' | 'error'>('idle');
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<E | null>(null);
-
   const execute = useCallback(async () => {
     setStatus('pending');
     setData(null);
     setError(null);
-
     try {
       const result = await asyncFunction();
       setData(result);
@@ -328,42 +280,33 @@ import { ApiResponse } from '../types';
       throw err;
     }
   }, [asyncFunction]);
-
   useEffect(() => {
     if (immediate) {
       execute();
     }
   }, [execute, immediate]);
-
   return { execute, status, data, error };
 };
-
   data: T[],
   itemsPerPage: number = 10
 ) => {
   const [currentPage, setCurrentPage] = useState(1);
-
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = data.slice(startIndex, endIndex);
-
   const goToPage = useCallback((page: number) => {
     setCurrentPage(Math.max(1, Math.min(page, totalPages)));
   }, [totalPages]);
-
   const nextPage = useCallback(() => {
     setCurrentPage(prev => Math.min(prev + 1, totalPages));
   }, [totalPages]);
-
   const prevPage = useCallback(() => {
     setCurrentPage(prev => Math.max(prev - 1, 1));
   }, []);
-
   const reset = useCallback(() => {
     setCurrentPage(1);
   }, []);
-
   return {
     currentPage,
     totalPages,
@@ -376,14 +319,12 @@ import { ApiResponse } from '../types';
     hasPrev: currentPage > 1,
   };
 };
-
   data: T[],
   searchFields: (keyof T)[],
   searchTerm: string
 ) => {
   const filteredData = useMemo(() => {
     if (!searchTerm.trim()) return data;
-
     return data.filter(item =>
       searchFields.some(field => {
         const value = item[field];
@@ -397,30 +338,24 @@ import { ApiResponse } from '../types';
       })
     );
   }, [data, searchFields, searchTerm]);
-
   return filteredData;
 };
-
   data: T[],
   sortField: keyof T | null,
   sortDirection: 'asc' | 'desc' = 'asc'
 ) => {
   const sortedData = useMemo(() => {
     if (!sortField) return data;
-
     return [...data].sort((a, b) => {
       const aValue = a[sortField];
       const bValue = b[sortField];
-
       if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
       if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
       return 0;
     });
   }, [data, sortField, sortDirection]);
-
   return sortedData;
 };
-
 // Exports
 export const useAuth = () => {
 export const useTheme = () => {

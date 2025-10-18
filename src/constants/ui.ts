@@ -5,7 +5,6 @@
   DESKTOP: "1440px",
   LARGE_DESKTOP: "1920px",
 } as const;
-
   DROPDOWN: 1000,
   STICKY: 1020,
   FIXED: 1030,
@@ -15,12 +14,10 @@
   TOOLTIP: 1070,
   TOAST: 1080,
 } as const;
-
   FAST: 150,
   NORMAL: 300,
   SLOW: 500,
 } as const;
-
   PRIMARY: {
     50: "#eff6ff",
     100: "#dbeafe",
@@ -82,7 +79,6 @@
     900: "#7f1d1d",
   },
 } as const;
-
   XS: "0.25rem",
   SM: "0.5rem",
   MD: "1rem",
@@ -92,7 +88,6 @@
   "3XL": "4rem",
   "4XL": "6rem",
 } as const;
-
   NONE: "0",
   SM: "0.125rem",
   MD: "0.375rem",
@@ -101,7 +96,6 @@
   "2XL": "1rem",
   FULL: "9999px",
 } as const;
-
   XS: "0.75rem",
   SM: "0.875rem",
   BASE: "1rem",
@@ -113,7 +107,6 @@
   "5XL": "3rem",
   "6XL": "3.75rem",
 } as const;
-
   THIN: "100",
   EXTRALIGHT: "200",
   LIGHT: "300",
@@ -124,7 +117,6 @@
   EXTRABOLD: "800",
   BLACK: "900",
 } as const;
-
   SM: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
   MD: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
   LG: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
@@ -133,8 +125,6 @@
   INNER: "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
   NONE: "none",
 } as const;
-
-
 // Exports
 export const BREAKPOINTS = {
 export const Z_INDEX = {

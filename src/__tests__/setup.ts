@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-
 // Mock Next.js router
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -14,7 +13,6 @@ jest.mock('next/navigation', () => ({
   usePathname: () => '/',
   useSearchParams: () => new URLSearchParams(),
 }));
-
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
   __esModule: true,
@@ -23,7 +21,6 @@ jest.mock('next/image', () => ({
     return React.createElement('img', props);
   },
 }));
-
 // Mock Next.js Link component
 jest.mock('next/link', () => ({
   __esModule: true,
@@ -31,10 +28,8 @@ jest.mock('next/link', () => ({
     return React.createElement('a', { href, ...props }, children);
   },
 }));
-
 // Mock fetch globally
 global.fetch = jest.fn();
-
 // Mock window.location
 Object.defineProperty(window, 'location', {
   value: {
@@ -45,7 +40,6 @@ Object.defineProperty(window, 'location', {
   },
   writable: true,
 });
-
 // Mock localStorage
 const localStorageMock = {
   getItem: jest.fn(),
@@ -56,7 +50,6 @@ const localStorageMock = {
 Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
 });
-
 // Mock sessionStorage
 const sessionStorageMock = {
   getItem: jest.fn(),
@@ -67,21 +60,18 @@ const sessionStorageMock = {
 Object.defineProperty(window, 'sessionStorage', {
   value: sessionStorageMock,
 });
-
 // Mock IntersectionObserver
 global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
-
 // Mock ResizeObserver
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
-
 // Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -96,7 +86,6 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: jest.fn(),
   })),
 });
-
 // Mock performance.now
 Object.defineProperty(window, 'performance', {
   writable: true,
@@ -104,20 +93,16 @@ Object.defineProperty(window, 'performance', {
     now: jest.fn(() => Date.now()),
   },
 });
-
 // Setup test environment
 beforeEach(() => {
   // Clear all mocks before each test
   jest.clearAllMocks();
-  
   // Reset localStorage and sessionStorage
   localStorageMock.clear();
   sessionStorageMock.clear();
-  
   // Reset fetch mock
   (global.fetch as jest.Mock).mockClear();
 });
-
 // Global test utilities
   id: 'test-user-id',
   email: 'test@example.com',
@@ -125,19 +110,15 @@ beforeEach(() => {
   role: 'user',
   created_at: new Date().toISOString(),
 };
-
-
   success: true,
   data: {
     user: mockUser,
     token: mockToken,
   },
 };
-
   success: false,
   error: 'Authentication failed',
 };
-
 // Exports
 export const mockUser = {
 export const mockToken = 'mock-jwt-token-123456789';

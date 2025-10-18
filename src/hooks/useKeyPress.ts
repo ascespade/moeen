@@ -1,7 +1,5 @@
 import { useEffect, useCallback } from "react";
-
 // Key press hooks
-
   targetKey: string | string[],
   handler: (event: KeyboardEvent) => void,
   options: {
@@ -15,14 +13,11 @@ import { useEffect, useCallback } from "react";
     stopPropagation = false,
     enabled = true,
   } = options;
-
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
       if (!enabled) return;
-
       const keys = Array.isArray(targetKey) ? targetKey : [targetKey];
       const isTargetKey = keys.includes(event.key) || keys.includes(event.code);
-
       if (isTargetKey) {
         if (preventDefault) {
           event.preventDefault();
@@ -35,31 +30,24 @@ import { useEffect, useCallback } from "react";
     },
     [targetKey, handler, preventDefault, stopPropagation, enabled],
   );
-
   useEffect(() => {
     if (!enabled) return;
-
     document.addEventListener("keydown", handleKeyPress);
-
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [handleKeyPress, enabled]);
 };
-
   useKeyPress("Escape", handler, { enabled });
 };
-
   useKeyPress("Enter", handler, { enabled });
 };
-
   handler: (direction: "up" | "down" | "left" | "right") => void,
   enabled: boolean = true,
 ) => {
   const handleArrowKey = useCallback(
     (event: KeyboardEvent) => {
       if (!enabled) return;
-
       switch (event.key) {
         case "ArrowUp":
           handler("up");
@@ -77,7 +65,6 @@ import { useEffect, useCallback } from "react";
     },
     [handler, enabled],
   );
-
   useKeyPress(
     ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"],
     handleArrowKey,
@@ -86,7 +73,6 @@ import { useEffect, useCallback } from "react";
     },
   );
 };
-
   key: string,
   handler: () => void,
   options: {
@@ -104,18 +90,15 @@ import { useEffect, useCallback } from "react";
     metaKey = false,
     enabled = true,
   } = options;
-
   const handleHotkey = useCallback(
     (event: KeyboardEvent) => {
       if (!enabled) return;
-
       const isTargetKey = event.key === key || event.code === key;
       const modifiersMatch =
         event.ctrlKey === ctrlKey &&
         event.altKey === altKey &&
         event.shiftKey === shiftKey &&
         event.metaKey === metaKey;
-
       if (isTargetKey && modifiersMatch) {
         event.preventDefault();
         handler();
@@ -123,19 +106,14 @@ import { useEffect, useCallback } from "react";
     },
     [key, handler, ctrlKey, altKey, shiftKey, metaKey, enabled],
   );
-
   useEffect(() => {
     if (!enabled) return;
-
     document.addEventListener("keydown", handleHotkey);
-
     return () => {
       document.removeEventListener("keydown", handleHotkey);
     };
   }, [handleHotkey, enabled]);
 };
-
-
 // Exports
 export const useKeyPress = (
 export const useEscapeKey = (handler: () => void, enabled: boolean = true) => {

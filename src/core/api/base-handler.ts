@@ -3,7 +3,6 @@
  * Base API Handler - معالج API الأساسي
  * Unified API request handler with error handling and validation
  */
-
 import { log } from '@/lib/monitoring/logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { ErrorHandler, ErrorFactory } from '../errors';
@@ -11,7 +10,6 @@ import { ValidationHelper } from '../validation';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { authorize } from '@/lib/auth/authorize';
-
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   auth?: boolean;
   roles?: string[];
@@ -24,13 +22,10 @@ import { authorize } from '@/lib/auth/authorize';
     maxRequests: number;
   };
 }
-
   private errorHandler: ErrorHandler;
-
   constructor() {
     this.errorHandler = ErrorHandler.getInstance();
   }
-
   public createHandler<T = any>(
     handler: (req: NextRequest, context: any) => Promise<NextResponse<T>>,
     config: ApiHandlerConfig
@@ -44,18 +39,15 @@ import { authorize } from '@/lib/auth/authorize';
             { status: 405 }
           );
         }
-
         // Authentication check
         if (config.auth) {
           const { user, error: authError } = await authorize(req);
-          
           if (authError || !user) {
             return NextResponse.json(
               { success: false, error: { message: 'Unauthorized', code: 'UNAUTHORIZED' } },
               { status: 401 }
             );
           }
-
           // Role-based access control
           if (config.roles && !config.roles.includes(user.role)) {
             return NextResponse.json(
@@ -63,33 +55,27 @@ import { authorize } from '@/lib/auth/authorize';
               { status: 403 }
             );
           }
-
           // Add user to context
           context.user = user;
         }
-
         // Request validation
         if (config.validation) {
           // Body validation
           if (config.validation.body && req.method !== 'GET') {
             const body = await req.json();
             const validation = ValidationHelper.validateRequestBody(config.validation.body, body);
-            
             if (!validation.success) {
               return NextResponse.json(
                 { success: false, error: validation.error.toJSON() },
                 { status: 400 }
               );
             }
-            
             context.validatedBody = validation.data;
           }
-
           // Query validation
           if (config.validation.query) {
             const searchParams = new URLSearchParams(req.url.split('?')[1] || '');
             const queryParams: Record<string, any> = {};
-            
             for (const [key, value] of searchParams.entries()) {
               // Try to parse as number
               if (!isNaN(Number(value))) {
@@ -104,31 +90,24 @@ import { authorize } from '@/lib/auth/authorize';
                 queryParams[key] = value;
               }
             }
-
             const validation = ValidationHelper.validate(config.validation.query, queryParams);
-            
             if (!validation.success) {
               return NextResponse.json(
                 { success: false, error: validation.error.toJSON() },
                 { status: 400 }
               );
             }
-            
             context.validatedQuery = validation.data;
           }
         }
-
         // Rate limiting (basic implementation)
         if (config.rateLimit) {
           // TODO: Implement rate limiting logic
         }
-
         // Execute handler
         return await handler(req, context);
-
       } catch (error) {
         const handledError = this.errorHandler.handle(error as Error);
-        
         return NextResponse.json(
           {
             success: false,
@@ -143,12 +122,10 @@ import { authorize } from '@/lib/auth/authorize';
       }
     };
   }
-
   // Helper methods for common operations
   public async getSupabaseClient() {
     return createClient();
   }
-
   public async getCurrentUser(req: NextRequest) {
     const { user, error } = await authorize(req);
     if (error || !user) {
@@ -156,7 +133,6 @@ import { authorize } from '@/lib/auth/authorize';
     }
     return user;
   }
-
   public async checkResourceAccess(
     resourceType: string,
     resourceId: string,
@@ -167,7 +143,6 @@ import { authorize } from '@/lib/auth/authorize';
     // This would check if the user has access to the specific resource
     return true;
   }
-
   public async auditLog(
     action: string,
     resourceType: string,
@@ -191,7 +166,6 @@ import { authorize } from '@/lib/auth/authorize';
       console.error('Failed to create audit log:', error);
     }
   }
-
   public createSuccessResponse<T>(data: T, message?: string) {
     return NextResponse.json({
       success: true,
@@ -199,7 +173,6 @@ import { authorize } from '@/lib/auth/authorize';
       message,
     });
   }
-
   public createErrorResponse(message: string, code: string, statusCode: number = 400) {
     return NextResponse.json(
       {
@@ -212,7 +185,6 @@ import { authorize } from '@/lib/auth/authorize';
       { status: statusCode }
     );
   }
-
   public createPaginatedResponse<T>(
     data: T[],
     page: number,
@@ -220,7 +192,6 @@ import { authorize } from '@/lib/auth/authorize';
     total: number
   ) {
     const totalPages = Math.ceil(total / limit);
-    
     return NextResponse.json({
       success: true,
       data,
@@ -235,16 +206,13 @@ import { authorize } from '@/lib/auth/authorize';
     });
   }
 }
-
 // Export singleton instance
-
 // Helper function to create API handlers
   handler: (req: NextRequest, context: any) => Promise<NextResponse<T>>,
   config: ApiHandlerConfig
 ) => {
   return baseApiHandler.createHandler(handler, config);
 };
-
 // Exports
 export interface ApiHandlerConfig {
 export class BaseApiHandler {

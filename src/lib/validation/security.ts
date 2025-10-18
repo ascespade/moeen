@@ -3,17 +3,14 @@
  * Security Validation - التحقق الأمني
  * Security-focused validation and sanitization
  */
-
 import { z } from 'zod';
 import DOMPurify from 'isomorphic-dompurify';
-
 // XSS Protection
   return DOMPurify.sanitize(input, {
     ALLOWED_TAGS: [],
     ALLOWED_ATTR: [],
   });
 }
-
 // SQL Injection Protection
   return input
     .replace(/'/g, "''")
@@ -23,7 +20,6 @@ import DOMPurify from 'isomorphic-dompurify';
     .replace(/\r/g, '\\r')
     .replace(/\x1a/g, '\\Z');
 }
-
 // Input validation schemas
   // Email validation with additional security checks
   secureEmail: z.string()
@@ -39,17 +35,15 @@ import DOMPurify from 'isomorphic-dompurify';
       ];
       return !suspiciousPatterns.some(pattern => pattern.test(email));
     }, 'Email contains suspicious content'),
-
   // Phone number validation
   securePhone: z.string()
     .regex(/^(\+966|0)?[5-9][0-9]{8}$/, 'Invalid phone number format')
     .max(15, 'Phone number too long'),
-
   // Password validation with security requirements
   securePassword: z.string()
     .min(8, 'Password must be at least 8 characters')
     .max(128, 'Password too long')
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, 
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
       'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character')
     .refine((password) => {
       // Check for common passwords
@@ -59,7 +53,6 @@ import DOMPurify from 'isomorphic-dompurify';
       ];
       return !commonPasswords.includes(password.toLowerCase());
     }, 'Password is too common'),
-
   // File upload validation
   secureFileUpload: z.object({
     filename: z.string()
@@ -71,11 +64,9 @@ import DOMPurify from 'isomorphic-dompurify';
         const extension = name.toLowerCase().substring(name.lastIndexOf('.'));
         return !dangerousExtensions.includes(extension);
       }, 'File type not allowed'),
-    
     size: z.number()
       .min(1, 'File size must be greater than 0')
       .max(10 * 1024 * 1024, 'File size too large (max 10MB)'),
-    
     mimeType: z.string()
       .refine((type) => {
         const allowedTypes = [
@@ -87,7 +78,6 @@ import DOMPurify from 'isomorphic-dompurify';
         return allowedTypes.includes(type);
       }, 'File type not allowed'),
   }),
-
   // URL validation
   secureUrl: z.string()
     .url('Invalid URL format')
@@ -100,7 +90,6 @@ import DOMPurify from 'isomorphic-dompurify';
         return false;
       }
     }, 'Invalid URL protocol'),
-
   // UUID validation
   secureUuid: z.string()
     .uuid('Invalid UUID format')
@@ -109,7 +98,6 @@ import DOMPurify from 'isomorphic-dompurify';
       const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
       return uuidRegex.test(uuid);
     }, 'Invalid UUID format'),
-
   // Date validation
   secureDate: z.string()
     .datetime('Invalid date format')
@@ -118,10 +106,8 @@ import DOMPurify from 'isomorphic-dompurify';
       const now = new Date();
       const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
       const oneYearFromNow = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
-      
       return parsedDate >= oneYearAgo && parsedDate <= oneYearFromNow;
     }, 'Date must be within reasonable range'),
-
   // Text content validation
   secureText: z.string()
     .min(1, 'Text cannot be empty')
@@ -139,15 +125,12 @@ import DOMPurify from 'isomorphic-dompurify';
       return !suspiciousPatterns.some(pattern => pattern.test(text));
     }, 'Text contains suspicious content'),
 };
-
 // Rate limiting validation
   // This would integrate with actual rate limiting logic
   return requests <= limit;
 }
-
 // Input sanitization
   const sanitized = {} as T;
-  
   for (const [key, value] of Object.entries(obj)) {
     if (typeof value === 'string') {
       sanitized[key as keyof T] = sanitizeInput(value) as T[keyof T];
@@ -157,19 +140,15 @@ import DOMPurify from 'isomorphic-dompurify';
       sanitized[key as keyof T] = value;
     }
   }
-  
   return sanitized;
 }
-
 // CSRF token validation
   return token === sessionToken && token.length > 0;
 }
-
 // File type validation
   const extension = filename.toLowerCase().substring(filename.lastIndexOf('.'));
   return allowedTypes.includes(extension);
 }
-
 // Content Security Policy validation
   const requiredDirectives = [
     'default-src',
@@ -178,10 +157,8 @@ import DOMPurify from 'isomorphic-dompurify';
     'img-src',
     'font-src',
   ];
-  
   return requiredDirectives.every(directive => header.includes(directive));
 }
-
 // Exports
 export function sanitizeInput(input: string): string {
 export function escapeSqlString(input: string): string {

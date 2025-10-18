@@ -3,7 +3,6 @@
  * Design System - نظام التصميم الموحد
  * Centralized design tokens and components
  */
-
 // Color Palette
   primary: {
     50: '#fef7ed',
@@ -78,7 +77,6 @@
     900: '#7f1d1d',
   },
 } as const;
-
 // Typography
   fontFamily: {
     sans: ['Cairo', 'Inter', 'system-ui', 'sans-serif'],
@@ -107,7 +105,6 @@
     relaxed: 1.75,
   },
 } as const;
-
 // Spacing
   0: '0',
   1: '0.25rem',   // 4px
@@ -124,7 +121,6 @@
   24: '6rem',     // 96px
   32: '8rem',     // 128px
 } as const;
-
 // Border Radius
   none: '0',
   sm: '0.125rem',   // 2px
@@ -135,7 +131,6 @@
   '3xl': '1.5rem',  // 24px
   full: '9999px',
 } as const;
-
 // Shadows
   sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
   md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
@@ -144,7 +139,6 @@
   '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
   inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
 } as const;
-
 // Breakpoints
   sm: '640px',
   md: '768px',
@@ -152,7 +146,6 @@
   xl: '1280px',
   '2xl': '1536px',
 } as const;
-
 // Z-Index
   hide: -1,
   auto: 'auto',
@@ -168,7 +161,6 @@
   toast: 1700,
   tooltip: 1800,
 } as const;
-
 // Animation
   duration: {
     fast: '150ms',
@@ -183,7 +175,6 @@
     easeInOut: 'ease-in-out',
   },
 } as const;
-
 // Theme Configuration
   light: {
     colors: {
@@ -214,7 +205,6 @@
     },
   },
 } as const;
-
 // Exports
 export const colors = {
 export const typography = {

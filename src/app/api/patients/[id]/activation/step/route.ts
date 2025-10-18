@@ -2,38 +2,31 @@ export async function PATCH(
 import { NextRequest, NextResponse } from 'next/server';
 import { authorize } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
-
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
     const { user, error: authError } = await authorize(request);
-    
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
     const supabase = await createClient();
     const patientId = params.id;
     const { stepId, completed } = await request.json();
-
     // Validate stepId
     const validSteps = ['profile_complete', 'insurance_verified', 'payment_settled', 'first_visit_completed'];
     if (!validSteps.includes(stepId)) {
       return NextResponse.json({ error: 'Invalid step ID' }, { status: 400 });
     }
-
     // Check if patient exists
     const { data: patient, error: patientError } = await supabase
       .from('patients')
       .select('*')
       .eq('id', patientId)
       .single();
-
     if (patientError || !patient) {
       return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
     }
-
     // Update activation step in patient meta
     const currentMeta = patient.meta || {};
     const updatedMeta = {
@@ -47,19 +40,16 @@ import { createClient } from '@/lib/supabase/server';
         }
       }
     };
-
     const { error: updateError } = await supabase
       .from('patients')
-      .update({ 
+      .update({
         meta: updatedMeta,
         updated_at: new Date().toISOString()
       })
       .eq('id', patientId);
-
     if (updateError) {
       return NextResponse.json({ error: 'Failed to update activation step' }, { status: 500 });
     }
-
     // Log step completion
     await supabase
       .from('audit_logs')
@@ -74,13 +64,11 @@ import { createClient } from '@/lib/supabase/server';
           patient_name: patient.full_name
         }
       });
-
-    return NextResponse.json({ 
+    return NextResponse.json({
       message: 'Activation step updated successfully',
       stepId,
-      completed 
+      completed
     });
-
   } catch (error) {
     return NextResponse.json(
       { error: 'Internal server error' },
@@ -88,40 +76,32 @@ import { createClient } from '@/lib/supabase/server';
     );
   }
 }
-
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
     const { user, error: authError } = await authorize(request);
-    
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
     const supabase = await createClient();
     const patientId = params.id;
-
     // Get patient activation steps
     const { data: patient, error: patientError } = await supabase
       .from('patients')
       .select('id, activated, meta')
       .eq('id', patientId)
       .single();
-
     if (patientError || !patient) {
       return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
     }
-
     const activationSteps = patient.meta?.activation_steps || {};
-    
     return NextResponse.json({
       patient_id: patient.id,
       activated: patient.activated,
       activation_steps: activationSteps
     });
-
   } catch (error) {
     return NextResponse.json(
       { error: 'Internal server error' },

@@ -32,11 +32,6 @@ export class SMSNotificationService {
 
       // In development, just log the SMS
       if (process.env.NODE_ENV === 'development') {
-        console.log('SMS would be sent:', {
-          to: data.to,
-          message: data.message,
-          language: data.language
-        });
         return {
           success: true,
           messageId: `dev_${Date.now()}`

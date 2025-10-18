@@ -1,13 +1,10 @@
 import { ApiResponse, PaginationParams, PaginatedResponse } from "./index";
-
 // API-specific type definitions
-
 // Auth API Types
   email: string;
   password: string;
   rememberMe?: boolean;
 }
-
   data: {
     user: {
       id: string;
@@ -19,63 +16,50 @@ import { ApiResponse, PaginationParams, PaginatedResponse } from "./index";
     refreshToken: string;
   };
 }
-
   name: string;
   email: string;
   password: string;
 }
-
   refreshToken: string;
 }
-
 // Channels API Types
   name: string;
   description?: string;
   type: "public" | "private" | "direct";
   members?: string[];
 }
-
   name?: string;
   description?: string;
   members?: string[];
 }
-
   type?: "public" | "private" | "direct";
   search?: string;
 }
-
   data: any[]; // Will be replaced with proper Channel type
 }
-
 // Messages API Types
   content: string;
   channelId: string;
   replyTo?: string;
 }
-
   channelId: string;
   before?: string;
   after?: string;
 }
-
   data: any[]; // Will be replaced with proper Message type
 }
-
 // Users API Types
   role?: string;
   search?: string;
   status?: "active" | "inactive" | "banned";
 }
-
   data: any[]; // Will be replaced with proper User type
 }
-
   name?: string;
   email?: string;
   role?: string;
   avatar?: string;
 }
-
 // Settings API Types
   theme?: "light" | "dark" | "system";
   language?: string;
@@ -89,14 +73,12 @@ import { ApiResponse, PaginationParams, PaginatedResponse } from "./index";
     allowDirectMessages?: boolean;
   };
 }
-
 // Webhooks API Types
   name: string;
   url: string;
   events: string[];
   secret?: string;
 }
-
   data: {
     id: string;
     name: string;
@@ -107,28 +89,24 @@ import { ApiResponse, PaginationParams, PaginatedResponse } from "./index";
     updatedAt: string;
   };
 }
-
 // AI API Types
   prompt: string;
   context?: string;
   maxTokens?: number;
   temperature?: number;
 }
-
   data: {
     response: string;
     tokensUsed: number;
     model: string;
   };
 }
-
 // Logs API Types
   level?: "error" | "warn" | "info" | "debug";
   service?: string;
   startDate?: string;
   endDate?: string;
 }
-
   id: string;
   level: "error" | "warn" | "info" | "debug";
   message: string;
@@ -136,11 +114,8 @@ import { ApiResponse, PaginationParams, PaginatedResponse } from "./index";
   timestamp: string;
   metadata?: any;
 }
-
   data: LogEntry[];
 }
-
-
 // Exports
 export interface LoginRequest {
 export interface LoginResponse extends ApiResponse {
