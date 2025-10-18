@@ -84,44 +84,34 @@ jobs:
               analyzeWorkflowError() {
                 console.log('🔍 تحليل خطأ الـ workflow...');
                 
-                // تحليل أنواع الأخطاء الشائعة
-                const commonErrors = [
-                  {
-                    pattern: 'Artifact not found',
-                    solution: 'إصلاح مشكلة تحميل الـ artifacts',
-                    fix: 'check-artifact-download'
-                  },
-                  {
-                    pattern: 'Permission denied',
-                    solution: 'إصلاح مشكلة الصلاحيات',
-                    fix: 'fix-permissions'
-                  },
-                  {
-                    pattern: 'npm ci failed',
-                    solution: 'إصلاح مشكلة تثبيت التبعيات',
-                    fix: 'fix-npm-install'
-                  },
-                  {
-                    pattern: 'Playwright install failed',
-                    solution: 'إصلاح مشكلة تثبيت Playwright',
-                    fix: 'fix-playwright'
-                  },
-                  {
-                    pattern: 'YAML parsing error',
-                    solution: 'إصلاح مشكلة YAML syntax',
-                    fix: 'fix-yaml-syntax'
-                  },
-                  {
-                    pattern: 'JSON syntax error',
-                    solution: 'إصلاح مشكلة JSON syntax',
-                    fix: 'fix-json-syntax'
-                  },
-                  {
-                    pattern: 'Timeout',
-                    solution: 'زيادة timeout أو تحسين الأداء',
-                    fix: 'fix-timeout'
-                  }
-                ];
+            // تحليل أخطاء الـ workflow فقط
+            const workflowErrors = [
+              {
+                pattern: 'YAML parsing error',
+                solution: 'إصلاح مشكلة YAML syntax في الـ workflow',
+                fix: 'fix-workflow-yaml'
+              },
+              {
+                pattern: 'Invalid workflow',
+                solution: 'إصلاح مشكلة workflow syntax',
+                fix: 'fix-workflow-syntax'
+              },
+              {
+                pattern: 'Permission denied',
+                solution: 'إصلاح مشكلة الصلاحيات في الـ workflow',
+                fix: 'fix-workflow-permissions'
+              },
+              {
+                pattern: 'Artifact not found',
+                solution: 'إصلاح مشكلة الـ artifacts في الـ workflow',
+                fix: 'fix-workflow-artifacts'
+              },
+              {
+                pattern: 'Timeout',
+                solution: 'زيادة timeout في الـ workflow',
+                fix: 'fix-workflow-timeout'
+              }
+            ];
                 
                 // تحديد نوع الخطأ
                 const errorType = this.detectErrorType();
@@ -432,6 +422,12 @@ permissions:
         run: |
           echo "💾 حفظ التغييرات..."
           
+          # فحص إضافي لمنع الحلقة المفرغة
+          if [[ "${{ github.event.workflow_run.head_commit.message }}" == *"🤖 CI Assistant"* ]] || [[ "${{ github.event.workflow_run.head_commit.message }}" == *"CI Assistant"* ]]; then
+            echo "⚠️ تم منع الإصلاح لتجنب الحلقة المفرغة"
+            exit 0
+          fi
+          
           # إعداد Git
           git config --local user.email "action@github.com"
           git config --local user.name "CI Assistant"
@@ -439,7 +435,7 @@ permissions:
           # إضافة التغييرات
           git add .
           
-          # إنشاء commit
+          # إنشاء commit مع علامة خاصة
           git commit -m "🤖 CI Assistant: إصلاح خطأ في Self-Healing
 
 🔧 الإصلاحات:
@@ -452,7 +448,8 @@ permissions:
 - تم تحديث أنماط الأخطاء
 - تم تحسين النظام لتجنب تكرار الخطأ
 
-🤖 تم بواسطة: CI Assistant" || echo "لا توجد تغييرات للحفظ"
+🤖 تم بواسطة: CI Assistant
+🚫 منع الإصلاح الذاتي: تم تفعيل الحماية" || echo "لا توجد تغييرات للحفظ"
 
       - name: 📤 رفع التغييرات
         run: |
