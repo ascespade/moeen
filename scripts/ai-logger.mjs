@@ -44,7 +44,7 @@ export async function logAIResult(result) {
   try {
     const db = await initDatabase();
 
-    await db.run(
+    await db.exec(
       `INSERT INTO ai_logs (
         date, status, type, duration, linesChanged, 
         qualityScore, notes, branch, commit, author, timestamp
@@ -128,7 +128,7 @@ export async function cleanOldLogs(daysToKeep = 30) {
     const db = await initDatabase();
     const cutoffTime = Date.now() - (daysToKeep * 24 * 60 * 60 * 1000);
     
-    const result = await db.run(
+    const result = await db.exec(
       'DELETE FROM ai_logs WHERE timestamp < ?',
       cutoffTime
     );
