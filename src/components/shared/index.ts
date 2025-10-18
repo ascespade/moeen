@@ -1,9 +1,9 @@
 
- from "./DataTable";
- from "./Modal";
- from "./Tabs";
- from "./Form";
- from "./EmptyState";
+from;"./DataTable";
+from;"./Modal";
+from;"./Tabs";
+from;"./Form";
+from;"./EmptyState";
 
 
-export { default as DataTable }
+export { default as DataTable };
