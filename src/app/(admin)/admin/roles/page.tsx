@@ -22,6 +22,7 @@ const mockRoles: Role[] = [
     userCount: 2,
     createdAt: "2024-01-01",
   },
+  {
     id: "2",
     name: "مدير الرعاية الصحية",
     description: "إدارة وحدة الرعاية الصحية",

@@ -13,7 +13,6 @@ type UserRow = {
 };
 
 const seed: UserRow[] = [
-  {
   { id: "1", email: "admin@example.com", role: "admin", status: "active" },
   { id: "2", email: "staff@example.com", role: "staff", status: "active" },
   { id: "3", email: "viewer@example.com", role: "viewer", status: "suspended" },
