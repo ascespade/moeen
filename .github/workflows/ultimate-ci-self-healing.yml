@@ -461,13 +461,15 @@ jobs:
           git add .github/workflows/ci-assistant.yml
           
           # إنشاء commit
-          git commit -m "🔧 Self-Healing: إصلاح CI Assistant workflow
+          git commit -m "🔧 Self-Healing: إصلاح CI Assistant workflow بواسطة Cursor Background Agent
 
 - تم إصلاح مشاكل الـ workflow
 - تحسين timeout والصلاحيات
 - ضمان عمل CI Assistant بشكل صحيح
 
-🤖 تم بواسطة: Self-Healing" || echo "لا توجد تغييرات للحفظ"
+🤖 تم الإصلاح بواسطة: Cursor Background Agent
+📤 تم الإرسال عبر: Self-Healing Agent API
+⏳ وقت الانتظار: 10 دقائق" || echo "لا توجد تغييرات للحفظ"
 
       - name: 📤 رفع الإصلاح
         run: |
@@ -529,12 +531,79 @@ jobs:
           path: ./results
           merge-multiple: true
 
-      - name: 🛠️ إصلاح ذكي متقدم
+      - name: 🤖 إرسال الأخطاء إلى Cursor Background Agent
+        id: send-to-cursor
         run: |
-          echo "🛠️ بدء الإصلاح الذكي المتقدم..."
+          echo "🤖 إرسال الأخطاء إلى Cursor Background Agent..."
           
-          # استخدام سكريبت الإصلاح الذكي المحسن
-          node scripts/intelligent-fixer.js
+          # إنشاء تقرير الأخطاء المفصل
+          cat > error-report.json << 'EOF'
+          {
+            "error_type": "test_failure",
+            "workflow_name": "🚀 Ultimate CI Self-Healing Agent",
+            "test_results": "failure",
+            "repository": "${{ github.repository }}",
+            "branch": "${{ github.ref_name }}",
+            "commit_sha": "${{ github.sha }}",
+            "commit_message": "${{ github.event.head_commit.message }}",
+            "context": "GitHub Actions test failure",
+            "priority": "high",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "request_type": "fix_test_errors",
+            "files_to_fix": ["src/", "components/", "lib/", "tests/", "*.js", "*.ts", "*.tsx", "*.jsx"],
+            "fix_scope": "all_project_files",
+            "test_types": ["unit", "integration", "e2e", "database"],
+            "error_details": {
+              "unit_tests": "failed",
+              "playwright_tests": "failed",
+              "supawright_tests": "failed"
+            }
+          }
+          EOF
+          
+          # إرسال إلى Cursor Background Agent
+          echo "📤 إرسال الأخطاء إلى Cursor Background Agent..."
+          
+          RESPONSE=$(curl -s -X POST "https://api.cursor.sh/v1/background-agent" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ vars.CURSOR_API_KEY }}" \
+            -d @error-report.json)
+          
+          if [ $? -eq 0 ]; then
+            echo "✅ تم إرسال الأخطاء بنجاح"
+            echo "response=$RESPONSE" >> $GITHUB_OUTPUT
+            echo "status=success" >> $GITHUB_OUTPUT
+          else
+            echo "❌ فشل في إرسال الأخطاء"
+            echo "status=failed" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "📄 تم إرسال تقرير الأخطاء"
+          echo "🤖 يرجى انتظار الإصلاح من Cursor Background Agent"
+
+      - name: ⏳ انتظار إصلاح Cursor Background Agent
+        run: |
+          echo "⏳ انتظار إصلاح Cursor Background Agent..."
+          echo "🤖 Cursor Background Agent يعمل على إصلاح الأخطاء..."
+          
+          # انتظار لمدة 10 دقائق لـ Cursor Background Agent
+          echo "⏰ انتظار 10 دقائق لإصلاح الأخطاء..."
+          sleep 600
+          
+          echo "✅ انتهى وقت الانتظار - المتابعة..."
+
+      - name: 🔍 فحص الإصلاحات من Cursor
+        run: |
+          echo "🔍 فحص الإصلاحات من Cursor Background Agent..."
+          
+          # فحص إذا كان Cursor قام بإصلاح الملفات
+          if git diff --quiet; then
+            echo "ℹ️ لا توجد تغييرات من Cursor - المتابعة بدون إصلاح"
+          else
+            echo "✅ تم العثور على إصلاحات من Cursor Background Agent"
+            echo "📝 التغييرات:"
+            git diff --name-only
+          fi
 
       - name: 🧪 إعادة تشغيل الاختبارات بعد الإصلاح
         run: |
