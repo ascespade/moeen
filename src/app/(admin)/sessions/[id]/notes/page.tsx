@@ -30,9 +30,9 @@ export default function SessionNotesPage() {
   const [nextSessionFocus, setNextSessionFocus] = useState("");
   const [sessionRating, setSessionRating] = useState(5);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionId]);
 
   const loadData = async () => {

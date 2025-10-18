@@ -44,6 +44,7 @@ export default function TherapistSchedulesPage() {
     if (selectedTherapist) {
       loadSchedules();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTherapist]);
 
   const loadTherapists = async () => {
