@@ -154,7 +154,9 @@ export default function ChatbotAnalyticsPage() {
             <div className="mb-2 text-gray-600 dark:text-gray-300">
               إجمالي الرسائل
             </div>
-            <div className="text-sm text-brand-success">+12.5% من الشهر الماضي</div>
+            <div className="text-sm text-brand-success">
+              +12.5% من الشهر الماضي
+            </div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-success">
@@ -163,7 +165,9 @@ export default function ChatbotAnalyticsPage() {
             <div className="mb-2 text-gray-600 dark:text-gray-300">
               إجمالي المستخدمين
             </div>
-            <div className="text-sm text-brand-success">+8.3% من الشهر الماضي</div>
+            <div className="text-sm text-brand-success">
+              +8.3% من الشهر الماضي
+            </div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-purple-600">
@@ -172,7 +176,9 @@ export default function ChatbotAnalyticsPage() {
             <div className="mb-2 text-gray-600 dark:text-gray-300">
               متوسط وقت الاستجابة
             </div>
-            <div className="text-sm text-brand-success">-0.5ث من الشهر الماضي</div>
+            <div className="text-sm text-brand-success">
+              -0.5ث من الشهر الماضي
+            </div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-primary">
@@ -181,7 +187,9 @@ export default function ChatbotAnalyticsPage() {
             <div className="mb-2 text-gray-600 dark:text-gray-300">
               معدل الرضا
             </div>
-            <div className="text-sm text-brand-success">+0.2 من الشهر الماضي</div>
+            <div className="text-sm text-brand-success">
+              +0.2 من الشهر الماضي
+            </div>
           </div>
         </div>
 

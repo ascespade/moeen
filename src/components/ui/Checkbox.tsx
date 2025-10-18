@@ -1,9 +1,13 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { cn } from '@/lib/utils';
+import React from "react";
+import { cn } from "@/lib/utils";
 
-export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> {
+export interface CheckboxProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "type" | "onChange"
+  > {
   label?: string;
   description?: string;
   onCheckedChange?: (checked: boolean) => void;
@@ -18,7 +22,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             type="checkbox"
             className={cn(
               "w-4 h-4 text-brand-primary bg-surface border-gray-300 rounded focus:ring-brand-primary dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600",
-              className
+              className,
             )}
             ref={ref}
             onChange={(e) => onCheckedChange?.(e.target.checked)}
@@ -33,17 +37,15 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
               </label>
             )}
             {description && (
-              <p className="text-gray-500 dark:text-gray-400">
-                {description}
-              </p>
+              <p className="text-gray-500 dark:text-gray-400">{description}</p>
             )}
           </div>
         )}
       </div>
     );
-  }
+  },
 );
 
-Checkbox.displayName = 'Checkbox';
+Checkbox.displayName = "Checkbox";
 
 export { Checkbox };

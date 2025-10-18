@@ -2,7 +2,18 @@ import { ROUTES } from "@/constants/routes";
 export interface User {
   id: string;
   email: string;
-  role: "admin" | "user" | "doctor" | "nurse" | "staff" | "supervisor" | "patient" | "agent" | "manager" | "demo" | "moderator";
+  role:
+    | "admin"
+    | "user"
+    | "doctor"
+    | "nurse"
+    | "staff"
+    | "supervisor"
+    | "patient"
+    | "agent"
+    | "manager"
+    | "demo"
+    | "moderator";
   permissions?: string[];
 }
 

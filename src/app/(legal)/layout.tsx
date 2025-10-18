@@ -12,4 +12,3 @@ export default function LegalLayout({
 }) {
   return children;
 }
-

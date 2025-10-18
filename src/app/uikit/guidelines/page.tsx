@@ -6,10 +6,22 @@ export default function GuidelinesPage() {
       <section className="grid gap-3">
         <div className="font-medium">Brand Colors</div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="rounded-lg border p-3"><div className="h-10 rounded bg-brand mb-2" /><div className="text-sm">Primary</div></div>
-          <div className="rounded-lg border p-3"><div className="h-10 rounded bg-amber-500 mb-2" /><div className="text-sm">Accent</div></div>
-          <div className="rounded-lg border p-3"><div className="h-10 rounded bg-brand-success mb-2" /><div className="text-sm">Success</div></div>
-          <div className="rounded-lg border p-3"><div className="h-10 rounded bg-gray-600 mb-2" /><div className="text-sm">Neutral</div></div>
+          <div className="rounded-lg border p-3">
+            <div className="h-10 rounded bg-brand mb-2" />
+            <div className="text-sm">Primary</div>
+          </div>
+          <div className="rounded-lg border p-3">
+            <div className="h-10 rounded bg-amber-500 mb-2" />
+            <div className="text-sm">Accent</div>
+          </div>
+          <div className="rounded-lg border p-3">
+            <div className="h-10 rounded bg-brand-success mb-2" />
+            <div className="text-sm">Success</div>
+          </div>
+          <div className="rounded-lg border p-3">
+            <div className="h-10 rounded bg-gray-600 mb-2" />
+            <div className="text-sm">Neutral</div>
+          </div>
         </div>
       </section>
 
@@ -21,7 +33,9 @@ export default function GuidelinesPage() {
           <div className="h-4 w-12 bg-gray-200" />
           <div className="h-4 w-16 bg-gray-200" />
         </div>
-        <div className="text-xs text-gray-500">Base 8px scale للهوامش والمسافات.</div>
+        <div className="text-xs text-gray-500">
+          Base 8px scale للهوامش والمسافات.
+        </div>
       </section>
 
       <section className="grid gap-3">
@@ -39,8 +53,12 @@ export default function GuidelinesPage() {
         <div className="font-medium">Interaction States</div>
         <div className="flex flex-wrap gap-2">
           <button className="h-10 px-4 rounded-md btn-brand">Default</button>
-          <button className="h-10 px-4 rounded-md btn-brand" disabled>Disabled</button>
-          <button className="h-10 px-4 rounded-md border focus:outline-none focus:ring-2 focus:ring-brand-primary">Focus</button>
+          <button className="h-10 px-4 rounded-md btn-brand" disabled>
+            Disabled
+          </button>
+          <button className="h-10 px-4 rounded-md border focus:outline-none focus:ring-2 focus:ring-brand-primary">
+            Focus
+          </button>
         </div>
       </section>
     </main>

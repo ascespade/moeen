@@ -5,11 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { 
-  Users, 
-  Phone, 
-  Mail, 
-  MapPin, 
+import {
+  Users,
+  Phone,
+  Mail,
+  MapPin,
   Calendar,
   Plus,
   Search,
@@ -22,7 +22,7 @@ import {
   MessageCircle,
   Star,
   Clock,
-  Activity
+  Activity,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
@@ -36,7 +36,7 @@ interface Contact {
   phone: string;
   company?: string;
   position?: string;
-  status: 'lead' | 'prospect' | 'customer' | 'inactive';
+  status: "lead" | "prospect" | "customer" | "inactive";
   source: string;
   notes?: string;
   tags: string[];
@@ -60,7 +60,7 @@ interface Contact {
 interface ContactActivity {
   id: string;
   contact_id: string;
-  type: 'call' | 'email' | 'meeting' | 'note';
+  type: "call" | "email" | "meeting" | "note";
   subject: string;
   description: string;
   date: string;
@@ -114,12 +114,12 @@ const ContactsPage: React.FC = () => {
           address: {
             street: "شارع الملك فهد",
             city: "جدة",
-            country: "المملكة العربية السعودية"
+            country: "المملكة العربية السعودية",
           },
           social_media: {
             linkedin: "ahmed-mohammed",
-            twitter: "@ahmed_m"
-          }
+            twitter: "@ahmed_m",
+          },
         },
         {
           id: "2",
@@ -137,8 +137,8 @@ const ContactsPage: React.FC = () => {
           next_follow_up: "2024-01-20T11:00:00Z",
           created_at: "2024-01-05T00:00:00Z",
           updated_at: "2024-01-10T15:30:00Z",
-          avatar: "/logo.png"
-        }
+          avatar: "/logo.png",
+        },
       ];
 
       const mockActivities: ContactActivity[] = [
@@ -150,7 +150,7 @@ const ContactsPage: React.FC = () => {
           description: "مناقشة احتياجات الشركة من خدمات التأهيل",
           date: "2024-01-15T10:00:00Z",
           user_id: "user-1",
-          user_name: "سارة أحمد"
+          user_name: "سارة أحمد",
         },
         {
           id: "2",
@@ -160,14 +160,14 @@ const ContactsPage: React.FC = () => {
           description: "عرض خدمات المركز وبرامج التأهيل المتاحة",
           date: "2024-01-12T14:00:00Z",
           user_id: "user-2",
-          user_name: "محمد العلي"
-        }
+          user_name: "محمد العلي",
+        },
       ];
 
       setContacts(mockContacts);
       setActivities(mockActivities);
     } catch (error) {
-      setError('فشل في تحميل جهات الاتصال');
+      setError("فشل في تحميل جهات الاتصال");
     } finally {
       setLoading(false);
     }
@@ -175,47 +175,55 @@ const ContactsPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      'lead': { label: 'عميل محتمل', variant: 'secondary' as const },
-      'prospect': { label: 'عميل واعد', variant: 'primary' as const },
-      'customer': { label: 'عميل', variant: 'primary' as const },
-      'inactive': { label: 'غير نشط', variant: 'destructive' as const }
+      lead: { label: "عميل محتمل", variant: "secondary" as const },
+      prospect: { label: "عميل واعد", variant: "primary" as const },
+      customer: { label: "عميل", variant: "primary" as const },
+      inactive: { label: "غير نشط", variant: "destructive" as const },
     };
-    
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'secondary' as const };
+
+    const statusInfo = statusMap[status as keyof typeof statusMap] || {
+      label: status,
+      variant: "secondary" as const,
+    };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 
   const getActivityIcon = (type: string) => {
     switch (type) {
-      case 'call':
+      case "call":
         return <Phone className="w-4 h-4 text-brand-primary" />;
-      case 'email':
+      case "email":
         return <Mail className="w-4 h-4 text-brand-success" />;
-      case 'meeting':
+      case "meeting":
         return <Calendar className="w-4 h-4 text-purple-500" />;
-      case 'note':
+      case "note":
         return <MessageCircle className="w-4 h-4 text-brand-primary" />;
       default:
         return <Activity className="w-4 h-4 text-gray-500" />;
     }
   };
 
-  const filteredContacts = contacts.filter(contact => {
-    const matchesSearch = 
+  const filteredContacts = contacts.filter((contact) => {
+    const matchesSearch =
       contact.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       contact.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       contact.phone.includes(searchTerm) ||
-      (contact.company && contact.company.toLowerCase().includes(searchTerm.toLowerCase()));
-    
-    const matchesStatus = filterStatus === "all" || contact.status === filterStatus;
-    const matchesSource = filterSource === "all" || contact.source === filterSource;
-    
+      (contact.company &&
+        contact.company.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    const matchesStatus =
+      filterStatus === "all" || contact.status === filterStatus;
+    const matchesSource =
+      filterSource === "all" || contact.source === filterSource;
+
     return matchesSearch && matchesStatus && matchesSource;
   });
 
-  const contactActivities = selectedContact 
-    ? activities.filter(activity => activity.contact_id === selectedContact.id)
+  const contactActivities = selectedContact
+    ? activities.filter(
+        (activity) => activity.contact_id === selectedContact.id,
+      )
     : [];
 
   if (!isAuthenticated) {
@@ -228,11 +236,15 @@ const ContactsPage: React.FC = () => {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">إدارة جهات الاتصال</h1>
-            <p className="text-gray-600 mt-2">إدارة العملاء المحتملين والعملاء الحاليين</p>
+            <h1 className="text-3xl font-bold text-gray-900">
+              إدارة جهات الاتصال
+            </h1>
+            <p className="text-gray-600 mt-2">
+              إدارة العملاء المحتملين والعملاء الحاليين
+            </p>
           </div>
-          <Button 
-            onClick={() => router.push('/crm/contacts/new')}
+          <Button
+            onClick={() => router.push("/crm/contacts/new")}
             className="bg-[var(--brand-primary)] hover:brightness-95"
           >
             <Plus className="w-4 h-4 mr-2" />
@@ -281,30 +293,34 @@ const ContactsPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">إجمالي جهات الاتصال</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              إجمالي جهات الاتصال
+            </CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{contacts.length}</div>
             <p className="text-xs text-muted-foreground">
-              {contacts.filter(c => c.status === 'customer').length} عميل
+              {contacts.filter((c) => c.status === "customer").length} عميل
             </p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">العملاء المحتملين</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              العملاء المحتملين
+            </CardTitle>
             <UserPlus className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {contacts.filter(c => c.status === 'lead').length}
+              {contacts.filter((c) => c.status === "lead").length}
             </div>
             <p className="text-xs text-muted-foreground">عميل محتمل</p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">الأنشطة اليوم</CardTitle>
@@ -312,24 +328,31 @@ const ContactsPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {activities.filter(a => 
-                new Date(a.date).toDateString() === new Date().toDateString()
-              ).length}
+              {
+                activities.filter(
+                  (a) =>
+                    new Date(a.date).toDateString() ===
+                    new Date().toDateString(),
+                ).length
+              }
             </div>
             <p className="text-xs text-muted-foreground">نشاط</p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">المتابعات المعلقة</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              المتابعات المعلقة
+            </CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {contacts.filter(c => 
-                new Date(c.next_follow_up) > new Date()
-              ).length}
+              {
+                contacts.filter((c) => new Date(c.next_follow_up) > new Date())
+                  .length
+              }
             </div>
             <p className="text-xs text-muted-foreground">متابعة</p>
           </CardContent>
@@ -351,10 +374,14 @@ const ContactsPage: React.FC = () => {
               ) : filteredContacts.length === 0 ? (
                 <div className="text-center py-12">
                   <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد جهات اتصال</h3>
-                  <p className="text-gray-600 mb-4">ابدأ بإضافة جهة اتصال جديدة</p>
-                  <Button 
-                    onClick={() => router.push('/crm/contacts/new')}
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    لا توجد جهات اتصال
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    ابدأ بإضافة جهة اتصال جديدة
+                  </p>
+                  <Button
+                    onClick={() => router.push("/crm/contacts/new")}
                     className="bg-[var(--brand-primary)] hover:brightness-95"
                   >
                     إضافة جهة اتصال
@@ -366,9 +393,9 @@ const ContactsPage: React.FC = () => {
                     <div
                       key={contact.id}
                       className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-                        selectedContact?.id === contact.id 
-                          ? 'border-[var(--brand-primary)] bg-surface' 
-                          : 'border-gray-200 hover:border-gray-300'
+                        selectedContact?.id === contact.id
+                          ? "border-[var(--brand-primary)] bg-surface"
+                          : "border-gray-200 hover:border-gray-300"
                       }`}
                       onClick={() => setSelectedContact(contact)}
                     >
@@ -390,9 +417,13 @@ const ContactsPage: React.FC = () => {
                             </p>
                             <div className="flex items-center gap-2 mt-1">
                               <Phone className="w-3 h-3 text-gray-500" />
-                              <span className="text-xs text-gray-600">{contact.phone}</span>
+                              <span className="text-xs text-gray-600">
+                                {contact.phone}
+                              </span>
                               <Mail className="w-3 h-3 text-gray-500 mr-2" />
-                              <span className="text-xs text-gray-600">{contact.email}</span>
+                              <span className="text-xs text-gray-600">
+                                {contact.email}
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -403,19 +434,28 @@ const ContactsPage: React.FC = () => {
                           </Button>
                         </div>
                       </div>
-                      
+
                       {contact.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-3">
                           {contact.tags.map((tag, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="text-xs"
+                            >
                               {tag}
                             </Badge>
                           ))}
                         </div>
                       )}
-                      
+
                       <div className="flex items-center justify-between mt-3 text-xs text-gray-500">
-                        <span>آخر اتصال: {new Date(contact.last_contact).toLocaleDateString('ar-SA')}</span>
+                        <span>
+                          آخر اتصال:{" "}
+                          {new Date(contact.last_contact).toLocaleDateString(
+                            "ar-SA",
+                          )}
+                        </span>
                         <span>المصدر: {contact.source}</span>
                       </div>
                     </div>
@@ -451,7 +491,9 @@ const ContactsPage: React.FC = () => {
                       {selectedContact.first_name} {selectedContact.last_name}
                     </h3>
                     <p className="text-gray-600">{selectedContact.company}</p>
-                    <p className="text-sm text-gray-500">{selectedContact.position}</p>
+                    <p className="text-sm text-gray-500">
+                      {selectedContact.position}
+                    </p>
                   </div>
 
                   <div className="space-y-3">
@@ -467,7 +509,8 @@ const ContactsPage: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4 text-gray-500" />
                         <span className="text-sm">
-                          {selectedContact.address.street}, {selectedContact.address.city}
+                          {selectedContact.address.street},{" "}
+                          {selectedContact.address.city}
                         </span>
                       </div>
                     )}
@@ -483,9 +526,13 @@ const ContactsPage: React.FC = () => {
                       <span className="text-sm">{selectedContact.source}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">المتابعة التالية:</span>
+                      <span className="text-sm font-medium">
+                        المتابعة التالية:
+                      </span>
                       <span className="text-sm">
-                        {new Date(selectedContact.next_follow_up).toLocaleDateString('ar-SA')}
+                        {new Date(
+                          selectedContact.next_follow_up,
+                        ).toLocaleDateString("ar-SA")}
                       </span>
                     </div>
                   </div>
@@ -525,7 +572,7 @@ const ContactsPage: React.FC = () => {
                       size="sm"
                       onClick={() => setShowActivities(!showActivities)}
                     >
-                      {showActivities ? 'إخفاء' : 'عرض'}
+                      {showActivities ? "إخفاء" : "عرض"}
                     </Button>
                   </div>
                 </CardHeader>
@@ -538,19 +585,28 @@ const ContactsPage: React.FC = () => {
                         </p>
                       ) : (
                         contactActivities.map((activity) => (
-                          <div key={activity.id} className="flex items-start gap-3 p-3 bg-surface rounded-lg">
+                          <div
+                            key={activity.id}
+                            className="flex items-start gap-3 p-3 bg-surface rounded-lg"
+                          >
                             <div className="p-2 bg-white rounded-full">
                               {getActivityIcon(activity.type)}
                             </div>
                             <div className="flex-1">
-                              <h4 className="text-sm font-semibold">{activity.subject}</h4>
-                              <p className="text-xs text-gray-600">{activity.description}</p>
+                              <h4 className="text-sm font-semibold">
+                                {activity.subject}
+                              </h4>
+                              <p className="text-xs text-gray-600">
+                                {activity.description}
+                              </p>
                               <div className="flex items-center justify-between mt-2">
                                 <span className="text-xs text-gray-500">
                                   {activity.user_name}
                                 </span>
                                 <span className="text-xs text-gray-500">
-                                  {new Date(activity.date).toLocaleDateString('ar-SA')}
+                                  {new Date(activity.date).toLocaleDateString(
+                                    "ar-SA",
+                                  )}
                                 </span>
                               </div>
                             </div>
@@ -566,8 +622,12 @@ const ContactsPage: React.FC = () => {
             <Card>
               <CardContent className="p-12 text-center">
                 <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">اختر جهة اتصال</h3>
-                <p className="text-gray-600">اختر جهة اتصال لعرض التفاصيل والأنشطة</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  اختر جهة اتصال
+                </h3>
+                <p className="text-gray-600">
+                  اختر جهة اتصال لعرض التفاصيل والأنشطة
+                </p>
               </CardContent>
             </Card>
           )}

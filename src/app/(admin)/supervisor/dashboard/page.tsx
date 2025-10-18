@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import logger from '@/lib/monitoring/logger';
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import logger from "@/lib/monitoring/logger";
 
 interface CallRequest {
   id: string;
@@ -23,20 +23,22 @@ export default function SupervisorDashboardPage() {
   });
   const [loading, setLoading] = useState(true);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadData();
-    
+
     // Real-time subscription
     const supabase = createClient();
     const channel = supabase
-      .channel('supervisor-feed')
-      .on('postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'call_requests' },
+      .channel("supervisor-feed")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "call_requests" },
         (payload) => {
           // New call request - show alert!
           playNotificationSound();
           loadCallRequests();
-        }
+        },
       )
       .subscribe();
 
@@ -46,56 +48,53 @@ export default function SupervisorDashboardPage() {
   }, []);
 
   const loadData = async () => {
-    await Promise.all([
-      loadCallRequests(),
-      loadStats(),
-    ]);
+    await Promise.all([loadCallRequests(), loadStats()]);
     setLoading(false);
   };
 
   const loadCallRequests = async () => {
     try {
-      const response = await fetch('/api/supervisor/call-request');
+      const response = await fetch("/api/supervisor/call-request");
       const data = await response.json();
 
       if (data.success) {
         setCallRequests(data.requests || []);
       }
     } catch (error) {
-      logger.error('Error loading call requests', error);
+      logger.error("Error loading call requests", error);
     }
   };
 
   const loadStats = async () => {
     try {
       const supabase = createClient();
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date().toISOString().split("T")[0];
 
       // Today's sessions
       const { count: sessionsCount } = await supabase
-        .from('appointments')
-        .select('*', { count: 'exact', head: true })
-        .eq('appointment_date', today);
+        .from("appointments")
+        .select("*", { count: "exact", head: true })
+        .eq("appointment_date", today);
 
       // Completed sessions
       const { count: completedCount } = await supabase
-        .from('appointments')
-        .select('*', { count: 'exact', head: true })
-        .eq('appointment_date', today)
-        .eq('status', 'completed');
+        .from("appointments")
+        .select("*", { count: "exact", head: true })
+        .eq("appointment_date", today)
+        .eq("status", "completed");
 
       // Cancelled sessions
       const { count: cancelledCount } = await supabase
-        .from('appointments')
-        .select('*', { count: 'exact', head: true })
-        .eq('appointment_date', today)
-        .eq('status', 'cancelled');
+        .from("appointments")
+        .select("*", { count: "exact", head: true })
+        .eq("appointment_date", today)
+        .eq("status", "cancelled");
 
       // Pending call requests
       const { count: pendingRequests } = await supabase
-        .from('call_requests')
-        .select('*', { count: 'exact', head: true })
-        .eq('status', 'pending');
+        .from("call_requests")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "pending");
 
       setStats({
         pending: pendingRequests || 0,
@@ -104,7 +103,7 @@ export default function SupervisorDashboardPage() {
         today_cancellations: cancelledCount || 0,
       });
     } catch (error) {
-      logger.error('Error loading stats', error);
+      logger.error("Error loading stats", error);
     }
   };
 
@@ -112,20 +111,20 @@ export default function SupervisorDashboardPage() {
     try {
       const supabase = createClient();
       const { error } = await supabase
-        .from('call_requests')
+        .from("call_requests")
         .update({
-          status: 'acknowledged',
+          status: "acknowledged",
           acknowledged_at: new Date().toISOString(),
         })
-        .eq('id', requestId);
+        .eq("id", requestId);
 
       if (error) throw error;
 
-      alert('✅ تم تأكيد الاستلام');
+      alert("✅ تم تأكيد الاستلام");
       await loadCallRequests();
     } catch (error: any) {
-      logger.error('Error acknowledging request', error);
-      alert('خطأ: ' + error.message);
+      logger.error("Error acknowledging request", error);
+      alert("خطأ: " + error.message);
     }
   };
 
@@ -133,27 +132,27 @@ export default function SupervisorDashboardPage() {
     try {
       const supabase = createClient();
       const { error } = await supabase
-        .from('call_requests')
+        .from("call_requests")
         .update({
-          status: 'completed',
+          status: "completed",
           completed_at: new Date().toISOString(),
         })
-        .eq('id', requestId);
+        .eq("id", requestId);
 
       if (error) throw error;
 
-      alert('✅ تم إنهاء الطلب');
+      alert("✅ تم إنهاء الطلب");
       await loadCallRequests();
     } catch (error: any) {
-      logger.error('Error completing request', error);
-      alert('خطأ: ' + error.message);
+      logger.error("Error completing request", error);
+      alert("خطأ: " + error.message);
     }
   };
 
   const playNotificationSound = () => {
     // Play notification sound
-    if (typeof Audio !== 'undefined') {
-      const audio = new Audio('/notification.mp3');
+    if (typeof Audio !== "undefined") {
+      const audio = new Audio("/notification.mp3");
       audio.play().catch(() => {});
     }
   };
@@ -169,7 +168,7 @@ export default function SupervisorDashboardPage() {
     );
   }
 
-  const pendingRequests = callRequests.filter(r => r.status === 'pending');
+  const pendingRequests = callRequests.filter((r) => r.status === "pending");
 
   return (
     <div className="container-app py-8">
@@ -185,7 +184,9 @@ export default function SupervisorDashboardPage() {
         <div className="card p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">طلبات معلقة</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                طلبات معلقة
+              </p>
               <p className="text-3xl font-bold text-red-600">{stats.pending}</p>
             </div>
             <div className="text-4xl">🔴</div>
@@ -195,8 +196,12 @@ export default function SupervisorDashboardPage() {
         <div className="card p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">جلسات اليوم</p>
-              <p className="text-3xl font-bold text-blue-600">{stats.today_sessions}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                جلسات اليوم
+              </p>
+              <p className="text-3xl font-bold text-blue-600">
+                {stats.today_sessions}
+              </p>
             </div>
             <div className="text-4xl">📅</div>
           </div>
@@ -206,7 +211,9 @@ export default function SupervisorDashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-600 dark:text-gray-400">الحضور</p>
-              <p className="text-3xl font-bold text-green-600">{stats.today_attendance}</p>
+              <p className="text-3xl font-bold text-green-600">
+                {stats.today_attendance}
+              </p>
             </div>
             <div className="text-4xl">✅</div>
           </div>
@@ -215,8 +222,12 @@ export default function SupervisorDashboardPage() {
         <div className="card p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">الإلغاءات</p>
-              <p className="text-3xl font-bold text-orange-600">{stats.today_cancellations}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                الإلغاءات
+              </p>
+              <p className="text-3xl font-bold text-orange-600">
+                {stats.today_cancellations}
+              </p>
             </div>
             <div className="text-4xl">❌</div>
           </div>
@@ -232,30 +243,34 @@ export default function SupervisorDashboardPage() {
               <h2 className="text-2xl font-bold text-red-900 dark:text-red-100">
                 طلبات مكالمات عاجلة ({pendingRequests.length})
               </h2>
-              <p className="text-red-700 dark:text-red-300">
-                يرجى الرد فوراً!
-              </p>
+              <p className="text-red-700 dark:text-red-300">يرجى الرد فوراً!</p>
             </div>
           </div>
 
           <div className="space-y-4">
             {pendingRequests.map((request) => (
-              <div key={request.id} className="card p-6 bg-white dark:bg-gray-800">
+              <div
+                key={request.id}
+                className="card p-6 bg-white dark:bg-gray-800"
+              >
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-                      {request.requester?.full_name || 'مستخدم'}
+                      {request.requester?.full_name || "مستخدم"}
                     </h3>
                     <a
                       href={`tel:${request.requester?.phone}`}
                       className="text-[var(--brand-primary)] font-bold text-lg hover:underline"
                     >
-                      📞 {request.requester?.phone || 'غير متوفر'}
+                      📞 {request.requester?.phone || "غير متوفر"}
                     </a>
                   </div>
                   <span className="text-xs px-3 py-1 rounded-full bg-red-100 text-red-700 font-bold">
-                    {request.priority === 'emergency' ? '🔴 طارئ' : 
-                     request.priority === 'high' ? '🟠 عاجل' : '🟡 عادي'}
+                    {request.priority === "emergency"
+                      ? "🔴 طارئ"
+                      : request.priority === "high"
+                        ? "🟠 عاجل"
+                        : "🟡 عادي"}
                   </span>
                 </div>
 
@@ -264,8 +279,14 @@ export default function SupervisorDashboardPage() {
                 </p>
 
                 <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
-                  <span>⏰ {new Date(request.created_at).toLocaleTimeString('ar-SA')}</span>
-                  <span>📅 {new Date(request.created_at).toLocaleDateString('ar-SA')}</span>
+                  <span>
+                    ⏰{" "}
+                    {new Date(request.created_at).toLocaleTimeString("ar-SA")}
+                  </span>
+                  <span>
+                    📅{" "}
+                    {new Date(request.created_at).toLocaleDateString("ar-SA")}
+                  </span>
                 </div>
 
                 <div className="flex gap-2">
@@ -307,37 +328,46 @@ export default function SupervisorDashboardPage() {
               <div
                 key={request.id}
                 className={`p-4 rounded-lg border ${
-                  request.status === 'pending'
-                    ? 'border-red-300 bg-red-50 dark:bg-red-900/10'
-                    : request.status === 'acknowledged'
-                    ? 'border-yellow-300 bg-yellow-50 dark:bg-yellow-900/10'
-                    : 'border-green-300 bg-green-50 dark:bg-green-900/10'
+                  request.status === "pending"
+                    ? "border-red-300 bg-red-50 dark:bg-red-900/10"
+                    : request.status === "acknowledged"
+                      ? "border-yellow-300 bg-yellow-50 dark:bg-yellow-900/10"
+                      : "border-green-300 bg-green-50 dark:bg-green-900/10"
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-semibold text-gray-900 dark:text-white">
-                      {request.requester?.full_name || 'مستخدم'}
+                      {request.requester?.full_name || "مستخدم"}
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       {request.requester?.phone}
                     </p>
                   </div>
                   <div className="text-left">
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      request.status === 'pending' ? 'bg-red-100 text-red-700' :
-                      request.status === 'acknowledged' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-green-100 text-green-700'
-                    }`}>
-                      {request.status === 'pending' ? '⏳ معلق' :
-                       request.status === 'acknowledged' ? '✅ مستلم' :
-                       '✔️ مكتمل'}
+                    <span
+                      className={`text-xs px-2 py-1 rounded-full ${
+                        request.status === "pending"
+                          ? "bg-red-100 text-red-700"
+                          : request.status === "acknowledged"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-green-100 text-green-700"
+                      }`}
+                    >
+                      {request.status === "pending"
+                        ? "⏳ معلق"
+                        : request.status === "acknowledged"
+                          ? "✅ مستلم"
+                          : "✔️ مكتمل"}
                     </span>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      {new Date(request.created_at).toLocaleTimeString('ar-SA', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
+                      {new Date(request.created_at).toLocaleTimeString(
+                        "ar-SA",
+                        {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        },
+                      )}
                     </p>
                   </div>
                 </div>

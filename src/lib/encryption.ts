@@ -4,20 +4,25 @@
  * Replaces insecure Base64 encoding
  */
 
-import logger from '@/lib/monitoring/logger';
-import CryptoJS from 'crypto-js';
+import logger from "@/lib/monitoring/logger";
+import CryptoJS from "crypto-js";
 
 /**
  * Get encryption key from environment or generate a default one
  * WARNING: In production, ALWAYS use environment variable!
  */
 const getEncryptionKey = (): string => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     // Client-side: use a client-specific key or public encryption
-    return process.env.NEXT_PUBLIC_ENCRYPTION_KEY || 'CHANGE_THIS_CLIENT_KEY_IN_PRODUCTION_2024';
+    return (
+      process.env.NEXT_PUBLIC_ENCRYPTION_KEY ||
+      "CHANGE_THIS_CLIENT_KEY_IN_PRODUCTION_2024"
+    );
   }
   // Server-side: use server key
-  return process.env.ENCRYPTION_KEY || 'CHANGE_THIS_SERVER_KEY_IN_PRODUCTION_2024';
+  return (
+    process.env.ENCRYPTION_KEY || "CHANGE_THIS_SERVER_KEY_IN_PRODUCTION_2024"
+  );
 };
 
 /**
@@ -27,16 +32,16 @@ const getEncryptionKey = (): string => {
  */
 export function encrypt(data: string | object): string {
   try {
-    const plaintext = typeof data === 'string' ? data : JSON.stringify(data);
+    const plaintext = typeof data === "string" ? data : JSON.stringify(data);
     const key = getEncryptionKey();
-    
+
     // Encrypt using AES
     const encrypted = CryptoJS.AES.encrypt(plaintext, key);
-    
+
     return encrypted.toString();
   } catch (error) {
-    console.error('Encryption error:', error);
-    throw new Error('Failed to encrypt data');
+    console.error("Encryption error:", error);
+    throw new Error("Failed to encrypt data");
   }
 }
 
@@ -46,26 +51,29 @@ export function encrypt(data: string | object): string {
  * @param parseJSON - Whether to parse result as JSON
  * @returns Decrypted string or object
  */
-export function decrypt<T = string>(encryptedData: string, parseJSON: boolean = false): T {
+export function decrypt<T = string>(
+  encryptedData: string,
+  parseJSON: boolean = false,
+): T {
   try {
     const key = getEncryptionKey();
-    
+
     // Decrypt using AES
     const decrypted = CryptoJS.AES.decrypt(encryptedData, key);
     const plaintext = decrypted.toString(CryptoJS.enc.Utf8);
-    
+
     if (!plaintext) {
-      throw new Error('Decryption failed - invalid key or corrupted data');
+      throw new Error("Decryption failed - invalid key or corrupted data");
     }
-    
+
     if (parseJSON) {
       return JSON.parse(plaintext) as T;
     }
-    
+
     return plaintext as T;
   } catch (error) {
-    console.error('Decryption error:', error);
-    throw new Error('Failed to decrypt data');
+    console.error("Decryption error:", error);
+    throw new Error("Failed to decrypt data");
   }
 }
 
@@ -97,7 +105,11 @@ export function sign(data: string, secret?: string): string {
  * @param secret - Secret key (optional, uses env key)
  * @returns true if valid, false otherwise
  */
-export function verify(data: string, signature: string, secret?: string): boolean {
+export function verify(
+  data: string,
+  signature: string,
+  secret?: string,
+): boolean {
   const expectedSignature = sign(data, secret);
   return expectedSignature === signature;
 }
@@ -135,7 +147,9 @@ export function decryptApiKey(encryptedKey: string): string {
  * @deprecated Use encrypt() instead
  */
 export function encodeBase64(data: string): string {
-  console.warn('⚠️ encodeBase64 is deprecated. Use encrypt() instead for better security.');
+  console.warn(
+    "⚠️ encodeBase64 is deprecated. Use encrypt() instead for better security.",
+  );
   return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(data));
 }
 
@@ -144,12 +158,14 @@ export function encodeBase64(data: string): string {
  * @deprecated Use decrypt() instead
  */
 export function decodeBase64(encoded: string): string {
-  console.warn('⚠️ decodeBase64 is deprecated. Use decrypt() instead for better security.');
+  console.warn(
+    "⚠️ decodeBase64 is deprecated. Use decrypt() instead for better security.",
+  );
   return CryptoJS.enc.Base64.parse(encoded).toString(CryptoJS.enc.Utf8);
 }
 
 // Export everything as default for convenience
-export default {
+const encryption = {
   encrypt,
   decrypt,
   hash,
@@ -162,3 +178,5 @@ export default {
   encodeBase64,
   decodeBase64,
 };
+
+export default encryption;

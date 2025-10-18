@@ -101,7 +101,7 @@ export default function ChatbotIntegrationsPage() {
 
   const handleDisconnect = (integrationId: string) => {
     // Simulate disconnect
-    };
+  };
 
   const handleTestWebhook = (integrationId: string) => {
     setWebhookTest((prev) => ({ ...prev, [integrationId]: true }));

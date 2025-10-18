@@ -5,11 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { 
-  Heart, 
-  Calendar, 
-  Clock, 
-  User, 
+import {
+  Heart,
+  Calendar,
+  Clock,
+  User,
   Users,
   MessageCircle,
   FileText,
@@ -28,7 +28,7 @@ import {
   Star,
   BookOpen,
   Shield,
-  Lightbulb
+  Lightbulb,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
@@ -90,7 +90,7 @@ interface Resource {
   title: string;
   description: string;
   category: string;
-  type: 'document' | 'video' | 'link' | 'guide';
+  type: "document" | "video" | "link" | "guide";
   url?: string;
   file_path?: string;
   tags: string[];
@@ -106,7 +106,9 @@ const FamilySupportPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeTab, setActiveTab] = useState<'members' | 'sessions' | 'resources'>('members');
+  const [activeTab, setActiveTab] = useState<
+    "members" | "sessions" | "resources"
+  >("members");
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -140,8 +142,8 @@ const FamilySupportPage: React.FC = () => {
             last_name: "محمد",
             age: 8,
             condition: "شلل دماغي",
-            avatar: "/logo.png"
-          }
+            avatar: "/logo.png",
+          },
         },
         {
           id: "2",
@@ -160,9 +162,9 @@ const FamilySupportPage: React.FC = () => {
             last_name: "محمد",
             age: 8,
             condition: "شلل دماغي",
-            avatar: "/logo.png"
-          }
-        }
+            avatar: "/logo.png",
+          },
+        },
       ];
 
       const mockSupportSessions: SupportSession[] = [
@@ -184,15 +186,15 @@ const FamilySupportPage: React.FC = () => {
             first_name: "فاطمة",
             last_name: "محمد",
             relationship: "أم",
-            phone: "0501234567"
+            phone: "0501234567",
           },
           counselors: {
             first_name: "د. نورا",
             last_name: "السعد",
             specialty: "الاستشارة النفسية للأسر",
-            avatar: "/logo.png"
-          }
-        }
+            avatar: "/logo.png",
+          },
+        },
       ];
 
       const mockResources: Resource[] = [
@@ -204,25 +206,26 @@ const FamilySupportPage: React.FC = () => {
           type: "document",
           file_path: "/resources/family-guide.pdf",
           tags: ["دعم", "أسرة", "تعليم"],
-          created_at: "2024-01-01T00:00:00Z"
+          created_at: "2024-01-01T00:00:00Z",
         },
         {
           id: "2",
           title: "فيديو: استراتيجيات التعامل مع التوتر",
-          description: "فيديو تعليمي حول كيفية التعامل مع التوتر في رعاية الطفل",
+          description:
+            "فيديو تعليمي حول كيفية التعامل مع التوتر في رعاية الطفل",
           category: "الصحة النفسية",
           type: "video",
           url: "https://example.com/video1",
           tags: ["توتر", "صحة نفسية", "فيديو"],
-          created_at: "2024-01-05T00:00:00Z"
-        }
+          created_at: "2024-01-05T00:00:00Z",
+        },
       ];
 
       setFamilyMembers(mockFamilyMembers);
       setSupportSessions(mockSupportSessions);
       setResources(mockResources);
     } catch (error) {
-      setError('فشل في تحميل بيانات دعم الأسر');
+      setError("فشل في تحميل بيانات دعم الأسر");
     } finally {
       setLoading(false);
     }
@@ -230,24 +233,27 @@ const FamilySupportPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      'scheduled': { label: 'مجدولة', variant: 'primary' as const },
-      'completed': { label: 'مكتملة', variant: 'primary' as const },
-      'cancelled': { label: 'ملغية', variant: 'destructive' as const }
+      scheduled: { label: "مجدولة", variant: "primary" as const },
+      completed: { label: "مكتملة", variant: "primary" as const },
+      cancelled: { label: "ملغية", variant: "destructive" as const },
     };
-    
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'primary' as const };
+
+    const statusInfo = statusMap[status as keyof typeof statusMap] || {
+      label: status,
+      variant: "primary" as const,
+    };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 
   const getResourceIcon = (type: string) => {
     switch (type) {
-      case 'document':
+      case "document":
         return <FileText className="w-4 h-4 text-brand-primary" />;
-      case 'video':
+      case "video":
         return <Video className="w-4 h-4 text-brand-error" />;
-      case 'link':
+      case "link":
         return <BookOpen className="w-4 h-4 text-brand-success" />;
-      case 'guide':
+      case "guide":
         return <Lightbulb className="w-4 h-4 text-brand-warning" />;
       default:
         return <FileText className="w-4 h-4 text-gray-500" />;
@@ -256,36 +262,43 @@ const FamilySupportPage: React.FC = () => {
 
   const getRelationshipIcon = (relationship: string) => {
     switch (relationship) {
-      case 'أم':
-      case 'أب':
+      case "أم":
+      case "أب":
         return <Heart className="w-4 h-4 text-brand-error" />;
-      case 'أخ':
-      case 'أخت':
+      case "أخ":
+      case "أخت":
         return <Users className="w-4 h-4 text-brand-primary" />;
-      case 'جد':
-      case 'جدة':
+      case "جد":
+      case "جدة":
         return <Shield className="w-4 h-4 text-purple-500" />;
       default:
         return <User className="w-4 h-4 text-gray-500" />;
     }
   };
 
-  const filteredFamilyMembers = familyMembers.filter(member =>
-    member.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    member.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    member.relationship.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredFamilyMembers = familyMembers.filter(
+    (member) =>
+      member.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      member.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      member.relationship.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const filteredSessions = supportSessions.filter(session =>
-    session.family_members?.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    session.family_members?.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    session.session_type.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredSessions = supportSessions.filter(
+    (session) =>
+      session.family_members?.first_name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      session.family_members?.last_name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      session.session_type.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const filteredResources = resources.filter(resource =>
-    resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    resource.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    resource.category.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredResources = resources.filter(
+    (resource) =>
+      resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      resource.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      resource.category.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   if (!isAuthenticated) {
@@ -299,10 +312,12 @@ const FamilySupportPage: React.FC = () => {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">دعم الأسر</h1>
-            <p className="text-gray-600 mt-2">دعم شامل لأسر ذوي الاحتياجات الخاصة</p>
+            <p className="text-gray-600 mt-2">
+              دعم شامل لأسر ذوي الاحتياجات الخاصة
+            </p>
           </div>
-          <Button 
-            onClick={() => router.push('/family-support/new')}
+          <Button
+            onClick={() => router.push("/family-support/new")}
             className="bg-[var(--brand-primary)] hover:brightness-95"
           >
             <Plus className="w-4 h-4 mr-2" />
@@ -331,11 +346,12 @@ const FamilySupportPage: React.FC = () => {
           <CardContent>
             <div className="text-2xl font-bold">{familyMembers.length}</div>
             <p className="text-xs text-muted-foreground">
-              {familyMembers.filter(m => m.primary_caregiver).length} مقدم رعاية أساسي
+              {familyMembers.filter((m) => m.primary_caregiver).length} مقدم
+              رعاية أساسي
             </p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">جلسات الدعم</CardTitle>
@@ -344,14 +360,17 @@ const FamilySupportPage: React.FC = () => {
           <CardContent>
             <div className="text-2xl font-bold">{supportSessions.length}</div>
             <p className="text-xs text-muted-foreground">
-              {supportSessions.filter(s => s.status === 'completed').length} مكتملة
+              {supportSessions.filter((s) => s.status === "completed").length}{" "}
+              مكتملة
             </p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">الموارد التعليمية</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              الموارد التعليمية
+            </CardTitle>
             <BookOpen className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -359,7 +378,7 @@ const FamilySupportPage: React.FC = () => {
             <p className="text-xs text-muted-foreground">مورد متاح</p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">معدل الرضا</CardTitle>
@@ -376,31 +395,31 @@ const FamilySupportPage: React.FC = () => {
       <div className="mb-6">
         <div className="flex space-x-1 bg-surface p-1 rounded-lg">
           <button
-            onClick={() => setActiveTab('members')}
+            onClick={() => setActiveTab("members")}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-              activeTab === 'members'
-                ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+              activeTab === "members"
+                ? "bg-white text-gray-900 shadow-sm"
+                : "text-gray-600 hover:text-gray-900"
             }`}
           >
             أعضاء الأسر
           </button>
           <button
-            onClick={() => setActiveTab('sessions')}
+            onClick={() => setActiveTab("sessions")}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-              activeTab === 'sessions'
-                ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+              activeTab === "sessions"
+                ? "bg-white text-gray-900 shadow-sm"
+                : "text-gray-600 hover:text-gray-900"
             }`}
           >
             جلسات الدعم
           </button>
           <button
-            onClick={() => setActiveTab('resources')}
+            onClick={() => setActiveTab("resources")}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-              activeTab === 'resources'
-                ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+              activeTab === "resources"
+                ? "bg-white text-gray-900 shadow-sm"
+                : "text-gray-600 hover:text-gray-900"
             }`}
           >
             الموارد التعليمية
@@ -416,16 +435,20 @@ const FamilySupportPage: React.FC = () => {
       ) : (
         <>
           {/* Family Members Tab */}
-          {activeTab === 'members' && (
+          {activeTab === "members" && (
             <div className="space-y-6">
               {filteredFamilyMembers.length === 0 ? (
                 <Card>
                   <CardContent className="p-12 text-center">
                     <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد أعضاء أسر</h3>
-                    <p className="text-gray-600 mb-4">ابدأ بإضافة عضو أسرة جديد</p>
-                    <Button 
-                      onClick={() => router.push('/family-support/new')}
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      لا توجد أعضاء أسر
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      ابدأ بإضافة عضو أسرة جديد
+                    </p>
+                    <Button
+                      onClick={() => router.push("/family-support/new")}
                       className="bg-[var(--brand-primary)] hover:brightness-95"
                     >
                       إضافة عضو أسرة
@@ -434,7 +457,10 @@ const FamilySupportPage: React.FC = () => {
                 </Card>
               ) : (
                 filteredFamilyMembers.map((member) => (
-                  <Card key={member.id} className="hover:shadow-md transition-shadow">
+                  <Card
+                    key={member.id}
+                    className="hover:shadow-md transition-shadow"
+                  >
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-4">
@@ -455,7 +481,9 @@ const FamilySupportPage: React.FC = () => {
                               {member.first_name} {member.last_name}
                             </h3>
                             <p className="text-sm text-gray-600">
-                              {member.relationship} - {member.patients?.first_name} {member.patients?.last_name}
+                              {member.relationship} -{" "}
+                              {member.patients?.first_name}{" "}
+                              {member.patients?.last_name}
                             </p>
                           </div>
                         </div>
@@ -493,7 +521,9 @@ const FamilySupportPage: React.FC = () => {
 
                       {member.notes && (
                         <div className="mb-4">
-                          <h4 className="text-sm font-semibold mb-2">ملاحظات:</h4>
+                          <h4 className="text-sm font-semibold mb-2">
+                            ملاحظات:
+                          </h4>
                           <p className="text-sm text-gray-700 bg-surface p-3 rounded-lg">
                             {member.notes}
                           </p>
@@ -502,7 +532,10 @@ const FamilySupportPage: React.FC = () => {
 
                       <div className="flex items-center justify-between pt-4 border-t">
                         <div className="text-sm text-gray-600">
-                          عضو منذ {new Date(member.created_at).toLocaleDateString('ar-SA')}
+                          عضو منذ{" "}
+                          {new Date(member.created_at).toLocaleDateString(
+                            "ar-SA",
+                          )}
                         </div>
                         <div className="flex gap-2">
                           <Button variant="outline" size="sm">
@@ -523,16 +556,22 @@ const FamilySupportPage: React.FC = () => {
           )}
 
           {/* Support Sessions Tab */}
-          {activeTab === 'sessions' && (
+          {activeTab === "sessions" && (
             <div className="space-y-6">
               {filteredSessions.length === 0 ? (
                 <Card>
                   <CardContent className="p-12 text-center">
                     <MessageCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد جلسات دعم</h3>
-                    <p className="text-gray-600 mb-4">ابدأ بجدولة جلسة دعم جديدة</p>
-                    <Button 
-                      onClick={() => router.push('/family-support/sessions/new')}
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      لا توجد جلسات دعم
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      ابدأ بجدولة جلسة دعم جديدة
+                    </p>
+                    <Button
+                      onClick={() =>
+                        router.push("/family-support/sessions/new")
+                      }
                       className="bg-[var(--brand-primary)] hover:brightness-95"
                     >
                       جدولة جلسة دعم
@@ -541,13 +580,20 @@ const FamilySupportPage: React.FC = () => {
                 </Card>
               ) : (
                 filteredSessions.map((session) => (
-                  <Card key={session.id} className="hover:shadow-md transition-shadow">
+                  <Card
+                    key={session.id}
+                    className="hover:shadow-md transition-shadow"
+                  >
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div>
-                          <h3 className="text-lg font-semibold">{session.session_type}</h3>
+                          <h3 className="text-lg font-semibold">
+                            {session.session_type}
+                          </h3>
                           <p className="text-sm text-gray-600">
-                            {session.family_members?.first_name} {session.family_members?.last_name} - {session.family_members?.relationship}
+                            {session.family_members?.first_name}{" "}
+                            {session.family_members?.last_name} -{" "}
+                            {session.family_members?.relationship}
                           </p>
                         </div>
                         <div className="flex items-center gap-2">
@@ -561,25 +607,36 @@ const FamilySupportPage: React.FC = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div className="flex items-center gap-2">
                           <Calendar className="w-4 h-4 text-gray-500" />
-                          <span className="text-sm">{session.session_date}</span>
+                          <span className="text-sm">
+                            {session.session_date}
+                          </span>
                         </div>
                         <div className="flex items-center gap-2">
                           <Clock className="w-4 h-4 text-gray-500" />
-                          <span className="text-sm">{session.session_time} ({session.duration} دقيقة)</span>
+                          <span className="text-sm">
+                            {session.session_time} ({session.duration} دقيقة)
+                          </span>
                         </div>
                         <div className="flex items-center gap-2">
                           <User className="w-4 h-4 text-gray-500" />
                           <span className="text-sm">
-                            {session.counselors?.first_name} {session.counselors?.last_name}
+                            {session.counselors?.first_name}{" "}
+                            {session.counselors?.last_name}
                           </span>
                         </div>
                       </div>
 
                       <div className="mb-4">
-                        <h4 className="text-sm font-semibold mb-2">المواضيع المناقشة:</h4>
+                        <h4 className="text-sm font-semibold mb-2">
+                          المواضيع المناقشة:
+                        </h4>
                         <div className="flex flex-wrap gap-2">
                           {session.topics_discussed.map((topic, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
+                            <Badge
+                              key={index}
+                              variant="secondary"
+                              className="text-xs"
+                            >
                               {topic}
                             </Badge>
                           ))}
@@ -587,10 +644,16 @@ const FamilySupportPage: React.FC = () => {
                       </div>
 
                       <div className="mb-4">
-                        <h4 className="text-sm font-semibold mb-2">التوصيات:</h4>
+                        <h4 className="text-sm font-semibold mb-2">
+                          التوصيات:
+                        </h4>
                         <div className="flex flex-wrap gap-2">
                           {session.recommendations.map((rec, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="text-xs"
+                            >
                               {rec}
                             </Badge>
                           ))}
@@ -599,7 +662,9 @@ const FamilySupportPage: React.FC = () => {
 
                       {session.follow_up_notes && (
                         <div className="mb-4">
-                          <h4 className="text-sm font-semibold mb-2">ملاحظات المتابعة:</h4>
+                          <h4 className="text-sm font-semibold mb-2">
+                            ملاحظات المتابعة:
+                          </h4>
                           <p className="text-sm text-gray-700 bg-surface p-3 rounded-lg">
                             {session.follow_up_notes}
                           </p>
@@ -608,7 +673,9 @@ const FamilySupportPage: React.FC = () => {
 
                       <div className="flex items-center justify-between pt-4 border-t">
                         <div className="text-sm text-gray-600">
-                          {new Date(session.created_at).toLocaleDateString('ar-SA')}
+                          {new Date(session.created_at).toLocaleDateString(
+                            "ar-SA",
+                          )}
                         </div>
                         <div className="flex gap-2">
                           <Button variant="outline" size="sm">
@@ -629,16 +696,22 @@ const FamilySupportPage: React.FC = () => {
           )}
 
           {/* Resources Tab */}
-          {activeTab === 'resources' && (
+          {activeTab === "resources" && (
             <div className="space-y-6">
               {filteredResources.length === 0 ? (
                 <Card>
                   <CardContent className="p-12 text-center">
                     <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد موارد تعليمية</h3>
-                    <p className="text-gray-600 mb-4">ابدأ بإضافة مورد تعليمي جديد</p>
-                    <Button 
-                      onClick={() => router.push('/family-support/resources/new')}
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      لا توجد موارد تعليمية
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      ابدأ بإضافة مورد تعليمي جديد
+                    </p>
+                    <Button
+                      onClick={() =>
+                        router.push("/family-support/resources/new")
+                      }
                       className="bg-[var(--brand-primary)] hover:brightness-95"
                     >
                       إضافة مورد جديد
@@ -647,7 +720,10 @@ const FamilySupportPage: React.FC = () => {
                 </Card>
               ) : (
                 filteredResources.map((resource) => (
-                  <Card key={resource.id} className="hover:shadow-md transition-shadow">
+                  <Card
+                    key={resource.id}
+                    className="hover:shadow-md transition-shadow"
+                  >
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-4">
@@ -655,8 +731,12 @@ const FamilySupportPage: React.FC = () => {
                             {getResourceIcon(resource.type)}
                           </div>
                           <div>
-                            <h3 className="text-lg font-semibold">{resource.title}</h3>
-                            <p className="text-sm text-gray-600">{resource.description}</p>
+                            <h3 className="text-lg font-semibold">
+                              {resource.title}
+                            </h3>
+                            <p className="text-sm text-gray-600">
+                              {resource.description}
+                            </p>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
@@ -668,10 +748,16 @@ const FamilySupportPage: React.FC = () => {
                       </div>
 
                       <div className="mb-4">
-                        <h4 className="text-sm font-semibold mb-2">العلامات:</h4>
+                        <h4 className="text-sm font-semibold mb-2">
+                          العلامات:
+                        </h4>
                         <div className="flex flex-wrap gap-2">
                           {resource.tags.map((tag, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
+                            <Badge
+                              key={index}
+                              variant="secondary"
+                              className="text-xs"
+                            >
                               {tag}
                             </Badge>
                           ))}
@@ -680,7 +766,9 @@ const FamilySupportPage: React.FC = () => {
 
                       <div className="flex items-center justify-between pt-4 border-t">
                         <div className="text-sm text-gray-600">
-                          {new Date(resource.created_at).toLocaleDateString('ar-SA')}
+                          {new Date(resource.created_at).toLocaleDateString(
+                            "ar-SA",
+                          )}
                         </div>
                         <div className="flex gap-2">
                           <Button variant="outline" size="sm">

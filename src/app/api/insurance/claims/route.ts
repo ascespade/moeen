@@ -3,28 +3,37 @@
  * Handle insurance claims processing, provider integration, and status tracking
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
-import { ValidationHelper } from '@/core/validation';
-import { ErrorHandler } from '@/core/errors';
-import { requireAuth } from '@/lib/auth/authorize';
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import { createClient } from "@/lib/supabase/server";
+import { ValidationHelper } from "@/core/validation";
+import { ErrorHandler } from "@/core/errors";
+import { requireAuth } from "@/lib/auth/authorize";
 
 const claimSchema = z.object({
-  appointmentId: z.string().uuid('Invalid appointment ID'),
-  provider: z.enum(['tawuniya', 'bupa', 'axa', 'medgulf', 'other']),
-  policyNumber: z.string().min(1, 'Policy number required'),
-  memberId: z.string().min(1, 'Member ID required'),
-  claimAmount: z.number().positive('Claim amount must be positive'),
-  diagnosis: z.string().min(1, 'Diagnosis required'),
-  treatment: z.string().min(1, 'Treatment required'),
+  appointmentId: z.string().uuid("Invalid appointment ID"),
+  provider: z.enum(["tawuniya", "bupa", "axa", "medgulf", "other"]),
+  policyNumber: z.string().min(1, "Policy number required"),
+  memberId: z.string().min(1, "Member ID required"),
+  claimAmount: z.number().positive("Claim amount must be positive"),
+  diagnosis: z.string().min(1, "Diagnosis required"),
+  treatment: z.string().min(1, "Treatment required"),
   attachments: z.array(z.string().url()).optional(),
   notes: z.string().optional(),
-  priority: z.enum(['low', 'normal', 'high', 'urgent']).default('normal'),
+  priority: z.enum(["low", "normal", "high", "urgent"]).default("normal"),
 });
 
 const updateClaimSchema = z.object({
-  status: z.enum(['draft', 'submitted', 'under_review', 'approved', 'rejected', 'paid']).optional(),
+  status: z
+    .enum([
+      "draft",
+      "submitted",
+      "under_review",
+      "approved",
+      "rejected",
+      "paid",
+    ])
+    .optional(),
   providerResponse: z.string().optional(),
   approvedAmount: z.number().positive().optional(),
   rejectionReason: z.string().optional(),
@@ -34,9 +43,11 @@ const updateClaimSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize staff, supervisor, or admin
-    const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(request);
+    const authResult = await requireAuth(["staff", "supervisor", "admin"])(
+      request,
+    );
     if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const supabase = await createClient();
@@ -45,7 +56,10 @@ export async function POST(request: NextRequest) {
     // Validate input
     const validation = await ValidationHelper.validateAsync(claimSchema, body);
     if (!validation.success) {
-      return NextResponse.json({ error: validation.error.message }, { status: 400 });
+      return NextResponse.json(
+        { error: validation.error.message },
+        { status: 400 },
+      );
     }
 
     const {
@@ -58,13 +72,14 @@ export async function POST(request: NextRequest) {
       treatment,
       attachments,
       notes,
-      priority
+      priority,
     } = validation.data;
 
     // Verify appointment exists and get details
     const { data: appointment, error: appointmentError } = await supabase
-      .from('appointments')
-      .select(`
+      .from("appointments")
+      .select(
+        `
         id,
         patientId,
         doctorId,
@@ -72,17 +87,24 @@ export async function POST(request: NextRequest) {
         status,
         patients(id, fullName, insuranceProvider, insuranceNumber),
         doctors(id, fullName, speciality)
-      `)
-      .eq('id', appointmentId)
+      `,
+      )
+      .eq("id", appointmentId)
       .single();
 
     if (appointmentError || !appointment) {
-      return NextResponse.json({ error: 'Appointment not found' }, { status: 404 });
+      return NextResponse.json(
+        { error: "Appointment not found" },
+        { status: 404 },
+      );
     }
 
     // Verify patient has insurance
     if (!appointment.patients.insuranceProvider) {
-      return NextResponse.json({ error: 'Patient has no insurance provider' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Patient has no insurance provider" },
+        { status: 400 },
+      );
     }
 
     // Generate claim reference
@@ -90,7 +112,7 @@ export async function POST(request: NextRequest) {
 
     // Create insurance claim
     const { data: claim, error: claimError } = await supabase
-      .from('insurance_claims')
+      .from("insurance_claims")
       .insert({
         appointmentId,
         patientId: appointment.patientId,
@@ -104,14 +126,17 @@ export async function POST(request: NextRequest) {
         notes,
         priority,
         claimReference,
-        status: 'draft',
+        status: "draft",
         createdBy: authResult.user!.id,
       })
       .select()
       .single();
 
     if (claimError) {
-      return NextResponse.json({ error: 'Failed to create insurance claim' }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to create insurance claim" },
+        { status: 500 },
+      );
     }
 
     // Submit to insurance provider
@@ -119,29 +144,29 @@ export async function POST(request: NextRequest) {
 
     // Update claim with submission result
     const { error: updateError } = await supabase
-      .from('insurance_claims')
+      .from("insurance_claims")
       .update({
-        status: submissionResult.success ? 'submitted' : 'draft',
+        status: submissionResult.success ? "submitted" : "draft",
         providerResponse: submissionResult.response,
         submittedAt: submissionResult.success ? new Date().toISOString() : null,
       })
-      .eq('id', claim.id);
+      .eq("id", claim.id);
 
     if (updateError) {
-      console.error('Failed to update claim submission status:', updateError);
+      console.error("Failed to update claim submission status:", updateError);
     }
 
     // Create audit log
-    await supabase.from('audit_logs').insert({
-      action: 'insurance_claim_created',
-      entityType: 'insurance_claim',
+    await supabase.from("audit_logs").insert({
+      action: "insurance_claim_created",
+      entityType: "insurance_claim",
       entityId: claim.id,
       userId: authResult.user!.id,
       metadata: {
         appointmentId,
         provider,
         claimAmount,
-        status: submissionResult.success ? 'submitted' : 'draft',
+        status: submissionResult.success ? "submitted" : "draft",
       },
     });
 
@@ -151,9 +176,8 @@ export async function POST(request: NextRequest) {
         ...claim,
         submissionResult,
       },
-      message: 'Insurance claim created successfully'
+      message: "Insurance claim created successfully",
     });
-
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
@@ -162,22 +186,25 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     // Authorize staff, supervisor, or admin
-    const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(request);
+    const authResult = await requireAuth(["staff", "supervisor", "admin"])(
+      request,
+    );
     if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
-    const status = searchParams.get('status');
-    const provider = searchParams.get('provider');
-    const patientId = searchParams.get('patientId');
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '20');
+    const status = searchParams.get("status");
+    const provider = searchParams.get("provider");
+    const patientId = searchParams.get("patientId");
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "20");
 
     let query = supabase
-      .from('insurance_claims')
-      .select(`
+      .from("insurance_claims")
+      .select(
+        `
         *,
         appointment:appointments(
           id,
@@ -186,24 +213,28 @@ export async function GET(request: NextRequest) {
           doctors(id, fullName, speciality)
         ),
         createdBy:users(id, email, fullName)
-      `)
-      .order('createdAt', { ascending: false })
+      `,
+      )
+      .order("createdAt", { ascending: false })
       .range((page - 1) * limit, page * limit - 1);
 
     if (status) {
-      query = query.eq('status', status);
+      query = query.eq("status", status);
     }
     if (provider) {
-      query = query.eq('provider', provider);
+      query = query.eq("provider", provider);
     }
     if (patientId) {
-      query = query.eq('patientId', patientId);
+      query = query.eq("patientId", patientId);
     }
 
     const { data: claims, error, count } = await query;
 
     if (error) {
-      return NextResponse.json({ error: 'Failed to fetch insurance claims' }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to fetch insurance claims" },
+        { status: 500 },
+      );
     }
 
     return NextResponse.json({
@@ -216,7 +247,6 @@ export async function GET(request: NextRequest) {
         pages: Math.ceil((count || 0) / limit),
       },
     });
-
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
@@ -225,49 +255,58 @@ export async function GET(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     // Authorize supervisor or admin only
-    const authResult = await requireAuth(['supervisor', 'admin'])(request);
+    const authResult = await requireAuth(["supervisor", "admin"])(request);
     if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
-    const claimId = searchParams.get('claimId');
-    
+    const claimId = searchParams.get("claimId");
+
     if (!claimId) {
-      return NextResponse.json({ error: 'Claim ID required' }, { status: 400 });
+      return NextResponse.json({ error: "Claim ID required" }, { status: 400 });
     }
 
     const body = await request.json();
 
     // Validate input
-    const validation = await ValidationHelper.validateAsync(updateClaimSchema, body);
+    const validation = await ValidationHelper.validateAsync(
+      updateClaimSchema,
+      body,
+    );
     if (!validation.success) {
-      return NextResponse.json({ error: validation.error.message }, { status: 400 });
+      return NextResponse.json(
+        { error: validation.error.message },
+        { status: 400 },
+      );
     }
 
     const updateData = validation.data;
 
     // Update claim
     const { data: updatedClaim, error: updateError } = await supabase
-      .from('insurance_claims')
+      .from("insurance_claims")
       .update({
         ...updateData,
         updatedBy: authResult.user!.id,
         updatedAt: new Date().toISOString(),
       })
-      .eq('id', claimId)
+      .eq("id", claimId)
       .select()
       .single();
 
     if (updateError) {
-      return NextResponse.json({ error: 'Failed to update claim' }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to update claim" },
+        { status: 500 },
+      );
     }
 
     // Create audit log
-    await supabase.from('audit_logs').insert({
-      action: 'insurance_claim_updated',
-      entityType: 'insurance_claim',
+    await supabase.from("audit_logs").insert({
+      action: "insurance_claim_updated",
+      entityType: "insurance_claim",
       entityId: claimId,
       userId: authResult.user!.id,
       metadata: updateData,
@@ -276,9 +315,8 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: updatedClaim,
-      message: 'Insurance claim updated successfully'
+      message: "Insurance claim updated successfully",
     });
-
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
@@ -288,30 +326,30 @@ async function submitToInsuranceProvider(claim: any, provider: string) {
   try {
     // This would integrate with actual insurance provider APIs
     // For now, we'll simulate the submission
-    
+
     const providerEndpoints = {
-      tawuniya: 'https://api.tawuniya.com/claims',
-      bupa: 'https://api.bupa.com/claims',
-      axa: 'https://api.axa.com/claims',
-      medgulf: 'https://api.medgulf.com/claims',
+      tawuniya: "https://api.tawuniya.com/claims",
+      bupa: "https://api.bupa.com/claims",
+      axa: "https://api.axa.com/claims",
+      medgulf: "https://api.medgulf.com/claims",
       other: null,
     };
 
     const endpoint = providerEndpoints[provider];
-    
+
     if (!endpoint) {
       return {
         success: false,
-        response: 'Provider integration not available',
+        response: "Provider integration not available",
       };
     }
 
     // Simulate API call
     const response = await fetch(endpoint, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${process.env[`${provider.toUpperCase()}_API_KEY`]}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env[`${provider.toUpperCase()}_API_KEY`]}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         claimReference: claim.claimReference,

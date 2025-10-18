@@ -5,15 +5,15 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { 
-  Calendar, 
-  Users, 
-  FileText, 
-  Settings, 
+import {
+  Calendar,
+  Users,
+  FileText,
+  Settings,
   Bell,
   BarChart3,
   Clock,
-  CheckCircle
+  CheckCircle,
 } from "lucide-react";
 
 export default function UserDashboard() {
@@ -27,6 +27,7 @@ export default function UserDashboard() {
     }
   }, [isAuthenticated, isLoading, router]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     document.title = "Dashboard - مُعين";
   }, []);
@@ -58,7 +59,7 @@ export default function UserDashboard() {
       change: "+2 هذا الأسبوع",
       icon: Calendar,
       color: "text-brand-primary",
-      bgColor: "bg-blue-100"
+      bgColor: "bg-blue-100",
     },
     {
       title: "الملفات الطبية",
@@ -66,7 +67,7 @@ export default function UserDashboard() {
       change: "تم تحديث 2 ملف",
       icon: FileText,
       color: "text-brand-success",
-      bgColor: "bg-green-100"
+      bgColor: "bg-green-100",
     },
     {
       title: "الإشعارات",
@@ -74,7 +75,7 @@ export default function UserDashboard() {
       change: "3 جديدة",
       icon: Bell,
       color: "text-brand-primary",
-      bgColor: "bg-orange-100"
+      bgColor: "bg-orange-100",
     },
     {
       title: "الوقت المتبقي",
@@ -82,8 +83,8 @@ export default function UserDashboard() {
       change: "حتى الموعد التالي",
       icon: Clock,
       color: "text-purple-600",
-      bgColor: "bg-purple-100"
-    }
+      bgColor: "bg-purple-100",
+    },
   ];
 
   const recentActivities = [
@@ -92,22 +93,22 @@ export default function UserDashboard() {
       title: "تم تأكيد موعدك مع د. أحمد محمد",
       time: "منذ 2 ساعة",
       type: "appointment",
-      status: "confirmed"
+      status: "confirmed",
     },
     {
       id: 2,
       title: "تم تحديث ملفك الطبي",
       time: "منذ 4 ساعات",
       type: "medical",
-      status: "updated"
+      status: "updated",
     },
     {
       id: 3,
       title: "إشعار جديد: تذكير بموعد غد",
       time: "منذ 6 ساعات",
       type: "notification",
-      status: "new"
-    }
+      status: "new",
+    },
   ];
 
   return (
@@ -133,7 +134,7 @@ export default function UserDashboard() {
               </Button>
               <div className="h-8 w-8 bg-gray-300 rounded-full flex items-center justify-center">
                 <span className="text-sm font-medium text-gray-700">
-                  {user?.name?.charAt(0) || 'U'}
+                  {user?.name?.charAt(0) || "U"}
                 </span>
               </div>
             </div>
@@ -146,7 +147,7 @@ export default function UserDashboard() {
         {/* Welcome Section */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            مرحباً، {user?.name || 'مستخدم'}
+            مرحباً، {user?.name || "مستخدم"}
           </h2>
           <p className="text-gray-600 dark:text-gray-400">
             إليك نظرة عامة على نشاطك اليوم
@@ -166,9 +167,7 @@ export default function UserDashboard() {
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {stat.value}
                     </p>
-                    <p className="text-xs text-gray-500">
-                      {stat.change}
-                    </p>
+                    <p className="text-xs text-gray-500">{stat.change}</p>
                   </div>
                   <div className={`p-3 rounded-full ${stat.bgColor}`}>
                     <stat.icon className={`h-6 w-6 ${stat.color}`} />
@@ -193,7 +192,10 @@ export default function UserDashboard() {
               <CardContent>
                 <div className="space-y-4">
                   {recentActivities.map((activity) => (
-                    <div key={activity.id} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-800">
+                    <div
+                      key={activity.id}
+                      className="flex items-start space-x-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-800"
+                    >
                       <div className="flex-shrink-0">
                         <div className="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
                           <CheckCircle className="h-4 w-4 text-brand-primary" />
@@ -203,9 +205,7 @@ export default function UserDashboard() {
                         <p className="text-sm font-medium text-gray-900 dark:text-white">
                           {activity.title}
                         </p>
-                        <p className="text-sm text-gray-500">
-                          {activity.time}
-                        </p>
+                        <p className="text-sm text-gray-500">{activity.time}</p>
                       </div>
                     </div>
                   ))}
@@ -245,4 +245,3 @@ export default function UserDashboard() {
     </div>
   );
 }
-

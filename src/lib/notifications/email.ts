@@ -1,4 +1,4 @@
-import { log } from '@/lib/monitoring/logger';
+import logger from '@/lib/monitoring/logger';
 interface EmailTemplate {
   subject: string;
   html: string;
@@ -9,7 +9,7 @@ interface EmailData {
   to: string;
   template: string;
   data: Record<string, any>;
-  language?: 'ar' | 'en';
+  language?: "ar" | "en";
 }
 
 export class EmailNotificationService {
@@ -21,8 +21,8 @@ export class EmailNotificationService {
 
   private initializeTemplates() {
     // Appointment confirmation template
-    this.templates.set('appointment_confirmation', {
-      subject: 'تأكيد الموعد - مركز الحمام',
+    this.templates.set("appointment_confirmation", {
+      subject: "تأكيد الموعد - مركز الحمام",
       html: `
         <div style="font-family: Arial, sans-serif; direction: rtl; text-align: right;">
           <h2>تأكيد الموعد</h2>
@@ -52,12 +52,12 @@ export class EmailNotificationService {
         
         يرجى الحضور قبل الموعد بـ 15 دقيقة.
         شكراً لاختياركم مركز الحمام.
-      `
+      `,
     });
 
     // Payment confirmation template
-    this.templates.set('payment_confirmation', {
-      subject: 'تأكيد الدفع - مركز الحمام',
+    this.templates.set("payment_confirmation", {
+      subject: "تأكيد الدفع - مركز الحمام",
       html: `
         <div style="font-family: Arial, sans-serif; direction: rtl; text-align: right;">
           <h2>تأكيد الدفع</h2>
@@ -85,12 +85,12 @@ export class EmailNotificationService {
         التاريخ: {{paymentDate}}
         
         شكراً لاختياركم مركز الحمام.
-      `
+      `,
     });
 
     // Appointment reminder template
-    this.templates.set('appointment_reminder', {
-      subject: 'تذكير بالموعد - مركز الحمام',
+    this.templates.set("appointment_reminder", {
+      subject: "تذكير بالموعد - مركز الحمام",
       html: `
         <div style="font-family: Arial, sans-serif; direction: rtl; text-align: right;">
           <h2>تذكير بالموعد</h2>
@@ -118,15 +118,17 @@ export class EmailNotificationService {
         
         يرجى الحضور قبل الموعد بـ 15 دقيقة.
         شكراً لاختياركم مركز الحمام.
-      `
+      `,
     });
   }
 
-  async sendEmail(emailData: EmailData): Promise<{ success: boolean; error?: string }> {
+  async sendEmail(
+    emailData: EmailData,
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       const template = this.templates.get(emailData.template);
       if (!template) {
-        return { success: false, error: 'Template not found' };
+        return { success: false, error: "Template not found" };
       }
 
       // Replace template variables
@@ -135,19 +137,19 @@ export class EmailNotificationService {
       let text = template.text;
 
       Object.entries(emailData.data).forEach(([key, value]) => {
-        const regex = new RegExp(`{{${key}}}`, 'g');
+        const regex = new RegExp(`{{${key}}}`, "g");
         subject = subject.replace(regex, String(value));
         html = html.replace(regex, String(value));
         text = text.replace(regex, String(value));
       });
 
       // In production, this would integrate with an email service like SendGrid, AWS SES, etc.
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Email would be sent:', {
+      if (process.env.NODE_ENV === "development") {
+        console.log("Email would be sent:", {
           to: emailData.to,
           subject,
           html,
-          text
+          text,
         });
         return { success: true };
       }
@@ -161,11 +163,10 @@ export class EmailNotificationService {
       // });
 
       return { success: true };
-
     } catch (error) {
-      return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Email sending failed' 
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : "Email sending failed",
       };
     }
   }
@@ -180,9 +181,9 @@ export class EmailNotificationService {
   }) {
     return this.sendEmail({
       to: data.patientEmail,
-      template: 'appointment_confirmation',
+      template: "appointment_confirmation",
       data,
-      language: 'ar'
+      language: "ar",
     });
   }
 
@@ -196,9 +197,9 @@ export class EmailNotificationService {
   }) {
     return this.sendEmail({
       to: data.patientEmail,
-      template: 'payment_confirmation',
+      template: "payment_confirmation",
       data,
-      language: 'ar'
+      language: "ar",
     });
   }
 
@@ -211,9 +212,9 @@ export class EmailNotificationService {
   }) {
     return this.sendEmail({
       to: data.patientEmail,
-      template: 'appointment_reminder',
+      template: "appointment_reminder",
       data,
-      language: 'ar'
+      language: "ar",
     });
   }
 }

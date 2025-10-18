@@ -1,4 +1,4 @@
-import { log } from '@/lib/monitoring/logger';
+import logger from '@/lib/monitoring/logger';
 /**
  * Redis Cache Manager - مدير التخزين المؤقت
  * Redis-based caching system for improved performance
@@ -16,7 +16,7 @@ class RedisCache {
   constructor() {
     this.config = {
       ttl: 3600, // 1 hour default
-      prefix: 'healthcare:',
+      prefix: "healthcare:",
     };
   }
 
@@ -27,7 +27,7 @@ class RedisCache {
       const cached = this.getFromMemory(key);
       return cached ? JSON.parse(cached) : null;
     } catch (error) {
-      console.error('Cache get error:', error);
+      console.error("Cache get error:", error);
       return null;
     }
   }
@@ -36,12 +36,12 @@ class RedisCache {
     try {
       const serialized = JSON.stringify(value);
       const actualTtl = ttl || this.config.ttl;
-      
+
       // In a real implementation, this would use Redis
       this.setInMemory(key, serialized, actualTtl);
       return true;
     } catch (error) {
-      console.error('Cache set error:', error);
+      console.error("Cache set error:", error);
       return false;
     }
   }
@@ -51,7 +51,7 @@ class RedisCache {
       this.deleteFromMemory(key);
       return true;
     } catch (error) {
-      console.error('Cache delete error:', error);
+      console.error("Cache delete error:", error);
       return false;
     }
   }
@@ -65,7 +65,7 @@ class RedisCache {
       this.flushMemory();
       return true;
     } catch (error) {
-      console.error('Cache flush error:', error);
+      console.error("Cache flush error:", error);
       return false;
     }
   }
@@ -76,19 +76,19 @@ class RedisCache {
   private getFromMemory(key: string): string | null {
     const item = this.memoryCache.get(key);
     if (!item) return null;
-    
+
     if (Date.now() > item.expires) {
       this.memoryCache.delete(key);
       return null;
     }
-    
+
     return item.value;
   }
 
   private setInMemory(key: string, value: string, ttl: number): void {
     this.memoryCache.set(key, {
       value,
-      expires: Date.now() + (ttl * 1000),
+      expires: Date.now() + ttl * 1000,
     });
   }
 
@@ -107,14 +107,23 @@ class RedisCache {
 }
 
 // Cache decorator for functions
-export function cached(ttl: number = 3600, keyGenerator?: (...args: any[]) => string) {
-  return function (target: any, propertyName: string, descriptor: PropertyDescriptor) {
+export function cached(
+  ttl: number = 3600,
+  keyGenerator?: (...args: any[]) => string,
+) {
+  return function (
+    target: any,
+    propertyName: string,
+    descriptor: PropertyDescriptor,
+  ) {
     const method = descriptor.value;
     const cache = new RedisCache();
 
     descriptor.value = async function (...args: any[]) {
-      const cacheKey = keyGenerator ? keyGenerator(...args) : `${propertyName}:${JSON.stringify(args)}`;
-      
+      const cacheKey = keyGenerator
+        ? keyGenerator(...args)
+        : `${propertyName}:${JSON.stringify(args)}`;
+
       // Try to get from cache
       const cached = await cache.get(cacheKey);
       if (cached !== null) {
@@ -124,7 +133,7 @@ export function cached(ttl: number = 3600, keyGenerator?: (...args: any[]) => st
       // Execute method and cache result
       const result = await method.apply(this, args);
       await cache.set(cacheKey, result, ttl);
-      
+
       return result;
     };
   };
@@ -138,9 +147,11 @@ export const CACHE_KEYS = {
   USER_PROFILE: (userId: string) => `user:profile:${userId}`,
   PATIENT_DATA: (patientId: string) => `patient:data:${patientId}`,
   DOCTOR_SCHEDULE: (doctorId: string) => `doctor:schedule:${doctorId}`,
-  APPOINTMENT_AVAILABILITY: (doctorId: string, date: string) => `appointment:availability:${doctorId}:${date}`,
+  APPOINTMENT_AVAILABILITY: (doctorId: string, date: string) =>
+    `appointment:availability:${doctorId}:${date}`,
   DASHBOARD_METRICS: (dateRange: string) => `dashboard:metrics:${dateRange}`,
-  NOTIFICATION_TEMPLATES: (type: string, language: string) => `notification:templates:${type}:${language}`,
+  NOTIFICATION_TEMPLATES: (type: string, language: string) =>
+    `notification:templates:${type}:${language}`,
   MEDICAL_RECORDS: (patientId: string) => `medical:records:${patientId}`,
   INSURANCE_CLAIMS: (patientId: string) => `insurance:claims:${patientId}`,
   REPORTS: (reportId: string) => `reports:${reportId}`,

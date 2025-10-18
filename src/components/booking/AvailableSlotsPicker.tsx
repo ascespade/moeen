@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import logger from '@/lib/monitoring/logger';
+import { useEffect, useState } from "react";
+import logger from "@/lib/monitoring/logger";
 
 interface Slot {
   therapistId: string;
@@ -29,8 +29,9 @@ export default function AvailableSlotsPicker({
 }: Props) {
   const [slots, setSlots] = useState<Slot[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (sessionTypeId && selectedDate) {
       loadAvailableSlots();
@@ -39,7 +40,7 @@ export default function AvailableSlotsPicker({
 
   const loadAvailableSlots = async () => {
     setLoading(true);
-    setError('');
+    setError("");
     try {
       const params = new URLSearchParams({
         sessionTypeId,
@@ -47,24 +48,24 @@ export default function AvailableSlotsPicker({
       });
 
       if (therapistId) {
-        params.append('therapistId', therapistId);
+        params.append("therapistId", therapistId);
       }
 
       const response = await fetch(`/api/sessions/available-slots?${params}`);
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to load slots');
+        throw new Error(data.error || "Failed to load slots");
       }
 
       setSlots(data.slots || []);
 
       if (data.slots.length === 0) {
-        setError('لا توجد مواعيد متاحة في هذا التاريخ');
+        setError("لا توجد مواعيد متاحة في هذا التاريخ");
       }
     } catch (err: any) {
-      logger.error('Error loading available slots', err);
-      setError(err.message || 'حدث خطأ في تحميل المواعيد المتاحة');
+      logger.error("Error loading available slots", err);
+      setError(err.message || "حدث خطأ في تحميل المواعيد المتاحة");
     } finally {
       setLoading(false);
     }
@@ -86,10 +87,7 @@ export default function AvailableSlotsPicker({
       <div className="card p-8 text-center">
         <div className="text-5xl mb-4">📅</div>
         <p className="text-lg text-gray-700 dark:text-gray-300">{error}</p>
-        <button
-          onClick={loadAvailableSlots}
-          className="btn btn-outline mt-4"
-        >
+        <button onClick={loadAvailableSlots} className="btn btn-outline mt-4">
           إعادة المحاولة
         </button>
       </div>
@@ -143,8 +141,8 @@ export default function AvailableSlotsPicker({
                 className={`p-3 rounded-lg border-2 transition-all text-center ${
                   selectedSlot?.startTime === slot.startTime &&
                   selectedSlot?.therapistId === slot.therapistId
-                    ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/10 font-bold'
-                    : 'border-gray-200 dark:border-gray-700 hover:border-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/5'
+                    ? "border-[var(--brand-primary)] bg-[var(--brand-primary)]/10 font-bold"
+                    : "border-gray-200 dark:border-gray-700 hover:border-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/5"
                 }`}
               >
                 <div className="text-sm font-semibold text-gray-900 dark:text-white">

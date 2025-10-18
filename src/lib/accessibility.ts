@@ -1,7 +1,7 @@
 // Accessibility utilities for users with special needs
 export interface AccessibilitySettings {
-  fontSize: 'small' | 'medium' | 'large' | 'extra-large';
-  contrast: 'normal' | 'high' | 'extra-high';
+  fontSize: "small" | "medium" | "large" | "extra-large";
+  contrast: "normal" | "high" | "extra-high";
   screenReader: boolean;
   keyboardNavigation: boolean;
   voiceControl: boolean;
@@ -9,7 +9,7 @@ export interface AccessibilitySettings {
   focusIndicators: boolean;
   colorBlindSupport: boolean;
   dyslexiaSupport: boolean;
-  language: 'ar' | 'en';
+  language: "ar" | "en";
 }
 
 export class AccessibilityManager {
@@ -24,16 +24,15 @@ export class AccessibilityManager {
 
   // Load settings from localStorage or use defaults
   private loadSettings(): AccessibilitySettings {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return this.getDefaultSettings();
     }
 
-    const saved = localStorage.getItem('accessibility-settings');
+    const saved = localStorage.getItem("accessibility-settings");
     if (saved) {
       try {
         return { ...this.getDefaultSettings(), ...JSON.parse(saved) };
-      } catch (error) {
-        }
+      } catch (error) {}
     }
 
     return this.getDefaultSettings();
@@ -41,8 +40,8 @@ export class AccessibilityManager {
 
   private getDefaultSettings(): AccessibilitySettings {
     return {
-      fontSize: 'medium',
-      contrast: 'normal',
+      fontSize: "medium",
+      contrast: "normal",
       screenReader: false,
       keyboardNavigation: true,
       voiceControl: false,
@@ -50,91 +49,99 @@ export class AccessibilityManager {
       focusIndicators: true,
       colorBlindSupport: false,
       dyslexiaSupport: false,
-      language: 'ar'
+      language: "ar",
     };
   }
 
   // Save settings to localStorage
   private saveSettings(): void {
-    if (typeof window === 'undefined') return;
-    
+    if (typeof window === "undefined") return;
+
     try {
-      localStorage.setItem('accessibility-settings', JSON.stringify(this.settings));
-    } catch (error) {
-      }
+      localStorage.setItem(
+        "accessibility-settings",
+        JSON.stringify(this.settings),
+      );
+    } catch (error) {}
   }
 
   // Apply accessibility settings to the DOM
   private applySettings(): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const root = document.documentElement;
-    
+
     // Font size
     const fontSizeMap = {
-      'small': '14px',
-      'medium': '16px',
-      'large': '18px',
-      'extra-large': '20px'
+      small: "14px",
+      medium: "16px",
+      large: "18px",
+      "extra-large": "20px",
     };
-    root.style.setProperty('--base-font-size', fontSizeMap[this.settings.fontSize]);
+    root.style.setProperty(
+      "--base-font-size",
+      fontSizeMap[this.settings.fontSize],
+    );
 
     // Contrast
-    if (this.settings.contrast === 'high') {
-      root.classList.add('high-contrast');
-    } else if (this.settings.contrast === 'extra-high') {
-      root.classList.add('extra-high-contrast');
+    if (this.settings.contrast === "high") {
+      root.classList.add("high-contrast");
+    } else if (this.settings.contrast === "extra-high") {
+      root.classList.add("extra-high-contrast");
     } else {
-      root.classList.remove('high-contrast', 'extra-high-contrast');
+      root.classList.remove("high-contrast", "extra-high-contrast");
     }
 
     // Reduced motion
     if (this.settings.reducedMotion) {
-      root.classList.add('reduced-motion');
+      root.classList.add("reduced-motion");
     } else {
-      root.classList.remove('reduced-motion');
+      root.classList.remove("reduced-motion");
     }
 
     // Focus indicators
     if (this.settings.focusIndicators) {
-      root.classList.add('focus-indicators');
+      root.classList.add("focus-indicators");
     } else {
-      root.classList.remove('focus-indicators');
+      root.classList.remove("focus-indicators");
     }
 
     // Color blind support
     if (this.settings.colorBlindSupport) {
-      root.classList.add('color-blind-support');
+      root.classList.add("color-blind-support");
     } else {
-      root.classList.remove('color-blind-support');
+      root.classList.remove("color-blind-support");
     }
 
     // Dyslexia support
     if (this.settings.dyslexiaSupport) {
-      root.classList.add('dyslexia-support');
+      root.classList.add("dyslexia-support");
     } else {
-      root.classList.remove('dyslexia-support');
+      root.classList.remove("dyslexia-support");
     }
 
     // Screen reader support
     if (this.settings.screenReader) {
-      root.classList.add('screen-reader-mode');
+      root.classList.add("screen-reader-mode");
     } else {
-      root.classList.remove('screen-reader-mode');
+      root.classList.remove("screen-reader-mode");
     }
 
     // Language direction
-    root.setAttribute('dir', this.settings.language === 'ar' ? 'rtl' : 'ltr');
-    root.setAttribute('lang', this.settings.language);
+    root.setAttribute("dir", this.settings.language === "ar" ? "rtl" : "ltr");
+    root.setAttribute("lang", this.settings.language);
   }
 
   // Setup event listeners for accessibility features
   private setupEventListeners(): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     // Keyboard navigation
     if (this.settings.keyboardNavigation) {
-      document.addEventListener('keydown', this.handleKeyboardNavigation.bind(this));
+      document.addEventListener(
+        "keydown",
+        this.handleKeyboardNavigation.bind(this),
+      );
     }
 
     // Voice control
@@ -143,50 +150,50 @@ export class AccessibilityManager {
     }
 
     // Focus management
-    document.addEventListener('focusin', this.handleFocusIn.bind(this));
-    document.addEventListener('focusout', this.handleFocusOut.bind(this));
+    document.addEventListener("focusin", this.handleFocusIn.bind(this));
+    document.addEventListener("focusout", this.handleFocusOut.bind(this));
   }
 
   // Handle keyboard navigation
   private handleKeyboardNavigation(event: KeyboardEvent): void {
     // Skip links
-    if (event.key === 'Tab' && event.shiftKey === false) {
-      this.announceToScreenReader('انتقل إلى العنصر التالي');
-    } else if (event.key === 'Tab' && event.shiftKey === true) {
-      this.announceToScreenReader('انتقل إلى العنصر السابق');
+    if (event.key === "Tab" && event.shiftKey === false) {
+      this.announceToScreenReader("انتقل إلى العنصر التالي");
+    } else if (event.key === "Tab" && event.shiftKey === true) {
+      this.announceToScreenReader("انتقل إلى العنصر السابق");
     }
 
     // Escape key
-    if (event.key === 'Escape') {
-      this.announceToScreenReader('إغلاق');
+    if (event.key === "Escape") {
+      this.announceToScreenReader("إغلاق");
     }
 
     // Enter key
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === "Enter" || event.key === " ") {
       const target = event.target as HTMLElement;
-      if (target && target.getAttribute('role') === 'button') {
-        this.announceToScreenReader('تم الضغط على الزر');
+      if (target && target.getAttribute("role") === "button") {
+        this.announceToScreenReader("تم الضغط على الزر");
       }
     }
   }
 
   // Setup voice control
   private setupVoiceControl(): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     // This would integrate with Web Speech API
     // For now, we'll just set up the basic structure
-    }
+  }
 
   // Handle focus events
   private handleFocusIn(event: FocusEvent): void {
     const target = event.target as HTMLElement;
     if (target) {
       // Announce focused element to screen reader
-      const ariaLabel = target.getAttribute('aria-label');
+      const ariaLabel = target.getAttribute("aria-label");
       const textContent = target.textContent?.trim();
-      const role = target.getAttribute('role');
-      
+      const role = target.getAttribute("role");
+
       if (ariaLabel) {
         this.announceToScreenReader(ariaLabel);
       } else if (textContent) {
@@ -196,29 +203,29 @@ export class AccessibilityManager {
       }
 
       // Add focus indicator
-      target.classList.add('focused');
+      target.classList.add("focused");
     }
   }
 
   private handleFocusOut(event: FocusEvent): void {
     const target = event.target as HTMLElement;
     if (target) {
-      target.classList.remove('focused');
+      target.classList.remove("focused");
     }
   }
 
   // Announce text to screen reader
   private announceToScreenReader(text: string): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
-    const announcement = document.createElement('div');
-    announcement.setAttribute('aria-live', 'polite');
-    announcement.setAttribute('aria-atomic', 'true');
-    announcement.className = 'sr-only';
+    const announcement = document.createElement("div");
+    announcement.setAttribute("aria-live", "polite");
+    announcement.setAttribute("aria-atomic", "true");
+    announcement.className = "sr-only";
     announcement.textContent = text;
-    
+
     document.body.appendChild(announcement);
-    
+
     setTimeout(() => {
       document.body.removeChild(announcement);
     }, 1000);
@@ -229,7 +236,7 @@ export class AccessibilityManager {
     this.settings = { ...this.settings, ...newSettings };
     this.saveSettings();
     this.applySettings();
-    this.notifyListeners('settingsChanged', this.settings);
+    this.notifyListeners("settingsChanged", this.settings);
   }
 
   // Get current settings
@@ -260,33 +267,36 @@ export class AccessibilityManager {
   private notifyListeners(event: string, data: any): void {
     const listeners = this.listeners.get(event);
     if (listeners) {
-      listeners.forEach(callback => callback(data));
+      listeners.forEach((callback) => callback(data));
     }
   }
 
   // Accessibility helpers
   static addAriaLabels(element: HTMLElement, label: string): void {
-    element.setAttribute('aria-label', label);
+    element.setAttribute("aria-label", label);
   }
 
   static addAriaDescribedBy(element: HTMLElement, descriptionId: string): void {
-    element.setAttribute('aria-describedby', descriptionId);
+    element.setAttribute("aria-describedby", descriptionId);
   }
 
   static addRole(element: HTMLElement, role: string): void {
-    element.setAttribute('role', role);
+    element.setAttribute("role", role);
   }
 
   static addTabIndex(element: HTMLElement, index: number): void {
-    element.setAttribute('tabindex', index.toString());
+    element.setAttribute("tabindex", index.toString());
   }
 
   static makeFocusable(element: HTMLElement): void {
-    element.setAttribute('tabindex', '0');
+    element.setAttribute("tabindex", "0");
   }
 
-  static addKeyboardHandler(element: HTMLElement, handler: (event: KeyboardEvent) => void): void {
-    element.addEventListener('keydown', handler);
+  static addKeyboardHandler(
+    element: HTMLElement,
+    handler: (event: KeyboardEvent) => void,
+  ): void {
+    element.addEventListener("keydown", handler);
   }
 
   // Color contrast utilities
@@ -303,22 +313,22 @@ export class AccessibilityManager {
   // Font size utilities
   static getFontSizeMultiplier(fontSize: string): number {
     const multipliers = {
-      'small': 0.875,
-      'medium': 1,
-      'large': 1.125,
-      'extra-large': 1.25
+      small: 0.875,
+      medium: 1,
+      large: 1.125,
+      "extra-large": 1.25,
     };
     return multipliers[fontSize as keyof typeof multipliers] || 1;
   }
 
   // Language utilities
   static isRTL(language: string): boolean {
-    const rtlLanguages = ['ar', 'he', 'fa', 'ur'];
+    const rtlLanguages = ["ar", "he", "fa", "ur"];
     return rtlLanguages.includes(language);
   }
 
-  static getTextDirection(language: string): 'ltr' | 'rtl' {
-    return this.isRTL(language) ? 'rtl' : 'ltr';
+  static getTextDirection(language: string): "ltr" | "rtl" {
+    return this.isRTL(language) ? "rtl" : "ltr";
   }
 }
 
@@ -327,17 +337,25 @@ export const accessibilityManager = new AccessibilityManager();
 
 // React hook for accessibility
 export function useAccessibility() {
-  const [settings, setSettings] = React.useState(accessibilityManager.getSettings());
+  const [settings, setSettings] = React.useState(
+    accessibilityManager.getSettings(),
+  );
 
   React.useEffect(() => {
     const handleSettingsChange = (newSettings: AccessibilitySettings) => {
       setSettings(newSettings);
     };
 
-    accessibilityManager.addEventListener('settingsChanged', handleSettingsChange);
+    accessibilityManager.addEventListener(
+      "settingsChanged",
+      handleSettingsChange,
+    );
 
     return () => {
-      accessibilityManager.removeEventListener('settingsChanged', handleSettingsChange);
+      accessibilityManager.removeEventListener(
+        "settingsChanged",
+        handleSettingsChange,
+      );
     };
   }, []);
 
@@ -349,4 +367,4 @@ export function useAccessibility() {
 }
 
 // Import React for the hook
-import React from 'react';
+import React from "react";

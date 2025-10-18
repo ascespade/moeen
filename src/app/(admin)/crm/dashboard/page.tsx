@@ -5,12 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { 
-  Calendar, 
-  Clock, 
-  Users, 
-  Phone, 
-  MapPin, 
+import {
+  Calendar,
+  Clock,
+  Users,
+  Phone,
+  MapPin,
   Search,
   Filter,
   MoreVertical,
@@ -20,7 +20,7 @@ import {
   Eye,
   UserPlus,
   TrendingUp,
-  Activity
+  Activity,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
@@ -71,7 +71,7 @@ const CRMDashboard: React.FC = () => {
     pendingAppointments: 0,
     completedAppointments: 0,
     totalPatients: 0,
-    totalDoctors: 0
+    totalDoctors: 0,
   });
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -89,67 +89,90 @@ const CRMDashboard: React.FC = () => {
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      
+
       // جلب المواعيد
-      const appointmentsResponse = await fetch('/api/appointments');
+      const appointmentsResponse = await fetch("/api/appointments");
       const appointmentsData = await appointmentsResponse.json();
-      
+
       if (appointmentsData.success) {
         setAppointments(appointmentsData.appointments || []);
       }
 
       // جلب الإحصائيات
-      const statsResponse = await fetch('/api/crm/stats');
+      const statsResponse = await fetch("/api/crm/stats");
       const statsData = await statsResponse.json();
-      
+
       if (statsData.success) {
         setStats(statsData.stats);
       }
     } catch (error) {
-      } finally {
+    } finally {
       setLoading(false);
     }
   };
 
-  const handleStatusUpdate = async (appointmentId: string, newStatus: string) => {
+  const handleStatusUpdate = async (
+    appointmentId: string,
+    newStatus: string,
+  ) => {
     try {
       const response = await fetch(`/api/appointments/${appointmentId}`, {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          status: newStatus
+          status: newStatus,
         }),
       });
 
       const data = await response.json();
-      
+
       if (data.success) {
         loadDashboardData(); // إعادة تحميل البيانات
       } else {
-        alert('فشل في تحديث حالة الموعد: ' + data.error);
+        alert("فشل في تحديث حالة الموعد: " + data.error);
       }
     } catch (error) {
-      alert('حدث خطأ في تحديث حالة الموعد');
+      alert("حدث خطأ في تحديث حالة الموعد");
     }
   };
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      'scheduled': { label: 'مجدول', variant: 'primary' as const, color: 'bg-blue-100 text-blue-800' },
-      'confirmed': { label: 'مؤكد', variant: 'secondary' as const, color: 'bg-green-100 text-green-800' },
-      'completed': { label: 'مكتمل', variant: 'outline' as const, color: 'bg-surface text-gray-800' },
-      'cancelled': { label: 'ملغي', variant: 'destructive' as const, color: 'bg-red-100 text-red-800' },
-      'no_show': { label: 'لم يحضر', variant: 'destructive' as const, color: 'bg-orange-100 text-orange-800' }
+      scheduled: {
+        label: "مجدول",
+        variant: "primary" as const,
+        color: "bg-blue-100 text-blue-800",
+      },
+      confirmed: {
+        label: "مؤكد",
+        variant: "secondary" as const,
+        color: "bg-green-100 text-green-800",
+      },
+      completed: {
+        label: "مكتمل",
+        variant: "outline" as const,
+        color: "bg-surface text-gray-800",
+      },
+      cancelled: {
+        label: "ملغي",
+        variant: "destructive" as const,
+        color: "bg-red-100 text-red-800",
+      },
+      no_show: {
+        label: "لم يحضر",
+        variant: "destructive" as const,
+        color: "bg-orange-100 text-orange-800",
+      },
     };
 
-    const config = statusConfig[status as keyof typeof statusConfig] || { 
-      label: status, 
-      variant: 'outline' as const, 
-      color: 'bg-surface text-gray-800' 
+    const config = statusConfig[status as keyof typeof statusConfig] || {
+      label: status,
+      variant: "outline" as const,
+      color: "bg-surface text-gray-800",
     };
-    
+
     return (
       <Badge variant={config.variant} className={config.color}>
         {config.label}
@@ -162,29 +185,44 @@ const CRMDashboard: React.FC = () => {
 
     // فلترة حسب البحث
     if (searchTerm) {
-      filtered = filtered.filter(appointment => 
-        appointment.patients?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        appointment.patients?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        appointment.doctors?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        appointment.doctors?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        appointment.public_id?.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(
+        (appointment) =>
+          appointment.patients?.first_name
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          appointment.patients?.last_name
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          appointment.doctors?.first_name
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          appointment.doctors?.last_name
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          appointment.public_id
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()),
       );
     }
 
     // فلترة حسب الحالة
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter(appointment => appointment.status === statusFilter);
+    if (statusFilter !== "all") {
+      filtered = filtered.filter(
+        (appointment) => appointment.status === statusFilter,
+      );
     }
 
     // فلترة حسب التاريخ
-    const today = new Date().toISOString().split('T')[0];
-    if (dateFilter === 'today') {
-      filtered = filtered.filter(appointment => appointment.appointment_date === today);
-    } else if (dateFilter === 'week') {
+    const today = new Date().toISOString().split("T")[0];
+    if (dateFilter === "today") {
+      filtered = filtered.filter(
+        (appointment) => appointment.appointment_date === today,
+      );
+    } else if (dateFilter === "week") {
       const weekAgo = new Date();
       weekAgo.setDate(weekAgo.getDate() - 7);
-      filtered = filtered.filter(appointment => 
-        new Date(appointment.appointment_date) >= weekAgo
+      filtered = filtered.filter(
+        (appointment) => new Date(appointment.appointment_date) >= weekAgo,
       );
     }
 
@@ -203,19 +241,23 @@ const CRMDashboard: React.FC = () => {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">لوحة تحكم الطاقم الطبي</h1>
-            <p className="text-gray-600 mt-2">إدارة المواعيد والمرضى والأطباء</p>
+            <h1 className="text-3xl font-bold text-gray-900">
+              لوحة تحكم الطاقم الطبي
+            </h1>
+            <p className="text-gray-600 mt-2">
+              إدارة المواعيد والمرضى والأطباء
+            </p>
           </div>
           <div className="flex gap-2">
-            <Button 
-              onClick={() => router.push('/crm/patients')}
+            <Button
+              onClick={() => router.push("/crm/patients")}
               variant="outline"
             >
               <Users className="w-4 h-4 mr-2" />
               إدارة المرضى
             </Button>
-            <Button 
-              onClick={() => router.push('/crm/doctors')}
+            <Button
+              onClick={() => router.push("/crm/doctors")}
               variant="outline"
             >
               <UserPlus className="w-4 h-4 mr-2" />
@@ -231,44 +273,58 @@ const CRMDashboard: React.FC = () => {
               <div className="flex items-center">
                 <Calendar className="h-8 w-8 text-[var(--brand-primary)]" />
                 <div className="mr-4">
-                  <p className="text-sm font-medium text-gray-600">إجمالي المواعيد</p>
-                  <p className="text-2xl font-bold">{stats.totalAppointments}</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    إجمالي المواعيد
+                  </p>
+                  <p className="text-2xl font-bold">
+                    {stats.totalAppointments}
+                  </p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
                 <Clock className="h-8 w-8 text-brand-success" />
                 <div className="mr-4">
-                  <p className="text-sm font-medium text-gray-600">مواعيد اليوم</p>
-                  <p className="text-2xl font-bold">{stats.todayAppointments}</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    مواعيد اليوم
+                  </p>
+                  <p className="text-2xl font-bold">
+                    {stats.todayAppointments}
+                  </p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
                 <Activity className="h-8 w-8 text-brand-primary" />
                 <div className="mr-4">
-                  <p className="text-sm font-medium text-gray-600">في الانتظار</p>
-                  <p className="text-2xl font-bold">{stats.pendingAppointments}</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    في الانتظار
+                  </p>
+                  <p className="text-2xl font-bold">
+                    {stats.pendingAppointments}
+                  </p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
                 <CheckCircle className="h-8 w-8 text-brand-success" />
                 <div className="mr-4">
                   <p className="text-sm font-medium text-gray-600">مكتملة</p>
-                  <p className="text-2xl font-bold">{stats.completedAppointments}</p>
+                  <p className="text-2xl font-bold">
+                    {stats.completedAppointments}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -291,7 +347,7 @@ const CRMDashboard: React.FC = () => {
                 />
               </div>
             </div>
-            
+
             <div className="flex gap-2">
               <select
                 value={statusFilter}
@@ -305,7 +361,7 @@ const CRMDashboard: React.FC = () => {
                 <option value="cancelled">ملغي</option>
                 <option value="no_show">لم يحضر</option>
               </select>
-              
+
               <select
                 value={dateFilter}
                 onChange={(e) => setDateFilter(e.target.value)}
@@ -329,14 +385,21 @@ const CRMDashboard: React.FC = () => {
         <Card>
           <CardContent className="p-12 text-center">
             <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد مواعيد</h3>
-            <p className="text-gray-600">لا توجد مواعيد تطابق المعايير المحددة</p>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              لا توجد مواعيد
+            </h3>
+            <p className="text-gray-600">
+              لا توجد مواعيد تطابق المعايير المحددة
+            </p>
           </CardContent>
         </Card>
       ) : (
         <div className="space-y-4">
           {filteredAppointments.map((appointment) => (
-            <Card key={appointment.id} className="hover:shadow-md transition-shadow">
+            <Card
+              key={appointment.id}
+              className="hover:shadow-md transition-shadow"
+            >
               <CardContent className="p-6">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -350,18 +413,23 @@ const CRMDashboard: React.FC = () => {
                           <div className="flex items-center gap-2">
                             <Users className="w-4 h-4 text-gray-500" />
                             <span className="font-medium">
-                              {appointment.patients?.first_name} {appointment.patients?.last_name}
+                              {appointment.patients?.first_name}{" "}
+                              {appointment.patients?.last_name}
                             </span>
                           </div>
                           {appointment.patients?.phone && (
                             <div className="flex items-center gap-2">
                               <Phone className="w-4 h-4 text-gray-500" />
-                              <span className="text-sm text-gray-600">{appointment.patients.phone}</span>
+                              <span className="text-sm text-gray-600">
+                                {appointment.patients.phone}
+                              </span>
                             </div>
                           )}
                           {appointment.patients?.email && (
                             <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600">{appointment.patients.email}</span>
+                              <span className="text-sm text-gray-600">
+                                {appointment.patients.email}
+                              </span>
                             </div>
                           )}
                         </div>
@@ -375,7 +443,8 @@ const CRMDashboard: React.FC = () => {
                         <div className="space-y-2">
                           <div className="flex items-center gap-2">
                             <span className="font-medium">
-                              د. {appointment.doctors?.first_name} {appointment.doctors?.last_name}
+                              د. {appointment.doctors?.first_name}{" "}
+                              {appointment.doctors?.last_name}
                             </span>
                           </div>
                           <div className="text-sm text-gray-600">
@@ -384,12 +453,16 @@ const CRMDashboard: React.FC = () => {
                           <div className="flex items-center gap-2">
                             <Calendar className="w-4 h-4 text-gray-500" />
                             <span className="text-sm">
-                              {new Date(appointment.appointment_date).toLocaleDateString('ar-SA')}
+                              {new Date(
+                                appointment.appointment_date,
+                              ).toLocaleDateString("ar-SA")}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">
                             <Clock className="w-4 h-4 text-gray-500" />
-                            <span className="text-sm">{appointment.appointment_time}</span>
+                            <span className="text-sm">
+                              {appointment.appointment_time}
+                            </span>
                           </div>
                           <div className="text-sm text-gray-600">
                             المدة: {appointment.duration} دقيقة
@@ -397,7 +470,7 @@ const CRMDashboard: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     {appointment.notes && (
                       <div className="mt-4 bg-surface p-3 rounded-lg">
                         <p className="text-sm text-gray-700">
@@ -406,17 +479,19 @@ const CRMDashboard: React.FC = () => {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="flex flex-col items-end gap-3">
                     {getStatusBadge(appointment.status)}
-                    
+
                     <div className="flex gap-2">
-                      {appointment.status === 'scheduled' && (
+                      {appointment.status === "scheduled" && (
                         <>
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => handleStatusUpdate(appointment.id, 'confirmed')}
+                            onClick={() =>
+                              handleStatusUpdate(appointment.id, "confirmed")
+                            }
                             className="text-brand-success hover:text-green-700"
                           >
                             <CheckCircle className="w-4 h-4 mr-1" />
@@ -425,7 +500,9 @@ const CRMDashboard: React.FC = () => {
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => handleStatusUpdate(appointment.id, 'cancelled')}
+                            onClick={() =>
+                              handleStatusUpdate(appointment.id, "cancelled")
+                            }
                             className="text-brand-error hover:text-red-700"
                           >
                             <XCircle className="w-4 h-4 mr-1" />
@@ -433,12 +510,14 @@ const CRMDashboard: React.FC = () => {
                           </Button>
                         </>
                       )}
-                      
-                      {appointment.status === 'confirmed' && (
+
+                      {appointment.status === "confirmed" && (
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => handleStatusUpdate(appointment.id, 'completed')}
+                          onClick={() =>
+                            handleStatusUpdate(appointment.id, "completed")
+                          }
                           className="text-brand-primary hover:text-blue-700"
                         >
                           <CheckCircle className="w-4 h-4 mr-1" />

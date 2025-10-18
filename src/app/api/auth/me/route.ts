@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { authorize } from '@/lib/auth/authorize';
+import { NextRequest, NextResponse } from "next/server";
+import { authorize } from "@/lib/auth/authorize";
 
 export async function GET(request: NextRequest) {
   try {
     const { user, error } = await authorize(request);
-    
+
     if (error || !user) {
       return NextResponse.json({ error }, { status: 401 });
     }
@@ -12,8 +12,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(user);
   } catch (error) {
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }

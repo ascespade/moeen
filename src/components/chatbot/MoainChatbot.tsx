@@ -55,6 +55,7 @@ const MoainChatbot: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // تحميل الرسائل المحفوظة
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadChatHistory();
   }, []);
@@ -71,16 +72,18 @@ const MoainChatbot: React.FC = () => {
   const loadChatHistory = async () => {
     try {
       // جلب تاريخ المحادثة من قاعدة البيانات
-      const response = await fetch('/api/chatbot/messages?conversationId=current-conversation');
+      const response = await fetch(
+        "/api/chatbot/messages?conversationId=current-conversation",
+      );
       const data = await response.json();
-      
+
       if (data.success && data.messages) {
         const dbMessages: ChatMessage[] = data.messages.map((msg: any) => ({
           id: msg.id,
-          type: msg.sender_type === 'user' ? 'user' : 'bot',
+          type: msg.sender_type === "user" ? "user" : "bot",
           content: msg.message_text,
           timestamp: new Date(msg.created_at),
-          metadata: msg.metadata
+          metadata: msg.metadata,
         }));
         setMessages(dbMessages);
       } else {
@@ -88,7 +91,8 @@ const MoainChatbot: React.FC = () => {
         const welcomeMessage: ChatMessage = {
           id: "1",
           type: "bot",
-          content: "مرحباً! أنا معين، مساعدك الذكي في مركز الهمم. كيف يمكنني مساعدتك اليوم؟",
+          content:
+            "مرحباً! أنا معين، مساعدك الذكي في مركز الهمم. كيف يمكنني مساعدتك اليوم؟",
           timestamp: new Date(),
         };
         setMessages([welcomeMessage]);
@@ -98,7 +102,8 @@ const MoainChatbot: React.FC = () => {
       const welcomeMessage: ChatMessage = {
         id: "1",
         type: "bot",
-        content: "مرحباً! أنا معين، مساعدك الذكي في مركز الهمم. كيف يمكنني مساعدتك اليوم؟",
+        content:
+          "مرحباً! أنا معين، مساعدك الذكي في مركز الهمم. كيف يمكنني مساعدتك اليوم؟",
         timestamp: new Date(),
       };
       setMessages([welcomeMessage]);
@@ -122,33 +127,33 @@ const MoainChatbot: React.FC = () => {
 
     try {
       // إرسال الرسالة إلى API
-      const response = await fetch('/api/chatbot/message', {
-        method: 'POST',
+      const response = await fetch("/api/chatbot/message", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           message: messageToSend,
-          userId: 'current-user', // سيتم ربطه بالمستخدم المسجل
-          conversationId: 'current-conversation',
+          userId: "current-user", // سيتم ربطه بالمستخدم المسجل
+          conversationId: "current-conversation",
           currentFlow: currentFlow,
-          currentStep: currentStep
+          currentStep: currentStep,
         }),
       });
 
       const data = await response.json();
-      
+
       if (data.message) {
         const botMessage: ChatMessage = {
           id: (Date.now() + 1).toString(),
           type: "bot",
           content: data.message,
           timestamp: new Date(),
-          metadata: data.metadata
+          metadata: data.metadata,
         };
 
         setMessages((prev) => [...prev, botMessage]);
-        
+
         // تحديث حالة الـ Flow
         if (data.metadata?.flow) {
           setCurrentFlow(data.metadata.flow);
@@ -159,7 +164,7 @@ const MoainChatbot: React.FC = () => {
         if (data.metadata?.options) {
           setFlowOptions(data.metadata.options);
         }
-        
+
         if (data.appointmentSuggestions) {
           setAppointmentSuggestions(data.appointmentSuggestions);
         }
@@ -171,7 +176,7 @@ const MoainChatbot: React.FC = () => {
           type: "bot",
           content: fallbackResponse.content,
           timestamp: new Date(),
-          metadata: fallbackResponse.metadata
+          metadata: fallbackResponse.metadata,
         };
         setMessages((prev) => [...prev, botMessage]);
       }
@@ -181,9 +186,11 @@ const MoainChatbot: React.FC = () => {
       const botMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         type: "bot",
-        content: fallbackResponse.content || "عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.",
+        content:
+          fallbackResponse.content ||
+          "عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.",
         timestamp: new Date(),
-        metadata: fallbackResponse.metadata
+        metadata: fallbackResponse.metadata,
       };
       setMessages((prev) => [...prev, botMessage]);
     } finally {
@@ -293,21 +300,21 @@ const MoainChatbot: React.FC = () => {
     time: string,
   ) => {
     try {
-      const response = await fetch('/api/chatbot/appointments', {
-        method: 'POST',
+      const response = await fetch("/api/chatbot/appointments", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           doctorId: appointment.id,
           appointmentTime: time,
-          patientId: 'current-user', // سيتم ربطه بالمستخدم المسجل
-          conversationId: 'current-conversation'
+          patientId: "current-user", // سيتم ربطه بالمستخدم المسجل
+          conversationId: "current-conversation",
         }),
       });
 
       const data = await response.json();
-      
+
       if (data.success) {
         const confirmationMessage: ChatMessage = {
           id: Date.now().toString(),
@@ -324,13 +331,14 @@ const MoainChatbot: React.FC = () => {
         setMessages((prev) => [...prev, confirmationMessage]);
         setAppointmentSuggestions([]);
       } else {
-        throw new Error(data.error || 'فشل في حجز الموعد');
+        throw new Error(data.error || "فشل في حجز الموعد");
       }
     } catch (error) {
       const errorMessage: ChatMessage = {
         id: Date.now().toString(),
         type: "bot",
-        content: "عذراً، لم يتم حجز الموعد. يرجى المحاولة مرة أخرى أو الاتصال بنا.",
+        content:
+          "عذراً، لم يتم حجز الموعد. يرجى المحاولة مرة أخرى أو الاتصال بنا.",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);

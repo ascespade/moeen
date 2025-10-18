@@ -3,7 +3,7 @@
 import Image, { ImageProps } from "next/image";
 import { useState } from "react";
 
-interface OptimizedImageProps extends Omit<ImageProps, 'src'> {
+interface OptimizedImageProps extends Omit<ImageProps, "src"> {
   src: string;
   fallback?: string;
   alt: string;

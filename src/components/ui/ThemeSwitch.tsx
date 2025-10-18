@@ -72,7 +72,9 @@ export function ThemeSwitch({
       >
         <CurrentIcon className={iconSizes[size]} />
         {showLabel && (
-          <span className="mr-2 hidden sm:inline text-[var(--text-primary)]">{currentTheme?.label || 'Theme'}</span>
+          <span className="mr-2 hidden sm:inline text-[var(--text-primary)]">
+            {currentTheme?.label || "Theme"}
+          </span>
         )}
       </Button>
     );
@@ -81,7 +83,9 @@ export function ThemeSwitch({
   if (variant === "toggle") {
     return (
       <div className={`flex items-center space-x-2 ${className}`}>
-        <Sun className={`${iconSizes[size]} ${isLight ? "text-[var(--brand-primary)]" : "text-[var(--text-tertiary)]"}`} />
+        <Sun
+          className={`${iconSizes[size]} ${isLight ? "text-[var(--brand-primary)]" : "text-[var(--text-tertiary)]"}`}
+        />
         <button
           onClick={() => {
             if (theme === "light") setTheme("dark");
@@ -98,7 +102,9 @@ export function ThemeSwitch({
             }`}
           />
         </button>
-        <Moon className={`${iconSizes[size]} ${isDark ? "text-[var(--brand-accent)]" : "text-[var(--text-tertiary)]"}`} />
+        <Moon
+          className={`${iconSizes[size]} ${isDark ? "text-[var(--brand-accent)]" : "text-[var(--text-tertiary)]"}`}
+        />
       </div>
     );
   }
@@ -112,7 +118,7 @@ export function ThemeSwitch({
         className="flex items-center space-x-2"
       >
         <CurrentIcon className={iconSizes[size]} />
-        {showLabel && <span>{currentTheme?.label || 'Theme'}</span>}
+        {showLabel && <span>{currentTheme?.label || "Theme"}</span>}
       </Button>
 
       {isOpen && (
@@ -122,14 +128,14 @@ export function ThemeSwitch({
             className="fixed inset-0 z-10"
             onClick={() => setIsOpen(false)}
           />
-          
+
           {/* Dropdown */}
           <Card className="absolute top-full right-0 mt-2 w-48 z-20 shadow-lg border border-[var(--border-primary)] bg-[var(--panel)]">
             <div className="p-2">
               {themes.map((themeOption) => {
                 const Icon = themeOption.icon;
                 const isSelected = theme === themeOption.value;
-                
+
                 return (
                   <button
                     key={themeOption.value}
@@ -138,14 +144,18 @@ export function ThemeSwitch({
                       setIsOpen(false);
                     }}
                     className={`w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors hover:bg-[var(--surface-hover)] ${
-                      isSelected ? "bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]" : "text-[var(--text-primary)]"
+                      isSelected
+                        ? "bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]"
+                        : "text-[var(--text-primary)]"
                     }`}
                   >
                     <div className="flex items-center space-x-3">
                       <Icon className={iconSizes[size]} />
                       <div className="text-right">
                         <div className="font-medium">{themeOption.label}</div>
-                        <div className="text-xs text-[var(--text-tertiary)]">{themeOption.description}</div>
+                        <div className="text-xs text-[var(--text-tertiary)]">
+                          {themeOption.description}
+                        </div>
                       </div>
                     </div>
                     {isSelected && (

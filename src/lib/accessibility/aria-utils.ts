@@ -16,23 +16,23 @@ interface AriaLabelProps {
  */
 export function getFormAriaProps(props: AriaLabelProps): Record<string, any> {
   const attrs: Record<string, any> = {
-    'aria-label': props.label,
+    "aria-label": props.label,
   };
 
   if (props.describedBy) {
-    attrs['aria-describedby'] = props.describedBy;
+    attrs["aria-describedby"] = props.describedBy;
   }
 
   if (props.required) {
-    attrs['aria-required'] = 'true';
+    attrs["aria-required"] = "true";
   }
 
   if (props.invalid) {
-    attrs['aria-invalid'] = 'true';
+    attrs["aria-invalid"] = "true";
   }
 
   if (props.hidden) {
-    attrs['aria-hidden'] = 'true';
+    attrs["aria-hidden"] = "true";
   }
 
   return attrs;
@@ -48,26 +48,26 @@ export function getButtonAriaProps(
     expanded?: boolean;
     disabled?: boolean;
     controls?: string;
-  }
+  },
 ): Record<string, any> {
   const attrs: Record<string, any> = {
-    'aria-label': label,
+    "aria-label": label,
   };
 
   if (options?.pressed !== undefined) {
-    attrs['aria-pressed'] = String(options.pressed);
+    attrs["aria-pressed"] = String(options.pressed);
   }
 
   if (options?.expanded !== undefined) {
-    attrs['aria-expanded'] = String(options.expanded);
+    attrs["aria-expanded"] = String(options.expanded);
   }
 
   if (options?.disabled) {
-    attrs['aria-disabled'] = 'true';
+    attrs["aria-disabled"] = "true";
   }
 
   if (options?.controls) {
-    attrs['aria-controls'] = options.controls;
+    attrs["aria-controls"] = options.controls;
   }
 
   return attrs;
@@ -76,10 +76,13 @@ export function getButtonAriaProps(
 /**
  * Generate ARIA attributes for navigation
  */
-export function getNavAriaProps(label: string, current?: boolean): Record<string, any> {
+export function getNavAriaProps(
+  label: string,
+  current?: boolean,
+): Record<string, any> {
   return {
-    'aria-label': label,
-    'aria-current': current ? 'page' : undefined,
+    "aria-label": label,
+    "aria-current": current ? "page" : undefined,
   };
 }
 
@@ -88,24 +91,26 @@ export function getNavAriaProps(label: string, current?: boolean): Record<string
  */
 export function getDialogAriaProps(
   title: string,
-  describedBy?: string
+  describedBy?: string,
 ): Record<string, any> {
   return {
-    role: 'dialog',
-    'aria-modal': 'true',
-    'aria-labelledby': title,
-    'aria-describedby': describedBy,
+    role: "dialog",
+    "aria-modal": "true",
+    "aria-labelledby": title,
+    "aria-describedby": describedBy,
   };
 }
 
 /**
  * Generate ARIA attributes for alerts
  */
-export function getAlertAriaProps(type: 'error' | 'warning' | 'success' | 'info'): Record<string, any> {
+export function getAlertAriaProps(
+  type: "error" | "warning" | "success" | "info",
+): Record<string, any> {
   return {
-    role: 'alert',
-    'aria-live': type === 'error' ? 'assertive' : 'polite',
-    'aria-atomic': 'true',
+    role: "alert",
+    "aria-live": type === "error" ? "assertive" : "polite",
+    "aria-atomic": "true",
   };
 }
 
@@ -114,8 +119,8 @@ export function getAlertAriaProps(type: 'error' | 'warning' | 'success' | 'info'
  */
 export function getTableAriaProps(caption: string): Record<string, any> {
   return {
-    role: 'table',
-    'aria-label': caption,
+    role: "table",
+    "aria-label": caption,
   };
 }
 
@@ -125,12 +130,12 @@ export function getTableAriaProps(caption: string): Record<string, any> {
 export function getTabAriaProps(
   id: string,
   selected: boolean,
-  controls: string
+  controls: string,
 ): Record<string, any> {
   return {
-    role: 'tab',
-    'aria-selected': String(selected),
-    'aria-controls': controls,
+    role: "tab",
+    "aria-selected": String(selected),
+    "aria-controls": controls,
     id,
     tabIndex: selected ? 0 : -1,
   };
@@ -142,13 +147,13 @@ export function getTabAriaProps(
 export function getTabPanelAriaProps(
   id: string,
   labelledBy: string,
-  hidden: boolean
+  hidden: boolean,
 ): Record<string, any> {
   return {
-    role: 'tabpanel',
+    role: "tabpanel",
     id,
-    'aria-labelledby': labelledBy,
-    'aria-hidden': String(hidden),
+    "aria-labelledby": labelledBy,
+    "aria-hidden": String(hidden),
     tabIndex: 0,
   };
 }
@@ -157,24 +162,25 @@ export function getTabPanelAriaProps(
  * Generate ARIA live region
  */
 export function getLiveRegionAriaProps(
-  politeness: 'polite' | 'assertive' = 'polite'
+  politeness: "polite" | "assertive" = "polite",
 ): Record<string, any> {
   return {
-    'aria-live': politeness,
-    'aria-atomic': 'true',
-    role: 'status',
+    "aria-live": politeness,
+    "aria-atomic": "true",
+    role: "status",
   };
 }
 
 /**
  * Screen reader only CSS class
  */
-export const srOnly = 'sr-only';
+export const srOnly = "sr-only";
 
 /**
  * Focus visible CSS class
  */
-export const focusVisible = 'focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2';
+export const focusVisible =
+  "focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2";
 
 /**
  * Keyboard navigation helper
@@ -184,30 +190,30 @@ export function handleKeyboardNav(
   onEnter?: () => void,
   onEscape?: () => void,
   onArrowUp?: () => void,
-  onArrowDown?: () => void
+  onArrowDown?: () => void,
 ): void {
   switch (event.key) {
-    case 'Enter':
-    case ' ':
+    case "Enter":
+    case " ":
       event.preventDefault();
       onEnter?.();
       break;
-    case 'Escape':
+    case "Escape":
       event.preventDefault();
       onEscape?.();
       break;
-    case 'ArrowUp':
+    case "ArrowUp":
       event.preventDefault();
       onArrowUp?.();
       break;
-    case 'ArrowDown':
+    case "ArrowDown":
       event.preventDefault();
       onArrowDown?.();
       break;
   }
 }
 
-export default {
+const ariautils = {
   getFormAriaProps,
   getButtonAriaProps,
   getNavAriaProps,
@@ -221,3 +227,5 @@ export default {
   srOnly,
   focusVisible,
 };
+
+export default ariautils;

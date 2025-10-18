@@ -289,8 +289,7 @@ export class SaudiMinistryHealthIntegration {
         results.sehaSubmission = true;
         results.submissionIds.sehaId = sehaResponse.data.submissionId;
       }
-    } catch (error) {
-      }
+    } catch (error) {}
 
     try {
       // Submit to SHOON
@@ -303,8 +302,7 @@ export class SaudiMinistryHealthIntegration {
         results.shoonSubmission = true;
         results.submissionIds.shoonId = shoonResponse.data.submissionId;
       }
-    } catch (error) {
-      }
+    } catch (error) {}
 
     try {
       // Submit to TATMAN
@@ -317,8 +315,7 @@ export class SaudiMinistryHealthIntegration {
         results.tatmanSubmission = true;
         results.submissionIds.tatmanId = tatmanResponse.data.claimId;
       }
-    } catch (error) {
-      }
+    } catch (error) {}
 
     return results;
   }

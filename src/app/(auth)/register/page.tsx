@@ -7,7 +7,6 @@ import Link from "next/link";
 
 import Image from "next/image";
 
-
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -78,10 +77,10 @@ export default function RegisterPage() {
 
     try {
       // Call registration API
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: formData.name,
@@ -102,7 +101,10 @@ export default function RegisterPage() {
           });
           setErrors(newErrors);
         } else {
-          setErrors({ general: data.message || "حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى." });
+          setErrors({
+            general:
+              data.message || "حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى.",
+          });
         }
         return;
       }
@@ -117,7 +119,7 @@ export default function RegisterPage() {
         agreeToTerms: false,
       });
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error("Registration error:", error);
       setErrors({ general: "حدث خطأ أثناء الاتصال بالخادم. حاول مرة أخرى." });
     } finally {
       setIsLoading(false);
@@ -251,7 +253,9 @@ export default function RegisterPage() {
                 disabled={isLoading}
               />
               {errors.password && (
-                <p className="mt-1 text-sm text-brand-error">{errors.password}</p>
+                <p className="mt-1 text-sm text-brand-error">
+                  {errors.password}
+                </p>
               )}
             </div>
 

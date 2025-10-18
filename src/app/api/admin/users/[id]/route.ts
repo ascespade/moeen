@@ -180,6 +180,5 @@ async function logAdminAction(userId: string, action: string, details: any) {
       ip_address: "127.0.0.1",
       user_agent: "Admin Panel",
     });
-  } catch (error) {
-    }
+  } catch (error) {}
 }

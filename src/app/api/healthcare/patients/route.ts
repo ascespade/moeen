@@ -1,25 +1,26 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
 
 // GET /api/healthcare/patients - جلب المرضى
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const search = searchParams.get('search');
-    const gender = searchParams.get('gender');
-    const age_min = searchParams.get('age_min');
-    const age_max = searchParams.get('age_max');
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '10');
+    const search = searchParams.get("search");
+    const gender = searchParams.get("gender");
+    const age_min = searchParams.get("age_min");
+    const age_max = searchParams.get("age_max");
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "10");
 
     let query = supabase
-      .from('patients')
-      .select(`
+      .from("patients")
+      .select(
+        `
         *,
         customers (
           id,
@@ -27,28 +28,31 @@ export async function GET(request: NextRequest) {
           phone,
           email
         )
-      `)
-      .order('created_at', { ascending: false });
+      `,
+      )
+      .order("created_at", { ascending: false });
 
     // تطبيق الفلاتر
     if (search) {
-      query = query.or(`first_name.ilike.%${search}%,last_name.ilike.%${search}%,phone.ilike.%${search}%`);
+      query = query.or(
+        `first_name.ilike.%${search}%,last_name.ilike.%${search}%,phone.ilike.%${search}%`,
+      );
     }
 
     if (gender) {
-      query = query.eq('gender', gender);
+      query = query.eq("gender", gender);
     }
 
     if (age_min) {
       const min_date = new Date();
       min_date.setFullYear(min_date.getFullYear() - parseInt(age_min));
-      query = query.lte('date_of_birth', min_date.toISOString().split('T')[0]);
+      query = query.lte("date_of_birth", min_date.toISOString().split("T")[0]);
     }
 
     if (age_max) {
       const max_date = new Date();
       max_date.setFullYear(max_date.getFullYear() - parseInt(age_max));
-      query = query.gte('date_of_birth', max_date.toISOString().split('T')[0]);
+      query = query.gte("date_of_birth", max_date.toISOString().split("T")[0]);
     }
 
     // تطبيق الصفحات
@@ -68,11 +72,14 @@ export async function GET(request: NextRequest) {
         page,
         limit,
         total: count || 0,
-        pages: Math.ceil((count || 0) / limit)
-      }
+        pages: Math.ceil((count || 0) / limit),
+      },
     });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 
@@ -93,11 +100,11 @@ export async function POST(request: NextRequest) {
       medical_history,
       allergies,
       medications,
-      customer_id
+      customer_id,
     } = body;
 
     const { data: patient, error } = await supabase
-      .from('patients')
+      .from("patients")
       .insert({
         first_name,
         last_name,
@@ -112,7 +119,7 @@ export async function POST(request: NextRequest) {
         allergies,
         medications,
         customer_id,
-        is_active: true
+        is_active: true,
       })
       .select()
       .single();
@@ -123,6 +130,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ patient }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

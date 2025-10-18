@@ -1,34 +1,37 @@
-import logger from '@/lib/monitoring/logger';
+import logger from "@/lib/monitoring/logger";
 // Conversation Flow Management System
 
 // Intent Analysis
 export class IntentAnalyzer {
   static analyzeIntent(message: string): string {
     const lowerMessage = message.toLowerCase();
-    
+
     // Medical intents
-    if (lowerMessage.includes('appointment') || lowerMessage.includes('موعد')) {
-      return 'appointment';
+    if (lowerMessage.includes("appointment") || lowerMessage.includes("موعد")) {
+      return "appointment";
     }
-    if (lowerMessage.includes('emergency') || lowerMessage.includes('طوارئ')) {
-      return 'emergency';
+    if (lowerMessage.includes("emergency") || lowerMessage.includes("طوارئ")) {
+      return "emergency";
     }
-    if (lowerMessage.includes('prescription') || lowerMessage.includes('وصفة')) {
-      return 'prescription';
+    if (
+      lowerMessage.includes("prescription") ||
+      lowerMessage.includes("وصفة")
+    ) {
+      return "prescription";
     }
-    if (lowerMessage.includes('payment') || lowerMessage.includes('دفع')) {
-      return 'payment';
+    if (lowerMessage.includes("payment") || lowerMessage.includes("دفع")) {
+      return "payment";
     }
-    
+
     // General intents
-    if (lowerMessage.includes('hello') || lowerMessage.includes('مرحبا')) {
-      return 'greeting';
+    if (lowerMessage.includes("hello") || lowerMessage.includes("مرحبا")) {
+      return "greeting";
     }
-    if (lowerMessage.includes('help') || lowerMessage.includes('مساعدة')) {
-      return 'help';
+    if (lowerMessage.includes("help") || lowerMessage.includes("مساعدة")) {
+      return "help";
     }
-    
-    return 'general';
+
+    return "general";
   }
 }
 
@@ -36,31 +39,37 @@ export class IntentAnalyzer {
 export class ActionExecutor {
   static async executeAction(action: string, data: any): Promise<any> {
     switch (action) {
-      case 'create_appointment':
+      case "create_appointment":
         // Implement appointment creation
         return { success: true, data: { id: Date.now() } };
-      case 'send_notification':
+      case "send_notification":
         // Implement notification sending
-        return { success: true, message: 'Notification sent' };
-      case 'redirect':
+        return { success: true, message: "Notification sent" };
+      case "redirect":
         // Implement redirection
         return { success: true, redirect: data.redirect };
       default:
-        return { success: false, error: 'Unknown action' };
+        return { success: false, error: "Unknown action" };
     }
   }
 }
 
 export interface FlowStep {
   id: string;
-  type: "question" | "information" | "action" | "redirect" | "slack_notify" | "whatsapp_send";
+  type:
+    | "question"
+    | "information"
+    | "action"
+    | "redirect"
+    | "slack_notify"
+    | "whatsapp_send";
   content: string;
   options?: string[];
   nextStep?: string;
   conditions?: FlowCondition[];
   slackChannel?: string;
   whatsappTemplate?: string;
-  notificationType?: 'appointment' | 'reminder' | 'emergency' | 'general';
+  notificationType?: "appointment" | "reminder" | "emergency" | "general";
 }
 
 export interface FlowCondition {
@@ -278,7 +287,8 @@ export class FlowManager {
         {
           id: "collect_question",
           type: "action",
-          content: "شكراً لك على سؤالك. سأقوم بإرساله للطبيب المختص وستحصل على رد قريباً.",
+          content:
+            "شكراً لك على سؤالك. سأقوم بإرساله للطبيب المختص وستحصل على رد قريباً.",
           nextStep: "notify_doctor",
         },
         {
@@ -302,7 +312,8 @@ export class FlowManager {
         {
           id: "emergency_detection",
           type: "action",
-          content: "🚨 تم اكتشاف حالة طوارئ! يرجى الاتصال فوراً بالرقم 997 أو 911.",
+          content:
+            "🚨 تم اكتشاف حالة طوارئ! يرجى الاتصال فوراً بالرقم 997 أو 911.",
           nextStep: "slack_alert",
         },
         {
@@ -316,7 +327,8 @@ export class FlowManager {
         {
           id: "emergency_contacts",
           type: "information",
-          content: "أرقام الطوارئ: 997 (الطوارئ العامة) - 911 (الإسعاف) - مركز الهمم: +966501234567",
+          content:
+            "أرقام الطوارئ: 997 (الطوارئ العامة) - 911 (الإسعاف) - مركز الهمم: +966501234567",
           nextStep: "follow_up",
         },
         {
@@ -426,16 +438,13 @@ export class FlowManager {
   }
 
   // Execute step action (Slack notifications, WhatsApp sending, etc.)
-  async executeStepAction(
-    step: FlowStep,
-    context: any = {}
-  ): Promise<boolean> {
+  async executeStepAction(step: FlowStep, context: any = {}): Promise<boolean> {
     try {
       switch (step.type) {
-        case 'slack_notify':
+        case "slack_notify":
           await this.executeSlackNotification(step, context);
           break;
-        case 'whatsapp_send':
+        case "whatsapp_send":
           await this.executeWhatsAppSend(step, context);
           break;
         default:
@@ -449,35 +458,39 @@ export class FlowManager {
   }
 
   // Execute Slack notification
-  private async executeSlackNotification(step: FlowStep, context: any): Promise<void> {
+  private async executeSlackNotification(
+    step: FlowStep,
+    context: any,
+  ): Promise<void> {
     try {
-      const response = await fetch('/api/slack/notify', {
-        method: 'POST',
+      const response = await fetch("/api/slack/notify", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: step.notificationType || 'general',
+          type: step.notificationType || "general",
           message: step.content,
-          channel: step.slackChannel || 'general',
-          priority: 'medium',
-          ...context
+          channel: step.slackChannel || "general",
+          priority: "medium",
+          ...context,
         }),
       });
 
       if (!response.ok) {
-        console.error('Failed to send message:', await response.text());
+        console.error("Failed to send message:", await response.text());
       }
-    } catch (error) {
-      }
+    } catch (error) {}
   }
 
   // Execute WhatsApp send
-  private async executeWhatsAppSend(step: FlowStep, context: any): Promise<void> {
+  private async executeWhatsAppSend(
+    step: FlowStep,
+    context: any,
+  ): Promise<void> {
     try {
       // This would integrate with the existing WhatsApp system
-      } catch (error) {
-      }
+    } catch (error) {}
   }
 
   // Evaluate condition

@@ -28,9 +28,9 @@ export default function ForgotPasswordPage() {
 
     try {
       // Real API call
-      const response = await fetch('/api/auth/forgot-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
@@ -39,10 +39,14 @@ export default function ForgotPasswordPage() {
       if (data.success) {
         setIsSuccess(true);
       } else {
-        setError(data.error || "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور.");
+        setError(
+          data.error || "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور.",
+        );
       }
     } catch (error) {
-      setError("حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. حاول مرة أخرى.");
+      setError(
+        "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. حاول مرة أخرى.",
+      );
     } finally {
       setIsLoading(false);
     }

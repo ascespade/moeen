@@ -20,8 +20,10 @@ export function Badge({
   const styles = {
     default:
       "badge bg-surface text-gray-800 dark:bg-gray-800 dark:text-gray-200",
-    secondary: "badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200",
-    destructive: "badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
+    secondary:
+      "badge bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200",
+    destructive:
+      "badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
     success: "badge badge-success",
     warning: "badge badge-warning",
     danger: "badge badge-error",

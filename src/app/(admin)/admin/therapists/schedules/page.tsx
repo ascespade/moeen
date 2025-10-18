@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import logger from '@/lib/monitoring/logger';
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import logger from "@/lib/monitoring/logger";
 
 interface Therapist {
   id: string;
@@ -19,22 +19,23 @@ interface Schedule {
 }
 
 const DAYS = [
-  'الأحد',
-  'الإثنين',
-  'الثلاثاء',
-  'الأربعاء',
-  'الخميس',
-  'الجمعة',
-  'السبت',
+  "الأحد",
+  "الإثنين",
+  "الثلاثاء",
+  "الأربعاء",
+  "الخميس",
+  "الجمعة",
+  "السبت",
 ];
 
 export default function TherapistSchedulesPage() {
   const [therapists, setTherapists] = useState<Therapist[]>([]);
-  const [selectedTherapist, setSelectedTherapist] = useState<string>('');
+  const [selectedTherapist, setSelectedTherapist] = useState<string>("");
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadTherapists();
   }, []);
@@ -49,10 +50,10 @@ export default function TherapistSchedulesPage() {
     try {
       const supabase = createClient();
       const { data, error } = await supabase
-        .from('users')
-        .select('id, full_name, email')
-        .eq('role', 'doctor')
-        .order('full_name');
+        .from("users")
+        .select("id, full_name, email")
+        .eq("role", "doctor")
+        .order("full_name");
 
       if (error) throw error;
       setTherapists(data || []);
@@ -61,7 +62,7 @@ export default function TherapistSchedulesPage() {
         setSelectedTherapist(data[0].id);
       }
     } catch (error) {
-      logger.error('Error loading therapists', error);
+      logger.error("Error loading therapists", error);
     }
   };
 
@@ -72,15 +73,15 @@ export default function TherapistSchedulesPage() {
     try {
       const supabase = createClient();
       const { data, error } = await supabase
-        .from('therapist_schedules')
-        .select('*')
-        .eq('therapist_id', selectedTherapist)
-        .order('day_of_week, start_time');
+        .from("therapist_schedules")
+        .select("*")
+        .eq("therapist_id", selectedTherapist)
+        .order("day_of_week, start_time");
 
       if (error) throw error;
       setSchedules(data || []);
     } catch (error) {
-      logger.error('Error loading schedules', error);
+      logger.error("Error loading schedules", error);
     } finally {
       setLoading(false);
     }
@@ -92,69 +93,74 @@ export default function TherapistSchedulesPage() {
     setSaving(true);
     try {
       const supabase = createClient();
-      const { error } = await supabase
-        .from('therapist_schedules')
-        .insert({
-          therapist_id: selectedTherapist,
-          day_of_week: dayOfWeek,
-          start_time: '09:00',
-          end_time: '17:00',
-          is_available: true,
-        });
+      const { error } = await supabase.from("therapist_schedules").insert({
+        therapist_id: selectedTherapist,
+        day_of_week: dayOfWeek,
+        start_time: "09:00",
+        end_time: "17:00",
+        is_available: true,
+      });
 
       if (error) throw error;
       await loadSchedules();
-      alert('تم إضافة الجدول بنجاح!');
+      alert("تم إضافة الجدول بنجاح!");
     } catch (error: any) {
-      logger.error('Error adding schedule', error);
-      alert('خطأ: ' + (error.message || 'فشل في إضافة الجدول'));
+      logger.error("Error adding schedule", error);
+      alert("خطأ: " + (error.message || "فشل في إضافة الجدول"));
     } finally {
       setSaving(false);
     }
   };
 
-  const updateSchedule = async (scheduleId: string, field: string, value: any) => {
+  const updateSchedule = async (
+    scheduleId: string,
+    field: string,
+    value: any,
+  ) => {
     try {
       const supabase = createClient();
       const { error } = await supabase
-        .from('therapist_schedules')
+        .from("therapist_schedules")
         .update({ [field]: value })
-        .eq('id', scheduleId);
+        .eq("id", scheduleId);
 
       if (error) throw error;
       await loadSchedules();
     } catch (error) {
-      logger.error('Error updating schedule', error);
-      alert('فشل في التحديث');
+      logger.error("Error updating schedule", error);
+      alert("فشل في التحديث");
     }
   };
 
   const deleteSchedule = async (scheduleId: string) => {
-    if (!confirm('هل أنت متأكد من الحذف؟')) return;
+    if (!confirm("هل أنت متأكد من الحذف؟")) return;
 
     try {
       const supabase = createClient();
       const { error } = await supabase
-        .from('therapist_schedules')
+        .from("therapist_schedules")
         .delete()
-        .eq('id', scheduleId);
+        .eq("id", scheduleId);
 
       if (error) throw error;
       await loadSchedules();
-      alert('تم الحذف بنجاح');
+      alert("تم الحذف بنجاح");
     } catch (error) {
-      logger.error('Error deleting schedule', error);
-      alert('فشل في الحذف');
+      logger.error("Error deleting schedule", error);
+      alert("فشل في الحذف");
     }
   };
 
   // Group schedules by day
   const schedulesByDay: Record<number, Schedule[]> = {};
   schedules.forEach((schedule) => {
-    if (!schedulesByDay[schedule.day_of_week]) {
-      schedulesByDay[schedule.day_of_week] = [];
+    const dayOfWeek = schedule?.day_of_week;
+    if (dayOfWeek !== undefined && dayOfWeek !== null) {
+      if (!schedulesByDay[dayOfWeek]) {
+        schedulesByDay[dayOfWeek] = [];
+      }  
+      schedulesByDay[dayOfWeek]!.push(schedule);
     }
-    schedulesByDay[schedule.day_of_week].push(schedule);
   });
 
   return (
@@ -187,7 +193,9 @@ export default function TherapistSchedulesPage() {
       {loading ? (
         <div className="card p-12 text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--brand-primary)] mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">جاري التحميل...</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">
+            جاري التحميل...
+          </p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -206,9 +214,10 @@ export default function TherapistSchedulesPage() {
                 </button>
               </div>
 
-              {schedulesByDay[dayIndex] && schedulesByDay[dayIndex].length > 0 ? (
+              {schedulesByDay[dayIndex] &&
+              schedulesByDay[dayIndex]!.length > 0 ? (
                 <div className="space-y-3">
-                  {schedulesByDay[dayIndex].map((schedule) => (
+                  {schedulesByDay[dayIndex]!.map((schedule) => (
                     <div
                       key={schedule.id}
                       className="flex items-center gap-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
@@ -221,7 +230,11 @@ export default function TherapistSchedulesPage() {
                           type="time"
                           value={schedule.start_time}
                           onChange={(e) =>
-                            updateSchedule(schedule.id, 'start_time', e.target.value)
+                            updateSchedule(
+                              schedule.id,
+                              "start_time",
+                              e.target.value,
+                            )
                           }
                           className="px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         />
@@ -235,7 +248,11 @@ export default function TherapistSchedulesPage() {
                           type="time"
                           value={schedule.end_time}
                           onChange={(e) =>
-                            updateSchedule(schedule.id, 'end_time', e.target.value)
+                            updateSchedule(
+                              schedule.id,
+                              "end_time",
+                              e.target.value,
+                            )
                           }
                           className="px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         />
@@ -246,7 +263,11 @@ export default function TherapistSchedulesPage() {
                           type="checkbox"
                           checked={schedule.is_available}
                           onChange={(e) =>
-                            updateSchedule(schedule.id, 'is_available', e.target.checked)
+                            updateSchedule(
+                              schedule.id,
+                              "is_available",
+                              e.target.checked,
+                            )
                           }
                           className="w-5 h-5 rounded border-gray-300 dark:border-gray-600"
                         />
@@ -282,7 +303,7 @@ export default function TherapistSchedulesPage() {
         <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
           <li>• حدد أوقات العمل لكل يوم في الأسبوع</li>
           <li>• يمكن إضافة أكثر من فترة في نفس اليوم (صباحي/مسائي)</li>
-          <li>• استخدم "متاح" لتفعيل/تعطيل وقت معين</li>
+          <li>• استخدم خيار متاح لتفعيل/تعطيل وقت معين</li>
           <li>• ساعات العمل: الأحد - الخميس (7 ص - 7 م)</li>
         </ul>
       </div>

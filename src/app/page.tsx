@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ROUTES } from "@/constants/routes";
-import { ThemeSwitch as ThemeSwitcher } from '@/components/ui';
+import { ThemeSwitch as ThemeSwitcher } from "@/components/ui";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useT } from "@/components/providers/I18nProvider";
 import Image from "next/image";
@@ -13,7 +13,8 @@ const heroSlides = (t: any) => [
     id: 1,
     title: "مركز الهمم",
     subtitle: "طاقات تتجدد، أحلام تتحقق، مستقبل واعد",
-    description: "نؤمن بقدراتهم، ونعمل لتمكينهم - مركز رائد في رعاية وتأهيل أصحاب الهمم",
+    description:
+      "نؤمن بقدراتهم، ونعمل لتمكينهم - مركز رائد في رعاية وتأهيل أصحاب الهمم",
     image: "/hero-1.jpg",
     cta: "احجز موعد تقييم مجاني",
     ctaLink: ROUTES.HEALTH.APPOINTMENTS,
@@ -43,7 +44,8 @@ const getServices = (t: any) => [
   {
     id: 1,
     title: "التشخيص والتقييم الشامل",
-    description: "تقييمات دقيقة باستخدام مقاييس عالمية (ADOS/ADIR) لاضطرابات التوحد والتأخر النمائي",
+    description:
+      "تقييمات دقيقة باستخدام مقاييس عالمية (ADOS/ADIR) لاضطرابات التوحد والتأخر النمائي",
     icon: "🔍",
     color: "text-blue-600",
     bgColor: "bg-blue-100",
@@ -51,7 +53,8 @@ const getServices = (t: any) => [
   {
     id: 2,
     title: "علاج النطق والتخاطب",
-    description: "جلسات فردية لعلاج التلعثم، اللدغات، تأخر النطق، والتواصل البديل (AAC)",
+    description:
+      "جلسات فردية لعلاج التلعثم، اللدغات، تأخر النطق، والتواصل البديل (AAC)",
     icon: "🗣️",
     color: "text-green-600",
     bgColor: "bg-green-100",
@@ -59,7 +62,8 @@ const getServices = (t: any) => [
   {
     id: 3,
     title: "العلاج الوظيفي والتكامل الحسي",
-    description: "تحسين المهارات الحركية والاعتماد على الذات في بيئة آمنة ومحفزة",
+    description:
+      "تحسين المهارات الحركية والاعتماد على الذات في بيئة آمنة ومحفزة",
     icon: "🎯",
     color: "text-purple-600",
     bgColor: "bg-purple-100",
@@ -102,7 +106,8 @@ const features = [
     id: 2,
     icon: "📚",
     title: "منهجيات علمية حديثة",
-    description: "الاعتماد على ممارسات مبنية على الأدلة (Evidence-Based Practices)",
+    description:
+      "الاعتماد على ممارسات مبنية على الأدلة (Evidence-Based Practices)",
   },
   {
     id: 3,
@@ -121,7 +126,7 @@ const features = [
 export default function HomePage() {
   const { t } = useT();
   const [currentSlide, setCurrentSlide] = useState(0);
-  
+
   const slides = heroSlides(t);
   const services = getServices(t);
 
@@ -276,7 +281,10 @@ export default function HomePage() {
       </section>
 
       {/* About Section - رؤية ورسالة المركز */}
-      <section id="about" className="bg-gradient-to-br from-[var(--brand-primary)]/10 to-purple-100/20 dark:from-gray-800 dark:to-gray-900 py-20">
+      <section
+        id="about"
+        className="bg-gradient-to-br from-[var(--brand-primary)]/10 to-purple-100/20 dark:from-gray-800 dark:to-gray-900 py-20"
+      >
         <div className="container-app">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <div>
@@ -284,20 +292,26 @@ export default function HomePage() {
                 مركز الهمم
               </h2>
               <h3 className="mb-6 text-2xl font-semibold text-[var(--brand-primary)]">
-                "نؤمن بقدراتهم، ونعمل لتمكينهم"
+                نؤمن بقدراتهم، ونعمل لتمكينهم
               </h3>
-              
+
               <div className="mb-6 rounded-xl bg-white dark:bg-gray-800 p-6 shadow-lg">
-                <h4 className="mb-3 text-xl font-bold text-gray-900 dark:text-white">🎯 رؤيتنا</h4>
+                <h4 className="mb-3 text-xl font-bold text-gray-900 dark:text-white">
+                  🎯 رؤيتنا
+                </h4>
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  أن نكون المركز الرائد في تقديم خدمات تأهيلية متكاملة تضمن دمجاً مجتمعياً فعالاً لأصحاب الهمم في المملكة.
+                  أن نكون المركز الرائد في تقديم خدمات تأهيلية متكاملة تضمن
+                  دمجاً مجتمعياً فعالاً لأصحاب الهمم في المملكة.
                 </p>
               </div>
 
               <div className="mb-8 rounded-xl bg-white dark:bg-gray-800 p-6 shadow-lg">
-                <h4 className="mb-3 text-xl font-bold text-gray-900 dark:text-white">💫 رسالتنا</h4>
+                <h4 className="mb-3 text-xl font-bold text-gray-900 dark:text-white">
+                  💫 رسالتنا
+                </h4>
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  تقديم أعلى معايير الرعاية والتدريب باستخدام منهجيات علمية متقدمة وفريق متخصص لدعم الأفراد والأسر.
+                  تقديم أعلى معايير الرعاية والتدريب باستخدام منهجيات علمية
+                  متقدمة وفريق متخصص لدعم الأفراد والأسر.
                 </p>
               </div>
 
@@ -380,7 +394,8 @@ export default function HomePage() {
                 الأطفال والشباب
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                من التشخيص المبكر وحتى سن 18 عاماً - التوحد، متلازمة داون، صعوبات التعلم، اضطرابات النطق
+                من التشخيص المبكر وحتى سن 18 عاماً - التوحد، متلازمة داون،
+                صعوبات التعلم، اضطرابات النطق
               </p>
             </div>
 
@@ -498,10 +513,16 @@ export default function HomePage() {
                   موقعنا
                 </h3>
                 <div className="space-y-4 text-gray-700 dark:text-gray-300">
-                  <p className="text-xl font-semibold">جدة، المملكة العربية السعودية</p>
-                  <p className="text-lg">شارع الأمير محمد بن عبد العزيز (التحلية)</p>
+                  <p className="text-xl font-semibold">
+                    جدة، المملكة العربية السعودية
+                  </p>
+                  <p className="text-lg">
+                    شارع الأمير محمد بن عبد العزيز (التحلية)
+                  </p>
                   <p className="text-lg">حي الصفا</p>
-                  <p className="text-lg">فندق "دبليو إيه" (WA Hotel) - الدور الثامن</p>
+                  <p className="text-lg">
+                    فندق دبليو إيه (WA Hotel) - الدور الثامن
+                  </p>
                 </div>
               </div>
 
@@ -512,8 +533,12 @@ export default function HomePage() {
                 </h3>
                 <div className="space-y-3 text-gray-700 dark:text-gray-300">
                   <div className="flex justify-between items-center bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-                    <span className="text-lg font-semibold">الأحد - الخميس</span>
-                    <span className="text-lg font-bold text-green-600">7 صباحاً - 7 مساءً</span>
+                    <span className="text-lg font-semibold">
+                      الأحد - الخميس
+                    </span>
+                    <span className="text-lg font-bold text-green-600">
+                      7 صباحاً - 7 مساءً
+                    </span>
                   </div>
                   <div className="flex justify-between items-center bg-red-50 dark:bg-red-900/20 p-4 rounded-lg">
                     <span className="text-lg font-semibold">الجمعة والسبت</span>
@@ -552,15 +577,33 @@ export default function HomePage() {
             <div>
               <h4 className="mb-6 text-xl font-bold">خدماتنا</h4>
               <ul className="space-y-2 text-sm">
-                <li className="text-gray-300 hover:text-white transition-colors">• تعديل السلوك</li>
-                <li className="text-gray-300 hover:text-white transition-colors">• علاج وظيفي</li>
-                <li className="text-gray-300 hover:text-white transition-colors">• تكامل حسي</li>
-                <li className="text-gray-300 hover:text-white transition-colors">• تنمية مهارات</li>
-                <li className="text-gray-300 hover:text-white transition-colors">• التدخل المبكر</li>
-                <li className="text-gray-300 hover:text-white transition-colors">• البرنامج الشامل</li>
-                <li className="text-gray-300 hover:text-white transition-colors">• علاج التأتأة</li>
-                <li className="text-gray-300 hover:text-white transition-colors">• علاج مشاكل الصوت</li>
-                <li className="text-gray-300 hover:text-white transition-colors">• التأهيل السمعي</li>
+                <li className="text-gray-300 hover:text-white transition-colors">
+                  • تعديل السلوك
+                </li>
+                <li className="text-gray-300 hover:text-white transition-colors">
+                  • علاج وظيفي
+                </li>
+                <li className="text-gray-300 hover:text-white transition-colors">
+                  • تكامل حسي
+                </li>
+                <li className="text-gray-300 hover:text-white transition-colors">
+                  • تنمية مهارات
+                </li>
+                <li className="text-gray-300 hover:text-white transition-colors">
+                  • التدخل المبكر
+                </li>
+                <li className="text-gray-300 hover:text-white transition-colors">
+                  • البرنامج الشامل
+                </li>
+                <li className="text-gray-300 hover:text-white transition-colors">
+                  • علاج التأتأة
+                </li>
+                <li className="text-gray-300 hover:text-white transition-colors">
+                  • علاج مشاكل الصوت
+                </li>
+                <li className="text-gray-300 hover:text-white transition-colors">
+                  • التأهيل السمعي
+                </li>
               </ul>
             </div>
 
@@ -568,17 +611,26 @@ export default function HomePage() {
               <h4 className="mb-6 text-xl font-bold">روابط سريعة</h4>
               <ul className="space-y-3">
                 <li>
-                  <Link href="#services" className="text-gray-300 hover:text-white transition-colors">
+                  <Link
+                    href="#services"
+                    className="text-gray-300 hover:text-white transition-colors"
+                  >
                     الخدمات
                   </Link>
                 </li>
                 <li>
-                  <Link href="#about" className="text-gray-300 hover:text-white transition-colors">
+                  <Link
+                    href="#about"
+                    className="text-gray-300 hover:text-white transition-colors"
+                  >
                     عن المركز
                   </Link>
                 </li>
                 <li>
-                  <Link href={ROUTES.LOGIN} className="text-gray-300 hover:text-white transition-colors">
+                  <Link
+                    href={ROUTES.LOGIN}
+                    className="text-gray-300 hover:text-white transition-colors"
+                  >
                     تسجيل الدخول
                   </Link>
                 </li>

@@ -3,16 +3,16 @@
  * Export reports in various formats (CSV, PDF, Excel)
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
-import { ValidationHelper } from '@/core/validation';
-import { ErrorHandler } from '@/core/errors';
-import { requireAuth } from '@/lib/auth/authorize';
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import { createClient } from "@/lib/supabase/server";
+import { ValidationHelper } from "@/core/validation";
+import { ErrorHandler } from "@/core/errors";
+import { requireAuth } from "@/lib/auth/authorize";
 
 const exportSchema = z.object({
-  reportId: z.string().uuid('Invalid report ID'),
-  format: z.enum(['csv', 'pdf', 'excel', 'json']),
+  reportId: z.string().uuid("Invalid report ID"),
+  format: z.enum(["csv", "pdf", "excel", "json"]),
   includeCharts: z.boolean().default(false),
   customFields: z.array(z.string()).optional(),
 });
@@ -20,9 +20,11 @@ const exportSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize staff, supervisor, or admin
-    const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(request);
+    const authResult = await requireAuth(["staff", "supervisor", "admin"])(
+      request,
+    );
     if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const supabase = await createClient();
@@ -31,20 +33,23 @@ export async function POST(request: NextRequest) {
     // Validate input
     const validation = await ValidationHelper.validateAsync(exportSchema, body);
     if (!validation.success) {
-      return NextResponse.json({ error: validation.error.message }, { status: 400 });
+      return NextResponse.json(
+        { error: validation.error.message },
+        { status: 400 },
+      );
     }
 
     const { reportId, format, includeCharts, customFields } = validation.data;
 
     // Get report data
     const { data: report, error: reportError } = await supabase
-      .from('reports_admin')
-      .select('*')
-      .eq('id', reportId)
+      .from("reports_admin")
+      .select("*")
+      .eq("id", reportId)
       .single();
 
     if (reportError || !report) {
-      return NextResponse.json({ error: 'Report not found' }, { status: 404 });
+      return NextResponse.json({ error: "Report not found" }, { status: 404 });
     }
 
     // Generate export based on format
@@ -53,34 +58,35 @@ export async function POST(request: NextRequest) {
     let filename;
 
     switch (format) {
-      case 'csv':
+      case "csv":
         exportData = await generateCSV(report.payload, customFields);
-        mimeType = 'text/csv';
+        mimeType = "text/csv";
         filename = `report_${reportId}.csv`;
         break;
-      case 'pdf':
+      case "pdf":
         exportData = await generatePDF(report.payload, includeCharts);
-        mimeType = 'application/pdf';
+        mimeType = "application/pdf";
         filename = `report_${reportId}.pdf`;
         break;
-      case 'excel':
+      case "excel":
         exportData = await generateExcel(report.payload, customFields);
-        mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        mimeType =
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         filename = `report_${reportId}.xlsx`;
         break;
-      case 'json':
+      case "json":
         exportData = JSON.stringify(report.payload, null, 2);
-        mimeType = 'application/json';
+        mimeType = "application/json";
         filename = `report_${reportId}.json`;
         break;
       default:
-        return NextResponse.json({ error: 'Invalid format' }, { status: 400 });
+        return NextResponse.json({ error: "Invalid format" }, { status: 400 });
     }
 
     // Create audit log
-    await supabase.from('audit_logs').insert({
-      action: 'report_exported',
-      entityType: 'report',
+    await supabase.from("audit_logs").insert({
+      action: "report_exported",
+      entityType: "report",
       entityId: reportId,
       userId: authResult.user!.id,
       metadata: {
@@ -93,11 +99,10 @@ export async function POST(request: NextRequest) {
     return new NextResponse(exportData, {
       status: 200,
       headers: {
-        'Content-Type': mimeType,
-        'Content-Disposition': `attachment; filename="${filename}"`,
+        "Content-Type": mimeType,
+        "Content-Disposition": `attachment; filename="${filename}"`,
       },
     });
-
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
@@ -107,12 +112,12 @@ async function generateCSV(data: any, customFields?: string[]) {
   // Simple CSV generation
   const headers = customFields || Object.keys(data);
   const csvContent = [
-    headers.join(','),
-    ...Object.values(data).map((row: any) => 
-      headers.map(header => `"${row[header] || ''}"`).join(',')
-    )
-  ].join('\n');
-  
+    headers.join(","),
+    ...Object.values(data).map((row: any) =>
+      headers.map((header) => `"${row[header] || ""}"`).join(","),
+    ),
+  ].join("\n");
+
   return csvContent;
 }
 

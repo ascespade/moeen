@@ -72,11 +72,12 @@ export default function AgentDashboard() {
         setLogs(logsData.logs || []);
       }
     } catch (error) {
-      } finally {
+    } finally {
       setIsLoading(false);
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchStatus();
     const interval = setInterval(fetchStatus, 5000); // Update every 5 seconds

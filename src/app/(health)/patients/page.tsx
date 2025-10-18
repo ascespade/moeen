@@ -17,12 +17,11 @@ import { Badge } from "@/components/ui/Badge";
 
 import { Input } from "@/components/ui/Input";
 
-import { 
-
-  Users, 
-  Phone, 
-  Mail, 
-  MapPin, 
+import {
+  Users,
+  Phone,
+  Mail,
+  MapPin,
   Calendar,
   Plus,
   Search,
@@ -41,7 +40,7 @@ import {
   CheckCircle,
   TrendingUp,
   Target,
-  FileText
+  FileText,
 } from "lucide-react";
 
 interface Patient {
@@ -92,7 +91,8 @@ export default function PatientsPage() {
   >("all");
   const [filterCondition, setFilterCondition] = useState<string>("all");
   const [filterSeverity, setFilterSeverity] = useState<string>("all");
-  const [selectedPatient, setSelectedPatient] = useState<PatientWithStats | null>(null);
+  const [selectedPatient, setSelectedPatient] =
+    useState<PatientWithStats | null>(null);
   const [showDetails, setShowDetails] = useState(false);
 
   // Load patients from database
@@ -188,23 +188,55 @@ export default function PatientsPage() {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      'active': { label: 'نشط', variant: 'primary' as const, color: 'text-brand-success' },
-      'inactive': { label: 'غير نشط', variant: 'secondary' as const, color: 'text-gray-600' },
-      'blocked': { label: 'محظور', variant: 'destructive' as const, color: 'text-brand-error' }
+      active: {
+        label: "نشط",
+        variant: "primary" as const,
+        color: "text-brand-success",
+      },
+      inactive: {
+        label: "غير نشط",
+        variant: "secondary" as const,
+        color: "text-gray-600",
+      },
+      blocked: {
+        label: "محظور",
+        variant: "destructive" as const,
+        color: "text-brand-error",
+      },
     };
-    
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'primary' as const, color: 'text-gray-600' };
+
+    const statusInfo = statusMap[status as keyof typeof statusMap] || {
+      label: status,
+      variant: "primary" as const,
+      color: "text-gray-600",
+    };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 
   const getSeverityBadge = (severity: string) => {
     const severityMap = {
-      'mild': { label: 'خفيف', variant: 'primary' as const, color: 'text-brand-success' },
-      'moderate': { label: 'متوسط', variant: 'secondary' as const, color: 'text-yellow-600' },
-      'severe': { label: 'شديد', variant: 'destructive' as const, color: 'text-brand-error' }
+      mild: {
+        label: "خفيف",
+        variant: "primary" as const,
+        color: "text-brand-success",
+      },
+      moderate: {
+        label: "متوسط",
+        variant: "secondary" as const,
+        color: "text-yellow-600",
+      },
+      severe: {
+        label: "شديد",
+        variant: "destructive" as const,
+        color: "text-brand-error",
+      },
     };
-    
-    const severityInfo = severityMap[severity as keyof typeof severityMap] || { label: severity, variant: 'primary' as const, color: 'text-gray-600' };
+
+    const severityInfo = severityMap[severity as keyof typeof severityMap] || {
+      label: severity,
+      variant: "primary" as const,
+      color: "text-gray-600",
+    };
     return <Badge variant={severityInfo.variant}>{severityInfo.label}</Badge>;
   };
 
