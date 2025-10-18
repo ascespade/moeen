@@ -190,6 +190,14 @@ jobs:
           echo "🎯 نوع الخطأ: $ERROR_TYPE"
           echo "🔧 نوع الإصلاح: $FIX_TYPE"
           
+          # إصلاح خطأ YAML في الـ Self-Healing workflow
+          echo "🔧 إصلاح خطأ YAML في الـ Self-Healing workflow..."
+          
+          # إصلاح المشكلة في السطر 493
+          sed -i '493s/\\`;/`;/' .github/workflows/ultimate-ci-self-healing.yml
+          
+          echo "✅ تم إصلاح خطأ YAML"
+          
           case "$FIX_TYPE" in
             "check-artifact-download")
               echo "🔧 إصلاح مشكلة تحميل الـ artifacts..."
