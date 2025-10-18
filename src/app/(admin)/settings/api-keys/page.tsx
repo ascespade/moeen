@@ -191,6 +191,7 @@ const APIKeysSettingsPage: React.FC = () => {
       return;
     }
     loadApiKeys();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, router]);
 
   const loadApiKeys = async () => {

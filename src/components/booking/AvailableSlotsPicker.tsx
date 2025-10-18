@@ -36,6 +36,7 @@ export default function AvailableSlotsPicker({
     if (sessionTypeId && selectedDate) {
       loadAvailableSlots();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionTypeId, selectedDate, therapistId]);
 
   const loadAvailableSlots = async () => {
