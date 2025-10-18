@@ -49,6 +49,7 @@ interface StaffWorkHours {
   isOnDuty: boolean;
   lastCheckIn?: string;
   lastCheckOut?: string;
+}
 
 // TODO: Replace mock with live API once endpoints ready
 const mockStats: DashboardStats = {
