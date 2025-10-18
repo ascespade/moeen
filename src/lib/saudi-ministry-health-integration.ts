@@ -103,7 +103,6 @@ export class SaudiMinistryHealthIntegration {
         lastSync: new Date().toISOString(),
         status: "inactive",
       };
-    }
 
   async getSehaHealthRecord(
     nationalId: string,
@@ -120,7 +119,6 @@ export class SaudiMinistryHealthIntegration {
       return null;
     } catch (error) {
       return null;
-    }
 
   // SHOON Integration - نظام شؤون المرضى
   async syncWithShoon(
@@ -150,7 +148,6 @@ export class SaudiMinistryHealthIntegration {
         lastSync: new Date().toISOString(),
         status: "inactive",
       };
-    }
 
   async getShoonPatientData(nationalId: string): Promise<any> {
     try {
@@ -161,7 +158,6 @@ export class SaudiMinistryHealthIntegration {
       return response.success ? response.data : null;
     } catch (error) {
       return null;
-    }
 
   // TATMAN Integration - نظام تطمن للتأمين الصحي
   async syncWithTatman(
@@ -196,7 +192,6 @@ export class SaudiMinistryHealthIntegration {
         coverageStatus: "inactive",
         lastSync: new Date().toISOString(),
       };
-    }
 
   async verifyTatmanCoverage(
     nationalId: string,
@@ -235,7 +230,6 @@ export class SaudiMinistryHealthIntegration {
         remainingAmount: 0,
         requiresApproval: false,
       };
-    }
 
   // Submit to Ministry Systems
   async submitToMinistry(
@@ -354,7 +348,7 @@ export class SaudiMinistryHealthIntegration {
       recommendations.push("تأكد من تحديث البيانات بانتظام");
 
     return {
-      {
+
       compliant: violations.length === 0,
       violations,
       recommendations,
@@ -510,7 +504,6 @@ export class SaudiMinistryHealthIntegration {
         requiresApproval: false,
       },
     };
-  }
 
 export const ministryHealthIntegration = new SaudiMinistryHealthIntegration();
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

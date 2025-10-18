@@ -298,7 +298,6 @@ async function seedTranslations() {
           result.push(...flattenKeys(value, fullKey));
         } else {
           result.push({ key: fullKey, value: value as string });
-        }
 
       return result;
 
@@ -339,13 +338,11 @@ async function seedTranslations() {
         logger.info(
           `✅ Inserted batch ${i / batchSize + 1}/${Math.ceil(translations.length / batchSize)}`,
         );
-      }
 
     logger.info("🎉 Comprehensive translation seeding completed!");
   } catch (error) {
     logger.error("❌ Translation seeding failed:", error);
     throw error;
-  }
 
 // Run if called directly
 if (require.main === module) {

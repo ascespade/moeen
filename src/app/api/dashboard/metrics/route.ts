@@ -238,7 +238,6 @@ export async function GET(request: NextRequest) {
       },
       { status: 500 },
     );
-  }
 
 async function getSystemHealth() {
   try {
@@ -270,7 +269,6 @@ async function getSystemHealth() {
     }));
   } catch (error) {
     return [];
-  }
 
 async function getSystemMetrics() {
   try {
@@ -309,7 +307,6 @@ async function getSystemMetrics() {
     return Object.values(aggregated);
   } catch (error) {
     return [];
-  }
 
 async function getSocialMediaMetrics() {
   try {
@@ -367,7 +364,6 @@ async function getSocialMediaMetrics() {
         totalShares: 0,
       },
     };
-  }
 
 async function getWorkflowMetrics() {
   try {
@@ -401,7 +397,6 @@ async function getWorkflowMetrics() {
       invalidWorkflows: 0,
       commonIssues: {},
     };
-  }
 
 async function getChatbotMetrics() {
   try {
@@ -432,7 +427,6 @@ async function getChatbotMetrics() {
       languages: [],
       categories: [],
     };
-  }
 
 function calculateOverallHealth(systemHealth: any[]) {
   if (systemHealth.length === 0) return "unknown";
@@ -576,7 +570,6 @@ async function getHealthcareMetrics() {
         averagePerPatient: 0,
       },
     };
-  }
 
 async function getCrmMetrics() {
   try {

@@ -187,7 +187,6 @@ export function validateData<T>(
         success: false,
         errors: ["Validation failed"],
       };
-    }
 
     export function validateQueryParams<T>(
       schema: z.ZodSchema<T>,
@@ -203,7 +202,6 @@ export function validateData<T>(
           params[key] = value === "true";
         } else {
           params[key] = value;
-        }
 
         return validateData(schema, params);
       }

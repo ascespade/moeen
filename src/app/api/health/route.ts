@@ -35,7 +35,6 @@ interface ServiceStatus {
   error?: string;
   lastChecked: string;
 
-}
 
 export async function GET(request: NextRequest) {
   const startTime = Date.now();
@@ -75,7 +74,6 @@ export async function GET(request: NextRequest) {
     };
 
     return NextResponse.json(errorResponse, { status: 503 });
-  }
 
 async function performHealthCheck(): Promise<HealthCheck> {
   const timestamp = new Date().toISOString();
@@ -151,7 +149,6 @@ async function checkDatabase(): Promise<ServiceStatus> {
       error: error.message,
       lastChecked: new Date().toISOString(),
     };
-  }
 
 async function checkStorage(): Promise<ServiceStatus> {
   const startTime = Date.now();
@@ -182,7 +179,6 @@ async function checkStorage(): Promise<ServiceStatus> {
       error: error.message,
       lastChecked: new Date().toISOString(),
     };
-  }
 
 async function checkAuth(): Promise<ServiceStatus> {
   const startTime = Date.now();
@@ -211,7 +207,6 @@ async function checkAuth(): Promise<ServiceStatus> {
       error: error.message,
       lastChecked: new Date().toISOString(),
     };
-  }
 
 async function checkAPI(): Promise<ServiceStatus> {
   const startTime = Date.now();
@@ -241,7 +236,6 @@ async function checkAPI(): Promise<ServiceStatus> {
       error: error.message,
       lastChecked: new Date().toISOString(),
     };
-  }
 
 async function checkMemory(): Promise<ServiceStatus> {
   const memoryUsage = process.memoryUsage();
@@ -306,7 +300,6 @@ function getHttpStatus(status: "healthy" | "degraded" | "unhealthy"): number {
       return 503;
     default:
       return 500;
-  }
 
 // Additional health check endpoints
 export async function POST(request: NextRequest) {

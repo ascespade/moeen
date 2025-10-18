@@ -103,7 +103,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
-  }
 
 async function generateCSV(data: any, customFields?: string[]) {
   // Simple CSV generation

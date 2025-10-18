@@ -33,7 +33,6 @@ export async function GET(request: NextRequest) {
       { error: "Failed to fetch logs" },
       { status: 500 },
     );
-  }
 
 async function getActivityLogs(filters: {
   service?: string | null;
@@ -77,7 +76,6 @@ async function getActivityLogs(filters: {
     );
   } catch (error) {
     return [];
-  }
 
 function generateLogSummary(logs: any[]) {
   const summary = {

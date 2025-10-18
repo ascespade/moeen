@@ -25,7 +25,6 @@ interface ClaimResult {
   error?: string;
   referenceNumber?: string;
 
-}
 
 export class InsuranceProviderService {
   private providers: Map<string, InsuranceProvider> = new Map();
@@ -36,7 +35,7 @@ export class InsuranceProviderService {
   private initializeProviders() {
     const providers: InsuranceProvider[] = [
   {
-      {
+
     id: "seha",
         name: "SEHA",
         code: "SEHA",
@@ -111,7 +110,6 @@ export class InsuranceProviderService {
         success: false,
         error: error instanceof Error ? error.message : "Verification failed",
       };
-    }
 
   async createClaim(
     providerCode: string,
@@ -158,7 +156,6 @@ export class InsuranceProviderService {
         success: false,
         error: error instanceof Error ? error.message : "Claim creation failed",
       };
-    }
 
   async checkClaimStatus(
     providerCode: string,
@@ -196,7 +193,6 @@ export class InsuranceProviderService {
         success: false,
         error: error instanceof Error ? error.message : "Status check failed",
       };
-    }
 
   async submitClaim(
     providerCode: string,
@@ -236,14 +232,12 @@ export class InsuranceProviderService {
         error:
           error instanceof Error ? error.message : "Claim submission failed",
       };
-    }
 
   getProviders(): InsuranceProvider[] {
     return Array.from(this.providers.values()).filter((p) => p.isActive);
 
   getProvider(code: string): InsuranceProvider | undefined {
     return this.providers.get(code);
-  }
 
 export const insuranceService = new InsuranceProviderService();
 }}}}}}}}}}}}}}}

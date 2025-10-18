@@ -59,7 +59,6 @@ export async function GET(request: NextRequest) {
       { error: "Internal server error" },
       { status: 500 },
     );
-  }
 
 // POST /api/crm/leads - إنشاء عميل محتمل جديد
 export async function POST(request: NextRequest) {

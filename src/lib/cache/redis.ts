@@ -30,7 +30,6 @@ class RedisCache {
     } catch (error) {
       console.error("Cache get error:", error);
       return null;
-    }
 
   async set<T>(key: string, value: T, ttl?: number): Promise<boolean> {
     try {
@@ -43,7 +42,6 @@ class RedisCache {
     } catch (error) {
       console.error("Cache set error:", error);
       return false;
-    }
 
   async del(key: string): Promise<boolean> {
     try {
@@ -52,7 +50,6 @@ class RedisCache {
     } catch (error) {
       console.error("Cache delete error:", error);
       return false;
-    }
 
   async exists(key: string): Promise<boolean> {
     return this.existsInMemory(key);
@@ -64,7 +61,6 @@ class RedisCache {
     } catch (error) {
       console.error("Cache flush error:", error);
       return false;
-    }
 
   // Memory-based cache (fallback)
   private memoryCache = new Map<string, { value: string; expires: number }>();
@@ -94,7 +90,6 @@ class RedisCache {
 
   private flushMemory(): void {
     this.memoryCache.clear();
-  }
 
 // Cache decorator for functions
 export function cached(

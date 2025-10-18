@@ -10,7 +10,6 @@ interface SMSResult {
   messageId?: string;
   error?: string;
 
-}
 
 export class SMSNotificationService {
   private apiKey: string;
@@ -73,7 +72,6 @@ export class SMSNotificationService {
         success: false,
         error: error instanceof Error ? error.message : "SMS sending failed",
       };
-    }
 
   async sendAppointmentConfirmation(data: {
     patientPhone: string;
@@ -138,7 +136,6 @@ export class SMSNotificationService {
       message,
       language: "ar",
     });
-  }
 
 export const smsService = new SMSNotificationService();
 }}}}}}}}}

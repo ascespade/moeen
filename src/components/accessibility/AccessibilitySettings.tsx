@@ -1,13 +1,12 @@
 "use client";
 
+
 import React, { useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Switch } from "@/components/ui/Switch";
-import { useAccessibility } from "@/lib/accessibility";
-
-} from "@/components/ui/Select";
+import { useAccessibility } from "@/components/ui/Select";
   Volume2,
 } from "lucide-react";
 

@@ -51,7 +51,6 @@ export class ValidationError extends BaseError {
       context: this.context,
       timestamp: new Date().toISOString(),
     };
-  }
 
 // Authentication Error
 export class AuthenticationError extends BaseError {
@@ -74,7 +73,6 @@ export class AuthenticationError extends BaseError {
       context: this.context,
       timestamp: new Date().toISOString(),
     };
-  }
 
 // Authorization Error
 export class AuthorizationError extends BaseError {
@@ -97,7 +95,6 @@ export class AuthorizationError extends BaseError {
       context: this.context,
       timestamp: new Date().toISOString(),
     };
-  }
 
 // Not Found Error
 export class NotFoundError extends BaseError {
@@ -120,7 +117,6 @@ export class NotFoundError extends BaseError {
       context: this.context,
       timestamp: new Date().toISOString(),
     };
-  }
 
 // Conflict Error
 export class ConflictError extends BaseError {
@@ -140,7 +136,6 @@ export class ConflictError extends BaseError {
       context: this.context,
       timestamp: new Date().toISOString(),
     };
-  }
 
 // Rate Limit Error
 export class RateLimitError extends BaseError {
@@ -163,7 +158,6 @@ export class RateLimitError extends BaseError {
       context: this.context,
       timestamp: new Date().toISOString(),
     };
-  }
 
 // Internal Server Error
 export class InternalServerError extends BaseError {
@@ -186,7 +180,6 @@ export class InternalServerError extends BaseError {
       context: this.context,
       timestamp: new Date().toISOString(),
     };
-  }
 
 // Database Error
 export class DatabaseError extends BaseError {
@@ -209,7 +202,6 @@ export class DatabaseError extends BaseError {
       context: this.context,
       timestamp: new Date().toISOString(),
     };
-  }
 
 // External Service Error
 export class ExternalServiceError extends BaseError {
@@ -234,7 +226,6 @@ export class ExternalServiceError extends BaseError {
       context: this.context,
       timestamp: new Date().toISOString(),
     };
-  }
 
 // Business Logic Error
 export class BusinessLogicError extends BaseError {
@@ -254,7 +245,6 @@ export class BusinessLogicError extends BaseError {
       context: this.context,
       timestamp: new Date().toISOString(),
     };
-  }
 
 // Error Handler Class
 export class ErrorHandler {
@@ -315,13 +305,11 @@ export class ErrorHandler {
       this.logger.error("Operational Error:", errorInfo);
     } else {
       this.logger.error("Unexpected Error:", errorInfo);
-    }
 
   public isOperationalError(error: Error): boolean {
     if (error instanceof BaseError) {
       return error.isOperational;
     return false;
-  }
 
 // Error Factory
 export class ErrorFactory {
@@ -374,7 +362,6 @@ export class ErrorFactory {
     context?: Record<string, any>,
   ): ExternalServiceError {
     return new ExternalServiceError(message, serviceName, context);
-  }
 
 // Error Response Formatter
 export class ErrorResponseFormatter {
@@ -407,7 +394,6 @@ export class ErrorResponseFormatter {
         timestamp: new Date().toISOString(),
       },
     };
-  }
 
 // Async Error Wrapper
 export const asyncHandler = (fn: Function) => {

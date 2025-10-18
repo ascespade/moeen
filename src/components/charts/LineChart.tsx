@@ -1,5 +1,6 @@
 "use client";
 
+
 import React from "react";
 
 import { useTheme } from "@/core/theme";
@@ -29,7 +30,6 @@ interface LineChartProps {
   showTooltip?: boolean;
   smooth?: boolean;
 
-}
 
 export const LineChart: React.FC<LineChartProps> = ({
   data,

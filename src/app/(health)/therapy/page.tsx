@@ -1,5 +1,6 @@
 "use client";
 
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,9 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { useAuth } from "@/hooks/useAuth";
-
-} from "lucide-react";
+import { useAuth } from "lucide-react";
 
 interface TherapySession {
   id: string;
@@ -53,7 +52,6 @@ interface TherapyGoal {
   status: "active" | "completed" | "paused";
   created_at: string;
 
-}
 
 const TherapyPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -79,7 +77,7 @@ const TherapyPage: React.FC = () => {
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockSessions: TherapySession[] = [
   {
-        {
+
     id: "1",
           patient_id: "pat-1",
           therapist_id: "ther-1",
@@ -112,7 +110,7 @@ const TherapyPage: React.FC = () => {
 
       const mockGoals: TherapyGoal[] = [
   {
-        {
+
     id: "1",
           patient_id: "pat-1",
           goal_title: "تحسين المشي",

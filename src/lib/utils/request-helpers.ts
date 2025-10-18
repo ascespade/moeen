@@ -9,7 +9,6 @@ export function getClientIP(request: NextRequest | undefined): string {
     );
   } catch {
     return "127.0.0.1";
-  }
 
   export function getUserAgent(request: NextRequest | undefined): string {
     if (!request) return "Unknown";

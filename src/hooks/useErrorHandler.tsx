@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useCallback } from "react";
 
 import logger from "@/lib/monitoring/logger";
@@ -13,7 +14,6 @@ interface ErrorHandlerOptions {
   logError?: boolean;
   fallbackMessage?: string;
 
-}
 
 export function useErrorHandler() {
   const { t } = useT();
@@ -52,7 +52,6 @@ export function useErrorHandler() {
               url: window.location.href,
             }),
           }).catch(console.error);
-        }
 
       // Show toast if enabled
       if (showToast) {

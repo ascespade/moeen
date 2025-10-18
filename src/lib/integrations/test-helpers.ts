@@ -80,7 +80,6 @@ export async function logIntegrationTest(
 
   if (error) {
     console.error("Error logging integration test:", error);
-  }
 
 // ================================================================
 // WHATSAPP TESTING
@@ -132,7 +131,6 @@ export async function testWhatsAppConnection(
       error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
-  }
 
 // ================================================================
 // SMS TESTING (Twilio)
@@ -187,7 +185,6 @@ export async function testSmsConnection(config: SMSConfig): Promise<any> {
       error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
-  }
 
 // ================================================================
 // EMAIL TESTING (SendGrid)
@@ -235,7 +232,6 @@ export async function testEmailConnection(config: EmailConfig): Promise<any> {
       error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
-  }
 
 // ================================================================
 // GOOGLE CALENDAR TESTING
@@ -315,7 +311,6 @@ export async function testGoogleCalendarConnection(
       error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
-  }
 
 // ================================================================
 // SLACK TESTING
@@ -363,7 +358,6 @@ export async function testSlackConnection(config: SlackConfig): Promise<any> {
       error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
-  }
 
 // ================================================================
 // SEHA PLATFORM TESTING
@@ -413,7 +407,6 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
       error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
-  }
 
 // ================================================================
 // TATMAN INSURANCE TESTING

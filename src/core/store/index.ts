@@ -25,7 +25,6 @@ interface AuthActions {
   setError: (error: string | null) => void;
   updateUser: (user: Partial<User>) => void;
 
-}
 
 export const useAuthStore = create<AuthState & AuthActions>()(
   devtools(
@@ -108,7 +107,6 @@ interface UIActions {
   closeModal: (modalId: string) => void;
   setLoading: (key: string, loading: boolean) => void;
 
-}
 
 export const useUIStore = create<UIState & UIActions>()(
   devtools(
@@ -280,7 +278,6 @@ interface DataActions {
   setError: (error: string | null) => void;
   clearError: () => void;
 
-}
 
 export const useDataStore = create<DataState & DataActions>()(
   devtools(

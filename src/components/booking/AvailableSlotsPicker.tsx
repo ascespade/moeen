@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useEffect, useState } from "react";
 
 import logger from "@/lib/monitoring/logger";
@@ -19,7 +20,6 @@ interface Props {
   onSelect: (slot: Slot) => void;
   selectedSlot?: Slot;
 
-}
 
 export default function AvailableSlotsPicker({
   sessionTypeId,

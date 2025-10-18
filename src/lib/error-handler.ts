@@ -15,7 +15,6 @@ interface ErrorReport {
   context: ErrorContext;
   componentStack?: string;
 
-}
 
 export class ErrorHandler {
   private static instance: ErrorHandler;
@@ -92,14 +91,13 @@ export class ErrorHandler {
     } catch (error) {
     } finally {
       this.isProcessing = false;
-    }
 
   private async sendErrorReport(errorReport: ErrorReport): Promise<void> {
     try {
       // Send to analytics/monitoring service
       if (process.env.NODE_ENV === "production") {
         await fetch("/api/errors", {
-          {
+
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -175,7 +173,7 @@ export const errorHandler = ErrorHandler.getInstance();
 if (typeof window !== "undefined") {
   window.addEventListener("error", (event) => {
     errorHandler.reportError(event.error, {
-      {
+
       url: window.location.href,
       userAgent: navigator.userAgent,
     });

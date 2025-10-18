@@ -1,5 +1,6 @@
 "use client";
 
+
 import React, { useState } from "react";
 
 import { Sun, Moon, Monitor, Check } from "lucide-react";
@@ -15,7 +16,6 @@ interface ThemeSwitchProps {
   showLabel?: boolean;
   className?: string;
 
-}
 
 export function ThemeSwitch({
   variant = "dropdown",
@@ -172,4 +172,3 @@ export function ThemeSwitch({
     </div>
   );
 export default ThemeSwitch;
-}

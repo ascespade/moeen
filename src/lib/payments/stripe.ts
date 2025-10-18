@@ -52,7 +52,6 @@ export class StripePaymentService {
         error:
           error instanceof Error ? error.message : "Payment creation failed",
       };
-    }
 
   async confirmPayment(paymentIntentId: string): Promise<PaymentResult> {
     if (!stripe) {
@@ -83,7 +82,6 @@ export class StripePaymentService {
             ? error.message
             : "Payment confirmation failed",
       };
-    }
 
   async refundPayment(
     paymentIntentId: string,
@@ -110,7 +108,6 @@ export class StripePaymentService {
         success: false,
         error: error instanceof Error ? error.message : "Refund failed",
       };
-    }
 
   async handleWebhook(
     payload: string,

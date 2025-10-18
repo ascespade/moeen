@@ -53,7 +53,6 @@ export function middleware(request: NextRequest) {
         },
         { status: 403 },
       );
-    }
 
   // Public routes that don't require authentication
   const publicRoutes = ["/login", "/register", "/forgot-password", "/"];
@@ -150,7 +149,6 @@ export function middleware(request: NextRequest) {
     });
 
     return response;
-  }
 
 export const config = {
   matcher: [

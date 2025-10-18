@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useState } from "react";
 
 import Image from "next/image";
@@ -21,11 +22,10 @@ interface InsuranceClaim {
   attachments: string[];
   reviewer?: string;
   notes?: string;
-}
 
 const mockClaims: InsuranceClaim[] = [
   {
-  {
+
     id: "1",
     patientName: "أحمد العتيبي",
     patientId: "1",
@@ -619,4 +619,3 @@ export default function InsuranceClaimsPage() {
       )}
     </div>
   );
-}

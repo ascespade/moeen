@@ -1,14 +1,13 @@
 "use client";
 
+
 import React, { useState, useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
-import { ScrollArea } from "@/components/ui/ScrollArea";
-
-} from "lucide-react";
+import { ScrollArea } from "lucide-react";
 
 interface ChatMessage {
   id: string;
@@ -29,7 +28,6 @@ interface AppointmentSuggestion {
   availableSlots: string[];
   date: string;
 
-}
 
 const MoainChatbot: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);

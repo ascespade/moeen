@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
@@ -12,7 +13,6 @@ interface ProtectedRouteProps {
   allowedRoles?: ("patient" | "doctor" | "staff" | "supervisor" | "admin")[];
   fallback?: React.ReactNode;
 
-}
 
 export default function ProtectedRoute({
   children,

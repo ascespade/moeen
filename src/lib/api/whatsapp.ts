@@ -5,7 +5,6 @@ type SendTextPayload = {
   text: string;
 };
 
-}
 
 export const sendWhatsAppMessage = async (payload: SendTextPayload) => {
   const cfg = getApiConfig();

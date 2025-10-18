@@ -42,7 +42,6 @@ export function encrypt(data: string | object): string {
   } catch (error) {
     console.error("Encryption error:", error);
     throw new Error("Failed to encrypt data");
-  }
 
 /**
  * Decrypt data using AES-256
@@ -71,7 +70,6 @@ export function decrypt<T = string>(
   } catch (error) {
     console.error("Decryption error:", error);
     throw new Error("Failed to decrypt data");
-  }
 
 /**
  * Hash data using SHA-256 (one-way)

@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useEffect } from "react";
 
 import { usePathname } from "next/navigation";
@@ -21,7 +22,6 @@ export const langAtom = atom<AppLang>("ar");
 declare global {
   interface Window {
     HSStaticMethods?: { autoInit?: () => void };
-  }
 
   export default function UIProvider({
     children,

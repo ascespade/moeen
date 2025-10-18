@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useEffect, useState } from "react";
 
 import { useParams, useRouter } from "next/navigation";
@@ -13,7 +14,6 @@ interface Goal {
   domain: string;
   current_progress: number;
 
-}
 
 export default function SessionNotesPage() {
   const params = useParams();
@@ -142,7 +142,6 @@ export default function SessionNotesPage() {
             notes: `تم العمل على الهدف في جلسة ${session?.appointment_date}`,
             recorded_by: user.id,
           });
-        }
 
       // Update session status to completed
       await supabase

@@ -1,5 +1,6 @@
 "use client";
 
+
 import React, { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -10,7 +11,6 @@ import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
 
   Trash2,
-} from "lucide-react";
 } from "@/components/ui/Select";
 
 interface Appointment {
@@ -35,7 +35,6 @@ interface Doctor {
   availableSlots: string[];
   maxPatientsPerDay: number;
 
-}
 
 const AppointmentManager: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -76,7 +75,7 @@ const AppointmentManager: React.FC = () => {
     // محاكاة تحميل المواعيد من قاعدة البيانات
     const mockAppointments: Appointment[] = [
   {
-      {
+
     id: "1",
         patientName: "أحمد محمد",
         patientPhone: "+966501234567",
@@ -113,7 +112,7 @@ const AppointmentManager: React.FC = () => {
   const loadDoctors = async () => {
     const mockDoctors: Doctor[] = [
   {
-      {
+
     id: "1",
         name: "د. سارة أحمد",
         specialty: "طب الأطفال",

@@ -1,5 +1,6 @@
 "use client";
 
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -50,7 +51,6 @@ interface Appointment {
     age?: number;
   };
 
-}
 
 const AppointmentsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

@@ -47,4 +47,3 @@ export default function PlaceholderSquare({
       </div>
     </div>
   );
-}

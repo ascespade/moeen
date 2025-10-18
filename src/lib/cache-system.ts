@@ -40,7 +40,6 @@ export class MemoryCache {
         iter && iter.value ? String(iter.value) : undefined;
       if (oldestKey !== undefined) {
         this.cache.delete(oldestKey);
-      }
 
     this.cache.set(key, {
       data,
@@ -102,7 +101,6 @@ export class MemoryCache {
     if (this.cleanupTimer) {
       clearInterval(this.cleanupTimer);
     this.cache.clear();
-  }
 
 // Cache key generators
 export class CacheKeys {
@@ -143,7 +141,6 @@ export class CacheKeys {
 
   static messageTemplates(): string {
     return "message_templates";
-  }
 
 // Cache manager
 export class CacheManager {
@@ -328,7 +325,6 @@ export class CacheManager {
   clear(): void {
     this.cache.clear();
     this.requestCache.clear();
-  }
 
 // Cache middleware
 export function withCache(

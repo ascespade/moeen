@@ -82,7 +82,6 @@ export class SlackIntegration {
       return true;
     } catch (error) {
       return false;
-    }
 
   // Load channels
   private async loadChannels(): Promise<void> {
@@ -165,7 +164,6 @@ export class SlackIntegration {
       }
     } catch (error) {
       return null;
-    }
 
   // Send appointment notification
   async sendAppointmentNotification(
@@ -386,7 +384,6 @@ export class SlackIntegration {
       }
     } catch (error) {
       return null;
-    }
 
   // Handle Slack events
   async handleSlackEvent(event: any): Promise<void> {
@@ -417,7 +414,6 @@ export class SlackIntegration {
     if (isInThread) {
       // This is a response in a thread - likely a doctor responding
       await this.handleDoctorResponse(event);
-    }
 
   // Handle app mentions
   private async handleAppMention(event: any): Promise<void> {
@@ -434,7 +430,6 @@ export class SlackIntegration {
       case "reply_to_patient":
         await this.handleReplyToPatient(action.value);
         break;
-    }
 
   // Handle doctor response
   private async handleDoctorResponse(event: any): Promise<void> {

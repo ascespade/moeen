@@ -68,7 +68,6 @@ export async function POST(request: NextRequest) {
       { error: "Webhook processing failed" },
       { status: 500 },
     );
-  }
 
 async function handlePaymentSucceeded(
   paymentIntent: Stripe.PaymentIntent,

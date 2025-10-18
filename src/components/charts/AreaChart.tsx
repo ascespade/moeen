@@ -1,5 +1,6 @@
 "use client";
 
+
 import React from "react";
 
 import { useTheme } from "@/core/theme";
@@ -27,7 +28,6 @@ interface AreaChartProps {
   showLegend?: boolean;
   showTooltip?: boolean;
 
-}
 
 export const AreaChart: React.FC<AreaChartProps> = ({
   data,

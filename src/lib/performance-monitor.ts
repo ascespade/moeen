@@ -46,7 +46,7 @@ export class PerformanceMonitor {
 
   private constructor() {
     this.thresholds = {
-      {
+
       responseTime: {
         warning: 1000, // 1 second
       },
@@ -138,7 +138,6 @@ export class PerformanceMonitor {
     // Log to database periodically
     if (this.metrics.length % 100 === 0) {
       this.logMetricsToDatabase();
-    }
 
   // Check performance thresholds
   private checkThresholds(metrics: PerformanceMetrics): void {
@@ -147,7 +146,7 @@ export class PerformanceMonitor {
     // Check response time
     if (metrics.responseTime > this.thresholds.responseTime.critical) {
       alerts.push({
-        {
+
         type: "CRITICAL",
         metric: "responseTime",
         value: metrics.responseTime,
@@ -378,11 +377,10 @@ export class PerformanceMonitor {
   // Clear metrics
   clearMetrics(): void {
     this.metrics = [];
-  }
 
 // Performance alert interface
 interface PerformanceAlert {
-  {
+
   type: "WARNING" | "CRITICAL";
 },
   {

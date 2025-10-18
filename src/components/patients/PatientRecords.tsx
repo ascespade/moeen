@@ -1,5 +1,6 @@
 "use client";
 
+
 import React, { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -9,7 +10,6 @@ import { Badge } from "@/components/ui/Badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
   Trash2,
-} from "lucide-react";
 } from "@/components/ui/Select";
 
 interface Patient {
@@ -51,7 +51,6 @@ interface MedicalRecord {
   followUpRequired: boolean;
   followUpDate?: string;
 
-}
 
 const PatientRecords: React.FC = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -110,7 +109,7 @@ const PatientRecords: React.FC = () => {
     // محاكاة تحميل المرضى من قاعدة البيانات
     const mockPatients: Patient[] = [
   {
-      {
+
     id: "1",
         name: "أحمد محمد الأحمد",
         phone: "+966501234567",
@@ -174,7 +173,7 @@ const PatientRecords: React.FC = () => {
     // محاكاة تحميل السجلات الطبية
     const mockRecords: MedicalRecord[] = [
   {
-      {
+
     id: "1",
         patientId: "1",
         date: "2024-01-10",

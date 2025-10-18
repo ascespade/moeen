@@ -61,7 +61,6 @@ export async function POST(request: NextRequest) {
       if (!userError && user) {
         if (!patientEmail) patientEmail = user.email;
         if (!patientPhone) patientPhone = user.meta?.phone;
-      }
 
     if (channels.includes("email") && !patientEmail) {
       return NextResponse.json(
@@ -195,7 +194,6 @@ export async function POST(request: NextRequest) {
 
       if (emailResult) {
         results.push({ channel: "email", ...emailResult });
-      }
 
     // Send SMS notifications
     if (channels.includes("sms") || channels.includes("both")) {
@@ -290,7 +288,6 @@ export async function POST(request: NextRequest) {
 
       if (smsResult) {
         results.push({ channel: "sms", ...smsResult });
-      }
 
     // Check if any notification failed
     const failedResults = results.filter((result) => !result.success);

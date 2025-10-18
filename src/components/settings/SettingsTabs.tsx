@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useEffect, useState } from "react";
 
 import { isWhatsAppConfigured, getApiConfig } from "@/lib/api/config";
@@ -36,7 +37,6 @@ const tabs = [
   { id: "users", label: "المستخدمون والأدوار" },
 ];
 
-}
 
 export default function SettingsTabs() {
   const [active, setActive] = useState<string>(tabs[0]?.id || "general");
@@ -74,7 +74,6 @@ export default function SettingsTabs() {
       setSettings(data);
     } finally {
       setSaving(false);
-    }
 
   if (loading) {
     return <div className="rounded-xl border p-4">جاري التحميل...</div>;

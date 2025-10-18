@@ -26,7 +26,7 @@ export const isValidPassword = (
     errors.push("Password must contain at least one special character");
 
   return {
-    {
+
     isValid: errors.length === 0,
     errors,
   };
@@ -103,7 +103,6 @@ export const validateForm = <T extends Record<string, any>>(
     if (!result.isValid) {
       errors[field as keyof T] = result.error || "Invalid value";
       isValid = false;
-    }
 
   return { isValid, errors };
 };

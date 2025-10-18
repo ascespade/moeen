@@ -68,7 +68,6 @@ export async function PATCH(
           user_id: userId,
           role_id: roleData.id,
         });
-      }
 
     // Log admin action
     await logAdminAction(currentUser.id, "UPDATE_USER", {
@@ -85,7 +84,6 @@ export async function PATCH(
       { error: "Failed to update user" },
       { status: 500 },
     );
-  }
 
 export async function DELETE(
   request: NextRequest,
@@ -137,7 +135,6 @@ export async function DELETE(
       { error: "Failed to delete user" },
       { status: 500 },
     );
-  }
 
 async function getCurrentUser(authHeader: string) {
   try {
@@ -159,7 +156,6 @@ async function getCurrentUser(authHeader: string) {
     return userData;
   } catch (error) {
     return null;
-  }
 
 async function logAdminAction(userId: string, action: string, details: any) {
   try {

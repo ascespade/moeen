@@ -45,7 +45,6 @@ export class CSRFProtection {
       path: "/",
       maxAge: 60 * 60 * 24, // 24 hours
     });
-  }
 
 // Rate limiting
 export class RateLimiter {
@@ -78,7 +77,6 @@ export class RateLimiter {
   static getResetTime(ip: string): number {
     const userRequests = this.requests.get(ip);
     return userRequests?.resetTime || Date.now() + this.WINDOW_MS;
-  }
 
 // Input sanitization
 export class InputSanitizer {
@@ -98,7 +96,6 @@ export class InputSanitizer {
       .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
       .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "")
       .replace(/on\w+="[^"]*"/gi, "");
-  }
 
 // Security headers
 export const securityHeaders = {
@@ -141,11 +138,10 @@ export class PasswordValidator {
       errors.push("Password must contain at least one special character");
 
     return {
-      {
+
       isValid: errors.length === 0,
       errors,
     };
-  }
 
 // Session security
 export class SessionSecurity {

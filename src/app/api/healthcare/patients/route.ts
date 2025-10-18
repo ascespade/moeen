@@ -76,7 +76,6 @@ export async function GET(request: NextRequest) {
       { error: "Internal server error" },
       { status: 500 },
     );
-  }
 
 // POST /api/healthcare/patients - إنشاء مريض جديد
 export async function POST(request: NextRequest) {

@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useEffect, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
@@ -9,7 +10,6 @@ interface Therapist {
   id: string;
   full_name: string;
   email: string;
-}
 
 interface Schedule {
   id: string;
@@ -17,7 +17,6 @@ interface Schedule {
   start_time: string;
   end_time: string;
   is_available: boolean;
-}
 
 const DAYS = [
   "الأحد",
@@ -29,7 +28,6 @@ const DAYS = [
   "السبت",
 ];
 
-}
 
 export default function TherapistSchedulesPage() {
   const [therapists, setTherapists] = useState<Therapist[]>([]);

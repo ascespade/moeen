@@ -143,7 +143,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
-  }
 
 export async function GET(request: NextRequest) {
   try {
@@ -201,7 +200,6 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
-  }
 
 export async function PUT(request: NextRequest) {
   try {
@@ -266,7 +264,6 @@ export async function PUT(request: NextRequest) {
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
-  }
 
 export async function DELETE(request: NextRequest) {
   try {
@@ -320,7 +317,6 @@ export async function DELETE(request: NextRequest) {
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
-  }
 
 async function createPatientProfile(userId: string, profile: any) {
   const supabase = await createClient();

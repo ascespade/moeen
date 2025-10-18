@@ -290,7 +290,6 @@ async function seedHomepageContent() {
   } catch (error) {
     logger.error("❌ Error seeding homepage content:", error);
     throw error;
-  }
 
 // Run the seeding if this file is executed directly
 if (require.main === module) {

@@ -8,4 +8,3 @@ export default function KpiCard({ title, value, hint }: Props) {
       {hint ? <div className="text-xs text-gray-400 mt-1">{hint}</div> : null}
     </div>
   );
-}

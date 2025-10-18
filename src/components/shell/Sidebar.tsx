@@ -1,11 +1,10 @@
 "use client";
 
+
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-import { useT } from "@/components/providers/I18nProvider";
-
-} from "lucide-react";
+import { useT } from "lucide-react";
 
 const adminItems = [
     href: "/dashboard",

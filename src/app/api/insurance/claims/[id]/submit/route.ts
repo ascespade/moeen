@@ -123,7 +123,6 @@ export async function PATCH(
       { error: "Internal server error" },
       { status: 500 },
     );
-  }
 
 export async function GET(
   request: NextRequest,

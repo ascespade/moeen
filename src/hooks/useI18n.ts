@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useEffect, useState } from "react";
 
 import { dynamicContentManager } from "@/lib/dynamic-content-manager";
@@ -41,4 +42,3 @@ export function useI18n(locale: "ar" | "en" = "ar", ns: string = "common") {
   return { t, messages, loading };
 
   export default useI18n;
-}

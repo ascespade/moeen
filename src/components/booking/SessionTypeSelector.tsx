@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useEffect, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
@@ -18,7 +19,6 @@ interface Props {
   onSelect: (sessionType: SessionType) => void;
   selectedId?: string;
 
-}
 
 export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
   const [sessionTypes, setSessionTypes] = useState<SessionType[]>([]);

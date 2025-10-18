@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useState } from "react";
 
 import Image from "next/image";
@@ -24,11 +25,10 @@ interface InsuranceClaim {
   isBlocked: boolean;
   hasOutstandingBalance: boolean;
   outstandingAmount?: number;
-}
 
 const mockClaims: InsuranceClaim[] = [
   {
-  {
+
     id: "1",
     patientName: "أحمد محمد العتيبي",
     patientId: "P001",
@@ -127,7 +127,6 @@ export default function InsurancePage() {
           <span className="text-sm font-medium">نشط</span>
         </div>
       );
-    }
 
     const getOutstandingBalance = (claim: InsuranceClaim) => {
       if (claim.hasOutstandingBalance) {
@@ -145,7 +144,6 @@ export default function InsurancePage() {
             <span className="text-sm font-medium">لا يوجد رصيد مستحق</span>
           </div>
         );
-      }
 
       return (
         <div className="min-h-screen bg-[var(--brand-surface)]">
@@ -501,4 +499,3 @@ export default function InsurancePage() {
       );
     };
   };
-}

@@ -109,7 +109,6 @@ class DynamicContentValidator {
       });
     } catch (error) {
       logger.error(`Error reading file ${filePath}:`, error);
-    }
 
   private shouldSkipFile(filePath: string): boolean {
     const skipPatterns = [
@@ -157,7 +156,6 @@ class DynamicContentValidator {
     for (const file of files) {
       const fullPath = path.join(dirPath, file);
       await this.validateFile(fullPath);
-    }
 
   generateReport(): void {
     logger.info("\n📊 Dynamic Content Validation Report");
@@ -206,11 +204,9 @@ class DynamicContentValidator {
     if (this.violations.length > 0) {
       logger.info("\n🚨 Build should be blocked due to violations!");
       process.exit(1);
-    }
 
   getViolations(): Violation[] {
     return this.violations;
-  }
 
 async function main() {
   const validator = new DynamicContentValidator();

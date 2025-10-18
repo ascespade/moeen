@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useState } from "react";
 
 import Image from "next/image";
@@ -15,11 +16,10 @@ interface Session {
   endTime: string;
   status: "upcoming" | "in-progress" | "completed" | "cancelled";
   notes?: string;
-}
 
 const mockSessions: Session[] = [
   {
-  {
+
     id: "1",
     patientName: "أحمد العتيبي",
     doctorName: "د. سارة أحمد",
@@ -339,4 +339,3 @@ export default function SessionsPage() {
       </main>
     </div>
   );
-}

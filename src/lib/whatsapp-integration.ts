@@ -43,7 +43,7 @@ export class WhatsAppIntegration {
   private initializeTemplates() {
     // Appointment Templates
     this.templates.set("appointment_confirmation", {
-      {
+
       id: "appointment_confirmation",
       name: "تأكيد الموعد",
       category: "appointment",

@@ -64,7 +64,6 @@ export function usePageI18n(locale: "ar" | "en" = "ar") {
       const commonTranslation = t(key, "common");
       if (commonTranslation !== key) {
         translation = commonTranslation;
-      }
 
     return translation;
   };

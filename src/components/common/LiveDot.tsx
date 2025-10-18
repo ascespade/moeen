@@ -11,4 +11,3 @@ export default function LiveDot({ color = "#16A34A" }: { color?: string }) {
       />
     </span>
   );
-}

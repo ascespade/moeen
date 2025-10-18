@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useState } from "react";
 
 import Image from "next/image";
@@ -73,7 +74,7 @@ const mockStats: DashboardStats = {
 
 const mockRecentActivities: RecentActivity[] = [
   {
-  {
+
     id: "1",
     type: "appointment",
     title: "موعد جديد",
@@ -117,7 +118,7 @@ const mockRecentActivities: RecentActivity[] = [
 
 const mockStaffWorkHours: StaffWorkHours[] = [
   {
-  {
+
     id: "1",
     name: "د. سارة أحمد",
     position: "طبيبة علاج طبيعي",

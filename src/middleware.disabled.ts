@@ -9,4 +9,3 @@ export function middleware(_request: NextRequest) {
       "/((?!_next|api|static|.*\\.png$|.*\\.svg$|.*\\.ico$|.*\\.jpg$|.*\\.jpeg$).*)",
     ],
   };
-}

@@ -12,7 +12,6 @@ interface PageMetadata {
   image?: string;
   noIndex?: boolean;
 
-}
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://moeen.sa";
 const appName = "معين - Moeen";
@@ -268,7 +267,6 @@ export function generateStructuredData(
 
     default:
       return baseData;
-  }
 
 const metadata = {
   generateMetadata,

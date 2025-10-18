@@ -45,7 +45,6 @@ export const formatDate = (
             return `${diffInDays}d ago`;
 
             return formatDate(d, "short");
-          }
 
           export const formatNumber = (
             num: number,
@@ -87,7 +86,6 @@ export const formatDate = (
               return `(${match[1]}) ${match[2]}-${match[3]}`;
 
               return phone;
-            }
 
             export const truncateText = (
               text: string,

@@ -136,7 +136,6 @@ export class SaudiHealthSystemIntegration {
         lastSync: new Date().toISOString(),
         status: "inactive",
       };
-    }
 
   async getSehaHealthRecord(
     nationalId: string,
@@ -153,7 +152,6 @@ export class SaudiHealthSystemIntegration {
       return null;
     } catch (error) {
       return null;
-    }
 
   private mapSehaToHealthRecord(sehaData: any): SaudiHealthRecord {
     return {
@@ -235,7 +233,6 @@ export class SaudiHealthSystemIntegration {
         expiryDate: "",
         remainingAmount: 0,
       };
-    }
 
   async submitInsuranceClaim(claimData: {
     patientId: string;
@@ -281,7 +278,6 @@ export class SaudiHealthSystemIntegration {
       throw new Error("Failed to submit insurance claim");
     } catch (error) {
       throw error;
-    }
 
   async checkClaimStatus(
     claimNumber: string,
@@ -327,7 +323,6 @@ export class SaudiHealthSystemIntegration {
         rejectionReason: "System error",
       };
       return result;
-    }
 
   // Saudi Health Regulations Compliance
   validatePatientData(patientData: Partial<SaudiHealthRecord>): {
@@ -340,29 +335,25 @@ export class SaudiHealthSystemIntegration {
     if (patientData.nationalId) {
       if (!this.isValidSaudiNationalId(patientData.nationalId)) {
         errors.push("رقم الهوية الوطنية غير صحيح");
-      }
 
     // Phone number validation (Saudi format)
     if (patientData.phone) {
       if (!this.isValidSaudiPhoneNumber(patientData.phone)) {
         errors.push("رقم الهاتف غير صحيح (يجب أن يبدأ بـ +966 أو 966)");
-      }
 
     // Email validation
     if (patientData.email) {
       if (!this.isValidEmail(patientData.email)) {
         errors.push("البريد الإلكتروني غير صحيح");
-      }
 
     // Age validation (must be between 0 and 120)
     if (patientData.dateOfBirth) {
       const age = this.calculateAge(patientData.dateOfBirth);
       if (age < 0 || age > 120) {
         errors.push("العمر غير صحيح");
-      }
 
     return {
-      {
+
       valid: errors.length === 0,
       errors,
     };
@@ -474,7 +465,6 @@ export class SaudiHealthSystemIntegration {
   // Get insurance provider by code
   getInsuranceProvider(code: string): InsuranceProvider | undefined {
     return this.insuranceProviders.get(code);
-  }
 
 export const saudiHealthSystem = new SaudiHealthSystemIntegration();
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

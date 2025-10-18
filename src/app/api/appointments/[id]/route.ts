@@ -95,7 +95,6 @@ export async function GET(
       { error: "Internal server error" },
       { status: 500 },
     );
-  }
 
 export async function PATCH(
   request: NextRequest,

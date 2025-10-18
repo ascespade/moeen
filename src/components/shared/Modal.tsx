@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useEffect } from "react";
 
 interface ModalProps {
@@ -10,7 +11,6 @@ interface ModalProps {
   size?: "sm" | "md" | "lg" | "xl";
   showCloseButton?: boolean;
 
-}
 
 export default function Modal({
   isOpen,
