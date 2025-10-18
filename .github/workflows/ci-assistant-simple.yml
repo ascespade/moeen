@@ -7,8 +7,8 @@ name: 🤖 CI Assistant Simple - Cursor Integration
 # 4. This workflow is designed to call Cursor Background Agent for fixes
 # 5. This workflow runs ONLY ONCE per Master workflow failure
 # 6. This workflow ONLY triggers on main branch
-# 7. This workflow NEVER creates new branches - always works on main
-# 8. This workflow SKIPS execution if triggered by commit (not by workflow failure)
+# 7. If triggered by COMMIT → Creates new branch for fixes
+# 8. If triggered by WORKFLOW → Works on main branch only
 
 on:
   workflow_run:
@@ -31,9 +31,96 @@ env:
   NODE_ENV: production
 
 jobs:
+  # Job 0: Generate Workflow Name
+  generate-name:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      workflow-name: ${{ steps.name-gen.outputs.workflow-name }}
+      branch-name: ${{ steps.name-gen.outputs.branch-name }}
+      is-commit-trigger: ${{ steps.name-gen.outputs.is-commit-trigger }}
+      workflow-chain: ${{ steps.name-gen.outputs.workflow-chain }}
+      workflow-depth: ${{ steps.name-gen.outputs.workflow-depth }}
+
+    steps:
+      - name: 🏷️ Generate Workflow Name
+        id: name-gen
+        run: |
+          # Get current timestamp
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+
+          # Get commit SHA short
+          COMMIT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+
+          # Get parent workflow name for chain tracking
+          PARENT_WORKFLOW="${{ github.event.workflow_run.name }}"
+
+          # Detect workflow depth and create smart naming
+          if [[ "$PARENT_WORKFLOW" == *"CI Assistant"* ]]; then
+            # This is a recursive call - extract depth from name
+            if [[ "$PARENT_WORKFLOW" == *"recursive"* ]]; then
+              # Extract existing depth and increment
+              DEPTH=$(echo "$PARENT_WORKFLOW" | grep -o '[0-9]\+' | tail -1)
+              if [ -z "$DEPTH" ]; then
+                DEPTH=2
+              else
+                DEPTH=$((DEPTH + 1))
+              fi
+            else
+              DEPTH=2
+            fi
+          else
+            DEPTH=1
+          fi
+
+          # Check if triggered by commit
+          if [ "${{ github.event.workflow_run.head_commit.message }}" != "" ]; then
+            echo "is-commit-trigger=true" >> $GITHUB_OUTPUT
+            
+            # Create workflow chain name with depth tracking
+            if [[ "$PARENT_WORKFLOW" == *"Ultimate AI CI Workflow"* ]]; then
+              if [ "$DEPTH" -eq 1 ]; then
+                WORKFLOW_CHAIN="commit-master-assistant"
+              else
+                WORKFLOW_CHAIN="commit-master-assistant-$DEPTH"
+              fi
+            else
+              WORKFLOW_CHAIN="commit-${PARENT_WORKFLOW//[^a-zA-Z0-9]/-}-assistant-$DEPTH"
+            fi
+            
+            BRANCH_NAME="ci-assistant-fix-$TIMESTAMP-$COMMIT_SHA"
+            WORKFLOW_NAME="🤖 $WORKFLOW_CHAIN - $TIMESTAMP"
+          else
+            echo "is-commit-trigger=false" >> $GITHUB_OUTPUT
+            
+            # Create workflow chain name for workflow-triggered
+            if [[ "$PARENT_WORKFLOW" == *"Ultimate AI CI Workflow"* ]]; then
+              if [ "$DEPTH" -eq 1 ]; then
+                WORKFLOW_CHAIN="workflow-master-assistant"
+              else
+                WORKFLOW_CHAIN="workflow-master-assistant-$DEPTH"
+              fi
+            else
+              WORKFLOW_CHAIN="workflow-${PARENT_WORKFLOW//[^a-zA-Z0-9]/-}-assistant-$DEPTH"
+            fi
+            
+            BRANCH_NAME="main"
+            WORKFLOW_NAME="🤖 $WORKFLOW_CHAIN - $TIMESTAMP"
+          fi
+
+          echo "workflow-name=$WORKFLOW_NAME" >> $GITHUB_OUTPUT
+          echo "branch-name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          echo "workflow-chain=$WORKFLOW_CHAIN" >> $GITHUB_OUTPUT
+          echo "workflow-depth=$DEPTH" >> $GITHUB_OUTPUT
+
+          echo "✅ Generated workflow name: $WORKFLOW_NAME"
+          echo "✅ Generated branch name: $BRANCH_NAME"
+          echo "✅ Workflow chain: $WORKFLOW_CHAIN"
+
   # Job 1: Check if Master Workflow Failed
   check-failure:
     runs-on: ubuntu-latest
+    needs: generate-name
     timeout-minutes: 5
     outputs:
       needs-fix: ${{ steps.check.outputs.needs-fix }}
@@ -41,7 +128,11 @@ jobs:
       logs-url: ${{ steps.check.outputs.logs-url }}
       is-master-workflow: ${{ steps.check.outputs.is-master-workflow }}
       is-failure: ${{ steps.check.outputs.is-failure }}
-      is-commit-trigger: ${{ steps.check.outputs.is-commit-trigger }}
+      is-commit-trigger: ${{ needs.generate-name.outputs.is-commit-trigger }}
+      workflow-name: ${{ needs.generate-name.outputs.workflow-name }}
+      branch-name: ${{ needs.generate-name.outputs.branch-name }}
+      workflow-chain: ${{ needs.generate-name.outputs.workflow-chain }}
+      workflow-depth: ${{ needs.generate-name.outputs.workflow-depth }}
 
     steps:
       - name: 📥 Checkout Repository
@@ -62,15 +153,6 @@ jobs:
           if [ "${{ github.event.workflow_run.name }}" = "🚀 Ultimate AI CI Workflow - Complete Self-Healing System" ]; then
             echo "✅ Triggered by Master workflow - Safe to proceed"
             echo "is-master-workflow=true" >> $GITHUB_OUTPUT
-            
-            # Check if triggered by commit (not by another workflow)
-            if [ "${{ github.event.workflow_run.head_commit.message }}" != "" ]; then
-              echo "⚠️ Triggered by commit - Will work on main branch only"
-              echo "is-commit-trigger=true" >> $GITHUB_OUTPUT
-            else
-              echo "ℹ️ Triggered by workflow - Will work on main branch only"
-              echo "is-commit-trigger=false" >> $GITHUB_OUTPUT
-            fi
           else
             echo "❌ NOT triggered by Master workflow - BLOCKING execution"
             echo "❌ This assistant can only be triggered by Master workflow failures"
@@ -99,8 +181,8 @@ jobs:
   # Job 2: Extract Logs and Call Cursor
   call-cursor:
     runs-on: ubuntu-latest
-    needs: check-failure
-    if: needs.check-failure.outputs.needs-fix == 'true' && needs.check-failure.outputs.is-master-workflow == 'true' && needs.check-failure.outputs.is-failure == 'true' && needs.check-failure.outputs.is-commit-trigger == 'false'
+    needs: [generate-name, check-failure]
+    if: needs.check-failure.outputs.needs-fix == 'true' && needs.check-failure.outputs.is-master-workflow == 'true' && needs.check-failure.outputs.is-failure == 'true'
     timeout-minutes: 15
     outputs:
       cursor-response: ${{ steps.cursor-call.outputs.response }}
@@ -240,8 +322,8 @@ jobs:
   # Job 3: Apply Fixes and Commit
   apply-fixes:
     runs-on: ubuntu-latest
-    needs: [check-failure, call-cursor]
-    if: needs.call-cursor.outputs.fixes-applied == 'true' && needs.check-failure.outputs.is-master-workflow == 'true' && needs.check-failure.outputs.is-failure == 'true' && needs.check-failure.outputs.is-commit-trigger == 'false'
+    needs: [generate-name, check-failure, call-cursor]
+    if: needs.call-cursor.outputs.fixes-applied == 'true' && needs.check-failure.outputs.is-master-workflow == 'true' && needs.check-failure.outputs.is-failure == 'true'
     timeout-minutes: 10
     outputs:
       commit-sha: ${{ steps.commit.outputs.sha }}
@@ -333,7 +415,7 @@ jobs:
 
           # Create commit message
           cat > commit-message.txt << EOF
-          🤖 CI Assistant: Fix Master Workflow Failure
+          🤖 ${{ needs.check-failure.outputs.workflow-name }}: Fix Master Workflow Failure
 
           Applied fixes from Cursor Background Agent:
           - Fixed package.json dependencies
@@ -342,17 +424,26 @@ jobs:
           - Fixed test configurations
 
           Workflow URL: ${{ needs.check-failure.outputs.workflow-url }}
-          Fixed by: CI Assistant Simple
-          Working on: main branch (no new branch created)
+          Fixed by: ${{ needs.check-failure.outputs.workflow-name }}
+          Working on: ${{ needs.check-failure.outputs.branch-name }}
           Timestamp: $(date '+%Y-%m-%d %H:%M:%S UTC')
           EOF
 
           # Commit changes
           git commit -F commit-message.txt || echo "No changes to commit"
 
-          # Push changes to main branch only (no new branches)
-          echo "🔧 Working on main branch only - no new branches will be created"
-          git push origin main || echo "Push completed"
+          # Determine branch strategy based on trigger type
+          if [ "${{ needs.check-failure.outputs.is-commit-trigger }}" = "true" ]; then
+            # Create new branch for commit-triggered fixes
+            BRANCH_NAME="${{ needs.check-failure.outputs.branch-name }}"
+            echo "🔧 Creating new branch for fixes: $BRANCH_NAME"
+            git checkout -b "$BRANCH_NAME"
+            git push origin "$BRANCH_NAME" || echo "Push completed"
+          else
+            # Work on main branch for workflow-triggered fixes
+            echo "🔧 Working on main branch only - no new branches will be created"
+            git push origin main || echo "Push completed"
+          fi
 
           # Get commit SHA
           echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
@@ -362,7 +453,7 @@ jobs:
   # Job 4: Final Report
   final-report:
     runs-on: ubuntu-latest
-    needs: [check-failure, call-cursor, apply-fixes]
+    needs: [generate-name, check-failure, call-cursor, apply-fixes]
     if: always()
     timeout-minutes: 5
 
@@ -378,12 +469,15 @@ jobs:
           echo "📊 Generating CI Assistant report..."
 
           cat > ci-assistant-report.md << EOF
-          # 🤖 CI Assistant Simple - Final Report
+          # ${{ needs.check-failure.outputs.workflow-name }} - Final Report
 
           **Execution Time:** $(date '+%Y-%m-%d %H:%M:%S UTC')
           **Master Workflow Status:** ${{ needs.check-failure.outputs.needs-fix }}
           **Cursor Response:** ${{ needs.call-cursor.outputs.fixes-applied }}
           **Fixes Applied:** ${{ needs.apply-fixes.outputs.commit-sha }}
+          **Working Branch:** ${{ needs.check-failure.outputs.branch-name }}
+          **Workflow Chain:** ${{ needs.check-failure.outputs.workflow-chain }}
+          **Workflow Depth:** ${{ needs.check-failure.outputs.workflow-depth }}
 
           ## 📋 Summary
 
