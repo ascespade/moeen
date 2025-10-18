@@ -11,7 +11,6 @@
  from "./LineChart";
 
 
-
 export type { default as AreaChartProps } from "./AreaChart";
 export type { default as BarChartProps } from "./BarChart";
 export type { default as LineChartProps } from "./LineChart";

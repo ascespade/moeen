@@ -16,5 +16,4 @@
  from "./PlaceholderSquare";
 
 
-
 export { default as ErrorBoundary }
