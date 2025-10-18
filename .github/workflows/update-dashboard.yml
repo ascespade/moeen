@@ -1,0 +1,137 @@
+name: 📊 Update Dashboard
+
+on:
+  workflow_run:
+    workflows: ["🤖 AI Self-Healing CI/CD v3.0"]
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  update_dashboard:
+    name: 📊 تحديث لوحة التحكم
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 تحميل الكود
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📦 إعداد Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📥 تثبيت التبعيات
+        run: |
+          npm install
+          npm install sqlite3 sqlite --save-dev
+
+      - name: 📊 تصدير السجلات إلى JSON
+        run: |
+          echo "📊 تصدير السجلات من SQLite إلى JSON..."
+          node scripts/ai-logger.mjs export
+
+      - name: 📁 إعداد مجلد gh-pages
+        run: |
+          echo "📁 إعداد مجلد gh-pages..."
+          git config --global user.name "AI Agent"
+          git config --global user.email "ai-agent@users.noreply.github.com"
+          
+          # إنشاء فرع gh-pages إذا لم يكن موجوداً
+          git fetch origin gh-pages || git checkout --orphan gh-pages || true
+          git checkout gh-pages || git checkout --orphan gh-pages
+          
+          # تنظيف المجلد
+          git rm -rf . || true
+          
+          # نسخ ملفات Dashboard
+          cp -r dashboard/* .
+          
+          # إضافة ملف .nojekyll لتعطيل Jekyll
+          touch .nojekyll
+          
+          # إنشاء ملف README
+          cat > README.md << 'EOF'
+          # 🤖 AI Self-Healing Dashboard
+          
+          لوحة مراقبة نظام AI Self-Healing CI/CD v3.0
+          
+          ## الميزات
+          
+          - 📊 إحصائيات شاملة للعمليات
+          - 📈 رسوم بيانية تفاعلية
+          - 🔍 بحث وتصفية متقدم
+          - 🔄 تحديث تلقائي كل 15 ثانية
+          
+          ## الوصول
+          
+          يمكنك الوصول إلى اللوحة عبر:
+          https://$(echo ${{ github.repository }} | cut -d'/' -f1).github.io/$(echo ${{ github.repository }} | cut -d'/' -f2)/
+          
+          ---
+          
+          *تم إنشاء هذه اللوحة بواسطة AI Self-Healing CI/CD v3.0*
+          EOF
+
+      - name: 💾 حفظ التغييرات
+        run: |
+          echo "💾 حفظ التغييرات..."
+          git add -A
+          git commit -m "📊 Update dashboard at $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git push origin gh-pages --force
+
+      - name: 📊 إنشاء تقرير
+        run: |
+          echo "📊 إنشاء تقرير التحديث..."
+          echo "## 📊 Dashboard Update Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ تم تحديث لوحة التحكم بنجاح" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**الوقت:** $(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**الرابط:** https://$(echo ${{ github.repository }} | cut -d'/' -f1).github.io/$(echo ${{ github.repository }} | cut -d'/' -f2)/" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 الإحصائيات:" >> $GITHUB_STEP_SUMMARY
+          
+          # قراءة الإحصائيات من logs.json إذا كان موجوداً
+          if [ -f "logs.json" ]; then
+            echo "- إجمالي السجلات: $(cat logs.json | jq '.stats.total // 0')" >> $GITHUB_STEP_SUMMARY
+            echo "- العمليات الناجحة: $(cat logs.json | jq '.stats.successful // 0')" >> $GITHUB_STEP_SUMMARY
+            echo "- العمليات الفاشلة: $(cat logs.json | jq '.stats.failed // 0')" >> $GITHUB_STEP_SUMMARY
+            echo "- متوسط الجودة: $(cat logs.json | jq '.stats.avgQuality // 0')%" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  deploy_pages:
+    name: 🚀 نشر GitHub Pages
+    runs-on: ubuntu-latest
+    needs: update_dashboard
+    
+    steps:
+      - name: 📥 تحميل الكود من gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: 🚀 نشر إلى GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          publish_branch: gh-pages
+          force_orphan: false
+
+      - name: 📊 تقرير النشر
+        run: |
+          echo "## 🚀 GitHub Pages Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ تم نشر اللوحة بنجاح على GitHub Pages" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 **الرابط:** https://$(echo ${{ github.repository }} | cut -d'/' -f1).github.io/$(echo ${{ github.repository }} | cut -d'/' -f2)/" >> $GITHUB_STEP_SUMMARY

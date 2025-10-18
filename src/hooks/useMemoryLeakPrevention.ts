@@ -29,7 +29,7 @@ export const useEventListener = <T extends keyof WindowEventMap>(
   handler: (event: WindowEventMap[T]) => void,
   element?: Element | Window | Document,
 ) => {
-  const savedHandler = useRef<(event: WindowEventMap[T]) => void>();
+  const savedHandler = useRef<(event: WindowEventMap[T]) => void>(() => {});
 
   useEffect(() => {
     savedHandler.current = handler;
@@ -56,7 +56,7 @@ export const useEventListener = <T extends keyof WindowEventMap>(
 
 // Hook for managing intervals with automatic cleanup
 export const useInterval = (callback: () => void, delay: number | null) => {
-  const savedCallback = useRef<() => void>();
+  const savedCallback = useRef<() => void>(() => {});
 
   useEffect(() => {
     savedCallback.current = callback;
@@ -77,7 +77,7 @@ export const useInterval = (callback: () => void, delay: number | null) => {
 
 // Hook for managing timeouts with automatic cleanup
 export const useTimeout = (callback: () => void, delay: number | null) => {
-  const savedCallback = useRef<() => void>();
+  const savedCallback = useRef<() => void>(() => {});
 
   useEffect(() => {
     savedCallback.current = callback;

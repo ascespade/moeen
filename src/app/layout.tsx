@@ -7,6 +7,7 @@ import {
   generateStructuredData,
 } from "@/lib/seo/metadata";
 import MoeenChatbot from "@/components/chatbot/MoeenChatbot";
+import { I18nProvider } from "@/components/providers/I18nProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,8 +40,10 @@ export default function RootLayout({
         <meta name="theme-color" content="#4F46E5" />
       </head>
       <body className={inter.className}>
-        {children}
-        <MoeenChatbot position="bottom-right" />
+        <I18nProvider>
+          {children}
+          <MoeenChatbot position="bottom-right" />
+        </I18nProvider>
       </body>
     </html>
   );

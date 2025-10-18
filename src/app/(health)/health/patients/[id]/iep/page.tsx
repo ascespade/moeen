@@ -44,7 +44,7 @@ const DOMAIN_COLORS: Record<string, string> = {
 
 export default function PatientIEPPage() {
   const params = useParams();
-  const patientId = params.id as string;
+  const patientId = params?.id as string;
 
   const [patient, setPatient] = useState<any>(null);
   const [iep, setIep] = useState<IEP | null>(null);

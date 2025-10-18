@@ -1,50 +1,84 @@
 {
-  "name": "Smart Bootloader Agent",
-  "description": "AI Self-Healing CI/CD Agent for automatic code fixing and testing",
-  "version": "3.0.0",
-  "triggers": {
-    "onCommit": true,
-    "onSchedule": "0 */4 * * *",
-    "onPullRequest": true,
-    "onManual": true
-  },
-  "commands": {
-    "analyze": "npm run lint:check && npm run type:check",
-    "fix": "npm run lint:fix && npm run agent:fix",
-    "test": "npm run test:full-suite",
-    "build": "npm run build",
-    "deploy": "npm run deploy:prod"
-  },
+  "name": "ai-self-healing-agent",
+  "description": "Run Supawright tests, fix failures with LLM-driven patches, push PRs automatically",
+  "version": "3.0",
+  "triggers": [
+    {
+      "event": "on_push",
+      "branches": ["main", "develop"],
+      "paths": ["src/**/*.js", "src/**/*.ts", "src/**/*.jsx", "src/**/*.tsx", "tests/**/*.js", "tests/**/*.ts", "scripts/**/*.js", "scripts/**/*.ts", "package.json", ".eslintrc.cjs", "tsconfig.json", "vitest.config.js", "next.config.js"]
+    },
+    {
+      "event": "on_schedule",
+      "cron": "0 */4 * * *"
+    },
+    {
+      "event": "manual"
+    }
+  ],
+  "commands": [
+    {
+      "name": "run_ai_agent",
+      "command": "node scripts/ai_self_test_and_fix.mjs --agent-mode=cursor",
+      "description": "تشغيل الوكيل الذكي للإصلاح التلقائي"
+    },
+    {
+      "name": "run_tests",
+      "command": "npm run test:full-suite",
+      "description": "تشغيل جميع الاختبارات"
+    },
+    {
+      "name": "run_playwright",
+      "command": "npx playwright test --reporter=html",
+      "description": "تشغيل اختبارات Playwright"
+    },
+    {
+      "name": "run_supawright",
+      "command": "npx supawright test",
+      "description": "تشغيل اختبارات Supawright"
+    },
+    {
+      "name": "fix_lint",
+      "command": "npm run lint:fix",
+      "description": "إصلاح مشاكل ESLint"
+    },
+    {
+      "name": "check_types",
+      "command": "npm run type:check",
+      "description": "فحص TypeScript"
+    },
+    {
+      "name": "build_project",
+      "command": "npm run build",
+      "description": "بناء المشروع"
+    },
+    {
+      "name": "show_report",
+      "command": "cat reports/final_summary.md",
+      "description": "عرض التقرير النهائي"
+    }
+  ],
   "environment": {
     "NODE_ENV": "production",
-    "NODE_VERSION": "18",
-    "NPM_VERSION": "8"
+    "NEXT_PUBLIC_SUPABASE_URL": "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}",
+    "SUPABASE_SERVICE_ROLE_KEY": "${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}",
+    "CURSOR_API_KEY": "${{ secrets.CURSOR_API_KEY }}",
+    "LLM_PROVIDER": "cursor"
   },
-  "runtime": {
-    "maxExecutionTime": 1800,
-    "maxMemory": "2GB",
-    "maxRetries": 3
-  },
+  "max_runtime_minutes": 120,
   "safety": {
-    "backupBeforeChanges": true,
-    "requireApproval": false,
-    "maxChangesPerRun": 100,
-    "excludePatterns": [
-      "node_modules/**",
-      "dist/**",
-      ".next/**",
-      "out/**"
-    ]
+    "backup_before_modification": true,
+    "revert_on_unfixable_error": true,
+    "max_files_to_change": 50,
+    "max_lines_to_change": 1000,
+    "require_approval_for_pr": true,
+    "create_backup_branch": "ai-auto-fixes"
   },
-  "notifications": {
-    "onSuccess": true,
-    "onFailure": true,
-    "onProgress": true
+  "reporting": {
+    "output_file": "reports/ai-agent-report.json",
+    "log_file": "logs/ai-agent.log",
+    "final_summary": "reports/final_summary.md"
   },
-  "reports": {
-    "generate": true,
-    "format": "markdown",
-    "includeMetrics": true,
-    "includeLogs": true
-  }
+  "instructions": "You are an autonomous AI engineer (Cursor Background Agent) with full repo access. Goal: For each module under src/, run Supawright E2E tests, detect failing cases, generate minimal, correct code patches that preserve business logic, run tests again, and iterate until all tests pass. Commit fixes to branch ai-auto-fixes and open a PR. Always backup files before changes. Use Supabase creds to validate DB operations. Provide a final report in reports/final_summary.md."
 }
