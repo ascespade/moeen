@@ -52,7 +52,6 @@ interface StaffWorkHours {
 }
 
 // TODO: Replace mock with live API once endpoints ready
-}
 
 const mockStats: DashboardStats = {
   totalPatients: 1247,
