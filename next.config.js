@@ -1,4 +1,4 @@
-// Bundle analyzer is optional
+// next.config.js
 const withBundleAnalyzer =
   process.env.ANALYZE === 'true'
     ? require('@next/bundle-analyzer')({ enabled: true })
