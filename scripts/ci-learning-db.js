@@ -54,7 +54,13 @@ class CILearningDB {
           context TEXT,
           stack_trace TEXT,
           retry_count INTEGER DEFAULT 0,
-          resolution_time INTEGER DEFAULT 0
+          resolution_time INTEGER DEFAULT 0,
+          master_workflow_id TEXT,
+          assistant_workflow_id TEXT,
+          cursor_api_used BOOLEAN DEFAULT 0,
+          fix_source TEXT DEFAULT 'local',
+          workflow_run_id TEXT,
+          failure_reason TEXT
         )
       `,
       improvements: `
