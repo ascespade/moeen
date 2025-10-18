@@ -1,0 +1,50 @@
+{
+  "name": "Smart Bootloader Agent",
+  "description": "AI Self-Healing CI/CD Agent for automatic code fixing and testing",
+  "version": "3.0.0",
+  "triggers": {
+    "onCommit": true,
+    "onSchedule": "0 */4 * * *",
+    "onPullRequest": true,
+    "onManual": true
+  },
+  "commands": {
+    "analyze": "npm run lint:check && npm run type:check",
+    "fix": "npm run lint:fix && npm run agent:fix",
+    "test": "npm run test:full-suite",
+    "build": "npm run build",
+    "deploy": "npm run deploy:prod"
+  },
+  "environment": {
+    "NODE_ENV": "production",
+    "NODE_VERSION": "18",
+    "NPM_VERSION": "8"
+  },
+  "runtime": {
+    "maxExecutionTime": 1800,
+    "maxMemory": "2GB",
+    "maxRetries": 3
+  },
+  "safety": {
+    "backupBeforeChanges": true,
+    "requireApproval": false,
+    "maxChangesPerRun": 100,
+    "excludePatterns": [
+      "node_modules/**",
+      "dist/**",
+      ".next/**",
+      "out/**"
+    ]
+  },
+  "notifications": {
+    "onSuccess": true,
+    "onFailure": true,
+    "onProgress": true
+  },
+  "reports": {
+    "generate": true,
+    "format": "markdown",
+    "includeMetrics": true,
+    "includeLogs": true
+  }
+}
