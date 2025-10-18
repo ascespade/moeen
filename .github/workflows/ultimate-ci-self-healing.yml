@@ -67,8 +67,8 @@ jobs:
   # 🔍 تحليل ذكي للمشروع والتغييرات
   intelligent-analysis:
     name: 🔍 تحليل ذكي للمشروع
-    if: ${{ !contains(github.event.head_commit.message, 'Self-Healing') && !contains(github.event.head_commit.message, '🤖 CI Assistant') && !contains(github.event.head_commit.message, 'CI Assistant') && !contains(github.event.head_commit.author.name, 'Self-Healing') && !contains(github.event.head_commit.author.name, 'CI Assistant') }}
     runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, 'Self-Healing') && !contains(github.event.head_commit.message, '🤖 CI Assistant') && !contains(github.event.head_commit.message, 'CI Assistant') && !contains(github.event.head_commit.author.name, 'Self-Healing') && !contains(github.event.head_commit.author.name, 'CI Assistant') }}
     timeout-minutes: 15
     outputs:
       is-first-run: ${{ steps.analysis.outputs.is-first-run }}
@@ -97,6 +97,7 @@ jobs:
           echo "📦 Installing dependencies..."
           npm ci --cache .npm --prefer-offline
           npm install -g @typescript-eslint/parser @typescript-eslint/eslint-plugin
+          npm install sqlite3 js-yaml
           npx playwright install --with-deps chromium
         continue-on-error: false
 
@@ -106,7 +107,11 @@ jobs:
           echo "🔍 بدء التحليل الذكي الشامل..."
           
           # إنشاء مجلدات التقارير
-          mkdir -p reports dashboard logs analysis
+          mkdir -p reports dashboard logs analysis learning
+          
+          # تهيئة قاعدة بيانات التعلم
+          echo "🧠 تهيئة قاعدة بيانات التعلم..."
+          node scripts/ci-learning-db.js init
           
           # إنشاء معرف فريد للدورة
           RUN_ID="run-$(date +%Y%m%d-%H%M%S)-${{ github.run_number }}"
@@ -506,13 +511,7 @@ jobs:
           git add .github/workflows/ci-assistant.yml
           
           # إنشاء commit
-          git commit -m "🔧 Self-Healing: إصلاح CI Assistant workflow
-
-- تم إصلاح مشاكل الـ workflow
-- تحسين timeout والصلاحيات
-- ضمان عمل CI Assistant بشكل صحيح
-
-🤖 تم بواسطة: Self-Healing" || echo "لا توجد تغييرات للحفظ"
+          git commit -m "🔧 Self-Healing: إصلاح CI Assistant workflow - تم إصلاح مشاكل الـ workflow - تحسين timeout والصلاحيات - ضمان عمل CI Assistant بشكل صحيح 🤖 تم بواسطة: Self-Healing" || echo "لا توجد تغييرات للحفظ"
 
       - name: 📤 رفع الإصلاح
         run: |
@@ -578,7 +577,11 @@ jobs:
         run: |
           echo "🛠️ بدء الإصلاح الذكي المتقدم..."
           
-          # إنشاء سكريبت الإصلاح الذكي
+          # استخدام مدير الإصلاح الذكي مع التعلم
+          echo "🧠 استخدام مدير الإصلاح الذكي مع التعلم..."
+          node scripts/ci-self-healing-manager.js fix .github/workflows/ultimate-ci-self-healing.yml "Workflow execution failed" || echo "فشل في الإصلاح الذكي"
+          
+          # إنشاء سكريبت الإصلاح الذكي التقليدي كاحتياطي
           cat > intelligent-fix.js << 'EOF'
           const { execSync } = require('child_process');
           const fs = require('fs');

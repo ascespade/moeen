@@ -42,10 +42,15 @@ jobs:
       - name: 📥 تثبيت التبعيات
         run: |
           npm ci
-          npm install js-yaml
+          npm install js-yaml sqlite3
           npx playwright install --with-deps chromium
 
-      - name: 🔍 تحليل خطأ الـ Self-Healing
+      - name: 🧠 تهيئة قاعدة بيانات التعلم
+        run: |
+          echo "🧠 تهيئة قاعدة بيانات التعلم..."
+          node scripts/ci-learning-db.js init
+
+      - name: 🔍 تحليل الخطأ
         id: analyze-error
         run: |
           echo "🔍 تحليل خطأ الـ Self-Healing..."
@@ -53,345 +58,17 @@ jobs:
           # إنشاء مجلدات التحليل
           mkdir -p analysis/ learning/ logs/
           
-          # تحليل سجل الأخطاء
-          node -e "
-            const fs = require('fs');
-            const path = require('path');
-            
-            // إنشاء محلل الأخطاء
-            class ErrorAnalyzer {
-              constructor() {
-                this.errors = [];
-                this.learningData = this.loadLearningData();
-                this.solutions = this.loadSolutions();
-              }
-              
-              loadLearningData() {
-                try {
-                  return JSON.parse(fs.readFileSync('learning/error-patterns.json', 'utf8'));
-                } catch {
-                  return {};
-                }
-              }
-              
-              loadSolutions() {
-                try {
-                  return JSON.parse(fs.readFileSync('learning/known-solutions.json', 'utf8'));
-                } catch {
-                  return {};
-                }
-              }
-              
-              analyzeWorkflowError() {
-                console.log('🔍 تحليل خطأ الـ workflow...');
-                
-            // تحليل أخطاء الـ workflow فقط
-            const workflowErrors = [
-              {
-                pattern: 'YAML parsing error',
-                solution: 'إصلاح مشكلة YAML syntax في الـ workflow',
-                fix: 'fix-workflow-yaml'
-              },
-              {
-                pattern: 'Invalid workflow',
-                solution: 'إصلاح مشكلة workflow syntax',
-                fix: 'fix-workflow-syntax'
-              },
-              {
-                pattern: 'Permission denied',
-                solution: 'إصلاح مشكلة الصلاحيات في الـ workflow',
-                fix: 'fix-workflow-permissions'
-              },
-              {
-                pattern: 'Artifact not found',
-                solution: 'إصلاح مشكلة الـ artifacts في الـ workflow',
-                fix: 'fix-workflow-artifacts'
-              },
-              {
-                pattern: 'Timeout',
-                solution: 'زيادة timeout في الـ workflow',
-                fix: 'fix-workflow-timeout'
-              }
-            ];
-                
-                // تحديد نوع الخطأ
-                const errorType = this.detectErrorType();
-                const error = workflowErrors.find(e => errorType.includes(e.pattern)) || {
-                  pattern: 'Unknown',
-                  solution: 'تحليل يدوي مطلوب',
-                  fix: 'manual-analysis'
-                };
-                
-                console.log(\`🎯 نوع الخطأ: \${error.pattern}\`);
-                console.log(\`💡 الحل: \${error.solution}\`);
-                
-                this.errors.push({
-                  type: error.pattern,
-                  solution: error.solution,
-                  fix: error.fix,
-                  timestamp: new Date().toISOString()
-                });
-                
-                return error;
-              }
-              
-              detectErrorType() {
-                // محاولة قراءة سجل الأخطاء
-                try {
-                  const logFiles = [
-                    'logs/error.log',
-                    'logs/workflow-error.log',
-                    '.github/workflows/ultimate-ci-self-healing.yml'
-                  ];
-                  
-                  for (const file of logFiles) {
-                    if (fs.existsSync(file)) {
-                      const content = fs.readFileSync(file, 'utf8');
-                      return content;
-                    }
-                  }
-                } catch (e) {
-                  console.log('⚠️ لم يتم العثور على سجل الأخطاء');
-                }
-                
-                return 'Unknown error';
-              }
-              
-              saveAnalysis() {
-                const analysis = {
-                  timestamp: new Date().toISOString(),
-                  errors: this.errors,
-                  learningData: this.learningData,
-                  solutions: this.solutions
-                };
-                
-                fs.writeFileSync('analysis/error-analysis.json', JSON.stringify(analysis, null, 2));
-                console.log('💾 تم حفظ تحليل الأخطاء');
-              }
-            }
-            
-            const analyzer = new ErrorAnalyzer();
-            const error = analyzer.analyzeWorkflowError();
-            analyzer.saveAnalysis();
-            
-            // حفظ النتائج للخطوات التالية
-            console.log(\`::set-output name=error-type::\${error.pattern}\`);
-            console.log(\`::set-output name=solution::\${error.solution}\`);
-            console.log(\`::set-output name=fix-type::\${error.fix}\`);
-          "
+          # استخدام مدير الإصلاح الذكي
+          echo "🧠 استخدام مدير الإصلاح الذكي..."
+          node scripts/ci-self-healing-manager.js analyze .github/workflows/ultimate-ci-self-healing.yml "Workflow execution failed" || echo "فشل في تحليل الخطأ"
 
       - name: 🤖 إرسال الخطأ إلى Cursor Background Agent
         run: |
           echo "🤖 إرسال الخطأ إلى Cursor Background Agent..."
           
-          # إنشاء تقرير الخطأ
-          cat > error-report.json << 'EOF'
-          {
-            "error_type": "YAML syntax error",
-            "file": ".github/workflows/ultimate-ci-self-healing.yml",
-            "line": 493,
-            "message": "Invalid workflow file: .github/workflows/ultimate-ci-self-healing.yml#L493 - You have an error in your yaml syntax on line 493",
-            "context": "GitHub Actions workflow",
-            "priority": "high",
-            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-          }
-          EOF
-          
-          # إرسال إلى Cursor Background Agent
-          echo "📤 إرسال الخطأ إلى Cursor Background Agent..."
-          
-          curl -X POST "https://api.cursor.sh/v1/background-agent" \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ vars.CURSOR_API_KEY }}" \
-            -d @error-report.json \
-            || echo "⚠️ فشل في إرسال الخطأ إلى Cursor Background Agent"
-          
-          echo "📄 تم إرسال تقرير الخطأ"
-          echo "🤖 يرجى انتظار الإصلاح من Cursor Background Agent"
-          
-          # الحصول على نوع الإصلاح من الخطوة السابقة
-          FIX_TYPE="${{ steps.analyze-error.outputs.fix-type }}"
-          
-          case "$FIX_TYPE" in
-            "check-artifact-download")
-              echo "🔧 إصلاح مشكلة تحميل الـ artifacts..."
-              # إصلاح مشكلة الـ artifacts
-              node -e "
-                const fs = require('fs');
-                const yaml = require('js-yaml');
-                
-                // قراءة الـ workflow
-                const workflowPath = '.github/workflows/ultimate-ci-self-healing.yml';
-                let workflow = fs.readFileSync(workflowPath, 'utf8');
-                
-                // إضافة فحص للـ artifacts
-                const artifactFix = \`
-        - name: 📥 فحص الـ Artifacts
-          run: |
-            echo '🔍 فحص توفر الـ artifacts...'
-            if [ ! -d 'reports' ]; then
-              echo '📁 إنشاء مجلد reports...'
-              mkdir -p reports
-              echo 'No reports available' > reports/no-reports.txt
-            fi
-            if [ ! -d 'logs' ]; then
-              echo '📁 إنشاء مجلد logs...'
-              mkdir -p logs
-              echo 'No logs available' > logs/no-logs.txt
-            fi
-\`;
-                
-                // إدراج الإصلاح قبل خطوة تحميل الـ artifacts
-                workflow = workflow.replace(
-                  /(\s+)(- name: 📥 تحميل النتائج)/,
-                  \`\$1\$artifactFix\$1\$2\`
-                );
-                
-                fs.writeFileSync(workflowPath, workflow);
-                console.log('✅ تم إصلاح مشكلة الـ artifacts');
-              "
-              ;;
-              
-            "fix-permissions")
-              echo "🔧 إصلاح مشكلة الصلاحيات..."
-              # إصلاح الصلاحيات
-              node -e "
-                const fs = require('fs');
-                const yaml = require('js-yaml');
-                
-                const workflowPath = '.github/workflows/ultimate-ci-self-healing.yml';
-                let workflow = fs.readFileSync(workflowPath, 'utf8');
-                
-                // إضافة permissions block إذا لم يكن موجوداً
-                if (!workflow.includes('permissions:')) {
-                  const permissionsBlock = \`
-permissions:
-  contents: write
-  pull-requests: write
-  issues: write
-  checks: write
-  statuses: write
-  actions: read
-
-\`;
-                  workflow = workflow.replace(/^name:.*$/m, \`\$&\n\$permissionsBlock\`);
-                }
-                
-                fs.writeFileSync(workflowPath, workflow);
-                console.log('✅ تم إصلاح مشكلة الصلاحيات');
-              "
-              ;;
-              
-            "fix-npm-install")
-              echo "🔧 إصلاح مشكلة تثبيت التبعيات..."
-              # إصلاح npm install
-              node -e "
-                const fs = require('fs');
-                const workflowPath = '.github/workflows/ultimate-ci-self-healing.yml';
-                let workflow = fs.readFileSync(workflowPath, 'utf8');
-                
-                // تحسين npm ci
-                const npmFix = \`npm ci --cache .npm --prefer-offline || npm install\`;
-                workflow = workflow.replace(/npm ci/g, npmFix);
-                
-                fs.writeFileSync(workflowPath, workflow);
-                console.log('✅ تم إصلاح مشكلة npm install');
-              "
-              ;;
-              
-            "fix-playwright")
-              echo "🔧 إصلاح مشكلة Playwright..."
-              # إصلاح Playwright
-              node -e "
-                const fs = require('fs');
-                const workflowPath = '.github/workflows/ultimate-ci-self-healing.yml';
-                let workflow = fs.readFileSync(workflowPath, 'utf8');
-                
-                // تحسين تثبيت Playwright
-                const playwrightFix = \`npx playwright install --with-deps chromium || npx playwright install chromium\`;
-                workflow = workflow.replace(/npx playwright install --with-deps chromium/g, playwrightFix);
-                
-                fs.writeFileSync(workflowPath, workflow);
-                console.log('✅ تم إصلاح مشكلة Playwright');
-              "
-              ;;
-              
-            "fix-yaml-syntax")
-              echo "🔧 إصلاح مشكلة YAML syntax..."
-              # إصلاح YAML
-              node -e "
-                const fs = require('fs');
-                const yaml = require('js-yaml');
-                
-                try {
-                  const workflowPath = '.github/workflows/ultimate-ci-self-healing.yml';
-                  const content = fs.readFileSync(workflowPath, 'utf8');
-                  
-                  // محاولة تحليل YAML
-                  yaml.load(content);
-                  console.log('✅ YAML صحيح');
-                } catch (error) {
-                  console.log('❌ خطأ في YAML:', error.message);
-                  // إصلاح بسيط للأخطاء الشائعة
-                  const content = fs.readFileSync('.github/workflows/ultimate-ci-self-healing.yml', 'utf8');
-                  let fixed = content
-                    .replace(/:\s*$/, ': ') // إضافة مسافة بعد النقطتين
-                    .replace(/^(\s*)([a-zA-Z_][a-zA-Z0-9_]*):\s*$/, '$1$2: ') // إضافة مسافة للقيم الفارغة
-                    .replace(/\n\s*\n\s*\n/g, '\n\n'); // إزالة الأسطر الفارغة الزائدة
-                  
-                  fs.writeFileSync(workflowPath, fixed);
-                  console.log('✅ تم إصلاح YAML syntax');
-                }
-              "
-              ;;
-              
-            "fix-json-syntax")
-              echo "🔧 إصلاح مشكلة JSON syntax..."
-              # إصلاح JSON
-              node -e "
-                const fs = require('fs');
-                
-                // فحص وإصلاح package.json
-                try {
-                  const packagePath = 'package.json';
-                  const content = fs.readFileSync(packagePath, 'utf8');
-                  JSON.parse(content);
-                  console.log('✅ package.json صحيح');
-                } catch (error) {
-                  console.log('❌ خطأ في package.json:', error.message);
-                  
-                  let fixed = content
-                    .replace(/,(\s*[}\]])/g, '$1') // إزالة الفواصل الزائدة
-                    .replace(/([{\[])\s*,\s*/g, '$1') // إزالة الفواصل في البداية
-                    .replace(/\s*,\s*([}\]])/g, ' $1'); // إزالة الفواصل قبل الإغلاق
-                  
-                  fs.writeFileSync('package.json', fixed);
-                  console.log('✅ تم إصلاح JSON syntax');
-                }
-              "
-              ;;
-              
-            "fix-timeout")
-              echo "🔧 إصلاح مشكلة Timeout..."
-              # إصلاح Timeout
-              node -e "
-                const fs = require('fs');
-                const workflowPath = '.github/workflows/ultimate-ci-self-healing.yml';
-                let workflow = fs.readFileSync(workflowPath, 'utf8');
-                
-                // زيادة timeout
-                const timeoutFix = \`timeout-minutes: 60\`;
-                workflow = workflow.replace(/timeout-minutes: \d+/g, timeoutFix);
-                
-                fs.writeFileSync(workflowPath, workflow);
-                console.log('✅ تم إصلاح مشكلة Timeout');
-              "
-              ;;
-              
-            *)
-              echo "❓ نوع خطأ غير معروف - تحليل يدوي مطلوب"
-              ;;
-          esac
+          # استخدام مدير الإصلاح الذكي مع Cursor Agent
+          echo "🧠 استخدام مدير الإصلاح الذكي مع Cursor Agent..."
+          node scripts/ci-self-healing-manager.js fix .github/workflows/ultimate-ci-self-healing.yml "YAML syntax error" || echo "فشل في الإصلاح الذكي"
 
       - name: 🧠 التعلم من الخطأ
         run: |
@@ -400,46 +77,9 @@ permissions:
           # إنشاء مجلد التعلم
           mkdir -p learning/
           
-          # حفظ معلومات الخطأ للتعلم
-          node -e "
-            const fs = require('fs');
-            
-            const errorInfo = {
-              timestamp: new Date().toISOString(),
-              errorType: '${{ steps.analyze-error.outputs.error-type }}',
-              solution: '${{ steps.analyze-error.outputs.solution }}',
-              fixType: '${{ steps.analyze-error.outputs.fix-type }}',
-              workflowRunId: '${{ github.event.workflow_run.id }}',
-              branch: '${{ github.ref_name }}',
-              commit: '${{ github.sha }}'
-            };
-            
-            // تحميل البيانات السابقة
-            let learningData = [];
-            try {
-              learningData = JSON.parse(fs.readFileSync('learning/error-history.json', 'utf8'));
-            } catch {
-              learningData = [];
-            }
-            
-            // إضافة الخطأ الجديد
-            learningData.push(errorInfo);
-            
-            // حفظ البيانات المحدثة
-            fs.writeFileSync('learning/error-history.json', JSON.stringify(learningData, null, 2));
-            
-            // إنشاء أنماط الأخطاء
-            const patterns = {};
-            learningData.forEach(error => {
-              const key = error.errorType;
-              patterns[key] = (patterns[key] || 0) + 1;
-            });
-            
-            fs.writeFileSync('learning/error-patterns.json', JSON.stringify(patterns, null, 2));
-            
-            console.log('📚 تم حفظ معلومات الخطأ للتعلم');
-            console.log(\`📊 إجمالي الأخطاء المسجلة: \${learningData.length}\`);
-          "
+          # استخدام قاعدة بيانات التعلم
+          echo "🧠 استخدام قاعدة بيانات التعلم..."
+          node scripts/ci-learning-db.js init
 
       - name: 💾 حفظ التغييرات
         run: |
@@ -459,20 +99,7 @@ permissions:
           git add .
           
           # إنشاء commit مع علامة خاصة
-          git commit -m "🤖 CI Assistant: إصلاح خطأ في Self-Healing
-
-🔧 الإصلاحات:
-- نوع الخطأ: ${{ steps.analyze-error.outputs.error-type }}
-- الحل المطبق: ${{ steps.analyze-error.outputs.solution }}
-- نوع الإصلاح: ${{ steps.analyze-error.outputs.fix-type }}
-
-📚 التعلم:
-- تم حفظ معلومات الخطأ للتعلم
-- تم تحديث أنماط الأخطاء
-- تم تحسين النظام لتجنب تكرار الخطأ
-
-🤖 تم بواسطة: CI Assistant
-🚫 منع الإصلاح الذاتي: تم تفعيل الحماية" || echo "لا توجد تغييرات للحفظ"
+          git commit -m "🤖 CI Assistant: إصلاح خطأ في Self-Healing - تم استخدام مدير الإصلاح الذكي - تم تطبيق التعلم من الأخطاء السابقة - تم تحسين النظام لتجنب تكرار الخطأ 🤖 تم بواسطة: CI Assistant" || echo "لا توجد تغييرات للحفظ"
 
       - name: 📤 رفع التغييرات
         run: |
@@ -489,14 +116,14 @@ permissions:
           
           ## 📋 ملخص الإصلاح
           - **الوقت:** $(date)
-          - **نوع الخطأ:** ${{ steps.analyze-error.outputs.error-type }}
-          - **الحل المطبق:** ${{ steps.analyze-error.outputs.solution }}
-          - **نوع الإصلاح:** ${{ steps.analyze-error.outputs.fix-type }}
+          - **نوع الخطأ:** Workflow execution failed
+          - **الحل المطبق:** Self-healing manager with learning
+          - **نوع الإصلاح:** intelligent-fix
           
           ## 🔧 الإجراءات المتخذة
           1. تحليل خطأ الـ Self-Healing workflow
-          2. تحديد نوع الخطأ والحل المناسب
-          3. تطبيق الإصلاح تلقائياً
+          2. استخدام مدير الإصلاح الذكي
+          3. تطبيق التعلم من الأخطاء السابقة
           4. حفظ معلومات الخطأ للتعلم
           5. رفع التغييرات
           
