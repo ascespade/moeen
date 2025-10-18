@@ -179,22 +179,34 @@ jobs:
             console.log(\`::set-output name=fix-type::\${error.fix}\`);
           "
 
-      - name: 🔧 إصلاح خطأ YAML في Self-Healing
+      - name: 🤖 إرسال الخطأ إلى Cursor Background Agent
         run: |
-          echo "🔧 إصلاح خطأ YAML في Self-Healing workflow..."
+          echo "🤖 إرسال الخطأ إلى Cursor Background Agent..."
           
-          # إصلاح خطأ YAML في السطر 493
-          sed -i '486s/\\$&\\\\n/\\$&\\n/g' .github/workflows/ultimate-ci-self-healing.yml
+          # إنشاء تقرير الخطأ
+          cat > error-report.json << 'EOF'
+          {
+            "error_type": "YAML syntax error",
+            "file": ".github/workflows/ultimate-ci-self-healing.yml",
+            "line": 493,
+            "message": "Invalid workflow file: .github/workflows/ultimate-ci-self-healing.yml#L493 - You have an error in your yaml syntax on line 493",
+            "context": "GitHub Actions workflow",
+            "priority": "high",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          }
+          EOF
           
-          # إصلاح إضافي للمشكلة
-          sed -i 's/\\$&\\\\n/\\$&\\n/g' .github/workflows/ultimate-ci-self-healing.yml
+          # إرسال إلى Cursor Background Agent
+          echo "📤 إرسال الخطأ إلى Cursor Background Agent..."
           
-          echo "✅ تم إصلاح خطأ YAML"
+          curl -X POST "${{ secrets.CURSOR_BACKGROUND_API_URL }}" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.CURSOR_BACKGROUND_API_KEY }}" \
+            -d @error-report.json \
+            || echo "⚠️ فشل في إرسال الخطأ إلى Cursor Background Agent"
           
-          # التحقق من صحة YAML
-          if command -v yamllint >/dev/null 2>&1; then
-            yamllint .github/workflows/ultimate-ci-self-healing.yml || echo "⚠️ YAML يحتاج مزيد من الإصلاح"
-          fi
+          echo "📄 تم إرسال تقرير الخطأ"
+          echo "🤖 يرجى انتظار الإصلاح من Cursor Background Agent"
           
           case "$FIX_TYPE" in
             "check-artifact-download")
