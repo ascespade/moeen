@@ -1,0 +1,759 @@
+
+> moeen@0.1.0 lint
+> next lint
+
+
+./src/app/(admin)/admin/dashboard/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(admin)/admin/page.tsx
+119:6  Error: Parsing error: 'try' expected.
+
+./src/app/(admin)/admin/roles/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(admin)/admin/therapists/schedules/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(admin)/admin/users/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(admin)/agent-dashboard/page.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/app/(admin)/analytics/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/chatbot/analytics/page.tsx
+376:1  Error: Parsing error: Declaration or statement expected.
+
+./src/app/(admin)/chatbot/flows/[flowId]/page.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/app/(admin)/chatbot/integrations/page.tsx
+276:20  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/chatbot/templates/[id]/page.tsx
+276:22  Error: Parsing error: '}' expected.
+
+./src/app/(admin)/conversations/page.tsx
+28:2  Error: Parsing error: Expression or comma expected.
+
+./src/app/(admin)/crm/contacts/[id]/page.tsx
+18:1  Error: Parsing error: Declaration or statement expected.
+
+./src/app/(admin)/crm/contacts/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/crm/dashboard/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(admin)/crm/flows/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/integrations/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(admin)/notifications/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/owner/dashboard/page.tsx
+322:30  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/performance/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(admin)/security/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/sessions/[id]/notes/page.tsx
+160:6  Error: Parsing error: 'try' expected.
+
+./src/app/(admin)/settings/api-keys/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/settings/page.tsx
+190:28  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/supervisor/dashboard/page.tsx
+367:30  Error: Parsing error: ',' expected.
+
+./src/app/(auth)/login/page.tsx
+115:10  Error: Parsing error: ',' expected.
+
+./src/app/(auth)/register/page.tsx
+113:6  Error: Parsing error: 'try' expected.
+
+./src/app/(doctor)/doctor-dashboard/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(health)/appointments/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(health)/family-support/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(health)/health/patients/[id]/iep/page.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/app/(health)/health/sessions/book/page.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/app/(health)/medical-file/page.tsx
+71:2  Error: Parsing error: Expression or comma expected.
+
+./src/app/(health)/patients/[id]/page.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/app/(health)/patients/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(health)/progress-tracking/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(health)/therapy/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(health)/training/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(info)/about/page.tsx
+10:10  Error: Parsing error: ',' expected.
+
+./src/app/(info)/contact/page.tsx
+41:10  Error: Parsing error: ',' expected.
+
+./src/app/(marketing)/faq/page.tsx
+8:7  Error: Parsing error: ',' expected.
+
+./src/app/(marketing)/features/page.tsx
+8:11  Error: Parsing error: ',' expected.
+
+./src/app/(marketing)/pricing/page.tsx
+8:10  Error: Parsing error: ',' expected.
+
+./src/app/(patient)/patient-dashboard/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(public)/chatbot/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(staff)/staff-dashboard/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/(supervisor)/supervisor-dashboard/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/api/admin/configs/route.ts
+104:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/admin/security-events/route.ts
+69:10  Error: Parsing error: Property assignment expected.
+
+./src/app/api/admin/stats/route.ts
+146:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/admin/system-config/route.ts
+71:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/admin/users/[id]/route.ts
+83:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/admin/users/route.ts
+144:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/agent/completion/route.ts
+20:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/agent/logs/route.ts
+22:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/agent/status/route.ts
+23:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/agent/tasks/route.ts
+26:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/analytics/action/route.ts
+33:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/analytics/metrics/route.ts
+31:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/appointments/[id]/route.ts
+Error: Parsing error: Expression expected.
+
+./src/app/api/appointments/availability/route.ts
+119:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/appointments/book/route.ts
+74:15  Error: Parsing error: ',' expected.
+
+./src/app/api/appointments/conflict-check/route.ts
+102:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/appointments/route.ts
+94:5  Error: Parsing error: ',' expected.
+
+./src/app/api/audit-logs/route.ts
+94:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/auth/forgot-password/route.ts
+46:17  Error: Parsing error: ',' expected.
+
+./src/app/api/auth/login/route.ts
+95:21  Error: Parsing error: ',' expected.
+
+./src/app/api/auth/logout/route.ts
+64:14  Error: Parsing error: ',' expected.
+
+./src/app/api/auth/me/route.ts
+13:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/auth/register/route.ts
+58:17  Error: Parsing error: ',' expected.
+
+./src/app/api/auth/reset-password/route.ts
+31:17  Error: Parsing error: ',' expected.
+
+./src/app/api/chatbot/appointments/route.ts
+139:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/chatbot/config/route.ts
+44:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/chatbot/conversations/route.ts
+44:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/chatbot/flows/route.ts
+22:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/chatbot/intents/route.ts
+22:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/chatbot/message/route.ts
+95:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/chatbot/messages/route.ts
+43:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/crm/contacts/route.ts
+56:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/crm/leads/route.ts
+57:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/dashboard/health/route.ts
+42:14  Error: Parsing error: ',' expected.
+
+./src/app/api/dashboard/logs/route.ts
+78:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/dashboard/metrics/route.ts
+96:7  Error: Parsing error: ',' expected.
+
+./src/app/api/doctors/availability/route.ts
+135:14  Error: Parsing error: Property assignment expected.
+
+./src/app/api/errors/route.ts
+25:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/health/route.ts
+Error: Parsing error: Property or signature expected.
+
+./src/app/api/healthcare/appointments/route.ts
+73:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/healthcare/patients/route.ts
+74:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/i18n/route.ts
+65:3  Error: Parsing error: ',' expected.
+
+./src/app/api/insurance/claims/[id]/submit/route.ts
+50:15  Error: Parsing error: ',' expected.
+
+./src/app/api/insurance/claims/route.ts
+177:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/medical-records/route.ts
+73:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/medical-records/upload/route.ts
+74:15  Error: Parsing error: ',' expected.
+
+./src/app/api/notifications/send/route.ts
+33:15  Error: Parsing error: ',' expected.
+
+./src/app/api/notifications/templates/route.ts
+84:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/patients/[id]/activate/route.ts
+74:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/patients/[id]/activation/step/route.ts
+51:5  Error: Parsing error: ',' expected.
+
+./src/app/api/patients/journey/route.ts
+147:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/payments/webhook/stripe/route.ts
+65:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/reports/dashboard-metrics/route.ts
+220:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/reports/export/route.ts
+104:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/sessions/available-slots/route.ts
+123:12  Error: Parsing error: Property assignment expected.
+
+./src/app/api/slack/notify/route.ts
+90:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/slack/webhook/route.ts
+24:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/supervisor/call-request/route.ts
+109:6  Error: Parsing error: 'try' expected.
+
+./src/app/api/translations/[lang]/route.ts
+31:12  Error: Parsing error: ',' expected.
+
+./src/app/api/translations/missing/route.ts
+44:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/upload/route.ts
+48:15  Error: Parsing error: ',' expected.
+
+./src/app/api/user/preferences/route.ts
+41:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/webhook/whatsapp/route.ts
+35:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/webhooks/payments/moyasar/route.ts
+83:4  Error: Parsing error: 'try' expected.
+
+./src/app/api/webhooks/payments/stripe/route.ts
+82:4  Error: Parsing error: 'try' expected.
+
+./src/app/dashboard/doctor/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/dashboard/page.tsx
+26:3  Error: Parsing error: Declaration or statement expected.
+
+./src/app/dashboard/patient/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/dashboard/staff/page.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/app/dashboard/supervisor/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/dashboard/user/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/layout.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/page.tsx
+15:6  Error: Parsing error: ',' expected.
+
+./src/components/accessibility/AccessibilitySettings.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/components/appointments/AppointmentManager.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/auth/ProtectedRoute.tsx
+45:8  Error: Parsing error: 'try' expected.
+
+./src/components/booking/AvailableSlotsPicker.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/booking/SessionTypeSelector.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/charts/AreaChart.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/charts/BarChart.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/charts/LineChart.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/chatbot/MoainChatbot.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/components/chatbot/MoeenChatbot.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/common/ErrorBoundary.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/common/LanguageSwitcher.tsx
+132:2  Error: Parsing error: Declaration or statement expected.
+
+./src/components/common/OptimizedImage.tsx
+39:1  Error: Parsing error: Declaration or statement expected.
+
+./src/components/common/PerformanceOptimizedImage.tsx
+49:3  Error: Parsing error: Declaration or statement expected.
+
+./src/components/index.ts
+66:1  Error: Parsing error: Unexpected keyword or identifier.
+
+./src/components/insurance/ClaimsManager.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/components/layout/SmartHeader.tsx
+158:14  Error: Parsing error: ',' expected.
+
+./src/components/patient/ActivationFlow.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/components/patient/PreVisitChecklist.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/components/patients/PatientRecords.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/providers/DesignSystemProvider.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/settings/SettingsTabs.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/components/shared/DataTable.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/shared/EmptyState.tsx
+43:1  Error: Parsing error: Declaration or statement expected.
+
+./src/components/shared/Form.tsx
+70:4  Error: Parsing error: Declaration or statement expected.
+
+./src/components/shared/LiveRegion.tsx
+25:1  Error: Parsing error: Declaration or statement expected.
+
+./src/components/shared/Modal.tsx
+32:3  Error: Parsing error: Declaration or statement expected.
+
+./src/components/shared/ScreenReaderOnly.tsx
+12:1  Error: Parsing error: Declaration or statement expected.
+
+./src/components/shared/Tabs.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/shell/Sidebar.tsx
+Error: Parsing error: Declaration or statement expected.
+
+./src/components/ui/Button.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/ui/Card.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/ui/Checkbox.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/ui/Input.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/ui/LoadingSpinner.tsx
+37:2  Error: Parsing error: Declaration or statement expected.
+
+./src/components/ui/Modal.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/ui/ScrollArea.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/ui/Select.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/ui/Tabs.tsx
+102:7  Error: Parsing error: Declaration or statement expected.
+
+./src/components/ui/Textarea.tsx
+Error: Parsing error: Property or signature expected.
+
+./src/components/ui/ThemeSwitch.tsx
+30:11  Error: Parsing error: ',' expected.
+
+./src/components/ui/index.ts
+Error: Parsing error: Declaration or statement expected.
+
+./src/context/TranslationProvider.tsx
+Error: Parsing error: Identifier expected.
+
+./src/core/api/base-handler.ts
+Error: Parsing error: Property or signature expected.
+
+./src/core/api/client.ts
+Error: Parsing error: Property or signature expected.
+
+./src/core/config/index.ts
+95:10  Error: Parsing error: ',' expected.
+
+./src/core/errors/index.ts
+22:2  Error: Parsing error: Unexpected keyword or identifier.
+
+./src/core/hooks/index.ts
+70:6  Error: Parsing error: 'try' expected.
+
+./src/core/index.ts
+40:1  Error: Parsing error: Unexpected keyword or identifier.
+
+./src/core/store/index.ts
+Error: Parsing error: Property or signature expected.
+
+./src/core/types/index.ts
+Error: Parsing error: Property or signature expected.
+
+./src/core/validation/index.ts
+358:2  Error: Parsing error: Declaration or statement expected.
+
+./src/design-system/index.ts
+Error: Parsing error: Expression expected.
+
+./src/hooks/useApi.ts
+Error: Parsing error: Declaration or statement expected.
+
+./src/hooks/useAsync.ts
+Error: Parsing error: Property or signature expected.
+
+./src/hooks/useAuth.ts
+Error: Parsing error: Expression expected.
+
+./src/hooks/useBrandColorFromLogo.ts
+58:6  Error: Parsing error: ';' expected.
+
+./src/hooks/useDebounce.ts
+39:5  Error: Parsing error: Declaration or statement expected.
+
+./src/hooks/useErrorHandler.tsx
+65:5  Error: Parsing error: Declaration or statement expected.
+
+./src/hooks/useForm.ts
+Error: Parsing error: Property or signature expected.
+
+./src/hooks/useIntersectionObserver.ts
+62:3  Error: Parsing error: Declaration or statement expected.
+
+./src/hooks/useKeyPress.ts
+34:5  Error: Parsing error: Declaration or statement expected.
+
+./src/hooks/useKeyboardNavigation.ts
+17:6  Error: Parsing error: Declaration or statement expected.
+
+./src/hooks/useMediaQuery.ts
+27:3  Error: Parsing error: Declaration or statement expected.
+
+./src/hooks/useMemoryLeakPrevention.ts
+109:3  Error: Parsing error: Declaration or statement expected.
+
+./src/hooks/usePageI18n.ts
+52:3  Error: Parsing error: Declaration or statement expected.
+
+./src/hooks/usePerformance.ts
+22:3  Error: Parsing error: Declaration or statement expected.
+
+./src/hooks/useT.tsx
+Error: Parsing error: Identifier expected.
+
+./src/hooks/useThrottle.ts
+25:3  Error: Parsing error: Declaration or statement expected.
+
+./src/hooks/useTranslation.ts
+37:6  Error: Parsing error: 'try' expected.
+
+./src/lib/accessibility/aria-utils.ts
+216:18  Error: Parsing error: Declaration or statement expected.
+
+./src/lib/accessibility.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/ai-assistant.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/api/config.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/api/whatsapp.ts
+Error: Parsing error: Declaration or statement expected.
+
+./src/lib/auth/authorize.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/auth/index.ts
+8:4  Error: Parsing error: Declaration or statement expected.
+
+./src/lib/cache/redis.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/cache-system.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/conversation-flows.ts
+Error: Parsing error: Unexpected token. A constructor, method, accessor, or property was expected.
+
+./src/lib/database/connection-pool.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/database-utils.ts
+21:2  Error: Parsing error: Declaration or statement expected.
+
+./src/lib/database.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/deployment/docker.ts
+62:2  Error: Parsing error: Declaration or statement expected.
+
+./src/lib/dynamic-content-manager.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/dynamic-theme-manager.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/encryption.ts
+71:4  Error: Parsing error: 'try' expected.
+
+./src/lib/error-handler.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/errors/api-errors.ts
+Error: Parsing error: Unexpected token. A constructor, method, accessor, or property was expected.
+
+./src/lib/file-upload.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/i18n/translationService.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/insurance/providers.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/integration-system.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/integrations/test-helpers.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/logger.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/monitoring/logger.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/notifications/email.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/notifications/sms.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/optimization/performance.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/payments/moyasar.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/payments/stripe.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/performance-monitor.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/performance.ts
+12:19  Error: Parsing error: ',' expected.
+
+./src/lib/private-center-integration.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/rate-limiter.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/router.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/saudi-health-integration.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/saudi-ministry-health-integration.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/security.ts
+30:2  Error: Parsing error: Declaration or statement expected.
+
+./src/lib/seo/metadata.ts
+54:13  Error: Parsing error: ',' expected.
+
+./src/lib/slack-integration.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/supabase/server.ts
+11:13  Error: Parsing error: ',' expected.
+
+./src/lib/supabase-real.ts
+60:2  Error: Parsing error: Unexpected keyword or identifier.
+
+./src/lib/supabase.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/testing/test-utils.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/translations-manager.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/whatsapp-business-api.ts
+Error: Parsing error: Property or signature expected.
+
+./src/lib/whatsapp-integration.ts
+Error: Parsing error: Property or signature expected.
+
+./src/middleware/rate-limiter.ts
+81:13  Error: Parsing error: ',' expected.
+
+./src/middleware/security.ts
+58:2  Error: Parsing error: Unexpected keyword or identifier.
+
+./src/middleware.prod.ts
+25:17  Error: Parsing error: ',' expected.
+
+./src/theme/index.ts
+Error: Parsing error: Property or signature expected.
+
+./src/types/api.ts
+Error: Parsing error: Property or signature expected.
+
+./src/types/auth.ts
+Error: Parsing error: Property or signature expected.
+
+./src/types/common.ts
+Error: Parsing error: Property or signature expected.
+
+./src/types/components.ts
+Error: Parsing error: Property or signature expected.
+
+./src/types/database.ts
+Error: Parsing error: Property or signature expected.
+
+./src/types/index.ts
+Error: Parsing error: Property or signature expected.
+
+./src/utils/api-client.ts
+9:2  Error: Parsing error: Declaration or statement expected.
+
+./src/utils/api.ts
+54:6  Error: Parsing error: 'try' expected.
+
+./src/utils/validation.ts
+29:4  Error: Parsing error: Property assignment expected.
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
