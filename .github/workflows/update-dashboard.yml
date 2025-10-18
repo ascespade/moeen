@@ -1,7 +1,7 @@
 name: Update Dashboard
 on:
   workflow_run:
-    workflows: ["AI Self-Healing CI/CD"]
+    workflows: ['AI Self-Healing CI/CD']
     types: [completed]
 
 jobs:

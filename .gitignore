@@ -2,3 +2,6 @@ node_modules/
 reports/
 ai_logs.db
 dashboard/logs.json
+.next/
+playwright-report/
+test-results/

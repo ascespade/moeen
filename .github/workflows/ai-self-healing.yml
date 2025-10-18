@@ -1,7 +1,7 @@
 name: AI Self-Healing CI/CD
 on:
   push:
-    branches: [ main, dev ]
+    branches: [main, dev]
   pull_request:
 
 jobs:
