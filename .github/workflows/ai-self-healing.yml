@@ -1,0 +1,32 @@
+name: AI Self-Healing CI/CD
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+
+jobs:
+  build_and_self_heal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - name: Install deps
+        run: npm ci || npm install
+
+      - name: Run AI Self-Healing Orchestrator
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo 'Starting orchestrator'
+          node scripts/ai_self_test_and_fix.mjs
+
+      - name: Upload logs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-reports
+          path: reports/**
