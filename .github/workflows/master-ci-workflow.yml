@@ -923,14 +923,7 @@ jobs:
           git add MASTER_CI_REPORT.md
           
           # إنشاء commit
-          git commit -m "📊 Master CI Report - $(date '+%Y-%m-%d %H:%M:%S')
-
-🔍 التحليل الأولي: ${{ needs.initial-analysis.outputs.error-count }} أخطاء
-🔧 الإصلاح الذكي: ${{ needs.smart-error-fixing.outputs.fix-count }} إصلاح
-🧪 الاختبارات الشاملة: ${{ needs.comprehensive-testing.outputs.test-coverage }}% نجاح
-📊 المشاكل الحرجة: ${{ needs.comprehensive-testing.outputs.critical-issues }}
-
-🤖 تم بواسطة: Master CI Workflow" || echo "لا توجد تغييرات للحفظ"
+          git commit -m "📊 Master CI Report - $(date '+%Y-%m-%d %H:%M:%S')" || echo "لا توجد تغييرات للحفظ"
 
       - name: 📤 رفع التقرير
         run: |
