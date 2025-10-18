@@ -50,26 +50,18 @@ for (const file of errorFiles) {
     // Strategy 2: إصلاح const/let بدون =
     content = content.replace(/\n\s*(const|let|var)\s+(\w+)\s*;\s*\n/g, '\n// $1 $2 removed\n');
     
-    // Strategy 3: إصلاح } missing
-    const openBraces = (content.match(/{/g) || []).length;
-    const closeBraces = (content.match(/}/g) || []).length;
+    // Strategy 3 & 5: إصلاح } missing - balance braces
+    let openBraces = (content.match(/{/g) || []).length;
+    let closeBraces = (content.match(/}/g) || []).length;
     
-    if (openBraces > closeBraces) {
-      const diff = openBraces - closeBraces;
-      content = content.trimEnd() + '\n' + '}'.repeat(diff) + '\n';
-    }
-    
-    // Strategy 4: إصلاح , missing في objects
-    content = content.replace(/:\s*([^,}\n]+)\s*\n\s*([a-zA-Z_])/g, ': $1,\n  $2');
-    
-    // Strategy 5: إصلاح } expected - balance braces
-    const openBraces = (content.match(/{/g) || []).length;
-    const closeBraces = (content.match(/}/g) || []).length;
     if (openBraces > closeBraces) {
       const diff = openBraces - closeBraces;
       content = content.trimEnd() + '\n' + '}'.repeat(diff) + '\n';
       fixed = true;
     }
+    
+    // Strategy 4: إصلاح , missing في objects
+    content = content.replace(/:\s*([^,}\n]+)\s*\n\s*([a-zA-Z_])/g, ': $1,\n  $2');
     
     // Strategy 6: إصلاح ';' expected في useState/const
     const lines = content.split('\n');
