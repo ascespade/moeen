@@ -33,7 +33,7 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
   const quickActions = [
     { id: 1, text: "احجز موعد", action: "book_appointment" },
     { id: 2, text: "الخدمات المتوفرة", action: "services" },
-    { id: 3, text: "تواصل مع أخصائي", action: "contact_specialist" },
+    { id: 3, text: "📞 طلب مكالمة عاجلة", action: "request_call" },
     { id: 4, text: "أسئلة شائعة", action: "faq" },
   ];
 
@@ -48,6 +48,11 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
 
   // Handle quick action
   const handleQuickAction = async (action: string) => {
+    if (action === "request_call") {
+      await handleCallRequest();
+      return;
+    }
+
     const actionMessages: Record<string, string> = {
       book_appointment: "أريد حجز موعد",
       services: "ما هي الخدمات المتوفرة؟",
@@ -58,6 +63,58 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
     const userMessage = actionMessages[action];
     if (userMessage) {
       await handleSendMessage(userMessage);
+    }
+  };
+
+  // Handle call request (طلب مكالمة عاجلة)
+  const handleCallRequest = async () => {
+    setIsLoading(true);
+
+    try {
+      // Add user message
+      const userMessage: Message = {
+        id: Date.now().toString(),
+        role: "user",
+        content: "أريد طلب مكالمة عاجلة من المشرف",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, userMessage]);
+
+      // Create call request
+      const response = await fetch("/api/supervisor/call-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          reason: "طلب من الشاتبوت",
+          priority: "high",
+        }),
+      });
+
+      const data = await response.json();
+
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: data.success
+          ? "✅ تم إرسال طلبك للمشرف!\n\nسيتواصل معك خلال دقائق.\n\nفي حالة عدم الرد، سنحول الطلب للمدير تلقائياً.\n\nشكراً لصبرك 🙏"
+          : "❌ عذراً، حدث خطأ في إرسال الطلب.\n\nيرجى الاتصال مباشرة:\n📞 +966126173693\n📱 +966555381558",
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+    } catch (error) {
+      logger.error("Call request error", error);
+
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: "حدث خطأ. يرجى الاتصال مباشرة:\n📞 +966126173693",
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
