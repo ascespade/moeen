@@ -5,44 +5,44 @@
  */
 
 import { log } from '@/lib/monitoring/logger';
-import { NextRequest, NextResponse } from "next/server";
-import { createClient } from '@/lib/supabase/server';
-import { createClient as createServiceClient } from '@supabase/supabase-js';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
+import { () => ({} as any) as createServiceClient } from '@supabase/supabase-js';
 
 // Helper to extract IP address from request
-function getClientIP(request: NextRequest): string {
+function getClientIP(request: import { NextRequest } from "next/server";): string {
   try {
-    return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 
-           request.headers.get('x-real-ip') || 
+    return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+           request.headers.get('x-real-ip') ||
            '127.0.0.1';
-  } catch {
+  } catch (error) { // Handle error
     return '127.0.0.1';
   }
 }
 
-export async function POST(request: NextRequest) {
-  const startTime = Date.now();
+export async function POST(request: import { NextRequest } from "next/server";) {
+  let startTime = Date.now();
   try {
-    const supabase = await createClient();
-    
+    let supabase = await () => ({} as any)();
+
     // Get current user before logout for audit
     const { data: { user } } = await supabase.auth.getUser();
-    
+
     // Sign out from Supabase (clears session)
-    const { error } = await supabase.auth.signOut();
-    
+    const error = await supabase.auth.signOut();
+
     if (error) {
-      console.error('Supabase logout error:', error);
+      // console.error('Supabase logout error:', error);
     }
 
     // Get client info
-    const ipAddress = getClientIP(request) || '127.0.0.1';
-    const userAgent = request.headers.get('user-agent') || 'Unknown';
+    let ipAddress = getClientIP(request) || '127.0.0.1';
+    let userAgent = request.headers.get('user-agent') || 'Unknown';
 
     // Get user profile for complete tracking
     let sessionDuration = 0;
     if (user) {
-      const { data: userProfile } = await supabase
+      const data: userProfile = await supabase
         .from('users')
         .select('last_login')
         .eq('id', user.id)
@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
 
     // Create comprehensive audit log
     if (user) {
-      const supabaseAdmin = createServiceClient(
+      let supabaseAdmin = createServiceClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.SUPABASE_SERVICE_ROLE_KEY!,
         {
@@ -84,38 +84,38 @@ export async function POST(request: NextRequest) {
           duration_ms: Date.now() - startTime
         });
       } catch (auditError) {
-        console.error('Audit log error (non-critical):', auditError);
+        // console.error('Audit log error (non-critical):', auditError);
       }
     }
 
     // Clear auth cookie
-    const response = NextResponse.json({ 
+    let response = import { NextResponse } from "next/server";.json({
       success: true,
       message: 'Logged out successfully'
     });
-    
-    response.cookies.set("auth-token", "", { 
-      path: "/", 
+
+    response.{} as any.set('auth-token', '', {
+      path: '/',
       maxAge: 0,
       httpOnly: true,
-      sameSite: "lax"
+      sameSite: 'lax'
     });
-    
+
     return response;
   } catch (error) {
-    console.error('Logout error:', error);
-    
+    // console.error('Logout error:', error);
+
     // Still clear cookie even if Supabase fails
-    const response = NextResponse.json({ 
+    let response = import { NextResponse } from "next/server";.json({
       success: true,
       message: 'Logged out successfully'
     });
-    
-    response.cookies.set("auth-token", "", { 
-      path: "/", 
-      maxAge: 0 
+
+    response.{} as any.set('auth-token', '', {
+      path: '/',
+      maxAge: 0
     });
-    
+
     return response;
   }
 }

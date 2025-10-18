@@ -5,8 +5,8 @@
  * سكريبت إعادة تنظيم المشروع حسب المعايير العالمية
  */
 
-const fs = require('fs');
-const path = require('path');
+let fs = require('fs');
+let path = require('path');
 
 class ProjectRestructure {
   constructor() {
@@ -27,33 +27,33 @@ class ProjectRestructure {
       'config': 'src/config',              // Configuration files
       'assets': 'src/assets',              // Static assets
       'locales': 'src/locales',            // Internationalization files
-      'tests': 'src/tests',                // Test utilities and helpers
+      'tests': 'src/tests'                // Test utilities and helpers
     };
   }
 
   log(message, type = 'info') {
-    const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
-    console.log(`[${timestamp}] ${prefix} ${message}`);
+    let timestamp = new Date().toISOString();
+    let prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    // console.log(`[${timestamp}] ${prefix} ${message}`
   }
 
   async createDirectoryStructure() {
     this.log('🏗️ Creating standardized directory structure...');
-    
+
     for (const [name, path] of Object.entries(this.newStructure)) {
       if (!fs.existsSync(path)) {
         fs.mkdirSync(path, { recursive: true });
-        this.log(`✅ Created directory: ${path}`);
+        this.log(`✅ Created directory: ${path}`
       } else {
-        this.log(`ℹ️ Directory already exists: ${path}`);
+        this.log(`ℹ️ Directory already exists: ${path}`
       }
     }
   }
 
   async organizeComponents() {
     this.log('🧩 Organizing components...');
-    
-    const componentStructure = {
+
+    let componentStructure = {
       'ui': 'src/components/ui',           // Basic UI components (Button, Input, etc.)
       'layout': 'src/components/layout',   // Layout components (Header, Sidebar, etc.)
       'forms': 'src/components/forms',     // Form components
@@ -63,39 +63,39 @@ class ProjectRestructure {
       'navigation': 'src/components/navigation', // Navigation components
       'feedback': 'src/components/feedback', // Loading, Error, Success components
       'data-display': 'src/components/data-display', // Cards, Lists, etc.
-      'surfaces': 'src/components/surfaces', // Surfaces and containers
+      'surfaces': 'src/components/surfaces' // Surfaces and containers
     };
 
     for (const [name, path] of Object.entries(componentStructure)) {
       if (!fs.existsSync(path)) {
         fs.mkdirSync(path, { recursive: true });
-        this.log(`✅ Created component directory: ${path}`);
+        this.log(`✅ Created component directory: ${path}`
       }
     }
   }
 
   async organizeAppRouter() {
     this.log('📱 Organizing App Router structure...');
-    
-    const appStructure = {
+
+    let appStructure = {
       // Public routes
       '(auth)': 'src/app/(auth)',
       '(marketing)': 'src/app/(marketing)',
-      
+
       // Protected routes
       '(dashboard)': 'src/app/(dashboard)',
       '(admin)': 'src/app/(admin)',
-      
+
       // API routes
       'api': 'src/app/api',
-      
+
       // Special pages
       'globals.css': 'src/app/globals.css',
       'layout.tsx': 'src/app/layout.tsx',
       'page.tsx': 'src/app/page.tsx',
       'loading.tsx': 'src/app/loading.tsx',
       'error.tsx': 'src/app/error.tsx',
-      'not-found.tsx': 'src/app/not-found.tsx',
+      'not-found.tsx': 'src/app/not-found.tsx'
     };
 
     for (const [name, path] of Object.entries(appStructure)) {
@@ -103,18 +103,18 @@ class ProjectRestructure {
         // This is a file, not a directory
         continue;
       }
-      
+
       if (!fs.existsSync(path)) {
         fs.mkdirSync(path, { recursive: true });
-        this.log(`✅ Created app directory: ${path}`);
+        this.log(`✅ Created app directory: ${path}`
       }
     }
   }
 
   async organizeServices() {
     this.log('🔧 Organizing services...');
-    
-    const serviceStructure = {
+
+    let serviceStructure = {
       'api': 'src/services/api',           // API client and endpoints
       'auth': 'src/services/auth',         // Authentication services
       'database': 'src/services/database', // Database services
@@ -122,21 +122,21 @@ class ProjectRestructure {
       'email': 'src/services/email',       // Email services
       'notifications': 'src/services/notifications', // Notification services
       'analytics': 'src/services/analytics', // Analytics services
-      'external': 'src/services/external', // External API integrations
+      'external': 'src/services/external' // External API integrations
     };
 
     for (const [name, path] of Object.entries(serviceStructure)) {
       if (!fs.existsSync(path)) {
         fs.mkdirSync(path, { recursive: true });
-        this.log(`✅ Created service directory: ${path}`);
+        this.log(`✅ Created service directory: ${path}`
       }
     }
   }
 
   async organizeUtils() {
     this.log('🛠️ Organizing utilities...');
-    
-    const utilStructure = {
+
+    let utilStructure = {
       'validation': 'src/utils/validation', // Validation utilities
       'formatting': 'src/utils/formatting', // Date, number, text formatting
       'helpers': 'src/utils/helpers',       // General helper functions
@@ -147,44 +147,44 @@ class ProjectRestructure {
       'date': 'src/utils/date',             // Date utilities
       'string': 'src/utils/string',         // String utilities
       'array': 'src/utils/array',           // Array utilities
-      'object': 'src/utils/object',         // Object utilities
+      'object': 'src/utils/object'         // Object utilities
     };
 
     for (const [name, path] of Object.entries(utilStructure)) {
       if (!fs.existsSync(path)) {
         fs.mkdirSync(path, { recursive: true });
-        this.log(`✅ Created util directory: ${path}`);
+        this.log(`✅ Created util directory: ${path}`
       }
     }
   }
 
   async createIndexFiles() {
     this.log('📄 Creating index files...');
-    
-    const indexFiles = [
+
+    let indexFiles = [
       'src/components/index.ts',
       'src/lib/index.ts',
       'src/hooks/index.ts',
       'src/types/index.ts',
       'src/utils/index.ts',
       'src/services/index.ts',
-      'src/constants/index.ts',
+      'src/constants/index.ts'
     ];
 
     for (const file of indexFiles) {
       if (!fs.existsSync(file)) {
         fs.writeFileSync(file, '// Auto-generated index file\n');
-        this.log(`✅ Created index file: ${file}`);
+        this.log(`✅ Created index file: ${file}`
       }
     }
   }
 
   async createConfigFiles() {
     this.log('⚙️ Creating configuration files...');
-    
-    const configFiles = {
-      'src/config/app.ts': `// Application configuration
-export const appConfig = {
+
+    let configFiles = {
+      'src/config/app.ts': `
+export let appConfig = {
   name: 'Moeen',
   version: '1.0.0',
   description: 'منصة دردشة متعددة القنوات مدعومة بالذكاء الاصطناعي',
@@ -193,20 +193,20 @@ export const appConfig = {
 };
 
 export default appConfig;
-`,
+`
 
-      'src/config/database.ts': `// Database configuration
-export const databaseConfig = {
+      'src/config/database.ts': `
+export let databaseConfig = {
   url: process.env.DATABASE_URL,
   maxConnections: 10,
   ssl: process.env.NODE_ENV === 'production',
 };
 
 export default databaseConfig;
-`,
+`
 
-      'src/config/auth.ts': `// Authentication configuration
-export const authConfig = {
+      'src/config/auth.ts': `
+export let authConfig = {
   secret: process.env.AUTH_SECRET,
   expiresIn: '7d',
   refreshExpiresIn: '30d',
@@ -215,10 +215,10 @@ export const authConfig = {
 };
 
 export default authConfig;
-`,
+`
 
-      'src/config/api.ts': `// API configuration
-export const apiConfig = {
+      'src/config/api.ts': `
+export let apiConfig = {
   baseUrl: process.env.NEXT_PUBLIC_API_URL || '/api',
   timeout: 30000,
   retries: 3,
@@ -229,22 +229,22 @@ export const apiConfig = {
 };
 
 export default apiConfig;
-`,
+`
     };
 
     for (const [file, content] of Object.entries(configFiles)) {
       if (!fs.existsSync(file)) {
         fs.writeFileSync(file, content);
-        this.log(`✅ Created config file: ${file}`);
+        this.log(`✅ Created config file: ${file}`
       }
     }
   }
 
   async createTypeDefinitions() {
     this.log('📝 Creating type definitions...');
-    
-    const typeFiles = {
-      'src/types/common.ts': `// Common types
+
+    let typeFiles = {
+      'src/types/common.ts': `
 export interface BaseEntity {
   id: string;
   created_at: string;
@@ -273,20 +273,20 @@ export interface PaginatedResponse<T> extends ApiResponse<T[]> {
     totalPages: number;
   };
 }
-`,
+`
 
-      'src/types/auth.ts': `// Authentication types
+      'src/types/auth.ts': `
 export interface User extends BaseEntity {
   email: string;
   name: string;
-  role: UserRole;
+  role: Userstring;
   status: UserStatus;
   is_active: boolean;
   last_login?: string;
   login_count: number;
 }
 
-export type UserRole = 'admin' | 'doctor' | 'nurse' | 'staff' | 'supervisor' | 'patient' | 'agent' | 'manager' | 'demo';
+export type Userstring = 'admin' | 'doctor' | 'nurse' | 'staff' | 'supervisor' | 'patient' | 'agent' | 'manager' | 'demo';
 export type UserStatus = 'active' | 'inactive' | 'suspended' | 'pending';
 
 export interface LoginRequest {
@@ -300,9 +300,9 @@ export interface LoginResponse {
   token: string;
   refreshToken: string;
 }
-`,
+`
 
-      'src/types/components.ts': `// Component types
+      'src/types/components.ts': `
 export interface ComponentProps {
   className?: string;
   children?: React.ReactNode;
@@ -325,23 +325,23 @@ export interface InputProps extends ComponentProps {
   disabled?: boolean;
   required?: boolean;
 }
-`,
+`
     };
 
     for (const [file, content] of Object.entries(typeFiles)) {
       if (!fs.existsSync(file)) {
         fs.writeFileSync(file, content);
-        this.log(`✅ Created type file: ${file}`);
+        this.log(`✅ Created type file: ${file}`
       }
     }
   }
 
   async createConstants() {
     this.log('📋 Creating constants...');
-    
-    const constantFiles = {
-      'src/constants/routes.ts': `// Application routes
-export const ROUTES = {
+
+    let constantFiles = {
+      'src/constants/routes.ts': `
+export let ROUTES = {
   // Public routes
   HOME: '/',
   LOGIN: '/login',
@@ -371,10 +371,10 @@ export const ROUTES = {
 } as const;
 
 export default ROUTES;
-`,
+`
 
-      'src/constants/roles.ts': `// User roles and permissions
-export const USER_ROLES = {
+      'src/constants/roles.ts': `
+export let USER_ROLES = {
   ADMIN: 'admin',
   DOCTOR: 'doctor',
   NURSE: 'nurse',
@@ -386,7 +386,7 @@ export const USER_ROLES = {
   DEMO: 'demo',
 } as const;
 
-export const ROLE_PERMISSIONS = {
+export let ROLE_PERMISSIONS = {
   [USER_ROLES.ADMIN]: ['*'],
   [USER_ROLES.DOCTOR]: ['read:patients', 'write:appointments', 'read:medical_records'],
   [USER_ROLES.NURSE]: ['read:patients', 'read:appointments'],
@@ -398,11 +398,11 @@ export const ROLE_PERMISSIONS = {
   [USER_ROLES.DEMO]: ['read:*'],
 } as const;
 
-export type UserRole = typeof USER_ROLES[keyof typeof USER_ROLES];
-`,
+export type Userstring = typeof USER_ROLES[keyof typeof USER_ROLES];
+`
 
-      'src/constants/api.ts': `// API constants
-export const API_ENDPOINTS = {
+      'src/constants/api.ts': `
+export let API_ENDPOINTS = {
   AUTH: {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
@@ -427,7 +427,7 @@ export const API_ENDPOINTS = {
   },
 } as const;
 
-export const HTTP_STATUS = {
+export let HTTP_STATUS = {
   OK: 200,
   CREATED: 201,
   NO_CONTENT: 204,
@@ -440,20 +440,20 @@ export const HTTP_STATUS = {
   TOO_MANY_REQUESTS: 429,
   INTERNAL_SERVER_ERROR: 500,
 } as const;
-`,
+`
     };
 
     for (const [file, content] of Object.entries(constantFiles)) {
       if (!fs.existsSync(file)) {
         fs.writeFileSync(file, content);
-        this.log(`✅ Created constants file: ${file}`);
+        this.log(`✅ Created constants file: ${file}`
       }
     }
   }
 
   async run() {
     this.log('🚀 Starting project restructure...');
-    
+
     try {
       await this.createDirectoryStructure();
       await this.organizeComponents();
@@ -464,11 +464,11 @@ export const HTTP_STATUS = {
       await this.createConfigFiles();
       await this.createTypeDefinitions();
       await this.createConstants();
-      
+
       this.log('✅ Project restructure completed successfully!', 'success');
-      
+
     } catch (error) {
-      this.log(`❌ Project restructure failed: ${error.message}`, 'error');
+      this.log(`❌ Project restructure failed: ${error.message}`
       throw error;
     }
   }
@@ -476,9 +476,9 @@ export const HTTP_STATUS = {
 
 // Run the restructure
 if (require.main === module) {
-  const restructure = new ProjectRestructure();
+  let restructure = new ProjectRestructure();
   restructure.run().catch(error => {
-    console.error('Restructure failed:', error);
+    // console.error('Restructure failed:', error);
     process.exit(1);
   });
 }

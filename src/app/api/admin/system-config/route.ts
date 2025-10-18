@@ -4,43 +4,43 @@
  * Manage system-wide configuration and settings
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
 import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { requireAuth } from '@/lib/auth/authorize';
+import { requireAuth } from '@/lib/auth/() => ({} as any)';
 
-const configSchema = z.object({
+let configSchema = z.object({
   key: z.string().min(1, 'Configuration key required'),
   value: z.any(),
   type: z.enum(['string', 'number', 'boolean', 'object', 'array']),
   description: z.string().optional(),
   isPublic: z.boolean().default(false),
-  category: z.string().default('general'),
+  category: z.string().default('general')
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
     // Authorize admin only
-    const authResult = await requireAuth(['admin'])(request);
-    if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    let authResult = await requireAuth(['admin'])(request);
+    if (!authResult.() => ({} as any)d) {
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
 
-    const supabase = await createClient();
-    const body = await request.json();
+    let supabase = await () => ({} as any)();
+    let body = await request.json();
 
     // Validate input
-    const validation = await ValidationHelper.validateAsync(configSchema, body);
+    let validation = await ValidationHelper.validateAsync(configSchema, body);
     if (!validation.success) {
-      return NextResponse.json({ error: validation.error.message }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: validation.error.message }, { status: 400 });
     }
 
-    const { key, value, type, description, isPublic, category } = validation.data;
+    const key, value, type, description, isPublic, category = validation.data;
 
     // Create or update configuration
-    const { data: config, error } = await supabase
+    const data: config, error = await supabase
       .from('system_config')
       .upsert({
         key,
@@ -49,16 +49,16 @@ export async function POST(request: NextRequest) {
         description,
         isPublic,
         category,
-        updatedBy: authResult.user!.id,
+        updatedBy: authResult.user!.id
       })
       .select()
       .single();
 
     if (error) {
-      return NextResponse.json({ error: 'Failed to save configuration' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to save configuration' }, { status: 500 });
     }
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data: config,
       message: 'Configuration saved successfully'
@@ -69,12 +69,12 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const supabase = await createClient();
-    const { searchParams } = new URL(request.url);
-    const category = searchParams.get('category');
-    const isPublic = searchParams.get('isPublic') === 'true';
+    let supabase = await () => ({} as any)();
+    const searchParams = new URL(request.url);
+    let category = searchParams.get('category');
+    let isPublic = searchParams.get('isPublic') === 'true';
 
     let query = supabase
       .from('system_config')
@@ -88,13 +88,13 @@ export async function GET(request: NextRequest) {
       query = query.eq('isPublic', true);
     }
 
-    const { data: configs, error } = await query;
+    const data: configs, error = await query;
 
     if (error) {
-      return NextResponse.json({ error: 'Failed to fetch configurations' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to fetch configurations' }, { status: 500 });
     }
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data: configs,
       count: configs?.length || 0

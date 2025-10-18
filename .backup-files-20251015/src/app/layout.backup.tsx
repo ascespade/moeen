@@ -13,12 +13,12 @@ export const metadata: Metadata = {
 };
 
 // Reduce font payload by limiting weights
-const cairo = Cairo({
+let cairo = Cairo({
   subsets: ["arabic", "latin"],
   weight: ["400", "700"],
   variable: "--font-cairo",
 });
-const inter = Inter({
+let inter = Inter({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
   variable: "--font-inter",
@@ -38,15 +38,15 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                const theme = localStorage.getItem('theme-mode') || 'light';
+                let theme = localStorage.getItem('theme-mode') || 'light';
                 document.documentElement.setAttribute('data-theme', theme);
               })();
-            `,
+            `
           }}
         />
       </head>
       <body
-        className={`${cairo.variable} ${inter.variable} antialiased`}
+        className={`${cairo.variable} ${inter.variable} antialiased`
         suppressHydrationWarning
       >
         <a

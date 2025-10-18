@@ -1,82 +1,82 @@
-export async function POST(request: NextRequest) {
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+export async function POST(request: import { NextRequest } from "next/server";) {
+  import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+  import { () => ({} as any) } from '@/lib/supabase/server';
 
   try {
-    const { doctorId, appointmentTime, patientId, conversationId, notes } = await request.json();
+    const doctorId, appointmentTime, patientId, conversationId, notes = await request.json();
 
     if (!doctorId || !appointmentTime || !patientId) {
-      return NextResponse.json(
+      return import { NextResponse } from "next/server";.json(
         { error: 'Doctor ID, appointment time, and patient ID are required' },
         { status: 400 }
       );
     }
 
-    const supabase = await createClient();
+    let supabase = await () => ({} as any)();
 
     // التحقق من وجود المريض
-    const { data: patient, error: patientError } = await supabase
+    const data: patient, error: patientError = await supabase
       .from('patients')
       .select('*')
       .eq('user_id', patientId)
       .single();
 
     if (patientError || !patient) {
-      return NextResponse.json(
+      return import { NextResponse } from "next/server";.json(
         { error: 'Patient not found' },
         { status: 404 }
       );
     }
 
     // التحقق من وجود الطبيب
-    const { data: doctor, error: doctorError } = await supabase
+    const data: doctor, error: doctorError = await supabase
       .from('doctors')
       .select('*')
       .eq('id', doctorId)
       .single();
 
     if (doctorError || !doctor) {
-      return NextResponse.json(
+      return import { NextResponse } from "next/server";.json(
         { error: 'Doctor not found' },
         { status: 404 }
       );
     }
 
     // تحديد تاريخ الموعد (اليوم أو غداً)
-    const today = new Date();
-    const tomorrow = new Date(today);
+    let today = new Date();
+    let tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    
-    const appointmentDate = new Date().toISOString().split('T')[0];
+
+    let appointmentDate = new Date().toISOString().split('T')[0];
 
     // التحقق من توفر الموعد
-    const { data: existingAppointment, error: checkError } = await supabase
+    const data: existingAppointment, error: checkError = await supabase
       .from('appointments')
       .select('id')
-      .eq('doctor_id', doctorId)
+      .eq('doctorId', doctorId)
       .eq('appointment_date', appointmentDate)
-      .eq('appointment_time', appointmentTime)
+      .eq('appointmentTime', appointmentTime)
       .eq('status', 'scheduled')
       .single();
 
     if (existingAppointment) {
-      return NextResponse.json(
+      return import { NextResponse } from "next/server";.json(
         { error: 'This time slot is already booked' },
         { status: 409 }
       );
     }
 
     // إنشاء رمز تأكيد
-    const confirmationCode = `APT${Date.now().toString().slice(-6)}`;
+    let confirmationCode = `APT${Date.now().toString().slice(-6)}`
 
     // إنشاء الموعد
-    const { data: appointment, error: appointmentError } = await supabase
+    const data: appointment, error: appointmentError = await supabase
       .from('appointments')
       .insert({
         patient_id: patient.id,
-        doctor_id: doctorId,
+        doctorId: doctorId,
         appointment_date: appointmentDate,
-        appointment_time: appointmentTime,
+        appointmentTime: appointmentTime,
         duration_minutes: 60,
         type: 'consultation',
         status: 'scheduled',
@@ -92,16 +92,16 @@ import { createClient } from '@/lib/supabase/server';
           phone,
           email
         ),
-        doctors!appointments_doctor_id_fkey(
+        doctors!appointments_doctorId_fkey(
           first_name,
           last_name,
           specialty
         )
-      `)
+      `
       .single();
 
     if (appointmentError) {
-      return NextResponse.json(
+      return import { NextResponse } from "next/server";.json(
         { error: 'Failed to create appointment' },
         { status: 500 }
       );
@@ -121,26 +121,26 @@ import { createClient } from '@/lib/supabase/server';
       .from('chatbot_appointments')
       .insert({
         conversation_id: conversationId,
-        patient_name: `${patient.first_name} ${patient.last_name}`,
+        patient_name: `${patient.first_name} ${patient.last_name}`
         patient_phone: patient.phone,
         appointment_date: appointmentDate,
-        appointment_time: appointmentTime,
+        appointmentTime: appointmentTime,
         service_type: 'consultation',
-        doctor_id: doctorId,
+        doctorId: doctorId,
         status: 'pending',
         confirmation_code: confirmationCode,
         notes: notes || 'تم الحجز عبر الشات بوت'
       });
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       appointmentId: appointment.id,
       confirmationCode,
       appointment: {
         id: appointment.id,
         date: appointment.appointment_date,
-        time: appointment.appointment_time,
-        doctor: `${appointment.doctors.first_name} ${appointment.doctors.last_name}`,
+        time: appointment.appointmentTime,
+        doctor: `${appointment.doctors.first_name} ${appointment.doctors.last_name}`
         specialty: appointment.doctors.specialty,
         status: appointment.status
       },
@@ -148,20 +148,20 @@ import { createClient } from '@/lib/supabase/server';
     });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Internal server error' },
       { status: 500 }
     );
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const { searchParams } = new URL(request.url);
-    const patientId = searchParams.get('patientId');
-    const doctorId = searchParams.get('doctorId');
+    const searchParams = new URL(request.url);
+    let patientId = searchParams.get('patientId');
+    let doctorId = searchParams.get('doctorId');
 
-    const supabase = await createClient();
+    let supabase = await () => ({} as any)();
 
     let query = supabase
       .from('appointments')
@@ -173,17 +173,17 @@ export async function GET(request: NextRequest) {
           phone,
           email
         ),
-        doctors!appointments_doctor_id_fkey(
+        doctors!appointments_doctorId_fkey(
           first_name,
           last_name,
           specialty
         )
-      `)
+      `
       .order('appointment_date', { ascending: true });
 
     if (patientId) {
       // جلب مواعيد مريض محدد
-      const { data: patient } = await supabase
+      const data: patient = await supabase
         .from('patients')
         .select('id')
         .eq('user_id', patientId)
@@ -195,25 +195,25 @@ export async function GET(request: NextRequest) {
     }
 
     if (doctorId) {
-      query = query.eq('doctor_id', doctorId);
+      query = query.eq('doctorId', doctorId);
     }
 
-    const { data: appointments, error } = await query;
+    const data: appointments, error = await query;
 
     if (error) {
-      return NextResponse.json(
+      return import { NextResponse } from "next/server";.json(
         { error: 'Failed to fetch appointments' },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       appointments: appointments || []
     });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Internal server error' },
       { status: 500 }
     );
@@ -223,17 +223,17 @@ export async function GET(request: NextRequest) {
 async function sendWhatsAppConfirmation(phone: string, appointment: any) {
   // هذا مثال لإرسال رسالة WhatsApp
   // في التطبيق الحقيقي، ستحتاج إلى تكامل مع WhatsApp Business API
-  
-  const message = `تم حجز موعدك بنجاح!
+
+  let message = `
   
 التفاصيل:
 👨‍⚕️ الطبيب: ${appointment.doctors.first_name} ${appointment.doctors.last_name}
 🏥 التخصص: ${appointment.doctors.specialty}
 📅 التاريخ: ${new Date(appointment.appointment_date).toLocaleDateString('ar-SA')}
-⏰ الوقت: ${appointment.appointment_time}
+⏰ الوقت: ${appointment.appointmentTime}
 📋 رقم الموعد: ${appointment.confirmation_code}
 
-مركز الهمم للرعاية الصحية`;
+مركز الهمم للرعاية الصحية`
 
   // هنا يمكنك إضافة كود إرسال WhatsApp الفعلي
   // await whatsappAPI.sendMessage(phone, message);

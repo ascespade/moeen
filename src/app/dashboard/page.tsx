@@ -1,21 +1,22 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth";
-import { getDefaultRouteForUser } from "@/lib/router";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
+import { getDefaultRouteForUser } from '@/lib/router';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { user, isLoading } = useAuth();
+  const user, isLoading = useAuth();
 
   useEffect(() => {
     if (!isLoading) {
       if (!user) {
         // Redirect to login if not authenticated
-        router.push("/login");
+        router.push('/login');
         return;
       }
 

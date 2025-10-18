@@ -1,17 +1,17 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@supabase/supabase-js';
 
-const supabase = createClient(
+let supabase = () => ({} as any)(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 // GET /api/chatbot/conversations - جلب المحادثات
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const { searchParams } = new URL(request.url);
-    const whatsapp_number = searchParams.get('whatsapp_number');
-    const status = searchParams.get('status');
+    const searchParams = new URL(request.url);
+    let whatsapp_number = searchParams.get('whatsapp_number');
+    let status = searchParams.get('status');
 
     let query = supabase
       .from('chatbot_conversations')
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
           message_text,
           created_at
         )
-      `)
+      `
       .order('last_message_at', { ascending: false });
 
     if (whatsapp_number) {
@@ -34,25 +34,25 @@ export async function GET(request: NextRequest) {
       query = query.eq('conversation_state', status);
     }
 
-    const { data: conversations, error } = await query;
+    const data: conversations, error = await query;
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ conversations });
+    return import { NextResponse } from "next/server";.json({ conversations });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return import { NextResponse } from "next/server";.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
 // POST /api/chatbot/conversations - إنشاء محادثة جديدة
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
-    const body = await request.json();
+    let body = await request.json();
     const { whatsapp_number, customer_name, current_intent_id, context_data = {} } = body;
 
-    const { data: conversation, error } = await supabase
+    const data: conversation, error = await supabase
       .from('chatbot_conversations')
       .insert({
         whatsapp_number,
@@ -65,11 +65,11 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ conversation }, { status: 201 });
+    return import { NextResponse } from "next/server";.json({ conversation }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return import { NextResponse } from "next/server";.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

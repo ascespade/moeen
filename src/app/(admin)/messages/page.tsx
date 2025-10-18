@@ -1,7 +1,8 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
-import Image from "next/image";
+'use client';
+import { useState } from 'react';
+import Image from 'next/image';
 
 interface Message {
   id: string;
@@ -9,133 +10,133 @@ interface Message {
   recipient: string;
   subject: string;
   content: string;
-  channel: "whatsapp" | "telegram" | "facebook" | "website";
-  status: "sent" | "delivered" | "read" | "failed";
+  channel: 'whatsapp' | 'telegram' | 'facebook' | 'website';
+  status: 'sent' | 'delivered' | 'read' | 'failed';
   createdAt: string;
-  priority: "low" | "medium" | "high";
+  priority: 'low' | 'medium' | 'high';
 }
 
 const mockMessages: Message[] = [
   {
-    id: "1",
-    sender: "نظام المواعيد",
-    recipient: "أحمد محمد",
-    subject: "تأكيد الموعد",
-    content: "تم تأكيد موعدك مع د. سارة أحمد في 2024-01-20 الساعة 10:00 صباحاً",
-    channel: "whatsapp",
-    status: "delivered",
-    createdAt: "2024-01-15 09:30",
-    priority: "medium",
+    id: '1',
+    sender: 'نظام المواعيد',
+    recipient: 'أحمد محمد',
+    subject: 'تأكيد الموعد',
+    content: 'تم تأكيد موعدك مع د. سارة أحمد في 2024-01-20 الساعة 10:00 صباحاً',
+    channel: 'whatsapp',
+    status: 'delivered',
+    createdAt: '2024-01-15 09:30',
+    priority: 'medium'
   },
   {
-    id: "2",
-    sender: "نظام التذكير",
-    recipient: "فاطمة العتيبي",
-    subject: "تذكير بالموعد",
+    id: '2',
+    sender: 'نظام التذكير',
+    recipient: 'فاطمة العتيبي',
+    subject: 'تذكير بالموعد',
     content:
-      "تذكير: لديك موعد غداً مع د. خالد القحطاني في 2024-01-16 الساعة 2:00 مساءً",
-    channel: "telegram",
-    status: "read",
-    createdAt: "2024-01-15 08:15",
-    priority: "high",
+      'تذكير: لديك موعد غداً مع د. خالد القحطاني في 2024-01-16 الساعة 2:00 مساءً',
+    channel: 'telegram',
+    status: 'read',
+    createdAt: '2024-01-15 08:15',
+    priority: 'high'
   },
   {
-    id: "3",
-    sender: "نظام الاستفسارات",
-    recipient: "محمد السعد",
-    subject: "رد على استفسارك",
-    content: "شكراً لاستفسارك. سنتواصل معك قريباً لتوضيح التفاصيل",
-    channel: "facebook",
-    status: "sent",
-    createdAt: "2024-01-15 07:45",
-    priority: "low",
-  },
+    id: '3',
+    sender: 'نظام الاستفسارات',
+    recipient: 'محمد السعد',
+    subject: 'رد على استفسارك',
+    content: 'شكراً لاستفسارك. سنتواصل معك قريباً لتوضيح التفاصيل',
+    channel: 'facebook',
+    status: 'sent',
+    createdAt: '2024-01-15 07:45',
+    priority: 'low'
+  }
 ];
 
 export default function MessagesPage() {
   const [filter, setFilter] = useState<
-    "all" | "sent" | "delivered" | "read" | "failed"
-  >("all");
-  const [channelFilter, setChannelFilter] = useState<string>("all");
+    'all' | 'sent' | 'delivered' | 'read' | 'failed'
+  >('all');
+  const [channelFilter, setChannelFilter] = useState<string>('all');
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const getChannelIcon = (channel: Message["channel"]) => {
+  const getChannelIcon = (channel: Message['channel']) => {
     switch (channel) {
-      case "whatsapp":
-        return "📱";
-      case "telegram":
-        return "✈️";
-      case "facebook":
-        return "📘";
-      case "website":
-        return "🌐";
-      default:
-        return "💬";
+    case 'whatsapp':
+      return '📱';
+    case 'telegram':
+      return '✈️';
+    case 'facebook':
+      return '📘';
+    case 'website':
+      return '🌐';
+    default:
+      return '💬';
     }
   };
 
-  const getChannelText = (channel: Message["channel"]) => {
+  const getChannelText = (channel: Message['channel']) => {
     switch (channel) {
-      case "whatsapp":
-        return "واتساب";
-      case "telegram":
-        return "تيليجرام";
-      case "facebook":
-        return "فيسبوك";
-      case "website":
-        return "الموقع";
-      default:
-        return "قناة";
+    case 'whatsapp':
+      return 'واتساب';
+    case 'telegram':
+      return 'تيليجرام';
+    case 'facebook':
+      return 'فيسبوك';
+    case 'website':
+      return 'الموقع';
+    default:
+      return 'قناة';
     }
   };
 
-  const getStatusColor = (status: Message["status"]) => {
+  const getStatusColor = (status: Message['status']) => {
     switch (status) {
-      case "sent":
-        return "bg-blue-100 text-blue-800";
-      case "delivered":
-        return "bg-green-100 text-green-800";
-      case "read":
-        return "bg-purple-100 text-purple-800";
-      case "failed":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-surface text-gray-800";
+    case 'sent':
+      return 'bg-blue-100 text-blue-800';
+    case 'delivered':
+      return 'bg-green-100 text-green-800';
+    case 'read':
+      return 'bg-purple-100 text-purple-800';
+    case 'failed':
+      return 'bg-red-100 text-red-800';
+    default:
+      return 'bg-surface text-gray-800';
     }
   };
 
-  const getStatusText = (status: Message["status"]) => {
+  const getStatusText = (status: Message['status']) => {
     switch (status) {
-      case "sent":
-        return "مرسل";
-      case "delivered":
-        return "تم التسليم";
-      case "read":
-        return "مقروء";
-      case "failed":
-        return "فشل";
-      default:
-        return "غير محدد";
+    case 'sent':
+      return 'مرسل';
+    case 'delivered':
+      return 'تم التسليم';
+    case 'read':
+      return 'مقروء';
+    case 'failed':
+      return 'فشل';
+    default:
+      return 'غير محدد';
     }
   };
 
-  const getPriorityColor = (priority: Message["priority"]) => {
+  const getPriorityColor = (priority: Message['priority']) => {
     switch (priority) {
-      case "high":
-        return "bg-red-100 text-red-800";
-      case "medium":
-        return "bg-yellow-100 text-yellow-800";
-      case "low":
-        return "bg-green-100 text-green-800";
-      default:
-        return "bg-surface text-gray-800";
+    case 'high':
+      return 'bg-red-100 text-red-800';
+    case 'medium':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'low':
+      return 'bg-green-100 text-green-800';
+    default:
+      return 'bg-surface text-gray-800';
     }
   };
 
   const filteredMessages = mockMessages.filter((message) => {
-    const matchesFilter = filter === "all" || message.status === filter;
+    const matchesFilter = filter === 'all' || message.status === filter;
     const matchesChannel =
-      channelFilter === "all" || message.channel === channelFilter;
+      channelFilter === 'all' || message.channel === channelFilter;
     return matchesFilter && matchesChannel;
   });
 
@@ -181,19 +182,19 @@ export default function MessagesPage() {
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-success">
-              {mockMessages.filter((m) => m.status === "delivered").length}
+              {mockMessages.filter((m) => m.status === 'delivered').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">تم التسليم</div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-purple-600">
-              {mockMessages.filter((m) => m.status === "read").length}
+              {mockMessages.filter((m) => m.status === 'read').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">مقروءة</div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-error">
-              {mockMessages.filter((m) => m.status === "failed").length}
+              {mockMessages.filter((m) => m.status === 'failed').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">فشل</div>
           </div>
@@ -257,18 +258,18 @@ export default function MessagesPage() {
                       {message.subject}
                     </h3>
                     <span
-                      className={`rounded-full px-2 py-1 text-xs ${getStatusColor(message.status)}`}
+                      className={`rounded-full px-2 py-1 text-xs ${getStatusColor(message.status)}`
                     >
                       {getStatusText(message.status)}
                     </span>
                     <span
-                      className={`rounded-full px-2 py-1 text-xs ${getPriorityColor(message.priority)}`}
+                      className={`rounded-full px-2 py-1 text-xs ${getPriorityColor(message.priority)}`
                     >
-                      {message.priority === "high"
-                        ? "عالي"
-                        : message.priority === "medium"
-                          ? "متوسط"
-                          : "منخفض"}
+                      {message.priority === 'high'
+                        ? 'عالي'
+                        : message.priority === 'medium'
+                          ? 'متوسط'
+                          : 'منخفض'}
                     </span>
                   </div>
                   <div className="mb-3 text-sm text-gray-600 dark:text-gray-300">

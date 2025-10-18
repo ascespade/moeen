@@ -20,10 +20,10 @@
 // Exports
 // Exports
 // Exports
-export const useTheme = () => ({
-export const useThemeAware = () => ({ resolvedTheme: 'light' as 'light' | 'dark' });
-export const useDesignTokens = () => ({ colors: {} });
-export const useThemeColors = () => ({});
-export const ThemeProvider = ({ children }: any) => children;
+export let useTheme = () => ({
+export let useThemeAware = () => ({ resolvedTheme: 'light' as 'light' | 'dark' });
+export let useDesignTokens = () => ({ colors: {} });
+export let useThemeColors = () => ({});
+export let ThemeProvider = ({ children }: any) => children;
 export type ThemeMode = 'light' | 'dark' | 'system';
 export type ResolvedTheme = 'light' | 'dark';

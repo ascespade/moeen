@@ -1,35 +1,36 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { 
-  Calendar, 
-  Users, 
-  FileText, 
-  Settings, 
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import {
+  Calendar,
+  Users,
+  FileText,
+  Settings,
   Bell,
   BarChart3,
   Clock,
   CheckCircle
-} from "lucide-react";
+} from 'lucide-react';
 
 export default function UserDashboard() {
-  const { user, isAuthenticated, isLoading } = useAuth();
+  const user, isAuthenticated, isLoading = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push("/login");
-      return;
+      router.push('/login');
+
     }
   }, [isAuthenticated, isLoading, router]);
 
   useEffect(() => {
-    document.title = "Dashboard - مُعين";
+    document.title = 'Dashboard - مُعين';
   }, []);
 
   if (isLoading) {
@@ -54,60 +55,60 @@ export default function UserDashboard() {
 
   const stats = [
     {
-      title: "المواعيد القادمة",
-      value: "3",
-      change: "+2 هذا الأسبوع",
+      title: 'المواعيد القادمة',
+      value: '3',
+      change: '+2 هذا الأسبوع',
       icon: Calendar,
-      color: "text-brand-primary",
-      bgColor: "bg-blue-100"
+      color: 'text-brand-primary',
+      bgColor: 'bg-blue-100'
     },
     {
-      title: "الملفات الطبية",
-      value: "12",
-      change: "تم تحديث 2 ملف",
+      title: 'الملفات الطبية',
+      value: '12',
+      change: 'تم تحديث 2 ملف',
       icon: FileText,
-      color: "text-brand-success",
-      bgColor: "bg-green-100"
+      color: 'text-brand-success',
+      bgColor: 'bg-green-100'
     },
     {
-      title: "الإشعارات",
-      value: "5",
-      change: "3 جديدة",
+      title: 'الإشعارات',
+      value: '5',
+      change: '3 جديدة',
       icon: Bell,
-      color: "text-brand-primary",
-      bgColor: "bg-orange-100"
+      color: 'text-brand-primary',
+      bgColor: 'bg-orange-100'
     },
     {
-      title: "الوقت المتبقي",
-      value: "2س 30د",
-      change: "حتى الموعد التالي",
+      title: 'الوقت المتبقي',
+      value: '2س 30د',
+      change: 'حتى الموعد التالي',
       icon: Clock,
-      color: "text-purple-600",
-      bgColor: "bg-purple-100"
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-100'
     }
   ];
 
   const recentActivities = [
     {
       id: 1,
-      title: "تم تأكيد موعدك مع د. أحمد محمد",
-      time: "منذ 2 ساعة",
-      type: "appointment",
-      status: "confirmed"
+      title: 'تم تأكيد موعدك مع د. أحمد محمد',
+      time: 'منذ 2 ساعة',
+      type: 'appointment',
+      status: 'confirmed'
     },
     {
       id: 2,
-      title: "تم تحديث ملفك الطبي",
-      time: "منذ 4 ساعات",
-      type: "medical",
-      status: "updated"
+      title: 'تم تحديث ملفك الطبي',
+      time: 'منذ 4 ساعات',
+      type: 'medical',
+      status: 'updated'
     },
     {
       id: 3,
-      title: "إشعار جديد: تذكير بموعد غد",
-      time: "منذ 6 ساعات",
-      type: "notification",
-      status: "new"
+      title: 'إشعار جديد: تذكير بموعد غد',
+      time: 'منذ 6 ساعات',
+      type: 'notification',
+      status: 'new'
     }
   ];
 
@@ -171,8 +172,8 @@ export default function UserDashboard() {
                       {stat.change}
                     </p>
                   </div>
-                  <div className={`p-3 rounded-full ${stat.bgColor}`}>
-                    <stat.icon className={`h-6 w-6 ${stat.color}`} />
+                  <div className={`p-3 rounded-full ${stat.bgColor}`
+                    <stat.icon className={`h-6 w-6 ${stat.color}`
                   </div>
                 </div>
               </CardContent>

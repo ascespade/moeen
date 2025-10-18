@@ -1,3 +1,4 @@
+import React from "react";
 
 'use client';
 
@@ -9,10 +10,10 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { LoadingSpinner } from '@/components/ui';
-import { 
-  Users, 
-  Calendar, 
-  FileText, 
+import {
+  Users,
+  Calendar,
+  FileText,
   Clock,
   CheckCircle,
   AlertCircle,
@@ -43,13 +44,13 @@ interface DoctorData {
 }
 
 export default function DoctorDashboard() {
-  const { t } = useT();
-  const { theme } = useTheme();
+  const t = useT();
+  const theme = useTheme();
   const [doctorData, setDoctorData] = useState<DoctorData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchDoctorData = async () => {
+    const fetchDoctorData = async() => {
       try {
         const response = await fetch('/api/doctors/me');
         if (response.ok) {
@@ -57,7 +58,7 @@ export default function DoctorDashboard() {
           setDoctorData(data);
         }
       } catch (error) {
-        } finally {
+      } finally {
         setIsLoading(false);
       }
     };
@@ -65,20 +66,20 @@ export default function DoctorDashboard() {
     fetchDoctorData();
   }, []);
 
-  const handleStartAppointment = async (appointmentId: string) => {
+  const handleStartAppointment = async(appointmentId: string) => {
     try {
-      const response = await fetch(`/api/appointments/${appointmentId}/start`, {
+      const response = await fetch(`/api/appointments/${appointmentId}/start`
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'in_progress' })
       });
-      
+
       if (response.ok) {
         // Refresh data
         window.location.reload();
       }
     } catch (error) {
-      }
+    }
   };
 
   if (isLoading) {
@@ -90,7 +91,7 @@ export default function DoctorDashboard() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['doctor']}>
+    <ProtectedRoute allowedstrings={['doctor']}>
       <div className="min-h-screen bg-surface dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
@@ -173,7 +174,7 @@ export default function DoctorDashboard() {
                 {doctorData?.todayAppointments && doctorData.todayAppointments.length > 0 ? (
                   <div className="space-y-4">
                     {doctorData.todayAppointments.map((appointment) => (
-                      <div 
+                      <div
                         key={appointment.id}
                         className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-surface dark:hover:bg-gray-800"
                       >
@@ -193,13 +194,13 @@ export default function DoctorDashboard() {
                           </div>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <Badge 
+                          <Badge
                             variant={
                               appointment.status === 'completed' ? 'primary' :
-                              appointment.status === 'in_progress' ? 'secondary' : 'outline'
+                                appointment.status === 'in_progress' ? 'secondary' : 'outline'
                             }
                           >
-                            {t(`appointment.status.${appointment.status}`)}
+                            {t(`appointment.status.${appointment.status}`
                           </Badge>
                           {appointment.status === 'pending' && (
                             <Button
@@ -212,7 +213,7 @@ export default function DoctorDashboard() {
                           <Button
                             size="sm"
                             variant="outline"
-                            onClick={() => window.open(`/doctor/patients/${appointment.patientId}`, '_blank')}
+                            onClick={() => window.open(`/doctor/patients/${appointment.patientId}`
                           >
                             {t('doctor.actions.view_file')}
                           </Button>
@@ -253,7 +254,7 @@ export default function DoctorDashboard() {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => window.open(`/doctor/patients/${patient.id}`, '_blank')}
+                          onClick={() => window.open(`/doctor/patients/${patient.id}`
                         >
                           {t('doctor.actions.view')}
                         </Button>

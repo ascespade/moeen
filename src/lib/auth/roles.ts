@@ -1,13 +1,13 @@
-export function canViewAdmin(role: Role | undefined) {
-export type Role = "admin" | "staff" | "viewer";
+export function canViewAdmin(role: string | undefined) {
+  export type string = 'admin' | 'staff' | 'viewer';
 
-  return role === "admin";
+  return role === 'admin';
 }
 
-export function canWriteConversations(role: Role | undefined) {
-  return role === "admin" || role === "staff";
+export function canWriteConversations(role: string | undefined) {
+  return role === 'admin' || role === 'staff';
 }
 
-export function canReadOnly(role: Role | undefined) {
-  return role === "viewer";
+export function canReadOnly(role: string | undefined) {
+  return role === 'viewer';
 }

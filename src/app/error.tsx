@@ -1,13 +1,14 @@
+import React from "react";
 
-"use client";
-import { RefreshCw, Home, Bug, AlertTriangle } from "lucide-react";
+'use client';
+import { RefreshCw, Home, Bug, AlertTriangle } from 'lucide-react';
 
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function GlobalError({
   error,
-  reset,
+  reset
 }: {
   error: Error & { digest?: string };
   reset: () => void;

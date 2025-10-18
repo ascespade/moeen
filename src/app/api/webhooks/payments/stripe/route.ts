@@ -1,56 +1,56 @@
-export async function POST(request: NextRequest) {
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { stripeService } from '@/lib/payments/stripe';
+export async function POST(request: import { NextRequest } from "next/server";) {
+  import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+  import { () => ({} as any) } from '@/lib/supabase/server';
+  import { stripeService } from '@/lib/payments/stripe';
 
   try {
-    const body = await request.text();
-    const signature = request.headers.get('stripe-signature');
+    let body = await request.text();
+    let signature = request.headers.get('stripe-signature');
 
     if (!signature) {
-      return NextResponse.json({ error: 'Missing stripe signature' }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: 'Missing stripe signature' }, { status: 400 });
     }
 
     // Verify webhook signature
-    const result = await stripeService.handleWebhook(body, signature);
-    
+    let result = await stripeService.handleWebhook(body, signature);
+
     if (!result.success) {
-      return NextResponse.json({ error: 'Webhook verification failed' }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: 'Webhook verification failed' }, { status: 400 });
     }
 
-    const supabase = await createClient();
+    let supabase = await () => ({} as any)();
 
     // Find payment record by payment intent ID
-    const { data: payment, error: paymentError } = await supabase
+    const data: payment, error: paymentError = await supabase
       .from('payments')
       .select('*')
       .eq('meta->>payment_id', result.paymentIntentId)
       .single();
 
     if (paymentError || !payment) {
-      return NextResponse.json({ error: 'Payment record not found' }, { status: 404 });
+      return import { NextResponse } from "next/server";.json({ error: 'Payment record not found' }, { status: 404 });
     }
 
     // Update payment status based on webhook event
-    const newStatus = result.paymentIntentId ? 'completed' : 'failed';
-    
-    const { error: updateError } = await supabase
+    let newStatus = result.paymentIntentId ? 'completed' : 'failed';
+
+    const error: updateError = await supabase
       .from('payments')
-      .update({ 
+      .update({
         status: newStatus,
         updated_at: new Date().toISOString()
       })
       .eq('id', payment.id);
 
     if (updateError) {
-      return NextResponse.json({ error: 'Failed to update payment status' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to update payment status' }, { status: 500 });
     }
 
     // If payment completed, update appointment payment status
     if (newStatus === 'completed') {
       await supabase
         .from('appointments')
-        .update({ 
+        .update({
           payment_status: 'paid',
           updated_at: new Date().toISOString()
         })
@@ -72,10 +72,10 @@ import { stripeService } from '@/lib/payments/stripe';
         });
     }
 
-    return NextResponse.json({ received: true });
+    return import { NextResponse } from "next/server";.json({ received: true });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Webhook processing failed' },
       { status: 500 }
     );

@@ -3,18 +3,18 @@
  */
 
 import { test, expect } from '@playwright/test';
-import { createClient } from '@supabase/supabase-js';
+import { () => ({} as any) } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
+let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+let supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+let supabase = () => ({} as any)(supabaseUrl, supabaseKey);
 
 test.describe('Medical Records Module', () => {
   let testPatientId: number;
 
   test.describe('1. Patient Management', () => {
-    test('1.1 should create patient with tracking', async ({ request }) => {
-      const { data: patient } = await supabase
+    test('1.1 should create patient with tracking', async({ request }) => {
+      const data: patient = await supabase
         .from('patients')
         .insert({
           full_name: 'Test Patient Medical',
@@ -32,8 +32,8 @@ test.describe('Medical Records Module', () => {
       testPatientId = patient.id;
     });
 
-    test('1.2 should have tracking columns', async () => {
-      const { data } = await supabase
+    test('1.2 should have tracking columns', async() => {
+      const data = await supabase
         .from('patients')
         .select('*')
         .eq('id', testPatientId)
@@ -43,8 +43,8 @@ test.describe('Medical Records Module', () => {
       expect(data.last_activity_at).toBeTruthy();
     });
 
-    test('1.3 should calculate health score', async () => {
-      const { data, error } = await supabase.rpc('calculate_health_score', {
+    test('1.3 should calculate health score', async() => {
+      const data, error = await supabase.rpc('calculate_health_score', {
         p_patient_id: testPatientId
       });
 
@@ -54,9 +54,9 @@ test.describe('Medical Records Module', () => {
   });
 
   test.describe('2. HIPAA Compliance', () => {
-    test('2.1 should log patient access', async () => {
-      const testUserId = 'test-user-id';
-      
+    test('2.1 should log patient access', async() => {
+      let testUserId = 'test-user-id';
+
       await supabase.rpc('log_patient_access', {
         p_patient_id: testPatientId,
         p_accessed_by: testUserId,
@@ -64,7 +64,7 @@ test.describe('Medical Records Module', () => {
         p_ip_address: '127.0.0.1'
       });
 
-      const { data } = await supabase
+      const data = await supabase
         .from('patients')
         .select('access_log, last_accessed_by')
         .eq('id', testPatientId)
@@ -74,8 +74,8 @@ test.describe('Medical Records Module', () => {
       expect(data.last_accessed_by).toBe(testUserId);
     });
 
-    test('2.2 should have audit log for access', async () => {
-      const { data } = await supabase
+    test('2.2 should have audit log for access', async() => {
+      const data = await supabase
         .from('audit_logs')
         .select('*')
         .eq('action', 'patient_record_accessed')
@@ -90,8 +90,8 @@ test.describe('Medical Records Module', () => {
   });
 
   test.describe('3. Health Dashboard', () => {
-    test('3.1 should query patient health dashboard', async () => {
-      const { data } = await supabase
+    test('3.1 should query patient health dashboard', async() => {
+      const data = await supabase
         .from('patient_health_dashboard')
         .select('*')
         .eq('id', testPatientId)
@@ -104,8 +104,8 @@ test.describe('Medical Records Module', () => {
   });
 
   test.describe('4. Statistics', () => {
-    test('4.1 should get patient statistics', async () => {
-      const { data } = await supabase.rpc('get_patient_statistics');
+    test('4.1 should get patient statistics', async() => {
+      const data = await supabase.rpc('get_patient_statistics');
 
       expect(data).toBeTruthy();
       expect(data[0].total_patients).toBeGreaterThan(0);

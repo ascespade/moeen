@@ -3,14 +3,14 @@
  * Seed Translations - إنشاء الترجمات الأساسية
  */
 require('dotenv').config({ path: '.env.local' });
-const { createClient } = require('@supabase/supabase-js');
+const { () => ({} as any) } = require('@supabase/supabase-js');
 
-const supabase = createClient(
+let supabase = () => ({} as any)(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-const translations = {
+let translations = {
   // Common
   'common.loading': { ar: 'جاري التحميل...', en: 'Loading...' },
   'common.save': { ar: 'حفظ', en: 'Save' },
@@ -21,7 +21,7 @@ const translations = {
   'common.filter': { ar: 'تصفية', en: 'Filter' },
   'common.welcome': { ar: 'مرحباً', en: 'Welcome' },
   'common.logout': { ar: 'تسجيل الخروج', en: 'Logout' },
-  
+
   // Auth
   'auth.login': { ar: 'تسجيل الدخول', en: 'Login' },
   'auth.register': { ar: 'إنشاء حساب', en: 'Register' },
@@ -40,8 +40,8 @@ const translations = {
   'auth.testMessage': { ar: 'اختبر النظام بحسابات تجريبية جاهزة', en: 'Test the system with ready demo accounts' },
   'auth.loggingIn': { ar: 'جارٍ تسجيل الدخول...', en: 'Logging in...' },
   'auth.createAccount': { ar: 'إنشاء حساب جديد', en: 'Create new account' },
-  'auth.noAccount': { ar: 'ليس لديك حساب؟', en: "Don't have an account?" },
-  
+  'auth.noAccount': { ar: 'ليس لديك حساب؟', en: 'Don\'t have an account?' },
+
   // Navigation
   'nav.services': { ar: 'الخدمات', en: 'Services' },
   'nav.about': { ar: 'عن معين', en: 'About' },
@@ -49,101 +49,101 @@ const translations = {
   'nav.contact': { ar: 'اتصل بنا', en: 'Contact Us' },
   'nav.dashboard': { ar: 'لوحة التحكم', en: 'Dashboard' },
   'nav.settings': { ar: 'الإعدادات', en: 'Settings' },
-  
+
   // Homepage
   'home.hero.title': { ar: 'مرحباً بك في مُعين', en: 'Welcome to Moeen' },
   'home.hero.subtitle': { ar: 'منصة الرعاية الصحية المتخصصة', en: 'Specialized Healthcare Platform' },
   'home.hero.description': { ar: 'نقدم خدمات متكاملة للرعاية الصحية مع أحدث التقنيات والذكاء الاصطناعي', en: 'Comprehensive healthcare services with latest AI technology' },
   'home.hero.cta': { ar: 'اكتشف خدماتنا', en: 'Discover Our Services' },
-  
+
   // Dashboard
   'dashboard.title': { ar: 'لوحة التحكم', en: 'Dashboard' },
   'dashboard.welcome': { ar: 'مرحباً', en: 'Welcome' },
-  'dashboard.overview': { ar: 'إليك نظرة عامة على نشاطك اليوم', en: "Here's your activity overview" },
+  'dashboard.overview': { ar: 'إليك نظرة عامة على نشاطك اليوم', en: 'Here\'s your activity overview' },
   'dashboard.stats.appointments': { ar: 'المواعيد القادمة', en: 'Upcoming Appointments' },
   'dashboard.stats.patients': { ar: 'المرضى', en: 'Patients' },
   'dashboard.stats.notifications': { ar: 'الإشعارات', en: 'Notifications' },
   'dashboard.recentActivity': { ar: 'النشاط الأخير', en: 'Recent Activity' },
   'dashboard.quickActions': { ar: 'الإجراءات السريعة', en: 'Quick Actions' },
-  
-  // Roles
+
+  // strings
   'role.admin': { ar: 'مدير', en: 'Admin' },
   'role.supervisor': { ar: 'مشرف', en: 'Supervisor' },
   'role.patient': { ar: 'مريض', en: 'Patient' },
   'role.staff': { ar: 'موظف', en: 'Staff' },
   'role.doctor': { ar: 'طبيب', en: 'Doctor' },
-  
+
   // Status
   'status.active': { ar: 'نشط', en: 'Active' },
   'status.inactive': { ar: 'غير نشط', en: 'Inactive' },
   'status.pending': { ar: 'قيد الانتظار', en: 'Pending' },
   'status.completed': { ar: 'مكتمل', en: 'Completed' },
-  
+
   // Errors
   'error.generic': { ar: 'حدث خطأ ما', en: 'Something went wrong' },
-  'error.unauthorized': { ar: 'غير مصرح لك', en: 'Unauthorized' },
+  'error.un() => ({} as any)d': { ar: 'غير مصرح لك', en: 'Un() => ({} as any)d' },
   'error.notFound': { ar: 'غير موجود', en: 'Not found' },
-  'error.serverError': { ar: 'خطأ في الخادم', en: 'Server error' },
+  'error.serverError': { ar: 'خطأ في الخادم', en: 'Server error' }
 };
 
 async function seedTranslations() {
-  console.log('🌐 Seeding translations...\n');
-  
+  // console.log('🌐 Seeding translations...\n');
+
   try {
     // 1. Ensure languages exist
-    console.log('📝 Ensuring languages...');
-    const { error: langError } = await supabase
+    // console.log('📝 Ensuring languages...');
+    const error: langError = await supabase
       .from('languages')
       .upsert([
-        { code: 'ar', name: 'العربية', is_default: true, direction: 'rtl' },
-        { code: 'en', name: 'English', is_default: false, direction: 'ltr' },
+        { code: 'ar', name: 'العربية', isDefault: true, direction: 'rtl' },
+        { code: 'en', name: 'English', isDefault: false, direction: 'ltr' }
       ], { onConflict: 'code' });
-    
+
     if (langError) {
-      console.error('❌ Language error:', langError);
+      // console.error('❌ Language error:', langError);
       return;
     }
-    console.log('✅ Languages ready\n');
-    
+    // console.log('✅ Languages ready\n');
+
     // 2. Insert translations
-    console.log('📝 Inserting translations...');
+    // console.log('📝 Inserting translations...');
     let successCount = 0;
     let errorCount = 0;
-    
+
     for (const [key, values] of Object.entries(translations)) {
       for (const [lang, value] of Object.entries(values)) {
-        const { error } = await supabase
+        const error = await supabase
           .from('translations')
           .upsert({
             lang_code: lang,
             key: key,
-            value: value,
+            value: value
           }, { onConflict: 'lang_code,key' });
-        
+
         if (error) {
           errorCount++;
-          console.error(`  ❌ ${key} [${lang}]`);
+          // console.error(`  ❌ ${key} [${lang}]`
         } else {
           successCount++;
         }
       }
     }
-    
-    console.log(`\n✅ Inserted ${successCount} translations`);
+
+    // console.log(`\n✅ Inserted ${successCount} translations`
     if (errorCount > 0) {
-      console.log(`⚠️  ${errorCount} errors`);
+      // console.log(`⚠️  ${errorCount} errors`
     }
-    
+
     // 3. Verify
-    const { count } = await supabase
+    const count = await supabase
       .from('translations')
       .select('*', { count: 'exact', head: true });
-    
-    console.log(`\n📊 Total translations in DB: ${count}`);
-    console.log('\n✅ Translations seeded successfully!');
-    
+
+    // console.log(`\n📊 Total translations in DB: ${count}`
+    // console.log('\n✅ Translations seeded successfully!');
+
   } catch (err) {
-    console.error('❌ Error:', err.message);
+    // console.error('❌ Error:', err.message);
   }
 }
 

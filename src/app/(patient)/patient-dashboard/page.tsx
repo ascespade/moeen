@@ -1,3 +1,4 @@
+import React from "react";
 
 'use client';
 
@@ -9,11 +10,11 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { LoadingSpinner } from '@/components/ui';
-import { 
-  CalendarDays, 
-  FileText, 
-  CreditCard, 
-  Shield, 
+import {
+  CalendarDays,
+  FileText,
+  CreditCard,
+  Shield,
   Clock,
   CheckCircle,
   AlertCircle
@@ -47,13 +48,13 @@ interface PatientData {
 }
 
 export default function PatientDashboard() {
-  const { t } = useT();
-  const { theme } = useTheme();
+  const t = useT();
+  const theme = useTheme();
   const [patientData, setPatientData] = useState<PatientData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPatientData = async () => {
+    const fetchPatientData = async() => {
       try {
         const response = await fetch('/api/patients/me');
         if (response.ok) {
@@ -61,7 +62,7 @@ export default function PatientDashboard() {
           setPatientData(data);
         }
       } catch (error) {
-        } finally {
+      } finally {
         setIsLoading(false);
       }
     };
@@ -78,7 +79,7 @@ export default function PatientDashboard() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['patient']}>
+    <ProtectedRoute allowedstrings={['patient']}>
       <div className="min-h-screen bg-surface dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
@@ -139,8 +140,8 @@ export default function PatientDashboard() {
                   </p>
                 </div>
               </div>
-              <Button 
-                className="w-full mt-4" 
+              <Button
+                className="w-full mt-4"
                 disabled={!patientData?.activated}
                 variant={patientData?.activated ? 'primary' : 'secondary'}
               >
@@ -236,7 +237,7 @@ export default function PatientDashboard() {
                     <span className="text-sm text-gray-600 dark:text-gray-400">
                       {t('patient.dashboard.activation_status')}
                     </span>
-                    <Badge 
+                    <Badge
                       variant={patientData?.activated ? 'primary' : 'secondary'}
                       className={patientData?.activated ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800'}
                     >

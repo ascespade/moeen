@@ -1,53 +1,54 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { Users, Target, Heart, Award, Globe, Shield } from "lucide-react";
+import Image from 'next/image';
+import Link from 'next/link';
+import { Users, Target, Heart, Award, Globe, Shield } from 'lucide-react';
 
 export default function AboutPage() {
   const features = [
     {
       icon: <Users className="h-8 w-8" />,
-      title: "مجتمع متكامل",
+      title: 'مجتمع متكامل',
       description:
-        "نوفر منصة شاملة تجمع المستفيدين والمتطوعين والمتبرعين في مكان واحد",
+        'نوفر منصة شاملة تجمع المستفيدين والمتطوعين والمتبرعين في مكان واحد'
     },
     {
       icon: <Target className="h-8 w-8" />,
-      title: "رؤية واضحة",
+      title: 'رؤية واضحة',
       description:
-        "نسعى لبناء مجتمع داعم ومتضامن يساعد الجميع على تحقيق أهدافهم",
+        'نسعى لبناء مجتمع داعم ومتضامن يساعد الجميع على تحقيق أهدافهم'
     },
     {
       icon: <Heart className="h-8 w-8" />,
-      title: "قيم إنسانية",
-      description: "نؤمن بقوة التضامن والتعاون في بناء مجتمع أفضل للجميع",
+      title: 'قيم إنسانية',
+      description: 'نؤمن بقوة التضامن والتعاون في بناء مجتمع أفضل للجميع'
     },
     {
       icon: <Award className="h-8 w-8" />,
-      title: "جودة عالية",
+      title: 'جودة عالية',
       description:
-        "نلتزم بتقديم خدمات عالية الجودة تلبي احتياجات جميع المستخدمين",
+        'نلتزم بتقديم خدمات عالية الجودة تلبي احتياجات جميع المستخدمين'
     },
     {
       icon: <Globe className="h-8 w-8" />,
-      title: "وصول عالمي",
+      title: 'وصول عالمي',
       description:
-        "نعمل على توسيع نطاق خدماتنا لتشمل أكبر عدد ممكن من المحتاجين",
+        'نعمل على توسيع نطاق خدماتنا لتشمل أكبر عدد ممكن من المحتاجين'
     },
     {
       icon: <Shield className="h-8 w-8" />,
-      title: "أمان وخصوصية",
-      description: "نضمن أمان وخصوصية جميع البيانات والمعلومات الشخصية",
-    },
+      title: 'أمان وخصوصية',
+      description: 'نضمن أمان وخصوصية جميع البيانات والمعلومات الشخصية'
+    }
   ];
 
   const stats = [
-    { number: "10,000+", label: "مستفيد" },
-    { number: "5,000+", label: "متطوع" },
-    { number: "2,000+", label: "متبرع" },
-    { number: "50+", label: "مشروع" },
+    { number: '10,000+', label: 'مستفيد' },
+    { number: '5,000+', label: 'متطوع' },
+    { number: '2,000+', label: 'متبرع' },
+    { number: '50+', label: 'مشروع' }
   ];
 
   return (
@@ -66,7 +67,7 @@ export default function AboutPage() {
               />
               <span
                 className="text-xl font-bold"
-                style={{ color: "var(--brand-primary)" }}
+                style={{ color: 'var(--brand-primary)' }}
               >
                 مُعين
               </span>

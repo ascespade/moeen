@@ -1,38 +1,39 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import { useT } from "@/components/providers/I18nProvider";
+import { useT } from '@/components/providers/I18nProvider';
 
 
 export default function PricingPage() {
-  const { t } = useT();
+  const t = useT();
   const tiers = [
     {
-      name: t("pricing.basic", "أساسي"),
-      price: t("pricing.free", "مجاني"),
+      name: t('pricing.basic', 'أساسي'),
+      price: t('pricing.free', 'مجاني'),
       features: [
-        t("pricing.f1", "قناة واحدة"),
-        t("pricing.f2", "محادثات محدودة"),
-      ],
+        t('pricing.f1', 'قناة واحدة'),
+        t('pricing.f2', 'محادثات محدودة')
+      ]
     },
     {
-      name: t("pricing.pro", "محترف"),
-      price: "$29",
-      features: [t("pricing.f3", "3 قنوات"), t("pricing.f4", "تقارير أساسية")],
+      name: t('pricing.pro', 'محترف'),
+      price: '$29',
+      features: [t('pricing.f3', '3 قنوات'), t('pricing.f4', 'تقارير أساسية')]
     },
     {
-      name: t("pricing.enterprise", "مؤسسات"),
-      price: t("pricing.custom", "مخصص"),
+      name: t('pricing.enterprise', 'مؤسسات'),
+      price: t('pricing.custom', 'مخصص'),
       features: [
-        t("pricing.f5", "قنوات غير محدودة"),
-        t("pricing.f6", "دعم مخصص"),
-      ],
-    },
+        t('pricing.f5', 'قنوات غير محدودة'),
+        t('pricing.f6', 'دعم مخصص')
+      ]
+    }
   ];
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-12">
       <h1 className="mb-6 text-3xl font-bold">
-        {t("pricing.title", "الأسعار")}
+        {t('pricing.title', 'الأسعار')}
       </h1>
       <div className="grid gap-6 md:grid-cols-3">
         {tiers.map((t) => (

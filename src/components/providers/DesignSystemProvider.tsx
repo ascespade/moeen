@@ -1,3 +1,4 @@
+import React from "react";
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -180,66 +181,66 @@ export function useDesignSystem() {
 
 // Hook to use theme
 export function useTheme() {
-  const { theme, setTheme } = useDesignSystem();
+  const theme, setTheme = useDesignSystem();
   return { theme, setTheme };
 }
 
 // Hook to use language
 export function useLanguage() {
-  const { language, setLanguage } = useDesignSystem();
+  const language, setLanguage = useDesignSystem();
   return { language, setLanguage };
 }
 
 // Hook to use direction
 export function useDirection() {
-  const { direction, setDirection } = useDesignSystem();
+  const direction, setDirection = useDesignSystem();
   return { direction, setDirection };
 }
 
 // Hook to use spacing
 export function useSpacing() {
-  const { spacing, setSpacing } = useDesignSystem();
+  const spacing, setSpacing = useDesignSystem();
   return { spacing, setSpacing };
 }
 
 // Hook to use fontSize
 export function useFontSize() {
-  const { fontSize, setFontSize } = useDesignSystem();
+  const fontSize, setFontSize = useDesignSystem();
   return { fontSize, setFontSize };
 }
 
 // Hook to use borderRadius
 export function useBorderRadius() {
-  const { borderRadius, setBorderRadius } = useDesignSystem();
+  const borderRadius, setBorderRadius = useDesignSystem();
   return { borderRadius, setBorderRadius };
 }
 
 // Hook to use shadows
 export function useShadows() {
-  const { shadows, setShadows } = useDesignSystem();
+  const shadows, setShadows = useDesignSystem();
   return { shadows, setShadows };
 }
 
 // Hook to use animations
 export function useAnimations() {
-  const { animations, setAnimations } = useDesignSystem();
+  const animations, setAnimations = useDesignSystem();
   return { animations, setAnimations };
 }
 
 // Hook to use reduced motion
 export function useReducedMotion() {
-  const { reducedMotion, setReducedMotion } = useDesignSystem();
+  const reducedMotion, setReducedMotion = useDesignSystem();
   return { reducedMotion, setReducedMotion };
 }
 
 // Hook to use high contrast
 export function useHighContrast() {
-  const { highContrast, setHighContrast } = useDesignSystem();
+  const highContrast, setHighContrast = useDesignSystem();
   return { highContrast, setHighContrast };
 }
 
 // Hook to use focus visible
 export function useFocusVisible() {
-  const { focusVisible, setFocusVisible } = useDesignSystem();
+  const focusVisible, setFocusVisible = useDesignSystem();
   return { focusVisible, setFocusVisible };
 }

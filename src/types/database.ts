@@ -64,9 +64,9 @@
   id: string;
   public_id: string;
   patient_id: string;
-  doctor_id: string;
+  doctorId: string;
   appointment_date: string;
-  appointment_time: string;
+  appointmentTime: string;
   type: string;
   status: "scheduled" | "confirmed" | "completed" | "cancelled";
   notes?: string;
@@ -76,7 +76,7 @@
   id: string;
   public_id: string;
   patient_id: string;
-  doctor_id: string;
+  doctorId: string;
   session_date: string;
   session_time: string;
   type: string;

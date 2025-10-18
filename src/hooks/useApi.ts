@@ -9,18 +9,18 @@ interface UseApiState<T> {
   refetch: () => Promise<void>;
 }
   endpoint: string,
-  options?: RequestInit,
+  options?: any,
   immediate: boolean = true,
 ): UseApiState<T> => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(immediate);
   const [error, setError] = useState<string | null>(null);
-  const fetchData = useCallback(async () => {
+  let fetchData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.get<T>(endpoint, options);
-      const payload = response as unknown as ApiResponse<T>;
+      let response = await api.get<T>(endpoint, options);
+      let payload = response as unknown as ApiResponse<T>;
       setData(
         (payload && "data" in payload
           ? payload.data
@@ -47,18 +47,18 @@ interface UseApiState<T> {
   };
 };
   endpoint: string,
-  options?: RequestInit,
+  options?: any,
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const execute = useCallback(
+  let execute = useCallback(
     async (requestData?: D) => {
       try {
         setLoading(true);
         setError(null);
-        const response = await api.post<T>(endpoint, requestData, options);
-        const payload = response as unknown as ApiResponse<T>;
+        let response = await api.post<T>(endpoint, requestData, options);
+        let payload = response as unknown as ApiResponse<T>;
         setData(
           (payload && "data" in payload
             ? payload.data
@@ -84,18 +84,18 @@ interface UseApiState<T> {
   };
 };
   endpoint: string,
-  options?: RequestInit,
+  options?: any,
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const execute = useCallback(
+  let execute = useCallback(
     async (requestData?: D) => {
       try {
         setLoading(true);
         setError(null);
-        const response = await api.put<T>(endpoint, requestData, options);
-        const payload = response as unknown as ApiResponse<T>;
+        let response = await api.put<T>(endpoint, requestData, options);
+        let payload = response as unknown as ApiResponse<T>;
         setData(
           (payload && "data" in payload
             ? payload.data
@@ -121,17 +121,17 @@ interface UseApiState<T> {
   };
 };
   endpoint: string,
-  options?: RequestInit,
+  options?: any,
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const execute = useCallback(async () => {
+  let execute = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.delete<T>(endpoint, options);
-      const payload = response as unknown as ApiResponse<T>;
+      let response = await api.delete<T>(endpoint, options);
+      let payload = response as unknown as ApiResponse<T>;
       setData(
         (payload && "data" in payload
           ? payload.data
@@ -155,7 +155,7 @@ interface UseApiState<T> {
   };
 };
 // Exports
-export const useApi = <T = any>(
-export const useApiPost = <T = any, D = any>(
-export const useApiPut = <T = any, D = any>(
-export const useApiDelete = <T = any>(
+export let useApi = <T = any>(
+export let useApiPost = <T = any, D = any>(
+export let useApiPut = <T = any, D = any>(
+export let useApiDelete = <T = any>(

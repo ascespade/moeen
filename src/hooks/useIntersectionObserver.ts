@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 // Intersection Observer hook
 
@@ -10,13 +10,13 @@ interface UseIntersectionObserverOptions {
 }
 
 export const useIntersectionObserver = (
-  options: UseIntersectionObserverOptions = {},
+  options: UseIntersectionObserverOptions = {}
 ) => {
   const {
     threshold = 0,
     root = null,
-    rootMargin = "0%",
-    freezeOnceVisible = false,
+    rootMargin = '0%',
+    freezeOnceVisible = false
   } = options;
 
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
@@ -37,7 +37,7 @@ export const useIntersectionObserver = (
     const observerParams = { threshold, root, rootMargin };
     const currentObserver = new IntersectionObserver(
       updateEntry,
-      observerParams,
+      observerParams
     );
 
     observer.current = currentObserver;

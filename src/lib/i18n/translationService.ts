@@ -41,14 +41,14 @@ class TranslationService {
       }
 
       // Fetch from API
-      const response = await fetch(`/api/translations/${language}`, {
+      const response = await fetch(`/api/translations/${language}`
         headers: {
-          'Cache-Control': 'no-cache',
-        },
+          'Cache-Control': 'no-cache'
+        }
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch translations for ${language}`);
+        throw new Error(`Failed to fetch translations for ${language}`
       }
 
       const translations = await response.json();
@@ -56,30 +56,30 @@ class TranslationService {
       // Cache the translations
       this.cache[language] = {
         ...translations,
-        timestamp: Date.now(),
+        timestamp: Date.now()
       };
 
       // Store in localStorage for offline access
       try {
         localStorage.setItem(
-          `translations_${language}`,
+          `translations_${language}`
           JSON.stringify(this.cache[language])
         );
       } catch (error) {
-        }
+      }
 
       return translations;
     } catch (error) {
       // Try to load from localStorage as fallback
       try {
-        const cached = localStorage.getItem(`translations_${language}`);
+        const cached = localStorage.getItem(`translations_${language}`
         if (cached) {
           const parsed = JSON.parse(cached);
           this.cache[language] = parsed;
           return parsed;
         }
       } catch (localError) {
-        }
+      }
 
       // Return default translations
       return this.getDefaultTranslations(language);
@@ -97,7 +97,7 @@ class TranslationService {
       }
 
       const translation = this.cache[language]?.[key];
-      
+
       if (translation && typeof translation === 'string') {
         return translation;
       }
@@ -125,11 +125,11 @@ class TranslationService {
    */
   async getMultiple(keys: string[], language: string = 'ar'): Promise<{ [key: string]: string }> {
     const translations: { [key: string]: string } = {};
-    
+
     for (const key of keys) {
       translations[key] = await this.get(key, language);
     }
-    
+
     return translations;
   }
 
@@ -139,7 +139,7 @@ class TranslationService {
   private isCacheValid(language: string): boolean {
     const cached = this.cache[language];
     if (!cached) return false;
-    
+
     return Date.now() - cached.timestamp < this.cacheExpiry;
   }
 
@@ -156,23 +156,23 @@ class TranslationService {
       this.missingKeys.push({
         language,
         key,
-        requestedAt: new Date(),
+        requestedAt: new Date()
       });
 
       // Send to API for logging
       await fetch('/api/translations/missing', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           language,
           key,
-          requestedAt: new Date().toISOString(),
-        }),
+          requestedAt: new Date().toISOString()
+        })
       });
     } catch (error) {
-      } finally {
+    } finally {
       this.isLoggingMissing = false;
     }
   }
@@ -210,7 +210,7 @@ class TranslationService {
         'admin.title': 'المدير',
         'appointment.title': 'الموعد',
         'payment.title': 'الدفع',
-        'insurance.title': 'التأمين',
+        'insurance.title': 'التأمين'
       },
       en: {
         'common.welcome': 'Welcome',
@@ -240,8 +240,8 @@ class TranslationService {
         'admin.title': 'Admin',
         'appointment.title': 'Appointment',
         'payment.title': 'Payment',
-        'insurance.title': 'Insurance',
-      },
+        'insurance.title': 'Insurance'
+      }
     };
 
     return defaultTranslations[language as keyof typeof defaultTranslations] || defaultTranslations.en;

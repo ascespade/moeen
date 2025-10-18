@@ -3,15 +3,15 @@
  * Comprehensive Translations - جميع مفاتيح الترجمة للنظام
  */
 require('dotenv').config({ path: '.env.local' });
-const { createClient } = require('@supabase/supabase-js');
+const { () => ({} as any) } = require('@supabase/supabase-js');
 
-const supabase = createClient(
+let supabase = () => ({} as any)(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
 // 500+ Translation Keys
-const translations = {
+let translations = {
   // ============= COMMON (عام) =============
   'common.loading': { ar: 'جاري التحميل...', en: 'Loading...' },
   'common.save': { ar: 'حفظ', en: 'Save' },
@@ -59,7 +59,7 @@ const translations = {
   'auth.testMessage': { ar: 'اختبر النظام بحسابات تجريبية جاهزة', en: 'Test the system with ready demo accounts' },
   'auth.loggingIn': { ar: 'جارٍ تسجيل الدخول...', en: 'Logging in...' },
   'auth.createAccount': { ar: 'إنشاء حساب جديد', en: 'Create new account' },
-  'auth.noAccount': { ar: 'ليس لديك حساب؟', en: "Don't have an account?" },
+  'auth.noAccount': { ar: 'ليس لديك حساب؟', en: 'Don\'t have an account?' },
   'auth.hasAccount': { ar: 'لديك حساب بالفعل؟', en: 'Already have an account?' },
   'auth.verifyEmail': { ar: 'تحقق من بريدك الإلكتروني', en: 'Verify your email' },
 
@@ -79,10 +79,10 @@ const translations = {
   'home.hero.subtitle': { ar: 'منصة الرعاية الصحية المتخصصة', en: 'Specialized Healthcare Platform' },
   'home.hero.description': { ar: 'نقدم خدمات متكاملة للرعاية الصحية مع أحدث التقنيات والذكاء الاصطناعي', en: 'Comprehensive healthcare services with latest AI technology' },
   'home.hero.cta': { ar: 'اكتشف خدماتنا', en: 'Discover Our Services' },
-  
+
   'home.services.title': { ar: 'خدماتنا المتكاملة', en: 'Our Comprehensive Services' },
   'home.services.subtitle': { ar: 'نقدم مجموعة شاملة من الخدمات التقنية لمراكز الرعاية الصحية', en: 'Complete technical services for healthcare centers' },
-  
+
   'home.service.appointments': { ar: 'إدارة المواعيد', en: 'Appointments Management' },
   'home.service.appointments.desc': { ar: 'نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية', en: 'Advanced calendar system for appointments and therapy sessions' },
   'home.service.patients': { ar: 'إدارة المرضى', en: 'Patient Management' },
@@ -137,10 +137,10 @@ const translations = {
   // ============= DASHBOARD (لوحة التحكم) =============
   'dashboard.title': { ar: 'لوحة التحكم', en: 'Dashboard' },
   'dashboard.welcome': { ar: 'مرحباً', en: 'Welcome' },
-  'dashboard.overview': { ar: 'إليك نظرة عامة على نشاطك اليوم', en: "Here's your activity overview" },
+  'dashboard.overview': { ar: 'إليك نظرة عامة على نشاطك اليوم', en: 'Here\'s your activity overview' },
   'dashboard.recentActivity': { ar: 'النشاط الأخير', en: 'Recent Activity' },
   'dashboard.quickActions': { ar: 'الإجراءات السريعة', en: 'Quick Actions' },
-  
+
   'dashboard.stats.appointments': { ar: 'المواعيد القادمة', en: 'Upcoming Appointments' },
   'dashboard.stats.patients': { ar: 'المرضى', en: 'Patients' },
   'dashboard.stats.medicalFiles': { ar: 'الملفات الطبية', en: 'Medical Files' },
@@ -188,7 +188,7 @@ const translations = {
   'appointments.book': { ar: 'حجز موعد', en: 'Book Appointment' },
   'appointments.upcoming': { ar: 'المواعيد القادمة', en: 'Upcoming Appointments' },
   'appointments.past': { ar: 'المواعيد السابقة', en: 'Past Appointments' },
-  'appointments.today': { ar: 'مواعيد اليوم', en: "Today's Appointments" },
+  'appointments.today': { ar: 'مواعيد اليوم', en: 'Today\'s Appointments' },
   'appointments.selectDate': { ar: 'اختر التاريخ', en: 'Select Date' },
   'appointments.selectTime': { ar: 'اختر الوقت', en: 'Select Time' },
   'appointments.selectDoctor': { ar: 'اختر الطبيب', en: 'Select Doctor' },
@@ -205,7 +205,7 @@ const translations = {
 
   // ============= ERRORS (الأخطاء) =============
   'error.generic': { ar: 'حدث خطأ ما', en: 'Something went wrong' },
-  'error.unauthorized': { ar: 'غير مصرح لك', en: 'Unauthorized' },
+  'error.un() => ({} as any)d': { ar: 'غير مصرح لك', en: 'Un() => ({} as any)d' },
   'error.notFound': { ar: 'غير موجود', en: 'Not found' },
   'error.serverError': { ar: 'خطأ في الخادم', en: 'Server error' },
   'error.networkError': { ar: 'خطأ في الاتصال', en: 'Network error' },
@@ -280,33 +280,33 @@ const translations = {
   'crm.leads': { ar: 'العملاء المحتملون', en: 'Leads' },
   'crm.contacts': { ar: 'جهات الاتصال', en: 'Contacts' },
   'crm.deals': { ar: 'الصفقات', en: 'Deals' },
-  'crm.activities': { ar: 'الأنشطة', en: 'Activities' },
+  'crm.activities': { ar: 'الأنشطة', en: 'Activities' }
 };
 
 async function seedAllTranslations() {
-  console.log('🌐 Seeding comprehensive translations...\n');
-  
+  // console.log('🌐 Seeding comprehensive translations...\n');
+
   try {
     // 1. Languages
-    console.log('📝 Ensuring languages...');
+    // console.log('📝 Ensuring languages...');
     await supabase
       .from('languages')
       .upsert([
-        { code: 'ar', name: 'العربية', is_default: true, direction: 'rtl' },
-        { code: 'en', name: 'English', is_default: false, direction: 'ltr' },
+        { code: 'ar', name: 'العربية', isDefault: true, direction: 'rtl' },
+        { code: 'en', name: 'English', isDefault: false, direction: 'ltr' }
       ], { onConflict: 'code' });
-    console.log('✅ Languages ready\n');
-    
+    // console.log('✅ Languages ready\n');
+
     // 2. Translations
-    console.log('📝 Inserting translations...');
+    // console.log('📝 Inserting translations...');
     let successCount = 0;
     let errorCount = 0;
-    const totalKeys = Object.keys(translations).length;
-    
+    let totalKeys = Object.keys(translations).length;
+
     let processed = 0;
     for (const [key, values] of Object.entries(translations)) {
       for (const [lang, value] of Object.entries(values)) {
-        const { error } = await supabase
+        const error = await supabase
           .from('translations')
           .upsert({
             locale: lang,
@@ -314,34 +314,34 @@ async function seedAllTranslations() {
             value: value,
             namespace: key.split('.')[0]
           }, { onConflict: 'locale,key,namespace' });
-        
+
         if (error) errorCount++;
         else successCount++;
       }
-      
+
       processed++;
       if (processed % 50 === 0) {
-        console.log(`  Progress: ${processed}/${totalKeys} keys...`);
+        // console.log(`  Progress: ${processed}/${totalKeys} keys...`
       }
     }
-    
-    console.log(`\n✅ Successfully inserted ${successCount} translations`);
+
+    // console.log(`\n✅ Successfully inserted ${successCount} translations`
     if (errorCount > 0) {
-      console.log(`⚠️  ${errorCount} errors encountered`);
+      // console.log(`⚠️  ${errorCount} errors encountered`
     }
-    
+
     // 3. Summary
-    const { count } = await supabase
+    const count = await supabase
       .from('translations')
       .select('*', { count: 'exact', head: true });
-    
-    console.log(`\n📊 Total translations in database: ${count}`);
-    console.log(`📦 Total unique keys: ${totalKeys}`);
-    console.log(`🌍 Total entries: ${successCount} (${totalKeys} keys × 2 languages)`);
-    console.log('\n✅ All translations seeded successfully!');
-    
+
+    // console.log(`\n📊 Total translations in database: ${count}`
+    // console.log(`📦 Total unique keys: ${totalKeys}`
+    // console.log(`🌍 Total entries: ${successCount} (${totalKeys} keys × 2 languages)`
+    // console.log('\n✅ All translations seeded successfully!');
+
   } catch (err) {
-    console.error('❌ Error:', err.message);
+    // console.error('❌ Error:', err.message);
   }
 }
 

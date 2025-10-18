@@ -1,14 +1,15 @@
+import React from "react";
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
 import RegisterPage from '@/app/(auth)/register/page';
 
 // Mock dependencies
 jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
+  useRouter: jest.fn()
 }));
 
 const mockRouter = {
-  push: jest.fn(),
+  push: jest.fn()
 };
 
 describe('RegisterPage', () => {
@@ -19,7 +20,7 @@ describe('RegisterPage', () => {
 
   it('renders registration form correctly', () => {
     render(<RegisterPage />);
-    
+
     expect(screen.getByText('إنشاء حساب جديد')).toBeInTheDocument();
     expect(screen.getByText('انضم إلى منصة الرعاية الصحية المتخصصة')).toBeInTheDocument();
     expect(screen.getByLabelText('الاسم الكامل')).toBeInTheDocument();
@@ -27,12 +28,12 @@ describe('RegisterPage', () => {
     expect(screen.getByLabelText('كلمة المرور')).toBeInTheDocument();
     expect(screen.getByLabelText('تأكيد كلمة المرور')).toBeInTheDocument();
     expect(screen.getByText('أوافق على')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /إنشاء الحساب/ })).toBeInTheDocument();
+    expect(screen.getBystring('button', { name: /إنشاء الحساب/ })).toBeInTheDocument();
   });
 
   it('handles form input changes', () => {
     render(<RegisterPage />);
-    
+
     const nameInput = screen.getByLabelText('الاسم الكامل');
     const emailInput = screen.getByLabelText('البريد الإلكتروني');
     const passwordInput = screen.getByLabelText('كلمة المرور');
@@ -52,10 +53,10 @@ describe('RegisterPage', () => {
     expect(agreeToTermsCheckbox).toBeChecked();
   });
 
-  it('validates form fields correctly', async () => {
+  it('validates form fields correctly', async() => {
     render(<RegisterPage />);
-    
-    const submitButton = screen.getByRole('button', { name: /إنشاء الحساب/ });
+
+    const submitButton = screen.getBystring('button', { name: /إنشاء الحساب/ });
     fireEvent.click(submitButton);
 
     await waitFor(() => {
@@ -66,11 +67,11 @@ describe('RegisterPage', () => {
     });
   });
 
-  it('validates email format', async () => {
+  it('validates email format', async() => {
     render(<RegisterPage />);
-    
+
     const emailInput = screen.getByLabelText('البريد الإلكتروني');
-    const submitButton = screen.getByRole('button', { name: /إنشاء الحساب/ });
+    const submitButton = screen.getBystring('button', { name: /إنشاء الحساب/ });
 
     fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
     fireEvent.click(submitButton);
@@ -80,11 +81,11 @@ describe('RegisterPage', () => {
     });
   });
 
-  it('validates password length', async () => {
+  it('validates password length', async() => {
     render(<RegisterPage />);
-    
+
     const passwordInput = screen.getByLabelText('كلمة المرور');
-    const submitButton = screen.getByRole('button', { name: /إنشاء الحساب/ });
+    const submitButton = screen.getBystring('button', { name: /إنشاء الحساب/ });
 
     fireEvent.change(passwordInput, { target: { value: '123' } });
     fireEvent.click(submitButton);
@@ -94,12 +95,12 @@ describe('RegisterPage', () => {
     });
   });
 
-  it('validates password confirmation', async () => {
+  it('validates password confirmation', async() => {
     render(<RegisterPage />);
-    
+
     const passwordInput = screen.getByLabelText('كلمة المرور');
     const confirmPasswordInput = screen.getByLabelText('تأكيد كلمة المرور');
-    const submitButton = screen.getByRole('button', { name: /إنشاء الحساب/ });
+    const submitButton = screen.getBystring('button', { name: /إنشاء الحساب/ });
 
     fireEvent.change(passwordInput, { target: { value: 'password123' } });
     fireEvent.change(confirmPasswordInput, { target: { value: 'different123' } });
@@ -110,15 +111,15 @@ describe('RegisterPage', () => {
     });
   });
 
-  it('shows success message after successful registration', async () => {
+  it('shows success message after successful registration', async() => {
     render(<RegisterPage />);
-    
+
     const nameInput = screen.getByLabelText('الاسم الكامل');
     const emailInput = screen.getByLabelText('البريد الإلكتروني');
     const passwordInput = screen.getByLabelText('كلمة المرور');
     const confirmPasswordInput = screen.getByLabelText('تأكيد كلمة المرور');
     const agreeToTermsCheckbox = screen.getByLabelText('أوافق على');
-    const submitButton = screen.getByRole('button', { name: /إنشاء الحساب/ });
+    const submitButton = screen.getBystring('button', { name: /إنشاء الحساب/ });
 
     fireEvent.change(nameInput, { target: { value: 'John Doe' } });
     fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
@@ -133,15 +134,15 @@ describe('RegisterPage', () => {
     });
   });
 
-  it('shows loading state during submission', async () => {
+  it('shows loading state during submission', async() => {
     render(<RegisterPage />);
-    
+
     const nameInput = screen.getByLabelText('الاسم الكامل');
     const emailInput = screen.getByLabelText('البريد الإلكتروني');
     const passwordInput = screen.getByLabelText('كلمة المرور');
     const confirmPasswordInput = screen.getByLabelText('تأكيد كلمة المرور');
     const agreeToTermsCheckbox = screen.getByLabelText('أوافق على');
-    const submitButton = screen.getByRole('button', { name: /إنشاء الحساب/ });
+    const submitButton = screen.getBystring('button', { name: /إنشاء الحساب/ });
 
     fireEvent.change(nameInput, { target: { value: 'John Doe' } });
     fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
@@ -156,7 +157,7 @@ describe('RegisterPage', () => {
 
   it('has correct links to terms and privacy', () => {
     render(<RegisterPage />);
-    
+
     const termsLink = screen.getByText('الشروط والأحكام');
     const privacyLink = screen.getByText('سياسة الخصوصية');
 
@@ -166,7 +167,7 @@ describe('RegisterPage', () => {
 
   it('has link to login page', () => {
     render(<RegisterPage />);
-    
+
     const loginLink = screen.getByText('تسجيل الدخول');
     expect(loginLink.closest('a')).toHaveAttribute('href', '/login');
   });

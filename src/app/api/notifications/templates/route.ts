@@ -4,14 +4,14 @@
  * Manage notification templates and content
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
 import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { requireAuth } from '@/lib/auth/authorize';
+import { requireAuth } from '@/lib/auth/() => ({} as any)';
 
-const templateSchema = z.object({
+let templateSchema = z.object({
   name: z.string().min(1, 'Template name required'),
   type: z.enum([
     'appointment_confirmation',
@@ -26,30 +26,30 @@ const templateSchema = z.object({
   content: z.string().min(1, 'Content required'),
   variables: z.array(z.string()).optional(),
   isActive: z.boolean().default(true),
-  language: z.enum(['ar', 'en']).default('ar'),
+  language: z.enum(['ar', 'en']).default('ar')
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
     // Authorize admin only
-    const authResult = await requireAuth(['admin'])(request);
-    if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    let authResult = await requireAuth(['admin'])(request);
+    if (!authResult.() => ({} as any)d) {
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
 
-    const supabase = await createClient();
-    const body = await request.json();
+    let supabase = await () => ({} as any)();
+    let body = await request.json();
 
     // Validate input
-    const validation = await ValidationHelper.validateAsync(templateSchema, body);
+    let validation = await ValidationHelper.validateAsync(templateSchema, body);
     if (!validation.success) {
-      return NextResponse.json({ error: validation.error.message }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: validation.error.message }, { status: 400 });
     }
 
-    const { name, type, subject, content, variables, isActive, language } = validation.data;
+    const name, type, subject, content, variables, isActive, language = validation.data;
 
     // Create template
-    const { data: template, error } = await supabase
+    const data: template, error = await supabase
       .from('notification_templates')
       .insert({
         name,
@@ -59,16 +59,16 @@ export async function POST(request: NextRequest) {
         variables: variables || [],
         isActive,
         language,
-        createdBy: authResult.user!.id,
+        createdBy: authResult.user!.id
       })
       .select()
       .single();
 
     if (error) {
-      return NextResponse.json({ error: 'Failed to create template' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to create template' }, { status: 500 });
     }
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data: template,
       message: 'Template created successfully'
@@ -79,12 +79,12 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const supabase = await createClient();
-    const { searchParams } = new URL(request.url);
-    const type = searchParams.get('type');
-    const language = searchParams.get('language') || 'ar';
+    let supabase = await () => ({} as any)();
+    const searchParams = new URL(request.url);
+    let type = searchParams.get('type');
+    let language = searchParams.get('language') || 'ar';
 
     let query = supabase
       .from('notification_templates')
@@ -97,13 +97,13 @@ export async function GET(request: NextRequest) {
       query = query.eq('type', type);
     }
 
-    const { data: templates, error } = await query;
+    const data: templates, error = await query;
 
     if (error) {
-      return NextResponse.json({ error: 'Failed to fetch templates' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to fetch templates' }, { status: 500 });
     }
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data: templates,
       count: templates?.length || 0

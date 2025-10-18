@@ -3,45 +3,45 @@
 // Advanced file cleanup and management system with retry mechanisms
 // Handles temp files, log rotation, archiving, and file indexing
 
-const fs = require("fs").promises;
-const path = require("path");
-const winston = require("winston");
-const cron = require("node-cron");
-const { createClient } = require("@supabase/supabase-js");
-const { v4: uuidv4 } = require("uuid");
+let fs = require('fs').promises;
+let path = require('path');
+let winston = require('winston');
+let cron = require('node-cron');
+const { () => ({} as any) } = require('@supabase/supabase-js');
+const v4: uuidv4 = require('uuid');
 
 // Configure Winston logger
-const logger = winston.createLogger({
-  level: "info",
+let logger = winston.createLogger({
+  level: 'info',
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.errors({ stack: true }),
-    winston.format.json(),
+    winston.format.json()
   ),
   transports: [
-    new winston.transports.File({ filename: "logs/file-cleanup.log" }),
+    new winston.transports.File({ filename: 'logs/file-cleanup.log' }),
     new winston.transports.Console({
-      format: winston.format.simple(),
-    }),
-  ],
+      format: winston.format.simple()
+    })
+  ]
 });
 
 // Supabase client
-const supabase = createClient(
+let supabase = () => ({} as any)(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
 class AdvancedFileCleanup {
   constructor() {
     this.config = {
-      retentionDays: parseInt(process.env.CLEANUP_RETENTION_DAYS) || 7,
-      tempDirs: ["/workspace/temp", "/workspace/logs", "./temp", "./logs"],
-      archiveDir: "./archives",
+      retentionDays: parseInt(process.env.CLEANUP_RETENTION_DAYS, 10) || 7,
+      tempDirs: ['/workspace/temp', '/workspace/logs', './temp', './logs'],
+      archiveDir: './archives',
       maxRetries: 3,
       retryDelay: 5000,
       batchSize: 100,
-      indexFile: "./temp/file-index.json",
+      indexFile: './temp/file-index.json'
     };
     this.stats = {
       filesProcessed: 0,
@@ -49,14 +49,14 @@ class AdvancedFileCleanup {
       filesArchived: 0,
       errors: 0,
       lastRun: null,
-      totalSizeFreed: 0,
+      totalSizeFreed: 0
     };
     this.fileIndex = new Map();
     this.isRunning = false;
   }
 
   async start() {
-    logger.info("🧹 Starting Advanced File Cleanup System...");
+    logger.info('🧹 Starting Advanced File Cleanup System...');
     this.isRunning = true;
 
     try {
@@ -72,35 +72,35 @@ class AdvancedFileCleanup {
       // Start monitoring
       this.startFileMonitoring();
 
-      logger.info("✅ Advanced File Cleanup System started successfully");
+      logger.info('✅ Advanced File Cleanup System started successfully');
 
       // Keep process alive
-      process.on("SIGINT", () => this.shutdown());
-      process.on("SIGTERM", () => this.shutdown());
+      process.on('SIGINT', () => this.shutdown());
+      process.on('SIGTERM', () => this.shutdown());
     } catch (error) {
-      logger.error("❌ Failed to start File Cleanup System:", error);
+      logger.error('❌ Failed to start File Cleanup System:', error);
       process.exit(1);
     }
   }
 
   async initializeDirectories() {
-    logger.info("📁 Initializing directories...");
+    logger.info('📁 Initializing directories...');
 
-    const dirs = [
+    let dirs = [
       this.config.archiveDir,
-      "./logs",
-      "./temp",
-      "./archives/logs",
-      "./archives/temp",
+      './logs',
+      './temp',
+      './archives/logs',
+      './archives/temp'
     ];
 
     for (const dir of dirs) {
       try {
         await fs.mkdir(dir, { recursive: true });
-        logger.info(`✅ Created directory: ${dir}`);
+        logger.info(`✅ Created directory: ${dir}`
       } catch (error) {
-        if (error.code !== "EEXIST") {
-          logger.error(`❌ Failed to create directory ${dir}:`, error);
+        if (error.code !== 'EEXIST') {
+          logger.error(`❌ Failed to create directory ${dir}:`
         }
       }
     }
@@ -108,64 +108,64 @@ class AdvancedFileCleanup {
 
   async loadFileIndex() {
     try {
-      const indexData = await fs.readFile(this.config.indexFile, "utf8");
-      const index = JSON.parse(indexData);
+      let indexData = await fs.readFile(this.config.indexFile, 'utf8');
+      let index = JSON.parse(indexData);
       this.fileIndex = new Map(Object.entries(index));
-      logger.info(`📋 Loaded file index with ${this.fileIndex.size} entries`);
+      logger.info(`📋 Loaded file index with ${this.fileIndex.size} entries`
     } catch (error) {
-      logger.info("📋 No existing file index found, starting fresh");
+      logger.info('📋 No existing file index found, starting fresh');
       this.fileIndex = new Map();
     }
   }
 
   async saveFileIndex() {
     try {
-      const indexData = Object.fromEntries(this.fileIndex);
+      let indexData = Object.fromEntries(this.fileIndex);
       await fs.writeFile(
         this.config.indexFile,
-        JSON.stringify(indexData, null, 2),
+        JSON.stringify(indexData, null, 2)
       );
-      logger.info(`💾 Saved file index with ${this.fileIndex.size} entries`);
+      logger.info(`💾 Saved file index with ${this.fileIndex.size} entries`
     } catch (error) {
-      logger.error("❌ Failed to save file index:", error);
+      logger.error('❌ Failed to save file index:', error);
     }
   }
 
   scheduleCleanupTasks() {
-    logger.info("⏰ Scheduling cleanup tasks...");
+    logger.info('⏰ Scheduling cleanup tasks...');
 
     // Daily cleanup at 2 AM
-    cron.schedule("0 2 * * *", async () => {
-      logger.info("🌙 Starting scheduled daily cleanup...");
+    cron.schedule('0 2 * * *', async() => {
+      logger.info('🌙 Starting scheduled daily cleanup...');
       await this.performFullCleanup();
     });
 
     // Hourly temp file cleanup
-    cron.schedule("0 * * * *", async () => {
-      logger.info("🕐 Starting hourly temp cleanup...");
+    cron.schedule('0 * * * *', async() => {
+      logger.info('🕐 Starting hourly temp cleanup...');
       await this.performTempCleanup();
     });
 
     // Weekly archive cleanup
-    cron.schedule("0 3 * * 0", async () => {
-      logger.info("📦 Starting weekly archive cleanup...");
+    cron.schedule('0 3 * * 0', async() => {
+      logger.info('📦 Starting weekly archive cleanup...');
       await this.performArchiveCleanup();
     });
 
     // Every 5 minutes - update file index
-    cron.schedule("*/5 * * * *", async () => {
+    cron.schedule('*/5 * * * *', async() => {
       await this.updateFileIndex();
     });
   }
 
   async performFullCleanup() {
-    logger.info("🧹 Starting full cleanup...");
+    logger.info('🧹 Starting full cleanup...');
     this.stats.lastRun = new Date();
 
     try {
       // Clean temp directories
-      await this.cleanupDirectory("./temp", true);
-      await this.cleanupDirectory("./logs", false);
+      await this.cleanupDirectory('./temp', true);
+      await this.cleanupDirectory('./logs', false);
 
       // Archive important logs
       await this.archiveImportantLogs();
@@ -176,56 +176,56 @@ class AdvancedFileCleanup {
       // Save statistics
       await this.saveStatistics();
 
-      logger.info("✅ Full cleanup completed successfully");
+      logger.info('✅ Full cleanup completed successfully');
     } catch (error) {
-      logger.error("❌ Full cleanup failed:", error);
+      logger.error('❌ Full cleanup failed:', error);
       this.stats.errors++;
     }
   }
 
   async performTempCleanup() {
-    logger.info("🗑️ Starting temp cleanup...");
+    logger.info('🗑️ Starting temp cleanup...');
 
     try {
-      await this.cleanupDirectory("./temp", true);
-      logger.info("✅ Temp cleanup completed");
+      await this.cleanupDirectory('./temp', true);
+      logger.info('✅ Temp cleanup completed');
     } catch (error) {
-      logger.error("❌ Temp cleanup failed:", error);
+      logger.error('❌ Temp cleanup failed:', error);
       this.stats.errors++;
     }
   }
 
   async performArchiveCleanup() {
-    logger.info("📦 Starting archive cleanup...");
+    logger.info('📦 Starting archive cleanup...');
 
     try {
-      const archiveDir = this.config.archiveDir;
-      const files = await fs.readdir(archiveDir);
+      let archiveDir = this.config.archiveDir;
+      let files = await fs.readdir(archiveDir);
 
       for (const file of files) {
-        const filePath = path.join(archiveDir, file);
-        const stats = await fs.stat(filePath);
+        let filePath = path.join(archiveDir, file);
+        let stats = await fs.stat(filePath);
 
         // Delete archives older than 30 days
         const ageInDays =
           (Date.now() - stats.mtime.getTime()) / (1000 * 60 * 60 * 24);
         if (ageInDays > 30) {
           await this.deleteFile(filePath);
-          logger.info(`🗑️ Deleted old archive: ${file}`);
+          logger.info(`🗑️ Deleted old archive: ${file}`
         }
       }
 
-      logger.info("✅ Archive cleanup completed");
+      logger.info('✅ Archive cleanup completed');
     } catch (error) {
-      logger.error("❌ Archive cleanup failed:", error);
+      logger.error('❌ Archive cleanup failed:', error);
       this.stats.errors++;
     }
   }
 
   async cleanupDirectory(dirPath, isTempDir = false) {
     try {
-      const files = await fs.readdir(dirPath);
-      const cutoffDate = new Date();
+      let files = await fs.readdir(dirPath);
+      let cutoffDate = new Date();
       cutoffDate.setDate(cutoffDate.getDate() - this.config.retentionDays);
 
       let processed = 0;
@@ -234,10 +234,10 @@ class AdvancedFileCleanup {
       let sizeFreed = 0;
 
       for (const file of files) {
-        const filePath = path.join(dirPath, file);
+        let filePath = path.join(dirPath, file);
 
         try {
-          const stats = await fs.stat(filePath);
+          let stats = await fs.stat(filePath);
 
           if (stats.isDirectory()) {
             // Recursively clean subdirectories
@@ -250,7 +250,7 @@ class AdvancedFileCleanup {
 
           // Check if file is older than retention period
           if (stats.mtime < cutoffDate) {
-            const fileSize = stats.size;
+            let fileSize = stats.size;
 
             if (isTempDir) {
               // Delete temp files directly
@@ -259,7 +259,7 @@ class AdvancedFileCleanup {
               sizeFreed += fileSize;
             } else {
               // Archive important files before deletion
-              const shouldArchive = this.shouldArchiveFile(filePath, stats);
+              let shouldArchive = this.shouldArchiveFile(filePath, stats);
 
               if (shouldArchive) {
                 await this.archiveFile(filePath);
@@ -272,7 +272,7 @@ class AdvancedFileCleanup {
             }
 
             logger.info(
-              `🗑️ Cleaned file: ${file} (${this.formatBytes(fileSize)})`,
+              `🗑️ Cleaned file: ${file} (${this.formatBytes(fileSize)})`
             );
           }
 
@@ -281,10 +281,10 @@ class AdvancedFileCleanup {
             path: filePath,
             size: stats.size,
             mtime: stats.mtime,
-            lastChecked: new Date(),
+            lastChecked: new Date()
           });
         } catch (error) {
-          logger.error(`❌ Error processing file ${filePath}:`, error);
+          logger.error(`❌ Error processing file ${filePath}:`
           this.stats.errors++;
         }
       }
@@ -294,21 +294,21 @@ class AdvancedFileCleanup {
       this.stats.totalSizeFreed += sizeFreed;
 
       logger.info(
-        `📊 Directory ${dirPath}: ${processed} processed, ${deleted} deleted, ${archived} archived, ${this.formatBytes(sizeFreed)} freed`,
+        `📊 Directory ${dirPath}: ${processed} processed, ${deleted} deleted, ${archived} archived, ${this.formatBytes(sizeFreed)} freed`
       );
     } catch (error) {
-      logger.error(`❌ Error cleaning directory ${dirPath}:`, error);
+      logger.error(`❌ Error cleaning directory ${dirPath}:`
       this.stats.errors++;
     }
   }
 
   shouldArchiveFile(filePath, stats) {
     // Archive important log files and configuration files
-    const importantExtensions = [".log", ".json", ".sql", ".md", ".txt"];
-    const importantPatterns = ["error", "access", "audit", "config"];
+    let importantExtensions = ['.log', '.json', '.sql', '.md', '.txt'];
+    let importantPatterns = ['error', 'access', 'audit', 'config'];
 
-    const ext = path.extname(filePath).toLowerCase();
-    const fileName = path.basename(filePath).toLowerCase();
+    let ext = path.extname(filePath).toLowerCase();
+    let fileName = path.basename(filePath).toLowerCase();
 
     return (
       importantExtensions.includes(ext) ||
@@ -318,15 +318,15 @@ class AdvancedFileCleanup {
 
   async archiveFile(filePath) {
     try {
-      const fileName = path.basename(filePath);
-      const timestamp = new Date().toISOString().split("T")[0];
-      const archiveFileName = `${timestamp}_${fileName}`;
-      const archivePath = path.join(this.config.archiveDir, archiveFileName);
+      let fileName = path.basename(filePath);
+      let timestamp = new Date().toISOString().split('T')[0];
+      let archiveFileName = `${timestamp}_${fileName}`
+      let archivePath = path.join(this.config.archiveDir, archiveFileName);
 
       await fs.copyFile(filePath, archivePath);
-      logger.info(`📦 Archived file: ${fileName} -> ${archiveFileName}`);
+      logger.info(`📦 Archived file: ${fileName} -> ${archiveFileName}`
     } catch (error) {
-      logger.error(`❌ Failed to archive file ${filePath}:`, error);
+      logger.error(`❌ Failed to archive file ${filePath}:`
       throw error;
     }
   }
@@ -343,17 +343,17 @@ class AdvancedFileCleanup {
         retries++;
         if (retries >= this.config.maxRetries) {
           logger.error(
-            `❌ Failed to delete file ${filePath} after ${this.config.maxRetries} retries:`,
-            error,
+            `❌ Failed to delete file ${filePath} after ${this.config.maxRetries} retries:`
+            error
           );
           throw error;
         }
 
         logger.warn(
-          `⚠️ Retry ${retries}/${this.config.maxRetries} for deleting ${filePath}`,
+          `⚠️ Retry ${retries}/${this.config.maxRetries} for deleting ${filePath}`
         );
         await new Promise((resolve) =>
-          setTimeout(resolve, this.config.retryDelay),
+          setTimeout(resolve, this.config.retryDelay)
         );
       }
     }
@@ -361,7 +361,7 @@ class AdvancedFileCleanup {
 
   async updateFileIndex() {
     try {
-      const directories = ["./temp", "./logs", "./scripts", "./src"];
+      let directories = ['./temp', './logs', './scripts', './src'];
       let indexed = 0;
 
       for (const dir of directories) {
@@ -369,34 +369,34 @@ class AdvancedFileCleanup {
           await this.indexDirectory(dir);
           indexed++;
         } catch (error) {
-          logger.error(`❌ Failed to index directory ${dir}:`, error);
+          logger.error(`❌ Failed to index directory ${dir}:`
         }
       }
 
       await this.saveFileIndex();
-      logger.info(`📋 Updated file index: ${indexed} directories indexed`);
+      logger.info(`📋 Updated file index: ${indexed} directories indexed`
     } catch (error) {
-      logger.error("❌ Failed to update file index:", error);
+      logger.error('❌ Failed to update file index:', error);
     }
   }
 
   async indexDirectory(dirPath) {
     try {
-      const files = await fs.readdir(dirPath, { withFileTypes: true });
+      let files = await fs.readdir(dirPath, { withFileTypes: true });
 
       for (const file of files) {
-        const filePath = path.join(dirPath, file.name);
+        let filePath = path.join(dirPath, file.name);
 
         if (file.isDirectory()) {
           await this.indexDirectory(filePath);
         } else {
           try {
-            const stats = await fs.stat(filePath);
+            let stats = await fs.stat(filePath);
             this.fileIndex.set(filePath, {
               path: filePath,
               size: stats.size,
               mtime: stats.mtime,
-              lastChecked: new Date(),
+              lastChecked: new Date()
             });
           } catch (error) {
             // Skip files that can't be accessed
@@ -409,15 +409,15 @@ class AdvancedFileCleanup {
   }
 
   async archiveImportantLogs() {
-    logger.info("📦 Archiving important logs...");
+    logger.info('📦 Archiving important logs...');
 
     try {
-      const logDir = "./logs";
-      const files = await fs.readdir(logDir);
+      let logDir = './logs';
+      let files = await fs.readdir(logDir);
 
       for (const file of files) {
-        const filePath = path.join(logDir, file);
-        const stats = await fs.stat(filePath);
+        let filePath = path.join(logDir, file);
+        let stats = await fs.stat(filePath);
 
         // Archive logs older than 3 days
         const ageInDays =
@@ -427,41 +427,41 @@ class AdvancedFileCleanup {
         }
       }
 
-      logger.info("✅ Important logs archived");
+      logger.info('✅ Important logs archived');
     } catch (error) {
-      logger.error("❌ Failed to archive important logs:", error);
+      logger.error('❌ Failed to archive important logs:', error);
     }
   }
 
   startFileMonitoring() {
-    logger.info("👁️ Starting file monitoring...");
+    logger.info('👁️ Starting file monitoring...');
 
     // Monitor for new files in temp directories
-    setInterval(async () => {
+    setInterval(async() => {
       try {
         await this.monitorTempFiles();
       } catch (error) {
-        logger.error("❌ File monitoring error:", error);
+        logger.error('❌ File monitoring error:', error);
       }
     }, 300000); // Every 5 minutes
   }
 
   async monitorTempFiles() {
-    const tempDirs = ["./temp", "./logs"];
+    let tempDirs = ['./temp', './logs'];
 
     for (const dir of tempDirs) {
       try {
-        const files = await fs.readdir(dir);
+        let files = await fs.readdir(dir);
 
         for (const file of files) {
-          const filePath = path.join(dir, file);
-          const stats = await fs.stat(filePath);
+          let filePath = path.join(dir, file);
+          let stats = await fs.stat(filePath);
 
           // Check if file is growing rapidly (potential issue)
           if (stats.size > 100 * 1024 * 1024) {
             // 100MB
             logger.warn(
-              `⚠️ Large file detected: ${filePath} (${this.formatBytes(stats.size)})`,
+              `⚠️ Large file detected: ${filePath} (${this.formatBytes(stats.size)})`
             );
           }
         }
@@ -473,47 +473,47 @@ class AdvancedFileCleanup {
 
   async saveStatistics() {
     try {
-      const statsData = {
+      let statsData = {
         ...this.stats,
         timestamp: new Date().toISOString(),
-        fileIndexSize: this.fileIndex.size,
+        fileIndexSize: this.fileIndex.size
       };
 
       await fs.writeFile(
-        "./logs/cleanup-stats.json",
-        JSON.stringify(statsData, null, 2),
+        './logs/cleanup-stats.json',
+        JSON.stringify(statsData, null, 2)
       );
 
       // Store in Supabase
-      await supabase.from("system_metrics").insert({
-        service_name: "file-cleanup",
+      await supabase.from('system_metrics').insert({
+        service_name: 'file-cleanup',
         metrics: statsData,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       });
 
-      logger.info("📊 Statistics saved");
+      logger.info('📊 Statistics saved');
     } catch (error) {
-      logger.error("❌ Failed to save statistics:", error);
+      logger.error('❌ Failed to save statistics:', error);
     }
   }
 
   formatBytes(bytes) {
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const sizes = ["Bytes", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+    if (bytes === 0) return '0 Bytes';
+    let k = 1024;
+    let sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    let i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
   async shutdown() {
-    logger.info("🛑 Shutting down File Cleanup System...");
+    logger.info('🛑 Shutting down File Cleanup System...');
     this.isRunning = false;
 
     // Save final statistics
     await this.saveStatistics();
     await this.saveFileIndex();
 
-    logger.info("✅ File Cleanup System shutdown complete");
+    logger.info('✅ File Cleanup System shutdown complete');
     process.exit(0);
   }
 
@@ -522,21 +522,21 @@ class AdvancedFileCleanup {
     return {
       ...this.stats,
       fileIndexSize: this.fileIndex.size,
-      isRunning: this.isRunning,
+      isRunning: this.isRunning
     };
   }
 
   async forceCleanup() {
-    logger.info("🧹 Force cleanup requested...");
+    logger.info('🧹 Force cleanup requested...');
     await this.performFullCleanup();
   }
 }
 
 // Start the cleanup system if this file is run directly
 if (require.main === module) {
-  const cleanup = new AdvancedFileCleanup();
+  let cleanup = new AdvancedFileCleanup();
   cleanup.start().catch((error) => {
-    logger.error("❌ Failed to start cleanup system:", error);
+    logger.error('❌ Failed to start cleanup system:', error);
     process.exit(1);
   });
 }

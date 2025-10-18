@@ -1,4 +1,4 @@
-import { Pool } from "pg";
+import { Pool } from 'pg';
 
 // Database Integration System
 
@@ -25,7 +25,7 @@ export class DatabaseManager {
       ssl: config.ssl,
       max: 20,
       idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 2000,
+      connectionTimeoutMillis: 2000
     });
 
     this.initializeTables();
@@ -46,7 +46,7 @@ export class DatabaseManager {
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-      `);
+      `
 
       // Create doctors table
       await this.pool.query(`
@@ -58,29 +58,29 @@ export class DatabaseManager {
           email VARCHAR(255),
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-      `);
+      `
 
       // Create appointments table
       await this.pool.query(`
         CREATE TABLE IF NOT EXISTS appointments (
           id SERIAL PRIMARY KEY,
           patient_id INTEGER REFERENCES patients(id),
-          doctor_id INTEGER REFERENCES doctors(id),
+          doctorId INTEGER REFERENCES doctors(id),
           appointment_date DATE NOT NULL,
-          appointment_time TIME NOT NULL,
+          appointmentTime TIME NOT NULL,
           type VARCHAR(50) DEFAULT 'treatment',
           status VARCHAR(50) DEFAULT 'scheduled',
           notes TEXT,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-      `);
+      `
 
       // Create sessions table
       await this.pool.query(`
         CREATE TABLE IF NOT EXISTS sessions (
           id SERIAL PRIMARY KEY,
           patient_id INTEGER REFERENCES patients(id),
-          doctor_id INTEGER REFERENCES doctors(id),
+          doctorId INTEGER REFERENCES doctors(id),
           session_date DATE NOT NULL,
           session_time TIME NOT NULL,
           type VARCHAR(50) NOT NULL,
@@ -89,11 +89,11 @@ export class DatabaseManager {
           completed BOOLEAN DEFAULT FALSE,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-      `);
+      `
 
-      // Create family_members table
+      // Create familyMembers table
       await this.pool.query(`
-        CREATE TABLE IF NOT EXISTS family_members (
+        CREATE TABLE IF NOT EXISTS familyMembers (
           id SERIAL PRIMARY KEY,
           patient_id INTEGER REFERENCES patients(id),
           name VARCHAR(255) NOT NULL,
@@ -103,7 +103,7 @@ export class DatabaseManager {
           notifications_enabled BOOLEAN DEFAULT TRUE,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-      `);
+      `
 
       // Create conversations table
       await this.pool.query(`
@@ -118,7 +118,7 @@ export class DatabaseManager {
           crisis_level VARCHAR(50) DEFAULT 'normal',
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-      `);
+      `
 
       // Create message_templates table
       await this.pool.query(`
@@ -131,10 +131,10 @@ export class DatabaseManager {
           approved BOOLEAN DEFAULT FALSE,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-      `);
+      `
 
       this.isConnected = true;
-      } catch (error) {
+    } catch (error) {
       this.isConnected = false;
     }
   }
@@ -152,7 +152,7 @@ export class DatabaseManager {
       INSERT INTO patients (name, age, phone, email, emergency_contact, medical_history)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING id, name, age, phone, email, emergency_contact, medical_history, created_at
-    `;
+    `
 
     const values = [
       patientData.name,
@@ -160,7 +160,7 @@ export class DatabaseManager {
       patientData.phone,
       patientData.email,
       patientData.emergencyContact,
-      patientData.medicalHistory || [],
+      patientData.medicalHistory || []
     ];
 
     const result = await this.pool.query(query, values);
@@ -168,13 +168,13 @@ export class DatabaseManager {
   }
 
   async getPatient(patientId: number) {
-    const query = "SELECT * FROM patients WHERE id = $1";
+    const query = 'SELECT * FROM patients WHERE id = $1';
     const result = await this.pool.query(query, [patientId]);
     return result.rows[0];
   }
 
   async getPatientByPhone(phone: string) {
-    const query = "SELECT * FROM patients WHERE phone = $1";
+    const query = 'SELECT * FROM patients WHERE phone = $1';
     const result = await this.pool.query(query, [phone]);
     return result.rows[0];
   }
@@ -183,15 +183,15 @@ export class DatabaseManager {
     const fields = Object.keys(updates);
     const values = Object.values(updates);
     const setClause = fields
-      .map((field, index) => `${field} = $${index + 2}`)
-      .join(", ");
+      .map((field, index) => `${field} = $${index + 2}`
+      .join(', ');
 
     const query = `
       UPDATE patients 
       SET ${setClause}, updated_at = CURRENT_TIMESTAMP 
       WHERE id = $1 
       RETURNING *
-    `;
+    `
 
     const result = await this.pool.query(query, [patientId, ...values]);
     return result.rows[0];
@@ -207,18 +207,18 @@ export class DatabaseManager {
     notes?: string;
   }) {
     const query = `
-      INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time, type, notes)
+      INSERT INTO appointments (patient_id, doctorId, appointment_date, appointmentTime, type, notes)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *
-    `;
+    `
 
     const values = [
       appointmentData.patientId,
       appointmentData.doctorId,
       appointmentData.appointmentDate,
       appointmentData.appointmentTime,
-      appointmentData.type || "treatment",
-      appointmentData.notes,
+      appointmentData.type || 'treatment',
+      appointmentData.notes
     ];
 
     const result = await this.pool.query(query, values);
@@ -227,34 +227,34 @@ export class DatabaseManager {
 
   async getAppointments(patientId?: number, doctorId?: number, date?: string) {
     let query =
-      "SELECT a.*, p.name as patient_name, d.name as doctor_name FROM appointments a JOIN patients p ON a.patient_id = p.id JOIN doctors d ON a.doctor_id = d.id";
+      'SELECT a.*, p.name as patient_name, d.name as doctor_name FROM appointments a JOIN patients p ON a.patient_id = p.id JOIN doctors d ON a.doctorId = d.id';
     const conditions = [];
     const values = [];
     let paramCount = 1;
 
     if (patientId) {
-      conditions.push(`a.patient_id = $${paramCount}`);
+      conditions.push(`a.patient_id = $${paramCount}`
       values.push(patientId);
       paramCount++;
     }
 
     if (doctorId) {
-      conditions.push(`a.doctor_id = $${paramCount}`);
+      conditions.push(`a.doctorId = $${paramCount}`
       values.push(doctorId);
       paramCount++;
     }
 
     if (date) {
-      conditions.push(`a.appointment_date = $${paramCount}`);
+      conditions.push(`a.appointment_date = $${paramCount}`
       values.push(date);
       paramCount++;
     }
 
     if (conditions.length > 0) {
-      query += " WHERE " + conditions.join(" AND ");
+      query += ' WHERE ' + conditions.join(' AND ');
     }
 
-    query += " ORDER BY a.appointment_date, a.appointment_time";
+    query += ' ORDER BY a.appointment_date, a.appointmentTime';
 
     const result = await this.pool.query(query, values);
     return result.rows;
@@ -271,10 +271,10 @@ export class DatabaseManager {
     exercises?: any;
   }) {
     const query = `
-      INSERT INTO sessions (patient_id, doctor_id, session_date, session_time, type, notes, exercises)
+      INSERT INTO sessions (patient_id, doctorId, session_date, session_time, type, notes, exercises)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *
-    `;
+    `
 
     const values = [
       sessionData.patientId,
@@ -283,7 +283,7 @@ export class DatabaseManager {
       sessionData.sessionTime,
       sessionData.type,
       sessionData.notes,
-      JSON.stringify(sessionData.exercises || []),
+      JSON.stringify(sessionData.exercises || [])
     ];
 
     const result = await this.pool.query(query, values);
@@ -304,7 +304,7 @@ export class DatabaseManager {
       INSERT INTO conversations (patient_id, session_id, message_type, content, response, sentiment, crisis_level)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *
-    `;
+    `
 
     const values = [
       conversationData.patientId,
@@ -312,8 +312,8 @@ export class DatabaseManager {
       conversationData.messageType,
       conversationData.content,
       conversationData.response,
-      conversationData.sentiment || "neutral",
-      conversationData.crisisLevel || "normal",
+      conversationData.sentiment || 'neutral',
+      conversationData.crisisLevel || 'normal'
     ];
 
     const result = await this.pool.query(query, values);
@@ -328,7 +328,7 @@ export class DatabaseManager {
         COUNT(CASE WHEN created_at >= CURRENT_DATE - INTERVAL '30 days' THEN 1 END) as new_patients_30_days,
         COUNT(CASE WHEN created_at >= CURRENT_DATE - INTERVAL '7 days' THEN 1 END) as new_patients_7_days
       FROM patients
-    `;
+    `
 
     const result = await this.pool.query(query);
     return result.rows[0];
@@ -341,7 +341,7 @@ export class DatabaseManager {
         COUNT(CASE WHEN crisis_level = 'crisis' THEN 1 END) as crisis_conversations,
         COUNT(CASE WHEN created_at >= CURRENT_DATE - INTERVAL '7 days' THEN 1 END) as conversations_7_days
       FROM conversations
-    `;
+    `
 
     const result = await this.pool.query(query);
     return result.rows[0];
@@ -350,11 +350,11 @@ export class DatabaseManager {
   // Health Check
   async healthCheck() {
     try {
-      await this.pool.query("SELECT 1");
-      return { status: "healthy", connected: this.isConnected };
+      await this.pool.query('SELECT 1');
+      return { status: 'healthy', connected: this.isConnected };
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
-      return { status: "unhealthy", error: message };
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      return { status: 'unhealthy', error: message };
     }
   }
 

@@ -1,15 +1,16 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
 
 
-import Image from "next/image";
+import Image from 'next/image';
 
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<
-    "general" | "api" | "integrations" | "notifications" | "templates"
-  >("general");
+    'general' | 'api' | 'integrations' | 'notifications' | 'templates'
+  >('general');
 
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
@@ -38,20 +39,20 @@ export default function SettingsPage() {
           <div className="lg:col-span-1">
             <nav className="space-y-1">
               {[
-                { id: "general", label: "عام", icon: "⚙️" },
-                { id: "api", label: "مفاتيح API", icon: "🔑" },
-                { id: "integrations", label: "التكاملات", icon: "��" },
-                { id: "notifications", label: "الإشعارات", icon: "🔔" },
-                { id: "templates", label: "القوالب", icon: "📝" },
+                { id: 'general', label: 'عام', icon: '⚙️' },
+                { id: 'api', label: 'مفاتيح API', icon: '🔑' },
+                { id: 'integrations', label: 'التكاملات', icon: '��' },
+                { id: 'notifications', label: 'الإشعارات', icon: '🔔' },
+                { id: 'templates', label: 'القوالب', icon: '📝' }
               ].map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-right transition-colors ${
+                  className={`
                     activeTab === tab.id
-                      ? "bg-[var(--brand-primary)] text-white"
-                      : "text-gray-700 hover:bg-surface dark:text-gray-300 dark:hover:bg-gray-800"
-                  }`}
+                      ? 'bg-[var(--brand-primary)] text-white'
+                      : 'text-gray-700 hover:bg-surface dark:text-gray-300 dark:hover:bg-gray-800'
+                  }`
                 >
                   <span className="text-lg">{tab.icon}</span>
                   <span className="font-medium">{tab.label}</span>
@@ -62,7 +63,7 @@ export default function SettingsPage() {
 
           <div className="lg:col-span-3">
             <div className="card p-6">
-              {activeTab === "general" && (
+              {activeTab === 'general' && (
                 <div>
                   <h2 className="mb-6 text-xl font-semibold">
                     الإعدادات العامة
@@ -131,7 +132,7 @@ export default function SettingsPage() {
                 </div>
               )}
 
-              {activeTab === "api" && (
+              {activeTab === 'api' && (
                 <div>
                   <h2 className="mb-6 text-xl font-semibold">مفاتيح API</h2>
                   <div className="space-y-6">
@@ -184,31 +185,31 @@ export default function SettingsPage() {
                 </div>
               )}
 
-              {activeTab === "integrations" && (
+              {activeTab === 'integrations' && (
                 <div>
                   <h2 className="mb-6 text-xl font-semibold">التكاملات</h2>
                   <div className="space-y-4">
                     {[
                       {
-                        name: "واتساب بزنس",
-                        status: "connected",
-                        description: "متصل",
+                        name: 'واتساب بزنس',
+                        status: 'connected',
+                        description: 'متصل'
                       },
                       {
-                        name: "تيليجرام",
-                        status: "disconnected",
-                        description: "غير متصل",
+                        name: 'تيليجرام',
+                        status: 'disconnected',
+                        description: 'غير متصل'
                       },
                       {
-                        name: "فيسبوك ماسنجر",
-                        status: "error",
-                        description: "خطأ في الاتصال",
+                        name: 'فيسبوك ماسنجر',
+                        status: 'error',
+                        description: 'خطأ في الاتصال'
                       },
                       {
-                        name: "الموقع الإلكتروني",
-                        status: "connected",
-                        description: "متصل",
-                      },
+                        name: 'الموقع الإلكتروني',
+                        status: 'connected',
+                        description: 'متصل'
+                      }
                     ].map((integration, index) => (
                       <div
                         key={index}
@@ -222,24 +223,24 @@ export default function SettingsPage() {
                         </div>
                         <div className="flex items-center gap-2">
                           <span
-                            className={`rounded-full px-2 py-1 text-xs ${
-                              integration.status === "connected"
-                                ? "bg-green-100 text-green-800"
-                                : integration.status === "disconnected"
-                                  ? "bg-surface text-gray-800"
-                                  : "bg-red-100 text-red-800"
-                            }`}
+                            className={`
+                              integration.status === 'connected'
+                                ? 'bg-green-100 text-green-800'
+                                : integration.status === 'disconnected'
+                                  ? 'bg-surface text-gray-800'
+                                  : 'bg-red-100 text-red-800'
+                            }`
                           >
-                            {integration.status === "connected"
-                              ? "متصل"
-                              : integration.status === "disconnected"
-                                ? "غير متصل"
-                                : "خطأ"}
+                            {integration.status === 'connected'
+                              ? 'متصل'
+                              : integration.status === 'disconnected'
+                                ? 'غير متصل'
+                                : 'خطأ'}
                           </span>
                           <button className="rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-surface">
-                            {integration.status === "connected"
-                              ? "إعدادات"
-                              : "اتصال"}
+                            {integration.status === 'connected'
+                              ? 'إعدادات'
+                              : 'اتصال'}
                           </button>
                         </div>
                       </div>
@@ -248,7 +249,7 @@ export default function SettingsPage() {
                 </div>
               )}
 
-              {activeTab === "notifications" && (
+              {activeTab === 'notifications' && (
                 <div>
                   <h2 className="mb-6 text-xl font-semibold">
                     إعدادات الإشعارات
@@ -311,7 +312,7 @@ export default function SettingsPage() {
                 </div>
               )}
 
-              {activeTab === "templates" && (
+              {activeTab === 'templates' && (
                 <div>
                   <h2 className="mb-6 text-xl font-semibold">
                     قوالب الإشعارات

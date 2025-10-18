@@ -1,16 +1,17 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
 
-import { Card } from "@/components/ui/Card";
+import { Card } from '@/components/ui/Card';
 
-import { Button } from "@/components/ui/Button";
+import { Button } from '@/components/ui/Button';
 
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from '@/components/ui/Badge';
 
-import { ROUTES } from "@/constants/routes";
+import { ROUTES } from '@/constants/routes';
 
-import Image from "next/image";
+import Image from 'next/image';
 
 
 interface InsuranceClaim {
@@ -21,7 +22,7 @@ interface InsuranceClaim {
   insuranceCompany: string;
   serviceType: string;
   amount: number;
-  status: "pending" | "approved" | "rejected" | "under_review";
+  status: 'pending' | 'approved' | 'rejected' | 'under_review';
   submissionDate: string;
   approvalDate?: string;
   rejectionReason?: string;
@@ -32,82 +33,82 @@ interface InsuranceClaim {
 
 const mockClaims: InsuranceClaim[] = [
   {
-    id: "1",
-    patientName: "أحمد محمد العتيبي",
-    patientId: "P001",
-    claimNumber: "IC-2024-001",
-    insuranceCompany: "شركة التعاونية للتأمين",
-    serviceType: "علاج طبيعي",
+    id: '1',
+    patientName: 'أحمد محمد العتيبي',
+    patientId: 'P001',
+    claimNumber: 'IC-2024-001',
+    insuranceCompany: 'شركة التعاونية للتأمين',
+    serviceType: 'علاج طبيعي',
     amount: 1500,
-    status: "approved",
-    submissionDate: "2024-01-15",
-    approvalDate: "2024-01-18",
+    status: 'approved',
+    submissionDate: '2024-01-15',
+    approvalDate: '2024-01-18',
     isBlocked: false,
-    hasOutstandingBalance: false,
+    hasOutstandingBalance: false
   },
   {
-    id: "2",
-    patientName: "فاطمة عبدالله السعيد",
-    patientId: "P002",
-    claimNumber: "IC-2024-002",
-    insuranceCompany: "شركة الأهلي للتأمين",
-    serviceType: "علاج نفسي",
+    id: '2',
+    patientName: 'فاطمة عبدالله السعيد',
+    patientId: 'P002',
+    claimNumber: 'IC-2024-002',
+    insuranceCompany: 'شركة الأهلي للتأمين',
+    serviceType: 'علاج نفسي',
     amount: 2000,
-    status: "pending",
-    submissionDate: "2024-01-20",
+    status: 'pending',
+    submissionDate: '2024-01-20',
     isBlocked: false,
-    hasOutstandingBalance: false,
+    hasOutstandingBalance: false
   },
   {
-    id: "3",
-    patientName: "محمد سالم القحطاني",
-    patientId: "P003",
-    claimNumber: "IC-2024-003",
-    insuranceCompany: "شركة سابك للتأمين",
-    serviceType: "علاج وظيفي",
+    id: '3',
+    patientName: 'محمد سالم القحطاني',
+    patientId: 'P003',
+    claimNumber: 'IC-2024-003',
+    insuranceCompany: 'شركة سابك للتأمين',
+    serviceType: 'علاج وظيفي',
     amount: 1200,
-    status: "rejected",
-    submissionDate: "2024-01-18",
-    rejectionReason: "عدم اكتمال الوثائق المطلوبة",
+    status: 'rejected',
+    submissionDate: '2024-01-18',
+    rejectionReason: 'عدم اكتمال الوثائق المطلوبة',
     isBlocked: true,
     hasOutstandingBalance: true,
-    outstandingAmount: 1200,
+    outstandingAmount: 1200
   },
   {
-    id: "4",
-    patientName: "نورا أحمد الزهراني",
-    patientId: "P004",
-    claimNumber: "IC-2024-004",
-    insuranceCompany: "شركة الراجحي للتأمين",
-    serviceType: "علاج طبيعي",
+    id: '4',
+    patientName: 'نورا أحمد الزهراني',
+    patientId: 'P004',
+    claimNumber: 'IC-2024-004',
+    insuranceCompany: 'شركة الراجحي للتأمين',
+    serviceType: 'علاج طبيعي',
     amount: 1800,
-    status: "under_review",
-    submissionDate: "2024-01-22",
+    status: 'under_review',
+    submissionDate: '2024-01-22',
     isBlocked: false,
-    hasOutstandingBalance: false,
-  },
+    hasOutstandingBalance: false
+  }
 ];
 
 const statusConfig = {
-  pending: { label: "قيد المراجعة", color: "warning" as const },
-  approved: { label: "موافق عليه", color: "success" as const },
-  rejected: { label: "مرفوض", color: "error" as const },
-  under_review: { label: "قيد التدقيق", color: "info" as const },
+  pending: { label: 'قيد المراجعة', color: 'warning' as const },
+  approved: { label: 'موافق عليه', color: 'success' as const },
+  rejected: { label: 'مرفوض', color: 'error' as const },
+  under_review: { label: 'قيد التدقيق', color: 'info' as const }
 };
 
 export default function InsurancePage() {
   const [selectedClaim, setSelectedClaim] = useState<InsuranceClaim | null>(
-    null,
+    null
   );
   const [filter, setFilter] = useState<
-    "all" | "pending" | "approved" | "rejected"
-  >("all");
+    'all' | 'pending' | 'approved' | 'rejected'
+  >('all');
 
   const filteredClaims = mockClaims.filter(
-    (claim) => filter === "all" || claim.status === filter,
+    (claim) => filter === 'all' || claim.status === filter
   );
 
-  const getStatusBadge = (status: InsuranceClaim["status"]) => {
+  const getStatusBadge = (status: InsuranceClaim['status']) => {
     const config = statusConfig[status];
     return (
       <Badge variant={config.color} className="text-sm">
@@ -200,7 +201,7 @@ export default function InsurancePage() {
           </Card>
           <Card className="p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-success">
-              {mockClaims.filter((c) => c.status === "approved").length}
+              {mockClaims.filter((c) => c.status === 'approved').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
               مطالبات موافق عليها
@@ -208,7 +209,7 @@ export default function InsurancePage() {
           </Card>
           <Card className="p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-yellow-600">
-              {mockClaims.filter((c) => c.status === "pending").length}
+              {mockClaims.filter((c) => c.status === 'pending').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">قيد المراجعة</div>
           </Card>
@@ -225,30 +226,30 @@ export default function InsurancePage() {
         {/* Filters */}
         <div className="mb-6 flex flex-wrap gap-3">
           <Button
-            variant={filter === "all" ? "primary" : "outline"}
+            variant={filter === 'all' ? 'primary' : 'outline'}
             size="sm"
-            onClick={() => setFilter("all")}
+            onClick={() => setFilter('all')}
           >
             جميع المطالبات
           </Button>
           <Button
-            variant={filter === "pending" ? "primary" : "outline"}
+            variant={filter === 'pending' ? 'primary' : 'outline'}
             size="sm"
-            onClick={() => setFilter("pending")}
+            onClick={() => setFilter('pending')}
           >
             قيد المراجعة
           </Button>
           <Button
-            variant={filter === "approved" ? "primary" : "outline"}
+            variant={filter === 'approved' ? 'primary' : 'outline'}
             size="sm"
-            onClick={() => setFilter("approved")}
+            onClick={() => setFilter('approved')}
           >
             موافق عليها
           </Button>
           <Button
-            variant={filter === "rejected" ? "primary" : "outline"}
+            variant={filter === 'rejected' ? 'primary' : 'outline'}
             size="sm"
-            onClick={() => setFilter("rejected")}
+            onClick={() => setFilter('rejected')}
           >
             مرفوضة
           </Button>

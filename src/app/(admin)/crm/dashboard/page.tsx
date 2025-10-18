@@ -1,17 +1,18 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { Input } from "@/components/ui/Input";
-import { 
-  Calendar, 
-  Clock, 
-  Users, 
-  Phone, 
-  MapPin, 
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { Input } from '@/components/ui/Input';
+import {
+  Calendar,
+  Clock,
+  Users,
+  Phone,
+  MapPin,
   Search,
   Filter,
   MoreVertical,
@@ -22,17 +23,17 @@ import {
   UserPlus,
   TrendingUp,
   Activity
-} from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
+} from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface Appointment {
   id: string;
   patient_id: string;
-  doctor_id: string;
+  doctorId: string;
   appointment_date: string;
-  appointment_time: string;
+  appointmentTime: string;
   duration: number;
   status: string;
   notes?: string;
@@ -63,7 +64,7 @@ interface DashboardStats {
 }
 
 const CRMDashboard: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const user, isAuthenticated = useAuth();
   const router = useRouter();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [stats, setStats] = useState<DashboardStats>({
@@ -75,26 +76,26 @@ const CRMDashboard: React.FC = () => {
     totalDoctors: 0
   });
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [dateFilter, setDateFilter] = useState("today");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [dateFilter, setDateFilter] = useState('today');
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/login");
+      router.push('/login');
       return;
     }
     loadDashboardData();
   }, [isAuthenticated, router]);
 
-  const loadDashboardData = async () => {
+  const loadDashboardData = async() => {
     try {
       setLoading(true);
-      
+
       // جلب المواعيد
       const appointmentsResponse = await fetch('/api/appointments');
       const appointmentsData = await appointmentsResponse.json();
-      
+
       if (appointmentsData.success) {
         setAppointments(appointmentsData.appointments || []);
       }
@@ -102,30 +103,30 @@ const CRMDashboard: React.FC = () => {
       // جلب الإحصائيات
       const statsResponse = await fetch('/api/crm/stats');
       const statsData = await statsResponse.json();
-      
+
       if (statsData.success) {
         setStats(statsData.stats);
       }
     } catch (error) {
-      } finally {
+    } finally {
       setLoading(false);
     }
   };
 
-  const handleStatusUpdate = async (appointmentId: string, newStatus: string) => {
+  const handleStatusUpdate = async(appointmentId: string, newStatus: string) => {
     try {
-      const response = await fetch(`/api/appointments/${appointmentId}`, {
+      const response = await fetch(`/api/appointments/${appointmentId}`
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           status: newStatus
-        }),
+        })
       });
 
       const data = await response.json();
-      
+
       if (data.success) {
         loadDashboardData(); // إعادة تحميل البيانات
       } else {
@@ -145,12 +146,12 @@ const CRMDashboard: React.FC = () => {
       'no_show': { label: 'لم يحضر', variant: 'destructive' as const, color: 'bg-orange-100 text-orange-800' }
     };
 
-    const config = statusConfig[status as keyof typeof statusConfig] || { 
-      label: status, 
-      variant: 'outline' as const, 
-      color: 'bg-surface text-gray-800' 
+    const config = statusConfig[status as keyof typeof statusConfig] || {
+      label: status,
+      variant: 'outline' as const,
+      color: 'bg-surface text-gray-800'
     };
-    
+
     return (
       <Badge variant={config.variant} className={config.color}>
         {config.label}
@@ -163,7 +164,7 @@ const CRMDashboard: React.FC = () => {
 
     // فلترة حسب البحث
     if (searchTerm) {
-      filtered = filtered.filter(appointment => 
+      filtered = filtered.filter(appointment =>
         appointment.patients?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         appointment.patients?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         appointment.doctors?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -184,7 +185,7 @@ const CRMDashboard: React.FC = () => {
     } else if (dateFilter === 'week') {
       const weekAgo = new Date();
       weekAgo.setDate(weekAgo.getDate() - 7);
-      filtered = filtered.filter(appointment => 
+      filtered = filtered.filter(appointment =>
         new Date(appointment.appointment_date) >= weekAgo
       );
     }
@@ -208,14 +209,14 @@ const CRMDashboard: React.FC = () => {
             <p className="text-gray-600 mt-2">إدارة المواعيد والمرضى والأطباء</p>
           </div>
           <div className="flex gap-2">
-            <Button 
+            <Button
               onClick={() => router.push('/crm/patients')}
               variant="outline"
             >
               <Users className="w-4 h-4 mr-2" />
               إدارة المرضى
             </Button>
-            <Button 
+            <Button
               onClick={() => router.push('/crm/doctors')}
               variant="outline"
             >
@@ -238,7 +239,7 @@ const CRMDashboard: React.FC = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
@@ -250,7 +251,7 @@ const CRMDashboard: React.FC = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
@@ -262,7 +263,7 @@ const CRMDashboard: React.FC = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
@@ -292,7 +293,7 @@ const CRMDashboard: React.FC = () => {
                 />
               </div>
             </div>
-            
+
             <div className="flex gap-2">
               <select
                 value={statusFilter}
@@ -306,7 +307,7 @@ const CRMDashboard: React.FC = () => {
                 <option value="cancelled">ملغي</option>
                 <option value="no_show">لم يحضر</option>
               </select>
-              
+
               <select
                 value={dateFilter}
                 onChange={(e) => setDateFilter(e.target.value)}
@@ -390,7 +391,7 @@ const CRMDashboard: React.FC = () => {
                           </div>
                           <div className="flex items-center gap-2">
                             <Clock className="w-4 h-4 text-gray-500" />
-                            <span className="text-sm">{appointment.appointment_time}</span>
+                            <span className="text-sm">{appointment.appointmentTime}</span>
                           </div>
                           <div className="text-sm text-gray-600">
                             المدة: {appointment.duration} دقيقة
@@ -398,7 +399,7 @@ const CRMDashboard: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     {appointment.notes && (
                       <div className="mt-4 bg-surface p-3 rounded-lg">
                         <p className="text-sm text-gray-700">
@@ -407,10 +408,10 @@ const CRMDashboard: React.FC = () => {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="flex flex-col items-end gap-3">
                     {getStatusBadge(appointment.status)}
-                    
+
                     <div className="flex gap-2">
                       {appointment.status === 'scheduled' && (
                         <>
@@ -434,7 +435,7 @@ const CRMDashboard: React.FC = () => {
                           </Button>
                         </>
                       )}
-                      
+
                       {appointment.status === 'confirmed' && (
                         <Button
                           variant="outline"

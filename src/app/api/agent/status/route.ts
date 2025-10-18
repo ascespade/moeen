@@ -1,29 +1,29 @@
-import fs from "fs";
-import path from "path";
-import { NextRequest, NextResponse } from "next/server";
+import fs from 'fs';
+import path from 'path';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
 
-const LOG_DIR = "/home/ubuntu/workspace/projects/moeen/logs";
+let LOG_DIR = '/home/ubuntu/workspace/projects/moeen/logs';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const statusFile = path.join(LOG_DIR, "agent-status.json");
+    let statusFile = path.join(LOG_DIR, 'agent-status.json');
 
     if (!fs.existsSync(statusFile)) {
-      return NextResponse.json({
-        status: "not_running",
-        message: "Agent not started",
+      return import { NextResponse } from "next/server";.json({
+        status: 'not_running',
+        message: 'Agent not started',
         last_update: new Date().toISOString(),
         restart_count: 0,
-        mode: "none",
+        mode: 'none'
       });
     }
 
-    const statusData = JSON.parse(fs.readFileSync(statusFile, "utf8"));
-    return NextResponse.json(statusData);
+    let statusData = JSON.parse(fs.readFileSync(statusFile, 'utf8'));
+    return import { NextResponse } from "next/server";.json(statusData);
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to read agent status" },
-      { status: 500 },
+    return import { NextResponse } from "next/server";.json(
+      { error: 'Failed to read agent status' },
+      { status: 500 }
     );
   }
 }

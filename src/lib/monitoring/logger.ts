@@ -1,5 +1,5 @@
 
-;
+
 
 /**
  * Professional Logging System
@@ -56,7 +56,7 @@ class Logger {
     const errorData = error instanceof Error ? {
       message: error.message,
       stack: error.stack,
-      name: error.name,
+      name: error.name
     } : error;
 
     this.log('error', message, errorData, context, error?.stack);
@@ -78,7 +78,7 @@ class Logger {
       message,
       context,
       data: this.sanitizeData(data),
-      stack,
+      stack
     };
 
     // In development, log to console with colors
@@ -96,27 +96,27 @@ class Logger {
    * Log to console (development only)
    */
   private logToConsole(entry: LogEntry): void {
-    const prefix = `[${entry.timestamp}] [${entry.level.toUpperCase()}]`;
-    const contextStr = entry.context ? ` [${entry.context}]` : '';
-    const fullMessage = `${prefix}${contextStr} ${entry.message}`;
+    const prefix = `[${entry.timestamp}] [${entry.level.toUpperCase()}]`
+    const contextStr = entry.context ? ` [${entry.context}]`
+    const fullMessage = `${prefix}${contextStr} ${entry.message}`
 
     switch (entry.level) {
-      case 'debug':
-        // eslint-disable-next-line no-console
-        console.debug(fullMessage, entry.data);
-        break;
-      case 'info':
-        // eslint-disable-next-line no-console
-        console.info(fullMessage, entry.data);
-        break;
-      case 'warn':
-        // eslint-disable-next-line no-console
-        console.warn(fullMessage, entry.data);
-        break;
-      case 'error':
-        // eslint-disable-next-line no-console
-        console.error(fullMessage, entry.data, entry.stack);
-        break;
+    case 'debug':
+      // eslint-disable-next-line no-console
+      console.debug(fullMessage, entry.data);
+      break;
+    case 'info':
+      // eslint-disable-next-line no-console
+      // console.info(fullMessage, entry.data);
+      break;
+    case 'warn':
+      // eslint-disable-next-line no-console
+      // console.warn(fullMessage, entry.data);
+      break;
+    case 'error':
+      // eslint-disable-next-line no-console
+      // console.error(fullMessage, entry.data, entry.stack);
+      break;
     }
   }
 
@@ -160,12 +160,12 @@ class Logger {
       'auth',
       'credit_card',
       'ssn',
-      'social_security',
+      'social_security'
     ];
 
     if (typeof data === 'object') {
       const sanitized = { ...data };
-      
+
       for (const key in sanitized) {
         const lowerKey = key.toLowerCase();
         if (sensitiveKeys.some(sensitive => lowerKey.includes(sensitive))) {
@@ -174,7 +174,7 @@ class Logger {
           sanitized[key] = this.sanitizeData(sanitized[key]);
         }
       }
-      
+
       return sanitized;
     }
 

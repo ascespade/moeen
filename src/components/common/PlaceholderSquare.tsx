@@ -1,4 +1,5 @@
 import React from "react";
+import React from 'react';
 
 type PlaceholderSquareProps = {
   title: string;
@@ -11,7 +12,7 @@ export default function PlaceholderSquare({
   title,
   description,
   steps = [],
-  docsLink,
+  docsLink
 }: PlaceholderSquareProps) {
   return (
     <div className="rounded-xl border border-dashed border-gray-300 dark:border-gray-700 p-4 md:p-6 bg-white dark:bg-gray-900">

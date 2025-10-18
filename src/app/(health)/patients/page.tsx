@@ -1,29 +1,30 @@
+import React from "react";
 
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+import { useState, useEffect } from 'react';
 
-import { ROUTES } from "@/constants/routes";
+import { ROUTES } from '@/constants/routes';
 
-import { createClient } from "@/lib/supabase/client";
+import { () => ({} as any) } from '@/lib/supabase/client';
 
-import Image from "next/image";
+import Image from 'next/image';
 
-import Link from "next/link";
+import Link from 'next/link';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 
-import { Button } from "@/components/ui/Button";
+import { Button } from '@/components/ui/Button';
 
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from '@/components/ui/Badge';
 
-import { Input } from "@/components/ui/Input";
+import { Input } from '@/components/ui/Input';
 
-import { 
+import {
 
-  Users, 
-  Phone, 
-  Mail, 
-  MapPin, 
+  Users,
+  Phone,
+  Mail,
+  MapPin,
   Calendar,
   Plus,
   Search,
@@ -43,7 +44,7 @@ import {
   TrendingUp,
   Target,
   FileText
-} from "lucide-react";
+} from 'lucide-react';
 
 interface Patient {
   id: string;
@@ -53,7 +54,7 @@ interface Patient {
   phone: string;
   email?: string;
   date_of_birth: string;
-  gender: "male" | "female";
+  gender: 'male' | 'female';
   address?: string;
   emergency_contact_name?: string;
   emergency_contact_phone?: string;
@@ -68,9 +69,9 @@ interface PatientWithStats extends Patient {
   totalSessions: number;
   insuranceProvider?: string;
   notes?: string;
-  status: "active" | "inactive" | "blocked";
+  status: 'active' | 'inactive' | 'blocked';
   condition: string;
-  severity: "mild" | "moderate" | "severe";
+  severity: 'mild' | 'moderate' | 'severe';
   therapyType: string[];
   progressPercentage: number;
   nextAppointment?: string;
@@ -87,33 +88,33 @@ export default function PatientsPage() {
   const [patients, setPatients] = useState<PatientWithStats[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<
-    "all" | "active" | "inactive" | "blocked"
-  >("all");
-  const [filterCondition, setFilterCondition] = useState<string>("all");
-  const [filterSeverity, setFilterSeverity] = useState<string>("all");
+    'all' | 'active' | 'inactive' | 'blocked'
+  >('all');
+  const [filterCondition, setFilterCondition] = useState<string>('all');
+  const [filterSeverity, setFilterSeverity] = useState<string>('all');
   const [selectedPatient, setSelectedPatient] = useState<PatientWithStats | null>(null);
   const [showDetails, setShowDetails] = useState(false);
 
   // Load patients from database
   useEffect(() => {
-    const loadPatients = async () => {
+    let loadPatients = async() => {
       try {
         setLoading(true);
-        const supabase = createClient();
+        let supabase = () => ({} as any)();
 
         // Get patients with their appointment statistics
-        const { data: patientsData, error: patientsError } = await supabase
-          .from("patients")
+        const data: patientsData, error: patientsError = await supabase
+          .from('patients')
           .select(
             `
             *,
             appointments:appointments(count),
             sessions:sessions(count)
-          `,
+          `
           )
-          .order("created_at", { ascending: false });
+          .order('created_at', { ascending: false });
 
         if (patientsError) throw patientsError;
 
@@ -121,34 +122,34 @@ export default function PatientsPage() {
         const patientsWithStats: PatientWithStats[] = (patientsData || []).map(
           (patient) => ({
             ...patient,
-            name: `${patient.first_name} ${patient.last_name}`,
+            name: `${patient.first_name} ${patient.last_name}`
             age: patient.date_of_birth
               ? new Date().getFullYear() -
                 new Date(patient.date_of_birth).getFullYear()
               : 0,
             lastVisit:
               patient.appointments?.[0]?.appointment_date ||
-              "لم يتم تحديد موعد",
+              'لم يتم تحديد موعد',
             totalSessions: patient.sessions?.length || 0,
-            status: "active" as const, // Default status, can be enhanced later
-            insuranceProvider: "غير محدد", // Can be enhanced with insurance claims data
-            notes: patient.medical_history || "",
-          }),
+            status: 'active' as const, // Default status, can be enhanced later
+            insuranceProvider: 'غير محدد', // Can be enhanced with insurance claims data
+            notes: patient.medical_history || ''
+          })
         );
 
         setPatients(patientsWithStats);
       } catch (err) {
-        setError("فشل في تحميل بيانات المرضى");
+        setError('فشل في تحميل بيانات المرضى');
       } finally {
         setLoading(false);
       }
     };
 
     loadPatients();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line off
 
   // Filter patients based on search and status
-  const filteredPatients = patients.filter((patient) => {
+  let filteredPatients = patients.filter((patient) => {
     const matchesSearch =
       patient.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       patient.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -156,64 +157,64 @@ export default function PatientsPage() {
       patient.email?.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesStatus =
-      filterStatus === "all" || patient.status === filterStatus;
+      filterStatus === 'all' || patient.status === filterStatus;
 
     return matchesSearch && matchesStatus;
   });
 
-  const getStatusColor = (status: string) => {
+  let getStatusColor = (status: string) => {
     switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800";
-      case "inactive":
-        return "bg-yellow-100 text-yellow-800";
-      case "blocked":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-surface text-gray-800";
+    case 'active':
+      return 'bg-green-100 text-green-800';
+    case 'inactive':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'blocked':
+      return 'bg-red-100 text-red-800';
+    default:
+      return 'bg-surface text-gray-800';
     }
   };
 
-  const getStatusText = (status: string) => {
+  let getStatusText = (status: string) => {
     switch (status) {
-      case "active":
-        return "نشط";
-      case "inactive":
-        return "غير نشط";
-      case "blocked":
-        return "محظور";
-      default:
-        return "غير محدد";
+    case 'active':
+      return 'نشط';
+    case 'inactive':
+      return 'غير نشط';
+    case 'blocked':
+      return 'محظور';
+    default:
+      return 'غير محدد';
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    const statusMap = {
+  let getStatusBadge = (status: string) => {
+    let statusMap = {
       'active': { label: 'نشط', variant: 'primary' as const, color: 'text-brand-success' },
       'inactive': { label: 'غير نشط', variant: 'secondary' as const, color: 'text-gray-600' },
       'blocked': { label: 'محظور', variant: 'destructive' as const, color: 'text-brand-error' }
     };
-    
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'primary' as const, color: 'text-gray-600' };
+
+    let statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'primary' as const, color: 'text-gray-600' };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 
-  const getSeverityBadge = (severity: string) => {
-    const severityMap = {
+  let getSeverityBadge = (severity: string) => {
+    let severityMap = {
       'mild': { label: 'خفيف', variant: 'primary' as const, color: 'text-brand-success' },
       'moderate': { label: 'متوسط', variant: 'secondary' as const, color: 'text-yellow-600' },
       'severe': { label: 'شديد', variant: 'destructive' as const, color: 'text-brand-error' }
     };
-    
-    const severityInfo = severityMap[severity as keyof typeof severityMap] || { label: severity, variant: 'primary' as const, color: 'text-gray-600' };
+
+    let severityInfo = severityMap[severity as keyof typeof severityMap] || { label: severity, variant: 'primary' as const, color: 'text-gray-600' };
     return <Badge variant={severityInfo.variant}>{severityInfo.label}</Badge>;
   };
 
-  const getProgressColor = (percentage: number) => {
-    if (percentage >= 80) return "bg-brand-success";
-    if (percentage >= 60) return "bg-brand-warning";
-    if (percentage >= 40) return "bg-brand-primary";
-    return "bg-brand-error";
+  let getProgressColor = (percentage: number) => {
+    if (percentage >= 80) return 'bg-brand-success';
+    if (percentage >= 60) return 'bg-brand-warning';
+    if (percentage >= 40) return 'bg-brand-primary';
+    return 'bg-brand-error';
   };
 
   if (loading) {
@@ -257,7 +258,7 @@ export default function PatientsPage() {
               </p>
             </div>
             <Link
-              href={ROUTES.HEALTH.PATIENTS + "/new"}
+              href={ROUTES.HEALTH.PATIENTS + '/new'}
               className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
             >
               إضافة مريض جديد
@@ -324,12 +325,12 @@ export default function PatientsPage() {
                         {patient.first_name} {patient.last_name}
                       </h3>
                       <p className="text-sm text-gray-500">
-                        العمر: {(patient as any).age || "غير محدد"} سنة
+                        العمر: {(patient as any).age || 'غير محدد'} سنة
                       </p>
                     </div>
                   </div>
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(patient.status)}`}
+                    className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(patient.status)}`
                   >
                     {getStatusText(patient.status)}
                   </span>
@@ -359,7 +360,7 @@ export default function PatientsPage() {
                   </div>
                   <div className="text-center">
                     <div className="text-lg font-semibold text-brand-success">
-                      {patient.lastVisit === "لم يتم تحديد موعد" ? "0" : "1"}
+                      {patient.lastVisit === 'لم يتم تحديد موعد' ? '0' : '1'}
                     </div>
                     <div className="text-xs text-gray-500">آخر زيارة</div>
                   </div>
@@ -368,13 +369,13 @@ export default function PatientsPage() {
                 {/* Actions */}
                 <div className="flex space-x-2">
                   <Link
-                    href={`${ROUTES.HEALTH.PATIENTS}/${patient.public_id}`}
+                    href={`${ROUTES.HEALTH.PATIENTS}/${patient.public_id}`
                     className="flex-1 bg-blue-600 text-white text-center py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm"
                   >
                     عرض التفاصيل
                   </Link>
                   <Link
-                    href={`${ROUTES.HEALTH.APPOINTMENTS}?patient=${patient.public_id}`}
+                    href={`${ROUTES.HEALTH.APPOINTMENTS}?patient=${patient.public_id}`
                     className="flex-1 bg-brand-success text-white text-center py-2 px-3 rounded-lg hover:bg-green-700 transition-colors text-sm"
                   >
                     حجز موعد
@@ -393,9 +394,9 @@ export default function PatientsPage() {
               لا توجد نتائج
             </h3>
             <p className="text-gray-500">
-              {searchTerm || filterStatus !== "all"
-                ? "لم يتم العثور على مرضى يطابقون معايير البحث"
-                : "لم يتم إضافة أي مرضى بعد"}
+              {searchTerm || filterStatus !== 'all'
+                ? 'لم يتم العثور على مرضى يطابقون معايير البحث'
+                : 'لم يتم إضافة أي مرضى بعد'}
             </p>
           </div>
         )}

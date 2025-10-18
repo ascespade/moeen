@@ -3,33 +3,33 @@
  * This utility ensures clean test data for each test run
  */
 
-import { createClient } from '@supabase/supabase-js';
+import { () => ({} as any) } from '@supabase/supabase-js';
 import { config } from 'dotenv';
 
 // Load environment variables
 config({ path: '.env.local' });
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+let supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 if (!supabaseUrl || !supabaseKey) {
   throw new Error('Missing Supabase environment variables');
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+let supabase = () => ({} as any)(supabaseUrl, supabaseKey);
 
 export class SupabaseCleanup {
   /**
    * Clean all test data from the database
    */
   static async cleanTestData() {
-    console.log('🧹 Cleaning test data from Supabase...');
-    
+    // console.log('🧹 Cleaning test data from Supabase...');
+
     try {
       // Delete in order to respect foreign key constraints
-      const tablesToClean = [
+      let tablesToClean = [
         'chatbot_appointments',
-        'appointments', 
+        'appointments',
         'sessions',
         'patients',
         'doctors',
@@ -45,24 +45,24 @@ export class SupabaseCleanup {
 
       for (const table of tablesToClean) {
         try {
-          const { error } = await supabase
+          const error = await supabase
             .from(table)
             .delete()
             .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all except dummy record
-          
+
           if (error) {
-            console.warn(`⚠️ Warning cleaning ${table}:`, error.message);
+            // console.warn(`⚠️ Warning cleaning ${table}:`
           } else {
-            console.log(`✅ Cleaned ${table}`);
+            // console.log(`✅ Cleaned ${table}`
           }
         } catch (err) {
-          console.warn(`⚠️ Error cleaning ${table}:`, err);
+          // console.warn(`⚠️ Error cleaning ${table}:`
         }
       }
 
-      console.log('✅ Test data cleanup completed');
+      // console.log('✅ Test data cleanup completed');
     } catch (error) {
-      console.error('❌ Error during cleanup:', error);
+      // console.error('❌ Error during cleanup:', error);
       throw error;
     }
   }
@@ -71,11 +71,11 @@ export class SupabaseCleanup {
    * Create test fixtures (test users and data)
    */
   static async createTestFixtures() {
-    console.log('🔧 Creating test fixtures...');
-    
+    // console.log('🔧 Creating test fixtures...');
+
     try {
       // Create test users
-      const testUsers = [
+      let testUsers = [
         {
           id: 'test-patient-a-id',
           email: 'patient-a@test.com',
@@ -86,7 +86,7 @@ export class SupabaseCleanup {
           status: 'active' as const
         },
         {
-          id: 'test-patient-b-id', 
+          id: 'test-patient-b-id',
           email: 'patient-b@test.com',
           name: 'Patient B',
           role: 'patient' as const,
@@ -96,7 +96,7 @@ export class SupabaseCleanup {
         },
         {
           id: 'test-doctor-a-id',
-          email: 'doctor-a@test.com', 
+          email: 'doctor-a@test.com',
           name: 'Doctor A',
           role: 'doctor' as const,
           phone: '+966501234569',
@@ -116,19 +116,19 @@ export class SupabaseCleanup {
 
       // Insert test users
       for (const user of testUsers) {
-        const { error } = await supabase
+        const error = await supabase
           .from('users')
           .upsert(user, { onConflict: 'id' });
-        
+
         if (error) {
-          console.warn(`⚠️ Warning creating user ${user.email}:`, error.message);
+          // console.warn(`⚠️ Warning creating user ${user.email}:`
         } else {
-          console.log(`✅ Created user: ${user.email}`);
+          // console.log(`✅ Created user: ${user.email}`
         }
       }
 
       // Create test patients
-      const testPatients = [
+      let testPatients = [
         {
           id: 'test-patient-a-record-id',
           user_id: 'test-patient-a-id',
@@ -143,7 +143,7 @@ export class SupabaseCleanup {
         },
         {
           id: 'test-patient-b-record-id',
-          user_id: 'test-patient-b-id', 
+          user_id: 'test-patient-b-id',
           first_name: 'فاطمة',
           last_name: 'علي',
           phone: '+966501234568',
@@ -156,19 +156,19 @@ export class SupabaseCleanup {
       ];
 
       for (const patient of testPatients) {
-        const { error } = await supabase
+        const error = await supabase
           .from('patients')
           .upsert(patient, { onConflict: 'id' });
-        
+
         if (error) {
-          console.warn(`⚠️ Warning creating patient ${patient.first_name}:`, error.message);
+          // console.warn(`⚠️ Warning creating patient ${patient.first_name}:`
         } else {
-          console.log(`✅ Created patient: ${patient.first_name} ${patient.last_name}`);
+          // console.log(`✅ Created patient: ${patient.first_name} ${patient.last_name}`
         }
       }
 
       // Create test doctors
-      const testDoctors = [
+      let testDoctors = [
         {
           id: 'test-doctor-a-record-id',
           user_id: 'test-doctor-a-id',
@@ -184,20 +184,20 @@ export class SupabaseCleanup {
       ];
 
       for (const doctor of testDoctors) {
-        const { error } = await supabase
+        const error = await supabase
           .from('doctors')
           .upsert(doctor, { onConflict: 'id' });
-        
+
         if (error) {
-          console.warn(`⚠️ Warning creating doctor ${doctor.first_name}:`, error.message);
+          // console.warn(`⚠️ Warning creating doctor ${doctor.first_name}:`
         } else {
-          console.log(`✅ Created doctor: ${doctor.first_name} ${doctor.last_name}`);
+          // console.log(`✅ Created doctor: ${doctor.first_name} ${doctor.last_name}`
         }
       }
 
-      console.log('✅ Test fixtures created successfully');
+      // console.log('✅ Test fixtures created successfully');
     } catch (error) {
-      console.error('❌ Error creating test fixtures:', error);
+      // console.error('❌ Error creating test fixtures:', error);
       throw error;
     }
   }
@@ -206,10 +206,10 @@ export class SupabaseCleanup {
    * Reset database to clean state for testing
    */
   static async resetForTesting() {
-    console.log('🔄 Resetting database for testing...');
+    // console.log('🔄 Resetting database for testing...');
     await this.cleanTestData();
     await this.createTestFixtures();
-    console.log('✅ Database reset completed');
+    // console.log('✅ Database reset completed');
   }
 }
 

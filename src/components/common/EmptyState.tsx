@@ -1,8 +1,9 @@
+import React from "react";
 export default function EmptyState({
 
   title,
   description,
-  cta,
+  cta
 }: {
   title: string;
   description?: string;

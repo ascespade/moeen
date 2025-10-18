@@ -1,20 +1,21 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
 export default function KeywordEditor({
   keywords,
-  onChange,
+  onChange
 }: {
   keywords: string[];
   onChange: (kw: string[]) => void;
 }) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
   function add() {
     const v = value.trim();
     if (!v) return;
     onChange(Array.from(new Set([...(keywords || []), v])));
-    setValue("");
+    setValue('');
   }
 
   function remove(k: string) {
@@ -29,7 +30,7 @@ export default function KeywordEditor({
           placeholder="أدخل كلمة طوارئ"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && add()}
+          onKeyDown={(e) => e.key === 'Enter' && add()}
         />
         <button className="h-10 rounded-md border px-3" onClick={add}>
           إضافة

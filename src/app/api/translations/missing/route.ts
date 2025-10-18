@@ -1,14 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabaseClient";
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
 
-const supabase = getServiceSupabase();
+let supabase = getServiceSupabase();
 
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
-    const { language, key, requestedAt } = await request.json();
+    const language, key, requestedAt = await request.json();
 
     if (!language || !key) {
-      return NextResponse.json(
+      return import { NextResponse } from "next/server";.json(
         { error: 'Language and key are required' },
         { status: 400 }
       );
@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     // Create missing_translations table if it doesn't exist
     await supabase.rpc('exec_sql', {
-      sql_query: `
+      sqlQuery: `
         CREATE TABLE IF NOT EXISTS missing_translations (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
           language TEXT NOT NULL,
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Insert missing translation key
-    const { data, error } = await supabase
+    const data, error = await supabase
       .from('missing_translations')
       .insert({
         language,
@@ -37,26 +37,26 @@ export async function POST(request: NextRequest) {
       });
 
     if (error) {
-      return NextResponse.json(
+      return import { NextResponse } from "next/server";.json(
         { error: 'Failed to log missing translation' },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ success: true, data });
+    return import { NextResponse } from "next/server";.json({ success: true, data });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Internal server error' },
       { status: 500 }
     );
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const { searchParams } = new URL(request.url);
-    const language = searchParams.get('language');
+    const searchParams = new URL(request.url);
+    let language = searchParams.get('language');
 
     let query = supabase
       .from('missing_translations')
@@ -67,19 +67,19 @@ export async function GET(request: NextRequest) {
       query = query.eq('language', language);
     }
 
-    const { data, error } = await query;
+    const data, error = await query;
 
     if (error) {
-      return NextResponse.json(
+      return import { NextResponse } from "next/server";.json(
         { error: 'Failed to fetch missing translations' },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ data });
+    return import { NextResponse } from "next/server";.json({ data });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Internal server error' },
       { status: 500 }
     );

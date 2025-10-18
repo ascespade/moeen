@@ -1,12 +1,13 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { Input } from "@/components/ui/Input";
-import { 
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { Input } from '@/components/ui/Input';
+import {
   Plus,
   Edit,
   Trash2,
@@ -19,13 +20,13 @@ import {
   ArrowRight,
   CheckCircle,
   AlertCircle
-} from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
+} from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 interface FlowStep {
   id: string;
-  type: "question" | "information" | "action" | "redirect" | "slack_notify" | "whatsapp_send";
+  type: 'question' | 'information' | 'action' | 'redirect' | 'slack_notify' | 'whatsapp_send';
   content: string;
   options?: string[];
   nextStep?: string;
@@ -46,119 +47,119 @@ interface ConversationFlow {
 }
 
 const FlowsManagementPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const user, isAuthenticated = useAuth();
   const router = useRouter();
   const [flows, setFlows] = useState<ConversationFlow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedFlow, setSelectedFlow] = useState<ConversationFlow | null>(null);
   const [showFlowEditor, setShowFlowEditor] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/login");
+      router.push('/login');
       return;
     }
     loadFlows();
   }, [isAuthenticated, router]);
 
-  const loadFlows = async () => {
+  const loadFlows = async() => {
     try {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب الـ flows من API
       const mockFlows: ConversationFlow[] = [
         {
-          id: "new_beneficiary",
-          name: "المستفيد الجديد",
-          description: "تسهيل عملية الانضمام وجمع المعلومات الأولية",
-          entryPoints: ["new_user", "first_time", "تقييم أولي"],
+          id: 'new_beneficiary',
+          name: 'المستفيد الجديد',
+          description: 'تسهيل عملية الانضمام وجمع المعلومات الأولية',
+          entryPoints: ['new_user', 'first_time', 'تقييم أولي'],
           isActive: true,
-          createdAt: "2024-01-15",
-          updatedAt: "2024-01-15",
+          createdAt: '2024-01-15',
+          updatedAt: '2024-01-15',
           steps: [
             {
-              id: "welcome",
-              type: "information",
-              content: "أهلاً بك في مركز الهمم، أنا مُعين، مساعدك الرقمي.",
-              nextStep: "needs_assessment"
+              id: 'welcome',
+              type: 'information',
+              content: 'أهلاً بك في مركز الهمم، أنا مُعين، مساعدك الرقمي.',
+              nextStep: 'needs_assessment'
             },
             {
-              id: "needs_assessment",
-              type: "question",
-              content: "لفهم كيفية مساعدتك بشكل أفضل، هل يمكنك اختيار الفئة الأقرب لاحتياجك؟",
-              options: ["دعم نفسي", "دعم حركي وجسدي", "صعوبات تعلم", "استشارات أسرية", "غير ذلك"],
-              nextStep: "collect_info"
+              id: 'needs_assessment',
+              type: 'question',
+              content: 'لفهم كيفية مساعدتك بشكل أفضل، هل يمكنك اختيار الفئة الأقرب لاحتياجك؟',
+              options: ['دعم نفسي', 'دعم حركي وجسدي', 'صعوبات تعلم', 'استشارات أسرية', 'غير ذلك'],
+              nextStep: 'collect_info'
             }
           ]
         },
         {
-          id: "appointment_slack",
-          name: "حجز المواعيد مع Slack",
-          description: "نظام حجز المواعيد مع إشعارات Slack للطاقم الطبي",
-          entryPoints: ["موعد", "حجز", "جدولة", "appointment"],
+          id: 'appointment_slack',
+          name: 'حجز المواعيد مع Slack',
+          description: 'نظام حجز المواعيد مع إشعارات Slack للطاقم الطبي',
+          entryPoints: ['موعد', 'حجز', 'جدولة', 'appointment'],
           isActive: true,
-          createdAt: "2024-01-15",
-          updatedAt: "2024-01-15",
+          createdAt: '2024-01-15',
+          updatedAt: '2024-01-15',
           steps: [
             {
-              id: "appointment_type",
-              type: "question",
-              content: "هل هذا موعد جديد أم متابعة؟",
-              options: ["موعد جديد", "متابعة", "إعادة جدولة"],
-              nextStep: "check_schedule"
+              id: 'appointment_type',
+              type: 'question',
+              content: 'هل هذا موعد جديد أم متابعة؟',
+              options: ['موعد جديد', 'متابعة', 'إعادة جدولة'],
+              nextStep: 'check_schedule'
             },
             {
-              id: "slack_notification",
-              type: "slack_notify",
-              content: "تم حجز موعد جديد",
-              slackChannel: "appointments",
-              notificationType: "appointment",
-              nextStep: "send_confirmation"
+              id: 'slack_notification',
+              type: 'slack_notify',
+              content: 'تم حجز موعد جديد',
+              slackChannel: 'appointments',
+              notificationType: 'appointment',
+              nextStep: 'send_confirmation'
             }
           ]
         },
         {
-          id: "emergency_slack",
-          name: "الطوارئ مع Slack",
-          description: "نظام طوارئ متكامل مع إشعارات Slack",
-          entryPoints: ["طارئ", "عاجل", "خطر", "إسعاف"],
+          id: 'emergency_slack',
+          name: 'الطوارئ مع Slack',
+          description: 'نظام طوارئ متكامل مع إشعارات Slack',
+          entryPoints: ['طارئ', 'عاجل', 'خطر', 'إسعاف'],
           isActive: true,
-          createdAt: "2024-01-15",
-          updatedAt: "2024-01-15",
+          createdAt: '2024-01-15',
+          updatedAt: '2024-01-15',
           steps: [
             {
-              id: "emergency_detection",
-              type: "action",
-              content: "🚨 تم اكتشاف حالة طوارئ! يرجى الاتصال فوراً بالرقم 997 أو 911.",
-              nextStep: "slack_alert"
+              id: 'emergency_detection',
+              type: 'action',
+              content: '🚨 تم اكتشاف حالة طوارئ! يرجى الاتصال فوراً بالرقم 997 أو 911.',
+              nextStep: 'slack_alert'
             },
             {
-              id: "slack_alert",
-              type: "slack_notify",
-              content: "تنبيه طارئ من المريض",
-              slackChannel: "emergency",
-              notificationType: "emergency",
-              nextStep: "emergency_contacts"
+              id: 'slack_alert',
+              type: 'slack_notify',
+              content: 'تنبيه طارئ من المريض',
+              slackChannel: 'emergency',
+              notificationType: 'emergency',
+              nextStep: 'emergency_contacts'
             }
           ]
         }
       ];
-      
+
       setFlows(mockFlows);
     } catch (error) {
-      } finally {
+    } finally {
       setLoading(false);
     }
   };
 
-  const handleToggleFlow = async (flowId: string) => {
+  const handleToggleFlow = async(flowId: string) => {
     try {
       // في التطبيق الحقيقي، سيتم تحديث حالة الـ flow عبر API
-      setFlows(prev => prev.map(flow => 
+      setFlows(prev => prev.map(flow =>
         flow.id === flowId ? { ...flow, isActive: !flow.isActive } : flow
       ));
     } catch (error) {
-      }
+    }
   };
 
   const handleEditFlow = (flow: ConversationFlow) => {
@@ -166,30 +167,30 @@ const FlowsManagementPage: React.FC = () => {
     setShowFlowEditor(true);
   };
 
-  const handleDeleteFlow = async (flowId: string) => {
+  const handleDeleteFlow = async(flowId: string) => {
     if (!confirm('هل أنت متأكد من حذف هذا الـ Flow؟')) return;
 
     try {
       // في التطبيق الحقيقي، سيتم حذف الـ flow عبر API
       setFlows(prev => prev.filter(flow => flow.id !== flowId));
     } catch (error) {
-      }
+    }
   };
 
   const getStepIcon = (type: string) => {
     switch (type) {
-      case 'question':
-        return <MessageCircle className="w-4 h-4 text-brand-primary" />;
-      case 'information':
-        return <Bot className="w-4 h-4 text-brand-success" />;
-      case 'action':
-        return <Zap className="w-4 h-4 text-brand-warning" />;
-      case 'slack_notify':
-        return <Settings className="w-4 h-4 text-purple-500" />;
-      case 'whatsapp_send':
-        return <MessageCircle className="w-4 h-4 text-brand-success" />;
-      default:
-        return <ArrowRight className="w-4 h-4 text-gray-500" />;
+    case 'question':
+      return <MessageCircle className="w-4 h-4 text-brand-primary" />;
+    case 'information':
+      return <Bot className="w-4 h-4 text-brand-success" />;
+    case 'action':
+      return <Zap className="w-4 h-4 text-brand-warning" />;
+    case 'slack_notify':
+      return <Settings className="w-4 h-4 text-purple-500" />;
+    case 'whatsapp_send':
+      return <MessageCircle className="w-4 h-4 text-brand-success" />;
+    default:
+      return <ArrowRight className="w-4 h-4 text-gray-500" />;
     }
   };
 
@@ -211,7 +212,7 @@ const FlowsManagementPage: React.FC = () => {
             <h1 className="text-3xl font-bold text-gray-900">إدارة Flows الشات بوت</h1>
             <p className="text-gray-600 mt-2">إدارة سيناريوهات المحادثة والتفاعل</p>
           </div>
-          <Button 
+          <Button
             onClick={() => setShowFlowEditor(true)}
             className="bg-[var(--brand-primary)] hover:brightness-95"
           >
@@ -242,7 +243,7 @@ const FlowsManagementPage: React.FC = () => {
             <Bot className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد Flows</h3>
             <p className="text-gray-600 mb-4">ابدأ بإنشاء أول Flow للشات بوت</p>
-            <Button 
+            <Button
               onClick={() => setShowFlowEditor(true)}
               className="bg-[var(--brand-primary)] hover:brightness-95"
             >
@@ -259,10 +260,10 @@ const FlowsManagementPage: React.FC = () => {
                   <div className="flex-1">
                     <CardTitle className="text-lg mb-2">{flow.name}</CardTitle>
                     <p className="text-sm text-gray-600 mb-3">{flow.description}</p>
-                    
+
                     <div className="flex items-center gap-2 mb-3">
-                      <Badge variant={flow.isActive ? "primary" : "outline"}>
-                        {flow.isActive ? "نشط" : "غير نشط"}
+                      <Badge variant={flow.isActive ? 'primary' : 'outline'}>
+                        {flow.isActive ? 'نشط' : 'غير نشط'}
                       </Badge>
                       <span className="text-xs text-gray-500">
                         {flow.steps.length} خطوة
@@ -270,17 +271,17 @@ const FlowsManagementPage: React.FC = () => {
                     </div>
 
                     <div className="text-xs text-gray-500">
-                      <p>نقاط الدخول: {flow.entryPoints.join(", ")}</p>
+                      <p>نقاط الدخول: {flow.entryPoints.join(', ')}</p>
                       <p>آخر تحديث: {flow.updatedAt}</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex gap-1">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handleToggleFlow(flow.id)}
-                      className={flow.isActive ? "text-brand-error" : "text-brand-success"}
+                      className={flow.isActive ? 'text-brand-error' : 'text-brand-success'}
                     >
                       {flow.isActive ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                     </Button>
@@ -302,7 +303,7 @@ const FlowsManagementPage: React.FC = () => {
                   </div>
                 </div>
               </CardHeader>
-              
+
               <CardContent>
                 <div className="space-y-2">
                   <h4 className="text-sm font-semibold text-gray-700 mb-2">خطوات الـ Flow:</h4>
@@ -343,7 +344,7 @@ const FlowsManagementPage: React.FC = () => {
                 إغلاق
               </Button>
             </div>
-            
+
             <div className="text-center py-8">
               <Settings className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-600">محرر الـ Flows قيد التطوير</p>

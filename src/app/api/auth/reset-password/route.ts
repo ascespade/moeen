@@ -5,26 +5,26 @@
  */
 
 import { log } from '@/lib/monitoring/logger';
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
 import { z } from 'zod';
 
-const resetPasswordSchema = z.object({
+let resetPasswordSchema = z.object({
   password: z.string().min(6, 'كلمة المرور يجب أن تكون 6 أحرف على الأقل'),
-  confirmPassword: z.string(),
+  confirmPassword: z.string()
 }).refine((data) => data.password === data.confirmPassword, {
   message: 'كلمة المرور غير متطابقة',
-  path: ['confirmPassword'],
+  path: ['confirmPassword']
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
-    const body = await request.json();
-    
+    let body = await request.json();
+
     // Validate input
-    const validation = resetPasswordSchema.safeParse(body);
+    let validation = resetPasswordSchema.safeParse(body);
     if (!validation.success) {
-      return NextResponse.json({
+      return import { NextResponse } from "next/server";.json({
         success: false,
         errors: validation.error.issues.map(err => ({
           field: err.path[0],
@@ -33,27 +33,27 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const { password } = validation.data;
-    const supabase = await createClient();
+    const password = validation.data;
+    let supabase = await () => ({} as any)();
 
     // Get current user (must be authenticated via reset token)
     const { data: { user }, error: userError } = await supabase.auth.getUser();
 
     if (userError || !user) {
-      return NextResponse.json({
+      return import { NextResponse } from "next/server";.json({
         success: false,
         error: 'غير مصرح. الرجاء استخدام رابط إعادة التعيين الصحيح.'
       }, { status: 401 });
     }
 
     // Update password
-    const { error: updateError } = await supabase.auth.updateUser({
+    const error: updateError = await supabase.auth.updateUser({
       password: password
     });
 
     if (updateError) {
-      console.error('Password update error:', updateError);
-      return NextResponse.json({
+      // console.error('Password update error:', updateError);
+      return import { NextResponse } from "next/server";.json({
         success: false,
         error: 'فشل تحديث كلمة المرور. حاول مرة أخرى.'
       }, { status: 500 });
@@ -80,17 +80,17 @@ export async function POST(request: NextRequest) {
         }
       });
     } catch (auditError) {
-      console.error('Audit log error (non-critical):', auditError);
+      // console.error('Audit log error (non-critical):', auditError);
     }
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       message: 'تم تحديث كلمة المرور بنجاح'
     });
 
   } catch (error) {
-    console.error('Reset password error:', error);
-    return NextResponse.json({
+    // console.error('Reset password error:', error);
+    return import { NextResponse } from "next/server";.json({
       success: false,
       error: 'حدث خطأ أثناء معالجة طلبك'
     }, { status: 500 });

@@ -1,3 +1,4 @@
+import React from "react";
 
 /**
  * Area Chart Component - مكون الرسم البياني المساحي
@@ -15,7 +16,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
+  Legend
 } from 'recharts';
 import { useTheme } from '@/core/theme';
 
@@ -44,23 +45,23 @@ export const AreaChart: React.FC<AreaChartProps> = ({
   className = '',
   showGrid = true,
   showLegend = true,
-  showTooltip = true,
+  showTooltip = true
 }) => {
-  const { isDark } = useTheme();
+  const isDark = useTheme();
 
   // Default areas if none provided
   const defaultAreas = areas.length > 0 ? areas : [
     {
       dataKey: dataKey,
       color: 'var(--brand-primary)',
-      name: 'Value',
-    },
+      name: 'Value'
+    }
   ];
 
   const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 
   return (
-    <div className={`w-full ${className}`} style={{ height }}>
+    <div className={`w-full ${className}`
       <ResponsiveContainer width="100%" height="100%">
         <RechartsAreaChart
           data={data}
@@ -68,7 +69,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
             top: 20,
             right: isRTL ? 30 : 30,
             left: isRTL ? 30 : 0,
-            bottom: 20,
+            bottom: 20
           }}
         >
           {showGrid && (
@@ -94,13 +95,13 @@ export const AreaChart: React.FC<AreaChartProps> = ({
             <Tooltip
               contentStyle={{
                 backgroundColor: isDark ? '#1f2937' : '#ffffff',
-                border: `1px solid ${isDark ? '#374151' : '#e5e7eb'}`,
+                border: `1px solid ${isDark ? '#374151' : '#e5e7eb'}`
                 borderRadius: '8px',
-                color: isDark ? '#e5eef7' : '#0f172a',
+                color: isDark ? '#e5eef7' : '#0f172a'
               }}
               labelStyle={{
                 color: isDark ? '#9ca3af' : '#6b7280',
-                fontSize: '12px',
+                fontSize: '12px'
               }}
             />
           )}
@@ -108,7 +109,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
             <Legend
               wrapperStyle={{
                 color: isDark ? '#e5eef7' : '#0f172a',
-                fontSize: '12px',
+                fontSize: '12px'
               }}
             />
           )}

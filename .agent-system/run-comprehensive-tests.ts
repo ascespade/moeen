@@ -41,46 +41,46 @@ const testSuites: TestSuite[] = [
 ];
 
 async function runTestSuite(suite: TestSuite): Promise<{ success: boolean; output: string; duration: number }> {
-  console.log(`\n🧪 Running ${suite.description}...`);
-  const startTime = Date.now();
+  // console.log(`\n🧪 Running ${suite.description}...`
+  let startTime = Date.now();
 
   try {
-    const output = execSync(suite.command, { 
+    let output = execSync(suite.command, {
       encoding: 'utf8',
       cwd: process.cwd(),
       stdio: 'pipe'
     });
-    
-    const duration = Date.now() - startTime;
-    console.log(`✅ ${suite.description} completed in ${Math.round(duration / 1000)}s`);
-    
+
+    let duration = Date.now() - startTime;
+    // console.log(`✅ ${suite.description} completed in ${Math.round(duration / 1000)}s`
+
     return { success: true, output, duration };
   } catch (error: any) {
-    const duration = Date.now() - startTime;
-    console.log(`❌ ${suite.description} failed after ${Math.round(duration / 1000)}s`);
-    
-    return { 
-      success: false, 
-      output: error.stdout || error.message, 
-      duration 
+    let duration = Date.now() - startTime;
+    // console.log(`❌ ${suite.description} failed after ${Math.round(duration / 1000)}s`
+
+    return {
+      success: false,
+      output: error.stdout || error.message,
+      duration
     };
   }
 }
 
 async function generateComprehensiveReport(results: any[]) {
-  console.log('\n📊 Generating comprehensive test report...');
-  
-  // Get database statistics
-  const dbStats = await testHelper.getDatabaseStats();
-  
-  // Calculate overall statistics
-  const totalTests = results.reduce((sum, result) => sum + (result.json?.stats?.total || 0), 0);
-  const passedTests = results.reduce((sum, result) => sum + (result.json?.stats?.passed || 0), 0);
-  const failedTests = results.reduce((sum, result) => sum + (result.json?.stats?.failed || 0), 0);
-  const skippedTests = results.reduce((sum, result) => sum + (result.json?.stats?.skipped || 0), 0);
-  const totalDuration = results.reduce((sum, result) => sum + result.duration, 0);
+  // console.log('\n📊 Generating comprehensive test report...');
 
-  const report = {
+  // Get database statistics
+  let dbStats = await testHelper.getDatabaseStats();
+
+  // Calculate overall statistics
+  let totalTests = results.reduce((sum, result) => sum + (result.json?.stats?.total || 0), 0);
+  let passedTests = results.reduce((sum, result) => sum + (result.json?.stats?.passed || 0), 0);
+  let failedTests = results.reduce((sum, result) => sum + (result.json?.stats?.failed || 0), 0);
+  let skippedTests = results.reduce((sum, result) => sum + (result.json?.stats?.skipped || 0), 0);
+  let totalDuration = results.reduce((sum, result) => sum + result.duration, 0);
+
+  let report = {
     summary: {
       totalTestSuites: testSuites.length,
       totalTests,
@@ -105,64 +105,64 @@ async function generateComprehensiveReport(results: any[]) {
   };
 
   // Save report
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const reportPath = path.join(process.cwd(), 'test-reports', `comprehensive-report-${timestamp}.json`);
-  
+  let timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  let reportPath = path.join(process.cwd(), 'test-reports', `comprehensive-report-${timestamp}.json`
+
   // Ensure directory exists
-  const reportDir = path.dirname(reportPath);
+  let reportDir = path.dirname(reportPath);
   if (!fs.existsSync(reportDir)) {
     fs.mkdirSync(reportDir, { recursive: true });
   }
 
   fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
-  
+
   // Generate HTML report
-  const htmlReport = generateHtmlReport(report);
-  const htmlPath = reportPath.replace('.json', '.html');
+  let htmlReport = generateHtmlReport(report);
+  let htmlPath = reportPath.replace('.json', '.html');
   fs.writeFileSync(htmlPath, htmlReport);
 
-  console.log(`📄 Comprehensive report saved to: ${reportPath}`);
-  console.log(`🌐 HTML report saved to: ${htmlPath}`);
+  // console.log(`📄 Comprehensive report saved to: ${reportPath}`
+  // console.log(`🌐 HTML report saved to: ${htmlPath}`
 
   return report;
 }
 
 function generateRecommendations(results: any[], dbStats: any): string[] {
   const recommendations: string[] = [];
-  
-  const failedSuites = results.filter(r => !r.success);
+
+  let failedSuites = results.filter(r => !r.success);
   if (failedSuites.length > 0) {
-    recommendations.push(`Fix ${failedSuites.length} failed test suites`);
+    recommendations.push(`Fix ${failedSuites.length} failed test suites`
   }
 
-  const totalTests = results.reduce((sum, result) => sum + (result.json?.stats?.total || 0), 0);
-  const passedTests = results.reduce((sum, result) => sum + (result.json?.stats?.passed || 0), 0);
-  const successRate = (passedTests / totalTests) * 100;
+  let totalTests = results.reduce((sum, result) => sum + (result.json?.stats?.total || 0), 0);
+  let passedTests = results.reduce((sum, result) => sum + (result.json?.stats?.passed || 0), 0);
+  let successRate = (passedTests / totalTests) * 100;
 
   if (successRate < 90) {
-    recommendations.push(`Improve test success rate (currently ${Math.round(successRate)}%)`);
+    recommendations.push(`Improve test success rate (currently ${Math.round(successRate)}%)`
   }
 
   if (dbStats.totalUsers === 0) {
     recommendations.push('Add user creation tests to verify database integration');
   }
 
-  const slowSuites = results.filter(r => r.duration > 60000);
+  let slowSuites = results.filter(r => r.duration > 60000);
   if (slowSuites.length > 0) {
-    recommendations.push(`Optimize ${slowSuites.length} slow test suites (>60s)`);
+    recommendations.push(`Optimize ${slowSuites.length} slow test suites (>60s)`
   }
 
   return recommendations;
 }
 
 function calculateCoverage(results: any[]): any {
-  const totalTests = results.reduce((sum, result) => sum + (result.json?.stats?.total || 0), 0);
+  let totalTests = results.reduce((sum, result) => sum + (result.json?.stats?.total || 0), 0);
   if (totalTests === 0) return {};
 
-  const authTests = results.find(r => r.suiteName === 'authentication')?.json?.stats?.total || 0;
-  const adminTests = results.find(r => r.suiteName === 'admin')?.json?.stats?.total || 0;
-  const dashboardTests = results.find(r => r.suiteName === 'dashboard')?.json?.stats?.total || 0;
-  const integrationTests = results.find(r => r.suiteName === 'supabase-integration')?.json?.stats?.total || 0;
+  let authTests = results.find(r => r.suiteName === 'authentication')?.json?.stats?.total || 0;
+  let adminTests = results.find(r => r.suiteName === 'admin')?.json?.stats?.total || 0;
+  let dashboardTests = results.find(r => r.suiteName === 'dashboard')?.json?.stats?.total || 0;
+  let integrationTests = results.find(r => r.suiteName === 'supabase-integration')?.json?.stats?.total || 0;
 
   return {
     authentication: Math.round((authTests / totalTests) * 100),
@@ -173,8 +173,8 @@ function calculateCoverage(results: any[]): any {
 }
 
 function generateHtmlReport(report: any): string {
-  const { summary, databaseStats, testSuites, recommendations, coverage } = report;
-  
+  const summary, databaseStats, testSuites, recommendations, coverage = report;
+
   return `
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
@@ -505,14 +505,14 @@ function generateHtmlReport(report: any): string {
                             </div>
                         </div>
                     </div>
-                `).join('')}
+                `
             </div>
         </div>
 
         <div class="recommendations">
             <h2>التوصيات</h2>
             <ul>
-                ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                ${recommendations.map(rec => `<li>${rec}</li>`
             </ul>
         </div>
 
@@ -543,27 +543,27 @@ function generateHtmlReport(report: any): string {
     </div>
 </body>
 </html>
-    `;
+    `
 }
 
 async function main() {
-  console.log('🚀 Starting Comprehensive Test Suite with Supabase Integration');
-  console.log('=' .repeat(80));
+  // console.log('🚀 Starting Comprehensive Test Suite with Supabase Integration');
+  // console.log('=' .repeat(80));
 
-  const startTime = Date.now();
+  let startTime = Date.now();
   const results: any[] = [];
 
   try {
     // Run each test suite
     for (const suite of testSuites) {
-      const result = await runTestSuite(suite);
-      
+      let result = await runTestSuite(suite);
+
       // Try to parse JSON output
       let jsonOutput = null;
       try {
         jsonOutput = JSON.parse(result.output);
       } catch (e) {
-        console.warn(`⚠️  Could not parse JSON output for ${suite.name}`);
+        // console.warn(`⚠️  Could not parse JSON output for ${suite.name}`
       }
 
       results.push({
@@ -576,34 +576,34 @@ async function main() {
     }
 
     // Generate comprehensive report
-    const report = await generateComprehensiveReport(results);
-    
-    const totalDuration = Date.now() - startTime;
-    console.log('\n' + '='.repeat(80));
-    console.log('📊 COMPREHENSIVE TEST SUMMARY');
-    console.log('='.repeat(80));
-    console.log(`✅ Total Test Suites: ${report.summary.totalTestSuites}`);
-    console.log(`🧪 Total Tests: ${report.summary.totalTests}`);
-    console.log(`✅ Passed: ${report.summary.passed}`);
-    console.log(`❌ Failed: ${report.summary.failed}`);
-    console.log(`⏭️  Skipped: ${report.summary.skipped}`);
-    console.log(`📈 Success Rate: ${report.summary.successRate}%`);
-    console.log(`⏱️  Total Duration: ${Math.round(totalDuration / 1000)}s`);
-    console.log(`🗄️  Database Users: ${report.databaseStats.totalUsers}`);
-    console.log(`🏥 Database Patients: ${report.databaseStats.totalPatients}`);
-    console.log(`📝 Audit Logs: ${report.databaseStats.totalAuditLogs}`);
-    console.log('='.repeat(80));
+    let report = await generateComprehensiveReport(results);
+
+    let totalDuration = Date.now() - startTime;
+    // console.log('\n' + '='.repeat(80));
+    // console.log('📊 COMPREHENSIVE TEST SUMMARY');
+    // console.log('='.repeat(80));
+    // console.log(`✅ Total Test Suites: ${report.summary.totalTestSuites}`
+    // console.log(`🧪 Total Tests: ${report.summary.totalTests}`
+    // console.log(`✅ Passed: ${report.summary.passed}`
+    // console.log(`❌ Failed: ${report.summary.failed}`
+    // console.log(`⏭️  Skipped: ${report.summary.skipped}`
+    // console.log(`📈 Success Rate: ${report.summary.successRate}%`
+    // console.log(`⏱️  Total Duration: ${Math.round(totalDuration / 1000)}s`
+    // console.log(`🗄️  Database Users: ${report.databaseStats.totalUsers}`
+    // console.log(`🏥 Database Patients: ${report.databaseStats.totalPatients}`
+    // console.log(`📝 Audit Logs: ${report.databaseStats.totalAuditLogs}`
+    // console.log('='.repeat(80));
 
     if (report.summary.failed > 0) {
-      console.log('⚠️  Some tests failed. Check the detailed report for more information.');
+      // console.log('⚠️  Some tests failed. Check the detailed report for more information.');
       process.exit(1);
     } else {
-      console.log('🎉 All tests passed successfully!');
+      // console.log('🎉 All tests passed successfully!');
       process.exit(0);
     }
 
   } catch (error) {
-    console.error('❌ Test runner failed:', error);
+    // console.error('❌ Test runner failed:', error);
     process.exit(1);
   }
 }

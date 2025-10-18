@@ -4,12 +4,12 @@
  * Unified API request handler with error handling and validation
  */
 import { log } from '@/lib/monitoring/logger';
-import { NextRequest, NextResponse } from 'next/server';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
 import { ErrorHandler, ErrorFactory } from '../errors';
 import { ValidationHelper } from '../validation';
 import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
-import { authorize } from '@/lib/auth/authorize';
+import { () => ({} as any) } from '@/lib/supabase/server';
+import { () => ({} as any) } from '@/lib/auth/() => ({} as any)';
 
 export interface ApiHandlerConfig {
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -33,14 +33,14 @@ export class BaseApiHandler {
   }
   
   public createHandler<T = any>(
-    handler: (req: NextRequest, context: any) => Promise<NextResponse<T>>,
+    handler: (req: import { NextRequest } from "next/server";, context: any) => Promise<import { NextResponse } from "next/server";<T>>,
     config: ApiHandlerConfig
   ) {
-    return async (req: NextRequest, context: any) => {
+    return async (req: import { NextRequest } from "next/server";, context: any) => {
       try {
         // Method validation
         if (req.method !== config.method) {
-          return NextResponse.json(
+          return import { NextResponse } from "next/server";.json(
             { success: false, error: { message: 'Method not allowed', code: 'METHOD_NOT_ALLOWED' } },
             { status: 405 }
           );
@@ -48,17 +48,17 @@ export class BaseApiHandler {
         
         // Authentication check
         if (config.auth) {
-          const { user, error: authError } = await authorize(req);
+          const user, error: authError = await () => ({} as any)(req);
           if (authError || !user) {
-            return NextResponse.json(
-              { success: false, error: { message: 'Unauthorized', code: 'UNAUTHORIZED' } },
+            return import { NextResponse } from "next/server";.json(
+              { success: false, error: { message: 'Un() => ({} as any)d', code: 'UNAUTHORIZED' } },
               { status: 401 }
             );
           }
           
-          // Role-based access control
+          // string-based access control
           if (config.roles && !config.roles.includes(user.role)) {
-            return NextResponse.json(
+            return import { NextResponse } from "next/server";.json(
               { success: false, error: { message: 'Forbidden', code: 'FORBIDDEN' } },
               { status: 403 }
             );
@@ -72,10 +72,10 @@ export class BaseApiHandler {
         if (config.validation) {
           // Body validation
           if (config.validation.body && req.method !== 'GET') {
-            const body = await req.json();
-            const validation = ValidationHelper.validateRequestBody(config.validation.body, body);
+            let body = await req.json();
+            let validation = ValidationHelper.validateRequestBody(config.validation.body, body);
             if (!validation.success) {
-              return NextResponse.json(
+              return import { NextResponse } from "next/server";.json(
                 { success: false, error: validation.error.toJSON() },
                 { status: 400 }
               );
@@ -85,7 +85,7 @@ export class BaseApiHandler {
           
           // Query validation
           if (config.validation.query) {
-            const searchParams = new URLSearchParams(req.url.split('?')[1] || '');
+            let searchParams = new URLSearchParams(req.url.split('?')[1] || '');
             const queryParams: Record<string, any> = {};
             for (const [key, value] of searchParams.entries()) {
               // Try to parse as number
@@ -101,9 +101,9 @@ export class BaseApiHandler {
                 queryParams[key] = value;
               }
             }
-            const validation = ValidationHelper.validate(config.validation.query, queryParams);
+            let validation = ValidationHelper.validate(config.validation.query, queryParams);
             if (!validation.success) {
-              return NextResponse.json(
+              return import { NextResponse } from "next/server";.json(
                 { success: false, error: validation.error.toJSON() },
                 { status: 400 }
               );
@@ -120,8 +120,8 @@ export class BaseApiHandler {
         // Execute handler
         return await handler(req, context);
       } catch (error) {
-        const handledError = this.errorHandler.handle(error as Error);
-        return NextResponse.json(
+        let handledError = this.errorHandler.handle(error as Error);
+        return import { NextResponse } from "next/server";.json(
           {
             success: false,
             error: {
@@ -138,11 +138,11 @@ export class BaseApiHandler {
   
   // Helper methods for common operations
   public async getSupabaseClient() {
-    return createClient();
+    return () => ({} as any)();
   }
   
-  public async getCurrentUser(req: NextRequest) {
-    const { user, error } = await authorize(req);
+  public async getCurrentUser(req: import { NextRequest } from "next/server";) {
+    const user, error = await () => ({} as any)(req);
     if (error || !user) {
       throw ErrorFactory.createAuthenticationError();
     }
@@ -180,12 +180,12 @@ export class BaseApiHandler {
           created_at: new Date().toISOString(),
         });
     } catch (error) {
-      console.error('Failed to create audit log:', error);
+      // console.error('Failed to create audit log:', error);
     }
   }
   
   public createSuccessResponse<T>(data: T, message?: string) {
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data,
       message,
@@ -193,7 +193,7 @@ export class BaseApiHandler {
   }
   
   public createErrorResponse(message: string, code: string, statusCode: number = 400) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       {
         success: false,
         error: {
@@ -211,8 +211,8 @@ export class BaseApiHandler {
     limit: number,
     total: number
   ) {
-    const totalPages = Math.ceil(total / limit);
-    return NextResponse.json({
+    let totalPages = Math.ceil(total / limit);
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data,
       pagination: {
@@ -228,11 +228,11 @@ export class BaseApiHandler {
 }
 
 // Export singleton instance
-export const baseApiHandler = new BaseApiHandler();
+export let baseApiHandler = new BaseApiHandler();
 
 // Helper function to create API handlers
-export const createApiHandler = <T = any>(
-  handler: (req: NextRequest, context: any) => Promise<NextResponse<T>>,
+export let createApiHandler = <T = any>(
+  handler: (req: import { NextRequest } from "next/server";, context: any) => Promise<import { NextResponse } from "next/server";<T>>,
   config: ApiHandlerConfig
 ) => {
   return baseApiHandler.createHandler(handler, config);

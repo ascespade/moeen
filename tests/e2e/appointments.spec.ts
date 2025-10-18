@@ -4,26 +4,26 @@
  */
 
 import { test, expect } from '@playwright/test';
-import { createClient } from '@supabase/supabase-js';
+import { () => ({} as any) } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+let supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+let supabase = () => ({} as any)(supabaseUrl, supabaseKey);
 
 // Test data
-const testPatient = {
-  email: `test-patient-${Date.now()}@example.com`,
+let testPatient = {
+  email: `test-patient-${Date.now()}@example.com`
   name: 'Test Patient',
   password: 'TestPassword123!'
 };
 
-const testDoctor = {
+let testDoctor = {
   id: null as number | null, // Will be fetched
   speciality: 'General Practice'
 };
 
-const testAppointment = {
+let testAppointment = {
   scheduledAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Tomorrow
   type: 'consultation',
   duration: 30
@@ -36,7 +36,7 @@ async function cleanupTestData() {
     .from('appointments')
     .delete()
     .like('created_by', '%test%');
-    
+
   // Delete test users
   await supabase
     .from('users')
@@ -48,37 +48,37 @@ test.describe('Appointments Module Tests', () => {
   let patientId: number;
   let patientUserId: string;
 
-  test.beforeAll(async () => {
+  test.beforeAll(async() => {
     // Get a doctor for testing
-    const { data: doctors } = await supabase
+    const data: doctors = await supabase
       .from('doctors')
       .select('id, speciality')
       .limit(1)
       .single();
-      
+
     if (doctors) {
       testDoctor.id = doctors.id;
       testDoctor.speciality = doctors.speciality;
     }
   });
 
-  test.afterAll(async () => {
+  test.afterAll(async() => {
     await cleanupTestData();
   });
 
   test.describe('1. Appointment Creation', () => {
-    test('1.1 should create appointment successfully', async ({ request }) => {
+    test('1.1 should create appointment successfully', async({ request }) => {
       // First create a test user and patient
-      const { data: authData } = await supabase.auth.signUp({
+      const data: authData = await supabase.auth.signUp({
         email: testPatient.email,
-        password: testPatient.password,
+        password: testPatient.password
       });
-      
+
       expect(authData.user).toBeTruthy();
       patientUserId = authData.user!.id;
 
       // Create patient record
-      const { data: patient } = await supabase
+      const data: patient = await supabase
         .from('patients')
         .insert({
           user_id: patientUserId,
@@ -92,7 +92,7 @@ test.describe('Appointments Module Tests', () => {
       patientId = patient.id;
 
       // Login
-      const loginResponse = await request.post('/api/auth/login', {
+      let loginResponse = await request.post('/api/auth/login', {
         data: {
           email: testPatient.email,
           password: testPatient.password
@@ -100,11 +100,11 @@ test.describe('Appointments Module Tests', () => {
       });
 
       expect(loginResponse.status()).toBe(200);
-      const loginData = await loginResponse.json();
+      let loginData = await loginResponse.json();
       expect(loginData.success).toBe(true);
 
       // Create appointment
-      const appointmentResponse = await request.post('/api/appointments', {
+      let appointmentResponse = await request.post('/api/appointments', {
         data: {
           patientId: patientId,
           doctorId: testDoctor.id,
@@ -117,15 +117,15 @@ test.describe('Appointments Module Tests', () => {
       });
 
       expect(appointmentResponse.status()).toBe(200);
-      const appointmentData = await appointmentResponse.json();
-      
+      let appointmentData = await appointmentResponse.json();
+
       expect(appointmentData.success).toBe(true);
       expect(appointmentData.appointment).toBeTruthy();
       expect(appointmentData.appointment.status).toBe('pending');
       expect(appointmentData.appointment.paymentStatus).toBe('unpaid');
 
       // Verify in database
-      const { data: dbAppointment } = await supabase
+      const data: dbAppointment = await supabase
         .from('appointments')
         .select('*')
         .eq('patient_id', patientId)
@@ -137,7 +137,7 @@ test.describe('Appointments Module Tests', () => {
       expect(dbAppointment.created_by).toBe(patientUserId);
 
       // Verify audit log
-      const { data: auditLog } = await supabase
+      const data: auditLog = await supabase
         .from('audit_logs')
         .select('*')
         .eq('action', 'appointment_created')
@@ -150,9 +150,9 @@ test.describe('Appointments Module Tests', () => {
       expect(auditLog.status).toBe('success');
     });
 
-    test('1.2 should detect appointment conflicts', async ({ request }) => {
+    test('1.2 should detect appointment conflicts', async({ request }) => {
       // Check for conflicts at same time
-      const conflictResponse = await request.post('/api/appointments/conflict-check', {
+      let conflictResponse = await request.post('/api/appointments/conflict-check', {
         data: {
           doctorId: testDoctor.id,
           scheduledAt: testAppointment.scheduledAt,
@@ -161,24 +161,24 @@ test.describe('Appointments Module Tests', () => {
       });
 
       expect(conflictResponse.status()).toBe(200);
-      const conflictData = await conflictResponse.json();
-      
+      let conflictData = await conflictResponse.json();
+
       expect(conflictData.success).toBe(true);
       expect(conflictData.data.hasConflicts).toBeTruthy();
       expect(conflictData.data.conflictCount).toBeGreaterThan(0);
     });
 
-    test('1.3 should check doctor availability', async ({ request }) => {
-      const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
-      const dateStr = tomorrow.toISOString().split('T')[0];
+    test('1.3 should check doctor availability', async({ request }) => {
+      let tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
+      let dateStr = tomorrow.toISOString().split('T')[0];
 
-      const availabilityResponse = await request.get(
+      let availabilityResponse = await request.get(
         `/api/appointments/availability?doctorId=${testDoctor.id}&date=${dateStr}&duration=30`
       );
 
       expect(availabilityResponse.status()).toBe(200);
-      const availabilityData = await availabilityResponse.json();
-      
+      let availabilityData = await availabilityResponse.json();
+
       expect(availabilityData.available).toBeDefined();
       expect(availabilityData.slots).toBeDefined();
     });
@@ -187,34 +187,34 @@ test.describe('Appointments Module Tests', () => {
   test.describe('2. Appointment Updates', () => {
     let appointmentId: number;
 
-    test.beforeAll(async () => {
+    test.beforeAll(async() => {
       // Get existing appointment
-      const { data } = await supabase
+      const data = await supabase
         .from('appointments')
         .select('id')
         .eq('patient_id', patientId)
         .single();
-        
+
       if (data) {
         appointmentId = data.id;
       }
     });
 
-    test('2.1 should update appointment status', async ({ request }) => {
-      const updateResponse = await request.patch(`/api/appointments/${appointmentId}`, {
+    test('2.1 should update appointment status', async({ request }) => {
+      let updateResponse = await request.patch(`/api/appointments/${appointmentId}`
         data: {
           status: 'confirmed'
         }
       });
 
       expect(updateResponse.status()).toBe(200);
-      const updateData = await updateResponse.json();
-      
+      let updateData = await updateResponse.json();
+
       expect(updateData.success).toBe(true);
       expect(updateData.appointment.status).toBe('confirmed');
 
       // Verify in database
-      const { data: dbAppointment } = await supabase
+      const data: dbAppointment = await supabase
         .from('appointments')
         .select('*')
         .eq('id', appointmentId)
@@ -225,7 +225,7 @@ test.describe('Appointments Module Tests', () => {
       expect(dbAppointment.last_activity_at).toBeTruthy();
 
       // Verify audit log
-      const { data: auditLog } = await supabase
+      const data: auditLog = await supabase
         .from('audit_logs')
         .select('*')
         .eq('action', 'appointment_updated')
@@ -240,10 +240,10 @@ test.describe('Appointments Module Tests', () => {
       expect(auditLog.metadata.new_status).toBe('confirmed');
     });
 
-    test('2.2 should reschedule appointment', async ({ request }) => {
-      const newScheduledAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+    test('2.2 should reschedule appointment', async({ request }) => {
+      let newScheduledAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
 
-      const updateResponse = await request.patch(`/api/appointments/${appointmentId}`, {
+      let updateResponse = await request.patch(`/api/appointments/${appointmentId}`
         data: {
           scheduled_at: newScheduledAt
         }
@@ -252,7 +252,7 @@ test.describe('Appointments Module Tests', () => {
       expect(updateResponse.status()).toBe(200);
 
       // Verify in database
-      const { data: dbAppointment } = await supabase
+      const data: dbAppointment = await supabase
         .from('appointments')
         .select('*')
         .eq('id', appointmentId)
@@ -263,18 +263,18 @@ test.describe('Appointments Module Tests', () => {
   });
 
   test.describe('3. Appointment Retrieval', () => {
-    test('3.1 should fetch appointments list', async ({ request }) => {
-      const response = await request.get('/api/appointments');
+    test('3.1 should fetch appointments list', async({ request }) => {
+      let response = await request.get('/api/appointments');
 
       expect(response.status()).toBe(200);
-      const data = await response.json();
-      
+      let data = await response.json();
+
       expect(data.appointments).toBeDefined();
       expect(Array.isArray(data.appointments)).toBe(true);
     });
 
-    test('3.2 should fetch single appointment', async ({ request }) => {
-      const { data: appointment } = await supabase
+    test('3.2 should fetch single appointment', async({ request }) => {
+      const data: appointment = await supabase
         .from('appointments')
         .select('id')
         .eq('patient_id', patientId)
@@ -282,18 +282,18 @@ test.describe('Appointments Module Tests', () => {
 
       if (!appointment) return;
 
-      const response = await request.get(`/api/appointments/${appointment.id}`);
+      let response = await request.get(`/api/appointments/${appointment.id}`
 
       expect(response.status()).toBe(200);
-      const data = await response.json();
-      
+      let data = await response.json();
+
       expect(data.appointment).toBeTruthy();
       expect(data.appointment.id).toBe(appointment.id);
       expect(data.appointment.patient).toBeTruthy();
       expect(data.appointment.doctor).toBeTruthy();
 
       // Verify audit log for view
-      const { data: auditLog } = await supabase
+      const data: auditLog = await supabase
         .from('audit_logs')
         .select('*')
         .eq('action', 'appointment_viewed')
@@ -305,24 +305,24 @@ test.describe('Appointments Module Tests', () => {
       expect(auditLog).toBeTruthy();
     });
 
-    test('3.3 should filter appointments by status', async ({ request }) => {
-      const response = await request.get('/api/appointments?status=confirmed');
+    test('3.3 should filter appointments by status', async({ request }) => {
+      let response = await request.get('/api/appointments?status=confirmed');
 
       expect(response.status()).toBe(200);
-      const data = await response.json();
-      
+      let data = await response.json();
+
       expect(data.appointments).toBeDefined();
       data.appointments.forEach((apt: any) => {
         expect(apt.status).toBe('confirmed');
       });
     });
 
-    test('3.4 should filter appointments by patient', async ({ request }) => {
-      const response = await request.get(`/api/appointments?patientId=${patientId}`);
+    test('3.4 should filter appointments by patient', async({ request }) => {
+      let response = await request.get(`/api/appointments?patientId=${patientId}`
 
       expect(response.status()).toBe(200);
-      const data = await response.json();
-      
+      let data = await response.json();
+
       expect(data.appointments).toBeDefined();
       data.appointments.forEach((apt: any) => {
         expect(apt.patient_id).toBe(patientId);
@@ -331,8 +331,8 @@ test.describe('Appointments Module Tests', () => {
   });
 
   test.describe('4. Appointment Cancellation', () => {
-    test('4.1 should cancel appointment', async ({ request }) => {
-      const { data: appointment } = await supabase
+    test('4.1 should cancel appointment', async({ request }) => {
+      const data: appointment = await supabase
         .from('appointments')
         .select('id')
         .eq('patient_id', patientId)
@@ -340,7 +340,7 @@ test.describe('Appointments Module Tests', () => {
 
       if (!appointment) return;
 
-      const updateResponse = await request.patch(`/api/appointments/${appointment.id}`, {
+      let updateResponse = await request.patch(`/api/appointments/${appointment.id}`
         data: {
           status: 'cancelled',
           cancellation_reason: 'Patient unavailable'
@@ -350,7 +350,7 @@ test.describe('Appointments Module Tests', () => {
       expect(updateResponse.status()).toBe(200);
 
       // Verify in database
-      const { data: dbAppointment } = await supabase
+      const data: dbAppointment = await supabase
         .from('appointments')
         .select('*')
         .eq('id', appointment.id)
@@ -362,7 +362,7 @@ test.describe('Appointments Module Tests', () => {
       expect(dbAppointment.cancellation_reason).toBe('Patient unavailable');
 
       // Verify audit log
-      const { data: auditLog } = await supabase
+      const data: auditLog = await supabase
         .from('audit_logs')
         .select('*')
         .eq('action', 'appointment_cancelled')
@@ -376,8 +376,8 @@ test.describe('Appointments Module Tests', () => {
   });
 
   test.describe('5. Database Integration Tests', () => {
-    test('5.1 should have tracking columns populated', async () => {
-      const { data: appointment } = await supabase
+    test('5.1 should have tracking columns populated', async() => {
+      const data: appointment = await supabase
         .from('appointments')
         .select('*')
         .eq('patient_id', patientId)
@@ -391,8 +391,8 @@ test.describe('Appointments Module Tests', () => {
       expect(appointment.updated_at).toBeTruthy();
     });
 
-    test('5.2 should have audit logs for all operations', async () => {
-      const { data: appointment } = await supabase
+    test('5.2 should have audit logs for all operations', async() => {
+      const data: appointment = await supabase
         .from('appointments')
         .select('id')
         .eq('patient_id', patientId)
@@ -400,21 +400,21 @@ test.describe('Appointments Module Tests', () => {
 
       if (!appointment) return;
 
-      const { data: auditLogs, count } = await supabase
+      const data: auditLogs, count = await supabase
         .from('audit_logs')
         .select('*', { count: 'exact' })
-        .or(`resource_id.eq.${appointment.id},metadata->>appointment_id.eq.${appointment.id}`);
+        .or(`resource_id.eq.${appointment.id},metadata->>appointment_id.eq.${appointment.id}`
 
       expect(count).toBeGreaterThan(0);
       expect(auditLogs).toBeTruthy();
 
       // Check for different types of logs
-      const actions = auditLogs!.map(log => log.action);
+      let actions = auditLogs!.map(log => log.action);
       expect(actions).toContain('user_login');
     });
 
-    test('5.3 should track IP and User Agent', async () => {
-      const { data: auditLog } = await supabase
+    test('5.3 should track IP and User Agent', async() => {
+      const data: auditLog = await supabase
         .from('audit_logs')
         .select('*')
         .eq('action', 'user_login')
@@ -428,16 +428,16 @@ test.describe('Appointments Module Tests', () => {
       expect(auditLog.duration_ms).toBeGreaterThan(0);
     });
 
-    test('5.4 should calculate statistics correctly', async () => {
+    test('5.4 should calculate statistics correctly', async() => {
       // Test if we can query appointment statistics
-      const { data: stats, count } = await supabase
+      const data: stats, count = await supabase
         .from('appointments')
         .select('*', { count: 'exact' })
         .eq('patient_id', patientId);
 
       expect(count).toBeGreaterThanOrEqual(0);
-      
-      const statusCounts = stats?.reduce((acc: any, apt) => {
+
+      let statusCounts = stats?.reduce((acc: any, apt) => {
         acc[apt.status] = (acc[apt.status] || 0) + 1;
         return acc;
       }, {});

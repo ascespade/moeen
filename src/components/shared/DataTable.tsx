@@ -1,10 +1,11 @@
 import React from "react";
+import React from 'react';
 
 interface Column {
   key: string;
   label: string;
   sortable?: boolean;
-  sortDirection?: "asc" | "desc" | "none";
+  sortDirection?: 'asc' | 'desc' | 'none';
   render?: (value: any, row: any) => React.ReactNode;
 }
 
@@ -23,13 +24,13 @@ export function DataTable({
   onSort,
   onFilter,
   caption,
-  className = "",
+  className = ''
 }: DataTableProps) {
   return (
     <div
       role="region"
       aria-label="Data table"
-      className={`overflow-x-auto ${className}`}
+      className={`overflow-x-auto ${className}`
     >
       <table
         role="table"
@@ -38,7 +39,7 @@ export function DataTable({
       >
         <caption className="sr-only">
           {caption ||
-            `Table with ${data.length} rows and ${columns.length} columns`}
+            `Table with ${data.length} rows and ${columns.length} columns`
         </caption>
         <thead className="bg-surface">
           <tr role="row">
@@ -47,16 +48,16 @@ export function DataTable({
                 key={column.key}
                 role="columnheader"
                 aria-sort={
-                  column.sortDirection === "asc"
-                    ? "ascending"
-                    : column.sortDirection === "desc"
-                      ? "descending"
-                      : "none"
+                  column.sortDirection === 'asc'
+                    ? 'ascending'
+                    : column.sortDirection === 'desc'
+                      ? 'descending'
+                      : 'none'
                 }
                 tabIndex={0}
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-[var(--brand-surface)] focus:bg-[var(--brand-surface)] focus:outline-none focus:ring-2"
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
+                  if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     onSort?.(column.key);
                   }
@@ -66,11 +67,11 @@ export function DataTable({
                 {column.label}
                 {column.sortable && (
                   <span aria-hidden="true" className="ml-1">
-                    {column.sortDirection === "asc"
-                      ? "↑"
-                      : column.sortDirection === "desc"
-                        ? "↓"
-                        : "↕"}
+                    {column.sortDirection === 'asc'
+                      ? '↑'
+                      : column.sortDirection === 'desc'
+                        ? '↓'
+                        : '↕'}
                   </span>
                 )}
               </th>

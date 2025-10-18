@@ -5,7 +5,7 @@ export const authConfig = {
   expiresIn: '7d',
   refreshExpiresIn: '30d',
   maxLoginAttempts: 5,
-  lockoutDuration: 15, // minutes
+  lockoutDuration: 15 // minutes
 };
 
 export default authConfig;

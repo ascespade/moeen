@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 function getAllFiles(dir, exts) {
   const out = [];
@@ -9,9 +9,9 @@ function getAllFiles(dir, exts) {
     if (entry.isDirectory()) {
       // Skip heavy or irrelevant folders
       if (
-        entry.name === "node_modules" ||
-        entry.name === ".next" ||
-        entry.name === ".git"
+        entry.name === 'node_modules' ||
+        entry.name === '.next' ||
+        entry.name === '.git'
       )
         continue;
       out.push(...getAllFiles(full, exts));
@@ -24,30 +24,30 @@ function getAllFiles(dir, exts) {
 }
 
 function normalizeUseClient(filePath) {
-  const src = fs.readFileSync(filePath, "utf8");
+  const src = fs.readFileSync(filePath, 'utf8');
   const startsWithDirective =
-    src.startsWith('"use client";') || src.startsWith("'use client';");
+    src.startsWith('"use client";') || src.startsWith('\'use client\';');
   const hasDirective = /(^|\n)\s*(?:"use client";|'use client';)/.test(src);
   if (!hasDirective) return false;
   if (startsWithDirective) return false;
 
   const without = src.replace(
     /(^|\n)\s*(?:"use client";|'use client';)\s*/g,
-    "\n",
+    '\n'
   );
-  const fixed = `"use client";\n${without.trimStart()}`;
+  const fixed = `"use client";\n${without.trimStart()}`
   fs.writeFileSync(filePath, fixed);
   return true;
 }
 
 (function main() {
   const root = process.cwd();
-  const srcDir = path.join(root, "src");
+  const srcDir = path.join(root, 'src');
   if (!fs.existsSync(srcDir)) {
-    console.error("src directory not found");
+    // console.error('src directory not found');
     process.exit(1);
   }
-  const files = getAllFiles(srcDir, [".tsx", ".ts"]);
+  const files = getAllFiles(srcDir, ['.tsx', '.ts']);
   let changed = 0;
   for (const f of files) {
     try {
@@ -56,5 +56,5 @@ function normalizeUseClient(filePath) {
       // ignore per-file errors
     }
   }
-  console.log(`rewrite-client-directive: updated ${changed} files`);
+  // console.log(`rewrite-client-directive: updated ${changed} files`
 })();

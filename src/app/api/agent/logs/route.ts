@@ -1,25 +1,25 @@
-import fs from "fs";
-import path from "path";
-import { NextRequest, NextResponse } from "next/server";
+import fs from 'fs';
+import path from 'path';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
 
-const LOG_DIR = "/home/ubuntu/workspace/projects/moeen/logs";
+let LOG_DIR = '/home/ubuntu/workspace/projects/moeen/logs';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const logFile = path.join(LOG_DIR, "continuous-agent.log");
+    let logFile = path.join(LOG_DIR, 'continuous-agent.log');
 
     if (!fs.existsSync(logFile)) {
-      return NextResponse.json({ logs: [] });
+      return import { NextResponse } from "next/server";.json({ logs: [] });
     }
 
-    const logContent = fs.readFileSync(logFile, "utf8");
-    const logs = logContent
-      .split("\n")
+    let logContent = fs.readFileSync(logFile, 'utf8');
+    let logs = logContent
+      .split('\n')
       .filter((line) => line.trim())
       .slice(-50); // Last 50 lines
 
-    return NextResponse.json({ logs });
+    return import { NextResponse } from "next/server";.json({ logs });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to read logs" }, { status: 500 });
+    return import { NextResponse } from "next/server";.json({ error: 'Failed to read logs' }, { status: 500 });
   }
 }

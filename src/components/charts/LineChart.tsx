@@ -1,3 +1,4 @@
+import React from "react";
 
 /**
  * Line Chart Component - مكون الرسم البياني الخطي
@@ -15,7 +16,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
+  Legend
 } from 'recharts';
 import { useTheme } from '@/core/theme';
 
@@ -47,9 +48,9 @@ export const LineChart: React.FC<LineChartProps> = ({
   showGrid = true,
   showLegend = true,
   showTooltip = true,
-  smooth = true,
+  smooth = true
 }) => {
-  const { isDark } = useTheme();
+  const isDark = useTheme();
 
   // Default lines if none provided
   const defaultLines = lines.length > 0 ? lines : [
@@ -57,14 +58,14 @@ export const LineChart: React.FC<LineChartProps> = ({
       dataKey: dataKey,
       color: 'var(--brand-primary)',
       name: 'Value',
-      strokeWidth: 2,
-    },
+      strokeWidth: 2
+    }
   ];
 
   const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 
   return (
-    <div className={`w-full ${className}`} style={{ height }}>
+    <div className={`w-full ${className}`
       <ResponsiveContainer width="100%" height="100%">
         <RechartsLineChart
           data={data}
@@ -72,7 +73,7 @@ export const LineChart: React.FC<LineChartProps> = ({
             top: 20,
             right: isRTL ? 30 : 30,
             left: isRTL ? 30 : 0,
-            bottom: 20,
+            bottom: 20
           }}
         >
           {showGrid && (
@@ -98,13 +99,13 @@ export const LineChart: React.FC<LineChartProps> = ({
             <Tooltip
               contentStyle={{
                 backgroundColor: isDark ? '#1f2937' : '#ffffff',
-                border: `1px solid ${isDark ? '#374151' : '#e5e7eb'}`,
+                border: `1px solid ${isDark ? '#374151' : '#e5e7eb'}`
                 borderRadius: '8px',
-                color: isDark ? '#e5eef7' : '#0f172a',
+                color: isDark ? '#e5eef7' : '#0f172a'
               }}
               labelStyle={{
                 color: isDark ? '#9ca3af' : '#6b7280',
-                fontSize: '12px',
+                fontSize: '12px'
               }}
             />
           )}
@@ -112,7 +113,7 @@ export const LineChart: React.FC<LineChartProps> = ({
             <Legend
               wrapperStyle={{
                 color: isDark ? '#e5eef7' : '#0f172a',
-                fontSize: '12px',
+                fontSize: '12px'
               }}
             />
           )}

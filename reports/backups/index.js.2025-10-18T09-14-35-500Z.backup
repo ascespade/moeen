@@ -1,0 +1,86 @@
+/**
+ * AI Self-Healing CI/CD v3.0
+ * Main application entry point
+ */
+
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize Supabase client
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.warn('⚠️ Supabase credentials not found. Some features may not work.');
+}
+
+const supabase = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null;
+
+// Main application class
+class AISelfHealingApp {
+  constructor() {
+    this.supabase = supabase;
+    this.isHealthy = true;
+    this.lastCheck = new Date();
+  }
+
+  // Health check method
+  async healthCheck() {
+    try {
+      if (this.supabase) {
+        const { data, error } = await this.supabase
+          .from('health_check')
+          .select('*')
+          .limit(1);
+        
+        if (error) {
+          console.error('Health check failed:', error.message);
+          this.isHealthy = false;
+          return false;
+        }
+      }
+      
+      this.isHealthy = true;
+      this.lastCheck = new Date();
+      console.log('✅ Health check passed');
+      return true;
+    } catch (error) {
+      console.error('Health check error:', error.message);
+      this.isHealthy = false;
+      return false;
+    }
+  }
+
+  // Start the application
+  async start() {
+    console.log('🚀 Starting AI Self-Healing CI/CD v3.0...');
+    
+    // Run initial health check
+    await this.healthCheck();
+    
+    // Set up periodic health checks
+    setInterval(() => {
+      this.healthCheck();
+    }, 30000); // Every 30 seconds
+    
+    console.log('✅ Application started successfully');
+  }
+
+  // Get application status
+  getStatus() {
+    return {
+      isHealthy: this.isHealthy,
+      lastCheck: this.lastCheck,
+      supabaseConnected: !!this.supabase,
+      version: '3.0.0'
+    };
+  }
+}
+
+// Export for use in other modules
+export default AISelfHealingApp;
+
+// If running directly, start the app
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const app = new AISelfHealingApp();
+  app.start().catch(console.error);
+}

@@ -104,26 +104,26 @@ export class TestReportGenerator {
       };
     }
 
-    const authTests = this.results.filter(r => 
-      r.testName.includes('login') || 
-      r.testName.includes('register') || 
+    const authTests = this.results.filter(r =>
+      r.testName.includes('login') ||
+      r.testName.includes('register') ||
       r.testName.includes('forgot-password')
     ).length;
 
-    const userMgmtTests = this.results.filter(r => 
-      r.testName.includes('user') || 
+    const userMgmtTests = this.results.filter(r =>
+      r.testName.includes('user') ||
       r.testName.includes('admin')
     ).length;
 
-    const patientMgmtTests = this.results.filter(r => 
+    const patientMgmtTests = this.results.filter(r =>
       r.testName.includes('patient')
     ).length;
 
-    const adminTests = this.results.filter(r => 
+    const adminTests = this.results.filter(r =>
       r.testName.includes('admin')
     ).length;
 
-    const dbTests = this.results.filter(r => 
+    const dbTests = this.results.filter(r =>
       r.databaseOperations.length > 0
     ).length;
 
@@ -141,10 +141,10 @@ export class TestReportGenerator {
     const failedTests = this.results.filter(r => r.status === 'failed');
 
     if (failedTests.length > 0) {
-      recommendations.push(`Fix ${failedTests.length} failed tests to improve reliability`);
+      recommendations.push(`Fix ${failedTests.length} failed tests to improve reliability`
     }
 
-    const dbOperationFailures = this.results.filter(r => 
+    const dbOperationFailures = this.results.filter(r =>
       r.databaseOperations.some(op => !op.success)
     );
 
@@ -154,7 +154,7 @@ export class TestReportGenerator {
 
     const slowTests = this.results.filter(r => r.duration > 10000);
     if (slowTests.length > 0) {
-      recommendations.push(`Optimize ${slowTests.length} slow tests (>10s) for better performance`);
+      recommendations.push(`Optimize ${slowTests.length} slow tests (>10s) for better performance`
     }
 
     const coverage = this.calculateCoverage();
@@ -171,7 +171,7 @@ export class TestReportGenerator {
 
   async saveReport(report: TestReport, filename?: string): Promise<string> {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const reportFilename = filename || `test-report-${timestamp}.json`;
+    const reportFilename = filename || `test-report-${timestamp}.json`
     const reportPath = path.join(process.cwd(), 'test-reports', reportFilename);
 
     // Ensure directory exists
@@ -192,8 +192,8 @@ export class TestReportGenerator {
   }
 
   private generateHtmlReport(report: TestReport): string {
-    const { summary, databaseStats, testResults, recommendations, coverage } = report;
-    
+    const summary, databaseStats, testResults, recommendations, coverage = report;
+
     return `
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
@@ -436,27 +436,27 @@ export class TestReportGenerator {
                     </div>
                     <div class="test-details">
                         <p><strong>المدة:</strong> ${result.duration}ms</p>
-                        ${result.error ? `<p><strong>الخطأ:</strong> ${result.error}</p>` : ''}
+                        ${result.error ? `<p><strong>الخطأ:</strong> ${result.error}</p>`
                         ${result.databaseOperations.length > 0 ? `
                             <div class="database-ops">
                                 <h4>عمليات قاعدة البيانات:</h4>
                                 ${result.databaseOperations.map(op => `
                                     <div class="db-op">
                                         ${op.operation} → ${op.table} (${op.success ? 'نجح' : 'فشل'}) - ${op.duration}ms
-                                        ${op.error ? `<br><small>خطأ: ${op.error}</small>` : ''}
+                                        ${op.error ? `<br><small>خطأ: ${op.error}</small>`
                                     </div>
-                                `).join('')}
+                                `
                             </div>
-                        ` : ''}
+                        `
                     </div>
                 </div>
-            `).join('')}
+            `
         </div>
 
         <div class="recommendations">
             <h2>التوصيات</h2>
             <ul>
-                ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                ${recommendations.map(rec => `<li>${rec}</li>`
             </ul>
         </div>
 
@@ -467,7 +467,7 @@ export class TestReportGenerator {
     </div>
 </body>
 </html>
-    `;
+    `
   }
 }
 

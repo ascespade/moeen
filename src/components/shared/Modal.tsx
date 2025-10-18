@@ -1,12 +1,13 @@
+import React from "react";
 
-"use client";
-import { useEffect } from "react";
+'use client';
+import { useEffect } from 'react';
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
   children: React.ReactNode;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   showCloseButton?: boolean;
 }
 
@@ -15,50 +16,50 @@ export default function Modal({
   onClose,
   title,
   children,
-  size = "md",
-  showCloseButton = true,
+  size = 'md',
+  showCloseButton = true
 }: ModalProps) {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = 'unset';
     }
 
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         onClose();
       }
     };
 
     if (isOpen) {
-      document.addEventListener("keydown", handleEscape);
+      document.addEventListener('keydown', handleEscape);
     }
 
     return () => {
-      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener('keydown', handleEscape);
     };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   const sizeClasses = {
-    sm: "max-w-md",
-    md: "max-w-2xl",
-    lg: "max-w-4xl",
-    xl: "max-w-6xl",
+    sm: 'max-w-md',
+    md: 'max-w-2xl',
+    lg: 'max-w-4xl',
+    xl: 'max-w-6xl'
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div
-        className={`w-full rounded-lg bg-white dark:bg-gray-900 ${sizeClasses[size]} flex max-h-[90vh] flex-col overflow-hidden`}
+        className={`w-full rounded-lg bg-white dark:bg-gray-900 ${sizeClasses[size]} flex max-h-[90vh] flex-col overflow-hidden`
       >
         <div className="flex items-center justify-between border-b border-gray-200 p-6 dark:border-gray-700">
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white">

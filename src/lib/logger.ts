@@ -51,11 +51,11 @@ class Logger {
     const logEntry = this.formatMessage(level, message, context);
 
     // Console logging
-    const consoleMethod = level === 'error' ? 'error' : 
-                         level === 'warn' ? 'warn' : 
-                         level === 'info' ? 'info' : 'log';
-    
-    console[consoleMethod](`[${logEntry.timestamp}] ${level.toUpperCase()}: ${message}`, context || '');
+    const consoleMethod = level === 'error' ? 'error' :
+      level === 'warn' ? 'warn' :
+        level === 'info' ? 'info' : 'log';
+
+    console[consoleMethod](`[${logEntry.timestamp}] ${level.toUpperCase()}: ${message}`
 
     // Send to external service in production
     if (this.isProduction && level === 'error') {

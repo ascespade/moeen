@@ -1,3 +1,4 @@
+import React from "react";
 
 /**
  * useT Hook - خطاف الترجمة
@@ -29,7 +30,7 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   // Load translations when language changes
   useEffect(() => {
-    const loadTranslations = async () => {
+    const loadTranslations = async() => {
       setIsLoading(true);
       try {
         const fetchedTranslations = await translationService.fetchTranslations(language);
@@ -67,7 +68,7 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
     language,
     setLanguage,
     t,
-    isLoading,
+    isLoading
   };
 
   return (

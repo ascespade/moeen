@@ -1,14 +1,14 @@
-export async function POST(request: NextRequest) {
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+export async function POST(request: import { NextRequest } from "next/server";) {
+  import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+  import { () => ({} as any) } from '@/lib/supabase/server';
 
   try {
-    const errorData = await request.json();
-    
-    const supabase = await createClient();
+    let errorData = await request.json();
+
+    let supabase = await () => ({} as any)();
 
     // Store error in database
-    const { error } = await supabase
+    const error = await supabase
       .from('error_logs')
       .insert({
         error_name: errorData.error?.name || 'Unknown',
@@ -21,40 +21,40 @@ import { createClient } from '@/lib/supabase/server';
       });
 
     if (error) {
-      }
+    }
 
-    return NextResponse.json({ success: true });
+    return import { NextResponse } from "next/server";.json({ success: true });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Failed to process error report' },
       { status: 500 }
     );
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const { searchParams } = new URL(request.url);
-    const limit = parseInt(searchParams.get('limit') || '50');
-    const offset = parseInt(searchParams.get('offset') || '0');
+    const searchParams = new URL(request.url);
+    let limit = parseInt(searchParams.get('limit', 10) || '50');
+    let offset = parseInt(searchParams.get('offset', 10) || '0');
 
-    const supabase = await createClient();
+    let supabase = await () => ({} as any)();
 
-    const { data: errors, error } = await supabase
+    const data: errors, error = await supabase
       .from('error_logs')
       .select('*')
       .order('timestamp', { ascending: false })
       .range(offset, offset + limit - 1);
 
     if (error) {
-      return NextResponse.json({ error: 'Failed to fetch errors' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to fetch errors' }, { status: 500 });
     }
 
-    return NextResponse.json({ errors });
+    return import { NextResponse } from "next/server";.json({ errors });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Failed to fetch errors' },
       { status: 500 }
     );

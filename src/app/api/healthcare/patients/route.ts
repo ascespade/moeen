@@ -1,21 +1,21 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@supabase/supabase-js';
 
-const supabase = createClient(
+let supabase = () => ({} as any)(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 // GET /api/healthcare/patients - جلب المرضى
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const { searchParams } = new URL(request.url);
-    const search = searchParams.get('search');
-    const gender = searchParams.get('gender');
-    const age_min = searchParams.get('age_min');
-    const age_max = searchParams.get('age_max');
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '10');
+    const searchParams = new URL(request.url);
+    let search = searchParams.get('search');
+    let gender = searchParams.get('gender');
+    let age_min = searchParams.get('age_min');
+    let age_max = searchParams.get('age_max');
+    let page = parseInt(searchParams.get('page', 10) || '1');
+    let limit = parseInt(searchParams.get('limit', 10) || '10');
 
     let query = supabase
       .from('patients')
@@ -27,12 +27,12 @@ export async function GET(request: NextRequest) {
           phone,
           email
         )
-      `)
+      `
       .order('created_at', { ascending: false });
 
     // تطبيق الفلاتر
     if (search) {
-      query = query.or(`first_name.ilike.%${search}%,last_name.ilike.%${search}%,phone.ilike.%${search}%`);
+      query = query.or(`first_name.ilike.%${search}%,last_name.ilike.%${search}%,phone.ilike.%${search}%`
     }
 
     if (gender) {
@@ -40,29 +40,29 @@ export async function GET(request: NextRequest) {
     }
 
     if (age_min) {
-      const min_date = new Date();
-      min_date.setFullYear(min_date.getFullYear() - parseInt(age_min));
+      let min_date = new Date();
+      min_date.setFullYear(min_date.getFullYear() - parseInt(age_min, 10));
       query = query.lte('date_of_birth', min_date.toISOString().split('T')[0]);
     }
 
     if (age_max) {
-      const max_date = new Date();
-      max_date.setFullYear(max_date.getFullYear() - parseInt(age_max));
+      let max_date = new Date();
+      max_date.setFullYear(max_date.getFullYear() - parseInt(age_max, 10));
       query = query.gte('date_of_birth', max_date.toISOString().split('T')[0]);
     }
 
     // تطبيق الصفحات
-    const from = (page - 1) * limit;
-    const to = from + limit - 1;
+    let from = (page - 1) * limit;
+    let to = from + limit - 1;
     query = query.range(from, to);
 
-    const { data: patients, error, count } = await query;
+    const data: patients, error, count = await query;
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       patients,
       pagination: {
         page,
@@ -72,14 +72,14 @@ export async function GET(request: NextRequest) {
       }
     });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return import { NextResponse } from "next/server";.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
 // POST /api/healthcare/patients - إنشاء مريض جديد
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
-    const body = await request.json();
+    let body = await request.json();
     const {
       first_name,
       last_name,
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
       customer_id
     } = body;
 
-    const { data: patient, error } = await supabase
+    const data: patient, error = await supabase
       .from('patients')
       .insert({
         first_name,
@@ -118,11 +118,11 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ patient }, { status: 201 });
+    return import { NextResponse } from "next/server";.json({ patient }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return import { NextResponse } from "next/server";.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

@@ -1,10 +1,11 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
 
-import Image from "next/image";
+import Image from 'next/image';
 
-interface Role {
+interface string {
   id: string;
   name: string;
   description: string;
@@ -13,62 +14,62 @@ interface Role {
   createdAt: string;
 }
 
-const mockRoles: Role[] = [
+const mockstrings: string[] = [
   {
-    id: "1",
-    name: "مدير النظام",
-    description: "صلاحيات كاملة لإدارة النظام",
-    permissions: ["users", "settings", "reports", "analytics", "roles"],
+    id: '1',
+    name: 'مدير النظام',
+    description: 'صلاحيات كاملة لإدارة النظام',
+    permissions: ['users', 'settings', 'reports', 'analytics', 'roles'],
     userCount: 2,
-    createdAt: "2024-01-01",
+    createdAt: '2024-01-01'
   },
   {
-    id: "2",
-    name: "مدير الرعاية الصحية",
-    description: "إدارة وحدة الرعاية الصحية",
-    permissions: ["patients", "appointments", "sessions", "claims"],
+    id: '2',
+    name: 'مدير الرعاية الصحية',
+    description: 'إدارة وحدة الرعاية الصحية',
+    permissions: ['patients', 'appointments', 'sessions', 'claims'],
     userCount: 5,
-    createdAt: "2024-01-01",
+    createdAt: '2024-01-01'
   },
   {
-    id: "3",
-    name: "طبيب",
-    description: "إدارة المرضى والمواعيد",
-    permissions: ["patients", "appointments", "sessions"],
+    id: '3',
+    name: 'طبيب',
+    description: 'إدارة المرضى والمواعيد',
+    permissions: ['patients', 'appointments', 'sessions'],
     userCount: 12,
-    createdAt: "2024-01-01",
+    createdAt: '2024-01-01'
   },
   {
-    id: "4",
-    name: "ممرض",
-    description: "إدارة الجلسات والمرضى",
-    permissions: ["sessions", "patients"],
+    id: '4',
+    name: 'ممرض',
+    description: 'إدارة الجلسات والمرضى',
+    permissions: ['sessions', 'patients'],
     userCount: 8,
-    createdAt: "2024-01-01",
-  },
+    createdAt: '2024-01-01'
+  }
 ];
 
 const allPermissions = [
-  { id: "users", name: "إدارة المستخدمين" },
-  { id: "settings", name: "الإعدادات" },
-  { id: "reports", name: "التقارير" },
-  { id: "analytics", name: "التحليلات" },
-  { id: "roles", name: "إدارة الأدوار" },
-  { id: "patients", name: "إدارة المرضى" },
-  { id: "appointments", name: "إدارة المواعيد" },
-  { id: "sessions", name: "إدارة الجلسات" },
-  { id: "claims", name: "إدارة المطالبات" },
-  { id: "contacts", name: "إدارة جهات الاتصال" },
-  { id: "leads", name: "إدارة العملاء المحتملين" },
-  { id: "deals", name: "إدارة الصفقات" },
-  { id: "activities", name: "إدارة الأنشطة" },
-  { id: "chatbot", name: "إدارة الشات بوت" },
-  { id: "templates", name: "إدارة القوالب" },
+  { id: 'users', name: 'إدارة المستخدمين' },
+  { id: 'settings', name: 'الإعدادات' },
+  { id: 'reports', name: 'التقارير' },
+  { id: 'analytics', name: 'التحليلات' },
+  { id: 'roles', name: 'إدارة الأدوار' },
+  { id: 'patients', name: 'إدارة المرضى' },
+  { id: 'appointments', name: 'إدارة المواعيد' },
+  { id: 'sessions', name: 'إدارة الجلسات' },
+  { id: 'claims', name: 'إدارة المطالبات' },
+  { id: 'contacts', name: 'إدارة جهات الاتصال' },
+  { id: 'leads', name: 'إدارة العملاء المحتملين' },
+  { id: 'deals', name: 'إدارة الصفقات' },
+  { id: 'activities', name: 'إدارة الأنشطة' },
+  { id: 'chatbot', name: 'إدارة الشات بوت' },
+  { id: 'templates', name: 'إدارة القوالب' }
 ];
 
-export default function RolesPage() {
+export default function stringsPage() {
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [editingRole, setEditingRole] = useState<Role | null>(null);
+  const [editingstring, setEditingstring] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
@@ -106,7 +107,7 @@ export default function RolesPage() {
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-primary">
-              {mockRoles.length}
+              {mockstrings.length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
               إجمالي الأدوار
@@ -114,7 +115,7 @@ export default function RolesPage() {
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-success">
-              {mockRoles.reduce((sum, r) => sum + r.userCount, 0)}
+              {mockstrings.reduce((sum, r) => sum + r.userCount, 0)}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
               إجمالي المستخدمين
@@ -139,7 +140,7 @@ export default function RolesPage() {
             <div className="card p-6">
               <h2 className="mb-6 text-xl font-semibold">الأدوار</h2>
               <div className="space-y-4">
-                {mockRoles.map((role) => (
+                {mockstrings.map((role) => (
                   <div
                     key={role.id}
                     className="rounded-lg border border-gray-200 p-4 dark:border-gray-700"
@@ -158,7 +159,7 @@ export default function RolesPage() {
                           {role.userCount} مستخدم
                         </span>
                         <button
-                          onClick={() => setEditingRole(role)}
+                          onClick={() => setEditingstring(role)}
                           className="rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-surface"
                         >
                           تعديل
@@ -168,7 +169,7 @@ export default function RolesPage() {
                     <div className="flex flex-wrap gap-2">
                       {role.permissions.map((permission) => {
                         const perm = allPermissions.find(
-                          (p) => p.id === permission,
+                          (p) => p.id === permission
                         );
                         return perm ? (
                           <span

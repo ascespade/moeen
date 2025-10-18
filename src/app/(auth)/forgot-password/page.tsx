@@ -1,38 +1,39 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
-import Link from "next/link";
-import Image from "next/image";
+'use client';
+import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
 
     if (!email.trim()) {
-      setError("البريد الإلكتروني مطلوب");
+      setError('البريد الإلكتروني مطلوب');
       return;
     }
 
     if (!/\S+@\S+\.\S+/.test(email)) {
-      setError("البريد الإلكتروني غير صحيح");
+      setError('البريد الإلكتروني غير صحيح');
       return;
     }
 
     setIsLoading(true);
-    setError("");
+    setError('');
 
     try {
       // Real API call
       const response = await fetch('/api/auth/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email })
       });
 
       const data = await response.json();
@@ -40,10 +41,10 @@ export default function ForgotPasswordPage() {
       if (data.success) {
         setIsSuccess(true);
       } else {
-        setError(data.error || "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور.");
+        setError(data.error || 'حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور.');
       }
     } catch (error) {
-      setError("حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. حاول مرة أخرى.");
+      setError('حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. حاول مرة أخرى.');
     } finally {
       setIsLoading(false);
     }
@@ -73,7 +74,7 @@ export default function ForgotPasswordPage() {
             <button
               onClick={() => {
                 setIsSuccess(false);
-                setEmail("");
+                setEmail('');
               }}
               className="w-full rounded-lg border border-gray-300 px-6 py-3 text-gray-700 transition-colors hover:bg-surface"
             >
@@ -131,7 +132,7 @@ export default function ForgotPasswordPage() {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  if (error) setError("");
+                  if (error) setError('');
                 }}
                 className="form-input"
                 placeholder="أدخل بريدك الإلكتروني"
@@ -152,7 +153,7 @@ export default function ForgotPasswordPage() {
                   جاري الإرسال...
                 </>
               ) : (
-                "إرسال رابط إعادة التعيين"
+                'إرسال رابط إعادة التعيين'
               )}
             </button>
           </form>
@@ -160,7 +161,7 @@ export default function ForgotPasswordPage() {
           {/* Back to Login */}
           <div className="mt-6 text-center">
             <p className="text-gray-600 dark:text-gray-300">
-              تذكرت كلمة المرور؟{" "}
+              تذكرت كلمة المرور؟{' '}
               <Link
                 href={ROUTES.LOGIN}
                 className="text-brand font-semibold hover:underline"
@@ -174,11 +175,11 @@ export default function ForgotPasswordPage() {
         {/* Help Text */}
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-500">
-            إذا لم تستلم البريد الإلكتروني، تحقق من مجلد الرسائل المزعجة أو{" "}
+            إذا لم تستلم البريد الإلكتروني، تحقق من مجلد الرسائل المزعجة أو{' '}
             <button
               onClick={() => {
-                setEmail("");
-                setError("");
+                setEmail('');
+                setError('');
               }}
               className="text-[var(--brand-primary)] hover:underline"
             >

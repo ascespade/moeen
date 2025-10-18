@@ -5,8 +5,8 @@
  * إصلاح أخطاء TypeScript
  */
 
-const fs = require('fs');
-const path = require('path');
+let fs = require('fs');
+let path = require('path');
 
 class TypeScriptErrorFixer {
   constructor() {
@@ -35,22 +35,22 @@ class TypeScriptErrorFixer {
   }
 
   log(message, type = 'info') {
-    const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
-    console.log(`[${timestamp}] ${prefix} ${message}`);
+    let timestamp = new Date().toISOString();
+    let prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    // console.log(`[${timestamp}] ${prefix} ${message}`
   }
 
   async findTypeScriptFiles() {
-    const files = [];
-    const srcDir = 'src';
-    
-    const walkDir = (dir) => {
-      const items = fs.readdirSync(dir);
-      
+    let files = [];
+    let srcDir = 'src';
+
+    let walkDir = (dir) => {
+      let items = fs.readdirSync(dir);
+
       for (const item of items) {
-        const fullPath = path.join(dir, item);
-        const stat = fs.statSync(fullPath);
-        
+        let fullPath = path.join(dir, item);
+        let stat = fs.statSync(fullPath);
+
         if (stat.isDirectory()) {
           walkDir(fullPath);
         } else if (item.endsWith('.ts') || item.endsWith('.tsx')) {
@@ -58,7 +58,7 @@ class TypeScriptErrorFixer {
         }
       }
     };
-    
+
     walkDir(srcDir);
     return files;
   }
@@ -66,14 +66,14 @@ class TypeScriptErrorFixer {
   async fixZodErrors(filePath) {
     let content = fs.readFileSync(filePath, 'utf8');
     let modified = false;
-    
+
     // Fix ZodError.errors to .issues
     if (content.includes('.errors')) {
       content = content.replace(/\.errors/g, '.issues');
       modified = true;
-      this.log(`Fixed ZodError.errors in ${filePath}`);
+      this.log(`Fixed ZodError.errors in ${filePath}`
     }
-    
+
     if (modified) {
       fs.writeFileSync(filePath, content);
     }
@@ -82,37 +82,37 @@ class TypeScriptErrorFixer {
   async fixUndefinedChecks(filePath) {
     let content = fs.readFileSync(filePath, 'utf8');
     let modified = false;
-    
+
     // Add null checks for common patterns
-    const patterns = [
+    let patterns = [
       {
         search: /const \{ data \} = await supabase\.from\('(\w+)'\)\.select\('(\w+)'\)\.eq\('(\w+)', (\w+)\)\.single\(\);/g,
         replace: (match, table, select, field, value) => {
-          return `const { data } = await supabase.from('${table}').select('${select}').eq('${field}', ${value}).single();
+          return `
 if (!data) {
   throw new Error('${table} not found');
-}`;
+}`
         }
       },
       {
         search: /const \{ data: (\w+) \} = await supabase\.from\('(\w+)'\)\.select\('(\w+)'\)\.eq\('(\w+)', (\w+)\)\.single\(\);/g,
         replace: (match, varName, table, select, field, value) => {
-          return `const { data: ${varName} } = await supabase.from('${table}').select('${select}').eq('${field}', ${value}).single();
+          return `
 if (!${varName}) {
   throw new Error('${table} not found');
-}`;
+}`
         }
       }
     ];
-    
+
     for (const pattern of patterns) {
       if (pattern.search.test(content)) {
         content = content.replace(pattern.search, pattern.replace);
         modified = true;
-        this.log(`Added null checks in ${filePath}`);
+        this.log(`Added null checks in ${filePath}`
       }
     }
-    
+
     if (modified) {
       fs.writeFileSync(filePath, content);
     }
@@ -121,31 +121,31 @@ if (!${varName}) {
   async fixFunctionArguments(filePath) {
     let content = fs.readFileSync(filePath, 'utf8');
     let modified = false;
-    
+
     // Fix common function argument issues
-    const fixes = [
+    let fixes = [
       {
         search: /supabase\.from\('(\w+)'\)\.insert\((\w+)\)/g,
         replace: (match, table, data) => {
-          return `supabase.from('${table}').insert(${data})`;
+          return `supabase.from('${table}').insert(${data})`
         }
       },
       {
         search: /supabase\.from\('(\w+)'\)\.update\((\w+)\)\.eq\('(\w+)', (\w+)\)/g,
         replace: (match, table, data, field, value) => {
-          return `supabase.from('${table}').update(${data}).eq('${field}', ${value})`;
+          return `supabase.from('${table}').update(${data}).eq('${field}', ${value})`
         }
       }
     ];
-    
+
     for (const fix of fixes) {
       if (fix.search.test(content)) {
         content = content.replace(fix.search, fix.replace);
         modified = true;
-        this.log(`Fixed function arguments in ${filePath}`);
+        this.log(`Fixed function arguments in ${filePath}`
       }
     }
-    
+
     if (modified) {
       fs.writeFileSync(filePath, content);
     }
@@ -154,11 +154,11 @@ if (!${varName}) {
   async fixMissingProperties(filePath) {
     let content = fs.readFileSync(filePath, 'utf8');
     let modified = false;
-    
+
     // Add missing properties to common types
     if (content.includes('ActionExecutor') && content.includes('createAppointment')) {
       // Add missing methods to ActionExecutor
-      const actionExecutorFix = `
+      let actionExecutorFix = `
 // Add missing methods to ActionExecutor
 interface ActionExecutor {
   createAppointment(data: any): Promise<any>;
@@ -167,22 +167,22 @@ interface ActionExecutor {
   updatePatient(data: any): Promise<any>;
   sendEmail(data: any): Promise<any>;
 }
-`;
-      
+`
+
       if (!content.includes('interface ActionExecutor')) {
         content = actionExecutorFix + content;
         modified = true;
-        this.log(`Added ActionExecutor interface in ${filePath}`);
+        this.log(`Added ActionExecutor interface in ${filePath}`
       }
     }
-    
+
     if (content.includes('FlowManager') && content.includes('executeAction')) {
       // Fix FlowManager method name
       content = content.replace(/\.executeAction\(/g, '.executeStepAction(');
       modified = true;
-      this.log(`Fixed FlowManager method name in ${filePath}`);
+      this.log(`Fixed FlowManager method name in ${filePath}`
     }
-    
+
     if (modified) {
       fs.writeFileSync(filePath, content);
     }
@@ -195,25 +195,25 @@ interface ActionExecutor {
       await this.fixFunctionArguments(filePath);
       await this.fixMissingProperties(filePath);
     } catch (error) {
-      this.log(`Error fixing ${filePath}: ${error.message}`, 'error');
+      this.log(`Error fixing ${filePath}: ${error.message}`
     }
   }
 
   async run() {
     this.log('🔧 Starting TypeScript error fixes...');
-    
+
     try {
-      const files = await this.findTypeScriptFiles();
-      this.log(`Found ${files.length} TypeScript files`);
-      
+      let files = await this.findTypeScriptFiles();
+      this.log(`Found ${files.length} TypeScript files`
+
       for (const file of files) {
         await this.fixFile(file);
       }
-      
+
       this.log('✅ TypeScript error fixes completed!', 'success');
-      
+
     } catch (error) {
-      this.log(`❌ TypeScript fixes failed: ${error.message}`, 'error');
+      this.log(`❌ TypeScript fixes failed: ${error.message}`
       throw error;
     }
   }
@@ -221,9 +221,9 @@ interface ActionExecutor {
 
 // Run the fixer
 if (require.main === module) {
-  const fixer = new TypeScriptErrorFixer();
+  let fixer = new TypeScriptErrorFixer();
   fixer.run().catch(error => {
-    console.error('TypeScript fixer failed:', error);
+    // console.error('TypeScript fixer failed:', error);
     process.exit(1);
   });
 }

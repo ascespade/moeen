@@ -1,55 +1,55 @@
 #!/usr/bin/env node
 require('dotenv').config({ path: '.env.local' });
-const { createClient } = require('@supabase/supabase-js');
-const fs = require('fs');
-const path = require('path');
+const { () => ({} as any) } = require('@supabase/supabase-js');
+let fs = require('fs');
+let path = require('path');
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+let supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.error('❌ Missing Supabase credentials');
+  // console.error('❌ Missing Supabase credentials');
   process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+let supabase = () => ({} as any)(supabaseUrl, supabaseServiceKey, {
   auth: {
     autoRefreshToken: false,
-    persistSession: false,
-  },
+    persistSession: false
+  }
 });
 
 async function executeSQL(sql) {
   try {
     // Try using the REST API directly
-    const response = await fetch(`${supabaseUrl}/rest/v1/rpc/exec_sql`, {
+    let response = await fetch(`${supabaseUrl}/rest/v1/rpc/exec_sql`
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${supabaseServiceKey}`,
+        'Authorization': `Bearer ${supabaseServiceKey}`
         'apikey': supabaseServiceKey
       },
-      body: JSON.stringify({ sql_query: sql })
+      body: JSON.stringify({ sqlQuery: sql })
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('❌ HTTP Error:', response.status, errorText);
+      let errorText = await response.text();
+      // console.error('❌ HTTP Error:', response.status, errorText);
       return false;
     }
 
-    const data = await response.json();
+    let data = await response.json();
     return true;
   } catch (err) {
-    console.error('❌ Exception:', err.message);
+    // console.error('❌ Exception:', err.message);
     return false;
   }
 }
 
 async function createBasicTables() {
-  console.log('🏗️  Creating basic healthcare tables...');
-  
-  const basicSchema = `
+  // console.log('🏗️  Creating basic healthcare tables...');
+
+  let basicSchema = `
     -- Enable necessary extensions
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
     CREATE EXTENSION IF NOT EXISTS "pgcrypto";
@@ -59,7 +59,7 @@ async function createBasicTables() {
         id SERIAL PRIMARY KEY,
         public_id VARCHAR(255) UNIQUE DEFAULT 'aud_' || TO_CHAR(NOW(), 'YYYYMMDD') || '_' || LPAD(NEXTVAL('audit_logs_id_seq')::TEXT, 6, '0'),
         action VARCHAR(100) NOT NULL,
-        table_name VARCHAR(100) NOT NULL,
+        tableName VARCHAR(100) NOT NULL,
         record_id INTEGER,
         old_values JSONB,
         new_values JSONB,
@@ -132,9 +132,9 @@ async function createBasicTables() {
         id SERIAL PRIMARY KEY,
         public_id VARCHAR(255) UNIQUE DEFAULT 'apt_' || TO_CHAR(NOW(), 'YYYYMMDD') || '_' || LPAD(NEXTVAL('appointments_id_seq')::TEXT, 6, '0'),
         patient_id INTEGER REFERENCES patients(id) ON DELETE CASCADE,
-        doctor_id INTEGER REFERENCES doctors(id) ON DELETE CASCADE,
+        doctorId INTEGER REFERENCES doctors(id) ON DELETE CASCADE,
         appointment_date DATE NOT NULL,
-        appointment_time TIME NOT NULL,
+        appointmentTime TIME NOT NULL,
         duration INTEGER DEFAULT 30,
         status VARCHAR(20) DEFAULT 'scheduled',
         notes TEXT,
@@ -150,7 +150,7 @@ async function createBasicTables() {
         id SERIAL PRIMARY KEY,
         public_id VARCHAR(255) UNIQUE DEFAULT 'ses_' || TO_CHAR(NOW(), 'YYYYMMDD') || '_' || LPAD(NEXTVAL('sessions_id_seq')::TEXT, 6, '0'),
         patient_id INTEGER REFERENCES patients(id) ON DELETE CASCADE,
-        doctor_id INTEGER REFERENCES doctors(id) ON DELETE CASCADE,
+        doctorId INTEGER REFERENCES doctors(id) ON DELETE CASCADE,
         session_date DATE NOT NULL,
         session_time TIME NOT NULL,
         duration INTEGER DEFAULT 60,
@@ -311,22 +311,22 @@ async function createBasicTables() {
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
         UNIQUE(key, language)
     );
-  `;
+  `
 
-  const success = await executeSQL(basicSchema);
+  let success = await executeSQL(basicSchema);
   if (success) {
-    console.log('✅ Basic tables created successfully');
+    // console.log('✅ Basic tables created successfully');
     return true;
   } else {
-    console.log('❌ Failed to create basic tables');
+    // console.log('❌ Failed to create basic tables');
     return false;
   }
 }
 
 async function createIndexes() {
-  console.log('📊 Creating performance indexes...');
-  
-  const indexesSQL = `
+  // console.log('📊 Creating performance indexes...');
+
+  let indexesSQL = `
     -- Create performance indexes
     CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
     CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
@@ -335,7 +335,7 @@ async function createIndexes() {
     CREATE INDEX IF NOT EXISTS idx_patients_public_id ON patients(public_id);
     CREATE INDEX IF NOT EXISTS idx_patients_email ON patients(email);
     CREATE INDEX IF NOT EXISTS idx_appointments_patient_date ON appointments(patient_id, appointment_date);
-    CREATE INDEX IF NOT EXISTS idx_appointments_doctor_date ON appointments(doctor_id, appointment_date);
+    CREATE INDEX IF NOT EXISTS idx_appointments_doctor_date ON appointments(doctorId, appointment_date);
     CREATE INDEX IF NOT EXISTS idx_appointments_status ON appointments(status);
     CREATE INDEX IF NOT EXISTS idx_conversations_status_assigned ON conversations(status, assigned_to);
     CREATE INDEX IF NOT EXISTS idx_conversations_channel ON conversations(channel);
@@ -346,22 +346,22 @@ async function createIndexes() {
     CREATE INDEX IF NOT EXISTS idx_crm_leads_status ON crm_leads(status);
     CREATE INDEX IF NOT EXISTS idx_crm_deals_owner ON crm_deals(owner_id);
     CREATE INDEX IF NOT EXISTS idx_crm_deals_stage ON crm_deals(stage);
-  `;
+  `
 
-  const success = await executeSQL(indexesSQL);
+  let success = await executeSQL(indexesSQL);
   if (success) {
-    console.log('✅ Indexes created successfully');
+    // console.log('✅ Indexes created successfully');
     return true;
   } else {
-    console.log('❌ Failed to create indexes');
+    // console.log('❌ Failed to create indexes');
     return false;
   }
 }
 
 async function createTriggers() {
-  console.log('⚡ Creating triggers...');
-  
-  const triggersSQL = `
+  // console.log('⚡ Creating triggers...');
+
+  let triggersSQL = `
     -- Create trigger function for updated_at
     CREATE OR REPLACE FUNCTION update_updated_at_column()
     RETURNS TRIGGER AS $$
@@ -391,42 +391,42 @@ async function createTriggers() {
         END LOOP;
     END;
     $$;
-  `;
+  `
 
-  const success = await executeSQL(triggersSQL);
+  let success = await executeSQL(triggersSQL);
   if (success) {
-    console.log('✅ Triggers created successfully');
+    // console.log('✅ Triggers created successfully');
     return true;
   } else {
-    console.log('❌ Failed to create triggers');
+    // console.log('❌ Failed to create triggers');
     return false;
   }
 }
 
 async function main() {
-  console.log('🚀 Starting healthcare system migration...');
-  
+  // console.log('🚀 Starting healthcare system migration...');
+
   // Test connection first
   try {
-    const { data, error } = await supabase
+    const data, error = await supabase
       .from('users')
       .select('count')
       .limit(1);
-    
+
     if (error) {
-      console.log('⚠️  Users table not found (expected for new database)');
+      // console.log('⚠️  Users table not found (expected for new database)');
     } else {
-      console.log('✅ Database connection successful');
+      // console.log('✅ Database connection successful');
     }
   } catch (err) {
-    console.error('❌ Database connection failed:', err.message);
+    // console.error('❌ Database connection failed:', err.message);
     return;
   }
 
   // Create basic tables
-  const tablesSuccess = await createBasicTables();
+  let tablesSuccess = await createBasicTables();
   if (!tablesSuccess) {
-    console.error('❌ Failed to create basic tables. Stopping migration.');
+    // console.error('❌ Failed to create basic tables. Stopping migration.');
     return;
   }
 
@@ -434,26 +434,26 @@ async function main() {
   await new Promise(resolve => setTimeout(resolve, 2000));
 
   // Create indexes
-  const indexesSuccess = await createIndexes();
+  let indexesSuccess = await createIndexes();
   if (!indexesSuccess) {
-    console.error('⚠️  Failed to create indexes, but continuing...');
+    // console.error('⚠️  Failed to create indexes, but continuing...');
   }
 
   // Wait a bit between operations
   await new Promise(resolve => setTimeout(resolve, 2000));
 
   // Create triggers
-  const triggersSuccess = await createTriggers();
+  let triggersSuccess = await createTriggers();
   if (!triggersSuccess) {
-    console.error('⚠️  Failed to create triggers, but continuing...');
+    // console.error('⚠️  Failed to create triggers, but continuing...');
   }
 
-  console.log('\n🎉 Migration completed!');
-  console.log('📋 Summary:');
-  console.log('✅ Basic healthcare tables created');
-  console.log('✅ Performance indexes added');
-  console.log('✅ Triggers configured');
-  console.log('\n🔍 You can now test the application with: npm run dev');
+  // console.log('\n🎉 Migration completed!');
+  // console.log('📋 Summary:');
+  // console.log('✅ Basic healthcare tables created');
+  // console.log('✅ Performance indexes added');
+  // console.log('✅ Triggers configured');
+  // console.log('\n🔍 You can now test the application with: npm run dev');
 }
 
 main().catch(console.error);

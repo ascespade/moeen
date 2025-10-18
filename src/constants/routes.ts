@@ -45,21 +45,21 @@ export const ROUTES = {
   CHANNEL: {
     LIST: "/channels",
     CREATE: "/channels/create",
-    VIEW: (id: string) => `/channels/${id}`,
-    EDIT: (id: string) => `/channels/${id}/edit`,
-    SETTINGS: (id: string) => `/channels/${id}/settings`,
+    VIEW: (id: string) => `/channels/${id}`
+    EDIT: (id: string) => `/channels/${id}/edit`
+    SETTINGS: (id: string) => `/channels/${id}/settings`
   },
   // Conversation routes
   CONVERSATION: {
     LIST: "/conversations",
-    VIEW: (id: string) => `/conversations/${id}`,
+    VIEW: (id: string) => `/conversations/${id}`
   },
   // Chatbot routes
   CHATBOT: {
     FLOWS: "/chatbot/flows",
-    FLOW: (id: string) => `/chatbot/flows/${id}`,
+    FLOW: (id: string) => `/chatbot/flows/${id}`
     TEMPLATES: "/chatbot/templates",
-    TEMPLATE: (id: string) => `/chatbot/templates/${id}`,
+    TEMPLATE: (id: string) => `/chatbot/templates/${id}`
     INTEGRATIONS: "/chatbot/integrations",
     ANALYTICS: "/chatbot/analytics",
   },
@@ -67,7 +67,7 @@ export const ROUTES = {
   CRM: {
     DASHBOARD: "/crm/dashboard",
     CONTACTS: "/crm/contacts",
-    CONTACT: (id: string) => `/crm/contacts/${id}`,
+    CONTACT: (id: string) => `/crm/contacts/${id}`
     LEADS: "/crm/leads",
     DEALS: "/crm/deals",
     ACTIVITIES: "/crm/activities",
@@ -78,7 +78,7 @@ export const ROUTES = {
     APPOINTMENTS: "/appointments",
     SESSIONS: "/sessions",
     PATIENTS: "/patients",
-    PATIENT: (id: string) => `/patients/${id}`,
+    PATIENT: (id: string) => `/patients/${id}`
     INSURANCE_CLAIMS: "/insurance-claims",
     MEDICAL_FILE: "/medical-file",
     APPROVALS: "/approvals",

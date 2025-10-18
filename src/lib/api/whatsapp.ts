@@ -1,30 +1,30 @@
-import { getApiConfig, isWhatsAppConfigured } from "./config";
+import { getApiConfig, isWhatsAppConfigured } from './config';
 
 type SendTextPayload = {
   to: string;
   text: string;
 };
 
-export const sendWhatsAppMessage = async (payload: SendTextPayload) => {
+export const sendWhatsAppMessage = async(payload: SendTextPayload) => {
   const cfg = getApiConfig();
   if (!isWhatsAppConfigured(cfg)) {
-    return { success: true, note: "Connect WhatsApp API in Admin Settings." };
+    return { success: true, note: 'Connect WhatsApp API in Admin Settings.' };
   }
 
   try {
-    const url = `${cfg.whatsapp.baseUrl}/${cfg.whatsapp.phoneNumberId}/messages`;
+    const url = `${cfg.whatsapp.baseUrl}/${cfg.whatsapp.phoneNumberId}/messages`
     const res = await fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${cfg.whatsapp.token}`,
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cfg.whatsapp.token}`
       },
       body: JSON.stringify({
-        messaging_product: "whatsapp",
+        messaging_product: 'whatsapp',
         to: payload.to,
-        type: "text",
-        text: { body: payload.text },
-      }),
+        type: 'text',
+        text: { body: payload.text }
+      })
     });
 
     if (!res.ok) {
@@ -33,11 +33,11 @@ export const sendWhatsAppMessage = async (payload: SendTextPayload) => {
     }
     return { success: true };
   } catch (e: any) {
-    return { success: false, error: e?.message || "Unknown error" };
+    return { success: false, error: e?.message || 'Unknown error' };
   }
 };
 
-export const handleWhatsAppWebhook = async (_body: any) => {
+export const handleWhatsAppWebhook = async(_body: any) => {
   // Placeholder structure for webhook handling
   if (!isWhatsAppConfigured()) {
     return { success: true };

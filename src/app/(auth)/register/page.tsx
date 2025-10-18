@@ -1,38 +1,39 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
 
-import { ROUTES } from "@/constants/routes";
+import { ROUTES } from '@/constants/routes';
 
-import Link from "next/link";
+import Link from 'next/link';
 
-import Image from "next/image";
+import Image from 'next/image';
 
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    agreeToTerms: false,
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    agreeToTerms: false
   });
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+    const name, value, type, checked = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === 'checkbox' ? checked : value
     }));
 
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
-        [name]: "",
+        [name]: ''
       }));
     }
   };
@@ -41,34 +42,34 @@ export default function RegisterPage() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "الاسم مطلوب";
+      newErrors.name = 'الاسم مطلوب';
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = "البريد الإلكتروني مطلوب";
+      newErrors.email = 'البريد الإلكتروني مطلوب';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "البريد الإلكتروني غير صحيح";
+      newErrors.email = 'البريد الإلكتروني غير صحيح';
     }
 
     if (!formData.password) {
-      newErrors.password = "كلمة المرور مطلوبة";
+      newErrors.password = 'كلمة المرور مطلوبة';
     } else if (formData.password.length < 6) {
-      newErrors.password = "كلمة المرور يجب أن تكون 6 أحرف على الأقل";
+      newErrors.password = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
     }
 
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "كلمة المرور غير متطابقة";
+      newErrors.confirmPassword = 'كلمة المرور غير متطابقة';
     }
 
     if (!formData.agreeToTerms) {
-      newErrors.agreeToTerms = "يجب الموافقة على الشروط والأحكام";
+      newErrors.agreeToTerms = 'يجب الموافقة على الشروط والأحكام';
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -82,14 +83,14 @@ export default function RegisterPage() {
       const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
           password: formData.password,
-          confirmPassword: formData.confirmPassword,
-        }),
+          confirmPassword: formData.confirmPassword
+        })
       });
 
       const data = await response.json();
@@ -103,7 +104,7 @@ export default function RegisterPage() {
           });
           setErrors(newErrors);
         } else {
-          setErrors({ general: data.message || "حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى." });
+          setErrors({ general: data.message || 'حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى.' });
         }
         return;
       }
@@ -111,15 +112,15 @@ export default function RegisterPage() {
       // Success - show success message
       setSuccess(true);
       setFormData({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        agreeToTerms: false,
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        agreeToTerms: false
       });
     } catch (error) {
-      console.error('Registration error:', error);
-      setErrors({ general: "حدث خطأ أثناء الاتصال بالخادم. حاول مرة أخرى." });
+      // console.error('Registration error:', error);
+      setErrors({ general: 'حدث خطأ أثناء الاتصال بالخادم. حاول مرة أخرى.' });
     } finally {
       setIsLoading(false);
     }
@@ -195,9 +196,9 @@ export default function RegisterPage() {
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] ${
-                  errors.name ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`
+                  errors.name ? 'border-red-500' : 'border-gray-300'
+                }`
                 placeholder="أدخل اسمك الكامل"
                 disabled={isLoading}
               />
@@ -220,9 +221,9 @@ export default function RegisterPage() {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] ${
-                  errors.email ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`
+                  errors.email ? 'border-red-500' : 'border-gray-300'
+                }`
                 placeholder="أدخل بريدك الإلكتروني"
                 disabled={isLoading}
               />
@@ -245,9 +246,9 @@ export default function RegisterPage() {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] ${
-                  errors.password ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`
+                  errors.password ? 'border-red-500' : 'border-gray-300'
+                }`
                 placeholder="أدخل كلمة المرور"
                 disabled={isLoading}
               />
@@ -270,9 +271,9 @@ export default function RegisterPage() {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
-                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] ${
-                  errors.confirmPassword ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`
+                  errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+                }`
                 placeholder="أعد إدخال كلمة المرور"
                 disabled={isLoading}
               />
@@ -295,14 +296,14 @@ export default function RegisterPage() {
                   disabled={isLoading}
                 />
                 <span className="text-sm text-gray-700 dark:text-gray-300">
-                  أوافق على{" "}
+                  أوافق على{' '}
                   <Link
                     href="/terms"
                     className="text-[var(--brand-primary)] hover:underline"
                   >
                     الشروط والأحكام
-                  </Link>{" "}
-                  و{" "}
+                  </Link>{' '}
+                  و{' '}
                   <Link
                     href="/privacy"
                     className="text-[var(--brand-primary)] hover:underline"
@@ -330,7 +331,7 @@ export default function RegisterPage() {
                   جاري إنشاء الحساب...
                 </div>
               ) : (
-                "إنشاء الحساب"
+                'إنشاء الحساب'
               )}
             </button>
           </form>
@@ -338,7 +339,7 @@ export default function RegisterPage() {
           {/* Login Link */}
           <div className="mt-6 text-center">
             <p className="text-gray-600 dark:text-gray-300">
-              لديك حساب بالفعل؟{" "}
+              لديك حساب بالفعل؟{' '}
               <Link
                 href={ROUTES.LOGIN}
                 className="font-semibold text-[var(--brand-primary)] hover:underline"

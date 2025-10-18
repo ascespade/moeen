@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 class FileCleanupManager {
   constructor() {
-    this.workspaceRoot = path.join(__dirname, "..");
-    this.tempDir = path.join(this.workspaceRoot, "temp");
-    this.logsDir = path.join(this.workspaceRoot, "logs");
-    this.archiveDir = path.join(this.workspaceRoot, "archive");
-    this.logFile = path.join(this.logsDir, "file-cleanup.log");
+    this.workspaceRoot = path.join(__dirname, '..');
+    this.tempDir = path.join(this.workspaceRoot, 'temp');
+    this.logsDir = path.join(this.workspaceRoot, 'logs');
+    this.archiveDir = path.join(this.workspaceRoot, 'archive');
+    this.logFile = path.join(this.logsDir, 'file-cleanup.log');
   }
 
   log(message) {
     const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] File Cleanup: ${message}\n`;
+    const logMessage = `[${timestamp}] File Cleanup: ${message}\n`
 
     // Ensure logs directory exists
     if (!fs.existsSync(this.logsDir)) {
@@ -22,11 +22,11 @@ class FileCleanupManager {
     }
 
     fs.appendFileSync(this.logFile, logMessage);
-    console.log(logMessage.trim());
+    // console.log(logMessage.trim());
   }
 
   async cleanupOldFiles() {
-    this.log("Starting file cleanup process...");
+    this.log('Starting file cleanup process...');
 
     let totalCleaned = 0;
     let totalArchived = 0;
@@ -44,19 +44,19 @@ class FileCleanupManager {
     totalArchived += archived;
 
     this.log(
-      `Cleanup completed: ${totalCleaned} files deleted, ${totalArchived} files archived`,
+      `Cleanup completed: ${totalCleaned} files deleted, ${totalArchived} files archived`
     );
 
     return {
       deleted: totalCleaned,
       archived: totalArchived,
-      timestamp: new Date().toISOString(),
+      timestamp: new Date().toISOString()
     };
   }
 
   async cleanupDirectory(dirPath, maxAgeDays) {
     if (!fs.existsSync(dirPath)) {
-      this.log(`Directory does not exist: ${dirPath}`);
+      this.log(`Directory does not exist: ${dirPath}`
       return 0;
     }
 
@@ -76,7 +76,7 @@ class FileCleanupManager {
           if (age > maxAge) {
             fs.unlinkSync(filePath);
             cleanedCount++;
-            this.log(`Deleted old file: ${file}`);
+            this.log(`Deleted old file: ${file}`
           }
         } else if (stats.isDirectory()) {
           // Recursively clean subdirectories
@@ -88,7 +88,7 @@ class FileCleanupManager {
             const remainingFiles = fs.readdirSync(filePath);
             if (remainingFiles.length === 0) {
               fs.rmdirSync(filePath);
-              this.log(`Removed empty directory: ${file}`);
+              this.log(`Removed empty directory: ${file}`
             }
           } catch (error) {
             // Directory not empty or other error, skip
@@ -96,14 +96,14 @@ class FileCleanupManager {
         }
       }
     } catch (error) {
-      this.log(`Error cleaning directory ${dirPath}: ${error.message}`);
+      this.log(`Error cleaning directory ${dirPath}: ${error.message}`
     }
 
     return cleanedCount;
   }
 
   async archiveImportantLogs() {
-    this.log("Archiving important logs...");
+    this.log('Archiving important logs...');
 
     // Ensure archive directory exists
     if (!fs.existsSync(this.archiveDir)) {
@@ -112,11 +112,11 @@ class FileCleanupManager {
 
     let archivedCount = 0;
     const importantLogs = [
-      "cursor-agent.log",
-      "file-cleanup.log",
-      "n8n-workflow.log",
-      "social-media.log",
-      "dashboard.log",
+      'cursor-agent.log',
+      'file-cleanup.log',
+      'n8n-workflow.log',
+      'social-media.log',
+      'dashboard.log'
     ];
 
     for (const logFile of importantLogs) {
@@ -130,12 +130,12 @@ class FileCleanupManager {
         if (age > maxAge) {
           const archivePath = path.join(
             this.archiveDir,
-            `${logFile}.${Date.now()}`,
+            `${logFile}.${Date.now()}`
           );
           fs.copyFileSync(sourcePath, archivePath);
           fs.unlinkSync(sourcePath);
           archivedCount++;
-          this.log(`Archived log file: ${logFile}`);
+          this.log(`Archived log file: ${logFile}`
         }
       }
     }
@@ -144,28 +144,28 @@ class FileCleanupManager {
   }
 
   async updateFileIndex() {
-    this.log("Updating file index...");
+    this.log('Updating file index...');
 
     const fileIndex = {
       timestamp: new Date().toISOString(),
       workspace: this.workspaceRoot,
       files: [],
-      directories: [],
+      directories: []
     };
 
     // Scan workspace
     this.scanDirectory(
       this.workspaceRoot,
       fileIndex.files,
-      fileIndex.directories,
+      fileIndex.directories
     );
 
     // Save file index
-    const indexFile = path.join(this.tempDir, "file-index.json");
+    const indexFile = path.join(this.tempDir, 'file-index.json');
     fs.writeFileSync(indexFile, JSON.stringify(fileIndex, null, 2));
 
     this.log(
-      `File index updated with ${fileIndex.files.length} files and ${fileIndex.directories.length} directories`,
+      `File index updated with ${fileIndex.files.length} files and ${fileIndex.directories.length} directories`
     );
 
     return fileIndex;
@@ -183,19 +183,19 @@ class FileCleanupManager {
           // Skip common directories that don't need indexing
           if (
             ![
-              "node_modules",
-              ".git",
-              ".next",
-              "dist",
-              "build",
-              "coverage",
+              'node_modules',
+              '.git',
+              '.next',
+              'dist',
+              'build',
+              'coverage'
             ].includes(item)
           ) {
             const relativePath = path.relative(this.workspaceRoot, itemPath);
             dirList.push({
               path: relativePath,
               created: stats.birthtime.toISOString(),
-              modified: stats.mtime.toISOString(),
+              modified: stats.mtime.toISOString()
             });
 
             // Recursively scan subdirectory
@@ -208,45 +208,45 @@ class FileCleanupManager {
             size: stats.size,
             created: stats.birthtime.toISOString(),
             modified: stats.mtime.toISOString(),
-            extension: path.extname(item),
+            extension: path.extname(item)
           });
         }
       }
     } catch (error) {
-      this.log(`Error scanning directory ${dirPath}: ${error.message}`);
+      this.log(`Error scanning directory ${dirPath}: ${error.message}`
     }
   }
 
   async generateCleanupReport() {
-    this.log("Generating cleanup report...");
+    this.log('Generating cleanup report...');
 
     const report = {
       timestamp: new Date().toISOString(),
       workspace: this.workspaceRoot,
       cleanup: await this.cleanupOldFiles(),
       fileIndex: await this.updateFileIndex(),
-      diskUsage: await this.getDiskUsage(),
+      diskUsage: await this.getDiskUsage()
     };
 
     // Save report
     const reportFile = path.join(
       this.workspaceRoot,
-      "reports",
-      "file-cleanup-report.json",
+      'reports',
+      'file-cleanup-report.json'
     );
     fs.writeFileSync(reportFile, JSON.stringify(report, null, 2));
 
-    this.log(`Cleanup report saved to: ${reportFile}`);
+    this.log(`Cleanup report saved to: ${reportFile}`
 
     return report;
   }
 
   async getDiskUsage() {
     try {
-      const { exec } = require("child_process");
+      const exec = require('child_process');
 
       return new Promise((resolve) => {
-        exec("df -h", (error, stdout) => {
+        exec('df -h', (error, stdout) => {
           if (error) {
             resolve({ error: error.message });
           } else {
@@ -267,11 +267,11 @@ if (require.main === module) {
   cleanupManager
     .generateCleanupReport()
     .then((report) => {
-      console.log("File cleanup completed successfully");
-      console.log(JSON.stringify(report, null, 2));
+      // console.log('File cleanup completed successfully');
+      // console.log(JSON.stringify(report, null, 2));
     })
     .catch((error) => {
-      console.error("File cleanup failed:", error);
+      // console.error('File cleanup failed:', error);
       process.exit(1);
     });
 }

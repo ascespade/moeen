@@ -9,7 +9,7 @@ export const USER_ROLES = {
   PATIENT: 'patient',
   AGENT: 'agent',
   MANAGER: 'manager',
-  DEMO: 'demo',
+  DEMO: 'demo'
 } as const;
 
 export const ROLE_PERMISSIONS = {
@@ -21,7 +21,7 @@ export const ROLE_PERMISSIONS = {
   [USER_ROLES.PATIENT]: ['read:own_data', 'write:own_appointments'],
   [USER_ROLES.AGENT]: ['read:appointments', 'write:appointments'],
   [USER_ROLES.MANAGER]: ['read:*', 'write:appointments', 'write:patients'],
-  [USER_ROLES.DEMO]: ['read:*'],
+  [USER_ROLES.DEMO]: ['read:*']
 } as const;
 
-export type UserRole = typeof USER_ROLES[keyof typeof USER_ROLES];
+export type Userstring = typeof USER_ROLES[keyof typeof USER_ROLES];

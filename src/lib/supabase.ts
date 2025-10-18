@@ -1,8 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
+import { () => ({} as any) } from "@supabase/supabase-js";
 // Supabase Integration for Hemam Center
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
+let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+let supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+let supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
 // Client for client-side operations
 // Admin client for server-side operations
   auth: {
@@ -48,9 +48,9 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
 }
   id: string;
   patient_id: string;
-  doctor_id: string;
+  doctorId: string;
   appointment_date: string;
-  appointment_time: string;
+  appointmentTime: string;
   type: "assessment" | "treatment" | "follow_up" | "consultation";
   status:
     | "scheduled"
@@ -67,7 +67,7 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
 }
   id: string;
   patient_id: string;
-  doctor_id: string;
+  doctorId: string;
   session_date: string;
   session_time: string;
   type: "assessment" | "treatment" | "follow_up";
@@ -94,94 +94,94 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
   async createPatient(
     patientData: Omit<Patient, "id" | "created_at" | "updated_at">,
   ) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("patients")
       .insert([patientData])
       .select()
       .single();
-    if (error) throw new Error(`Failed to create patient: ${error.message}`);
+    if (error) throw new Error(`Failed to create patient: ${error.message}`
     return data;
   }
   async getPatient(patientId: string) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("patients")
       .select("*")
       .eq("id", patientId)
       .single();
-    if (error) throw new Error(`Failed to get patient: ${error.message}`);
+    if (error) throw new Error(`Failed to get patient: ${error.message}`
     return data;
   }
   async getPatientByNationalId(nationalId: string) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("patients")
       .select("*")
       .eq("national_id", nationalId)
       .single();
     if (error)
-      throw new Error(`Failed to get patient by national ID: ${error.message}`);
+      throw new Error(`Failed to get patient by national ID: ${error.message}`
     return data;
   }
   async updatePatient(patientId: string, updates: Partial<Patient>) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("patients")
       .update({ ...updates, updated_at: new Date().toISOString() })
       .eq("id", patientId)
       .select()
       .single();
-    if (error) throw new Error(`Failed to update patient: ${error.message}`);
+    if (error) throw new Error(`Failed to update patient: ${error.message}`
     return data;
   }
   async searchPatients(searchTerm: string) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("patients")
       .select("*")
       .or(
-        `name.ilike.%${searchTerm}%,national_id.ilike.%${searchTerm}%,phone.ilike.%${searchTerm}%`,
+        `name.ilike.%${searchTerm}%,national_id.ilike.%${searchTerm}%,phone.ilike.%${searchTerm}%`
       )
       .order("created_at", { ascending: false });
-    if (error) throw new Error(`Failed to search patients: ${error.message}`);
+    if (error) throw new Error(`Failed to search patients: ${error.message}`
     return data;
   }
   // Doctor Management
   async createDoctor(doctorData: Omit<Doctor, "id" | "created_at">) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("doctors")
       .insert([doctorData])
       .select()
       .single();
-    if (error) throw new Error(`Failed to create doctor: ${error.message}`);
+    if (error) throw new Error(`Failed to create doctor: ${error.message}`
     return data;
   }
   async getDoctor(doctorId: string) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("doctors")
       .select("*")
       .eq("id", doctorId)
       .single();
-    if (error) throw new Error(`Failed to get doctor: ${error.message}`);
+    if (error) throw new Error(`Failed to get doctor: ${error.message}`
     return data;
   }
   async getDoctorsBySpecialty(specialty: string) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("doctors")
       .select("*")
       .eq("specialty", specialty)
       .eq("status", "active");
     if (error)
-      throw new Error(`Failed to get doctors by specialty: ${error.message}`);
+      throw new Error(`Failed to get doctors by specialty: ${error.message}`
     return data;
   }
   // Appointment Management
   async createAppointment(
     appointmentData: Omit<Appointment, "id" | "created_at" | "updated_at">,
   ) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("appointments")
       .insert([appointmentData])
       .select()
       .single();
     if (error)
-      throw new Error(`Failed to create appointment: ${error.message}`);
+      throw new Error(`Failed to create appointment: ${error.message}`
     return data;
   }
   async getAppointments(
@@ -195,61 +195,61 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
     let query = supabaseAdmin.from("appointments").select(`
       *,
       patients!appointments_patient_id_fkey(name, phone),
-      doctors!appointments_doctor_id_fkey(name, specialty)
-    `);
+      doctors!appointments_doctorId_fkey(name, specialty)
+    `
     if (filters.patientId) query = query.eq("patient_id", filters.patientId);
-    if (filters.doctorId) query = query.eq("doctor_id", filters.doctorId);
+    if (filters.doctorId) query = query.eq("doctorId", filters.doctorId);
     if (filters.date) query = query.eq("appointment_date", filters.date);
     if (filters.status) query = query.eq("status", filters.status);
-    const { data, error } = await query.order("appointment_date", {
+    const data, error = await query.order("appointment_date", {
       ascending: true,
     });
-    if (error) throw new Error(`Failed to get appointments: ${error.message}`);
+    if (error) throw new Error(`Failed to get appointments: ${error.message}`
     return data;
   }
   async updateAppointment(
     appointmentId: string,
     updates: Partial<Appointment>,
   ) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("appointments")
       .update({ ...updates, updated_at: new Date().toISOString() })
       .eq("id", appointmentId)
       .select()
       .single();
     if (error)
-      throw new Error(`Failed to update appointment: ${error.message}`);
+      throw new Error(`Failed to update appointment: ${error.message}`
     return data;
   }
   // Session Management
   async createSession(sessionData: Omit<Session, "id" | "created_at">) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("sessions")
       .insert([sessionData])
       .select()
       .single();
-    if (error) throw new Error(`Failed to create session: ${error.message}`);
+    if (error) throw new Error(`Failed to create session: ${error.message}`
     return data;
   }
   async getSessions(patientId: string) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("sessions")
       .select(
         `
         *,
-        doctors!sessions_doctor_id_fkey(name, specialty)
-      `,
+        doctors!sessions_doctorId_fkey(name, specialty)
+      `
       )
       .eq("patient_id", patientId)
       .order("session_date", { ascending: false });
-    if (error) throw new Error(`Failed to get sessions: ${error.message}`);
+    if (error) throw new Error(`Failed to get sessions: ${error.message}`
     return data;
   }
   // Insurance Claims
   async createInsuranceClaim(
     claimData: Omit<InsuranceClaim, "id" | "submitted_at">,
   ) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("insurance_claims")
       .insert([
         {
@@ -260,60 +260,60 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
       .select()
       .single();
     if (error)
-      throw new Error(`Failed to create insurance claim: ${error.message}`);
+      throw new Error(`Failed to create insurance claim: ${error.message}`
     return data;
   }
   async getInsuranceClaims(patientId: string) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("insurance_claims")
       .select("*")
       .eq("patient_id", patientId)
       .order("submitted_at", { ascending: false });
     if (error)
-      throw new Error(`Failed to get insurance claims: ${error.message}`);
+      throw new Error(`Failed to get insurance claims: ${error.message}`
     return data;
   }
   async updateInsuranceClaim(
     claimId: string,
     updates: Partial<InsuranceClaim>,
   ) {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("insurance_claims")
       .update(updates)
       .eq("id", claimId)
       .select()
       .single();
     if (error)
-      throw new Error(`Failed to update insurance claim: ${error.message}`);
+      throw new Error(`Failed to update insurance claim: ${error.message}`
     return data;
   }
   // Analytics
   async getPatientStats() {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("patients")
       .select("id, created_at, status");
-    if (error) throw new Error(`Failed to get patient stats: ${error.message}`);
-    const total = data.length;
-    const active = data.filter((p) => p.status === "active").length;
-    const newLast30Days = data.filter((p) => {
-      const createdAt = new Date(p.created_at);
-      const thirtyDaysAgo = new Date();
+    if (error) throw new Error(`Failed to get patient stats: ${error.message}`
+    let total = data.length;
+    let active = data.filter((p) => p.status === "active").length;
+    let newLast30Days = data.filter((p) => {
+      let createdAt = new Date(p.created_at);
+      let thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       return createdAt >= thirtyDaysAgo;
     }).length;
     return { total, active, newLast30Days };
   }
   async getAppointmentStats() {
-    const { data, error } = await supabaseAdmin
+    const data, error = await supabaseAdmin
       .from("appointments")
       .select("status, appointment_date, created_at");
     if (error)
-      throw new Error(`Failed to get appointment stats: ${error.message}`);
-    const total = data.length;
-    const completed = data.filter((a) => a.status === "completed").length;
-    const cancelled = data.filter((a) => a.status === "cancelled").length;
-    const upcoming = data.filter((a) => {
-      const appointmentDate = new Date(a.appointment_date);
+      throw new Error(`Failed to get appointment stats: ${error.message}`
+    let total = data.length;
+    let completed = data.filter((a) => a.status === "completed").length;
+    let cancelled = data.filter((a) => a.status === "cancelled").length;
+    let upcoming = data.filter((a) => {
+      let appointmentDate = new Date(a.appointment_date);
       return appointmentDate >= new Date() && a.status === "scheduled";
     }).length;
     return { total, completed, cancelled, upcoming };
@@ -321,7 +321,7 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
   // Health Check
   async healthCheck() {
     try {
-      const { data: _d, error } = await supabaseAdmin
+      const data: _d, error = await supabaseAdmin
         .from("patients")
         .select("id")
         .limit(1);
@@ -332,7 +332,7 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
         timestamp: new Date().toISOString(),
       };
     } catch (error) {
-      const err = error as Error;
+      let err = error as Error;
       return {
         status: "unhealthy",
         connected: false,
@@ -343,12 +343,12 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
   }
 }
 // Exports
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+export let supabase = () => ({} as any)(supabaseUrl, supabaseAnonKey);
+export let supabaseAdmin = () => ({} as any)(supabaseUrl, supabaseServiceKey, {
 export interface Patient {
 export interface Doctor {
 export interface Appointment {
 export interface Session {
 export interface InsuranceClaim {
 export class SupabaseDatabaseManager {
-export const db = new SupabaseDatabaseManager();
+export let db = new SupabaseDatabaseManager();

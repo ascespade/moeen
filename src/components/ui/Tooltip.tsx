@@ -1,11 +1,12 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
 export function Tooltip({
   label,
-  children,
+  children
 }: {
   label: string;
   children: React.ReactNode;

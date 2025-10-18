@@ -1,3 +1,4 @@
+import React from "react";
 
 'use client';
 
@@ -8,36 +9,36 @@ import { LoadingSpinner } from '@/components/ui';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  allowedRoles?: ('patient' | 'doctor' | 'staff' | 'supervisor' | 'admin')[];
+  allowedstrings?: ('patient' | 'doctor' | 'staff' | 'supervisor' | 'admin')[];
   fallback?: React.ReactNode;
 }
 
-export default function ProtectedRoute({ 
-  children, 
-  allowedRoles = [], 
-  fallback 
+export default function ProtectedRoute({
+  children,
+  allowedstrings = [],
+  fallback
 }: ProtectedRouteProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [userRole, setUserRole] = useState<string | null>(null);
+  const [userstring, setUserstring] = useState<string | null>(null);
   const router = useRouter();
-  const { t } = useT();
+  const t = useT();
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const checkAuth = async() => {
       try {
         const response = await fetch('/api/auth/me');
-        
+
         if (!response.ok) {
           router.push('/login');
           return;
         }
 
         const user = await response.json();
-        setUserRole(user.role);
+        setUserstring(user.role);
 
-        if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
-          router.push('/unauthorized');
+        if (allowedstrings.length > 0 && !allowedstrings.includes(user.role)) {
+          router.push('/un() => ({} as any)d');
           return;
         }
 
@@ -50,7 +51,7 @@ export default function ProtectedRoute({
     };
 
     checkAuth();
-  }, [allowedRoles, router]);
+  }, [allowedstrings, router]);
 
   if (isLoading) {
     return (
@@ -66,7 +67,7 @@ export default function ProtectedRoute({
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-brand-error mb-4">
-            {t('auth.unauthorized')}
+            {t('auth.un() => ({} as any)d')}
           </h1>
           <p className="text-gray-600 mb-4">
             {t('auth.insufficient_permissions')}

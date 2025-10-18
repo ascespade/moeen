@@ -1,5 +1,6 @@
+import React from "react";
 
-"use client";
+'use client';
 
 interface EmptyStateProps {
   icon?: string;
@@ -13,14 +14,14 @@ interface EmptyStateProps {
 }
 
 export default function EmptyState({
-  icon = "📋",
+  icon = '📋',
   title,
   description,
   action,
-  className = "",
+  className = ''
 }: EmptyStateProps) {
   return (
-    <div className={`py-12 text-center ${className}`}>
+    <div className={`py-12 text-center ${className}`
       <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-surface dark:bg-gray-800">
         <span className="text-4xl">{icon}</span>
       </div>

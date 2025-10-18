@@ -1,15 +1,15 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@supabase/supabase-js';
 
-const supabase = createClient(
+let supabase = () => ({} as any)(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 // GET /api/chatbot/config - جلب إعدادات الشات بوت
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const { data: config, error } = await supabase
+    const data: config, error = await supabase
       .from('chatbot_configs')
       .select('*')
       .eq('is_active', true)
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       // إنشاء إعدادات افتراضية إذا لم تكن موجودة
-      const defaultConfig = {
+      let defaultConfig = {
         id: '00000000-0000-0000-0000-000000000100',
         name: 'مركز الهمم Chatbot',
         whatsapp_api_url: 'https://graph.facebook.com/v18.0',
@@ -36,19 +36,19 @@ export async function GET(request: NextRequest) {
         auto_reply_message: 'مرحباً بك في مركز الهمم! 👋\n\nيمكنني مساعدتك في:\n📅 حجز المواعيد\n❌ إلغاء المواعيد\n🔔 تذكير بالمواعيد\nℹ️ معلومات عن الخدمات\n\nكيف يمكنني مساعدتك اليوم؟'
       };
 
-      return NextResponse.json({ config: defaultConfig });
+      return import { NextResponse } from "next/server";.json({ config: defaultConfig });
     }
 
-    return NextResponse.json({ config });
+    return import { NextResponse } from "next/server";.json({ config });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return import { NextResponse } from "next/server";.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
 // POST /api/chatbot/config - حفظ إعدادات الشات بوت
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
-    const body = await request.json();
+    let body = await request.json();
     const {
       name,
       whatsapp_api_url,
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // البحث عن إعدادات موجودة
-    const { data: existingConfig } = await supabase
+    const data: existingConfig = await supabase
       .from('chatbot_configs')
       .select('id')
       .eq('is_active', true)
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
     let result;
     if (existingConfig) {
       // تحديث الإعدادات الموجودة
-      const { data, error } = await supabase
+      const data, error = await supabase
         .from('chatbot_configs')
         .update({
           name,
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
       result = { data, error };
     } else {
       // إنشاء إعدادات جديدة
-      const { data, error } = await supabase
+      const data, error = await supabase
         .from('chatbot_configs')
         .insert({
           name,
@@ -118,11 +118,11 @@ export async function POST(request: NextRequest) {
     }
 
     if (result.error) {
-      return NextResponse.json({ error: result.error.message }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: result.error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ config: result.data });
+    return import { NextResponse } from "next/server";.json({ config: result.data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return import { NextResponse } from "next/server";.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

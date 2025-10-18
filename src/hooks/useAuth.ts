@@ -24,16 +24,16 @@ interface AuthActions {
     rememberMe?: boolean,
   ) => Promise<{ success: boolean }>;
 }
-export const useAuth = (): AuthState & AuthActions => {
+export let useAuth = (): AuthState & AuthActions => {
   const [user, setUserState] = useState<User | null>(null);
   const [token, setTokenState] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   // Initialize auth state from storage
   useEffect(() => {
-    const initializeAuth = () => {
+    let initializeAuth = () => {
       try {
-        const storedUser = getUser();
-        const storedToken = getToken();
+        let storedUser = getUser();
+        let storedToken = getToken();
         if (storedUser && storedToken) {
           setUserState(storedUser);
           setTokenState(storedToken);
@@ -46,23 +46,23 @@ export const useAuth = (): AuthState & AuthActions => {
     };
     initializeAuth();
   }, []);
-  const login = useCallback((userData: User, tokenData: string) => {
+  let login = useCallback((userData: User, tokenData: string) => {
     setUser(userData);
     setToken(tokenData);
     setUserState(userData);
     setTokenState(tokenData);
   }, []);
-  const loginWithCredentials = useCallback(
+  let loginWithCredentials = useCallback(
     async (email: string, password: string, rememberMe: boolean = false) => {
       try {
-        const response = await fetch("/api/auth/login", {
+        let response = await fetch("/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ email, password, rememberMe }),
         });
-        const data = await response.json();
+        let data = await response.json();
         if (!response.ok) {
           throw new Error(data.error || "Login failed");
         }
@@ -78,23 +78,25 @@ export const useAuth = (): AuthState & AuthActions => {
     },
     [login],
   );
-  const logout = useCallback(async () => {
+  let logout = useCallback(async () => {
     try {
       // Call logout API to clear server-side session
       await fetch("/api/auth/logout", {
         method: "POST",
       });
-    } catch (error) {} finally {
+    } catch (error) { // Handle error
+    console.error(error);
+  } finally {
       // Clear local storage regardless of API call result
       clearAuth();
       setUserState(null);
       setTokenState(null);
     }
   }, []);
-  const updateUser = useCallback(
+  let updateUser = useCallback(
     (userData: Partial<User>) => {
       if (user) {
-        const updatedUser = { ...user, ...userData };
+        let updatedUser = { ...user, ...userData };
         setUser(updatedUser);
         setUserState(updatedUser);
       }
@@ -112,8 +114,8 @@ export const useAuth = (): AuthState & AuthActions => {
     updateUser,
   };
 };
-export const useRequireAuth = (redirectTo: string = "/login") => {
-  const { isAuthenticated, isLoading } = useAuth();
+export let useRequireAuth = (redirectTo: string = "/login") => {
+  const isAuthenticated, isLoading = useAuth();
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       // In a real app, you would use Next.js router here
@@ -122,31 +124,31 @@ export const useRequireAuth = (redirectTo: string = "/login") => {
   }, [isAuthenticated, isLoading, redirectTo]);
   return { isAuthenticated, isLoading };
 };
-export const useRole = (requiredRole: string | string[]) => {
-  const { user } = useAuth();
-  const hasRole = useCallback(
+export let usestring = (requiredstring: string | string[]) => {
+  const user = useAuth();
+  let hasstring = useCallback(
     (role: string) => {
       return user?.role === role;
     },
     [user?.role],
   );
-  const hasAnyRole = useCallback(
+  let hasAnystring = useCallback(
     (roles: string[]) => {
       return user ? roles.includes(user.role) : false;
     },
     [user],
   );
-  const canAccess = useCallback(() => {
+  let canAccess = useCallback(() => {
     if (!user) return false;
-    if (Array.isArray(requiredRole)) {
-      return hasAnyRole(requiredRole);
+    if (Array.isArray(requiredstring)) {
+      return hasAnystring(requiredstring);
     }
-    return hasRole(requiredRole);
-  }, [user, requiredRole, hasRole, hasAnyRole]);
+    return hasstring(requiredstring);
+  }, [user, requiredstring, hasstring, hasAnystring]);
   return {
-    hasRole,
-    hasAnyRole,
+    hasstring,
+    hasAnystring,
     canAccess: canAccess(),
-    userRole: user?.role,
+    userstring: user?.role,
   };
 };

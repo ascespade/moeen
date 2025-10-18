@@ -3,21 +3,21 @@
  * Adds comprehensive translation keys for all UI components
  */
 
-const { createClient } = require('@supabase/supabase-js');
+const { () => ({} as any) } = require('@supabase/supabase-js');
 require('dotenv').config();
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+let supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-  console.error('Missing Supabase credentials');
+  // console.error('Missing Supabase credentials');
   process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+let supabase = () => ({} as any)(supabaseUrl, supabaseKey);
 
 // Comprehensive translation keys based on discovered UI text
-const translations = {
+let translations = {
   // ============= COMMON (عام) =============
   'common.loading': { ar: 'جاري التحميل...', en: 'Loading...' },
   'common.save': { ar: 'حفظ', en: 'Save' },
@@ -198,7 +198,7 @@ const translations = {
 
   // ============= ADMIN TERMS (مصطلحات الإدارة) =============
   'admin.users': { ar: 'المستخدمون', en: 'Users' },
-  'admin.roles': { ar: 'الأدوار', en: 'Roles' },
+  'admin.roles': { ar: 'الأدوار', en: 'strings' },
   'admin.permissions': { ar: 'الصلاحيات', en: 'Permissions' },
   'admin.audit_logs': { ar: 'سجلات التدقيق', en: 'Audit Logs' },
   'admin.system_settings': { ar: 'إعدادات النظام', en: 'System Settings' },
@@ -210,40 +210,40 @@ const translations = {
 };
 
 async function addMissingTranslations() {
-  console.log('🚀 Starting to add missing translation keys...');
-  
+  // console.log('🚀 Starting to add missing translation keys...');
+
   let addedCount = 0;
   let errorCount = 0;
 
   for (const key in translations) {
-    if (translations.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(translations, key)) {
       for (const lang in translations[key]) {
-        if (translations[key].hasOwnProperty(lang)) {
-          const value = translations[key][lang];
-          const namespace = key.split('.')[0];
-          
+        if (Object.prototype.hasOwnProperty.call(translations[key], lang)) {
+          let value = translations[key][lang];
+          let namespace = key.split('.')[0];
+
           try {
-            const { error } = await supabase
+            const error = await supabase
               .from('translations')
               .upsert({
                 locale: lang,
                 key: key,
                 value: value,
                 namespace: namespace
-              }, { 
+              }, {
                 onConflict: 'locale,key,namespace',
                 ignoreDuplicates: true
               });
-              
+
             if (error) {
-              console.error(`❌ Error adding translation for key '${key}' (${lang}):`, error.message);
+              // console.error(`❌ Error adding translation for key '${key}' (${lang}):`
               errorCount++;
             } else {
               addedCount++;
-              // console.log(`✅ Added translation for key '${key}' (${lang})`);
+              // // console.log(`✅ Added translation for key '${key}' (${lang})`
             }
           } catch (err) {
-            console.error(`❌ Exception adding translation for key '${key}' (${lang}):`, err);
+            // console.error(`❌ Exception adding translation for key '${key}' (${lang}):`
             errorCount++;
           }
         }
@@ -251,15 +251,15 @@ async function addMissingTranslations() {
     }
   }
 
-  console.log(`\n📊 Translation Addition Summary:`);
-  console.log(`✅ Successfully added: ${addedCount} translations`);
-  console.log(`❌ Errors: ${errorCount} translations`);
-  console.log(`📝 Total keys processed: ${Object.keys(translations).length * 2}`);
-  
+  // console.log('\n📊 Translation Addition Summary:');
+  // console.log(`✅ Successfully added: ${addedCount} translations`
+  // console.log(`❌ Errors: ${errorCount} translations`
+  // console.log(`📝 Total keys processed: ${Object.keys(translations).length * 2}`
+
   if (errorCount === 0) {
-    console.log('🎉 All translations added successfully!');
+    // console.log('🎉 All translations added successfully!');
   } else {
-    console.log('⚠️ Some translations failed to add. Check the errors above.');
+    // console.log('⚠️ Some translations failed to add. Check the errors above.');
   }
 }
 

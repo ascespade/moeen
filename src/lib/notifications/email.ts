@@ -39,7 +39,7 @@ export class EmailNotificationService {
           <p>يرجى الحضور قبل الموعد بـ 15 دقيقة.</p>
           <p>شكراً لاختياركم مركز الحمام.</p>
         </div>
-      `,
+      `
       text: `
         تأكيد الموعد
         عزيزي/عزيزتي {{patientName}}،
@@ -73,7 +73,7 @@ export class EmailNotificationService {
           </div>
           <p>شكراً لاختياركم مركز الحمام.</p>
         </div>
-      `,
+      `
       text: `
         تأكيد الدفع
         عزيزي/عزيزتي {{patientName}}،
@@ -106,7 +106,7 @@ export class EmailNotificationService {
           <p>يرجى الحضور قبل الموعد بـ 15 دقيقة.</p>
           <p>شكراً لاختياركم مركز الحمام.</p>
         </div>
-      `,
+      `
       text: `
         تذكير بالموعد
         عزيزي/عزيزتي {{patientName}}،
@@ -136,7 +136,7 @@ export class EmailNotificationService {
       let text = template.text;
 
       Object.entries(emailData.data).forEach(([key, value]) => {
-        const regex = new RegExp(`{{${key}}}`, 'g');
+        const regex = new RegExp(`{{${key}}}`
         subject = subject.replace(regex, String(value));
         html = html.replace(regex, String(value));
         text = text.replace(regex, String(value));
@@ -158,9 +158,9 @@ export class EmailNotificationService {
       return { success: true };
 
     } catch (error) {
-      return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Email sending failed' 
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Email sending failed'
       };
     }
   }

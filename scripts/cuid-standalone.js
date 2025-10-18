@@ -1,9 +1,9 @@
-const { createId } = require("@paralleldrive/cuid2");
+const createId = require('@paralleldrive/cuid2');
 
 // Generate a public ID with prefix
-function generatePublicId(prefix = "") {
+function generatePublicId(prefix = '') {
   const cuid = createId();
-  return prefix ? `${prefix}_${cuid}` : cuid;
+  return prefix ? `${prefix}_${cuid}`
 }
 
 // Generate a short ID (8 characters)
@@ -20,5 +20,5 @@ module.exports = {
   generatePublicId,
   generateShortId,
   generateLegacyCuid,
-  createId,
+  createId
 };

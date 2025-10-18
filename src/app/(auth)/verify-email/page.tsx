@@ -1,16 +1,17 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { Mail, CheckCircle, RefreshCw } from "lucide-react";
+import { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Mail, CheckCircle, RefreshCw } from 'lucide-react';
 
 export default function VerifyEmailPage() {
   const [isResending, setIsResending] = useState(false);
   const [isResent, setIsResent] = useState(false);
 
-  const handleResend = async () => {
+  const handleResend = async() => {
     setIsResending(true);
 
     // محاكاة إعادة إرسال رابط التحقق
@@ -100,7 +101,7 @@ export default function VerifyEmailPage() {
 
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            إذا واجهت مشاكل، يرجى{" "}
+            إذا واجهت مشاكل، يرجى{' '}
             <Link
               href="/contact"
               className="text-[var(--brand-primary)] hover:underline"

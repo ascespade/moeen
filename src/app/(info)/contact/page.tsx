@@ -1,31 +1,32 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 
 export default function ContactPage() {
   const [isSending, setIsSending] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = async(e: React.FormEvent) => {
     e.preventDefault();
     setIsSending(true);
 
@@ -39,28 +40,28 @@ export default function ContactPage() {
   const contactInfo = [
     {
       icon: <Mail className="h-6 w-6" />,
-      title: "البريد الإلكتروني",
-      value: "info@mu3een.com",
-      link: "mailto:info@mu3een.com",
+      title: 'البريد الإلكتروني',
+      value: 'info@mu3een.com',
+      link: 'mailto:info@mu3een.com'
     },
     {
       icon: <Phone className="h-6 w-6" />,
-      title: "الهاتف",
-      value: "+966 50 123 4567",
-      link: "tel:+966501234567",
+      title: 'الهاتف',
+      value: '+966 50 123 4567',
+      link: 'tel:+966501234567'
     },
     {
       icon: <MapPin className="h-6 w-6" />,
-      title: "العنوان",
-      value: "الرياض، المملكة العربية السعودية",
-      link: "#",
+      title: 'العنوان',
+      value: 'الرياض، المملكة العربية السعودية',
+      link: '#'
     },
     {
       icon: <Clock className="h-6 w-6" />,
-      title: "ساعات العمل",
-      value: "الأحد - الخميس: 8:00 - 17:00",
-      link: "#",
-    },
+      title: 'ساعات العمل',
+      value: 'الأحد - الخميس: 8:00 - 17:00',
+      link: '#'
+    }
   ];
 
   if (isSubmitted) {
@@ -123,7 +124,7 @@ export default function ContactPage() {
               />
               <span
                 className="text-xl font-bold"
-                style={{ color: "var(--brand-primary)" }}
+                style={{ color: 'var(--brand-primary)' }}
               >
                 مُعين
               </span>

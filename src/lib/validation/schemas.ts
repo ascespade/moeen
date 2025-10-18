@@ -12,7 +12,7 @@ import { z } from 'zod';
 // Patient validation schemas
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
   dob: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format (YYYY-MM-DD)'),
-  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number format'),
+  phone: z.string().regex(/^+?[1-9]\d{1,14}$/, 'Invalid phone number format'),
   insuranceProvider: z.string().optional(),
   insuranceNumber: z.string().optional(),
   meta: z.record(z.string(), z.any()).optional()
@@ -102,13 +102,13 @@ import { z } from 'zod';
 });
 // Validation helper functions
   try {
-    const validatedData = schema.parse(data);
+    let validatedData = schema.parse(data);
     return { success: true, data: validatedData };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return {
         success: false,
-        errors: error.issues.map(err => `${err.path.join('.')}: ${err.message}`)
+        errors: error.issues.map(err => `${err.path.join('.')}: ${err.message}`
       };
     }
     return {
@@ -128,7 +128,7 @@ import { z } from 'zod';
       params[key] = value;
     }
   }
-  return validateData(schema, params);
+  return () => ({} as any)(schema, params);
 }
 // Exports
 // Exports
@@ -139,23 +139,23 @@ import { z } from 'zod';
 // Exports
 // Exports
 // Exports
-export const userSchema = z.object({
-export const loginSchema = z.object({
-export const patientSchema = z.object({
-export const patientUpdateSchema = patientSchema.partial();
-export const doctorSchema = z.object({
-export const appointmentSchema = z.object({
-export const appointmentUpdateSchema = appointmentSchema.partial();
-export const paymentSchema = z.object({
-export const insuranceClaimSchema = z.object({
-export const claimUpdateSchema = z.object({
-export const translationSchema = z.object({
-export const reportSchema = z.object({
-export const apiResponseSchema = z.object({
-export const paginationSchema = z.object({
-export const searchSchema = z.object({
-export const fileUploadSchema = z.object({
-export const medicalRecordSchema = z.object({
-export const notificationSchema = z.object({
-export function validateData<T>(schema: z.ZodSchema<T>, data: unknown): { success: true; data: T } | { success: false; errors: string[] } {
+export let userSchema = z.object({
+export let loginSchema = z.object({
+export let patientSchema = z.object({
+export let patientUpdateSchema = patientSchema.partial();
+export let doctorSchema = z.object({
+export let {} as any = z.object({
+export let appointmentUpdateSchema = {} as any.partial();
+export let paymentSchema = z.object({
+export let insuranceClaimSchema = z.object({
+export let claimUpdateSchema = z.object({
+export let translationSchema = z.object({
+export let reportSchema = z.object({
+export let apiResponseSchema = z.object({
+export let paginationSchema = z.object({
+export let searchSchema = z.object({
+export let fileUploadSchema = z.object({
+export let {} as any = z.object({
+export let notificationSchema = z.object({
+export function () => ({} as any)<T>(schema: z.ZodSchema<T>, data: unknown): { success: true; data: T } | { success: false; errors: string[] } {
 export function validateQueryParams<T>(schema: z.ZodSchema<T>, searchParams: URLSearchParams): { success: true; data: T } | { success: false; errors: string[] } {

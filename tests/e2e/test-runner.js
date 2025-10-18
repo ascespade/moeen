@@ -3,44 +3,44 @@
 // Comprehensive Test Runner for All Automation Systems
 // Executes Playwright tests with detailed reporting and analysis
 
-const { exec } = require("child_process");
-const fs = require("fs").promises;
-const path = require("path");
-const winston = require("winston");
+const exec = require('child_process');
+const fs = require('fs').promises;
+const path = require('path');
+const winston = require('winston');
 
 // Configure Winston logger
 const logger = winston.createLogger({
-  level: "info",
+  level: 'info',
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.errors({ stack: true }),
-    winston.format.json(),
+    winston.format.json()
   ),
   transports: [
-    new winston.transports.File({ filename: "logs/test-runner.log" }),
+    new winston.transports.File({ filename: 'logs/test-runner.log' }),
     new winston.transports.Console({
-      format: winston.format.simple(),
-    }),
-  ],
+      format: winston.format.simple()
+    })
+  ]
 });
 
 class TestRunner {
   constructor() {
     this.config = {
       testSuites: [
-        "dashboard.spec.ts",
-        "admin.spec.ts",
-        "chatbot.spec.ts",
-        "automation.spec.ts",
+        'dashboard.spec.ts',
+        'admin.spec.ts',
+        'chatbot.spec.ts',
+        'automation.spec.ts'
       ],
-      browsers: ["chromium", "firefox", "webkit"],
+      browsers: ['chromium', 'firefox', 'webkit'],
       retries: 2,
       timeout: 30000,
       parallel: true,
-      reportDir: "./test-results",
-      screenshotsDir: "./test-results/screenshots",
-      videosDir: "./test-results/videos",
-      tracesDir: "./test-results/traces",
+      reportDir: './test-results',
+      screenshotsDir: './test-results/screenshots',
+      videosDir: './test-results/videos',
+      tracesDir: './test-results/traces'
     };
 
     this.results = {
@@ -51,12 +51,12 @@ class TestRunner {
       duration: 0,
       suites: [],
       startTime: null,
-      endTime: null,
+      endTime: null
     };
   }
 
   async run() {
-    logger.info("🚀 Starting comprehensive test run...");
+    logger.info('🚀 Starting comprehensive test run...');
 
     try {
       // Initialize test environment
@@ -71,15 +71,15 @@ class TestRunner {
       // Analyze results
       await this.analyzeResults();
 
-      logger.info("✅ Test run completed successfully");
+      logger.info('✅ Test run completed successfully');
     } catch (error) {
-      logger.error("❌ Test run failed:", error);
+      logger.error('❌ Test run failed:', error);
       process.exit(1);
     }
   }
 
   async initializeTestEnvironment() {
-    logger.info("🔧 Initializing test environment...");
+    logger.info('🔧 Initializing test environment...');
 
     try {
       // Create test result directories
@@ -88,7 +88,7 @@ class TestRunner {
         this.config.screenshotsDir,
         this.config.videosDir,
         this.config.tracesDir,
-        "./logs",
+        './logs'
       ];
 
       for (const dir of dirs) {
@@ -101,23 +101,23 @@ class TestRunner {
       // Verify test environment
       await this.verifyTestEnvironment();
 
-      logger.info("✅ Test environment initialized");
+      logger.info('✅ Test environment initialized');
     } catch (error) {
-      logger.error("❌ Test environment initialization failed:", error);
+      logger.error('❌ Test environment initialization failed:', error);
       throw error;
     }
   }
 
   async installPlaywrightBrowsers() {
-    logger.info("🌐 Installing Playwright browsers...");
+    logger.info('🌐 Installing Playwright browsers...');
 
     return new Promise((resolve, reject) => {
-      exec("npx playwright install", (error, stdout, stderr) => {
+      exec('npx playwright install', (error, stdout, stderr) => {
         if (error) {
-          logger.error("❌ Failed to install Playwright browsers:", error);
+          logger.error('❌ Failed to install Playwright browsers:', error);
           reject(error);
         } else {
-          logger.info("✅ Playwright browsers installed");
+          logger.info('✅ Playwright browsers installed');
           resolve();
         }
       });
@@ -125,44 +125,44 @@ class TestRunner {
   }
 
   async verifyTestEnvironment() {
-    logger.info("🔍 Verifying test environment...");
+    logger.info('🔍 Verifying test environment...');
 
     try {
       // Check if Playwright is installed
-      const { exec } = require("child_process");
-      const { promisify } = require("util");
+      const exec = require('child_process');
+      const promisify = require('util');
       const execAsync = promisify(exec);
 
-      await execAsync("npx playwright --version");
+      await execAsync('npx playwright --version');
 
       // Check if test files exist
       for (const suite of this.config.testSuites) {
-        const testFile = path.join("./tests/e2e", suite);
+        const testFile = path.join('./tests/e2e', suite);
         try {
           await fs.access(testFile);
         } catch (error) {
-          logger.warn(`⚠️ Test file not found: ${suite}`);
+          logger.warn(`⚠️ Test file not found: ${suite}`
         }
       }
 
-      logger.info("✅ Test environment verified");
+      logger.info('✅ Test environment verified');
     } catch (error) {
-      logger.error("❌ Test environment verification failed:", error);
+      logger.error('❌ Test environment verification failed:', error);
       throw error;
     }
   }
 
   async runTestSuites() {
-    logger.info("🧪 Running test suites...");
+    logger.info('🧪 Running test suites...');
 
     this.results.startTime = new Date();
 
     for (const suite of this.config.testSuites) {
       try {
-        logger.info(`📋 Running test suite: ${suite}`);
+        logger.info(`📋 Running test suite: ${suite}`
         await this.runTestSuite(suite);
       } catch (error) {
-        logger.error(`❌ Test suite ${suite} failed:`, error);
+        logger.error(`❌ Test suite ${suite} failed:`
         this.results.failed++;
       }
     }
@@ -174,14 +174,14 @@ class TestRunner {
 
   async runTestSuite(suiteName) {
     return new Promise((resolve, reject) => {
-      const command = `npx playwright test tests/e2e/${suiteName} --reporter=json --output-dir=${this.config.reportDir}`;
+      const command = `npx playwright test tests/e2e/${suiteName} --reporter=json --output-dir=${this.config.reportDir}`
 
       exec(
         command,
         { timeout: this.config.timeout },
-        async (error, stdout, stderr) => {
+        async(error, stdout, stderr) => {
           if (error) {
-            logger.error(`❌ Test suite ${suiteName} execution failed:`, error);
+            logger.error(`❌ Test suite ${suiteName} execution failed:`
             reject(error);
           } else {
             try {
@@ -189,7 +189,7 @@ class TestRunner {
               const results = await this.parseTestResults(stdout);
               this.results.suites.push({
                 name: suiteName,
-                ...results,
+                ...results
               });
 
               this.results.totalTests += results.totalTests || 0;
@@ -198,18 +198,18 @@ class TestRunner {
               this.results.skipped += results.skipped || 0;
 
               logger.info(
-                `✅ Test suite ${suiteName} completed: ${results.passed || 0} passed, ${results.failed || 0} failed`,
+                `✅ Test suite ${suiteName} completed: ${results.passed || 0} passed, ${results.failed || 0} failed`
               );
               resolve();
             } catch (parseError) {
               logger.error(
-                `❌ Failed to parse results for ${suiteName}:`,
-                parseError,
+                `❌ Failed to parse results for ${suiteName}:`
+                parseError
               );
               reject(parseError);
             }
           }
-        },
+        }
       );
     });
   }
@@ -217,16 +217,16 @@ class TestRunner {
   async parseTestResults(stdout) {
     try {
       // Try to parse JSON output
-      const lines = stdout.split("\n");
+      const lines = stdout.split('\n');
       for (const line of lines) {
-        if (line.trim().startsWith("{")) {
+        if (line.trim().startsWith('{')) {
           const result = JSON.parse(line);
           return {
             totalTests: result.stats?.total || 0,
             passed: result.stats?.passed || 0,
             failed: result.stats?.failed || 0,
             skipped: result.stats?.skipped || 0,
-            duration: result.stats?.duration || 0,
+            duration: result.stats?.duration || 0
           };
         }
       }
@@ -237,22 +237,22 @@ class TestRunner {
         passed: 0,
         failed: 0,
         skipped: 0,
-        duration: 0,
+        duration: 0
       };
     } catch (error) {
-      logger.error("❌ Failed to parse test results:", error);
+      logger.error('❌ Failed to parse test results:', error);
       return {
         totalTests: 0,
         passed: 0,
         failed: 0,
         skipped: 0,
-        duration: 0,
+        duration: 0
       };
     }
   }
 
   async generateReports() {
-    logger.info("📊 Generating test reports...");
+    logger.info('📊 Generating test reports...');
 
     try {
       // Generate HTML report
@@ -264,9 +264,9 @@ class TestRunner {
       // Generate summary report
       await this.generateSummaryReport();
 
-      logger.info("✅ Test reports generated");
+      logger.info('✅ Test reports generated');
     } catch (error) {
-      logger.error("❌ Report generation failed:", error);
+      logger.error('❌ Report generation failed:', error);
     }
   }
 
@@ -274,12 +274,12 @@ class TestRunner {
     try {
       const htmlContent = this.createHtmlReport();
       await fs.writeFile(
-        path.join(this.config.reportDir, "test-report.html"),
-        htmlContent,
+        path.join(this.config.reportDir, 'test-report.html'),
+        htmlContent
       );
-      logger.info("📄 HTML report generated");
+      logger.info('📄 HTML report generated');
     } catch (error) {
-      logger.error("❌ HTML report generation failed:", error);
+      logger.error('❌ HTML report generation failed:', error);
     }
   }
 
@@ -332,8 +332,8 @@ class TestRunner {
     
     <h2>Test Suites</h2>
     ${suites
-      .map(
-        (suite) => `
+    .map(
+      (suite) => `
         <div class="suite">
             <h3>${suite.name}</h3>
             <div class="metrics">
@@ -344,23 +344,23 @@ class TestRunner {
                 <div>Duration: ${(suite.duration / 1000).toFixed(2)}s</div>
             </div>
         </div>
-    `,
-      )
-      .join("")}
+    `
+    )
+    .join('')}
 </body>
-</html>`;
+</html>`
   }
 
   async generateJsonReport() {
     try {
       const jsonContent = JSON.stringify(this.results, null, 2);
       await fs.writeFile(
-        path.join(this.config.reportDir, "test-results.json"),
-        jsonContent,
+        path.join(this.config.reportDir, 'test-results.json'),
+        jsonContent
       );
-      logger.info("📄 JSON report generated");
+      logger.info('📄 JSON report generated');
     } catch (error) {
-      logger.error("❌ JSON report generation failed:", error);
+      logger.error('❌ JSON report generation failed:', error);
     }
   }
 
@@ -384,58 +384,58 @@ class TestRunner {
           failed: suite.failed,
           skipped: suite.skipped,
           successRate:
-            suite.totalTests > 0 ? (suite.passed / suite.totalTests) * 100 : 0,
-        })),
+            suite.totalTests > 0 ? (suite.passed / suite.totalTests) * 100 : 0
+        }))
       };
 
       await fs.writeFile(
-        path.join(this.config.reportDir, "summary.json"),
-        JSON.stringify(summary, null, 2),
+        path.join(this.config.reportDir, 'summary.json'),
+        JSON.stringify(summary, null, 2)
       );
-      logger.info("📄 Summary report generated");
+      logger.info('📄 Summary report generated');
     } catch (error) {
-      logger.error("❌ Summary report generation failed:", error);
+      logger.error('❌ Summary report generation failed:', error);
     }
   }
 
   async analyzeResults() {
-    logger.info("📈 Analyzing test results...");
+    logger.info('📈 Analyzing test results...');
 
     try {
-      const { totalTests, passed, failed, skipped } = this.results;
+      const totalTests, passed, failed, skipped = this.results;
       const successRate = totalTests > 0 ? (passed / totalTests) * 100 : 0;
 
-      logger.info(`📊 Test Results Summary:`);
-      logger.info(`   Total Tests: ${totalTests}`);
-      logger.info(`   Passed: ${passed} (${successRate.toFixed(2)}%)`);
-      logger.info(`   Failed: ${failed}`);
-      logger.info(`   Skipped: ${skipped}`);
+      logger.info('📊 Test Results Summary:');
+      logger.info(`   Total Tests: ${totalTests}`
+      logger.info(`   Passed: ${passed} (${successRate.toFixed(2)}%)`
+      logger.info(`   Failed: ${failed}`
+      logger.info(`   Skipped: ${skipped}`
       logger.info(
-        `   Duration: ${(this.results.duration / 1000).toFixed(2)} seconds`,
+        `   Duration: ${(this.results.duration / 1000).toFixed(2)} seconds`
       );
 
       // Analyze by suite
-      logger.info(`📋 Suite Analysis:`);
+      logger.info('📋 Suite Analysis:');
       for (const suite of this.results.suites) {
         const suiteSuccessRate =
           suite.totalTests > 0 ? (suite.passed / suite.totalTests) * 100 : 0;
         logger.info(
-          `   ${suite.name}: ${suite.passed}/${suite.totalTests} (${suiteSuccessRate.toFixed(2)}%)`,
+          `   ${suite.name}: ${suite.passed}/${suite.totalTests} (${suiteSuccessRate.toFixed(2)}%)`
         );
       }
 
       // Determine overall status
       if (failed === 0) {
-        logger.info("🎉 All tests passed!");
+        logger.info('🎉 All tests passed!');
       } else if (successRate >= 90) {
-        logger.info("✅ Tests mostly passed with minor issues");
+        logger.info('✅ Tests mostly passed with minor issues');
       } else if (successRate >= 70) {
-        logger.warn("⚠️ Tests passed but with significant issues");
+        logger.warn('⚠️ Tests passed but with significant issues');
       } else {
-        logger.error("❌ Tests failed with major issues");
+        logger.error('❌ Tests failed with major issues');
       }
     } catch (error) {
-      logger.error("❌ Results analysis failed:", error);
+      logger.error('❌ Results analysis failed:', error);
     }
   }
 }
@@ -444,7 +444,7 @@ class TestRunner {
 if (require.main === module) {
   const testRunner = new TestRunner();
   testRunner.run().catch((error) => {
-    logger.error("❌ Test runner failed:", error);
+    logger.error('❌ Test runner failed:', error);
     process.exit(1);
   });
 }

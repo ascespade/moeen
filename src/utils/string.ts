@@ -111,7 +111,7 @@ export const generateRandomString = (length: number = 8): string => {
 export const generateRandomId = (prefix: string = ""): string => {
   const timestamp = Date.now().toString(36);
   const random = Math.random().toString(36).substr(2, 5);
-  return `${prefix}${timestamp}${random}`;
+  return `${prefix}${timestamp}${random}`
 };
 
 export const maskEmail = (email: string): string => {
@@ -121,7 +121,7 @@ export const maskEmail = (email: string): string => {
     localPart[0] +
     "*".repeat(localPart.length - 2) +
     localPart[localPart.length - 1];
-  return `${maskedLocal}@${domain}`;
+  return `${maskedLocal}@${domain}`
 };
 
 export const maskPhone = (phone: string): string => {
@@ -146,8 +146,8 @@ export const highlightText = (
   className: string = "highlight",
 ): string => {
   if (!searchTerm) return text;
-  const regex = new RegExp(`(${escapeRegex(searchTerm)})`, "gi");
-  return text.replace(regex, `<span class="${className}">$1</span>`);
+  const regex = new RegExp(`(${escapeRegex(searchTerm)})`
+  return text.replace(regex, `<span class="${className}">$1</span>`
 };
 
 export const escapeRegex = (text: string): string => {

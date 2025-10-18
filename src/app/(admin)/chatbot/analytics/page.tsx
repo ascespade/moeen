@@ -1,8 +1,9 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
-import Image from "next/image";
+'use client';
+import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
+import Image from 'next/image';
 
 interface AnalyticsData {
   totalMessages: number;
@@ -38,69 +39,69 @@ const mockAnalytics: AnalyticsData = {
   avgResponseTime: 2.3,
   satisfactionRate: 4.2,
   topFlows: [
-    { name: "استقبال المرضى", usage: 1247, satisfaction: 4.5 },
-    { name: "حجز المواعيد", usage: 892, satisfaction: 4.3 },
-    { name: "استفسارات عامة", usage: 756, satisfaction: 4.1 },
-    { name: "تأكيد المواعيد", usage: 634, satisfaction: 4.4 },
-    { name: "الدعم الفني", usage: 423, satisfaction: 3.9 },
+    { name: 'استقبال المرضى', usage: 1247, satisfaction: 4.5 },
+    { name: 'حجز المواعيد', usage: 892, satisfaction: 4.3 },
+    { name: 'استفسارات عامة', usage: 756, satisfaction: 4.1 },
+    { name: 'تأكيد المواعيد', usage: 634, satisfaction: 4.4 },
+    { name: 'الدعم الفني', usage: 423, satisfaction: 3.9 }
   ],
   channelStats: [
-    { channel: "واتساب", messages: 8923, users: 2156, growth: 12.5 },
-    { channel: "الموقع", messages: 4567, users: 892, growth: 8.3 },
-    { channel: "تيليجرام", messages: 1234, users: 156, growth: -2.1 },
-    { channel: "فيسبوك", messages: 696, users: 43, growth: 5.7 },
+    { channel: 'واتساب', messages: 8923, users: 2156, growth: 12.5 },
+    { channel: 'الموقع', messages: 4567, users: 892, growth: 8.3 },
+    { channel: 'تيليجرام', messages: 1234, users: 156, growth: -2.1 },
+    { channel: 'فيسبوك', messages: 696, users: 43, growth: 5.7 }
   ],
   hourlyStats: [
-    { hour: "00:00", messages: 45, users: 23 },
-    { hour: "01:00", messages: 32, users: 18 },
-    { hour: "02:00", messages: 28, users: 15 },
-    { hour: "03:00", messages: 35, users: 19 },
-    { hour: "04:00", messages: 42, users: 22 },
-    { hour: "05:00", messages: 58, users: 31 },
-    { hour: "06:00", messages: 89, users: 45 },
-    { hour: "07:00", messages: 156, users: 78 },
-    { hour: "08:00", messages: 234, users: 112 },
-    { hour: "09:00", messages: 312, users: 145 },
-    { hour: "10:00", messages: 389, users: 178 },
-    { hour: "11:00", messages: 445, users: 201 },
-    { hour: "12:00", messages: 512, users: 234 },
-    { hour: "13:00", messages: 478, users: 198 },
-    { hour: "14:00", messages: 523, users: 245 },
-    { hour: "15:00", messages: 567, users: 267 },
-    { hour: "16:00", messages: 589, users: 278 },
-    { hour: "17:00", messages: 612, users: 289 },
-    { hour: "18:00", messages: 534, users: 256 },
-    { hour: "19:00", messages: 456, users: 223 },
-    { hour: "20:00", messages: 378, users: 189 },
-    { hour: "21:00", messages: 289, users: 145 },
-    { hour: "22:00", messages: 198, users: 98 },
-    { hour: "23:00", messages: 123, users: 67 },
+    { hour: '00:00', messages: 45, users: 23 },
+    { hour: '01:00', messages: 32, users: 18 },
+    { hour: '02:00', messages: 28, users: 15 },
+    { hour: '03:00', messages: 35, users: 19 },
+    { hour: '04:00', messages: 42, users: 22 },
+    { hour: '05:00', messages: 58, users: 31 },
+    { hour: '06:00', messages: 89, users: 45 },
+    { hour: '07:00', messages: 156, users: 78 },
+    { hour: '08:00', messages: 234, users: 112 },
+    { hour: '09:00', messages: 312, users: 145 },
+    { hour: '10:00', messages: 389, users: 178 },
+    { hour: '11:00', messages: 445, users: 201 },
+    { hour: '12:00', messages: 512, users: 234 },
+    { hour: '13:00', messages: 478, users: 198 },
+    { hour: '14:00', messages: 523, users: 245 },
+    { hour: '15:00', messages: 567, users: 267 },
+    { hour: '16:00', messages: 589, users: 278 },
+    { hour: '17:00', messages: 612, users: 289 },
+    { hour: '18:00', messages: 534, users: 256 },
+    { hour: '19:00', messages: 456, users: 223 },
+    { hour: '20:00', messages: 378, users: 189 },
+    { hour: '21:00', messages: 289, users: 145 },
+    { hour: '22:00', messages: 198, users: 98 },
+    { hour: '23:00', messages: 123, users: 67 }
   ],
   sentimentData: [
-    { sentiment: "إيجابي", count: 8923, percentage: 65.2 },
-    { sentiment: "محايد", count: 3124, percentage: 22.8 },
-    { sentiment: "سلبي", count: 1633, percentage: 12.0 },
-  ],
+    { sentiment: 'إيجابي', count: 8923, percentage: 65.2 },
+    { sentiment: 'محايد', count: 3124, percentage: 22.8 },
+    { sentiment: 'سلبي', count: 1633, percentage: 12.0 }
+  ]
 };
 
 export default function ChatbotAnalyticsPage() {
   const [selectedPeriod, setSelectedPeriod] = useState<
-    "day" | "week" | "month" | "year"
-  >("month");
+    'day' | 'week' | 'month' | 'year'
+  >('month');
   const [selectedMetric, setSelectedMetric] = useState<
-    "messages" | "users" | "satisfaction"
-  >("messages");
+    'messages' | 'users' | 'satisfaction'
+  >('messages');
 
   const getGrowthColor = (growth: number) => {
-    if (growth > 0) return "text-brand-success";
-    if (growth < 0) return "text-brand-error";
-    return "text-gray-600";
+    if (growth > 0) return 'text-brand-success';
+    if (growth < 0) return 'text-brand-error';
+    return 'text-gray-600';
   };
 
   const getGrowthIcon = (growth: number) => {
-    if (growth > 0) return "↗️";
-    if (growth < 0) return "↘️";
-    return "➡️";
+    if (growth > 0) return '↗️';
+    if (growth < 0) return '↘️';
+    return '➡️';
   };
 
   return (
@@ -194,22 +195,22 @@ export default function ChatbotAnalyticsPage() {
               <h3 className="text-lg font-semibold">الرسائل حسب الساعة</h3>
               <div className="flex gap-2">
                 <button
-                  onClick={() => setSelectedMetric("messages")}
-                  className={`rounded-lg px-3 py-1 text-sm ${
-                    selectedMetric === "messages"
-                      ? "bg-[var(--brand-primary)] text-white"
-                      : "bg-surface text-gray-600"
-                  }`}
+                  onClick={() => setSelectedMetric('messages')}
+                  className={`
+                    selectedMetric === 'messages'
+                      ? 'bg-[var(--brand-primary)] text-white'
+                      : 'bg-surface text-gray-600'
+                  }`
                 >
                   الرسائل
                 </button>
                 <button
-                  onClick={() => setSelectedMetric("users")}
-                  className={`rounded-lg px-3 py-1 text-sm ${
-                    selectedMetric === "users"
-                      ? "bg-[var(--brand-primary)] text-white"
-                      : "bg-surface text-gray-600"
-                  }`}
+                  onClick={() => setSelectedMetric('users')}
+                  className={`
+                    selectedMetric === 'users'
+                      ? 'bg-[var(--brand-primary)] text-white'
+                      : 'bg-surface text-gray-600'
+                  }`
                 >
                   المستخدمين
                 </button>
@@ -221,7 +222,7 @@ export default function ChatbotAnalyticsPage() {
                   <div
                     className="mb-2 w-4 rounded-t bg-[var(--brand-primary)]"
                     style={{
-                      height: `${(selectedMetric === "messages" ? stat.messages : stat.users) / 20}px`,
+                      height: `${(selectedMetric === 'messages' ? stat.messages : stat.users) / 20}px`
                     }}
                   ></div>
                   <span className="origin-left -rotate-45 transform text-xs text-gray-500">
@@ -247,14 +248,14 @@ export default function ChatbotAnalyticsPage() {
                   </div>
                   <div className="h-2 w-full rounded-full bg-gray-200">
                     <div
-                      className={`h-2 rounded-full ${
-                        sentiment.sentiment === "إيجابي"
-                          ? "bg-brand-success"
-                          : sentiment.sentiment === "محايد"
-                            ? "bg-brand-warning"
-                            : "bg-brand-error"
-                      }`}
-                      style={{ width: `${sentiment.percentage}%` }}
+                      className={`
+                        sentiment.sentiment === 'إيجابي'
+                          ? 'bg-brand-success'
+                          : sentiment.sentiment === 'محايد'
+                            ? 'bg-brand-warning'
+                            : 'bg-brand-error'
+                      }`
+                      style={{ width: `${sentiment.percentage}%`
                     ></div>
                   </div>
                 </div>
@@ -326,13 +327,13 @@ export default function ChatbotAnalyticsPage() {
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
                         <span className="text-lg">
-                          {channel.channel === "واتساب"
-                            ? "📱"
-                            : channel.channel === "الموقع"
-                              ? "🌐"
-                              : channel.channel === "تيليجرام"
-                                ? "✈️"
-                                : "💬"}
+                          {channel.channel === 'واتساب'
+                            ? '📱'
+                            : channel.channel === 'الموقع'
+                              ? '🌐'
+                              : channel.channel === 'تيليجرام'
+                                ? '✈️'
+                                : '💬'}
                         </span>
                         <span className="font-medium">{channel.channel}</span>
                       </div>
@@ -345,7 +346,7 @@ export default function ChatbotAnalyticsPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div
-                        className={`flex items-center gap-1 ${getGrowthColor(channel.growth)}`}
+                        className={`flex items-center gap-1 ${getGrowthColor(channel.growth)}`
                       >
                         <span>{getGrowthIcon(channel.growth)}</span>
                         <span className="font-medium">

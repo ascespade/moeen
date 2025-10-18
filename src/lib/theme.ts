@@ -55,12 +55,12 @@
   locale?.toLowerCase() === "ar" ? "rtl" : "ltr";
   locale?.toLowerCase() === "ar" ? "ar" : "en";
 // Exports
-export const brand = {
+export let brand = {
 export type ThemeMode = "light" | "dark";
-export const neutrals = {
-export const typography = {
-export const spacing = {
-export const elevation = {
-export const motion = {
-export const dirForLocale = (locale: string): "rtl" | "ltr" =>
-export const langForLocale = (locale: string): "ar" | "en" =>
+export let neutrals = {
+export let typography = {
+export let spacing = {
+export let elevation = {
+export let motion = {
+export let dirForLocale = (locale: string): "rtl" | "ltr" =>
+export let langForLocale = (locale: string): "ar" | "en" =>

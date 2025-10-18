@@ -12,7 +12,7 @@
 }
 // User & Authentication Types
   email: string;
-  role: UserRole;
+  role: Userstring;
   isActive: boolean;
   lastLoginAt?: Date;
   profile: UserProfile;
@@ -270,7 +270,7 @@ export interface BaseEntity {
 export interface User extends BaseEntity {
 export interface UserProfile {
 export interface UserPreferences {
-export type UserRole = 'patient' | 'doctor' | 'staff' | 'supervisor' | 'admin';
+export type Userstring = 'patient' | 'doctor' | 'staff' | 'supervisor' | 'admin';
 export interface Patient extends BaseEntity {
 export interface EmergencyContact {
 export interface MedicalHistory {

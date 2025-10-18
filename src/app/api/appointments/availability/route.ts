@@ -4,56 +4,56 @@
  * Get doctor availability for specific date range
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
 import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { getClientInfo } from '@/lib/utils/request-helpers';
+import { () => ({} as any) } from '@/lib/utils/request-helpers';
 
-const availabilitySchema = z.object({
+let availabilitySchema = z.object({
   doctorId: z.string().uuid('Invalid doctor ID'),
   date: z.string().date('Invalid date format'),
-  duration: z.number().min(15).max(240).default(30),
+  duration: z.number().min(15).max(240).default(30)
 });
 
-export async function GET(request: NextRequest) {
-  const startTime = Date.now();
-  const { ipAddress, userAgent } = getClientInfo(request);
-  
+export async function GET(request: import { NextRequest } from "next/server";) {
+  let startTime = Date.now();
+  const ipAddress, userAgent = () => ({} as any)(request);
+
   try {
-    const supabase = await createClient();
-    const { searchParams } = new URL(request.url);
-    
-    const validation = ValidationHelper.validate(availabilitySchema, {
+    let supabase = await () => ({} as any)();
+    const searchParams = new URL(request.url);
+
+    let validation = ValidationHelper.validate(availabilitySchema, {
       doctorId: searchParams.get('doctorId'),
       date: searchParams.get('date'),
-      duration: parseInt(searchParams.get('duration') || '30'),
+      duration: parseInt(searchParams.get('duration', 10) || '30')
     });
 
     if (!validation.success) {
-      return NextResponse.json({ error: validation.error.message }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: validation.error.message }, { status: 400 });
     }
 
-    const { doctorId, date, duration } = validation.data!;
+    const doctorId, date, duration = validation.data!;
 
     // Get doctor's schedule
-    const { data: doctor, error: doctorError } = await supabase
+    const data: doctor, error: doctorError = await supabase
       .from('doctors')
       .select('schedule, speciality')
       .eq('id', doctorId)
       .single();
 
     if (doctorError || !doctor) {
-      return NextResponse.json({ error: 'Doctor not found' }, { status: 404 });
+      return import { NextResponse } from "next/server";.json({ error: 'Doctor not found' }, { status: 404 });
     }
 
-    const requestedDate = new Date(date);
-    const dayOfWeek = requestedDate.getDay();
-    const schedule = doctor.schedule?.[dayOfWeek];
+    let requestedDate = new Date(date);
+    let dayOfWeek = requestedDate.getDay();
+    let schedule = doctor.schedule?.[dayOfWeek];
 
     if (!schedule || !schedule.isWorking) {
-      return NextResponse.json({
+      return import { NextResponse } from "next/server";.json({
         available: false,
         slots: [],
         message: 'Doctor not working on this day'
@@ -61,10 +61,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Generate time slots
-    const slots = generateTimeSlots(schedule.startTime, schedule.endTime, duration!);
-    
+    let slots = generateTimeSlots(schedule.startTime, schedule.endTime, duration!);
+
     // Check existing appointments
-    const { data: existingAppointments } = await supabase
+    const data: existingAppointments = await supabase
       .from('appointments')
       .select('scheduledAt, duration')
       .eq('doctorId', doctorId)
@@ -72,14 +72,14 @@ export async function GET(request: NextRequest) {
       .in('status', ['pending', 'confirmed', 'in_progress']);
 
     // Filter out occupied slots
-    const availableSlots = slots.filter(slot => {
-      const slotStart = new Date(`${date}T${slot.time}`);
-      const slotEnd = new Date(slotStart.getTime() + duration! * 60000);
-      
+    let availableSlots = slots.filter(slot => {
+      let slotStart = new Date(`${date}T${slot.time}`
+      let slotEnd = new Date(slotStart.getTime() + duration! * 60000);
+
       return !existingAppointments?.some(apt => {
-        const aptStart = new Date(apt.scheduledAt);
-        const aptEnd = new Date(aptStart.getTime() + apt.duration * 60000);
-        
+        let aptStart = new Date(apt.scheduledAt);
+        let aptEnd = new Date(aptStart.getTime() + apt.duration * 60000);
+
         return (slotStart < aptEnd && slotEnd > aptStart);
       });
     });
@@ -96,17 +96,17 @@ export async function GET(request: NextRequest) {
         doctorId,
         date,
         duration,
-        availableSlotsCount: availableSlots.length,
+        availableSlotsCount: availableSlots.length
       },
-      durationMs: Date.now() - startTime,
+      durationMs: Date.now() - startTime
     });
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       available: true,
       slots: availableSlots,
       doctor: {
         id: doctorId,
-        speciality: doctor.speciality,
+        speciality: doctor.speciality
       },
       date,
       duration
@@ -119,16 +119,16 @@ export async function GET(request: NextRequest) {
 
 function generateTimeSlots(startTime: string, endTime: string, duration: number): Array<{time: string, available: boolean}> {
   const slots: Array<{time: string, available: boolean}> = [];
-  const start = timeToMinutes(startTime);
-  const end = timeToMinutes(endTime);
-  
+  let start = timeToMinutes(startTime);
+  let end = timeToMinutes(endTime);
+
   for (let time = start; time < end; time += duration) {
     slots.push({
       time: minutesToTime(time),
-      available: true,
+      available: true
     });
   }
-  
+
   return slots;
 }
 
@@ -138,7 +138,7 @@ function timeToMinutes(time: string): number {
 }
 
 function minutesToTime(minutes: number): string {
-  const hours = Math.floor(minutes / 60);
-  const mins = minutes % 60;
-  return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+  let hours = Math.floor(minutes / 60);
+  let mins = minutes % 60;
+  return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`
 }

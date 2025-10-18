@@ -1,35 +1,35 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 class MLLearningEngine {
   constructor() {
-    this.workspaceRoot = path.join(__dirname, "..");
-    this.logFile = path.join(this.workspaceRoot, "logs", "ml-learning.log");
-    this.modelFile = path.join(this.workspaceRoot, "learning", "ml-model.json");
+    this.workspaceRoot = path.join(__dirname, '..');
+    this.logFile = path.join(this.workspaceRoot, 'logs', 'ml-learning.log');
+    this.modelFile = path.join(this.workspaceRoot, 'learning', 'ml-model.json');
     this.trainingDataFile = path.join(
       this.workspaceRoot,
-      "learning",
-      "training-data.json",
+      'learning',
+      'training-data.json'
     );
     this.patternsFile = path.join(
       this.workspaceRoot,
-      "learning",
-      "patterns.json",
+      'learning',
+      'patterns.json'
     );
     this.model = {
       patterns: {},
       predictions: {},
       weights: {},
       accuracy: 0,
-      lastUpdated: null,
+      lastUpdated: null
     };
   }
 
-  log(message, level = "info") {
+  log(message, level = 'info') {
     const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] [${level.toUpperCase()}] ML Learning: ${message}\n`;
+    const logMessage = `[${timestamp}] [${level.toUpperCase()}] ML Learning: ${message}\n`
 
     const logsDir = path.dirname(this.logFile);
     if (!fs.existsSync(logsDir)) {
@@ -37,14 +37,14 @@ class MLLearningEngine {
     }
 
     fs.appendFileSync(this.logFile, logMessage);
-    console.log(logMessage.trim());
+    // console.log(logMessage.trim());
   }
 
   async initialize() {
-    this.log("Initializing ML Learning Engine...");
+    this.log('Initializing ML Learning Engine...');
 
     // Create learning directory
-    const learningDir = path.join(this.workspaceRoot, "learning");
+    const learningDir = path.join(this.workspaceRoot, 'learning');
     if (!fs.existsSync(learningDir)) {
       fs.mkdirSync(learningDir, { recursive: true });
     }
@@ -55,17 +55,17 @@ class MLLearningEngine {
     // Load training data
     await this.loadTrainingData();
 
-    this.log("ML Learning Engine initialized");
+    this.log('ML Learning Engine initialized');
   }
 
   async loadModel() {
     if (fs.existsSync(this.modelFile)) {
       try {
-        const data = fs.readFileSync(this.modelFile, "utf8");
+        const data = fs.readFileSync(this.modelFile, 'utf8');
         this.model = JSON.parse(data);
-        this.log("ML model loaded");
+        this.log('ML model loaded');
       } catch (error) {
-        this.log(`Error loading model: ${error.message}`, "warn");
+        this.log(`Error loading model: ${error.message}`
         this.model = this.initializeModel();
       }
     } else {
@@ -79,33 +79,33 @@ class MLLearningEngine {
         success: {},
         failure: {},
         performance: {},
-        errors: {},
+        errors: {}
       },
       predictions: {
         nextFailure: null,
         optimalTiming: {},
-        resourceNeeds: {},
+        resourceNeeds: {}
       },
       weights: {
         timeOfDay: 0.1,
         dayOfWeek: 0.1,
         systemLoad: 0.2,
         errorHistory: 0.3,
-        recentChanges: 0.3,
+        recentChanges: 0.3
       },
       accuracy: 0,
-      lastUpdated: new Date().toISOString(),
+      lastUpdated: new Date().toISOString()
     };
   }
 
   async loadTrainingData() {
     if (fs.existsSync(this.trainingDataFile)) {
       try {
-        const data = fs.readFileSync(this.trainingDataFile, "utf8");
+        const data = fs.readFileSync(this.trainingDataFile, 'utf8');
         this.trainingData = JSON.parse(data);
-        this.log("Training data loaded");
+        this.log('Training data loaded');
       } catch (error) {
-        this.log(`Error loading training data: ${error.message}`, "warn");
+        this.log(`Error loading training data: ${error.message}`
         this.trainingData = [];
       }
     } else {
@@ -121,12 +121,12 @@ class MLLearningEngine {
   async saveTrainingData() {
     fs.writeFileSync(
       this.trainingDataFile,
-      JSON.stringify(this.trainingData, null, 2),
+      JSON.stringify(this.trainingData, null, 2)
     );
   }
 
   async collectDataPoint(event) {
-    this.log(`Collecting data point: ${event.type}`);
+    this.log(`Collecting data point: ${event.type}`
 
     const dataPoint = {
       timestamp: new Date().toISOString(),
@@ -138,9 +138,9 @@ class MLLearningEngine {
         dayOfWeek: new Date().getDay(),
         systemLoad: process.memoryUsage().heapUsed,
         errorCount: event.errorCount || 0,
-        recentChanges: event.recentChanges || 0,
+        recentChanges: event.recentChanges || 0
       },
-      outcome: event.outcome || "unknown",
+      outcome: event.outcome || 'unknown'
     };
 
     this.trainingData.push(dataPoint);
@@ -155,13 +155,13 @@ class MLLearningEngine {
   }
 
   async analyzePatterns() {
-    this.log("Analyzing patterns...");
+    this.log('Analyzing patterns...');
 
     const patterns = {
       success: {},
       failure: {},
       performance: {},
-      errors: {},
+      errors: {}
     };
 
     // Analyze success patterns
@@ -183,7 +183,7 @@ class MLLearningEngine {
     this.model.patterns = patterns;
     await this.saveModel();
 
-    this.log("Pattern analysis completed");
+    this.log('Pattern analysis completed');
     return patterns;
   }
 
@@ -209,13 +209,13 @@ class MLLearningEngine {
     patterns.dayOfWeek = dayPatterns;
 
     // System load patterns
-    const loadRanges = ["low", "medium", "high"];
+    const loadRanges = ['low', 'medium', 'high'];
     const loadPatterns = {};
     data.forEach((d) => {
       const load = d.context.systemLoad;
-      let range = "low";
-      if (load > 50 * 1024 * 1024) range = "medium";
-      if (load > 100 * 1024 * 1024) range = "high";
+      let range = 'low';
+      if (load > 50 * 1024 * 1024) range = 'medium';
+      if (load > 100 * 1024 * 1024) range = 'high';
       loadPatterns[range] = (loadPatterns[range] || 0) + 1;
     });
     patterns.systemLoad = loadPatterns;
@@ -235,7 +235,7 @@ class MLLearningEngine {
       average: avgDuration,
       maximum: maxDuration,
       minimum: minDuration,
-      variance: this.calculateVariance(durations, avgDuration),
+      variance: this.calculateVariance(durations, avgDuration)
     };
   }
 
@@ -245,10 +245,10 @@ class MLLearningEngine {
   }
 
   async trainModel() {
-    this.log("Training ML model...");
+    this.log('Training ML model...');
 
     if (this.trainingData.length < 10) {
-      this.log("Insufficient training data", "warn");
+      this.log('Insufficient training data', 'warn');
       return;
     }
 
@@ -260,7 +260,7 @@ class MLLearningEngine {
     this.model.accuracy = this.calculateAccuracy();
 
     await this.saveModel();
-    this.log(`Model trained with accuracy: ${this.model.accuracy.toFixed(2)}`);
+    this.log(`Model trained with accuracy: ${this.model.accuracy.toFixed(2)}`
   }
 
   extractFeatures() {
@@ -269,7 +269,7 @@ class MLLearningEngine {
       dayOfWeek: {},
       systemLoad: {},
       errorHistory: {},
-      recentChanges: {},
+      recentChanges: {}
     };
 
     this.trainingData.forEach((dataPoint) => {
@@ -294,7 +294,7 @@ class MLLearningEngine {
     const predictions = {
       nextFailure: this.predictNextFailure(features),
       optimalTiming: this.predictOptimalTiming(features),
-      resourceNeeds: this.predictResourceNeeds(features),
+      resourceNeeds: this.predictResourceNeeds(features)
     };
 
     return predictions;
@@ -351,7 +351,7 @@ class MLLearningEngine {
       .sort(([, a], [, b]) => b - a)
       .slice(0, 3);
 
-    return sortedSlots.map(([hour, rate]) => ({ hour: parseInt(hour), rate }));
+    return sortedSlots.map(([hour, rate]) => ({ hour: parseInt(hour, 10), rate }));
   }
 
   predictResourceNeeds(features) {
@@ -359,7 +359,7 @@ class MLLearningEngine {
     const resourceNeeds = {
       memory: 0,
       cpu: 0,
-      disk: 0,
+      disk: 0
     };
 
     const recentData = this.trainingData.slice(-100); // Last 100 data points
@@ -371,12 +371,12 @@ class MLLearningEngine {
       resourceNeeds.memory = Math.min(1, avgMemory / (100 * 1024 * 1024)); // Normalize to 0-1
       resourceNeeds.cpu = Math.min(
         1,
-        recentData.filter((d) => d.duration > 5000).length / recentData.length,
+        recentData.filter((d) => d.duration > 5000).length / recentData.length
       );
       resourceNeeds.disk = Math.min(
         1,
         recentData.filter((d) => d.context.recentChanges > 0).length /
-          recentData.length,
+          recentData.length
       );
     }
 
@@ -403,7 +403,7 @@ class MLLearningEngine {
   }
 
   async generateRecommendations() {
-    this.log("Generating recommendations...");
+    this.log('Generating recommendations...');
 
     const recommendations = [];
 
@@ -413,11 +413,11 @@ class MLLearningEngine {
       if (perf.average > 10000) {
         // 10 seconds
         recommendations.push({
-          type: "performance",
-          priority: "high",
-          message: "Average execution time is high. Consider optimization.",
-          action: "optimize_performance",
-          confidence: 0.8,
+          type: 'performance',
+          priority: 'high',
+          message: 'Average execution time is high. Consider optimization.',
+          action: 'optimize_performance',
+          confidence: 0.8
         });
       }
     }
@@ -427,11 +427,11 @@ class MLLearningEngine {
       const optimalTimes = this.model.predictions.optimalTiming;
       if (optimalTimes.length > 0) {
         recommendations.push({
-          type: "scheduling",
-          priority: "medium",
-          message: `Optimal execution times: ${optimalTimes.map((t) => `${t.hour}:00`).join(", ")}`,
-          action: "adjust_schedule",
-          confidence: 0.6,
+          type: 'scheduling',
+          priority: 'medium',
+          message: `Optimal execution times: ${optimalTimes.map((t) => `${t.hour}:00`).join(', ')}`
+          action: 'adjust_schedule',
+          confidence: 0.6
         });
       }
     }
@@ -441,11 +441,11 @@ class MLLearningEngine {
       const needs = this.model.predictions.resourceNeeds;
       if (needs.memory > 0.8) {
         recommendations.push({
-          type: "resources",
-          priority: "high",
-          message: "High memory usage predicted. Consider memory optimization.",
-          action: "optimize_memory",
-          confidence: 0.7,
+          type: 'resources',
+          priority: 'high',
+          message: 'High memory usage predicted. Consider memory optimization.',
+          action: 'optimize_memory',
+          confidence: 0.7
         });
       }
     }
@@ -454,7 +454,7 @@ class MLLearningEngine {
   }
 
   async runLearningCycle() {
-    this.log("Running learning cycle...");
+    this.log('Running learning cycle...');
 
     // Analyze patterns
     await this.analyzePatterns();
@@ -466,13 +466,13 @@ class MLLearningEngine {
     const recommendations = await this.generateRecommendations();
 
     this.log(
-      `Learning cycle completed. Generated ${recommendations.length} recommendations`,
+      `Learning cycle completed. Generated ${recommendations.length} recommendations`
     );
     return recommendations;
   }
 
   async generateLearningReport() {
-    this.log("Generating learning report...");
+    this.log('Generating learning report...');
 
     const report = {
       timestamp: new Date().toISOString(),
@@ -483,23 +483,23 @@ class MLLearningEngine {
         accuracy: this.model.accuracy,
         patternsDiscovered: Object.keys(this.model.patterns).length,
         predictionsGenerated: Object.keys(this.model.predictions).length,
-        lastUpdated: this.model.lastUpdated,
-      },
+        lastUpdated: this.model.lastUpdated
+      }
     };
 
     const reportFile = path.join(
       this.workspaceRoot,
-      "reports",
-      "ml-learning-report.json",
+      'reports',
+      'ml-learning-report.json'
     );
     fs.writeFileSync(reportFile, JSON.stringify(report, null, 2));
 
-    this.log(`Learning report saved: ${reportFile}`);
+    this.log(`Learning report saved: ${reportFile}`
     return report;
   }
 
   async start() {
-    this.log("Starting ML Learning Engine...");
+    this.log('Starting ML Learning Engine...');
 
     await this.initialize();
 
@@ -507,24 +507,24 @@ class MLLearningEngine {
     await this.runLearningCycle();
 
     // Set up continuous learning
-    const learningInterval = setInterval(async () => {
+    const learningInterval = setInterval(async() => {
       try {
         await this.runLearningCycle();
         await this.generateLearningReport();
       } catch (error) {
-        this.log(`Learning cycle error: ${error.message}`, "error");
+        this.log(`Learning cycle error: ${error.message}`
       }
     }, 600000); // Every 10 minutes
 
     // Cleanup on exit
-    process.on("SIGINT", () => {
+    process.on('SIGINT', () => {
       clearInterval(learningInterval);
-      this.log("ML Learning Engine stopped");
+      this.log('ML Learning Engine stopped');
     });
 
-    process.on("SIGTERM", () => {
+    process.on('SIGTERM', () => {
       clearInterval(learningInterval);
-      this.log("ML Learning Engine stopped");
+      this.log('ML Learning Engine stopped');
     });
   }
 }
@@ -533,7 +533,7 @@ class MLLearningEngine {
 if (require.main === module) {
   const mlEngine = new MLLearningEngine();
   mlEngine.start().catch((error) => {
-    console.error("ML Learning Engine failed:", error);
+    // console.error('ML Learning Engine failed:', error);
     process.exit(1);
   });
 }

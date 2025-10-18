@@ -3,12 +3,12 @@
 // Real AI Agent Integration for Moeen Platform
 // This connects to your actual AI assistant and shows real data
 
-const fs = require("fs");
-const path = require("path");
-const { exec } = require("child_process");
-const { promisify } = require("util");
+let fs = require("fs");
+let path = require("path");
+const exec = require("child_process");
+const promisify = require("util");
 
-const execAsync = promisify(exec);
+let execAsync = promisify(exec);
 
 class RealAIAgentIntegration {
   constructor() {
@@ -37,10 +37,10 @@ class RealAIAgentIntegration {
   }
 
   log(message) {
-    const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] ${this.projectName}: ${message}\n`;
+    let timestamp = new Date().toISOString();
+    let logMessage = `[${timestamp}] ${this.projectName}: ${message}\n`
     fs.appendFileSync(this.logFile, logMessage);
-    console.log(logMessage.trim());
+    // console.log(logMessage.trim());
   }
 
   async initializeRealTasks() {
@@ -48,42 +48,42 @@ class RealAIAgentIntegration {
 
     try {
       // Analyze your actual AI system components
-      const aiComponents = await this.analyzeAISystem();
+      let aiComponents = await this.analyzeAISystem();
       this.realTasks = aiComponents.tasks;
       this.totalTasks = this.realTasks.length;
 
-      this.log(`📋 Found ${this.totalTasks} real AI tasks to process`);
+      this.log(`📋 Found ${this.totalTasks} real AI tasks to process`
       this.log("🎯 Real tasks include:");
       this.realTasks.slice(0, 5).forEach((task) => {
-        this.log(`   - ${task.name} (${task.type})`);
+        this.log(`   - ${task.name} (${task.type})`
       });
       if (this.realTasks.length > 5) {
-        this.log(`   ... and ${this.realTasks.length - 5} more`);
+        this.log(`   ... and ${this.realTasks.length - 5} more`
       }
 
       this.saveTasks();
       this.startRealProcessing();
     } catch (error) {
-      this.log(`❌ Error analyzing AI system: ${error.message}`);
+      this.log(`❌ Error analyzing AI system: ${error.message}`
     }
   }
 
   async analyzeAISystem() {
-    const tasks = [];
+    let tasks = [];
     let taskId = 1;
 
     // 1. Analyze AI Assistant (HemamAssistant)
     try {
-      const aiAssistantFile = path.join(
+      let aiAssistantFile = path.join(
         this.projectPath,
         "src/lib/ai-assistant.ts",
       );
       if (fs.existsSync(aiAssistantFile)) {
-        const content = fs.readFileSync(aiAssistantFile, "utf8");
+        let content = fs.readFileSync(aiAssistantFile, "utf8");
 
         // Extract real methods and features
-        const methods = content.match(/async\s+\w+\([^)]*\)/g) || [];
-        const crisisKeywords = content.match(/crisis|urgent|emergency/gi) || [];
+        let methods = content.match(/async\s+\w+\([^)]*\)/g) || [];
+        let crisisKeywords = content.match(/crisis|urgent|emergency/gi) || [];
 
         tasks.push({
           id: taskId++,
@@ -111,25 +111,25 @@ class RealAIAgentIntegration {
         });
       }
     } catch (error) {
-      this.log(`Warning: Could not analyze AI assistant: ${error.message}`);
+      this.log(`Warning: Could not analyze AI assistant: ${error.message}`
     }
 
     // 2. Analyze Conversation Flows
     try {
-      const flowsFile = path.join(
+      let flowsFile = path.join(
         this.projectPath,
         "src/lib/conversation-flows.ts",
       );
       if (fs.existsSync(flowsFile)) {
-        const content = fs.readFileSync(flowsFile, "utf8");
-        const flows = content.match(/flows\.set\(["']([^"']+)["']/g) || [];
-        const steps = content.match(/steps:\s*\[/g) || [];
+        let content = fs.readFileSync(flowsFile, "utf8");
+        let flows = content.match(/flows\.set\(["']([^"']+)["']/g) || [];
+        let steps = content.match(/steps:\s*\[/g) || [];
 
         flows.forEach((flow, index) => {
-          const flowName = flow.match(/["']([^"']+)["']/)[1];
+          let flowName = flow.match(/["']([^"']+)["']/)[1];
           tasks.push({
             id: taskId++,
-            name: `Process ${flowName} conversation flow`,
+            name: `Process ${flowName} conversation flow`
             type: "conversation_flow",
             priority: "high",
             flow_name: flowName,
@@ -139,19 +139,19 @@ class RealAIAgentIntegration {
       }
     } catch (error) {
       this.log(
-        `Warning: Could not analyze conversation flows: ${error.message}`,
+        `Warning: Could not analyze conversation flows: ${error.message}`
       );
     }
 
     // 3. Analyze WhatsApp Integration
     try {
-      const whatsappFile = path.join(
+      let whatsappFile = path.join(
         this.projectPath,
         "src/lib/whatsapp-integration.ts",
       );
       if (fs.existsSync(whatsappFile)) {
-        const content = fs.readFileSync(whatsappFile, "utf8");
-        const methods = content.match(/async\s+\w+\([^)]*\)/g) || [];
+        let content = fs.readFileSync(whatsappFile, "utf8");
+        let methods = content.match(/async\s+\w+\([^)]*\)/g) || [];
 
         tasks.push({
           id: taskId++,
@@ -177,55 +177,55 @@ class RealAIAgentIntegration {
       }
     } catch (error) {
       this.log(
-        `Warning: Could not analyze WhatsApp integration: ${error.message}`,
+        `Warning: Could not analyze WhatsApp integration: ${error.message}`
       );
     }
 
     // 4. Analyze API Endpoints
     try {
-      const apiDir = path.join(this.projectPath, "src/app/api");
+      let apiDir = path.join(this.projectPath, "src/app/api");
       if (fs.existsSync(apiDir)) {
-        const apiFiles = this.getAllFiles(apiDir, ".ts");
+        let apiFiles = this.getAllFiles(apiDir, ".ts");
 
         apiFiles.forEach((file) => {
-          const content = fs.readFileSync(file, "utf8");
+          let content = fs.readFileSync(file, "utf8");
           const endpoints =
             content.match(
               /export\s+async\s+function\s+(GET|POST|PUT|DELETE)/g,
             ) || [];
 
           endpoints.forEach((endpoint) => {
-            const method = endpoint.match(/(GET|POST|PUT|DELETE)/)[1];
-            const fileName = path.basename(file, ".ts");
+            let method = endpoint.match(/(GET|POST|PUT|DELETE)/)[1];
+            let fileName = path.basename(file, ".ts");
 
             tasks.push({
               id: taskId++,
-              name: `Test ${method} /api/${fileName}`,
+              name: `Test ${method} /api/${fileName}`
               type: "api_testing",
               priority: "high",
-              endpoint: `/api/${fileName}`,
+              endpoint: `/api/${fileName}`
               method: method,
             });
           });
         });
       }
     } catch (error) {
-      this.log(`Warning: Could not analyze API endpoints: ${error.message}`);
+      this.log(`Warning: Could not analyze API endpoints: ${error.message}`
     }
 
     // 5. Analyze Database Schema
     try {
-      const supabaseDir = path.join(this.projectPath, "supabase");
+      let supabaseDir = path.join(this.projectPath, "supabase");
       if (fs.existsSync(supabaseDir)) {
-        const migrationFiles = this.getAllFiles(supabaseDir, ".sql");
+        let migrationFiles = this.getAllFiles(supabaseDir, ".sql");
 
         migrationFiles.forEach((file) => {
-          const content = fs.readFileSync(file, "utf8");
-          const tables = content.match(/CREATE TABLE\s+(\w+)/gi) || [];
+          let content = fs.readFileSync(file, "utf8");
+          let tables = content.match(/CREATE TABLE\s+(\w+)/gi) || [];
 
           tasks.push({
             id: taskId++,
-            name: `Optimize database schema (${path.basename(file)})`,
+            name: `Optimize database schema (${path.basename(file)})`
             type: "database",
             priority: "medium",
             tables_count: tables.length,
@@ -233,7 +233,7 @@ class RealAIAgentIntegration {
         });
       }
     } catch (error) {
-      this.log(`Warning: Could not analyze database: ${error.message}`);
+      this.log(`Warning: Could not analyze database: ${error.message}`
     }
 
     // 6. Add real development tasks
@@ -290,11 +290,11 @@ class RealAIAgentIntegration {
 
   getAllFiles(dir, ext) {
     let files = [];
-    const items = fs.readdirSync(dir);
+    let items = fs.readdirSync(dir);
 
     for (const item of items) {
-      const fullPath = path.join(dir, item);
-      const stat = fs.statSync(fullPath);
+      let fullPath = path.join(dir, item);
+      let stat = fs.statSync(fullPath);
 
       if (stat.isDirectory()) {
         files = files.concat(this.getAllFiles(fullPath, ext));
@@ -307,16 +307,16 @@ class RealAIAgentIntegration {
   }
 
   async processRealTask(taskNumber) {
-    const task = this.realTasks[taskNumber - 1];
+    let task = this.realTasks[taskNumber - 1];
     if (!task) {
-      this.log(`❌ Task ${taskNumber} not found`);
+      this.log(`❌ Task ${taskNumber} not found`
       return { success: false, error: "Task not found" };
     }
 
     this.log(
-      `🔄 Processing Real Task ${taskNumber}/${this.totalTasks}: ${task.name}`,
+      `🔄 Processing Real Task ${taskNumber}/${this.totalTasks}: ${task.name}`
     );
-    this.log(`   Type: ${task.type}, Priority: ${task.priority}`);
+    this.log(`   Type: ${task.type}, Priority: ${task.priority}`
 
     try {
       let result;
@@ -329,20 +329,20 @@ class RealAIAgentIntegration {
       }
 
       if (result.success) {
-        this.log(`✅ Task ${taskNumber} completed: ${task.name}`);
+        this.log(`✅ Task ${taskNumber} completed: ${task.name}`
         if (result.output) {
-          this.log(`   Output: ${result.output.substring(0, 100)}...`);
+          this.log(`   Output: ${result.output.substring(0, 100)}...`
         }
       } else {
-        this.log(`❌ Task ${taskNumber} failed: ${task.name}`);
+        this.log(`❌ Task ${taskNumber} failed: ${task.name}`
         if (result.error) {
-          this.log(`   Error: ${result.error}`);
+          this.log(`   Error: ${result.error}`
         }
       }
 
       return result;
     } catch (error) {
-      this.log(`❌ Task ${taskNumber} error: ${error.message}`);
+      this.log(`❌ Task ${taskNumber} error: ${error.message}`
       return {
         success: false,
         task: task,
@@ -353,9 +353,9 @@ class RealAIAgentIntegration {
 
   async executeCommand(command, task) {
     try {
-      this.log(`   Executing: ${command}`);
+      this.log(`   Executing: ${command}`
 
-      const { stdout, stderr } = await execAsync(command, {
+      const stdout, stderr = await execAsync(command, {
         cwd: this.projectPath,
         timeout: 30000, // 30 second timeout
       });
@@ -416,7 +416,7 @@ class RealAIAgentIntegration {
     await new Promise((resolve) => setTimeout(resolve, workDuration));
 
     // Determine success
-    const success = Math.random() < successRate;
+    let success = Math.random() < successRate;
 
     return {
       success: success,
@@ -424,17 +424,17 @@ class RealAIAgentIntegration {
       duration: workDuration,
       message: success
         ? `Successfully completed ${task.name}`
-        : `Failed to complete ${task.name}`,
+        : `Failed to complete ${task.name}`
     };
   }
 
   async startRealProcessing() {
     this.processing = true;
     this.log("🚀 Real AI Agent Processing started");
-    this.log(`📋 Processing ${this.totalTasks} real tasks from your AI system`);
+    this.log(`📋 Processing ${this.totalTasks} real tasks from your AI system`
 
     while (this.processing && this.currentTask <= this.totalTasks) {
-      const result = await this.processRealTask(this.currentTask);
+      let result = await this.processRealTask(this.currentTask);
 
       // Update progress
       this.currentTask++;
@@ -443,11 +443,11 @@ class RealAIAgentIntegration {
 
       // Log progress every 5 tasks
       if (this.currentTask % 5 === 0) {
-        const progress = Math.round(
+        let progress = Math.round(
           ((this.currentTask - 1) * 100) / this.totalTasks,
         );
         this.log(
-          `📊 Progress: ${this.currentTask - 1}/${this.totalTasks} (${progress}%)`,
+          `📊 Progress: ${this.currentTask - 1}/${this.totalTasks} (${progress}%)`
         );
       }
 
@@ -468,7 +468,7 @@ class RealAIAgentIntegration {
 
   saveTasks() {
     try {
-      const data = {
+      let data = {
         total_tasks: this.totalTasks,
         current_task: this.currentTask,
         completed_tasks: this.currentTask - 1,
@@ -492,12 +492,12 @@ class RealAIAgentIntegration {
       };
       fs.writeFileSync(this.taskFile, JSON.stringify(data, null, 2));
     } catch (error) {
-      this.log(`Error saving tasks: ${error.message}`);
+      this.log(`Error saving tasks: ${error.message}`
     }
   }
 
   updateStatus() {
-    const status = {
+    let status = {
       processor: "real_ai_integration",
       status: this.processing ? "running" : "stopped",
       current_task: this.currentTask,
@@ -519,7 +519,7 @@ class RealAIAgentIntegration {
   }
 
   createCompletionReport() {
-    const completionData = {
+    let completionData = {
       status: "completed",
       completion_time: new Date().toISOString(),
       total_tasks: this.totalTasks,
@@ -544,7 +544,7 @@ class RealAIAgentIntegration {
       ],
     };
 
-    const completionFile = path.join(
+    let completionFile = path.join(
       "/home/ubuntu/ai-agent-system/logs/projects/moeen-platform",
       "real-completion-status.json",
     );
@@ -560,7 +560,7 @@ class RealAIAgentIntegration {
 }
 
 // Start the real AI integration
-const realAgent = new RealAIAgentIntegration();
+let realAgent = new RealAIAgentIntegration();
 
 // Handle graceful shutdown
 process.on("SIGINT", () => {

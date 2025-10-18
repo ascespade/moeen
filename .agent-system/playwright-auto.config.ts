@@ -6,61 +6,61 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests/e2e',
-  
+
   /* تشغيل الاختبارات بشكل متوازي */
   fullyParallel: true,
-  
+
   /* منع الاختبارات المحددة فقط في CI */
   forbidOnly: !!process.env.CI,
-  
+
   /* إعادة المحاولة - محلي و CI */
   retries: 1,
-  
+
   /* عدد العمال المتوازيين */
   workers: process.env.CI ? 1 : 2,
-  
+
   /* مهلة زمنية عامة للاختبارات */
   timeout: 60000,
-  
+
   /* مهلة زمنية للتحقق من النتائج */
   expect: {
-    timeout: 10000,
+    timeout: 10000
   },
-  
+
   /* تقارير الاختبارات */
   reporter: [
     ['html', { outputFolder: 'playwright-report' }],
     ['json', { outputFile: 'playwright-results.json' }],
     ['junit', { outputFile: 'playwright-results.xml' }],
-    ['list'], // تقرير مبسط في الكونسول
+    ['list'] // تقرير مبسط في الكونسول
   ],
-  
+
   /* إعدادات مشتركة لجميع الاختبارات */
   use: {
     /* الرابط الأساسي */
     baseURL: 'http://localhost:3001',
-    
+
     /* تتبع الأخطاء */
     trace: 'on-first-retry',
-    
+
     /* لقطات الشاشة عند الفشل فقط */
     screenshot: 'only-on-failure',
-    
+
     /* تسجيل الفيديو عند الفشل فقط */
     video: 'retain-on-failure',
-    
+
     /* مهلة زمنية للإجراءات */
     actionTimeout: 30000,
-    
+
     /* مهلة زمنية للتنقل */
     navigationTimeout: 30000,
-    
+
     /* تجاهل أخطاء HTTPS */
     ignoreHTTPSErrors: true,
-    
+
     /* قبول التنزيلات تلقائياً */
     acceptDownloads: true,
-    
+
     /* إعدادات إضافية للاستقرار */
     launchOptions: {
       args: [
@@ -79,7 +79,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
         // إعدادات إضافية لكروم
         launchOptions: {
@@ -91,8 +91,8 @@ export default defineConfig({
             '--disable-renderer-backgrounding'
           ]
         }
-      },
-    },
+      }
+    }
   ],
 
   /* إعداد الخادم المحلي */
@@ -102,7 +102,7 @@ export default defineConfig({
     reuseExistingServer: true,
     timeout: 120 * 1000, // 2 دقيقة
     stdout: 'pipe',
-    stderr: 'pipe',
+    stderr: 'pipe'
   },
 
   /* الإعدادات العامة */
@@ -113,6 +113,6 @@ export default defineConfig({
   env: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
-    NODE_ENV: 'test',
-  },
+    NODE_ENV: 'test'
+  }
 });

@@ -11,9 +11,9 @@ interface PageMetadata {
   image?: string;
   noIndex?: boolean;
 }
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://moeen.sa';
-const appName = 'معين - Moeen';
-const defaultImage = `${baseUrl}/og-image.png`;
+let baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://moeen.sa';
+let appName = 'معين - Moeen';
+let defaultImage = `${baseUrl}/og-image.png`
 /**
  * Generate complete metadata for a page
  */
@@ -24,7 +24,7 @@ const defaultImage = `${baseUrl}/og-image.png`;
     image = defaultImage,
     noIndex = false,
   } = config;
-  const fullTitle = title.includes(appName) ? title : `${title} | ${appName}`;
+  let fullTitle = title.includes(appName) ? title : `${title} | ${appName}`
   return {
     title: fullTitle,
     description,
@@ -68,7 +68,7 @@ const defaultImage = `${baseUrl}/og-image.png`;
       canonical: baseUrl,
       languages: {
         'ar-SA': baseUrl,
-        'en-US': `${baseUrl}/en`,
+        'en-US': `${baseUrl}/en`
       },
     },
     // App links
@@ -178,7 +178,7 @@ const defaultImage = `${baseUrl}/og-image.png`;
 /**
  * Generate JSON-LD structured data
  */
-  const baseData = {
+  let baseData = {
     '@context': 'https://schema.org',
   };
   switch (type) {
@@ -188,7 +188,7 @@ const defaultImage = `${baseUrl}/og-image.png`;
         '@type': 'Organization',
         name: appName,
         url: baseUrl,
-        logo: `${baseUrl}/logo.png`,
+        logo: `${baseUrl}/logo.png`
         description: 'نظام متكامل لإدارة المراكز الصحية',
         contactPoint: {
           '@type': 'ContactPoint',
@@ -205,7 +205,7 @@ const defaultImage = `${baseUrl}/og-image.png`;
         url: baseUrl,
         potentialAction: {
           '@type': 'SearchAction',
-          target: `${baseUrl}/search?q={search_term_string}`,
+          target: `${baseUrl}/search?q={search_term_string}`
           'query-input': 'required name=search_term_string',
         },
       };
@@ -232,6 +232,6 @@ const defaultImage = `${baseUrl}/og-image.png`;
 };
 // Exports
 export function generateMetadata(config: PageMetadata): Metadata {
-export const pageMetadata = {
+export let pageMetadata = {
 export function generateStructuredData(type: 'organization' | 'website' | 'healthClinic') {
 export default {

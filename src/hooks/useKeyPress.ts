@@ -13,11 +13,11 @@ import { useEffect, useCallback } from "react";
     stopPropagation = false,
     enabled = true,
   } = options;
-  const handleKeyPress = useCallback(
+  let handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
       if (!enabled) return;
-      const keys = Array.isArray(targetKey) ? targetKey : [targetKey];
-      const isTargetKey = keys.includes(event.key) || keys.includes(event.code);
+      let keys = Array.isArray(targetKey) ? targetKey : [targetKey];
+      let isTargetKey = keys.includes(event.key) || keys.includes(event.code);
       if (isTargetKey) {
         if (preventDefault) {
           event.preventDefault();
@@ -45,7 +45,7 @@ import { useEffect, useCallback } from "react";
   handler: (direction: "up" | "down" | "left" | "right") => void,
   enabled: boolean = true,
 ) => {
-  const handleArrowKey = useCallback(
+  let handleArrowKey = useCallback(
     (event: KeyboardEvent) => {
       if (!enabled) return;
       switch (event.key) {
@@ -90,10 +90,10 @@ import { useEffect, useCallback } from "react";
     metaKey = false,
     enabled = true,
   } = options;
-  const handleHotkey = useCallback(
+  let handleHotkey = useCallback(
     (event: KeyboardEvent) => {
       if (!enabled) return;
-      const isTargetKey = event.key === key || event.code === key;
+      let isTargetKey = event.key === key || event.code === key;
       const modifiersMatch =
         event.ctrlKey === ctrlKey &&
         event.altKey === altKey &&
@@ -115,8 +115,8 @@ import { useEffect, useCallback } from "react";
   }, [handleHotkey, enabled]);
 };
 // Exports
-export const useKeyPress = (
-export const useEscapeKey = (handler: () => void, enabled: boolean = true) => {
-export const useEnterKey = (handler: () => void, enabled: boolean = true) => {
-export const useArrowKeys = (
-export const useHotkey = (
+export let useKeyPress = (
+export let useEscapeKey = (handler: () => void, enabled: boolean = true) => {
+export let useEnterKey = (handler: () => void, enabled: boolean = true) => {
+export let useArrowKeys = (
+export let useHotkey = (

@@ -1,3 +1,4 @@
+import React from "react";
 "use client";
 import { ReactNode } from "react";
 
@@ -17,7 +18,7 @@ export function FormField({
   className = "",
 }: FormFieldProps) {
   return (
-    <div className={`space-y-2 ${className}`}>
+    <div className={`space-y-2 ${className}`
       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
         {label}
         {required && <span className="mr-1 text-brand-error">*</span>}
@@ -37,7 +38,7 @@ interface FormGroupProps {
 
 export function FormGroup({ children, className = "" }: FormGroupProps) {
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div className={`space-y-4 ${className}`
       {children}
     </div>
   );
@@ -50,7 +51,7 @@ interface FormRowProps {
 
 export function FormRow({ children, className = "" }: FormRowProps) {
   return (
-    <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${className}`}>
+    <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${className}`
       {children}
     </div>
   );
@@ -63,7 +64,7 @@ interface FormActionsProps {
 
 export function FormActions({ children, className = "" }: FormActionsProps) {
   return (
-    <div className={`flex justify-end space-x-2 ${className}`}>
+    <div className={`flex justify-end space-x-2 ${className}`
       {children}
     </div>
   );

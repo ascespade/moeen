@@ -4,12 +4,12 @@
  * سكريبت لجلب التاريخ والوقت الحالي
  */
 
-const now = new Date();
-const isoString = now.toISOString();
-const dateOnly = isoString.split('T')[0];
-const timeOnly = isoString.split('T')[1].split('.')[0];
+let now = new Date();
+let isoString = now.toISOString();
+let dateOnly = isoString.split('T')[0];
+let timeOnly = isoString.split('T')[1].split('.')[0];
 
-console.log(JSON.stringify({
+// console.log(JSON.stringify({
   iso: isoString,
   date: dateOnly,
   time: timeOnly,

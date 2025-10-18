@@ -1,13 +1,13 @@
-import "@testing-library/jest-dom";
+import '@testing-library/jest-dom';
 
 // Mock Next.js router
-jest.mock("next/router", () => ({
+jest.mock('next/router', () => ({
   useRouter() {
     return {
-      route: "/",
-      pathname: "/",
+      route: '/',
+      pathname: '/',
       query: {},
-      asPath: "/",
+      asPath: '/',
       push: jest.fn(),
       pop: jest.fn(),
       reload: jest.fn(),
@@ -17,15 +17,15 @@ jest.mock("next/router", () => ({
       events: {
         on: jest.fn(),
         off: jest.fn(),
-        emit: jest.fn(),
+        emit: jest.fn()
       },
-      isFallback: false,
+      isFallback: false
     };
-  },
+  }
 }));
 
 // Mock Next.js navigation
-jest.mock("next/navigation", () => ({
+jest.mock('next/navigation', () => ({
   useRouter() {
     return {
       push: jest.fn(),
@@ -33,19 +33,19 @@ jest.mock("next/navigation", () => ({
       prefetch: jest.fn(),
       back: jest.fn(),
       forward: jest.fn(),
-      refresh: jest.fn(),
+      refresh: jest.fn()
     };
   },
   useSearchParams() {
     return new URLSearchParams();
   },
   usePathname() {
-    return "/";
-  },
+    return '/';
+  }
 }));
 
 // Mock window.matchMedia
-Object.defineProperty(window, "matchMedia", {
+Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation((query) => ({
     matches: false,
@@ -55,8 +55,8 @@ Object.defineProperty(window, "matchMedia", {
     removeListener: jest.fn(), // deprecated
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
+    dispatchEvent: jest.fn()
+  }))
 });
 
 // Mock IntersectionObserver
@@ -76,20 +76,20 @@ global.ResizeObserver = class ResizeObserver {
 };
 
 // Mock localStorage
-const localStorageMock = {
+let localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
-  clear: jest.fn(),
+  clear: jest.fn()
 };
 global.localStorage = localStorageMock;
 
 // Mock sessionStorage
-const sessionStorageMock = {
+let sessionStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
-  clear: jest.fn(),
+  clear: jest.fn()
 };
 global.sessionStorage = sessionStorageMock;
 
@@ -98,7 +98,7 @@ global.fetch = jest.fn();
 
 // Mock console methods to reduce noise in tests
 global.console = {
-  ...console,
+  ...console
   // Uncomment to ignore a specific log level
   // log: jest.fn(),
   // debug: jest.fn(),

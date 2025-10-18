@@ -2,7 +2,7 @@ import { BaseEntity } from './common';
 // Authentication types
   email: string;
   name: string;
-  role: UserRole;
+  role: Userstring;
   status: UserStatus;
   is_active: boolean;
   last_login?: string;
@@ -18,7 +18,7 @@ import { BaseEntity } from './common';
 }
 // Exports
 export interface User extends BaseEntity {
-export type UserRole = 'admin' | 'doctor' | 'nurse' | 'staff' | 'supervisor' | 'patient' | 'agent' | 'manager' | 'demo';
+export type Userstring = 'admin' | 'doctor' | 'nurse' | 'staff' | 'supervisor' | 'patient' | 'agent' | 'manager' | 'demo';
 export type UserStatus = 'active' | 'inactive' | 'suspended' | 'pending';
 export interface LoginRequest {
 export interface LoginResponse {

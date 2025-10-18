@@ -1,46 +1,47 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import { useState, useEffect, useRef } from "react";
-import { createClient } from "@/lib/supabase/client";
-import logger from "@/lib/monitoring/logger";
+import { useState, useEffect, useRef } from 'react';
+import { () => ({} as any) } from '@/lib/supabase/client';
+import logger from '@/lib/monitoring/logger';
 
 interface Message {
   id: string;
-  role: "user" | "assistant";
+  role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
 }
 
 interface MoeenChatbotProps {
-  position?: "bottom-right" | "bottom-left";
+  position?: 'bottom-right' | 'bottom-left';
 }
 
-export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbotProps) {
+export default function MoeenChatbot({ position = 'bottom-right' }: MoeenChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
-      id: "welcome",
-      role: "assistant",
-      content: "أهلاً بك في مركز الهمم 👋\n\nأنا مُعين، مساعدك الرقمي. نحن هنا لتقديم الدعم لكل فرد.\n\nكيف يمكنني مساعدتك اليوم؟",
-      timestamp: new Date(),
-    },
+      id: 'welcome',
+      role: 'assistant',
+      content: 'أهلاً بك في مركز الهمم 👋\n\nأنا مُعين، مساعدك الرقمي. نحن هنا لتقديم الدعم لكل فرد.\n\nكيف يمكنني مساعدتك اليوم؟',
+      timestamp: new Date()
+    }
   ]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  let messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Quick actions
-  const quickActions = [
-    { id: 1, text: "احجز موعد", action: "book_appointment" },
-    { id: 2, text: "الخدمات المتوفرة", action: "services" },
-    { id: 3, text: "تواصل مع أخصائي", action: "contact_specialist" },
-    { id: 4, text: "أسئلة شائعة", action: "faq" },
+  let quickActions = [
+    { id: 1, text: 'احجز موعد', action: 'book_appointment' },
+    { id: 2, text: 'الخدمات المتوفرة', action: 'services' },
+    { id: 3, text: 'تواصل مع أخصائي', action: 'contact_specialist' },
+    { id: 4, text: 'أسئلة شائعة', action: 'faq' }
   ];
 
   // Auto-scroll to bottom
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  let scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -48,67 +49,67 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
   }, [messages]);
 
   // Handle quick action
-  const handleQuickAction = async (action: string) => {
+  let handleQuickAction = async(action: string) => {
     const actionMessages: Record<string, string> = {
-      book_appointment: "أريد حجز موعد",
-      services: "ما هي الخدمات المتوفرة؟",
-      contact_specialist: "أريد التواصل مع أخصائي",
-      faq: "عندي أسئلة",
+      book_appointment: 'أريد حجز موعد',
+      services: 'ما هي الخدمات المتوفرة؟',
+      contact_specialist: 'أريد التواصل مع أخصائي',
+      faq: 'عندي أسئلة'
     };
 
-    const userMessage = actionMessages[action];
+    let userMessage = actionMessages[action];
     if (userMessage) {
       await handleSendMessage(userMessage);
     }
   };
 
   // Send message
-  const handleSendMessage = async (messageText?: string) => {
-    const text = messageText || input.trim();
+  let handleSendMessage = async(messageText?: string) => {
+    let text = messageText || input.trim();
     if (!text) return;
 
     // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
-      role: "user",
+      role: 'user',
       content: text,
-      timestamp: new Date(),
+      timestamp: new Date()
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setInput("");
+    setInput('');
     setIsLoading(true);
 
     try {
       // Call chatbot API
-      const response = await fetch("/api/chatbot/message", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text }),
+      let response = await fetch('/api/chatbot/message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
       });
 
-      const data = await response.json();
+      let data = await response.json();
 
       // Add assistant response
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: data.response || "عذراً، حدث خطأ. يرجى المحاولة مرة أخرى.",
-        timestamp: new Date(),
+        role: 'assistant',
+        content: data.response || 'عذراً، حدث خطأ. يرجى المحاولة مرة أخرى.',
+        timestamp: new Date()
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      logger.error("Chatbot error", error);
-      
+      logger.error('Chatbot error', error);
+
       // Fallback response
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: "عذراً، يبدو أن هناك مشكلة في الاتصال. يرجى التواصل معنا عبر الواتساب: +966555381558",
-        timestamp: new Date(),
+        role: 'assistant',
+        content: 'عذراً، يبدو أن هناك مشكلة في الاتصال. يرجى التواصل معنا عبر الواتساب: +966555381558',
+        timestamp: new Date()
       };
-      
+
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
@@ -116,25 +117,25 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
   };
 
   // Handle Enter key
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+  let handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
   };
 
-  const positionClasses = position === "bottom-right" 
-    ? "bottom-6 right-6" 
-    : "bottom-6 left-6";
+  let positionClasses = position === 'bottom-right'
+    ? 'bottom-6 right-6'
+    : 'bottom-6 left-6';
 
   return (
     <>
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed ${positionClasses} z-50 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-purple-600 text-white shadow-2xl transition-all hover:scale-110 hover:shadow-3xl ${
-          isOpen ? "rotate-90" : ""
-        }`}
+        className={`
+          isOpen ? 'rotate-90' : ''
+        }`
         aria-label="فتح مساعد معين"
       >
         {isOpen ? (
@@ -151,9 +152,9 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
 
       {/* Notification Badge */}
       {!isOpen && messages.length > 1 && (
-        <div className={`fixed ${positionClasses} z-40 translate-x-8 -translate-y-8`}>
+        <div className={`fixed ${positionClasses} z-40 translate-x-8 -translate-y-8`
           <div className="h-6 w-6 rounded-full bg-red-500 flex items-center justify-center text-xs font-bold animate-bounce">
-            {messages.filter(m => m.role === "assistant").length - 1}
+            {messages.filter(m => m.role === 'assistant').length - 1}
           </div>
         </div>
       )}
@@ -161,7 +162,7 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
       {/* Chat Window */}
       {isOpen && (
         <div
-          className={`fixed ${positionClasses} z-40 mb-20 h-[600px] w-[400px] overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-gray-800 flex flex-col`}
+          className={`fixed ${positionClasses} z-40 mb-20 h-[600px] w-[400px] overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-gray-800 flex flex-col`
         >
           {/* Header */}
           <div className="bg-gradient-to-r from-[var(--brand-primary)] to-purple-600 p-4 text-white">
@@ -187,24 +188,24 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`
               >
                 <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                    message.role === "user"
-                      ? "bg-[var(--brand-primary)] text-white"
-                      : "bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-md"
-                  }`}
+                  className={`
+                    message.role === 'user'
+                      ? 'bg-[var(--brand-primary)] text-white'
+                      : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-md'
+                  }`
                 >
                   <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
                   <p
-                    className={`mt-2 text-xs ${
-                      message.role === "user" ? "text-white/70" : "text-gray-500"
-                    }`}
+                    className={`
+                      message.role === 'user' ? 'text-white/70' : 'text-gray-500'
+                    }`
                   >
-                    {message.timestamp.toLocaleTimeString("ar-SA", {
-                      hour: "2-digit",
-                      minute: "2-digit",
+                    {message.timestamp.toLocaleTimeString('ar-SA', {
+                      hour: '2-digit',
+                      minute: '2-digit'
                     })}
                   </p>
                 </div>
@@ -216,8 +217,8 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
                 <div className="bg-white dark:bg-gray-800 rounded-2xl px-4 py-3 shadow-md">
                   <div className="flex gap-2">
                     <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce"></div>
-                    <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                    <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0.4s" }}></div>
+                    <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                   </div>
                 </div>
               </div>

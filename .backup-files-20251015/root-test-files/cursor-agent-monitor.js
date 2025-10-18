@@ -3,12 +3,12 @@
 // Cursor Agent Monitor
 // This monitors the real Cursor agent activity and displays it in the dashboard
 
-const fs = require("fs");
-const path = require("path");
-const { exec } = require("child_process");
-const { promisify } = require("util");
+let fs = require("fs");
+let path = require("path");
+const exec = require("child_process");
+const promisify = require("util");
 
-const execAsync = promisify(exec);
+let execAsync = promisify(exec);
 
 class CursorAgentMonitor {
   constructor() {
@@ -38,10 +38,10 @@ class CursorAgentMonitor {
   }
 
   log(message) {
-    const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] ${this.projectName}: ${message}\n`;
+    let timestamp = new Date().toISOString();
+    let logMessage = `[${timestamp}] ${this.projectName}: ${message}\n`
     fs.appendFileSync(this.logFile, logMessage);
-    console.log(logMessage.trim());
+    // console.log(logMessage.trim());
   }
 
   async startMonitoring() {
@@ -59,10 +59,10 @@ class CursorAgentMonitor {
   async checkCursorAgentActivity() {
     try {
       // Check for Cursor agent processes
-      const { stdout } = await execAsync(
+      const stdout = await execAsync(
         "ps aux | grep -i cursor | grep -v grep",
       );
-      const cursorProcesses = stdout
+      let cursorProcesses = stdout
         .trim()
         .split("\n")
         .filter((line) => line.length > 0);
@@ -88,28 +88,28 @@ class CursorAgentMonitor {
         }
       }
     } catch (error) {
-      this.log(`Error checking Cursor agent: ${error.message}`);
+      this.log(`Error checking Cursor agent: ${error.message}`
     }
   }
 
   async monitorFileChanges() {
     try {
       // Check for recent file modifications (last 10 seconds)
-      const { stdout } = await execAsync(
-        `find ${this.projectPath} -type f -newermt "10 seconds ago" -not -path "*/node_modules/*" -not -path "*/.git/*" | head -10`,
+      const stdout = await execAsync(
+        `find ${this.projectPath} -type f -newermt "10 seconds ago" -not -path "*/node_modules/*" -not -path "*/.git/*" | head -10`
       );
-      const recentFiles = stdout
+      let recentFiles = stdout
         .trim()
         .split("\n")
         .filter((line) => line.length > 0);
 
       if (recentFiles.length > 0) {
         this.log(
-          `📝 Cursor agent modified ${recentFiles.length} files recently`,
+          `📝 Cursor agent modified ${recentFiles.length} files recently`
         );
         recentFiles.forEach((file) => {
-          const fileName = path.basename(file);
-          this.log(`   - ${fileName}`);
+          let fileName = path.basename(file);
+          this.log(`   - ${fileName}`
         });
 
         this.taskCount++;
@@ -123,18 +123,18 @@ class CursorAgentMonitor {
   async monitorGitActivity() {
     try {
       // Check for recent git commits
-      const { stdout } = await execAsync(
-        `cd ${this.projectPath} && git log --oneline -5 --since="1 minute ago"`,
+      const stdout = await execAsync(
+        `cd ${this.projectPath} && git log --oneline -5 --since="1 minute ago"`
       );
-      const recentCommits = stdout
+      let recentCommits = stdout
         .trim()
         .split("\n")
         .filter((line) => line.length > 0);
 
       if (recentCommits.length > 0) {
-        this.log(`📦 Cursor agent made ${recentCommits.length} recent commits`);
+        this.log(`📦 Cursor agent made ${recentCommits.length} recent commits`
         recentCommits.forEach((commit) => {
-          this.log(`   - ${commit}`);
+          this.log(`   - ${commit}`
         });
 
         this.completedTasks += recentCommits.length;
@@ -148,23 +148,23 @@ class CursorAgentMonitor {
   async monitorTerminalActivity() {
     try {
       // Check for active terminal sessions
-      const { stdout } = await execAsync(
+      const stdout = await execAsync(
         'ps aux | grep -E "(bash|zsh|sh)" | grep -v grep | wc -l',
       );
-      const activeTerminals = parseInt(stdout.trim());
+      let activeTerminals = parseInt(stdout.trim(, 10));
 
       if (activeTerminals > 0) {
         // Check for npm/yarn processes (indicating development work)
-        const { stdout: npmProcesses } = await execAsync(
+        const stdout: npmProcesses = await execAsync(
           'ps aux | grep -E "(npm|yarn|node)" | grep -v grep',
         );
-        const npmCount = npmProcesses
+        let npmCount = npmProcesses
           .trim()
           .split("\n")
           .filter((line) => line.length > 0).length;
 
         if (npmCount > 0) {
-          this.log(`⚙️ Cursor agent running ${npmCount} development processes`);
+          this.log(`⚙️ Cursor agent running ${npmCount} development processes`
           this.lastActivity = new Date().toISOString();
         }
       }
@@ -174,7 +174,7 @@ class CursorAgentMonitor {
   }
 
   async updateStatus() {
-    const status = {
+    let status = {
       monitor: "cursor_agent_monitor",
       status: this.monitoring ? "monitoring" : "stopped",
       cursor_agent_active: this.cursorAgentActive,
@@ -197,7 +197,7 @@ class CursorAgentMonitor {
     fs.writeFileSync(this.statusFile, JSON.stringify(status, null, 2));
 
     // Also update task file for dashboard compatibility
-    const taskData = {
+    let taskData = {
       total_tasks: this.taskCount || 100, // Default to 100 if no tasks detected
       current_task: this.completedTasks + 1,
       completed_tasks: this.completedTasks,
@@ -218,19 +218,19 @@ class CursorAgentMonitor {
   async getCursorAgentLogs() {
     try {
       // Get recent logs from various sources
-      const logs = [];
+      let logs = [];
 
       // Get recent git log
       try {
-        const { stdout } = await execAsync(
-          `cd ${this.projectPath} && git log --oneline -10`,
+        const stdout = await execAsync(
+          `cd ${this.projectPath} && git log --oneline -10`
         );
-        const gitLogs = stdout
+        let gitLogs = stdout
           .trim()
           .split("\n")
           .filter((line) => line.length > 0);
         gitLogs.forEach((log) => {
-          logs.push(`[GIT] ${log}`);
+          logs.push(`[GIT] ${log}`
         });
       } catch (error) {
         // Ignore git errors
@@ -238,16 +238,16 @@ class CursorAgentMonitor {
 
       // Get recent file changes
       try {
-        const { stdout } = await execAsync(
-          `find ${this.projectPath} -type f -newermt "1 hour ago" -not -path "*/node_modules/*" -not -path "*/.git/*" | head -20`,
+        const stdout = await execAsync(
+          `find ${this.projectPath} -type f -newermt "1 hour ago" -not -path "*/node_modules/*" -not -path "*/.git/*" | head -20`
         );
-        const recentFiles = stdout
+        let recentFiles = stdout
           .trim()
           .split("\n")
           .filter((line) => line.length > 0);
         recentFiles.forEach((file) => {
-          const fileName = path.basename(file);
-          logs.push(`[FILE] Modified: ${fileName}`);
+          let fileName = path.basename(file);
+          logs.push(`[FILE] Modified: ${fileName}`
         });
       } catch (error) {
         // Ignore file errors
@@ -255,17 +255,17 @@ class CursorAgentMonitor {
 
       // Get active processes
       try {
-        const { stdout } = await execAsync(
+        const stdout = await execAsync(
           'ps aux | grep -E "(npm|yarn|node|cursor)" | grep -v grep | head -5',
         );
-        const processes = stdout
+        let processes = stdout
           .trim()
           .split("\n")
           .filter((line) => line.length > 0);
         processes.forEach((process) => {
-          const parts = process.split(/\s+/);
-          const command = parts.slice(10).join(" ");
-          logs.push(`[PROCESS] ${command}`);
+          let parts = process.split(/\s+/);
+          let command = parts.slice(10).join(" ");
+          logs.push(`[PROCESS] ${command}`
         });
       } catch (error) {
         // Ignore process errors
@@ -273,8 +273,8 @@ class CursorAgentMonitor {
 
       return logs;
     } catch (error) {
-      this.log(`Error getting Cursor agent logs: ${error.message}`);
-      return [`Error: ${error.message}`];
+      this.log(`Error getting Cursor agent logs: ${error.message}`
+      return [`Error: ${error.message}`
     }
   }
 
@@ -285,7 +285,7 @@ class CursorAgentMonitor {
 }
 
 // Start the Cursor agent monitor
-const monitor = new CursorAgentMonitor();
+let monitor = new CursorAgentMonitor();
 
 // Handle graceful shutdown
 process.on("SIGINT", () => {

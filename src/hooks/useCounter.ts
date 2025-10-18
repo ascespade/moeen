@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 
 // Counter hooks
 
@@ -8,9 +8,9 @@ export const useCounter = (
     min?: number;
     max?: number;
     step?: number;
-  } = {},
+  } = {}
 ) => {
-  const { min = -Infinity, max = Infinity, step = 1 } = options;
+  const min = -Infinity, max = Infinity, step = 1 = options;
 
   const [count, setCount] = useState<number>(initialValue);
 
@@ -30,7 +30,7 @@ export const useCounter = (
     (value: number) => {
       setCount(Math.min(Math.max(value, min), max));
     },
-    [min, max],
+    [min, max]
   );
 
   const isAtMin = count <= min;
@@ -43,6 +43,6 @@ export const useCounter = (
     reset,
     setValue,
     isAtMin,
-    isAtMax,
+    isAtMax
   };
 };

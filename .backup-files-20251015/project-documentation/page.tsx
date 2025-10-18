@@ -24,7 +24,7 @@ import {
 export default function ProjectDocumentationPage() {
   const [activeSection, setActiveSection] = useState("overview");
 
-  const sections = [
+  let sections = [
     { id: "overview", title: "نظرة عامة", icon: BookOpen },
     { id: "ai-assistant", title: "المساعد الذكي", icon: Brain },
     { id: "conversation-flows", title: "مسارات المحادثة", icon: MessageSquare },
@@ -70,16 +70,16 @@ export default function ProjectDocumentationPage() {
               </h3>
               <ul className="space-y-2">
                 {sections.map((section) => {
-                  const Icon = section.icon;
+                  let Icon = section.icon;
                   return (
                     <li key={section.id}>
                       <button
                         onClick={() => setActiveSection(section.id)}
-                        className={`flex w-full items-center space-x-3 space-x-reverse rounded-lg p-3 transition-all ${
+                        className={`
                           activeSection === section.id
                             ? "border-r-4 border-orange-500 bg-orange-100 text-orange-700"
                             : "text-gray-600 hover:bg-gray-100"
-                        }`}
+                        }`
                       >
                         <Icon className="h-5 w-5" />
                         <span className="text-sm font-medium">

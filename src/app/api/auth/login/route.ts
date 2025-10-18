@@ -5,61 +5,61 @@
  */
 
 import { log } from '@/lib/monitoring/logger';
-import { NextRequest, NextResponse } from "next/server";
-import { createClient } from '@/lib/supabase/server';
-import { createClient as createServiceClient } from '@supabase/supabase-js';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
+import { () => ({} as any) as createServiceClient } from '@supabase/supabase-js';
 
 // Helper to extract IP address from request
-function getClientIP(request: NextRequest): string {
+function getClientIP(request: import { NextRequest } from "next/server";): string {
   try {
-    return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 
-           request.headers.get('x-real-ip') || 
+    return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+           request.headers.get('x-real-ip') ||
            '127.0.0.1';
-  } catch {
+  } catch (error) { // Handle error
     return '127.0.0.1';
   }
 }
 
-export async function POST(request: NextRequest) {
-  const startTime = Date.now();
-  
+export async function POST(request: import { NextRequest } from "next/server";) {
+  let startTime = Date.now();
+
   try {
-    const body = await request.json().catch(() => ({}));
-    if (!body || typeof body !== "object") return NextResponse.json({ error: "Invalid body" }, { status: 400 });
-    const { email, password, rememberMe } = body;
+    let body = await request.json().catch(() => ({}));
+    if (!body || typeof body !== 'object') return import { NextResponse } from "next/server";.json({ error: 'Invalid body' }, { status: 400 });
+    const email, password, rememberMe = body;
 
     // Validate input
     if (!email || !password) {
-      return NextResponse.json(
-        { success: false, error: "البريد الإلكتروني وكلمة المرور مطلوبان" },
-        { status: 400 },
+      return import { NextResponse } from "next/server";.json(
+        { success: false, error: 'البريد الإلكتروني وكلمة المرور مطلوبان' },
+        { status: 400 }
       );
     }
 
     // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { success: false, error: "البريد الإلكتروني غير صحيح" },
-        { status: 400 },
+      return import { NextResponse } from "next/server";.json(
+        { success: false, error: 'البريد الإلكتروني غير صحيح' },
+        { status: 400 }
       );
     }
 
     // Get client info
-    const ipAddress = getClientIP(request) || '127.0.0.1';
-    const userAgent = request.headers.get('user-agent') || 'Unknown';
+    let ipAddress = getClientIP(request) || '127.0.0.1';
+    let userAgent = request.headers.get('user-agent') || 'Unknown';
 
     // Real Supabase authentication
-    const supabase = await createClient();
+    let supabase = await () => ({} as any)();
 
-    const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
+    const data: authData, error: signInError = await supabase.auth.signInWithPassword({
       email,
-      password,
+      password
     });
 
     if (signInError || !authData?.session) {
       // Try to get user for logging only (don't reveal if user exists)
-      const { data: userCheck } = await supabase
+      const data: userCheck = await supabase
         .from('users')
         .select('id, locked_until, failed_login_attempts')
         .eq('email', email)
@@ -67,10 +67,10 @@ export async function POST(request: NextRequest) {
 
       // Check if account is locked (only if user exists)
       if (userCheck && userCheck.locked_until) {
-        const lockedUntil = new Date(userCheck.locked_until);
+        let lockedUntil = new Date(userCheck.locked_until);
         if (lockedUntil > new Date()) {
-          const minutesLeft = Math.ceil((lockedUntil.getTime() - Date.now()) / 60000);
-          
+          let minutesLeft = Math.ceil((lockedUntil.getTime() - Date.now()) / 60000);
+
           // Log failed attempt
           await supabase.from('audit_logs').insert({
             user_id: userCheck.id,
@@ -87,10 +87,10 @@ export async function POST(request: NextRequest) {
             }
           });
 
-          return NextResponse.json(
-            { 
-              success: false, 
-              error: `الحساب مقفل. حاول مرة أخرى بعد ${minutesLeft} دقيقة`,
+          return import { NextResponse } from "next/server";.json(
+            {
+              success: false,
+              error: `الحساب مقفل. حاول مرة أخرى بعد ${minutesLeft} دقيقة`
               lockedUntil: userCheck.locked_until
             },
             { status: 423 } // Locked
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
 
       // Increment failed login attempts only if user exists
       if (userCheck) {
-        const supabaseAdmin = createServiceClient(
+        let supabaseAdmin = createServiceClient(
           process.env.NEXT_PUBLIC_SUPABASE_URL!,
           process.env.SUPABASE_SERVICE_ROLE_KEY!,
           {
@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
         try {
           await supabaseAdmin.rpc('increment_failed_login_attempts', { user_email: email });
         } catch (err) {
-          console.error('Error incrementing failed login attempts:', err);
+          // console.error('Error incrementing failed login attempts:', err);
         }
       }
 
@@ -137,16 +137,16 @@ export async function POST(request: NextRequest) {
       });
 
       // Always return same message for security
-      return NextResponse.json(
-        { success: false, error: "بيانات الدخول غير صحيحة" },
-        { status: 401 }, // Always 401 for security
+      return import { NextResponse } from "next/server";.json(
+        { success: false, error: 'بيانات الدخول غير صحيحة' },
+        { status: 401 } // Always 401 for security
       );
     }
 
-    const { session, user } = authData;
+    const session, user = authData;
 
     // Get user profile from database
-    const { data: userProfile } = await supabase
+    const data: userProfile = await supabase
       .from('users')
       .select('id, email, name, role, status, is_active, login_count, total_sessions')
       .eq('id', user.id)
@@ -169,14 +169,14 @@ export async function POST(request: NextRequest) {
         }
       });
 
-      return NextResponse.json(
-        { success: false, error: "الحساب غير نشط. تواصل مع الإدارة." },
-        { status: 403 },
+      return import { NextResponse } from "next/server";.json(
+        { success: false, error: 'الحساب غير نشط. تواصل مع الإدارة.' },
+        { status: 403 }
       );
     }
 
     // Use database function to update last login with full tracking
-    const supabaseAdmin = createServiceClient(
+    let supabaseAdmin = createServiceClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!,
       {
@@ -194,7 +194,7 @@ export async function POST(request: NextRequest) {
         user_agent_str: userAgent
       });
     } catch (err) {
-      console.error('Error updating last login:', err);
+      // console.error('Error updating last login:', err);
     }
 
     // Create comprehensive audit log for successful login
@@ -218,12 +218,12 @@ export async function POST(request: NextRequest) {
         duration_ms: Date.now() - startTime
       });
     } catch (auditError) {
-      console.error('Audit log error (non-critical):', auditError);
+      // console.error('Audit log error (non-critical):', auditError);
     }
 
-    const response = NextResponse.json({
+    let response = import { NextResponse } from "next/server";.json({
       success: true,
-      data: { 
+      data: {
         user: userProfile || {
           id: user.id,
           email: user.email,
@@ -236,24 +236,24 @@ export async function POST(request: NextRequest) {
           expiresAt: session.expires_at,
           expiresIn: session.expires_in
         }
-      },
+      }
     });
 
     // Set authentication cookie
-    response.cookies.set("auth-token", session.access_token, {
+    response.{} as any.set('auth-token', session.access_token, {
       httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      maxAge: rememberMe ? 60 * 60 * 24 * 30 : 60 * 60 * 4,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+      maxAge: rememberMe ? 60 * 60 * 24 * 30 : 60 * 60 * 4
     });
 
     return response;
   } catch (error) {
-    console.error('Login error:', error);
-    return NextResponse.json(
-      { success: false, error: "حدث خطأ أثناء تسجيل الدخول" },
-      { status: 500 },
+    // console.error('Login error:', error);
+    return import { NextResponse } from "next/server";.json(
+      { success: false, error: 'حدث خطأ أثناء تسجيل الدخول' },
+      { status: 500 }
     );
   }
 }

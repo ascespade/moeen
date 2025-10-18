@@ -1,3 +1,4 @@
+import React from "react";
 export default function UIKitPage() {
 
   return (
@@ -12,8 +13,8 @@ export default function UIKitPage() {
               <button className="btn btn-brand">Primary</button>
               <button className="btn btn-secondary">Secondary</button>
               <button className="btn btn-outline">Ghost</button>
-              <button className="btn btn-outline" style={{backgroundColor: 'var(--brand-warning)', color: 'white'}}>Accent</button>
-              <button className="btn btn-outline" style={{backgroundColor: 'var(--brand-error)', color: 'white'}}>Destructive</button>
+              <button className="btn btn-outline" style={{ backgroundColor: 'var(--brand-warning)', color: 'white' }}>Accent</button>
+              <button className="btn btn-outline" style={{ backgroundColor: 'var(--brand-error)', color: 'white' }}>Destructive</button>
             </div>
           </section>
 

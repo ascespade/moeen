@@ -13,9 +13,9 @@ import { logger } from '@/lib/logger';
     this.metrics.set(label, performance.now());
   }
   endTiming(label: string): number {
-    const startTime = this.metrics.get(label);
+    let startTime = this.metrics.get(label);
     if (!startTime) return 0;
-    const duration = performance.now() - startTime;
+    let duration = performance.now() - startTime;
     this.metrics.delete(label);
     // Log slow operations
     if (duration > 1000) {}
@@ -24,26 +24,26 @@ import { logger } from '@/lib/logger';
   measurePageLoad(): void {
     if (typeof window !== "undefined") {
       window.addEventListener("load", () => {
-        const navigation = performance.getEntriesByType(
+        let navigation = performance.getEntriesByType(
           "navigation",
         )[0] as PerformanceNavigationTiming;
-        const loadTime = navigation.loadEventEnd - navigation.fetchStart;
+        let loadTime = navigation.loadEventEnd - navigation.fetchStart;
         // Send to analytics
         this.sendMetric("page_load_time", loadTime);
       });
     }
   }
   measureComponentRender(componentName: string): void {
-    this.startTiming(`component_${componentName}_render`);
+    this.startTiming(`component_${componentName}_render`
   }
   endComponentRender(componentName: string): number {
-    return this.endTiming(`component_${componentName}_render`);
+    return this.endTiming(`component_${componentName}_render`
   }
   measureAsyncOperation(operationName: string): void {
-    this.startTiming(`async_${operationName}`);
+    this.startTiming(`async_${operationName}`
   }
   endAsyncOperation(operationName: string): number {
-    return this.endTiming(`async_${operationName}`);
+    return this.endTiming(`async_${operationName}`
   }
   private sendMetric(name: string, value: number): void {
     if (process.env.NODE_ENV === "production") {
@@ -58,12 +58,12 @@ import { logger } from '@/lib/logger';
   // Memory usage monitoring
   checkMemoryUsage(): void {
     if (typeof window !== "undefined" && "memory" in performance) {
-      const memory = (performance as any).memory;
-      const used = memory.usedJSHeapSize / 1024 / 1024; // MB
-      const total = memory.totalJSHeapSize / 1024 / 1024; // MB
+      let memory = (performance as any).memory;
+      let used = memory.usedJSHeapSize / 1024 / 1024; // MB
+      let total = memory.totalJSHeapSize / 1024 / 1024; // MB
       if (used > 100) {
         // Alert if using more than 100MB
-        console.warn(`High memory usage: ${used.toFixed(2)}MB / ${total.toFixed(2)}MB`);
+        // console.warn(`High memory usage: ${used.toFixed(2)}MB / ${total.toFixed(2)}MB`
       }
     }
   }

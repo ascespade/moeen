@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 // Async hooks
 
@@ -16,20 +16,20 @@ interface AsyncOptions {
 
 export const useAsync = <T>(
   asyncFunction: (...args: any[]) => Promise<T>,
-  options: AsyncOptions = {},
+  options: AsyncOptions = {}
 ) => {
-  const { immediate = false, onSuccess, onError } = options;
+  const immediate = false, onSuccess, onError = options;
 
   const [state, setState] = useState<AsyncState<T>>({
     data: null,
     loading: false,
-    error: null,
+    error: null
   });
 
   const isMountedRef = useRef(true);
 
   const execute = useCallback(
-    async (...args: any[]) => {
+    async(...args: any[]) => {
       setState((prev) => ({ ...prev, loading: true, error: null }));
 
       try {
@@ -43,7 +43,7 @@ export const useAsync = <T>(
         return data;
       } catch (error) {
         const errorObj =
-          error instanceof Error ? error : new Error("An error occurred");
+          error instanceof Error ? error : new Error('An error occurred');
 
         if (isMountedRef.current) {
           setState((prev) => ({ ...prev, loading: false, error: errorObj }));
@@ -53,7 +53,7 @@ export const useAsync = <T>(
         throw error;
       }
     },
-    [asyncFunction, onSuccess, onError],
+    [asyncFunction, onSuccess, onError]
   );
 
   useEffect(() => {
@@ -70,21 +70,21 @@ export const useAsync = <T>(
 
   return {
     ...state,
-    execute,
+    execute
   };
 };
 
 export const useAsyncEffect = <T>(
   asyncFunction: () => Promise<T>,
   deps: ReadonlyArray<unknown> = [],
-  options: AsyncOptions = {},
+  options: AsyncOptions = {}
 ) => {
-  const { onSuccess, onError } = options;
+  const onSuccess, onError = options;
 
   const [state, setState] = useState<AsyncState<T>>({
     data: null,
     loading: true,
-    error: null,
+    error: null
   });
 
   const isMountedRef = useRef(true);
@@ -92,7 +92,7 @@ export const useAsyncEffect = <T>(
   useEffect(() => {
     let isCancelled = false;
 
-    const runAsync = async () => {
+    const runAsync = async() => {
       try {
         const data = await asyncFunction();
 
@@ -102,7 +102,7 @@ export const useAsyncEffect = <T>(
         }
       } catch (error) {
         const errorObj =
-          error instanceof Error ? error : new Error("An error occurred");
+          error instanceof Error ? error : new Error('An error occurred');
 
         if (!isCancelled && isMountedRef.current) {
           setState((prev) => ({ ...prev, loading: false, error: errorObj }));

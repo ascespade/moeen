@@ -1,7 +1,7 @@
 
 /**
  * Components Central Export - التصدير المركزي للمكونات
- * 
+ *
  * SINGLE SOURCE OF TRUTH for all component imports
  * Following industry best practices for component libraries
  */
@@ -55,14 +55,14 @@
 
 /**
  * USAGE EXAMPLES:
- * 
+ *
  * // ✅ RECOMMENDED: Named imports from central location
  * import { Button, Card, LoadingSpinner, ErrorBoundary } from '@/components';
- * 
+ *
  * // ✅ ALTERNATIVE: Category-specific imports
  * import { Button, Card } from '@/components/ui';
  * import { ErrorBoundary } from '@/components/common';
- * 
+ *
  * // ❌ AVOID: Individual file imports
  * import Button from '@/components/ui/Button';
  * import ErrorBoundary from '@/components/common/ErrorBoundary';

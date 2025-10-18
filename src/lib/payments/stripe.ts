@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+let stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2023-10-16',
 }) : null;
   amount: number;
@@ -21,7 +21,7 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
       };
     }
     try {
-      const paymentIntent = await stripe.paymentIntents.create({
+      let paymentIntent = await stripe.paymentIntents.create({
         amount: Math.round(data.amount * 100), // Convert to cents
         currency: data.currency.toLowerCase(),
         metadata: {
@@ -53,7 +53,7 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
       };
     }
     try {
-      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+      let paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
       if (paymentIntent.status === 'succeeded') {
         return {
           success: true,
@@ -79,7 +79,7 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
       };
     }
     try {
-      const refund = await stripe.refunds.create({
+      let refund = await stripe.refunds.create({
         payment_intent: paymentIntentId,
         amount: amount ? Math.round(amount * 100) : undefined
       });
@@ -102,20 +102,20 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
       };
     }
     try {
-      const event = stripe.webhooks.constructEvent(
+      let event = stripe.webhooks.constructEvent(
         payload,
         signature,
         process.env.STRIPE_WEBHOOK_SECRET!
       );
       switch (event.type) {
         case 'payment_intent.succeeded':
-          const paymentIntent = event.data.object as Stripe.PaymentIntent;
+          let paymentIntent = event.data.object as Stripe.PaymentIntent;
           return {
             success: true,
             paymentIntentId: paymentIntent.id
           };
         case 'payment_intent.payment_failed':
-          const failedPayment = event.data.object as Stripe.PaymentIntent;
+          let failedPayment = event.data.object as Stripe.PaymentIntent;
           return {
             success: false,
             error: `Payment failed: ${failedPayment.last_payment_error?.message}`
@@ -138,4 +138,4 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
 export interface PaymentIntentData {
 export interface PaymentResult {
 export class StripePaymentService {
-export const stripeService = new StripePaymentService();
+export let stripeService = new StripePaymentService();

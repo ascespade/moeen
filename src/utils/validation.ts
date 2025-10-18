@@ -1,6 +1,6 @@
 
 // Validation utilities
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
   password: string,
@@ -26,13 +26,13 @@
     errors,
   };
 };
-  const phoneRegex = /^\+?[\d\s\-\(\)]{10,}$/;
+  let phoneRegex = /^+?[\d\s\-\(\)]{10,}$/;
   return phoneRegex.test(phone);
 };
   try {
     new URL(url);
     return true;
-  } catch {
+  } catch (error) { // Handle error
     return false;
   }
 };
@@ -71,7 +71,7 @@
   const errors: Record<keyof T, string> = {} as Record<keyof T, string>;
   let isValid = true;
   for (const [field, rule] of Object.entries(rules)) {
-    const result = rule(data[field as keyof T]);
+    let result = rule(data[field as keyof T]);
     if (!result.isValid) {
       errors[field as keyof T] = result.error || "Invalid value";
       isValid = false;
@@ -80,17 +80,17 @@
   return { isValid, errors };
 };
 // Exports
-export const isValidEmail = (email: string): boolean => {
-export const isValidPassword = (
-export const isValidPhoneNumber = (phone: string): boolean => {
-export const isValidUrl = (url: string): boolean => {
-export const isValidUuid = (uuid: string): boolean => {
-export const isNotEmpty = (value: any): boolean => {
-export const isNumeric = (value: any): boolean => {
-export const isInteger = (value: any): boolean => {
-export const isPositive = (value: number): boolean => {
-export const isInRange = (value: number, min: number, max: number): boolean => {
-export const hasMinLength = (value: string, minLength: number): boolean => {
-export const hasMaxLength = (value: string, maxLength: number): boolean => {
-export const matchesPattern = (value: string, pattern: RegExp): boolean => {
-export const validateForm = <T extends Record<string, any>>(
+export let isValidEmail = (email: string): boolean => {
+export let isValidPassword = (
+export let isValidPhoneNumber = (phone: string): boolean => {
+export let isValidUrl = (url: string): boolean => {
+export let isValidUuid = (uuid: string): boolean => {
+export let isNotEmpty = (value: any): boolean => {
+export let isNumeric = (value: any): boolean => {
+export let isInteger = (value: any): boolean => {
+export let isPositive = (value: number): boolean => {
+export let isInRange = (value: number, min: number, max: number): boolean => {
+export let hasMinLength = (value: string, minLength: number): boolean => {
+export let hasMaxLength = (value: string, maxLength: number): boolean => {
+export let matchesPattern = (value: string, pattern: RegExp): boolean => {
+export let validateForm = <T extends Record<string, any>>(

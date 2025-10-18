@@ -6,7 +6,7 @@ export default defineConfig({
   test: {
     // البيئة
     environment: 'jsdom',
-    
+
     // المجلدات
     include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     exclude: [
@@ -16,7 +16,7 @@ export default defineConfig({
       '**/.{idea,git,cache,output,temp}/**',
       '**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*'
     ],
-    
+
     // إعدادات الاختبار
     globals: true,
     passWithNoTests: true,
@@ -24,7 +24,7 @@ export default defineConfig({
     timeout: 10000,
     hookTimeout: 10000,
     teardownTimeout: 10000,
-    
+
     // التغطية
     coverage: {
       provider: 'c8',
@@ -55,7 +55,7 @@ export default defineConfig({
       clean: true,
       cleanOnRerun: true
     },
-    
+
     // إعدادات الأداء
     pool: 'threads',
     poolOptions: {
@@ -65,36 +65,36 @@ export default defineConfig({
         maxThreads: 4
       }
     },
-    
+
     // إعدادات المراقبة
     watch: false,
     watchExclude: ['**/node_modules/**', '**/dist/**'],
-    
+
     // إعدادات التقارير
     reporter: ['verbose', 'json', 'html'],
     outputFile: {
       json: './test-results/results.json',
       html: './test-results/index.html'
     },
-    
+
     // إعدادات الاختبار
     testTimeout: 10000,
     hookTimeout: 10000,
     teardownTimeout: 10000,
-    
+
     // إعدادات الاستيراد
     deps: {
       inline: ['@testing-library/jest-dom']
     },
-    
+
     // إعدادات البيئة
     env: {
       NODE_ENV: 'test'
     },
-    
+
     // إعدادات الملفات
     setupFiles: ['./config/test-setup.js'],
-    
+
     // إعدادات CSS
     css: {
       modules: {
@@ -102,7 +102,7 @@ export default defineConfig({
       }
     }
   },
-  
+
   // إعدادات Vite
   resolve: {
     alias: {
@@ -118,7 +118,7 @@ export default defineConfig({
       '@types': resolve(__dirname, './src/types')
     }
   },
-  
+
   // إعدادات البناء
   build: {
     outDir: 'dist',
@@ -131,14 +131,14 @@ export default defineConfig({
       fileName: 'smart-bootloader-system'
     }
   },
-  
+
   // إعدادات الخادم
   server: {
     port: 3000,
     open: false,
     cors: true
   },
-  
+
   // إعدادات المعاينة
   preview: {
     port: 4173,

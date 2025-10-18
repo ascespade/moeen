@@ -64,7 +64,7 @@ import { ROUTES } from "@/constants/routes";
       { label: "إنشاء حساب", href: ROUTES.REGISTER },
     ];
   }
-  const baseItems = [
+  let baseItems = [
     { label: "لوحة التحكم", href: ROUTES.USER.DASHBOARD },
     { label: "المواعيد", href: "/appointments" },
     { label: "المرضى", href: "/patients" },

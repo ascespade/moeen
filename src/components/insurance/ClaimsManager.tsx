@@ -1,3 +1,4 @@
+import React from "react";
 
 'use client';
 import { log } from '@/lib/monitoring/logger';
@@ -9,11 +10,11 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
-import { 
-  FileText, 
-  Upload, 
-  CheckCircle, 
-  AlertCircle, 
+import {
+  FileText,
+  Upload,
+  CheckCircle,
+  AlertCircle,
   Clock,
   Search,
   Plus,
@@ -37,7 +38,7 @@ interface ClaimsManagerProps {
 }
 
 export default function ClaimsManager({ patientId, onClaimUpdate }: ClaimsManagerProps) {
-  const { t } = useT();
+  const t = useT();
   const [claims, setClaims] = useState<Claim[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
@@ -54,19 +55,19 @@ export default function ClaimsManager({ patientId, onClaimUpdate }: ClaimsManage
     treatment: ''
   });
 
-  const fetchClaims = useCallback(async () => {
+  const fetchClaims = useCallback(async() => {
     try {
-      const url = patientId 
+      const url = patientId
         ? `/api/insurance/claims?patientId=${patientId}`
         : '/api/insurance/claims';
-      
+
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
         setClaims(data.claims || []);
       }
     } catch (error) {
-      console.error('Error fetching claims:', error);
+      // console.error('Error fetching claims:', error);
     } finally {
       setIsLoading(false);
     }
@@ -76,7 +77,7 @@ export default function ClaimsManager({ patientId, onClaimUpdate }: ClaimsManage
     fetchClaims();
   }, [fetchClaims]);
 
-  const handleCreateClaim = async (e: React.FormEvent) => {
+  const handleCreateClaim = async(e: React.FormEvent) => {
     e.preventDefault();
     setIsCreating(true);
 
@@ -107,15 +108,15 @@ export default function ClaimsManager({ patientId, onClaimUpdate }: ClaimsManage
         onClaimUpdate?.();
       }
     } catch (error) {
-      console.error('Error creating claim:', error);
+      // console.error('Error creating claim:', error);
     } finally {
       setIsCreating(false);
     }
   };
 
-  const handleSubmitClaim = async (claimId: string) => {
+  const handleSubmitClaim = async(claimId: string) => {
     try {
-      const response = await fetch(`/api/insurance/claims/${claimId}/submit`, {
+      const response = await fetch(`/api/insurance/claims/${claimId}/submit`
         method: 'PATCH'
       });
 
@@ -124,29 +125,29 @@ export default function ClaimsManager({ patientId, onClaimUpdate }: ClaimsManage
         onClaimUpdate?.();
       }
     } catch (error) {
-      console.error('Error submitting claim:', error);
+      // console.error('Error submitting claim:', error);
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'draft': return 'bg-surface text-gray-800';
-      case 'submitted': return 'bg-blue-100 text-blue-800';
-      case 'approved': return 'bg-green-100 text-green-800';
-      case 'rejected': return 'bg-red-100 text-red-800';
-      case 'under_review': return 'bg-yellow-100 text-yellow-800';
-      default: return 'bg-surface text-gray-800';
+    case 'draft': return 'bg-surface text-gray-800';
+    case 'submitted': return 'bg-blue-100 text-blue-800';
+    case 'approved': return 'bg-green-100 text-green-800';
+    case 'rejected': return 'bg-red-100 text-red-800';
+    case 'under_review': return 'bg-yellow-100 text-yellow-800';
+    default: return 'bg-surface text-gray-800';
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'draft': return <FileText className="h-4 w-4" />;
-      case 'submitted': return <Clock className="h-4 w-4" />;
-      case 'approved': return <CheckCircle className="h-4 w-4" />;
-      case 'rejected': return <AlertCircle className="h-4 w-4" />;
-      case 'under_review': return <Clock className="h-4 w-4" />;
-      default: return <FileText className="h-4 w-4" />;
+    case 'draft': return <FileText className="h-4 w-4" />;
+    case 'submitted': return <Clock className="h-4 w-4" />;
+    case 'approved': return <CheckCircle className="h-4 w-4" />;
+    case 'rejected': return <AlertCircle className="h-4 w-4" />;
+    case 'under_review': return <Clock className="h-4 w-4" />;
+    default: return <FileText className="h-4 w-4" />;
     }
   };
 
@@ -327,7 +328,7 @@ export default function ClaimsManager({ patientId, onClaimUpdate }: ClaimsManage
               </div>
               <div className="flex items-center space-x-3">
                 <Badge className={getStatusColor(claim.status)}>
-                  {t(`insurance.claims.status.${claim.status}`)}
+                  {t(`insurance.claims.status.${claim.status}`
                 </Badge>
                 {claim.status === 'draft' && (
                   <Button
@@ -340,7 +341,7 @@ export default function ClaimsManager({ patientId, onClaimUpdate }: ClaimsManage
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => window.open(`/insurance/claims/${claim.id}`, '_blank')}
+                  onClick={() => window.open(`/insurance/claims/${claim.id}`
                 >
                   <Eye className="h-4 w-4" />
                 </Button>

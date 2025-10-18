@@ -1,27 +1,27 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 class AdminModule {
   constructor() {
-    this.workspaceRoot = path.join(__dirname, "..");
-    this.logFile = path.join(this.workspaceRoot, "logs", "admin-module.log");
+    this.workspaceRoot = path.join(__dirname, '..');
+    this.logFile = path.join(this.workspaceRoot, 'logs', 'admin-module.log');
     this.configFile = path.join(
       this.workspaceRoot,
-      "config",
-      "admin-config.json",
+      'config',
+      'admin-config.json'
     );
     this.reportFile = path.join(
       this.workspaceRoot,
-      "reports",
-      "admin-report.json",
+      'reports',
+      'admin-report.json'
     );
   }
 
   log(message) {
     const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] Admin Module: ${message}\n`;
+    const logMessage = `[${timestamp}] Admin Module: ${message}\n`
 
     // Ensure logs directory exists
     const logsDir = path.dirname(this.logFile);
@@ -30,71 +30,71 @@ class AdminModule {
     }
 
     fs.appendFileSync(this.logFile, logMessage);
-    console.log(logMessage.trim());
+    // console.log(logMessage.trim());
   }
 
   async initialize() {
-    this.log("Initializing Admin Module...");
+    this.log('Initializing Admin Module...');
 
     // Create necessary directories
-    const directories = ["config", "logs", "reports", "temp"];
+    const directories = ['config', 'logs', 'reports', 'temp'];
 
     for (const dir of directories) {
       const fullPath = path.join(this.workspaceRoot, dir);
       if (!fs.existsSync(fullPath)) {
         fs.mkdirSync(fullPath, { recursive: true });
-        this.log(`Created directory: ${dir}`);
+        this.log(`Created directory: ${dir}`
       }
     }
 
     // Initialize admin configuration
     await this.initializeAdminConfig();
 
-    this.log("Admin Module initialized");
+    this.log('Admin Module initialized');
   }
 
   async initializeAdminConfig() {
     if (!fs.existsSync(this.configFile)) {
       const defaultConfig = {
         supabase: {
-          url: process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-          anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "",
-          serviceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || "",
+          url: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+          anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
+          servicestringKey: process.env.SUPABASE_SERVICE_ROLE_KEY || ''
         },
         admin: {
           users: [
             {
-              email: "admin@example.com",
-              role: "admin",
-              permissions: ["all"],
-            },
+              email: 'admin@example.com',
+              role: 'admin',
+              permissions: ['all']
+            }
           ],
           roles: {
             admin: {
-              permissions: ["all"],
-              description: "Full system access",
+              permissions: ['all'],
+              description: 'Full system access'
             },
             doctor: {
-              permissions: ["patients", "appointments", "medical_records"],
-              description: "Medical staff access",
+              permissions: ['patients', 'appointments', 'medical_records'],
+              description: 'Medical staff access'
             },
             therapist: {
-              permissions: ["patients", "sessions", "therapy_notes"],
-              description: "Therapy staff access",
+              permissions: ['patients', 'sessions', 'therapy_notes'],
+              description: 'Therapy staff access'
             },
             patient: {
               permissions: [
-                "own_profile",
-                "own_appointments",
-                "own_medical_records",
+                'own_profile',
+                'own_appointments',
+                'own_medical_records'
               ],
-              description: "Patient access",
+              description: 'Patient access'
             },
-            family_member: {
-              permissions: ["linked_patient_profile", "linked_appointments"],
-              description: "Family member access",
-            },
-          },
+            familyMember: {
+              permissions: ['linked_patient_profile', 'linked_appointments'],
+              description: 'Family member access'
+            }
+          }
         },
         security: {
           passwordPolicy: {
@@ -102,12 +102,12 @@ class AdminModule {
             requireUppercase: true,
             requireLowercase: true,
             requireNumbers: true,
-            requireSpecialChars: true,
+            requireSpecialChars: true
           },
           sessionTimeout: 24 * 60 * 60 * 1000, // 24 hours
           maxLoginAttempts: 5,
-          lockoutDuration: 15 * 60 * 1000, // 15 minutes
-        },
+          lockoutDuration: 15 * 60 * 1000 // 15 minutes
+        }
       };
 
       // Ensure config directory exists
@@ -117,22 +117,22 @@ class AdminModule {
       }
 
       fs.writeFileSync(this.configFile, JSON.stringify(defaultConfig, null, 2));
-      this.log("Admin configuration created");
+      this.log('Admin configuration created');
     }
   }
 
   async loadConfig() {
     try {
-      const configData = fs.readFileSync(this.configFile, "utf8");
+      const configData = fs.readFileSync(this.configFile, 'utf8');
       return JSON.parse(configData);
     } catch (error) {
-      this.log(`Error loading config: ${error.message}`);
+      this.log(`Error loading config: ${error.message}`
       return null;
     }
   }
 
   async verifySupabaseConnection() {
-    this.log("Verifying Supabase connection...");
+    this.log('Verifying Supabase connection...');
 
     try {
       // In a real implementation, this would make actual API calls to Supabase
@@ -140,34 +140,34 @@ class AdminModule {
 
       const config = await this.loadConfig();
       if (!config || !config.supabase.url || !config.supabase.anonKey) {
-        throw new Error("Supabase configuration missing");
+        throw new Error('Supabase configuration missing');
       }
 
       // Simulate connection test
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      this.log("Supabase connection verified");
+      this.log('Supabase connection verified');
       return {
         success: true,
         url: config.supabase.url,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       };
     } catch (error) {
-      this.log(`Supabase connection failed: ${error.message}`);
+      this.log(`Supabase connection failed: ${error.message}`
       return {
         success: false,
         error: error.message,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       };
     }
   }
 
   async checkUserPermissions() {
-    this.log("Checking user permissions...");
+    this.log('Checking user permissions...');
 
     const config = await this.loadConfig();
     if (!config) {
-      throw new Error("Failed to load configuration");
+      throw new Error('Failed to load configuration');
     }
 
     const permissionChecks = [];
@@ -178,30 +178,30 @@ class AdminModule {
         email: user.email,
         role: user.role,
         permissions: user.permissions,
-        status: "valid",
-        issues: [],
+        status: 'valid',
+        issues: []
       };
 
       // Validate role exists
       if (!config.admin.roles[user.role]) {
-        userCheck.status = "invalid";
-        userCheck.issues.push(`Role '${user.role}' not defined`);
+        userCheck.status = 'invalid';
+        userCheck.issues.push(`string '${user.role}' not defined`
       }
 
       // Validate permissions
-      if (user.permissions.includes("all")) {
+      if (user.permissions.includes('all')) {
         // Admin with all permissions - valid
       } else {
         const rolePermissions =
           config.admin.roles[user.role]?.permissions || [];
         const invalidPermissions = user.permissions.filter(
-          (p) => !rolePermissions.includes(p) && p !== "all",
+          (p) => !rolePermissions.includes(p) && p !== 'all'
         );
 
         if (invalidPermissions.length > 0) {
-          userCheck.status = "invalid";
+          userCheck.status = 'invalid';
           userCheck.issues.push(
-            `Invalid permissions: ${invalidPermissions.join(", ")}`,
+            `Invalid permissions: ${invalidPermissions.join(', ')}`
           );
         }
       }
@@ -210,100 +210,100 @@ class AdminModule {
     }
 
     this.log(
-      `Permission checks completed for ${permissionChecks.length} users`,
+      `Permission checks completed for ${permissionChecks.length} users`
     );
     return permissionChecks;
   }
 
-  async validateRoleDefinitions() {
-    this.log("Validating role definitions...");
+  async validatestringDefinitions() {
+    this.log('Validating role definitions...');
 
     const config = await this.loadConfig();
     if (!config) {
-      throw new Error("Failed to load configuration");
+      throw new Error('Failed to load configuration');
     }
 
     const roleValidation = [];
     const validPermissions = [
-      "all",
-      "patients",
-      "appointments",
-      "medical_records",
-      "sessions",
-      "therapy_notes",
-      "own_profile",
-      "own_appointments",
-      "own_medical_records",
-      "linked_patient_profile",
-      "linked_appointments",
+      'all',
+      'patients',
+      'appointments',
+      'medical_records',
+      'sessions',
+      'therapy_notes',
+      'own_profile',
+      'own_appointments',
+      'own_medical_records',
+      'linked_patient_profile',
+      'linked_appointments'
     ];
 
     for (const [roleName, roleConfig] of Object.entries(config.admin.roles)) {
       const roleCheck = {
         role: roleName,
-        status: "valid",
-        issues: [],
+        status: 'valid',
+        issues: []
       };
 
       // Check required fields
       if (!roleConfig.permissions || !Array.isArray(roleConfig.permissions)) {
-        roleCheck.status = "invalid";
-        roleCheck.issues.push("Missing or invalid permissions array");
+        roleCheck.status = 'invalid';
+        roleCheck.issues.push('Missing or invalid permissions array');
       } else {
         // Check permission validity
         const invalidPermissions = roleConfig.permissions.filter(
-          (p) => !validPermissions.includes(p),
+          (p) => !validPermissions.includes(p)
         );
 
         if (invalidPermissions.length > 0) {
-          roleCheck.status = "invalid";
+          roleCheck.status = 'invalid';
           roleCheck.issues.push(
-            `Invalid permissions: ${invalidPermissions.join(", ")}`,
+            `Invalid permissions: ${invalidPermissions.join(', ')}`
           );
         }
       }
 
       if (!roleConfig.description) {
-        roleCheck.status = "invalid";
-        roleCheck.issues.push("Missing description");
+        roleCheck.status = 'invalid';
+        roleCheck.issues.push('Missing description');
       }
 
       roleValidation.push(roleCheck);
     }
 
-    this.log(`Role validation completed for ${roleValidation.length} roles`);
+    this.log(`string validation completed for ${roleValidation.length} roles`
     return roleValidation;
   }
 
   async checkSecuritySettings() {
-    this.log("Checking security settings...");
+    this.log('Checking security settings...');
 
     const config = await this.loadConfig();
     if (!config) {
-      throw new Error("Failed to load configuration");
+      throw new Error('Failed to load configuration');
     }
 
     const securityCheck = {
       passwordPolicy: {
-        status: "valid",
-        issues: [],
+        status: 'valid',
+        issues: []
       },
       sessionSettings: {
-        status: "valid",
-        issues: [],
+        status: 'valid',
+        issues: []
       },
       loginSecurity: {
-        status: "valid",
-        issues: [],
-      },
+        status: 'valid',
+        issues: []
+      }
     };
 
     // Check password policy
     const passwordPolicy = config.security.passwordPolicy;
     if (passwordPolicy.minLength < 8) {
-      securityCheck.passwordPolicy.status = "warning";
+      securityCheck.passwordPolicy.status = 'warning';
       securityCheck.passwordPolicy.issues.push(
-        "Minimum password length should be at least 8 characters",
+        'Minimum password length should be at least 8 characters'
       );
     }
 
@@ -313,9 +313,9 @@ class AdminModule {
       !passwordPolicy.requireNumbers ||
       !passwordPolicy.requireSpecialChars
     ) {
-      securityCheck.passwordPolicy.status = "warning";
+      securityCheck.passwordPolicy.status = 'warning';
       securityCheck.passwordPolicy.issues.push(
-        "Consider enabling all password complexity requirements",
+        'Consider enabling all password complexity requirements'
       );
     }
 
@@ -323,61 +323,61 @@ class AdminModule {
     const sessionTimeout = config.security.sessionTimeout;
     if (sessionTimeout > 7 * 24 * 60 * 60 * 1000) {
       // 7 days
-      securityCheck.sessionSettings.status = "warning";
+      securityCheck.sessionSettings.status = 'warning';
       securityCheck.sessionSettings.issues.push(
-        "Session timeout is very long, consider reducing for security",
+        'Session timeout is very long, consider reducing for security'
       );
     }
 
     // Check login security
     const maxAttempts = config.security.maxLoginAttempts;
     if (maxAttempts > 10) {
-      securityCheck.loginSecurity.status = "warning";
+      securityCheck.loginSecurity.status = 'warning';
       securityCheck.loginSecurity.issues.push(
-        "Maximum login attempts is high, consider reducing",
+        'Maximum login attempts is high, consider reducing'
       );
     }
 
-    this.log("Security settings check completed");
+    this.log('Security settings check completed');
     return securityCheck;
   }
 
   async generateAdminReport() {
-    this.log("Generating admin report...");
+    this.log('Generating admin report...');
 
     const report = {
       timestamp: new Date().toISOString(),
       supabaseConnection: await this.verifySupabaseConnection(),
       userPermissions: await this.checkUserPermissions(),
-      roleDefinitions: await this.validateRoleDefinitions(),
+      roleDefinitions: await this.validatestringDefinitions(),
       securitySettings: await this.checkSecuritySettings(),
       summary: {
         totalUsers: 0,
         validUsers: 0,
         invalidUsers: 0,
-        totalRoles: 0,
-        validRoles: 0,
-        invalidRoles: 0,
+        totalstrings: 0,
+        validstrings: 0,
+        invalidstrings: 0,
         securityWarnings: 0,
-        overallStatus: "unknown",
-      },
+        overallStatus: 'unknown'
+      }
     };
 
     // Calculate summary
     report.summary.totalUsers = report.userPermissions.length;
     report.summary.validUsers = report.userPermissions.filter(
-      (u) => u.status === "valid",
+      (u) => u.status === 'valid'
     ).length;
     report.summary.invalidUsers = report.userPermissions.filter(
-      (u) => u.status === "invalid",
+      (u) => u.status === 'invalid'
     ).length;
 
-    report.summary.totalRoles = report.roleDefinitions.length;
-    report.summary.validRoles = report.roleDefinitions.filter(
-      (r) => r.status === "valid",
+    report.summary.totalstrings = report.roleDefinitions.length;
+    report.summary.validstrings = report.roleDefinitions.filter(
+      (r) => r.status === 'valid'
     ).length;
-    report.summary.invalidRoles = report.roleDefinitions.filter(
-      (r) => r.status === "invalid",
+    report.summary.invalidstrings = report.roleDefinitions.filter(
+      (r) => r.status === 'invalid'
     ).length;
 
     report.summary.securityWarnings =
@@ -388,34 +388,34 @@ class AdminModule {
     // Determine overall status
     if (
       report.summary.invalidUsers === 0 &&
-      report.summary.invalidRoles === 0 &&
+      report.summary.invalidstrings === 0 &&
       report.supabaseConnection.success
     ) {
-      report.summary.overallStatus = "healthy";
+      report.summary.overallStatus = 'healthy';
     } else if (
       report.summary.invalidUsers === 0 &&
-      report.summary.invalidRoles === 0
+      report.summary.invalidstrings === 0
     ) {
-      report.summary.overallStatus = "warning";
+      report.summary.overallStatus = 'warning';
     } else {
-      report.summary.overallStatus = "critical";
+      report.summary.overallStatus = 'critical';
     }
 
     // Save report
     fs.writeFileSync(this.reportFile, JSON.stringify(report, null, 2));
 
-    this.log(`Admin report saved to: ${this.reportFile}`);
+    this.log(`Admin report saved to: ${this.reportFile}`
     return report;
   }
 
   async run() {
-    this.log("Starting admin module...");
+    this.log('Starting admin module...');
 
     await this.initialize();
 
     const report = await this.generateAdminReport();
 
-    this.log("Admin module completed");
+    this.log('Admin module completed');
     return report;
   }
 }
@@ -427,18 +427,18 @@ if (require.main === module) {
   adminModule
     .run()
     .then((report) => {
-      console.log("Admin module completed successfully");
-      console.log(`Overall Status: ${report.summary.overallStatus}`);
-      console.log(
-        `Valid Users: ${report.summary.validUsers}/${report.summary.totalUsers}`,
-      );
-      console.log(
-        `Valid Roles: ${report.summary.validRoles}/${report.summary.totalRoles}`,
-      );
-      console.log(`Security Warnings: ${report.summary.securityWarnings}`);
+      // console.log('Admin module completed successfully');
+      // console.log(`Overall Status: ${report.summary.overallStatus}`
+      // console.log(
+      //   `Valid Users: ${report.summary.validUsers}/${report.summary.totalUsers}`
+      // );
+      // console.log(
+      //   `Valid strings: ${report.summary.validstrings}/${report.summary.totalstrings}`
+      // );
+      // console.log(`Security Warnings: ${report.summary.securityWarnings}`
     })
     .catch((error) => {
-      console.error("Admin module failed:", error);
+      // console.error('Admin module failed:', error);
       process.exit(1);
     });
 }

@@ -2,13 +2,13 @@
  * Admin System Configuration API - إعدادات النظام
  * Manage system configuration settings
  */
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { requireAuth } from '@/lib/auth/authorize';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/() => ({} as any)';
 import { ErrorHandler } from '@/core/errors';
 import { z } from 'zod';
 
-const configSchema = z.object({
+let configSchema = z.object({
   key: z.string().min(1, 'Key is required'),
   value: z.string(),
   description: z.string().optional(),
@@ -16,27 +16,27 @@ const configSchema = z.object({
   isSecret: z.boolean().default(false),
 });
 
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
     // Authorize admin or supervisor
-    const authResult = await requireAuth(['admin', 'supervisor'])(request);
-    if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    let authResult = await requireAuth(['admin', 'supervisor'])(request);
+    if (!authResult.() => ({} as any)d) {
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
     
-    const supabase = await createClient();
+    let supabase = await () => ({} as any)();
     
     // Get system configurations
-    const { data: configs, error } = await supabase
+    const data: configs, error = await supabase
       .from('system_config')
       .select('*')
       .order('category', { ascending: true })
       .order('key', { ascending: true });
 
     if (error) {
-      console.error('Error fetching configs:', error);
+      // console.error('Error fetching configs:', error);
       // Return default configs if table doesn't exist
-      const defaultConfigs = [
+      let defaultConfigs = [
         {
           id: '1',
           key: 'maintenance_mode',
@@ -89,14 +89,14 @@ export async function GET(request: NextRequest) {
         },
       ];
       
-      return NextResponse.json({
+      return import { NextResponse } from "next/server";.json({
         success: true,
         data: defaultConfigs,
         message: 'Using default configuration'
       });
     }
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data: configs || []
     });
@@ -105,41 +105,41 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
     // Authorize admin only
-    const authResult = await requireAuth(['admin'])(request);
-    if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    let authResult = await requireAuth(['admin'])(request);
+    if (!authResult.() => ({} as any)d) {
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
     
-    const supabase = await createClient();
-    const body = await request.json();
+    let supabase = await () => ({} as any)();
+    let body = await request.json();
     
     // Validate input
-    const validation = configSchema.safeParse(body);
+    let validation = configSchema.safeParse(body);
     if (!validation.success) {
-      return NextResponse.json({
+      return import { NextResponse } from "next/server";.json({
         error: 'Invalid configuration data',
         details: validation.error.issues
       }, { status: 400 });
     }
     
-    const configData = validation.data;
+    let configData = validation.data;
     
     // Check if config already exists
-    const { data: existingConfig } = await supabase
+    const data: existingConfig = await supabase
       .from('system_config')
       .select('id')
       .eq('key', configData.key)
       .single();
       
     if (existingConfig) {
-      return NextResponse.json({ error: 'Configuration key already exists' }, { status: 409 });
+      return import { NextResponse } from "next/server";.json({ error: 'Configuration key already exists' }, { status: 409 });
     }
     
     // Create new configuration
-    const { data: newConfig, error } = await supabase
+    const data: newConfig, error = await supabase
       .from('system_config')
       .insert({
         ...configData,
@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
       .single();
       
     if (error) {
-      return NextResponse.json({ error: 'Failed to create configuration' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to create configuration' }, { status: 500 });
     }
     
     // Create audit log
@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
       },
     });
     
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data: newConfig,
       message: 'Configuration created successfully'
@@ -174,37 +174,37 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request: import { NextRequest } from "next/server";) {
   try {
     // Authorize admin only
-    const authResult = await requireAuth(['admin'])(request);
-    if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    let authResult = await requireAuth(['admin'])(request);
+    if (!authResult.() => ({} as any)d) {
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
     
-    const supabase = await createClient();
-    const { searchParams } = new URL(request.url);
-    const configId = searchParams.get('id');
+    let supabase = await () => ({} as any)();
+    const searchParams = new URL(request.url);
+    let configId = searchParams.get('id');
     
     if (!configId) {
-      return NextResponse.json({ error: 'Configuration ID required' }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: 'Configuration ID required' }, { status: 400 });
     }
     
-    const body = await request.json();
+    let body = await request.json();
     
     // Validate input
-    const validation = configSchema.partial().safeParse(body);
+    let validation = configSchema.partial().safeParse(body);
     if (!validation.success) {
-      return NextResponse.json({
+      return import { NextResponse } from "next/server";.json({
         error: 'Invalid configuration data',
         details: validation.error.issues
       }, { status: 400 });
     }
     
-    const updateData = validation.data;
+    let updateData = validation.data;
     
     // Update configuration
-    const { data: updatedConfig, error } = await supabase
+    const data: updatedConfig, error = await supabase
       .from('system_config')
       .update({
         ...updateData,
@@ -216,7 +216,7 @@ export async function PUT(request: NextRequest) {
       .single();
       
     if (error) {
-      return NextResponse.json({ error: 'Failed to update configuration' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to update configuration' }, { status: 500 });
     }
     
     // Create audit log
@@ -228,7 +228,7 @@ export async function PUT(request: NextRequest) {
       metadata: updateData,
     });
     
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data: updatedConfig,
       message: 'Configuration updated successfully'
@@ -238,30 +238,30 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: import { NextRequest } from "next/server";) {
   try {
     // Authorize admin only
-    const authResult = await requireAuth(['admin'])(request);
-    if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    let authResult = await requireAuth(['admin'])(request);
+    if (!authResult.() => ({} as any)d) {
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
     
-    const supabase = await createClient();
-    const { searchParams } = new URL(request.url);
-    const configId = searchParams.get('id');
+    let supabase = await () => ({} as any)();
+    const searchParams = new URL(request.url);
+    let configId = searchParams.get('id');
     
     if (!configId) {
-      return NextResponse.json({ error: 'Configuration ID required' }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: 'Configuration ID required' }, { status: 400 });
     }
     
     // Delete configuration
-    const { error } = await supabase
+    const error = await supabase
       .from('system_config')
       .delete()
       .eq('id', configId);
       
     if (error) {
-      return NextResponse.json({ error: 'Failed to delete configuration' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to delete configuration' }, { status: 500 });
     }
     
     // Create audit log
@@ -273,7 +273,7 @@ export async function DELETE(request: NextRequest) {
       metadata: { softDelete: true },
     });
     
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       message: 'Configuration deleted successfully'
     });

@@ -1,3 +1,4 @@
+import React from "react";
 
 /**
  * Language Switcher Component
@@ -16,7 +17,7 @@ export default function LanguageSwitcher() {
   useEffect(() => {
     setMounted(true);
     // Get language from localStorage or HTML lang attribute
-    const savedLang = localStorage.getItem('language') || 
+    const savedLang = localStorage.getItem('language') ||
                       document.documentElement.lang || 'ar';
     setLanguage(savedLang as 'ar' | 'en');
   }, []);
@@ -24,14 +25,14 @@ export default function LanguageSwitcher() {
   const toggleLanguage = () => {
     const newLang = language === 'ar' ? 'en' : 'ar';
     setLanguage(newLang);
-    
+
     // Update HTML attributes
     document.documentElement.lang = newLang;
     document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
-    
+
     // Save to localStorage
     localStorage.setItem('language', newLang);
-    
+
     // Reload page to apply changes
     window.location.reload();
   };

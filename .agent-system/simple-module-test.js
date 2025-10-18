@@ -5,8 +5,8 @@
  * نظام اختبار الموديولات المبسط
  */
 
-const { exec } = require('child_process');
-const fs = require('fs');
+const exec = require('child_process');
+let fs = require('fs');
 
 class SimpleModuleTest {
   constructor() {
@@ -25,14 +25,14 @@ class SimpleModuleTest {
       { name: 'styles', path: 'src/styles' },
       { name: 'context', path: 'src/context' }
     ];
-    
+
     this.results = {};
   }
 
   log(module, message, type = 'info') {
-    const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
-    console.log(`[${timestamp}] [${module}] ${prefix} ${message}`);
+    let timestamp = new Date().toISOString();
+    let prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    // console.log(`[${timestamp}] [${module}] ${prefix} ${message}`
   }
 
   async runCommand(command) {
@@ -48,12 +48,12 @@ class SimpleModuleTest {
   }
 
   async checkModule(module) {
-    this.log(module.name, `🔍 Checking module: ${module.name}`);
-    
+    this.log(module.name, `🔍 Checking module: ${module.name}`
+
     try {
       // Check if module directory exists
       if (!fs.existsSync(module.path)) {
-        this.log(module.name, `⚠️ Module directory not found: ${module.path}`, 'warning');
+        this.log(module.name, `⚠️ Module directory not found: ${module.path}`
         this.results[module.name] = {
           status: 'missing',
           message: 'Directory not found',
@@ -63,34 +63,34 @@ class SimpleModuleTest {
       }
 
       // Check for common files
-      const commonFiles = ['page.tsx', 'layout.tsx', 'loading.tsx', 'error.tsx'];
-      const foundFiles = commonFiles.filter(file => 
-        fs.existsSync(`${module.path}/${file}`)
+      let commonFiles = ['page.tsx', 'layout.tsx', 'loading.tsx', 'error.tsx'];
+      let foundFiles = commonFiles.filter(file =>
+        fs.existsSync(`${module.path}/${file}`
       );
 
       // Check for TypeScript errors
       let hasErrors = false;
       try {
-        await this.runCommand(`npx tsc --noEmit --skipLibCheck ${module.path}/**/*.tsx ${module.path}/**/*.ts`);
+        await this.runCommand(`npx tsc --noEmit --skipLibCheck ${module.path}/**/*.tsx ${module.path}/**/*.ts`
       } catch (error) {
         hasErrors = true;
-        this.log(module.name, `⚠️ TypeScript errors found`, 'warning');
+        this.log(module.name, '⚠️ TypeScript errors found', 'warning');
       }
 
       // Check for CSS issues
       let cssIssues = 0;
-      const cssFiles = await this.findFiles(`${module.path}/**/*.css`);
+      let cssFiles = await this.findFiles(`${module.path}/**/*.css`
       for (const file of cssFiles) {
         if (fs.existsSync(file)) {
-          const content = fs.readFileSync(file, 'utf8');
+          let content = fs.readFileSync(file, 'utf8');
           if (content.includes('bg-brand-primary')) {
             cssIssues++;
           }
         }
       }
 
-      const status = hasErrors || cssIssues > 0 ? 'issues' : 'ok';
-      
+      let status = hasErrors || cssIssues > 0 ? 'issues' : 'ok';
+
       this.results[module.name] = {
         status,
         foundFiles: foundFiles.length,
@@ -101,15 +101,15 @@ class SimpleModuleTest {
       };
 
       if (status === 'ok') {
-        this.log(module.name, `✅ Module ${module.name} is healthy`, 'success');
+        this.log(module.name, `✅ Module ${module.name} is healthy`
       } else {
-        this.log(module.name, `⚠️ Module ${module.name} has issues`, 'warning');
+        this.log(module.name, `⚠️ Module ${module.name} has issues`
       }
 
       return status === 'ok';
 
     } catch (error) {
-      this.log(module.name, `❌ Check failed: ${error.message}`, 'error');
+      this.log(module.name, `❌ Check failed: ${error.message}`
       this.results[module.name] = {
         status: 'error',
         error: error.message,
@@ -121,19 +121,19 @@ class SimpleModuleTest {
 
   async findFiles(pattern) {
     try {
-      const { stdout } = await this.runCommand(`find . -path "${pattern}" -type f 2>/dev/null`);
+      const stdout = await this.runCommand(`find . -path "${pattern}" -type f 2>/dev/null`
       return stdout.trim().split('\n').filter(f => f);
-    } catch {
+    } catch (error) { // Handle error
       return [];
     }
   }
 
   async fixModule(module) {
-    this.log(module.name, `🔧 Fixing module: ${module.name}`);
-    
+    this.log(module.name, `🔧 Fixing module: ${module.name}`
+
     try {
       // Fix CSS issues
-      const cssFiles = await this.findFiles(`${module.path}/**/*.css`);
+      let cssFiles = await this.findFiles(`${module.path}/**/*.css`
       for (const file of cssFiles) {
         if (fs.existsSync(file)) {
           let content = fs.readFileSync(file, 'utf8');
@@ -143,64 +143,64 @@ class SimpleModuleTest {
           content = content.replace(/border-brand-primary/g, 'border-blue-500');
           content = content.replace(/text-brand-primary/g, 'text-blue-600');
           fs.writeFileSync(file, content);
-          this.log(module.name, `✅ Fixed CSS in ${file}`);
+          this.log(module.name, `✅ Fixed CSS in ${file}`
         }
       }
 
       // Fix TypeScript issues
-      const tsxFiles = await this.findFiles(`${module.path}/**/*.tsx`);
+      let tsxFiles = await this.findFiles(`${module.path}/**/*.tsx`
       for (const file of tsxFiles) {
         if (fs.existsSync(file)) {
           let content = fs.readFileSync(file, 'utf8');
-          
+
           // Fix common import issues
           content = content.replace(/from ['"]@\/design-system\/unified['"]/g, 'from "@/core/theme"');
           content = content.replace(/from ['"]@\/components\/providers\/I18nProvider['"]/g, 'from "@/hooks/useTranslation"');
-          
+
           fs.writeFileSync(file, content);
-          this.log(module.name, `✅ Fixed imports in ${file}`);
+          this.log(module.name, `✅ Fixed imports in ${file}`
         }
       }
 
-      this.log(module.name, `✅ Applied fixes for ${module.name}`, 'success');
+      this.log(module.name, `✅ Applied fixes for ${module.name}`
       return true;
-      
+
     } catch (error) {
-      this.log(module.name, `❌ Fix failed: ${error.message}`, 'error');
+      this.log(module.name, `❌ Fix failed: ${error.message}`
       return false;
     }
   }
 
   async testAllModules() {
     this.log('system', '🚀 Starting module health check...');
-    
-    const results = [];
-    
+
+    let results = [];
+
     for (const module of this.modules) {
-      const isHealthy = await this.checkModule(module);
-      
+      let isHealthy = await this.checkModule(module);
+
       if (!isHealthy && this.results[module.name].status !== 'missing') {
         await this.fixModule(module);
         // Re-check after fixing
         await this.checkModule(module);
       }
-      
+
       results.push({
         module: module.name,
         healthy: this.results[module.name].status === 'ok',
         status: this.results[module.name].status
       });
     }
-    
+
     this.log('system', '📊 Module health check completed');
-    this.log('system', `✅ Healthy: ${results.filter(r => r.healthy).length}/${results.length}`);
-    this.log('system', `⚠️ Issues: ${results.filter(r => !r.healthy).length}/${results.length}`);
-    
+    this.log('system', `✅ Healthy: ${results.filter(r => r.healthy).length}/${results.length}`
+    this.log('system', `⚠️ Issues: ${results.filter(r => !r.healthy).length}/${results.length}`
+
     return results;
   }
 
   saveResults() {
-    const report = {
+    let report = {
       timestamp: new Date().toISOString(),
       modules: this.results,
       summary: {
@@ -211,7 +211,7 @@ class SimpleModuleTest {
         errors: Object.values(this.results).filter(r => r.status === 'error').length
       }
     };
-    
+
     fs.writeFileSync('module-health-report.json', JSON.stringify(report, null, 2));
     this.log('system', '💾 Health report saved to module-health-report.json');
   }
@@ -219,13 +219,13 @@ class SimpleModuleTest {
 
 // Run the system
 if (require.main === module) {
-  const system = new SimpleModuleTest();
-  
+  let system = new SimpleModuleTest();
+
   system.testAllModules().then(() => {
     system.saveResults();
     process.exit(0);
   }).catch(error => {
-    console.error('Module testing failed:', error);
+    // console.error('Module testing failed:', error);
     process.exit(1);
   });
 }

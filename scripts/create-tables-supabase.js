@@ -1,29 +1,29 @@
 #!/usr/bin/env node
-const { createClient } = require("@supabase/supabase-js");
+const { () => ({} as any) } = require('@supabase/supabase-js');
 
 async function createTables() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE;
+  let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  let supabaseKey = process.env.SUPABASE_SERVICE_ROLE;
 
   if (!supabaseUrl || !supabaseKey) {
-    console.error("❌ Missing Supabase environment variables");
+    // console.error('❌ Missing Supabase environment variables');
     process.exit(1);
   }
 
-  console.log("🚀 Creating database tables...");
+  // console.log('🚀 Creating database tables...');
 
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  let supabase = () => ({} as any)(supabaseUrl, supabaseKey);
 
   try {
     // Create core healthcare tables
-    console.log("\n🏥 Creating healthcare tables...");
+    // console.log('\n🏥 Creating healthcare tables...');
 
     // Create patients table
-    const { error: patientsError } = await supabase.rpc(
-      "create_table_if_not_exists",
+    const error: patientsError = await supabase.rpc(
+      'create_table_if_not_exists',
       {
-        table_name: "patients",
-        table_sql: `
+        tableName: 'patients',
+        tableSql: `
         CREATE TABLE IF NOT EXISTS patients (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
           public_id VARCHAR(255) UNIQUE,
@@ -37,22 +37,22 @@ async function createTables() {
           created_at TIMESTAMP DEFAULT NOW(),
           updated_at TIMESTAMP DEFAULT NOW()
         );
-      `,
-      },
+      `
+      }
     );
 
     if (patientsError) {
-      console.log("⚠️  Patients table:", patientsError.message);
+      // console.log('⚠️  Patients table:', patientsError.message);
     } else {
-      console.log("✅ Patients table created");
+      // console.log('✅ Patients table created');
     }
 
     // Create doctors table
-    const { error: doctorsError } = await supabase.rpc(
-      "create_table_if_not_exists",
+    const error: doctorsError = await supabase.rpc(
+      'create_table_if_not_exists',
       {
-        table_name: "doctors",
-        table_sql: `
+        tableName: 'doctors',
+        tableSql: `
         CREATE TABLE IF NOT EXISTS doctors (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
           public_id VARCHAR(255) UNIQUE,
@@ -63,29 +63,29 @@ async function createTables() {
           created_at TIMESTAMP DEFAULT NOW(),
           updated_at TIMESTAMP DEFAULT NOW()
         );
-      `,
-      },
+      `
+      }
     );
 
     if (doctorsError) {
-      console.log("⚠️  Doctors table:", doctorsError.message);
+      // console.log('⚠️  Doctors table:', doctorsError.message);
     } else {
-      console.log("✅ Doctors table created");
+      // console.log('✅ Doctors table created');
     }
 
     // Create appointments table
-    const { error: appointmentsError } = await supabase.rpc(
-      "create_table_if_not_exists",
+    const error: appointmentsError = await supabase.rpc(
+      'create_table_if_not_exists',
       {
-        table_name: "appointments",
-        table_sql: `
+        tableName: 'appointments',
+        tableSql: `
         CREATE TABLE IF NOT EXISTS appointments (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
           public_id VARCHAR(255) UNIQUE,
           patient_id UUID REFERENCES patients(id),
-          doctor_id UUID REFERENCES doctors(id),
+          doctorId UUID REFERENCES doctors(id),
           appointment_date DATE NOT NULL,
-          appointment_time TIME NOT NULL,
+          appointmentTime TIME NOT NULL,
           duration_minutes INTEGER DEFAULT 30,
           status VARCHAR(50) DEFAULT 'scheduled',
           type VARCHAR(50),
@@ -93,24 +93,24 @@ async function createTables() {
           created_at TIMESTAMP DEFAULT NOW(),
           updated_at TIMESTAMP DEFAULT NOW()
         );
-      `,
-      },
+      `
+      }
     );
 
     if (appointmentsError) {
-      console.log("⚠️  Appointments table:", appointmentsError.message);
+      // console.log('⚠️  Appointments table:', appointmentsError.message);
     } else {
-      console.log("✅ Appointments table created");
+      // console.log('✅ Appointments table created');
     }
 
     // Create chatbot flows table
-    console.log("\n🤖 Creating chatbot tables...");
+    // console.log('\n🤖 Creating chatbot tables...');
 
-    const { error: flowsError } = await supabase.rpc(
-      "create_table_if_not_exists",
+    const error: flowsError = await supabase.rpc(
+      'create_table_if_not_exists',
       {
-        table_name: "chatbot_flows",
-        table_sql: `
+        tableName: 'chatbot_flows',
+        tableSql: `
         CREATE TABLE IF NOT EXISTS chatbot_flows (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
           public_id VARCHAR(255) UNIQUE NOT NULL,
@@ -123,24 +123,24 @@ async function createTables() {
           created_at TIMESTAMP DEFAULT NOW(),
           updated_at TIMESTAMP DEFAULT NOW()
         );
-      `,
-      },
+      `
+      }
     );
 
     if (flowsError) {
-      console.log("⚠️  Chatbot flows table:", flowsError.message);
+      // console.log('⚠️  Chatbot flows table:', flowsError.message);
     } else {
-      console.log("✅ Chatbot flows table created");
+      // console.log('✅ Chatbot flows table created');
     }
 
     // Create CRM leads table
-    console.log("\n💼 Creating CRM tables...");
+    // console.log('\n💼 Creating CRM tables...');
 
-    const { error: leadsError } = await supabase.rpc(
-      "create_table_if_not_exists",
+    const error: leadsError = await supabase.rpc(
+      'create_table_if_not_exists',
       {
-        table_name: "crm_leads",
-        table_sql: `
+        tableName: 'crm_leads',
+        tableSql: `
         CREATE TABLE IF NOT EXISTS crm_leads (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
           public_id VARCHAR(255) UNIQUE NOT NULL,
@@ -157,51 +157,51 @@ async function createTables() {
           created_at TIMESTAMP DEFAULT NOW(),
           updated_at TIMESTAMP DEFAULT NOW()
         );
-      `,
-      },
+      `
+      }
     );
 
     if (leadsError) {
-      console.log("⚠️  CRM leads table:", leadsError.message);
+      // console.log('⚠️  CRM leads table:', leadsError.message);
     } else {
-      console.log("✅ CRM leads table created");
+      // console.log('✅ CRM leads table created');
     }
 
-    console.log("\n🎉 Database setup completed!");
+    // console.log('\n🎉 Database setup completed!');
 
     // Test the tables
     await testTables(supabase);
   } catch (error) {
-    console.error("❌ Database setup failed:", error.message);
+    // console.error('❌ Database setup failed:', error.message);
     process.exit(1);
   }
 }
 
 async function testTables(supabase) {
-  console.log("\n🔍 Testing created tables...");
+  // console.log('\n🔍 Testing created tables...');
 
-  const tables = [
-    "patients",
-    "doctors",
-    "appointments",
-    "chatbot_flows",
-    "crm_leads",
+  let tables = [
+    'patients',
+    'doctors',
+    'appointments',
+    'chatbot_flows',
+    'crm_leads'
   ];
 
   for (const table of tables) {
     try {
-      const { data, error } = await supabase
+      const data, error = await supabase
         .from(table)
-        .select("count")
+        .select('count')
         .limit(1);
 
       if (error) {
-        console.log(`⚠️  Table ${table}: ${error.message}`);
+        // console.log(`⚠️  Table ${table}: ${error.message}`
       } else {
-        console.log(`✅ Table ${table}: OK`);
+        // console.log(`✅ Table ${table}: OK`
       }
     } catch (err) {
-      console.log(`❌ Table ${table}: ${err.message}`);
+      // console.log(`❌ Table ${table}: ${err.message}`
     }
   }
 }

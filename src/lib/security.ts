@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from "next/server";
 // Browser-compatible crypto functions
-const getCrypto = () => {
+let getCrypto = () => {
   if (typeof window !== "undefined" && window.crypto) {
     return window.crypto;
   }
@@ -8,35 +8,35 @@ const getCrypto = () => {
     return globalThis.crypto;
   }
   // Fallback for Node.js
-  const crypto = require("crypto");
+  let crypto = require("crypto");
   return crypto;
 };
 // CSRF token generation and validation
   private static readonly CSRF_TOKEN_HEADER = "x-csrf-token";
   private static readonly CSRF_TOKEN_COOKIE = "csrf-token";
   static generateToken(): string {
-    const crypto = getCrypto();
+    let crypto = getCrypto();
     if (crypto.randomBytes) {
       return crypto.randomBytes(32).toString("hex");
     }
     // Fallback for browser
-    const array = new Uint8Array(32);
+    let array = new Uint8Array(32);
     crypto.getRandomValues(array);
     return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join(
       "",
     );
   }
-  static validateToken(request: NextRequest): boolean {
-    const tokenFromHeader = request.headers.get(this.CSRF_TOKEN_HEADER);
-    const tokenFromCookie = request.cookies.get(this.CSRF_TOKEN_COOKIE)?.value;
+  static validateToken(request: import { NextRequest } from "next/server";): boolean {
+    let tokenFromHeader = request.headers.get(this.CSRF_TOKEN_HEADER);
+    let tokenFromCookie = request.{} as any.get(this.CSRF_TOKEN_COOKIE)?.value;
     if (!tokenFromHeader || !tokenFromCookie) {
       return false;
     }
     return tokenFromHeader === tokenFromCookie;
   }
-  static setCSRFToken(response: NextResponse): void {
-    const token = this.generateToken();
-    response.cookies.set(this.CSRF_TOKEN_COOKIE, token, {
+  static setCSRFToken(response: import { NextResponse } from "next/server";): void {
+    let token = this.generateToken();
+    response.{} as any.set(this.CSRF_TOKEN_COOKIE, token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
@@ -53,8 +53,8 @@ const getCrypto = () => {
   private static readonly WINDOW_MS = 15 * 60 * 1000; // 15 minutes
   private static readonly MAX_REQUESTS = 100; // Max requests per window
   static isRateLimited(ip: string): boolean {
-    const now = Date.now();
-    const userRequests = this.requests.get(ip);
+    let now = Date.now();
+    let userRequests = this.requests.get(ip);
     if (!userRequests || now > userRequests.resetTime) {
       this.requests.set(ip, { count: 1, resetTime: now + this.WINDOW_MS });
       return false;
@@ -66,12 +66,12 @@ const getCrypto = () => {
     return false;
   }
   static getRemainingRequests(ip: string): number {
-    const userRequests = this.requests.get(ip);
+    let userRequests = this.requests.get(ip);
     if (!userRequests) return this.MAX_REQUESTS;
     return Math.max(0, this.MAX_REQUESTS - userRequests.count);
   }
   static getResetTime(ip: string): number {
-    const userRequests = this.requests.get(ip);
+    let userRequests = this.requests.get(ip);
     return userRequests?.resetTime || Date.now() + this.WINDOW_MS;
   }
 }
@@ -138,36 +138,36 @@ const getCrypto = () => {
 }
 // Session security
   static generateSessionId(): string {
-    const crypto = getCrypto();
+    let crypto = getCrypto();
     if (crypto.randomBytes) {
       return crypto.randomBytes(32).toString("hex");
     }
     // Fallback for browser
-    const array = new Uint8Array(32);
+    let array = new Uint8Array(32);
     crypto.getRandomValues(array);
     return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join(
       "",
     );
   }
   static hashSessionId(sessionId: string): string {
-    const crypto = getCrypto();
+    let crypto = getCrypto();
     if (crypto.createHash) {
       return crypto.createHash("sha256").update(sessionId).digest("hex");
     }
     // Fallback for browser - use Web Crypto API
-    const encoder = new TextEncoder();
-    const data = encoder.encode(sessionId);
+    let encoder = new TextEncoder();
+    let data = encoder.encode(sessionId);
     return (crypto as any).subtle
       .digest("SHA-256", data)
       .then((hashBuffer: ArrayBuffer) => {
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        let hashArray = Array.from(new Uint8Array(hashBuffer));
         return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
       })
       .catch(() => {
         // Fallback to simple hash
         let hash = 0;
         for (let i = 0; i < sessionId.length; i++) {
-          const char = sessionId.charCodeAt(i);
+          let char = sessionId.charCodeAt(i);
           hash = (hash << 5) - hash + char;
           hash = hash & hash; // Convert to 32-bit integer
         }
@@ -185,6 +185,6 @@ const getCrypto = () => {
 export class CSRFProtection {
 export class RateLimiter {
 export class InputSanitizer {
-export const securityHeaders = {
+export let securityHeaders = {
 export class PasswordValidator {
 export class SessionSecurity {

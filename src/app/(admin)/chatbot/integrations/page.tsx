@@ -1,14 +1,15 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
-import Image from "next/image";
+'use client';
+import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
+import Image from 'next/image';
 
 interface Integration {
   id: string;
   name: string;
-  type: "whatsapp" | "web" | "telegram" | "facebook";
-  status: "connected" | "disconnected" | "error";
+  type: 'whatsapp' | 'web' | 'telegram' | 'facebook';
+  status: 'connected' | 'disconnected' | 'error';
   description: string;
   webhookUrl?: string;
   lastSync?: string;
@@ -19,80 +20,80 @@ interface Integration {
 
 const mockIntegrations: Integration[] = [
   {
-    id: "1",
-    name: "واتساب بزنس",
-    type: "whatsapp",
-    status: "connected",
-    description: "تكامل مع واتساب بزنس لإرسال واستقبال الرسائل",
-    webhookUrl: "https://api.moeen.com/webhook/whatsapp",
-    lastSync: "2024-01-15 14:30",
+    id: '1',
+    name: 'واتساب بزنس',
+    type: 'whatsapp',
+    status: 'connected',
+    description: 'تكامل مع واتساب بزنس لإرسال واستقبال الرسائل',
+    webhookUrl: 'https://api.moeen.com/webhook/whatsapp',
+    lastSync: '2024-01-15 14:30',
     messageCount: 1247,
-    icon: "📱",
-    color: "text-brand-success",
+    icon: '📱',
+    color: 'text-brand-success'
   },
   {
-    id: "2",
-    name: "الموقع الإلكتروني",
-    type: "web",
-    status: "connected",
-    description: "شات بوت مدمج في الموقع الإلكتروني",
-    webhookUrl: "https://api.moeen.com/webhook/web",
-    lastSync: "2024-01-15 14:25",
+    id: '2',
+    name: 'الموقع الإلكتروني',
+    type: 'web',
+    status: 'connected',
+    description: 'شات بوت مدمج في الموقع الإلكتروني',
+    webhookUrl: 'https://api.moeen.com/webhook/web',
+    lastSync: '2024-01-15 14:25',
     messageCount: 892,
-    icon: "🌐",
-    color: "text-brand-primary",
+    icon: '🌐',
+    color: 'text-brand-primary'
   },
   {
-    id: "3",
-    name: "تيليجرام",
-    type: "telegram",
-    status: "disconnected",
-    description: "تكامل مع تيليجرام للرسائل",
+    id: '3',
+    name: 'تيليجرام',
+    type: 'telegram',
+    status: 'disconnected',
+    description: 'تكامل مع تيليجرام للرسائل',
     messageCount: 0,
-    icon: "✈️",
-    color: "text-brand-primary",
+    icon: '✈️',
+    color: 'text-brand-primary'
   },
   {
-    id: "4",
-    name: "فيسبوك ماسنجر",
-    type: "facebook",
-    status: "error",
-    description: "تكامل مع فيسبوك ماسنجر",
-    webhookUrl: "https://api.moeen.com/webhook/facebook",
-    lastSync: "2024-01-14 09:15",
+    id: '4',
+    name: 'فيسبوك ماسنجر',
+    type: 'facebook',
+    status: 'error',
+    description: 'تكامل مع فيسبوك ماسنجر',
+    webhookUrl: 'https://api.moeen.com/webhook/facebook',
+    lastSync: '2024-01-14 09:15',
     messageCount: 156,
-    icon: "💬",
-    color: "text-blue-700",
-  },
+    icon: '💬',
+    color: 'text-blue-700'
+  }
 ];
 
 export default function ChatbotIntegrationsPage() {
   const [showConnectModal, setShowConnectModal] = useState<string | null>(null);
   const [webhookTest, setWebhookTest] = useState<Record<string, boolean>>({});
 
-  const getStatusColor = (status: Integration["status"]) => {
+  const getStatusColor = (status: Integration['status']) => {
     switch (status) {
-      case "connected":
-        return "bg-green-100 text-green-800";
-      case "disconnected":
-        return "bg-surface text-gray-800";
-      case "error":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-surface text-gray-800";
+    case 'connected':
+      return 'bg-green-100 text-green-800';
+    case 'disconnected':
+      return 'bg-surface text-gray-800';
+    case 'error':
+      return 'bg-red-100 text-red-800';
+    default:
+      return 'bg-surface text-gray-800';
     }
   };
 
-  const getStatusText = (status: Integration["status"]) => {
+  const getStatusText = (status: Integration['status']) => {
     switch (status) {
-      case "connected":
-        return "متصل";
-      case "disconnected":
-        return "غير متصل";
-      case "error":
-        return "خطأ";
-      default:
-        return "غير محدد";
+    case 'connected':
+      return 'متصل';
+    case 'disconnected':
+      return 'غير متصل';
+    case 'error':
+      return 'خطأ';
+    default:
+      return 'غير محدد';
     }
   };
 
@@ -102,7 +103,7 @@ export default function ChatbotIntegrationsPage() {
 
   const handleDisconnect = (integrationId: string) => {
     // Simulate disconnect
-    };
+  };
 
   const handleTestWebhook = (integrationId: string) => {
     setWebhookTest((prev) => ({ ...prev, [integrationId]: true }));
@@ -157,13 +158,13 @@ export default function ChatbotIntegrationsPage() {
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-success">
-              {mockIntegrations.filter((i) => i.status === "connected").length}
+              {mockIntegrations.filter((i) => i.status === 'connected').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">متصلة</div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-error">
-              {mockIntegrations.filter((i) => i.status === "error").length}
+              {mockIntegrations.filter((i) => i.status === 'error').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">خطأ</div>
           </div>
@@ -171,7 +172,7 @@ export default function ChatbotIntegrationsPage() {
             <div className="mb-2 text-3xl font-bold text-purple-600">
               {mockIntegrations.reduce(
                 (sum, integration) => sum + integration.messageCount,
-                0,
+                0
               )}
             </div>
             <div className="text-gray-600 dark:text-gray-300">
@@ -189,7 +190,7 @@ export default function ChatbotIntegrationsPage() {
             >
               <div className="mb-4 flex items-center gap-4">
                 <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-lg text-2xl ${integration.color}`}
+                  className={`flex h-12 w-12 items-center justify-center rounded-lg text-2xl ${integration.color}`
                 >
                   {integration.icon}
                 </div>
@@ -202,7 +203,7 @@ export default function ChatbotIntegrationsPage() {
                   </p>
                 </div>
                 <span
-                  className={`rounded-full px-3 py-1 text-sm ${getStatusColor(integration.status)}`}
+                  className={`rounded-full px-3 py-1 text-sm ${getStatusColor(integration.status)}`
                 >
                   {getStatusText(integration.status)}
                 </span>
@@ -225,14 +226,14 @@ export default function ChatbotIntegrationsPage() {
                   <div className="flex justify-between">
                     <span>Webhook:</span>
                     <span className="rounded bg-surface px-2 py-1 font-mono text-xs dark:bg-gray-800">
-                      {integration.webhookUrl.split("/").pop()}
+                      {integration.webhookUrl.split('/').pop()}
                     </span>
                   </div>
                 )}
               </div>
 
               <div className="flex gap-2">
-                {integration.status === "connected" ? (
+                {integration.status === 'connected' ? (
                   <>
                     <button
                       onClick={() => handleTestWebhook(integration.id)}
@@ -240,8 +241,8 @@ export default function ChatbotIntegrationsPage() {
                       disabled={webhookTest[integration.id]}
                     >
                       {webhookTest[integration.id]
-                        ? "جاري الاختبار..."
-                        : "اختبار Webhook"}
+                        ? 'جاري الاختبار...'
+                        : 'اختبار Webhook'}
                     </button>
                     <button
                       onClick={() => handleDisconnect(integration.id)}
@@ -255,7 +256,7 @@ export default function ChatbotIntegrationsPage() {
                     onClick={() => handleConnect(integration.id)}
                     className="btn-brand flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
                   >
-                    {integration.status === "error" ? "إعادة الاتصال" : "اتصال"}
+                    {integration.status === 'error' ? 'إعادة الاتصال' : 'اتصال'}
                   </button>
                 )}
               </div>
@@ -271,25 +272,25 @@ export default function ChatbotIntegrationsPage() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             {[
               {
-                name: "واتساب بزنس",
-                icon: "📱",
-                description: "رسائل واتساب التجارية",
+                name: 'واتساب بزنس',
+                icon: '📱',
+                description: 'رسائل واتساب التجارية'
               },
-              { name: "تيليجرام", icon: "✈️", description: "بوت تيليجرام" },
+              { name: 'تيليجرام', icon: '✈️', description: 'بوت تيليجرام' },
               {
-                name: "فيسبوك ماسنجر",
-                icon: "💬",
-                description: "فيسبوك ماسنجر",
+                name: 'فيسبوك ماسنجر',
+                icon: '💬',
+                description: 'فيسبوك ماسنجر'
               },
-              { name: "إنستغرام", icon: "📷", description: "رسائل إنستغرام" },
+              { name: 'إنستغرام', icon: '📷', description: 'رسائل إنستغرام' },
               {
-                name: "تويتر",
-                icon: "🐦",
-                description: "رسائل تويتر المباشرة",
+                name: 'تويتر',
+                icon: '🐦',
+                description: 'رسائل تويتر المباشرة'
               },
-              { name: "لينكد إن", icon: "💼", description: "لينكد إن ماسنجر" },
-              { name: "سلاك", icon: "💬", description: "سلاك ووركسبيس" },
-              { name: "ديسكورد", icon: "🎮", description: "ديسكورد بوت" },
+              { name: 'لينكد إن', icon: '💼', description: 'لينكد إن ماسنجر' },
+              { name: 'سلاك', icon: '💬', description: 'سلاك ووركسبيس' },
+              { name: 'ديسكورد', icon: '🎮', description: 'ديسكورد بوت' }
             ].map((integration, index) => (
               <div
                 key={index}

@@ -1,8 +1,9 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
 
-import Image from "next/image";
+import Image from 'next/image';
 
 interface AuditLog {
   id: string;
@@ -13,108 +14,108 @@ interface AuditLog {
   ipAddress: string;
   userAgent: string;
   timestamp: string;
-  status: "success" | "failed" | "warning";
+  status: 'success' | 'failed' | 'warning';
 }
 
 const mockAuditLogs: AuditLog[] = [
   {
-    id: "1",
-    user: "أحمد العتيبي",
-    action: "تسجيل دخول",
-    resource: "نظام المصادقة",
-    details: "تم تسجيل الدخول بنجاح",
-    ipAddress: "192.168.1.100",
-    userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-    timestamp: "2024-01-15 10:30:25",
-    status: "success",
+    id: '1',
+    user: 'أحمد العتيبي',
+    action: 'تسجيل دخول',
+    resource: 'نظام المصادقة',
+    details: 'تم تسجيل الدخول بنجاح',
+    ipAddress: '192.168.1.100',
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    timestamp: '2024-01-15 10:30:25',
+    status: 'success'
   },
   {
-    id: "2",
-    user: "سارة أحمد",
-    action: "إنشاء موعد",
-    resource: "نظام المواعيد",
-    details: "تم إنشاء موعد جديد للمريض محمد السعد",
-    ipAddress: "192.168.1.101",
+    id: '2',
+    user: 'سارة أحمد',
+    action: 'إنشاء موعد',
+    resource: 'نظام المواعيد',
+    details: 'تم إنشاء موعد جديد للمريض محمد السعد',
+    ipAddress: '192.168.1.101',
     userAgent:
-      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
-    timestamp: "2024-01-15 10:25:15",
-    status: "success",
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+    timestamp: '2024-01-15 10:25:15',
+    status: 'success'
   },
   {
-    id: "3",
-    user: "خالد القحطاني",
-    action: "تحديث بيانات المريض",
-    resource: "نظام المرضى",
-    details: "تم تحديث معلومات المريض فاطمة العتيبي",
-    ipAddress: "192.168.1.102",
+    id: '3',
+    user: 'خالد القحطاني',
+    action: 'تحديث بيانات المريض',
+    resource: 'نظام المرضى',
+    details: 'تم تحديث معلومات المريض فاطمة العتيبي',
+    ipAddress: '192.168.1.102',
     userAgent:
-      "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15",
-    timestamp: "2024-01-15 10:20:45",
-    status: "success",
+      'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15',
+    timestamp: '2024-01-15 10:20:45',
+    status: 'success'
   },
   {
-    id: "4",
-    user: "نورا محمد",
-    action: "محاولة تسجيل دخول",
-    resource: "نظام المصادقة",
-    details: "فشل في تسجيل الدخول - كلمة مرور خاطئة",
-    ipAddress: "192.168.1.103",
-    userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-    timestamp: "2024-01-15 10:15:30",
-    status: "failed",
+    id: '4',
+    user: 'نورا محمد',
+    action: 'محاولة تسجيل دخول',
+    resource: 'نظام المصادقة',
+    details: 'فشل في تسجيل الدخول - كلمة مرور خاطئة',
+    ipAddress: '192.168.1.103',
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    timestamp: '2024-01-15 10:15:30',
+    status: 'failed'
   },
   {
-    id: "5",
-    user: "محمد حسن",
-    action: "حذف رسالة",
-    resource: "نظام الرسائل",
-    details: "تم حذف رسالة واتساب للمريض أحمد محمد",
-    ipAddress: "192.168.1.104",
-    userAgent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
-    timestamp: "2024-01-15 10:10:20",
-    status: "success",
-  },
+    id: '5',
+    user: 'محمد حسن',
+    action: 'حذف رسالة',
+    resource: 'نظام الرسائل',
+    details: 'تم حذف رسالة واتساب للمريض أحمد محمد',
+    ipAddress: '192.168.1.104',
+    userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36',
+    timestamp: '2024-01-15 10:10:20',
+    status: 'success'
+  }
 ];
 
 export default function AuditLogsPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState<string>("all");
-  const [actionFilter, setActionFilter] = useState<string>("all");
-  const [dateRange, setDateRange] = useState<string>("today");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [actionFilter, setActionFilter] = useState<string>('all');
+  const [dateRange, setDateRange] = useState<string>('today');
 
-  const getStatusColor = (status: AuditLog["status"]) => {
+  const getStatusColor = (status: AuditLog['status']) => {
     switch (status) {
-      case "success":
-        return "bg-green-100 text-green-800";
-      case "failed":
-        return "bg-red-100 text-red-800";
-      case "warning":
-        return "bg-yellow-100 text-yellow-800";
-      default:
-        return "bg-surface text-gray-800";
+    case 'success':
+      return 'bg-green-100 text-green-800';
+    case 'failed':
+      return 'bg-red-100 text-red-800';
+    case 'warning':
+      return 'bg-yellow-100 text-yellow-800';
+    default:
+      return 'bg-surface text-gray-800';
     }
   };
 
-  const getStatusText = (status: AuditLog["status"]) => {
+  const getStatusText = (status: AuditLog['status']) => {
     switch (status) {
-      case "success":
-        return "نجح";
-      case "failed":
-        return "فشل";
-      case "warning":
-        return "تحذير";
-      default:
-        return "غير محدد";
+    case 'success':
+      return 'نجح';
+    case 'failed':
+      return 'فشل';
+    case 'warning':
+      return 'تحذير';
+    default:
+      return 'غير محدد';
     }
   };
 
   const getActionIcon = (action: string) => {
-    if (action.includes("تسجيل دخول")) return "🔐";
-    if (action.includes("إنشاء")) return "➕";
-    if (action.includes("تحديث")) return "✏️";
-    if (action.includes("حذف")) return "🗑️";
-    if (action.includes("عرض")) return "👁️";
-    return "📋";
+    if (action.includes('تسجيل دخول')) return '🔐';
+    if (action.includes('إنشاء')) return '➕';
+    if (action.includes('تحديث')) return '✏️';
+    if (action.includes('حذف')) return '🗑️';
+    if (action.includes('عرض')) return '👁️';
+    return '📋';
   };
 
   const filteredLogs = mockAuditLogs.filter((log) => {
@@ -123,14 +124,14 @@ export default function AuditLogsPage() {
       log.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
       log.resource.toLowerCase().includes(searchTerm.toLowerCase()) ||
       log.details.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === "all" || log.status === statusFilter;
+    const matchesStatus = statusFilter === 'all' || log.status === statusFilter;
     const matchesAction =
-      actionFilter === "all" || log.action.includes(actionFilter);
+      actionFilter === 'all' || log.action.includes(actionFilter);
     return matchesSearch && matchesStatus && matchesAction;
   });
 
   const allActions = Array.from(
-    new Set(mockAuditLogs.map((log) => log.action.split(" ")[0])),
+    new Set(mockAuditLogs.map((log) => log.action.split(' ')[0]))
   );
 
   return (
@@ -167,19 +168,19 @@ export default function AuditLogsPage() {
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-success">
-              {mockAuditLogs.filter((l) => l.status === "success").length}
+              {mockAuditLogs.filter((l) => l.status === 'success').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">نجح</div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-error">
-              {mockAuditLogs.filter((l) => l.status === "failed").length}
+              {mockAuditLogs.filter((l) => l.status === 'failed').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">فشل</div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-yellow-600">
-              {mockAuditLogs.filter((l) => l.status === "warning").length}
+              {mockAuditLogs.filter((l) => l.status === 'warning').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">تحذير</div>
           </div>
@@ -305,7 +306,7 @@ export default function AuditLogsPage() {
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
                       <span
-                        className={`rounded-full px-2 py-1 text-xs ${getStatusColor(log.status)}`}
+                        className={`rounded-full px-2 py-1 text-xs ${getStatusColor(log.status)}`
                       >
                         {getStatusText(log.status)}
                       </span>

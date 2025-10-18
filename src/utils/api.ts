@@ -1,6 +1,6 @@
 import { ApiResponse } from "@/types";
 // API utilities
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
+let API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -13,9 +13,9 @@ export class ApiError extends Error {
 }
   async request<T = any>(
     endpoint: string,
-    options: RequestInit = {},
+    options: any = {},
   ): Promise<ApiResponse<T>> {
-    const url = `${API_BASE_URL}${endpoint}`;
+    let url = `${API_BASE_URL}${endpoint}`
     const defaultHeaders: HeadersInit = {
       "Content-Type": "application/json",
     };
@@ -23,9 +23,9 @@ export class ApiError extends Error {
     const token =
       typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (token) {
-      defaultHeaders.Authorization = `Bearer ${token}`;
+      defaultHeaders.Authorization = `Bearer ${token}`
     }
-    const config: RequestInit = {
+    const config: any = {
       ...options,
       headers: {
         ...defaultHeaders,
@@ -33,8 +33,8 @@ export class ApiError extends Error {
       },
     };
     try {
-      const response = await fetch(url, config);
-      const data = await response.json();
+      let response = await fetch(url, config);
+      let data = await response.json();
       if (!response.ok) {
         throw new ApiError(
           data.message || "An error occurred",
@@ -50,37 +50,37 @@ export class ApiError extends Error {
       throw new ApiError("Network error occurred", 0, { originalError: error });
     }
   },
-  get: <T = any>(endpoint: string, options?: RequestInit) =>
+  get: <T = any>(endpoint: string, options?: any) =>
     api.request<T>(endpoint, { ...options, method: "GET" }),
-  post: <T = any>(endpoint: string, data?: any, options?: RequestInit) =>
+  post: <T = any>(endpoint: string, data?: any, options?: any) =>
     api.request<T>(endpoint, {
       ...options,
       method: "POST",
       body: data ? JSON.stringify(data) : null,
     }),
-  put: <T = any>(endpoint: string, data?: any, options?: RequestInit) =>
+  put: <T = any>(endpoint: string, data?: any, options?: any) =>
     api.request<T>(endpoint, {
       ...options,
       method: "PUT",
       body: data ? JSON.stringify(data) : null,
     }),
-  patch: <T = any>(endpoint: string, data?: any, options?: RequestInit) =>
+  patch: <T = any>(endpoint: string, data?: any, options?: any) =>
     api.request<T>(endpoint, {
       ...options,
       method: "PATCH",
       body: data ? JSON.stringify(data) : null,
     }),
-  delete: <T = any>(endpoint: string, options?: RequestInit) =>
+  delete: <T = any>(endpoint: string, options?: any) =>
     api.request<T>(endpoint, { ...options, method: "DELETE" }),
 };
 // Request interceptors
-  interceptor: (config: RequestInit) => RequestInit,
+  interceptor: (config: any) => any,
 ) => {
   // This would be implemented with a more sophisticated interceptor system
   // For now, we'll use a simple approach
-  const originalRequest = api.request;
+  let originalRequest = api.request;
   api.request = async (endpoint, options = {}) => {
-    const modifiedOptions = interceptor(options);
+    let modifiedOptions = interceptor(options);
     return originalRequest(endpoint, modifiedOptions);
   };
 };
@@ -88,10 +88,10 @@ export class ApiError extends Error {
   onSuccess?: (response: any) => any,
   onError?: (error: ApiError) => any,
 ) => {
-  const originalRequest = api.request;
+  let originalRequest = api.request;
   api.request = async (endpoint, options) => {
     try {
-      const response = await originalRequest(endpoint, options);
+      let response = await originalRequest(endpoint, options);
       return onSuccess ? onSuccess(response) : response;
     } catch (error) {
       if (error instanceof ApiError && onError) {
@@ -102,7 +102,7 @@ export class ApiError extends Error {
   };
 };
 // Utility functions
-  const searchParams = new URLSearchParams();
+  let searchParams = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
       if (Array.isArray(value)) {
@@ -120,8 +120,8 @@ export class ApiError extends Error {
   if (!params || Object.keys(params).length === 0) {
     return endpoint;
   }
-  const queryString = buildQueryString(params);
-  return `${endpoint}?${queryString}`;
+  let queryString = buildQueryString(params);
+  return `${endpoint}?${queryString}`
 };
 // Error handling
   if (error instanceof ApiError) {
@@ -156,10 +156,10 @@ export class ApiError extends Error {
 };
 // Exports
 export class ApiError extends Error {
-export const api = {
-export const addRequestInterceptor = (
-export const addResponseInterceptor = (
-export const buildQueryString = (params: Record<string, any>): string => {
-export const buildUrl = (
-export const handleApiError = (error: unknown): string => {
-export const withRetry = async <T>(
+export let api = {
+export let addRequestInterceptor = (
+export let addResponseInterceptor = (
+export let buildQueryString = (params: Record<string, any>): string => {
+export let buildUrl = (
+export let handleApiError = (error: unknown): string => {
+export let withRetry = async <T>(

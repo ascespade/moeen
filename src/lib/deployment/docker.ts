@@ -10,7 +10,7 @@ import { logger } from '../monitoring/logger';
 
 class DockerConfigGenerator {
   static generateDockerfile(): string {
-    return `# Multi-stage build for production
+    return `
 FROM node:18-alpine AS base
 
 # Install dependencies only when needed
@@ -57,11 +57,11 @@ EXPOSE 3000
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
-CMD ["node", "server.js"]`;
+CMD ["node", "server.js"]`
   }
 
   static generateDockerCompose(): string {
-    return `version: '3.8'
+    return `
 
 services:
   app:
@@ -114,11 +114,11 @@ services:
 
 volumes:
   postgres_data:
-  redis_data:`;
+  redis_data:`
   }
 
   static generateNginxConfig(): string {
-    return `events {
+    return `
     worker_connections 1024;
 }
 
@@ -192,11 +192,11 @@ http {
             proxy_pass http://app;
         }
     }
-}`;
+}`
   }
 
   static generateDockerIgnore(): string {
-    return `# Dependencies
+    return `
 node_modules
 npm-debug.log*
 yarn-debug.log*
@@ -284,11 +284,11 @@ jspm_packages/
 .dynamodb/
 
 # TernJS port file
-.tern-port`;
+.tern-port`
   }
 
   static generateEnvironmentTemplate(): string {
-    return `# Database
+    return `
 DATABASE_URL=postgresql://username:password@localhost:5432/healthcare_db
 POSTGRES_DB=healthcare_db
 POSTGRES_USER=username
@@ -341,12 +341,12 @@ TRUSTED_PROXIES=127.0.0.1
 
 # Monitoring
 SENTRY_DSN=your-sentry-dsn
-NEW_RELIC_LICENSE_KEY=your-new-relic-license-key`;
+NEW_RELIC_LICENSE_KEY=your-new-relic-license-key`
   }
 
   static generateDeploymentScripts(): void {
     const scripts = {
-      'deploy.sh': `#!/bin/bash
+      'deploy.sh': `
 set -e
 
 echo "🚀 Starting deployment..."
@@ -379,9 +379,9 @@ docker-compose exec app npm run migrate
 echo "🏥 Running health check..."
 curl -f http://localhost:3000/api/test/health || exit 1
 
-echo "✅ Deployment completed successfully!"`,
+echo "✅ Deployment completed successfully!"`
 
-      'rollback.sh': `#!/bin/bash
+      'rollback.sh': `
 set -e
 
 echo "🔄 Starting rollback..."
@@ -394,9 +394,9 @@ docker-compose down
 echo "🔄 Starting previous version..."
 # This would restore from backup or previous image
 
-echo "✅ Rollback completed!"`,
+echo "✅ Rollback completed!"`
 
-      'backup.sh': `#!/bin/bash
+      'backup.sh': `
 set -e
 
 echo "💾 Starting backup..."
@@ -433,22 +433,22 @@ echo "✅ Backup completed: $BACKUP_DIR"`
     try {
       // Generate Dockerfile
       writeFileSync(join(process.cwd(), 'Dockerfile'), this.generateDockerfile());
-      
+
       // Generate docker-compose.yml
       writeFileSync(join(process.cwd(), 'docker-compose.yml'), this.generateDockerCompose());
-      
+
       // Generate nginx.conf
       writeFileSync(join(process.cwd(), 'nginx.conf'), this.generateNginxConfig());
-      
+
       // Generate .dockerignore
       writeFileSync(join(process.cwd(), '.dockerignore'), this.generateDockerIgnore());
-      
+
       // Generate .env.template
       writeFileSync(join(process.cwd(), '.env.template'), this.generateEnvironmentTemplate());
-      
+
       // Generate deployment scripts
       this.generateDeploymentScripts();
-      
+
       logger.info('All Docker configuration files generated successfully');
     } catch (error) {
       logger.error('Failed to generate Docker configuration', {}, error as Error);

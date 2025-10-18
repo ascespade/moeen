@@ -1,21 +1,21 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@supabase/supabase-js';
 import { logger } from '@/lib/logger';
 
-const supabase = createClient(
+let supabase = () => ({} as any)(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 // POST /api/webhook/whatsapp - استقبال رسائل WhatsApp
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
-    const body = await request.json();
+    let body = await request.json();
     
     // التحقق من صحة الطلب
-    const verifyToken = request.headers.get('x-verify-token');
+    let verifyToken = request.headers.get('x-verify-token');
     if (verifyToken !== process.env.WHATSAPP_VERIFY_TOKEN) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
     
     // معالجة رسائل WhatsApp
@@ -31,26 +31,26 @@ export async function POST(request: NextRequest) {
       }
     }
     
-    return NextResponse.json({ status: 'success' });
+    return import { NextResponse } from "next/server";.json({ status: 'success' });
   } catch (error) {
     logger.error('WhatsApp webhook error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return import { NextResponse } from "next/server";.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
 // معالجة رسالة WhatsApp
 async function processWhatsAppMessage(message: any, value: any) {
   try {
-    const { from, text, type, timestamp } = message;
+    const from, text, type, timestamp = message;
     
     // حفظ الرسالة في قاعدة البيانات
-    const { error } = await supabase
+    const error = await supabase
       .from('whatsapp_messages')
       .insert({
         from_number: from,
         message_text: text?.body || '',
         message_type: type,
-        timestamp: new Date(parseInt(timestamp) * 1000).toISOString(),
+        timestamp: new Date(parseInt(timestamp, 10) * 1000).toISOString(),
         raw_data: message,
       });
       
@@ -77,7 +77,7 @@ async function processWhatsAppMessage(message: any, value: any) {
 async function handleTextMessage(from: string, text: string) {
   try {
     // البحث عن محادثة موجودة
-    const { data: conversation } = await supabase
+    const data: conversation = await supabase
       .from('whatsapp_conversations')
       .select('*')
       .eq('phone_number', from)
@@ -120,7 +120,7 @@ async function handleTextMessage(from: string, text: string) {
 // معالجة رسائل الأزرار
 async function handleButtonMessage(from: string, button: any) {
   try {
-    const { text, payload } = button;
+    const text, payload = button;
     
     // حفظ تفاعل الزر
     await supabase
@@ -150,7 +150,7 @@ async function handleButtonMessage(from: string, button: any) {
 // معالجة الرسائل التفاعلية
 async function handleInteractiveMessage(from: string, interactive: any) {
   try {
-    const { type, list_reply, button_reply } = interactive;
+    const type, list_reply, button_reply = interactive;
     
     if (type === 'list_reply' && list_reply) {
       await handleListReply(from, list_reply);
@@ -196,47 +196,47 @@ async function handleCommand(from: string, command: string) {
 // إرسال رسالة ترحيب
 async function sendWelcomeMessage(from: string) {
   // Implementation for sending welcome message
-  logger.info(`Sending welcome message to ${from}`);
+  logger.info(`Sending welcome message to ${from}`
 }
 
 // إرسال رسالة مساعدة
 async function sendHelpMessage(from: string) {
   // Implementation for sending help message
-  logger.info(`Sending help message to ${from}`);
+  logger.info(`Sending help message to ${from}`
 }
 
 // معالجة حجز موعد
 async function handleBookAppointment(from: string) {
   // Implementation for booking appointment
-  logger.info(`Handling appointment booking for ${from}`);
+  logger.info(`Handling appointment booking for ${from}`
 }
 
 // معالجة عرض الخدمات
 async function handleViewServices(from: string) {
   // Implementation for viewing services
-  logger.info(`Handling view services for ${from}`);
+  logger.info(`Handling view services for ${from}`
 }
 
 // معالجة التواصل مع الدعم
 async function handleContactSupport(from: string) {
   // Implementation for contact support
-  logger.info(`Handling contact support for ${from}`);
+  logger.info(`Handling contact support for ${from}`
 }
 
 // إرسال رسالة أمر غير معروف
 async function sendUnknownCommandMessage(from: string) {
   // Implementation for unknown command message
-  logger.info(`Sending unknown command message to ${from}`);
+  logger.info(`Sending unknown command message to ${from}`
 }
 
 // معالجة رد القائمة
 async function handleListReply(from: string, listReply: any) {
   // Implementation for list reply
-  logger.info(`Handling list reply for ${from}:`, listReply);
+  logger.info(`Handling list reply for ${from}:`
 }
 
 // معالجة رد الزر
 async function handleButtonReply(from: string, buttonReply: any) {
   // Implementation for button reply
-  logger.info(`Handling button reply for ${from}:`, buttonReply);
+  logger.info(`Handling button reply for ${from}:`
 }

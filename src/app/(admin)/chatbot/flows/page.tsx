@@ -1,15 +1,16 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
-import Image from "next/image";
-import Link from "next/link";
+'use client';
+import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface Flow {
   id: string;
   name: string;
   description: string;
-  status: "draft" | "published" | "archived";
+  status: 'draft' | 'published' | 'archived';
   createdAt: string;
   updatedAt: string;
   tags: string[];
@@ -19,78 +20,78 @@ interface Flow {
 
 const mockFlows: Flow[] = [
   {
-    id: "1",
-    name: "استقبال المرضى",
-    description: "تدفق ترحيب واستقبال المرضى الجدد",
-    status: "published",
-    createdAt: "2024-01-10",
-    updatedAt: "2024-01-15",
-    tags: ["ترحيب", "استقبال"],
+    id: '1',
+    name: 'استقبال المرضى',
+    description: 'تدفق ترحيب واستقبال المرضى الجدد',
+    status: 'published',
+    createdAt: '2024-01-10',
+    updatedAt: '2024-01-15',
+    tags: ['ترحيب', 'استقبال'],
     messageCount: 12,
-    lastUsed: "2024-01-15",
+    lastUsed: '2024-01-15'
   },
   {
-    id: "2",
-    name: "حجز المواعيد",
-    description: "مساعدة المرضى في حجز المواعيد",
-    status: "published",
-    createdAt: "2024-01-08",
-    updatedAt: "2024-01-12",
-    tags: ["مواعيد", "حجز"],
+    id: '2',
+    name: 'حجز المواعيد',
+    description: 'مساعدة المرضى في حجز المواعيد',
+    status: 'published',
+    createdAt: '2024-01-08',
+    updatedAt: '2024-01-12',
+    tags: ['مواعيد', 'حجز'],
     messageCount: 8,
-    lastUsed: "2024-01-14",
+    lastUsed: '2024-01-14'
   },
   {
-    id: "3",
-    name: "استفسارات عامة",
-    description: "الرد على الاستفسارات العامة حول الخدمات",
-    status: "draft",
-    createdAt: "2024-01-12",
-    updatedAt: "2024-01-13",
-    tags: ["استفسارات", "خدمات"],
-    messageCount: 5,
+    id: '3',
+    name: 'استفسارات عامة',
+    description: 'الرد على الاستفسارات العامة حول الخدمات',
+    status: 'draft',
+    createdAt: '2024-01-12',
+    updatedAt: '2024-01-13',
+    tags: ['استفسارات', 'خدمات'],
+    messageCount: 5
   },
   {
-    id: "4",
-    name: "تأكيد المواعيد",
-    description: "تأكيد المواعيد قبل 24 ساعة",
-    status: "archived",
-    createdAt: "2024-01-05",
-    updatedAt: "2024-01-10",
-    tags: ["تأكيد", "مواعيد"],
-    messageCount: 3,
-  },
+    id: '4',
+    name: 'تأكيد المواعيد',
+    description: 'تأكيد المواعيد قبل 24 ساعة',
+    status: 'archived',
+    createdAt: '2024-01-05',
+    updatedAt: '2024-01-10',
+    tags: ['تأكيد', 'مواعيد'],
+    messageCount: 3
+  }
 ];
 
 export default function ChatbotFlowsPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState<string>("all");
-  const [selectedTag, setSelectedTag] = useState<string>("all");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState<string>('all');
+  const [selectedTag, setSelectedTag] = useState<string>('all');
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const getStatusColor = (status: Flow["status"]) => {
+  const getStatusColor = (status: Flow['status']) => {
     switch (status) {
-      case "draft":
-        return "bg-yellow-100 text-yellow-800";
-      case "published":
-        return "bg-green-100 text-green-800";
-      case "archived":
-        return "bg-surface text-gray-800";
-      default:
-        return "bg-surface text-gray-800";
+    case 'draft':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'published':
+      return 'bg-green-100 text-green-800';
+    case 'archived':
+      return 'bg-surface text-gray-800';
+    default:
+      return 'bg-surface text-gray-800';
     }
   };
 
-  const getStatusText = (status: Flow["status"]) => {
+  const getStatusText = (status: Flow['status']) => {
     switch (status) {
-      case "draft":
-        return "مسودة";
-      case "published":
-        return "منشور";
-      case "archived":
-        return "مؤرشف";
-      default:
-        return "غير محدد";
+    case 'draft':
+      return 'مسودة';
+    case 'published':
+      return 'منشور';
+    case 'archived':
+      return 'مؤرشف';
+    default:
+      return 'غير محدد';
     }
   };
 
@@ -101,8 +102,8 @@ export default function ChatbotFlowsPage() {
       flow.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       flow.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus =
-      selectedStatus === "all" || flow.status === selectedStatus;
-    const matchesTag = selectedTag === "all" || flow.tags.includes(selectedTag);
+      selectedStatus === 'all' || flow.status === selectedStatus;
+    const matchesTag = selectedTag === 'all' || flow.tags.includes(selectedTag);
     return matchesSearch && matchesStatus && matchesTag;
   });
 
@@ -154,13 +155,13 @@ export default function ChatbotFlowsPage() {
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-success">
-              {mockFlows.filter((f) => f.status === "published").length}
+              {mockFlows.filter((f) => f.status === 'published').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">منشورة</div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-yellow-600">
-              {mockFlows.filter((f) => f.status === "draft").length}
+              {mockFlows.filter((f) => f.status === 'draft').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">مسودات</div>
           </div>
@@ -249,7 +250,7 @@ export default function ChatbotFlowsPage() {
                   </p>
                 </div>
                 <span
-                  className={`rounded-full px-3 py-1 text-sm ${getStatusColor(flow.status)}`}
+                  className={`rounded-full px-3 py-1 text-sm ${getStatusColor(flow.status)}`
                 >
                   {getStatusText(flow.status)}
                 </span>

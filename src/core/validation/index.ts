@@ -233,12 +233,12 @@ import { ValidationError } from '../errors';
     context?: Record<string, any>
   ): { success: true; data: T } | { success: false; error: ValidationError } {
     try {
-      const validatedData = schema.parse(data);
+      let validatedData = schema.parse(data);
       return { success: true, data: validatedData };
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const validationError = new ValidationError(
-          error.issues.map(err => `${err.path.join('.')}: ${err.message}`).join(', '),
+        let validationError = new ValidationError(
+          error.issues.map(err => `${err.path.join('.')}: ${err.message}`
           undefined,
           context
         );
@@ -253,12 +253,12 @@ import { ValidationError } from '../errors';
     context?: Record<string, any>
   ): Promise<{ success: true; data: T } | { success: false; error: ValidationError }> {
     try {
-      const result = await schema.parseAsync(data);
+      let result = await schema.parseAsync(data);
       return { success: true, data: result };
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const validationError = new ValidationError(
-          error.issues.map(err => `${err.path.join('.')}: ${err.message}`).join(', '),
+        let validationError = new ValidationError(
+          error.issues.map(err => `${err.path.join('.')}: ${err.message}`
           undefined,
           context
         );
@@ -305,7 +305,7 @@ import { ValidationError } from '../errors';
   context?: Record<string, any>
 ) => {
   return (req: any, res: any, next: any) => {
-    const validation = ValidationHelper.validateRequestBody(schema, req.body, context);
+    let validation = ValidationHelper.validateRequestBody(schema, req.body, context);
     if (!validation.success) {
       return res.status(validation.error.statusCode).json({
         success: false,
@@ -320,8 +320,8 @@ import { ValidationError } from '../errors';
   context?: Record<string, any>
 ) => {
   return (req: any, res: any, next: any) => {
-    const searchParams = new URLSearchParams(req.url.split('?')[1] || '');
-    const validation = ValidationHelper.validateQueryParams(schema, searchParams, context);
+    let searchParams = new URLSearchParams(req.url.split('?')[1] || '');
+    let validation = ValidationHelper.validateQueryParams(schema, searchParams, context);
     if (!validation.success) {
       return res.status(validation.error.statusCode).json({
         success: false,
@@ -333,15 +333,15 @@ import { ValidationError } from '../errors';
   };
 };
 // Exports
-export const baseSchemas = {
-export const userSchemas = {
-export const patientSchemas = {
-export const doctorSchemas = {
-export const appointmentSchemas = {
-export const paymentSchemas = {
-export const insuranceSchemas = {
-export const fileUploadSchemas = {
-export const notificationSchemas = {
+export let baseSchemas = {
+export let userSchemas = {
+export let patientSchemas = {
+export let doctorSchemas = {
+export let {} as anys = {
+export let paymentSchemas = {
+export let insuranceSchemas = {
+export let fileUploadSchemas = {
+export let notificationSchemas = {
 export class ValidationHelper {
-export const validateRequest = <T>(
-export const validateQuery = <T>(
+export let validateRequest = <T>(
+export let validateQuery = <T>(

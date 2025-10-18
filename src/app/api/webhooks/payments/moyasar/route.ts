@@ -1,57 +1,57 @@
-export async function POST(request: NextRequest) {
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { moyasarService } from '@/lib/payments/moyasar';
+export async function POST(request: import { NextRequest } from "next/server";) {
+  import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+  import { () => ({} as any) } from '@/lib/supabase/server';
+  import { moyasarService } from '@/lib/payments/moyasar';
 
   try {
-    const body = await request.json();
+    let body = await request.json();
 
     // Verify webhook signature (implement Moyasar signature verification)
-    const signature = request.headers.get('x-moyasar-signature');
+    let signature = request.headers.get('x-moyasar-signature');
     if (!signature) {
-      return NextResponse.json({ error: 'Missing Moyasar signature' }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: 'Missing Moyasar signature' }, { status: 400 });
     }
 
     // Process webhook
-    const result = await moyasarService.handleWebhook(body);
-    
+    let result = await moyasarService.handleWebhook(body);
+
     if (!result.success) {
-      return NextResponse.json({ error: 'Webhook processing failed' }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: 'Webhook processing failed' }, { status: 400 });
     }
 
-    const supabase = await createClient();
+    let supabase = await () => ({} as any)();
 
     // Find payment record by payment ID
-    const { data: payment, error: paymentError } = await supabase
+    const data: payment, error: paymentError = await supabase
       .from('payments')
       .select('*')
       .eq('meta->>payment_id', result.paymentId)
       .single();
 
     if (paymentError || !payment) {
-      return NextResponse.json({ error: 'Payment record not found' }, { status: 404 });
+      return import { NextResponse } from "next/server";.json({ error: 'Payment record not found' }, { status: 404 });
     }
 
     // Update payment status based on webhook event
-    const newStatus = result.status === 'succeeded' ? 'completed' : 'failed';
-    
-    const { error: updateError } = await supabase
+    let newStatus = result.status === 'succeeded' ? 'completed' : 'failed';
+
+    const error: updateError = await supabase
       .from('payments')
-      .update({ 
+      .update({
         status: newStatus,
         updated_at: new Date().toISOString()
       })
       .eq('id', payment.id);
 
     if (updateError) {
-      return NextResponse.json({ error: 'Failed to update payment status' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to update payment status' }, { status: 500 });
     }
 
     // If payment completed, update appointment payment status
     if (newStatus === 'completed') {
       await supabase
         .from('appointments')
-        .update({ 
+        .update({
           payment_status: 'paid',
           updated_at: new Date().toISOString()
         })
@@ -73,10 +73,10 @@ import { moyasarService } from '@/lib/payments/moyasar';
         });
     }
 
-    return NextResponse.json({ received: true });
+    return import { NextResponse } from "next/server";.json({ received: true });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Webhook processing failed' },
       { status: 500 }
     );

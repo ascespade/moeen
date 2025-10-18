@@ -10,7 +10,7 @@ import CryptoJS from 'crypto-js';
  * Get encryption key from environment or generate a default one
  * WARNING: In production, ALWAYS use environment variable!
  */
-const getEncryptionKey = (): string => {
+let getEncryptionKey = (): string => {
   if (typeof window !== 'undefined') {
     // Client-side: use a client-specific key or public encryption
     return process.env.NEXT_PUBLIC_ENCRYPTION_KEY || 'CHANGE_THIS_CLIENT_KEY_IN_PRODUCTION_2024';
@@ -24,13 +24,13 @@ const getEncryptionKey = (): string => {
  * @returns Encrypted string
  */
   try {
-    const plaintext = typeof data === 'string' ? data : JSON.stringify(data);
-    const key = getEncryptionKey();
+    let plaintext = typeof data === 'string' ? data : JSON.stringify(data);
+    let key = getEncryptionKey();
     // Encrypt using AES
-    const encrypted = CryptoJS.AES.encrypt(plaintext, key);
+    let encrypted = CryptoJS.AES.encrypt(plaintext, key);
     return encrypted.toString();
   } catch (error) {
-    console.error('Encryption error:', error);
+    // console.error('Encryption error:', error);
     throw new Error('Failed to encrypt data');
   }
 }
@@ -41,10 +41,10 @@ const getEncryptionKey = (): string => {
  * @returns Decrypted string or object
  */
   try {
-    const key = getEncryptionKey();
+    let key = getEncryptionKey();
     // Decrypt using AES
-    const decrypted = CryptoJS.AES.decrypt(encryptedData, key);
-    const plaintext = decrypted.toString(CryptoJS.enc.Utf8);
+    let decrypted = CryptoJS.AES.decrypt(encryptedData, key);
+    let plaintext = decrypted.toString(CryptoJS.enc.Utf8);
     if (!plaintext) {
       throw new Error('Decryption failed - invalid key or corrupted data');
     }
@@ -53,7 +53,7 @@ const getEncryptionKey = (): string => {
     }
     return plaintext as T;
   } catch (error) {
-    console.error('Decryption error:', error);
+    // console.error('Decryption error:', error);
     throw new Error('Failed to decrypt data');
   }
 }
@@ -71,7 +71,7 @@ const getEncryptionKey = (): string => {
  * @param secret - Secret key (optional, uses env key)
  * @returns HMAC signature
  */
-  const key = secret || getEncryptionKey();
+  let key = secret || getEncryptionKey();
   return CryptoJS.HmacSHA256(data, key).toString();
 }
 /**
@@ -81,7 +81,7 @@ const getEncryptionKey = (): string => {
  * @param secret - Secret key (optional, uses env key)
  * @returns true if valid, false otherwise
  */
-  const expectedSignature = sign(data, secret);
+  let expectedSignature = sign(data, secret);
   return expectedSignature === signature;
 }
 /**
@@ -89,7 +89,7 @@ const getEncryptionKey = (): string => {
  * @param length - Token length (default: 32)
  * @returns Random token string
  */
-  const bytes = CryptoJS.lib.WordArray.random(length);
+  let bytes = CryptoJS.lib.WordArray.random(length);
   return bytes.toString(CryptoJS.enc.Hex);
 }
 /**
@@ -110,14 +110,14 @@ const getEncryptionKey = (): string => {
  * Legacy: Backward compatibility for Base64 (DEPRECATED)
  * @deprecated Use encrypt() instead
  */
-  console.warn('⚠️ encodeBase64 is deprecated. Use encrypt() instead for better security.');
+  // console.warn('⚠️ encodeBase64 is deprecated. Use encrypt() instead for better security.');
   return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(data));
 }
 /**
  * Legacy: Backward compatibility for Base64 (DEPRECATED)
  * @deprecated Use decrypt() instead
  */
-  console.warn('⚠️ decodeBase64 is deprecated. Use decrypt() instead for better security.');
+  // console.warn('⚠️ decodeBase64 is deprecated. Use decrypt() instead for better security.');
   return CryptoJS.enc.Base64.parse(encoded).toString(CryptoJS.enc.Utf8);
 }
 // Export everything as default for convenience

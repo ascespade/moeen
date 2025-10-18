@@ -1,12 +1,13 @@
+import React from "react";
 
-"use client";
-import { useEffect, useState } from "react";
-import clsx from "clsx";
+'use client';
+import { useEffect, useState } from 'react';
+import clsx from 'clsx';
 
 export function Toast({
   message,
   open,
-  onOpenChange,
+  onOpenChange
 }: {
   message: string;
   open: boolean;
@@ -23,8 +24,8 @@ export function Toast({
   return (
     <div
       className={clsx(
-        "fixed bottom-4 start-1/2 -translate-x-1/2 z-50 transition",
-        visible ? "opacity-100" : "opacity-0 pointer-events-none",
+        'fixed bottom-4 start-1/2 -translate-x-1/2 z-50 transition',
+        visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
       )}
       role="status"
       aria-live="polite"

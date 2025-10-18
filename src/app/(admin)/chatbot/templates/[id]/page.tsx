@@ -1,9 +1,10 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
-import Image from "next/image";
-import Link from "next/link";
+'use client';
+import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface Template {
   id: string;
@@ -11,7 +12,7 @@ interface Template {
   description: string;
   category: string;
   language: string;
-  status: "draft" | "approved" | "pending";
+  status: 'draft' | 'approved' | 'pending';
   content: string;
   variables: string[];
   createdAt: string;
@@ -20,22 +21,22 @@ interface Template {
 }
 
 const mockTemplate: Template = {
-  id: "1",
-  name: "ترحيب المرضى",
-  description: "رسالة ترحيب للمرضى الجدد",
-  category: "ترحيب",
-  language: "العربية",
-  status: "approved",
+  id: '1',
+  name: 'ترحيب المرضى',
+  description: 'رسالة ترحيب للمرضى الجدد',
+  category: 'ترحيب',
+  language: 'العربية',
+  status: 'approved',
   content:
-    "مرحباً {{اسم المريض}}، أهلاً وسهلاً بك في {{اسم المركز}}! نحن سعداء لاختيارك خدماتنا الطبية المتخصصة. كيف يمكننا مساعدتك اليوم؟",
-  variables: ["اسم المريض", "اسم المركز"],
-  createdAt: "2024-01-10",
-  updatedAt: "2024-01-15",
-  usageCount: 45,
+    'مرحباً {{اسم المريض}}، أهلاً وسهلاً بك في {{اسم المركز}}! نحن سعداء لاختيارك خدماتنا الطبية المتخصصة. كيف يمكننا مساعدتك اليوم؟',
+  variables: ['اسم المريض', 'اسم المركز'],
+  createdAt: '2024-01-10',
+  updatedAt: '2024-01-15',
+  usageCount: 45
 };
 
 export default function TemplateEditorPage({
-  params,
+  params
 }: {
   params: { id: string };
 }) {
@@ -43,7 +44,7 @@ export default function TemplateEditorPage({
   const [isEditing, setIsEditing] = useState(false);
   const [showTestModal, setShowTestModal] = useState(false);
   const [testVariables, setTestVariables] = useState<Record<string, string>>(
-    {},
+    {}
   );
 
   const handleContentChange = (newContent: string) => {
@@ -54,7 +55,7 @@ export default function TemplateEditorPage({
     if (newVariable && !template.variables.includes(newVariable)) {
       setTemplate((prev) => ({
         ...prev,
-        variables: [...prev.variables, newVariable],
+        variables: [...prev.variables, newVariable]
       }));
     }
   };
@@ -62,15 +63,15 @@ export default function TemplateEditorPage({
   const handleVariableRemove = (variableToRemove: string) => {
     setTemplate((prev) => ({
       ...prev,
-      variables: prev.variables.filter((v) => v !== variableToRemove),
+      variables: prev.variables.filter((v) => v !== variableToRemove)
     }));
   };
 
   const generatePreview = () => {
     let preview = template.content;
     template.variables.forEach((variable) => {
-      const value = testVariables[variable] || `{{${variable}}}`;
-      preview = preview.replace(new RegExp(`{{${variable}}}`, "g"), value);
+      const value = testVariables[variable] || `{{${variable}}}`
+      preview = preview.replace(new RegExp(`{{${variable}}}`
     });
     return preview;
   };
@@ -85,7 +86,7 @@ export default function TemplateEditorPage({
     // Initialize test variables
     const initialTestVars: Record<string, string> = {};
     template.variables.forEach((variable) => {
-      initialTestVars[variable] = `قيمة ${variable}`;
+      initialTestVars[variable] = `قيمة ${variable}`
     });
     setTestVariables(initialTestVars);
     setShowTestModal(true);
@@ -122,7 +123,7 @@ export default function TemplateEditorPage({
                 onClick={() => setIsEditing(!isEditing)}
                 className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface"
               >
-                {isEditing ? "عرض" : "تعديل"}
+                {isEditing ? 'عرض' : 'تعديل'}
               </button>
               {isEditing && (
                 <button
@@ -215,20 +216,20 @@ export default function TemplateEditorPage({
                       placeholder="إضافة متغير جديد"
                       className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                       onKeyPress={(e) => {
-                        if (e.key === "Enter") {
+                        if (e.key === 'Enter') {
                           handleVariableAdd(e.currentTarget.value);
-                          e.currentTarget.value = "";
+                          e.currentTarget.value = '';
                         }
                       }}
                     />
                     <button
                       onClick={() => {
                         const input = document.querySelector(
-                          'input[placeholder="إضافة متغير جديد"]',
+                          'input[placeholder="إضافة متغير جديد"]'
                         ) as HTMLInputElement;
                         if (input?.value) {
                           handleVariableAdd(input.value);
-                          input.value = "";
+                          input.value = '';
                         }
                       }}
                       className="rounded-lg bg-[var(--brand-primary)] px-3 py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
@@ -268,7 +269,7 @@ export default function TemplateEditorPage({
                       onChange={(e) =>
                         setTemplate((prev) => ({
                           ...prev,
-                          name: e.target.value,
+                          name: e.target.value
                         }))
                       }
                       className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
@@ -285,7 +286,7 @@ export default function TemplateEditorPage({
                       onChange={(e) =>
                         setTemplate((prev) => ({
                           ...prev,
-                          description: e.target.value,
+                          description: e.target.value
                         }))
                       }
                       className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
@@ -304,7 +305,7 @@ export default function TemplateEditorPage({
                       placeholder="اكتب محتوى القالب هنا... استخدم {{اسم المتغير}} للمتغيرات"
                     />
                     <p className="mt-1 text-xs text-gray-500">
-                      استخدم {"{{"}اسم المتغير{"}}"} لإدراج المتغيرات في النص
+                      استخدم {'{{'}اسم المتغير{'}}'} لإدراج المتغيرات في النص
                     </p>
                   </div>
                 </div>
@@ -388,15 +389,15 @@ export default function TemplateEditorPage({
                       </label>
                       <input
                         type="text"
-                        value={testVariables[variable] || ""}
+                        value={testVariables[variable] || ''}
                         onChange={(e) =>
                           setTestVariables((prev) => ({
                             ...prev,
-                            [variable]: e.target.value,
+                            [variable]: e.target.value
                           }))
                         }
                         className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                        placeholder={`أدخل قيمة ${variable}`}
+                        placeholder={`أدخل قيمة ${variable}`
                       />
                     </div>
                   ))}

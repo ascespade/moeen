@@ -1,46 +1,46 @@
 // Bundle analyzer is optional
-const withBundleAnalyzer = process.env.ANALYZE === "true" 
-  ? require("@next/bundle-analyzer")({ enabled: true })
+let withBundleAnalyzer = process.env.ANALYZE === 'true'
+  ? require('@next/bundle-analyzer')({ enabled: true })
   : (config) => config;
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+let nextConfig = {
   // Security headers
   async headers() {
     return [
       {
-        source: "/(.*)",
+        source: '/(.*)',
         headers: [
           {
-            key: "X-Frame-Options",
-            value: "DENY",
+            key: 'X-Frame-Options',
+            value: 'DENY'
           },
           {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
           },
           {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin'
           },
           {
-            key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=()",
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()'
           },
           {
-            key: "Content-Security-Policy",
+            key: 'Content-Security-Policy',
             value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
-              "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: https: blob:",
-              "font-src 'self'",
-              "connect-src 'self' https://api.supabase.co https://*.supabase.co",
-              "frame-ancestors 'none'",
-            ].join("; "),
-          },
-        ],
-      },
+              'default-src \'self\'',
+              'script-src \'self\' \'unsafe-eval\' \'unsafe-inline\'',
+              'style-src \'self\' \'unsafe-inline\'',
+              'img-src \'self\' data: https: blob:',
+              'font-src \'self\'',
+              'connect-src \'self\' https://api.supabase.co https://*.supabase.co',
+              'frame-ancestors \'none\''
+            ].join('; ')
+          }
+        ]
+      }
     ];
   },
 
@@ -48,20 +48,20 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "localhost",
-        port: "3000",
-        pathname: "/**",
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/**'
       },
       {
-        protocol: "https",
-        hostname: "your-domain.com",
-        pathname: "/**",
-      },
+        protocol: 'https',
+        hostname: 'your-domain.com',
+        pathname: '/**'
+      }
     ],
-    formats: ["image/webp", "image/avif"],
+    formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 60,
-    dangerouslyAllowSVG: false,
+    dangerouslyAllowSVG: false
   },
 
   // Bundle analyzer
@@ -69,45 +69,45 @@ const nextConfig = {
     // Fix filesystem issues
     config.snapshot = {
       ...config.snapshot,
-      managedPaths: [/^(.+?[\\/]node_modules[\\/])(.+)$/],
+      managedPaths: [/^(.+?[\\/]node_modules[\\/])(.+)$/]
     };
 
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
-        chunks: "all",
+        chunks: 'all',
         minSize: 20000,
         maxSize: 244000,
         cacheGroups: {
           default: {
             minChunks: 2,
             priority: -20,
-            reuseExistingChunk: true,
+            reuseExistingChunk: true
           },
           vendor: {
             test: /[\\/]node_modules[\\/]/,
-            name: "vendors",
+            name: 'vendors',
             priority: -10,
-            chunks: "all",
+            chunks: 'all'
           },
           react: {
             test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-            name: "react",
+            name: 'react',
             priority: 20,
-            chunks: "all",
+            chunks: 'all'
           },
           ui: {
             test: /[\\/]node_modules[\\/](@headlessui|lucide-react)[\\/]/,
-            name: "ui",
+            name: 'ui',
             priority: 15,
-            chunks: "all",
+            chunks: 'all'
           },
           utils: {
             test: /[\\/]node_modules[\\/](clsx|class-variance-authority)[\\/]/,
-            name: "utils",
+            name: 'utils',
             priority: 10,
-            chunks: "all",
-          },
-        },
+            chunks: 'all'
+          }
+        }
       };
     }
     return config;
@@ -116,11 +116,11 @@ const nextConfig = {
   // Performance optimizations
   experimental: {
     optimizeCss: true,
-    optimizePackageImports: ["lucide-react", "@headlessui/react"],
+    optimizePackageImports: ['lucide-react', '@headlessui/react']
   },
 
   // Output configuration for Docker
-  output: "standalone",
+  output: 'standalone'
 };
 
 module.exports = withBundleAnalyzer(nextConfig);

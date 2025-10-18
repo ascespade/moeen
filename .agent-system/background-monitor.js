@@ -2,14 +2,14 @@
 
 /**
  * Background Monitor - مراقب الخلفية
- * 
+ *
  * يراقب النظام ويصلح المشاكل تلقائياً
  * Monitors system and fixes issues automatically
  */
 
-const AutoTestingSystem = require('./auto-testing-system');
-const fs = require('fs');
-const path = require('path');
+let AutoTestingSystem = require('./auto-testing-system');
+let fs = require('fs');
+let path = require('path');
 
 class BackgroundMonitor {
   constructor() {
@@ -21,29 +21,29 @@ class BackgroundMonitor {
   }
 
   log(message, type = 'info') {
-    const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
-    console.log(`[${timestamp}] ${prefix} ${message}`);
+    let timestamp = new Date().toISOString();
+    let prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    // console.log(`[${timestamp}] ${prefix} ${message}`
   }
 
   saveStatus(status) {
-    const statusData = {
+    let statusData = {
       timestamp: new Date().toISOString(),
       status: status,
       isMonitoring: this.isMonitoring,
       lastCheck: new Date().toISOString()
     };
-    
+
     fs.writeFileSync(this.statusFile, JSON.stringify(statusData, null, 2));
   }
 
   async checkSystemHealth() {
     this.log('🔍 Checking system health...');
-    
+
     try {
       // Check if server is running
-      const { exec } = require('child_process');
-      const isServerRunning = await new Promise((resolve) => {
+      const exec = require('child_process');
+      let isServerRunning = await new Promise((resolve) => {
         exec('curl -s http://localhost:3001 > /dev/null', (error) => {
           resolve(!error);
         });
@@ -55,10 +55,10 @@ class BackgroundMonitor {
       }
 
       // Check for common issues
-      const issues = await this.detectIssues();
-      
+      let issues = await this.detectIssues();
+
       if (issues.length > 0) {
-        this.log(`🔧 Found ${issues.length} issues, applying fixes...`);
+        this.log(`🔧 Found ${issues.length} issues, applying fixes...`
         await this.applyFixes(issues);
         return false;
       }
@@ -68,14 +68,14 @@ class BackgroundMonitor {
       return true;
 
     } catch (error) {
-      this.log(`❌ Health check failed: ${error.message}`, 'error');
+      this.log(`❌ Health check failed: ${error.message}`
       this.saveStatus('error');
       return false;
     }
   }
 
   async detectIssues() {
-    const issues = [];
+    let issues = [];
 
     // Check for CSS errors
     if (await this.hasCSSErrors()) {
@@ -97,68 +97,68 @@ class BackgroundMonitor {
 
   async hasCSSErrors() {
     try {
-      const { exec } = require('child_process');
-      const result = await new Promise((resolve) => {
+      const exec = require('child_process');
+      let result = await new Promise((resolve) => {
         exec('npm run build 2>&1 | grep -i "css\\|syntax\\|error"', (error, stdout) => {
           resolve(stdout.length > 0);
         });
       });
       return result;
-    } catch {
+    } catch (error) { // Handle error
       return false;
     }
   }
 
   async hasBuildErrors() {
     try {
-      const { exec } = require('child_process');
-      const result = await new Promise((resolve) => {
+      const exec = require('child_process');
+      let result = await new Promise((resolve) => {
         exec('npm run build 2>&1 | grep -i "error\\|failed"', (error, stdout) => {
           resolve(stdout.length > 0);
         });
       });
       return result;
-    } catch {
+    } catch (error) { // Handle error
       return false;
     }
   }
 
   async hasTestFailures() {
     try {
-      const { exec } = require('child_process');
-      const result = await new Promise((resolve) => {
+      const exec = require('child_process');
+      let result = await new Promise((resolve) => {
         exec('npx playwright test --config=playwright-auto.config.ts --reporter=json 2>&1 | grep -i "failed\\|error"', (error, stdout) => {
           resolve(stdout.length > 0);
         });
       });
       return result;
-    } catch {
+    } catch (error) { // Handle error
       return false;
     }
   }
 
   async applyFixes(issues) {
     for (const issue of issues) {
-      this.log(`🔧 Fixing ${issue.type}: ${issue.description}`);
-      
+      this.log(`🔧 Fixing ${issue.type}: ${issue.description}`
+
       switch (issue.type) {
-        case 'css':
-          await this.fixCSSIssues();
-          break;
-        case 'build':
-          await this.fixBuildIssues();
-          break;
-        case 'tests':
-          await this.fixTestIssues();
-          break;
+      case 'css':
+        await this.fixCSSIssues();
+        break;
+      case 'build':
+        await this.fixBuildIssues();
+        break;
+      case 'tests':
+        await this.fixTestIssues();
+        break;
       }
     }
   }
 
   async fixCSSIssues() {
     this.log('🎨 Fixing CSS issues...');
-    
-    const cssFiles = [
+
+    let cssFiles = [
       'src/styles/theme.css',
       'src/styles/design-system.css',
       'src/styles/centralized.css'
@@ -173,35 +173,35 @@ class BackgroundMonitor {
         content = content.replace(/border-brand-primary/g, 'border-blue-500');
         content = content.replace(/text-brand-primary/g, 'text-blue-600');
         fs.writeFileSync(file, content);
-        this.log(`✅ Fixed CSS in ${file}`);
+        this.log(`✅ Fixed CSS in ${file}`
       }
     }
   }
 
   async fixBuildIssues() {
     this.log('🔨 Fixing build issues...');
-    
+
     // Clear Next.js cache
-    const { exec } = require('child_process');
+    const exec = require('child_process');
     await new Promise((resolve) => {
       exec('rm -rf .next', () => resolve());
     });
-    
+
     this.log('✅ Cleared Next.js cache');
   }
 
   async fixTestIssues() {
     this.log('🧪 Fixing test issues...');
-    
+
     // Clear rate limit cache
     try {
-      const response = await fetch('http://localhost:3001/api/test/clear-rate-limit', {
+      let response = await fetch('http://localhost:3001/api/test/clear-rate-limit', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       });
-      
+
       if (response.ok) {
         this.log('✅ Cleared rate limit cache');
       }
@@ -215,9 +215,9 @@ class BackgroundMonitor {
     this.isMonitoring = true;
     this.saveStatus('monitoring');
 
-    this.intervalId = setInterval(async () => {
-      const isHealthy = await this.checkSystemHealth();
-      
+    this.intervalId = setInterval(async() => {
+      let isHealthy = await this.checkSystemHealth();
+
       if (!isHealthy) {
         this.log('🔄 System needs attention, running full test cycle...');
         await this.testingSystem.runFullCycle();
@@ -230,11 +230,11 @@ class BackgroundMonitor {
   stopMonitoring() {
     this.log('🛑 Stopping background monitoring...');
     this.isMonitoring = false;
-    
+
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
-    
+
     this.saveStatus('stopped');
     this.log('✅ Background monitoring stopped');
   }
@@ -249,21 +249,21 @@ class BackgroundMonitor {
 
 // Run the monitor
 if (require.main === module) {
-  const monitor = new BackgroundMonitor();
-  
+  let monitor = new BackgroundMonitor();
+
   // Handle graceful shutdown
   process.on('SIGINT', () => {
     monitor.stopMonitoring();
     process.exit(0);
   });
-  
+
   process.on('SIGTERM', () => {
     monitor.stopMonitoring();
     process.exit(0);
   });
-  
+
   monitor.startMonitoring().catch(error => {
-    console.error('Monitor failed:', error);
+    // console.error('Monitor failed:', error);
     process.exit(1);
   });
 }

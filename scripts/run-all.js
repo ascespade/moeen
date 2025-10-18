@@ -1,24 +1,24 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
-const { spawn } = require("child_process");
+const fs = require('fs');
+const path = require('path');
+const spawn = require('child_process');
 
 class MasterExecutor {
   constructor() {
-    this.workspaceRoot = path.join(__dirname, "..");
-    this.logFile = path.join(this.workspaceRoot, "logs", "master-executor.log");
+    this.workspaceRoot = path.join(__dirname, '..');
+    this.logFile = path.join(this.workspaceRoot, 'logs', 'master-executor.log');
     this.reportFile = path.join(
       this.workspaceRoot,
-      "reports",
-      "master-execution-report.json",
+      'reports',
+      'master-execution-report.json'
     );
     this.startTime = new Date();
   }
 
   log(message) {
     const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] Master Executor: ${message}\n`;
+    const logMessage = `[${timestamp}] Master Executor: ${message}\n`
 
     // Ensure logs directory exists
     const logsDir = path.dirname(this.logFile);
@@ -27,48 +27,48 @@ class MasterExecutor {
     }
 
     fs.appendFileSync(this.logFile, logMessage);
-    console.log(logMessage.trim());
+    // console.log(logMessage.trim());
   }
 
   async runScript(scriptPath, args = []) {
     return new Promise((resolve, reject) => {
-      this.log(`Running script: ${scriptPath}`);
+      this.log(`Running script: ${scriptPath}`
 
-      const child = spawn("node", [scriptPath, ...args], {
+      const child = spawn('node', [scriptPath, ...args], {
         cwd: this.workspaceRoot,
-        stdio: "pipe",
+        stdio: 'pipe'
       });
 
-      let stdout = "";
-      let stderr = "";
+      let stdout = '';
+      let stderr = '';
 
-      child.stdout.on("data", (data) => {
+      child.stdout.on('data', (data) => {
         stdout += data.toString();
       });
 
-      child.stderr.on("data", (data) => {
+      child.stderr.on('data', (data) => {
         stderr += data.toString();
       });
 
-      child.on("close", (code) => {
+      child.on('close', (code) => {
         if (code === 0) {
-          this.log(`Script completed successfully: ${scriptPath}`);
+          this.log(`Script completed successfully: ${scriptPath}`
           resolve({ success: true, stdout, stderr });
         } else {
-          this.log(`Script failed with code ${code}: ${scriptPath}`);
+          this.log(`Script failed with code ${code}: ${scriptPath}`
           resolve({ success: false, code, stdout, stderr });
         }
       });
 
-      child.on("error", (error) => {
-        this.log(`Script error: ${scriptPath} - ${error.message}`);
+      child.on('error', (error) => {
+        this.log(`Script error: ${scriptPath} - ${error.message}`
         reject(error);
       });
     });
   }
 
   async executeModule(moduleName, scriptPath, args = []) {
-    this.log(`Executing module: ${moduleName}`);
+    this.log(`Executing module: ${moduleName}`
 
     const startTime = new Date();
 
@@ -85,7 +85,7 @@ class MasterExecutor {
         endTime: endTime.toISOString(),
         stdout: result.stdout,
         stderr: result.stderr,
-        error: result.success ? null : `Script failed with code ${result.code}`,
+        error: result.success ? null : `Script failed with code ${result.code}`
       };
     } catch (error) {
       const endTime = new Date();
@@ -97,40 +97,40 @@ class MasterExecutor {
         duration: duration,
         startTime: startTime.toISOString(),
         endTime: endTime.toISOString(),
-        error: error.message,
+        error: error.message
       };
     }
   }
 
   async executeAllModules() {
-    this.log("Starting master execution...");
+    this.log('Starting master execution...');
 
     const modules = [
       {
-        name: "File Cleanup and Management",
-        script: "scripts/file-cleanup.js",
-        args: [],
+        name: 'File Cleanup and Management',
+        script: 'scripts/file-cleanup.js',
+        args: []
       },
       {
-        name: "N8n Workflow Integration",
-        script: "scripts/n8n-workflow-manager.js",
-        args: [],
+        name: 'N8n Workflow Integration',
+        script: 'scripts/n8n-workflow-manager.js',
+        args: []
       },
       {
-        name: "Social Media Automation",
-        script: "scripts/social-media-automation.js",
-        args: [],
+        name: 'Social Media Automation',
+        script: 'scripts/social-media-automation.js',
+        args: []
       },
       {
-        name: "Admin Module",
-        script: "scripts/admin-module.js",
-        args: [],
+        name: 'Admin Module',
+        script: 'scripts/admin-module.js',
+        args: []
       },
       {
-        name: "Enhancements",
-        script: "scripts/enhancements.js",
-        args: [],
-      },
+        name: 'Enhancements',
+        script: 'scripts/enhancements.js',
+        args: []
+      }
     ];
 
     const results = [];
@@ -139,15 +139,15 @@ class MasterExecutor {
       const result = await this.executeModule(
         module.name,
         module.script,
-        module.args,
+        module.args
       );
       results.push(result);
 
       // Log result
       if (result.success) {
-        this.log(`✓ ${module.name} completed successfully`);
+        this.log(`✓ ${module.name} completed successfully`
       } else {
-        this.log(`✗ ${module.name} failed: ${result.error}`);
+        this.log(`✗ ${module.name} failed: ${result.error}`
       }
     }
 
@@ -155,7 +155,7 @@ class MasterExecutor {
   }
 
   async generateFinalReport() {
-    this.log("Generating final report...");
+    this.log('Generating final report...');
 
     const endTime = new Date();
     const totalDuration = endTime - this.startTime;
@@ -165,30 +165,30 @@ class MasterExecutor {
         startTime: this.startTime.toISOString(),
         endTime: endTime.toISOString(),
         totalDuration: totalDuration,
-        status: "completed",
+        status: 'completed'
       },
       modules: await this.executeAllModules(),
       summary: {
         totalModules: 0,
         successfulModules: 0,
         failedModules: 0,
-        totalDuration: totalDuration,
+        totalDuration: totalDuration
       },
       system: {
         nodeVersion: process.version,
         platform: process.platform,
         arch: process.arch,
-        memoryUsage: process.memoryUsage(),
-      },
+        memoryUsage: process.memoryUsage()
+      }
     };
 
     // Calculate summary
     report.summary.totalModules = report.modules.length;
     report.summary.successfulModules = report.modules.filter(
-      (m) => m.success,
+      (m) => m.success
     ).length;
     report.summary.failedModules = report.modules.filter(
-      (m) => !m.success,
+      (m) => !m.success
     ).length;
 
     // Save report
@@ -199,34 +199,34 @@ class MasterExecutor {
 
     fs.writeFileSync(this.reportFile, JSON.stringify(report, null, 2));
 
-    this.log(`Final report saved to: ${this.reportFile}`);
+    this.log(`Final report saved to: ${this.reportFile}`
 
     return report;
   }
 
   async run() {
     try {
-      this.log("Master execution started");
+      this.log('Master execution started');
 
       const report = await this.generateFinalReport();
 
       // Log summary
       this.log(
-        `Execution completed: ${report.summary.successfulModules}/${report.summary.totalModules} modules successful`,
+        `Execution completed: ${report.summary.successfulModules}/${report.summary.totalModules} modules successful`
       );
 
       if (report.summary.failedModules > 0) {
         this.log(
-          `Failed modules: ${report.modules
+          `
             .filter((m) => !m.success)
             .map((m) => m.module)
-            .join(", ")}`,
+            .join(', ')}`
         );
       }
 
       return report;
     } catch (error) {
-      this.log(`Master execution failed: ${error.message}`);
+      this.log(`Master execution failed: ${error.message}`
       throw error;
     }
   }
@@ -239,12 +239,12 @@ if (require.main === module) {
   executor
     .run()
     .then((report) => {
-      console.log("Master execution completed successfully");
-      console.log(JSON.stringify(report, null, 2));
+      // console.log('Master execution completed successfully');
+      // console.log(JSON.stringify(report, null, 2));
       process.exit(0);
     })
     .catch((error) => {
-      console.error("Master execution failed:", error);
+      // console.error('Master execution failed:', error);
       process.exit(1);
     });
 }

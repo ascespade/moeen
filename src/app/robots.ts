@@ -1,12 +1,12 @@
-export default function robots(): MetadataRoute.Robots {
-import type { MetadataRoute } from "next";
+export default function robots(): import { MetadataRoute } from "next";.Robots {
+  import type { import { MetadataRoute } from "next"; } from 'next';
 
   return {
     rules: {
-      userAgent: "*",
-      allow: ["/", "/features", "/pricing", "/faq"],
-      disallow: ["/api", "/admin"],
+      userAgent: '*',
+      allow: ['/', '/features', '/pricing', '/faq'],
+      disallow: ['/api', '/admin']
     },
-    sitemap: "https://example.com/sitemap.xml",
+    sitemap: 'https://example.com/sitemap.xml'
   };
 }

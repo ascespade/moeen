@@ -1,3 +1,4 @@
+import React from "react";
 
 'use client';
 
@@ -9,11 +10,11 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { LoadingSpinner } from '@/components/ui';
-import { 
-  UserPlus, 
-  Users, 
-  CreditCard, 
-  FileText, 
+import {
+  UserPlus,
+  Users,
+  CreditCard,
+  FileText,
   Clock,
   CheckCircle,
   AlertCircle,
@@ -53,13 +54,13 @@ interface StaffData {
 }
 
 export default function StaffDashboard() {
-  const { t } = useT();
-  const { theme } = useTheme();
+  const t = useT();
+  const theme = useTheme();
   const [staffData, setStaffData] = useState<StaffData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchStaffData = async () => {
+    const fetchStaffData = async() => {
       try {
         const response = await fetch('/api/staff/me');
         if (response.ok) {
@@ -67,7 +68,7 @@ export default function StaffDashboard() {
           setStaffData(data);
         }
       } catch (error) {
-        } finally {
+      } finally {
         setIsLoading(false);
       }
     };
@@ -75,36 +76,36 @@ export default function StaffDashboard() {
     fetchStaffData();
   }, []);
 
-  const handleProcessPayment = async (paymentId: string) => {
+  const handleProcessPayment = async(paymentId: string) => {
     try {
-      const response = await fetch(`/api/payments/${paymentId}/process`, {
+      const response = await fetch(`/api/payments/${paymentId}/process`
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'completed' })
       });
-      
+
       if (response.ok) {
         // Refresh data
         window.location.reload();
       }
     } catch (error) {
-      }
+    }
   };
 
-  const handleSubmitClaim = async (claimId: string) => {
+  const handleSubmitClaim = async(claimId: string) => {
     try {
-      const response = await fetch(`/api/insurance/claims/${claimId}/submit`, {
+      const response = await fetch(`/api/insurance/claims/${claimId}/submit`
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'submitted' })
       });
-      
+
       if (response.ok) {
         // Refresh data
         window.location.reload();
       }
     } catch (error) {
-      }
+    }
   };
 
   if (isLoading) {
@@ -116,7 +117,7 @@ export default function StaffDashboard() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['staff', 'supervisor', 'admin']}>
+    <ProtectedRoute allowedstrings={['staff', 'supervisor', 'admin']}>
       <div className="min-h-screen bg-surface dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
@@ -196,7 +197,7 @@ export default function StaffDashboard() {
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                   {t('staff.dashboard.pending_tasks')}
                 </h2>
-                
+
                 {/* Pending Payments */}
                 <div className="mb-6">
                   <h3 className="font-medium text-gray-900 dark:text-white mb-3">
@@ -205,7 +206,7 @@ export default function StaffDashboard() {
                   {staffData?.pendingPayments && staffData.pendingPayments.length > 0 ? (
                     <div className="space-y-3">
                       {staffData.pendingPayments.map((payment) => (
-                        <div 
+                        <div
                           key={payment.id}
                           className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
                         >
@@ -249,7 +250,7 @@ export default function StaffDashboard() {
                   {staffData?.pendingClaims && staffData.pendingClaims.length > 0 ? (
                     <div className="space-y-3">
                       {staffData.pendingClaims.map((claim) => (
-                        <div 
+                        <div
                           key={claim.id}
                           className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
                         >
@@ -266,7 +267,7 @@ export default function StaffDashboard() {
                           </div>
                           <div className="flex items-center space-x-2">
                             <Badge variant="outline">
-                              {t(`claim.status.${claim.status}`)}
+                              {t(`claim.status.${claim.status}`
                             </Badge>
                             <Button
                               size="sm"

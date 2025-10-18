@@ -1,32 +1,33 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import { useT } from "@/components/providers/I18nProvider";
+import { useT } from '@/components/providers/I18nProvider';
 
 
 export default function FeaturesPage() {
-  const { t } = useT();
+  const t = useT();
   const features = [
     {
-      title: t("home.features.unifiedChat", "دردشة موحّدة"),
+      title: t('home.features.unifiedChat', 'دردشة موحّدة'),
       desc: t(
-        "home.features.unifiedChat.desc",
-        "إدارة كل القنوات من واجهة واحدة",
-      ),
+        'home.features.unifiedChat.desc',
+        'إدارة كل القنوات من واجهة واحدة'
+      )
     },
     {
-      title: t("home.features.reports", "تقارير لحظية"),
-      desc: t("home.features.reports.desc", "لوحات ذكية ومؤشرات أداء"),
+      title: t('home.features.reports', 'تقارير لحظية'),
+      desc: t('home.features.reports.desc', 'لوحات ذكية ومؤشرات أداء')
     },
     {
-      title: t("home.hero.subtitle", "تلقائية وذكاء"),
-      desc: "AI assisted flows",
-    },
+      title: t('home.hero.subtitle', 'تلقائية وذكاء'),
+      desc: 'AI assisted flows'
+    }
   ];
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-12">
       <h1 className="mb-6 text-3xl font-bold">
-        {t("features.title", "المميزات")}
+        {t('features.title', 'المميزات')}
       </h1>
       <div className="grid gap-6 md:grid-cols-3">
         {features.map((f, i) => (

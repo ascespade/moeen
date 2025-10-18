@@ -1,31 +1,32 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
-import Link from "next/link";
-import Image from "next/image";
+'use client';
+import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ResetPasswordPage() {
   const [formData, setFormData] = useState({
-    password: "",
-    confirmPassword: "",
+    password: '',
+    confirmPassword: ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const name, value = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
 
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
-        [name]: "",
+        [name]: ''
       }));
     }
   };
@@ -34,22 +35,22 @@ export default function ResetPasswordPage() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.password) {
-      newErrors.password = "كلمة المرور مطلوبة";
+      newErrors.password = 'كلمة المرور مطلوبة';
     } else if (formData.password.length < 6) {
-      newErrors.password = "كلمة المرور يجب أن تكون 6 أحرف على الأقل";
+      newErrors.password = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
     }
 
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = "تأكيد كلمة المرور مطلوب";
+      newErrors.confirmPassword = 'تأكيد كلمة المرور مطلوب';
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "كلمة المرور غير متطابقة";
+      newErrors.confirmPassword = 'كلمة المرور غير متطابقة';
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -64,7 +65,7 @@ export default function ResetPasswordPage() {
       setIsSuccess(true);
     } catch (error) {
       setErrors({
-        general: "حدث خطأ أثناء إعادة تعيين كلمة المرور. حاول مرة أخرى.",
+        general: 'حدث خطأ أثناء إعادة تعيين كلمة المرور. حاول مرة أخرى.'
       });
     } finally {
       setIsLoading(false);
@@ -142,9 +143,9 @@ export default function ResetPasswordPage() {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] ${
-                  errors.password ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`
+                  errors.password ? 'border-red-500' : 'border-gray-300'
+                }`
                 placeholder="أدخل كلمة المرور الجديدة"
                 disabled={isLoading}
               />
@@ -170,9 +171,9 @@ export default function ResetPasswordPage() {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
-                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)] ${
-                  errors.confirmPassword ? "border-red-500" : "border-gray-300"
-                }`}
+                className={`
+                  errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+                }`
                 placeholder="أعد إدخال كلمة المرور الجديدة"
                 disabled={isLoading}
               />
@@ -207,7 +208,7 @@ export default function ResetPasswordPage() {
                   جاري الحفظ...
                 </div>
               ) : (
-                "تغيير كلمة المرور"
+                'تغيير كلمة المرور'
               )}
             </button>
           </form>
@@ -215,7 +216,7 @@ export default function ResetPasswordPage() {
           {/* Back to Login */}
           <div className="mt-6 text-center">
             <p className="text-gray-600 dark:text-gray-300">
-              تذكرت كلمة المرور؟{" "}
+              تذكرت كلمة المرور؟{' '}
               <Link
                 href={ROUTES.LOGIN}
                 className="font-semibold text-[var(--brand-primary)] hover:underline"

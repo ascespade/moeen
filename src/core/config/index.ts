@@ -16,9 +16,9 @@ export const ENV = {
 // Database Configuration
 export const DATABASE_CONFIG = {
   URL: process.env.DATABASE_URL || '',
-  MAX_CONNECTIONS: parseInt(process.env.DB_MAX_CONNECTIONS || '10'),
-  CONNECTION_TIMEOUT: parseInt(process.env.DB_CONNECTION_TIMEOUT || '30000'),
-  QUERY_TIMEOUT: parseInt(process.env.DB_QUERY_TIMEOUT || '10000'),
+  MAX_CONNECTIONS: parseInt(process.env.DB_MAX_CONNECTIONS || '10', 10),
+  CONNECTION_TIMEOUT: parseInt(process.env.DB_CONNECTION_TIMEOUT || '30000', 10),
+  QUERY_TIMEOUT: parseInt(process.env.DB_QUERY_TIMEOUT || '10000', 10),
 } as const;
 
 // Supabase Configuration
@@ -32,10 +32,10 @@ export const SUPABASE_CONFIG = {
 // API Configuration
 export const API_CONFIG = {
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || '/api',
-  TIMEOUT: parseInt(process.env.API_TIMEOUT || '30000'),
+  TIMEOUT: parseInt(process.env.API_TIMEOUT || '30000', 10),
   RATE_LIMIT: {
-    WINDOW_MS: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'), // 15 minutes
-    MAX_REQUESTS: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100'),
+    WINDOW_MS: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10), // 15 minutes
+    MAX_REQUESTS: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100', 10),
   },
   CORS: {
     ORIGINS: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'],
@@ -48,10 +48,10 @@ export const AUTH_CONFIG = {
   JWT_SECRET: process.env.JWT_SECRET || '',
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '24h',
   REFRESH_TOKEN_EXPIRES_IN: process.env.REFRESH_TOKEN_EXPIRES_IN || '7d',
-  SESSION_TIMEOUT: parseInt(process.env.SESSION_TIMEOUT || '3600000'), // 1 hour
-  PASSWORD_MIN_LENGTH: parseInt(process.env.PASSWORD_MIN_LENGTH || '8'),
-  MAX_LOGIN_ATTEMPTS: parseInt(process.env.MAX_LOGIN_ATTEMPTS || '5'),
-  LOCKOUT_DURATION: parseInt(process.env.LOCKOUT_DURATION || '900000'), // 15 minutes
+  SESSION_TIMEOUT: parseInt(process.env.SESSION_TIMEOUT || '3600000', 10), // 1 hour
+  PASSWORD_MIN_LENGTH: parseInt(process.env.PASSWORD_MIN_LENGTH || '8', 10),
+  MAX_LOGIN_ATTEMPTS: parseInt(process.env.MAX_LOGIN_ATTEMPTS || '5', 10),
+  LOCKOUT_DURATION: parseInt(process.env.LOCKOUT_DURATION || '900000', 10), // 15 minutes
 } as const;
 
 // Payment Configuration
@@ -91,8 +91,8 @@ export const INSURANCE_CONFIG = {
       ENABLED: process.env.TATMAN_ENABLED === 'true',
     },
   },
-  CLAIM_TIMEOUT: parseInt(process.env.INSURANCE_CLAIM_TIMEOUT || '86400000'), // 24 hours
-  RETRY_ATTEMPTS: parseInt(process.env.INSURANCE_RETRY_ATTEMPTS || '3'),
+  CLAIM_TIMEOUT: parseInt(process.env.INSURANCE_CLAIM_TIMEOUT || '86400000', 10), // 24 hours
+  RETRY_ATTEMPTS: parseInt(process.env.INSURANCE_RETRY_ATTEMPTS || '3', 10),
 } as const;
 
 // Notification Configuration
@@ -100,7 +100,7 @@ export const NOTIFICATION_CONFIG = {
   EMAIL: {
     PROVIDER: process.env.EMAIL_PROVIDER || 'smtp',
     SMTP_HOST: process.env.SMTP_HOST || '',
-    SMTP_PORT: parseInt(process.env.SMTP_PORT || '587'),
+    SMTP_PORT: parseInt(process.env.SMTP_PORT || '587', 10),
     SMTP_USER: process.env.SMTP_USER || '',
     SMTP_PASS: process.env.SMTP_PASS || '',
     FROM_EMAIL: process.env.FROM_EMAIL || 'noreply@alhemamcenter.com',
@@ -117,13 +117,13 @@ export const NOTIFICATION_CONFIG = {
     VAPID_PRIVATE_KEY: process.env.VAPID_PRIVATE_KEY || '',
     VAPID_SUBJECT: process.env.VAPID_SUBJECT || 'mailto:admin@alhemamcenter.com',
   },
-  BATCH_SIZE: parseInt(process.env.NOTIFICATION_BATCH_SIZE || '100'),
-  RETRY_ATTEMPTS: parseInt(process.env.NOTIFICATION_RETRY_ATTEMPTS || '3'),
+  BATCH_SIZE: parseInt(process.env.NOTIFICATION_BATCH_SIZE || '100', 10),
+  RETRY_ATTEMPTS: parseInt(process.env.NOTIFICATION_RETRY_ATTEMPTS || '3', 10),
 } as const;
 
 // File Upload Configuration
 export const UPLOAD_CONFIG = {
-  MAX_FILE_SIZE: parseInt(process.env.MAX_FILE_SIZE || '10485760'), // 10MB
+  MAX_FILE_SIZE: parseInt(process.env.MAX_FILE_SIZE || '10485760', 10), // 10MB
   ALLOWED_TYPES: process.env.ALLOWED_FILE_TYPES?.split(',') || [
     'image/jpeg',
     'image/png',
@@ -140,11 +140,11 @@ export const UPLOAD_CONFIG = {
 // Security Configuration
 export const SECURITY_CONFIG = {
   ENCRYPTION_KEY: process.env.ENCRYPTION_KEY || '',
-  HASH_ROUNDS: parseInt(process.env.HASH_ROUNDS || '12'),
+  HASH_ROUNDS: parseInt(process.env.HASH_ROUNDS || '12', 10),
   CORS_ORIGINS: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'],
   RATE_LIMITING: {
-    WINDOW_MS: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'),
-    MAX_REQUESTS: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100'),
+    WINDOW_MS: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10),
+    MAX_REQUESTS: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100', 10),
   },
   HEADERS: {
     'X-Frame-Options': 'DENY',

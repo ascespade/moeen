@@ -1,3 +1,4 @@
+import React from "react";
 /**
  * Card Component - مكون البطاقة
  * Unified card component with multiple variants

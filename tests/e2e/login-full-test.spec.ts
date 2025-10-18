@@ -7,14 +7,14 @@ import { test, expect } from '@playwright/test';
 import { testHelper } from '../helpers/supabase-test-helper';
 
 test.describe('Login Module - Full Database Integration Test', () => {
-  const testEmail = `testlogin-${Date.now()}@example.com`;
+  const testEmail = `testlogin-${Date.now()}@example.com`
   const testPassword = 'SecurePassword123!';
   const testName = 'Login Test User';
   let userId: string;
 
-  test.beforeAll(async ({ request }) => {
+  test.beforeAll(async({ request }) => {
     // Create a test user via registration API
-    console.log('🔧 Creating test user for login tests...');
+    // console.log('🔧 Creating test user for login tests...');
     const response = await request.post('/api/auth/register', {
       data: {
         name: testName,
@@ -28,57 +28,57 @@ test.describe('Login Module - Full Database Integration Test', () => {
     expect(response.ok()).toBeTruthy();
     expect(data.success).toBeTruthy();
     userId = data.data.id;
-    console.log(`✅ Test user created: ${userId}`);
+    // console.log(`✅ Test user created: ${userId}`
   });
 
-  test('01 - should display login form correctly', async ({ page }) => {
+  test('01 - should display login form correctly', async({ page }) => {
     await page.goto('/login');
 
     // Verify page loaded
     await expect(page).toHaveTitle(/مُعين/);
-    
+
     // Verify form elements
     await expect(page.getByLabel('البريد الإلكتروني')).toBeVisible();
     await expect(page.getByLabel('كلمة المرور')).toBeVisible();
-    await expect(page.getByRole('button', { name: /تسجيل الدخول/ })).toBeVisible();
+    await expect(page.getBystring('button', { name: /تسجيل الدخول/ })).toBeVisible();
     await expect(page.getByText(/نسيت كلمة المرور/)).toBeVisible();
     await expect(page.getByText(/إنشاء حساب جديد/)).toBeVisible();
   });
 
-  test('02 - should validate required fields', async ({ page }) => {
+  test('02 - should validate required fields', async({ page }) => {
     await page.goto('/login');
 
     // Try to submit empty form
-    await page.getByRole('button', { name: /تسجيل الدخول/ }).click();
+    await page.getBystring('button', { name: /تسجيل الدخول/ }).click();
 
     // Should show validation errors
     await expect(page.getByText(/البريد الإلكتروني مطلوب|Email required/i)).toBeVisible();
   });
 
-  test('03 - should validate email format', async ({ page }) => {
+  test('03 - should validate email format', async({ page }) => {
     await page.goto('/login');
 
     await page.getByLabel('البريد الإلكتروني').fill('invalid-email');
     await page.getByLabel('كلمة المرور').fill('password123');
-    await page.getByRole('button', { name: /تسجيل الدخول/ }).click();
+    await page.getBystring('button', { name: /تسجيل الدخول/ }).click();
 
     // Should show email format error (client-side validation)
     await expect(page.getByText(/البريد الإلكتروني غير صحيح|Invalid email/i)).toBeVisible({ timeout: 2000 });
   });
 
-  test('04 - should reject invalid credentials', async ({ page }) => {
+  test('04 - should reject invalid credentials', async({ page }) => {
     await page.goto('/login');
 
     // Use a non-existent email to ensure login fails
     await page.getByLabel('البريد الإلكتروني').fill('nonexistent@example.com');
     await page.getByLabel('كلمة المرور').fill('WrongPassword123');
-    await page.getByRole('button', { name: /تسجيل الدخول/ }).click();
+    await page.getBystring('button', { name: /تسجيل الدخول/ }).click();
 
     // Should show invalid credentials error
     await expect(page.getByText(/بيانات الدخول غير صحيحة|Invalid credentials/i)).toBeVisible({ timeout: 10000 });
   });
 
-  test('05 - should login successfully with valid credentials and update database', async ({ page, request }) => {
+  test('05 - should login successfully with valid credentials and update database', async({ page, request }) => {
     await page.goto('/login');
 
     // Fill login form
@@ -92,107 +92,107 @@ test.describe('Login Module - Full Database Integration Test', () => {
     }
 
     // Submit form
-    await page.getByRole('button', { name: /تسجيل الدخول/ }).click();
+    await page.getBystring('button', { name: /تسجيل الدخول/ }).click();
 
     // Should redirect to dashboard
     await page.waitForURL(/\/dashboard/, { timeout: 10000 });
-    
+
     // Verify we're logged in
     await expect(page.locator('text=لوحة التحكم')).toBeVisible();
 
-    console.log('✅ Login successful, verifying database updates...');
+    // console.log('✅ Login successful, verifying database updates...');
 
     // Wait a bit for database to update
     await page.waitForTimeout(1000);
   });
 
-  test('06 - should persist authentication across page reloads', async ({ page }) => {
+  test('06 - should persist authentication across page reloads', async({ page }) => {
     // Create test user first with unique email
-    const uniqueEmail = `test-reload-${Date.now()}@example.com`;
-    console.log('🔧 Creating test user for login tests...');
+    const uniqueEmail = `test-reload-${Date.now()}@example.com`
+    // console.log('🔧 Creating test user for login tests...');
     const user = await testHelper.createTestUser({
       email: uniqueEmail,
       name: 'Test User',
       password: testPassword,
       role: 'agent'
     });
-    console.log(`✅ Test user created: ${user.id}`);
+    // console.log(`✅ Test user created: ${user.id}`
 
     // First login
     await page.goto('/login');
     await page.getByLabel('البريد الإلكتروني').fill(uniqueEmail);
     await page.getByLabel('كلمة المرور').fill(testPassword);
-    await page.getByRole('button', { name: /تسجيل الدخول/ }).click();
-    
+    await page.getBystring('button', { name: /تسجيل الدخول/ }).click();
+
     // Wait for redirect to dashboard
     await expect(page).toHaveURL(/\/dashboard/, { timeout: 10000 });
-    
+
     // Reload the page
     await page.reload();
-    
+
     // Should still be logged in (no redirect to login)
     await expect(page).toHaveURL(/\/dashboard/, { timeout: 5000 });
     await expect(page.locator('text=لوحة التحكم')).toBeVisible();
   });
 
-  test('07 - should show loading state during login', async ({ page }) => {
+  test('07 - should show loading state during login', async({ page }) => {
     await page.goto('/login');
 
     await page.getByLabel('البريد الإلكتروني').fill(testEmail);
     await page.getByLabel('كلمة المرور').fill(testPassword);
 
     // Click login and immediately check for loading state
-    await page.getByRole('button', { name: /تسجيل الدخول/ }).click();
-    
+    await page.getBystring('button', { name: /تسجيل الدخول/ }).click();
+
     // Should show loading state
-    await expect(page.getByRole('button', { name: /جارٍ تسجيل الدخول|Logging in/i })).toBeVisible({
+    await expect(page.getBystring('button', { name: /جارٍ تسجيل الدخول|Logging in/i })).toBeVisible({
       timeout: 2000
     });
   });
 
-  test('08 - should logout successfully', async ({ page }) => {
+  test('08 - should logout successfully', async({ page }) => {
     await page.goto('/dashboard/user');
-    
+
     // Wait for page to load
     await expect(page.locator('text=لوحة التحكم')).toBeVisible();
 
     // Find and click logout button (might be in a menu)
     const logoutButton = page.locator('button, a').filter({ hasText: /تسجيل الخروج|Logout|خروج/i }).first();
-    
+
     if (await logoutButton.isVisible()) {
       await logoutButton.click();
-      
+
       // Should redirect to login or home page
       await page.waitForURL(/\/(login|$)/, { timeout: 5000 });
     }
   });
 
-  test('09 - should navigate to forgot password page', async ({ page }) => {
+  test('09 - should navigate to forgot password page', async({ page }) => {
     await page.goto('/login');
 
     await page.getByText(/نسيت كلمة المرور|Forgot password/i).click();
-    
+
     await expect(page).toHaveURL(/forgot-password/);
     await expect(page.getByLabel('البريد الإلكتروني')).toBeVisible();
   });
 
-  test('10 - should navigate to register page', async ({ page }) => {
+  test('10 - should navigate to register page', async({ page }) => {
     await page.goto('/login');
 
     await page.getByText(/إنشاء حساب جديد|Create account|Register/i).click();
-    
+
     await expect(page).toHaveURL(/register/);
     await expect(page.getByLabel('الاسم الكامل')).toBeVisible();
   });
 });
 
 test.describe('Login Module - Database Verification', () => {
-  test('should have created user in database', async ({ request }) => {
+  test('should have created user in database', async({ request }) => {
     // This test verifies that our test user exists in the database
     // In a real scenario, you would query the database directly
     // For now, we verify through the auth system
-    
-    const email = `verify-${Date.now()}@example.com`;
+
+    const email = `verify-${Date.now()}@example.com`
     const password = 'VerifyPassword123!';
 
     // Create user
@@ -211,7 +211,7 @@ test.describe('Login Module - Database Verification', () => {
     expect(registerData.data.id).toBeTruthy();
     expect(registerData.data.email).toBe(email);
 
-    console.log('✅ User created in database:', registerData.data.id);
+    // console.log('✅ User created in database:', registerData.data.id);
 
     // Verify login works
     const loginResponse = await request.post('/api/auth/login', {
@@ -228,10 +228,10 @@ test.describe('Login Module - Database Verification', () => {
     expect(loginData.data.user.email).toBe(email);
     expect(loginData.data.token).toBeTruthy();
 
-    console.log('✅ Login verified with database credentials');
+    // console.log('✅ Login verified with database credentials');
   });
 
-  test('should reject login for non-existent user', async ({ request }) => {
+  test('should reject login for non-existent user', async({ request }) => {
     const response = await request.post('/api/auth/login', {
       data: {
         email: 'nonexistent@example.com',
@@ -245,11 +245,11 @@ test.describe('Login Module - Database Verification', () => {
     expect(data.success).toBeFalsy();
     expect(data.error).toContain('بيانات الدخول غير صحيحة');
 
-    console.log('✅ Correctly rejected non-existent user');
+    // console.log('✅ Correctly rejected non-existent user');
   });
 
-  test('should handle concurrent login requests', async ({ request }) => {
-    const email = `concurrent-${Date.now()}@example.com`;
+  test('should handle concurrent login requests', async({ request }) => {
+    const email = `concurrent-${Date.now()}@example.com`
     const password = 'ConcurrentPassword123!';
 
     // Create user first
@@ -263,7 +263,7 @@ test.describe('Login Module - Database Verification', () => {
     });
 
     // Make multiple concurrent login requests
-    const loginPromises = Array(5).fill(null).map(() => 
+    const loginPromises = Array(5).fill(null).map(() =>
       request.post('/api/auth/login', {
         data: { email, password, rememberMe: false }
       })
@@ -283,6 +283,6 @@ test.describe('Login Module - Database Verification', () => {
     }
     expect(successCount).toBeGreaterThan(0);
 
-    console.log('✅ Handled concurrent login requests successfully');
+    // console.log('✅ Handled concurrent login requests successfully');
   });
 });

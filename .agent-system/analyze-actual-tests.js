@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
+let fs = require('fs');
+let path = require('path');
 
-const testFiles = [
+let testFiles = [
   'tests/e2e/auth.spec.ts',
   'tests/e2e/admin.spec.ts',
   'tests/e2e/appointments.spec.ts',
@@ -39,22 +39,22 @@ const testFiles = [
 ];
 
 let totalTests = 0;
-const report = {};
+let report = {};
 
 testFiles.forEach(file => {
   if (fs.existsSync(file)) {
-    const content = fs.readFileSync(file, 'utf8');
-    const testMatches = content.match(/test\(/g) || [];
-    const testCount = testMatches.length;
+    let content = fs.readFileSync(file, 'utf8');
+    let testMatches = content.match(/test\(/g) || [];
+    let testCount = testMatches.length;
     totalTests += testCount;
-    
-    const fileName = path.basename(file);
+
+    let fileName = path.basename(file);
     report[fileName] = testCount;
-    console.log(`✅ ${fileName.padEnd(50)} ${testCount} اختبارات`);
+    // console.log(`✅ ${fileName.padEnd(50)} ${testCount} اختبارات`
   }
 });
 
-console.log('\n' + '='.repeat(70));
-console.log(`إجمالي الاختبارات الفعلية: ${totalTests}`);
-console.log('='.repeat(70));
+// console.log('\n' + '='.repeat(70));
+// console.log(`إجمالي الاختبارات الفعلية: ${totalTests}`
+// console.log('='.repeat(70));
 

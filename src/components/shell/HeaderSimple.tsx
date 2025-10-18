@@ -1,22 +1,23 @@
+import React from "react";
 
-"use client";
-import { useEffect, useState } from "react";
-import { Sun, Moon, Languages } from "lucide-react";
-import Image from "next/image";
+'use client';
+import { useEffect, useState } from 'react';
+import { Sun, Moon, Languages } from 'lucide-react';
+import Image from 'next/image';
 
 export default function HeaderSimple() {
-  const [theme, setTheme] = useState<string>("light");
-  const [dir, setDir] = useState<"rtl" | "ltr">("rtl");
+  const [theme, setTheme] = useState<string>('light');
+  const [dir, setDir] = useState<'rtl' | 'ltr'>('rtl');
   const [showThemeDropdown, setShowThemeDropdown] = useState(false);
   const [showLangDropdown, setShowLangDropdown] = useState(false);
 
   useEffect(() => {
     const html = document.documentElement;
-    html.setAttribute("data-theme", theme);
-    html.setAttribute("dir", dir);
-    html.setAttribute("lang", dir === "rtl" ? "ar" : "en");
-    localStorage.setItem("theme", theme);
-    localStorage.setItem("dir", dir);
+    html.setAttribute('data-theme', theme);
+    html.setAttribute('dir', dir);
+    html.setAttribute('lang', dir === 'rtl' ? 'ar' : 'en');
+    localStorage.setItem('theme', theme);
+    localStorage.setItem('dir', dir);
   }, [theme, dir]);
 
   // Close dropdowns when clicking outside
@@ -26,8 +27,8 @@ export default function HeaderSimple() {
       setShowLangDropdown(false);
     };
 
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
   return (
@@ -59,7 +60,7 @@ export default function HeaderSimple() {
                   setShowThemeDropdown(!showThemeDropdown);
                 }}
               >
-                {theme === "light" ? (
+                {theme === 'light' ? (
                   <Sun className="h-4 w-4" />
                 ) : (
                   <Moon className="h-4 w-4" />
@@ -74,7 +75,7 @@ export default function HeaderSimple() {
                   <button
                     className="w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800"
                     onClick={() => {
-                      setTheme("light");
+                      setTheme('light');
                       setShowThemeDropdown(false);
                     }}
                   >
@@ -83,7 +84,7 @@ export default function HeaderSimple() {
                   <button
                     className="w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800"
                     onClick={() => {
-                      setTheme("dark");
+                      setTheme('dark');
                       setShowThemeDropdown(false);
                     }}
                   >
@@ -96,9 +97,9 @@ export default function HeaderSimple() {
             {/* Direction Toggle */}
             <button
               className="h-9 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
-              onClick={() => setDir(dir === "rtl" ? "ltr" : "rtl")}
+              onClick={() => setDir(dir === 'rtl' ? 'ltr' : 'rtl')}
             >
-              {dir === "rtl" ? "RTL" : "LTR"}
+              {dir === 'rtl' ? 'RTL' : 'LTR'}
             </button>
 
             {/* Language Dropdown */}

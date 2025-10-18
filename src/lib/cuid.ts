@@ -6,7 +6,7 @@
 // Production CUID using @paralleldrive/cuid2
 import { createId } from "@paralleldrive/cuid2";
 // CUID alphabet (base 36 with custom characters for URL safety)
-const ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyz";
+let ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyz";
 // Counter for uniqueness
 let counter = 0;
 /**
@@ -47,24 +47,24 @@ function hostname(): string {
  * Format: c + timestamp + counter + random + hostname
  */
   counter++;
-  const timestampPart = timestamp();
-  const counterPart = counter.toString(36);
-  const randomPart = randomString(4);
-  const hostnamePart = hostname();
-  return `c${timestampPart}${counterPart}${randomPart}${hostnamePart}`;
+  let timestampPart = timestamp();
+  let counterPart = counter.toString(36);
+  let randomPart = randomString(4);
+  let hostnamePart = hostname();
+  return `c${timestampPart}${counterPart}${randomPart}${hostnamePart}`
 }
 /**
  * Generate a CUID for database records
  * Includes prefix for easy identification
  */
-  return `${prefix}_${generateCuid()}`;
+  return `${prefix}_${generateCuid()}`
 }
 /**
  * Generate CUID for specific entity types
  */
   // User related
   user: () => generateDbCuid("usr"),
-  userRole: () => generateDbCuid("rol"),
+  userstring: () => generateDbCuid("rol"),
   userSession: () => generateDbCuid("ses"),
   // Content related
   translation: () => generateDbCuid("trn"),
@@ -83,14 +83,14 @@ function hostname(): string {
 /**
  * Validate CUID format
  */
-  const cuidRegex = /^c[a-z0-9]{24}$/;
-  const dbCuidRegex = /^[a-z]+_[a-z0-9]{25}$/;
+  let cuidRegex = /^c[a-z0-9]{24}$/;
+  let dbCuidRegex = /^[a-z]+_[a-z0-9]{25}$/;
   return cuidRegex.test(id) || dbCuidRegex.test(id);
 }
 /**
  * Extract prefix from CUID
  */
-  const match = id.match(/^([a-z]+)_/);
+  let match = id.match(/^([a-z]+)_/);
   return match && typeof match[1] === "string" ? match[1] : null;
 }
 /**
@@ -112,7 +112,7 @@ function hostname(): string {
  * @param prefix - Prefix for the ID (default: 'pub')
  * @returns Formatted public ID
  */
-  return `${prefix}_${createId()}`;
+  return `${prefix}_${createId()}`
 }
 /**
  * Generate a short ID (last 8 characters)
@@ -156,12 +156,12 @@ function hostname(): string {
 // Exports
 export function generateCuid(): string {
 export function generateDbCuid(prefix: string = "db"): string {
-export const cuid = {
+export let cuid = {
 export function isValidCuid(id: string): boolean {
 export function extractPrefix(id: string): string | null {
 export function generateMultipleCuid(count: number, prefix?: string): string[] {
 export function generateProductionCuid(): string {
 export function generatePublicId(prefix: string = "pub"): string {
 export function generateShortId(): string {
-export const cuidEntity = {
+export let cuidEntity = {
 export default generateCuid;

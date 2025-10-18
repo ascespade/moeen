@@ -1,26 +1,26 @@
 // scripts/smart-clean.js
-import fs from "fs";
-import path from "path";
+import fs from 'fs';
+import path from 'path';
 
 const root = process.cwd();
 const safeRootFolders = new Set([
-  "src",
-  "public",
-  "scripts",
-  "node_modules",
-  ".git",
-  "docs",
+  'src',
+  'public',
+  'scripts',
+  'node_modules',
+  '.git',
+  'docs'
 ]);
 const allowedExtensions = new Set([
-  ".ts",
-  ".tsx",
-  ".js",
-  ".jsx",
-  ".json",
-  ".css",
-  ".scss",
-  ".env",
-  ".md",
+  '.ts',
+  '.tsx',
+  '.js',
+  '.jsx',
+  '.json',
+  '.css',
+  '.scss',
+  '.env',
+  '.md'
 ]);
 
 function walkAndClean(dir) {
@@ -36,19 +36,19 @@ function walkAndClean(dir) {
       // Remove empty folders (ignore protected)
       if (fs.existsSync(full) && fs.readdirSync(full).length === 0) {
         fs.rmdirSync(full);
-        console.log(`🗑️ Removed empty folder: ${full}`);
+        // console.log(`🗑️ Removed empty folder: ${full}`
       }
     } else {
       const ext = path.extname(file);
       if (!allowedExtensions.has(ext)) {
         // never delete inside protected folders
-        if (full.includes("node_modules") || full.includes(".git")) continue;
+        if (full.includes('node_modules') || full.includes('.git')) continue;
         fs.unlinkSync(full);
-        console.log(`🧹 Deleted garbage file: ${full}`);
+        // console.log(`🧹 Deleted garbage file: ${full}`
       }
     }
   }
 }
 
 walkAndClean(root);
-console.log("✅ Smart clean completed safely.");
+// console.log('✅ Smart clean completed safely.');

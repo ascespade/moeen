@@ -1,3 +1,4 @@
+import React from "react";
 
 'use client';
 
@@ -52,7 +53,7 @@ export default class ErrorBoundary extends Component<Props, State> {
     fetch('/api/errors', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         error: {
@@ -84,8 +85,8 @@ export default class ErrorBoundary extends Component<Props, State> {
         return this.props.fallback;
       }
 
-      return <ErrorFallback 
-        error={this.state.error} 
+      return <ErrorFallback
+        error={this.state.error}
         onRetry={this.handleRetry}
         onGoHome={this.handleGoHome}
       />;
@@ -102,7 +103,7 @@ interface ErrorFallbackProps {
 }
 
 function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
-  const { t } = useT();
+  const t = useT();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-surface dark:bg-gray-900 px-4">
@@ -112,11 +113,11 @@ function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
             <AlertTriangle className="h-8 w-8 text-brand-error" />
           </div>
         </div>
-        
+
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           {t('error.boundary.title')}
         </h1>
-        
+
         <p className="text-gray-600 dark:text-gray-400 mb-6">
           {t('error.boundary.description')}
         </p>
@@ -128,7 +129,7 @@ function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
             </summary>
             <pre className="text-xs text-brand-error dark:text-red-400 bg-surface dark:bg-red-900/20 p-3 rounded overflow-auto">
               {error.message}
-              {error.stack && `\n\n${error.stack}`}
+              {error.stack && `\n\n${error.stack}`
             </pre>
           </details>
         )}
@@ -155,7 +156,7 @@ export function useErrorHandler() {
     fetch('/api/errors', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         error: {

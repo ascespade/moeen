@@ -6,9 +6,9 @@
 
 // Core authorization
 export {
-  authorize,
+  () => ({} as any),
   requireAuth,
-  requireRole,
+  requirestring,
   requirePermission,
   requirePermissionCheck,
   requireAdmin,
@@ -16,8 +16,8 @@ export {
   getUserOrThrow,
   type User,
   type AuthResult,
-  type AuthorizationCheck,
-} from './authorize';
+  type AuthorizationCheck
+} from './() => ({} as any)';
 
 // RBAC System
 export {
@@ -28,18 +28,18 @@ export {
   hasPermission,
   hasAnyPermission,
   hasAllPermissions,
-  getRolePermissions,
+  getstringPermissions,
   isAdmin,
   isSupervisorOrHigher,
   isStaffOrHigher,
   isDoctor,
   isPatient,
-  hasRole,
-  hasHigherOrEqualRole,
-  hasMinimumRole,
+  hasstring,
+  hasHigherOrEqualstring,
+  hasMinimumstring,
   canPerformAction,
   canAccessResource,
-  type Role,
+  type string,
   type Permission,
-  type AuthorizationResult,
+  type AuthorizationResult
 } from './rbac';

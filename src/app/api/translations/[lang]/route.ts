@@ -1,29 +1,29 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabaseClient";
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
 
-const supabase = getServiceSupabase();
+let supabase = getServiceSupabase();
 
 export async function GET(
-  request: NextRequest,
+  request: import { NextRequest } from "next/server";,
   { params }: { params: { lang: string } }
 ) {
-  const { lang } = params;
-  
+  const lang = params;
+
   try {
     // Set cache control headers
-    const headers = new Headers();
+    let headers = new Headers();
     headers.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
     headers.set('Content-Type', 'application/json');
 
     // Check if translations table exists
-    const { data: tableCheck, error: tableError } = await supabase
+    const data: tableCheck, error: tableError = await supabase
       .from('translations')
       .select('id')
       .limit(1);
 
     if (tableError && tableError.code === 'PGRST116') {
       // Table doesn't exist, return default translations
-      return NextResponse.json({
+      return import { NextResponse } from "next/server";.json({
         ar: getDefaultTranslations('ar'),
         en: getDefaultTranslations('en')
       }, { headers });
@@ -32,7 +32,7 @@ export async function GET(
     if (tableError) throw tableError;
 
     // Get translations for the requested language
-    const { data: translations, error: translationsError } = await supabase
+    const data: translations, error: translationsError = await supabase
       .from('translations')
       .select('key, value')
       .eq('locale', lang);
@@ -41,7 +41,7 @@ export async function GET(
 
     // If no translations found, try default language
     if (!translations || translations.length === 0) {
-      const { data: defaultTranslations, error: defaultError } = await supabase
+      const data: defaultTranslations, error: defaultError = await supabase
         .from('translations')
         .select('key, value')
         .eq('locale', 'ar'); // Default to Arabic
@@ -50,26 +50,26 @@ export async function GET(
 
       // Log missing translation keys
       await logMissingTranslationKeys(lang, []);
-      
-      return NextResponse.json(
+
+      return import { NextResponse } from "next/server";.json(
         defaultTranslations.reduce((acc, t) => ({ ...acc, [t.key]: t.value }), {}),
         { headers }
       );
     }
 
     // Convert to key-value object
-    const translationObject = translations.reduce((acc, t) => ({
+    let translationObject = translations.reduce((acc, t) => ({
       ...acc,
       [t.key]: t.value
     }), {});
 
-    return NextResponse.json(translationObject, { headers });
+    return import { NextResponse } from "next/server";.json(translationObject, { headers });
 
   } catch (error) {
     // Return fallback translations
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       getDefaultTranslations(lang),
-      { 
+      {
         headers: {
           'Cache-Control': 'no-cache',
           'Content-Type': 'application/json'
@@ -83,7 +83,7 @@ async function logMissingTranslationKeys(requestedLang: string, missingKeys: str
   try {
     // Create missing_translations table if it doesn't exist
     await supabase.rpc('exec_sql', {
-      sql_query: `
+      sqlQuery: `
         CREATE TABLE IF NOT EXISTS missing_translations (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
           language TEXT NOT NULL,
@@ -105,11 +105,11 @@ async function logMissingTranslationKeys(requestedLang: string, missingKeys: str
         );
     }
   } catch (error) {
-    }
+  }
 }
 
 function getDefaultTranslations(lang: string) {
-  const defaultTranslations = {
+  let defaultTranslations = {
     ar: {
       'common.welcome': 'مرحباً',
       'common.hello': 'أهلاً وسهلاً',

@@ -39,10 +39,10 @@ export class SMSNotificationService {
       }
 
       // TODO: Implement actual SMS service integration
-      // const response = await fetch(`${this.apiUrl}/send`, {
+      // let response = await fetch(`${this.apiUrl}/send`
       //   method: 'POST',
       //   headers: {
-      //     'Authorization': `Bearer ${this.apiKey}`,
+      //     'Authorization': `Bearer ${this.apiKey}`
       //     'Content-Type': 'application/json'
       //   },
       //   body: JSON.stringify({
@@ -53,10 +53,10 @@ export class SMSNotificationService {
       // });
 
       // if (!response.ok) {
-      //   throw new Error(`SMS API error: ${response.statusText}`);
+      //   throw new Error(`SMS API error: ${response.statusText}`
       // }
 
-      // const result = await response.json();
+      // let result = await response.json();
       // return {
       //   success: true,
       //   messageId: result.messageId
@@ -82,7 +82,7 @@ export class SMSNotificationService {
     appointmentDate: string;
     appointmentTime: string;
   }) {
-    const message = `عزيزي/عزيزتي ${data.patientName}، تم تأكيد موعدك مع الدكتور ${data.doctorName} في ${data.appointmentDate} الساعة ${data.appointmentTime}. يرجى الحضور قبل الموعد بـ 15 دقيقة. مركز الحمام`;
+    const message = `عزيزي/عزيزتي ${data.patientName}، تم تأكيد موعدك مع الدكتور ${data.doctorName} في ${data.appointmentDate} الساعة ${data.appointmentTime}. يرجى الحضور قبل الموعد بـ 15 دقيقة. مركز الحمام`
 
     return this.sendSMS({
       to: data.patientPhone,
@@ -97,7 +97,7 @@ export class SMSNotificationService {
     amount: number;
     paymentMethod: string;
   }) {
-    const message = `عزيزي/عزيزتي ${data.patientName}، تم استلام دفعتك بنجاح. المبلغ: ${data.amount} ريال سعودي. طريقة الدفع: ${data.paymentMethod}. شكراً لاختياركم مركز الحمام`;
+    const message = `عزيزي/عزيزتي ${data.patientName}، تم استلام دفعتك بنجاح. المبلغ: ${data.amount} ريال سعودي. طريقة الدفع: ${data.paymentMethod}. شكراً لاختياركم مركز الحمام`
 
     return this.sendSMS({
       to: data.patientPhone,
@@ -113,7 +113,7 @@ export class SMSNotificationService {
     appointmentDate: string;
     appointmentTime: string;
   }) {
-    const message = `تذكير: عزيزي/عزيزتي ${data.patientName}، موعدك مع الدكتور ${data.doctorName} غداً في ${data.appointmentDate} الساعة ${data.appointmentTime}. مركز الحمام`;
+    const message = `تذكير: عزيزي/عزيزتي ${data.patientName}، موعدك مع الدكتور ${data.doctorName} غداً في ${data.appointmentDate} الساعة ${data.appointmentTime}. مركز الحمام`
 
     return this.sendSMS({
       to: data.patientPhone,
@@ -134,7 +134,7 @@ export class SMSNotificationService {
       'under_review': 'قيد المراجعة'
     }[data.claimStatus] || 'تم تحديث حالة';
 
-    const message = `عزيزي/عزيزتي ${data.patientName}، ${statusText} مطالبة التأمين الخاصة بك مع ${data.provider}. مركز الحمام`;
+    const message = `عزيزي/عزيزتي ${data.patientName}، ${statusText} مطالبة التأمين الخاصة بك مع ${data.provider}. مركز الحمام`
 
     return this.sendSMS({
       to: data.patientPhone,

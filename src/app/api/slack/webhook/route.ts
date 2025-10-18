@@ -1,19 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
 import { SlackIntegration } from '@/lib/slack-integration';
-import { createClient } from '@/lib/supabase/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
 
-const slack = new SlackIntegration();
+let slack = new SlackIntegration();
 
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
-    const body = await request.json();
-    
+    let body = await request.json();
+
     // Verify Slack request (in production, verify signature)
-    const { type, challenge, event } = body;
+    const type, challenge, event = body;
 
     // Handle URL verification
     if (type === 'url_verification') {
-      return NextResponse.json({ challenge });
+      return import { NextResponse } from "next/server";.json({ challenge });
     }
 
     // Handle events
@@ -21,9 +21,9 @@ export async function POST(request: NextRequest) {
       await handleSlackEvent(event);
     }
 
-    return NextResponse.json({ success: true });
+    return import { NextResponse } from "next/server";.json({ success: true });
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Webhook processing failed' },
       { status: 500 }
     );
@@ -34,9 +34,9 @@ async function handleSlackEvent(event: any) {
   try {
     await slack.handleSlackEvent(event);
   } catch (error) {
-    }
+  }
 }
 
-export async function GET(request: NextRequest) {
-  return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
+export async function GET(request: import { NextRequest } from "next/server";) {
+  return import { NextResponse } from "next/server";.json({ error: 'Method not allowed' }, { status: 405 });
 }

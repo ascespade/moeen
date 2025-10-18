@@ -1,55 +1,55 @@
-import { test, expect } from "@playwright/test";
-import AxeBuilder from "@axe-core/playwright";
+import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
 
-test.describe("Accessibility Tests", () => {
-  test("Homepage should not have accessibility violations", async ({
-    page,
+test.describe('Accessibility Tests', () => {
+  test('Homepage should not have accessibility violations', async({
+    page
   }) => {
-    await page.goto("/");
+    await page.goto('/');
 
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
   });
 
-  test("Dashboard should not have accessibility violations", async ({
-    page,
+  test('Dashboard should not have accessibility violations', async({
+    page
   }) => {
-    await page.goto("/login");
-    await page.fill('[data-testid="email"]', "admin@example.com");
-    await page.fill('[data-testid="password"]', "password");
+    await page.goto('/login');
+    await page.fill('[data-testid="email"]', 'admin@example.com');
+    await page.fill('[data-testid="password"]', 'password');
     await page.click('[data-testid="login-button"]');
-    await page.waitForURL("/dashboard");
+    await page.waitForURL('/dashboard');
 
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
   });
 
-  test("Forms should be keyboard navigable", async ({ page }) => {
-    await page.goto("/register");
+  test('Forms should be keyboard navigable', async({ page }) => {
+    await page.goto('/register');
 
     // Test tab navigation
-    await page.keyboard.press("Tab");
+    await page.keyboard.press('Tab');
     await expect(page.locator('[data-testid="full-name"]')).toBeFocused();
 
-    await page.keyboard.press("Tab");
+    await page.keyboard.press('Tab');
     await expect(page.locator('[data-testid="email"]')).toBeFocused();
 
-    await page.keyboard.press("Tab");
+    await page.keyboard.press('Tab');
     await expect(page.locator('[data-testid="password"]')).toBeFocused();
 
-    await page.keyboard.press("Tab");
+    await page.keyboard.press('Tab');
     await expect(
-      page.locator('[data-testid="confirm-password"]'),
+      page.locator('[data-testid="confirm-password"]')
     ).toBeFocused();
 
-    await page.keyboard.press("Tab");
+    await page.keyboard.press('Tab');
     await expect(page.locator('[data-testid="register-button"]')).toBeFocused();
   });
 
-  test("Login form should be accessible", async ({ page }) => {
-    await page.goto("/login");
+  test('Login form should be accessible', async({ page }) => {
+    await page.goto('/login');
 
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
@@ -63,46 +63,46 @@ test.describe("Accessibility Tests", () => {
     const emailInput = page.locator('[data-testid="email"]');
     const passwordInput = page.locator('[data-testid="password"]');
 
-    await expect(emailInput).toHaveAttribute("required");
-    await expect(passwordInput).toHaveAttribute("required");
+    await expect(emailInput).toHaveAttribute('required');
+    await expect(passwordInput).toHaveAttribute('required');
   });
 
-  test("Data tables should be accessible", async ({ page }) => {
-    await page.goto("/login");
-    await page.fill('[data-testid="email"]', "admin@example.com");
-    await page.fill('[data-testid="password"]', "password");
+  test('Data tables should be accessible', async({ page }) => {
+    await page.goto('/login');
+    await page.fill('[data-testid="email"]', 'admin@example.com');
+    await page.fill('[data-testid="password"]', 'password');
     await page.click('[data-testid="login-button"]');
-    await page.waitForURL("/dashboard");
-    await page.goto("/patients");
+    await page.waitForURL('/dashboard');
+    await page.goto('/patients');
 
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
 
     // Test table accessibility
-    const table = page.locator("table");
-    await expect(table).toHaveAttribute("role", "table");
+    const table = page.locator('table');
+    await expect(table).toHaveAttribute('role', 'table');
 
-    const headers = page.locator("th");
-    await expect(headers.first()).toHaveAttribute("role", "columnheader");
+    const headers = page.locator('th');
+    await expect(headers.first()).toHaveAttribute('role', 'columnheader');
   });
 
-  test("Navigation should be keyboard accessible", async ({ page }) => {
-    await page.goto("/");
+  test('Navigation should be keyboard accessible', async({ page }) => {
+    await page.goto('/');
 
     // Test skip links
-    await page.keyboard.press("Tab");
-    const skipLink = page.locator(".skip-link");
+    await page.keyboard.press('Tab');
+    const skipLink = page.locator('.skip-link');
     if (await skipLink.isVisible()) {
       await expect(skipLink).toBeFocused();
     }
 
     // Test main navigation
-    const nav = page.locator("nav");
+    const nav = page.locator('nav');
     await expect(nav).toBeVisible();
 
     // Test keyboard navigation in menu
-    const menuItems = page.locator("nav a, nav button");
+    const menuItems = page.locator('nav a, nav button');
     const firstMenuItem = menuItems.first();
 
     if (await firstMenuItem.isVisible()) {
@@ -111,25 +111,25 @@ test.describe("Accessibility Tests", () => {
     }
   });
 
-  test("Color contrast should meet WCAG standards", async ({ page }) => {
-    await page.goto("/");
+  test('Color contrast should meet WCAG standards', async({ page }) => {
+    await page.goto('/');
 
     const accessibilityScanResults = await new AxeBuilder({ page })
-      .withTags(["color-contrast"])
+      .withTags(['color-contrast'])
       .analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
   });
 
-  test("Images should have proper alt text", async ({ page }) => {
-    await page.goto("/");
+  test('Images should have proper alt text', async({ page }) => {
+    await page.goto('/');
 
-    const images = page.locator("img");
+    const images = page.locator('img');
     const imageCount = await images.count();
 
     for (let i = 0; i < imageCount; i++) {
       const img = images.nth(i);
-      const alt = await img.getAttribute("alt");
+      const alt = await img.getAttribute('alt');
 
       // Decorative images should have empty alt
       // Content images should have descriptive alt
@@ -137,13 +137,13 @@ test.describe("Accessibility Tests", () => {
     }
   });
 
-  test("Focus indicators should be visible", async ({ page }) => {
-    await page.goto("/");
+  test('Focus indicators should be visible', async({ page }) => {
+    await page.goto('/');
 
     // Focus on first interactive element
-    await page.keyboard.press("Tab");
+    await page.keyboard.press('Tab');
 
-    const focusedElement = page.locator(":focus");
+    const focusedElement = page.locator(':focus');
     await expect(focusedElement).toBeVisible();
 
     // Check if focus indicator is visible
@@ -151,20 +151,20 @@ test.describe("Accessibility Tests", () => {
       const styles = window.getComputedStyle(el);
       return {
         outline: styles.outline,
-        boxShadow: styles.boxShadow,
+        boxShadow: styles.boxShadow
       };
     });
 
     expect(
-      focusStyles.outline !== "none" || focusStyles.boxShadow !== "none",
+      focusStyles.outline !== 'none' || focusStyles.boxShadow !== 'none'
     ).toBeTruthy();
   });
 
-  test("ARIA labels should be properly used", async ({ page }) => {
-    await page.goto("/");
+  test('ARIA labels should be properly used', async({ page }) => {
+    await page.goto('/');
 
     const accessibilityScanResults = await new AxeBuilder({ page })
-      .withTags(["aria"])
+      .withTags(['aria'])
       .analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);

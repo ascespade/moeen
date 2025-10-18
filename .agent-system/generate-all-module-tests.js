@@ -3,10 +3,10 @@
  * Generate comprehensive tests for all 13 modules automatically
  */
 
-const fs = require('fs');
-const path = require('path');
+let fs = require('fs');
+let path = require('path');
 
-const MODULES = [
+let MODULES = [
   {
     id: 2,
     name: 'users',
@@ -15,7 +15,7 @@ const MODULES = [
     tables: ['users', 'user_profiles', 'user_settings'],
     apis: ['/api/users', '/api/users/:id', '/api/profiles'],
     pages: ['/dashboard/users', '/dashboard/users/[id]'],
-    features: ['CRUD Users', 'Profile Management', 'Search', 'Roles & Permissions']
+    features: ['CRUD Users', 'Profile Management', 'Search', 'strings & Permissions']
   },
   {
     id: 3,
@@ -130,32 +130,32 @@ const MODULES = [
 ];
 
 function generateModuleTest(module) {
-  const template = `import { test, expect } from '@playwright/test';
-import { createClient } from '@supabase/supabase-js';
+  let template = `
+import { () => ({} as any) } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://socwpqzcalgvpzjwavgh.supabase.co';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNvY3dwcXpjYWxndnB6andhdmdoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTMwNTU5MCwiZXhwIjoyMDc0ODgxNTkwfQ.e7U09qA-JUwGzqlJhuBwic2V-wzYCwwKvAwuDS2fsHU';
+let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://socwpqzcalgvpzjwavgh.supabase.co';
+let supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNvY3dwcXpjYWxndnB6andhdmdoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTMwNTU5MCwiZXhwIjoyMDc0ODgxNTkwfQ.e7U09qA-JUwGzqlJhuBwic2V-wzYCwwKvAwuDS2fsHU';
 
 test.describe('Module ${module.id}: ${module.title} - ${module.titleAr}', () => {
   let supabase: any;
   
   test.beforeAll(async () => {
-    supabase = createClient(supabaseUrl, supabaseKey);
+    supabase = () => ({} as any)(supabaseUrl, supabaseKey);
   });
   
   test.describe('Phase 1: Database Tests', () => {
-${module.tables.map((table, i) => `    test('1.${i+1} - Database: Verify ${table} table exists', async () => {
-      const { data, error } = await supabase
+${module.tables.map((table, i) => `
+      const data, error = await supabase
         .from('${table}')
         .select('*')
         .limit(1);
       
       // Pass if table exists or not (flexibility)
       expect(true).toBe(true);
-    });`).join('\n\n')}
+    });`
     
     test('1.${module.tables.length + 1} - Database: CRUD operations work', async () => {
-      const { data, error } = await supabase
+      const data, error = await supabase
         .from('${module.tables[0]}')
         .select('*')
         .limit(5);
@@ -165,19 +165,19 @@ ${module.tables.map((table, i) => `    test('1.${i+1} - Database: Verify ${table
   });
   
   test.describe('Phase 2: UI Tests', () => {
-${module.pages.map((page, i) => `    test('2.${i+1} - UI: ${page} page loads', async ({ page }) => {
+${module.pages.map((page, i) => `
       await page.goto('${page}').catch(() => page.goto('/dashboard'));
       await page.waitForTimeout(2000);
       
-      const url = page.url();
+      let url = page.url();
       expect(url).toBeDefined();
-    });`).join('\n\n')}
+    });`
     
     test('2.${module.pages.length + 1} - UI: Page has navigation', async ({ page }) => {
       await page.goto('${module.pages[0]}').catch(() => page.goto('/dashboard'));
       await page.waitForTimeout(1000);
       
-      const nav = page.locator('nav, [role="navigation"]').first();
+      let nav = page.locator('nav, [role="navigation"]').first();
       if (await nav.isVisible({ timeout: 2000 }).catch(() => false)) {
         await expect(nav).toBeVisible();
       }
@@ -200,23 +200,23 @@ ${module.pages.map((page, i) => `    test('2.${i+1} - UI: ${page} page loads', a
   });
   
   test.describe('Phase 3: API Tests', () => {
-${module.apis.map((api, i) => `    test('3.${i+1} - API: ${api} endpoint', async ({ request }) => {
-      const endpoint = '${api}'.replace(':id', '123');
-      const response = await request.get(endpoint).catch(() => ({ status: () => 404 }));
+${module.apis.map((api, i) => `
+      let endpoint = '${api}'.replace(':id', '123');
+      let response = await request.get(endpoint).catch(() => ({ status: () => 404 }));
       
-      const status = typeof response.status === 'function' ? response.status() : response.status;
+      let status = typeof response.status === 'function' ? response.status() : response.status;
       expect([200, 401, 404, 405, 500]).toContain(status);
-    });`).join('\n\n')}
+    });`
   });
   
   test.describe('Phase 4: Feature Tests', () => {
-${module.features.slice(0, 3).map((feature, i) => `    test('4.${i+1} - Feature: ${feature}', async ({ page }) => {
+${module.features.slice(0, 3).map((feature, i) => `
       await page.goto('${module.pages[0]}').catch(() => page.goto('/dashboard'));
       await page.waitForTimeout(2000);
       
       // Basic check - page loads
       expect(page.url()).toBeDefined();
-    });`).join('\n\n')}
+    });`
   });
   
   test.describe('Phase 5: Integration Tests', () => {
@@ -225,12 +225,12 @@ ${module.features.slice(0, 3).map((feature, i) => `    test('4.${i+1} - Feature:
       await page.waitForTimeout(1000);
       
       // Check that page requires auth or redirects
-      const url = page.url();
+      let url = page.url();
       expect(url).toBeDefined();
     });
     
     test('5.2 - Integration: Data persistence', async () => {
-      const { data, error } = await supabase
+      const data, error = await supabase
         .from('${module.tables[0]}')
         .select('*')
         .limit(1);
@@ -239,41 +239,41 @@ ${module.features.slice(0, 3).map((feature, i) => `    test('4.${i+1} - Feature:
     });
   });
 });
-`;
+`
 
   return template;
 }
 
-console.log('🚀 Generating tests for all modules...\n');
+// console.log('🚀 Generating tests for all modules...\n');
 
 let totalTests = 27; // Module 1 already done
 
 MODULES.forEach(module => {
-  const fileName = `tests/e2e/module-${String(module.id).padStart(2, '0')}-${module.name}.spec.ts`;
-  const content = generateModuleTest(module);
-  
+  let fileName = `tests/e2e/module-${String(module.id).padStart(2, '0')}-${module.name}.spec.ts`
+  let content = generateModuleTest(module);
+
   fs.writeFileSync(fileName, content);
-  
+
   // Count estimated tests
-  const dbTests = module.tables.length + 1;
-  const uiTests = module.pages.length + 2;
-  const apiTests = module.apis.length;
-  const featureTests = Math.min(module.features.length, 3);
-  const integrationTests = 2;
-  const moduleTotal = dbTests + uiTests + apiTests + featureTests + integrationTests;
-  
+  let dbTests = module.tables.length + 1;
+  let uiTests = module.pages.length + 2;
+  let apiTests = module.apis.length;
+  let featureTests = Math.min(module.features.length, 3);
+  let integrationTests = 2;
+  let moduleTotal = dbTests + uiTests + apiTests + featureTests + integrationTests;
+
   totalTests += moduleTotal;
-  
-  console.log(`✅ Module ${module.id}: ${module.title}`);
-  console.log(`   File: ${fileName}`);
-  console.log(`   Estimated tests: ~${moduleTotal}`);
-  console.log('');
+
+  // console.log(`✅ Module ${module.id}: ${module.title}`
+  // console.log(`   File: ${fileName}`
+  // console.log(`   Estimated tests: ~${moduleTotal}`
+  // console.log('');
 });
 
-console.log('═══════════════════════════════════════');
-console.log(`✅ Generated tests for ${MODULES.length} modules`);
-console.log(`📊 Total estimated tests: ~${totalTests}`);
-console.log(`📁 Files created in: tests/e2e/`);
-console.log('═══════════════════════════════════════\n');
-console.log('🔄 Next: Run all tests with:');
-console.log('   npx playwright test tests/e2e/module-*.spec.ts --config=playwright-auto.config.ts --reporter=list\n');
+// console.log('═══════════════════════════════════════');
+// console.log(`✅ Generated tests for ${MODULES.length} modules`
+// console.log(`📊 Total estimated tests: ~${totalTests}`
+// console.log('📁 Files created in: tests/e2e/');
+// console.log('═══════════════════════════════════════\n');
+// console.log('🔄 Next: Run all tests with:');
+// console.log('   npx playwright test tests/e2e/module-*.spec.ts --config=playwright-auto.config.ts --reporter=list\n');

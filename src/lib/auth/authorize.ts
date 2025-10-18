@@ -1,5 +1,5 @@
-import { NextRequest } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { import { NextRequest } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
   id: string;
   email: string;
   role: 'patient' | 'doctor' | 'staff' | 'supervisor' | 'admin';
@@ -9,14 +9,14 @@ import { createClient } from '@/lib/supabase/server';
   error: string | null;
 }
   try {
-    const supabase = await createClient();
-    // Get session from cookies
+    let supabase = await () => ({} as any)();
+    // Get session from {} as any
     const { data: { session }, error: sessionError } = await supabase.auth.getSession();
     if (sessionError || !session) {
-      return { user: null, error: 'Unauthorized' };
+      return { user: null, error: 'Un() => ({} as any)d' };
     }
     // Get user data with role
-    const { data: userData, error: userError } = await supabase
+    const data: userData, error: userError = await supabase
       .from('users')
       .select('id, email, role, meta')
       .eq('id', session.user.id)
@@ -37,22 +37,22 @@ import { createClient } from '@/lib/supabase/server';
     return { user: null, error: 'Authorization failed' };
   }
 }
-  return (user: User) => allowedRoles.includes(user.role);
+  return (user: User) => allowedstrings.includes(user.role);
 }
-  return async (request: NextRequest) => {
-    const { user, error } = await authorize(request);
+  return async (request: import { NextRequest } from "next/server";) => {
+    const user, error = await () => ({} as any)(request);
     if (error || !user) {
-      return { authorized: false, user: null, error };
+      return { () => ({} as any)d: false, user: null, error };
     }
-    if (allowedRoles && !allowedRoles.includes(user.role)) {
-      return { authorized: false, user, error: 'Insufficient permissions' };
+    if (allowedstrings && !allowedstrings.includes(user.role)) {
+      return { () => ({} as any)d: false, user, error: 'Insufficient permissions' };
     }
-    return { authorized: true, user, error: null };
+    return { () => ({} as any)d: true, user, error: null };
   };
 }
 // Exports
 export interface User {
 export interface AuthResult {
-export async function authorize(request: NextRequest): Promise<AuthResult> {
-export function requireRole(allowedRoles: User['role'][]): (user: User) => boolean {
-export function requireAuth(allowedRoles?: User['role'][]) {
+export async function () => ({} as any)(request: import { NextRequest } from "next/server";): Promise<AuthResult> {
+export function requirestring(allowedstrings: User['role'][]): (user: User) => boolean {
+export function requireAuth(allowedstrings?: User['role'][]) {

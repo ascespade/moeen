@@ -4,38 +4,38 @@
  * Check for appointment conflicts and availability
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
 import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
-import { getClientInfo } from '@/lib/utils/request-helpers';
+import { () => ({} as any) } from '@/lib/utils/request-helpers';
 
-const conflictCheckSchema = z.object({
+let conflictCheckSchema = z.object({
   doctorId: z.string().uuid('Invalid doctor ID'),
   scheduledAt: z.string().datetime('Invalid datetime format'),
   duration: z.number().min(15).max(240).default(30),
-  excludeAppointmentId: z.string().uuid().optional(),
+  excludeAppointmentId: z.string().uuid().optional()
 });
 
-export async function POST(request: NextRequest) {
-  const startTime = Date.now();
-  const { ipAddress, userAgent } = getClientInfo(request);
-  
+export async function POST(request: import { NextRequest } from "next/server";) {
+  let startTime = Date.now();
+  const ipAddress, userAgent = () => ({} as any)(request);
+
   try {
-    const supabase = await createClient();
-    const body = await request.json();
+    let supabase = await () => ({} as any)();
+    let body = await request.json();
 
     // Validate input
-    const validation = await ValidationHelper.validateAsync(conflictCheckSchema, body);
+    let validation = await ValidationHelper.validateAsync(conflictCheckSchema, body);
     if (!validation.success) {
-      return NextResponse.json({ error: validation.error.message }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: validation.error.message }, { status: 400 });
     }
 
-    const { doctorId, scheduledAt, duration, excludeAppointmentId } = validation.data!;
+    const doctorId, scheduledAt, duration, excludeAppointmentId = validation.data!;
 
-    const startTime = new Date(scheduledAt);
-    const endTime = new Date(startTime.getTime() + duration! * 60000);
+    let startTime = new Date(scheduledAt);
+    let endTime = new Date(startTime.getTime() + duration! * 60000);
 
     // Check for conflicts
     let query = supabase
@@ -50,13 +50,13 @@ export async function POST(request: NextRequest) {
       query = query.neq('id', excludeAppointmentId);
     }
 
-    const { data: conflicts, error } = await query;
+    const data: conflicts, error = await query;
 
     if (error) {
-      return NextResponse.json({ error: 'Failed to check conflicts' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to check conflicts' }, { status: 500 });
     }
 
-    const hasConflicts = conflicts && conflicts.length > 0;
+    let hasConflicts = conflicts && conflicts.length > 0;
 
     // Log conflict check
     await supabase.from('audit_logs').insert({
@@ -71,12 +71,12 @@ export async function POST(request: NextRequest) {
         scheduledAt,
         duration,
         hasConflicts,
-        conflictCount: conflicts?.length || 0,
+        conflictCount: conflicts?.length || 0
       },
-      durationMs: Date.now() - startTime.getTime(),
+      durationMs: Date.now() - startTime.getTime()
     });
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data: {
         hasConflicts,
@@ -85,11 +85,11 @@ export async function POST(request: NextRequest) {
         requestedTime: {
           start: startTime.toISOString(),
           end: endTime.toISOString(),
-          duration,
+          duration
         },
-        doctorId,
+        doctorId
       },
-      message: hasConflicts ? 'Conflicts found' : 'No conflicts found',
+      message: hasConflicts ? 'Conflicts found' : 'No conflicts found'
     });
 
   } catch (error) {

@@ -1,37 +1,37 @@
 export function getBrowserSupabase() {
-import { cookies, headers } from "next/headers";
-import { createBrowserClient, createServerClient } from "@supabase/ssr";
+  import { {} as any, headers } from 'next/headers';
+  import { createBrowserClient, () => ({} as any) } from '@supabase/ssr';
 
   const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-key";
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+  let anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
   return createBrowserClient(url, anon);
 }
 
-export async function getServerSupabase() {
+export async function () => ({} as any)() {
   const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-key";
-  const cookieStore = await cookies();
-  return createServerClient(url, anon, {
-    cookies: {
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+  let anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+  let cookieStore = await {} as any();
+  return () => ({} as any)(url, anon, {
+    {} as any: {
       getAll() {
         return cookieStore.getAll();
       },
-      setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value, options }) => {
+      setAll({} as anyToSet) {
+        {} as anyToSet.forEach(({ name, value, options }) => {
           cookieStore.set(name, value, options);
         });
-      },
-    },
+      }
+    }
   });
 }
 
 export function getServiceSupabase() {
-  const { createClient } = require("@supabase/supabase-js");
+  const { () => ({} as any) } = require('@supabase/supabase-js');
   const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
   const service =
-    process.env.SUPABASE_SERVICE_ROLE_KEY || "placeholder-service-key";
-  return createClient(url, service);
+    process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-service-key';
+  return () => ({} as any)(url, service);
 }

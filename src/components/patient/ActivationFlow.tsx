@@ -1,3 +1,4 @@
+import React from "react";
 
 'use client';
 
@@ -6,10 +7,10 @@ import { useT } from '@/hooks/useT';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { 
-  CheckCircle, 
-  Clock, 
-  AlertCircle, 
+import {
+  CheckCircle,
+  Clock,
+  AlertCircle,
   FileText,
   Shield,
   CreditCard
@@ -30,7 +31,7 @@ interface ActivationFlowProps {
 }
 
 export default function ActivationFlow({ patientId, onActivationComplete }: ActivationFlowProps) {
-  const { t } = useT();
+  const t = useT();
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -69,21 +70,21 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
     }
   ]);
 
-  const handleStepComplete = async (stepId: string) => {
+  const handleStepComplete = async(stepId: string) => {
     setIsProcessing(true);
-    
+
     try {
-      const response = await fetch(`/api/patients/${patientId}/activation/step`, {
+      const response = await fetch(`/api/patients/${patientId}/activation/step`
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ stepId, completed: true })
       });
 
       if (response.ok) {
-        setSteps(prev => prev.map(step => 
+        setSteps(prev => prev.map(step =>
           step.id === stepId ? { ...step, completed: true } : step
         ));
-        
+
         // Move to next step
         const currentIndex = steps.findIndex(step => step.id === stepId);
         if (currentIndex < steps.length - 1) {
@@ -91,16 +92,16 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
         }
       }
     } catch (error) {
-      } finally {
+    } finally {
       setIsProcessing(false);
     }
   };
 
-  const handleActivateAccount = async () => {
+  const handleActivateAccount = async() => {
     setIsProcessing(true);
-    
+
     try {
-      const response = await fetch(`/api/patients/${patientId}/activate`, {
+      const response = await fetch(`/api/patients/${patientId}/activate`
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -109,7 +110,7 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
         onActivationComplete?.();
       }
     } catch (error) {
-      } finally {
+    } finally {
       setIsProcessing(false);
     }
   };
@@ -129,7 +130,7 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
         <p className="text-gray-600 dark:text-gray-400">
           {t('patient.activation.description')}
         </p>
-        
+
         {/* Progress Bar */}
         <div className="mt-4">
           <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
@@ -137,9 +138,9 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
             <span>{Math.round(progressPercentage)}%</span>
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-            <div 
+            <div
               className="bg-brand-primary h-2 rounded-full transition-all duration-300"
-              style={{ width: `${progressPercentage}%` }}
+              style={{ width: `${progressPercentage}%`
             />
           </div>
         </div>
@@ -148,15 +149,15 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
       {/* Steps */}
       <div className="space-y-4">
         {steps.map((step, index) => (
-          <div 
+          <div
             key={step.id}
-            className={`flex items-start p-4 rounded-lg border ${
-              step.completed 
+            className={`
+              step.completed
                 ? 'bg-surface dark:bg-green-900/20 border-green-200 dark:border-green-800'
                 : index === currentStep
-                ? 'bg-surface dark:bg-blue-900/20 border-blue-200 dark:border-blue-800'
-                : 'bg-surface dark:bg-gray-800 border-gray-200 dark:border-gray-700'
-            }`}
+                  ? 'bg-surface dark:bg-blue-900/20 border-blue-200 dark:border-blue-800'
+                  : 'bg-surface dark:bg-gray-800 border-gray-200 dark:border-gray-700'
+            }`
           >
             <div className="flex-shrink-0 mr-4">
               {step.completed ? (
@@ -167,7 +168,7 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
                 <AlertCircle className="h-6 w-6 text-gray-400" />
               )}
             </div>
-            
+
             <div className="flex-1">
               <div className="flex items-center justify-between">
                 <h3 className="font-medium text-gray-900 dark:text-white">
@@ -186,11 +187,11 @@ export default function ActivationFlow({ patientId, onActivationComplete }: Acti
                   )}
                 </div>
               </div>
-              
+
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 {step.description}
               </p>
-              
+
               {index === currentStep && !step.completed && (
                 <div className="mt-3">
                   <Button

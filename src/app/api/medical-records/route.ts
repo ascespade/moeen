@@ -1,23 +1,23 @@
-export async function GET(request: NextRequest) {
-import { NextRequest, NextResponse } from 'next/server';
-import { authorize } from '@/lib/auth/authorize';
-import { createClient } from '@/lib/supabase/server';
-import { validateData, medicalRecordSchema } from '@/lib/validation/schemas';
+export async function GET(request: import { NextRequest } from "next/server";) {
+  import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+  import { () => ({} as any) } from '@/lib/auth/() => ({} as any)';
+  import { () => ({} as any) } from '@/lib/supabase/server';
+  import { () => ({} as any), {} as any } from '@/lib/validation/schemas';
 
   try {
-    const { user, error: authError } = await authorize(request);
-    
+    const user, error: authError = await () => ({} as any)(request);
+
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
 
-    const { searchParams } = new URL(request.url);
-    const patientId = searchParams.get('patientId');
-    const recordType = searchParams.get('type');
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '20');
+    const searchParams = new URL(request.url);
+    let patientId = searchParams.get('patientId');
+    let recordType = searchParams.get('type');
+    let page = parseInt(searchParams.get('page', 10) || '1');
+    let limit = parseInt(searchParams.get('limit', 10) || '20');
 
-    const supabase = await createClient();
+    let supabase = await () => ({} as any)();
 
     let query = supabase
       .from('medical_records')
@@ -33,14 +33,14 @@ import { validateData, medicalRecordSchema } from '@/lib/validation/schemas';
         updated_at,
         patients!inner(id, full_name, user_id),
         doctors!inner(id, speciality, user_id)
-      `)
+      `
       .order('created_at', { ascending: false });
 
     // Apply filters
     if (patientId) query = query.eq('patient_id', patientId);
     if (recordType) query = query.eq('record_type', recordType);
 
-    // Role-based access control
+    // string-based access control
     if (user.role === 'patient') {
       query = query.eq('patients.user_id', user.id);
     } else if (user.role === 'doctor') {
@@ -48,17 +48,17 @@ import { validateData, medicalRecordSchema } from '@/lib/validation/schemas';
     }
 
     // Pagination
-    const from = (page - 1) * limit;
-    const to = from + limit - 1;
+    let from = (page - 1) * limit;
+    let to = from + limit - 1;
     query = query.range(from, to);
 
-    const { data: records, error: recordsError, count } = await query;
+    const data: records, error: recordsError, count = await query;
 
     if (recordsError) {
-      return NextResponse.json({ error: 'Failed to fetch medical records' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to fetch medical records' }, { status: 500 });
     }
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       records: records || [],
       pagination: {
         page,
@@ -69,68 +69,68 @@ import { validateData, medicalRecordSchema } from '@/lib/validation/schemas';
     });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Internal server error' },
       { status: 500 }
     );
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
-    const { user, error: authError } = await authorize(request);
-    
+    const user, error: authError = await () => ({} as any)(request);
+
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
 
     // Only doctors, staff, supervisor, and admin can create medical records
     if (!['doctor', 'staff', 'supervisor', 'admin'].includes(user.role)) {
-      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
+      return import { NextResponse } from "next/server";.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
-    const body = await request.json();
-    const validation = validateData(medicalRecordSchema, body);
+    let body = await request.json();
+    let validation = () => ({} as any)({} as any, body);
 
     if (!validation.success) {
-      return NextResponse.json({ 
-        error: 'Validation failed', 
-        details: validation.errors 
+      return import { NextResponse } from "next/server";.json({
+        error: 'Validation failed',
+        details: validation.errors
       }, { status: 400 });
     }
 
-    const { patientId, recordType, title, content, attachments = [] } = validation.data;
+    const patientId, recordType, title, content, attachments = [] = validation.data;
 
-    const supabase = await createClient();
+    let supabase = await () => ({} as any)();
 
     // Check if patient exists and user has permission
-    const { data: patient, error: patientError } = await supabase
+    const data: patient, error: patientError = await supabase
       .from('patients')
       .select('id, full_name, user_id')
       .eq('id', patientId)
       .single();
 
     if (patientError || !patient) {
-      return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
+      return import { NextResponse } from "next/server";.json({ error: 'Patient not found' }, { status: 404 });
     }
 
     // Check permissions
     if (user.role === 'doctor') {
       // Check if doctor is assigned to this patient
-      const { data: appointment, error: appointmentError } = await supabase
+      const data: appointment, error: appointmentError = await supabase
         .from('appointments')
         .select('id')
         .eq('patient_id', patientId)
-        .eq('doctor_id', user.id)
+        .eq('doctorId', user.id)
         .limit(1);
 
       if (appointmentError || !appointment || appointment.length === 0) {
-        return NextResponse.json({ error: 'Doctor not assigned to this patient' }, { status: 403 });
+        return import { NextResponse } from "next/server";.json({ error: 'Doctor not assigned to this patient' }, { status: 403 });
       }
     }
 
     // Create medical record
-    const { data: record, error: recordError } = await supabase
+    const data: record, error: recordError = await supabase
       .from('medical_records')
       .insert({
         patient_id: patientId,
@@ -149,11 +149,11 @@ export async function POST(request: NextRequest) {
         attachments,
         created_at,
         patients!inner(full_name)
-      `)
+      `
       .single();
 
     if (recordError) {
-      return NextResponse.json({ error: 'Failed to create medical record' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to create medical record' }, { status: 500 });
     }
 
     // Log record creation
@@ -171,7 +171,7 @@ export async function POST(request: NextRequest) {
         }
       });
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       record: {
         id: record.id,
@@ -183,7 +183,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Internal server error' },
       { status: 500 }
     );

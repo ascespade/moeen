@@ -1,0 +1,202 @@
+{
+  "config": {
+    "configFile": "/home/ubuntu/moeen/playwright.config.js",
+    "rootDir": "/home/ubuntu/moeen/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "/home/ubuntu/moeen/tests/playwright-setup.js",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "reports/playwright-html"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright-results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "reports/playwright-results.xml"
+        }
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/ubuntu/moeen/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/ubuntu/moeen/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/ubuntu/moeen/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/home/ubuntu/moeen/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/ubuntu/moeen/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/home/ubuntu/moeen/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/ubuntu/moeen/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/home/ubuntu/moeen/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/ubuntu/moeen/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/home/ubuntu/moeen/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.0",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [],
+  "errors": [
+    {
+      "message": "Error: Cannot find package '@axe-core/playwright' imported from /home/ubuntu/moeen/tests/accessibility/accessibility.test.ts",
+      "stack": "Error: Cannot find package '@axe-core/playwright' imported from /home/ubuntu/moeen/tests/accessibility/accessibility.test.ts"
+    },
+    {
+      "message": "Error: supabaseUrl is required.",
+      "stack": "Error: supabaseUrl is required.\n    at validateSupabaseUrl (/home/ubuntu/moeen/node_modules/@supabase/supabase-js/src/lib/helpers.ts:86:11)\n    at SupabaseClient (/home/ubuntu/moeen/node_modules/@supabase/supabase-js/src/SupabaseClient.ts:110:40)\n    at createClient (/home/ubuntu/moeen/node_modules/@supabase/supabase-js/src/index.ts:46:10)\n    at /home/ubuntu/moeen/tests/e2e/appointments.spec.ts:12:18",
+      "location": {
+        "file": "/home/ubuntu/moeen/tests/e2e/appointments.spec.ts",
+        "column": 18,
+        "line": 12
+      },
+      "snippet": "   at e2e/appointments.spec.ts:12\n\n  10 | const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;\n  11 |\n> 12 | const supabase = createClient(supabaseUrl, supabaseKey);\n     |                  ^\n  13 |\n  14 | // Test data\n  15 | const testPatient = {"
+    },
+    {
+      "message": "Error: Missing Supabase environment variables",
+      "stack": "Error: Missing Supabase environment variables\n    at /home/ubuntu/moeen/tests/helpers/supabase-test-helper.ts:12:9",
+      "location": {
+        "file": "/home/ubuntu/moeen/tests/helpers/supabase-test-helper.ts",
+        "column": 9,
+        "line": 12
+      },
+      "snippet": "   at helpers/supabase-test-helper.ts:12\n\n  10 |\n  11 | if (!supabaseUrl || !supabaseServiceKey) {\n> 12 |   throw new Error('Missing Supabase environment variables');\n     |         ^\n  13 | }\n  14 |\n  15 | // Create Supabase client with service role key for testing"
+    },
+    {
+      "message": "Error: supabaseUrl is required.",
+      "stack": "Error: supabaseUrl is required.\n    at validateSupabaseUrl (/home/ubuntu/moeen/node_modules/@supabase/supabase-js/src/lib/helpers.ts:86:11)\n    at SupabaseClient (/home/ubuntu/moeen/node_modules/@supabase/supabase-js/src/SupabaseClient.ts:110:40)\n    at createClient (/home/ubuntu/moeen/node_modules/@supabase/supabase-js/src/index.ts:46:10)\n    at /home/ubuntu/moeen/tests/e2e/medical-records.spec.ts:10:18",
+      "location": {
+        "file": "/home/ubuntu/moeen/tests/e2e/medical-records.spec.ts",
+        "column": 18,
+        "line": 10
+      },
+      "snippet": "   at e2e/medical-records.spec.ts:10\n\n   8 | const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;\n   9 | const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;\n> 10 | const supabase = createClient(supabaseUrl, supabaseKey);\n     |                  ^\n  11 |\n  12 | test.describe('Medical Records Module', () => {\n  13 |   let testPatientId: number;"
+    },
+    {
+      "message": "Error: supabaseUrl is required.",
+      "stack": "Error: supabaseUrl is required.\n    at validateSupabaseUrl (/home/ubuntu/moeen/node_modules/@supabase/supabase-js/src/lib/helpers.ts:86:11)\n    at SupabaseClient (/home/ubuntu/moeen/node_modules/@supabase/supabase-js/src/SupabaseClient.ts:110:40)\n    at createClient (/home/ubuntu/moeen/node_modules/@supabase/supabase-js/src/index.ts:46:10)\n    at /home/ubuntu/moeen/tests/e2e/payments.spec.ts:10:18",
+      "location": {
+        "file": "/home/ubuntu/moeen/tests/e2e/payments.spec.ts",
+        "column": 18,
+        "line": 10
+      },
+      "snippet": "   at e2e/payments.spec.ts:10\n\n   8 | const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;\n   9 | const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;\n> 10 | const supabase = createClient(supabaseUrl, supabaseKey);\n     |                  ^\n  11 |\n  12 | test.describe('Payments Module', () => {\n  13 |   test('1. should create payment with tracking', async () => {"
+    },
+    {
+      "message": "Error: supabaseUrl is required.",
+      "stack": "Error: supabaseUrl is required.\n    at validateSupabaseUrl (/home/ubuntu/moeen/node_modules/@supabase/supabase-js/src/lib/helpers.ts:86:11)\n    at SupabaseClient (/home/ubuntu/moeen/node_modules/@supabase/supabase-js/src/SupabaseClient.ts:110:40)\n    at createClient (/home/ubuntu/moeen/node_modules/@supabase/supabase-js/src/index.ts:46:10)\n    at /home/ubuntu/moeen/tests/e2e/remaining-modules.spec.ts:11:18",
+      "location": {
+        "file": "/home/ubuntu/moeen/tests/e2e/remaining-modules.spec.ts",
+        "column": 18,
+        "line": 11
+      },
+      "snippet": "   at e2e/remaining-modules.spec.ts:11\n\n   9 | const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;\n  10 | const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;\n> 11 | const supabase = createClient(supabaseUrl, supabaseKey);\n     |                  ^\n  12 |\n  13 | test.describe('Chatbot & AI Module', () => {\n  14 |   test('should have tracking columns in conversations', async () => {"
+    },
+    {
+      "message": "Error: Missing Supabase environment variables",
+      "stack": "Error: Missing Supabase environment variables\n    at /home/ubuntu/moeen/tests/helpers/supabase-test-helper.ts:12:9",
+      "location": {
+        "file": "/home/ubuntu/moeen/tests/helpers/supabase-test-helper.ts",
+        "column": 9,
+        "line": 12
+      },
+      "snippet": "   at helpers/supabase-test-helper.ts:12\n\n  10 |\n  11 | if (!supabaseUrl || !supabaseServiceKey) {\n> 12 |   throw new Error('Missing Supabase environment variables');\n     |         ^\n  13 | }\n  14 |\n  15 | // Create Supabase client with service role key for testing"
+    },
+    {
+      "message": "Error: Cannot find package 'playwright-lh' imported from /home/ubuntu/moeen/tests/lighthouse/lighthouse.test.ts",
+      "stack": "Error: Cannot find package 'playwright-lh' imported from /home/ubuntu/moeen/tests/lighthouse/lighthouse.test.ts"
+    }
+  ],
+  "stats": {
+    "startTime": "2025-10-18T09:25:23.300Z",
+    "duration": 738.4999999999999,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -18,55 +18,55 @@ export const API_ENDPOINTS = {
   USERS: {
     LIST: '/api/users',
     CREATE: '/api/users',
-    GET: (id: string) => `/api/users/${id}`,
-    UPDATE: (id: string) => `/api/users/${id}`,
-    DELETE: (id: string) => `/api/users/${id}`,
+    GET: (id: string) => `/api/users/${id}`
+    UPDATE: (id: string) => `/api/users/${id}`
+    DELETE: (id: string) => `/api/users/${id}`
   },
   // Patients
   PATIENTS: {
     LIST: '/api/patients',
     CREATE: '/api/patients',
-    GET: (id: string) => `/api/patients/${id}`,
-    UPDATE: (id: string) => `/api/patients/${id}`,
-    DELETE: (id: string) => `/api/patients/${id}`,
-    ACTIVATE: (id: string) => `/api/patients/${id}/activate`,
+    GET: (id: string) => `/api/patients/${id}`
+    UPDATE: (id: string) => `/api/patients/${id}`
+    DELETE: (id: string) => `/api/patients/${id}`
+    ACTIVATE: (id: string) => `/api/patients/${id}/activate`
   },
   // Doctors
   DOCTORS: {
     LIST: '/api/doctors',
     CREATE: '/api/doctors',
-    GET: (id: string) => `/api/doctors/${id}`,
-    UPDATE: (id: string) => `/api/doctors/${id}`,
-    DELETE: (id: string) => `/api/doctors/${id}`,
+    GET: (id: string) => `/api/doctors/${id}`
+    UPDATE: (id: string) => `/api/doctors/${id}`
+    DELETE: (id: string) => `/api/doctors/${id}`
     AVAILABILITY: '/api/doctors/availability',
   },
   // Appointments
   APPOINTMENTS: {
     LIST: '/api/appointments',
     CREATE: '/api/appointments',
-    GET: (id: string) => `/api/appointments/${id}`,
-    UPDATE: (id: string) => `/api/appointments/${id}`,
-    DELETE: (id: string) => `/api/appointments/${id}`,
+    GET: (id: string) => `/api/appointments/${id}`
+    UPDATE: (id: string) => `/api/appointments/${id}`
+    DELETE: (id: string) => `/api/appointments/${id}`
   },
   // Payments
   PAYMENTS: {
     LIST: '/api/payments',
     CREATE: '/api/payments',
-    GET: (id: string) => `/api/payments/${id}`,
-    UPDATE: (id: string) => `/api/payments/${id}`,
+    GET: (id: string) => `/api/payments/${id}`
+    UPDATE: (id: string) => `/api/payments/${id}`
     PROCESS: '/api/payments/process',
   },
   // Insurance
   INSURANCE: {
     CLAIMS: '/api/insurance/claims',
-    CLAIM: (id: string) => `/api/insurance/claims/${id}`,
-    SUBMIT: (id: string) => `/api/insurance/claims/${id}/submit`,
+    CLAIM: (id: string) => `/api/insurance/claims/${id}`
+    SUBMIT: (id: string) => `/api/insurance/claims/${id}/submit`
   },
   // Notifications
   NOTIFICATIONS: {
     LIST: '/api/notifications',
     SEND: '/api/notifications/send',
-    MARK_READ: (id: string) => `/api/notifications/${id}/read`,
+    MARK_READ: (id: string) => `/api/notifications/${id}/read`
   },
   // Reports
   REPORTS: {
@@ -82,7 +82,7 @@ export const API_ENDPOINTS = {
   },
 } as const;
 
-// User Roles
+// User strings
 export const USER_ROLES = {
   PATIENT: 'patient',
   DOCTOR: 'doctor',
@@ -261,7 +261,7 @@ export const ERROR_MESSAGES = {
 // Regular Expressions
 export const REGEX_PATTERNS = {
   EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  PHONE: /^(\+966|0)?[5-9][0-9]{8}$/,
+  PHONE: /^(+966|0)?[5-9][0-9]{8}$/,
   PASSWORD: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
   MEDICAL_RECORD: /^MR[0-9]{8}$/,
   LICENSE_NUMBER: /^[A-Z]{2}[0-9]{6}$/,

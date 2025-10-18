@@ -1,3 +1,4 @@
+import React from "react";
 
 'use client';
 
@@ -9,10 +10,10 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { LoadingSpinner } from '@/components/ui';
-import { 
-  Users, 
-  TrendingUp, 
-  AlertTriangle, 
+import {
+  Users,
+  TrendingUp,
+  AlertTriangle,
   CheckCircle,
   Clock,
   FileText,
@@ -54,13 +55,13 @@ interface SupervisorData {
 }
 
 export default function SupervisorDashboard() {
-  const { t } = useT();
-  const { theme } = useTheme();
+  const t = useT();
+  const theme = useTheme();
   const [supervisorData, setSupervisorData] = useState<SupervisorData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchSupervisorData = async () => {
+    const fetchSupervisorData = async() => {
       try {
         const response = await fetch('/api/supervisor/me');
         if (response.ok) {
@@ -68,7 +69,7 @@ export default function SupervisorDashboard() {
           setSupervisorData(data);
         }
       } catch (error) {
-        } finally {
+      } finally {
         setIsLoading(false);
       }
     };
@@ -76,20 +77,20 @@ export default function SupervisorDashboard() {
     fetchSupervisorData();
   }, []);
 
-  const handleGenerateReport = async (reportType: string) => {
+  const handleGenerateReport = async(reportType: string) => {
     try {
       const response = await fetch('/api/reports/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: reportType })
       });
-      
+
       if (response.ok) {
         // Refresh data
         window.location.reload();
       }
     } catch (error) {
-      }
+    }
   };
 
   if (isLoading) {
@@ -101,7 +102,7 @@ export default function SupervisorDashboard() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['supervisor', 'admin']}>
+    <ProtectedRoute allowedstrings={['supervisor', 'admin']}>
       <div className="min-h-screen bg-surface dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
@@ -184,7 +185,7 @@ export default function SupervisorDashboard() {
                 {supervisorData?.staffActivity && supervisorData.staffActivity.length > 0 ? (
                   <div className="space-y-4">
                     {supervisorData.staffActivity.map((staff) => (
-                      <div 
+                      <div
                         key={staff.id}
                         className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
                       >
@@ -220,11 +221,11 @@ export default function SupervisorDashboard() {
                               {staff.efficiency}%
                             </p>
                           </div>
-                          <Badge 
+                          <Badge
                             variant={staff.efficiency >= 80 ? 'primary' : staff.efficiency >= 60 ? 'secondary' : 'destructive'}
                           >
-                            {staff.efficiency >= 80 ? t('common.excellent') : 
-                             staff.efficiency >= 60 ? t('common.good') : t('common.needs_improvement')}
+                            {staff.efficiency >= 80 ? t('common.excellent') :
+                              staff.efficiency >= 60 ? t('common.good') : t('common.needs_improvement')}
                           </Badge>
                         </div>
                       </div>
@@ -248,19 +249,19 @@ export default function SupervisorDashboard() {
                 {supervisorData?.alerts && supervisorData.alerts.length > 0 ? (
                   <div className="space-y-3">
                     {supervisorData.alerts.slice(0, 5).map((alert) => (
-                      <div 
+                      <div
                         key={alert.id}
-                        className={`flex items-start p-3 rounded-lg ${
+                        className={`
                           alert.type === 'error' ? 'bg-surface dark:bg-red-900/20' :
-                          alert.type === 'warning' ? 'bg-surface dark:bg-yellow-900/20' :
-                          'bg-surface dark:bg-blue-900/20'
-                        }`}
+                            alert.type === 'warning' ? 'bg-surface dark:bg-yellow-900/20' :
+                              'bg-surface dark:bg-blue-900/20'
+                        }`
                       >
-                        <AlertTriangle className={`h-4 w-4 mt-0.5 mr-3 ${
+                        <AlertTriangle className={`
                           alert.type === 'error' ? 'text-brand-error' :
-                          alert.type === 'warning' ? 'text-yellow-600' :
-                          'text-brand-primary'
-                        }`} />
+                            alert.type === 'warning' ? 'text-yellow-600' :
+                              'text-brand-primary'
+                        }`
                         <div className="flex-1">
                           <p className="text-sm text-gray-900 dark:text-white">
                             {alert.message}
@@ -285,21 +286,21 @@ export default function SupervisorDashboard() {
                   {t('supervisor.dashboard.reports')}
                 </h3>
                 <div className="space-y-3">
-                  <Button 
-                    className="w-full justify-start" 
+                  <Button
+                    className="w-full justify-start"
                     onClick={() => handleGenerateReport('daily')}
                   >
                     <BarChart3 className="h-4 w-4 mr-2" />
                     {t('supervisor.actions.daily_report')}
                   </Button>
-                  <Button 
+                  <Button
                     className="w-full justify-start" variant="outline"
                     onClick={() => handleGenerateReport('monthly')}
                   >
                     <FileText className="h-4 w-4 mr-2" />
                     {t('supervisor.actions.monthly_report')}
                   </Button>
-                  <Button 
+                  <Button
                     className="w-full justify-start" variant="outline"
                     onClick={() => handleGenerateReport('staff_performance')}
                   >
@@ -307,7 +308,7 @@ export default function SupervisorDashboard() {
                     {t('supervisor.actions.staff_report')}
                   </Button>
                 </div>
-                
+
                 {supervisorData?.reports && supervisorData.reports.length > 0 && (
                   <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                     <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
@@ -320,7 +321,7 @@ export default function SupervisorDashboard() {
                             {report.name}
                           </span>
                           <Badge variant="outline">
-                            {t(`report.status.${report.status}`)}
+                            {t(`report.status.${report.status}`
                           </Badge>
                         </div>
                       ))}

@@ -6,19 +6,19 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   // 🔧 إعدادات Playwright
   testDir: './tests/e2e',
-  
+
   // تشغيل الاختبارات في ملفات متوازية
   fullyParallel: true,
-  
+
   // فشل الاختبار إذا كان هناك خطأ في console
   forbidOnly: !!process.env.CI,
-  
+
   // إعادة المحاولة عند الفشل
   retries: process.env.CI ? 2 : 0,
-  
+
   // عدد العمال المتوازيين
   workers: process.env.CI ? 1 : undefined,
-  
+
   // إعدادات التقرير
   reporter: [
     ['html', { outputFolder: 'test-results/e2e-html' }],
@@ -26,29 +26,29 @@ export default defineConfig({
     ['junit', { outputFile: 'test-results/e2e-results.xml' }],
     ['list']
   ],
-  
+
   // إعدادات عامة
   use: {
     // Base URL للاختبارات
     baseURL: 'http://localhost:3000',
-    
+
     // تتبع الأخطاء
     trace: 'on-first-retry',
-    
+
     // لقطات الشاشة
     screenshot: 'only-on-failure',
-    
+
     // تسجيل الفيديو
     video: 'retain-on-failure',
-    
+
     // إعدادات المتصفح
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,
-    
+
     // إعدادات الشبكة
     actionTimeout: 10000,
     navigationTimeout: 30000,
-    
+
     // إعدادات التحميل
     waitForLoadState: 'networkidle'
   },
@@ -57,29 +57,29 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'] }
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { ...devices['Desktop Firefox'] }
     },
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: { ...devices['Desktop Safari'] }
     },
     // اختبارات الهاتف المحمول
     {
       name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] },
+      use: { ...devices['Pixel 5'] }
     },
     {
       name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
+      use: { ...devices['iPhone 12'] }
     },
     // اختبارات التابلت
     {
       name: 'Tablet',
-      use: { ...devices['iPad Pro'] },
+      use: { ...devices['iPad Pro'] }
     }
   ],
 
@@ -98,7 +98,7 @@ export default defineConfig({
     '**/*.e2e.{test,spec}.{js,ts,jsx,tsx}',
     '**/e2e/**/*.{test,spec}.{js,ts,jsx,tsx}'
   ],
-  
+
   // إعدادات الاستبعاد
   testIgnore: [
     '**/node_modules/**',
@@ -127,7 +127,7 @@ export default defineConfig({
 
   // إعدادات التصحيح
   debug: process.env.PWDEBUG === '1',
-  
+
   // إعدادات الشبكة
   use: {
     ...devices['Desktop Chrome'],

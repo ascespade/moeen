@@ -44,7 +44,7 @@
   INDEXED_DB: 50 * 1024 * 1024, // 50MB
 } as const;
 // Exports
-export const STORAGE_KEYS = {
-export const STORAGE_TYPES = {
-export const CACHE_DURATION = {
-export const STORAGE_QUOTAS = {
+export let STORAGE_KEYS = {
+export let STORAGE_TYPES = {
+export let CACHE_DURATION = {
+export let STORAGE_QUOTAS = {

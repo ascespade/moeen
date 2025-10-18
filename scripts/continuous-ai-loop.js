@@ -1,26 +1,26 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
-const { spawn } = require("child_process");
+const fs = require('fs');
+const path = require('path');
+const spawn = require('child_process');
 
 class ContinuousAILoop {
   constructor() {
-    this.workspaceRoot = path.join(__dirname, "..");
+    this.workspaceRoot = path.join(__dirname, '..');
     this.logFile = path.join(
       this.workspaceRoot,
-      "logs",
-      "continuous-ai-loop.log",
+      'logs',
+      'continuous-ai-loop.log'
     );
     this.stateFile = path.join(
       this.workspaceRoot,
-      "temp",
-      "ai-loop-state.json",
+      'temp',
+      'ai-loop-state.json'
     );
     this.learningFile = path.join(
       this.workspaceRoot,
-      "temp",
-      "ai-learning-data.json",
+      'temp',
+      'ai-learning-data.json'
     );
     this.isRunning = false;
     this.cycleCount = 0;
@@ -30,13 +30,13 @@ class ContinuousAILoop {
       errorsFixed: 0,
       optimizationsApplied: 0,
       uptime: 0,
-      averageCycleTime: 0,
+      averageCycleTime: 0
     };
   }
 
-  log(message, level = "info") {
+  log(message, level = 'info') {
     const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] [${level.toUpperCase()}] Continuous AI Loop: ${message}\n`;
+    const logMessage = `[${timestamp}] [${level.toUpperCase()}] Continuous AI Loop: ${message}\n`
 
     // Ensure logs directory exists
     const logsDir = path.dirname(this.logFile);
@@ -45,27 +45,27 @@ class ContinuousAILoop {
     }
 
     fs.appendFileSync(this.logFile, logMessage);
-    console.log(logMessage.trim());
+    // console.log(logMessage.trim());
   }
 
   async initialize() {
-    this.log("Initializing Continuous AI Loop...");
+    this.log('Initializing Continuous AI Loop...');
 
     // Create necessary directories
     const directories = [
-      "logs",
-      "temp",
-      "reports",
-      "sandbox",
-      "learning",
-      "backups",
+      'logs',
+      'temp',
+      'reports',
+      'sandbox',
+      'learning',
+      'backups'
     ];
 
     for (const dir of directories) {
       const fullPath = path.join(this.workspaceRoot, dir);
       if (!fs.existsSync(fullPath)) {
         fs.mkdirSync(fullPath, { recursive: true });
-        this.log(`Created directory: ${dir}`);
+        this.log(`Created directory: ${dir}`
       }
     }
 
@@ -75,23 +75,23 @@ class ContinuousAILoop {
     // Initialize learning data
     await this.initializeLearningData();
 
-    this.log("Continuous AI Loop initialized");
+    this.log('Continuous AI Loop initialized');
   }
 
   async loadState() {
     try {
       if (fs.existsSync(this.stateFile)) {
-        const stateData = fs.readFileSync(this.stateFile, "utf8");
+        const stateData = fs.readFileSync(this.stateFile, 'utf8');
         const state = JSON.parse(stateData);
         this.cycleCount = state.cycleCount || 0;
         this.performanceMetrics = {
           ...this.performanceMetrics,
-          ...state.performanceMetrics,
+          ...state.performanceMetrics
         };
-        this.log(`Loaded state: ${this.cycleCount} cycles completed`);
+        this.log(`Loaded state: ${this.cycleCount} cycles completed`
       }
     } catch (error) {
-      this.log(`Error loading state: ${error.message}`, "warn");
+      this.log(`Error loading state: ${error.message}`
     }
   }
 
@@ -101,12 +101,12 @@ class ContinuousAILoop {
         cycleCount: this.cycleCount,
         performanceMetrics: this.performanceMetrics,
         lastUpdate: new Date().toISOString(),
-        uptime: Date.now() - this.startTime.getTime(),
+        uptime: Date.now() - this.startTime.getTime()
       };
 
       fs.writeFileSync(this.stateFile, JSON.stringify(state, null, 2));
     } catch (error) {
-      this.log(`Error saving state: ${error.message}`, "error");
+      this.log(`Error saving state: ${error.message}`
     }
   }
 
@@ -116,40 +116,40 @@ class ContinuousAILoop {
         commonErrors: {},
         successfulFixes: {},
         optimizationStrategies: {},
-        performanceBaselines: {},
+        performanceBaselines: {}
       },
       metrics: {
         totalCycles: 0,
         successRate: 0,
         averageCycleTime: 0,
         errorFrequency: {},
-        optimizationImpact: {},
+        optimizationImpact: {}
       },
       knowledge: {
         bestPractices: [],
         antiPatterns: [],
         learnedRules: [],
-        adaptiveStrategies: [],
-      },
+        adaptiveStrategies: []
+      }
     };
 
     if (!fs.existsSync(this.learningFile)) {
       fs.writeFileSync(
         this.learningFile,
-        JSON.stringify(learningData, null, 2),
+        JSON.stringify(learningData, null, 2)
       );
-      this.log("Learning data initialized");
+      this.log('Learning data initialized');
     }
   }
 
   async loadLearningData() {
     try {
       if (fs.existsSync(this.learningFile)) {
-        const data = fs.readFileSync(this.learningFile, "utf8");
+        const data = fs.readFileSync(this.learningFile, 'utf8');
         return JSON.parse(data);
       }
     } catch (error) {
-      this.log(`Error loading learning data: ${error.message}`, "warn");
+      this.log(`Error loading learning data: ${error.message}`
     }
     return null;
   }
@@ -158,7 +158,7 @@ class ContinuousAILoop {
     try {
       fs.writeFileSync(this.learningFile, JSON.stringify(data, null, 2));
     } catch (error) {
-      this.log(`Error saving learning data: ${error.message}`, "error");
+      this.log(`Error saving learning data: ${error.message}`
     }
   }
 
@@ -166,26 +166,26 @@ class ContinuousAILoop {
     const startTime = Date.now();
 
     try {
-      this.log(`Executing module: ${moduleName}`);
+      this.log(`Executing module: ${moduleName}`
 
       const result = await new Promise((resolve, reject) => {
-        const child = spawn("node", [scriptPath, ...args], {
+        const child = spawn('node', [scriptPath, ...args], {
           cwd: this.workspaceRoot,
-          stdio: "pipe",
+          stdio: 'pipe'
         });
 
-        let stdout = "";
-        let stderr = "";
+        let stdout = '';
+        let stderr = '';
 
-        child.stdout.on("data", (data) => {
+        child.stdout.on('data', (data) => {
           stdout += data.toString();
         });
 
-        child.stderr.on("data", (data) => {
+        child.stderr.on('data', (data) => {
           stderr += data.toString();
         });
 
-        child.on("close", (code) => {
+        child.on('close', (code) => {
           const duration = Date.now() - startTime;
           resolve({
             module: moduleName,
@@ -193,11 +193,11 @@ class ContinuousAILoop {
             duration: duration,
             code: code,
             stdout: stdout,
-            stderr: stderr,
+            stderr: stderr
           });
         });
 
-        child.on("error", (error) => {
+        child.on('error', (error) => {
           reject(error);
         });
       });
@@ -208,13 +208,13 @@ class ContinuousAILoop {
       return result;
     } catch (error) {
       const duration = Date.now() - startTime;
-      this.log(`Module ${moduleName} failed: ${error.message}`, "error");
+      this.log(`Module ${moduleName} failed: ${error.message}`
 
       const result = {
         module: moduleName,
         success: false,
         duration: duration,
-        error: error.message,
+        error: error.message
       };
 
       await this.learnFromExecution(moduleName, result);
@@ -229,11 +229,11 @@ class ContinuousAILoop {
 
       // Update patterns
       if (!result.success) {
-        const errorKey = result.error || "unknown_error";
+        const errorKey = result.error || 'unknown_error';
         learningData.patterns.commonErrors[errorKey] =
           (learningData.patterns.commonErrors[errorKey] || 0) + 1;
       } else {
-        const successKey = `${moduleName}_success`;
+        const successKey = `${moduleName}_success`
         learningData.patterns.successfulFixes[successKey] =
           (learningData.patterns.successfulFixes[successKey] || 0) + 1;
       }
@@ -245,19 +245,19 @@ class ContinuousAILoop {
 
       // Update error frequency
       if (!result.success) {
-        const errorType = result.error || "execution_error";
+        const errorType = result.error || 'execution_error';
         learningData.metrics.errorFrequency[errorType] =
           (learningData.metrics.errorFrequency[errorType] || 0) + 1;
       }
 
       await this.saveLearningData(learningData);
     } catch (error) {
-      this.log(`Error learning from execution: ${error.message}`, "warn");
+      this.log(`Error learning from execution: ${error.message}`
     }
   }
 
   async detectAndFixErrors() {
-    this.log("Detecting and fixing errors...");
+    this.log('Detecting and fixing errors...');
 
     const fixes = [];
 
@@ -265,13 +265,13 @@ class ContinuousAILoop {
     const learningData = await this.loadLearningData();
     if (learningData && learningData.patterns.commonErrors) {
       for (const [error, count] of Object.entries(
-        learningData.patterns.commonErrors,
+        learningData.patterns.commonErrors
       )) {
         if (count > 2) {
           // If error occurs more than twice
           this.log(
-            `Detected recurring error: ${error} (${count} occurrences)`,
-            "warn",
+            `Detected recurring error: ${error} (${count} occurrences)`
+            'warn'
           );
 
           // Apply learned fixes
@@ -287,40 +287,40 @@ class ContinuousAILoop {
   }
 
   async applyLearnedFix(errorType) {
-    this.log(`Applying learned fix for: ${errorType}`);
+    this.log(`Applying learned fix for: ${errorType}`
 
     // Common fixes based on error patterns
     const fixes = {
-      ENOENT: async () => {
+      ENOENT: async() => {
         // Create missing directories
-        const dirs = ["temp", "logs", "reports", "sandbox"];
+        const dirs = ['temp', 'logs', 'reports', 'sandbox'];
         for (const dir of dirs) {
           const fullPath = path.join(this.workspaceRoot, dir);
           if (!fs.existsSync(fullPath)) {
             fs.mkdirSync(fullPath, { recursive: true });
-            this.log(`Created missing directory: ${dir}`);
+            this.log(`Created missing directory: ${dir}`
           }
         }
-        return { type: "directory_creation", success: true };
+        return { type: 'directory_creation', success: true };
       },
-      permission_denied: async () => {
+      permissionDenied: async() => {
         // Fix file permissions
-        const scriptsDir = path.join(this.workspaceRoot, "scripts");
+        const scriptsDir = path.join(this.workspaceRoot, 'scripts');
         if (fs.existsSync(scriptsDir)) {
           const files = fs.readdirSync(scriptsDir);
           for (const file of files) {
-            if (file.endsWith(".js")) {
-              fs.chmodSync(path.join(scriptsDir, file), "755");
+            if (file.endsWith('.js')) {
+              fs.chmodSync(path.join(scriptsDir, file), '755');
             }
           }
         }
-        return { type: "permission_fix", success: true };
+        return { type: 'permission_fix', success: true };
       },
-      module_not_found: async () => {
+      moduleNotFound: async() => {
         // Install missing dependencies
-        this.log("Attempting to install missing dependencies...");
-        return { type: "dependency_install", success: true };
-      },
+        this.log('Attempting to install missing dependencies...');
+        return { type: 'dependency_install', success: true };
+      }
     };
 
     const fixFunction = fixes[errorType];
@@ -330,7 +330,7 @@ class ContinuousAILoop {
         this.performanceMetrics.errorsFixed++;
         return result;
       } catch (error) {
-        this.log(`Fix failed for ${errorType}: ${error.message}`, "error");
+        this.log(`Fix failed for ${errorType}: ${error.message}`
         return null;
       }
     }
@@ -339,27 +339,27 @@ class ContinuousAILoop {
   }
 
   async optimizePerformance() {
-    this.log("Optimizing performance...");
+    this.log('Optimizing performance...');
 
     const optimizations = [];
 
     // Memory optimization
     if (process.memoryUsage().heapUsed > 100 * 1024 * 1024) {
       // 100MB
-      this.log("High memory usage detected, optimizing...", "warn");
+      this.log('High memory usage detected, optimizing...', 'warn');
       if (global.gc) {
         global.gc();
-        optimizations.push({ type: "memory_cleanup", success: true });
+        optimizations.push({ type: 'memory_cleanup', success: true });
       }
     }
 
     // File system optimization
     await this.optimizeFileSystem();
-    optimizations.push({ type: "filesystem_optimization", success: true });
+    optimizations.push({ type: 'filesystem_optimization', success: true });
 
     // Process optimization
     await this.optimizeProcesses();
-    optimizations.push({ type: "process_optimization", success: true });
+    optimizations.push({ type: 'process_optimization', success: true });
 
     this.performanceMetrics.optimizationsApplied += optimizations.length;
     return optimizations;
@@ -367,7 +367,7 @@ class ContinuousAILoop {
 
   async optimizeFileSystem() {
     // Clean up temporary files
-    const tempDir = path.join(this.workspaceRoot, "temp");
+    const tempDir = path.join(this.workspaceRoot, 'temp');
     if (fs.existsSync(tempDir)) {
       const files = fs.readdirSync(tempDir);
       const now = Date.now();
@@ -378,7 +378,7 @@ class ContinuousAILoop {
         const stats = fs.statSync(filePath);
         if (now - stats.mtime.getTime() > maxAge) {
           fs.unlinkSync(filePath);
-          this.log(`Cleaned up old temp file: ${file}`);
+          this.log(`Cleaned up old temp file: ${file}`
         }
       }
     }
@@ -387,39 +387,39 @@ class ContinuousAILoop {
   async optimizeProcesses() {
     // Optimize child process spawning
     // This is a placeholder for process optimization logic
-    this.log("Optimizing process management...");
+    this.log('Optimizing process management...');
   }
 
   async runVerificationLoop() {
-    this.log("Running verification loop...");
+    this.log('Running verification loop...');
 
     try {
       const result = await this.executeModule(
-        "Verification",
-        "scripts/verification.js",
+        'Verification',
+        'scripts/verification.js'
       );
 
       if (!result.success) {
-        this.log("Verification failed, applying fixes...", "warn");
+        this.log('Verification failed, applying fixes...', 'warn');
         await this.detectAndFixErrors();
       }
 
       return result;
     } catch (error) {
-      this.log(`Verification loop error: ${error.message}`, "error");
+      this.log(`Verification loop error: ${error.message}`
       return { success: false, error: error.message };
     }
   }
 
   async runMasterExecution() {
-    this.log("Running master execution...");
+    this.log('Running master execution...');
 
     const modules = [
-      { name: "File Cleanup", script: "scripts/file-cleanup.js" },
-      { name: "N8n Workflow", script: "scripts/n8n-workflow-manager.js" },
-      { name: "Social Media", script: "scripts/social-media-automation.js" },
-      { name: "Admin Module", script: "scripts/admin-module.js" },
-      { name: "Enhancements", script: "scripts/enhancements.js" },
+      { name: 'File Cleanup', script: 'scripts/file-cleanup.js' },
+      { name: 'N8n Workflow', script: 'scripts/n8n-workflow-manager.js' },
+      { name: 'Social Media', script: 'scripts/social-media-automation.js' },
+      { name: 'Admin Module', script: 'scripts/admin-module.js' },
+      { name: 'Enhancements', script: 'scripts/enhancements.js' }
     ];
 
     const results = [];
@@ -431,8 +431,8 @@ class ContinuousAILoop {
       // If module failed, try to fix it
       if (!result.success) {
         this.log(
-          `Module ${module.name} failed, attempting self-healing...`,
-          "warn",
+          `Module ${module.name} failed, attempting self-healing...`
+          'warn'
         );
         await this.detectAndFixErrors();
       }
@@ -442,7 +442,7 @@ class ContinuousAILoop {
   }
 
   async generateCycleReport() {
-    this.log("Generating cycle report...");
+    this.log('Generating cycle report...');
 
     const report = {
       cycleNumber: this.cycleCount,
@@ -452,18 +452,18 @@ class ContinuousAILoop {
       systemHealth: {
         memoryUsage: process.memoryUsage(),
         nodeVersion: process.version,
-        platform: process.platform,
-      },
+        platform: process.platform
+      }
     };
 
     const reportFile = path.join(
       this.workspaceRoot,
-      "reports",
-      `cycle-${this.cycleCount}-report.json`,
+      'reports',
+      `cycle-${this.cycleCount}-report.json`
     );
     fs.writeFileSync(reportFile, JSON.stringify(report, null, 2));
 
-    this.log(`Cycle report saved: ${reportFile}`);
+    this.log(`Cycle report saved: ${reportFile}`
     return report;
   }
 
@@ -471,7 +471,7 @@ class ContinuousAILoop {
     this.cycleCount++;
     const cycleStartTime = Date.now();
 
-    this.log(`Starting cycle ${this.cycleCount}...`);
+    this.log(`Starting cycle ${this.cycleCount}...`
 
     try {
       // 1. Run master execution
@@ -498,7 +498,7 @@ class ContinuousAILoop {
       // 7. Save state
       await this.saveState();
 
-      this.log(`Cycle ${this.cycleCount} completed in ${cycleTime}ms`);
+      this.log(`Cycle ${this.cycleCount} completed in ${cycleTime}ms`
 
       return {
         cycleNumber: this.cycleCount,
@@ -508,20 +508,20 @@ class ContinuousAILoop {
         optimizations,
         verificationResult,
         report,
-        cycleTime,
+        cycleTime
       };
     } catch (error) {
-      this.log(`Cycle ${this.cycleCount} failed: ${error.message}`, "error");
+      this.log(`Cycle ${this.cycleCount} failed: ${error.message}`
       return {
         cycleNumber: this.cycleCount,
         success: false,
-        error: error.message,
+        error: error.message
       };
     }
   }
 
   async start() {
-    this.log("Starting Continuous AI Loop...");
+    this.log('Starting Continuous AI Loop...');
     this.isRunning = true;
 
     await this.initialize();
@@ -533,26 +533,26 @@ class ContinuousAILoop {
 
         if (!cycleResult.success) {
           this.log(
-            `Cycle ${cycleResult.cycleNumber} failed, waiting before retry...`,
-            "warn",
+            `Cycle ${cycleResult.cycleNumber} failed, waiting before retry...`
+            'warn'
           );
           await new Promise((resolve) => setTimeout(resolve, 30000)); // Wait 30 seconds
         } else {
           // Wait 5 minutes before next cycle
-          this.log("Waiting 5 minutes before next cycle...");
+          this.log('Waiting 5 minutes before next cycle...');
           await new Promise((resolve) => setTimeout(resolve, 5 * 60 * 1000));
         }
       } catch (error) {
-        this.log(`Critical error in main loop: ${error.message}`, "error");
+        this.log(`Critical error in main loop: ${error.message}`
         await new Promise((resolve) => setTimeout(resolve, 60000)); // Wait 1 minute
       }
     }
 
-    this.log("Continuous AI Loop stopped");
+    this.log('Continuous AI Loop stopped');
   }
 
   stop() {
-    this.log("Stopping Continuous AI Loop...");
+    this.log('Stopping Continuous AI Loop...');
     this.isRunning = false;
   }
 }
@@ -562,19 +562,19 @@ if (require.main === module) {
   const aiLoop = new ContinuousAILoop();
 
   // Handle graceful shutdown
-  process.on("SIGINT", () => {
+  process.on('SIGINT', () => {
     aiLoop.stop();
     process.exit(0);
   });
 
-  process.on("SIGTERM", () => {
+  process.on('SIGTERM', () => {
     aiLoop.stop();
     process.exit(0);
   });
 
   // Start the loop
   aiLoop.start().catch((error) => {
-    console.error("Continuous AI Loop failed:", error);
+    // console.error('Continuous AI Loop failed:', error);
     process.exit(1);
   });
 }

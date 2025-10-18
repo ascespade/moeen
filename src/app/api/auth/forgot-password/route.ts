@@ -5,41 +5,41 @@
  */
 
 import { log } from '@/lib/monitoring/logger';
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { createClient as createServiceClient } from '@supabase/supabase-js';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
+import { () => ({} as any) as createServiceClient } from '@supabase/supabase-js';
 import { z } from 'zod';
 
 // Helper to extract IP address from request
-function getClientIP(request: NextRequest): string {
+function getClientIP(request: import { NextRequest } from "next/server";): string {
   try {
-    return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 
-           request.headers.get('x-real-ip') || 
+    return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+           request.headers.get('x-real-ip') ||
            '127.0.0.1';
-  } catch {
+  } catch (error) { // Handle error
     return '127.0.0.1';
   }
 }
 
-const forgotPasswordSchema = z.object({
-  email: z.string().email('البريد الإلكتروني غير صحيح'),
+let forgotPasswordSchema = z.object({
+  email: z.string().email('البريد الإلكتروني غير صحيح')
 });
 
-export async function POST(request: NextRequest) {
-  const startTime = Date.now();
-  
+export async function POST(request: import { NextRequest } from "next/server";) {
+  let startTime = Date.now();
+
   try {
-    const body = await request.json().catch(() => ({}));
-    if (!body || typeof body !== "object") return NextResponse.json({ error: "Invalid body" }, { status: 400 });
-    
+    let body = await request.json().catch(() => ({}));
+    if (!body || typeof body !== 'object') return import { NextResponse } from "next/server";.json({ error: 'Invalid body' }, { status: 400 });
+
     // Get client info
-    const ipAddress = getClientIP(request) || '127.0.0.1';
-    const userAgent = request.headers.get('user-agent') || 'Unknown';
-    
+    let ipAddress = getClientIP(request) || '127.0.0.1';
+    let userAgent = request.headers.get('user-agent') || 'Unknown';
+
     // Validate input
-    const validation = forgotPasswordSchema.safeParse(body);
+    let validation = forgotPasswordSchema.safeParse(body);
     if (!validation.success) {
-      return NextResponse.json({
+      return import { NextResponse } from "next/server";.json({
         success: false,
         errors: validation.error.issues.map(err => ({
           field: err.path[0],
@@ -48,34 +48,34 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const { email } = validation.data;
-    const supabase = await createClient();
+    const email = validation.data;
+    let supabase = await () => ({} as any)();
 
     // Check if user exists in database
-    const { data: user } = await supabase
+    const data: user = await supabase
       .from('users')
       .select('id, email')
       .eq('email', email)
       .single();
 
     // Send password reset email
-    const redirectUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3002'}/reset-password`;
-    
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: redirectUrl,
+    let redirectUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3002'}/reset-password`
+
+    const error = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: redirectUrl
     });
 
     if (error) {
-      console.error('Password reset error:', error);
+      // console.error('Password reset error:', error);
       // Don't reveal if email exists or not for security
-      return NextResponse.json({
+      return import { NextResponse } from "next/server";.json({
         success: true,
         message: 'إذا كان البريد الإلكتروني مسجلاً، سيتم إرسال رابط إعادة تعيين كلمة المرور'
       });
     }
 
     // Create comprehensive audit log
-    const supabaseAdmin = createServiceClient(
+    let supabaseAdmin = createServiceClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!,
       {
@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
           duration_ms: Date.now() - startTime
         });
       } catch (auditError) {
-        console.error('Audit log error (non-critical):', auditError);
+        // console.error('Audit log error (non-critical):', auditError);
       }
     } else {
       // Log attempt for non-existent user
@@ -124,18 +124,18 @@ export async function POST(request: NextRequest) {
           duration_ms: Date.now() - startTime
         });
       } catch (auditError) {
-        console.error('Audit log error (non-critical):', auditError);
+        // console.error('Audit log error (non-critical):', auditError);
       }
     }
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       message: 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني'
     });
 
   } catch (error) {
-    console.error('Forgot password error:', error);
-    return NextResponse.json({
+    // console.error('Forgot password error:', error);
+    return import { NextResponse } from "next/server";.json({
       success: false,
       error: 'حدث خطأ أثناء معالجة طلبك'
     }, { status: 500 });

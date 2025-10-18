@@ -1,157 +1,158 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
-import Image from "next/image";
+'use client';
+import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
+import Image from 'next/image';
 
 interface Activity {
   id: string;
-  type: "call" | "meeting" | "email" | "task" | "note";
+  type: 'call' | 'meeting' | 'email' | 'task' | 'note';
   title: string;
   description: string;
   contactId: string;
   contactName: string;
   assignedTo: string;
   dueDate: string;
-  status: "pending" | "completed" | "cancelled";
-  priority: "low" | "medium" | "high";
+  status: 'pending' | 'completed' | 'cancelled';
+  priority: 'low' | 'medium' | 'high';
   createdAt: string;
   completedAt?: string;
 }
 
 const mockActivities: Activity[] = [
   {
-    id: "1",
-    type: "call",
-    title: "مكالمة مع أحمد العتيبي",
-    description: "مناقشة متطلبات نظام إدارة المواعيد",
-    contactId: "1",
-    contactName: "أحمد العتيبي",
-    assignedTo: "سارة أحمد",
-    dueDate: "2024-01-20",
-    status: "pending",
-    priority: "high",
-    createdAt: "2024-01-15",
+    id: '1',
+    type: 'call',
+    title: 'مكالمة مع أحمد العتيبي',
+    description: 'مناقشة متطلبات نظام إدارة المواعيد',
+    contactId: '1',
+    contactName: 'أحمد العتيبي',
+    assignedTo: 'سارة أحمد',
+    dueDate: '2024-01-20',
+    status: 'pending',
+    priority: 'high',
+    createdAt: '2024-01-15'
   },
   {
-    id: "2",
-    type: "meeting",
-    title: "اجتماع مع فريق مستشفى الملك فهد",
-    description: "عرض توضيحي لنظام إدارة المرضى",
-    contactId: "2",
-    contactName: "فاطمة السعيد",
-    assignedTo: "محمد حسن",
-    dueDate: "2024-01-18",
-    status: "completed",
-    priority: "high",
-    createdAt: "2024-01-10",
-    completedAt: "2024-01-18",
+    id: '2',
+    type: 'meeting',
+    title: 'اجتماع مع فريق مستشفى الملك فهد',
+    description: 'عرض توضيحي لنظام إدارة المرضى',
+    contactId: '2',
+    contactName: 'فاطمة السعيد',
+    assignedTo: 'محمد حسن',
+    dueDate: '2024-01-18',
+    status: 'completed',
+    priority: 'high',
+    createdAt: '2024-01-10',
+    completedAt: '2024-01-18'
   },
   {
-    id: "3",
-    type: "task",
-    title: "إعداد عرض تقديمي للعميل",
-    description: "تحضير عرض شامل لحلول إدارة المواعيد",
-    contactId: "3",
-    contactName: "خالد القحطاني",
-    assignedTo: "نورا محمد",
-    dueDate: "2024-01-25",
-    status: "pending",
-    priority: "medium",
-    createdAt: "2024-01-12",
-  },
+    id: '3',
+    type: 'task',
+    title: 'إعداد عرض تقديمي للعميل',
+    description: 'تحضير عرض شامل لحلول إدارة المواعيد',
+    contactId: '3',
+    contactName: 'خالد القحطاني',
+    assignedTo: 'نورا محمد',
+    dueDate: '2024-01-25',
+    status: 'pending',
+    priority: 'medium',
+    createdAt: '2024-01-12'
+  }
 ];
 
 export default function CRMActivitiesPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedType, setSelectedType] = useState<string>("all");
-  const [selectedStatus, setSelectedStatus] = useState<string>("all");
-  const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedType, setSelectedType] = useState<string>('all');
+  const [selectedStatus, setSelectedStatus] = useState<string>('all');
+  const [viewMode, setViewMode] = useState<'list' | 'calendar'>('list');
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const getTypeIcon = (type: Activity["type"]) => {
+  const getTypeIcon = (type: Activity['type']) => {
     switch (type) {
-      case "call":
-        return "📞";
-      case "meeting":
-        return "🤝";
-      case "email":
-        return "📧";
-      case "task":
-        return "✅";
-      case "note":
-        return "📝";
-      default:
-        return "📋";
+    case 'call':
+      return '📞';
+    case 'meeting':
+      return '🤝';
+    case 'email':
+      return '📧';
+    case 'task':
+      return '✅';
+    case 'note':
+      return '📝';
+    default:
+      return '📋';
     }
   };
 
-  const getTypeText = (type: Activity["type"]) => {
+  const getTypeText = (type: Activity['type']) => {
     switch (type) {
-      case "call":
-        return "مكالمة";
-      case "meeting":
-        return "اجتماع";
-      case "email":
-        return "بريد إلكتروني";
-      case "task":
-        return "مهمة";
-      case "note":
-        return "ملاحظة";
-      default:
-        return "نشاط";
+    case 'call':
+      return 'مكالمة';
+    case 'meeting':
+      return 'اجتماع';
+    case 'email':
+      return 'بريد إلكتروني';
+    case 'task':
+      return 'مهمة';
+    case 'note':
+      return 'ملاحظة';
+    default:
+      return 'نشاط';
     }
   };
 
-  const getStatusColor = (status: Activity["status"]) => {
+  const getStatusColor = (status: Activity['status']) => {
     switch (status) {
-      case "pending":
-        return "bg-yellow-100 text-yellow-800";
-      case "completed":
-        return "bg-green-100 text-green-800";
-      case "cancelled":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-surface text-gray-800";
+    case 'pending':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'completed':
+      return 'bg-green-100 text-green-800';
+    case 'cancelled':
+      return 'bg-red-100 text-red-800';
+    default:
+      return 'bg-surface text-gray-800';
     }
   };
 
-  const getStatusText = (status: Activity["status"]) => {
+  const getStatusText = (status: Activity['status']) => {
     switch (status) {
-      case "pending":
-        return "معلق";
-      case "completed":
-        return "مكتمل";
-      case "cancelled":
-        return "ملغي";
-      default:
-        return "غير محدد";
+    case 'pending':
+      return 'معلق';
+    case 'completed':
+      return 'مكتمل';
+    case 'cancelled':
+      return 'ملغي';
+    default:
+      return 'غير محدد';
     }
   };
 
-  const getPriorityColor = (priority: Activity["priority"]) => {
+  const getPriorityColor = (priority: Activity['priority']) => {
     switch (priority) {
-      case "high":
-        return "text-brand-error";
-      case "medium":
-        return "text-yellow-600";
-      case "low":
-        return "text-brand-success";
-      default:
-        return "text-gray-600";
+    case 'high':
+      return 'text-brand-error';
+    case 'medium':
+      return 'text-yellow-600';
+    case 'low':
+      return 'text-brand-success';
+    default:
+      return 'text-gray-600';
     }
   };
 
-  const getPriorityText = (priority: Activity["priority"]) => {
+  const getPriorityText = (priority: Activity['priority']) => {
     switch (priority) {
-      case "high":
-        return "عالي";
-      case "medium":
-        return "متوسط";
-      case "low":
-        return "منخفض";
-      default:
-        return "غير محدد";
+    case 'high':
+      return 'عالي';
+    case 'medium':
+      return 'متوسط';
+    case 'low':
+      return 'منخفض';
+    default:
+      return 'غير محدد';
     }
   };
 
@@ -161,9 +162,9 @@ export default function CRMActivitiesPage() {
       activity.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
       activity.contactName.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesType =
-      selectedType === "all" || activity.type === selectedType;
+      selectedType === 'all' || activity.type === selectedType;
     const matchesStatus =
-      selectedStatus === "all" || activity.status === selectedStatus;
+      selectedStatus === 'all' || activity.status === selectedStatus;
     return matchesSearch && matchesType && matchesStatus;
   });
 
@@ -190,14 +191,14 @@ export default function CRMActivitiesPage() {
             <div className="flex items-center gap-3">
               <div className="flex rounded-lg border border-gray-300">
                 <button
-                  onClick={() => setViewMode("list")}
-                  className={`px-3 py-2 text-sm ${viewMode === "list" ? "bg-[var(--brand-primary)] text-white" : "text-gray-600"}`}
+                  onClick={() => setViewMode('list')}
+                  className={`px-3 py-2 text-sm ${viewMode === 'list' ? 'bg-[var(--brand-primary)] text-white' : 'text-gray-600'}`
                 >
                   قائمة
                 </button>
                 <button
-                  onClick={() => setViewMode("calendar")}
-                  className={`px-3 py-2 text-sm ${viewMode === "calendar" ? "bg-[var(--brand-primary)] text-white" : "text-gray-600"}`}
+                  onClick={() => setViewMode('calendar')}
+                  className={`px-3 py-2 text-sm ${viewMode === 'calendar' ? 'bg-[var(--brand-primary)] text-white' : 'text-gray-600'}`
                 >
                   تقويم
                 </button>
@@ -225,19 +226,19 @@ export default function CRMActivitiesPage() {
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-success">
-              {mockActivities.filter((a) => a.status === "completed").length}
+              {mockActivities.filter((a) => a.status === 'completed').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">مكتملة</div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-yellow-600">
-              {mockActivities.filter((a) => a.status === "pending").length}
+              {mockActivities.filter((a) => a.status === 'pending').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">معلقة</div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-error">
-              {mockActivities.filter((a) => a.priority === "high").length}
+              {mockActivities.filter((a) => a.priority === 'high').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">أولوية عالية</div>
           </div>
@@ -297,7 +298,7 @@ export default function CRMActivitiesPage() {
           </div>
         </div>
 
-        {viewMode === "list" ? (
+        {viewMode === 'list' ? (
           <div className="space-y-4">
             {filteredActivities.map((activity) => (
               <div
@@ -312,12 +313,12 @@ export default function CRMActivitiesPage() {
                         {activity.title}
                       </h3>
                       <span
-                        className={`rounded-full px-2 py-1 text-xs ${getStatusColor(activity.status)}`}
+                        className={`rounded-full px-2 py-1 text-xs ${getStatusColor(activity.status)}`
                       >
                         {getStatusText(activity.status)}
                       </span>
                       <span
-                        className={`text-xs font-medium ${getPriorityColor(activity.priority)}`}
+                        className={`text-xs font-medium ${getPriorityColor(activity.priority)}`
                       >
                         {getPriorityText(activity.priority)}
                       </span>
@@ -338,7 +339,7 @@ export default function CRMActivitiesPage() {
                     <button className="rounded border border-gray-300 px-3 py-1 text-sm text-gray-700 transition-colors hover:bg-surface">
                       تعديل
                     </button>
-                    {activity.status === "pending" && (
+                    {activity.status === 'pending' && (
                       <button className="rounded bg-brand-success px-3 py-1 text-sm text-white transition-colors hover:bg-green-700">
                         إكمال
                       </button>

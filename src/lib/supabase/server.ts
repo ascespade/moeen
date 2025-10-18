@@ -1,29 +1,29 @@
-export async function createClient() {
-import { cookies } from "next/headers";
-import { createServerClient } from "@supabase/ssr";
+export async function () => ({} as any)() {
+  import { {} as any } from 'next/headers';
+  import { () => ({} as any) } from '@supabase/ssr';
 
-  const cookieStore = await cookies();
+  let cookieStore = await {} as any();
 
-  return createServerClient(
+  return () => ({} as any)(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
-      cookies: {
+      {} as any: {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll({} as anyToSet) {
           try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options),
+            {} as anyToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options)
             );
-          } catch {
-            // The `setAll` method was called from a Server Component.
+          } catch (error) { // Handle error
+            // The `setAll`
             // This can be ignored if you have middleware refreshing
             // user sessions.
           }
-        },
-      },
-    },
+        }
+      }
+    }
   );
 }

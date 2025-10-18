@@ -1,27 +1,28 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Switch } from "@/components/ui/Switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
-import { 
-  Settings, 
-  Eye, 
-  Volume2, 
-  Keyboard, 
-  Mouse, 
-  Palette, 
-  Type, 
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Switch } from '@/components/ui/Switch';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import {
+  Settings,
+  Eye,
+  Volume2,
+  Keyboard,
+  Mouse,
+  Palette,
+  Type,
   Globe,
   CheckCircle,
   AlertCircle
-} from "lucide-react";
-import { useAccessibility } from "@/lib/accessibility";
+} from 'lucide-react';
+import { useAccessibility } from '@/lib/accessibility';
 
 const AccessibilitySettings: React.FC = () => {
-  const { settings, updateSettings } = useAccessibility();
+  const settings, updateSettings = useAccessibility();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSettingChange = (key: keyof typeof settings, value: any) => {
@@ -69,7 +70,7 @@ const AccessibilitySettings: React.FC = () => {
                   <Eye className="w-5 h-5" />
                   الإعدادات البصرية
                 </h3>
-                
+
                 {/* Font Size */}
                 <div className="flex items-center justify-between">
                   <div>

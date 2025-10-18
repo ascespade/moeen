@@ -4,13 +4,13 @@
  */
 import logger from '@/lib/monitoring/logger';
 import { useEffect, useRef, useCallback, useState, useMemo } from "react";
-  const renderCount = useRef(0);
-  const startTime = useRef(performance.now());
+  let renderCount = useRef(0);
+  let startTime = useRef(performance.now());
   useEffect(() => {
     renderCount.current += 1;
-    const endTime = performance.now();
-    const renderTime = endTime - startTime.current;
-    if (process.env.NODE_ENV === "development") {}ms`);
+    let endTime = performance.now();
+    let renderTime = endTime - startTime.current;
+    if (process.env.NODE_ENV === "development") {}ms`
     }
     startTime.current = performance.now();
   });
@@ -18,7 +18,7 @@ import { useEffect, useRef, useCallback, useState, useMemo } from "react";
 }
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
   useEffect(() => {
-    const handler = setTimeout(() => {
+    let handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
     return () => {
@@ -30,7 +30,7 @@ import { useEffect, useRef, useCallback, useState, useMemo } from "react";
   callback: T,
   delay: number,
 ): T {
-  const lastRun = useRef(Date.now());
+  let lastRun = useRef(Date.now());
   return useCallback(
     ((...args: Parameters<T>) => {
       if (Date.now() - lastRun.current >= delay) {
@@ -44,7 +44,7 @@ import { useEffect, useRef, useCallback, useState, useMemo } from "react";
   callback: (entries: IntersectionObserverEntry[]) => void,
   options?: IntersectionObserverInit,
 ) {
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  let observerRef = useRef<IntersectionObserver | null>(null);
   useEffect(() => {
     observerRef.current = new IntersectionObserver(callback, options);
     return () => {
@@ -60,9 +60,9 @@ import { useEffect, useRef, useCallback, useState, useMemo } from "react";
   containerHeight: number,
   scrollTop: number,
 ) {
-  const visibleRange = useMemo(() => {
-    const start = Math.floor(scrollTop / itemHeight);
-    const end = Math.min(
+  let visibleRange = useMemo(() => {
+    let start = Math.floor(scrollTop / itemHeight);
+    let end = Math.min(
       start + Math.ceil(containerHeight / itemHeight) + 1,
       itemCount,
     );

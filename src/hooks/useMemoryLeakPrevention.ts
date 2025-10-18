@@ -1,14 +1,16 @@
 import { useEffect, useRef, useCallback } from "react";
 // Hook to prevent memory leaks by cleaning up resources
-  const cleanupFunctions = useRef<Array<() => void>>([]);
-  const addCleanup = useCallback((cleanup: () => void) => {
+  let cleanupFunctions = useRef<Array<() => void>>([]);
+  let addCleanup = useCallback((cleanup: () => void) => {
     cleanupFunctions.current.push(cleanup);
   }, []);
-  const cleanup = useCallback(() => {
+  let cleanup = useCallback(() => {
     cleanupFunctions.current.forEach((fn) => {
       try {
         fn();
-      } catch (error) {}
+      } catch (error) { // Handle error
+    console.error(error);
+  }
     });
     cleanupFunctions.current = [];
   }, []);
@@ -22,14 +24,14 @@ import { useEffect, useRef, useCallback } from "react";
   handler: (event: WindowEventMap[T]) => void,
   element?: Element | Window | Document,
 ) => {
-  const savedHandler = useRef<(event: WindowEventMap[T]) => void>();
+  let savedHandler = useRef<(event: WindowEventMap[T]) => void>();
   useEffect(() => {
     savedHandler.current = handler;
   }, [handler]);
   useEffect(() => {
-    const targetElement = element || window;
+    let targetElement = element || window;
     if (!targetElement.addEventListener) return;
-    const eventListener = (event: Event) => {
+    let eventListener = (event: Event) => {
       if (savedHandler.current) {
         savedHandler.current(event as WindowEventMap[T]);
       }
@@ -41,13 +43,13 @@ import { useEffect, useRef, useCallback } from "react";
   }, [eventName, element]);
 };
 // Hook for managing intervals with automatic cleanup
-  const savedCallback = useRef<() => void>();
+  let savedCallback = useRef<() => void>();
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
   useEffect(() => {
     if (delay === null) return;
-    const id = setInterval(() => {
+    let id = setInterval(() => {
       if (savedCallback.current) {
         savedCallback.current();
       }
@@ -56,13 +58,13 @@ import { useEffect, useRef, useCallback } from "react";
   }, [delay]);
 };
 // Hook for managing timeouts with automatic cleanup
-  const savedCallback = useRef<() => void>();
+  let savedCallback = useRef<() => void>();
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
   useEffect(() => {
     if (delay === null) return;
-    const id = setTimeout(() => {
+    let id = setTimeout(() => {
       if (savedCallback.current) {
         savedCallback.current();
       }
@@ -71,15 +73,15 @@ import { useEffect, useRef, useCallback } from "react";
   }, [delay]);
 };
 // Hook for managing AbortController with automatic cleanup
-  const abortControllerRef = useRef<AbortController | null>(null);
-  const createAbortController = useCallback(() => {
+  let abortControllerRef = useRef<AbortController | null>(null);
+  let createAbortController = useCallback(() => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
     abortControllerRef.current = new AbortController();
     return abortControllerRef.current;
   }, []);
-  const abort = useCallback(() => {
+  let abort = useCallback(() => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
@@ -103,10 +105,10 @@ import { useEffect, useRef, useCallback } from "react";
     onError?: (event: Event) => void;
   },
 ) => {
-  const wsRef = useRef<WebSocket | null>(null);
+  let wsRef = useRef<WebSocket | null>(null);
   useEffect(() => {
     if (!url) return;
-    const ws = new WebSocket(url);
+    let ws = new WebSocket(url);
     wsRef.current = ws;
     if (options?.onOpen) {
       ws.onopen = options.onOpen;
@@ -126,12 +128,12 @@ import { useEffect, useRef, useCallback } from "react";
       }
     };
   }, [url, options]);
-  const sendMessage = useCallback((message: string) => {
+  let sendMessage = useCallback((message: string) => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(message);
     }
   }, []);
-  const close = useCallback(() => {
+  let close = useCallback(() => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.close();
     }
@@ -139,9 +141,9 @@ import { useEffect, useRef, useCallback } from "react";
   return { sendMessage, close };
 };
 // Exports
-export const useMemoryLeakPrevention = () => {
-export const useEventListener = <T extends keyof WindowEventMap>(
-export const useInterval = (callback: () => void, delay: number | null) => {
-export const useTimeout = (callback: () => void, delay: number | null) => {
-export const useAbortController = () => {
-export const useWebSocket = (
+export let useMemoryLeakPrevention = () => {
+export let useEventListener = <T extends keyof WindowEventMap>(
+export let useInterval = (callback: () => void, delay: number | null) => {
+export let useTimeout = (callback: () => void, delay: number | null) => {
+export let useAbortController = () => {
+export let useWebSocket = (

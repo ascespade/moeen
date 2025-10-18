@@ -1,8 +1,9 @@
-
-"use client";
-
 import React from "react";
-import { useState, useEffect } from "react";
+
+'use client';
+
+import React from 'react';
+import { useState, useEffect } from 'react';
 
 interface TaskStatus {
   total_tasks: number;
@@ -43,37 +44,37 @@ export default function AgentDashboard() {
   const [logs, setLogs] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchStatus = async () => {
+  const fetchStatus = async() => {
     try {
       // Fetch task status
-      const taskResponse = await fetch("/api/agent/tasks");
+      const taskResponse = await fetch('/api/agent/tasks');
       if (taskResponse.ok) {
         const taskData = await taskResponse.json();
         setTaskStatus(taskData);
       }
 
       // Fetch agent status
-      const agentResponse = await fetch("/api/agent/status");
+      const agentResponse = await fetch('/api/agent/status');
       if (agentResponse.ok) {
         const agentData = await agentResponse.json();
         setAgentStatus(agentData);
       }
 
       // Fetch completion status
-      const completionResponse = await fetch("/api/agent/completion");
+      const completionResponse = await fetch('/api/agent/completion');
       if (completionResponse.ok) {
         const completionData = await completionResponse.json();
         setCompletionStatus(completionData);
       }
 
       // Fetch recent logs
-      const logsResponse = await fetch("/api/agent/logs");
+      const logsResponse = await fetch('/api/agent/logs');
       if (logsResponse.ok) {
         const logsData = await logsResponse.json();
         setLogs(logsData.logs || []);
       }
     } catch (error) {
-      } finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -86,21 +87,21 @@ export default function AgentDashboard() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "running":
-        return "text-brand-success bg-green-100";
-      case "completed":
-        return "text-brand-primary bg-blue-100";
-      case "failed":
-        return "text-brand-error bg-red-100";
-      case "stopped":
-        return "text-gray-600 bg-surface";
-      default:
-        return "text-yellow-600 bg-yellow-100";
+    case 'running':
+      return 'text-brand-success bg-green-100';
+    case 'completed':
+      return 'text-brand-primary bg-blue-100';
+    case 'failed':
+      return 'text-brand-error bg-red-100';
+    case 'stopped':
+      return 'text-gray-600 bg-surface';
+    default:
+      return 'text-yellow-600 bg-yellow-100';
     }
   };
 
   const formatTime = (timeString: string) => {
-    if (!timeString) return "N/A";
+    if (!timeString) return 'N/A';
     return new Date(timeString).toLocaleString();
   };
 
@@ -137,7 +138,7 @@ export default function AgentDashboard() {
             {agentStatus ? (
               <div className="space-y-2">
                 <div
-                  className={`inline-flex px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(agentStatus.status)}`}
+                  className={`inline-flex px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(agentStatus.status)}`
                 >
                   {agentStatus.status.toUpperCase()}
                 </div>
@@ -173,7 +174,7 @@ export default function AgentDashboard() {
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div
                     className="bg-brand-primary h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${taskStatus.progress_percentage}%` }}
+                    style={{ width: `${taskStatus.progress_percentage}%`
                   ></div>
                 </div>
                 <div className="text-sm text-gray-600">
@@ -185,7 +186,7 @@ export default function AgentDashboard() {
                 </div>
                 {taskStatus.estimated_completion && (
                   <p className="text-xs text-gray-500">
-                    Est. completion:{" "}
+                    Est. completion:{' '}
                     {formatTime(taskStatus.estimated_completion)}
                   </p>
                 )}
@@ -203,7 +204,7 @@ export default function AgentDashboard() {
             {completionStatus ? (
               <div className="space-y-2">
                 <div
-                  className={`inline-flex px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(completionStatus.status)}`}
+                  className={`inline-flex px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(completionStatus.status)}`
                 >
                   {completionStatus.status.toUpperCase()}
                 </div>
@@ -235,7 +236,7 @@ export default function AgentDashboard() {
             {logs.length > 0 ? (
               <div className="bg-gray-900 rounded-lg p-4 overflow-auto max-h-96">
                 <pre className="text-green-400 text-sm font-mono">
-                  {logs.slice(-20).join("\n")}
+                  {logs.slice(-20).join('\n')}
                 </pre>
               </div>
             ) : (

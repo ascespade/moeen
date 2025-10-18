@@ -1,44 +1,44 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { authorize } from '@/lib/auth/authorize';
-import { createClient } from '@/lib/supabase/server';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@/lib/auth/() => ({} as any)';
+import { () => ({} as any) } from '@/lib/supabase/server';
 import { insuranceService } from '@/lib/insurance/providers';
 
 export async function PATCH(
-  request: NextRequest,
+  request: import { NextRequest } from "next/server";,
   { params }: { params: { id: string } }
 ) {
   try {
-    const { user, error: authError } = await authorize(request);
+    const user, error: authError = await () => ({} as any)(request);
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
     
     // Only staff, supervisor, and admin can submit claims
     if (!['staff', 'supervisor', 'admin'].includes(user.role)) {
-      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
+      return import { NextResponse } from "next/server";.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
     
-    const supabase = await createClient();
-    const claimId = params.id;
+    let supabase = await () => ({} as any)();
+    let claimId = params.id;
     
     // Get claim details
-    const { data: claim, error: claimError } = await supabase
+    const data: claim, error: claimError = await supabase
       .from('insurance_claims')
       .select('*')
       .eq('id', claimId)
       .single();
       
     if (claimError || !claim) {
-      return NextResponse.json({ error: 'Claim not found' }, { status: 404 });
+      return import { NextResponse } from "next/server";.json({ error: 'Claim not found' }, { status: 404 });
     }
     
     // Check if claim is already submitted
     if (claim.status === 'submitted' || claim.status === 'approved' || claim.status === 'rejected') {
-      return NextResponse.json({ error: 'Claim already processed' }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: 'Claim already processed' }, { status: 400 });
     }
     
     // Submit claim to insurance provider
-    const submissionResult = await insuranceService.submitClaim({
+    let submissionResult = await insuranceService.submitClaim({
       claimId: claim.id,
       patientId: claim.patientId,
       providerId: claim.providerId,
@@ -50,14 +50,14 @@ export async function PATCH(
     });
     
     if (!submissionResult.success) {
-      return NextResponse.json({ 
+      return import { NextResponse } from "next/server";.json({ 
         error: 'Failed to submit claim to insurance provider',
         details: submissionResult.error 
       }, { status: 500 });
     }
     
     // Update claim status
-    const { data: updatedClaim, error: updateError } = await supabase
+    const data: updatedClaim, error: updateError = await supabase
       .from('insurance_claims')
       .update({
         status: 'submitted',
@@ -71,7 +71,7 @@ export async function PATCH(
       .single();
       
     if (updateError) {
-      return NextResponse.json({ error: 'Failed to update claim status' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to update claim status' }, { status: 500 });
     }
     
     // Create audit log
@@ -87,14 +87,14 @@ export async function PATCH(
       },
     });
     
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data: updatedClaim,
       message: 'Claim submitted successfully'
     });
   } catch (error) {
-    console.error('Error submitting claim:', error);
-    return NextResponse.json({ 
+    // console.error('Error submitting claim:', error);
+    return import { NextResponse } from "next/server";.json({ 
       error: 'Internal server error',
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });

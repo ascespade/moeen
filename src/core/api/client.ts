@@ -40,16 +40,16 @@ class ApiClient {
       body,
       params,
       timeout = this.defaultTimeout,
-      retries = 3,
+      retries = 3
     } = config;
 
     const url = this.buildURL(endpoint, params);
     const requestHeaders = this.buildHeaders(headers);
 
-    const requestConfig: RequestInit = {
+    const requestConfig: any = {
       method,
       headers: requestHeaders,
-      body: body ? JSON.stringify(body) : undefined,
+      body: body ? JSON.stringify(body) : undefined
     };
 
     try {
@@ -58,14 +58,14 @@ class ApiClient {
 
       const response = await fetch(url, {
         ...requestConfig,
-        signal: controller.signal,
+        signal: controller.signal
       });
 
       clearTimeout(timeoutId);
 
       if (!response.ok) {
         throw new ExternalServiceError(
-          `HTTP ${response.status}: ${response.statusText}`,
+          `HTTP ${response.status}: ${response.statusText}`
           'API',
           { status: response.status, url }
         );
@@ -82,14 +82,14 @@ class ApiClient {
       const handledError = this.errorHandler.handle(error as Error);
       return {
         success: false,
-        error: handledError.message,
+        error: handledError.message
       };
     }
   }
 
   private buildURL(endpoint: string, params?: Record<string, any>): string {
     const url = new URL(endpoint, this.baseURL);
-    
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -97,18 +97,18 @@ class ApiClient {
         }
       });
     }
-    
+
     return url.toString();
   }
 
   private buildHeaders(customHeaders: Record<string, string>): Record<string, string> {
     const token = storageUtils.get('auth_token');
-    
+
     return {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...customHeaders,
+      ...(token ? { Authorization: `Bearer ${token}`
+      ...customHeaders
     };
   }
 
@@ -297,7 +297,7 @@ class ApiClient {
     return this.request(API_ENDPOINTS.UPLOAD.FILE, {
       method: 'POST',
       body: formData,
-      headers: {}, // Let browser set Content-Type for FormData
+      headers: {} // Let browser set Content-Type for FormData
     });
   }
 }

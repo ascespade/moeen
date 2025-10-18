@@ -1,3 +1,4 @@
+import React from "react";
 
 'use client';
 import logger from '@/lib/monitoring/logger';
@@ -15,10 +16,10 @@ interface ErrorHandlerOptions {
 }
 
 export function useErrorHandler() {
-  const { t } = useT();
+  const t = useT();
 
   const handleError = useCallback((
-    error: unknown, 
+    error: unknown,
     options: ErrorHandlerOptions = {}
   ) => {
     const {
@@ -28,7 +29,7 @@ export function useErrorHandler() {
     } = options;
 
     let errorMessage = fallbackMessage;
-    let errorCode = 'UNKNOWN_ERROR';
+    const errorCode = 'UNKNOWN_ERROR';
 
     // Extract error information
     if (error instanceof Error) {
@@ -59,7 +60,7 @@ export function useErrorHandler() {
 
     // Show toast if enabled
     if (showToast) {
-      console.error('Error:', errorMessage);
+      // console.error('Error:', errorMessage);
     }
 
     return {
@@ -68,7 +69,7 @@ export function useErrorHandler() {
     };
   }, [t]);
 
-  const handleAsyncError = useCallback(async (
+  const handleAsyncError = useCallback(async(
     asyncFn: () => Promise<any>,
     options: ErrorHandlerOptions = {}
   ) => {

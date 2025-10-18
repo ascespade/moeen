@@ -1,7 +1,7 @@
 
 /**
  * UI Components Library - مكتبة المكونات المركزية
- * 
+ *
  * Central export for all UI components following best practices:
  * - Single source of truth
  * - Consistent API
@@ -19,10 +19,10 @@
 
 /**
  * Usage Examples:
- * 
+ *
  * // ✅ CORRECT - Import from central location:
  * import { Button, Card, LoadingSpinner } from '@/components/ui';
- * 
+ *
  * // ❌ WRONG - Don't import from individual files:
  * import Button from '@/components/ui/Button';
  * import LoadingSpinner from '@/components/common/LoadingSpinner';

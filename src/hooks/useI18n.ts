@@ -1,11 +1,11 @@
 
-"use client";
-import { useEffect, useState } from "react";
-import { dynamicContentManager } from "@/lib/dynamic-content-manager";
+'use client';
+import { useEffect, useState } from 'react';
+import { dynamicContentManager } from '@/lib/dynamic-content-manager';
 
 export type Messages = Record<string, string>;
 
-export function useI18n(locale: "ar" | "en" = "ar", ns: string = "common") {
+export function useI18n(locale: 'ar' | 'en' = 'ar', ns: string = 'common') {
   const [messages, setMessages] = useState<Messages>({});
   const [loading, setLoading] = useState(true);
 

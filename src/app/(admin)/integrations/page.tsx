@@ -1,15 +1,16 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { 
-  Plug, 
-  Settings, 
-  CheckCircle, 
-  XCircle, 
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import {
+  Plug,
+  Settings,
+  CheckCircle,
+  XCircle,
   AlertCircle,
   RefreshCw,
   ExternalLink,
@@ -22,9 +23,9 @@ import {
   Database,
   Cloud,
   Shield
-} from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
+} from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 interface Integration {
   id: string;
@@ -39,104 +40,104 @@ interface Integration {
 }
 
 const IntegrationsPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const user, isAuthenticated = useAuth();
   const router = useRouter();
   const [integrations, setIntegrations] = useState<Integration[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/login");
+      router.push('/login');
       return;
     }
     loadIntegrations();
   }, [isAuthenticated, router]);
 
-  const loadIntegrations = async () => {
+  const loadIntegrations = async() => {
     try {
       setLoading(true);
-      
+
       // Load API keys from settings
       const apiKeysRaw = localStorage.getItem('api_keys_config');
       const apiKeys = apiKeysRaw ? JSON.parse(apiKeysRaw) : [];
-      
+
       // Build integrations based on configured API keys
       const integrations: Integration[] = [
         {
-          id: "supabase",
-          name: "Supabase Database",
-          description: "قاعدة البيانات الرئيسية - PostgreSQL + Realtime",
-          type: "database",
-          status: apiKeys.find((k: any) => k.id === 'supabase_anon')?.key_value ? "active" : "inactive",
-          provider: "Supabase",
+          id: 'supabase',
+          name: 'Supabase Database',
+          description: 'قاعدة البيانات الرئيسية - PostgreSQL + Realtime',
+          type: 'database',
+          status: apiKeys.find((k: any) => k.id === 'supabase_anon')?.key_value ? 'active' : 'inactive',
+          provider: 'Supabase',
           last_sync: new Date().toISOString(),
           health_score: apiKeys.find((k: any) => k.id === 'supabase_anon')?.key_value ? 98 : 0,
-          config: { 
+          config: {
             url: apiKeys.find((k: any) => k.id === 'supabase_url')?.key_value || 'غير مُعد',
             status: apiKeys.find((k: any) => k.id === 'supabase_anon')?.status || 'inactive'
           }
         },
         {
-          id: "whatsapp",
-          name: "WhatsApp Business API",
-          description: "تكامل مع واتساب لإرسال الرسائل والتذكيرات التلقائية",
-          type: "api",
-          status: apiKeys.find((k: any) => k.id === 'whatsapp_token')?.key_value ? "active" : "inactive",
-          provider: "Meta",
+          id: 'whatsapp',
+          name: 'WhatsApp Business API',
+          description: 'تكامل مع واتساب لإرسال الرسائل والتذكيرات التلقائية',
+          type: 'api',
+          status: apiKeys.find((k: any) => k.id === 'whatsapp_token')?.key_value ? 'active' : 'inactive',
+          provider: 'Meta',
           last_sync: new Date().toISOString(),
           health_score: apiKeys.find((k: any) => k.id === 'whatsapp_token')?.status === 'active' ? 95 : 0,
-          config: { 
+          config: {
             phone_number: apiKeys.find((k: any) => k.id === 'whatsapp_phone')?.key_value || 'غير مُعد',
             token_status: apiKeys.find((k: any) => k.id === 'whatsapp_token')?.status || 'inactive'
           }
         },
         {
-          id: "google",
-          name: "Google Calendar",
-          description: "مزامنة المواعيد تلقائياً مع تقويم جوجل",
-          type: "oauth",
-          status: apiKeys.find((k: any) => k.id === 'google_client_id')?.key_value ? "active" : "inactive",
-          provider: "Google",
+          id: 'google',
+          name: 'Google Calendar',
+          description: 'مزامنة المواعيد تلقائياً مع تقويم جوجل',
+          type: 'oauth',
+          status: apiKeys.find((k: any) => k.id === 'google_client_id')?.key_value ? 'active' : 'inactive',
+          provider: 'Google',
           last_sync: new Date().toISOString(),
           health_score: apiKeys.find((k: any) => k.id === 'google_client_id')?.key_value ? 92 : 0,
-          config: { 
+          config: {
             client_id: apiKeys.find((k: any) => k.id === 'google_client_id')?.key_value ? 'مُعد' : 'غير مُعد',
             calendar_sync: 'bidirectional'
           }
         },
         {
-          id: "stripe",
-          name: "Stripe Payments",
-          description: "معالجة الدفعات الإلكترونية والاشتراكات",
-          type: "api",
-          status: apiKeys.find((k: any) => k.id === 'stripe_secret')?.key_value ? "active" : "inactive",
-          provider: "Stripe",
+          id: 'stripe',
+          name: 'Stripe Payments',
+          description: 'معالجة الدفعات الإلكترونية والاشتراكات',
+          type: 'api',
+          status: apiKeys.find((k: any) => k.id === 'stripe_secret')?.key_value ? 'active' : 'inactive',
+          provider: 'Stripe',
           last_sync: new Date().toISOString(),
           health_score: apiKeys.find((k: any) => k.id === 'stripe_secret')?.status === 'active' ? 94 : 0,
-          config: { 
+          config: {
             public_key: apiKeys.find((k: any) => k.id === 'stripe_public')?.key_value ? 'مُعد' : 'غير مُعد',
             webhooks: 'enabled'
           }
         },
         {
-          id: "smtp",
-          name: "Email / SMTP",
-          description: "إرسال الإشعارات والتقارير عبر البريد الإلكتروني",
-          type: "email",
-          status: apiKeys.find((k: any) => k.id === 'smtp_host')?.key_value ? "active" : "inactive",
-          provider: "SMTP",
+          id: 'smtp',
+          name: 'Email / SMTP',
+          description: 'إرسال الإشعارات والتقارير عبر البريد الإلكتروني',
+          type: 'email',
+          status: apiKeys.find((k: any) => k.id === 'smtp_host')?.key_value ? 'active' : 'inactive',
+          provider: 'SMTP',
           last_sync: new Date().toISOString(),
           health_score: apiKeys.find((k: any) => k.id === 'smtp_host')?.key_value ? 88 : 0,
-          config: { 
+          config: {
             host: apiKeys.find((k: any) => k.id === 'smtp_host')?.key_value || 'غير مُعد',
             port: '587'
           }
-        },
+        }
       ];
-      
+
       setIntegrations(integrations);
     } catch (error) {
-      console.error('Error loading integrations:', error);
+      // console.error('Error loading integrations:', error);
     } finally {
       setLoading(false);
     }
@@ -144,22 +145,22 @@ const IntegrationsPage: React.FC = () => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'active': return <CheckCircle className="w-4 h-4 text-brand-success" />;
-      case 'error': return <XCircle className="w-4 h-4 text-brand-error" />;
-      case 'pending': return <AlertCircle className="w-4 h-4 text-brand-warning" />;
-      default: return <XCircle className="w-4 h-4 text-gray-500" />;
+    case 'active': return <CheckCircle className="w-4 h-4 text-brand-success" />;
+    case 'error': return <XCircle className="w-4 h-4 text-brand-error" />;
+    case 'pending': return <AlertCircle className="w-4 h-4 text-brand-warning" />;
+    default: return <XCircle className="w-4 h-4 text-gray-500" />;
     }
   };
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'api': return <Globe className="w-4 h-4 text-brand-primary" />;
-      case 'webhook': return <Plug className="w-4 h-4 text-purple-500" />;
-      case 'oauth': return <Key className="w-4 h-4 text-brand-success" />;
-      case 'sms': return <Phone className="w-4 h-4 text-brand-primary" />;
-      case 'email': return <Mail className="w-4 h-4 text-brand-error" />;
-      case 'calendar': return <Calendar className="w-4 h-4 text-indigo-500" />;
-      default: return <Settings className="w-4 h-4 text-gray-500" />;
+    case 'api': return <Globe className="w-4 h-4 text-brand-primary" />;
+    case 'webhook': return <Plug className="w-4 h-4 text-purple-500" />;
+    case 'oauth': return <Key className="w-4 h-4 text-brand-success" />;
+    case 'sms': return <Phone className="w-4 h-4 text-brand-primary" />;
+    case 'email': return <Mail className="w-4 h-4 text-brand-error" />;
+    case 'calendar': return <Calendar className="w-4 h-4 text-indigo-500" />;
+    default: return <Settings className="w-4 h-4 text-gray-500" />;
     }
   };
 
@@ -189,7 +190,7 @@ const IntegrationsPage: React.FC = () => {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-gray-700 mb-4">{integration.description}</p>
-              
+
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
                   <span>الحالة:</span>
@@ -210,18 +211,18 @@ const IntegrationsPage: React.FC = () => {
               </div>
 
               <div className="flex gap-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="flex-1"
                   onClick={() => router.push('/settings/api-keys')}
                 >
                   <Settings className="w-4 h-4 mr-1" />
                   إعدادات
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="flex-1"
                   onClick={() => loadIntegrations()}
                 >

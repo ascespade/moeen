@@ -1,3 +1,4 @@
+import React from "react";
 import './globals.css';
 import { Inter } from 'next/font/google';
 import MoeenChatbot from '@/components/chatbot/MoeenChatbot';
@@ -9,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = genMeta(pageMetadata.home);
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {
@@ -23,14 +24,14 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        
+
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        
+
         {/* Manifest */}
         <link rel="manifest" href="/manifest.json" />
-        
+
         {/* Theme Color */}
         <meta name="theme-color" content="#4F46E5" />
       </head>

@@ -69,15 +69,15 @@ export const useAuthStore = create<AuthState & AuthActions>()(
             if (state.user) {
               state.user = { ...state.user, ...userData };
             }
-          }),
+          })
       })),
       {
         name: 'auth-store',
         partialize: (state) => ({
           user: state.user,
           token: state.token,
-          isAuthenticated: state.isAuthenticated,
-        }),
+          isAuthenticated: state.isAuthenticated
+        })
       }
     ),
     { name: 'AuthStore' }
@@ -145,8 +145,8 @@ export const useUIStore = create<UIState & UIActions>()(
           set((state) => {
             const newNotification: Notification = {
               ...notification,
-              id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-              createdAt: new Date(),
+              id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+              createdAt: new Date()
             };
             state.notifications.unshift(newNotification);
           }),
@@ -182,14 +182,14 @@ export const useUIStore = create<UIState & UIActions>()(
         setLoading: (key, loading) =>
           set((state) => {
             state.loading[key] = loading;
-          }),
+          })
       })),
       {
         name: 'ui-store',
         partialize: (state) => ({
           theme: state.theme,
-          language: state.language,
-        }),
+          language: state.language
+        })
       }
     ),
     { name: 'UIStore' }
@@ -477,7 +477,7 @@ export const useDataStore = create<DataState & DataActions>()(
         clearError: () =>
           set((state) => {
             state.error = null;
-          }),
+          })
       })),
       {
         name: 'data-store',
@@ -487,8 +487,8 @@ export const useDataStore = create<DataState & DataActions>()(
           appointments: state.appointments,
           payments: state.payments,
           insuranceClaims: state.insuranceClaims,
-          notifications: state.notifications,
-        }),
+          notifications: state.notifications
+        })
       }
     ),
     { name: 'DataStore' }

@@ -5,9 +5,9 @@
 // Storage utilities
   get: (key: string) => {
     try {
-      const item = localStorage.getItem(key);
+      let item = localStorage.getItem(key);
       return item ? JSON.parse(item) : null;
-    } catch {
+    } catch (error) { // Handle error
       return null;
     }
   },
@@ -15,7 +15,7 @@
     try {
       localStorage.setItem(key, JSON.stringify(value));
       return true;
-    } catch {
+    } catch (error) { // Handle error
       return false;
     }
   },
@@ -23,7 +23,7 @@
     try {
       localStorage.removeItem(key);
       return true;
-    } catch {
+    } catch (error) { // Handle error
       return false;
     }
   },
@@ -31,7 +31,7 @@
     try {
       localStorage.clear();
       return true;
-    } catch {
+    } catch (error) { // Handle error
       return false;
     }
   },
@@ -40,7 +40,7 @@
   fn: T,
   delay: number
 ): ((...args: Parameters<T>) => void) => {
-  let timeoutId: NodeJS.Timeout;
+  let timeoutId: global.Timeout;
   return (...args: Parameters<T>) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => fn(...args), delay);
@@ -49,5 +49,5 @@
 // Exports
 export { cn, cva } from '@/lib/cn';
 export type { VariantProps } from '@/lib/cn';
-export const storageUtils = {
-export const debounce = <T extends (...args: any[]) => any>(
+export let storageUtils = {
+export let debounce = <T extends (...args: any[]) => any>(

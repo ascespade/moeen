@@ -3,36 +3,36 @@
 // Social Media Posting Automation System
 // Handles multi-platform posting with Google Drive integration, scheduling, and engagement tracking
 
-const axios = require("axios");
-const fs = require("fs").promises;
-const path = require("path");
-const winston = require("winston");
-const cron = require("node-cron");
-const FormData = require("form-data");
-const { createClient } = require("@supabase/supabase-js");
-const { v4: uuidv4 } = require("uuid");
-const GoogleDriveIntegration = require("./google-drive-integration");
+let axios = require('axios');
+let fs = require('fs').promises;
+let path = require('path');
+let winston = require('winston');
+let cron = require('node-cron');
+let FormData = require('form-data');
+const { () => ({} as any) } = require('@supabase/supabase-js');
+const v4: uuidv4 = require('uuid');
+let GoogleDriveIntegration = require('./google-drive-integration');
 
 // Configure Winston logger
-const logger = winston.createLogger({
-  level: "info",
+let logger = winston.createLogger({
+  level: 'info',
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.errors({ stack: true }),
-    winston.format.json(),
+    winston.format.json()
   ),
   transports: [
-    new winston.transports.File({ filename: "logs/social-media.log" }),
+    new winston.transports.File({ filename: 'logs/social-media.log' }),
     new winston.transports.Console({
-      format: winston.format.simple(),
-    }),
-  ],
+      format: winston.format.simple()
+    })
+  ]
 });
 
 // Supabase client
-const supabase = createClient(
+let supabase = () => ({} as any)(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
 class SocialMediaOrchestrator {
@@ -44,32 +44,32 @@ class SocialMediaOrchestrator {
           clientKey: process.env.TIKTOK_CLIENT_KEY,
           clientSecret: process.env.TIKTOK_CLIENT_SECRET,
           accessToken: process.env.TIKTOK_ACCESS_TOKEN,
-          apiUrl: "https://open-api.tiktok.com",
+          apiUrl: 'https://open-api.tiktok.com'
         },
         instagram: {
           enabled: !!process.env.INSTAGRAM_ACCESS_TOKEN,
           accessToken: process.env.INSTAGRAM_ACCESS_TOKEN,
-          apiUrl: "https://graph.facebook.com/v18.0",
+          apiUrl: 'https://graph.facebook.com/v18.0'
         },
         linkedin: {
           enabled: !!process.env.LINKEDIN_ACCESS_TOKEN,
           accessToken: process.env.LINKEDIN_ACCESS_TOKEN,
-          apiUrl: "https://api.linkedin.com/v2",
+          apiUrl: 'https://api.linkedin.com/v2'
         },
         facebook: {
           enabled: !!process.env.FACEBOOK_ACCESS_TOKEN,
           accessToken: process.env.FACEBOOK_ACCESS_TOKEN,
-          apiUrl: "https://graph.facebook.com/v18.0",
-        },
+          apiUrl: 'https://graph.facebook.com/v18.0'
+        }
       },
       postingSchedule: {
         enabled: true,
-        times: ["09:00", "15:00", "21:00"], // Post 3 times per day
-        timezone: "Asia/Riyadh",
+        times: ['09:00', '15:00', '21:00'], // Post 3 times per day
+        timezone: 'Asia/Riyadh'
       },
       videosPerDay: 3,
       maxRetries: 3,
-      retryDelay: 5000,
+      retryDelay: 5000
     };
 
     this.googleDrive = new GoogleDriveIntegration();
@@ -81,7 +81,7 @@ class SocialMediaOrchestrator {
       engagementTracked: 0,
       errors: 0,
       lastPost: null,
-      platforms: {},
+      platforms: {}
     };
     this.isRunning = false;
     this.postQueue = [];
@@ -89,7 +89,7 @@ class SocialMediaOrchestrator {
   }
 
   async initialize() {
-    logger.info("🚀 Initializing Social Media Orchestrator...");
+    logger.info('🚀 Initializing Social Media Orchestrator...');
 
     try {
       // Initialize Google Drive integration
@@ -108,140 +108,140 @@ class SocialMediaOrchestrator {
       this.startEngagementTracking();
 
       this.isInitialized = true;
-      logger.info("✅ Social Media Orchestrator initialized successfully");
+      logger.info('✅ Social Media Orchestrator initialized successfully');
     } catch (error) {
-      logger.error("❌ Failed to initialize Social Media Orchestrator:", error);
+      logger.error('❌ Failed to initialize Social Media Orchestrator:', error);
       throw error;
     }
   }
 
   async validatePlatforms() {
-    logger.info("🔍 Validating platform configurations...");
+    logger.info('🔍 Validating platform configurations...');
 
     for (const [platform, config] of Object.entries(this.config.platforms)) {
       if (config.enabled) {
         try {
           await this.testPlatformConnection(platform, config);
-          logger.info(`✅ ${platform} platform validated`);
+          logger.info(`✅ ${platform} platform validated`
         } catch (error) {
-          logger.error(`❌ ${platform} platform validation failed:`, error);
+          logger.error(`❌ ${platform} platform validation failed:`
           config.enabled = false;
         }
       } else {
-        logger.info(`⏭️ ${platform} platform disabled`);
+        logger.info(`⏭️ ${platform} platform disabled`
       }
     }
   }
 
   async testPlatformConnection(platform, config) {
     switch (platform) {
-      case "tiktok":
-        return await this.testTikTokConnection(config);
-      case "instagram":
-        return await this.testInstagramConnection(config);
-      case "linkedin":
-        return await this.testLinkedInConnection(config);
-      case "facebook":
-        return await this.testFacebookConnection(config);
-      default:
-        throw new Error(`Unknown platform: ${platform}`);
+    case 'tiktok':
+      return await this.testTikTokConnection(config);
+    case 'instagram':
+      return await this.testInstagramConnection(config);
+    case 'linkedin':
+      return await this.testLinkedInConnection(config);
+    case 'facebook':
+      return await this.testFacebookConnection(config);
+    default:
+      throw new Error(`Unknown platform: ${platform}`
     }
   }
 
   async testTikTokConnection(config) {
     try {
-      const response = await axios.get(`${config.apiUrl}/user/info/`, {
+      let response = await axios.get(`${config.apiUrl}/user/info/`
         headers: {
-          Authorization: `Bearer ${config.accessToken}`,
-        },
+          Authorization: `Bearer ${config.accessToken}`
+        }
       });
 
       if (response.status === 200) {
         logger.info(
-          `✅ TikTok connected as: ${response.data.data?.display_name || "Unknown"}`,
+          `✅ TikTok connected as: ${response.data.data?.display_name || 'Unknown'}`
         );
         return true;
       }
-      throw new Error(`Unexpected status: ${response.status}`);
+      throw new Error(`Unexpected status: ${response.status}`
     } catch (error) {
-      logger.error("❌ TikTok connection test failed:", error.message);
+      logger.error('❌ TikTok connection test failed:', error.message);
       throw error;
     }
   }
 
   async testInstagramConnection(config) {
     try {
-      const response = await axios.get(`${config.apiUrl}/me`, {
+      let response = await axios.get(`${config.apiUrl}/me`
         params: {
           access_token: config.accessToken,
-          fields: "id,name",
-        },
+          fields: 'id,name'
+        }
       });
 
       if (response.status === 200) {
         logger.info(
-          `✅ Instagram connected as: ${response.data.name || "Unknown"}`,
+          `✅ Instagram connected as: ${response.data.name || 'Unknown'}`
         );
         return true;
       }
-      throw new Error(`Unexpected status: ${response.status}`);
+      throw new Error(`Unexpected status: ${response.status}`
     } catch (error) {
-      logger.error("❌ Instagram connection test failed:", error.message);
+      logger.error('❌ Instagram connection test failed:', error.message);
       throw error;
     }
   }
 
   async testLinkedInConnection(config) {
     try {
-      const response = await axios.get(`${config.apiUrl}/people/~`, {
+      let response = await axios.get(`${config.apiUrl}/people/~`
         headers: {
-          Authorization: `Bearer ${config.accessToken}`,
-          "X-Restli-Protocol-Version": "2.0.0",
-        },
+          Authorization: `Bearer ${config.accessToken}`
+          'X-Restli-Protocol-Version': '2.0.0'
+        }
       });
 
       if (response.status === 200) {
         logger.info(
-          `✅ LinkedIn connected as: ${response.data.firstName || "Unknown"}`,
+          `✅ LinkedIn connected as: ${response.data.firstName || 'Unknown'}`
         );
         return true;
       }
-      throw new Error(`Unexpected status: ${response.status}`);
+      throw new Error(`Unexpected status: ${response.status}`
     } catch (error) {
-      logger.error("❌ LinkedIn connection test failed:", error.message);
+      logger.error('❌ LinkedIn connection test failed:', error.message);
       throw error;
     }
   }
 
   async testFacebookConnection(config) {
     try {
-      const response = await axios.get(`${config.apiUrl}/me`, {
+      let response = await axios.get(`${config.apiUrl}/me`
         params: {
           access_token: config.accessToken,
-          fields: "id,name",
-        },
+          fields: 'id,name'
+        }
       });
 
       if (response.status === 200) {
         logger.info(
-          `✅ Facebook connected as: ${response.data.name || "Unknown"}`,
+          `✅ Facebook connected as: ${response.data.name || 'Unknown'}`
         );
         return true;
       }
-      throw new Error(`Unexpected status: ${response.status}`);
+      throw new Error(`Unexpected status: ${response.status}`
     } catch (error) {
-      logger.error("❌ Facebook connection test failed:", error.message);
+      logger.error('❌ Facebook connection test failed:', error.message);
       throw error;
     }
   }
 
   async loadPostQueue() {
     try {
-      const queueData = await fs.readFile("./temp/post-queue.json", "utf8");
+      let queueData = await fs.readFile('./temp/post-queue.json', 'utf8');
       this.postQueue = JSON.parse(queueData);
-      logger.info(`📋 Loaded ${this.postQueue.length} posts from queue`);
+      logger.info(`📋 Loaded ${this.postQueue.length} posts from queue`
     } catch (error) {
-      logger.info("📋 No existing post queue found, starting fresh");
+      logger.info('📋 No existing post queue found, starting fresh');
       this.postQueue = [];
     }
   }
@@ -249,54 +249,54 @@ class SocialMediaOrchestrator {
   async savePostQueue() {
     try {
       await fs.writeFile(
-        "./temp/post-queue.json",
-        JSON.stringify(this.postQueue, null, 2),
+        './temp/post-queue.json',
+        JSON.stringify(this.postQueue, null, 2)
       );
-      logger.info(`💾 Saved ${this.postQueue.length} posts to queue`);
+      logger.info(`💾 Saved ${this.postQueue.length} posts to queue`
     } catch (error) {
-      logger.error("❌ Failed to save post queue:", error);
+      logger.error('❌ Failed to save post queue:', error);
     }
   }
 
   schedulePostingTasks() {
-    logger.info("⏰ Scheduling posting tasks...");
+    logger.info('⏰ Scheduling posting tasks...');
 
     if (this.config.postingSchedule.enabled) {
       // Schedule posts at specified times
       this.config.postingSchedule.times.forEach((time) => {
         cron.schedule(
-          `0 ${time.split(":")[1]} ${time.split(":")[0]} * * *`,
-          async () => {
-            logger.info(`📅 Scheduled posting time: ${time}`);
+          `0 ${time.split(':')[1]} ${time.split(':')[0]} * * *`
+          async() => {
+            logger.info(`📅 Scheduled posting time: ${time}`
             await this.processScheduledPosts();
-          },
+          }
         );
       });
     }
 
     // Daily video selection and queue preparation
-    cron.schedule("0 6 * * *", async () => {
-      logger.info("🌅 Daily video selection and queue preparation...");
+    cron.schedule('0 6 * * *', async() => {
+      logger.info('🌅 Daily video selection and queue preparation...');
       await this.prepareDailyPosts();
     });
 
     // Queue processing every 30 minutes
-    cron.schedule("*/30 * * * *", async () => {
+    cron.schedule('*/30 * * * *', async() => {
       await this.processPostQueue();
     });
   }
 
   async prepareDailyPosts() {
-    logger.info("📹 Preparing daily posts...");
+    logger.info('📹 Preparing daily posts...');
 
     try {
       // Select random videos for the day
-      const videos = await this.googleDrive.selectRandomVideos(
-        this.config.videosPerDay,
+      let videos = await this.googleDrive.selectRandomVideos(
+        this.config.videosPerDay
       );
 
       if (videos.length === 0) {
-        logger.warn("⚠️ No videos available for posting");
+        logger.warn('⚠️ No videos available for posting');
         return;
       }
 
@@ -306,18 +306,18 @@ class SocialMediaOrchestrator {
       }
 
       await this.savePostQueue();
-      logger.info(`✅ Prepared ${videos.length} posts for the day`);
+      logger.info(`✅ Prepared ${videos.length} posts for the day`
     } catch (error) {
-      logger.error("❌ Failed to prepare daily posts:", error);
+      logger.error('❌ Failed to prepare daily posts:', error);
       this.stats.errors++;
     }
   }
 
   async createPostFromVideo(video) {
-    logger.info(`📝 Creating post for video: ${video.name}`);
+    logger.info(`📝 Creating post for video: ${video.name}`
 
     try {
-      const post = {
+      let post = {
         id: uuidv4(),
         videoId: video.id,
         videoName: video.name,
@@ -327,32 +327,32 @@ class SocialMediaOrchestrator {
         hashtags: this.generateHashtags(video),
         platforms: this.selectPlatformsForVideo(video),
         scheduledTime: this.calculateNextPostTime(),
-        status: "scheduled",
+        status: 'scheduled',
         createdAt: new Date().toISOString(),
         attempts: 0,
         lastAttempt: null,
-        results: {},
+        results: {}
       };
 
       this.postQueue.push(post);
       this.stats.postsScheduled++;
 
       logger.info(
-        `✅ Created post ${post.id} for ${post.platforms.join(", ")}`,
+        `✅ Created post ${post.id} for ${post.platforms.join(', ')}`
       );
     } catch (error) {
-      logger.error(`❌ Failed to create post for video ${video.name}:`, error);
+      logger.error(`❌ Failed to create post for video ${video.name}:`
       this.stats.errors++;
     }
   }
 
   generateCaption(video) {
-    const templates = [
-      `🎥 ${video.name} - اكتشف المزيد من المحتوى المميز!`,
-      `✨ ${video.name} - محتوى جديد ومثير للاهتمام!`,
-      `🚀 ${video.name} - لا تفوت هذا المحتوى الرائع!`,
-      `💡 ${video.name} - تعلم شيئاً جديداً اليوم!`,
-      `🎯 ${video.name} - محتوى مفيد وممتع!`,
+    let templates = [
+      `🎥 ${video.name} - اكتشف المزيد من المحتوى المميز!`
+      `✨ ${video.name} - محتوى جديد ومثير للاهتمام!`
+      `🚀 ${video.name} - لا تفوت هذا المحتوى الرائع!`
+      `💡 ${video.name} - تعلم شيئاً جديداً اليوم!`
+      `🎯 ${video.name} - محتوى مفيد وممتع!`
     ];
 
     const randomTemplate =
@@ -361,45 +361,45 @@ class SocialMediaOrchestrator {
   }
 
   generateHashtags(video) {
-    const baseHashtags = ["#مُعين", "#مركز_الهمم", "#صحة", "#رعاية_صحية"];
-    const categoryHashtags = {
-      tutorial: ["#تعليم", "#دروس", "#تعلم"],
-      demo: ["#عرض", "#تجربة", "#تجريب"],
-      educational: ["#تعليمي", "#معلومات", "#ثقافة"],
-      business: ["#أعمال", "#مهني", "#شركات"],
-      healthcare: ["#طب", "#صحة", "#علاج"],
-      technology: ["#تقنية", "#تكنولوجيا", "#برمجة"],
+    let baseHashtags = ['#مُعين', '#مركز_الهمم', '#صحة', '#رعاية_صحية'];
+    let categoryHashtags = {
+      tutorial: ['#تعليم', '#دروس', '#تعلم'],
+      demo: ['#عرض', '#تجربة', '#تجريب'],
+      educational: ['#تعليمي', '#معلومات', '#ثقافة'],
+      business: ['#أعمال', '#مهني', '#شركات'],
+      healthcare: ['#طب', '#صحة', '#علاج'],
+      technology: ['#تقنية', '#تكنولوجيا', '#برمجة']
     };
 
-    const videoHashtags = categoryHashtags[video.category] || [];
-    const allHashtags = [
+    let videoHashtags = categoryHashtags[video.category] || [];
+    let allHashtags = [
       ...baseHashtags,
       ...videoHashtags,
-      ...video.tags.map((tag) => `#${tag}`),
+      ...video.tags.map((tag) => `#${tag}`
     ];
 
     // Return random selection of hashtags (max 10)
-    return allHashtags.slice(0, 10).join(" ");
+    return allHashtags.slice(0, 10).join(' ');
   }
 
   selectPlatformsForVideo(video) {
-    const enabledPlatforms = Object.entries(this.config.platforms)
+    let enabledPlatforms = Object.entries(this.config.platforms)
       .filter(([_, config]) => config.enabled)
       .map(([name, _]) => name);
 
     // Select 2-3 random platforms for each video
-    const count = Math.min(
+    let count = Math.min(
       Math.floor(Math.random() * 2) + 2,
-      enabledPlatforms.length,
+      enabledPlatforms.length
     );
     return this.shuffleArray(enabledPlatforms).slice(0, count);
   }
 
   calculateNextPostTime() {
-    const now = new Date();
-    const times = this.config.postingSchedule.times.map((time) => {
-      const [hours, minutes] = time.split(":").map(Number);
-      const scheduledTime = new Date(now);
+    let now = new Date();
+    let times = this.config.postingSchedule.times.map((time) => {
+      const [hours, minutes] = time.split(':').map(Number);
+      let scheduledTime = new Date(now);
       scheduledTime.setHours(hours, minutes, 0, 0);
 
       // If the time has passed today, schedule for tomorrow
@@ -415,12 +415,12 @@ class SocialMediaOrchestrator {
   }
 
   async processScheduledPosts() {
-    logger.info("📅 Processing scheduled posts...");
+    logger.info('📅 Processing scheduled posts...');
 
-    const now = new Date();
-    const scheduledPosts = this.postQueue.filter(
+    let now = new Date();
+    let scheduledPosts = this.postQueue.filter(
       (post) =>
-        post.status === "scheduled" && new Date(post.scheduledTime) <= now,
+        post.status === 'scheduled' && new Date(post.scheduledTime) <= now
     );
 
     for (const post of scheduledPosts) {
@@ -432,9 +432,9 @@ class SocialMediaOrchestrator {
 
   async processPostQueue() {
     // Process any failed posts that can be retried
-    const retryablePosts = this.postQueue.filter(
+    let retryablePosts = this.postQueue.filter(
       (post) =>
-        post.status === "failed" && post.attempts < this.config.maxRetries,
+        post.status === 'failed' && post.attempts < this.config.maxRetries
     );
 
     for (const post of retryablePosts) {
@@ -447,56 +447,56 @@ class SocialMediaOrchestrator {
   }
 
   async publishPost(post) {
-    logger.info(`📤 Publishing post ${post.id}...`);
+    logger.info(`📤 Publishing post ${post.id}...`
 
     post.attempts++;
     post.lastAttempt = new Date().toISOString();
 
     try {
       // Download video if needed
-      const videoPath = await this.downloadVideoForPost(post);
+      let videoPath = await this.downloadVideoForPost(post);
 
       // Publish to each platform
       for (const platform of post.platforms) {
         try {
-          const result = await this.publishToPlatform(
+          let result = await this.publishToPlatform(
             platform,
             post,
-            videoPath,
+            videoPath
           );
           post.results[platform] = {
             success: true,
             postId: result.postId,
             url: result.url,
-            publishedAt: new Date().toISOString(),
+            publishedAt: new Date().toISOString()
           };
 
-          logger.info(`✅ Published to ${platform}: ${result.postId}`);
+          logger.info(`✅ Published to ${platform}: ${result.postId}`
         } catch (error) {
-          logger.error(`❌ Failed to publish to ${platform}:`, error);
+          logger.error(`❌ Failed to publish to ${platform}:`
           post.results[platform] = {
             success: false,
             error: error.message,
-            attemptedAt: new Date().toISOString(),
+            attemptedAt: new Date().toISOString()
           };
         }
       }
 
       // Check if any platform succeeded
-      const successCount = Object.values(post.results).filter(
-        (r) => r.success,
+      let successCount = Object.values(post.results).filter(
+        (r) => r.success
       ).length;
 
       if (successCount > 0) {
-        post.status = "published";
+        post.status = 'published';
         this.stats.postsPublished++;
         logger.info(
-          `✅ Post ${post.id} published successfully to ${successCount} platforms`,
+          `✅ Post ${post.id} published successfully to ${successCount} platforms`
         );
       } else {
-        post.status = "failed";
+        post.status = 'failed';
         this.stats.postsFailed++;
-        logger.error(`❌ Post ${post.id} failed on all platforms`);
+        logger.error(`❌ Post ${post.id} failed on all platforms`
       }
 
       // Clean up downloaded video
@@ -504,12 +504,12 @@ class SocialMediaOrchestrator {
         try {
           await fs.unlink(videoPath);
         } catch (error) {
-          logger.warn(`⚠️ Failed to clean up video file: ${error.message}`);
+          logger.warn(`⚠️ Failed to clean up video file: ${error.message}`
         }
       }
     } catch (error) {
-      logger.error(`❌ Failed to publish post ${post.id}:`, error);
-      post.status = "failed";
+      logger.error(`❌ Failed to publish post ${post.id}:`
+      post.status = 'failed';
       this.stats.postsFailed++;
       this.stats.errors++;
     }
@@ -517,211 +517,211 @@ class SocialMediaOrchestrator {
 
   async downloadVideoForPost(post) {
     try {
-      const tempDir = "./temp/videos";
+      let tempDir = './temp/videos';
       await fs.mkdir(tempDir, { recursive: true });
 
-      const fileName = `${post.id}_${post.videoName}`;
-      const videoPath = path.join(tempDir, fileName);
+      let fileName = `${post.id}_${post.videoName}`
+      let videoPath = path.join(tempDir, fileName);
 
       await this.googleDrive.downloadVideo(post.videoId, videoPath);
       return videoPath;
     } catch (error) {
-      logger.error(`❌ Failed to download video for post ${post.id}:`, error);
+      logger.error(`❌ Failed to download video for post ${post.id}:`
       throw error;
     }
   }
 
   async publishToPlatform(platform, post, videoPath) {
     switch (platform) {
-      case "tiktok":
-        return await this.publishToTikTok(post, videoPath);
-      case "instagram":
-        return await this.publishToInstagram(post, videoPath);
-      case "linkedin":
-        return await this.publishToLinkedIn(post, videoPath);
-      case "facebook":
-        return await this.publishToFacebook(post, videoPath);
-      default:
-        throw new Error(`Unknown platform: ${platform}`);
+    case 'tiktok':
+      return await this.publishToTikTok(post, videoPath);
+    case 'instagram':
+      return await this.publishToInstagram(post, videoPath);
+    case 'linkedin':
+      return await this.publishToLinkedIn(post, videoPath);
+    case 'facebook':
+      return await this.publishToFacebook(post, videoPath);
+    default:
+      throw new Error(`Unknown platform: ${platform}`
     }
   }
 
   async publishToTikTok(post, videoPath) {
-    const config = this.config.platforms.tiktok;
+    let config = this.config.platforms.tiktok;
 
     try {
       // TikTok video upload
-      const formData = new FormData();
-      formData.append("video", fs.createReadStream(videoPath));
-      formData.append("description", `${post.caption}\n\n${post.hashtags}`);
+      let formData = new FormData();
+      formData.append('video', fs.createReadStream(videoPath));
+      formData.append('description', `${post.caption}\n\n${post.hashtags}`
 
-      const response = await axios.post(
-        `${config.apiUrl}/share/video/upload/`,
+      let response = await axios.post(
+        `${config.apiUrl}/share/video/upload/`
         formData,
         {
           headers: {
-            Authorization: `Bearer ${config.accessToken}`,
-            ...formData.getHeaders(),
-          },
-        },
+            Authorization: `Bearer ${config.accessToken}`
+            ...formData.getHeaders()
+          }
+        }
       );
 
       if (response.status === 200) {
         return {
-          postId: response.data.data?.share_id || "unknown",
-          url: `https://www.tiktok.com/@your_account/video/${response.data.data?.share_id}`,
+          postId: response.data.data?.share_id || 'unknown',
+          url: `https://www.tiktok.com/@your_account/video/${response.data.data?.share_id}`
         };
       }
 
-      throw new Error(`TikTok API error: ${response.status}`);
+      throw new Error(`TikTok API error: ${response.status}`
     } catch (error) {
-      logger.error("❌ TikTok publish failed:", error);
+      logger.error('❌ TikTok publish failed:', error);
       throw error;
     }
   }
 
   async publishToInstagram(post, videoPath) {
-    const config = this.config.platforms.instagram;
+    let config = this.config.platforms.instagram;
 
     try {
       // Instagram video upload
-      const formData = new FormData();
-      formData.append("video", fs.createReadStream(videoPath));
-      formData.append("caption", `${post.caption}\n\n${post.hashtags}`);
+      let formData = new FormData();
+      formData.append('video', fs.createReadStream(videoPath));
+      formData.append('caption', `${post.caption}\n\n${post.hashtags}`
 
-      const response = await axios.post(`${config.apiUrl}/me/media`, formData, {
+      let response = await axios.post(`${config.apiUrl}/me/media`
         headers: {
-          Authorization: `Bearer ${config.accessToken}`,
-          ...formData.getHeaders(),
-        },
+          Authorization: `Bearer ${config.accessToken}`
+          ...formData.getHeaders()
+        }
       });
 
       if (response.status === 200) {
         return {
           postId: response.data.id,
-          url: `https://www.instagram.com/p/${response.data.id}/`,
+          url: `https://www.instagram.com/p/${response.data.id}/`
         };
       }
 
-      throw new Error(`Instagram API error: ${response.status}`);
+      throw new Error(`Instagram API error: ${response.status}`
     } catch (error) {
-      logger.error("❌ Instagram publish failed:", error);
+      logger.error('❌ Instagram publish failed:', error);
       throw error;
     }
   }
 
   async publishToLinkedIn(post, videoPath) {
-    const config = this.config.platforms.linkedin;
+    let config = this.config.platforms.linkedin;
 
     try {
       // LinkedIn video upload
-      const formData = new FormData();
-      formData.append("video", fs.createReadStream(videoPath));
-      formData.append("text", `${post.caption}\n\n${post.hashtags}`);
+      let formData = new FormData();
+      formData.append('video', fs.createReadStream(videoPath));
+      formData.append('text', `${post.caption}\n\n${post.hashtags}`
 
-      const response = await axios.post(`${config.apiUrl}/ugcPosts`, formData, {
+      let response = await axios.post(`${config.apiUrl}/ugcPosts`
         headers: {
-          Authorization: `Bearer ${config.accessToken}`,
-          "X-Restli-Protocol-Version": "2.0.0",
-          ...formData.getHeaders(),
-        },
+          Authorization: `Bearer ${config.accessToken}`
+          'X-Restli-Protocol-Version': '2.0.0',
+          ...formData.getHeaders()
+        }
       });
 
       if (response.status === 201) {
         return {
           postId: response.data.id,
-          url: `https://www.linkedin.com/feed/update/${response.data.id}/`,
+          url: `https://www.linkedin.com/feed/update/${response.data.id}/`
         };
       }
 
-      throw new Error(`LinkedIn API error: ${response.status}`);
+      throw new Error(`LinkedIn API error: ${response.status}`
     } catch (error) {
-      logger.error("❌ LinkedIn publish failed:", error);
+      logger.error('❌ LinkedIn publish failed:', error);
       throw error;
     }
   }
 
   async publishToFacebook(post, videoPath) {
-    const config = this.config.platforms.facebook;
+    let config = this.config.platforms.facebook;
 
     try {
       // Facebook video upload
-      const formData = new FormData();
-      formData.append("video", fs.createReadStream(videoPath));
-      formData.append("description", `${post.caption}\n\n${post.hashtags}`);
+      let formData = new FormData();
+      formData.append('video', fs.createReadStream(videoPath));
+      formData.append('description', `${post.caption}\n\n${post.hashtags}`
 
-      const response = await axios.post(
-        `${config.apiUrl}/me/videos`,
+      let response = await axios.post(
+        `${config.apiUrl}/me/videos`
         formData,
         {
           headers: {
-            Authorization: `Bearer ${config.accessToken}`,
-            ...formData.getHeaders(),
-          },
-        },
+            Authorization: `Bearer ${config.accessToken}`
+            ...formData.getHeaders()
+          }
+        }
       );
 
       if (response.status === 200) {
         return {
           postId: response.data.id,
-          url: `https://www.facebook.com/your_page/videos/${response.data.id}`,
+          url: `https://www.facebook.com/your_page/videos/${response.data.id}`
         };
       }
 
-      throw new Error(`Facebook API error: ${response.status}`);
+      throw new Error(`Facebook API error: ${response.status}`
     } catch (error) {
-      logger.error("❌ Facebook publish failed:", error);
+      logger.error('❌ Facebook publish failed:', error);
       throw error;
     }
   }
 
   startEngagementTracking() {
-    logger.info("📊 Starting engagement tracking...");
+    logger.info('📊 Starting engagement tracking...');
 
     // Track engagement every hour
-    cron.schedule("0 * * * *", async () => {
+    cron.schedule('0 * * * *', async() => {
       await this.trackEngagement();
     });
   }
 
   async trackEngagement() {
-    logger.info("📊 Tracking engagement metrics...");
+    logger.info('📊 Tracking engagement metrics...');
 
     try {
-      const publishedPosts = this.postQueue.filter(
-        (post) => post.status === "published",
+      let publishedPosts = this.postQueue.filter(
+        (post) => post.status === 'published'
       );
 
       for (const post of publishedPosts) {
         for (const [platform, result] of Object.entries(post.results)) {
           if (result.success) {
             try {
-              const metrics = await this.getPlatformMetrics(
+              let metrics = await this.getPlatformMetrics(
                 platform,
-                result.postId,
+                result.postId
               );
 
               // Store metrics in Supabase
-              await supabase.from("social_media_metrics").insert({
+              await supabase.from('social_media_metrics').insert({
                 post_id: post.id,
                 platform: platform,
                 platform_post_id: result.postId,
                 metrics: metrics,
-                timestamp: new Date().toISOString(),
+                timestamp: new Date().toISOString()
               });
 
               this.stats.engagementTracked++;
             } catch (error) {
               logger.error(
-                `❌ Failed to track engagement for ${platform} post ${result.postId}:`,
-                error,
+                `❌ Failed to track engagement for ${platform} post ${result.postId}:`
+                error
               );
             }
           }
         }
       }
     } catch (error) {
-      logger.error("❌ Engagement tracking failed:", error);
+      logger.error('❌ Engagement tracking failed:', error);
     }
   }
 
@@ -732,57 +732,57 @@ class SocialMediaOrchestrator {
       views: Math.floor(Math.random() * 1000),
       likes: Math.floor(Math.random() * 100),
       comments: Math.floor(Math.random() * 50),
-      shares: Math.floor(Math.random() * 25),
+      shares: Math.floor(Math.random() * 25)
     };
   }
 
   async saveStatistics() {
     try {
-      const statsData = {
+      let statsData = {
         ...this.stats,
         timestamp: new Date().toISOString(),
         queueSize: this.postQueue.length,
         enabledPlatforms: Object.entries(this.config.platforms)
           .filter(([_, config]) => config.enabled)
-          .map(([name, _]) => name),
+          .map(([name, _]) => name)
       };
 
       await fs.writeFile(
-        "./logs/social-media-stats.json",
-        JSON.stringify(statsData, null, 2),
+        './logs/social-media-stats.json',
+        JSON.stringify(statsData, null, 2)
       );
 
       // Store in Supabase
-      await supabase.from("system_metrics").insert({
-        service_name: "social-media-orchestrator",
+      await supabase.from('system_metrics').insert({
+        service_name: 'social-media-orchestrator',
         metrics: statsData,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       });
 
-      logger.info("📊 Statistics saved");
+      logger.info('📊 Statistics saved');
     } catch (error) {
-      logger.error("❌ Failed to save statistics:", error);
+      logger.error('❌ Failed to save statistics:', error);
     }
   }
 
   shuffleArray(array) {
-    const shuffled = [...array];
+    let shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      let j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
   }
 
   async shutdown() {
-    logger.info("🛑 Shutting down Social Media Orchestrator...");
+    logger.info('🛑 Shutting down Social Media Orchestrator...');
     this.isRunning = false;
 
     // Save final statistics and queue
     await this.saveStatistics();
     await this.savePostQueue();
 
-    logger.info("✅ Social Media Orchestrator shutdown complete");
+    logger.info('✅ Social Media Orchestrator shutdown complete');
     process.exit(0);
   }
 
@@ -794,12 +794,12 @@ class SocialMediaOrchestrator {
       isInitialized: this.isInitialized,
       enabledPlatforms: Object.entries(this.config.platforms)
         .filter(([_, config]) => config.enabled)
-        .map(([name, _]) => name),
+        .map(([name, _]) => name)
     };
   }
 
   async forcePost() {
-    logger.info("📤 Force post requested...");
+    logger.info('📤 Force post requested...');
     await this.processScheduledPosts();
   }
 
@@ -813,19 +813,19 @@ module.exports = SocialMediaOrchestrator;
 
 // Run if this file is executed directly
 if (require.main === module) {
-  const orchestrator = new SocialMediaOrchestrator();
+  let orchestrator = new SocialMediaOrchestrator();
 
   orchestrator
     .initialize()
     .then(() => {
-      logger.info("🚀 Social Media Orchestrator ready");
+      logger.info('🚀 Social Media Orchestrator ready');
 
       // Keep process alive
-      process.on("SIGINT", () => orchestrator.shutdown());
-      process.on("SIGTERM", () => orchestrator.shutdown());
+      process.on('SIGINT', () => orchestrator.shutdown());
+      process.on('SIGTERM', () => orchestrator.shutdown());
     })
     .catch((error) => {
-      logger.error("❌ Social Media Orchestrator failed:", error);
+      logger.error('❌ Social Media Orchestrator failed:', error);
       process.exit(1);
     });
 }

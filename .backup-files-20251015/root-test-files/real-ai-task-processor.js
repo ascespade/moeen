@@ -3,8 +3,8 @@
 // Real AI Agent Task Processor for Moeen Platform
 // This integrates with the actual AI assistant and conversation flows
 
-const fs = require("fs");
-const path = require("path");
+let fs = require("fs");
+let path = require("path");
 
 class RealAITaskProcessor {
   constructor() {
@@ -649,30 +649,30 @@ class RealAITaskProcessor {
   }
 
   log(message) {
-    const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] ${this.projectName}: ${message}\n`;
+    let timestamp = new Date().toISOString();
+    let logMessage = `[${timestamp}] ${this.projectName}: ${message}\n`
     fs.appendFileSync(this.logFile, logMessage);
-    console.log(logMessage.trim());
+    // console.log(logMessage.trim());
   }
 
   loadTasks() {
     try {
       if (fs.existsSync(this.taskFile)) {
-        const data = JSON.parse(fs.readFileSync(this.taskFile, "utf8"));
+        let data = JSON.parse(fs.readFileSync(this.taskFile, "utf8"));
         this.currentTask = data.current_task || 1;
         this.totalTasks = data.total_tasks || 100;
         this.log(
-          `Loaded real AI tasks: ${this.currentTask}/${this.totalTasks}`,
+          `Loaded real AI tasks: ${this.currentTask}/${this.totalTasks}`
         );
       }
     } catch (error) {
-      this.log(`Error loading tasks: ${error.message}`);
+      this.log(`Error loading tasks: ${error.message}`
     }
   }
 
   saveTasks() {
     try {
-      const data = {
+      let data = {
         total_tasks: this.totalTasks,
         current_task: this.currentTask,
         completed_tasks: this.currentTask - 1,
@@ -683,21 +683,21 @@ class RealAITaskProcessor {
       };
       fs.writeFileSync(this.taskFile, JSON.stringify(data, null, 2));
     } catch (error) {
-      this.log(`Error saving tasks: ${error.message}`);
+      this.log(`Error saving tasks: ${error.message}`
     }
   }
 
   async processRealTask(taskNumber) {
-    const task = this.realTasks[taskNumber - 1];
+    let task = this.realTasks[taskNumber - 1];
     if (!task) {
-      this.log(`❌ Task ${taskNumber} not found`);
+      this.log(`❌ Task ${taskNumber} not found`
       return { success: false, error: "Task not found" };
     }
 
     this.log(
-      `🔄 Processing Real Task ${taskNumber}/${this.totalTasks}: ${task.name}`,
+      `🔄 Processing Real Task ${taskNumber}/${this.totalTasks}: ${task.name}`
     );
-    this.log(`   Type: ${task.type}, Priority: ${task.priority}`);
+    this.log(`   Type: ${task.type}, Priority: ${task.priority}`
 
     try {
       // Simulate real work based on task type and priority
@@ -730,22 +730,22 @@ class RealAITaskProcessor {
       await new Promise((resolve) => setTimeout(resolve, workDuration));
 
       // Determine success based on task type and priority
-      const success = Math.random() < successRate;
+      let success = Math.random() < successRate;
 
       if (success) {
-        this.log(`✅ Task ${taskNumber} completed: ${task.name}`);
+        this.log(`✅ Task ${taskNumber} completed: ${task.name}`
         this.log(
-          `   Duration: ${Math.round(workDuration)}ms, Type: ${task.type}`,
+          `   Duration: ${Math.round(workDuration)}ms, Type: ${task.type}`
         );
         return {
           success: true,
           task: task,
           duration: workDuration,
-          message: `Successfully completed ${task.name}`,
+          message: `Successfully completed ${task.name}`
         };
       } else {
-        this.log(`❌ Task ${taskNumber} failed: ${task.name}`);
-        this.log(`   Reason: Simulated failure for testing`);
+        this.log(`❌ Task ${taskNumber} failed: ${task.name}`
+        this.log(`   Reason: Simulated failure for testing`
         return {
           success: false,
           task: task,
@@ -754,7 +754,7 @@ class RealAITaskProcessor {
         };
       }
     } catch (error) {
-      this.log(`❌ Task ${taskNumber} error: ${error.message}`);
+      this.log(`❌ Task ${taskNumber} error: ${error.message}`
       return {
         success: false,
         task: task,
@@ -767,14 +767,14 @@ class RealAITaskProcessor {
     this.processing = true;
     this.log("🚀 Real AI Task Processor started");
     this.log(
-      `📋 Processing ${this.totalTasks} real AI tasks for Moeen Platform`,
+      `📋 Processing ${this.totalTasks} real AI tasks for Moeen Platform`
     );
     this.log(
       "🎯 Tasks include: AI Assistant, Conversation Flows, WhatsApp Integration, Security, Testing",
     );
 
     while (this.processing && this.currentTask <= this.totalTasks) {
-      const result = await this.processRealTask(this.currentTask);
+      let result = await this.processRealTask(this.currentTask);
 
       // Update progress
       this.currentTask++;
@@ -783,13 +783,13 @@ class RealAITaskProcessor {
 
       // Log progress every 10 tasks
       if (this.currentTask % 10 === 0) {
-        const progress = Math.round(
+        let progress = Math.round(
           ((this.currentTask - 1) * 100) / this.totalTasks,
         );
         this.log(
-          `📊 Progress: ${this.currentTask - 1}/${this.totalTasks} (${progress}%)`,
+          `📊 Progress: ${this.currentTask - 1}/${this.totalTasks} (${progress}%)`
         );
-        this.log(`🎯 Completed: ${this.currentTask - 1} real AI tasks`);
+        this.log(`🎯 Completed: ${this.currentTask - 1} real AI tasks`
       }
 
       // Small delay between tasks
@@ -810,7 +810,7 @@ class RealAITaskProcessor {
   }
 
   updateStatus() {
-    const status = {
+    let status = {
       processor: "real_ai_processor",
       status: this.processing ? "running" : "stopped",
       current_task: this.currentTask,
@@ -836,7 +836,7 @@ class RealAITaskProcessor {
   }
 
   createCompletionReport() {
-    const completionData = {
+    let completionData = {
       status: "completed",
       completion_time: new Date().toISOString(),
       total_tasks: this.totalTasks,
@@ -857,7 +857,7 @@ class RealAITaskProcessor {
       ],
     };
 
-    const completionFile = path.join(
+    let completionFile = path.join(
       "/home/ubuntu/ai-agent-system/logs/projects/moeen-platform",
       "real-completion-status.json",
     );
@@ -873,7 +873,7 @@ class RealAITaskProcessor {
 }
 
 // Start the real processor
-const processor = new RealAITaskProcessor();
+let processor = new RealAITaskProcessor();
 
 // Handle graceful shutdown
 process.on("SIGINT", () => {
@@ -888,11 +888,11 @@ process.on("SIGTERM", () => {
 
 // Keep the process alive
 process.on("uncaughtException", (error) => {
-  console.error("Uncaught Exception:", error);
+  // console.error("Uncaught Exception:", error);
   // Don't exit, keep processing
 });
 
 process.on("unhandledRejection", (reason, promise) => {
-  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+  // console.error("Unhandled Rejection at:", promise, "reason:", reason);
   // Don't exit, keep processing
 });

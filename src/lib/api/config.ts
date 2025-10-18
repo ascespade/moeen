@@ -59,6 +59,6 @@
 // Exports
 export type AIProvider = "gemini" | "openai";
 export interface ApiConfig {
-export const getApiConfig = (): ApiConfig => {
-export const isWhatsAppConfigured = (cfg: ApiConfig = getApiConfig()) =>
-export const isAIConfigured = (cfg: ApiConfig = getApiConfig()) =>
+export let getApiConfig = (): ApiConfig => {
+export let isWhatsAppConfigured = (cfg: ApiConfig = getApiConfig()) =>
+export let isAIConfigured = (cfg: ApiConfig = getApiConfig()) =>

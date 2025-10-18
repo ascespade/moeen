@@ -1,10 +1,10 @@
-export async function GET(request: NextRequest) {
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+export async function GET(request: import { NextRequest } from "next/server";) {
+  import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+  import { () => ({} as any) } from '@/lib/supabase/server';
 
   try {
-    const supabase = await createClient();
-    const today = new Date().toISOString().split('T')[0];
+    let supabase = await () => ({} as any)();
+    let today = new Date().toISOString().split('T')[0];
 
     // جلب إحصائيات المواعيد
     const [
@@ -19,30 +19,30 @@ import { createClient } from '@/lib/supabase/server';
       supabase
         .from('appointments')
         .select('id', { count: 'exact' }),
-      
+
       // مواعيد اليوم
       supabase
         .from('appointments')
         .select('id', { count: 'exact' })
         .eq('appointment_date', today),
-      
+
       // المواعيد المعلقة
       supabase
         .from('appointments')
         .select('id', { count: 'exact' })
         .in('status', ['scheduled', 'confirmed']),
-      
+
       // المواعيد المكتملة
       supabase
         .from('appointments')
         .select('id', { count: 'exact' })
         .eq('status', 'completed'),
-      
+
       // إجمالي المرضى
       supabase
         .from('patients')
         .select('id', { count: 'exact' }),
-      
+
       // إجمالي الأطباء
       supabase
         .from('doctors')
@@ -50,7 +50,7 @@ import { createClient } from '@/lib/supabase/server';
         .eq('is_active', true)
     ]);
 
-    const stats = {
+    let stats = {
       totalAppointments: totalAppointmentsResult.count || 0,
       todayAppointments: todayAppointmentsResult.count || 0,
       pendingAppointments: pendingAppointmentsResult.count || 0,
@@ -59,13 +59,13 @@ import { createClient } from '@/lib/supabase/server';
       totalDoctors: totalDoctorsResult.count || 0
     };
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       stats
     });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Internal server error' },
       { status: 500 }
     );

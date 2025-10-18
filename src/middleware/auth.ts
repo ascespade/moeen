@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { authorize } from '@/lib/auth/authorize';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@/lib/auth/() => ({} as any)';
 
-// Role-based route protection
-const roleRoutes = {
+// string-based route protection
+let roleRoutes = {
   '/patient': ['patient'],
   '/doctor': ['doctor'],
   '/staff': ['staff', 'supervisor', 'admin'],
@@ -10,9 +10,9 @@ const roleRoutes = {
   '/admin': ['admin']
 };
 
-export async function authMiddleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-  
+export async function authMiddleware(request: import { NextRequest } from "next/server";) {
+  let pathname = request.nextUrl.pathname;
+
   // Skip auth for public routes
   if (
     pathname.startsWith('/api/health') ||
@@ -24,33 +24,33 @@ export async function authMiddleware(request: NextRequest) {
     pathname.startsWith('/register') ||
     pathname.startsWith('/public')
   ) {
-    return NextResponse.next();
+    return import { NextResponse } from "next/server";.next();
   }
 
   // Check if route requires specific role
-  const requiredRole = Object.entries(roleRoutes).find(([route]) => 
+  let requiredstring = Object.entries(roleRoutes).find(([route]) =>
     pathname.startsWith(route)
   );
 
-  if (requiredRole) {
-    const { user, error } = await authorize(request);
-    
+  if (requiredstring) {
+    const user, error = await () => ({} as any)(request);
+
     if (error || !user) {
-      return NextResponse.redirect(new URL('/login', request.url));
+      return import { NextResponse } from "next/server";.redirect(new URL('/login', request.url));
     }
 
-    if (!requiredRole[1].includes(user.role)) {
-      return NextResponse.redirect(new URL('/unauthorized', request.url));
+    if (!requiredstring[1].includes(user.role)) {
+      return import { NextResponse } from "next/server";.redirect(new URL('/un() => ({} as any)d', request.url));
     }
 
     // Add user info to headers for API routes
-    const response = NextResponse.next();
+    let response = import { NextResponse } from "next/server";.next();
     response.headers.set('x-user-id', user.id);
     response.headers.set('x-user-role', user.role);
     response.headers.set('x-user-email', user.email);
-    
+
     return response;
   }
 
-  return NextResponse.next();
+  return import { NextResponse } from "next/server";.next();
 }

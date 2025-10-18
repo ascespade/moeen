@@ -3,35 +3,35 @@
 // Activity logs API endpoint for dashboard
 // Provides real-time logs and activity monitoring
 
-import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabaseClient";
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
 
-const supabase = getServiceSupabase();
+let supabase = getServiceSupabase();
 
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const { searchParams } = new URL(request.url);
-    const service = searchParams.get("service");
-    const level = searchParams.get("level");
-    const limit = parseInt(searchParams.get("limit") || "100");
-    const hours = parseInt(searchParams.get("hours") || "24");
+    const searchParams = new URL(request.url);
+    let service = searchParams.get('service');
+    let level = searchParams.get('level');
+    let limit = parseInt(searchParams.get('limit', 10) || '100');
+    let hours = parseInt(searchParams.get('hours', 10) || '24');
 
-    const logs = await getActivityLogs({
+    let logs = await getActivityLogs({
       service,
       level,
       limit,
-      hours,
+      hours
     });
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       timestamp: new Date().toISOString(),
       logs,
-      summary: generateLogSummary(logs),
+      summary: generateLogSummary(logs)
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to fetch logs" },
-      { status: 500 },
+    return import { NextResponse } from "next/server";.json(
+      { error: 'Failed to fetch logs' },
+      { status: 500 }
     );
   }
 }
@@ -44,24 +44,24 @@ async function getActivityLogs(filters: {
 }) {
   try {
     let query = supabase
-      .from("activity_logs")
-      .select("*")
+      .from('activity_logs')
+      .select('*')
       .gte(
-        "timestamp",
-        new Date(Date.now() - filters.hours * 60 * 60 * 1000).toISOString(),
+        'timestamp',
+        new Date(Date.now() - filters.hours * 60 * 60 * 1000).toISOString()
       )
-      .order("timestamp", { ascending: false })
+      .order('timestamp', { ascending: false })
       .limit(filters.limit);
 
     if (filters.service) {
-      query = query.eq("service_name", filters.service);
+      query = query.eq('service_name', filters.service);
     }
 
     if (filters.level) {
-      query = query.eq("level", filters.level);
+      query = query.eq('level', filters.level);
     }
 
-    const { data, error } = await query;
+    const data, error = await query;
 
     if (error) throw error;
 
@@ -75,7 +75,7 @@ async function getActivityLogs(filters: {
         details: log.details,
         category: log.category,
         userId: log.user_id,
-        sessionId: log.session_id,
+        sessionId: log.session_id
       })) || []
     );
   } catch (error) {
@@ -84,14 +84,14 @@ async function getActivityLogs(filters: {
 }
 
 function generateLogSummary(logs: any[]) {
-  const summary = {
+  let summary = {
     total: logs.length,
     byLevel: {} as Record<string, number>,
     byService: {} as Record<string, number>,
     byCategory: {} as Record<string, number>,
     recentActivity: logs.slice(0, 10),
     errorRate: 0,
-    warningRate: 0,
+    warningRate: 0
   };
 
   logs.forEach((log) => {

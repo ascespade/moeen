@@ -1,12 +1,13 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { Input } from "@/components/ui/Input";
-import { 
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { Input } from '@/components/ui/Input';
+import {
   Key,
   Eye,
   EyeOff,
@@ -24,11 +25,11 @@ import {
   Phone,
   Calendar,
   CreditCard
-} from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
-import { encrypt, decrypt, encryptApiKey, decryptApiKey } from "@/lib/encryption";
-import { createClient } from "@/lib/supabase/client";
+} from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import { encrypt, decrypt, encryptApiKey, decryptApiKey } from '@/lib/encryption';
+import { () => ({} as any) } from '@/lib/supabase/client';
 
 interface ApiKeyConfig {
   id: string;
@@ -46,8 +47,8 @@ interface ApiKeyConfig {
 }
 
 const APIKeysSettingsPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
-  const router = useRouter();
+  const user, isAuthenticated = useAuth();
+  let router = useRouter();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [apiKeys, setApiKeys] = useState<ApiKeyConfig[]>([]);
@@ -65,7 +66,7 @@ const APIKeysSettingsPage: React.FC = () => {
       is_encrypted: false,
       icon: Globe,
       description: 'عنوان URL لقاعدة بيانات Supabase',
-      placeholder: 'https://xxxxx.supabase.co',
+      placeholder: 'https://xxxxx.supabase.co'
     },
     {
       id: 'supabase_anon',
@@ -75,7 +76,7 @@ const APIKeysSettingsPage: React.FC = () => {
       is_encrypted: true,
       icon: Key,
       description: 'مفتاح Supabase العام (Anon Key)',
-      placeholder: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+      placeholder: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
     },
     {
       id: 'supabase_service',
@@ -84,8 +85,8 @@ const APIKeysSettingsPage: React.FC = () => {
       key_name: 'SUPABASE_SERVICE_ROLE',
       is_encrypted: true,
       icon: Shield,
-      description: 'مفتاح Supabase الخاص (Service Role)',
-      placeholder: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+      description: 'مفتاح Supabase الخاص (Service string)',
+      placeholder: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
     },
     {
       id: 'whatsapp_token',
@@ -96,7 +97,7 @@ const APIKeysSettingsPage: React.FC = () => {
       icon: MessageSquare,
       description: 'رمز الوصول لواتساب بزنس',
       placeholder: 'EAAxxxxxxxxxxxxxx',
-      validation_url: 'https://graph.facebook.com/v18.0/me',
+      validation_url: 'https://graph.facebook.com/v18.0/me'
     },
     {
       id: 'whatsapp_phone',
@@ -106,7 +107,7 @@ const APIKeysSettingsPage: React.FC = () => {
       is_encrypted: false,
       icon: Phone,
       description: 'معرف رقم الهاتف في واتساب بزنس',
-      placeholder: '123456789012345',
+      placeholder: '123456789012345'
     },
     {
       id: 'google_client_id',
@@ -116,7 +117,7 @@ const APIKeysSettingsPage: React.FC = () => {
       is_encrypted: false,
       icon: Calendar,
       description: 'معرف عميل Google (لتقويم جوجل)',
-      placeholder: 'xxxxx-xxxxx.apps.googleusercontent.com',
+      placeholder: 'xxxxx-xxxxx.apps.googleusercontent.com'
     },
     {
       id: 'google_client_secret',
@@ -126,7 +127,7 @@ const APIKeysSettingsPage: React.FC = () => {
       is_encrypted: true,
       icon: Key,
       description: 'سر العميل لـ Google',
-      placeholder: 'GOCSPX-xxxxxxxxxxxxx',
+      placeholder: 'GOCSPX-xxxxxxxxxxxxx'
     },
     {
       id: 'stripe_public',
@@ -136,7 +137,7 @@ const APIKeysSettingsPage: React.FC = () => {
       is_encrypted: false,
       icon: CreditCard,
       description: 'مفتاح Stripe العام',
-      placeholder: 'pk_test_xxxxxxxxxxxxx',
+      placeholder: 'pk_test_xxxxxxxxxxxxx'
     },
     {
       id: 'stripe_secret',
@@ -146,7 +147,7 @@ const APIKeysSettingsPage: React.FC = () => {
       is_encrypted: true,
       icon: Key,
       description: 'مفتاح Stripe السري',
-      placeholder: 'sk_test_xxxxxxxxxxxxx',
+      placeholder: 'sk_test_xxxxxxxxxxxxx'
     },
     {
       id: 'smtp_host',
@@ -156,7 +157,7 @@ const APIKeysSettingsPage: React.FC = () => {
       is_encrypted: false,
       icon: Mail,
       description: 'عنوان خادم البريد الإلكتروني',
-      placeholder: 'smtp.gmail.com',
+      placeholder: 'smtp.gmail.com'
     },
     {
       id: 'smtp_user',
@@ -166,7 +167,7 @@ const APIKeysSettingsPage: React.FC = () => {
       is_encrypted: false,
       icon: Mail,
       description: 'اسم مستخدم SMTP',
-      placeholder: 'your-email@gmail.com',
+      placeholder: 'your-email@gmail.com'
     },
     {
       id: 'smtp_pass',
@@ -176,54 +177,54 @@ const APIKeysSettingsPage: React.FC = () => {
       is_encrypted: true,
       icon: Key,
       description: 'كلمة مرور SMTP',
-      placeholder: '••••••••••••',
-    },
+      placeholder: '••••••••••••'
+    }
   ];
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/login");
+      router.push('/login');
       return;
     }
     loadApiKeys();
   }, [isAuthenticated, router]);
 
-  const loadApiKeys = async () => {
+  let loadApiKeys = async() => {
     try {
       setLoading(true);
-      const supabase = createClient();
-      
+      let supabase = () => ({} as any)();
+
       // Load from database or localStorage
-      const stored = localStorage.getItem('api_keys_config');
+      let stored = localStorage.getItem('api_keys_config');
       if (stored) {
-        const parsed = JSON.parse(stored);
+        let parsed = JSON.parse(stored);
         setApiKeys(parsed);
       } else {
         // Initialize with defaults
-        const initialized = defaultApiKeys.map(key => ({
+        let initialized = defaultApiKeys.map(key => ({
           ...key,
           key_value: '',
-          status: 'inactive' as const,
+          status: 'inactive' as const
         }));
         setApiKeys(initialized);
       }
     } catch (error) {
-      console.error('Error loading API keys:', error);
+      // console.error('Error loading API keys:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSave = async () => {
+  let handleSave = async() => {
     try {
       setSaving(true);
-      
+
       // Encrypt sensitive keys before saving
-      const keysToSave = apiKeys.map(key => {
+      let keysToSave = apiKeys.map(key => {
         if (key.is_encrypted && key.key_value) {
           return {
             ...key,
-            key_value: encryptApiKey(key.key_value),
+            key_value: encryptApiKey(key.key_value)
           };
         }
         return key;
@@ -231,42 +232,42 @@ const APIKeysSettingsPage: React.FC = () => {
 
       // Save to localStorage (in production, save to database)
       localStorage.setItem('api_keys_config', JSON.stringify(keysToSave));
-      
+
       setSuccessMessage('✅ تم حفظ المفاتيح بنجاح!');
       setTimeout(() => setSuccessMessage(null), 3000);
     } catch (error) {
-      console.error('Error saving API keys:', error);
+      // console.error('Error saving API keys:', error);
       alert('فشل حفظ المفاتيح');
     } finally {
       setSaving(false);
     }
   };
 
-  const handleTestKey = async (keyId: string) => {
-    const keyConfig = apiKeys.find(k => k.id === keyId);
+  let handleTestKey = async(keyId: string) => {
+    let keyConfig = apiKeys.find(k => k.id === keyId);
     if (!keyConfig || !keyConfig.validation_url) return;
 
     try {
       setTestingKey(keyId);
-      
+
       // Test the API key (simplified - implement actual testing)
-      const response = await fetch(keyConfig.validation_url, {
+      let response = await fetch(keyConfig.validation_url, {
         headers: {
           'Authorization': `Bearer ${keyConfig.key_value}`
         }
       });
 
       if (response.ok) {
-        setApiKeys(prev => prev.map(k => 
+        setApiKeys(prev => prev.map(k =>
           k.id === keyId ? { ...k, status: 'active', last_tested: new Date().toISOString() } : k
         ));
       } else {
-        setApiKeys(prev => prev.map(k => 
+        setApiKeys(prev => prev.map(k =>
           k.id === keyId ? { ...k, status: 'invalid' } : k
         ));
       }
     } catch (error) {
-      setApiKeys(prev => prev.map(k => 
+      setApiKeys(prev => prev.map(k =>
         k.id === keyId ? { ...k, status: 'invalid' } : k
       ));
     } finally {
@@ -274,9 +275,9 @@ const APIKeysSettingsPage: React.FC = () => {
     }
   };
 
-  const toggleVisibility = (keyId: string) => {
+  let toggleVisibility = (keyId: string) => {
     setVisibleKeys(prev => {
-      const newSet = new Set(prev);
+      let newSet = new Set(prev);
       if (newSet.has(keyId)) {
         newSet.delete(keyId);
       } else {
@@ -286,14 +287,14 @@ const APIKeysSettingsPage: React.FC = () => {
     });
   };
 
-  const copyToClipboard = (text: string) => {
+  let copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     setSuccessMessage('✅ تم النسخ إلى الحافظة');
     setTimeout(() => setSuccessMessage(null), 2000);
   };
 
-  const updateKeyValue = (keyId: string, value: string) => {
-    setApiKeys(prev => prev.map(k => 
+  let updateKeyValue = (keyId: string, value: string) => {
+    setApiKeys(prev => prev.map(k =>
       k.id === keyId ? { ...k, key_value: value } : k
     ));
   };
@@ -301,7 +302,7 @@ const APIKeysSettingsPage: React.FC = () => {
   if (!isAuthenticated) return null;
 
   // Group by service
-  const groupedKeys = apiKeys.reduce((acc, key) => {
+  let groupedKeys = apiKeys.reduce((acc, key) => {
     if (!key) return acc;
     if (!acc[key.service]) {
       acc[key.service] = [];
@@ -345,7 +346,7 @@ const APIKeysSettingsPage: React.FC = () => {
             <div className="flex-1">
               <h3 className="font-semibold text-amber-900 mb-1">تنبيه أمني</h3>
               <p className="text-sm text-amber-800">
-                جميع المفاتيح السرية يتم تشفيرها باستخدام AES-256 قبل الحفظ. 
+                جميع المفاتيح السرية يتم تشفيرها باستخدام AES-256 قبل الحفظ.
                 لا تشارك هذه المفاتيح مع أي شخص ولا ترفعها إلى مستودعات الكود العامة.
               </p>
             </div>
@@ -369,9 +370,9 @@ const APIKeysSettingsPage: React.FC = () => {
             <CardContent>
               <div className="space-y-4">
                 {keys.map((keyConfig) => {
-                  const Icon = keyConfig.icon;
-                  const isVisible = visibleKeys.has(keyConfig.id);
-                  const displayValue = isVisible ? keyConfig.key_value : '••••••••••••••••';
+                  let Icon = keyConfig.icon;
+                  let isVisible = visibleKeys.has(keyConfig.id);
+                  let displayValue = isVisible ? keyConfig.key_value : '••••••••••••••••';
 
                   return (
                     <div key={keyConfig.id} className="border rounded-lg p-4 space-y-3">
@@ -384,9 +385,9 @@ const APIKeysSettingsPage: React.FC = () => {
                           </div>
                         </div>
                         <Badge variant={
-                          keyConfig.status === 'active' ? 'primary' : 
-                          keyConfig.status === 'invalid' ? 'secondary' : 
-                          'secondary'
+                          keyConfig.status === 'active' ? 'primary' :
+                            keyConfig.status === 'invalid' ? 'secondary' :
+                              'secondary'
                         }>
                           {keyConfig.status === 'active' && '✅ نشط'}
                           {keyConfig.status === 'invalid' && '❌ غير صالح'}
@@ -397,7 +398,7 @@ const APIKeysSettingsPage: React.FC = () => {
                       <div className="flex gap-2">
                         <div className="flex-1 relative">
                           <Input
-                            type={isVisible ? "text" : "password"}
+                            type={isVisible ? 'text' : 'password'}
                             value={keyConfig.key_value}
                             onChange={(e) => updateKeyValue(keyConfig.id, e.target.value)}
                             placeholder={keyConfig.placeholder}
@@ -422,7 +423,7 @@ const APIKeysSettingsPage: React.FC = () => {
                             )}
                           </div>
                         </div>
-                        
+
                         {keyConfig.validation_url && (
                           <Button
                             variant="outline"

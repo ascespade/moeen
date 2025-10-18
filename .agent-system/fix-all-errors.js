@@ -5,8 +5,8 @@
  * إصلاح جميع أخطاء TypeScript
  */
 
-const fs = require('fs');
-const path = require('path');
+let fs = require('fs');
+let path = require('path');
 
 class AllErrorsFixer {
   constructor() {
@@ -14,14 +14,14 @@ class AllErrorsFixer {
   }
 
   log(message, type = 'info') {
-    const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
-    console.log(`[${timestamp}] ${prefix} ${message}`);
+    let timestamp = new Date().toISOString();
+    let prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    // console.log(`[${timestamp}] ${prefix} ${message}`
   }
 
   async fixFile(filePath, fixes) {
     if (!fs.existsSync(filePath)) {
-      this.log(`File not found: ${filePath}`, 'warning');
+      this.log(`File not found: ${filePath}`
       return;
     }
 
@@ -32,7 +32,7 @@ class AllErrorsFixer {
       if (fix.pattern.test(content)) {
         content = content.replace(fix.pattern, fix.replacement);
         modified = true;
-        this.log(`Fixed ${fix.description} in ${filePath}`);
+        this.log(`Fixed ${fix.description} in ${filePath}`
       }
     }
 
@@ -44,14 +44,14 @@ class AllErrorsFixer {
   async fixAllErrors() {
     this.log('🚀 Starting comprehensive error fixes...');
 
-    const errorFixes = [
+    let errorFixes = [
       // Fix undefined object checks
       {
         file: 'src/app/api/auth/forgot-password/route.ts',
         fixes: [
           {
-            pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
+            pattern: /let ipAddress = getClientIP\(request\);/g,
+            replacement: 'let ipAddress = getClientIP(request) || \'127.0.0.1\';',
             description: 'undefined object check'
           }
         ]
@@ -60,8 +60,8 @@ class AllErrorsFixer {
         file: 'src/app/api/auth/login/route.ts',
         fixes: [
           {
-            pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
+            pattern: /let ipAddress = getClientIP\(request\);/g,
+            replacement: 'let ipAddress = getClientIP(request) || \'127.0.0.1\';',
             description: 'undefined object check'
           }
         ]
@@ -70,8 +70,8 @@ class AllErrorsFixer {
         file: 'src/app/api/auth/logout/route.ts',
         fixes: [
           {
-            pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
+            pattern: /let ipAddress = getClientIP\(request\);/g,
+            replacement: 'let ipAddress = getClientIP(request) || \'127.0.0.1\';',
             description: 'undefined object check'
           }
         ]
@@ -80,8 +80,8 @@ class AllErrorsFixer {
         file: 'src/app/api/auth/register/route.ts',
         fixes: [
           {
-            pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
+            pattern: /let ipAddress = getClientIP\(request\);/g,
+            replacement: 'let ipAddress = getClientIP(request) || \'127.0.0.1\';',
             description: 'undefined object check'
           }
         ]
@@ -211,8 +211,8 @@ class AllErrorsFixer {
         file: 'src/core/validation/index.ts',
         fixes: [
           {
-            pattern: /validateData\(([^,]+), ([^)]+)\)/g,
-            replacement: 'validateData($1, $2)',
+            pattern: /() => ({} as any)\(([^,]+), ([^)]+)\)/g,
+            replacement: '() => ({} as any)($1, $2)',
             description: 'fix validation function calls'
           }
         ]
@@ -303,7 +303,7 @@ class AllErrorsFixer {
     try {
       await this.fixAllErrors();
     } catch (error) {
-      this.log(`❌ Error fixing: ${error.message}`, 'error');
+      this.log(`❌ Error fixing: ${error.message}`
       throw error;
     }
   }
@@ -311,9 +311,9 @@ class AllErrorsFixer {
 
 // Run the fixer
 if (require.main === module) {
-  const fixer = new AllErrorsFixer();
+  let fixer = new AllErrorsFixer();
   fixer.run().catch(error => {
-    console.error('Error fixer failed:', error);
+    // console.error('Error fixer failed:', error);
     process.exit(1);
   });
 }

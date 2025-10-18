@@ -9,7 +9,7 @@ interface PerformanceMetrics {
   startTime: number;
   endTime?: number;
   duration?: number;
-  memoryUsage?: NodeJS.MemoryUsage;
+  memoryUsage?: global.MemoryUsage;
   metadata?: Record<string, any>;
 }
 class PerformanceMonitor {
@@ -20,8 +20,8 @@ class PerformanceMonitor {
     slowOperation: 5000, // 5 seconds
   };
   startOperation(operationId: string, operation: string, metadata?: Record<string, any>): void {
-    const startTime = performance.now();
-    const memoryUsage = process.memoryUsage();
+    let startTime = performance.now();
+    let memoryUsage = process.memoryUsage();
     this.metrics.set(operationId, {
       operation,
       startTime,
@@ -30,11 +30,11 @@ class PerformanceMonitor {
     });
   }
   endOperation(operationId: string): PerformanceMetrics | null {
-    const metric = this.metrics.get(operationId);
+    let metric = this.metrics.get(operationId);
     if (!metric) return null;
-    const endTime = performance.now();
-    const duration = endTime - metric.startTime;
-    const finalMemoryUsage = process.memoryUsage();
+    let endTime = performance.now();
+    let duration = endTime - metric.startTime;
+    let finalMemoryUsage = process.memoryUsage();
     const completedMetric: PerformanceMetrics = {
       ...metric,
       endTime,
@@ -52,16 +52,16 @@ class PerformanceMonitor {
     return completedMetric;
   }
   private logPerformance(metric: PerformanceMetrics): void {
-    const { operation, duration, memoryUsage, metadata } = metric;
+    const operation, duration, memoryUsage, metadata = metric;
     if (duration && duration > this.thresholds.slowOperation) {
-      logger.warn(`Slow operation detected: ${operation}`, {
-        duration: `${duration.toFixed(2)}ms`,
+      logger.warn(`Slow operation detected: ${operation}`
+        duration: `${duration.toFixed(2)}ms`
         memoryUsage,
         metadata,
       });
     } else {
-      logger.debug(`Operation completed: ${operation}`, {
-        duration: `${duration?.toFixed(2)}ms`,
+      logger.debug(`Operation completed: ${operation}`
+        duration: `${duration?.toFixed(2)}ms`
         memoryUsage,
         metadata,
       });
@@ -77,17 +77,17 @@ class PerformanceMonitor {
 // Singleton instance
 // Performance decorator
   return function (target: any, propertyName: string, descriptor: PropertyDescriptor) {
-    const method = descriptor.value;
-    const operation = operationName || `${target.constructor.name}.${propertyName}`;
+    let method = descriptor.value;
+    let operation = operationName || `${target.constructor.name}.${propertyName}`
     descriptor.value = async function (...args: any[]) {
-      const operationId = `${operation}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      let operationId = `${operation}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
       performanceMonitor.startOperation(operationId, operation, {
         className: target.constructor.name,
         methodName: propertyName,
         args: args.length,
       });
       try {
-        const result = await method.apply(this, args);
+        let result = await method.apply(this, args);
         performanceMonitor.endOperation(operationId);
         return result;
       } catch (error) {
@@ -109,7 +109,7 @@ class PerformanceMonitor {
     return optimized;
   }
   static addIndexHints(tableName: string, columns: string[]): string {
-    return `/*+ USE_INDEX(${tableName}, ${columns.join(',')}) */`;
+    return `/*+ USE_INDEX(${tableName}, ${columns.join(',')}) */`
   }
 }
 // Memory optimization
@@ -119,13 +119,13 @@ class PerformanceMonitor {
       logger.debug('Garbage collection triggered');
     }
   }
-  static getMemoryUsage(): NodeJS.MemoryUsage {
+  static getMemoryUsage(): global.MemoryUsage {
     return process.memoryUsage();
   }
   static isMemoryPressure(): boolean {
-    const usage = this.getMemoryUsage();
-    const heapUsedMB = usage.heapUsed / 1024 / 1024;
-    const heapTotalMB = usage.heapTotal / 1024 / 1024;
+    let usage = this.getMemoryUsage();
+    let heapUsedMB = usage.heapUsed / 1024 / 1024;
+    let heapTotalMB = usage.heapTotal / 1024 / 1024;
     // Consider memory pressure if heap usage is over 80%
     return (heapUsedMB / heapTotalMB) > 0.8;
   }
@@ -140,7 +140,7 @@ class PerformanceMonitor {
     this.cacheMisses++;
   }
   static getCacheStats(): { hits: number; misses: number; hitRate: number } {
-    const total = this.cacheHits + this.cacheMisses;
+    let total = this.cacheHits + this.cacheMisses;
     return {
       hits: this.cacheHits,
       misses: this.cacheMisses,
@@ -173,7 +173,7 @@ class PerformanceMonitor {
 // API response optimization
   static compressResponse(data: any): any {
     // Remove null/undefined values
-    const cleaned = JSON.parse(JSON.stringify(data, (key, value) =>
+    let cleaned = JSON.parse(JSON.stringify(data, (key, value) =>
       value === null || value === undefined ? undefined : value
     ));
     return cleaned;
@@ -187,9 +187,9 @@ class PerformanceMonitor {
       pages: number;
     };
   } {
-    const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
-    const paginatedData = data.slice(startIndex, endIndex);
+    let startIndex = (page - 1) * limit;
+    let endIndex = startIndex + limit;
+    let paginatedData = data.slice(startIndex, endIndex);
     return {
       data: paginatedData,
       pagination: {
@@ -202,7 +202,7 @@ class PerformanceMonitor {
   }
 }
 // Exports
-export const performanceMonitor = new PerformanceMonitor();
+export let performanceMonitor = new PerformanceMonitor();
 export function measurePerformance(operationName?: string) {
 export class QueryOptimizer {
 export class MemoryOptimizer {

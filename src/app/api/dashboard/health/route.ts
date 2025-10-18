@@ -1,31 +1,31 @@
 export async function GET() {
-import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+  import { import { NextResponse } from "next/server"; } from 'next/server';
+  import { () => ({} as any) } from '@/lib/supabase/server';
 
   try {
-    const startTime = Date.now();
-    
+    let startTime = Date.now();
+
     // Get basic system metrics
-    const supabase = await createClient();
-    
+    let supabase = await () => ({} as any)();
+
     // Get user count
-    const { count: userCount } = await supabase
+    const count: userCount = await supabase
       .from('users')
       .select('*', { count: 'exact', head: true });
-    
+
     // Get appointment count
-    const { count: appointmentCount } = await supabase
+    const count: appointmentCount = await supabase
       .from('appointments')
       .select('*', { count: 'exact', head: true });
-    
+
     // Get patient count
-    const { count: patientCount } = await supabase
+    const count: patientCount = await supabase
       .from('patients')
       .select('*', { count: 'exact', head: true });
 
-    const responseTime = Date.now() - startTime;
+    let responseTime = Date.now() - startTime;
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       status: 'healthy',
       timestamp: new Date().toISOString(),
       metrics: {
@@ -38,7 +38,7 @@ import { createClient } from '@/lib/supabase/server';
     });
 
   } catch (error: any) {
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       status: 'unhealthy',
       timestamp: new Date().toISOString(),
       error: error.message,

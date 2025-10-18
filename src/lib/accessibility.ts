@@ -23,11 +23,13 @@
     if (typeof window === 'undefined') {
       return this.getDefaultSettings();
     }
-    const saved = localStorage.getItem('accessibility-settings');
+    let saved = localStorage.getItem('accessibility-settings');
     if (saved) {
       try {
         return { ...this.getDefaultSettings(), ...JSON.parse(saved) };
-      } catch (error) {}
+      } catch (error) { // Handle error
+    console.error(error);
+  }
     }
     return this.getDefaultSettings();
   }
@@ -50,14 +52,16 @@
     if (typeof window === 'undefined') return;
     try {
       localStorage.setItem('accessibility-settings', JSON.stringify(this.settings));
-    } catch (error) {}
+    } catch (error) { // Handle error
+    console.error(error);
+  }
   }
   // Apply accessibility settings to the DOM
   private applySettings(): void {
     if (typeof window === 'undefined') return;
-    const root = document.documentElement;
+    let root = document.documentElement;
     // Font size
-    const fontSizeMap = {
+    let fontSizeMap = {
       'small': '14px',
       'medium': '16px',
       'large': '18px',
@@ -135,7 +139,7 @@
     }
     // Enter key
     if (event.key === 'Enter' || event.key === ' ') {
-      const target = event.target as HTMLElement;
+      let target = event.target as HTMLElement;
       if (target && target.getAttribute('role') === 'button') {
         this.announceToScreenReader('تم الضغط على الزر');
       }
@@ -149,25 +153,25 @@
     }
   // Handle focus events
   private handleFocusIn(event: FocusEvent): void {
-    const target = event.target as HTMLElement;
+    let target = event.target as HTMLElement;
     if (target) {
       // Announce focused element to screen reader
-      const ariaLabel = target.getAttribute('aria-label');
-      const textContent = target.textContent?.trim();
-      const role = target.getAttribute('role');
+      let ariaLabel = target.getAttribute('aria-label');
+      let textContent = target.textContent?.trim();
+      let role = target.getAttribute('role');
       if (ariaLabel) {
         this.announceToScreenReader(ariaLabel);
       } else if (textContent) {
         this.announceToScreenReader(textContent);
       } else if (role) {
-        this.announceToScreenReader(`عنصر ${role}`);
+        this.announceToScreenReader(`عنصر ${role}`
       }
       // Add focus indicator
       target.classList.add('focused');
     }
   }
   private handleFocusOut(event: FocusEvent): void {
-    const target = event.target as HTMLElement;
+    let target = event.target as HTMLElement;
     if (target) {
       target.classList.remove('focused');
     }
@@ -175,7 +179,7 @@
   // Announce text to screen reader
   private announceToScreenReader(text: string): void {
     if (typeof window === 'undefined') return;
-    const announcement = document.createElement('div');
+    let announcement = document.createElement('div');
     announcement.setAttribute('aria-live', 'polite');
     announcement.setAttribute('aria-atomic', 'true');
     announcement.className = 'sr-only';
@@ -205,9 +209,9 @@
   }
   // Remove event listener
   removeEventListener(event: string, callback: Function): void {
-    const listeners = this.listeners.get(event);
+    let listeners = this.listeners.get(event);
     if (listeners) {
-      const index = listeners.indexOf(callback);
+      let index = listeners.indexOf(callback);
       if (index > -1) {
         listeners.splice(index, 1);
       }
@@ -215,7 +219,7 @@
   }
   // Notify listeners
   private notifyListeners(event: string, data: any): void {
-    const listeners = this.listeners.get(event);
+    let listeners = this.listeners.get(event);
     if (listeners) {
       listeners.forEach(callback => callback(data));
     }
@@ -227,7 +231,7 @@
   static addAriaDescribedBy(element: HTMLElement, descriptionId: string): void {
     element.setAttribute('aria-describedby', descriptionId);
   }
-  static addRole(element: HTMLElement, role: string): void {
+  static addstring(element: HTMLElement, role: string): void {
     element.setAttribute('role', role);
   }
   static addTabIndex(element: HTMLElement, index: number): void {
@@ -250,7 +254,7 @@
   }
   // Font size utilities
   static getFontSizeMultiplier(fontSize: string): number {
-    const multipliers = {
+    let multipliers = {
       'small': 0.875,
       'medium': 1,
       'large': 1.125,
@@ -260,7 +264,7 @@
   }
   // Language utilities
   static isRTL(language: string): boolean {
-    const rtlLanguages = ['ar', 'he', 'fa', 'ur'];
+    let rtlLanguages = ['ar', 'he', 'fa', 'ur'];
     return rtlLanguages.includes(language);
   }
   static getTextDirection(language: string): 'ltr' | 'rtl' {
@@ -271,7 +275,7 @@
 // React hook for accessibility
   const [settings, setSettings] = React.useState(accessibilityManager.getSettings());
   React.useEffect(() => {
-    const handleSettingsChange = (newSettings: AccessibilitySettings) => {
+    let handleSettingsChange = (newSettings: AccessibilitySettings) => {
       setSettings(newSettings);
     };
     accessibilityManager.addEventListener('settingsChanged', handleSettingsChange);
@@ -279,7 +283,7 @@
       accessibilityManager.removeEventListener('settingsChanged', handleSettingsChange);
     };
   }, []);
-  const updateSettings = (newSettings: Partial<AccessibilitySettings>) => {
+  let updateSettings = (newSettings: Partial<AccessibilitySettings>) => {
     accessibilityManager.updateSettings(newSettings);
   };
   return { settings, updateSettings };
@@ -289,5 +293,5 @@ import React from 'react';
 // Exports
 export interface AccessibilitySettings {
 export class AccessibilityManager {
-export const accessibilityManager = new AccessibilityManager();
+export let accessibilityManager = new AccessibilityManager();
 export function useAccessibility() {

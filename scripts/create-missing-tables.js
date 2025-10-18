@@ -1,48 +1,48 @@
 #!/usr/bin/env node
-require("dotenv").config();
-const { createClient } = require("@supabase/supabase-js");
+require('dotenv').config();
+const { () => ({} as any) } = require('@supabase/supabase-js');
 
 async function createMissingTables() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE;
+  let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  let supabaseKey = process.env.SUPABASE_SERVICE_ROLE;
 
-  console.log("🚀 Creating missing database tables...");
+  // console.log('🚀 Creating missing database tables...');
 
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  let supabase = () => ({} as any)(supabaseUrl, supabaseKey);
 
   // Create a simple test table first to verify we can create tables
-  console.log("\n🧪 Testing table creation capability...");
+  // console.log('\n🧪 Testing table creation capability...');
 
   try {
     // Try to create a simple test table
-    const { error } = await supabase.rpc("create_test_table");
+    const error = await supabase.rpc('create_test_table');
 
     if (error) {
-      console.log("⚠️  Direct table creation not available via RPC");
-      console.log("📝 Using alternative approach...");
+      // console.log('⚠️  Direct table creation not available via RPC');
+      // console.log('📝 Using alternative approach...');
 
       // Try to insert into a table that might not exist to trigger creation
-      const { error: insertError } = await supabase
-        .from("patients")
-        .insert({ name: "Test Patient", email: "test@example.com" });
+      const error: insertError = await supabase
+        .from('patients')
+        .insert({ name: 'Test Patient', email: 'test@example.com' });
 
       if (insertError) {
-        console.log("✅ Confirmed: patients table needs to be created");
-        console.log("📋 Manual creation required via SQL Editor");
+        // console.log('✅ Confirmed: patients table needs to be created');
+        // console.log('📋 Manual creation required via SQL Editor');
       }
     }
   } catch (err) {
-    console.log("✅ Confirmed: Manual table creation required");
+    // console.log('✅ Confirmed: Manual table creation required');
   }
 
   // Generate the SQL for manual execution
-  console.log("\n📝 SQL Statements for Manual Execution:");
-  console.log("=".repeat(60));
+  // console.log('\n📝 SQL Statements for Manual Execution:');
+  // console.log('='.repeat(60));
 
-  const missingTables = [
+  let missingTables = [
     {
-      name: "patients",
-      sql: `CREATE TABLE IF NOT EXISTS patients (
+      name: 'patients',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE,
   name VARCHAR(255) NOT NULL,
@@ -54,11 +54,11 @@ async function createMissingTables() {
   status VARCHAR(50) DEFAULT 'active',
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
-);`,
+);`
     },
     {
-      name: "doctors",
-      sql: `CREATE TABLE IF NOT EXISTS doctors (
+      name: 'doctors',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE,
   name VARCHAR(255) NOT NULL,
@@ -67,32 +67,32 @@ async function createMissingTables() {
   specialty VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
-);`,
+);`
     },
     {
-      name: "appointments",
-      sql: `CREATE TABLE IF NOT EXISTS appointments (
+      name: 'appointments',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE,
   patient_id UUID REFERENCES patients(id),
-  doctor_id UUID REFERENCES doctors(id),
+  doctorId UUID REFERENCES doctors(id),
   appointment_date DATE NOT NULL,
-  appointment_time TIME NOT NULL,
+  appointmentTime TIME NOT NULL,
   duration_minutes INTEGER DEFAULT 30,
   status VARCHAR(50) DEFAULT 'scheduled',
   type VARCHAR(50),
   notes TEXT,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
-);`,
+);`
     },
     {
-      name: "sessions",
-      sql: `CREATE TABLE IF NOT EXISTS sessions (
+      name: 'sessions',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE,
   appointment_id UUID REFERENCES appointments(id),
-  doctor_id UUID REFERENCES doctors(id),
+  doctorId UUID REFERENCES doctors(id),
   patient_id UUID REFERENCES patients(id),
   session_date DATE NOT NULL,
   start_time TIME NOT NULL,
@@ -104,11 +104,11 @@ async function createMissingTables() {
   status VARCHAR(50) DEFAULT 'pending',
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
-);`,
+);`
     },
     {
-      name: "insurance_claims",
-      sql: `CREATE TABLE IF NOT EXISTS insurance_claims (
+      name: 'insurance_claims',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE,
   patient_id UUID REFERENCES patients(id),
@@ -122,11 +122,11 @@ async function createMissingTables() {
   attachments TEXT[],
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
-);`,
+);`
     },
     {
-      name: "chatbot_flows",
-      sql: `CREATE TABLE IF NOT EXISTS chatbot_flows (
+      name: 'chatbot_flows',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -137,11 +137,11 @@ async function createMissingTables() {
   published_at TIMESTAMP,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
-);`,
+);`
     },
     {
-      name: "chatbot_nodes",
-      sql: `CREATE TABLE IF NOT EXISTS chatbot_nodes (
+      name: 'chatbot_nodes',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
   flow_id UUID REFERENCES chatbot_flows(id) ON DELETE CASCADE,
@@ -152,11 +152,11 @@ async function createMissingTables() {
   position_y INTEGER DEFAULT 0,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
-);`,
+);`
     },
     {
-      name: "chatbot_edges",
-      sql: `CREATE TABLE IF NOT EXISTS chatbot_edges (
+      name: 'chatbot_edges',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
   flow_id UUID REFERENCES chatbot_flows(id) ON DELETE CASCADE,
@@ -164,11 +164,11 @@ async function createMissingTables() {
   target_node_id UUID REFERENCES chatbot_nodes(id) ON DELETE CASCADE,
   condition JSONB,
   created_at TIMESTAMP DEFAULT NOW()
-);`,
+);`
     },
     {
-      name: "chatbot_templates",
-      sql: `CREATE TABLE IF NOT EXISTS chatbot_templates (
+      name: 'chatbot_templates',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -181,11 +181,11 @@ async function createMissingTables() {
   approved_by UUID REFERENCES users(id),
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
-);`,
+);`
     },
     {
-      name: "chatbot_integrations",
-      sql: `CREATE TABLE IF NOT EXISTS chatbot_integrations (
+      name: 'chatbot_integrations',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
   provider VARCHAR(50) NOT NULL,
@@ -199,11 +199,11 @@ async function createMissingTables() {
   created_by UUID REFERENCES users(id),
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
-);`,
+);`
     },
     {
-      name: "crm_leads",
-      sql: `CREATE TABLE IF NOT EXISTS crm_leads (
+      name: 'crm_leads',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -218,11 +218,11 @@ async function createMissingTables() {
   assigned_at TIMESTAMP DEFAULT NOW(),
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
-);`,
+);`
     },
     {
-      name: "crm_deals",
-      sql: `CREATE TABLE IF NOT EXISTS crm_deals (
+      name: 'crm_deals',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
   title VARCHAR(255) NOT NULL,
@@ -238,11 +238,11 @@ async function createMissingTables() {
   lead_id UUID REFERENCES crm_leads(id),
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
-);`,
+);`
     },
     {
-      name: "crm_activities",
-      sql: `CREATE TABLE IF NOT EXISTS crm_activities (
+      name: 'crm_activities',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
   type VARCHAR(50) NOT NULL,
@@ -258,11 +258,11 @@ async function createMissingTables() {
           completed_at TIMESTAMP,
           created_at TIMESTAMP DEFAULT NOW(),
           updated_at TIMESTAMP DEFAULT NOW()
-        );`,
+        );`
     },
     {
-      name: "internal_messages",
-      sql: `CREATE TABLE IF NOT EXISTS internal_messages (
+      name: 'internal_messages',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
   sender_id UUID REFERENCES users(id),
@@ -273,11 +273,11 @@ async function createMissingTables() {
   parent_message_id UUID REFERENCES internal_messages(id),
   created_at TIMESTAMP DEFAULT NOW(),
   read_at TIMESTAMP
-);`,
+);`
     },
     {
-      name: "settings",
-      sql: `CREATE TABLE IF NOT EXISTS settings (
+      name: 'settings',
+      sql: `
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
   key VARCHAR(255) UNIQUE NOT NULL,
@@ -288,24 +288,24 @@ async function createMissingTables() {
   updated_by UUID REFERENCES users(id),
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
-);`,
-    },
+);`
+    }
   ];
 
   for (const table of missingTables) {
-    console.log(`\n-- Creating table: ${table.name}`);
-    console.log(table.sql);
-    console.log("");
+    // console.log(`\n-- Creating table: ${table.name}`
+    // console.log(table.sql);
+    // console.log('');
   }
 
-  console.log("=".repeat(60));
-  console.log("\n📋 Instructions:");
-  console.log("1. Copy all SQL statements above");
-  console.log("2. Go to Supabase Dashboard > SQL Editor");
-  console.log("3. Paste and run the complete script");
-  console.log("4. Run: node scripts/test-after-migration.js");
-  console.log(
-    "\n🔗 Dashboard: https://supabase.com/dashboard/project/socwpqzcalgvpzjwavgh",
+  // console.log('='.repeat(60));
+  // console.log('\n📋 Instructions:');
+  // console.log('1. Copy all SQL statements above');
+  // console.log('2. Go to Supabase Dashboard > SQL Editor');
+  // console.log('3. Paste and run the complete script');
+  // console.log('4. Run: node scripts/test-after-migration.js');
+  // console.log(
+    '\n🔗 Dashboard: https://supabase.com/dashboard/project/socwpqzcalgvpzjwavgh'
   );
 }
 

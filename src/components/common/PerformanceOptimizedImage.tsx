@@ -1,7 +1,8 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react';
 
 interface PerformanceOptimizedImageProps {
   src: string;
@@ -18,9 +19,9 @@ export function PerformanceOptimizedImage({
   alt,
   width,
   height,
-  className = "",
-  placeholder = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+",
-  priority = false,
+  className = '',
+  placeholder = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+',
+  priority = false
 }: PerformanceOptimizedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
@@ -39,7 +40,7 @@ export function PerformanceOptimizedImage({
           }
         });
       },
-      { rootMargin: "50px" },
+      { rootMargin: '50px' }
     );
 
     if (imgRef.current) {
@@ -60,7 +61,7 @@ export function PerformanceOptimizedImage({
   return (
     <div
       ref={imgRef}
-      className={`relative overflow-hidden ${className}`}
+      className={`relative overflow-hidden ${className}`
       style={{ width, height }}
     >
       {!isInView ? (
@@ -85,12 +86,12 @@ export function PerformanceOptimizedImage({
             alt={alt}
             width={width}
             height={height}
-            className={`w-full h-full object-cover transition-opacity duration-300 ${
-              isLoaded ? "opacity-100" : "opacity-0"
-            }`}
+            className={`
+              isLoaded ? 'opacity-100' : 'opacity-0'
+            }`
             onLoad={handleLoad}
             onError={handleError}
-            loading={priority ? "eager" : "lazy"}
+            loading={priority ? 'eager' : 'lazy'}
           />
           {hasError && (
             <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">

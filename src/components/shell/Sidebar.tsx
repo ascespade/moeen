@@ -1,72 +1,73 @@
+import React from "react";
 
-"use client";
-import { usePathname } from "next/navigation";
+'use client';
+import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
   MessagesSquare,
   Workflow,
   ShieldCheck,
   Settings,
-  Users,
-} from "lucide-react";
-import { useT } from "@/components/providers/I18nProvider";
-import Link from "next/link";
+  Users
+} from 'lucide-react';
+import { useT } from '@/components/providers/I18nProvider';
+import Link from 'next/link';
 
 const adminItems = [
   {
-    href: "/dashboard",
-    label: "nav.dashboard",
-    icon: <LayoutDashboard className="h-4 w-4" />,
+    href: '/dashboard',
+    label: 'nav.dashboard',
+    icon: <LayoutDashboard className="h-4 w-4" />
   },
   {
-    href: "/conversations",
-    label: "nav.conversations",
-    icon: <MessagesSquare className="h-4 w-4" />,
+    href: '/conversations',
+    label: 'nav.conversations',
+    icon: <MessagesSquare className="h-4 w-4" />
   },
-  { href: "/flow", label: "nav.flow", icon: <Workflow className="h-4 w-4" /> },
+  { href: '/flow', label: 'nav.flow', icon: <Workflow className="h-4 w-4" /> },
   {
-    href: "/review",
-    label: "nav.review",
-    icon: <ShieldCheck className="h-4 w-4" />,
+    href: '/review',
+    label: 'nav.review',
+    icon: <ShieldCheck className="h-4 w-4" />
   },
   {
-    href: "/settings",
-    label: "nav.settings",
-    icon: <Settings className="h-4 w-4" />,
+    href: '/settings',
+    label: 'nav.settings',
+    icon: <Settings className="h-4 w-4" />
   },
-  { href: "/users", label: "nav.users", icon: <Users className="h-4 w-4" /> },
+  { href: '/users', label: 'nav.users', icon: <Users className="h-4 w-4" /> }
 ];
 const staffItems = [
   {
-    href: "/dashboard",
-    label: "nav.dashboard",
-    icon: <LayoutDashboard className="h-4 w-4" />,
+    href: '/dashboard',
+    label: 'nav.dashboard',
+    icon: <LayoutDashboard className="h-4 w-4" />
   },
   {
-    href: "/conversations",
-    label: "nav.conversations",
-    icon: <MessagesSquare className="h-4 w-4" />,
-  },
+    href: '/conversations',
+    label: 'nav.conversations',
+    icon: <MessagesSquare className="h-4 w-4" />
+  }
 ];
 const viewerItems = [
   {
-    href: "/dashboard",
-    label: "nav.dashboard",
-    icon: <LayoutDashboard className="h-4 w-4" />,
+    href: '/dashboard',
+    label: 'nav.dashboard',
+    icon: <LayoutDashboard className="h-4 w-4" />
   },
   {
-    href: "/conversations",
-    label: "nav.conversations",
-    icon: <MessagesSquare className="h-4 w-4" />,
-  },
+    href: '/conversations',
+    label: 'nav.conversations',
+    icon: <MessagesSquare className="h-4 w-4" />
+  }
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const role = "admin";
+  const role = 'admin';
   const items =
-    role === "admin" ? adminItems : role === "staff" ? staffItems : viewerItems;
-  const { t } = useT();
+    role === 'admin' ? adminItems : role === 'staff' ? staffItems : viewerItems;
+  const t = useT();
 
   return (
     <>
@@ -88,16 +89,16 @@ export default function Sidebar() {
         <nav className="p-3 grid gap-1">
           {items.map((item) => {
             const active =
-              pathname === item.href || pathname.startsWith(item.href + "/");
+              pathname === item.href || pathname.startsWith(item.href + '/');
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-3 h-11 rounded-lg inline-flex items-center gap-3 border transition-colors ${
+                className={`
                   active
-                    ? "bg-brand text-white border-transparent"
-                    : "border-gray-200 dark:border-gray-800 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
-                }`}
+                    ? 'bg-brand text-white border-transparent'
+                    : 'border-gray-200 dark:border-gray-800 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200'
+                }`
                 data-hs-overlay="#app-sidebar"
               >
                 <span>{item.icon}</span>
@@ -126,16 +127,16 @@ export default function Sidebar() {
         <nav className="grid gap-1">
           {items.map((item) => {
             const active =
-              pathname === item.href || pathname.startsWith(item.href + "/");
+              pathname === item.href || pathname.startsWith(item.href + '/');
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-3 h-11 rounded-lg inline-flex items-center gap-3 border transition-colors ${
+                className={`
                   active
-                    ? "bg-brand text-white border-transparent"
-                    : "border-gray-200 dark:border-gray-800 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200"
-                }`}
+                    ? 'bg-brand text-white border-transparent'
+                    : 'border-gray-200 dark:border-gray-800 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200'
+                }`
               >
                 <span>{item.icon}</span>
                 <span className="font-medium">{t(item.label, item.label)}</span>

@@ -1,9 +1,10 @@
+import React from "react";
 "use client";
 
 // Lightweight chart implementations using SVG and CSS only to minimize bundle size
 
 const data = Array.from({ length: 7 }).map((_, i) => ({
-  day: `D${i + 1}`,
+  day: `D${i + 1}`
   messages: Math.round(50 + Math.random() * 100),
   conversations: Math.round(5 + Math.random() * 20),
 }));
@@ -25,11 +26,11 @@ export function LineChart() {
     height - padding - (v / maxY) * (height - padding * 2);
 
   const toPolyline = (key: "messages" | "conversations") =>
-    data.map((d, i) => `${padding + i * xStep},${yScale(d[key])}`).join(" ");
+    data.map((d, i) => `${padding + i * xStep},${yScale(d[key])}`
 
   return (
     <div className="h-64">
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-full">
+      <svg viewBox={`0 0 ${width} ${height}`
         <g>
           {/* Axes */}
           <line
@@ -76,13 +77,13 @@ export function BarChart() {
             <div
               className="bg-blue-500 rounded-t"
               style={{
-                height: `${(d.messages / maxY) * 200}px`,
+                height: `${(d.messages / maxY) * 200}px`
               }}
             />
             <div
               className="bg-green-500 rounded-b"
               style={{
-                height: `${(d.conversations / maxY) * 200}px`,
+                height: `${(d.conversations / maxY) * 200}px`
               }}
             />
           </div>
@@ -115,10 +116,10 @@ export function PieChart() {
             const largeArcFlag = angle > 180 ? 1 : 0;
 
             const pathData = [
-              `M 0 0`,
-              `L ${x1} ${y1}`,
-              `A 80 80 0 ${largeArcFlag} 1 ${x2} ${y2}`,
-              `Z`,
+              `M 0 0`
+              `L ${x1} ${y1}`
+              `A 80 80 0 ${largeArcFlag} 1 ${x2} ${y2}`
+              `Z`
             ].join(" ");
 
             return (
@@ -158,16 +159,16 @@ export function AreaChart() {
     height - padding - (v / maxY) * (height - padding * 2);
 
   const points = data
-    .map((d, i) => `${padding + i * xStep},${yScale(d.messages)}`)
+    .map((d, i) => `${padding + i * xStep},${yScale(d.messages)}`
     .join(" ");
 
-  const areaPath = `M ${padding},${height - padding} L ${points} L ${
+  const areaPath = `
     padding + (data.length - 1) * xStep
-  },${height - padding} Z`;
+  },${height - padding} Z`
 
   return (
     <div className="h-64">
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-full">
+      <svg viewBox={`0 0 ${width} ${height}`
         <g>
           {/* Area */}
           <path

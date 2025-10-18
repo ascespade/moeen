@@ -3,14 +3,14 @@
 /**
  * نظام الاختبار والتحسين التلقائي الشامل
  * Comprehensive Auto-Testing and Improvement System
- * 
+ *
  * يعمل في الخلفية لاختبار وإصلاح النظام تلقائياً
  * Runs in background to automatically test and fix the system
  */
 
-const { exec, spawn } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+const exec, spawn = require('child_process');
+let fs = require('fs');
+let path = require('path');
 
 class AutoTestingSystem {
   constructor() {
@@ -24,9 +24,9 @@ class AutoTestingSystem {
   }
 
   log(message, type = 'info') {
-    const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
-    console.log(`[${timestamp}] ${prefix} ${message}`);
+    let timestamp = new Date().toISOString();
+    let prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    // console.log(`[${timestamp}] ${prefix} ${message}`
   }
 
   async runCommand(command, options = {}) {
@@ -46,15 +46,15 @@ class AutoTestingSystem {
     try {
       // Kill any existing server
       await this.runCommand('pkill -f "next dev" || true');
-      
+
       // Start new server
-      const server = spawn('npm', ['run', 'dev'], {
+      let server = spawn('npm', ['run', 'dev'], {
         cwd: process.cwd(),
         stdio: 'pipe'
       });
 
       server.stdout.on('data', (data) => {
-        const output = data.toString();
+        let output = data.toString();
         if (output.includes('Ready in')) {
           this.log('✅ Server started successfully');
           this.isServerReady = true;
@@ -62,15 +62,15 @@ class AutoTestingSystem {
       });
 
       server.stderr.on('data', (data) => {
-        const error = data.toString();
+        let error = data.toString();
         if (error.includes('Error') || error.includes('Failed')) {
-          this.log(`Server error: ${error}`, 'error');
+          this.log(`Server error: ${error}`
         }
       });
 
       return server;
     } catch (error) {
-      this.log(`Failed to start server: ${error.message}`, 'error');
+      this.log(`Failed to start server: ${error.message}`
       throw error;
     }
   }
@@ -78,15 +78,15 @@ class AutoTestingSystem {
   async runPlaywrightTests() {
     this.log('🧪 Running Playwright tests...');
     try {
-      const { stdout, stderr } = await this.runCommand(
+      const stdout, stderr = await this.runCommand(
         'npx playwright test --config=playwright-auto.config.ts --reporter=json',
         { timeout: 300000 } // 5 minutes timeout
       );
 
-      const results = JSON.parse(stdout);
+      let results = JSON.parse(stdout);
       return results;
     } catch (error) {
-      this.log(`Test execution failed: ${error.message}`, 'error');
+      this.log(`Test execution failed: ${error.message}`
       return null;
     }
   }
@@ -94,8 +94,8 @@ class AutoTestingSystem {
   async analyzeTestResults(results) {
     if (!results) return [];
 
-    const issues = [];
-    
+    let issues = [];
+
     for (const result of results.suites || []) {
       for (const spec of result.specs || []) {
         for (const test of spec.tests || []) {
@@ -114,34 +114,34 @@ class AutoTestingSystem {
   }
 
   async applyFixes(issues) {
-    this.log(`🔧 Applying fixes for ${issues.length} issues...`);
-    
+    this.log(`🔧 Applying fixes for ${issues.length} issues...`
+
     for (const issue of issues) {
       try {
         await this.fixIssue(issue);
         this.fixesApplied.push(issue);
       } catch (error) {
-        this.log(`Failed to fix issue ${issue.test}: ${error.message}`, 'error');
+        this.log(`Failed to fix issue ${issue.test}: ${error.message}`
       }
     }
   }
 
   async fixIssue(issue) {
-    this.log(`🔧 Fixing issue: ${issue.test}`);
-    
+    this.log(`🔧 Fixing issue: ${issue.test}`
+
     // Common fixes based on error patterns
     if (issue.errors.some(e => e.message.includes('bg-brand-primary'))) {
       await this.fixBrandPrimaryCSS();
     }
-    
+
     if (issue.errors.some(e => e.message.includes('TimeoutError'))) {
       await this.fixTimeoutIssues();
     }
-    
+
     if (issue.errors.some(e => e.message.includes('Rate limit'))) {
       await this.fixRateLimitIssues();
     }
-    
+
     if (issue.errors.some(e => e.message.includes('Authentication'))) {
       await this.fixAuthIssues();
     }
@@ -149,8 +149,8 @@ class AutoTestingSystem {
 
   async fixBrandPrimaryCSS() {
     this.log('🎨 Fixing brand-primary CSS issues...');
-    
-    const cssFiles = [
+
+    let cssFiles = [
       'src/styles/theme.css',
       'src/styles/design-system.css',
       'src/styles/centralized.css'
@@ -165,16 +165,16 @@ class AutoTestingSystem {
         content = content.replace(/border-brand-primary/g, 'border-blue-500');
         content = content.replace(/text-brand-primary/g, 'text-blue-600');
         fs.writeFileSync(file, content);
-        this.log(`✅ Fixed CSS in ${file}`);
+        this.log(`✅ Fixed CSS in ${file}`
       }
     }
   }
 
   async fixTimeoutIssues() {
     this.log('⏱️ Fixing timeout issues...');
-    
+
     // Increase timeouts in Playwright config
-    const configFile = 'playwright-auto.config.ts';
+    let configFile = 'playwright-auto.config.ts';
     if (fs.existsSync(configFile)) {
       let content = fs.readFileSync(configFile, 'utf8');
       content = content.replace(/timeout: \d+/g, 'timeout: 120000');
@@ -186,7 +186,7 @@ class AutoTestingSystem {
 
   async fixRateLimitIssues() {
     this.log('🚦 Fixing rate limit issues...');
-    
+
     // Clear rate limit cache
     try {
       await this.runCommand('curl -X POST http://localhost:3001/api/test/clear-rate-limit');
@@ -198,7 +198,7 @@ class AutoTestingSystem {
 
   async fixAuthIssues() {
     this.log('🔐 Fixing authentication issues...');
-    
+
     // Reset test users
     try {
       await this.runCommand('node scripts/reset-test-users.js');
@@ -210,37 +210,37 @@ class AutoTestingSystem {
 
   async runFullCycle() {
     this.log('🔄 Starting full testing cycle...');
-    
+
     try {
       // 1. Start server
-      const server = await this.startServer();
-      
+      let server = await this.startServer();
+
       // Wait for server to be ready
       await new Promise(resolve => setTimeout(resolve, 10000));
-      
+
       // 2. Run tests
-      const results = await this.runPlaywrightTests();
-      
+      let results = await this.runPlaywrightTests();
+
       // 3. Analyze results
-      const issues = await this.analyzeTestResults(results);
-      
+      let issues = await this.analyzeTestResults(results);
+
       if (issues.length === 0) {
         this.log('🎉 All tests passed! System is ready.', 'success');
         this.isRunning = false;
         return true;
       }
-      
+
       // 4. Apply fixes
       await this.applyFixes(issues);
-      
+
       // 5. Restart server
       server.kill();
       await new Promise(resolve => setTimeout(resolve, 5000));
-      
+
       return false; // Not ready yet
-      
+
     } catch (error) {
-      this.log(`Cycle failed: ${error.message}`, 'error');
+      this.log(`Cycle failed: ${error.message}`
       return false;
     }
   }
@@ -248,29 +248,29 @@ class AutoTestingSystem {
   async start() {
     this.log('🚀 Starting Auto-Testing System...');
     this.isRunning = true;
-    
+
     while (this.isRunning && this.retryCount < this.maxRetries) {
-      this.log(`🔄 Attempt ${this.retryCount + 1}/${this.maxRetries}`);
-      
-      const success = await this.runFullCycle();
-      
+      this.log(`🔄 Attempt ${this.retryCount + 1}/${this.maxRetries}`
+
+      let success = await this.runFullCycle();
+
       if (success) {
         this.log('🎉 System is ready and all tests pass!', 'success');
         break;
       }
-      
+
       this.retryCount++;
-      
+
       if (this.retryCount < this.maxRetries) {
-        this.log(`⏳ Waiting ${this.testInterval/1000} seconds before retry...`);
+        this.log(`⏳ Waiting ${this.testInterval / 1000} seconds before retry...`
         await new Promise(resolve => setTimeout(resolve, this.testInterval));
       }
     }
-    
+
     if (this.retryCount >= this.maxRetries) {
       this.log('❌ Max retries reached. Manual intervention needed.', 'error');
     }
-    
+
     this.isRunning = false;
   }
 
@@ -285,21 +285,21 @@ class AutoTestingSystem {
 
 // Run the system
 if (require.main === module) {
-  const system = new AutoTestingSystem();
-  
+  let system = new AutoTestingSystem();
+
   // Handle graceful shutdown
   process.on('SIGINT', () => {
     system.stop();
     process.exit(0);
   });
-  
+
   process.on('SIGTERM', () => {
     system.stop();
     process.exit(0);
   });
-  
+
   system.start().catch(error => {
-    console.error('System failed:', error);
+    // console.error('System failed:', error);
     process.exit(1);
   });
 }

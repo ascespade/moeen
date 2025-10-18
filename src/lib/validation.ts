@@ -25,15 +25,15 @@ import { z } from "zod";
       .transform((email) => (email ? email.toLowerCase().trim() : undefined)),
     phone: z
       .string()
-      .regex(/^[\+]?[1-9][\d]{0,15}$/, "Invalid phone number format")
+      .regex(/^[+]?[1-9][\d]{0,15}$/, "Invalid phone number format")
       .min(10, "Phone number must be at least 10 digits"),
     date_of_birth: z
       .string()
       .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format")
       .refine((date) => {
-        const birthDate = new Date(date);
-        const today = new Date();
-        const age = today.getFullYear() - birthDate.getFullYear();
+        let birthDate = new Date(date);
+        let today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
         return age >= 0 && age <= 150;
       }, "Invalid birth date"),
     gender: z.enum(["male", "female", "other"]).optional(),
@@ -57,17 +57,17 @@ import { z } from "zod";
   }),
   appointment: z.object({
     patient_id: z.string().uuid("Invalid patient ID"),
-    doctor_id: z.string().uuid("Invalid doctor ID"),
+    doctorId: z.string().uuid("Invalid doctor ID"),
     appointment_date: z
       .string()
       .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format")
       .refine((date) => {
-        const appointmentDate = new Date(date);
-        const today = new Date();
+        let appointmentDate = new Date(date);
+        let today = new Date();
         today.setHours(0, 0, 0, 0);
         return appointmentDate >= today;
       }, "Appointment date cannot be in the past"),
-    appointment_time: z
+    appointmentTime: z
       .string()
       .regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
     duration_minutes: z
@@ -100,7 +100,7 @@ import { z } from "zod";
       .min(2, "Name must be at least 2 characters")
       .max(100, "Name must be less than 100 characters")
       .transform(sanitizeText),
-    role: z.enum(["admin", "doctor", "therapist", "patient", "family_member"]),
+    role: z.enum(["admin", "doctor", "therapist", "patient", "familyMember"]),
   }),
   // CSRF token validation
   csrf: z.object({
@@ -110,12 +110,12 @@ import { z } from "zod";
 // Validation middleware
   return async (request: Request): Promise<T> => {
     try {
-      const body = await request.json();
+      let body = await request.json();
       return schema.parse(body);
     } catch (error) {
       if (error instanceof z.ZodError) {
         throw new Error(
-          `Validation error: ${error.issues.map((e) => e.message).join(", ")}`,
+          `Validation error: ${error.issues.map((e) => e.message).join(", ")}`
         );
       }
       throw error;
@@ -136,7 +136,7 @@ import { z } from "zod";
 // Exports
 export function sanitizeHtml(html: string): string {
 export function sanitizeText(text: string): string {
-export const validationSchemas = {
+export let validationSchemas = {
 export function validateRequest<T>(schema: z.ZodSchema<T>) {
 export function generateCSRFToken(): string {
 export function validateCSRFToken(

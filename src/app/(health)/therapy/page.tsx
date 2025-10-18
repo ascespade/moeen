@@ -1,16 +1,17 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { Input } from "@/components/ui/Input";
-import { 
-  Activity, 
-  Calendar, 
-  Clock, 
-  User, 
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { Input } from '@/components/ui/Input';
+import {
+  Activity,
+  Calendar,
+  Clock,
+  User,
   Target,
   TrendingUp,
   FileText,
@@ -26,10 +27,10 @@ import {
   Heart,
   Brain,
   Zap
-} from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
+} from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface TherapySession {
   id: string;
@@ -74,71 +75,71 @@ interface TherapyGoal {
 }
 
 const TherapyPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const user, isAuthenticated = useAuth();
   const router = useRouter();
   const [sessions, setSessions] = useState<TherapySession[]>([]);
   const [goals, setGoals] = useState<TherapyGoal[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState<string>("all");
-  const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterType, setFilterType] = useState<string>('all');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/login");
+      router.push('/login');
       return;
     }
     loadTherapyData();
   }, [isAuthenticated, router]);
 
-  const loadTherapyData = async () => {
+  const loadTherapyData = async() => {
     try {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockSessions: TherapySession[] = [
         {
-          id: "1",
-          patient_id: "pat-1",
-          therapist_id: "ther-1",
-          session_date: "2024-01-15",
-          session_time: "10:00",
+          id: '1',
+          patient_id: 'pat-1',
+          therapist_id: 'ther-1',
+          session_date: '2024-01-15',
+          session_time: '10:00',
           duration: 60,
-          therapy_type: "العلاج الطبيعي",
-          status: "completed",
-          goals: ["تحسين الحركة", "تقوية العضلات"],
-          activities: ["تمارين الحركة", "العلاج المائي"],
-          progress_notes: "تحسن ملحوظ في نطاق الحركة",
-          next_session_goals: ["زيادة مدة التمارين", "تمارين التوازن"],
-          created_at: "2024-01-15T10:00:00Z",
-          updated_at: "2024-01-15T11:00:00Z",
-          public_id: "TH-001",
+          therapy_type: 'العلاج الطبيعي',
+          status: 'completed',
+          goals: ['تحسين الحركة', 'تقوية العضلات'],
+          activities: ['تمارين الحركة', 'العلاج المائي'],
+          progress_notes: 'تحسن ملحوظ في نطاق الحركة',
+          next_session_goals: ['زيادة مدة التمارين', 'تمارين التوازن'],
+          created_at: '2024-01-15T10:00:00Z',
+          updated_at: '2024-01-15T11:00:00Z',
+          public_id: 'TH-001',
           patients: {
-            first_name: "أحمد",
-            last_name: "محمد",
+            first_name: 'أحمد',
+            last_name: 'محمد',
             age: 8,
-            condition: "شلل دماغي",
-            avatar: "/logo.png"
+            condition: 'شلل دماغي',
+            avatar: '/logo.png'
           },
           therapists: {
-            first_name: "د. فاطمة",
-            last_name: "العلي",
-            specialty: "العلاج الطبيعي للأطفال",
-            avatar: "/logo.png"
+            first_name: 'د. فاطمة',
+            last_name: 'العلي',
+            specialty: 'العلاج الطبيعي للأطفال',
+            avatar: '/logo.png'
           }
         }
       ];
 
       const mockGoals: TherapyGoal[] = [
         {
-          id: "1",
-          patient_id: "pat-1",
-          goal_title: "تحسين المشي",
-          description: "القدرة على المشي لمسافة 10 أمتار بدون مساعدة",
-          target_date: "2024-03-15",
+          id: '1',
+          patient_id: 'pat-1',
+          goal_title: 'تحسين المشي',
+          description: 'القدرة على المشي لمسافة 10 أمتار بدون مساعدة',
+          target_date: '2024-03-15',
           progress_percentage: 65,
-          status: "active",
-          created_at: "2024-01-01T00:00:00Z"
+          status: 'active',
+          created_at: '2024-01-01T00:00:00Z'
         }
       ];
 
@@ -158,35 +159,35 @@ const TherapyPage: React.FC = () => {
       'completed': { label: 'مكتملة', variant: 'primary' as const },
       'cancelled': { label: 'ملغية', variant: 'destructive' as const }
     };
-    
+
     const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'primary' as const };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 
   const getTherapyTypeIcon = (type: string) => {
     switch (type) {
-      case 'العلاج الطبيعي':
-        return <Activity className="w-4 h-4 text-brand-primary" />;
-      case 'العلاج الوظيفي':
-        return <Target className="w-4 h-4 text-brand-success" />;
-      case 'علاج النطق':
-        return <Heart className="w-4 h-4 text-brand-error" />;
-      case 'العلاج النفسي':
-        return <Brain className="w-4 h-4 text-purple-500" />;
-      default:
-        return <Zap className="w-4 h-4 text-gray-500" />;
+    case 'العلاج الطبيعي':
+      return <Activity className="w-4 h-4 text-brand-primary" />;
+    case 'العلاج الوظيفي':
+      return <Target className="w-4 h-4 text-brand-success" />;
+    case 'علاج النطق':
+      return <Heart className="w-4 h-4 text-brand-error" />;
+    case 'العلاج النفسي':
+      return <Brain className="w-4 h-4 text-purple-500" />;
+    default:
+      return <Zap className="w-4 h-4 text-gray-500" />;
     }
   };
 
   const filteredSessions = sessions.filter(session => {
-    const matchesSearch = 
+    const matchesSearch =
       session.patients?.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       session.patients?.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       session.therapy_type.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesType = filterType === "all" || session.therapy_type === filterType;
-    const matchesStatus = filterStatus === "all" || session.status === filterStatus;
-    
+
+    const matchesType = filterType === 'all' || session.therapy_type === filterType;
+    const matchesStatus = filterStatus === 'all' || session.status === filterStatus;
+
     return matchesSearch && matchesType && matchesStatus;
   });
 
@@ -203,7 +204,7 @@ const TherapyPage: React.FC = () => {
             <h1 className="text-3xl font-bold text-gray-900">جلسات العلاج والتأهيل</h1>
             <p className="text-gray-600 mt-2">إدارة جلسات العلاج الطبيعي والتأهيل لذوي الاحتياجات الخاصة</p>
           </div>
-          <Button 
+          <Button
             onClick={() => router.push('/therapy/new')}
             className="bg-[var(--brand-primary)] hover:brightness-95"
           >
@@ -263,7 +264,7 @@ const TherapyPage: React.FC = () => {
             </p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">الجلسات اليوم</CardTitle>
@@ -271,14 +272,14 @@ const TherapyPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {sessions.filter(s => 
+              {sessions.filter(s =>
                 new Date(s.session_date).toDateString() === new Date().toDateString()
               ).length}
             </div>
             <p className="text-xs text-muted-foreground">جلسات مجدولة</p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">الأهداف النشطة</CardTitle>
@@ -291,7 +292,7 @@ const TherapyPage: React.FC = () => {
             <p className="text-xs text-muted-foreground">أهداف قيد التنفيذ</p>
           </CardContent>
         </Card>
-        
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">معدل الإنجاز</CardTitle>
@@ -299,7 +300,7 @@ const TherapyPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {goals.length > 0 
+              {goals.length > 0
                 ? Math.round(goals.reduce((acc, goal) => acc + goal.progress_percentage, 0) / goals.length)
                 : 0}%
             </div>
@@ -320,7 +321,7 @@ const TherapyPage: React.FC = () => {
               <Activity className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد جلسات علاج</h3>
               <p className="text-gray-600 mb-4">ابدأ بإنشاء جلسة علاج جديدة</p>
-              <Button 
+              <Button
                 onClick={() => router.push('/therapy/new')}
                 className="bg-[var(--brand-primary)] hover:brightness-95"
               >
@@ -336,7 +337,7 @@ const TherapyPage: React.FC = () => {
                   <div className="flex items-center gap-4">
                     <div className="relative">
                       <Image
-                        src={session.patients?.avatar || "/logo.png"}
+                        src={session.patients?.avatar || '/logo.png'}
                         alt="Patient"
                         width={48}
                         height={48}
@@ -410,7 +411,7 @@ const TherapyPage: React.FC = () => {
                 <div className="flex items-center justify-between pt-4 border-t">
                   <div className="flex items-center gap-2">
                     <Image
-                      src={session.therapists?.avatar || "/logo.png"}
+                      src={session.therapists?.avatar || '/logo.png'}
                       alt="Therapist"
                       width={24}
                       height={24}

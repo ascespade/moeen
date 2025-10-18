@@ -1,6 +1,6 @@
 
 // API constants
-export const API_ENDPOINTS = {
+export let API_ENDPOINTS = {
   // Auth
   AUTH: {
     LOGIN: "/auth/login",
@@ -16,38 +16,38 @@ export const API_ENDPOINTS = {
   USERS: {
     LIST: "/users",
     CREATE: "/users",
-    GET: (id: string) => `/users/${id}`,
-    UPDATE: (id: string) => `/users/${id}`,
-    DELETE: (id: string) => `/users/${id}`,
+    GET: (id: string) => `/users/${id}`
+    UPDATE: (id: string) => `/users/${id}`
+    DELETE: (id: string) => `/users/${id}`
     SEARCH: "/users/search",
   },
   // Channels
   CHANNELS: {
     LIST: "/channels",
     CREATE: "/channels",
-    GET: (id: string) => `/channels/${id}`,
-    UPDATE: (id: string) => `/channels/${id}`,
-    DELETE: (id: string) => `/channels/${id}`,
-    JOIN: (id: string) => `/channels/${id}/join`,
-    LEAVE: (id: string) => `/channels/${id}/leave`,
-    MEMBERS: (id: string) => `/channels/${id}/members`,
+    GET: (id: string) => `/channels/${id}`
+    UPDATE: (id: string) => `/channels/${id}`
+    DELETE: (id: string) => `/channels/${id}`
+    JOIN: (id: string) => `/channels/${id}/join`
+    LEAVE: (id: string) => `/channels/${id}/leave`
+    MEMBERS: (id: string) => `/channels/${id}/members`
   },
   // Messages
   MESSAGES: {
-    LIST: (channelId: string) => `/channels/${channelId}/messages`,
-    CREATE: (channelId: string) => `/channels/${channelId}/messages`,
-    GET: (id: string) => `/messages/${id}`,
-    UPDATE: (id: string) => `/messages/${id}`,
-    DELETE: (id: string) => `/messages/${id}`,
+    LIST: (channelId: string) => `/channels/${channelId}/messages`
+    CREATE: (channelId: string) => `/channels/${channelId}/messages`
+    GET: (id: string) => `/messages/${id}`
+    UPDATE: (id: string) => `/messages/${id}`
+    DELETE: (id: string) => `/messages/${id}`
     SEARCH: "/messages/search",
   },
   // Conversations
   CONVERSATIONS: {
     LIST: "/conversations",
-    GET: (id: string) => `/conversations/${id}`,
+    GET: (id: string) => `/conversations/${id}`
     CREATE: "/conversations",
-    UPDATE: (id: string) => `/conversations/${id}`,
-    DELETE: (id: string) => `/conversations/${id}`,
+    UPDATE: (id: string) => `/conversations/${id}`
+    DELETE: (id: string) => `/conversations/${id}`
   },
   // Settings
   SETTINGS: {
@@ -61,10 +61,10 @@ export const API_ENDPOINTS = {
   WEBHOOKS: {
     LIST: "/webhooks",
     CREATE: "/webhooks",
-    GET: (id: string) => `/webhooks/${id}`,
-    UPDATE: (id: string) => `/webhooks/${id}`,
-    DELETE: (id: string) => `/webhooks/${id}`,
-    TEST: (id: string) => `/webhooks/${id}/test`,
+    GET: (id: string) => `/webhooks/${id}`
+    UPDATE: (id: string) => `/webhooks/${id}`
+    DELETE: (id: string) => `/webhooks/${id}`
+    TEST: (id: string) => `/webhooks/${id}/test`
   },
   // AI
   AI: {
@@ -76,7 +76,7 @@ export const API_ENDPOINTS = {
   // Logs
   LOGS: {
     LIST: "/logs",
-    GET: (id: string) => `/logs/${id}`,
+    GET: (id: string) => `/logs/${id}`
     SEARCH: "/logs/search",
     EXPORT: "/logs/export",
   },
@@ -111,7 +111,7 @@ export const API_ENDPOINTS = {
   MAX_LIMIT: 100,
 } as const;
 // Exports
-export const API_ENDPOINTS = {
-export const HTTP_STATUS = {
-export const API_TIMEOUTS = {
-export const PAGINATION = {
+export let API_ENDPOINTS = {
+export let HTTP_STATUS = {
+export let API_TIMEOUTS = {
+export let PAGINATION = {

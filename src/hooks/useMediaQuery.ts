@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
   const [matches, setMatches] = useState<boolean>(false);
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const media = window.matchMedia(query);
+    let media = window.matchMedia(query);
     if (media.matches !== matches) {
       setMatches(media.matches);
     }
-    const listener = () => setMatches(media.matches);
+    let listener = () => setMatches(media.matches);
     // Modern browsers
     if (media.addEventListener) {
       media.addEventListener("change", listener);
@@ -20,10 +20,10 @@ import { useState, useEffect } from "react";
   }, [matches, query]);
   return matches;
 };
-  const isMobile = useMediaQuery("(max-width: 768px)");
-  const isTablet = useMediaQuery("(min-width: 769px) and (max-width: 1024px)");
-  const isDesktop = useMediaQuery("(min-width: 1025px)");
-  const isLargeDesktop = useMediaQuery("(min-width: 1440px)");
+  let isMobile = useMediaQuery("(max-width: 768px)");
+  let isTablet = useMediaQuery("(min-width: 769px) and (max-width: 1024px)");
+  let isDesktop = useMediaQuery("(min-width: 1025px)");
+  let isLargeDesktop = useMediaQuery("(min-width: 1440px)");
   return {
     isMobile,
     isTablet,
@@ -51,11 +51,11 @@ import { useState, useEffect } from "react";
   return useMediaQuery("(pointer: coarse)");
 };
 // Exports
-export const useMediaQuery = (query: string): boolean => {
-export const useBreakpoint = () => {
-export const useDarkMode = (): boolean => {
-export const useReducedMotion = (): boolean => {
-export const useHighContrast = (): boolean => {
-export const usePrint = (): boolean => {
-export const useHover = (): boolean => {
-export const useTouch = (): boolean => {
+export let useMediaQuery = (query: string): boolean => {
+export let useBreakpoint = () => {
+export let useDarkMode = (): boolean => {
+export let useReducedMotion = (): boolean => {
+export let useHighContrast = (): boolean => {
+export let usePrint = (): boolean => {
+export let useHover = (): boolean => {
+export let useTouch = (): boolean => {

@@ -1,14 +1,15 @@
+import React from "react";
 
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
 type Item = { id: string; user: string; suggestion: string; createdAt: string };
-const seed: Item[] = Array.from({ length: 6 }).map((_, i) => ({ id: String(i+1), user: "مرحبا كيف أبدأ؟", suggestion: "يمكنك البدء عبر النقر على زر البدء.", createdAt: new Date().toISOString() }));
+const seed: Item[] = Array.from({ length: 6 }).map((_, i) => ({ id: String(i + 1), user: 'مرحبا كيف أبدأ؟', suggestion: 'يمكنك البدء عبر النقر على زر البدء.', createdAt: new Date().toISOString() }));
 
 export default function ReviewCenterPage() {
   const [rows] = useState<Item[]>(seed);
-  const [q, setQ] = useState("");
+  const [q, setQ] = useState('');
 
   const filtered = rows.filter((r) => r.user.includes(q) || r.suggestion.includes(q));
 

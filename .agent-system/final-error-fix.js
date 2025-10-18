@@ -5,7 +5,7 @@
  * إصلاح نهائي شامل لجميع الأخطاء
  */
 
-const fs = require('fs');
+let fs = require('fs');
 
 class FinalErrorFixer {
   constructor() {
@@ -13,14 +13,14 @@ class FinalErrorFixer {
   }
 
   log(message, type = 'info') {
-    const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
-    console.log(`[${timestamp}] ${prefix} ${message}`);
+    let timestamp = new Date().toISOString();
+    let prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    // console.log(`[${timestamp}] ${prefix} ${message}`
   }
 
   async fixFile(filePath, fixes) {
     if (!fs.existsSync(filePath)) {
-      this.log(`File not found: ${filePath}`, 'warning');
+      this.log(`File not found: ${filePath}`
       return;
     }
 
@@ -31,7 +31,7 @@ class FinalErrorFixer {
       if (fix.pattern.test(content)) {
         content = content.replace(fix.pattern, fix.replacement);
         modified = true;
-        this.log(`Fixed ${fix.description} in ${filePath}`);
+        this.log(`Fixed ${fix.description} in ${filePath}`
       }
     }
 
@@ -43,14 +43,14 @@ class FinalErrorFixer {
   async fixAllErrors() {
     this.log('🚀 Starting final comprehensive error fixes...');
 
-    const errorFixes = [
+    let errorFixes = [
       // Fix auth API undefined checks
       {
         file: 'src/app/api/auth/forgot-password/route.ts',
         fixes: [
           {
-            pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
+            pattern: /let ipAddress = getClientIP\(request\);/g,
+            replacement: 'let ipAddress = getClientIP(request) || \'127.0.0.1\';',
             description: 'undefined object check'
           }
         ]
@@ -59,8 +59,8 @@ class FinalErrorFixer {
         file: 'src/app/api/auth/login/route.ts',
         fixes: [
           {
-            pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
+            pattern: /let ipAddress = getClientIP\(request\);/g,
+            replacement: 'let ipAddress = getClientIP(request) || \'127.0.0.1\';',
             description: 'undefined object check'
           }
         ]
@@ -69,8 +69,8 @@ class FinalErrorFixer {
         file: 'src/app/api/auth/logout/route.ts',
         fixes: [
           {
-            pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
+            pattern: /let ipAddress = getClientIP\(request\);/g,
+            replacement: 'let ipAddress = getClientIP(request) || \'127.0.0.1\';',
             description: 'undefined object check'
           }
         ]
@@ -79,8 +79,8 @@ class FinalErrorFixer {
         file: 'src/app/api/auth/register/route.ts',
         fixes: [
           {
-            pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
+            pattern: /let ipAddress = getClientIP\(request\);/g,
+            replacement: 'let ipAddress = getClientIP(request) || \'127.0.0.1\';',
             description: 'undefined object check'
           }
         ]
@@ -91,13 +91,13 @@ class FinalErrorFixer {
         file: 'src/app/api/chatbot/actions/route.ts',
         fixes: [
           {
-            pattern: /const result = await flowManager\.executeAction\(/g,
-            replacement: 'const result = await flowManager.executeStepAction(',
+            pattern: /let result = await flowManager\.executeAction\(/g,
+            replacement: 'let result = await flowManager.executeStepAction(',
             description: 'FlowManager method fix'
           },
           {
             pattern: /class EnhancedActionExecutor implements ActionExecutorInterface \{[\s\S]*?\}/g,
-            replacement: `class EnhancedActionExecutor implements ActionExecutorInterface {
+            replacement: `
   async createAppointment(data: any): Promise<any> {
     return { success: true, data };
   }
@@ -119,12 +119,12 @@ class FinalErrorFixer {
   async executeAction(action: string, parameters: any, context: any) {
     return { success: true, data: { action, parameters, context } };
   }
-}`,
+}`
             description: 'EnhancedActionExecutor implementation'
           },
           {
             pattern: /await supabase/g,
-            replacement: 'await createClient()',
+            replacement: 'await () => ({} as any)()',
             description: 'supabase client fix'
           }
         ]
@@ -237,8 +237,8 @@ class FinalErrorFixer {
         file: 'src/core/validation/index.ts',
         fixes: [
           {
-            pattern: /validateData\(([^,]+), ([^)]+)\)/g,
-            replacement: 'validateData($1, $2)',
+            pattern: /() => ({} as any)\(([^,]+), ([^)]+)\)/g,
+            replacement: '() => ({} as any)($1, $2)',
             description: 'validation function calls'
           }
         ]
@@ -247,8 +247,8 @@ class FinalErrorFixer {
         file: 'src/lib/validation/schemas.ts',
         fixes: [
           {
-            pattern: /validateData\(([^,]+), ([^)]+)\)/g,
-            replacement: 'validateData($1, $2)',
+            pattern: /() => ({} as any)\(([^,]+), ([^)]+)\)/g,
+            replacement: '() => ({} as any)($1, $2)',
             description: 'validation function calls'
           }
         ]
@@ -270,7 +270,7 @@ class FinalErrorFixer {
           },
           {
             pattern: /console\.log\(([^,]+), ([^,]+), ([^)]+)\)/g,
-            replacement: 'console.log($1, $2)',
+            replacement: '// console.log($1, $2)',
             description: 'console.log argument fix'
           }
         ]
@@ -371,8 +371,8 @@ class FinalErrorFixer {
         file: 'src/app/api/reports/generate/route.ts',
         fixes: [
           {
-            pattern: /validateData\(([^,]+), ([^)]+)\)/g,
-            replacement: 'validateData($1, $2)',
+            pattern: /() => ({} as any)\(([^,]+), ([^)]+)\)/g,
+            replacement: '() => ({} as any)($1, $2)',
             description: 'validation function calls'
           },
           {
@@ -388,8 +388,8 @@ class FinalErrorFixer {
         file: 'src/app/api/notifications/schedule/route.ts',
         fixes: [
           {
-            pattern: /validateData\(([^,]+), ([^)]+)\)/g,
-            replacement: 'validateData($1, $2)',
+            pattern: /() => ({} as any)\(([^,]+), ([^)]+)\)/g,
+            replacement: '() => ({} as any)($1, $2)',
             description: 'validation function calls'
           },
           {
@@ -405,8 +405,8 @@ class FinalErrorFixer {
         file: 'src/app/api/payments/process/route.ts',
         fixes: [
           {
-            pattern: /validateData\(([^,]+), ([^)]+)\)/g,
-            replacement: 'validateData($1, $2)',
+            pattern: /() => ({} as any)\(([^,]+), ([^)]+)\)/g,
+            replacement: '() => ({} as any)($1, $2)',
             description: 'validation function calls'
           }
         ]
@@ -424,7 +424,7 @@ class FinalErrorFixer {
     try {
       await this.fixAllErrors();
     } catch (error) {
-      this.log(`❌ Error fixing: ${error.message}`, 'error');
+      this.log(`❌ Error fixing: ${error.message}`
       throw error;
     }
   }
@@ -432,9 +432,9 @@ class FinalErrorFixer {
 
 // Run the fixer
 if (require.main === module) {
-  const fixer = new FinalErrorFixer();
+  let fixer = new FinalErrorFixer();
   fixer.run().catch(error => {
-    console.error('Error fixer failed:', error);
+    // console.error('Error fixer failed:', error);
     process.exit(1);
   });
 }

@@ -1,9 +1,10 @@
+import React from "react";
 
-"use client";
-import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
+'use client';
+import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
 
-import Image from "next/image";
+import Image from 'next/image';
 
 interface Session {
   id: string;
@@ -12,86 +13,86 @@ interface Session {
   type: string;
   startTime: string;
   endTime: string;
-  status: "upcoming" | "in-progress" | "completed" | "cancelled";
+  status: 'upcoming' | 'in-progress' | 'completed' | 'cancelled';
   notes?: string;
 }
 
 const mockSessions: Session[] = [
   {
-    id: "1",
-    patientName: "أحمد العتيبي",
-    doctorName: "د. سارة أحمد",
-    type: "علاج طبيعي",
-    startTime: "09:00",
-    endTime: "10:00",
-    status: "in-progress",
-    notes: "جلسة علاج طبيعي للظهر",
+    id: '1',
+    patientName: 'أحمد العتيبي',
+    doctorName: 'د. سارة أحمد',
+    type: 'علاج طبيعي',
+    startTime: '09:00',
+    endTime: '10:00',
+    status: 'in-progress',
+    notes: 'جلسة علاج طبيعي للظهر'
   },
   {
-    id: "2",
-    patientName: "فاطمة السعيد",
-    doctorName: "د. محمد حسن",
-    type: "علاج نفسي",
-    startTime: "10:30",
-    endTime: "11:15",
-    status: "upcoming",
+    id: '2',
+    patientName: 'فاطمة السعيد',
+    doctorName: 'د. محمد حسن',
+    type: 'علاج نفسي',
+    startTime: '10:30',
+    endTime: '11:15',
+    status: 'upcoming'
   },
   {
-    id: "3",
-    patientName: "خالد القحطاني",
-    doctorName: "د. نورا محمد",
-    type: "علاج وظيفي",
-    startTime: "14:00",
-    endTime: "14:30",
-    status: "completed",
+    id: '3',
+    patientName: 'خالد القحطاني',
+    doctorName: 'د. نورا محمد',
+    type: 'علاج وظيفي',
+    startTime: '14:00',
+    endTime: '14:30',
+    status: 'completed'
   },
   {
-    id: "4",
-    patientName: "نورا السعد",
-    doctorName: "د. خالد العتيبي",
-    type: "علاج طبيعي",
-    startTime: "15:30",
-    endTime: "16:30",
-    status: "upcoming",
-  },
+    id: '4',
+    patientName: 'نورا السعد',
+    doctorName: 'د. خالد العتيبي',
+    type: 'علاج طبيعي',
+    startTime: '15:30',
+    endTime: '16:30',
+    status: 'upcoming'
+  }
 ];
 
 export default function SessionsPage() {
-  const [viewMode, setViewMode] = useState<"table" | "cards">("cards");
-  const [selectedStatus, setSelectedStatus] = useState<string>("all");
+  const [viewMode, setViewMode] = useState<'table' | 'cards'>('cards');
+  const [selectedStatus, setSelectedStatus] = useState<string>('all');
 
-  const getStatusColor = (status: Session["status"]) => {
+  const getStatusColor = (status: Session['status']) => {
     switch (status) {
-      case "upcoming":
-        return "bg-blue-100 text-blue-800";
-      case "in-progress":
-        return "bg-yellow-100 text-yellow-800";
-      case "completed":
-        return "bg-green-100 text-green-800";
-      case "cancelled":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-surface text-gray-800";
+    case 'upcoming':
+      return 'bg-blue-100 text-blue-800';
+    case 'in-progress':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'completed':
+      return 'bg-green-100 text-green-800';
+    case 'cancelled':
+      return 'bg-red-100 text-red-800';
+    default:
+      return 'bg-surface text-gray-800';
     }
   };
 
-  const getStatusText = (status: Session["status"]) => {
+  const getStatusText = (status: Session['status']) => {
     switch (status) {
-      case "upcoming":
-        return "قادمة";
-      case "in-progress":
-        return "جارية";
-      case "completed":
-        return "مكتملة";
-      case "cancelled":
-        return "ملغية";
-      default:
-        return "غير محدد";
+    case 'upcoming':
+      return 'قادمة';
+    case 'in-progress':
+      return 'جارية';
+    case 'completed':
+      return 'مكتملة';
+    case 'cancelled':
+      return 'ملغية';
+    default:
+      return 'غير محدد';
     }
   };
 
   const filteredSessions =
-    selectedStatus === "all"
+    selectedStatus === 'all'
       ? mockSessions
       : mockSessions.filter((session) => session.status === selectedStatus);
 
@@ -120,14 +121,14 @@ export default function SessionsPage() {
             </select>
             <div className="flex rounded-lg border border-gray-300">
               <button
-                onClick={() => setViewMode("cards")}
-                className={`px-3 py-2 text-sm ${viewMode === "cards" ? "bg-[var(--brand-primary)] text-white" : "text-gray-600"}`}
+                onClick={() => setViewMode('cards')}
+                className={`px-3 py-2 text-sm ${viewMode === 'cards' ? 'bg-[var(--brand-primary)] text-white' : 'text-gray-600'}`
               >
                 بطاقات
               </button>
               <button
-                onClick={() => setViewMode("table")}
-                className={`px-3 py-2 text-sm ${viewMode === "table" ? "bg-[var(--brand-primary)] text-white" : "text-gray-600"}`}
+                onClick={() => setViewMode('table')}
+                className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--brand-primary)] text-white' : 'text-gray-600'}`
               >
                 جدول
               </button>
@@ -138,19 +139,19 @@ export default function SessionsPage() {
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-primary">
-              {mockSessions.filter((s) => s.status === "upcoming").length}
+              {mockSessions.filter((s) => s.status === 'upcoming').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">جلسات قادمة</div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-yellow-600">
-              {mockSessions.filter((s) => s.status === "in-progress").length}
+              {mockSessions.filter((s) => s.status === 'in-progress').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">جلسات جارية</div>
           </div>
           <div className="card p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-success">
-              {mockSessions.filter((s) => s.status === "completed").length}
+              {mockSessions.filter((s) => s.status === 'completed').length}
             </div>
             <div className="text-gray-600 dark:text-gray-300">جلسات مكتملة</div>
           </div>
@@ -165,7 +166,7 @@ export default function SessionsPage() {
         </div>
 
         {/* Sessions Content */}
-        {viewMode === "cards" ? (
+        {viewMode === 'cards' ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredSessions.map((session) => (
               <div
@@ -182,7 +183,7 @@ export default function SessionsPage() {
                     </p>
                   </div>
                   <span
-                    className={`rounded-full px-3 py-1 text-sm ${getStatusColor(session.status)}`}
+                    className={`rounded-full px-3 py-1 text-sm ${getStatusColor(session.status)}`
                   >
                     {getStatusText(session.status)}
                   </span>
@@ -214,17 +215,17 @@ export default function SessionsPage() {
                 )}
 
                 <div className="flex gap-2">
-                  {session.status === "upcoming" && (
+                  {session.status === 'upcoming' && (
                     <button className="btn-brand flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
                       بدء الجلسة
                     </button>
                   )}
-                  {session.status === "in-progress" && (
+                  {session.status === 'in-progress' && (
                     <button className="flex-1 rounded-lg bg-brand-success py-2 text-sm text-white transition-colors hover:bg-green-700">
                       إنهاء الجلسة
                     </button>
                   )}
-                  {session.status === "completed" && (
+                  {session.status === 'completed' && (
                     <button className="flex-1 rounded-lg border border-gray-300 py-2 text-sm text-gray-700 transition-colors hover:bg-surface">
                       عرض التفاصيل
                     </button>
@@ -290,19 +291,19 @@ export default function SessionsPage() {
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         <span
-                          className={`rounded-full px-2 py-1 text-xs ${getStatusColor(session.status)}`}
+                          className={`rounded-full px-2 py-1 text-xs ${getStatusColor(session.status)}`
                         >
                           {getStatusText(session.status)}
                         </span>
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-sm font-medium">
                         <div className="flex gap-2">
-                          {session.status === "upcoming" && (
+                          {session.status === 'upcoming' && (
                             <button className="text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]">
                               بدء
                             </button>
                           )}
-                          {session.status === "in-progress" && (
+                          {session.status === 'in-progress' && (
                             <button className="text-brand-success hover:text-green-700">
                               إنهاء
                             </button>

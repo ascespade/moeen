@@ -4,25 +4,25 @@
  * Manage security events and audit logs
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { requireAuth } from '@/lib/auth/authorize';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/() => ({} as any)';
 import { ErrorHandler } from '@/core/errors';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
     // Authorize admin or supervisor
-    const authResult = await requireAuth(['admin', 'supervisor'])(request);
-    if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    let authResult = await requireAuth(['admin', 'supervisor'])(request);
+    if (!authResult.() => ({} as any)d) {
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
 
-    const supabase = await createClient();
-    const { searchParams } = new URL(request.url);
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '50');
-    const action = searchParams.get('action');
-    const success = searchParams.get('success');
+    let supabase = await () => ({} as any)();
+    const searchParams = new URL(request.url);
+    let page = parseInt(searchParams.get('page', 10) || '1');
+    let limit = parseInt(searchParams.get('limit', 10) || '50');
+    let action = searchParams.get('action');
+    let success = searchParams.get('success');
 
     let query = supabase
       .from('audit_logs')
@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
         metadata,
         createdAt,
         user:users(id, email, profile)
-      `)
+      `
       .order('createdAt', { ascending: false })
       .range((page - 1) * limit, page * limit - 1);
 
@@ -43,12 +43,12 @@ export async function GET(request: NextRequest) {
       query = query.eq('action', action);
     }
 
-    const { data: events, error, count } = await query;
+    const data: events, error, count = await query;
 
     if (error) {
-      console.error('Error fetching security events:', error);
+      // console.error('Error fetching security events:', error);
       // Return mock data if table doesn't exist
-      const mockEvents = [
+      let mockEvents = [
         {
           id: '1',
           action: 'user_login',
@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
           metadata: {
             ipAddress: '192.168.1.100',
             userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-            success: true,
+            success: true
           },
           createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30 minutes ago
           user: {
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
           userId: 'user-1',
           metadata: {
             email: 'newuser@example.com',
-            role: 'patient',
+            role: 'patient'
           },
           createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(), // 2 hours ago
           user: {
@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
           metadata: {
             key: 'maintenance_mode',
             oldValue: 'false',
-            newValue: 'true',
+            newValue: 'true'
           },
           createdAt: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(), // 4 hours ago
           user: {
@@ -112,7 +112,7 @@ export async function GET(request: NextRequest) {
             ipAddress: '192.168.1.200',
             userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
             success: false,
-            reason: 'Invalid password',
+            reason: 'Invalid password'
           },
           createdAt: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(), // 6 hours ago
           user: null
@@ -126,7 +126,7 @@ export async function GET(request: NextRequest) {
           metadata: {
             ipAddress: '192.168.1.100',
             userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-            success: true,
+            success: true
           },
           createdAt: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString(), // 8 hours ago
           user: {
@@ -137,21 +137,21 @@ export async function GET(request: NextRequest) {
         }
       ];
 
-      return NextResponse.json({
+      return import { NextResponse } from "next/server";.json({
         success: true,
         data: mockEvents,
         pagination: {
           page,
           limit,
           total: mockEvents.length,
-          pages: 1,
+          pages: 1
         },
         message: 'Using mock security events data'
       });
     }
 
     // Transform events to match expected format
-    const transformedEvents = events?.map(event => ({
+    let transformedEvents = events?.map(event => ({
       id: event.id,
       action: event.action,
       entityType: event.entityType,
@@ -166,14 +166,14 @@ export async function GET(request: NextRequest) {
       } : null
     })) || [];
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data: transformedEvents,
       pagination: {
         page,
         limit,
         total: count || 0,
-        pages: Math.ceil((count || 0) / limit),
+        pages: Math.ceil((count || 0) / limit)
       }
     });
 
@@ -182,37 +182,37 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
     // Authorize admin only
-    const authResult = await requireAuth(['admin'])(request);
-    if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    let authResult = await requireAuth(['admin'])(request);
+    if (!authResult.() => ({} as any)d) {
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
 
-    const supabase = await createClient();
-    const body = await request.json();
+    let supabase = await () => ({} as any)();
+    let body = await request.json();
 
-    const { action, entityType, entityId, metadata } = body;
+    const action, entityType, entityId, metadata = body;
 
     // Create security event
-    const { data: newEvent, error } = await supabase
+    const data: newEvent, error = await supabase
       .from('audit_logs')
       .insert({
         action,
         entityType,
         entityId,
         userId: authResult.user!.id,
-        metadata: metadata || {},
+        metadata: metadata || {}
       })
       .select()
       .single();
 
     if (error) {
-      return NextResponse.json({ error: 'Failed to create security event' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to create security event' }, { status: 500 });
     }
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       data: newEvent,
       message: 'Security event created successfully'

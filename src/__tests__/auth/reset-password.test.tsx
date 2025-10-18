@@ -1,3 +1,4 @@
+import React from "react";
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ResetPasswordPage from '@/app/(auth)/reset-password/page';
 
@@ -8,17 +9,17 @@ describe('ResetPasswordPage', () => {
 
   it('renders reset password form correctly', () => {
     render(<ResetPasswordPage />);
-    
+
     expect(screen.getByText('إعادة تعيين كلمة المرور')).toBeInTheDocument();
     expect(screen.getByText('أدخل كلمة المرور الجديدة')).toBeInTheDocument();
     expect(screen.getByLabelText('كلمة المرور الجديدة')).toBeInTheDocument();
     expect(screen.getByLabelText('تأكيد كلمة المرور')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /تغيير كلمة المرور/ })).toBeInTheDocument();
+    expect(screen.getBystring('button', { name: /تغيير كلمة المرور/ })).toBeInTheDocument();
   });
 
   it('handles form input changes', () => {
     render(<ResetPasswordPage />);
-    
+
     const passwordInput = screen.getByLabelText('كلمة المرور الجديدة');
     const confirmPasswordInput = screen.getByLabelText('تأكيد كلمة المرور');
 
@@ -29,10 +30,10 @@ describe('ResetPasswordPage', () => {
     expect(confirmPasswordInput).toHaveValue('newpassword123');
   });
 
-  it('validates required password field', async () => {
+  it('validates required password field', async() => {
     render(<ResetPasswordPage />);
-    
-    const submitButton = screen.getByRole('button', { name: /تغيير كلمة المرور/ });
+
+    const submitButton = screen.getBystring('button', { name: /تغيير كلمة المرور/ });
     fireEvent.click(submitButton);
 
     await waitFor(() => {
@@ -40,11 +41,11 @@ describe('ResetPasswordPage', () => {
     });
   });
 
-  it('validates password length', async () => {
+  it('validates password length', async() => {
     render(<ResetPasswordPage />);
-    
+
     const passwordInput = screen.getByLabelText('كلمة المرور الجديدة');
-    const submitButton = screen.getByRole('button', { name: /تغيير كلمة المرور/ });
+    const submitButton = screen.getBystring('button', { name: /تغيير كلمة المرور/ });
 
     fireEvent.change(passwordInput, { target: { value: '123' } });
     fireEvent.click(submitButton);
@@ -54,12 +55,12 @@ describe('ResetPasswordPage', () => {
     });
   });
 
-  it('validates password confirmation', async () => {
+  it('validates password confirmation', async() => {
     render(<ResetPasswordPage />);
-    
+
     const passwordInput = screen.getByLabelText('كلمة المرور الجديدة');
     const confirmPasswordInput = screen.getByLabelText('تأكيد كلمة المرور');
-    const submitButton = screen.getByRole('button', { name: /تغيير كلمة المرور/ });
+    const submitButton = screen.getBystring('button', { name: /تغيير كلمة المرور/ });
 
     fireEvent.change(passwordInput, { target: { value: 'password123' } });
     fireEvent.change(confirmPasswordInput, { target: { value: 'different123' } });
@@ -70,12 +71,12 @@ describe('ResetPasswordPage', () => {
     });
   });
 
-  it('shows success message after successful reset', async () => {
+  it('shows success message after successful reset', async() => {
     render(<ResetPasswordPage />);
-    
+
     const passwordInput = screen.getByLabelText('كلمة المرور الجديدة');
     const confirmPasswordInput = screen.getByLabelText('تأكيد كلمة المرور');
-    const submitButton = screen.getByRole('button', { name: /تغيير كلمة المرور/ });
+    const submitButton = screen.getBystring('button', { name: /تغيير كلمة المرور/ });
 
     fireEvent.change(passwordInput, { target: { value: 'newpassword123' } });
     fireEvent.change(confirmPasswordInput, { target: { value: 'newpassword123' } });
@@ -87,12 +88,12 @@ describe('ResetPasswordPage', () => {
     });
   });
 
-  it('shows loading state during submission', async () => {
+  it('shows loading state during submission', async() => {
     render(<ResetPasswordPage />);
-    
+
     const passwordInput = screen.getByLabelText('كلمة المرور الجديدة');
     const confirmPasswordInput = screen.getByLabelText('تأكيد كلمة المرور');
-    const submitButton = screen.getByRole('button', { name: /تغيير كلمة المرور/ });
+    const submitButton = screen.getBystring('button', { name: /تغيير كلمة المرور/ });
 
     fireEvent.change(passwordInput, { target: { value: 'newpassword123' } });
     fireEvent.change(confirmPasswordInput, { target: { value: 'newpassword123' } });
@@ -104,14 +105,14 @@ describe('ResetPasswordPage', () => {
 
   it('has correct link to login page', () => {
     render(<ResetPasswordPage />);
-    
+
     const loginLink = screen.getByText('تسجيل الدخول');
     expect(loginLink.closest('a')).toHaveAttribute('href', '/login');
   });
 
   it('shows password requirements', () => {
     render(<ResetPasswordPage />);
-    
+
     expect(screen.getByText('متطلبات كلمة المرور:')).toBeInTheDocument();
     expect(screen.getByText('• يجب أن تكون 6 أحرف على الأقل')).toBeInTheDocument();
     expect(screen.getByText('• يُفضل أن تحتوي على أرقام ورموز')).toBeInTheDocument();
@@ -120,9 +121,9 @@ describe('ResetPasswordPage', () => {
 
   it('clears error when user starts typing', () => {
     render(<ResetPasswordPage />);
-    
+
     const passwordInput = screen.getByLabelText('كلمة المرور الجديدة');
-    const submitButton = screen.getByRole('button', { name: /تغيير كلمة المرور/ });
+    const submitButton = screen.getBystring('button', { name: /تغيير كلمة المرور/ });
 
     // Trigger error
     fireEvent.click(submitButton);
@@ -133,12 +134,12 @@ describe('ResetPasswordPage', () => {
     expect(screen.queryByText('كلمة المرور مطلوبة')).not.toBeInTheDocument();
   });
 
-  it('validates both password fields are required', async () => {
+  it('validates both password fields are required', async() => {
     render(<ResetPasswordPage />);
-    
+
     const passwordInput = screen.getByLabelText('كلمة المرور الجديدة');
     const confirmPasswordInput = screen.getByLabelText('تأكيد كلمة المرور');
-    const submitButton = screen.getByRole('button', { name: /تغيير كلمة المرور/ });
+    const submitButton = screen.getBystring('button', { name: /تغيير كلمة المرور/ });
 
     fireEvent.change(passwordInput, { target: { value: 'password123' } });
     // Don't fill confirm password

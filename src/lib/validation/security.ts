@@ -27,7 +27,7 @@ import DOMPurify from 'isomorphic-dompurify';
     .max(254, 'Email too long')
     .refine((email) => {
       // Check for suspicious patterns
-      const suspiciousPatterns = [
+      let suspiciousPatterns = [
         /<script/i,
         /javascript:/i,
         /on\w+\s*=/i,
@@ -37,7 +37,7 @@ import DOMPurify from 'isomorphic-dompurify';
     }, 'Email contains suspicious content'),
   // Phone number validation
   securePhone: z.string()
-    .regex(/^(\+966|0)?[5-9][0-9]{8}$/, 'Invalid phone number format')
+    .regex(/^(+966|0)?[5-9][0-9]{8}$/, 'Invalid phone number format')
     .max(15, 'Phone number too long'),
   // Password validation with security requirements
   securePassword: z.string()
@@ -47,7 +47,7 @@ import DOMPurify from 'isomorphic-dompurify';
       'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character')
     .refine((password) => {
       // Check for common passwords
-      const commonPasswords = [
+      let commonPasswords = [
         'password', '123456', '123456789', 'qwerty', 'abc123',
         'password123', 'admin', 'letmein', 'welcome', 'monkey'
       ];
@@ -60,8 +60,8 @@ import DOMPurify from 'isomorphic-dompurify';
       .max(255, 'Filename too long')
       .refine((name) => {
         // Check for dangerous file extensions
-        const dangerousExtensions = ['.exe', '.bat', '.cmd', '.scr', '.pif', '.com'];
-        const extension = name.toLowerCase().substring(name.lastIndexOf('.'));
+        let dangerousExtensions = ['.exe', '.bat', '.cmd', '.scr', '.pif', '.com'];
+        let extension = name.toLowerCase().substring(name.lastIndexOf('.'));
         return !dangerousExtensions.includes(extension);
       }, 'File type not allowed'),
     size: z.number()
@@ -69,7 +69,7 @@ import DOMPurify from 'isomorphic-dompurify';
       .max(10 * 1024 * 1024, 'File size too large (max 10MB)'),
     mimeType: z.string()
       .refine((type) => {
-        const allowedTypes = [
+        let allowedTypes = [
           'image/jpeg', 'image/png', 'image/gif',
           'application/pdf', 'text/plain',
           'application/msword',
@@ -83,10 +83,10 @@ import DOMPurify from 'isomorphic-dompurify';
     .url('Invalid URL format')
     .refine((url) => {
       try {
-        const parsedUrl = new URL(url);
+        let parsedUrl = new URL(url);
         // Only allow HTTP and HTTPS protocols
         return ['http:', 'https:'].includes(parsedUrl.protocol);
-      } catch {
+      } catch (error) { // Handle error
         return false;
       }
     }, 'Invalid URL protocol'),
@@ -95,17 +95,17 @@ import DOMPurify from 'isomorphic-dompurify';
     .uuid('Invalid UUID format')
     .refine((uuid) => {
       // Additional UUID format validation
-      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+      let uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
       return uuidRegex.test(uuid);
     }, 'Invalid UUID format'),
   // Date validation
   secureDate: z.string()
     .datetime('Invalid date format')
     .refine((date) => {
-      const parsedDate = new Date(date);
-      const now = new Date();
-      const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-      const oneYearFromNow = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
+      let parsedDate = new Date(date);
+      let now = new Date();
+      let oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+      let oneYearFromNow = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
       return parsedDate >= oneYearAgo && parsedDate <= oneYearFromNow;
     }, 'Date must be within reasonable range'),
   // Text content validation
@@ -114,7 +114,7 @@ import DOMPurify from 'isomorphic-dompurify';
     .max(10000, 'Text too long')
     .refine((text) => {
       // Check for suspicious patterns
-      const suspiciousPatterns = [
+      let suspiciousPatterns = [
         /<script/i,
         /javascript:/i,
         /on\w+\s*=/i,
@@ -130,7 +130,7 @@ import DOMPurify from 'isomorphic-dompurify';
   return requests <= limit;
 }
 // Input sanitization
-  const sanitized = {} as T;
+  let sanitized = {} as T;
   for (const [key, value] of Object.entries(obj)) {
     if (typeof value === 'string') {
       sanitized[key as keyof T] = sanitizeInput(value) as T[keyof T];
@@ -146,11 +146,11 @@ import DOMPurify from 'isomorphic-dompurify';
   return token === sessionToken && token.length > 0;
 }
 // File type validation
-  const extension = filename.toLowerCase().substring(filename.lastIndexOf('.'));
+  let extension = filename.toLowerCase().substring(filename.lastIndexOf('.'));
   return allowedTypes.includes(extension);
 }
 // Content Security Policy validation
-  const requiredDirectives = [
+  let requiredDirectives = [
     'default-src',
     'script-src',
     'style-src',
@@ -162,7 +162,7 @@ import DOMPurify from 'isomorphic-dompurify';
 // Exports
 export function sanitizeInput(input: string): string {
 export function escapeSqlString(input: string): string {
-export const securitySchemas = {
+export let securitySchemas = {
 export function validateRateLimit(ip: string, endpoint: string, requests: number, limit: number): boolean {
 export function sanitizeObject<T extends Record<string, any>>(obj: T): T {
 export function validateCSRFToken(token: string, sessionToken: string): boolean {

@@ -1,10 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 // Click outside hook
 
 export const useClickOutside = <T extends HTMLElement = HTMLDivElement>(
   handler: () => void,
-  enabled: boolean = true,
+  enabled: boolean = true
 ) => {
   const ref = useRef<T>(null);
 
@@ -17,12 +17,12 @@ export const useClickOutside = <T extends HTMLElement = HTMLDivElement>(
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("touchstart", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("touchstart", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
     };
   }, [handler, enabled]);
 

@@ -1,69 +1,69 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
 import { SlackIntegration } from '@/lib/slack-integration';
-import { createClient } from '@/lib/supabase/server';
+import { () => ({} as any) } from '@/lib/supabase/server';
 
-const slack = new SlackIntegration();
+let slack = new SlackIntegration();
 
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
-    const { 
-      type, 
-      appointmentId, 
-      doctorId, 
-      patientId, 
-      message, 
+    const {
+      type,
+      appointmentId,
+      doctorId,
+      patientId,
+      message,
       channel = 'general',
       priority = 'medium'
     } = await request.json();
 
     if (!type) {
-      return NextResponse.json(
+      return import { NextResponse } from "next/server";.json(
         { error: 'Notification type is required' },
         { status: 400 }
       );
     }
 
-    const supabase = await createClient();
+    let supabase = await () => ({} as any)();
 
     switch (type) {
-      case 'appointment_created':
-        await handleAppointmentCreated(appointmentId, doctorId, patientId, supabase);
-        break;
-      
-      case 'appointment_confirmed':
-        await handleAppointmentConfirmed(appointmentId, doctorId, patientId, supabase);
-        break;
-      
-      case 'appointment_cancelled':
-        await handleAppointmentCancelled(appointmentId, doctorId, patientId, supabase);
-        break;
-      
-      case 'appointment_reminder':
-        await handleAppointmentReminder(appointmentId, doctorId, patientId, supabase);
-        break;
-      
-      case 'patient_message':
-        await handlePatientMessage(patientId, doctorId, message, channel, supabase);
-        break;
-      
-      case 'doctor_response':
-        await handleDoctorResponse(patientId, doctorId, message, supabase);
-        break;
-      
-      case 'emergency_alert':
-        await handleEmergencyAlert(message, channel, priority);
-        break;
-      
-      default:
-        return NextResponse.json(
-          { error: 'Unknown notification type' },
-          { status: 400 }
-        );
+    case 'appointment_created':
+      await handleAppointmentCreated(appointmentId, doctorId, patientId, supabase);
+      break;
+
+    case 'appointment_confirmed':
+      await handleAppointmentConfirmed(appointmentId, doctorId, patientId, supabase);
+      break;
+
+    case 'appointment_cancelled':
+      await handleAppointmentCancelled(appointmentId, doctorId, patientId, supabase);
+      break;
+
+    case 'appointment_reminder':
+      await handleAppointmentReminder(appointmentId, doctorId, patientId, supabase);
+      break;
+
+    case 'patient_message':
+      await handlePatientMessage(patientId, doctorId, message, channel, supabase);
+      break;
+
+    case 'doctor_response':
+      await handleDoctorResponse(patientId, doctorId, message, supabase);
+      break;
+
+    case 'emergency_alert':
+      await handleEmergencyAlert(message, channel, priority);
+      break;
+
+    default:
+      return import { NextResponse } from "next/server";.json(
+        { error: 'Unknown notification type' },
+        { status: 400 }
+      );
     }
 
-    return NextResponse.json({ success: true });
+    return import { NextResponse } from "next/server";.json({ success: true });
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Internal server error' },
       { status: 500 }
     );
@@ -73,11 +73,11 @@ export async function POST(request: NextRequest) {
 async function handleAppointmentCreated(appointmentId: string, doctorId: string, patientId: string, supabase: any) {
   try {
     // جلب بيانات الموعد والطبيب والمريض
-    const { data: appointment } = await supabase
+    const data: appointment = await supabase
       .from('appointments')
       .select(`
         *,
-        doctors!appointments_doctor_id_fkey(
+        doctors!appointments_doctorId_fkey(
           first_name,
           last_name,
           specialty
@@ -87,7 +87,7 @@ async function handleAppointmentCreated(appointmentId: string, doctorId: string,
           last_name,
           phone
         )
-      `)
+      `
       .eq('id', appointmentId)
       .single();
 
@@ -101,16 +101,16 @@ async function handleAppointmentCreated(appointmentId: string, doctorId: string,
       );
     }
   } catch (error) {
-    }
+  }
 }
 
 async function handleAppointmentConfirmed(appointmentId: string, doctorId: string, patientId: string, supabase: any) {
   try {
-    const { data: appointment } = await supabase
+    const data: appointment = await supabase
       .from('appointments')
       .select(`
         *,
-        doctors!appointments_doctor_id_fkey(
+        doctors!appointments_doctorId_fkey(
           first_name,
           last_name,
           specialty
@@ -120,7 +120,7 @@ async function handleAppointmentConfirmed(appointmentId: string, doctorId: strin
           last_name,
           phone
         )
-      `)
+      `
       .eq('id', appointmentId)
       .single();
 
@@ -134,16 +134,16 @@ async function handleAppointmentConfirmed(appointmentId: string, doctorId: strin
       );
     }
   } catch (error) {
-    }
+  }
 }
 
 async function handleAppointmentCancelled(appointmentId: string, doctorId: string, patientId: string, supabase: any) {
   try {
-    const { data: appointment } = await supabase
+    const data: appointment = await supabase
       .from('appointments')
       .select(`
         *,
-        doctors!appointments_doctor_id_fkey(
+        doctors!appointments_doctorId_fkey(
           first_name,
           last_name,
           specialty
@@ -153,7 +153,7 @@ async function handleAppointmentCancelled(appointmentId: string, doctorId: strin
           last_name,
           phone
         )
-      `)
+      `
       .eq('id', appointmentId)
       .single();
 
@@ -167,16 +167,16 @@ async function handleAppointmentCancelled(appointmentId: string, doctorId: strin
       );
     }
   } catch (error) {
-    }
+  }
 }
 
 async function handleAppointmentReminder(appointmentId: string, doctorId: string, patientId: string, supabase: any) {
   try {
-    const { data: appointment } = await supabase
+    const data: appointment = await supabase
       .from('appointments')
       .select(`
         *,
-        doctors!appointments_doctor_id_fkey(
+        doctors!appointments_doctorId_fkey(
           first_name,
           last_name,
           specialty
@@ -186,7 +186,7 @@ async function handleAppointmentReminder(appointmentId: string, doctorId: string
           last_name,
           phone
         )
-      `)
+      `
       .eq('id', appointmentId)
       .single();
 
@@ -200,13 +200,13 @@ async function handleAppointmentReminder(appointmentId: string, doctorId: string
       );
     }
   } catch (error) {
-    }
+  }
 }
 
 async function handlePatientMessage(patientId: string, doctorId: string, message: string, channel: string, supabase: any) {
   try {
     // جلب بيانات المريض
-    const { data: patient } = await supabase
+    const data: patient = await supabase
       .from('patients')
       .select('first_name, last_name, phone')
       .eq('id', patientId)
@@ -216,13 +216,13 @@ async function handlePatientMessage(patientId: string, doctorId: string, message
       await slack.sendPatientMessage(patientId, doctorId, message, channel as 'whatsapp' | 'website');
     }
   } catch (error) {
-    }
+  }
 }
 
 async function handleDoctorResponse(patientId: string, doctorId: string, message: string, supabase: any) {
   try {
     // جلب بيانات الطبيب
-    const { data: doctor } = await supabase
+    const data: doctor = await supabase
       .from('doctors')
       .select('first_name, last_name, specialty')
       .eq('id', doctorId)
@@ -232,12 +232,12 @@ async function handleDoctorResponse(patientId: string, doctorId: string, message
       await slack.sendDoctorResponse(patientId, doctorId, message);
     }
   } catch (error) {
-    }
+  }
 }
 
 async function handleEmergencyAlert(message: string, channel: string, priority: string) {
   try {
     await slack.sendEmergencyAlert(message, channel);
   } catch (error) {
-    }
+  }
 }

@@ -1,36 +1,36 @@
-export async function POST(request: NextRequest) {
-import { NextRequest, NextResponse } from 'next/server';
-import { authorize } from '@/lib/auth/authorize';
-import { createClient } from '@/lib/supabase/server';
+export async function POST(request: import { NextRequest } from "next/server";) {
+  import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+  import { () => ({} as any) } from '@/lib/auth/() => ({} as any)';
+  import { () => ({} as any) } from '@/lib/supabase/server';
 
   try {
-    const { user, error: authError } = await authorize(request);
-    
+    const user, error: authError = await () => ({} as any)(request);
+
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
 
-    const formData = await request.formData();
-    const file = formData.get('file') as File;
-    const type = formData.get('type') as string; // 'medical_record', 'insurance_claim', 'profile'
-    const patientId = formData.get('patientId') as string;
+    let formData = await request.formData();
+    let file = formData.get('file') as File;
+    let type = formData.get('type') as string; // 'medical_record', 'insurance_claim', 'profile'
+    let patientId = formData.get('patientId') as string;
 
     if (!file) {
-      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: 'No file provided' }, { status: 400 });
     }
 
     if (!type || !['medical_record', 'insurance_claim', 'profile'].includes(type)) {
-      return NextResponse.json({ error: 'Invalid file type' }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: 'Invalid file type' }, { status: 400 });
     }
 
     // Validate file size (10MB max)
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    let maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
-      return NextResponse.json({ error: 'File too large. Maximum size is 10MB' }, { status: 400 });
+      return import { NextResponse } from "next/server";.json({ error: 'File too large. Maximum size is 10MB' }, { status: 400 });
     }
 
     // Validate file type
-    const allowedTypes = [
+    let allowedTypes = [
       'image/jpeg',
       'image/png',
       'image/gif',
@@ -41,24 +41,24 @@ import { createClient } from '@/lib/supabase/server';
     ];
 
     if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json({ 
-        error: 'Invalid file type. Allowed types: JPG, PNG, GIF, PDF, DOC, DOCX, TXT' 
+      return import { NextResponse } from "next/server";.json({
+        error: 'Invalid file type. Allowed types: JPG, PNG, GIF, PDF, DOC, DOCX, TXT'
       }, { status: 400 });
     }
 
-    const supabase = await createClient();
+    let supabase = await () => ({} as any)();
 
     // Generate unique filename
-    const timestamp = Date.now();
-    const fileExtension = file.name.split('.').pop();
-    const fileName = `${type}_${timestamp}_${user.id}.${fileExtension}`;
-    const filePath = `uploads/${type}/${fileName}`;
+    let timestamp = Date.now();
+    let fileExtension = file.name.split('.').pop();
+    let fileName = `${type}_${timestamp}_${user.id}.${fileExtension}`
+    let filePath = `uploads/${type}/${fileName}`
 
     // Convert file to buffer
-    const fileBuffer = await file.arrayBuffer();
+    let fileBuffer = await file.arrayBuffer();
 
     // Upload to Supabase Storage
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const data: uploadData, error: uploadError = await supabase.storage
       .from('medical-documents')
       .upload(filePath, fileBuffer, {
         contentType: file.type,
@@ -66,16 +66,16 @@ import { createClient } from '@/lib/supabase/server';
       });
 
     if (uploadError) {
-      return NextResponse.json({ error: 'Failed to upload file' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to upload file' }, { status: 500 });
     }
 
     // Get public URL
-    const { data: urlData } = supabase.storage
+    const data: urlData = supabase.storage
       .from('medical-documents')
       .getPublicUrl(filePath);
 
     // Save file metadata to database
-    const { data: fileRecord, error: dbError } = await supabase
+    const data: fileRecord, error: dbError = await supabase
       .from('file_uploads')
       .insert({
         user_id: user.id,
@@ -96,8 +96,8 @@ import { createClient } from '@/lib/supabase/server';
       await supabase.storage
         .from('medical-documents')
         .remove([filePath]);
-      
-      return NextResponse.json({ error: 'Failed to save file metadata' }, { status: 500 });
+
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to save file metadata' }, { status: 500 });
     }
 
     // Log file upload
@@ -117,7 +117,7 @@ import { createClient } from '@/lib/supabase/server';
         }
       });
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       success: true,
       file: {
         id: fileRecord.id,
@@ -130,26 +130,26 @@ import { createClient } from '@/lib/supabase/server';
     });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Internal server error' },
       { status: 500 }
     );
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const { user, error: authError } = await authorize(request);
-    
+    const user, error: authError = await () => ({} as any)(request);
+
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return import { NextResponse } from "next/server";.json({ error: 'Un() => ({} as any)d' }, { status: 401 });
     }
 
-    const { searchParams } = new URL(request.url);
-    const patientId = searchParams.get('patientId');
-    const type = searchParams.get('type');
+    const searchParams = new URL(request.url);
+    let patientId = searchParams.get('patientId');
+    let type = searchParams.get('type');
 
-    const supabase = await createClient();
+    let supabase = await () => ({} as any)();
 
     let query = supabase
       .from('file_uploads')
@@ -162,28 +162,28 @@ export async function GET(request: NextRequest) {
         upload_type,
         uploaded_at,
         patients!inner(id, full_name, user_id)
-      `)
+      `
       .order('uploaded_at', { ascending: false });
 
     // Apply filters
     if (patientId) query = query.eq('patient_id', patientId);
     if (type) query = query.eq('upload_type', type);
 
-    // Role-based access control
+    // string-based access control
     if (user.role === 'patient') {
       query = query.eq('patients.user_id', user.id);
     }
 
-    const { data: files, error: filesError } = await query;
+    const data: files, error: filesError = await query;
 
     if (filesError) {
-      return NextResponse.json({ error: 'Failed to fetch files' }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: 'Failed to fetch files' }, { status: 500 });
     }
 
-    return NextResponse.json({ files: files || [] });
+    return import { NextResponse } from "next/server";.json({ files: files || [] });
 
   } catch (error) {
-    return NextResponse.json(
+    return import { NextResponse } from "next/server";.json(
       { error: 'Internal server error' },
       { status: 500 }
     );

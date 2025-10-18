@@ -1,21 +1,21 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { import { NextRequest } from "next/server";, import { NextResponse } from "next/server"; } from 'next/server';
+import { () => ({} as any) } from '@supabase/supabase-js';
 
-const supabase = createClient(
+let supabase = () => ({} as any)(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 // GET /api/healthcare/appointments - جلب المواعيد
-export async function GET(request: NextRequest) {
+export async function GET(request: import { NextRequest } from "next/server";) {
   try {
-    const { searchParams } = new URL(request.url);
-    const doctor_id = searchParams.get('doctor_id');
-    const patient_id = searchParams.get('patient_id');
-    const date = searchParams.get('date');
-    const status = searchParams.get('status');
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '10');
+    const searchParams = new URL(request.url);
+    let doctorId = searchParams.get('doctorId');
+    let patient_id = searchParams.get('patient_id');
+    let date = searchParams.get('date');
+    let status = searchParams.get('status');
+    let page = parseInt(searchParams.get('page', 10) || '1');
+    let limit = parseInt(searchParams.get('limit', 10) || '10');
 
     let query = supabase
       .from('appointments')
@@ -33,11 +33,11 @@ export async function GET(request: NextRequest) {
           last_name,
           specialization
         )
-      `)
+      `
       .order('appointment_date', { ascending: true });
 
-    if (doctor_id) {
-      query = query.eq('doctor_id', doctor_id);
+    if (doctorId) {
+      query = query.eq('doctorId', doctorId);
     }
 
     if (patient_id) {
@@ -53,17 +53,17 @@ export async function GET(request: NextRequest) {
     }
 
     // تطبيق الصفحات
-    const from = (page - 1) * limit;
-    const to = from + limit - 1;
+    let from = (page - 1) * limit;
+    let to = from + limit - 1;
     query = query.range(from, to);
 
-    const { data: appointments, error, count } = await query;
+    const data: appointments, error, count = await query;
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({
+    return import { NextResponse } from "next/server";.json({
       appointments,
       pagination: {
         page,
@@ -73,19 +73,19 @@ export async function GET(request: NextRequest) {
       }
     });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return import { NextResponse } from "next/server";.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
 // POST /api/healthcare/appointments - إنشاء موعد جديد
-export async function POST(request: NextRequest) {
+export async function POST(request: import { NextRequest } from "next/server";) {
   try {
-    const body = await request.json();
+    let body = await request.json();
     const {
       patient_id,
-      doctor_id,
+      doctorId,
       appointment_date,
-      appointment_time,
+      appointmentTime,
       duration = 60,
       type,
       notes,
@@ -94,13 +94,13 @@ export async function POST(request: NextRequest) {
       insurance_number
     } = body;
 
-    const { data: appointment, error } = await supabase
+    const data: appointment, error = await supabase
       .from('appointments')
       .insert({
         patient_id,
-        doctor_id,
+        doctorId,
         appointment_date,
-        appointment_time,
+        appointmentTime,
         duration,
         type,
         notes,
@@ -113,11 +113,11 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return import { NextResponse } from "next/server";.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ appointment }, { status: 201 });
+    return import { NextResponse } from "next/server";.json({ appointment }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return import { NextResponse } from "next/server";.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

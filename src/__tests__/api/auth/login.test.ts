@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { import { NextRequest } from "next/server"; } from 'next/server';
 import { POST } from '@/app/api/auth/login/route';
 
 // Mock Supabase
@@ -22,38 +22,38 @@ describe('/api/auth/login', () => {
     jest.clearAllMocks();
   });
 
-  it('returns 400 for missing email', async () => {
-    const request = new NextRequest('http://localhost:3000/api/auth/login', {
+  it('returns 400 for missing email', async() => {
+    let request = new import { NextRequest } from "next/server";('http://localhost:3000/api/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ password: 'password123' }),
+      body: JSON.stringify({ password: 'password123' })
     });
 
-    const response = await POST(request);
-    const data = await response.json();
+    let response = await POST(request);
+    let data = await response.json();
 
     expect(response.status).toBe(400);
     expect(data.success).toBe(false);
     expect(data.error).toBe('Email and password are required');
   });
 
-  it('returns 400 for missing password', async () => {
-    const request = new NextRequest('http://localhost:3000/api/auth/login', {
+  it('returns 400 for missing password', async() => {
+    let request = new import { NextRequest } from "next/server";('http://localhost:3000/api/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ email: 'test@example.com' }),
+      body: JSON.stringify({ email: 'test@example.com' })
     });
 
-    const response = await POST(request);
-    const data = await response.json();
+    let response = await POST(request);
+    let data = await response.json();
 
     expect(response.status).toBe(400);
     expect(data.success).toBe(false);
     expect(data.error).toBe('Email and password are required');
   });
 
-  it('handles test credentials successfully', async () => {
-    const { getServiceSupabase } = require('@/lib/supabaseClient');
-    const mockSupabase = getServiceSupabase();
-    
+  it('handles test credentials successfully', async() => {
+    const getServiceSupabase = require('@/lib/supabaseClient');
+    let mockSupabase = getServiceSupabase();
+
     mockSupabase.from().select().eq().single.mockResolvedValue({
       data: {
         id: 'test-user-id',
@@ -64,17 +64,17 @@ describe('/api/auth/login', () => {
       error: null
     });
 
-    const request = new NextRequest('http://localhost:3000/api/auth/login', {
+    let request = new import { NextRequest } from "next/server";('http://localhost:3000/api/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ 
-        email: 'test@moeen.com', 
+      body: JSON.stringify({
+        email: 'test@moeen.com',
         password: 'test123',
         rememberMe: true
-      }),
+      })
     });
 
-    const response = await POST(request);
-    const data = await response.json();
+    let response = await POST(request);
+    let data = await response.json();
 
     expect(response.status).toBe(200);
     expect(data.success).toBe(true);
@@ -82,10 +82,10 @@ describe('/api/auth/login', () => {
     expect(data.data.token).toContain('mock-jwt-token-');
   });
 
-  it('handles Supabase auth for real users', async () => {
-    const { getServiceSupabase } = require('@/lib/supabaseClient');
-    const mockSupabase = getServiceSupabase();
-    
+  it('handles Supabase auth for real users', async() => {
+    const getServiceSupabase = require('@/lib/supabaseClient');
+    let mockSupabase = getServiceSupabase();
+
     mockSupabase.from().select().eq().single.mockResolvedValue({
       data: null,
       error: { message: 'User not found' }
@@ -103,27 +103,27 @@ describe('/api/auth/login', () => {
       error: null
     });
 
-    const request = new NextRequest('http://localhost:3000/api/auth/login', {
+    let request = new import { NextRequest } from "next/server";('http://localhost:3000/api/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ 
-        email: 'real@example.com', 
+      body: JSON.stringify({
+        email: 'real@example.com',
         password: 'realpassword',
         rememberMe: false
-      }),
+      })
     });
 
-    const response = await POST(request);
-    const data = await response.json();
+    let response = await POST(request);
+    let data = await response.json();
 
     expect(response.status).toBe(200);
     expect(data.success).toBe(true);
     expect(data.data.user.email).toBe('real@example.com');
   });
 
-  it('handles Supabase auth error', async () => {
-    const { getServiceSupabase } = require('@/lib/supabaseClient');
-    const mockSupabase = getServiceSupabase();
-    
+  it('handles Supabase auth error', async() => {
+    const getServiceSupabase = require('@/lib/supabaseClient');
+    let mockSupabase = getServiceSupabase();
+
     mockSupabase.from().select().eq().single.mockResolvedValue({
       data: null,
       error: { message: 'User not found' }
@@ -134,31 +134,31 @@ describe('/api/auth/login', () => {
       error: { message: 'Invalid credentials' }
     });
 
-    const request = new NextRequest('http://localhost:3000/api/auth/login', {
+    let request = new import { NextRequest } from "next/server";('http://localhost:3000/api/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ 
-        email: 'invalid@example.com', 
+      body: JSON.stringify({
+        email: 'invalid@example.com',
         password: 'wrongpassword',
         rememberMe: false
-      }),
+      })
     });
 
-    const response = await POST(request);
-    const data = await response.json();
+    let response = await POST(request);
+    let data = await response.json();
 
     expect(response.status).toBe(401);
     expect(data.success).toBe(false);
     expect(data.error).toBe('Invalid credentials');
   });
 
-  it('handles general errors', async () => {
-    const request = new NextRequest('http://localhost:3000/api/auth/login', {
+  it('handles general errors', async() => {
+    let request = new import { NextRequest } from "next/server";('http://localhost:3000/api/auth/login', {
       method: 'POST',
-      body: 'invalid json',
+      body: 'invalid json'
     });
 
-    const response = await POST(request);
-    const data = await response.json();
+    let response = await POST(request);
+    let data = await response.json();
 
     expect(response.status).toBe(500);
     expect(data.success).toBe(false);

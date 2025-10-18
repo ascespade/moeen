@@ -6,7 +6,7 @@ export default defineConfig({
   test: {
     // البيئة
     environment: 'node',
-    
+
     // المجلدات
     include: ['**/*.integration.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     exclude: [
@@ -16,7 +16,7 @@ export default defineConfig({
       '**/.{idea,git,cache,output,temp}/**',
       '**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*'
     ],
-    
+
     // إعدادات الاختبار
     globals: true,
     passWithNoTests: true,
@@ -24,7 +24,7 @@ export default defineConfig({
     timeout: 30000, // 30 ثانية لاختبارات التكامل
     hookTimeout: 30000,
     teardownTimeout: 30000,
-    
+
     // التغطية
     coverage: {
       provider: 'c8',
@@ -55,7 +55,7 @@ export default defineConfig({
       clean: true,
       cleanOnRerun: true
     },
-    
+
     // إعدادات الأداء
     pool: 'threads',
     poolOptions: {
@@ -65,37 +65,37 @@ export default defineConfig({
         maxThreads: 2 // أقل من اختبارات الوحدة
       }
     },
-    
+
     // إعدادات المراقبة
     watch: false,
     watchExclude: ['**/node_modules/**', '**/dist/**'],
-    
+
     // إعدادات التقارير
     reporter: ['verbose', 'json', 'html'],
     outputFile: {
       json: './test-results/integration-results.json',
       html: './test-results/integration-index.html'
     },
-    
+
     // إعدادات الاختبار
     testTimeout: 30000,
     hookTimeout: 30000,
     teardownTimeout: 30000,
-    
+
     // إعدادات الاستيراد
     deps: {
       inline: ['@testing-library/jest-dom']
     },
-    
+
     // إعدادات البيئة
     env: {
       NODE_ENV: 'test',
       INTEGRATION_TEST: 'true'
     },
-    
+
     // إعدادات الملفات
     setupFiles: ['./config/integration-test-setup.js'],
-    
+
     // إعدادات CSS
     css: {
       modules: {
@@ -103,7 +103,7 @@ export default defineConfig({
       }
     }
   },
-  
+
   // إعدادات Vite
   resolve: {
     alias: {
@@ -119,7 +119,7 @@ export default defineConfig({
       '@types': resolve(__dirname, './src/types')
     }
   },
-  
+
   // إعدادات البناء
   build: {
     outDir: 'dist',
@@ -127,14 +127,14 @@ export default defineConfig({
     minify: false,
     target: 'esnext'
   },
-  
+
   // إعدادات الخادم
   server: {
     port: 3001,
     open: false,
     cors: true
   },
-  
+
   // إعدادات المعاينة
   preview: {
     port: 4174,

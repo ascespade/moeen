@@ -5,9 +5,9 @@
  * نظام الاختبار المحسن
  */
 
-const { exec, spawn } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+const exec, spawn = require('child_process');
+let fs = require('fs');
+let path = require('path');
 
 class EnhancedTestingSystem {
   constructor() {
@@ -26,16 +26,16 @@ class EnhancedTestingSystem {
       { name: 'styles', path: 'src/styles', tests: 'tests/e2e/styles.spec.ts' },
       { name: 'context', path: 'src/context', tests: 'tests/e2e/context.spec.ts' }
     ];
-    
+
     this.results = {};
     this.isServerReady = false;
     this.serverProcess = null;
   }
 
   log(module, message, type = 'info') {
-    const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
-    console.log(`[${timestamp}] [${module}] ${prefix} ${message}`);
+    let timestamp = new Date().toISOString();
+    let prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    // console.log(`[${timestamp}] [${module}] ${prefix} ${message}`
   }
 
   async runCommand(command, options = {}) {
@@ -52,16 +52,16 @@ class EnhancedTestingSystem {
 
   async checkServerHealth() {
     try {
-      const response = await fetch('http://localhost:3001');
+      let response = await fetch('http://localhost:3001');
       return response.ok;
-    } catch {
+    } catch (error) { // Handle error
       return false;
     }
   }
 
   async startServer() {
     this.log('system', '🚀 Starting development server...');
-    
+
     try {
       // Check if server is already running
       if (await this.checkServerHealth()) {
@@ -72,7 +72,7 @@ class EnhancedTestingSystem {
 
       // Kill any existing server
       await this.runCommand('pkill -f "next dev" || true');
-      
+
       // Start new server
       this.serverProcess = spawn('npm', ['run', 'dev'], {
         cwd: process.cwd(),
@@ -80,7 +80,7 @@ class EnhancedTestingSystem {
       });
 
       this.serverProcess.stdout.on('data', (data) => {
-        const output = data.toString();
+        let output = data.toString();
         if (output.includes('Ready in')) {
           this.log('system', '✅ Server started successfully');
           this.isServerReady = true;
@@ -88,9 +88,9 @@ class EnhancedTestingSystem {
       });
 
       this.serverProcess.stderr.on('data', (data) => {
-        const error = data.toString();
+        let error = data.toString();
         if (error.includes('Error') || error.includes('Failed')) {
-          this.log('system', `Server error: ${error}`, 'error');
+          this.log('system', `Server error: ${error}`
         }
       });
 
@@ -108,7 +108,7 @@ class EnhancedTestingSystem {
 
       return this.serverProcess;
     } catch (error) {
-      this.log('system', `Failed to start server: ${error.message}`, 'error');
+      this.log('system', `Failed to start server: ${error.message}`
       throw error;
     }
   }
@@ -123,12 +123,12 @@ class EnhancedTestingSystem {
   }
 
   async checkModuleHealth(module) {
-    this.log(module.name, `🔍 Checking module health: ${module.name}`);
-    
+    this.log(module.name, `🔍 Checking module health: ${module.name}`
+
     try {
       // Check if module directory exists
       if (!fs.existsSync(module.path)) {
-        this.log(module.name, `⚠️ Module directory not found: ${module.path}`, 'warning');
+        this.log(module.name, `⚠️ Module directory not found: ${module.path}`
         this.results[module.name] = {
           status: 'missing',
           message: 'Directory not found',
@@ -140,32 +140,32 @@ class EnhancedTestingSystem {
       // Check TypeScript compilation
       let hasTypeErrors = false;
       try {
-        await this.runCommand(`npx tsc --noEmit --skipLibCheck ${module.path}/**/*.tsx ${module.path}/**/*.ts`);
+        await this.runCommand(`npx tsc --noEmit --skipLibCheck ${module.path}/**/*.tsx ${module.path}/**/*.ts`
       } catch (error) {
         hasTypeErrors = true;
-        this.log(module.name, `⚠️ TypeScript errors found`, 'warning');
+        this.log(module.name, '⚠️ TypeScript errors found', 'warning');
       }
 
       // Check for common files
-      const commonFiles = ['page.tsx', 'layout.tsx', 'loading.tsx', 'error.tsx'];
-      const foundFiles = commonFiles.filter(file => 
-        fs.existsSync(`${module.path}/${file}`)
+      let commonFiles = ['page.tsx', 'layout.tsx', 'loading.tsx', 'error.tsx'];
+      let foundFiles = commonFiles.filter(file =>
+        fs.existsSync(`${module.path}/${file}`
       );
 
       // Check for CSS issues
       let cssIssues = 0;
-      const cssFiles = await this.findFiles(`${module.path}/**/*.css`);
+      let cssFiles = await this.findFiles(`${module.path}/**/*.css`
       for (const file of cssFiles) {
         if (fs.existsSync(file)) {
-          const content = fs.readFileSync(file, 'utf8');
+          let content = fs.readFileSync(file, 'utf8');
           if (content.includes('bg-brand-primary') || content.includes('var(--brand-primary)')) {
             cssIssues++;
           }
         }
       }
 
-      const status = hasTypeErrors || cssIssues > 0 ? 'issues' : 'ok';
-      
+      let status = hasTypeErrors || cssIssues > 0 ? 'issues' : 'ok';
+
       this.results[module.name] = {
         status,
         foundFiles: foundFiles.length,
@@ -176,15 +176,15 @@ class EnhancedTestingSystem {
       };
 
       if (status === 'ok') {
-        this.log(module.name, `✅ Module ${module.name} is healthy`, 'success');
+        this.log(module.name, `✅ Module ${module.name} is healthy`
       } else {
-        this.log(module.name, `⚠️ Module ${module.name} has issues`, 'warning');
+        this.log(module.name, `⚠️ Module ${module.name} has issues`
       }
 
       return status === 'ok';
 
     } catch (error) {
-      this.log(module.name, `❌ Health check failed: ${error.message}`, 'error');
+      this.log(module.name, `❌ Health check failed: ${error.message}`
       this.results[module.name] = {
         status: 'error',
         error: error.message,
@@ -196,19 +196,19 @@ class EnhancedTestingSystem {
 
   async findFiles(pattern) {
     try {
-      const { stdout } = await this.runCommand(`find . -path "${pattern}" -type f 2>/dev/null`);
+      const stdout = await this.runCommand(`find . -path "${pattern}" -type f 2>/dev/null`
       return stdout.trim().split('\n').filter(f => f);
-    } catch {
+    } catch (error) { // Handle error
       return [];
     }
   }
 
   async fixModule(module) {
-    this.log(module.name, `🔧 Fixing module: ${module.name}`);
-    
+    this.log(module.name, `🔧 Fixing module: ${module.name}`
+
     try {
       // Fix CSS issues
-      const cssFiles = await this.findFiles(`${module.path}/**/*.css`);
+      let cssFiles = await this.findFiles(`${module.path}/**/*.css`
       for (const file of cssFiles) {
         if (fs.existsSync(file)) {
           let content = fs.readFileSync(file, 'utf8');
@@ -220,45 +220,45 @@ class EnhancedTestingSystem {
           content = content.replace(/var\(--brand-primary\)/g, '#2563eb');
           content = content.replace(/var\(--brand-primary-hover\)/g, '#1d4ed8');
           fs.writeFileSync(file, content);
-          this.log(module.name, `✅ Fixed CSS in ${file}`);
+          this.log(module.name, `✅ Fixed CSS in ${file}`
         }
       }
 
       // Fix TypeScript issues
-      const tsxFiles = await this.findFiles(`${module.path}/**/*.tsx`);
+      let tsxFiles = await this.findFiles(`${module.path}/**/*.tsx`
       for (const file of tsxFiles) {
         if (fs.existsSync(file)) {
           let content = fs.readFileSync(file, 'utf8');
-          
+
           // Fix common import issues
           content = content.replace(/from ['"]@\/design-system\/unified['"]/g, 'from "@/core/theme"');
           content = content.replace(/from ['"]@\/components\/providers\/I18nProvider['"]/g, 'from "@/hooks/useTranslation"');
           content = content.replace(/from ['"]@\/context\/UnifiedThemeProvider['"]/g, 'from "@/context/ThemeProvider"');
-          
+
           // Fix ZodError.errors
           content = content.replace(/\.errors/g, '.issues');
-          
+
           fs.writeFileSync(file, content);
-          this.log(module.name, `✅ Fixed imports in ${file}`);
+          this.log(module.name, `✅ Fixed imports in ${file}`
         }
       }
 
-      this.log(module.name, `✅ Applied fixes for ${module.name}`, 'success');
+      this.log(module.name, `✅ Applied fixes for ${module.name}`
       return true;
-      
+
     } catch (error) {
-      this.log(module.name, `❌ Fix failed: ${error.message}`, 'error');
+      this.log(module.name, `❌ Fix failed: ${error.message}`
       return false;
     }
   }
 
   async runModuleTests(module) {
-    this.log(module.name, `🧪 Running tests for: ${module.name}`);
-    
+    this.log(module.name, `🧪 Running tests for: ${module.name}`
+
     try {
       // Check if test file exists
       if (!fs.existsSync(module.tests)) {
-        this.log(module.name, `⚠️ Test file not found: ${module.tests}`, 'warning');
+        this.log(module.name, `⚠️ Test file not found: ${module.tests}`
         this.results[module.name] = {
           ...this.results[module.name],
           testStatus: 'skipped',
@@ -268,8 +268,8 @@ class EnhancedTestingSystem {
       }
 
       // Run specific test for this module
-      const { stdout, stderr } = await this.runCommand(
-        `npx playwright test --config=playwright-auto.config.ts --grep="${module.name}" --reporter=json`,
+      const stdout, stderr = await this.runCommand(
+        `npx playwright test --config=playwright-auto.config.ts --grep="${module.name}" --reporter=json`
         { timeout: 300000 }
       );
 
@@ -277,7 +277,7 @@ class EnhancedTestingSystem {
       try {
         results = JSON.parse(stdout);
       } catch (parseError) {
-        this.log(module.name, `⚠️ Could not parse test results, treating as passed`, 'warning');
+        this.log(module.name, '⚠️ Could not parse test results, treating as passed', 'warning');
         this.results[module.name] = {
           ...this.results[module.name],
           testStatus: 'passed',
@@ -286,9 +286,9 @@ class EnhancedTestingSystem {
         return true;
       }
 
-      const passed = results.suites?.every(suite => 
-        suite.specs?.every(spec => 
-          spec.tests?.every(test => 
+      let passed = results.suites?.every(suite =>
+        suite.specs?.every(spec =>
+          spec.tests?.every(test =>
             test.results?.every(result => result.status === 'passed')
           )
         )
@@ -301,15 +301,15 @@ class EnhancedTestingSystem {
       };
 
       if (passed) {
-        this.log(module.name, `✅ Module ${module.name} tests passed`, 'success');
+        this.log(module.name, `✅ Module ${module.name} tests passed`
       } else {
-        this.log(module.name, `❌ Module ${module.name} tests failed`, 'error');
+        this.log(module.name, `❌ Module ${module.name} tests failed`
       }
 
       return passed;
 
     } catch (error) {
-      this.log(module.name, `❌ Test failed: ${error.message || 'Unknown error'}`, 'error');
+      this.log(module.name, `❌ Test failed: ${error.message || 'Unknown error'}`
       this.results[module.name] = {
         ...this.results[module.name],
         testStatus: 'error',
@@ -321,28 +321,28 @@ class EnhancedTestingSystem {
 
   async testAllModules() {
     this.log('system', '🚀 Starting comprehensive module testing...');
-    
+
     // Start server
     await this.startServer();
-    
-    const results = [];
-    
+
+    let results = [];
+
     for (const module of this.modules) {
-      this.log('system', `\n📦 Processing module: ${module.name}`);
-      
+      this.log('system', `\n📦 Processing module: ${module.name}`
+
       // Health check
-      const isHealthy = await this.checkModuleHealth(module);
-      
+      let isHealthy = await this.checkModuleHealth(module);
+
       // Fix if needed
       if (!isHealthy && this.results[module.name].status !== 'missing') {
         await this.fixModule(module);
         // Re-check after fixing
         await this.checkModuleHealth(module);
       }
-      
+
       // Run tests
-      const testsPassed = await this.runModuleTests(module);
-      
+      let testsPassed = await this.runModuleTests(module);
+
       results.push({
         module: module.name,
         healthy: this.results[module.name].status === 'ok',
@@ -351,17 +351,17 @@ class EnhancedTestingSystem {
         testStatus: this.results[module.name].testStatus || 'skipped'
       });
     }
-    
+
     this.log('system', '\n📊 Module testing completed');
-    this.log('system', `✅ Healthy: ${results.filter(r => r.healthy).length}/${results.length}`);
-    this.log('system', `🧪 Tests Passed: ${results.filter(r => r.testsPassed).length}/${results.length}`);
-    this.log('system', `⚠️ Issues: ${results.filter(r => !r.healthy).length}/${results.length}`);
-    
+    this.log('system', `✅ Healthy: ${results.filter(r => r.healthy).length}/${results.length}`
+    this.log('system', `🧪 Tests Passed: ${results.filter(r => r.testsPassed).length}/${results.length}`
+    this.log('system', `⚠️ Issues: ${results.filter(r => !r.healthy).length}/${results.length}`
+
     return results;
   }
 
   saveResults() {
-    const report = {
+    let report = {
       timestamp: new Date().toISOString(),
       modules: this.results,
       summary: {
@@ -373,7 +373,7 @@ class EnhancedTestingSystem {
         errors: Object.values(this.results).filter(r => r.status === 'error').length
       }
     };
-    
+
     fs.writeFileSync('enhanced-test-results.json', JSON.stringify(report, null, 2));
     this.log('system', '💾 Enhanced test results saved to enhanced-test-results.json');
   }
@@ -382,14 +382,14 @@ class EnhancedTestingSystem {
     try {
       await this.testAllModules();
       this.saveResults();
-      
+
       // Stop server
       await this.stopServer();
-      
+
       this.log('system', '✅ Enhanced testing system completed!', 'success');
-      
+
     } catch (error) {
-      this.log('system', `❌ Enhanced testing failed: ${error.message}`, 'error');
+      this.log('system', `❌ Enhanced testing failed: ${error.message}`
       await this.stopServer();
       throw error;
     }
@@ -398,9 +398,9 @@ class EnhancedTestingSystem {
 
 // Run the system
 if (require.main === module) {
-  const system = new EnhancedTestingSystem();
+  let system = new EnhancedTestingSystem();
   system.run().catch(error => {
-    console.error('Enhanced testing failed:', error);
+    // console.error('Enhanced testing failed:', error);
     process.exit(1);
   });
 }

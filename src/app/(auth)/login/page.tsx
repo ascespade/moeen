@@ -1,23 +1,24 @@
+import React from "react";
 
-"use client";
-import { useState, useEffect, Suspense } from "react";
-import { useAuth } from "@/hooks/useAuth";
-import { ROUTES } from "@/constants/routes";
-import { getDefaultRouteForUser } from "@/lib/router";
-import { useT } from "@/components/providers/I18nProvider";
-import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
+'use client';
+import { useState, useEffect, Suspense } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { ROUTES } from '@/constants/routes';
+import { getDefaultRouteForUser } from '@/lib/router';
+import { useT } from '@/components/providers/I18nProvider';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
 
 function LoginForm() {
-  const { loginWithCredentials, isLoading, isAuthenticated } = useAuth();
-  const { t } = useT();
+  const loginWithCredentials, isLoading, isAuthenticated = useAuth();
+  const t = useT();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    rememberMe: false,
+    email: '',
+    password: '',
+    rememberMe: false
   });
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -26,27 +27,27 @@ function LoginForm() {
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/dashboard");
+      router.push('/dashboard');
     }
   }, [isAuthenticated, router]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
     // Client-side validation
     if (!formData.email) {
-      setError(t("auth.email.required", "البريد الإلكتروني مطلوب"));
+      setError(t('auth.email.required', 'البريد الإلكتروني مطلوب'));
       return;
     }
 
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      setError(t("auth.email.invalid", "البريد الإلكتروني غير صحيح"));
+      setError(t('auth.email.invalid', 'البريد الإلكتروني غير صحيح'));
       return;
     }
 
     if (!formData.password) {
-      setError(t("auth.password.required", "كلمة المرور مطلوبة"));
+      setError(t('auth.password.required', 'كلمة المرور مطلوبة'));
       return;
     }
 
@@ -55,24 +56,24 @@ function LoginForm() {
       const result = await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
       if (result.success) {
         // Get redirect URL from query params or default to dashboard
-        const redirectUrl = searchParams.get('redirect') || "/dashboard";
+        const redirectUrl = searchParams.get('redirect') || '/dashboard';
         router.push(redirectUrl);
       }
     } catch (err: any) {
-      setError(err?.message || t("auth.login.error", "فشل تسجيل الدخول"));
+      setError(err?.message || t('auth.login.error', 'فشل تسجيل الدخول'));
     } finally {
       setSubmitting(false);
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+    const name, value, type, checked = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === 'checkbox' ? checked : value
     }));
     setError(null);
-    
+
     // Real-time email validation
     if (name === 'email') {
       if (value && !/\S+@\S+\.\S+/.test(value)) {
@@ -83,7 +84,7 @@ function LoginForm() {
     }
   };
 
-  const handleQuickTestLogin = async (role: string, email: string, password: string) => {
+  const handleQuickTestLogin = async(role: string, email: string, password: string) => {
     setError(null);
     setSubmitting(true);
     try {
@@ -94,11 +95,11 @@ function LoginForm() {
         supervisor: '/supervisor-dashboard',
         patient: '/patient-dashboard',
         staff: '/staff-dashboard',
-        doctor: '/doctor-dashboard',
+        doctor: '/doctor-dashboard'
       };
       window.location.href = routes[role] || '/dashboard';
     } catch (err: any) {
-      setError(err?.message || `فشل تسجيل دخول ${role}`);
+      setError(err?.message || `فشل تسجيل دخول ${role}`
     } finally {
       setSubmitting(false);
     }
@@ -109,7 +110,7 @@ function LoginForm() {
     { role: 'supervisor', email: 'supervisor@moeen.com', password: 'super123', label: '👔 مشرف', color: 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 shadow-lg shadow-purple-500/50', route: '/supervisor-dashboard' },
     { role: 'agent', email: 'test@moeen.com', password: 'test123', label: '🏥 مريض', color: 'bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 shadow-lg shadow-green-500/50', route: '/dashboard/user' },
     { role: 'agent', email: 'user@moeen.com', password: 'user123', label: '👨‍⚕️ موظف', color: 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg shadow-blue-500/50', route: '/staff-dashboard' },
-    { role: 'agent', email: 'doctor@moeen.com', password: 'doctor123', label: '⚕️ طبيب', color: 'bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 shadow-lg shadow-orange-500/50', route: '/doctor-dashboard' },
+    { role: 'agent', email: 'doctor@moeen.com', password: 'doctor123', label: '⚕️ طبيب', color: 'bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 shadow-lg shadow-orange-500/50', route: '/doctor-dashboard' }
   ];
 
   return (
@@ -121,10 +122,10 @@ function LoginForm() {
             <span className="text-2xl font-bold text-white">م</span>
           </div>
           <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-            {t("auth.welcomeBack", "مرحباً بعودتك")}
+            {t('auth.welcomeBack', 'مرحباً بعودتك')}
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            {t("auth.loginMessage", "سجل دخولك للوصول إلى لوحة التحكم")}
+            {t('auth.loginMessage', 'سجل دخولك للوصول إلى لوحة التحكم')}
           </p>
         </div>
 
@@ -142,7 +143,7 @@ function LoginForm() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="email" className="form-label">{t("auth.email", "البريد الإلكتروني")}</label>
+                <label htmlFor="email" className="form-label">{t('auth.email', 'البريد الإلكتروني')}</label>
                 <div className="relative">
                   <input
                     id="email"
@@ -163,7 +164,7 @@ function LoginForm() {
               </div>
 
               <div>
-                <label htmlFor="password" className="form-label">{t("auth.password", "كلمة المرور")}</label>
+                <label htmlFor="password" className="form-label">{t('auth.password', 'كلمة المرور')}</label>
                 <div className="relative">
                   <input
                     id="password"
@@ -189,7 +190,7 @@ function LoginForm() {
                     onChange={handleInputChange}
                     className="text-brand focus:ring-brand h-4 w-4 rounded border-gray-300 focus:ring-2"
                   />
-                  {t("auth.rememberMe", "تذكرني")}
+                  {t('auth.rememberMe', 'تذكرني')}
                 </label>
                 <Link
                   href="/forgot-password"
@@ -226,7 +227,7 @@ function LoginForm() {
                 </div>
                 <div className="relative flex justify-center text-sm">
                   <span className="bg-white dark:bg-gray-800 px-4 text-gray-500">
-                    {t("auth.quickTest", "تسجيل دخول سريع للاختبار")}
+                    {t('auth.quickTest', 'تسجيل دخول سريع للاختبار')}
                   </span>
                 </div>
               </div>
@@ -238,11 +239,11 @@ function LoginForm() {
                     type="button"
                     onClick={() => handleQuickTestLogin(account.role, account.email, account.password)}
                     disabled={submitting || isLoading}
-                    className={`${account.color} text-white px-4 py-4 rounded-xl font-bold text-sm transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex flex-col items-center justify-center gap-2 relative overflow-hidden group`}
+                    className={`${account.color} text-white px-4 py-4 rounded-xl font-bold text-sm transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex flex-col items-center justify-center gap-2 relative overflow-hidden group`
                   >
                     {/* Shine effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                    
+
                     <span className="text-2xl relative z-10">{account.label.split(' ')[0]}</span>
                     <span className="text-xs font-medium relative z-10">{account.label.split(' ')[1]}</span>
                   </button>
@@ -250,18 +251,18 @@ function LoginForm() {
               </div>
 
               <p className="mt-3 text-center text-xs text-gray-500">
-                ⚡ {t("auth.testMessage", "اختبر النظام بحسابات تجريبية جاهزة")}
+                ⚡ {t('auth.testMessage', 'اختبر النظام بحسابات تجريبية جاهزة')}
               </p>
             </div>
 
             <div className="border-brand mt-6 border-t pt-6">
               <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-                {t("auth.noAccount", "ليس لديك حساب؟")}{" "}
+                {t('auth.noAccount', 'ليس لديك حساب؟')}{' '}
                 <Link
                   href={ROUTES.REGISTER}
                   className="text-brand font-medium transition-colors hover:text-[var(--brand-primary-hover)]"
                 >
-                  {t("auth.createAccount", "إنشاء حساب جديد")}
+                  {t('auth.createAccount', 'إنشاء حساب جديد')}
                 </Link>
               </p>
             </div>

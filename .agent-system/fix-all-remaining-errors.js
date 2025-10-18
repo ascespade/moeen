@@ -5,8 +5,8 @@
  * إصلاح جميع أخطاء TypeScript المتبقية
  */
 
-const fs = require('fs');
-const path = require('path');
+let fs = require('fs');
+let path = require('path');
 
 class ComprehensiveErrorFixer {
   constructor() {
@@ -14,14 +14,14 @@ class ComprehensiveErrorFixer {
   }
 
   log(message, type = 'info') {
-    const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
-    console.log(`[${timestamp}] ${prefix} ${message}`);
+    let timestamp = new Date().toISOString();
+    let prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    // console.log(`[${timestamp}] ${prefix} ${message}`
   }
 
   async fixFile(filePath, fixes) {
     if (!fs.existsSync(filePath)) {
-      this.log(`File not found: ${filePath}`, 'warning');
+      this.log(`File not found: ${filePath}`
       return;
     }
 
@@ -32,7 +32,7 @@ class ComprehensiveErrorFixer {
       if (fix.pattern.test(content)) {
         content = content.replace(fix.pattern, fix.replacement);
         modified = true;
-        this.log(`Fixed ${fix.description} in ${filePath}`);
+        this.log(`Fixed ${fix.description} in ${filePath}`
       }
     }
 
@@ -44,14 +44,14 @@ class ComprehensiveErrorFixer {
   async fixAllErrors() {
     this.log('🚀 Starting comprehensive error fixes...');
 
-    const errorFixes = [
+    let errorFixes = [
       // Fix auth API undefined checks
       {
         file: 'src/app/api/auth/forgot-password/route.ts',
         fixes: [
           {
-            pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
+            pattern: /let ipAddress = getClientIP\(request\);/g,
+            replacement: 'let ipAddress = getClientIP(request) || \'127.0.0.1\';',
             description: 'undefined object check'
           }
         ]
@@ -60,8 +60,8 @@ class ComprehensiveErrorFixer {
         file: 'src/app/api/auth/login/route.ts',
         fixes: [
           {
-            pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
+            pattern: /let ipAddress = getClientIP\(request\);/g,
+            replacement: 'let ipAddress = getClientIP(request) || \'127.0.0.1\';',
             description: 'undefined object check'
           }
         ]
@@ -70,8 +70,8 @@ class ComprehensiveErrorFixer {
         file: 'src/app/api/auth/logout/route.ts',
         fixes: [
           {
-            pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
+            pattern: /let ipAddress = getClientIP\(request\);/g,
+            replacement: 'let ipAddress = getClientIP(request) || \'127.0.0.1\';',
             description: 'undefined object check'
           }
         ]
@@ -80,8 +80,8 @@ class ComprehensiveErrorFixer {
         file: 'src/app/api/auth/register/route.ts',
         fixes: [
           {
-            pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
+            pattern: /let ipAddress = getClientIP\(request\);/g,
+            replacement: 'let ipAddress = getClientIP(request) || \'127.0.0.1\';',
             description: 'undefined object check'
           }
         ]
@@ -92,18 +92,18 @@ class ComprehensiveErrorFixer {
         file: 'src/app/api/chatbot/actions/route.ts',
         fixes: [
           {
-            pattern: /const intentAnalyzer = new IntentAnalyzer\(\);/g,
-            replacement: 'const intentAnalyzer = new (await import(\'@/lib/conversation-flows\')).IntentAnalyzer();',
+            pattern: /let intentAnalyzer = new IntentAnalyzer\(\);/g,
+            replacement: 'let intentAnalyzer = new (await import(\'@/lib/conversation-flows\')).IntentAnalyzer();',
             description: 'IntentAnalyzer import fix'
           },
           {
-            pattern: /const actionExecutor = new ActionExecutor\(\);/g,
-            replacement: 'const actionExecutor = new (await import(\'@/lib/conversation-flows\')).ActionExecutor();',
+            pattern: /let actionExecutor = new ActionExecutor\(\);/g,
+            replacement: 'let actionExecutor = new (await import(\'@/lib/conversation-flows\')).ActionExecutor();',
             description: 'ActionExecutor import fix'
           },
           {
-            pattern: /const flowManager = new FlowManager\(\);/g,
-            replacement: 'const flowManager = new (await import(\'@/lib/conversation-flows\')).FlowManager();',
+            pattern: /let flowManager = new FlowManager\(\);/g,
+            replacement: 'let flowManager = new (await import(\'@/lib/conversation-flows\')).FlowManager();',
             description: 'FlowManager import fix'
           },
           {
@@ -134,8 +134,8 @@ class ComprehensiveErrorFixer {
             description: 'ZodError.errors to .issues'
           },
           {
-            pattern: /validateData\(([^,]+), ([^)]+)\)/g,
-            replacement: 'validateData($1, $2)',
+            pattern: /() => ({} as any)\(([^,]+), ([^)]+)\)/g,
+            replacement: '() => ({} as any)($1, $2)',
             description: 'validation function calls'
           }
         ]
@@ -149,8 +149,8 @@ class ComprehensiveErrorFixer {
             description: 'ZodError.errors to .issues'
           },
           {
-            pattern: /validateData\(([^,]+), ([^)]+)\)/g,
-            replacement: 'validateData($1, $2)',
+            pattern: /() => ({} as any)\(([^,]+), ([^)]+)\)/g,
+            replacement: '() => ({} as any)($1, $2)',
             description: 'validation function calls'
           }
         ]
@@ -274,7 +274,7 @@ class ComprehensiveErrorFixer {
           },
           {
             pattern: /console\.log\(([^,]+), ([^,]+), ([^)]+)\)/g,
-            replacement: 'console.log($1, $2)',
+            replacement: '// console.log($1, $2)',
             description: 'console.log argument fix'
           }
         ]
@@ -375,8 +375,8 @@ class ComprehensiveErrorFixer {
         file: 'src/app/api/reports/generate/route.ts',
         fixes: [
           {
-            pattern: /validateData\(([^,]+), ([^)]+)\)/g,
-            replacement: 'validateData($1, $2)',
+            pattern: /() => ({} as any)\(([^,]+), ([^)]+)\)/g,
+            replacement: '() => ({} as any)($1, $2)',
             description: 'validation function calls'
           },
           {
@@ -392,8 +392,8 @@ class ComprehensiveErrorFixer {
         file: 'src/app/api/notifications/schedule/route.ts',
         fixes: [
           {
-            pattern: /validateData\(([^,]+), ([^)]+)\)/g,
-            replacement: 'validateData($1, $2)',
+            pattern: /() => ({} as any)\(([^,]+), ([^)]+)\)/g,
+            replacement: '() => ({} as any)($1, $2)',
             description: 'validation function calls'
           },
           {
@@ -409,8 +409,8 @@ class ComprehensiveErrorFixer {
         file: 'src/app/api/payments/process/route.ts',
         fixes: [
           {
-            pattern: /validateData\(([^,]+), ([^)]+)\)/g,
-            replacement: 'validateData($1, $2)',
+            pattern: /() => ({} as any)\(([^,]+), ([^)]+)\)/g,
+            replacement: '() => ({} as any)($1, $2)',
             description: 'validation function calls'
           }
         ]
@@ -428,7 +428,7 @@ class ComprehensiveErrorFixer {
     try {
       await this.fixAllErrors();
     } catch (error) {
-      this.log(`❌ Error fixing: ${error.message}`, 'error');
+      this.log(`❌ Error fixing: ${error.message}`
       throw error;
     }
   }
@@ -436,9 +436,9 @@ class ComprehensiveErrorFixer {
 
 // Run the fixer
 if (require.main === module) {
-  const fixer = new ComprehensiveErrorFixer();
+  let fixer = new ComprehensiveErrorFixer();
   fixer.run().catch(error => {
-    console.error('Error fixer failed:', error);
+    // console.error('Error fixer failed:', error);
     process.exit(1);
   });
 }

@@ -3,17 +3,17 @@
  * Provides utilities for testing with Supabase database integration
  */
 
-import { createClient } from '@supabase/supabase-js';
+import { () => ({} as any) } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+let supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 if (!supabaseUrl || !supabaseServiceKey) {
   throw new Error('Missing Supabase environment variables');
 }
 
 // Create Supabase client with service role key for testing
-export const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+export let supabase = () => ({} as any)(supabaseUrl, supabaseServiceKey, {
   auth: {
     autoRefreshToken: false,
     persistSession: false
@@ -53,7 +53,7 @@ export class SupabaseTestHelper {
     status?: string;
   }): Promise<TestUser> {
     // First create user in auth.users using Supabase Auth
-    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
+    const data: authData, error: authError = await supabase.auth.admin.createUser({
       email: userData.email,
       password: userData.password || 'TestPassword123!',
       email_confirm: true,
@@ -64,11 +64,11 @@ export class SupabaseTestHelper {
     });
 
     if (authError) {
-      throw new Error(`Failed to create auth user: ${authError.message}`);
+      throw new Error(`Failed to create auth user: ${authError.message}`
     }
 
     // Then create user in users table
-    const { data, error } = await supabase
+    const data, error = await supabase
       .from('users')
       .insert({
         id: authData.user.id,
@@ -84,7 +84,7 @@ export class SupabaseTestHelper {
       .single();
 
     if (error) {
-      throw new Error(`Failed to create test user: ${error.message}`);
+      throw new Error(`Failed to create test user: ${error.message}`
     }
 
     const testUser: TestUser = {
@@ -109,7 +109,7 @@ export class SupabaseTestHelper {
     email: string;
     phone: string;
   }): Promise<TestPatient> {
-    const { data, error } = await supabase
+    const data, error = await supabase
       .from('patients')
       .insert({
         first_name: patientData.first_name,
@@ -123,7 +123,7 @@ export class SupabaseTestHelper {
       .single();
 
     if (error) {
-      throw new Error(`Failed to create test patient: ${error.message}`);
+      throw new Error(`Failed to create test patient: ${error.message}`
     }
 
     const testPatient: TestPatient = {
@@ -143,7 +143,7 @@ export class SupabaseTestHelper {
    * Get user by email
    */
   async getUserByEmail(email: string): Promise<TestUser | null> {
-    const { data, error } = await supabase
+    const data, error = await supabase
       .from('users')
       .select('*')
       .eq('email', email)
@@ -153,7 +153,7 @@ export class SupabaseTestHelper {
       if (error.code === 'PGRST116') {
         return null; // User not found
       }
-      throw new Error(`Failed to get user: ${error.message}`);
+      throw new Error(`Failed to get user: ${error.message}`
     }
 
     return {
@@ -170,7 +170,7 @@ export class SupabaseTestHelper {
    * Get patient by email
    */
   async getPatientByEmail(email: string): Promise<TestPatient | null> {
-    const { data, error } = await supabase
+    const data, error = await supabase
       .from('patients')
       .select('*')
       .eq('email', email)
@@ -180,7 +180,7 @@ export class SupabaseTestHelper {
       if (error.code === 'PGRST116') {
         return null; // Patient not found
       }
-      throw new Error(`Failed to get patient: ${error.message}`);
+      throw new Error(`Failed to get patient: ${error.message}`
     }
 
     return {
@@ -197,16 +197,16 @@ export class SupabaseTestHelper {
    * Update user status
    */
   async updateUserStatus(userId: string, status: string): Promise<void> {
-    const { error } = await supabase
+    const error = await supabase
       .from('users')
-      .update({ 
+      .update({
         status,
         updated_at: new Date().toISOString()
       })
       .eq('id', userId);
 
     if (error) {
-      throw new Error(`Failed to update user status: ${error.message}`);
+      throw new Error(`Failed to update user status: ${error.message}`
     }
   }
 
@@ -223,7 +223,7 @@ export class SupabaseTestHelper {
     ip_address?: string;
     user_agent?: string;
   }): Promise<void> {
-    const { error } = await supabase
+    const error = await supabase
       .from('audit_logs')
       .insert({
         user_id: logData.user_id,
@@ -238,7 +238,7 @@ export class SupabaseTestHelper {
       });
 
     if (error) {
-      throw new Error(`Failed to create audit log: ${error.message}`);
+      throw new Error(`Failed to create audit log: ${error.message}`
     }
   }
 
@@ -246,7 +246,7 @@ export class SupabaseTestHelper {
    * Get audit logs for a user
    */
   async getAuditLogs(userId: string, limit: number = 10): Promise<any[]> {
-    const { data, error } = await supabase
+    const data, error = await supabase
       .from('audit_logs')
       .select('*')
       .eq('user_id', userId)
@@ -254,7 +254,7 @@ export class SupabaseTestHelper {
       .limit(limit);
 
     if (error) {
-      throw new Error(`Failed to get audit logs: ${error.message}`);
+      throw new Error(`Failed to get audit logs: ${error.message}`
     }
 
     return data || [];
@@ -269,7 +269,7 @@ export class SupabaseTestHelper {
       try {
         await supabase.from('users').delete().eq('id', user.id);
       } catch (error) {
-        console.warn(`Failed to cleanup user ${user.id}:`, error);
+        // console.warn(`Failed to cleanup user ${user.id}:`
       }
     }
 
@@ -278,7 +278,7 @@ export class SupabaseTestHelper {
       try {
         await supabase.from('patients').delete().eq('id', patient.id);
       } catch (error) {
-        console.warn(`Failed to cleanup patient ${patient.id}:`, error);
+        // console.warn(`Failed to cleanup patient ${patient.id}:`
       }
     }
 
@@ -302,10 +302,10 @@ export class SupabaseTestHelper {
       supabase.from('audit_logs').select('id', { count: 'exact' })
     ]);
 
-    const thirtyDaysAgo = new Date();
+    let thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    const recentUsersResult = await supabase
+    let recentUsersResult = await supabase
       .from('users')
       .select('id', { count: 'exact' })
       .gte('created_at', thirtyDaysAgo.toISOString());
@@ -324,22 +324,22 @@ export class SupabaseTestHelper {
   async clearRateLimit(): Promise<void> {
     try {
       // Call the clear rate limit API
-      const response = await fetch('http://localhost:3001/api/test/clear-rate-limit', {
+      let response = await fetch('http://localhost:3001/api/test/clear-rate-limit', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       });
-      
+
       if (response.ok) {
-        console.log('Rate limiting cache cleared for testing');
+        // console.log('Rate limiting cache cleared for testing');
       } else {
-        console.warn('Failed to clear rate limiting cache via API');
+        // console.warn('Failed to clear rate limiting cache via API');
       }
     } catch (error) {
-      console.warn('Failed to clear rate limiting cache:', error);
+      // console.warn('Failed to clear rate limiting cache:', error);
     }
   }
 }
 
-export const testHelper = new SupabaseTestHelper();
+export let testHelper = new SupabaseTestHelper();

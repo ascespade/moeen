@@ -78,10 +78,10 @@ export class InsuranceProviderService {
     }
 
     try {
-      const response = await fetch(`${provider.apiEndpoint}/members/verify`, {
+      const response = await fetch(`${provider.apiEndpoint}/members/verify`
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${provider.apiKey}`,
+          'Authorization': `Bearer ${provider.apiKey}`
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -119,10 +119,10 @@ export class InsuranceProviderService {
     }
 
     try {
-      const response = await fetch(`${provider.apiEndpoint}/claims`, {
+      const response = await fetch(`${provider.apiEndpoint}/claims`
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${provider.apiKey}`,
+          'Authorization': `Bearer ${provider.apiKey}`
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -166,7 +166,7 @@ export class InsuranceProviderService {
     }
 
     try {
-      const response = await fetch(`${provider.apiEndpoint}/claims/${claimId}`, {
+      const response = await fetch(`${provider.apiEndpoint}/claims/${claimId}`
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${provider.apiKey}`
@@ -203,10 +203,10 @@ export class InsuranceProviderService {
     }
 
     try {
-      const response = await fetch(`${provider.apiEndpoint}/claims/${claimId}/submit`, {
+      const response = await fetch(`${provider.apiEndpoint}/claims/${claimId}/submit`
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${provider.apiKey}`,
+          'Authorization': `Bearer ${provider.apiKey}`
           'Content-Type': 'application/json'
         }
       });
