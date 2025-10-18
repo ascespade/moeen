@@ -1,4 +1,6 @@
+./src/app/(admin)/admin/audit-logs/page.tsx
 ./src/app/(admin)/admin/dashboard/page.tsx
+./src/app/(admin)/admin/logs/page.tsx
 ./src/app/(admin)/admin/page.tsx
 ./src/app/(admin)/admin/roles/page.tsx
 ./src/app/(admin)/admin/therapists/schedules/page.tsx
@@ -128,6 +130,7 @@
 ./src/app/dashboard/user/page.tsx
 ./src/app/layout.tsx
 ./src/app/page.tsx
+./src/app/robots.ts
 ./src/components/accessibility/AccessibilitySettings.tsx
 ./src/components/appointments/AppointmentManager.tsx
 ./src/components/auth/ProtectedRoute.tsx
@@ -136,14 +139,12 @@
 ./src/components/charts/AreaChart.tsx
 ./src/components/charts/BarChart.tsx
 ./src/components/charts/LineChart.tsx
-./src/components/charts/index.ts
 ./src/components/chatbot/MoainChatbot.tsx
 ./src/components/chatbot/MoeenChatbot.tsx
 ./src/components/common/ErrorBoundary.tsx
 ./src/components/common/LanguageSwitcher.tsx
 ./src/components/common/OptimizedImage.tsx
 ./src/components/common/PerformanceOptimizedImage.tsx
-./src/components/common/index.ts
 ./src/components/index.ts
 ./src/components/insurance/ClaimsManager.tsx
 ./src/components/layout/SmartHeader.tsx
@@ -159,7 +160,6 @@
 ./src/components/shared/Modal.tsx
 ./src/components/shared/ScreenReaderOnly.tsx
 ./src/components/shared/Tabs.tsx
-./src/components/shared/index.ts
 ./src/components/shell/Sidebar.tsx
 ./src/components/ui/Button.tsx
 ./src/components/ui/Card.tsx
@@ -226,7 +226,6 @@
 ./src/lib/integration-system.ts
 ./src/lib/integrations/test-helpers.ts
 ./src/lib/logger.ts
-./src/lib/monitoring/logger.ts
 ./src/lib/notifications/email.ts
 ./src/lib/notifications/sms.ts
 ./src/lib/optimization/performance.ts
