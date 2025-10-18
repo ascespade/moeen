@@ -1,13 +1,13 @@
-import "@testing-library/jest-dom";
+import '@testing-library/jest-dom';
 
 // Mock Next.js router
-jest.mock("next/router", () => ({
+jest.mock('next/router', () => ({
   useRouter() {
     return {
-      route: "/",
-      pathname: "/",
+      route: '/',
+      pathname: '/',
       query: {},
-      asPath: "/",
+      asPath: '/',
       push: jest.fn(),
       pop: jest.fn(),
       reload: jest.fn(),
@@ -25,7 +25,7 @@ jest.mock("next/router", () => ({
 }));
 
 // Mock Next.js navigation
-jest.mock("next/navigation", () => ({
+jest.mock('next/navigation', () => ({
   useRouter() {
     return {
       push: jest.fn(),
@@ -40,14 +40,14 @@ jest.mock("next/navigation", () => ({
     return new URLSearchParams();
   },
   usePathname() {
-    return "/";
+    return '/';
   },
 }));
 
 // Mock window.matchMedia
-Object.defineProperty(window, "matchMedia", {
+Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: jest.fn().mockImplementation((query) => ({
+  value: jest.fn().mockImplementation(query => ({
     matches: false,
     media: query,
     onchange: null,

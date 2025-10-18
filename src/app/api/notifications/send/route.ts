@@ -1,22 +1,22 @@
-import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { authorize } from "@/lib/auth/authorize";
-import { emailService } from "@/lib/notifications/email";
-import { smsService } from "@/lib/notifications/sms";
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+import { authorize } from '@/lib/auth/authorize';
+import { emailService } from '@/lib/notifications/email';
+import { smsService } from '@/lib/notifications/sms';
 
 export async function POST(request: NextRequest) {
   try {
     const { user, error: authError } = await authorize(request);
 
     if (authError || !user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // Only staff, supervisor, and admin can send notifications
-    if (!["staff", "supervisor", "admin"].includes(user.role)) {
+    if (!['staff', 'supervisor', 'admin'].includes(user.role)) {
       return NextResponse.json(
-        { error: "Insufficient permissions" },
-        { status: 403 },
+        { error: 'Insufficient permissions' },
+        { status: 403 }
       );
     }
 
@@ -26,15 +26,15 @@ export async function POST(request: NextRequest) {
       appointmentId,
       customMessage,
       notificationData = {},
-      channels = ["email"], // email, sms, both
+      channels = ['email'], // email, sms, both
     } = await request.json();
 
     if (!type || !patientId) {
       return NextResponse.json(
         {
-          error: "Missing required fields: type, patientId",
+          error: 'Missing required fields: type, patientId',
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -42,13 +42,13 @@ export async function POST(request: NextRequest) {
 
     // Get patient details
     const { data: patient, error: patientError } = await supabase
-      .from("patients")
-      .select("id, full_name, email, user_id")
-      .eq("id", patientId)
+      .from('patients')
+      .select('id, full_name, email, user_id')
+      .eq('id', patientId)
       .single();
 
     if (patientError || !patient) {
-      return NextResponse.json({ error: "Patient not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
     }
 
     // Get user email and phone if patient doesn't have direct contact info
@@ -57,9 +57,9 @@ export async function POST(request: NextRequest) {
 
     if ((!patientEmail || !patientPhone) && patient.user_id) {
       const { data: user, error: userError } = await supabase
-        .from("users")
-        .select("email, meta")
-        .eq("id", patient.user_id)
+        .from('users')
+        .select('email, meta')
+        .eq('id', patient.user_id)
         .single();
 
       if (!userError && user) {
@@ -68,17 +68,17 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    if (channels.includes("email") && !patientEmail) {
+    if (channels.includes('email') && !patientEmail) {
       return NextResponse.json(
-        { error: "Patient email not found" },
-        { status: 400 },
+        { error: 'Patient email not found' },
+        { status: 400 }
       );
     }
 
-    if (channels.includes("sms") && !patientPhone) {
+    if (channels.includes('sms') && !patientPhone) {
       return NextResponse.json(
-        { error: "Patient phone not found" },
-        { status: 400 },
+        { error: 'Patient phone not found' },
+        { status: 400 }
       );
     }
 
@@ -90,35 +90,35 @@ export async function POST(request: NextRequest) {
     }> = [];
 
     // Send email notifications
-    if (channels.includes("email") || channels.includes("both")) {
+    if (channels.includes('email') || channels.includes('both')) {
       let emailResult;
 
       switch (type) {
-        case "appointment_confirmation":
+        case 'appointment_confirmation':
           if (!appointmentId) {
             return NextResponse.json(
-              { error: "Appointment ID required for appointment confirmation" },
-              { status: 400 },
+              { error: 'Appointment ID required for appointment confirmation' },
+              { status: 400 }
             );
           }
 
           // Get appointment details
           const { data: appointment, error: appointmentError } = await supabase
-            .from("appointments")
+            .from('appointments')
             .select(
               `
             id,
             scheduled_at,
             doctors!inner(speciality, users!inner(email))
-          `,
+          `
             )
-            .eq("id", appointmentId)
+            .eq('id', appointmentId)
             .single();
 
           if (appointmentError || !appointment) {
             return NextResponse.json(
-              { error: "Appointment not found" },
-              { status: 404 },
+              { error: 'Appointment not found' },
+              { status: 404 }
             );
           }
 
@@ -127,24 +127,24 @@ export async function POST(request: NextRequest) {
             patientEmail,
             patientName: patient.full_name,
             doctorName: appointment.doctors.users.email, // This should be doctor name
-            appointmentDate: appointmentDate.toLocaleDateString("ar-SA"),
-            appointmentTime: appointmentDate.toLocaleTimeString("ar-SA", {
-              hour: "2-digit",
-              minute: "2-digit",
+            appointmentDate: appointmentDate.toLocaleDateString('ar-SA'),
+            appointmentTime: appointmentDate.toLocaleTimeString('ar-SA', {
+              hour: '2-digit',
+              minute: '2-digit',
             }),
             speciality: appointment.doctors.speciality,
           });
           break;
 
-        case "payment_confirmation":
+        case 'payment_confirmation':
           const { amount, paymentMethod, transactionId } = notificationData;
           if (!amount || !paymentMethod || !transactionId) {
             return NextResponse.json(
               {
                 error:
-                  "Missing payment data: amount, paymentMethod, transactionId",
+                  'Missing payment data: amount, paymentMethod, transactionId',
               },
-              { status: 400 },
+              { status: 400 }
             );
           }
 
@@ -154,36 +154,36 @@ export async function POST(request: NextRequest) {
             amount,
             paymentMethod,
             transactionId,
-            paymentDate: new Date().toLocaleDateString("ar-SA"),
+            paymentDate: new Date().toLocaleDateString('ar-SA'),
           });
           break;
 
-        case "appointment_reminder":
+        case 'appointment_reminder':
           if (!appointmentId) {
             return NextResponse.json(
-              { error: "Appointment ID required for appointment reminder" },
-              { status: 400 },
+              { error: 'Appointment ID required for appointment reminder' },
+              { status: 400 }
             );
           }
 
           // Get appointment details for reminder
           const { data: reminderAppointment, error: reminderError } =
             await supabase
-              .from("appointments")
+              .from('appointments')
               .select(
                 `
             id,
             scheduled_at,
             doctors!inner(users!inner(email))
-          `,
+          `
               )
-              .eq("id", appointmentId)
+              .eq('id', appointmentId)
               .single();
 
           if (reminderError || !reminderAppointment) {
             return NextResponse.json(
-              { error: "Appointment not found" },
-              { status: 404 },
+              { error: 'Appointment not found' },
+              { status: 404 }
             );
           }
 
@@ -192,44 +192,44 @@ export async function POST(request: NextRequest) {
             patientEmail,
             patientName: patient.full_name,
             doctorName: reminderAppointment.doctors.users.email, // This should be doctor name
-            appointmentDate: reminderDate.toLocaleDateString("ar-SA"),
-            appointmentTime: reminderDate.toLocaleTimeString("ar-SA", {
-              hour: "2-digit",
-              minute: "2-digit",
+            appointmentDate: reminderDate.toLocaleDateString('ar-SA'),
+            appointmentTime: reminderDate.toLocaleTimeString('ar-SA', {
+              hour: '2-digit',
+              minute: '2-digit',
             }),
           });
           break;
 
         default:
           return NextResponse.json(
-            { error: "Invalid notification type" },
-            { status: 400 },
+            { error: 'Invalid notification type' },
+            { status: 400 }
           );
       }
 
       if (emailResult) {
-        results.push({ channel: "email", ...emailResult });
+        results.push({ channel: 'email', ...emailResult });
       }
     }
 
     // Send SMS notifications
-    if (channels.includes("sms") || channels.includes("both")) {
+    if (channels.includes('sms') || channels.includes('both')) {
       let smsResult;
 
       switch (type) {
-        case "appointment_confirmation":
+        case 'appointment_confirmation':
           if (appointmentId) {
             const { data: smsAppointment, error: smsAppointmentError } =
               await supabase
-                .from("appointments")
+                .from('appointments')
                 .select(
                   `
                 id,
                 scheduled_at,
                 doctors!inner(users!inner(email))
-              `,
+              `
                 )
-                .eq("id", appointmentId)
+                .eq('id', appointmentId)
                 .single();
 
             if (!smsAppointmentError && smsAppointment) {
@@ -238,20 +238,20 @@ export async function POST(request: NextRequest) {
                 patientPhone,
                 patientName: patient.full_name,
                 doctorName: smsAppointment.doctors.users.email,
-                appointmentDate: smsAppointmentDate.toLocaleDateString("ar-SA"),
+                appointmentDate: smsAppointmentDate.toLocaleDateString('ar-SA'),
                 appointmentTime: smsAppointmentDate.toLocaleTimeString(
-                  "ar-SA",
+                  'ar-SA',
                   {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  },
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  }
                 ),
               });
             }
           }
           break;
 
-        case "payment_confirmation":
+        case 'payment_confirmation':
           const { amount, paymentMethod, transactionId } = notificationData;
           if (amount && paymentMethod) {
             smsResult = await smsService.sendPaymentConfirmation({
@@ -263,40 +263,40 @@ export async function POST(request: NextRequest) {
           }
           break;
 
-        case "appointment_reminder":
+        case 'appointment_reminder':
           if (appointmentId) {
             const { data: smsReminderAppointment, error: smsReminderError } =
               await supabase
-                .from("appointments")
+                .from('appointments')
                 .select(
                   `
                 id,
                 scheduled_at,
                 doctors!inner(users!inner(email))
-              `,
+              `
                 )
-                .eq("id", appointmentId)
+                .eq('id', appointmentId)
                 .single();
 
             if (!smsReminderError && smsReminderAppointment) {
               const smsReminderDate = new Date(
-                smsReminderAppointment.scheduled_at,
+                smsReminderAppointment.scheduled_at
               );
               smsResult = await smsService.sendAppointmentReminder({
                 patientPhone,
                 patientName: patient.full_name,
                 doctorName: smsReminderAppointment.doctors.users.email,
-                appointmentDate: smsReminderDate.toLocaleDateString("ar-SA"),
-                appointmentTime: smsReminderDate.toLocaleTimeString("ar-SA", {
-                  hour: "2-digit",
-                  minute: "2-digit",
+                appointmentDate: smsReminderDate.toLocaleDateString('ar-SA'),
+                appointmentTime: smsReminderDate.toLocaleTimeString('ar-SA', {
+                  hour: '2-digit',
+                  minute: '2-digit',
                 }),
               });
             }
           }
           break;
 
-        case "insurance_claim_update":
+        case 'insurance_claim_update':
           const { claimStatus, provider } = notificationData;
           if (claimStatus && provider) {
             smsResult = await smsService.sendInsuranceClaimUpdate({
@@ -310,27 +310,27 @@ export async function POST(request: NextRequest) {
       }
 
       if (smsResult) {
-        results.push({ channel: "sms", ...smsResult });
+        results.push({ channel: 'sms', ...smsResult });
       }
     }
 
     // Check if any notification failed
-    const failedResults = results.filter((result) => !result.success);
+    const failedResults = results.filter(result => !result.success);
     if (failedResults.length > 0) {
       return NextResponse.json(
         {
-          error: "Some notifications failed",
+          error: 'Some notifications failed',
           details: failedResults,
         },
-        { status: 500 },
+        { status: 500 }
       );
     }
 
     // Log notification
-    await supabase.from("audit_logs").insert({
-      action: "notification_sent",
+    await supabase.from('audit_logs').insert({
+      action: 'notification_sent',
       user_id: user.id,
-      resource_type: "notification",
+      resource_type: 'notification',
       resource_id: patientId,
       metadata: {
         type,
@@ -342,12 +342,12 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: "Notification sent successfully",
+      message: 'Notification sent successfully',
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }

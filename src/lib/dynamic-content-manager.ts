@@ -1,5 +1,5 @@
-import { createClient } from "./supabase/client";
-import { I18N_KEYS } from "@/constants/i18n-keys";
+import { createClient } from './supabase/client';
+import { I18N_KEYS } from '@/constants/i18n-keys';
 
 export interface DynamicContent {
   id: string;
@@ -73,7 +73,7 @@ class DynamicContentManager {
    * Get homepage content from database
    */
   async getHomepageContent(): Promise<HomepageContent> {
-    const cacheKey = "homepage_content";
+    const cacheKey = 'homepage_content';
 
     // Check cache first
     if (this.cache.has(cacheKey)) {
@@ -86,14 +86,14 @@ class DynamicContentManager {
     try {
       // Load all homepage content from settings table
       const { data: settings, error } = await this.supabase
-        .from("settings")
-        .select("key, value")
-        .in("key", [
-          "homepage_hero_slides",
-          "homepage_services",
-          "homepage_testimonials",
-          "homepage_gallery",
-          "homepage_faqs",
+        .from('settings')
+        .select('key, value')
+        .in('key', [
+          'homepage_hero_slides',
+          'homepage_services',
+          'homepage_testimonials',
+          'homepage_gallery',
+          'homepage_faqs',
         ]);
 
       if (error) {
@@ -102,11 +102,11 @@ class DynamicContentManager {
 
       // Parse settings into structured content
       const content: HomepageContent = {
-        heroSlides: this.parseSetting(settings, "homepage_hero_slides", []),
-        services: this.parseSetting(settings, "homepage_services", []),
-        testimonials: this.parseSetting(settings, "homepage_testimonials", []),
-        galleryImages: this.parseSetting(settings, "homepage_gallery", []),
-        faqs: this.parseSetting(settings, "homepage_faqs", []),
+        heroSlides: this.parseSetting(settings, 'homepage_hero_slides', []),
+        services: this.parseSetting(settings, 'homepage_services', []),
+        testimonials: this.parseSetting(settings, 'homepage_testimonials', []),
+        galleryImages: this.parseSetting(settings, 'homepage_gallery', []),
+        faqs: this.parseSetting(settings, 'homepage_faqs', []),
       };
 
       // Cache the result
@@ -132,8 +132,8 @@ class DynamicContentManager {
    * Get translations for a specific locale and namespace
    */
   async getTranslations(
-    locale: "ar" | "en",
-    namespace: string = "common",
+    locale: 'ar' | 'en',
+    namespace: string = 'common'
   ): Promise<Record<string, string>> {
     const cacheKey = `translations_${locale}_${namespace}`;
 
@@ -147,17 +147,17 @@ class DynamicContentManager {
 
     try {
       const { data, error } = await this.supabase
-        .from("translations")
-        .select("key, value")
-        .eq("locale", locale)
-        .eq("namespace", namespace);
+        .from('translations')
+        .select('key, value')
+        .eq('locale', locale)
+        .eq('namespace', namespace);
 
       if (error) {
         throw new Error(`Failed to load translations: ${error.message}`);
       }
 
       const translations: Record<string, string> = {};
-      data?.forEach((item) => {
+      data?.forEach(item => {
         translations[item.key] = item.value;
       });
 
@@ -177,7 +177,7 @@ class DynamicContentManager {
    * Get system settings
    */
   async getSettings(keys: string[]): Promise<Record<string, any>> {
-    const cacheKey = `settings_${keys.join("_")}`;
+    const cacheKey = `settings_${keys.join('_')}`;
 
     // Check cache first
     if (this.cache.has(cacheKey)) {
@@ -189,16 +189,16 @@ class DynamicContentManager {
 
     try {
       const { data, error } = await this.supabase
-        .from("settings")
-        .select("key, value")
-        .in("key", keys);
+        .from('settings')
+        .select('key, value')
+        .in('key', keys);
 
       if (error) {
         throw new Error(`Failed to load settings: ${error.message}`);
       }
 
       const settings: Record<string, any> = {};
-      data?.forEach((item) => {
+      data?.forEach(item => {
         settings[item.key] = item.value;
       });
 
@@ -218,7 +218,7 @@ class DynamicContentManager {
    * Update homepage content in database
    */
   async updateHomepageContent(
-    content: Partial<HomepageContent>,
+    content: Partial<HomepageContent>
   ): Promise<void> {
     try {
       const updates: Array<{
@@ -230,45 +230,45 @@ class DynamicContentManager {
 
       if (content.heroSlides) {
         updates.push({
-          key: "homepage_hero_slides",
+          key: 'homepage_hero_slides',
           value: content.heroSlides,
-          category: "homepage",
+          category: 'homepage',
           is_public: true,
         });
       }
 
       if (content.services) {
         updates.push({
-          key: "homepage_services",
+          key: 'homepage_services',
           value: content.services,
-          category: "homepage",
+          category: 'homepage',
           is_public: true,
         });
       }
 
       if (content.testimonials) {
         updates.push({
-          key: "homepage_testimonials",
+          key: 'homepage_testimonials',
           value: content.testimonials,
-          category: "homepage",
+          category: 'homepage',
           is_public: true,
         });
       }
 
       if (content.galleryImages) {
         updates.push({
-          key: "homepage_gallery",
+          key: 'homepage_gallery',
           value: content.galleryImages,
-          category: "homepage",
+          category: 'homepage',
           is_public: true,
         });
       }
 
       if (content.faqs) {
         updates.push({
-          key: "homepage_faqs",
+          key: 'homepage_faqs',
           value: content.faqs,
-          category: "homepage",
+          category: 'homepage',
           is_public: true,
         });
       }
@@ -276,8 +276,8 @@ class DynamicContentManager {
       // Upsert settings
       for (const update of updates) {
         await this.supabase
-          .from("settings")
-          .upsert(update, { onConflict: "key" });
+          .from('settings')
+          .upsert(update, { onConflict: 'key' });
       }
 
       // Clear cache
@@ -292,20 +292,20 @@ class DynamicContentManager {
    */
   async updateTranslations(
     translations: Array<{
-      locale: "ar" | "en";
+      locale: 'ar' | 'en';
       namespace: string;
       key: string;
       value: string;
-    }>,
+    }>
   ): Promise<void> {
     try {
       await this.supabase
-        .from("translations")
-        .upsert(translations, { onConflict: "locale,namespace,key" });
+        .from('translations')
+        .upsert(translations, { onConflict: 'locale,namespace,key' });
 
       // Clear translation cache
       this.cache.forEach((value, key) => {
-        if (key.startsWith("translations_")) {
+        if (key.startsWith('translations_')) {
           this.cache.delete(key);
         }
       });
@@ -325,7 +325,7 @@ class DynamicContentManager {
    * Parse setting value from database result
    */
   private parseSetting(settings: any[], key: string, defaultValue: any): any {
-    const setting = settings.find((s) => s.key === key);
+    const setting = settings.find(s => s.key === key);
     return setting ? setting.value : defaultValue;
   }
 }

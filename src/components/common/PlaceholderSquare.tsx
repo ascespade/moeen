@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type PlaceholderSquareProps = {
   title: string;
@@ -14,20 +14,20 @@ export default function PlaceholderSquare({
   docsLink,
 }: PlaceholderSquareProps) {
   return (
-    <div className="rounded-xl border border-dashed border-gray-300 dark:border-gray-700 p-4 md:p-6 bg-white dark:bg-gray-900">
-      <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-orange-700 text-white flex items-center justify-center text-xl">
+    <div className='rounded-xl border border-dashed border-gray-300 dark:border-gray-700 p-4 md:p-6 bg-white dark:bg-gray-900'>
+      <div className='flex items-start gap-4'>
+        <div className='w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-orange-700 text-white flex items-center justify-center text-xl'>
           📌
         </div>
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <div className='flex-1'>
+          <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
             {title}
           </h3>
-          <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+          <p className='mt-1 text-sm text-gray-600 dark:text-gray-300'>
             {description}
           </p>
           {steps.length > 0 && (
-            <ol className="mt-3 list-decimal list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+            <ol className='mt-3 list-decimal list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1'>
               {steps.map((s, i) => (
                 <li key={i}>{s}</li>
               ))}
@@ -35,10 +35,10 @@ export default function PlaceholderSquare({
           )}
           {docsLink && (
             <a
-              className="mt-3 inline-block text-sm text-[var(--brand-primary)] hover:underline"
+              className='mt-3 inline-block text-sm text-[var(--brand-primary)] hover:underline'
               href={docsLink}
-              target="_blank"
-              rel="noreferrer"
+              target='_blank'
+              rel='noreferrer'
             >
               Documentation
             </a>

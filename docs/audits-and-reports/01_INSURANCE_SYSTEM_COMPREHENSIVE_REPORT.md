@@ -1,4 +1,5 @@
 # 🏥 نظام التأمينات الصحية - تقرير شامل ومفصل
+
 ## Comprehensive Insurance System Report
 
 **تاريخ الإعداد**: 2025-01-17  
@@ -10,6 +11,7 @@
 ## 📊 الملخص التنفيذي
 
 ### الوضع الحالي:
+
 - ❌ جدول واحد فقط (`insurance_claims`) - **فارغ تماماً**
 - ❌ APIs تحاكي فقط - **لا ترسل طلبات حقيقية**
 - ❌ لا يوجد تكامل مع أي شركة تأمين
@@ -17,6 +19,7 @@
 - ❌ لا يوجد UI للمستخدمين
 
 ### الرؤية المستقبلية:
+
 - ✅ تكامل مع **10 شركات تأمين سعودية** رئيسية
 - ✅ نظام موحد قابل للتوسع لإضافة شركات جديدة
 - ✅ **أتمتة كاملة** لدورة المطالبات
@@ -28,10 +31,12 @@
 ## 🇸🇦 أشهر 10 شركات تأمين في السعودية
 
 ### 1. **التعاونية (Tawuniya)** 🥇
+
 **الحصة السوقية**: ~20%  
 **التخصص**: تأمين صحي شامل
 
 **معلومات التكامل:**
+
 ```json
 {
   "name": "Tawuniya",
@@ -52,6 +57,7 @@
 ```
 
 **متطلبات التكامل:**
+
 - ✅ رخصة منشأة صحية من وزارة الصحة
 - ✅ عقد مع التعاونية
 - ✅ API Credentials (Client ID + Secret)
@@ -61,10 +67,12 @@
 ---
 
 ### 2. **بوبا العربية (Bupa Arabia)** 🥈
+
 **الحصة السوقية**: ~18%  
 **التخصص**: تأمين صحي فاخر
 
 **معلومات التكامل:**
+
 ```json
 {
   "name": "Bupa Arabia",
@@ -87,9 +95,11 @@
 ---
 
 ### 3. **التأمين الطبي الدولي (Medgulf)** 🥉
+
 **الحصة السوقية**: ~12%
 
 **معلومات التكامل:**
+
 ```json
 {
   "name": "Medgulf",
@@ -111,6 +121,7 @@
 ---
 
 ### 4. **ملاذ للتأمين (Malath Insurance)**
+
 **الحصة السوقية**: ~8%
 
 ```json
@@ -131,6 +142,7 @@
 ---
 
 ### 5. **سلامة للتأمين (Salama Insurance)**
+
 **الحصة السوقية**: ~7%
 
 ```json
@@ -151,6 +163,7 @@
 ---
 
 ### 6. **الراجحي تكافل (Al Rajhi Takaful)**
+
 **الحصة السوقية**: ~6%
 
 ```json
@@ -171,6 +184,7 @@
 ---
 
 ### 7. **الأهلي للتأمين (Al Ahli Insurance)**
+
 **الحصة السوقية**: ~5%
 
 ```json
@@ -191,6 +205,7 @@
 ---
 
 ### 8. **ساب تكافل (SABB Takaful)**
+
 **الحصة السوقية**: ~4%
 
 ```json
@@ -211,6 +226,7 @@
 ---
 
 ### 9. **الاتحاد التجاري (Union Commercial)**
+
 **الحصة السوقية**: ~3%
 
 ```json
@@ -231,6 +247,7 @@
 ---
 
 ### 10. **ولاء للتأمين (Walaa Insurance)**
+
 **الحصة السوقية**: ~3%
 
 ```json
@@ -253,9 +270,11 @@
 ## 🏗️ النظام الموحد للتكامل (Universal Integration System)
 
 ### الفلسفة:
+
 **"نظام واحد، تكاملات متعددة"**
 
 بدلاً من كتابة كود منفصل لكل شركة، نبني نظام موحد يدعم:
+
 - ✅ إضافة شركات جديدة **بدون تعديل الكود**
 - ✅ Configuration-driven approach
 - ✅ Plugin architecture
@@ -290,39 +309,40 @@
 ### الجداول المطلوبة:
 
 #### 1. `insurance_providers` - مزودي التأمين
+
 ```sql
 CREATE TABLE insurance_providers (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
-  
+
   -- معلومات أساسية
   name VARCHAR(255) NOT NULL,
   name_ar VARCHAR(255) NOT NULL,
   code VARCHAR(50) UNIQUE NOT NULL, -- 'tawuniya', 'bupa', etc.
   logo_url TEXT,
-  
+
   -- معلومات التكامل
   api_version VARCHAR(20),
   base_url TEXT NOT NULL,
   auth_type VARCHAR(50), -- 'oauth2', 'api_key', 'basic', etc.
-  
+
   -- Credentials (encrypted)
   credentials JSONB NOT NULL DEFAULT '{}',
-  
+
   -- Endpoints configuration
   endpoints JSONB NOT NULL DEFAULT '{}',
-  
+
   -- Settings
   is_active BOOLEAN DEFAULT true,
   is_test_mode BOOLEAN DEFAULT false,
   supported_formats JSONB DEFAULT '["json"]',
-  
+
   -- Performance metrics
   avg_response_time_ms INTEGER,
   success_rate DECIMAL(5,2),
   last_health_check TIMESTAMPTZ,
   health_status VARCHAR(20) DEFAULT 'unknown',
-  
+
   -- Metadata
   metadata JSONB DEFAULT '{}',
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -336,42 +356,43 @@ CREATE INDEX idx_insurance_providers_active ON insurance_providers(is_active);
 ---
 
 #### 2. `insurance_policies` - بوالص التأمين
+
 ```sql
 CREATE TABLE insurance_policies (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
-  
+
   -- ربط
   patient_id UUID REFERENCES patients(id) ON DELETE CASCADE,
   provider_id UUID REFERENCES insurance_providers(id),
-  
+
   -- معلومات البوليصة
   policy_number VARCHAR(255) NOT NULL,
   member_id VARCHAR(255) NOT NULL,
-  
+
   -- تفاصيل التغطية
   coverage_type VARCHAR(50), -- 'basic', 'premium', 'vip'
   coverage_start_date DATE NOT NULL,
   coverage_end_date DATE NOT NULL,
-  
+
   -- الحدود المالية
   annual_limit DECIMAL(12,2),
   remaining_limit DECIMAL(12,2),
   deductible DECIMAL(10,2) DEFAULT 0,
   copay_percentage DECIMAL(5,2) DEFAULT 0,
-  
+
   -- التغطيات
   covered_services JSONB DEFAULT '[]',
   excluded_services JSONB DEFAULT '[]',
-  
+
   -- الحالة
   status VARCHAR(20) DEFAULT 'active', -- 'active', 'expired', 'suspended'
-  
+
   -- Metadata
   metadata JSONB DEFAULT '{}',
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),
-  
+
   UNIQUE(provider_id, policy_number, member_id)
 );
 
@@ -384,53 +405,54 @@ CREATE INDEX idx_insurance_policies_dates ON insurance_policies(coverage_start_d
 ---
 
 #### 3. `insurance_claims` - المطالبات (محسّن)
+
 ```sql
 CREATE TABLE insurance_claims (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
-  
+
   -- ربط
   patient_id UUID REFERENCES patients(id),
   policy_id UUID REFERENCES insurance_policies(id),
   provider_id UUID REFERENCES insurance_providers(id),
   appointment_id UUID REFERENCES appointments(id),
-  
+
   -- معلومات المطالبة
   claim_number VARCHAR(255) UNIQUE,
   external_claim_id VARCHAR(255), -- من شركة التأمين
-  
+
   -- التفاصيل الطبية
   diagnosis_code VARCHAR(50), -- ICD-10
   diagnosis_description TEXT,
   procedure_codes JSONB DEFAULT '[]', -- CPT codes
-  
+
   -- المبالغ
   claimed_amount DECIMAL(12,2) NOT NULL,
   approved_amount DECIMAL(12,2),
   patient_share DECIMAL(12,2),
   insurance_share DECIMAL(12,2),
-  
+
   -- الحالة والتتبع
   status VARCHAR(30) DEFAULT 'draft',
-  -- 'draft', 'submitted', 'pending', 'under_review', 
+  -- 'draft', 'submitted', 'pending', 'under_review',
   -- 'approved', 'partially_approved', 'rejected', 'paid'
-  
+
   submission_date TIMESTAMPTZ,
   approval_date TIMESTAMPTZ,
   payment_date TIMESTAMPTZ,
-  
+
   -- الرد من شركة التأمين
   provider_response JSONB,
   rejection_reason TEXT,
   approval_code VARCHAR(255),
-  
+
   -- المرفقات
   attachments JSONB DEFAULT '[]',
-  
+
   -- التتبع
   submitted_by UUID REFERENCES users(id),
   reviewed_by UUID REFERENCES users(id),
-  
+
   -- Metadata
   metadata JSONB DEFAULT '{}',
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -448,40 +470,41 @@ CREATE INDEX idx_insurance_claims_number ON insurance_claims(claim_number);
 ---
 
 #### 4. `insurance_pre_authorizations` - التصاريح المسبقة
+
 ```sql
 CREATE TABLE insurance_pre_authorizations (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   public_id VARCHAR(255) UNIQUE NOT NULL,
-  
+
   -- ربط
   patient_id UUID REFERENCES patients(id),
   policy_id UUID REFERENCES insurance_policies(id),
   provider_id UUID REFERENCES insurance_providers(id),
-  
+
   -- تفاصيل التصريح
   authorization_number VARCHAR(255) UNIQUE,
   external_auth_id VARCHAR(255),
-  
+
   -- الخدمة المطلوبة
   service_type VARCHAR(100),
   service_description TEXT,
   procedure_codes JSONB DEFAULT '[]',
-  
+
   -- المبلغ المتوقع
   estimated_cost DECIMAL(12,2),
   approved_amount DECIMAL(12,2),
-  
+
   -- التواريخ
   valid_from DATE,
   valid_until DATE,
-  
+
   -- الحالة
   status VARCHAR(30) DEFAULT 'pending',
   -- 'pending', 'approved', 'rejected', 'expired', 'used'
-  
+
   approval_code VARCHAR(255),
   rejection_reason TEXT,
-  
+
   -- Metadata
   requested_by UUID REFERENCES users(id),
   metadata JSONB DEFAULT '{}',
@@ -497,27 +520,28 @@ CREATE INDEX idx_pre_auth_status ON insurance_pre_authorizations(status);
 ---
 
 #### 5. `insurance_eligibility_checks` - فحوصات الأهلية
+
 ```sql
 CREATE TABLE insurance_eligibility_checks (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  
+
   -- ربط
   patient_id UUID REFERENCES patients(id),
   policy_id UUID REFERENCES insurance_policies(id),
   provider_id UUID REFERENCES insurance_providers(id),
-  
+
   -- نتيجة الفحص
   is_eligible BOOLEAN,
   coverage_status VARCHAR(50),
-  
+
   -- التفاصيل
   covered_services JSONB,
   limitations JSONB,
   copay_info JSONB,
-  
+
   -- الرد من الشركة
   provider_response JSONB,
-  
+
   -- Metadata
   checked_by UUID REFERENCES users(id),
   checked_at TIMESTAMPTZ DEFAULT NOW()
@@ -530,24 +554,25 @@ CREATE INDEX idx_eligibility_date ON insurance_eligibility_checks(checked_at);
 ---
 
 #### 6. `insurance_claim_history` - سجل المطالبات
+
 ```sql
 CREATE TABLE insurance_claim_history (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  
+
   claim_id UUID REFERENCES insurance_claims(id) ON DELETE CASCADE,
-  
+
   -- التغيير
   status_from VARCHAR(30),
   status_to VARCHAR(30),
-  
+
   -- التفاصيل
   action VARCHAR(50), -- 'submitted', 'approved', 'rejected', 'updated'
   notes TEXT,
-  
+
   -- من قام بالإجراء
   performed_by UUID REFERENCES users(id),
   performed_at TIMESTAMPTZ DEFAULT NOW(),
-  
+
   -- البيانات
   data_snapshot JSONB
 );
@@ -561,7 +586,9 @@ CREATE INDEX idx_claim_history_date ON insurance_claim_history(performed_at);
 ## 🔌 نظام Adapters الموحد
 
 ### المفهوم:
+
 كل شركة تأمين لها **Adapter** خاص يترجم بين:
+
 - النظام الموحد ← API الشركة
 - API الشركة ← النظام الموحد
 
@@ -574,22 +601,22 @@ export interface InsuranceAdapter {
   // معلومات الـ Adapter
   readonly providerCode: string;
   readonly providerName: string;
-  
+
   // التحقق من الأهلية
   checkEligibility(params: EligibilityParams): Promise<EligibilityResult>;
-  
+
   // تقديم مطالبة
   submitClaim(params: ClaimSubmissionParams): Promise<ClaimSubmissionResult>;
-  
+
   // الحصول على حالة المطالبة
   getClaimStatus(claimId: string): Promise<ClaimStatusResult>;
-  
+
   // طلب تصريح مسبق
   requestPreAuthorization(params: PreAuthParams): Promise<PreAuthResult>;
-  
+
   // الحصول على التغطية
   getCoverage(policyNumber: string, memberId: string): Promise<CoverageResult>;
-  
+
   // اختبار الاتصال
   testConnection(): Promise<ConnectionTestResult>;
 }
@@ -597,12 +624,12 @@ export interface InsuranceAdapter {
 export abstract class BaseInsuranceAdapter implements InsuranceAdapter {
   abstract providerCode: string;
   abstract providerName: string;
-  
+
   constructor(
     protected config: InsuranceProviderConfig,
     protected httpClient: HttpClient
   ) {}
-  
+
   // Helper methods
   protected async makeRequest<T>(
     endpoint: string,
@@ -610,9 +637,9 @@ export abstract class BaseInsuranceAdapter implements InsuranceAdapter {
     data?: any
   ): Promise<T> {
     const url = `${this.config.baseUrl}${endpoint}`;
-    
+
     const headers = await this.getAuthHeaders();
-    
+
     try {
       const response = await this.httpClient.request<T>({
         url,
@@ -621,15 +648,15 @@ export abstract class BaseInsuranceAdapter implements InsuranceAdapter {
         data,
         timeout: 30000, // 30 seconds
       });
-      
+
       return response.data;
     } catch (error) {
       throw this.handleError(error);
     }
   }
-  
+
   protected abstract getAuthHeaders(): Promise<Record<string, string>>;
-  
+
   protected handleError(error: any): InsuranceError {
     // Unified error handling
     return new InsuranceError({
@@ -639,14 +666,23 @@ export abstract class BaseInsuranceAdapter implements InsuranceAdapter {
       originalError: error,
     });
   }
-  
+
   // Default implementations
-  abstract checkEligibility(params: EligibilityParams): Promise<EligibilityResult>;
-  abstract submitClaim(params: ClaimSubmissionParams): Promise<ClaimSubmissionResult>;
+  abstract checkEligibility(
+    params: EligibilityParams
+  ): Promise<EligibilityResult>;
+  abstract submitClaim(
+    params: ClaimSubmissionParams
+  ): Promise<ClaimSubmissionResult>;
   abstract getClaimStatus(claimId: string): Promise<ClaimStatusResult>;
-  abstract requestPreAuthorization(params: PreAuthParams): Promise<PreAuthResult>;
-  abstract getCoverage(policyNumber: string, memberId: string): Promise<CoverageResult>;
-  
+  abstract requestPreAuthorization(
+    params: PreAuthParams
+  ): Promise<PreAuthResult>;
+  abstract getCoverage(
+    policyNumber: string,
+    memberId: string
+  ): Promise<CoverageResult>;
+
   async testConnection(): Promise<ConnectionTestResult> {
     try {
       // Default implementation - override if needed
@@ -669,23 +705,23 @@ export abstract class BaseInsuranceAdapter implements InsuranceAdapter {
 export class TawuniyaAdapter extends BaseInsuranceAdapter {
   providerCode = 'tawuniya';
   providerName = 'التعاونية';
-  
+
   protected async getAuthHeaders(): Promise<Record<string, string>> {
     // OAuth 2.0 implementation
     const token = await this.getAccessToken();
-    
+
     return {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
       'X-Provider-ID': this.config.credentials.providerId,
     };
   }
-  
+
   private async getAccessToken(): Promise<string> {
     // Check cache first
     const cached = await this.getCachedToken();
     if (cached) return cached;
-    
+
     // Get new token
     const response = await this.httpClient.post(
       `${this.config.baseUrl}/oauth/token`,
@@ -695,16 +731,18 @@ export class TawuniyaAdapter extends BaseInsuranceAdapter {
         client_secret: this.config.credentials.clientSecret,
       }
     );
-    
+
     const token = response.data.access_token;
-    
+
     // Cache for 1 hour
     await this.cacheToken(token, 3600);
-    
+
     return token;
   }
-  
-  async checkEligibility(params: EligibilityParams): Promise<EligibilityResult> {
+
+  async checkEligibility(
+    params: EligibilityParams
+  ): Promise<EligibilityResult> {
     const response = await this.makeRequest<TawuniyaEligibilityResponse>(
       '/eligibility/check',
       'POST',
@@ -714,7 +752,7 @@ export class TawuniyaAdapter extends BaseInsuranceAdapter {
         serviceDate: params.serviceDate,
       }
     );
-    
+
     // Transform Tawuniya response to unified format
     return {
       isEligible: response.eligible === 'Y',
@@ -729,8 +767,10 @@ export class TawuniyaAdapter extends BaseInsuranceAdapter {
       message: response.message,
     };
   }
-  
-  async submitClaim(params: ClaimSubmissionParams): Promise<ClaimSubmissionResult> {
+
+  async submitClaim(
+    params: ClaimSubmissionParams
+  ): Promise<ClaimSubmissionResult> {
     const response = await this.makeRequest<TawuniyaClaimResponse>(
       '/claims/submit',
       'POST',
@@ -765,7 +805,7 @@ export class TawuniyaAdapter extends BaseInsuranceAdapter {
         })),
       }
     );
-    
+
     return {
       success: response.status === 'submitted',
       claimNumber: response.claimNumber,
@@ -775,13 +815,13 @@ export class TawuniyaAdapter extends BaseInsuranceAdapter {
       message: response.message,
     };
   }
-  
+
   async getClaimStatus(claimId: string): Promise<ClaimStatusResult> {
     const response = await this.makeRequest<TawuniyaStatusResponse>(
       `/claims/${claimId}/status`,
       'GET'
     );
-    
+
     return {
       status: this.mapClaimStatus(response.status),
       claimedAmount: response.claimedAmount,
@@ -791,7 +831,7 @@ export class TawuniyaAdapter extends BaseInsuranceAdapter {
       lastUpdated: new Date(response.lastUpdated),
     };
   }
-  
+
   async requestPreAuthorization(params: PreAuthParams): Promise<PreAuthResult> {
     const response = await this.makeRequest<TawuniyaPreAuthResponse>(
       '/pre-auth/request',
@@ -805,7 +845,7 @@ export class TawuniyaAdapter extends BaseInsuranceAdapter {
         requestedDate: params.requestedDate,
       }
     );
-    
+
     return {
       success: response.status === 'approved',
       authorizationNumber: response.authNumber,
@@ -816,14 +856,17 @@ export class TawuniyaAdapter extends BaseInsuranceAdapter {
       message: response.message,
     };
   }
-  
-  async getCoverage(policyNumber: string, memberId: string): Promise<CoverageResult> {
+
+  async getCoverage(
+    policyNumber: string,
+    memberId: string
+  ): Promise<CoverageResult> {
     const response = await this.makeRequest<TawuniyaCoverageResponse>(
       `/policies/${policyNumber}/coverage`,
       'POST',
       { memberId }
     );
-    
+
     return {
       annualLimit: response.annualLimit,
       remainingLimit: response.remainingLimit,
@@ -833,25 +876,25 @@ export class TawuniyaAdapter extends BaseInsuranceAdapter {
       excludedServices: response.exclusions,
     };
   }
-  
+
   // Helper methods
   private mapCoverageStatus(status: string): string {
     const mapping: Record<string, string> = {
-      'ACTIVE': 'active',
-      'EXPIRED': 'expired',
-      'SUSPENDED': 'suspended',
+      ACTIVE: 'active',
+      EXPIRED: 'expired',
+      SUSPENDED: 'suspended',
     };
     return mapping[status] || 'unknown';
   }
-  
+
   private mapClaimStatus(status: string): string {
     const mapping: Record<string, string> = {
-      'SUBMITTED': 'submitted',
-      'PENDING': 'pending',
-      'UNDER_REVIEW': 'under_review',
-      'APPROVED': 'approved',
-      'REJECTED': 'rejected',
-      'PAID': 'paid',
+      SUBMITTED: 'submitted',
+      PENDING: 'pending',
+      UNDER_REVIEW: 'under_review',
+      APPROVED: 'approved',
+      REJECTED: 'rejected',
+      PAID: 'paid',
     };
     return mapping[status] || 'unknown';
   }
@@ -892,23 +935,24 @@ export class TawuniyaAdapter extends BaseInsuranceAdapter {
 ### الأتمتة الذكية:
 
 #### 1. **Auto-Eligibility Check**
+
 ```typescript
 // قبل تقديم المطالبة، فحص تلقائي
 async function autoEligibilityCheck(claim: InsuranceClaim): Promise<boolean> {
   const adapter = getAdapter(claim.providerId);
-  
+
   const result = await adapter.checkEligibility({
     policyNumber: claim.policy.policyNumber,
     memberId: claim.policy.memberId,
     serviceDate: claim.serviceDate,
   });
-  
+
   if (!result.isEligible) {
     await updateClaimStatus(claim.id, 'ineligible', result.message);
     await notifyStaff('Claim ineligible', claim.id);
     return false;
   }
-  
+
   return true;
 }
 ```
@@ -916,24 +960,25 @@ async function autoEligibilityCheck(claim: InsuranceClaim): Promise<boolean> {
 ---
 
 #### 2. **Auto-Submission**
+
 ```typescript
 // تقديم تلقائي بعد موافقة الطبيب
 async function autoSubmitClaim(claim: InsuranceClaim): Promise<void> {
   // 1. Check eligibility
   const eligible = await autoEligibilityCheck(claim);
   if (!eligible) return;
-  
+
   // 2. Validate data
   const validation = await validateClaimData(claim);
   if (!validation.valid) {
     await notifyStaff('Claim validation failed', claim.id, validation.errors);
     return;
   }
-  
+
   // 3. Submit
   const adapter = getAdapter(claim.providerId);
   const result = await adapter.submitClaim(claim);
-  
+
   // 4. Update status
   await updateClaim(claim.id, {
     status: 'submitted',
@@ -941,10 +986,10 @@ async function autoSubmitClaim(claim: InsuranceClaim): Promise<void> {
     claimNumber: result.claimNumber,
     submissionDate: new Date(),
   });
-  
+
   // 5. Start polling for status
   await scheduleStatusCheck(claim.id, result.externalClaimId);
-  
+
   // 6. Notify
   await notifyPatient('Claim submitted', claim.id);
   await notifyStaff('Claim submitted successfully', claim.id);
@@ -954,18 +999,19 @@ async function autoSubmitClaim(claim: InsuranceClaim): Promise<void> {
 ---
 
 #### 3. **Auto-Status Polling**
+
 ```typescript
 // فحص الحالة تلقائياً كل 5 دقائق
 async function pollClaimStatus(claimId: string): Promise<void> {
   const claim = await getClaim(claimId);
-  
+
   if (!['submitted', 'pending', 'under_review'].includes(claim.status)) {
     return; // لا حاجة للفحص
   }
-  
+
   const adapter = getAdapter(claim.providerId);
   const status = await adapter.getClaimStatus(claim.externalClaimId);
-  
+
   // تحديث إذا تغيرت الحالة
   if (status.status !== claim.status) {
     await updateClaim(claimId, {
@@ -974,7 +1020,7 @@ async function pollClaimStatus(claimId: string): Promise<void> {
       rejectionReason: status.rejectionReason,
       approvalCode: status.approvalCode,
     });
-    
+
     // إشعار
     if (status.status === 'approved') {
       await notifyPatient('Claim approved!', claimId);
@@ -985,7 +1031,7 @@ async function pollClaimStatus(claimId: string): Promise<void> {
       await notifyStaff('Claim rejected', claimId);
     }
   }
-  
+
   // جدولة الفحص التالي
   if (['submitted', 'pending', 'under_review'].includes(status.status)) {
     await scheduleStatusCheck(claimId, claim.externalClaimId, 5 * 60 * 1000); // 5 minutes
@@ -996,6 +1042,7 @@ async function pollClaimStatus(claimId: string): Promise<void> {
 ---
 
 #### 4. **Smart Retry Logic**
+
 ```typescript
 // إعادة محاولة ذكية عند الفشل
 async function submitClaimWithRetry(
@@ -1003,22 +1050,22 @@ async function submitClaimWithRetry(
   maxRetries: number = 3
 ): Promise<ClaimSubmissionResult> {
   let lastError: Error;
-  
+
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       const adapter = getAdapter(claim.providerId);
       const result = await adapter.submitClaim(claim);
-      
+
       return result;
     } catch (error) {
       lastError = error;
-      
+
       // تحليل الخطأ
       if (isRetryableError(error)) {
         // Exponential backoff
         const delay = Math.pow(2, attempt) * 1000;
         await sleep(delay);
-        
+
         // Log
         await logClaimAttempt(claim.id, attempt, error.message);
       } else {
@@ -1027,7 +1074,7 @@ async function submitClaimWithRetry(
       }
     }
   }
-  
+
   // فشلت كل المحاولات
   throw new Error(`Failed after ${maxRetries} attempts: ${lastError.message}`);
 }
@@ -1039,7 +1086,7 @@ function isRetryableError(error: any): boolean {
     'SERVICE_UNAVAILABLE',
     'RATE_LIMIT',
   ];
-  
+
   return retryableCodes.includes(error.code);
 }
 ```
@@ -1063,7 +1110,7 @@ export default function ClaimsPage() {
           + مطالبة جديدة
         </Button>
       </div>
-      
+
       {/* Filters */}
       <Card>
         <div className="grid grid-cols-4 gap-4">
@@ -1074,19 +1121,19 @@ export default function ClaimsPage() {
             <option value="approved">موافق عليها</option>
             <option value="rejected">مرفوضة</option>
           </Select>
-          
+
           <Select label="شركة التأمين">
             <option value="">الكل</option>
             {providers.map(p => (
               <option key={p.id} value={p.id}>{p.name}</option>
             ))}
           </Select>
-          
+
           <DatePicker label="من تاريخ" />
           <DatePicker label="إلى تاريخ" />
         </div>
       </Card>
-      
+
       {/* Claims Table */}
       <Card>
         <Table>
@@ -1153,7 +1200,7 @@ export default function ClaimsPage() {
 
 export default function NewClaimPage() {
   const [step, setStep] = useState(1);
-  
+
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Progress Steps */}
@@ -1163,12 +1210,12 @@ export default function NewClaimPage() {
         <Step title="المرفقات" />
         <Step title="المراجعة والتقديم" />
       </Steps>
-      
+
       {/* Step 1: Patient & Policy */}
       {step === 1 && (
         <Card>
           <h2 className="text-xl font-bold mb-4">معلومات المريض والتأمين</h2>
-          
+
           {/* Patient Search */}
           <PatientSearchAutocomplete
             onSelect={(patient) => {
@@ -1177,12 +1224,12 @@ export default function NewClaimPage() {
               loadPatientPolicies(patient.id);
             }}
           />
-          
+
           {selectedPatient && (
             <>
               {/* Show patient info */}
               <PatientInfoCard patient={selectedPatient} />
-              
+
               {/* Insurance Policy Selection */}
               <div className="mt-4">
                 <label>اختر البوليصة</label>
@@ -1202,7 +1249,7 @@ export default function NewClaimPage() {
                   ))}
                 </Select>
               </div>
-              
+
               {/* Eligibility Check Result */}
               {eligibilityResult && (
                 <Alert type={eligibilityResult.isEligible ? 'success' : 'error'}>
@@ -1222,7 +1269,7 @@ export default function NewClaimPage() {
               )}
             </>
           )}
-          
+
           <div className="flex justify-end mt-6">
             <Button
               onClick={() => setStep(2)}
@@ -1233,12 +1280,12 @@ export default function NewClaimPage() {
           </div>
         </Card>
       )}
-      
+
       {/* Step 2: Diagnosis & Services */}
       {step === 2 && (
         <Card>
           <h2 className="text-xl font-bold mb-4">التشخيص والخدمات المقدمة</h2>
-          
+
           {/* Diagnosis */}
           <div className="space-y-4">
             <div>
@@ -1247,18 +1294,18 @@ export default function NewClaimPage() {
                 onSelect={(diagnosis) => setDiagnosis(diagnosis)}
               />
             </div>
-            
+
             {diagnosis && (
               <Alert type="info">
                 {diagnosis.code} - {diagnosis.description}
               </Alert>
             )}
           </div>
-          
+
           {/* Services */}
           <div className="mt-6">
             <h3 className="font-semibold mb-2">الخدمات المقدمة</h3>
-            
+
             {services.map((service, index) => (
               <div key={index} className="grid grid-cols-5 gap-4 mb-4">
                 <div className="col-span-2">
@@ -1289,12 +1336,12 @@ export default function NewClaimPage() {
                 </div>
               </div>
             ))}
-            
+
             <Button variant="outline" onClick={addService}>
               + إضافة خدمة
             </Button>
           </div>
-          
+
           {/* Total */}
           <div className="mt-6 p-4 bg-gray-50 rounded">
             <div className="flex justify-between text-lg font-bold">
@@ -1302,7 +1349,7 @@ export default function NewClaimPage() {
               <span>{formatCurrency(calculateTotal())}</span>
             </div>
           </div>
-          
+
           <div className="flex justify-between mt-6">
             <Button variant="outline" onClick={() => setStep(1)}>
               السابق
@@ -1313,18 +1360,18 @@ export default function NewClaimPage() {
           </div>
         </Card>
       )}
-      
+
       {/* Step 3: Attachments */}
       {step === 3 && (
         <Card>
           <h2 className="text-xl font-bold mb-4">المرفقات</h2>
-          
+
           <FileUpload
             accept=".pdf,.jpg,.png"
             multiple
             onUpload={(files) => setAttachments(files)}
           />
-          
+
           {attachments.length > 0 && (
             <div className="mt-4 space-y-2">
               {attachments.map((file, index) => (
@@ -1347,7 +1394,7 @@ export default function NewClaimPage() {
               ))}
             </div>
           )}
-          
+
           <div className="flex justify-between mt-6">
             <Button variant="outline" onClick={() => setStep(2)}>
               السابق
@@ -1358,12 +1405,12 @@ export default function NewClaimPage() {
           </div>
         </Card>
       )}
-      
+
       {/* Step 4: Review & Submit */}
       {step === 4 && (
         <Card>
           <h2 className="text-xl font-bold mb-4">مراجعة المطالبة</h2>
-          
+
           {/* Summary */}
           <div className="space-y-4">
             <div>
@@ -1371,7 +1418,7 @@ export default function NewClaimPage() {
               <p>{selectedPatient.name}</p>
               <p className="text-sm text-gray-600">{selectedPatient.nationalId}</p>
             </div>
-            
+
             <div>
               <h3 className="font-semibold">التأمين</h3>
               <p>{selectedPolicy.provider.name}</p>
@@ -1379,12 +1426,12 @@ export default function NewClaimPage() {
                 البوليصة: {selectedPolicy.policyNumber}
               </p>
             </div>
-            
+
             <div>
               <h3 className="font-semibold">التشخيص</h3>
               <p>{diagnosis.code} - {diagnosis.description}</p>
             </div>
-            
+
             <div>
               <h3 className="font-semibold">الخدمات</h3>
               <Table>
@@ -1412,7 +1459,7 @@ export default function NewClaimPage() {
                 </TableBody>
               </Table>
             </div>
-            
+
             <div className="p-4 bg-blue-50 rounded">
               <div className="flex justify-between text-lg font-bold">
                 <span>المبلغ الإجمالي:</span>
@@ -1420,7 +1467,7 @@ export default function NewClaimPage() {
               </div>
             </div>
           </div>
-          
+
           <div className="flex justify-between mt-6">
             <Button variant="outline" onClick={() => setStep(3)}>
               السابق
@@ -1487,7 +1534,7 @@ export default function InsuranceDashboard() {
           color="blue"
         />
       </div>
-      
+
       {/* Charts */}
       <div className="grid grid-cols-2 gap-6">
         <Card>
@@ -1500,7 +1547,7 @@ export default function InsuranceDashboard() {
             ]}
           />
         </Card>
-        
+
         <Card>
           <h3 className="font-semibold mb-4">المطالبات حسب شركة التأمين</h3>
           <BarChart
@@ -1510,13 +1557,13 @@ export default function InsuranceDashboard() {
           />
         </Card>
       </div>
-      
+
       {/* Recent Claims */}
       <Card>
         <h3 className="font-semibold mb-4">المطالبات الأخيرة</h3>
         <ClaimsTable claims={recentClaims} />
       </Card>
-      
+
       {/* Provider Performance */}
       <Card>
         <h3 className="font-semibold mb-4">أداء شركات التأمين</h3>
@@ -1560,18 +1607,21 @@ export default function InsuranceDashboard() {
 ## 🚀 المميزات الإضافية المبتكرة
 
 ### 1. **AI-Powered Claim Validation**
+
 ```typescript
 // التحقق الذكي من المطالبات قبل التقديم
-async function validateClaimWithAI(claim: InsuranceClaim): Promise<ValidationResult> {
+async function validateClaimWithAI(
+  claim: InsuranceClaim
+): Promise<ValidationResult> {
   const aiService = new AIValidationService();
-  
+
   const checks = await aiService.analyze({
     diagnosis: claim.diagnosis,
     services: claim.services,
     patientHistory: claim.patient.medicalHistory,
     policyRules: claim.policy.rules,
   });
-  
+
   return {
     isValid: checks.score > 0.8,
     confidence: checks.score,
@@ -1585,11 +1635,12 @@ async function validateClaimWithAI(claim: InsuranceClaim): Promise<ValidationRes
 ---
 
 ### 2. **Smart Document OCR**
+
 ```typescript
 // استخراج البيانات من المستندات تلقائياً
 async function extractClaimDataFromDocument(file: File): Promise<ClaimData> {
   const ocrService = new OCRService();
-  
+
   const extracted = await ocrService.extract(file, {
     fields: [
       'patient_name',
@@ -1599,7 +1650,7 @@ async function extractClaimDataFromDocument(file: File): Promise<ClaimData> {
       'amounts',
     ],
   });
-  
+
   // Auto-fill the claim form
   return {
     patientName: extracted.patient_name,
@@ -1614,14 +1665,15 @@ async function extractClaimDataFromDocument(file: File): Promise<ClaimData> {
 ---
 
 ### 3. **Predictive Analytics**
+
 ```typescript
 // توقع نتيجة المطالبة قبل التقديم
 async function predictClaimOutcome(claim: InsuranceClaim): Promise<Prediction> {
   const mlModel = await loadPredictionModel();
-  
+
   const features = extractFeatures(claim);
   const prediction = await mlModel.predict(features);
-  
+
   return {
     likelyOutcome: prediction.outcome, // 'approved', 'rejected', 'review'
     confidence: prediction.confidence,
@@ -1634,13 +1686,16 @@ async function predictClaimOutcome(claim: InsuranceClaim): Promise<Prediction> {
 ---
 
 ### 4. **Batch Claims Processing**
+
 ```typescript
 // معالجة دفعات من المطالبات
-async function processBatchClaims(claims: InsuranceClaim[]): Promise<BatchResult> {
+async function processBatchClaims(
+  claims: InsuranceClaim[]
+): Promise<BatchResult> {
   const results = await Promise.allSettled(
     claims.map(claim => autoSubmitClaim(claim))
   );
-  
+
   return {
     total: claims.length,
     successful: results.filter(r => r.status === 'fulfilled').length,
@@ -1655,18 +1710,21 @@ async function processBatchClaims(claims: InsuranceClaim[]): Promise<BatchResult
 ## 📊 التقارير والإحصائيات
 
 ### 1. **تقرير أداء شركات التأمين**
+
 - متوسط وقت الرد لكل شركة
 - معدل القبول/الرفض
 - المبالغ المعتمدة vs المطالب بها
 - توفر الخدمة (Uptime)
 
 ### 2. **تقرير المطالبات الشهري**
+
 - عدد المطالبات المقدمة
 - المبالغ الإجمالية
 - معدل القبول
 - أكثر التشخيصات شيوعاً
 
 ### 3. **تقرير الأداء المالي**
+
 - الإيرادات من التأمين
 - المبالغ المعلقة
 - المبالغ المرفوضة
@@ -1677,30 +1735,35 @@ async function processBatchClaims(claims: InsuranceClaim[]): Promise<BatchResult
 ## ⏱️ خطة التنفيذ
 
 ### المرحلة 1: البنية التحتية (2 أسابيع)
+
 - [ ] إنشاء الجداول الجديدة
 - [ ] بناء Base Adapter
 - [ ] نظام Configuration Management
 - [ ] Testing framework
 
 ### المرحلة 2: التكاملات (4 أسابيع)
+
 - [ ] Tawuniya Adapter (أسبوع 1)
 - [ ] Bupa Adapter (أسبوع 1)
 - [ ] Medgulf + Malath (أسبوع 2)
 - [ ] باقي الشركات (أسبوع 3-4)
 
 ### المرحلة 3: الأتمتة (2 أسابيع)
+
 - [ ] Auto-eligibility checks
 - [ ] Auto-submission workflow
 - [ ] Status polling system
 - [ ] Smart retry logic
 
 ### المرحلة 4: UI/UX (2 أسابيع)
+
 - [ ] Claims management page
 - [ ] New claim wizard
 - [ ] Dashboard
 - [ ] Reports
 
 ### المرحلة 5: المميزات المتقدمة (2 أسابيع)
+
 - [ ] AI validation
 - [ ] OCR integration
 - [ ] Predictive analytics
@@ -1712,19 +1775,20 @@ async function processBatchClaims(claims: InsuranceClaim[]): Promise<BatchResult
 
 ## 💰 التكلفة المتوقعة
 
-| البند | التكلفة الشهرية |
-|------|-----------------|
-| API Calls (متوسط 1000 مطالبة/شهر) | $50-100 |
-| OCR Service | $30-50 |
-| AI/ML Services | $100-200 |
-| Storage | $20 |
-| **المجموع** | **$200-370/شهر** |
+| البند                             | التكلفة الشهرية  |
+| --------------------------------- | ---------------- |
+| API Calls (متوسط 1000 مطالبة/شهر) | $50-100          |
+| OCR Service                       | $30-50           |
+| AI/ML Services                    | $100-200         |
+| Storage                           | $20              |
+| **المجموع**                       | **$200-370/شهر** |
 
 ---
 
 ## 🎯 النتيجة المتوقعة
 
 بعد التنفيذ الكامل:
+
 - ✅ **تقليل الوقت**: من 30 دقيقة إلى 2 دقيقة لكل مطالبة
 - ✅ **تقليل الأخطاء**: من 15% إلى أقل من 2%
 - ✅ **زيادة معدل القبول**: من 70% إلى 90%+
@@ -1733,7 +1797,6 @@ async function processBatchClaims(claims: InsuranceClaim[]): Promise<BatchResult
 
 ---
 
-*تم إعداد هذا التقرير بتاريخ: 2025-01-17*  
-*الحالة: جاهز للتنفيذ*  
-*الأولوية: 🔴 عالية جداً*
-
+_تم إعداد هذا التقرير بتاريخ: 2025-01-17_  
+_الحالة: جاهز للتنفيذ_  
+_الأولوية: 🔴 عالية جداً_

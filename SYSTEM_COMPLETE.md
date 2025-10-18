@@ -9,6 +9,7 @@
 ## 📦 ما تم تطبيقه
 
 ### 1. ✅ Cursor Background Agent
+
 - **ملف التكوين**: `cursor.agent.json`
 - **السكريبت الرئيسي**: `scripts/ai_self_test_and_fix.mjs`
 - **دعم متعدد LLM**: Cursor, OpenAI, Ollama
@@ -19,6 +20,7 @@
   - تسجيل النتائج
 
 ### 2. ✅ GitHub Actions
+
 - **Workflow الرئيسي**: `.github/workflows/ai-self-healing.yml`
 - **استدعاء Cursor Agent**: `.github/workflows/ai-call-cursor-agent.yml`
 - **تحديث Dashboard**: `.github/workflows/update-dashboard.yml`
@@ -29,6 +31,7 @@
   - تقارير مفصلة
 
 ### 3. ✅ لوحة المراقبة (Dashboard)
+
 - **الملفات**:
   - `dashboard/index.html`
   - `dashboard/style.css`
@@ -42,6 +45,7 @@
   - تصميم عربي متجاوب
 
 ### 4. ✅ نظام SQLite Logger
+
 - **الملف**: `scripts/ai-logger.mjs`
 - **قاعدة البيانات**: `ai_logs.db`
 - **الميزات**:
@@ -51,6 +55,7 @@
   - تنظيف السجلات القديمة
 
 ### 5. ✅ نظام النسخ الاحتياطي
+
 - **الملف**: `scripts/backup-system.mjs`
 - **المجلد**: `reports/backups/`
 - **الميزات**:
@@ -60,6 +65,7 @@
   - تنظيف النسخ القديمة
 
 ### 6. ✅ نظام المراقبة
+
 - **الملف**: `scripts/monitoring-system.mjs`
 - **المجلد**: `reports/monitoring/`
 - **الميزات**:
@@ -69,6 +75,7 @@
   - تقارير HTML
 
 ### 7. ✅ الاختبارات الشاملة
+
 - **المجلد**: `tests/comprehensive/`
 - **الملفات**:
   - `frontend.spec.js` - اختبارات الواجهة
@@ -77,6 +84,7 @@
 - **السكريبت**: `scripts/run-comprehensive-tests.mjs`
 
 ### 8. ✅ التوثيق الكامل
+
 - **الأدلة**:
   - `AI_SYSTEM_README.md` - دليل شامل للنظام
   - `CURSOR_AGENT_GUIDE.md` - دليل Cursor Agent
@@ -108,6 +116,7 @@ npm run setup:env
 اذهب إلى: `Settings → Secrets → Actions → New repository secret`
 
 أضف:
+
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
@@ -148,6 +157,7 @@ https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/
 ## 🎯 الأوامر المتاحة
 
 ### الوكيل الذكي
+
 ```bash
 npm run agent:auto        # وضع تلقائي
 npm run agent:cursor      # وضع Cursor
@@ -163,6 +173,7 @@ npm run agent:heal        # إصلاح شامل
 ```
 
 ### الاختبارات
+
 ```bash
 npm run test:unit              # اختبارات الوحدة
 npm run test:integration       # اختبارات التكامل
@@ -173,6 +184,7 @@ npm run test:coverage          # تغطية الاختبارات
 ```
 
 ### النسخ الاحتياطي
+
 ```bash
 npm run backup:create     # إنشاء نسخة
 npm run backup:restore    # استعادة نسخة
@@ -181,6 +193,7 @@ npm run backup:clean      # تنظيف النسخ القديمة
 ```
 
 ### المراقبة
+
 ```bash
 npm run monitor:report    # إنشاء تقرير
 npm run monitor:start     # بدء المراقبة
@@ -189,6 +202,7 @@ npm run monitor:health    # فحص الصحة
 ```
 
 ### الجودة
+
 ```bash
 npm run lint:check        # فحص ESLint
 npm run lint:fix          # إصلاح ESLint
@@ -260,6 +274,7 @@ npm run security:fix      # إصلاح الأمان
 ### المشكلة: لا تظهر البيانات في Dashboard
 
 **الحل:**
+
 ```bash
 # تشغيل الوكيل مرة واحدة
 npm run agent:auto
@@ -275,6 +290,7 @@ ls -la ai_logs.db
 ### المشكلة: فشل GitHub Action
 
 **الحل:**
+
 1. تحقق من GitHub Secrets
 2. راجع سجلات Action
 3. تأكد من صلاحيات GITHUB_TOKEN
@@ -282,6 +298,7 @@ ls -la ai_logs.db
 ### المشكلة: فشل الاختبارات
 
 **الحل:**
+
 ```bash
 # تشغيل الاختبارات محلياً
 npm run test:unit
@@ -351,7 +368,7 @@ git push
 
 ---
 
-*تم إنشاء هذا النظام بواسطة AI Self-Healing CI/CD v3.0* 🤖
+_تم إنشاء هذا النظام بواسطة AI Self-Healing CI/CD v3.0_ 🤖
 
 **التاريخ**: $(date '+%Y-%m-%d %H:%M:%S')
 **الإصدار**: 3.0

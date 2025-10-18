@@ -1,6 +1,6 @@
 // API configuration
 export const apiConfig = {
-  baseUrl: process.env.NEXT_PUBLIC_API_URL || "/api",
+  baseUrl: process.env.NEXT_PUBLIC_API_URL || '/api',
   timeout: 30000,
   retries: 3,
   rateLimit: {

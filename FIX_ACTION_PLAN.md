@@ -105,6 +105,7 @@ npx tsc --noEmit
 ```
 
 **الملفات الأكثر أخطاء**:
+
 1. `src/app/api/auth/*.ts` (16 خطأ)
 2. `src/lib/conversation-flows/*.ts` (15 خطأ)
 3. `src/app/api/test/*.ts` (14 خطأ)
@@ -128,6 +129,7 @@ logger.error('Login error', { error: error.message, userId });
 ```
 
 **الملفات المتأثرة** (19 console statement):
+
 - `src/app/api/auth/login/route.ts`
 - `src/app/api/auth/register/route.ts`
 - `src/app/api/auth/forgot-password/route.ts`
@@ -164,6 +166,7 @@ git commit -m "Archive temp_complex folder"
 **الملفات التي تحتاج تقسيم**:
 
 1. `scripts/seed-translations.ts` (1,311 سطر)
+
    ```bash
    # تقسيم إلى:
    # - scripts/translations/seed-ar.ts
@@ -206,7 +209,7 @@ const loadTranslations = useCallback(async () => {
 ```sql
 -- إضافة sample medical records
 INSERT INTO medical_records (patient_id, doctor_id, diagnosis, treatment, notes)
-SELECT 
+SELECT
   p.id,
   d.id,
   'Sample diagnosis ' || p.id,
@@ -218,7 +221,7 @@ LIMIT 20;
 
 -- إضافة sample payments
 INSERT INTO payments (patient_id, appointment_id, amount, status)
-SELECT 
+SELECT
   patient_id,
   id,
   200.00,
@@ -232,6 +235,7 @@ LIMIT 20;
 ## 📊 Checklist التنفيذ
 
 ### ⚡ فوري (اليوم):
+
 - [ ] تحديث Next.js من 14.0.4 إلى 14.2.32
 - [ ] تغيير JWT_SECRET
 - [ ] تغيير WEBHOOK_SECRET
@@ -239,12 +243,14 @@ LIMIT 20;
 - [ ] اختبار أن كل شيء يعمل
 
 ### 🟡 خلال يومين:
-- [ ] إصلاح TypeScript errors في api/auth/*.ts
-- [ ] إصلاح TypeScript errors في lib/conversation-flows/*.ts
+
+- [ ] إصلاح TypeScript errors في api/auth/\*.ts
+- [ ] إصلاح TypeScript errors في lib/conversation-flows/\*.ts
 - [ ] استبدال console.log بـ logger
 - [ ] حذف أو أرشفة temp_complex/
 
 ### 🟢 خلال أسبوع:
+
 - [ ] تقسيم seed-translations.ts
 - [ ] تقسيم medical-file/page.tsx
 - [ ] إصلاح React Hooks warnings
@@ -307,12 +313,12 @@ LIMIT 20;
 
 ## ⏱️ الوقت المتوقع
 
-| المرحلة | الوقت المتوقع |
-|---------|----------------|
-| ⚡ فوري | 2 ساعة |
-| 🟡 عالي الأولوية | 1-2 يوم |
-| 🟢 متوسط الأولوية | 1 أسبوع |
-| **المجموع** | **~10 أيام عمل** |
+| المرحلة           | الوقت المتوقع    |
+| ----------------- | ---------------- |
+| ⚡ فوري           | 2 ساعة           |
+| 🟡 عالي الأولوية  | 1-2 يوم          |
+| 🟢 متوسط الأولوية | 1 أسبوع          |
+| **المجموع**       | **~10 أيام عمل** |
 
 ---
 

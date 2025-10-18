@@ -225,8 +225,9 @@ This document provides comprehensive documentation for all GitHub Actions workfl
    - Run: `echo "📁 إعداد مجلدات النتائج..."...`
 
 10. **💾 حفظ النتائج**
-   - Uses: `actions/upload-artifact@v4`
-   - Condition: `always()`
+
+- Uses: `actions/upload-artifact@v4`
+- Condition: `always()`
 
 ### 🔧 الإصلاح التلقائي
 
@@ -554,6 +555,7 @@ This document provides comprehensive documentation for all GitHub Actions workfl
 ## 🏆 Best Practices
 
 ### ✅ Do's
+
 - Use explicit permissions for security
 - Set appropriate timeouts for jobs
 - Use caching for dependencies
@@ -564,6 +566,7 @@ This document provides comprehensive documentation for all GitHub Actions workfl
 - Clean up artifacts and temporary files
 
 ### ❌ Don'ts
+
 - Don't use deprecated runners (ubuntu-18.04)
 - Don't hardcode secrets in workflows
 - Don't skip error handling
@@ -593,4 +596,3 @@ This document provides comprehensive documentation for all GitHub Actions workfl
    - Use `npm ci` instead of `npm install`
    - Add caching for node_modules
    - Check package-lock.json is committed
-

@@ -3,7 +3,7 @@
  * Rate limiting for API endpoints
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
 interface RateLimitConfig {
   windowMs: number;
@@ -12,30 +12,30 @@ interface RateLimitConfig {
 }
 
 const rateLimitConfigs: Record<string, RateLimitConfig> = {
-  "/api/auth/login": {
+  '/api/auth/login': {
     windowMs: 15 * 60 * 1000, // 15 minutes
     maxRequests: 1000, // Disabled for testing
-    message: "Too many login attempts, please try again later",
+    message: 'Too many login attempts, please try again later',
   },
-  "/api/appointments/book": {
+  '/api/appointments/book': {
     windowMs: 60 * 1000, // 1 minute
     maxRequests: 10,
-    message: "Too many appointment booking attempts",
+    message: 'Too many appointment booking attempts',
   },
-  "/api/notifications/send": {
+  '/api/notifications/send': {
     windowMs: 60 * 1000, // 1 minute
     maxRequests: 20,
-    message: "Too many notification requests",
+    message: 'Too many notification requests',
   },
-  "/api/medical-records/upload": {
+  '/api/medical-records/upload': {
     windowMs: 60 * 1000, // 1 minute
     maxRequests: 5,
-    message: "Too many file upload attempts",
+    message: 'Too many file upload attempts',
   },
   default: {
     windowMs: 60 * 1000, // 1 minute
     maxRequests: 100,
-    message: "Too many requests, please slow down",
+    message: 'Too many requests, please slow down',
   },
 };
 
@@ -47,7 +47,7 @@ export function clearRateLimitCache(): void {
 }
 
 export function rateLimiter(request: NextRequest): NextResponse | null {
-  const ip = request.ip || request.headers.get("x-forwarded-for") || "unknown";
+  const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
   const pathname = request.nextUrl.pathname;
 
   // Find matching config - always defaults to 'default' config
@@ -55,7 +55,7 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
 
   if (!foundConfig) {
     for (const [path, pathConfig] of Object.entries(rateLimitConfigs)) {
-      if (path !== "default" && pathname.startsWith(path)) {
+      if (path !== 'default' && pathname.startsWith(path)) {
         foundConfig = pathConfig;
         break;
       }
@@ -87,12 +87,12 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
       {
         status: 429,
         headers: {
-          "Retry-After": Math.ceil((current.resetTime - now) / 1000).toString(),
-          "X-RateLimit-Limit": config.maxRequests.toString(),
-          "X-RateLimit-Remaining": "0",
-          "X-RateLimit-Reset": new Date(current.resetTime).toISOString(),
+          'Retry-After': Math.ceil((current.resetTime - now) / 1000).toString(),
+          'X-RateLimit-Limit': config.maxRequests.toString(),
+          'X-RateLimit-Remaining': '0',
+          'X-RateLimit-Reset': new Date(current.resetTime).toISOString(),
         },
-      },
+      }
     );
   }
 
@@ -102,14 +102,14 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
 
   // Add rate limit headers
   const response = NextResponse.next();
-  response.headers.set("X-RateLimit-Limit", config.maxRequests.toString());
+  response.headers.set('X-RateLimit-Limit', config.maxRequests.toString());
   response.headers.set(
-    "X-RateLimit-Remaining",
-    (config.maxRequests - current.count).toString(),
+    'X-RateLimit-Remaining',
+    (config.maxRequests - current.count).toString()
   );
   response.headers.set(
-    "X-RateLimit-Reset",
-    new Date(current.resetTime).toISOString(),
+    'X-RateLimit-Reset',
+    new Date(current.resetTime).toISOString()
   );
 
   return null; // Allow request
@@ -125,5 +125,5 @@ setInterval(
       }
     }
   },
-  5 * 60 * 1000,
+  5 * 60 * 1000
 ); // Clean up every 5 minutes

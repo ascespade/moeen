@@ -21,6 +21,7 @@
 ### 🟢 Week 1: Session Booking System (✅ مكتمل 85%)
 
 #### Database (3 migrations):
+
 ```sql
 070_session_types.sql:
 ✅ جدول session_types (9 أنواع جلسات)
@@ -37,6 +38,7 @@
 ```
 
 #### API Routes:
+
 ```typescript
 ✅ /api/sessions/available-slots
    - حساب المواعيد المتاحة
@@ -45,18 +47,21 @@
 ```
 
 #### UI Components:
+
 ```typescript
 ✅ SessionTypeSelector - اختيار نوع الجلسة
 ✅ AvailableSlotsPicker - اختيار الوقت
 ```
 
 #### Pages:
+
 ```typescript
 ✅ /health/sessions/book - صفحة الحجز (4-step wizard)
 ✅ /admin/therapists/schedules - إدارة جداول الأخصائيين
 ```
 
 **الترابط**:
+
 ```
 Patient → Booking Page → Select Session Type (من session_types)
        → Select Date → API checks (therapist_schedules + specializations)
@@ -69,6 +74,7 @@ Patient → Booking Page → Select Session Type (من session_types)
 ### 🟢 Week 2: IEP & Progress Tracking (✅ مكتمل 75%)
 
 #### Database:
+
 ```sql
 072_iep_system.sql:
 ✅ ieps table (الخطط الفردية)
@@ -85,6 +91,7 @@ Patient → Booking Page → Select Session Type (من session_types)
 ```
 
 #### Pages:
+
 ```typescript
 ✅ /health/patients/[id]/iep - عرض IEP للطفل
    - IEP info
@@ -94,6 +101,7 @@ Patient → Booking Page → Select Session Type (من session_types)
 ```
 
 **الترابط**:
+
 ```
 Therapist → Creates IEP for patient
          → Adds goals (3-10 goals)
@@ -108,6 +116,7 @@ Therapist → Creates IEP for patient
 ### 🟢 Week 3: Supervisor Notifications (✅ مكتمل 60%)
 
 #### Database:
+
 ```sql
 073_supervisor_notifications.sql:
 ✅ call_requests table (طلبات المكالمات)
@@ -120,12 +129,14 @@ Therapist → Creates IEP for patient
 ```
 
 #### Chatbot Integration:
+
 ```typescript
 ✅ زر "📞 طلب مكالمة عاجلة" في معين
 ✅ handleCallRequest() function
 ```
 
 #### API:
+
 ```typescript
 ✅ POST /api/supervisor/call-request
    - Create request
@@ -133,12 +144,13 @@ Therapist → Creates IEP for patient
    - Send WhatsApp (FREE!)
    - Create notification
    - Log everything
-   
+
 ✅ GET /api/supervisor/call-request
    - List requests for supervisor
 ```
 
 **الترابط (حل الطلب المحدد!)**:
+
 ```
 User في الشاتبوت → Clicks "📞 طلب مكالمة عاجلة"
                   → System creates call_request
@@ -267,11 +279,13 @@ User in Chatbot:
 ## 📊 نسبة الجاهزية الحالية
 
 ### Before Implementation:
+
 ```
 Overall: 57/100 🟡
 ```
 
 ### After Implementation:
+
 ```
 Overall: 72/100 🟢
 
@@ -298,6 +312,7 @@ Average: 66% → 72% (+6 points)
 ## 🗂️ الملفات المضافة (Summary)
 
 ### Migrations (3 ملفات):
+
 ```sql
 070_session_types.sql (9 أنواع جلسات)
 071_therapist_schedules.sql (جداول + تخصصات + إجازات)
@@ -306,18 +321,22 @@ Average: 66% → 72% (+6 points)
 ```
 
 ### API Routes (2 endpoints):
+
 ```typescript
-/api/sessions/available-slots (GET)
-/api/supervisor/call-request (POST, GET)
+/api/einossss / available -
+  slots(GET) / api / supervisor / call -
+  request(POST, GET);
 ```
 
 ### Components (2):
+
 ```typescript
-SessionTypeSelector.tsx
-AvailableSlotsPicker.tsx
+SessionTypeSelector.tsx;
+AvailableSlotsPicker.tsx;
 ```
 
 ### Pages (3):
+
 ```typescript
 /health/sessions/book (Booking wizard)
 /admin/therapists/schedules (Schedule management)
@@ -325,6 +344,7 @@ AvailableSlotsPicker.tsx
 ```
 
 ### Updates (1):
+
 ```typescript
 MoeenChatbot.tsx (added call request button)
 ```
@@ -336,6 +356,7 @@ MoeenChatbot.tsx (added call request button)
 ## ✅ الترابط والتكامل (Integration Verification)
 
 ### ✅ Session Booking Flow:
+
 ```
 session_types → SessionTypeSelector → User selects
      ↓
@@ -353,6 +374,7 @@ Success! ✅
 ```
 
 ### ✅ IEP Tracking Flow:
+
 ```
 Therapist creates IEP (ieps table)
      ↓
@@ -368,6 +390,7 @@ Transparent & Real-time! ✅
 ```
 
 ### ✅ Supervisor Notification Flow:
+
 ```
 User in chatbot clicks "طلب مكالمة"
      ↓
@@ -389,6 +412,7 @@ Supervisor receives immediately! ✅
 ## 🔒 الأمان (Security Integration)
 
 ### ✅ RLS Policies Applied:
+
 ```
 session_types: ✅ Anyone can view, only admins can modify
 therapist_schedules: ✅ Therapists own, admins all, anyone can view available
@@ -407,6 +431,7 @@ notification_rules: ✅ Admins manage, anyone view
 ## 📈 مقاييس الأداء (Performance)
 
 ### Database:
+
 ```
 ✅ Indexes added for all foreign keys
 ✅ Composite indexes for common queries
@@ -415,6 +440,7 @@ notification_rules: ✅ Admins manage, anyone view
 ```
 
 ### API:
+
 ```
 ✅ Fast queries (<100ms average)
 ✅ Proper error handling
@@ -423,6 +449,7 @@ notification_rules: ✅ Admins manage, anyone view
 ```
 
 ### UI:
+
 ```
 ✅ Loading states
 ✅ Error handling
@@ -435,6 +462,7 @@ notification_rules: ✅ Admins manage, anyone view
 ## 💰 التكلفة (Cost Analysis)
 
 ### Development:
+
 ```
 ✅ تم التنفيذ: ~40-50 ساعة
 ✅ تبقى: ~70-100 ساعة (optional features)
@@ -444,6 +472,7 @@ Outsource: ~$1,500 (للجزء المنفذ)
 ```
 
 ### Monthly Infrastructure:
+
 ```
 ✅ Supabase: $0 (free tier كافي حالياً)
 ✅ WhatsApp Business API: $0 (free up to 1000/month)
@@ -458,6 +487,7 @@ Total: $0-20/month 🎉
 ## 🎯 الأولويات المتبقية (Next Steps)
 
 ### 🔴 Critical (هذا الأسبوع):
+
 ```
 1. Run migrations (070, 071, 072, 073)
    - تطبيق الجداول على قاعدة البيانات
@@ -474,6 +504,7 @@ Total: $0-20/month 🎉
 ```
 
 ### 🟡 Important (الأسبوع القادم):
+
 ```
 4. Reminders System (8-10h)
    - WhatsApp reminders 24h before
@@ -491,6 +522,7 @@ Total: $0-20/month 🎉
 ```
 
 ### 🟢 Nice to Have (شهر):
+
 ```
 7. Owner Dashboard (16-20h)
    - KPIs
@@ -513,6 +545,7 @@ Total: $0-20/month 🎉
 ## ✅ Checklist للتأكد من الترابط
 
 ### Database:
+
 - [x] جميع الجداول مربوطة بـ foreign keys
 - [x] RLS policies active على كل الجداول
 - [x] Triggers working
@@ -520,6 +553,7 @@ Total: $0-20/month 🎉
 - [x] Indexes added
 
 ### API:
+
 - [x] Endpoints متاحة
 - [x] Authentication working
 - [x] Authorization checked
@@ -527,6 +561,7 @@ Total: $0-20/month 🎉
 - [x] Logging enabled
 
 ### UI:
+
 - [x] Components متصلة بـ API
 - [x] Data flow صحيح
 - [x] Loading states
@@ -534,6 +569,7 @@ Total: $0-20/month 🎉
 - [x] Success states
 
 ### Flow:
+
 - [x] Booking flow كامل
 - [x] IEP viewing works
 - [x] Call request works
@@ -545,6 +581,7 @@ Total: $0-20/month 🎉
 ## 🎓 التوصيات النهائية
 
 ### للإطلاق الفوري:
+
 ```
 1. ✅ Run migrations (CRITICAL!)
 2. ✅ Add therapist schedules (via Admin page)
@@ -555,6 +592,7 @@ Total: $0-20/month 🎉
 ```
 
 ### للأسبوع القادم:
+
 ```
 7. Session notes UI
 8. Payments invoicing
@@ -562,6 +600,7 @@ Total: $0-20/month 🎉
 ```
 
 ### للمستقبل:
+
 ```
 10. Owner dashboard
 11. Advanced analytics
@@ -574,6 +613,7 @@ Total: $0-20/month 🎉
 ## 🚀 الحالة النهائية
 
 ### Progress:
+
 ```
 Before: 57/100 🟡
 Now: 72/100 🟢 (+15 points!)
@@ -582,6 +622,7 @@ With Migrations Applied: 75/100 🟢
 ```
 
 ### Readiness:
+
 ```
 ✅ Core Booking System: READY
 ✅ IEP Tracking: READY
@@ -594,6 +635,7 @@ Status: 🚀 PRODUCTION READY (with migrations applied)
 ```
 
 ### Cost:
+
 ```
 Development: DONE (40-50h invested)
 Infrastructure: $0/month
@@ -623,12 +665,12 @@ Status: 🎯 READY FOR LAUNCH!
 
 ---
 
-*Report Date: 2025-10-17*  
-*Implementation Status: Core Features Complete*  
-*Integration Status: ✅ All Systems Connected*  
-*Security Status: ✅ Triple-Layer Protection*  
-*Performance Status: ✅ Optimized*  
-*Cost Status: ✅ $0/month*
+_Report Date: 2025-10-17_  
+_Implementation Status: Core Features Complete_  
+_Integration Status: ✅ All Systems Connected_  
+_Security Status: ✅ Triple-Layer Protection_  
+_Performance Status: ✅ Optimized_  
+_Cost Status: ✅ $0/month_
 
 ---
 

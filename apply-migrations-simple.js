@@ -26,10 +26,10 @@ async function executeSQL(sql) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${supabaseServiceKey}`,
-        'apikey': supabaseServiceKey
+        Authorization: `Bearer ${supabaseServiceKey}`,
+        apikey: supabaseServiceKey,
       },
-      body: JSON.stringify({ sql_query: sql })
+      body: JSON.stringify({ sql_query: sql }),
     });
 
     if (!response.ok) {
@@ -48,7 +48,7 @@ async function executeSQL(sql) {
 
 async function createBasicTables() {
   console.log('🏗️  Creating basic healthcare tables...');
-  
+
   const basicSchema = `
     -- Enable necessary extensions
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -325,7 +325,7 @@ async function createBasicTables() {
 
 async function createIndexes() {
   console.log('📊 Creating performance indexes...');
-  
+
   const indexesSQL = `
     -- Create performance indexes
     CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
@@ -360,7 +360,7 @@ async function createIndexes() {
 
 async function createTriggers() {
   console.log('⚡ Creating triggers...');
-  
+
   const triggersSQL = `
     -- Create trigger function for updated_at
     CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -405,14 +405,14 @@ async function createTriggers() {
 
 async function main() {
   console.log('🚀 Starting healthcare system migration...');
-  
+
   // Test connection first
   try {
     const { data, error } = await supabase
       .from('users')
       .select('count')
       .limit(1);
-    
+
     if (error) {
       console.log('⚠️  Users table not found (expected for new database)');
     } else {

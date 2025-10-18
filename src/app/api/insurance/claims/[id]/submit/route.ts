@@ -1,24 +1,24 @@
-import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { authorize } from "@/lib/auth/authorize";
-import { insuranceService } from "@/lib/insurance/providers";
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+import { authorize } from '@/lib/auth/authorize';
+import { insuranceService } from '@/lib/insurance/providers';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } }
 ) {
   try {
     const { user, error: authError } = await authorize(request);
 
     if (authError || !user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // Only staff, supervisor, and admin can submit claims
-    if (!["staff", "supervisor", "admin"].includes(user.role)) {
+    if (!['staff', 'supervisor', 'admin'].includes(user.role)) {
       return NextResponse.json(
-        { error: "Insufficient permissions" },
-        { status: 403 },
+        { error: 'Insufficient permissions' },
+        { status: 403 }
       );
     }
 
@@ -27,7 +27,7 @@ export async function PATCH(
 
     // Get claim details
     const { data: claim, error: claimError } = await supabase
-      .from("insurance_claims")
+      .from('insurance_claims')
       .select(
         `
         id,
@@ -38,21 +38,21 @@ export async function PATCH(
         amount,
         claim_payload,
         patients!inner(id, full_name, insurance_number)
-      `,
+      `
       )
-      .eq("id", claimId)
+      .eq('id', claimId)
       .single();
 
     if (claimError || !claim) {
-      return NextResponse.json({ error: "Claim not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Claim not found' }, { status: 404 });
     }
 
-    if (claim.claim_status !== "draft") {
+    if (claim.claim_status !== 'draft') {
       return NextResponse.json(
         {
-          error: "Only draft claims can be submitted",
+          error: 'Only draft claims can be submitted',
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -64,10 +64,10 @@ export async function PATCH(
         appointmentId: claim.appointment_id,
         provider: claim.provider,
         amount: claim.amount,
-        description: claim.claim_payload?.description || "",
-        diagnosis: claim.claim_payload?.diagnosis || "",
-        treatment: claim.claim_payload?.treatment || "",
-      },
+        description: claim.claim_payload?.description || '',
+        diagnosis: claim.claim_payload?.diagnosis || '',
+        treatment: claim.claim_payload?.treatment || '',
+      }
     );
 
     if (!submissionResult.success) {
@@ -75,15 +75,15 @@ export async function PATCH(
         {
           error: `Insurance submission failed: ${submissionResult.error}`,
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
     // Update claim status in database
     const { error: updateError } = await supabase
-      .from("insurance_claims")
+      .from('insurance_claims')
       .update({
-        claim_status: "submitted",
+        claim_status: 'submitted',
         claim_payload: {
           ...claim.claim_payload,
           external_claim_id: submissionResult.claimId,
@@ -93,20 +93,20 @@ export async function PATCH(
         },
         updated_at: new Date().toISOString(),
       })
-      .eq("id", claimId);
+      .eq('id', claimId);
 
     if (updateError) {
       return NextResponse.json(
-        { error: "Failed to update claim status" },
-        { status: 500 },
+        { error: 'Failed to update claim status' },
+        { status: 500 }
       );
     }
 
     // Log claim submission
-    await supabase.from("audit_logs").insert({
-      action: "claim_submitted",
+    await supabase.from('audit_logs').insert({
+      action: 'claim_submitted',
       user_id: user.id,
-      resource_type: "insurance_claim",
+      resource_type: 'insurance_claim',
       resource_id: claimId,
       metadata: {
         provider: claim.provider,
@@ -118,31 +118,31 @@ export async function PATCH(
 
     return NextResponse.json({
       success: true,
-      message: "Claim submitted successfully",
+      message: 'Claim submitted successfully',
       claim: {
         id: claimId,
-        status: "submitted",
+        status: 'submitted',
         externalClaimId: submissionResult.claimId,
         referenceNumber: submissionResult.referenceNumber,
       },
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } }
 ) {
   try {
     const { user, error: authError } = await authorize(request);
 
     if (authError || !user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const supabase = await createClient();
@@ -150,7 +150,7 @@ export async function GET(
 
     // Get claim details
     const { data: claim, error: claimError } = await supabase
-      .from("insurance_claims")
+      .from('insurance_claims')
       .select(
         `
         id,
@@ -164,18 +164,18 @@ export async function GET(
         created_at,
         updated_at,
         patients!inner(id, full_name, insurance_number)
-      `,
+      `
       )
-      .eq("id", claimId)
+      .eq('id', claimId)
       .single();
 
     if (claimError || !claim) {
-      return NextResponse.json({ error: "Claim not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Claim not found' }, { status: 404 });
     }
 
     // Check if user has permission to view this claim
-    if (user.role === "patient" && claim.patients.id !== user.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    if (user.role === 'patient' && claim.patients.id !== user.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
     return NextResponse.json({
@@ -197,8 +197,8 @@ export async function GET(
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }

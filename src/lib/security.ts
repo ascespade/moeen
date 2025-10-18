@@ -1,32 +1,32 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 // Browser-compatible crypto functions
 const getCrypto = () => {
-  if (typeof window !== "undefined" && window.crypto) {
+  if (typeof window !== 'undefined' && window.crypto) {
     return window.crypto;
   }
-  if (typeof globalThis !== "undefined" && globalThis.crypto) {
+  if (typeof globalThis !== 'undefined' && globalThis.crypto) {
     return globalThis.crypto;
   }
   // Fallback for Node.js
-  const crypto = require("crypto");
+  const crypto = require('crypto');
   return crypto;
 };
 
 // CSRF token generation and validation
 export class CSRFProtection {
-  private static readonly CSRF_TOKEN_HEADER = "x-csrf-token";
-  private static readonly CSRF_TOKEN_COOKIE = "csrf-token";
+  private static readonly CSRF_TOKEN_HEADER = 'x-csrf-token';
+  private static readonly CSRF_TOKEN_COOKIE = 'csrf-token';
 
   static generateToken(): string {
     const crypto = getCrypto();
     if (crypto.randomBytes) {
-      return crypto.randomBytes(32).toString("hex");
+      return crypto.randomBytes(32).toString('hex');
     }
     // Fallback for browser
     const array = new Uint8Array(32);
     crypto.getRandomValues(array);
-    return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join(
-      "",
+    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join(
+      ''
     );
   }
 
@@ -45,9 +45,9 @@ export class CSRFProtection {
     const token = this.generateToken();
     response.cookies.set(this.CSRF_TOKEN_COOKIE, token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      path: "/",
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
       maxAge: 60 * 60 * 24, // 24 hours
     });
   }
@@ -96,9 +96,9 @@ export class InputSanitizer {
   static sanitizeString(input: string): string {
     return input
       .trim()
-      .replace(/[<>]/g, "") // Remove potential HTML tags
-      .replace(/javascript:/gi, "") // Remove javascript: protocol
-      .replace(/on\w+=/gi, ""); // Remove event handlers
+      .replace(/[<>]/g, '') // Remove potential HTML tags
+      .replace(/javascript:/gi, '') // Remove javascript: protocol
+      .replace(/on\w+=/gi, ''); // Remove event handlers
   }
 
   static sanitizeEmail(email: string): string {
@@ -108,20 +108,20 @@ export class InputSanitizer {
   static sanitizeHTML(html: string): string {
     // Basic HTML sanitization - in production, use a proper library like DOMPurify
     return html
-      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
-      .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "")
-      .replace(/on\w+="[^"]*"/gi, "");
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+      .replace(/on\w+="[^"]*"/gi, '');
   }
 }
 
 // Security headers
 export const securityHeaders = {
-  "X-Frame-Options": "DENY",
-  "X-Content-Type-Options": "nosniff",
-  "Referrer-Policy": "origin-when-cross-origin",
-  "X-XSS-Protection": "1; mode=block",
-  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Content-Security-Policy": [
+  'X-Frame-Options': 'DENY',
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'origin-when-cross-origin',
+  'X-XSS-Protection': '1; mode=block',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  'Content-Security-Policy': [
     "default-src 'self'",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
     "style-src 'self' 'unsafe-inline'",
@@ -131,7 +131,7 @@ export const securityHeaders = {
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",
-  ].join("; "),
+  ].join('; '),
 };
 
 // Password validation
@@ -140,23 +140,23 @@ export class PasswordValidator {
     const errors: string[] = [];
 
     if (password.length < 8) {
-      errors.push("Password must be at least 8 characters long");
+      errors.push('Password must be at least 8 characters long');
     }
 
     if (!/[A-Z]/.test(password)) {
-      errors.push("Password must contain at least one uppercase letter");
+      errors.push('Password must contain at least one uppercase letter');
     }
 
     if (!/[a-z]/.test(password)) {
-      errors.push("Password must contain at least one lowercase letter");
+      errors.push('Password must contain at least one lowercase letter');
     }
 
     if (!/\d/.test(password)) {
-      errors.push("Password must contain at least one number");
+      errors.push('Password must contain at least one number');
     }
 
     if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-      errors.push("Password must contain at least one special character");
+      errors.push('Password must contain at least one special character');
     }
 
     return {
@@ -171,29 +171,29 @@ export class SessionSecurity {
   static generateSessionId(): string {
     const crypto = getCrypto();
     if (crypto.randomBytes) {
-      return crypto.randomBytes(32).toString("hex");
+      return crypto.randomBytes(32).toString('hex');
     }
     // Fallback for browser
     const array = new Uint8Array(32);
     crypto.getRandomValues(array);
-    return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join(
-      "",
+    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join(
+      ''
     );
   }
 
   static hashSessionId(sessionId: string): string {
     const crypto = getCrypto();
     if (crypto.createHash) {
-      return crypto.createHash("sha256").update(sessionId).digest("hex");
+      return crypto.createHash('sha256').update(sessionId).digest('hex');
     }
     // Fallback for browser - use Web Crypto API
     const encoder = new TextEncoder();
     const data = encoder.encode(sessionId);
     return (crypto as any).subtle
-      .digest("SHA-256", data)
+      .digest('SHA-256', data)
       .then((hashBuffer: ArrayBuffer) => {
         const hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
       })
       .catch(() => {
         // Fallback to simple hash
@@ -209,7 +209,7 @@ export class SessionSecurity {
 
   static validateSessionId(
     sessionId: string,
-    hashedSessionId: string,
+    hashedSessionId: string
   ): boolean {
     return this.hashSessionId(sessionId) === hashedSessionId;
   }

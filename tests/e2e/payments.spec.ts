@@ -14,10 +14,10 @@ test.describe('Payments Module', () => {
     const { data } = await supabase
       .from('payments')
       .insert({
-        amount: 100.00,
+        amount: 100.0,
         currency: 'SAR',
         method: 'credit_card',
-        status: 'completed'
+        status: 'completed',
       })
       .select()
       .single();

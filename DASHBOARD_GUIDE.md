@@ -31,13 +31,11 @@ import { useT } from '@/hooks/useT';
 
 function MyComponent() {
   const { t, language, setLanguage } = useT();
-  
+
   return (
     <div>
       <h1>{t('dashboard.title')}</h1>
-      <button onClick={() => setLanguage('en')}>
-        {t('language.english')}
-      </button>
+      <button onClick={() => setLanguage('en')}>{t('language.english')}</button>
     </div>
   );
 }
@@ -58,7 +56,7 @@ import ThemeSwitcher from '@/components/ThemeSwitcher';
 
 function MyComponent() {
   const { theme, isDark, toggleTheme } = useTheme();
-  
+
   return (
     <div>
       <ThemeSwitcher />
@@ -89,13 +87,13 @@ const data = [
 
 <AreaChart
   data={data}
-  dataKey="patients"
-  xAxisKey="month"
+  dataKey='patients'
+  xAxisKey='month'
   areas={[
     { dataKey: 'patients', color: 'var(--brand-primary)', name: 'Patients' },
-    { dataKey: 'revenue', color: 'var(--brand-accent)', name: 'Revenue' }
+    { dataKey: 'revenue', color: 'var(--brand-accent)', name: 'Revenue' },
   ]}
-/>
+/>;
 ```
 
 ### 5. Design System - نظام التصميم
@@ -115,14 +113,17 @@ const data = [
 ## API Endpoints - نقاط النهاية
 
 ### Dashboard Metrics
+
 - `GET /api/dashboard/metrics` - System health and metrics
 - `GET /api/dashboard/health` - Health check endpoint
 
 ### Translations
+
 - `GET /api/translations/[lang]` - Get translations for language
 - `POST /api/translations/missing` - Log missing translation keys
 
 ### Healthcare
+
 - `GET /api/healthcare/patients` - Patient management
 - `GET /api/healthcare/appointments` - Appointment management
 
@@ -145,17 +146,20 @@ const data = [
 ## Setup Instructions - تعليمات الإعداد
 
 1. **Install dependencies**:
+
    ```bash
    npm ci
    ```
 
 2. **Set up environment variables**:
+
    ```bash
    cp .env.local.example .env.local
    # Edit .env.local with your configuration
    ```
 
 3. **Run database migrations**:
+
    ```bash
    # Migrations are in supabase/migrations/
    # Apply them through Supabase dashboard or CLI

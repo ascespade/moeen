@@ -20,13 +20,13 @@ export class ApiClient {
   private baseUrl: string;
   private token: string | null = null;
 
-  constructor(baseUrl: string = "/api") {
+  constructor(baseUrl: string = '/api') {
     this.baseUrl = baseUrl;
   }
 
   async request<T>(
     endpoint: string,
-    options: RequestOptions = {},
+    options: RequestOptions = {}
   ): Promise<ApiResponse<T>> {
     // Implementation with error handling, retries, and logging
   }
@@ -84,9 +84,9 @@ export async function POST(request: Request) {
 
   // Set HttpOnly cookie
   const response = NextResponse.json({ user: data.user });
-  response.cookies.set("auth-token", data.session.access_token, {
+  response.cookies.set('auth-token', data.session.access_token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV === 'production',
     maxAge: 60 * 60 * 24 * 7, // 7 days
   });
 
@@ -115,16 +115,16 @@ export async function POST(request: Request) {
 // app/api/auth/logout/route.ts
 export async function POST() {
   const response = NextResponse.json({ success: true });
-  response.cookies.delete("auth-token");
+  response.cookies.delete('auth-token');
   return response;
 }
 
 // app/api/auth/me/route.ts
 export async function GET(request: Request) {
-  const token = request.cookies.get("auth-token")?.value;
+  const token = request.cookies.get('auth-token')?.value;
 
   if (!token) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const {
@@ -149,18 +149,18 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   const login = async (email: string, password: string) => {
-    const response = await apiClient.post("/auth/login", { email, password });
+    const response = await apiClient.post('/auth/login', { email, password });
     setUser(response.user);
     return response;
   };
 
   const register = async (userData: RegisterData) => {
-    const response = await apiClient.post("/auth/register", userData);
+    const response = await apiClient.post('/auth/register', userData);
     return response;
   };
 
   const logout = async () => {
-    await apiClient.post("/auth/logout");
+    await apiClient.post('/auth/logout');
     setUser(null);
   };
 
@@ -176,7 +176,7 @@ export function useAuth() {
 // app/api/dashboard/kpis/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const period = searchParams.get("period") || "30d";
+  const period = searchParams.get('period') || '30d';
 
   const [totalAppointments, totalPatients, totalSessions, totalRevenue] =
     await Promise.all([
@@ -197,8 +197,8 @@ export async function GET(request: Request) {
 // app/api/dashboard/charts/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const type = searchParams.get("type") || "appointments";
-  const period = searchParams.get("period") || "30d";
+  const type = searchParams.get('type') || 'appointments';
+  const period = searchParams.get('period') || '30d';
 
   const chartData = await getChartData(type, period);
 
@@ -210,7 +210,7 @@ export async function GET(request: Request) {
 
 ```typescript
 // src/hooks/useDashboard.ts
-export function useDashboard(period: string = "30d") {
+export function useDashboard(period: string = '30d') {
   const [kpis, setKpis] = useState<DashboardKPIs | null>(null);
   const [charts, setCharts] = useState<ChartData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -226,7 +226,7 @@ export function useDashboard(period: string = "30d") {
         setKpis(kpisData);
         setCharts(chartsData);
       } catch (error) {
-        console.error("Failed to fetch dashboard data:", error);
+        console.error('Failed to fetch dashboard data:', error);
       } finally {
         setLoading(false);
       }
@@ -247,8 +247,8 @@ export function useDashboard(period: string = "30d") {
 // app/api/chatbot/flows/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const status = searchParams.get("status");
-  const search = searchParams.get("search");
+  const status = searchParams.get('status');
+  const search = searchParams.get('search');
 
   const flows = await getChatbotFlows({ status, search });
   return NextResponse.json(flows);
@@ -265,18 +265,18 @@ export async function POST(request: Request) {
 // app/api/chatbot/flows/[id]/route.ts
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } }
 ) {
   const flow = await getChatbotFlowById(params.id);
   if (!flow) {
-    return NextResponse.json({ error: "Flow not found" }, { status: 404 });
+    return NextResponse.json({ error: 'Flow not found' }, { status: 404 });
   }
   return NextResponse.json(flow);
 }
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } }
 ) {
   const data = await request.json();
   const validatedData = validationSchemas.chatbotFlow.parse(data);
@@ -287,7 +287,7 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } }
 ) {
   await deleteChatbotFlow(params.id);
   return NextResponse.json({ success: true });
@@ -296,8 +296,8 @@ export async function DELETE(
 // app/api/chatbot/templates/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const category = searchParams.get("category");
-  const language = searchParams.get("language");
+  const category = searchParams.get('category');
+  const language = searchParams.get('language');
 
   const templates = await getChatbotTemplates({ category, language });
   return NextResponse.json(templates);
@@ -328,8 +328,8 @@ export async function POST(request: Request) {
 // app/api/chatbot/analytics/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const period = searchParams.get("period") || "30d";
-  const integrationId = searchParams.get("integration_id");
+  const period = searchParams.get('period') || '30d';
+  const integrationId = searchParams.get('integration_id');
 
   const analytics = await getChatbotAnalytics({ period, integrationId });
   return NextResponse.json(analytics);
@@ -347,35 +347,33 @@ export function useChatbotFlows(filters?: FlowFilters) {
   const fetchFlows = async () => {
     try {
       const queryParams = new URLSearchParams();
-      if (filters?.status) queryParams.append("status", filters.status);
-      if (filters?.search) queryParams.append("search", filters.search);
+      if (filters?.status) queryParams.append('status', filters.status);
+      if (filters?.search) queryParams.append('search', filters.search);
 
       const data = await apiClient.get(`/chatbot/flows?${queryParams}`);
       setFlows(data);
     } catch (error) {
-      console.error("Failed to fetch flows:", error);
+      console.error('Failed to fetch flows:', error);
     } finally {
       setLoading(false);
     }
   };
 
   const createFlow = async (flowData: CreateFlowData) => {
-    const newFlow = await apiClient.post("/chatbot/flows", flowData);
-    setFlows((prev) => [...prev, newFlow]);
+    const newFlow = await apiClient.post('/chatbot/flows', flowData);
+    setFlows(prev => [...prev, newFlow]);
     return newFlow;
   };
 
   const updateFlow = async (id: string, flowData: UpdateFlowData) => {
     const updatedFlow = await apiClient.put(`/chatbot/flows/${id}`, flowData);
-    setFlows((prev) =>
-      prev.map((flow) => (flow.id === id ? updatedFlow : flow)),
-    );
+    setFlows(prev => prev.map(flow => (flow.id === id ? updatedFlow : flow)));
     return updatedFlow;
   };
 
   const deleteFlow = async (id: string) => {
     await apiClient.delete(`/chatbot/flows/${id}`);
-    setFlows((prev) => prev.filter((flow) => flow.id !== id));
+    setFlows(prev => prev.filter(flow => flow.id !== id));
   };
 
   useEffect(() => {
@@ -401,10 +399,10 @@ export function useChatbotFlows(filters?: FlowFilters) {
 // app/api/crm/contacts/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const search = searchParams.get("search");
-  const status = searchParams.get("status");
-  const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "20");
+  const search = searchParams.get('search');
+  const status = searchParams.get('status');
+  const page = parseInt(searchParams.get('page') || '1');
+  const limit = parseInt(searchParams.get('limit') || '20');
 
   const { contacts, total, totalPages } = await getContacts({
     search,
@@ -427,8 +425,8 @@ export async function GET(request: Request) {
 // app/api/crm/leads/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const status = searchParams.get("status");
-  const ownerId = searchParams.get("owner_id");
+  const status = searchParams.get('status');
+  const ownerId = searchParams.get('owner_id');
 
   const leads = await getLeads({ status, ownerId });
   return NextResponse.json(leads);
@@ -445,8 +443,8 @@ export async function POST(request: Request) {
 // app/api/crm/deals/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const stage = searchParams.get("stage");
-  const ownerId = searchParams.get("owner_id");
+  const stage = searchParams.get('stage');
+  const ownerId = searchParams.get('owner_id');
 
   const deals = await getDeals({ stage, ownerId });
   return NextResponse.json(deals);
@@ -463,9 +461,9 @@ export async function POST(request: Request) {
 // app/api/crm/activities/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const type = searchParams.get("type");
-  const status = searchParams.get("status");
-  const dueDate = searchParams.get("due_date");
+  const type = searchParams.get('type');
+  const status = searchParams.get('status');
+  const dueDate = searchParams.get('due_date');
 
   const activities = await getActivities({ type, status, dueDate });
   return NextResponse.json(activities);
@@ -493,8 +491,8 @@ export function useCRM() {
   // Contacts
   const fetchContacts = async (filters?: ContactFilters) => {
     const queryParams = new URLSearchParams();
-    if (filters?.search) queryParams.append("search", filters.search);
-    if (filters?.status) queryParams.append("status", filters.status);
+    if (filters?.search) queryParams.append('search', filters.search);
+    if (filters?.status) queryParams.append('status', filters.status);
 
     const data = await apiClient.get(`/crm/contacts?${queryParams}`);
     setContacts(data.contacts);
@@ -504,8 +502,8 @@ export function useCRM() {
   // Leads
   const fetchLeads = async (filters?: LeadFilters) => {
     const queryParams = new URLSearchParams();
-    if (filters?.status) queryParams.append("status", filters.status);
-    if (filters?.ownerId) queryParams.append("owner_id", filters.ownerId);
+    if (filters?.status) queryParams.append('status', filters.status);
+    if (filters?.ownerId) queryParams.append('owner_id', filters.ownerId);
 
     const data = await apiClient.get(`/crm/leads?${queryParams}`);
     setLeads(data);
@@ -513,16 +511,16 @@ export function useCRM() {
   };
 
   const createLead = async (leadData: CreateLeadData) => {
-    const newLead = await apiClient.post("/crm/leads", leadData);
-    setLeads((prev) => [...prev, newLead]);
+    const newLead = await apiClient.post('/crm/leads', leadData);
+    setLeads(prev => [...prev, newLead]);
     return newLead;
   };
 
   // Deals
   const fetchDeals = async (filters?: DealFilters) => {
     const queryParams = new URLSearchParams();
-    if (filters?.stage) queryParams.append("stage", filters.stage);
-    if (filters?.ownerId) queryParams.append("owner_id", filters.ownerId);
+    if (filters?.stage) queryParams.append('stage', filters.stage);
+    if (filters?.ownerId) queryParams.append('owner_id', filters.ownerId);
 
     const data = await apiClient.get(`/crm/deals?${queryParams}`);
     setDeals(data);
@@ -530,8 +528,8 @@ export function useCRM() {
   };
 
   const createDeal = async (dealData: CreateDealData) => {
-    const newDeal = await apiClient.post("/crm/deals", dealData);
-    setDeals((prev) => [...prev, newDeal]);
+    const newDeal = await apiClient.post('/crm/deals', dealData);
+    setDeals(prev => [...prev, newDeal]);
     return newDeal;
   };
 
@@ -539,8 +537,8 @@ export function useCRM() {
     const updatedDeal = await apiClient.patch(`/crm/deals/${dealId}`, {
       stage: newStage,
     });
-    setDeals((prev) =>
-      prev.map((deal) => (deal.id === dealId ? updatedDeal : deal)),
+    setDeals(prev =>
+      prev.map(deal => (deal.id === dealId ? updatedDeal : deal))
     );
     return updatedDeal;
   };
@@ -548,9 +546,9 @@ export function useCRM() {
   // Activities
   const fetchActivities = async (filters?: ActivityFilters) => {
     const queryParams = new URLSearchParams();
-    if (filters?.type) queryParams.append("type", filters.type);
-    if (filters?.status) queryParams.append("status", filters.status);
-    if (filters?.dueDate) queryParams.append("due_date", filters.dueDate);
+    if (filters?.type) queryParams.append('type', filters.type);
+    if (filters?.status) queryParams.append('status', filters.status);
+    if (filters?.dueDate) queryParams.append('due_date', filters.dueDate);
 
     const data = await apiClient.get(`/crm/activities?${queryParams}`);
     setActivities(data);
@@ -558,8 +556,8 @@ export function useCRM() {
   };
 
   const createActivity = async (activityData: CreateActivityData) => {
-    const newActivity = await apiClient.post("/crm/activities", activityData);
-    setActivities((prev) => [...prev, newActivity]);
+    const newActivity = await apiClient.post('/crm/activities', activityData);
+    setActivities(prev => [...prev, newActivity]);
     return newActivity;
   };
 
@@ -595,10 +593,10 @@ export function useCRM() {
 // app/api/healthcare/appointments/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const doctorId = searchParams.get("doctor_id");
-  const patientId = searchParams.get("patient_id");
-  const date = searchParams.get("date");
-  const status = searchParams.get("status");
+  const doctorId = searchParams.get('doctor_id');
+  const patientId = searchParams.get('patient_id');
+  const date = searchParams.get('date');
+  const status = searchParams.get('status');
 
   const appointments = await getAppointments({
     doctorId,
@@ -621,13 +619,13 @@ export async function POST(request: Request) {
 // app/api/healthcare/appointments/[id]/route.ts
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } }
 ) {
   const appointment = await getAppointmentById(params.id);
   if (!appointment) {
     return NextResponse.json(
-      { error: "Appointment not found" },
-      { status: 404 },
+      { error: 'Appointment not found' },
+      { status: 404 }
     );
   }
   return NextResponse.json(appointment);
@@ -635,7 +633,7 @@ export async function GET(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } }
 ) {
   const data = await request.json();
   const validatedData = validationSchemas.appointment.parse(data);
@@ -646,7 +644,7 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } }
 ) {
   await deleteAppointment(params.id);
   return NextResponse.json({ success: true });
@@ -655,9 +653,9 @@ export async function DELETE(
 // app/api/healthcare/patients/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const search = searchParams.get("search");
-  const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "20");
+  const search = searchParams.get('search');
+  const page = parseInt(searchParams.get('page') || '1');
+  const limit = parseInt(searchParams.get('limit') || '20');
 
   const { patients, total, totalPages } = await getPatients({
     search,
@@ -687,9 +685,9 @@ export async function POST(request: Request) {
 // app/api/healthcare/sessions/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const doctorId = searchParams.get("doctor_id");
-  const date = searchParams.get("date");
-  const status = searchParams.get("status");
+  const doctorId = searchParams.get('doctor_id');
+  const date = searchParams.get('date');
+  const status = searchParams.get('status');
 
   const sessions = await getSessions({ doctorId, date, status });
   return NextResponse.json(sessions);
@@ -706,8 +704,8 @@ export async function POST(request: Request) {
 // app/api/healthcare/insurance-claims/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const patientId = searchParams.get("patient_id");
-  const status = searchParams.get("status");
+  const patientId = searchParams.get('patient_id');
+  const status = searchParams.get('status');
 
   const claims = await getInsuranceClaims({ patientId, status });
   return NextResponse.json(claims);
@@ -735,10 +733,10 @@ export function useHealthcare() {
   // Appointments
   const fetchAppointments = async (filters?: AppointmentFilters) => {
     const queryParams = new URLSearchParams();
-    if (filters?.doctorId) queryParams.append("doctor_id", filters.doctorId);
-    if (filters?.patientId) queryParams.append("patient_id", filters.patientId);
-    if (filters?.date) queryParams.append("date", filters.date);
-    if (filters?.status) queryParams.append("status", filters.status);
+    if (filters?.doctorId) queryParams.append('doctor_id', filters.doctorId);
+    if (filters?.patientId) queryParams.append('patient_id', filters.patientId);
+    if (filters?.date) queryParams.append('date', filters.date);
+    if (filters?.status) queryParams.append('status', filters.status);
 
     const data = await apiClient.get(`/healthcare/appointments?${queryParams}`);
     setAppointments(data);
@@ -747,38 +745,38 @@ export function useHealthcare() {
 
   const createAppointment = async (appointmentData: CreateAppointmentData) => {
     const newAppointment = await apiClient.post(
-      "/healthcare/appointments",
-      appointmentData,
+      '/healthcare/appointments',
+      appointmentData
     );
-    setAppointments((prev) => [...prev, newAppointment]);
+    setAppointments(prev => [...prev, newAppointment]);
     return newAppointment;
   };
 
   const updateAppointment = async (
     id: string,
-    appointmentData: UpdateAppointmentData,
+    appointmentData: UpdateAppointmentData
   ) => {
     const updatedAppointment = await apiClient.put(
       `/healthcare/appointments/${id}`,
-      appointmentData,
+      appointmentData
     );
-    setAppointments((prev) =>
-      prev.map((apt) => (apt.id === id ? updatedAppointment : apt)),
+    setAppointments(prev =>
+      prev.map(apt => (apt.id === id ? updatedAppointment : apt))
     );
     return updatedAppointment;
   };
 
   const deleteAppointment = async (id: string) => {
     await apiClient.delete(`/healthcare/appointments/${id}`);
-    setAppointments((prev) => prev.filter((apt) => apt.id !== id));
+    setAppointments(prev => prev.filter(apt => apt.id !== id));
   };
 
   // Patients
   const fetchPatients = async (filters?: PatientFilters) => {
     const queryParams = new URLSearchParams();
-    if (filters?.search) queryParams.append("search", filters.search);
-    if (filters?.page) queryParams.append("page", filters.page.toString());
-    if (filters?.limit) queryParams.append("limit", filters.limit.toString());
+    if (filters?.search) queryParams.append('search', filters.search);
+    if (filters?.page) queryParams.append('page', filters.page.toString());
+    if (filters?.limit) queryParams.append('limit', filters.limit.toString());
 
     const data = await apiClient.get(`/healthcare/patients?${queryParams}`);
     setPatients(data.patients);
@@ -787,19 +785,19 @@ export function useHealthcare() {
 
   const createPatient = async (patientData: CreatePatientData) => {
     const newPatient = await apiClient.post(
-      "/healthcare/patients",
-      patientData,
+      '/healthcare/patients',
+      patientData
     );
-    setPatients((prev) => [...prev, newPatient]);
+    setPatients(prev => [...prev, newPatient]);
     return newPatient;
   };
 
   // Sessions
   const fetchSessions = async (filters?: SessionFilters) => {
     const queryParams = new URLSearchParams();
-    if (filters?.doctorId) queryParams.append("doctor_id", filters.doctorId);
-    if (filters?.date) queryParams.append("date", filters.date);
-    if (filters?.status) queryParams.append("status", filters.status);
+    if (filters?.doctorId) queryParams.append('doctor_id', filters.doctorId);
+    if (filters?.date) queryParams.append('date', filters.date);
+    if (filters?.status) queryParams.append('status', filters.status);
 
     const data = await apiClient.get(`/healthcare/sessions?${queryParams}`);
     setSessions(data);
@@ -808,20 +806,20 @@ export function useHealthcare() {
 
   const createSession = async (sessionData: CreateSessionData) => {
     const newSession = await apiClient.post(
-      "/healthcare/sessions",
-      sessionData,
+      '/healthcare/sessions',
+      sessionData
     );
-    setSessions((prev) => [...prev, newSession]);
+    setSessions(prev => [...prev, newSession]);
     return newSession;
   };
 
   const updateSession = async (id: string, sessionData: UpdateSessionData) => {
     const updatedSession = await apiClient.put(
       `/healthcare/sessions/${id}`,
-      sessionData,
+      sessionData
     );
-    setSessions((prev) =>
-      prev.map((session) => (session.id === id ? updatedSession : session)),
+    setSessions(prev =>
+      prev.map(session => (session.id === id ? updatedSession : session))
     );
     return updatedSession;
   };
@@ -829,11 +827,11 @@ export function useHealthcare() {
   // Insurance Claims
   const fetchClaims = async (filters?: ClaimFilters) => {
     const queryParams = new URLSearchParams();
-    if (filters?.patientId) queryParams.append("patient_id", filters.patientId);
-    if (filters?.status) queryParams.append("status", filters.status);
+    if (filters?.patientId) queryParams.append('patient_id', filters.patientId);
+    if (filters?.status) queryParams.append('status', filters.status);
 
     const data = await apiClient.get(
-      `/healthcare/insurance-claims?${queryParams}`,
+      `/healthcare/insurance-claims?${queryParams}`
     );
     setClaims(data);
     return data;
@@ -841,27 +839,27 @@ export function useHealthcare() {
 
   const createClaim = async (claimData: CreateClaimData) => {
     const newClaim = await apiClient.post(
-      "/healthcare/insurance-claims",
-      claimData,
+      '/healthcare/insurance-claims',
+      claimData
     );
-    setClaims((prev) => [...prev, newClaim]);
+    setClaims(prev => [...prev, newClaim]);
     return newClaim;
   };
 
   const updateClaimStatus = async (
     id: string,
     status: string,
-    reason?: string,
+    reason?: string
   ) => {
     const updatedClaim = await apiClient.patch(
       `/healthcare/insurance-claims/${id}`,
       {
         status,
         rejection_reason: reason,
-      },
+      }
     );
-    setClaims((prev) =>
-      prev.map((claim) => (claim.id === id ? updatedClaim : claim)),
+    setClaims(prev =>
+      prev.map(claim => (claim.id === id ? updatedClaim : claim))
     );
     return updatedClaim;
   };
@@ -902,10 +900,10 @@ export function useHealthcare() {
 // app/api/admin/users/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const role = searchParams.get("role");
-  const status = searchParams.get("status");
-  const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "20");
+  const role = searchParams.get('role');
+  const status = searchParams.get('status');
+  const page = parseInt(searchParams.get('page') || '1');
+  const limit = parseInt(searchParams.get('limit') || '20');
 
   const { users, total, totalPages } = await getUsers({
     role,
@@ -942,13 +940,13 @@ export async function POST(request: Request) {
 // app/api/admin/audit-logs/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const userId = searchParams.get("user_id");
-  const action = searchParams.get("action");
-  const tableName = searchParams.get("table_name");
-  const startDate = searchParams.get("start_date");
-  const endDate = searchParams.get("end_date");
-  const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "50");
+  const userId = searchParams.get('user_id');
+  const action = searchParams.get('action');
+  const tableName = searchParams.get('table_name');
+  const startDate = searchParams.get('start_date');
+  const endDate = searchParams.get('end_date');
+  const page = parseInt(searchParams.get('page') || '1');
+  const limit = parseInt(searchParams.get('limit') || '50');
 
   const { logs, total, totalPages } = await getAuditLogs({
     userId,
@@ -974,8 +972,8 @@ export async function GET(request: Request) {
 // app/api/notifications/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const isRead = searchParams.get("is_read");
-  const type = searchParams.get("type");
+  const isRead = searchParams.get('is_read');
+  const type = searchParams.get('type');
 
   const notifications = await getNotifications({ isRead, type });
   return NextResponse.json(notifications);
@@ -992,7 +990,7 @@ export async function POST(request: Request) {
 // app/api/notifications/[id]/read/route.ts
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } }
 ) {
   await markNotificationAsRead(params.id);
   return NextResponse.json({ success: true });
@@ -1001,7 +999,7 @@ export async function PATCH(
 // app/api/settings/route.ts
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const category = searchParams.get("category");
+  const category = searchParams.get('category');
 
   const settings = await getSettings({ category });
   return NextResponse.json(settings);
@@ -1028,10 +1026,10 @@ export function useAdmin() {
   // Users
   const fetchUsers = async (filters?: UserFilters) => {
     const queryParams = new URLSearchParams();
-    if (filters?.role) queryParams.append("role", filters.role);
-    if (filters?.status) queryParams.append("status", filters.status);
-    if (filters?.page) queryParams.append("page", filters.page.toString());
-    if (filters?.limit) queryParams.append("limit", filters.limit.toString());
+    if (filters?.role) queryParams.append('role', filters.role);
+    if (filters?.status) queryParams.append('status', filters.status);
+    if (filters?.page) queryParams.append('page', filters.page.toString());
+    if (filters?.limit) queryParams.append('limit', filters.limit.toString());
 
     const data = await apiClient.get(`/admin/users?${queryParams}`);
     setUsers(data.users);
@@ -1042,35 +1040,35 @@ export function useAdmin() {
     const updatedUser = await apiClient.patch(`/admin/users/${userId}`, {
       roleId,
     });
-    setUsers((prev) =>
-      prev.map((user) => (user.id === userId ? updatedUser : user)),
+    setUsers(prev =>
+      prev.map(user => (user.id === userId ? updatedUser : user))
     );
     return updatedUser;
   };
 
   // Roles
   const fetchRoles = async () => {
-    const data = await apiClient.get("/admin/roles");
+    const data = await apiClient.get('/admin/roles');
     setRoles(data);
     return data;
   };
 
   const createRole = async (roleData: CreateRoleData) => {
-    const newRole = await apiClient.post("/admin/roles", roleData);
-    setRoles((prev) => [...prev, newRole]);
+    const newRole = await apiClient.post('/admin/roles', roleData);
+    setRoles(prev => [...prev, newRole]);
     return newRole;
   };
 
   // Audit Logs
   const fetchAuditLogs = async (filters?: AuditLogFilters) => {
     const queryParams = new URLSearchParams();
-    if (filters?.userId) queryParams.append("user_id", filters.userId);
-    if (filters?.action) queryParams.append("action", filters.action);
-    if (filters?.tableName) queryParams.append("table_name", filters.tableName);
-    if (filters?.startDate) queryParams.append("start_date", filters.startDate);
-    if (filters?.endDate) queryParams.append("end_date", filters.endDate);
-    if (filters?.page) queryParams.append("page", filters.page.toString());
-    if (filters?.limit) queryParams.append("limit", filters.limit.toString());
+    if (filters?.userId) queryParams.append('user_id', filters.userId);
+    if (filters?.action) queryParams.append('action', filters.action);
+    if (filters?.tableName) queryParams.append('table_name', filters.tableName);
+    if (filters?.startDate) queryParams.append('start_date', filters.startDate);
+    if (filters?.endDate) queryParams.append('end_date', filters.endDate);
+    if (filters?.page) queryParams.append('page', filters.page.toString());
+    if (filters?.limit) queryParams.append('limit', filters.limit.toString());
 
     const data = await apiClient.get(`/admin/audit-logs?${queryParams}`);
     setAuditLogs(data.logs);
@@ -1102,8 +1100,8 @@ export function useNotifications() {
   const fetchNotifications = async (filters?: NotificationFilters) => {
     const queryParams = new URLSearchParams();
     if (filters?.isRead !== undefined)
-      queryParams.append("is_read", filters.isRead.toString());
-    if (filters?.type) queryParams.append("type", filters.type);
+      queryParams.append('is_read', filters.isRead.toString());
+    if (filters?.type) queryParams.append('type', filters.type);
 
     const data = await apiClient.get(`/notifications?${queryParams}`);
     setNotifications(data);
@@ -1113,36 +1111,36 @@ export function useNotifications() {
 
   const markAsRead = async (notificationId: string) => {
     await apiClient.patch(`/notifications/${notificationId}/read`);
-    setNotifications((prev) =>
-      prev.map((n) =>
+    setNotifications(prev =>
+      prev.map(n =>
         n.id === notificationId
           ? { ...n, is_read: true, read_at: new Date().toISOString() }
-          : n,
-      ),
+          : n
+      )
     );
-    setUnreadCount((prev) => Math.max(0, prev - 1));
+    setUnreadCount(prev => Math.max(0, prev - 1));
   };
 
   const markAllAsRead = async () => {
-    await apiClient.patch("/notifications/read-all");
-    setNotifications((prev) =>
-      prev.map((n) => ({
+    await apiClient.patch('/notifications/read-all');
+    setNotifications(prev =>
+      prev.map(n => ({
         ...n,
         is_read: true,
         read_at: new Date().toISOString(),
-      })),
+      }))
     );
     setUnreadCount(0);
   };
 
   const createNotification = async (
-    notificationData: CreateNotificationData,
+    notificationData: CreateNotificationData
   ) => {
     const newNotification = await apiClient.post(
-      "/notifications",
-      notificationData,
+      '/notifications',
+      notificationData
     );
-    setNotifications((prev) => [newNotification, ...prev]);
+    setNotifications(prev => [newNotification, ...prev]);
     return newNotification;
   };
 
@@ -1163,23 +1161,23 @@ export function useNotifications() {
 
 ```typescript
 // middleware.ts
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
 export async function middleware(request: NextRequest) {
-  const token = request.cookies.get("auth-token")?.value;
+  const token = request.cookies.get('auth-token')?.value;
 
   // Public routes that don't require authentication
   const publicRoutes = [
-    "/login",
-    "/register",
-    "/forgot-password",
-    "/reset-password",
-    "/",
+    '/login',
+    '/register',
+    '/forgot-password',
+    '/reset-password',
+    '/',
   ];
-  const isPublicRoute = publicRoutes.some((route) =>
-    request.nextUrl.pathname.startsWith(route),
+  const isPublicRoute = publicRoutes.some(route =>
+    request.nextUrl.pathname.startsWith(route)
   );
 
   if (isPublicRoute) {
@@ -1187,15 +1185,15 @@ export async function middleware(request: NextRequest) {
   }
 
   // API routes
-  if (request.nextUrl.pathname.startsWith("/api/")) {
+  if (request.nextUrl.pathname.startsWith('/api/')) {
     if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // Verify token with Supabase
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
     const {
@@ -1204,13 +1202,13 @@ export async function middleware(request: NextRequest) {
     } = await supabase.auth.getUser(token);
 
     if (error || !user) {
-      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
 
     // Add user to request headers for API routes
     const requestHeaders = new Headers(request.headers);
-    requestHeaders.set("x-user-id", user.id);
-    requestHeaders.set("x-user-role", user.user_metadata?.role || "user");
+    requestHeaders.set('x-user-id', user.id);
+    requestHeaders.set('x-user-role', user.user_metadata?.role || 'user');
 
     return NextResponse.next({
       request: {
@@ -1221,14 +1219,14 @@ export async function middleware(request: NextRequest) {
 
   // Protected pages
   if (!token) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };
 ```
 
@@ -1238,35 +1236,35 @@ export const config = {
 // src/lib/rbac.ts
 export const PERMISSIONS = {
   // Healthcare
-  PATIENTS_READ: "patients:read",
-  PATIENTS_WRITE: "patients:write",
-  APPOINTMENTS_READ: "appointments:read",
-  APPOINTMENTS_WRITE: "appointments:write",
-  SESSIONS_READ: "sessions:read",
-  SESSIONS_WRITE: "sessions:write",
+  PATIENTS_READ: 'patients:read',
+  PATIENTS_WRITE: 'patients:write',
+  APPOINTMENTS_READ: 'appointments:read',
+  APPOINTMENTS_WRITE: 'appointments:write',
+  SESSIONS_READ: 'sessions:read',
+  SESSIONS_WRITE: 'sessions:write',
 
   // Chatbot
-  CHATBOT_FLOWS_READ: "chatbot:flows:read",
-  CHATBOT_FLOWS_WRITE: "chatbot:flows:write",
-  CHATBOT_TEMPLATES_READ: "chatbot:templates:read",
-  CHATBOT_TEMPLATES_WRITE: "chatbot:templates:write",
-  CHATBOT_INTEGRATIONS_READ: "chatbot:integrations:read",
-  CHATBOT_INTEGRATIONS_WRITE: "chatbot:integrations:write",
+  CHATBOT_FLOWS_READ: 'chatbot:flows:read',
+  CHATBOT_FLOWS_WRITE: 'chatbot:flows:write',
+  CHATBOT_TEMPLATES_READ: 'chatbot:templates:read',
+  CHATBOT_TEMPLATES_WRITE: 'chatbot:templates:write',
+  CHATBOT_INTEGRATIONS_READ: 'chatbot:integrations:read',
+  CHATBOT_INTEGRATIONS_WRITE: 'chatbot:integrations:write',
 
   // CRM
-  CRM_CONTACTS_READ: "crm:contacts:read",
-  CRM_CONTACTS_WRITE: "crm:contacts:write",
-  CRM_LEADS_READ: "crm:leads:read",
-  CRM_LEADS_WRITE: "crm:leads:write",
-  CRM_DEALS_READ: "crm:deals:read",
-  CRM_DEALS_WRITE: "crm:deals:write",
+  CRM_CONTACTS_READ: 'crm:contacts:read',
+  CRM_CONTACTS_WRITE: 'crm:contacts:write',
+  CRM_LEADS_READ: 'crm:leads:read',
+  CRM_LEADS_WRITE: 'crm:leads:write',
+  CRM_DEALS_READ: 'crm:deals:read',
+  CRM_DEALS_WRITE: 'crm:deals:write',
 
   // Admin
-  ADMIN_USERS_READ: "admin:users:read",
-  ADMIN_USERS_WRITE: "admin:users:write",
-  ADMIN_ROLES_READ: "admin:roles:read",
-  ADMIN_ROLES_WRITE: "admin:roles:write",
-  ADMIN_AUDIT_READ: "admin:audit:read",
+  ADMIN_USERS_READ: 'admin:users:read',
+  ADMIN_USERS_WRITE: 'admin:users:write',
+  ADMIN_ROLES_READ: 'admin:roles:read',
+  ADMIN_ROLES_WRITE: 'admin:roles:write',
+  ADMIN_AUDIT_READ: 'admin:audit:read',
 } as const;
 
 export const ROLE_PERMISSIONS = {
@@ -1307,18 +1305,18 @@ export function requirePermission(userRole: string, permission: string) {
 
 ```typescript
 // __tests__/api/auth.test.ts
-import { POST } from "@/app/api/auth/login/route";
-import { createClient } from "@supabase/supabase-js";
+import { POST } from '@/app/api/auth/login/route';
+import { createClient } from '@supabase/supabase-js';
 
-jest.mock("@supabase/supabase-js");
+jest.mock('@supabase/supabase-js');
 
-describe("/api/auth/login", () => {
-  it("should login user with valid credentials", async () => {
-    const mockUser = { id: "123", email: "test@example.com" };
+describe('/api/auth/login', () => {
+  it('should login user with valid credentials', async () => {
+    const mockUser = { id: '123', email: 'test@example.com' };
     const mockSupabase = {
       auth: {
         signInWithPassword: jest.fn().mockResolvedValue({
-          data: { user: mockUser, session: { access_token: "token" } },
+          data: { user: mockUser, session: { access_token: 'token' } },
           error: null,
         }),
       },
@@ -1326,9 +1324,9 @@ describe("/api/auth/login", () => {
 
     (createClient as jest.Mock).mockReturnValue(mockSupabase);
 
-    const request = new Request("http://localhost:3000/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email: "test@example.com", password: "password" }),
+    const request = new Request('http://localhost:3000/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email: 'test@example.com', password: 'password' }),
     });
 
     const response = await POST(request);
@@ -1338,28 +1336,28 @@ describe("/api/auth/login", () => {
     expect(data.user).toEqual(mockUser);
   });
 
-  it("should return 401 for invalid credentials", async () => {
+  it('should return 401 for invalid credentials', async () => {
     const mockSupabase = {
       auth: {
         signInWithPassword: jest.fn().mockResolvedValue({
           data: null,
-          error: { message: "Invalid credentials" },
+          error: { message: 'Invalid credentials' },
         }),
       },
     };
 
     (createClient as jest.Mock).mockReturnValue(mockSupabase);
 
-    const request = new Request("http://localhost:3000/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email: "test@example.com", password: "wrong" }),
+    const request = new Request('http://localhost:3000/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email: 'test@example.com', password: 'wrong' }),
     });
 
     const response = await POST(request);
     const data = await response.json();
 
     expect(response.status).toBe(401);
-    expect(data.error).toBe("Invalid credentials");
+    expect(data.error).toBe('Invalid credentials');
   });
 });
 ```
@@ -1368,37 +1366,37 @@ describe("/api/auth/login", () => {
 
 ```typescript
 // __tests__/integration/chatbot.test.ts
-import { ApiClient } from "@/utils/api-client";
+import { ApiClient } from '@/utils/api-client';
 
-describe("Chatbot API Integration", () => {
+describe('Chatbot API Integration', () => {
   let apiClient: ApiClient;
   let authToken: string;
 
   beforeAll(async () => {
     apiClient = new ApiClient();
     // Login and get token
-    const loginResponse = await apiClient.post("/auth/login", {
-      email: "test@example.com",
-      password: "password",
+    const loginResponse = await apiClient.post('/auth/login', {
+      email: 'test@example.com',
+      password: 'password',
     });
     authToken = loginResponse.token;
     apiClient.setToken(authToken);
   });
 
-  it("should create and manage chatbot flows", async () => {
+  it('should create and manage chatbot flows', async () => {
     // Create flow
     const flowData = {
-      name: "Test Flow",
-      description: "Test Description",
-      status: "draft",
+      name: 'Test Flow',
+      description: 'Test Description',
+      status: 'draft',
     };
 
-    const createdFlow = await apiClient.post("/chatbot/flows", flowData);
+    const createdFlow = await apiClient.post('/chatbot/flows', flowData);
     expect(createdFlow.name).toBe(flowData.name);
 
     // Get flow
     const retrievedFlow = await apiClient.get(
-      `/chatbot/flows/${createdFlow.id}`,
+      `/chatbot/flows/${createdFlow.id}`
     );
     expect(retrievedFlow.id).toBe(createdFlow.id);
 
@@ -1407,10 +1405,10 @@ describe("Chatbot API Integration", () => {
       `/chatbot/flows/${createdFlow.id}`,
       {
         ...flowData,
-        status: "published",
-      },
+        status: 'published',
+      }
     );
-    expect(updatedFlow.status).toBe("published");
+    expect(updatedFlow.status).toBe('published');
 
     // Delete flow
     await apiClient.delete(`/chatbot/flows/${createdFlow.id}`);
@@ -1418,7 +1416,7 @@ describe("Chatbot API Integration", () => {
     // Verify deletion
     try {
       await apiClient.get(`/chatbot/flows/${createdFlow.id}`);
-      fail("Flow should have been deleted");
+      fail('Flow should have been deleted');
     } catch (error) {
       expect(error.status).toBe(404);
     }
@@ -1430,24 +1428,24 @@ describe("Chatbot API Integration", () => {
 
 ```typescript
 // tests/e2e/dashboard.spec.ts
-import { test, expect } from "@playwright/test";
+import { test, expect } from '@playwright/test';
 
-test.describe("Dashboard", () => {
+test.describe('Dashboard', () => {
   test.beforeEach(async ({ page }) => {
     // Login
-    await page.goto("/login");
-    await page.fill('[data-testid="email"]', "admin@example.com");
-    await page.fill('[data-testid="password"]', "password");
+    await page.goto('/login');
+    await page.fill('[data-testid="email"]', 'admin@example.com');
+    await page.fill('[data-testid="password"]', 'password');
     await page.click('[data-testid="login-button"]');
-    await page.waitForURL("/dashboard");
+    await page.waitForURL('/dashboard');
   });
 
-  test("should display dashboard KPIs", async ({ page }) => {
-    await page.goto("/dashboard");
+  test('should display dashboard KPIs', async ({ page }) => {
+    await page.goto('/dashboard');
 
     // Check KPI cards
     await expect(
-      page.locator('[data-testid="kpi-appointments"]'),
+      page.locator('[data-testid="kpi-appointments"]')
     ).toBeVisible();
     await expect(page.locator('[data-testid="kpi-patients"]')).toBeVisible();
     await expect(page.locator('[data-testid="kpi-sessions"]')).toBeVisible();
@@ -1455,23 +1453,23 @@ test.describe("Dashboard", () => {
 
     // Check charts
     await expect(
-      page.locator('[data-testid="chart-appointments"]'),
+      page.locator('[data-testid="chart-appointments"]')
     ).toBeVisible();
     await expect(page.locator('[data-testid="chart-revenue"]')).toBeVisible();
   });
 
-  test("should filter dashboard data by period", async ({ page }) => {
-    await page.goto("/dashboard");
+  test('should filter dashboard data by period', async ({ page }) => {
+    await page.goto('/dashboard');
 
     // Change period filter
-    await page.selectOption('[data-testid="period-filter"]', "7d");
+    await page.selectOption('[data-testid="period-filter"]', '7d');
 
     // Wait for data to update
     await page.waitForSelector('[data-testid="kpi-appointments"]');
 
     // Verify data has changed (this would need specific assertions based on your data)
     const appointmentsCount = await page.textContent(
-      '[data-testid="kpi-appointments"] .value',
+      '[data-testid="kpi-appointments"] .value'
     );
     expect(appointmentsCount).toBeTruthy();
   });
@@ -1488,10 +1486,10 @@ export class AppError extends Error {
   constructor(
     public message: string,
     public statusCode: number = 500,
-    public code?: string,
+    public code?: string
   ) {
     super(message);
-    this.name = "AppError";
+    this.name = 'AppError';
   }
 }
 
@@ -1499,26 +1497,26 @@ export function handleApiError(error: unknown): Response {
   if (error instanceof AppError) {
     return NextResponse.json(
       { error: error.message, code: error.code },
-      { status: error.statusCode },
+      { status: error.statusCode }
     );
   }
 
   if (error instanceof Error) {
-    console.error("Unexpected error:", error);
+    console.error('Unexpected error:', error);
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 
   return NextResponse.json(
-    { error: "Unknown error occurred" },
-    { status: 500 },
+    { error: 'Unknown error occurred' },
+    { status: 500 }
   );
 }
 
 export function logError(error: Error, context?: Record<string, any>) {
-  console.error("Error occurred:", {
+  console.error('Error occurred:', {
     message: error.message,
     stack: error.stack,
     context,
@@ -1528,10 +1526,10 @@ export function logError(error: Error, context?: Record<string, any>) {
   // Send to external logging service if configured
   if (process.env.LOGGING_SERVICE_URL) {
     fetch(process.env.LOGGING_SERVICE_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        level: "error",
+        level: 'error',
         message: error.message,
         stack: error.stack,
         context,

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth";
-import { getDefaultRouteForUser } from "@/lib/router";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
+import { getDefaultRouteForUser } from '@/lib/router';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -14,7 +14,7 @@ export default function DashboardPage() {
     if (!isLoading) {
       if (!user) {
         // Redirect to login if not authenticated
-        router.push("/login");
+        router.push('/login');
         return;
       }
 
@@ -26,10 +26,10 @@ export default function DashboardPage() {
 
   // Show loading while determining redirect
   return (
-    <div className="min-h-screen bg-surface dark:bg-gray-900 flex items-center justify-center">
-      <div className="text-center">
-        <LoadingSpinner size="lg" />
-        <p className="mt-4 text-gray-600 dark:text-gray-400">
+    <div className='min-h-screen bg-surface dark:bg-gray-900 flex items-center justify-center'>
+      <div className='text-center'>
+        <LoadingSpinner size='lg' />
+        <p className='mt-4 text-gray-600 dark:text-gray-400'>
           جاري تحميل لوحة التحكم...
         </p>
       </div>

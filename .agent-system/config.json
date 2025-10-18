@@ -11,13 +11,7 @@
     "build_check": true,
     "test_fix": true
   },
-  "checks": [
-    "typescript",
-    "eslint",
-    "prettier",
-    "imports",
-    "build"
-  ],
+  "checks": ["typescript", "eslint", "prettier", "imports", "build"],
   "fix_strategies": {
     "missing_imports": "auto_add",
     "unused_vars": "remove",

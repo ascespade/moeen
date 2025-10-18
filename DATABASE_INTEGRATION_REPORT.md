@@ -1,4 +1,5 @@
 # 📊 تقرير التكامل الكامل مع قاعدة البيانات
+
 ## Complete Database Integration Report
 
 **التاريخ:** 17 أكتوبر 2025  
@@ -27,21 +28,21 @@
 
 ### الأعمدة الجديدة المضافة
 
-| العمود | النوع | الافتراضي | الوصف |
-|--------|------|----------|---------|
-| `last_password_change` | timestamp | now() | آخر تغيير لكلمة المرور |
-| `email_verified_at` | timestamp | NULL | وقت تأكيد البريد الإلكتروني |
-| `last_ip_address` | inet | NULL | آخر عنوان IP |
-| `last_user_agent` | text | NULL | آخر متصفح/جهاز |
-| `last_activity_at` | timestamp | now() | آخر نشاط |
-| `total_sessions` | integer | 0 | إجمالي عدد الجلسات |
-| `password_reset_token` | text | NULL | رمز إعادة تعيين كلمة المرور |
-| `password_reset_expires` | timestamp | NULL | انتهاء صلاحية الرمز |
-| `email_verification_token` | text | NULL | رمز تأكيد البريد |
-| `email_verification_expires` | timestamp | NULL | انتهاء صلاحية التأكيد |
-| `two_factor_enabled` | boolean | false | تفعيل المصادقة الثنائية |
-| `two_factor_secret` | text | NULL | سر المصادقة الثنائية |
-| `backup_codes` | jsonb | [] | رموز النسخ الاحتياطي |
+| العمود                       | النوع     | الافتراضي | الوصف                       |
+| ---------------------------- | --------- | --------- | --------------------------- |
+| `last_password_change`       | timestamp | now()     | آخر تغيير لكلمة المرور      |
+| `email_verified_at`          | timestamp | NULL      | وقت تأكيد البريد الإلكتروني |
+| `last_ip_address`            | inet      | NULL      | آخر عنوان IP                |
+| `last_user_agent`            | text      | NULL      | آخر متصفح/جهاز              |
+| `last_activity_at`           | timestamp | now()     | آخر نشاط                    |
+| `total_sessions`             | integer   | 0         | إجمالي عدد الجلسات          |
+| `password_reset_token`       | text      | NULL      | رمز إعادة تعيين كلمة المرور |
+| `password_reset_expires`     | timestamp | NULL      | انتهاء صلاحية الرمز         |
+| `email_verification_token`   | text      | NULL      | رمز تأكيد البريد            |
+| `email_verification_expires` | timestamp | NULL      | انتهاء صلاحية التأكيد       |
+| `two_factor_enabled`         | boolean   | false     | تفعيل المصادقة الثنائية     |
+| `two_factor_secret`          | text      | NULL      | سر المصادقة الثنائية        |
+| `backup_codes`               | jsonb     | []        | رموز النسخ الاحتياطي        |
 
 ### القيم الافتراضية المحدثة
 
@@ -76,19 +77,19 @@
 
 ### الأعمدة الجديدة
 
-| العمود | النوع | الافتراضي | الوصف |
-|--------|------|----------|---------|
-| `severity` | VARCHAR(20) | 'info' | مستوى الخطورة |
-| `status` | VARCHAR(20) | 'success' | حالة العملية |
-| `error_message` | TEXT | NULL | رسالة الخطأ |
-| `request_id` | VARCHAR(255) | NULL | معرف الطلب |
-| `session_id` | VARCHAR(255) | NULL | معرف الجلسة |
-| `duration_ms` | INTEGER | NULL | مدة العملية |
-| `metadata` | JSONB | {} | بيانات إضافية |
-| `geo_location` | JSONB | NULL | الموقع الجغرافي |
-| `device_type` | VARCHAR(50) | NULL | نوع الجهاز |
-| `browser` | VARCHAR(100) | NULL | المتصفح |
-| `os` | VARCHAR(100) | NULL | نظام التشغيل |
+| العمود          | النوع        | الافتراضي | الوصف           |
+| --------------- | ------------ | --------- | --------------- |
+| `severity`      | VARCHAR(20)  | 'info'    | مستوى الخطورة   |
+| `status`        | VARCHAR(20)  | 'success' | حالة العملية    |
+| `error_message` | TEXT         | NULL      | رسالة الخطأ     |
+| `request_id`    | VARCHAR(255) | NULL      | معرف الطلب      |
+| `session_id`    | VARCHAR(255) | NULL      | معرف الجلسة     |
+| `duration_ms`   | INTEGER      | NULL      | مدة العملية     |
+| `metadata`      | JSONB        | {}        | بيانات إضافية   |
+| `geo_location`  | JSONB        | NULL      | الموقع الجغرافي |
+| `device_type`   | VARCHAR(50)  | NULL      | نوع الجهاز      |
+| `browser`       | VARCHAR(100) | NULL      | المتصفح         |
+| `os`            | VARCHAR(100) | NULL      | نظام التشغيل    |
 
 ### قيود التحقق (CHECK Constraints)
 
@@ -184,6 +185,7 @@
 ### 1. Register API (/api/auth/register)
 
 **البيانات المحفوظة:**
+
 ```json
 {
   "id": "uuid من Supabase Auth",
@@ -212,6 +214,7 @@
 ```
 
 **Audit Log:**
+
 ```json
 {
   "action": "user_registered",
@@ -231,6 +234,7 @@
 ### 2. Login API (/api/auth/login)
 
 **الميزات:**
+
 - ✅ التحقق من قفل الحساب
 - ✅ تحديث last_login و login_count
 - ✅ تحديث total_sessions
@@ -240,6 +244,7 @@
 - ✅ قفل الحساب بعد 5 محاولات فاشلة
 
 **Audit Log عند النجاح:**
+
 ```json
 {
   "action": "user_login",
@@ -259,6 +264,7 @@
 ```
 
 **Audit Log عند الفشل:**
+
 ```json
 {
   "action": "failed_login_attempt",
@@ -274,11 +280,13 @@
 ### 3. Logout API (/api/auth/logout)
 
 **الميزات:**
+
 - ✅ حساب مدة الجلسة
 - ✅ مسح session من Supabase
 - ✅ تسجيل مدة الجلسة
 
 **Audit Log:**
+
 ```json
 {
   "action": "user_logout",
@@ -297,11 +305,13 @@
 ### 4. Forgot Password API (/api/auth/forgot-password)
 
 **الميزات:**
+
 - ✅ التحقق من وجود البريد
 - ✅ إرسال رابط إعادة التعيين
 - ✅ تسجيل المحاولات حتى للبريد غير الموجود
 
 **Audit Log (بريد موجود):**
+
 ```json
 {
   "action": "password_reset_requested",
@@ -315,6 +325,7 @@
 ```
 
 **Audit Log (بريد غير موجود):**
+
 ```json
 {
   "action": "password_reset_attempted_unknown_email",
@@ -379,6 +390,7 @@ SELECT * FROM audit_logs WHERE user_id = 'b8a902ed-196f-434b-9126-f37f3ee50eaf';
 ## 🎯 الميزات المكتملة
 
 ### تتبع المستخدم الكامل
+
 - ✅ تتبع IP Address في كل عملية
 - ✅ تتبع User Agent في كل عملية
 - ✅ تتبع آخر نشاط (last_activity_at)
@@ -389,6 +401,7 @@ SELECT * FROM audit_logs WHERE user_id = 'b8a902ed-196f-434b-9126-f37f3ee50eaf';
 - ✅ قفل الحساب التلقائي
 
 ### Audit Logging الشامل
+
 - ✅ تسجيل جميع عمليات المصادقة
 - ✅ تسجيل IP Address و User Agent
 - ✅ تسجيل مدة العمليات (duration_ms)
@@ -397,6 +410,7 @@ SELECT * FROM audit_logs WHERE user_id = 'b8a902ed-196f-434b-9126-f37f3ee50eaf';
 - ✅ حالات العمليات (status)
 
 ### الأمان
+
 - ✅ قفل الحساب بعد 5 محاولات فاشلة
 - ✅ مدة القفل: 30 دقيقة
 - ✅ تتبع جميع محاولات الدخول
@@ -408,15 +422,18 @@ SELECT * FROM audit_logs WHERE user_id = 'b8a902ed-196f-434b-9126-f37f3ee50eaf';
 ## 📁 الملفات المحدثة
 
 ### APIs
+
 - ✅ `src/app/api/auth/register/route.ts` - تكامل كامل
 - ✅ `src/app/api/auth/login/route.ts` - تكامل كامل + قفل الحساب
 - ✅ `src/app/api/auth/logout/route.ts` - تتبع مدة الجلسة
 - ✅ `src/app/api/auth/forgot-password/route.ts` - تتبع شامل
 
 ### Middleware
+
 - ✅ `src/middleware/activity-tracker.ts` - تتبع النشاط التلقائي
 
 ### Database Migrations
+
 - ✅ `enhance_users_table_with_tracking` - تحسين جدول users
 - ✅ `enhance_audit_logs_table` - تحسين جدول audit_logs
 - ✅ `create_triggers_for_users_and_audit` - المحفزات والدوال
@@ -428,6 +445,7 @@ SELECT * FROM audit_logs WHERE user_id = 'b8a902ed-196f-434b-9126-f37f3ee50eaf';
 ### 100% Integration Complete 🎉
 
 **نظام المصادقة الآن:**
+
 - ✅ يستخدم جميع أعمدة قاعدة البيانات
 - ✅ يتتبع كل شيء (IP, User Agent, النشاط، الجلسات)
 - ✅ يسجل كل عملية في audit_logs
@@ -435,6 +453,7 @@ SELECT * FROM audit_logs WHERE user_id = 'b8a902ed-196f-434b-9126-f37f3ee50eaf';
 - ✅ جاهز للإنتاج
 
 **الإحصائيات:**
+
 - 📊 13 عمود جديد في users
 - 📊 11 عمود جديد في audit_logs
 - 📊 6 دوال قاعدة بيانات
@@ -446,6 +465,6 @@ SELECT * FROM audit_logs WHERE user_id = 'b8a902ed-196f-434b-9126-f37f3ee50eaf';
 
 ---
 
-*تم الإنشاء: 17 أكتوبر 2025*  
-*الإصدار: 2.0*  
-*المراجعة القادمة: بعد إضافة ميزات جديدة*
+_تم الإنشاء: 17 أكتوبر 2025_  
+_الإصدار: 2.0_  
+_المراجعة القادمة: بعد إضافة ميزات جديدة_

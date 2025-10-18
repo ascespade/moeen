@@ -3,16 +3,19 @@
 ## 🎯 المشكلة
 
 **الخطأ**:
+
 ```
 column "ip_address" is of type inet but expression is of type text
 ```
 
-**السبب**: 
+**السبب**:
+
 - يوجد trigger في قاعدة البيانات يحاول تسجيل IP address تلقائياً
 - الـ trigger يحاول إدراج قيمة text في عمود من نوع PostgreSQL `inet`
 - يحدث عند INSERT أو UPDATE على جداول patients وربما users
 
 **التأثير**:
+
 - ⚠️ لا يمكن إنشاء أو تحديث مرضى عبر Supabase client مباشرة
 - ✅ جميع عمليات القراءة (SELECT, JOIN, etc.) تعمل بشكل ممتاز
 - ✅ النظام يعمل بشكل طبيعي في Production (الـ trigger قد يعمل مع requests فعلية)
@@ -30,9 +33,9 @@ column "ip_address" is of type inet but expression is of type text
 
 ```sql
 -- Find all triggers that set ip_address
-SELECT 
-  trigger_name, 
-  event_object_table, 
+SELECT
+  trigger_name,
+  event_object_table,
   action_statement
 FROM information_schema.triggers
 WHERE trigger_name LIKE '%ip%' OR action_statement LIKE '%ip_address%';
@@ -60,7 +63,7 @@ BEGIN
   ELSE
     NEW.ip_address := NULL;
   END IF;
-  
+
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -107,15 +110,13 @@ ALTER TABLE patients ENABLE TRIGGER ALL;
 
 ```typescript
 // Instead of direct insert:
-const { data, error } = await supabase
-  .from('patients')
-  .insert([patientData]);
+const { data, error } = await supabase.from('patients').insert([patientData]);
 
 // Use API endpoint that handles IP properly:
 const response = await fetch('/api/patients', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(patientData)
+  body: JSON.stringify(patientData),
 });
 ```
 
@@ -160,18 +161,23 @@ const response = await fetch('/api/patients', {
 ## 🎯 التوصية النهائية
 
 ### للاختبارات:
+
 ✅ **الحل الحالي يعمل بشكل ممتاز**
+
 - 1,311 اختبار نجح (100%)
 - جميع الوظائف الحرجة مختبرة
 - النظام جاهز للـ Production
 
 ### للـ Production:
+
 ⭐ **يُنصح بإصلاح Trigger** (غير حرج)
+
 - يحسّن developer experience
 - يسمح بـ direct inserts في المستقبل
 - يزيل warning messages
 
 ### الأولوية:
+
 🟢 **منخفضة** - النظام يعمل بشكل كامل بدون الإصلاح
 
 ---
@@ -190,6 +196,6 @@ const response = await fetch('/api/patients', {
 **التأثير**: منخفض (لا يؤثر على Production)  
 **الحل الحالي**: ✅ Workaround يعمل 100%  
 **الحل المثالي**: تعديل trigger في Supabase Dashboard  
-**الأولوية**: منخفضة  
+**الأولوية**: منخفضة
 
 **حالة النظام**: ✅ **جاهز للـ Production**

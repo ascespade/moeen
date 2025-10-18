@@ -1,8 +1,8 @@
-import Stripe from "stripe";
+import Stripe from 'stripe';
 
 const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2023-10-16",
+      apiVersion: '2023-10-16',
     })
   : null;
 
@@ -26,7 +26,7 @@ export class StripePaymentService {
     if (!stripe) {
       return {
         success: false,
-        error: "Stripe not configured",
+        error: 'Stripe not configured',
       };
     }
 
@@ -53,7 +53,7 @@ export class StripePaymentService {
       return {
         success: false,
         error:
-          error instanceof Error ? error.message : "Payment creation failed",
+          error instanceof Error ? error.message : 'Payment creation failed',
       };
     }
   }
@@ -62,7 +62,7 @@ export class StripePaymentService {
     if (!stripe) {
       return {
         success: false,
-        error: "Stripe not configured",
+        error: 'Stripe not configured',
       };
     }
 
@@ -70,7 +70,7 @@ export class StripePaymentService {
       const paymentIntent =
         await stripe.paymentIntents.retrieve(paymentIntentId);
 
-      if (paymentIntent.status === "succeeded") {
+      if (paymentIntent.status === 'succeeded') {
         return {
           success: true,
           paymentIntentId: paymentIntent.id,
@@ -87,19 +87,19 @@ export class StripePaymentService {
         error:
           error instanceof Error
             ? error.message
-            : "Payment confirmation failed",
+            : 'Payment confirmation failed',
       };
     }
   }
 
   async refundPayment(
     paymentIntentId: string,
-    amount?: number,
+    amount?: number
   ): Promise<PaymentResult> {
     if (!stripe) {
       return {
         success: false,
-        error: "Stripe not configured",
+        error: 'Stripe not configured',
       };
     }
 
@@ -116,19 +116,19 @@ export class StripePaymentService {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Refund failed",
+        error: error instanceof Error ? error.message : 'Refund failed',
       };
     }
   }
 
   async handleWebhook(
     payload: string,
-    signature: string,
+    signature: string
   ): Promise<PaymentResult> {
     if (!stripe) {
       return {
         success: false,
-        error: "Stripe not configured",
+        error: 'Stripe not configured',
       };
     }
 
@@ -136,18 +136,18 @@ export class StripePaymentService {
       const event = stripe.webhooks.constructEvent(
         payload,
         signature,
-        process.env.STRIPE_WEBHOOK_SECRET!,
+        process.env.STRIPE_WEBHOOK_SECRET!
       );
 
       switch (event.type) {
-        case "payment_intent.succeeded":
+        case 'payment_intent.succeeded':
           const paymentIntent = event.data.object as Stripe.PaymentIntent;
           return {
             success: true,
             paymentIntentId: paymentIntent.id,
           };
 
-        case "payment_intent.payment_failed":
+        case 'payment_intent.payment_failed':
           const failedPayment = event.data.object as Stripe.PaymentIntent;
           return {
             success: false,
@@ -157,14 +157,14 @@ export class StripePaymentService {
         default:
           return {
             success: true,
-            paymentIntentId: "unknown_event",
+            paymentIntentId: 'unknown_event',
           };
       }
     } catch (error) {
       return {
         success: false,
         error:
-          error instanceof Error ? error.message : "Webhook processing failed",
+          error instanceof Error ? error.message : 'Webhook processing failed',
       };
     }
   }

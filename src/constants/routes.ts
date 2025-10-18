@@ -1,53 +1,53 @@
 // Route constants
 export const ROUTES = {
   AUTH: {
-    LOGIN: "/login",
-    REGISTER: "/register",
-    FORGOT_PASSWORD: "/forgot-password",
-    RESET_PASSWORD: "/reset-password",
+    LOGIN: '/login',
+    REGISTER: '/register',
+    FORGOT_PASSWORD: '/forgot-password',
+    RESET_PASSWORD: '/reset-password',
   },
   // Public routes
-  HOME: "/",
-  LOGIN: "/login",
-  REGISTER: "/register",
-  FORGOT_PASSWORD: "/forgot-password",
-  RESET_PASSWORD: "/reset-password",
+  HOME: '/',
+  LOGIN: '/login',
+  REGISTER: '/register',
+  FORGOT_PASSWORD: '/forgot-password',
+  RESET_PASSWORD: '/reset-password',
 
   // Dashboard routes
-  DASHBOARD: "/dashboard",
+  DASHBOARD: '/dashboard',
 
   // Admin routes
   ADMIN: {
-    DASHBOARD: "/admin/dashboard",
-    USERS: "/admin/users",
-    CHANNELS: "/admin/channels",
-    CONVERSATIONS: "/admin/conversations",
-    SETTINGS: "/admin/settings",
-    LOGS: "/admin/logs",
-    REVIEW: "/admin/review",
-    FLOW: "/admin/flow",
-    NOTIFICATIONS: "/admin/notifications",
-    MESSAGES: "/admin/messages",
-    SYSTEM: "/admin/system",
-    ANALYTICS: "/admin/analytics",
-    SECURITY: "/admin/security",
-    INTEGRATIONS: "/admin/integrations",
-    PERFORMANCE: "/admin/performance",
+    DASHBOARD: '/admin/dashboard',
+    USERS: '/admin/users',
+    CHANNELS: '/admin/channels',
+    CONVERSATIONS: '/admin/conversations',
+    SETTINGS: '/admin/settings',
+    LOGS: '/admin/logs',
+    REVIEW: '/admin/review',
+    FLOW: '/admin/flow',
+    NOTIFICATIONS: '/admin/notifications',
+    MESSAGES: '/admin/messages',
+    SYSTEM: '/admin/system',
+    ANALYTICS: '/admin/analytics',
+    SECURITY: '/admin/security',
+    INTEGRATIONS: '/admin/integrations',
+    PERFORMANCE: '/admin/performance',
   },
 
   // User routes
   USER: {
-    DASHBOARD: "/dashboard",
-    PROFILE: "/profile",
-    SETTINGS: "/settings",
-    CHANNELS: "/channels",
-    CONVERSATIONS: "/conversations",
+    DASHBOARD: '/dashboard',
+    PROFILE: '/profile',
+    SETTINGS: '/settings',
+    CHANNELS: '/channels',
+    CONVERSATIONS: '/conversations',
   },
 
   // Channel routes
   CHANNEL: {
-    LIST: "/channels",
-    CREATE: "/channels/create",
+    LIST: '/channels',
+    CREATE: '/channels/create',
     VIEW: (id: string) => `/channels/${id}`,
     EDIT: (id: string) => `/channels/${id}/edit`,
     SETTINGS: (id: string) => `/channels/${id}/settings`,
@@ -55,87 +55,87 @@ export const ROUTES = {
 
   // Conversation routes
   CONVERSATION: {
-    LIST: "/conversations",
+    LIST: '/conversations',
     VIEW: (id: string) => `/conversations/${id}`,
   },
 
   // Chatbot routes
   CHATBOT: {
-    FLOWS: "/chatbot/flows",
+    FLOWS: '/chatbot/flows',
     FLOW: (id: string) => `/chatbot/flows/${id}`,
-    TEMPLATES: "/chatbot/templates",
+    TEMPLATES: '/chatbot/templates',
     TEMPLATE: (id: string) => `/chatbot/templates/${id}`,
-    INTEGRATIONS: "/chatbot/integrations",
-    ANALYTICS: "/chatbot/analytics",
+    INTEGRATIONS: '/chatbot/integrations',
+    ANALYTICS: '/chatbot/analytics',
   },
 
   // CRM routes
   CRM: {
-    DASHBOARD: "/crm/dashboard",
-    CONTACTS: "/crm/contacts",
+    DASHBOARD: '/crm/dashboard',
+    CONTACTS: '/crm/contacts',
     CONTACT: (id: string) => `/crm/contacts/${id}`,
-    LEADS: "/crm/leads",
-    DEALS: "/crm/deals",
-    ACTIVITIES: "/crm/activities",
-    FLOWS: "/crm/flows",
+    LEADS: '/crm/leads',
+    DEALS: '/crm/deals',
+    ACTIVITIES: '/crm/activities',
+    FLOWS: '/crm/flows',
   },
 
   // Healthcare routes
   HEALTH: {
-    APPOINTMENTS: "/appointments",
-    SESSIONS: "/sessions",
-    PATIENTS: "/patients",
+    APPOINTMENTS: '/appointments',
+    SESSIONS: '/sessions',
+    PATIENTS: '/patients',
     PATIENT: (id: string) => `/patients/${id}`,
-    INSURANCE_CLAIMS: "/insurance-claims",
-    MEDICAL_FILE: "/medical-file",
-    APPROVALS: "/approvals",
-    INSURANCE: "/insurance",
-    THERAPY: "/therapy",
-    TRAINING: "/training",
-    FAMILY_SUPPORT: "/family-support",
-    PROGRESS_TRACKING: "/progress-tracking",
+    INSURANCE_CLAIMS: '/insurance-claims',
+    MEDICAL_FILE: '/medical-file',
+    APPROVALS: '/approvals',
+    INSURANCE: '/insurance',
+    THERAPY: '/therapy',
+    TRAINING: '/training',
+    FAMILY_SUPPORT: '/family-support',
+    PROGRESS_TRACKING: '/progress-tracking',
   },
 
   // Marketing routes
   MARKETING: {
-    FEATURES: "/features",
-    PRICING: "/pricing",
-    FAQ: "/faq",
-    DOCUMENTATION: "/project-documentation",
+    FEATURES: '/features',
+    PRICING: '/pricing',
+    FAQ: '/faq',
+    DOCUMENTATION: '/project-documentation',
   },
 
   // Info routes
   INFO: {
-    ABOUT: "/about",
-    CONTACT: "/contact",
+    ABOUT: '/about',
+    CONTACT: '/contact',
   },
 
   // Legal routes
   LEGAL: {
-    PRIVACY: "/privacy",
-    TERMS: "/terms",
+    PRIVACY: '/privacy',
+    TERMS: '/terms',
   },
 
   // Notifications and Messages
-  NOTIFICATIONS: "/notifications",
-  MESSAGES: "/messages",
+  NOTIFICATIONS: '/notifications',
+  MESSAGES: '/messages',
 
   // Settings
-  SETTINGS: "/settings",
+  SETTINGS: '/settings',
 
   // API routes
   API: {
-    AUTH: "/api/auth",
-    USERS: "/api/users",
-    CHANNELS: "/api/channels",
-    MESSAGES: "/api/messages",
-    CONVERSATIONS: "/api/conversations",
-    SETTINGS: "/api/settings",
-    WEBHOOKS: "/api/webhooks",
-    AI: "/api/ai",
-    LOGS: "/api/logs",
-    USER_PREFERENCES: "/api/user/preferences",
-    I18N: "/api/i18n",
+    AUTH: '/api/auth',
+    USERS: '/api/users',
+    CHANNELS: '/api/channels',
+    MESSAGES: '/api/messages',
+    CONVERSATIONS: '/api/conversations',
+    SETTINGS: '/api/settings',
+    WEBHOOKS: '/api/webhooks',
+    AI: '/api/ai',
+    LOGS: '/api/logs',
+    USER_PREFERENCES: '/api/user/preferences',
+    I18N: '/api/i18n',
   },
 } as const;
 

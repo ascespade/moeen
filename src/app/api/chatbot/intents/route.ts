@@ -1,18 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 // GET /api/chatbot/intents - جلب جميع النيات
 export async function GET(request: NextRequest) {
   try {
     const { data: intents, error } = await supabase
-      .from("chatbot_intents")
-      .select("*")
-      .order("priority", { ascending: true });
+      .from('chatbot_intents')
+      .select('*')
+      .order('priority', { ascending: true });
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
@@ -21,8 +21,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ intents });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     } = body;
 
     const { data: intent, error } = await supabase
-      .from("chatbot_intents")
+      .from('chatbot_intents')
       .insert({
         name,
         description,
@@ -61,8 +61,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ intent }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }

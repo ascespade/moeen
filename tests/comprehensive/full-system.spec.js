@@ -1,20 +1,24 @@
-
 import { test, expect } from '@playwright/test';
 
 test.describe('Comprehensive System Tests', () => {
   test('Full system integration test', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/Moeen/);
-    
+
     // Test all major functionality
     await testNavigation(page);
     await testDatabaseConnection(page);
     await testAuthentication(page);
     await testCRUDOperations(page);
   });
-  
+
   async function testNavigation(page) {
-    const navItems = ['Dashboard', 'Patients', 'Appointments', 'Medical Records'];
+    const navItems = [
+      'Dashboard',
+      'Patients',
+      'Appointments',
+      'Medical Records',
+    ];
     for (const item of navItems) {
       if (await page.locator(`text=${item}`).isVisible()) {
         await page.click(`text=${item}`);
@@ -22,19 +26,19 @@ test.describe('Comprehensive System Tests', () => {
       }
     }
   }
-  
+
   async function testDatabaseConnection(page) {
     const response = await page.request.get('/api/health');
     expect(response.status()).toBe(200);
     const data = await response.json();
     expect(data.database).toBe('connected');
   }
-  
+
   async function testAuthentication(page) {
     await page.goto('/login');
     await expect(page.locator('form')).toBeVisible();
   }
-  
+
   async function testCRUDOperations(page) {
     // Test patient CRUD
     await page.goto('/patients');

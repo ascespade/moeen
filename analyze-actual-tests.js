@@ -35,7 +35,7 @@ const testFiles = [
   'tests/e2e/deep-03-all-fixed.spec.ts',
   'tests/e2e/deep-04-final-working.spec.ts',
   'tests/e2e/deep-05-fully-working.spec.ts',
-  'tests/e2e/massive-1000-tests.spec.ts'
+  'tests/e2e/massive-1000-tests.spec.ts',
 ];
 
 let totalTests = 0;
@@ -47,7 +47,7 @@ testFiles.forEach(file => {
     const testMatches = content.match(/test\(/g) || [];
     const testCount = testMatches.length;
     totalTests += testCount;
-    
+
     const fileName = path.basename(file);
     report[fileName] = testCount;
     console.log(`✅ ${fileName.padEnd(50)} ${testCount} اختبارات`);
@@ -57,4 +57,3 @@ testFiles.forEach(file => {
 console.log('\n' + '='.repeat(70));
 console.log(`إجمالي الاختبارات الفعلية: ${totalTests}`);
 console.log('='.repeat(70));
-

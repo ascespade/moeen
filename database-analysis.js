@@ -30,7 +30,7 @@ async function analyzeDatabase() {
     // 1. Get all tables
     console.log('📋 1. DATABASE TABLES');
     console.log('='.repeat(50));
-    
+
     const { data: tables, error: tablesError } = await supabase
       .from('information_schema.tables')
       .select('table_name, table_type')
@@ -54,26 +54,37 @@ async function analyzeDatabase() {
     for (const table of tables) {
       if (table.table_type === 'BASE TABLE') {
         console.log(`\n📋 Table: ${table.table_name}`);
-        
+
         // Get columns
         const { data: columns, error: columnsError } = await supabase
           .from('information_schema.columns')
-          .select('column_name, data_type, is_nullable, column_default, character_maximum_length')
+          .select(
+            'column_name, data_type, is_nullable, column_default, character_maximum_length'
+          )
           .eq('table_schema', 'public')
           .eq('table_name', table.table_name)
           .order('ordinal_position');
 
         if (columnsError) {
-          console.error(`Error fetching columns for ${table.table_name}:`, columnsError);
+          console.error(
+            `Error fetching columns for ${table.table_name}:`,
+            columnsError
+          );
           continue;
         }
 
         console.log('  Columns:');
         columns.forEach(col => {
           const nullable = col.is_nullable === 'YES' ? 'NULL' : 'NOT NULL';
-          const length = col.character_maximum_length ? `(${col.character_maximum_length})` : '';
-          const defaultVal = col.column_default ? ` DEFAULT ${col.column_default}` : '';
-          console.log(`    - ${col.column_name}: ${col.data_type}${length} ${nullable}${defaultVal}`);
+          const length = col.character_maximum_length
+            ? `(${col.character_maximum_length})`
+            : '';
+          const defaultVal = col.column_default
+            ? ` DEFAULT ${col.column_default}`
+            : '';
+          console.log(
+            `    - ${col.column_name}: ${col.data_type}${length} ${nullable}${defaultVal}`
+          );
         });
 
         // Get primary keys
@@ -82,14 +93,18 @@ async function analyzeDatabase() {
           .select('column_name')
           .eq('table_schema', 'public')
           .eq('table_name', table.table_name)
-          .eq('constraint_name', (await supabase
-            .from('information_schema.table_constraints')
-            .select('constraint_name')
-            .eq('table_schema', 'public')
-            .eq('table_name', table.table_name)
-            .eq('constraint_type', 'PRIMARY KEY')
-            .single()
-          ).data?.constraint_name);
+          .eq(
+            'constraint_name',
+            (
+              await supabase
+                .from('information_schema.table_constraints')
+                .select('constraint_name')
+                .eq('table_schema', 'public')
+                .eq('table_name', table.table_name)
+                .eq('constraint_type', 'PRIMARY KEY')
+                .single()
+            ).data?.constraint_name
+          );
 
         if (primaryKeys && primaryKeys.length > 0) {
           console.log('  Primary Keys:');
@@ -113,9 +128,11 @@ async function analyzeDatabase() {
               .select('table_name, column_name')
               .eq('constraint_name', fk.constraint_name)
               .single();
-            
+
             if (refTable) {
-              console.log(`    - ${fk.column_name} -> ${refTable.table_name}.${refTable.column_name}`);
+              console.log(
+                `    - ${fk.column_name} -> ${refTable.table_name}.${refTable.column_name}`
+              );
             }
           }
         }
@@ -156,7 +173,9 @@ async function analyzeDatabase() {
     } else {
       console.log(`Found ${policies.length} RLS policies:`);
       policies.forEach(policy => {
-        console.log(`  - ${policy.tablename}.${policy.policyname} (${policy.cmd})`);
+        console.log(
+          `  - ${policy.tablename}.${policy.policyname} (${policy.cmd})`
+        );
       });
     }
 
@@ -170,30 +189,34 @@ async function analyzeDatabase() {
         name: 'Orphaned conversations without users',
         query: `SELECT COUNT(*) as count FROM conversations c 
                 LEFT JOIN users u ON c.assigned_to = u.id 
-                WHERE c.assigned_to IS NOT NULL AND u.id IS NULL`
+                WHERE c.assigned_to IS NOT NULL AND u.id IS NULL`,
       },
       {
         name: 'Orphaned messages without conversations',
         query: `SELECT COUNT(*) as count FROM messages m 
                 LEFT JOIN conversations c ON m.conversation_id = c.id 
-                WHERE c.id IS NULL`
+                WHERE c.id IS NULL`,
       },
       {
         name: 'Orphaned appointments without patients',
         query: `SELECT COUNT(*) as count FROM appointments a 
                 LEFT JOIN patients p ON a.patient_id = p.id 
-                WHERE p.id IS NULL`
-      }
+                WHERE p.id IS NULL`,
+      },
     ];
 
     for (const check of integrityChecks) {
       try {
-        const { data, error } = await supabase.rpc('exec_sql', { sql: check.query });
+        const { data, error } = await supabase.rpc('exec_sql', {
+          sql: check.query,
+        });
         if (error) {
           console.log(`  ❌ ${check.name}: Error - ${error.message}`);
         } else {
           const count = data?.[0]?.count || 0;
-          console.log(`  ${count > 0 ? '⚠️' : '✅'} ${check.name}: ${count} issues found`);
+          console.log(
+            `  ${count > 0 ? '⚠️' : '✅'} ${check.name}: ${count} issues found`
+          );
         }
       } catch (err) {
         console.log(`  ❌ ${check.name}: ${err.message}`);
@@ -207,25 +230,27 @@ async function analyzeDatabase() {
     const healthChecks = [
       {
         name: 'Total users',
-        query: 'SELECT COUNT(*) as count FROM users'
+        query: 'SELECT COUNT(*) as count FROM users',
       },
       {
         name: 'Total conversations',
-        query: 'SELECT COUNT(*) as count FROM conversations'
+        query: 'SELECT COUNT(*) as count FROM conversations',
       },
       {
         name: 'Total appointments',
-        query: 'SELECT COUNT(*) as count FROM appointments'
+        query: 'SELECT COUNT(*) as count FROM appointments',
       },
       {
         name: 'Total patients',
-        query: 'SELECT COUNT(*) as count FROM patients'
-      }
+        query: 'SELECT COUNT(*) as count FROM patients',
+      },
     ];
 
     for (const check of healthChecks) {
       try {
-        const { data, error } = await supabase.rpc('exec_sql', { sql: check.query });
+        const { data, error } = await supabase.rpc('exec_sql', {
+          sql: check.query,
+        });
         if (error) {
           console.log(`  ❌ ${check.name}: Error - ${error.message}`);
         } else {
@@ -238,7 +263,6 @@ async function analyzeDatabase() {
     }
 
     console.log('\n✅ Database analysis completed!');
-
   } catch (error) {
     console.error('❌ Analysis failed:', error);
   }

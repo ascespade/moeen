@@ -28,13 +28,13 @@ class SmartBootloaderAgent {
 
   async init() {
     console.log('🚀 بدء تشغيل Smart Bootloader Agent...');
-    
+
     // إنشاء المجلدات المطلوبة
     await this.ensureDirectories();
-    
+
     // تسجيل بداية التشغيل
     await this.log('🤖 Smart Bootloader Agent بدأ التشغيل');
-    
+
     this.isRunning = true;
   }
 
@@ -52,13 +52,13 @@ class SmartBootloaderAgent {
   async log(message) {
     const timestamp = new Date().toISOString();
     const logMessage = `[${timestamp}] ${message}\n`;
-    
+
     try {
       await fs.appendFile(this.logFile, logMessage);
     } catch (error) {
       console.error('خطأ في كتابة السجل:', error.message);
     }
-    
+
     console.log(message);
   }
 
@@ -68,33 +68,37 @@ class SmartBootloaderAgent {
         cwd: this.projectRoot,
         encoding: 'utf8',
         stdio: options.silent ? 'pipe' : 'inherit',
-        ...options
+        ...options,
       });
       return { success: true, output: result };
     } catch (error) {
-      return { 
-        success: false, 
-        error: error.message, 
-        output: error.stdout || error.stderr || ''
+      return {
+        success: false,
+        error: error.message,
+        output: error.stdout || error.stderr || '',
       };
     }
   }
 
   async analyzeProject() {
     await this.log('🔍 تحليل حالة المشروع...');
-    
+
     const analysis = {
       eslint: { errors: 0, warnings: 0 },
       typescript: { errors: 0, warnings: 0 },
       tests: { passed: 0, failed: 0 },
-      build: { success: false }
+      build: { success: false },
     };
 
     // فحص ESLint
-    const eslintResult = await this.runCommand('npm run lint:check', { silent: true });
+    const eslintResult = await this.runCommand('npm run lint:check', {
+      silent: true,
+    });
     if (!eslintResult.success) {
       const output = eslintResult.output || eslintResult.error || '';
-      const errorMatch = output.match(/(\d+) problems \((\d+) errors, (\d+) warnings\)/);
+      const errorMatch = output.match(
+        /(\d+) problems \((\d+) errors, (\d+) warnings\)/
+      );
       if (errorMatch) {
         analysis.eslint.errors = parseInt(errorMatch[2]);
         analysis.eslint.warnings = parseInt(errorMatch[3]);
@@ -102,7 +106,9 @@ class SmartBootloaderAgent {
     }
 
     // فحص TypeScript
-    const tsResult = await this.runCommand('npm run type:check', { silent: true });
+    const tsResult = await this.runCommand('npm run type:check', {
+      silent: true,
+    });
     if (!tsResult.success) {
       const output = tsResult.output || tsResult.error || '';
       const errorCount = (output.match(/error TS/g) || []).length;
@@ -110,7 +116,9 @@ class SmartBootloaderAgent {
     }
 
     // فحص الاختبارات
-    const testResult = await this.runCommand('npm run test:unit', { silent: true });
+    const testResult = await this.runCommand('npm run test:unit', {
+      silent: true,
+    });
     if (testResult.success) {
       analysis.tests.passed = 1;
     } else {
@@ -118,20 +126,24 @@ class SmartBootloaderAgent {
     }
 
     // فحص البناء
-    const buildResult = await this.runCommand('npm run build', { silent: true });
+    const buildResult = await this.runCommand('npm run build', {
+      silent: true,
+    });
     analysis.build.success = buildResult.success;
 
-    await this.log(`📊 نتائج التحليل: ESLint(${analysis.eslint.errors}E/${analysis.eslint.warnings}W), TypeScript(${analysis.typescript.errors}E), Tests(${analysis.tests.passed}P/${analysis.tests.failed}F), Build(${analysis.build.success ? '✅' : '❌'})`);
-    
+    await this.log(
+      `📊 نتائج التحليل: ESLint(${analysis.eslint.errors}E/${analysis.eslint.warnings}W), TypeScript(${analysis.typescript.errors}E), Tests(${analysis.tests.passed}P/${analysis.tests.failed}F), Build(${analysis.build.success ? '✅' : '❌'})`
+    );
+
     return analysis;
   }
 
   async fixESLintIssues() {
     await this.log('🔧 إصلاح مشاكل ESLint...');
-    
+
     // تشغيل ESLint --fix
     const fixResult = await this.runCommand('npm run lint:fix');
-    
+
     if (fixResult.success) {
       await this.log('✅ تم إصلاح مشاكل ESLint بنجاح');
       this.fixesApplied++;
@@ -142,15 +154,15 @@ class SmartBootloaderAgent {
 
   async fixTypeScriptIssues() {
     await this.log('🔧 إصلاح مشاكل TypeScript...');
-    
+
     // محاولة إصلاح مشاكل TypeScript الأساسية
     const commonFixes = [
       // إصلاح مشاكل الـ imports
       'find . -name "*.ts" -o -name "*.tsx" | grep -v node_modules | xargs sed -i "s/import { \\([^}]*\\) } from \'@\\/types\';/import type { \\1 } from \'@\\/types\';/g"',
-      
+
       // إصلاح مشاكل JSX
       'find . -name "*.tsx" | grep -v node_modules | xargs sed -i "s/React\\.FC<{[^}]*}>/React.FC/g"',
-      
+
       // إصلاح مشاكل الـ async/await
       'find . -name "*.ts" -o -name "*.tsx" | grep -v node_modules | xargs sed -i "s/async function/async function/g"',
     ];
@@ -169,12 +181,12 @@ class SmartBootloaderAgent {
 
   async fixTestIssues() {
     await this.log('🧪 إصلاح مشاكل الاختبارات...');
-    
+
     // إصلاح مشاكل الاختبارات الأساسية
     const testFixes = [
       // إصلاح imports في ملفات الاختبار
       'find tests/ -name "*.ts" -o -name "*.js" | xargs sed -i "s/import { \\([^}]*\\) } from \'@\\/types\';/import type { \\1 } from \'@\\/types\';/g"',
-      
+
       // إصلاح مشاكل describe/it
       'find tests/ -name "*.ts" -o -name "*.js" | xargs sed -i "s/describe\\(/describe(/g"',
       'find tests/ -name "*.ts" -o -name "*.js" | xargs sed -i "s/it\\(/it(/g"',
@@ -194,15 +206,15 @@ class SmartBootloaderAgent {
 
   async runTests() {
     await this.log('🧪 تشغيل الاختبارات...');
-    
+
     const testCommands = [
       'npm run test:unit',
       'npm run test:integration',
-      'npm run test:e2e'
+      'npm run test:e2e',
     ];
 
     let allPassed = true;
-    
+
     for (const cmd of testCommands) {
       const result = await this.runCommand(cmd, { silent: true });
       if (!result.success) {
@@ -218,9 +230,9 @@ class SmartBootloaderAgent {
 
   async buildProject() {
     await this.log('🏗️ بناء المشروع...');
-    
+
     const buildResult = await this.runCommand('npm run build');
-    
+
     if (buildResult.success) {
       await this.log('✅ تم بناء المشروع بنجاح');
       return true;
@@ -272,64 +284,67 @@ ${this.generateRecommendations(analysis)}
 
   generateRecommendations(analysis) {
     const recommendations = [];
-    
+
     if (analysis.eslint.errors > 0) {
       recommendations.push('- 🔧 إصلاح أخطاء ESLint المتبقية');
     }
-    
+
     if (analysis.typescript.errors > 0) {
       recommendations.push('- 🔧 إصلاح أخطاء TypeScript المتبقية');
     }
-    
+
     if (analysis.tests.failed > 0) {
       recommendations.push('- 🧪 إصلاح الاختبارات الفاشلة');
     }
-    
+
     if (!analysis.build.success) {
       recommendations.push('- 🏗️ إصلاح مشاكل البناء');
     }
-    
+
     if (recommendations.length === 0) {
       recommendations.push('- ✅ المشروع في حالة ممتازة!');
     }
-    
+
     return recommendations.join('\n');
   }
 
   async runCycle() {
     this.cycleCount++;
     await this.log(`\n🔄 بدء الدورة ${this.cycleCount}...`);
-    
+
     // تحليل المشروع
     const analysis = await this.analyzeProject();
-    
+
     // تطبيق الإصلاحات
     if (analysis.eslint.errors > 0 || analysis.eslint.warnings > 0) {
       await this.fixESLintIssues();
     }
-    
+
     if (analysis.typescript.errors > 0) {
       await this.fixTypeScriptIssues();
     }
-    
+
     if (analysis.tests.failed > 0) {
       await this.fixTestIssues();
     }
-    
+
     // تشغيل الاختبارات
     const testsPassed = await this.runTests();
-    
+
     // بناء المشروع
     const buildSuccess = await this.buildProject();
-    
+
     // إنشاء التقرير
     await this.generateReport(analysis);
-    
+
     // تحديد ما إذا كان يجب الاستمرار
-    const shouldContinue = this.cycleCount < this.maxCycles && 
-                          (analysis.eslint.errors > 0 || analysis.typescript.errors > 0 || 
-                           !testsPassed || !buildSuccess);
-    
+    const shouldContinue =
+      this.cycleCount < this.maxCycles &&
+      (analysis.eslint.errors > 0 ||
+        analysis.typescript.errors > 0 ||
+        !testsPassed ||
+        !buildSuccess);
+
     if (shouldContinue) {
       await this.log(`⏳ انتظار 5 ثواني قبل الدورة التالية...`);
       await new Promise(resolve => setTimeout(resolve, 5000));
@@ -343,16 +358,15 @@ ${this.generateRecommendations(analysis)}
   async run() {
     try {
       await this.init();
-      
+
       while (this.isRunning && this.cycleCount < this.maxCycles) {
         const shouldContinue = await this.runCycle();
         if (!shouldContinue) {
           break;
         }
       }
-      
+
       await this.log('🏁 انتهى تشغيل Smart Bootloader Agent');
-      
     } catch (error) {
       await this.log(`❌ خطأ في Smart Bootloader Agent: ${error.message}`);
       console.error(error);

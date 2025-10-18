@@ -123,6 +123,7 @@
 ### ✅ **Homepage (`src/app/page.tsx`)**
 
 **تم ترجمة:**
+
 - ✅ Navigation menu (all links)
 - ✅ Hero slider (3 slides × 4 texts each)
 - ✅ Services section (6 services)
@@ -132,12 +133,14 @@
 - ✅ All buttons and links
 
 **قبل:**
+
 ```tsx
 <h1>مرحباً بك في مُعين</h1>
 <p>منصة الرعاية الصحية المتخصصة</p>
 ```
 
 **بعد:**
+
 ```tsx
 <h1>{t('home.hero.title')}</h1>
 <p>{t('home.hero.subtitle')}</p>
@@ -146,6 +149,7 @@
 ### ✅ **Login Page (`src/app/(auth)/login/page.tsx`)**
 
 **تم ترجمة:**
+
 - ✅ Welcome message
 - ✅ Form labels (email, password)
 - ✅ Buttons (login, test buttons)
@@ -191,7 +195,7 @@ import { useT } from '@/components/providers/I18nProvider';
 
 export default function MyComponent() {
   const { t } = useT();
-  
+
   return (
     <div>
       <h1>{t('common.welcome')}</h1>
@@ -231,11 +235,13 @@ const items = getItems(t);
 ### الخطوة 1: تطبيق SQL Migration
 
 **في Supabase Studio:**
+
 ```
 https://supabase.com/dashboard/project/YOUR_PROJECT/sql
 ```
 
 **انسخ والصق:**
+
 ```sql
 -- من ملف: apply-translations-migration.sql
 CREATE TABLE IF NOT EXISTS languages (
@@ -255,6 +261,7 @@ node scripts/comprehensive-translations.js
 ```
 
 **النتيجة المتوقعة:**
+
 ```
 🌐 Seeding comprehensive translations...
 📝 Ensuring languages...
@@ -280,29 +287,29 @@ node scripts/comprehensive-translations.js
 
 ```javascript
 // Common
-t('common.loading')          // "جاري التحميل..." / "Loading..."
-t('common.save')             // "حفظ" / "Save"
-t('common.search')           // "بحث" / "Search"
-t('common.welcome')          // "مرحباً" / "Welcome"
+t('common.loading'); // "جاري التحميل..." / "Loading..."
+t('common.save'); // "حفظ" / "Save"
+t('common.search'); // "بحث" / "Search"
+t('common.welcome'); // "مرحباً" / "Welcome"
 
 // Auth
-t('auth.login')              // "تسجيل الدخول" / "Login"
-t('auth.email')              // "البريد الإلكتروني" / "Email"
-t('auth.password')           // "كلمة المرور" / "Password"
+t('auth.login'); // "تسجيل الدخول" / "Login"
+t('auth.email'); // "البريد الإلكتروني" / "Email"
+t('auth.password'); // "كلمة المرور" / "Password"
 
 // Navigation
-t('nav.dashboard')           // "لوحة التحكم" / "Dashboard"
-t('nav.settings')            // "الإعدادات" / "Settings"
+t('nav.dashboard'); // "لوحة التحكم" / "Dashboard"
+t('nav.settings'); // "الإعدادات" / "Settings"
 
 // Status
-t('status.active')           // "نشط" / "Active"
-t('status.pending')          // "قيد الانتظار" / "Pending"
-t('status.completed')        // "مكتمل" / "Completed"
+t('status.active'); // "نشط" / "Active"
+t('status.pending'); // "قيد الانتظار" / "Pending"
+t('status.completed'); // "مكتمل" / "Completed"
 
 // Time
-t('time.today')              // "اليوم" / "Today"
-t('day.monday')              // "الاثنين" / "Monday"
-t('month.january')           // "يناير" / "January"
+t('time.today'); // "اليوم" / "Today"
+t('day.monday'); // "الاثنين" / "Monday"
+t('month.january'); // "يناير" / "January"
 ```
 
 ---
@@ -333,29 +340,35 @@ t('month.january')           // "يناير" / "January"
 ### إضافة ترجمات جديدة:
 
 1. أضف المفتاح في `scripts/comprehensive-translations.js`:
+
 ```javascript
 'new.key': { ar: 'نص عربي', en: 'English text' },
 ```
 
 2. شغّل:
+
 ```bash
 node scripts/comprehensive-translations.js
 ```
 
 3. استخدم في الكود:
+
 ```tsx
-{t('new.key')}
+{
+  t('new.key');
+}
 ```
 
 ### تطبيق على صفحات أخرى:
 
 اتبع نفس pattern:
+
 ```tsx
 import { useT } from '@/components/providers/I18nProvider';
 
 export default function MyPage() {
   const { t } = useT();
-  
+
   return (
     <div>
       <h1>{t('page.title')}</h1>

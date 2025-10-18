@@ -1,8 +1,8 @@
-"use client";
-import logger from "@/lib/monitoring/logger";
+'use client';
+import logger from '@/lib/monitoring/logger';
 
-import { useCallback } from "react";
-import { useT } from "@/hooks/useT";
+import { useCallback } from 'react';
+import { useT } from '@/hooks/useT';
 // import { toast } from '@/components/ui/Toast';
 // import { logger } from '@/lib/logger';
 
@@ -20,28 +20,28 @@ export function useErrorHandler() {
       const {
         showToast = true,
         logError = true,
-        fallbackMessage = t("error.generic"),
+        fallbackMessage = t('error.generic'),
       } = options;
 
       let errorMessage = fallbackMessage;
-      let errorCode = "UNKNOWN_ERROR";
+      let errorCode = 'UNKNOWN_ERROR';
 
       // Extract error information
       if (error instanceof Error) {
         errorMessage = error.message;
-      } else if (typeof error === "string") {
+      } else if (typeof error === 'string') {
         errorMessage = error;
-      } else if (error && typeof error === "object" && "message" in error) {
+      } else if (error && typeof error === 'object' && 'message' in error) {
         errorMessage = (error as any).message;
       }
 
       // Log error if enabled
       if (logError) {
         // Log to external service in production
-        if (process.env.NODE_ENV === "production") {
-          fetch("/api/errors", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+        if (process.env.NODE_ENV === 'production') {
+          fetch('/api/errors', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               message: errorMessage,
               stack: error instanceof Error ? error.stack : undefined,
@@ -55,7 +55,7 @@ export function useErrorHandler() {
 
       // Show toast if enabled
       if (showToast) {
-        console.error("Error:", errorMessage);
+        console.error('Error:', errorMessage);
       }
 
       return {
@@ -63,7 +63,7 @@ export function useErrorHandler() {
         code: errorCode,
       };
     },
-    [t],
+    [t]
   );
 
   const handleAsyncError = useCallback(
@@ -74,7 +74,7 @@ export function useErrorHandler() {
         return handleError(error, options);
       }
     },
-    [handleError],
+    [handleError]
   );
 
   return {

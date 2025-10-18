@@ -1,6 +1,28 @@
 {
-  "extends": "next/core-web-vitals",
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "next/core-web-vitals"
+  ],
   "rules": {
-    "react/no-unescaped-entities": "off"
-  }
+    "prettier/prettier": ["warn"],
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-img-element": "warn",
+    "react-hooks/exhaustive-deps": "warn",
+    "import/no-anonymous-default-export": "warn",
+    "@next/next/no-assign-module-variable": "warn"
+  },
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    ".github/workflows",
+    ".agent-system/**",
+    "src/__tests__/**",
+    "src/scripts/**"
+  ]
 }

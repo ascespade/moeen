@@ -10,7 +10,7 @@ let testCount = 0;
 // 1. Database Read Tests (200 tests)
 for (let i = 1; i <= 200; i++) {
   tests.push(`  test('DB-READ-${i}: Read operation ${i}', async () => {
-    const { data, error } = await supabase.from('${['users', 'patients', 'doctors', 'appointments'][i % 4]}').select('*').limit(${i % 10 + 1});
+    const { data, error } = await supabase.from('${['users', 'patients', 'doctors', 'appointments'][i % 4]}').select('*').limit(${(i % 10) + 1});
     expect(error).toBeNull();
   });`);
   testCount++;
@@ -19,7 +19,7 @@ for (let i = 1; i <= 200; i++) {
 // 2. Query Filter Tests (200 tests)
 for (let i = 1; i <= 200; i++) {
   tests.push(`  test('DB-FILTER-${i}: Filter test ${i}', async () => {
-    const { data, error } = await supabase.from('${['users', 'patients', 'appointments'][i % 3]}').select('*').limit(${i % 5 + 5});
+    const { data, error } = await supabase.from('${['users', 'patients', 'appointments'][i % 3]}').select('*').limit(${(i % 5) + 5});
     expect(error).toBeNull();
   });`);
   testCount++;
@@ -28,14 +28,21 @@ for (let i = 1; i <= 200; i++) {
 // 3. Join Tests (200 tests)
 for (let i = 1; i <= 200; i++) {
   tests.push(`  test('DB-JOIN-${i}: Join query ${i}', async () => {
-    const { data, error } = await supabase.from('appointments').select('*, patient:patient_id(*), doctor:doctor_id(*)').limit(${i % 3 + 1});
+    const { data, error } = await supabase.from('appointments').select('*, patient:patient_id(*), doctor:doctor_id(*)').limit(${(i % 3) + 1});
     expect(error).toBeNull();
   });`);
   testCount++;
 }
 
 // 4. UI Tests (300 tests)
-const pages = ['/dashboard', '/dashboard/users', '/dashboard/patients', '/dashboard/appointments', '/dashboard/reports', '/dashboard/settings'];
+const pages = [
+  '/dashboard',
+  '/dashboard/users',
+  '/dashboard/patients',
+  '/dashboard/appointments',
+  '/dashboard/reports',
+  '/dashboard/settings',
+];
 for (let i = 1; i <= 300; i++) {
   tests.push(`  test('UI-PAGE-${i}: Page test ${i}', async ({ page }) => {
     await page.goto('${pages[i % pages.length]}').catch(() => page.goto('/dashboard'));
@@ -46,7 +53,14 @@ for (let i = 1; i <= 300; i++) {
 }
 
 // 5. API Tests (150 tests)
-const endpoints = ['/api/users', '/api/patients', '/api/appointments', '/api/doctors', '/api/reports', '/api/stats'];
+const endpoints = [
+  '/api/users',
+  '/api/patients',
+  '/api/appointments',
+  '/api/doctors',
+  '/api/reports',
+  '/api/stats',
+];
 for (let i = 1; i <= 150; i++) {
   tests.push(`  test('API-${i}: API test ${i}', async ({ request }) => {
     const response = await request.get('${endpoints[i % endpoints.length]}').catch(() => ({ status: () => 404 }));

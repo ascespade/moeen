@@ -3,7 +3,7 @@
  * Performance monitoring and optimization utilities
  */
 
-import { logger } from "../monitoring/logger";
+import { logger } from '../monitoring/logger';
 
 interface PerformanceMetrics {
   operation: string;
@@ -25,7 +25,7 @@ class PerformanceMonitor {
   startOperation(
     operationId: string,
     operation: string,
-    metadata?: Record<string, any>,
+    metadata?: Record<string, any>
   ): void {
     const startTime = performance.now();
     const memoryUsage = process.memoryUsage();
@@ -105,7 +105,7 @@ export function measurePerformance(operationName?: string) {
   return function (
     target: any,
     propertyName: string,
-    descriptor: PropertyDescriptor,
+    descriptor: PropertyDescriptor
   ) {
     const method = descriptor.value;
     const operation =
@@ -136,22 +136,22 @@ export function measurePerformance(operationName?: string) {
 export class QueryOptimizer {
   static optimizeQuery(query: string): string {
     // Remove unnecessary whitespace
-    let optimized = query.replace(/\s+/g, " ").trim();
+    let optimized = query.replace(/\s+/g, ' ').trim();
 
     // Add query hints if needed
     if (
-      optimized.toLowerCase().includes("select") &&
-      !optimized.toLowerCase().includes("limit")
+      optimized.toLowerCase().includes('select') &&
+      !optimized.toLowerCase().includes('limit')
     ) {
       // Add default limit for large queries
-      optimized += " LIMIT 1000";
+      optimized += ' LIMIT 1000';
     }
 
     return optimized;
   }
 
   static addIndexHints(tableName: string, columns: string[]): string {
-    return `/*+ USE_INDEX(${tableName}, ${columns.join(",")}) */`;
+    return `/*+ USE_INDEX(${tableName}, ${columns.join(',')}) */`;
   }
 }
 
@@ -160,7 +160,7 @@ export class MemoryOptimizer {
   static cleanup(): void {
     if (global.gc) {
       global.gc();
-      logger.debug("Garbage collection triggered");
+      logger.debug('Garbage collection triggered');
     }
   }
 
@@ -219,9 +219,9 @@ export class BundleOptimizer {
     return {
       totalSize: this.getBundleSize(),
       suggestions: [
-        "Consider code splitting for large components",
-        "Remove unused dependencies",
-        "Optimize images and assets",
+        'Consider code splitting for large components',
+        'Remove unused dependencies',
+        'Optimize images and assets',
       ],
     };
   }
@@ -233,8 +233,8 @@ export class ResponseOptimizer {
     // Remove null/undefined values
     const cleaned = JSON.parse(
       JSON.stringify(data, (key, value) =>
-        value === null || value === undefined ? undefined : value,
-      ),
+        value === null || value === undefined ? undefined : value
+      )
     );
 
     return cleaned;
@@ -243,7 +243,7 @@ export class ResponseOptimizer {
   static paginateResponse(
     data: any[],
     page: number,
-    limit: number,
+    limit: number
   ): {
     data: any[];
     pagination: {

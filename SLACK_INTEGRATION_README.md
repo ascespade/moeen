@@ -7,22 +7,26 @@
 ## الميزات الرئيسية
 
 ### 1. إشعارات المواعيد التلقائية
+
 - إشعارات فورية عند حجز موعد جديد
 - تأكيد المواعيد عبر Slack
 - تذكيرات المواعيد
 - إشعارات إلغاء المواعيد
 
 ### 2. التواصل بين الأطباء والمرضى
+
 - إرسال استفسارات المرضى للطاقم الطبي عبر Slack
 - ردود الأطباء على استفسارات المرضى
 - تتبع المحادثات في threads منفصلة
 
 ### 3. نظام الطوارئ
+
 - تنبيهات فورية للحالات الطارئة
 - إشعارات في قناة الطوارئ المخصصة
 - ربط مع أرقام الطوارئ
 
 ### 4. إدارة الـ Flows
+
 - واجهة إدارة سيناريوهات المحادثة
 - تخصيص الـ Flows حسب الحاجة
 - دعم Slack notifications في الـ Flows
@@ -98,8 +102,8 @@ await fetch('/api/slack/notify', {
     type: 'appointment_created',
     appointmentId: 'apt-123',
     doctorId: 'doc-456',
-    patientId: 'pat-789'
-  })
+    patientId: 'pat-789',
+  }),
 });
 ```
 
@@ -114,8 +118,8 @@ await fetch('/api/slack/notify', {
     patientId: 'pat-123',
     doctorId: 'doc-456',
     message: 'سؤال من المريض',
-    channel: 'whatsapp'
-  })
+    channel: 'whatsapp',
+  }),
 });
 ```
 
@@ -130,16 +134,16 @@ const flow = {
       id: 'step1',
       type: 'question',
       content: 'ما هو سؤالك؟',
-      nextStep: 'notify_doctor'
+      nextStep: 'notify_doctor',
     },
     {
       id: 'notify_doctor',
       type: 'slack_notify',
       content: 'تم إرسال السؤال للطبيب',
       slackChannel: 'general',
-      notificationType: 'general'
-    }
-  ]
+      notificationType: 'general',
+    },
+  ],
 };
 ```
 
@@ -169,6 +173,7 @@ const flow = {
 ## الدعم الفني
 
 للحصول على الدعم الفني أو الإبلاغ عن مشاكل:
+
 - إنشاء issue في GitHub
 - التواصل عبر Slack في قناة #tech-support
 - إرسال بريد إلكتروني إلى: tech@hemamcenter.com

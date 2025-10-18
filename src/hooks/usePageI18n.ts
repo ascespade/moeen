@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import { useI18n } from "./useI18n";
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useI18n } from './useI18n';
 
 // Namespace mapping based on route
 const ROUTE_NAMESPACES: Record<string, string> = {
-  "/": "homepage",
-  "/dashboard": "dashboard",
-  "/patients": "patients",
-  "/appointments": "appointments",
-  "/sessions": "sessions",
-  "/insurance": "insurance",
-  "/settings": "settings",
-  "/login": "auth",
-  "/register": "auth",
-  "/admin": "admin",
+  '/': 'homepage',
+  '/dashboard': 'dashboard',
+  '/patients': 'patients',
+  '/appointments': 'appointments',
+  '/sessions': 'sessions',
+  '/insurance': 'insurance',
+  '/settings': 'settings',
+  '/login': 'auth',
+  '/register': 'auth',
+  '/admin': 'admin',
 };
 
 // Default namespace for unknown routes
-const DEFAULT_NAMESPACE = "common";
+const DEFAULT_NAMESPACE = 'common';
 
 /**
  * Enhanced i18n hook that automatically detects the current page
  * and loads the appropriate namespace
  */
-export function usePageI18n(locale: "ar" | "en" = "ar") {
-  const pathname = (usePathname() as string) || "/";
+export function usePageI18n(locale: 'ar' | 'en' = 'ar') {
+  const pathname = (usePathname() as string) || '/';
   const [currentNamespace, setCurrentNamespace] =
     useState<string>(DEFAULT_NAMESPACE);
 
@@ -40,7 +40,7 @@ export function usePageI18n(locale: "ar" | "en" = "ar") {
     } else {
       // Check for partial matches (e.g., /patients/123 -> patients)
       for (const [route, ns] of Object.entries(ROUTE_NAMESPACES)) {
-        if (pathname.startsWith(route) && route !== "/") {
+        if (pathname.startsWith(route) && route !== '/') {
           namespace = ns;
           break;
         }
@@ -59,8 +59,8 @@ export function usePageI18n(locale: "ar" | "en" = "ar") {
     let translation = t(key, fallback);
 
     // If not found and not the same as fallback, try common namespace
-    if (translation === key && currentNamespace !== "common") {
-      const commonTranslation = t(key, "common");
+    if (translation === key && currentNamespace !== 'common') {
+      const commonTranslation = t(key, 'common');
       if (commonTranslation !== key) {
         translation = commonTranslation;
       }
@@ -83,7 +83,7 @@ export function usePageI18n(locale: "ar" | "en" = "ar") {
  */
 export function useNamespaceI18n(
   namespace: string,
-  locale: "ar" | "en" = "ar",
+  locale: 'ar' | 'en' = 'ar'
 ) {
   const { t, messages, loading } = useI18n(locale, namespace);
 
@@ -99,6 +99,6 @@ export function useNamespaceI18n(
 /**
  * Hook for common translations (always uses 'common' namespace)
  */
-export function useCommonI18n(locale: "ar" | "en" = "ar") {
-  return useNamespaceI18n("common", locale);
+export function useCommonI18n(locale: 'ar' | 'en' = 'ar') {
+  return useNamespaceI18n('common', locale);
 }

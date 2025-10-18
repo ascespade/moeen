@@ -3,21 +3,21 @@
  * Comprehensive appointment booking with availability checking and conflict validation
  */
 
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-import { createClient } from "@/lib/supabase/server";
-import { ValidationHelper } from "@/core/validation";
-import { ErrorHandler } from "@/core/errors";
-import { requireAuth } from "@/lib/auth/authorize";
-import { getClientInfo } from "@/lib/utils/request-helpers";
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
+import { createClient } from '@/lib/supabase/server';
+import { ValidationHelper } from '@/core/validation';
+import { ErrorHandler } from '@/core/errors';
+import { requireAuth } from '@/lib/auth/authorize';
+import { getClientInfo } from '@/lib/utils/request-helpers';
 
 const bookingSchema = z.object({
-  patientId: z.string().uuid("Invalid patient ID"),
-  doctorId: z.string().uuid("Invalid doctor ID"),
-  scheduledAt: z.string().datetime("Invalid datetime format"),
+  patientId: z.string().uuid('Invalid patient ID'),
+  doctorId: z.string().uuid('Invalid doctor ID'),
+  scheduledAt: z.string().datetime('Invalid datetime format'),
   type: z
-    .enum(["consultation", "follow_up", "emergency", "routine_checkup"])
-    .default("consultation"),
+    .enum(['consultation', 'follow_up', 'emergency', 'routine_checkup'])
+    .default('consultation'),
   notes: z.string().optional(),
   duration: z.number().min(15).max(240).default(30), // minutes
   isVirtual: z.boolean().default(false),
@@ -30,11 +30,11 @@ export async function POST(request: NextRequest) {
 
   try {
     // Authorize user
-    const authResult = await requireAuth(["patient", "staff", "admin"])(
-      request,
+    const authResult = await requireAuth(['patient', 'staff', 'admin'])(
+      request
     );
     if (!authResult.authorized) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const supabase = await createClient();
@@ -43,12 +43,12 @@ export async function POST(request: NextRequest) {
     // Validate input
     const validation = await ValidationHelper.validateAsync(
       bookingSchema,
-      body,
+      body
     );
     if (!validation.success) {
       return NextResponse.json(
         { error: validation.error.message },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -67,15 +67,15 @@ export async function POST(request: NextRequest) {
     const doctorAvailability = await checkDoctorAvailability(
       doctorId,
       scheduledAt,
-      duration!,
+      duration!
     );
     if (!doctorAvailability.available) {
       return NextResponse.json(
         {
-          error: "Doctor not available at this time",
+          error: 'Doctor not available at this time',
           conflicts: doctorAvailability.conflicts,
         },
-        { status: 409 },
+        { status: 409 }
       );
     }
 
@@ -83,50 +83,50 @@ export async function POST(request: NextRequest) {
     const conflicts = await checkAppointmentConflicts(
       doctorId,
       scheduledAt,
-      duration!,
+      duration!
     );
     if (conflicts.length > 0) {
       return NextResponse.json(
         {
-          error: "Time slot conflicts with existing appointments",
+          error: 'Time slot conflicts with existing appointments',
           conflicts,
         },
-        { status: 409 },
+        { status: 409 }
       );
     }
 
     // Verify patient exists and is active
     const { data: patient, error: patientError } = await supabase
-      .from("patients")
-      .select("id, isActivated, userId")
-      .eq("id", patientId)
+      .from('patients')
+      .select('id, isActivated, userId')
+      .eq('id', patientId)
       .single();
 
     if (patientError || !patient) {
-      return NextResponse.json({ error: "Patient not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
     }
 
     if (!patient.isActivated) {
       return NextResponse.json(
-        { error: "Patient account not activated" },
-        { status: 400 },
+        { error: 'Patient account not activated' },
+        { status: 400 }
       );
     }
 
     // Verify doctor exists and is available
     const { data: doctor, error: doctorError } = await supabase
-      .from("doctors")
-      .select("id, userId, speciality, schedule")
-      .eq("id", doctorId)
+      .from('doctors')
+      .select('id, userId, speciality, schedule')
+      .eq('id', doctorId)
       .single();
 
     if (doctorError || !doctor) {
-      return NextResponse.json({ error: "Doctor not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Doctor not found' }, { status: 404 });
     }
 
     // Create appointment with full tracking
     const { data: appointment, error: appointmentError } = await supabase
-      .from("appointments")
+      .from('appointments')
       .insert({
         patientId,
         doctorId,
@@ -135,11 +135,11 @@ export async function POST(request: NextRequest) {
         notes,
         duration,
         isVirtual,
-        status: "pending",
-        paymentStatus: "unpaid",
+        status: 'pending',
+        paymentStatus: 'unpaid',
         insuranceClaimId,
         createdBy: authResult.user!.id,
-        bookingSource: "web",
+        bookingSource: 'web',
         lastActivityAt: new Date().toISOString(),
       })
       .select()
@@ -147,21 +147,21 @@ export async function POST(request: NextRequest) {
 
     if (appointmentError) {
       return NextResponse.json(
-        { error: "Failed to create appointment" },
-        { status: 500 },
+        { error: 'Failed to create appointment' },
+        { status: 500 }
       );
     }
 
     // Create audit log with full tracking
-    await supabase.from("audit_logs").insert({
-      action: "appointment_created",
-      entityType: "appointment",
+    await supabase.from('audit_logs').insert({
+      action: 'appointment_created',
+      entityType: 'appointment',
       entityId: appointment.id,
       userId: authResult.user!.id,
       ipAddress,
       userAgent,
-      status: "success",
-      severity: "info",
+      status: 'success',
+      severity: 'info',
       metadata: {
         patientId,
         doctorId,
@@ -169,7 +169,7 @@ export async function POST(request: NextRequest) {
         type,
         duration,
         isVirtual,
-        bookingSource: "web",
+        bookingSource: 'web',
       },
       durationMs: Date.now() - startTime,
     });
@@ -180,7 +180,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: appointment,
-      message: "Appointment booked successfully",
+      message: 'Appointment booked successfully',
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
@@ -190,19 +190,19 @@ export async function POST(request: NextRequest) {
 async function checkDoctorAvailability(
   doctorId: string,
   scheduledAt: string,
-  duration: number,
+  duration: number
 ) {
   const supabase = await createClient();
 
   // Get doctor's schedule
   const { data: doctor } = await supabase
-    .from("doctors")
-    .select("schedule")
-    .eq("id", doctorId)
+    .from('doctors')
+    .select('schedule')
+    .eq('id', doctorId)
     .single();
 
   if (!doctor?.schedule) {
-    return { available: false, conflicts: ["No schedule configured"] };
+    return { available: false, conflicts: ['No schedule configured'] };
   }
 
   const appointmentDate = new Date(scheduledAt);
@@ -212,12 +212,12 @@ async function checkDoctorAvailability(
   // Check if doctor works on this day
   const schedule = doctor.schedule[dayOfWeek];
   if (!schedule || !schedule.isWorking) {
-    return { available: false, conflicts: ["Doctor not working on this day"] };
+    return { available: false, conflicts: ['Doctor not working on this day'] };
   }
 
   // Check if appointment time is within working hours
   if (time < schedule.startTime || time > schedule.endTime) {
-    return { available: false, conflicts: ["Outside working hours"] };
+    return { available: false, conflicts: ['Outside working hours'] };
   }
 
   return { available: true, conflicts: [] };
@@ -226,7 +226,7 @@ async function checkDoctorAvailability(
 async function checkAppointmentConflicts(
   doctorId: string,
   scheduledAt: string,
-  duration: number,
+  duration: number
 ) {
   const supabase = await createClient();
 
@@ -234,12 +234,12 @@ async function checkAppointmentConflicts(
   const endTime = new Date(startTime.getTime() + duration * 60000);
 
   const { data: conflicts } = await supabase
-    .from("appointments")
-    .select("id, scheduledAt, duration, patientId")
-    .eq("doctorId", doctorId)
-    .in("status", ["pending", "confirmed", "in_progress"])
-    .gte("scheduledAt", startTime.toISOString())
-    .lte("scheduledAt", endTime.toISOString());
+    .from('appointments')
+    .select('id, scheduledAt, duration, patientId')
+    .eq('doctorId', doctorId)
+    .in('status', ['pending', 'confirmed', 'in_progress'])
+    .gte('scheduledAt', startTime.toISOString())
+    .lte('scheduledAt', endTime.toISOString());
 
   return conflicts || [];
 }

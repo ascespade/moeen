@@ -5,16 +5,18 @@ designed to run with Cursor Background Agents or within GitHub Actions. This ZIP
 **SQLite-local** variant (ai_logs.db kept in repo workspace).
 
 ## Contents
-- ai_agent_config.json         : Agent configuration
-- ai_training_cache.json      : Learning cache example
-- package.json                : dev deps and scripts
-- scripts/                    : orchestrator and helpers
-- tests/                      : test folders (generated/regression/base)
-- dashboard/                  : static dashboard files (reads logs.json)
-- .github/workflows/          : GitHub Actions workflows
-- cursor.agent.json           : Cursor agent configuration
+
+- ai_agent_config.json : Agent configuration
+- ai_training_cache.json : Learning cache example
+- package.json : dev deps and scripts
+- scripts/ : orchestrator and helpers
+- tests/ : test folders (generated/regression/base)
+- dashboard/ : static dashboard files (reads logs.json)
+- .github/workflows/ : GitHub Actions workflows
+- cursor.agent.json : Cursor agent configuration
 
 ## Quick local run (recommended for testing)
+
 1. Install dependencies:
    ```bash
    npm ci
@@ -31,15 +33,18 @@ designed to run with Cursor Background Agents or within GitHub Actions. This ZIP
    ```
 
 ## GitHub Actions
+
 - `ai-self-healing.yml` runs the orchestrator on push/PR.
 - `update-dashboard.yml` exports sqlite logs to dashboard/logs.json and pushes to gh-pages.
 
 ## Security notes
+
 - This bundle intentionally **does not include** any Supabase service keys. Keep any production service keys
   in GitHub Secrets or Cursor encrypted environment variables.
 - For local testing you can run without secrets; for Cursor integration add the secrets in the agent settings.
 
 ## Next steps
+
 - Configure Cursor Agent and GitHub Secrets as described in the included files.
 - Review and adapt the LLM prompts in `scripts/ai_scenario_generator.mjs` to your domain.
 - If you want Supabase-backed storage instead of local SQLite, contact me to switch the exporter.

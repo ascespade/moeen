@@ -25,7 +25,7 @@ async function analyzeDatabase() {
     // 1. Test connection
     console.log('📋 1. DATABASE CONNECTION TEST');
     console.log('='.repeat(50));
-    
+
     const { data: testData, error: testError } = await supabase
       .from('users')
       .select('count')
@@ -43,10 +43,22 @@ async function analyzeDatabase() {
     console.log('='.repeat(50));
 
     const tables = [
-      'users', 'conversations', 'messages', 'appointments', 
-      'patients', 'doctors', 'chatbot_conversations', 'chatbot_messages',
-      'crm_leads', 'crm_deals', 'crm_activities', 'analytics',
-      'audit_logs', 'notifications', 'settings', 'system_settings'
+      'users',
+      'conversations',
+      'messages',
+      'appointments',
+      'patients',
+      'doctors',
+      'chatbot_conversations',
+      'chatbot_messages',
+      'crm_leads',
+      'crm_deals',
+      'crm_activities',
+      'analytics',
+      'audit_logs',
+      'notifications',
+      'settings',
+      'system_settings',
     ];
 
     for (const table of tables) {
@@ -79,7 +91,9 @@ async function analyzeDatabase() {
       } else {
         console.log('📊 System Health Overview:');
         healthData.forEach(item => {
-          console.log(`  - ${item.table_name}: ${item.record_count} total, ${item.recent_records} recent`);
+          console.log(
+            `  - ${item.table_name}: ${item.record_count} total, ${item.recent_records} recent`
+          );
         });
       }
     } catch (err) {
@@ -102,7 +116,9 @@ async function analyzeDatabase() {
       } else {
         console.log('📞 Recent Conversations:');
         recentConversations.forEach(conv => {
-          console.log(`  - ${conv.id.substring(0, 8)}... (${conv.status}) - ${conv.created_at}`);
+          console.log(
+            `  - ${conv.id.substring(0, 8)}... (${conv.status}) - ${conv.created_at}`
+          );
         });
       }
     } catch (err) {
@@ -203,7 +219,10 @@ async function analyzeDatabase() {
         .is('assigned_to', null);
 
       if (orphanError) {
-        console.log('❌ Orphaned conversations check error:', orphanError.message);
+        console.log(
+          '❌ Orphaned conversations check error:',
+          orphanError.message
+        );
       } else {
         console.log(`✅ Orphaned conversations: ${orphanedConvs.length}`);
       }
@@ -216,7 +235,7 @@ async function analyzeDatabase() {
     console.log('='.repeat(50));
 
     const startTime = Date.now();
-    
+
     try {
       const { data: perfData, error: perfError } = await supabase
         .from('conversations')
@@ -244,7 +263,6 @@ async function analyzeDatabase() {
     console.log('- Performance indexes: ✅ Created');
     console.log('- Data integrity: ✅ Validated');
     console.log('- System health: ✅ Monitored');
-
   } catch (error) {
     console.error('❌ Analysis failed:', error);
   }

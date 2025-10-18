@@ -3,12 +3,14 @@
 ## Getting Started - البداية
 
 ### Prerequisites - المتطلبات
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 - Git
 - Supabase account
 
 ### Installation - التثبيت
+
 ```bash
 # Clone the repository
 git clone <repository-url>
@@ -60,6 +62,7 @@ src/
 ## Coding Standards - معايير البرمجة
 
 ### TypeScript Guidelines
+
 ```typescript
 // Use strict typing
 interface User {
@@ -73,7 +76,7 @@ enum UserRole {
   PATIENT = 'patient',
   DOCTOR = 'doctor',
   STAFF = 'staff',
-  ADMIN = 'admin'
+  ADMIN = 'admin',
 }
 
 // Use generics for reusable components
@@ -85,6 +88,7 @@ interface ApiResponse<T> {
 ```
 
 ### Component Guidelines
+
 ```typescript
 // Use functional components with TypeScript
 interface ButtonProps {
@@ -114,19 +118,18 @@ export const Button: React.FC<ButtonProps> = ({
 ```
 
 ### API Guidelines
+
 ```typescript
 // Use the base API handler
 export const GET = createApiHandler(
   async (req: NextRequest, context: any) => {
     const supabase = await baseApiHandler.getSupabaseClient();
-    const { data, error } = await supabase
-      .from('users')
-      .select('*');
-    
+    const { data, error } = await supabase.from('users').select('*');
+
     if (error) {
       throw ErrorFactory.createDatabaseError(error.message);
     }
-    
+
     return baseApiHandler.createSuccessResponse(data);
   },
   {
@@ -140,6 +143,7 @@ export const GET = createApiHandler(
 ## State Management - إدارة الحالة
 
 ### Using Zustand Store
+
 ```typescript
 // Access store in components
 const { user, isAuthenticated, login, logout } = useAuthStore();
@@ -150,6 +154,7 @@ updateUser({ name: 'New Name' });
 ```
 
 ### Using Custom Hooks
+
 ```typescript
 // Use custom hooks for data fetching
 const { patients, fetchPatients, createPatient } = usePatients();
@@ -163,6 +168,7 @@ useEffect(() => {
 ## API Development - تطوير API
 
 ### Creating API Routes
+
 ```typescript
 // src/app/api/users/route.ts
 import { createApiHandler } from '@/core';
@@ -178,11 +184,11 @@ export const GET = createApiHandler(
         context.validatedQuery.page * context.validatedQuery.limit,
         (context.validatedQuery.page + 1) * context.validatedQuery.limit - 1
       );
-    
+
     if (error) {
       throw ErrorFactory.createDatabaseError(error.message);
     }
-    
+
     return baseApiHandler.createPaginatedResponse(
       data,
       context.validatedQuery.page,
@@ -202,6 +208,7 @@ export const GET = createApiHandler(
 ```
 
 ### Error Handling
+
 ```typescript
 // Use error factory for consistent errors
 throw ErrorFactory.createValidationError('Email is required', 'email');
@@ -212,6 +219,7 @@ throw ErrorFactory.createBusinessLogicError('Appointment conflict detected');
 ## Database Operations - عمليات قاعدة البيانات
 
 ### Using Supabase Client
+
 ```typescript
 // Get client
 const supabase = await baseApiHandler.getSupabaseClient();
@@ -224,14 +232,12 @@ const { data, error } = await supabase
   .order('created_at', { ascending: false });
 
 // Insert data
-const { data, error } = await supabase
-  .from('appointments')
-  .insert({
-    patient_id: patientId,
-    doctor_id: doctorId,
-    scheduled_at: scheduledAt,
-    status: 'scheduled'
-  });
+const { data, error } = await supabase.from('appointments').insert({
+  patient_id: patientId,
+  doctor_id: doctorId,
+  scheduled_at: scheduledAt,
+  status: 'scheduled',
+});
 
 // Update data
 const { data, error } = await supabase
@@ -243,6 +249,7 @@ const { data, error } = await supabase
 ## Component Development - تطوير المكونات
 
 ### Creating UI Components
+
 ```typescript
 // src/components/ui/Input.tsx
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -279,6 +286,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 ```
 
 ### Using Design System
+
 ```typescript
 // Use design system tokens
 import { colors, typography, spacing } from '@/core/design-system';
@@ -293,6 +301,7 @@ const styles = {
 ## Testing - الاختبار
 
 ### Unit Testing
+
 ```typescript
 // src/components/__tests__/Button.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -314,6 +323,7 @@ describe('Button', () => {
 ```
 
 ### API Testing
+
 ```typescript
 // src/app/api/__tests__/users.test.ts
 import { GET } from '../users/route';
@@ -324,7 +334,7 @@ describe('/api/users', () => {
     const request = new NextRequest('http://localhost:3000/api/users');
     const response = await GET(request, {});
     const data = await response.json();
-    
+
     expect(response.status).toBe(200);
     expect(data.success).toBe(true);
     expect(Array.isArray(data.data)).toBe(true);
@@ -335,6 +345,7 @@ describe('/api/users', () => {
 ## Deployment - النشر
 
 ### Environment Setup
+
 ```bash
 # Production environment variables
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
@@ -344,6 +355,7 @@ DATABASE_URL=your_database_url
 ```
 
 ### Build and Deploy
+
 ```bash
 # Build the application
 npm run build
@@ -360,6 +372,7 @@ npm run migrate
 ### Common Issues
 
 #### 1. **Build Errors**
+
 ```bash
 # Clear Next.js cache
 rm -rf .next
@@ -367,16 +380,19 @@ npm run build
 ```
 
 #### 2. **Database Connection Issues**
+
 - Check Supabase credentials
 - Verify network connectivity
 - Check RLS policies
 
 #### 3. **Authentication Issues**
+
 - Verify JWT configuration
 - Check token expiration
 - Validate user permissions
 
 ### Debug Mode
+
 ```typescript
 // Enable debug logging
 const debug = process.env.NODE_ENV === 'development';
@@ -389,24 +405,28 @@ if (debug) {
 ## Best Practices - أفضل الممارسات
 
 ### 1. **Code Organization**
+
 - Keep components small and focused
 - Use custom hooks for reusable logic
 - Separate concerns properly
 - Follow naming conventions
 
 ### 2. **Performance**
+
 - Use React.memo for expensive components
 - Implement proper loading states
 - Optimize database queries
 - Use pagination for large datasets
 
 ### 3. **Security**
+
 - Validate all inputs
 - Use parameterized queries
 - Implement proper error handling
 - Follow OWASP guidelines
 
 ### 4. **Accessibility**
+
 - Use semantic HTML
 - Provide proper ARIA labels
 - Ensure keyboard navigation
@@ -415,12 +435,14 @@ if (debug) {
 ## Resources - الموارد
 
 ### Documentation
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Supabase Documentation](https://supabase.com/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs)
 
 ### Tools
+
 - [VS Code](https://code.visualstudio.com/)
 - [Supabase Studio](https://supabase.com/dashboard)
 - [Vercel Dashboard](https://vercel.com/dashboard)
@@ -429,6 +451,7 @@ if (debug) {
 ## Support - الدعم
 
 For questions and support:
+
 - Create an issue in the repository
 - Contact the development team
 - Check the documentation

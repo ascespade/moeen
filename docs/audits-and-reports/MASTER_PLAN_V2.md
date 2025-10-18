@@ -17,12 +17,14 @@ Overall Score: 71/100
 ## 🎯 تقسيم الخطة
 
 ### القسم الأول: الخطة الحالية (Current Plan) 🔴
+
 **المدة**: 4 أسابيع  
 **الهدف**: إكمال وإغلاق الأساسيات  
 **Score Target**: 71 → 88/100 (+17)  
 **الميزانية**: مجاني (Free tier فقط)
 
 ### القسم الثاني: خطة التطوير المستقبلية (Future Plan) 🟢
+
 **المدة**: 3-6 أشهر لاحقاً  
 **الهدف**: التحسينات والتوسع  
 **Score Target**: 88 → 98/100 (+10)  
@@ -39,6 +41,7 @@ Overall Score: 71/100
 **الميزانية**: $0 (مجاني)
 
 ### الأهداف:
+
 1. ✅ إتمام نظام Authorization المتبقي
 2. ✅ ربط 2 شركات تأمين رئيسية فقط (كبداية)
 3. ✅ تحسين نظام الأطباء (بديل مجاني لـ Slack)
@@ -49,12 +52,14 @@ Overall Score: 71/100
 
 ## 🗓️ Week 1: التأمينات الأساسي (Insurance Core)
 
-### الهدف: 
+### الهدف:
+
 ربط **شركتين فقط** كبداية (Tawuniya + Bupa) = 45% تغطية سوق
 
 ### المهام:
 
 #### Day 1-2: Generic Framework (16 ساعة)
+
 ```typescript
 ✅ Build adapter interface
 ✅ Create base adapter class
@@ -63,6 +68,7 @@ Overall Score: 71/100
 ```
 
 #### Day 3: Tawuniya Integration (8 ساعات)
+
 ```typescript
 ✅ Tawuniya adapter (25% سوق)
 ✅ Submit claim
@@ -71,6 +77,7 @@ Overall Score: 71/100
 ```
 
 #### Day 4: Bupa Integration (8 ساعات)
+
 ```typescript
 ✅ Bupa adapter (20% سوق)
 ✅ Submit claim
@@ -79,6 +86,7 @@ Overall Score: 71/100
 ```
 
 #### Day 5: Auto Status Checker (8 ساعات)
+
 ```typescript
 ✅ Cron job (free - built-in)
 ✅ Check every 5 minutes
@@ -87,6 +95,7 @@ Overall Score: 71/100
 ```
 
 **Week 1 Output:**
+
 - ✅ 2 insurance companies integrated (45% market)
 - ✅ Basic automation
 - ✅ Framework قابل للتوسع لاحقاً
@@ -98,11 +107,13 @@ Overall Score: 71/100
 ## 🗓️ Week 2: الأطباء والتواصل (Doctor Communication)
 
 ### الهدف:
+
 بديل مجاني لـ Slack - تواصل داخلي بين الأطباء والمرضى
 
 ### المهام:
 
 #### Day 1-2: Built-in Chat System (16 ساعة)
+
 ```typescript
 ✅ Real-time chat (Supabase Realtime - FREE!)
 ✅ Doctor-patient messaging
@@ -111,6 +122,7 @@ Overall Score: 71/100
 ```
 
 #### Day 3: Video Calls (8 ساعات)
+
 ```typescript
 ✅ Jitsi Meet integration (FREE!)
    - Self-hosted option
@@ -120,6 +132,7 @@ Overall Score: 71/100
 ```
 
 #### Day 4: Notifications (8 ساعات)
+
 ```typescript
 ✅ Browser notifications (FREE!)
 ✅ Email notifications (SendGrid free tier: 100/day)
@@ -127,6 +140,7 @@ Overall Score: 71/100
 ```
 
 #### Day 5: Privacy Controls (8 ساعات)
+
 ```typescript
 ✅ End-to-end encryption
 ✅ Access controls
@@ -135,6 +149,7 @@ Overall Score: 71/100
 ```
 
 **Week 2 Output:**
+
 - ✅ Chat system (Slack alternative)
 - ✅ Video calls (free)
 - ✅ Privacy controls
@@ -147,11 +162,13 @@ Overall Score: 71/100
 ## 🗓️ Week 3: Owner Dashboard الأساسي
 
 ### الهدف:
+
 Dashboard بسيط للمالك - real-time monitoring
 
 ### المهام:
 
 #### Day 1-2: Real-time Metrics (16 ساعة)
+
 ```typescript
 ✅ Live patient count
 ✅ Today's appointments
@@ -161,6 +178,7 @@ Dashboard بسيط للمالك - real-time monitoring
 ```
 
 #### Day 3: Quick Actions (8 ساعات)
+
 ```typescript
 ✅ Approve/reject requests
 ✅ View pending items
@@ -169,6 +187,7 @@ Dashboard بسيط للمالك - real-time monitoring
 ```
 
 #### Day 4-5: Reports (16 ساعات)
+
 ```typescript
 ✅ Financial summary
 ✅ Appointment stats
@@ -178,6 +197,7 @@ Dashboard بسيط للمالك - real-time monitoring
 ```
 
 **Week 3 Output:**
+
 - ✅ Owner dashboard (basic)
 - ✅ Real-time monitoring
 - ✅ Quick actions
@@ -190,11 +210,13 @@ Dashboard بسيط للمالك - real-time monitoring
 ## 🗓️ Week 4: الإشعارات والإغلاق (Notifications & Polish)
 
 ### الهدف:
+
 نظام إشعارات شامل + إغلاق كل المتبقيات
 
 ### المهام:
 
 #### Day 1-2: Supervisor Notifications (16 ساعة)
+
 ```typescript
 ✅ WhatsApp notifications (Business API - FREE up to 1000/month)
 ✅ Call request alerts
@@ -207,6 +229,7 @@ Dashboard بسيط للمالك - real-time monitoring
 ```
 
 #### Day 3: Wizard Integrations (8 ساعات)
+
 ```typescript
 ✅ Step-by-step setup for:
    - WhatsApp
@@ -217,6 +240,7 @@ Dashboard بسيط للمالك - real-time monitoring
 ```
 
 #### Day 4-5: Testing & Polish (16 ساعات)
+
 ```typescript
 ✅ End-to-end testing
 ✅ Fix bugs
@@ -226,6 +250,7 @@ Dashboard بسيط للمالك - real-time monitoring
 ```
 
 **Week 4 Output:**
+
 - ✅ Complete notifications system
 - ✅ Wizard-based integrations
 - ✅ Everything tested
@@ -263,6 +288,7 @@ Free tiers used:
 ```
 
 ### Production Ready:
+
 ```
 ✅ Core features complete
 ✅ 2 insurance companies working
@@ -278,6 +304,7 @@ Status: 🚀 READY FOR PRODUCTION!
 # 🟢 القسم الثاني: خطة التطوير المستقبلية
 
 ## 📅 متى نبدأ؟
+
 - بعد 3-6 أشهر من الإطلاق
 - عندما يكون هناك مستخدمين فعليين
 - عندما نحتاج التوسع فعلياً
@@ -287,6 +314,7 @@ Status: 🚀 READY FOR PRODUCTION!
 ### Phase 1: توسيع التأمينات (3-6 أشهر لاحقاً)
 
 **عند الحاجة فقط:**
+
 ```
 ⏳ 8 شركات تأمين إضافية
 ⏳ Prior authorization
@@ -303,6 +331,7 @@ Status: 🚀 READY FOR PRODUCTION!
 ### Phase 2: تحسينات متقدمة (6-12 شهر لاحقاً)
 
 **Nice to have:**
+
 ```
 ⏳ AI-powered chatbot
 ⏳ Advanced analytics
@@ -320,6 +349,7 @@ Status: 🚀 READY FOR PRODUCTION!
 ### Phase 3: Enterprise Features (1-2 سنة لاحقاً)
 
 **للنمو الكبير:**
+
 ```
 ⏳ Multi-tenant
 ⏳ White-label
@@ -337,6 +367,7 @@ Status: 🚀 READY FOR PRODUCTION!
 ## 💰 مقارنة التكلفة
 
 ### الخطة الحالية (4 أسابيع):
+
 ```
 Development: $0 (نفذها بنفسك)
 Infrastructure: $0 (free tiers)
@@ -346,6 +377,7 @@ Result: 88/100 - Production Ready
 ```
 
 ### الخطة المستقبلية (اختياري):
+
 ```
 Phase 1: $2,000-3,000 (عند الحاجة)
 Phase 2: $5,000-10,000 (للنمو)
@@ -385,24 +417,28 @@ Total: $22,000-28,000 (لاحقاً فقط!)
 ## 📋 Checklist الخطة الحالية
 
 ### Week 1: Insurance ☐
+
 - [ ] Generic framework
 - [ ] Tawuniya integration
 - [ ] Bupa integration
 - [ ] Auto status checker
 
 ### Week 2: Doctor Communication ☐
+
 - [ ] Built-in chat (Supabase)
 - [ ] Video calls (Jitsi)
 - [ ] Notifications
 - [ ] Privacy controls
 
 ### Week 3: Owner Dashboard ☐
+
 - [ ] Real-time metrics
 - [ ] Quick actions
 - [ ] Basic reports
 - [ ] Export功能
 
 ### Week 4: Notifications & Polish ☐
+
 - [ ] WhatsApp notifications
 - [ ] Wizard integrations
 - [ ] Testing
@@ -426,6 +462,7 @@ NOW                    +4 weeks              +3-6 months           +1-2 years
 ## ✅ الخلاصة
 
 ### الخطة الحالية (4 أسابيع):
+
 ```
 ✅ Focused
 ✅ Free
@@ -435,6 +472,7 @@ NOW                    +4 weeks              +3-6 months           +1-2 years
 ```
 
 ### الخطة المستقبلية:
+
 ```
 ⏳ Optional
 ⏳ When needed
@@ -449,6 +487,6 @@ NOW                    +4 weeks              +3-6 months           +1-2 years
 
 ---
 
-*Created: 2025-10-17*  
-*Focus: Realistic, Free, Production Ready*  
-*No scope creep! 🎯*
+_Created: 2025-10-17_  
+_Focus: Realistic, Free, Production Ready_  
+_No scope creep! 🎯_

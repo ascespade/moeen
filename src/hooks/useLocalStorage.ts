@@ -1,10 +1,10 @@
-import { useState, useCallback } from "react";
-import { storage } from "@/utils/storage";
+import { useState, useCallback } from 'react';
+import { storage } from '@/utils/storage';
 // Local storage hooks
 
 export const useLocalStorage = <T>(
   key: string,
-  initialValue: T,
+  initialValue: T
 ): [T, (value: T | ((val: T) => T)) => void, () => void] => {
   // Get from local storage then parse stored json or return initialValue
   const [storedValue, setStoredValue] = useState<T>(() => {
@@ -27,7 +27,7 @@ export const useLocalStorage = <T>(
         storage.set(key, valueToStore);
       } catch (error) {}
     },
-    [key, storedValue],
+    [key, storedValue]
   );
 
   const removeValue = useCallback(() => {
@@ -42,7 +42,7 @@ export const useLocalStorage = <T>(
 
 export const useSessionStorage = <T>(
   key: string,
-  initialValue: T,
+  initialValue: T
 ): [T, (value: T | ((val: T) => T)) => void, () => void] => {
   // Get from session storage then parse stored json or return initialValue
   const [storedValue, setStoredValue] = useState<T>(() => {
@@ -65,7 +65,7 @@ export const useSessionStorage = <T>(
         storage.setSession(key, valueToStore);
       } catch (error) {}
     },
-    [key, storedValue],
+    [key, storedValue]
   );
 
   const removeValue = useCallback(() => {

@@ -1,12 +1,12 @@
-import clsx from "clsx";
+import clsx from 'clsx';
 
 export function Table({
   className,
   ...props
 }: React.HTMLAttributes<HTMLTableElement>) {
   return (
-    <div className="overflow-x-auto">
-      <table className={clsx("min-w-full text-sm", className)} {...props} />
+    <div className='overflow-x-auto'>
+      <table className={clsx('min-w-full text-sm', className)} {...props} />
     </div>
   );
 }
@@ -17,7 +17,7 @@ export function THead({
 }: React.HTMLAttributes<HTMLTableSectionElement>) {
   return (
     <thead
-      className={clsx("bg-surface dark:bg-gray-800", className)}
+      className={clsx('bg-surface dark:bg-gray-800', className)}
       {...props}
     />
   );
@@ -29,7 +29,7 @@ export function TBody({
 }: React.HTMLAttributes<HTMLTableSectionElement>) {
   return (
     <tbody
-      className={clsx("divide-y divide-brand-border", className)}
+      className={clsx('divide-y divide-brand-border', className)}
       {...props}
     />
   );
@@ -41,7 +41,7 @@ export function TR({
 }: React.HTMLAttributes<HTMLTableRowElement>) {
   return (
     <tr
-      className={clsx("hover:bg-surface dark:hover:bg-gray-800", className)}
+      className={clsx('hover:bg-surface dark:hover:bg-gray-800', className)}
       {...props}
     />
   );
@@ -54,8 +54,8 @@ export function TH({
   return (
     <th
       className={clsx(
-        "px-4 py-3 text-start font-semibold text-gray-700 dark:text-gray-200 border-b border-brand-border",
-        className,
+        'px-4 py-3 text-start font-semibold text-gray-700 dark:text-gray-200 border-b border-brand-border',
+        className
       )}
       {...props}
     />
@@ -66,7 +66,7 @@ export function TD({
   className,
   ...props
 }: React.TdHTMLAttributes<HTMLTableCellElement>) {
-  return <td className={clsx("px-4 py-3", className)} {...props} />;
+  return <td className={clsx('px-4 py-3', className)} {...props} />;
 }
 
 export default Table;

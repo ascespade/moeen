@@ -2,7 +2,7 @@
 export const storage = {
   // Local Storage
   get: <T = any>(key: string, defaultValue?: T): T | null => {
-    if (typeof window === "undefined") return defaultValue || null;
+    if (typeof window === 'undefined') return defaultValue || null;
 
     try {
       const item = localStorage.getItem(key);
@@ -13,7 +13,7 @@ export const storage = {
   },
 
   set: <T = any>(key: string, value: T): void => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     try {
       localStorage.setItem(key, JSON.stringify(value));
@@ -21,7 +21,7 @@ export const storage = {
   },
 
   remove: (key: string): void => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     try {
       localStorage.removeItem(key);
@@ -29,7 +29,7 @@ export const storage = {
   },
 
   clear: (): void => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     try {
       localStorage.clear();
@@ -38,7 +38,7 @@ export const storage = {
 
   // Session Storage
   getSession: <T = any>(key: string, defaultValue?: T): T | null => {
-    if (typeof window === "undefined") return defaultValue || null;
+    if (typeof window === 'undefined') return defaultValue || null;
 
     try {
       const item = sessionStorage.getItem(key);
@@ -49,7 +49,7 @@ export const storage = {
   },
 
   setSession: <T = any>(key: string, value: T): void => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     try {
       sessionStorage.setItem(key, JSON.stringify(value));
@@ -57,7 +57,7 @@ export const storage = {
   },
 
   removeSession: (key: string): void => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     try {
       sessionStorage.removeItem(key);
@@ -65,7 +65,7 @@ export const storage = {
   },
 
   clearSession: (): void => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     try {
       sessionStorage.clear();
@@ -75,14 +75,14 @@ export const storage = {
 
 // Specific storage keys
 export const STORAGE_KEYS = {
-  USER: "user",
-  TOKEN: "token",
-  REFRESH_TOKEN: "refreshToken",
-  THEME: "theme",
-  LANGUAGE: "language",
-  SETTINGS: "settings",
-  RECENT_CHANNELS: "recentChannels",
-  DRAFT_MESSAGES: "draftMessages",
+  USER: 'user',
+  TOKEN: 'token',
+  REFRESH_TOKEN: 'refreshToken',
+  THEME: 'theme',
+  LANGUAGE: 'language',
+  SETTINGS: 'settings',
+  RECENT_CHANNELS: 'recentChannels',
+  DRAFT_MESSAGES: 'draftMessages',
 } as const;
 
 // Storage helpers
@@ -101,11 +101,11 @@ export const setRefreshToken = (token: string) =>
 export const removeRefreshToken = () =>
   storage.remove(STORAGE_KEYS.REFRESH_TOKEN);
 
-export const getTheme = () => storage.get(STORAGE_KEYS.THEME, "system");
+export const getTheme = () => storage.get(STORAGE_KEYS.THEME, 'system');
 export const setTheme = (theme: string) =>
   storage.set(STORAGE_KEYS.THEME, theme);
 
-export const getLanguage = () => storage.get(STORAGE_KEYS.LANGUAGE, "en");
+export const getLanguage = () => storage.get(STORAGE_KEYS.LANGUAGE, 'en');
 export const setLanguage = (language: string) =>
   storage.set(STORAGE_KEYS.LANGUAGE, language);
 

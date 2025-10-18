@@ -16,12 +16,12 @@
 :root {
   /* Import design system tokens */
   /* Brand Colors - Single Source of Truth (Solid brand colors) */
-  --brand-primary: #E46C0A; /* Solid Orange - Primary brand color */
-  --brand-primary-hover: #D45F08; /* Darker orange for hover states */
-  --brand-secondary: #FFA500; /* Solid Orange - Secondary brand color */
-  --brand-neutral-beige: #F2E7DC; /* Neutral Beige */
+  --brand-primary: #e46c0a; /* Solid Orange - Primary brand color */
+  --brand-primary-hover: #d45f08; /* Darker orange for hover states */
+  --brand-secondary: #ffa500; /* Solid Orange - Secondary brand color */
+  --brand-neutral-beige: #f2e7dc; /* Neutral Beige */
   --brand-accent: #007bff; /* Blue - Accent color */
-  --brand-accent-deep: #C93C00; /* Deep Red-Orange - Accent color */
+  --brand-accent-deep: #c93c00; /* Deep Red-Orange - Accent color */
   --brand-success: #009688; /* Green - Success states */
   --brand-warning: #f59e0b; /* Yellow - Warning states */
   --brand-error: #ef4444; /* Red - Error states */
@@ -83,8 +83,8 @@
   --transition-slow: 500ms ease-in-out;
 
   /* Typography */
-  --font-family-sans: "Cairo", "Inter", system-ui, sans-serif;
-  --font-family-mono: "Fira Code", monaco, consolas, monospace;
+  --font-family-sans: 'Cairo', 'Inter', system-ui, sans-serif;
+  --font-family-mono: 'Fira Code', monaco, consolas, monospace;
 
   /* Z-Index Scale */
   --z-dropdown: 1000;
@@ -102,12 +102,12 @@
   :root {
     --background: #0d1117; /* Dark navy */
     --foreground: #e5eef7; /* Light text */
-    --brand-primary: #E46C0A; /* Keep solid brand consistent */
-    --brand-primary-hover: #D45F08; /* Darker orange for dark mode */
-    --brand-secondary: #6B4E16; /* Keep solid secondary consistent */
-    --brand-neutral-beige: #2A2520; /* Darker beige for dark mode */
+    --brand-primary: #e46c0a; /* Keep solid brand consistent */
+    --brand-primary-hover: #d45f08; /* Darker orange for dark mode */
+    --brand-secondary: #6b4e16; /* Keep solid secondary consistent */
+    --brand-neutral-beige: #2a2520; /* Darker beige for dark mode */
     --brand-accent: #007bff; /* Keep accent consistent */
-    --brand-accent-deep: #C93C00; /* Keep accent deep consistent */
+    --brand-accent-deep: #c93c00; /* Keep accent deep consistent */
     --brand-success: #00b39b; /* Lighter green for dark mode */
     --brand-warning: #fbbf24; /* Lighter yellow for dark mode */
     --brand-error: #f87171; /* Lighter red for dark mode */
@@ -155,9 +155,9 @@ body {
   color: var(--foreground);
   font-family: var(--font-family-sans);
   font-feature-settings:
-    "kern" 1,
-    "liga" 1,
-    "calt" 1;
+    'kern' 1,
+    'liga' 1,
+    'calt' 1;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -707,15 +707,15 @@ body {
    RTL SUPPORT
    ======================================== */
 
-[dir="rtl"] {
+[dir='rtl'] {
   text-align: right;
 }
 
-[dir="rtl"] .text-left {
+[dir='rtl'] .text-left {
   text-align: right;
 }
 
-[dir="rtl"] .text-right {
+[dir='rtl'] .text-right {
   text-align: left;
 }
 

@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import clsx from 'clsx';
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -6,7 +6,7 @@ export interface TextareaProps
 }
 
 export function Textarea({ className, ...props }: TextareaProps) {
-  return <textarea className={clsx("form-input", className)} {...props} />;
+  return <textarea className={clsx('form-input', className)} {...props} />;
 }
 
 export default Textarea;

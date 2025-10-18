@@ -9,7 +9,7 @@ test.describe('System Health Tests', () => {
   test('should check API health endpoint', async ({ request }) => {
     const response = await request.get('/api/test/health');
     expect(response.status()).toBe(200);
-    
+
     const data = await response.json();
     expect(data).toHaveProperty('status');
     expect(data).toHaveProperty('timestamp');
@@ -18,7 +18,7 @@ test.describe('System Health Tests', () => {
   test('should check dashboard health endpoint', async ({ request }) => {
     const response = await request.get('/api/dashboard/health');
     expect(response.status()).toBe(200);
-    
+
     const data = await response.json();
     expect(data).toHaveProperty('status');
     expect(data).toHaveProperty('metrics');
@@ -28,10 +28,10 @@ test.describe('System Health Tests', () => {
     const response = await request.post('/api/auth/login', {
       data: {
         email: 'test@example.com',
-        password: 'testpassword'
-      }
+        password: 'testpassword',
+      },
     });
-    
+
     // Should return 401 for invalid credentials, not 500
     expect([400, 401]).toContain(response.status());
   });

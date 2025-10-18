@@ -1,47 +1,47 @@
 // Storage constants
 export const STORAGE_KEYS = {
   // Authentication
-  AUTH_TOKEN: "auth_token",
-  REFRESH_TOKEN: "refresh_token",
-  USER_DATA: "user_data",
+  AUTH_TOKEN: 'auth_token',
+  REFRESH_TOKEN: 'refresh_token',
+  USER_DATA: 'user_data',
 
   // User preferences
-  THEME: "theme",
-  LANGUAGE: "language",
-  TIMEZONE: "timezone",
+  THEME: 'theme',
+  LANGUAGE: 'language',
+  TIMEZONE: 'timezone',
 
   // App settings
-  SETTINGS: "app_settings",
-  NOTIFICATIONS: "notification_settings",
-  PRIVACY: "privacy_settings",
+  SETTINGS: 'app_settings',
+  NOTIFICATIONS: 'notification_settings',
+  PRIVACY: 'privacy_settings',
 
   // UI state
-  SIDEBAR_COLLAPSED: "sidebar_collapsed",
-  DASHBOARD_LAYOUT: "dashboard_layout",
-  TABLE_PREFERENCES: "table_preferences",
+  SIDEBAR_COLLAPSED: 'sidebar_collapsed',
+  DASHBOARD_LAYOUT: 'dashboard_layout',
+  TABLE_PREFERENCES: 'table_preferences',
 
   // Recent data
-  RECENT_CHANNELS: "recent_channels",
-  RECENT_CONVERSATIONS: "recent_conversations",
-  RECENT_SEARCHES: "recent_searches",
+  RECENT_CHANNELS: 'recent_channels',
+  RECENT_CONVERSATIONS: 'recent_conversations',
+  RECENT_SEARCHES: 'recent_searches',
 
   // Draft data
-  DRAFT_MESSAGES: "draft_messages",
-  DRAFT_FORMS: "draft_forms",
+  DRAFT_MESSAGES: 'draft_messages',
+  DRAFT_FORMS: 'draft_forms',
 
   // Cache
-  CACHE_PREFIX: "cache_",
-  CACHE_TIMESTAMP: "cache_timestamp",
+  CACHE_PREFIX: 'cache_',
+  CACHE_TIMESTAMP: 'cache_timestamp',
 
   // Temporary data
-  TEMP_PREFIX: "temp_",
-  UPLOAD_PROGRESS: "upload_progress",
+  TEMP_PREFIX: 'temp_',
+  UPLOAD_PROGRESS: 'upload_progress',
 } as const;
 
 export const STORAGE_TYPES = {
-  LOCAL: "localStorage",
-  SESSION: "sessionStorage",
-  INDEXED_DB: "indexedDB",
+  LOCAL: 'localStorage',
+  SESSION: 'sessionStorage',
+  INDEXED_DB: 'indexedDB',
 } as const;
 
 export const CACHE_DURATION = {

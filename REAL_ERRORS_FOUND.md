@@ -3,11 +3,13 @@
 ## 🔍 اكتشافات من الاختبارات العميقة
 
 ### خطأ 1: عمود 'name' مطلوب في users ❌
+
 ```
 Error: null value in column "name" of relation "users" violates not-null constraint
 ```
 
 **التفاصيل الكاملة**:
+
 ```
 Failing row contains:
 - id: 2ac6cc88-036d-43ad-9677-38abda7a4a92
@@ -22,6 +24,7 @@ Failing row contains:
 ---
 
 ### خطأ 2: role يجب أن يكون من قيم محددة ❌
+
 ```
 Error: invalid input value for enum user_role: "doctor"
 Code: 22P02
@@ -31,8 +34,9 @@ Code: 22P02
 **المشكلة**: 'doctor' ليس من القيم المسموحة في enum
 
 **القيم المسموحة محتملة**:
+
 - admin
-- agent  
+- agent
 - user
 - manager
 - (يجب التحقق من القيم الفعلية)
@@ -40,11 +44,13 @@ Code: 22P02
 ---
 
 ### خطأ 3: first_name مطلوب في patients ❌
+
 ```
 Error: null value in column "first_name" of relation "patients" violates not-null constraint
 ```
 
 **التفاصيل**:
+
 ```
 Failing row:
 - first_name: NULL ❌
@@ -58,11 +64,13 @@ Failing row:
 ---
 
 ### خطأ 4: appointment_time مطلوب في appointments ❌
+
 ```
 Error: null value in column "appointment_time" of relation "appointments" violates not-null constraint
 ```
 
 **التفاصيل**:
+
 ```
 Failing row:
 - appointment_date: 2025-10-18 ✅
@@ -86,18 +94,20 @@ Failing row:
 ## 📋 الأعمدة الفعلية المكتشفة
 
 ### Users Table (33 عمود):
+
 ```
-id, email, password_hash, name, role, status, phone, avatar_url, 
-timezone, language, is_active, last_login, login_count, 
-failed_login_attempts, locked_until, preferences, metadata, 
+id, email, password_hash, name, role, status, phone, avatar_url,
+timezone, language, is_active, last_login, login_count,
+failed_login_attempts, locked_until, preferences, metadata,
 created_at, updated_at, created_by, updated_by, last_password_change,
 email_verified_at, last_ip_address, last_user_agent, last_activity_at,
 total_sessions, password_reset_token, password_reset_expires,
-email_verification_token, email_verification_expires, 
+email_verification_token, email_verification_expires,
 two_factor_enabled, two_factor_secret, backup_codes
 ```
 
 ### Patients Table (30 عمود):
+
 ```
 id, first_name, last_name, email, phone, date_of_birth, gender,
 address, emergency_contact_name, emergency_contact_phone,
@@ -109,6 +119,7 @@ communication_preferences, tags, metadata
 ```
 
 ### Appointments Table (23 عمود):
+
 ```
 id, patient_id, doctor_id, appointment_date, appointment_time,
 duration, status, notes, created_at, updated_at, public_id,
@@ -122,6 +133,7 @@ internal_notes, tags, metadata
 ## 🔧 الإصلاحات المطلوبة
 
 ### إصلاح 1: استخدام 'name' بدلاً من 'full_name'
+
 ```typescript
 // ❌ Wrong
 const user = { email: 'test@test.com', full_name: 'Test User' };
@@ -131,6 +143,7 @@ const user = { email: 'test@test.com', name: 'Test User' };
 ```
 
 ### إصلاح 2: استخدام role صحيح
+
 ```typescript
 // ❌ Wrong
 const user = { role: 'doctor' };
@@ -140,28 +153,30 @@ const user = { role: 'agent' }; // or 'admin', 'user', etc.
 ```
 
 ### إصلاح 3: استخدام first_name و last_name
+
 ```typescript
 // ❌ Wrong
 const patient = { full_name: 'John Doe' };
 
 // ✅ Correct
-const patient = { 
-  first_name: 'John', 
-  last_name: 'Doe' 
+const patient = {
+  first_name: 'John',
+  last_name: 'Doe',
 };
 ```
 
 ### إصلاح 4: إضافة appointment_time
+
 ```typescript
 // ❌ Wrong
-const appointment = { 
-  appointment_date: '2025-10-18' 
+const appointment = {
+  appointment_date: '2025-10-18',
 };
 
 // ✅ Correct
-const appointment = { 
+const appointment = {
   appointment_date: '2025-10-18',
-  appointment_time: '09:00:00'
+  appointment_time: '09:00:00',
 };
 ```
 

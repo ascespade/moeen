@@ -1,9 +1,9 @@
 // Utility functions
-export const formatDate = (date) => {
+export const formatDate = date => {
   return new Date(date).toLocaleDateString();
 };
 
-export const capitalize = (str) => {
+export const capitalize = str => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
@@ -19,7 +19,7 @@ export const debounce = (func, wait) => {
   };
 };
 
-export const validateEmail = (email) => {
+export const validateEmail = email => {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(email);
 };

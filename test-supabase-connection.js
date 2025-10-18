@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 require('dotenv').config({ path: '.env.local' });
-const { createClient } = require("@supabase/supabase-js");
+const { createClient } = require('@supabase/supabase-js');
 
 async function testConnection() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -11,36 +11,36 @@ async function testConnection() {
   console.log('SERVICE_KEY:', supabaseKey ? 'Set' : 'Missing');
 
   if (!supabaseUrl || !supabaseKey) {
-    console.error("❌ Missing Supabase environment variables");
+    console.error('❌ Missing Supabase environment variables');
     process.exit(1);
   }
 
-  console.log("🔗 Testing Supabase connection...");
-  console.log("URL:", supabaseUrl);
+  console.log('🔗 Testing Supabase connection...');
+  console.log('URL:', supabaseUrl);
 
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   try {
     // Test connection by querying a simple table
     const { data, error } = await supabase
-      .from("users")
-      .select("count")
+      .from('users')
+      .select('count')
       .limit(1);
 
     if (error) {
-      console.log("⚠️  Users table not found (expected for new database)");
-      console.log("✅ Connection successful - ready for migrations");
+      console.log('⚠️  Users table not found (expected for new database)');
+      console.log('✅ Connection successful - ready for migrations');
     } else {
-      console.log("✅ Connection successful - found users table");
+      console.log('✅ Connection successful - found users table');
     }
 
     return true;
   } catch (err) {
-    console.error("❌ Connection failed:", err.message);
+    console.error('❌ Connection failed:', err.message);
     return false;
   }
 }
 
-testConnection().then((success) => {
+testConnection().then(success => {
   process.exit(success ? 0 : 1);
 });

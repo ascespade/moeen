@@ -1,10 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -14,7 +14,7 @@ module.exports = {
         serif: ['Georgia', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
-      
+
       // Spacing scale
       spacing: {
         1: '0.25rem',
@@ -31,7 +31,7 @@ module.exports = {
         24: '6rem',
         32: '8rem',
       },
-      
+
       // Container configuration
       container: {
         center: true,
@@ -50,7 +50,7 @@ module.exports = {
           '2xl': '1536px',
         },
       },
-      
+
       // Breakpoints
       screens: {
         sm: '640px',
@@ -59,90 +59,90 @@ module.exports = {
         xl: '1280px',
         '2xl': '1536px',
       },
-      
+
       // Colors from CSS variables
       colors: {
         // Brand colors
         brand: {
-          primary: "var(--brand-primary)",
-          "primary-hover": "var(--brand-primary-hover)",
-          secondary: "var(--brand-secondary)",
-          accent: "var(--brand-accent)",
-          success: "var(--brand-success)",
-          warning: "var(--brand-warning)",
-          error: "var(--brand-error)",
+          primary: 'var(--brand-primary)',
+          'primary-hover': 'var(--brand-primary-hover)',
+          secondary: 'var(--brand-secondary)',
+          accent: 'var(--brand-accent)',
+          success: 'var(--brand-success)',
+          warning: 'var(--brand-warning)',
+          error: 'var(--brand-error)',
         },
-        
+
         // Theme-aware colors
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        surface: "var(--surface)",
-        panel: "var(--panel)",
-        border: "var(--border)",
-        
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        surface: 'var(--surface)',
+        panel: 'var(--panel)',
+        border: 'var(--border)',
+
         // Text colors
-        "text-primary": "var(--text-primary)",
-        "text-secondary": "var(--text-secondary)",
-        "text-muted": "var(--text-muted)",
-        
+        'text-primary': 'var(--text-primary)',
+        'text-secondary': 'var(--text-secondary)',
+        'text-muted': 'var(--text-muted)',
+
         // Interactive states
-        hover: "var(--hover)",
-        active: "var(--active)",
-        focus: "var(--focus)",
-        
+        hover: 'var(--hover)',
+        active: 'var(--active)',
+        focus: 'var(--focus)',
+
         // Neutral colors
         neutral: {
-          50: "var(--neutral-50)",
-          100: "var(--neutral-100)",
-          200: "var(--neutral-200)",
-          300: "var(--neutral-300)",
-          400: "var(--neutral-400)",
-          500: "var(--neutral-500)",
-          600: "var(--neutral-600)",
-          700: "var(--neutral-700)",
-          800: "var(--neutral-800)",
-          900: "var(--neutral-900)",
+          50: 'var(--neutral-50)',
+          100: 'var(--neutral-100)',
+          200: 'var(--neutral-200)',
+          300: 'var(--neutral-300)',
+          400: 'var(--neutral-400)',
+          500: 'var(--neutral-500)',
+          600: 'var(--neutral-600)',
+          700: 'var(--neutral-700)',
+          800: 'var(--neutral-800)',
+          900: 'var(--neutral-900)',
         },
-        
+
         // Legacy color mappings for compatibility
         blue: {
-          50: "var(--neutral-50)",
-          100: "var(--neutral-100)",
-          200: "var(--neutral-200)",
-          300: "var(--neutral-300)",
-          400: "var(--neutral-400)",
-          500: "var(--brand-primary)",
-          600: "var(--brand-primary-hover)",
-          700: "var(--brand-primary-hover)",
-          800: "var(--brand-primary-hover)",
-          900: "var(--brand-primary-hover)",
+          50: 'var(--neutral-50)',
+          100: 'var(--neutral-100)',
+          200: 'var(--neutral-200)',
+          300: 'var(--neutral-300)',
+          400: 'var(--neutral-400)',
+          500: 'var(--brand-primary)',
+          600: 'var(--brand-primary-hover)',
+          700: 'var(--brand-primary-hover)',
+          800: 'var(--brand-primary-hover)',
+          900: 'var(--brand-primary-hover)',
         },
         purple: {
-          50: "var(--neutral-50)",
-          100: "var(--neutral-100)",
-          200: "var(--neutral-200)",
-          300: "var(--neutral-300)",
-          400: "var(--neutral-400)",
-          500: "var(--brand-primary)",
-          600: "var(--brand-primary-hover)",
-          700: "var(--brand-primary-hover)",
-          800: "var(--brand-primary-hover)",
-          900: "var(--brand-primary-hover)",
+          50: 'var(--neutral-50)',
+          100: 'var(--neutral-100)',
+          200: 'var(--neutral-200)',
+          300: 'var(--neutral-300)',
+          400: 'var(--neutral-400)',
+          500: 'var(--brand-primary)',
+          600: 'var(--brand-primary-hover)',
+          700: 'var(--brand-primary-hover)',
+          800: 'var(--brand-primary-hover)',
+          900: 'var(--brand-primary-hover)',
         },
         indigo: {
-          50: "var(--neutral-50)",
-          100: "var(--neutral-100)",
-          200: "var(--neutral-200)",
-          300: "var(--neutral-300)",
-          400: "var(--neutral-400)",
-          500: "var(--brand-primary)",
-          600: "var(--brand-primary-hover)",
-          700: "var(--brand-primary-hover)",
-          800: "var(--brand-primary-hover)",
-          900: "var(--brand-primary-hover)",
+          50: 'var(--neutral-50)',
+          100: 'var(--neutral-100)',
+          200: 'var(--neutral-200)',
+          300: 'var(--neutral-300)',
+          400: 'var(--neutral-400)',
+          500: 'var(--brand-primary)',
+          600: 'var(--brand-primary-hover)',
+          700: 'var(--brand-primary-hover)',
+          800: 'var(--brand-primary-hover)',
+          900: 'var(--brand-primary-hover)',
         },
       },
-      
+
       // Typography
       fontSize: {
         xs: '0.75rem',
@@ -174,7 +174,7 @@ module.exports = {
         relaxed: '1.625',
         loose: '2',
       },
-      
+
       // Border radius
       borderRadius: {
         none: '0',
@@ -187,7 +187,7 @@ module.exports = {
         '3xl': '1.5rem',
         full: '9999px',
       },
-      
+
       // Shadows
       boxShadow: {
         sm: 'var(--shadow-sm)',
@@ -198,7 +198,7 @@ module.exports = {
         '2xl': 'var(--shadow-2xl)',
         inner: 'var(--shadow-inner)',
       },
-      
+
       // Z-index
       zIndex: {
         hide: 'var(--z-hide)',
@@ -215,50 +215,50 @@ module.exports = {
         toast: 'var(--z-toast)',
         tooltip: 'var(--z-tooltip)',
       },
-      
+
       // Animation
       animation: {
-        "fade-in": "fadeIn 0.3s ease-out",
-        "slide-in-up": "slideInUp 0.3s ease-out",
-        "slide-in-down": "slideInDown 0.3s ease-out",
-        "scale-in": "scaleIn 0.3s ease-out",
-        "pulse-soft": "pulse 2s infinite",
+        'fade-in': 'fadeIn 0.3s ease-out',
+        'slide-in-up': 'slideInUp 0.3s ease-out',
+        'slide-in-down': 'slideInDown 0.3s ease-out',
+        'scale-in': 'scaleIn 0.3s ease-out',
+        'pulse-soft': 'pulse 2s infinite',
       },
-      
+
       // Keyframes
       keyframes: {
         fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
         slideInUp: {
-          "0%": {
-            opacity: "0",
-            transform: "translateY(20px)",
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(20px)',
           },
-          "100%": {
-            opacity: "1",
-            transform: "translateY(0)",
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
           },
         },
         slideInDown: {
-          "0%": {
-            opacity: "0",
-            transform: "translateY(-20px)",
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(-20px)',
           },
-          "100%": {
-            opacity: "1",
-            transform: "translateY(0)",
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
           },
         },
         scaleIn: {
-          "0%": {
-            opacity: "0",
-            transform: "scale(0.95)",
+          '0%': {
+            opacity: '0',
+            transform: 'scale(0.95)',
           },
-          "100%": {
-            opacity: "1",
-            transform: "scale(1)",
+          '100%': {
+            opacity: '1',
+            transform: 'scale(1)',
           },
         },
       },

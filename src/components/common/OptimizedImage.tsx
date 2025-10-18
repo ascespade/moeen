@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Image, { ImageProps } from "next/image";
-import { useState } from "react";
+import Image, { ImageProps } from 'next/image';
+import { useState } from 'react';
 
-interface OptimizedImageProps extends Omit<ImageProps, "src"> {
+interface OptimizedImageProps extends Omit<ImageProps, 'src'> {
   src: string;
   fallback?: string;
   alt: string;
@@ -11,7 +11,7 @@ interface OptimizedImageProps extends Omit<ImageProps, "src"> {
 
 export default function OptimizedImage({
   src,
-  fallback = "/logo.png",
+  fallback = '/logo.png',
   alt,
   ...props
 }: OptimizedImageProps) {

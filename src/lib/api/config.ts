@@ -1,5 +1,5 @@
 // Centralized API configuration for Moeen (Hemam Center)
-export type AIProvider = "gemini" | "openai";
+export type AIProvider = 'gemini' | 'openai';
 
 export interface ApiConfig {
   whatsapp: {
@@ -37,7 +37,7 @@ export const getApiConfig = (): ApiConfig => {
     whatsapp: {
       baseUrl:
         process.env.NEXT_PUBLIC_WHATSAPP_BASE_URL ||
-        "https://graph.facebook.com/v19.0",
+        'https://graph.facebook.com/v19.0',
       ...(whatsappToken ? { token: whatsappToken } : {}),
       ...(phoneNumberId ? { phoneNumberId } : {}),
       ...(webhookUrl ? { webhookUrl } : {}),
@@ -51,7 +51,7 @@ export const getApiConfig = (): ApiConfig => {
         : {}),
     },
     ai: {
-      provider: (process.env.NEXT_PUBLIC_AI_PROVIDER as AIProvider) || "gemini",
+      provider: (process.env.NEXT_PUBLIC_AI_PROVIDER as AIProvider) || 'gemini',
       ...(geminiApiKey ? { geminiApiKey } : {}),
       ...(openaiApiKey ? { openaiApiKey } : {}),
     },
@@ -62,6 +62,6 @@ export const isWhatsAppConfigured = (cfg: ApiConfig = getApiConfig()) =>
   Boolean(cfg.whatsapp.token && cfg.whatsapp.phoneNumberId);
 
 export const isAIConfigured = (cfg: ApiConfig = getApiConfig()) =>
-  cfg.ai.provider === "gemini"
+  cfg.ai.provider === 'gemini'
     ? Boolean(cfg.ai.geminiApiKey)
     : Boolean(cfg.ai.openaiApiKey);

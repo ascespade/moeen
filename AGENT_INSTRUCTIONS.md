@@ -1,4 +1,5 @@
 # 🤖 تعليمات مختصرة للـ Background Agent
+
 ## Quick Start Instructions
 
 ---
@@ -12,6 +13,7 @@
 ## 🎯 ما تم في مديول المصادقة (المرجع)
 
 ### 1. Database Enhancements ✅
+
 - أضفنا 13 عمود جديد (last_ip_address, last_user_agent, etc.)
 - قيم افتراضية لكل شيء
 - 7 فهارس للأداء
@@ -19,6 +21,7 @@
 - تعليقات شاملة
 
 ### 2. Triggers & Functions ✅
+
 ```sql
 ✅ update_updated_at_column()
 ✅ log_user_changes()
@@ -30,6 +33,7 @@
 ```
 
 ### 3. APIs ✅
+
 - حذف كل الـ mocks/simulations
 - استخدام Supabase حقيقي
 - تتبع IP و User Agent
@@ -37,6 +41,7 @@
 - معالجة أخطاء شاملة
 
 ### 4. Tests ✅
+
 - Playwright E2E tests
 - Database integration tests
 - 6/10 tests passed (4 rate-limited)
@@ -58,6 +63,7 @@
 ## 🚀 كيف تبدأ؟
 
 ### الأمر البسيط:
+
 ```
 ابدأ بوحدة [اسم الوحدة] وطبق عليها نفس ما تم في مديول المصادقة:
 1. حسّن الجداول
@@ -68,6 +74,7 @@
 ```
 
 ### مثال تفصيلي:
+
 ```
 Agent, work on the Appointments Module:
 
@@ -112,18 +119,21 @@ Agent, work on the Appointments Module:
 ## 🛠️ الأدوات المستخدمة
 
 ### Supabase MCP
+
 ```javascript
-mcp_supabase_execute_sql()        // استعلامات SQL
-mcp_supabase_apply_migration()    // تطبيق migrations
-mcp_supabase_list_tables()        // قائمة الجداول
+mcp_supabase_execute_sql(); // استعلامات SQL
+mcp_supabase_apply_migration(); // تطبيق migrations
+mcp_supabase_list_tables(); // قائمة الجداول
 ```
 
 ### Playwright
+
 ```bash
 npx playwright test tests/e2e/[module]-test.spec.ts
 ```
 
 ### Testing Helper
+
 ```typescript
 // Use: tests/helpers/supabase-test-helper.ts
 const helper = new SupabaseTestHelper();
@@ -136,16 +146,19 @@ await helper.cleanupRecords();
 ## 📊 ترتيب الأولويات
 
 ### 🔴 Priority 1 (ابدأ هنا):
+
 1. **Appointments** 📅 - 33 موعد
 2. **Medical Records** 📋 - 8 مرضى
 3. **Payments** 💳 - مهم جداً
 
 ### 🟡 Priority 2:
+
 4. **Chatbot & AI** 🤖 - 14 جدول
 5. **CRM** 👥 - 9 عملاء
 6. **Conversations** 💬 - 6 محادثات
 
 ### 🟢 Priority 3:
+
 7-13. باقي الوحدات
 
 ---
@@ -177,20 +190,24 @@ await helper.cleanupRecords();
 ## ✅ ما تم إنجازه
 
 ### Database
+
 - أعمدة مضافة: 5
 - فهارس مضافة: 3
 - محفزات: 2
 
 ### APIs
+
 - محدثة: 4
 - جديدة: 1
 - mocks مُزالة: 3
 
 ### Tests
+
 - E2E: 6/8 passed
 - DB Integration: 4/4 passed
 
 ### Statistics
+
 - Records before: 33
 - Records after: 33
 - Audit logs: 15 new
@@ -215,6 +232,7 @@ await helper.cleanupRecords();
 **13 وحدة × نفس مستوى مديول المصادقة = نظام متكامل 100%**
 
 ### Expected Results:
+
 - ✅ 53 جدول محسّنة
 - ✅ 26+ triggers
 - ✅ 39+ functions
@@ -243,4 +261,4 @@ Agent: Start with Priority 1, Module 1 (Appointments)
 
 **Good luck! 🚀**
 
-*هذه التعليمات كافية للبدء. باقي التفاصيل في AGENT_WORK_PLAN.md*
+_هذه التعليمات كافية للبدء. باقي التفاصيل في AGENT_WORK_PLAN.md_

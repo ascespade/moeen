@@ -13,33 +13,33 @@
   --theme-mode: light;
   --theme-is-dark: 0;
   --theme-is-light: 1;
-  
+
   /* Brand Colors - الألوان الأساسية */
-  --brand-primary: #E46C0A;
-  --brand-primary-hover: #D45F08;
-  --brand-secondary: #6B4E16;
+  --brand-primary: #e46c0a;
+  --brand-primary-hover: #d45f08;
+  --brand-secondary: #6b4e16;
   --brand-accent: #007bff;
   --brand-success: #009688;
   --brand-warning: #f59e0b;
   --brand-error: #ef4444;
-  
+
   /* Background Colors - ألوان الخلفية */
   --background: #ffffff;
   --foreground: #0f172a;
   --surface: #f9fafb;
   --panel: #ffffff;
   --border: #e5e7eb;
-  
+
   /* Text Colors - ألوان النص */
   --text-primary: #0f172a;
   --text-secondary: #6b7280;
   --text-muted: #9ca3af;
-  
+
   /* Interactive States - حالات التفاعل */
   --hover: #f3f4f6;
   --active: #e5e7eb;
   --focus: #007bff;
-  
+
   /* Neutral Colors - الألوان المحايدة */
   --neutral-50: #f9fafb;
   --neutral-100: #f3f4f6;
@@ -51,7 +51,7 @@
   --neutral-700: #374151;
   --neutral-800: #1f2937;
   --neutral-900: #111827;
-  
+
   /* Spacing Scale - مقياس المسافات */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -66,7 +66,7 @@
   --space-20: 5rem;
   --space-24: 6rem;
   --space-32: 8rem;
-  
+
   /* Border Radius - نصف قطر الحدود */
   --radius-none: 0;
   --radius-sm: 0.125rem;
@@ -77,16 +77,18 @@
   --radius-2xl: 1rem;
   --radius-3xl: 1.5rem;
   --radius-full: 9999px;
-  
+
   /* Shadows - الظلال */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl:
+    0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
-  
+
   /* Z-Index - ترتيب الطبقات */
   --z-hide: -1;
   --z-auto: auto;
@@ -101,12 +103,14 @@
   --z-skipLink: 1600;
   --z-toast: 1700;
   --z-tooltip: 1800;
-  
+
   /* Transitions - الانتقالات */
   --transition-fast: 150ms ease-in-out;
   --transition-normal: 300ms ease-in-out;
   --transition-slow: 500ms ease-in-out;
-  --transition-colors: color 200ms ease-in-out, background-color 200ms ease-in-out, border-color 200ms ease-in-out;
+  --transition-colors:
+    color 200ms ease-in-out, background-color 200ms ease-in-out,
+    border-color 200ms ease-in-out;
   --transition-transform: transform 200ms ease-in-out;
   --transition-opacity: opacity 200ms ease-in-out;
 }
@@ -115,24 +119,24 @@
    DARK THEME OVERRIDES - تجاوزات الثيم الداكن
    ======================================== */
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   /* Theme Mode - وضع الثيم */
   --theme-mode: dark;
   --theme-is-dark: 1;
   --theme-is-light: 0;
-  
+
   /* Background Colors - ألوان الخلفية */
   --background: #0f172a;
   --foreground: #f8fafc;
   --surface: #1e293b;
   --panel: #334155;
   --border: #475569;
-  
+
   /* Text Colors - ألوان النص */
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
-  
+
   /* Interactive States - حالات التفاعل */
   --hover: #334155;
   --active: #475569;
@@ -151,22 +155,42 @@
    ======================================== */
 
 /* Theme-aware background colors */
-.bg-theme-primary { background-color: var(--background); }
-.bg-theme-secondary { background-color: var(--surface); }
-.bg-theme-panel { background-color: var(--panel); }
+.bg-theme-primary {
+  background-color: var(--background);
+}
+.bg-theme-secondary {
+  background-color: var(--surface);
+}
+.bg-theme-panel {
+  background-color: var(--panel);
+}
 
 /* Theme-aware text colors */
-.text-theme-primary { color: var(--text-primary); }
-.text-theme-secondary { color: var(--text-secondary); }
-.text-theme-muted { color: var(--text-muted); }
+.text-theme-primary {
+  color: var(--text-primary);
+}
+.text-theme-secondary {
+  color: var(--text-secondary);
+}
+.text-theme-muted {
+  color: var(--text-muted);
+}
 
 /* Theme-aware border colors */
-.border-theme-primary { border-color: var(--border); }
-.border-theme-accent { border-color: #E46C0A; }
+.border-theme-primary {
+  border-color: var(--border);
+}
+.border-theme-accent {
+  border-color: #e46c0a;
+}
 
 /* Theme-aware hover states */
-.hover-theme:hover { background-color: var(--hover); }
-.active-theme:active { background-color: var(--active); }
+.hover-theme:hover {
+  background-color: var(--hover);
+}
+.active-theme:active {
+  background-color: var(--active);
+}
 
 /* Focus states */
 .focus-theme:focus {
@@ -191,7 +215,7 @@
   @apply bg-neutral-100 text-neutral-900 hover:bg-neutral-200 focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2;
 }
 
-[data-theme="dark"] .btn-secondary {
+[data-theme='dark'] .btn-secondary {
   @apply bg-neutral-800 text-neutral-100 hover:bg-neutral-700 focus:ring-neutral-400;
 }
 
@@ -218,8 +242,12 @@
    ======================================== */
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideInUp {
@@ -321,8 +349,8 @@
     --border: #000000;
     --text-secondary: #000000;
   }
-  
-  [data-theme="dark"] {
+
+  [data-theme='dark'] {
     --border: #ffffff;
     --text-secondary: #ffffff;
   }

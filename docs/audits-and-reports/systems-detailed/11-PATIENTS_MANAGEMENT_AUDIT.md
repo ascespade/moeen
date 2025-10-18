@@ -10,7 +10,9 @@
 ## 📋 نظرة عامة (Overview)
 
 ### الغرض:
+
 نظام لإدارة بيانات الأطفال (المرضى) في مركز الهمم:
+
 - ملفات الأطفال
 - المعلومات الطبية
 - تاريخ التشخيص
@@ -24,6 +26,7 @@
 ### الجداول الموجودة:
 
 #### `patients`:
+
 ```sql
 CREATE TABLE patients (
   id UUID PRIMARY KEY,
@@ -62,12 +65,14 @@ CREATE TABLE patients (
 ### 1. ربط الطفل بولي الأمر 🔴
 
 **المشكلة**:
+
 ```
 ❌ لا توجد علاقة واضحة بين patient و guardian
 ❌ طفل واحد قد يكون له أكثر من ولي أمر
 ```
 
 **الحل**:
+
 ```sql
 CREATE TABLE patient_guardians (
   patient_id UUID REFERENCES patients(id),
@@ -86,12 +91,14 @@ CREATE TABLE patient_guardians (
 ### 2. صور ووثائق 🟡
 
 **المشكلة**:
+
 ```
 ⚠️  لا يمكن رفع صورة الطفل
 ⚠️  لا يمكن رفع وثائق (تقارير، تشخيصات)
 ```
 
 **الحل**:
+
 ```sql
 CREATE TABLE patient_documents (
   id UUID PRIMARY KEY,
@@ -114,12 +121,14 @@ CREATE TABLE patient_documents (
 ## 🎯 خطة العمل
 
 ### Task 1: Patient-Guardian Link (4-6h)
+
 ```
 ✅ جدول patient_guardians
 ✅ UI updates
 ```
 
 ### Task 2: Documents (6-8h)
+
 ```
 ✅ File upload
 ✅ Document management
@@ -137,6 +146,6 @@ CREATE TABLE patient_documents (
 
 ---
 
-*Audit Date: 2025-10-17*  
-*System: Patients Management*  
-*Status: ✅ Good, Minor Enhancements Needed*
+_Audit Date: 2025-10-17_  
+_System: Patients Management_  
+_Status: ✅ Good, Minor Enhancements Needed_

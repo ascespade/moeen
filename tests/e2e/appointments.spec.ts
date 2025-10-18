@@ -15,33 +15,27 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const testPatient = {
   email: `test-patient-${Date.now()}@example.com`,
   name: 'Test Patient',
-  password: 'TestPassword123!'
+  password: 'TestPassword123!',
 };
 
 const testDoctor = {
   id: null as number | null, // Will be fetched
-  speciality: 'General Practice'
+  speciality: 'General Practice',
 };
 
 const testAppointment = {
   scheduledAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Tomorrow
   type: 'consultation',
-  duration: 30
+  duration: 30,
 };
 
 // Helper to clean up test data
 async function cleanupTestData() {
   // Delete test appointments
-  await supabase
-    .from('appointments')
-    .delete()
-    .like('created_by', '%test%');
-    
+  await supabase.from('appointments').delete().like('created_by', '%test%');
+
   // Delete test users
-  await supabase
-    .from('users')
-    .delete()
-    .like('email', '%test-patient%');
+  await supabase.from('users').delete().like('email', '%test-patient%');
 }
 
 test.describe('Appointments Module Tests', () => {
@@ -55,7 +49,7 @@ test.describe('Appointments Module Tests', () => {
       .select('id, speciality')
       .limit(1)
       .single();
-      
+
     if (doctors) {
       testDoctor.id = doctors.id;
       testDoctor.speciality = doctors.speciality;
@@ -73,7 +67,7 @@ test.describe('Appointments Module Tests', () => {
         email: testPatient.email,
         password: testPatient.password,
       });
-      
+
       expect(authData.user).toBeTruthy();
       patientUserId = authData.user!.id;
 
@@ -83,7 +77,7 @@ test.describe('Appointments Module Tests', () => {
         .insert({
           user_id: patientUserId,
           full_name: testPatient.name,
-          phone: '0500000000'
+          phone: '0500000000',
         })
         .select()
         .single();
@@ -95,8 +89,8 @@ test.describe('Appointments Module Tests', () => {
       const loginResponse = await request.post('/api/auth/login', {
         data: {
           email: testPatient.email,
-          password: testPatient.password
-        }
+          password: testPatient.password,
+        },
       });
 
       expect(loginResponse.status()).toBe(200);
@@ -109,16 +103,16 @@ test.describe('Appointments Module Tests', () => {
           patientId: patientId,
           doctorId: testDoctor.id,
           scheduledAt: testAppointment.scheduledAt,
-          type: testAppointment.type
+          type: testAppointment.type,
         },
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
 
       expect(appointmentResponse.status()).toBe(200);
       const appointmentData = await appointmentResponse.json();
-      
+
       expect(appointmentData.success).toBe(true);
       expect(appointmentData.appointment).toBeTruthy();
       expect(appointmentData.appointment.status).toBe('pending');
@@ -152,17 +146,20 @@ test.describe('Appointments Module Tests', () => {
 
     test('1.2 should detect appointment conflicts', async ({ request }) => {
       // Check for conflicts at same time
-      const conflictResponse = await request.post('/api/appointments/conflict-check', {
-        data: {
-          doctorId: testDoctor.id,
-          scheduledAt: testAppointment.scheduledAt,
-          duration: 30
+      const conflictResponse = await request.post(
+        '/api/appointments/conflict-check',
+        {
+          data: {
+            doctorId: testDoctor.id,
+            scheduledAt: testAppointment.scheduledAt,
+            duration: 30,
+          },
         }
-      });
+      );
 
       expect(conflictResponse.status()).toBe(200);
       const conflictData = await conflictResponse.json();
-      
+
       expect(conflictData.success).toBe(true);
       expect(conflictData.data.hasConflicts).toBeTruthy();
       expect(conflictData.data.conflictCount).toBeGreaterThan(0);
@@ -178,7 +175,7 @@ test.describe('Appointments Module Tests', () => {
 
       expect(availabilityResponse.status()).toBe(200);
       const availabilityData = await availabilityResponse.json();
-      
+
       expect(availabilityData.available).toBeDefined();
       expect(availabilityData.slots).toBeDefined();
     });
@@ -194,22 +191,25 @@ test.describe('Appointments Module Tests', () => {
         .select('id')
         .eq('patient_id', patientId)
         .single();
-        
+
       if (data) {
         appointmentId = data.id;
       }
     });
 
     test('2.1 should update appointment status', async ({ request }) => {
-      const updateResponse = await request.patch(`/api/appointments/${appointmentId}`, {
-        data: {
-          status: 'confirmed'
+      const updateResponse = await request.patch(
+        `/api/appointments/${appointmentId}`,
+        {
+          data: {
+            status: 'confirmed',
+          },
         }
-      });
+      );
 
       expect(updateResponse.status()).toBe(200);
       const updateData = await updateResponse.json();
-      
+
       expect(updateData.success).toBe(true);
       expect(updateData.appointment.status).toBe('confirmed');
 
@@ -241,13 +241,18 @@ test.describe('Appointments Module Tests', () => {
     });
 
     test('2.2 should reschedule appointment', async ({ request }) => {
-      const newScheduledAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+      const newScheduledAt = new Date(
+        Date.now() + 48 * 60 * 60 * 1000
+      ).toISOString();
 
-      const updateResponse = await request.patch(`/api/appointments/${appointmentId}`, {
-        data: {
-          scheduled_at: newScheduledAt
+      const updateResponse = await request.patch(
+        `/api/appointments/${appointmentId}`,
+        {
+          data: {
+            scheduled_at: newScheduledAt,
+          },
         }
-      });
+      );
 
       expect(updateResponse.status()).toBe(200);
 
@@ -258,7 +263,9 @@ test.describe('Appointments Module Tests', () => {
         .eq('id', appointmentId)
         .single();
 
-      expect(new Date(dbAppointment.scheduled_at).toISOString()).toBe(newScheduledAt);
+      expect(new Date(dbAppointment.scheduled_at).toISOString()).toBe(
+        newScheduledAt
+      );
     });
   });
 
@@ -268,7 +275,7 @@ test.describe('Appointments Module Tests', () => {
 
       expect(response.status()).toBe(200);
       const data = await response.json();
-      
+
       expect(data.appointments).toBeDefined();
       expect(Array.isArray(data.appointments)).toBe(true);
     });
@@ -286,7 +293,7 @@ test.describe('Appointments Module Tests', () => {
 
       expect(response.status()).toBe(200);
       const data = await response.json();
-      
+
       expect(data.appointment).toBeTruthy();
       expect(data.appointment.id).toBe(appointment.id);
       expect(data.appointment.patient).toBeTruthy();
@@ -310,7 +317,7 @@ test.describe('Appointments Module Tests', () => {
 
       expect(response.status()).toBe(200);
       const data = await response.json();
-      
+
       expect(data.appointments).toBeDefined();
       data.appointments.forEach((apt: any) => {
         expect(apt.status).toBe('confirmed');
@@ -318,11 +325,13 @@ test.describe('Appointments Module Tests', () => {
     });
 
     test('3.4 should filter appointments by patient', async ({ request }) => {
-      const response = await request.get(`/api/appointments?patientId=${patientId}`);
+      const response = await request.get(
+        `/api/appointments?patientId=${patientId}`
+      );
 
       expect(response.status()).toBe(200);
       const data = await response.json();
-      
+
       expect(data.appointments).toBeDefined();
       data.appointments.forEach((apt: any) => {
         expect(apt.patient_id).toBe(patientId);
@@ -340,12 +349,15 @@ test.describe('Appointments Module Tests', () => {
 
       if (!appointment) return;
 
-      const updateResponse = await request.patch(`/api/appointments/${appointment.id}`, {
-        data: {
-          status: 'cancelled',
-          cancellation_reason: 'Patient unavailable'
+      const updateResponse = await request.patch(
+        `/api/appointments/${appointment.id}`,
+        {
+          data: {
+            status: 'cancelled',
+            cancellation_reason: 'Patient unavailable',
+          },
         }
-      });
+      );
 
       expect(updateResponse.status()).toBe(200);
 
@@ -403,7 +415,9 @@ test.describe('Appointments Module Tests', () => {
       const { data: auditLogs, count } = await supabase
         .from('audit_logs')
         .select('*', { count: 'exact' })
-        .or(`resource_id.eq.${appointment.id},metadata->>appointment_id.eq.${appointment.id}`);
+        .or(
+          `resource_id.eq.${appointment.id},metadata->>appointment_id.eq.${appointment.id}`
+        );
 
       expect(count).toBeGreaterThan(0);
       expect(auditLogs).toBeTruthy();
@@ -436,7 +450,7 @@ test.describe('Appointments Module Tests', () => {
         .eq('patient_id', patientId);
 
       expect(count).toBeGreaterThanOrEqual(0);
-      
+
       const statusCounts = stats?.reduce((acc: any, apt) => {
         acc[apt.status] = (acc[apt.status] || 0) + 1;
         return acc;

@@ -18,7 +18,7 @@ const colors = {
   yellow: '\x1b[33m',
   blue: '\x1b[34m',
   magenta: '\x1b[35m',
-  cyan: '\x1b[36m'
+  cyan: '\x1b[36m',
 };
 
 function log(message, color = 'reset') {
@@ -30,133 +30,189 @@ class SmartWorkflowManager {
     this.workflows = {
       'unified-ai-healing': {
         name: 'Unified AI Self-Healing',
-        triggers: ['auto', 'emergency', 'maintenance', 'testing', 'deployment', 'monitoring'],
+        triggers: [
+          'auto',
+          'emergency',
+          'maintenance',
+          'testing',
+          'deployment',
+          'monitoring',
+        ],
         capabilities: ['error-fixing', 'self-healing', 'testing', 'deployment'],
-        priority: 1
+        priority: 1,
       },
       'ai-self-healing': {
         name: 'AI Self-Healing CI/CD',
         triggers: ['auto', 'fix-only', 'test-only', 'optimize-only'],
         capabilities: ['error-fixing', 'testing', 'optimization'],
-        priority: 2
+        priority: 2,
       },
       'ai-call-cursor-agent': {
         name: 'AI via Cursor Background Agent',
         triggers: ['auto', 'fix-only', 'test-only', 'optimize-only'],
         capabilities: ['ai-assistance', 'cursor-integration'],
-        priority: 3
+        priority: 3,
       },
       'workflow-testing': {
         name: 'Workflow Testing & Validation',
         triggers: ['all', 'syntax', 'execution', 'performance', 'security'],
         capabilities: ['testing', 'validation', 'performance'],
-        priority: 4
-      }
+        priority: 4,
+      },
     };
-    
+
     this.errorPatterns = {
-      'eslint': {
+      eslint: {
         severity: 'medium',
         workflow: 'unified-ai-healing',
         mode: 'auto',
-        scope: 'full'
+        scope: 'full',
       },
-      'typescript': {
+      typescript: {
         severity: 'high',
         workflow: 'unified-ai-healing',
         mode: 'auto',
-        scope: 'full'
+        scope: 'full',
       },
-      'security': {
+      security: {
         severity: 'critical',
         workflow: 'unified-ai-healing',
         mode: 'emergency',
-        scope: 'full'
+        scope: 'full',
       },
-      'tests': {
+      tests: {
         severity: 'medium',
         workflow: 'unified-ai-healing',
         mode: 'testing',
-        scope: 'tests'
+        scope: 'tests',
       },
-      'build': {
+      build: {
         severity: 'high',
         workflow: 'unified-ai-healing',
         mode: 'emergency',
-        scope: 'full'
+        scope: 'full',
       },
-      'deployment': {
+      deployment: {
         severity: 'critical',
         workflow: 'unified-ai-healing',
         mode: 'deployment',
-        scope: 'full'
-      }
+        scope: 'full',
+      },
     };
   }
 
   async analyzeProject() {
     log('🔍 تحليل المشروع...', 'cyan');
-    
+
     const analysis = {
       timestamp: new Date().toISOString(),
       errors: [],
       warnings: [],
       recommendations: [],
-      workflowSuggestions: []
+      workflowSuggestions: [],
     };
 
     try {
       // فحص ESLint
       try {
-        const eslintOutput = execSync('npm run lint:check 2>&1', { encoding: 'utf8' });
-        const eslintErrors = (eslintOutput.match(/(\d+) errors?/g) || []).map(m => parseInt(m)).reduce((a, b) => a + b, 0);
+        const eslintOutput = execSync('npm run lint:check 2>&1', {
+          encoding: 'utf8',
+        });
+        const eslintErrors = (eslintOutput.match(/(\d+) errors?/g) || [])
+          .map(m => parseInt(m))
+          .reduce((a, b) => a + b, 0);
         if (eslintErrors > 0) {
-          analysis.errors.push({ type: 'eslint', count: eslintErrors, severity: 'medium' });
+          analysis.errors.push({
+            type: 'eslint',
+            count: eslintErrors,
+            severity: 'medium',
+          });
         }
       } catch (e) {
-        analysis.errors.push({ type: 'eslint', error: e.message, severity: 'high' });
+        analysis.errors.push({
+          type: 'eslint',
+          error: e.message,
+          severity: 'high',
+        });
       }
 
       // فحص TypeScript
       try {
-        const tsOutput = execSync('npm run type:check 2>&1', { encoding: 'utf8' });
+        const tsOutput = execSync('npm run type:check 2>&1', {
+          encoding: 'utf8',
+        });
         const tsErrors = (tsOutput.match(/error TS\d+:/g) || []).length;
         if (tsErrors > 0) {
-          analysis.errors.push({ type: 'typescript', count: tsErrors, severity: 'high' });
+          analysis.errors.push({
+            type: 'typescript',
+            count: tsErrors,
+            severity: 'high',
+          });
         }
       } catch (e) {
-        analysis.errors.push({ type: 'typescript', error: e.message, severity: 'critical' });
+        analysis.errors.push({
+          type: 'typescript',
+          error: e.message,
+          severity: 'critical',
+        });
       }
 
       // فحص الأمان
       try {
-        const securityOutput = execSync('npm audit --audit-level=moderate 2>&1', { encoding: 'utf8' });
-        const vulnerabilities = (securityOutput.match(/(\d+) vulnerabilities/))?.[1] || 0;
+        const securityOutput = execSync(
+          'npm audit --audit-level=moderate 2>&1',
+          { encoding: 'utf8' }
+        );
+        const vulnerabilities =
+          securityOutput.match(/(\d+) vulnerabilities/)?.[1] || 0;
         if (vulnerabilities > 0) {
-          analysis.errors.push({ type: 'security', count: parseInt(vulnerabilities), severity: 'critical' });
+          analysis.errors.push({
+            type: 'security',
+            count: parseInt(vulnerabilities),
+            severity: 'critical',
+          });
         }
       } catch (e) {
-        analysis.warnings.push({ type: 'security', error: e.message, severity: 'medium' });
+        analysis.warnings.push({
+          type: 'security',
+          error: e.message,
+          severity: 'medium',
+        });
       }
 
       // فحص الاختبارات
       try {
-        const testOutput = execSync('npm run test:unit 2>&1', { encoding: 'utf8' });
-        const testFailed = (testOutput.match(/(\d+) failed/g) || []).map(m => parseInt(m)).reduce((a, b) => a + b, 0);
+        const testOutput = execSync('npm run test:unit 2>&1', {
+          encoding: 'utf8',
+        });
+        const testFailed = (testOutput.match(/(\d+) failed/g) || [])
+          .map(m => parseInt(m))
+          .reduce((a, b) => a + b, 0);
         if (testFailed > 0) {
-          analysis.errors.push({ type: 'tests', count: testFailed, severity: 'medium' });
+          analysis.errors.push({
+            type: 'tests',
+            count: testFailed,
+            severity: 'medium',
+          });
         }
       } catch (e) {
-        analysis.warnings.push({ type: 'tests', error: e.message, severity: 'medium' });
+        analysis.warnings.push({
+          type: 'tests',
+          error: e.message,
+          severity: 'medium',
+        });
       }
 
       // فحص البناء
       try {
         execSync('npm run build 2>&1', { encoding: 'utf8' });
       } catch (e) {
-        analysis.errors.push({ type: 'build', error: e.message, severity: 'critical' });
+        analysis.errors.push({
+          type: 'build',
+          error: e.message,
+          severity: 'critical',
+        });
       }
-
     } catch (error) {
       log(`❌ خطأ في التحليل: ${error.message}`, 'red');
     }
@@ -166,9 +222,9 @@ class SmartWorkflowManager {
 
   suggestWorkflow(analysis) {
     log('💡 اقتراح Workflow مناسب...', 'cyan');
-    
+
     const suggestions = [];
-    
+
     // تحليل الأخطاء واقتراح Workflow مناسب
     for (const error of analysis.errors) {
       const pattern = this.errorPatterns[error.type];
@@ -179,7 +235,7 @@ class SmartWorkflowManager {
           scope: pattern.scope,
           severity: pattern.severity,
           reason: `Error type: ${error.type}`,
-          priority: this.workflows[pattern.workflow].priority
+          priority: this.workflows[pattern.workflow].priority,
         });
       }
     }
@@ -195,18 +251,20 @@ class SmartWorkflowManager {
         scope: 'full',
         severity: 'low',
         reason: 'No errors detected - running comprehensive testing',
-        priority: 4
+        priority: 4,
       });
     }
 
-    return suggestions[0] || {
-      workflow: 'unified-ai-healing',
-      mode: 'auto',
-      scope: 'full',
-      severity: 'medium',
-      reason: 'Default fallback',
-      priority: 1
-    };
+    return (
+      suggestions[0] || {
+        workflow: 'unified-ai-healing',
+        mode: 'auto',
+        scope: 'full',
+        severity: 'medium',
+        reason: 'Default fallback',
+        priority: 1,
+      }
+    );
   }
 
   async executeWorkflow(suggestion) {
@@ -219,38 +277,37 @@ class SmartWorkflowManager {
     try {
       // تنفيذ Workflow باستخدام GitHub CLI
       const command = `gh workflow run ${suggestion.workflow}.yml -f mode=${suggestion.mode} -f severity=${suggestion.severity} -f scope=${suggestion.scope}`;
-      
+
       log(`📝 تنفيذ الأمر: ${command}`, 'magenta');
-      
+
       // محاكاة تنفيذ Workflow (في البيئة الحقيقية سيتم استخدام GitHub CLI)
       log('✅ تم بدء تنفيذ Workflow', 'green');
-      
+
       return {
         success: true,
         workflow: suggestion.workflow,
         mode: suggestion.mode,
         scope: suggestion.scope,
-        severity: suggestion.severity
+        severity: suggestion.severity,
       };
-
     } catch (error) {
       log(`❌ خطأ في تنفيذ Workflow: ${error.message}`, 'red');
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
 
   async monitorWorkflow(workflowName) {
     log(`👀 مراقبة Workflow: ${workflowName}`, 'cyan');
-    
+
     // محاكاة مراقبة Workflow
     const status = {
       running: true,
       progress: 0,
       currentStep: 'Initializing',
-      estimatedTime: '5 minutes'
+      estimatedTime: '5 minutes',
     };
 
     return status;
@@ -258,7 +315,7 @@ class SmartWorkflowManager {
 
   generateReport(analysis, suggestion, execution) {
     log('📊 إنشاء التقرير...', 'cyan');
-    
+
     const report = {
       timestamp: new Date().toISOString(),
       analysis: analysis,
@@ -268,16 +325,16 @@ class SmartWorkflowManager {
         totalErrors: analysis.errors.length,
         totalWarnings: analysis.warnings.length,
         suggestedWorkflow: suggestion.workflow,
-        executionSuccess: execution.success
-      }
+        executionSuccess: execution.success,
+      },
     };
 
     // حفظ التقرير
     const reportPath = path.join(process.cwd(), 'smart-workflow-report.json');
     fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
-    
+
     log(`📁 تم حفظ التقرير في: ${reportPath}`, 'green');
-    
+
     return report;
   }
 
@@ -288,20 +345,26 @@ class SmartWorkflowManager {
     try {
       // 1. تحليل المشروع
       const analysis = await this.analyzeProject();
-      
+
       log(`\n📊 نتائج التحليل:`, 'bright');
-      log(`🔍 الأخطاء: ${analysis.errors.length}`, analysis.errors.length > 0 ? 'red' : 'green');
-      log(`⚠️ التحذيرات: ${analysis.warnings.length}`, analysis.warnings.length > 0 ? 'yellow' : 'green');
+      log(
+        `🔍 الأخطاء: ${analysis.errors.length}`,
+        analysis.errors.length > 0 ? 'red' : 'green'
+      );
+      log(
+        `⚠️ التحذيرات: ${analysis.warnings.length}`,
+        analysis.warnings.length > 0 ? 'yellow' : 'green'
+      );
 
       // 2. اقتراح Workflow مناسب
       const suggestion = this.suggestWorkflow(analysis);
-      
+
       // 3. تنفيذ Workflow
       const execution = await this.executeWorkflow(suggestion);
-      
+
       // 4. إنشاء التقرير
       const report = this.generateReport(analysis, suggestion, execution);
-      
+
       // 5. عرض النتائج
       log('\n📈 ملخص النتائج:', 'bright');
       log(`✅ Workflow المقترح: ${suggestion.workflow}`, 'green');
@@ -309,10 +372,12 @@ class SmartWorkflowManager {
       log(`🎯 النطاق: ${suggestion.scope}`, 'blue');
       log(`⚠️ الخطورة: ${suggestion.severity}`, 'yellow');
       log(`💡 السبب: ${suggestion.reason}`, 'cyan');
-      log(`🚀 حالة التنفيذ: ${execution.success ? 'نجح' : 'فشل'}`, execution.success ? 'green' : 'red');
+      log(
+        `🚀 حالة التنفيذ: ${execution.success ? 'نجح' : 'فشل'}`,
+        execution.success ? 'green' : 'red'
+      );
 
       return report;
-
     } catch (error) {
       log(`❌ خطأ في Smart Workflow Manager: ${error.message}`, 'red');
       process.exit(1);

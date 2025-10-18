@@ -4,7 +4,7 @@ export interface SaudiHealthRecord {
   fullName: string;
   fullNameEn: string;
   dateOfBirth: string;
-  gender: "male" | "female";
+  gender: 'male' | 'female';
   nationality: string;
   phone: string;
   email?: string;
@@ -18,7 +18,7 @@ export interface SaudiHealthRecord {
     provider: string;
     policyNumber: string;
     expiryDate: string;
-    coverageType: "basic" | "premium" | "comprehensive";
+    coverageType: 'basic' | 'premium' | 'comprehensive';
   };
   medicalHistory: {
     chronicConditions: string[];
@@ -37,7 +37,7 @@ export interface SehaIntegration {
   patientId: string;
   sehaId: string;
   lastSync: string;
-  status: "active" | "inactive" | "pending";
+  status: 'active' | 'inactive' | 'pending';
 }
 
 export interface InsuranceProvider {
@@ -57,7 +57,7 @@ export interface InsuranceClaim {
   serviceCode: string;
   diagnosisCode: string;
   amount: number;
-  status: "pending" | "approved" | "rejected" | "under_review";
+  status: 'pending' | 'approved' | 'rejected' | 'under_review';
   submittedAt: string;
   processedAt?: string;
   rejectionReason?: string;
@@ -69,59 +69,59 @@ export class SaudiHealthSystemIntegration {
 
   constructor() {
     this.sehaApiEndpoint =
-      process.env.SEHA_API_ENDPOINT || "https://api.seha.sa";
+      process.env.SEHA_API_ENDPOINT || 'https://api.seha.sa';
     this.initializeInsuranceProviders();
   }
 
   private initializeInsuranceProviders() {
     // Saudi insurance providers
-    this.insuranceProviders.set("tawuniya", {
-      id: "tawuniya",
-      name: "التعاونية",
-      code: "TAW",
-      apiEndpoint: "https://api.tawuniya.com.sa",
+    this.insuranceProviders.set('tawuniya', {
+      id: 'tawuniya',
+      name: 'التعاونية',
+      code: 'TAW',
+      apiEndpoint: 'https://api.tawuniya.com.sa',
       requiresApproval: true,
-      coverageTypes: ["basic", "premium", "comprehensive"],
+      coverageTypes: ['basic', 'premium', 'comprehensive'],
     });
 
-    this.insuranceProviders.set("bupa", {
-      id: "bupa",
-      name: "بوبا العربية",
-      code: "BUPA",
-      apiEndpoint: "https://api.bupa.com.sa",
+    this.insuranceProviders.set('bupa', {
+      id: 'bupa',
+      name: 'بوبا العربية',
+      code: 'BUPA',
+      apiEndpoint: 'https://api.bupa.com.sa',
       requiresApproval: true,
-      coverageTypes: ["premium", "comprehensive"],
+      coverageTypes: ['premium', 'comprehensive'],
     });
 
-    this.insuranceProviders.set("medgulf", {
-      id: "medgulf",
-      name: "ميدغلف",
-      code: "MED",
-      apiEndpoint: "https://api.medgulf.com.sa",
+    this.insuranceProviders.set('medgulf', {
+      id: 'medgulf',
+      name: 'ميدغلف',
+      code: 'MED',
+      apiEndpoint: 'https://api.medgulf.com.sa',
       requiresApproval: false,
-      coverageTypes: ["basic", "premium"],
+      coverageTypes: ['basic', 'premium'],
     });
 
-    this.insuranceProviders.set("axa", {
-      id: "axa",
-      name: "أكسا",
-      code: "AXA",
-      apiEndpoint: "https://api.axa.com.sa",
+    this.insuranceProviders.set('axa', {
+      id: 'axa',
+      name: 'أكسا',
+      code: 'AXA',
+      apiEndpoint: 'https://api.axa.com.sa',
       requiresApproval: true,
-      coverageTypes: ["basic", "premium", "comprehensive"],
+      coverageTypes: ['basic', 'premium', 'comprehensive'],
     });
   }
 
   // Seha Platform Integration
   async syncWithSeha(
     patientId: string,
-    nationalId: string,
+    nationalId: string
   ): Promise<SehaIntegration> {
     try {
       // In real implementation, this would call Seha API
       const sehaResponse = await this.callSehaAPI(
-        "GET",
-        `/patients/${nationalId}`,
+        'GET',
+        `/patients/${nationalId}`
       );
 
       if (sehaResponse.success) {
@@ -129,28 +129,28 @@ export class SaudiHealthSystemIntegration {
           patientId,
           sehaId: sehaResponse.data.sehaId,
           lastSync: new Date().toISOString(),
-          status: "active",
+          status: 'active',
         };
       } else {
-        throw new Error("Failed to sync with Seha platform");
+        throw new Error('Failed to sync with Seha platform');
       }
     } catch (error) {
       return {
         patientId,
-        sehaId: "",
+        sehaId: '',
         lastSync: new Date().toISOString(),
-        status: "inactive",
+        status: 'inactive',
       };
     }
   }
 
   async getSehaHealthRecord(
-    nationalId: string,
+    nationalId: string
   ): Promise<SaudiHealthRecord | null> {
     try {
       const response = await this.callSehaAPI(
-        "GET",
-        `/health-records/${nationalId}`,
+        'GET',
+        `/health-records/${nationalId}`
       );
 
       if (response.success) {
@@ -202,7 +202,7 @@ export class SaudiHealthSystemIntegration {
   // Insurance Integration
   async verifyInsuranceCoverage(
     nationalId: string,
-    providerCode: string,
+    providerCode: string
   ): Promise<{
     covered: boolean;
     coverageType: string;
@@ -212,17 +212,17 @@ export class SaudiHealthSystemIntegration {
     try {
       const provider = this.insuranceProviders.get(providerCode);
       if (!provider) {
-        throw new Error("Insurance provider not found");
+        throw new Error('Insurance provider not found');
       }
 
       const response = await this.callInsuranceAPI(
         provider,
-        "POST",
-        "/verify-coverage",
+        'POST',
+        '/verify-coverage',
         {
           nationalId,
           serviceDate: new Date().toISOString(),
-        },
+        }
       );
 
       if (response.success) {
@@ -236,15 +236,15 @@ export class SaudiHealthSystemIntegration {
 
       return {
         covered: false,
-        coverageType: "none",
-        expiryDate: "",
+        coverageType: 'none',
+        expiryDate: '',
         remainingAmount: 0,
       };
     } catch (error) {
       return {
         covered: false,
-        coverageType: "none",
-        expiryDate: "",
+        coverageType: 'none',
+        expiryDate: '',
         remainingAmount: 0,
       };
     }
@@ -263,13 +263,13 @@ export class SaudiHealthSystemIntegration {
     try {
       const provider = this.insuranceProviders.get(claimData.providerCode);
       if (!provider) {
-        throw new Error("Insurance provider not found");
+        throw new Error('Insurance provider not found');
       }
 
       const response = await this.callInsuranceAPI(
         provider,
-        "POST",
-        "/submit-claim",
+        'POST',
+        '/submit-claim',
         {
           nationalId: claimData.nationalId,
           serviceCode: claimData.serviceCode,
@@ -277,7 +277,7 @@ export class SaudiHealthSystemIntegration {
           amount: claimData.amount,
           serviceDate: claimData.serviceDate,
           notes: claimData.notes,
-        },
+        }
       );
 
       if (response.success) {
@@ -289,12 +289,12 @@ export class SaudiHealthSystemIntegration {
           serviceCode: claimData.serviceCode,
           diagnosisCode: claimData.diagnosisCode,
           amount: claimData.amount,
-          status: "pending",
+          status: 'pending',
           submittedAt: new Date().toISOString(),
         };
       }
 
-      throw new Error("Failed to submit insurance claim");
+      throw new Error('Failed to submit insurance claim');
     } catch (error) {
       throw error;
     }
@@ -302,7 +302,7 @@ export class SaudiHealthSystemIntegration {
 
   async checkClaimStatus(
     claimNumber: string,
-    providerCode: string,
+    providerCode: string
   ): Promise<{
     status: string;
     processedAt?: string;
@@ -311,13 +311,13 @@ export class SaudiHealthSystemIntegration {
     try {
       const provider = this.insuranceProviders.get(providerCode);
       if (!provider) {
-        throw new Error("Insurance provider not found");
+        throw new Error('Insurance provider not found');
       }
 
       const response = await this.callInsuranceAPI(
         provider,
-        "GET",
-        `/claims/${claimNumber}/status`,
+        'GET',
+        `/claims/${claimNumber}/status`
       );
 
       if (response.success) {
@@ -333,7 +333,7 @@ export class SaudiHealthSystemIntegration {
         processedAt?: string;
         rejectionReason?: string;
       } = {
-        status: "unknown",
+        status: 'unknown',
       };
       return result;
     } catch (error) {
@@ -342,8 +342,8 @@ export class SaudiHealthSystemIntegration {
         processedAt?: string;
         rejectionReason?: string;
       } = {
-        status: "error",
-        rejectionReason: "System error",
+        status: 'error',
+        rejectionReason: 'System error',
       };
       return result;
     }
@@ -359,21 +359,21 @@ export class SaudiHealthSystemIntegration {
     // National ID validation (Saudi format)
     if (patientData.nationalId) {
       if (!this.isValidSaudiNationalId(patientData.nationalId)) {
-        errors.push("رقم الهوية الوطنية غير صحيح");
+        errors.push('رقم الهوية الوطنية غير صحيح');
       }
     }
 
     // Phone number validation (Saudi format)
     if (patientData.phone) {
       if (!this.isValidSaudiPhoneNumber(patientData.phone)) {
-        errors.push("رقم الهاتف غير صحيح (يجب أن يبدأ بـ +966 أو 966)");
+        errors.push('رقم الهاتف غير صحيح (يجب أن يبدأ بـ +966 أو 966)');
       }
     }
 
     // Email validation
     if (patientData.email) {
       if (!this.isValidEmail(patientData.email)) {
-        errors.push("البريد الإلكتروني غير صحيح");
+        errors.push('البريد الإلكتروني غير صحيح');
       }
     }
 
@@ -381,7 +381,7 @@ export class SaudiHealthSystemIntegration {
     if (patientData.dateOfBirth) {
       const age = this.calculateAge(patientData.dateOfBirth);
       if (age < 0 || age > 120) {
-        errors.push("العمر غير صحيح");
+        errors.push('العمر غير صحيح');
       }
     }
 
@@ -429,44 +429,44 @@ export class SaudiHealthSystemIntegration {
   private async callSehaAPI(
     method: string,
     endpoint: string,
-    data?: any,
+    data?: any
   ): Promise<any> {
     // In real implementation, this would make actual API calls
     // Mock response for development
     return {
       success: true,
       data: {
-        sehaId: "SEHA_" + Math.random().toString(36).substr(2, 9),
-        nationalId: data?.nationalId || "1234567890",
-        fullName: "أحمد محمد الأحمد",
-        fullNameEn: "Ahmed Mohammed Al-Ahmad",
-        dateOfBirth: "1990-01-01",
-        gender: "male",
-        nationality: "Saudi",
-        phone: "+966501234567",
-        email: "ahmed@example.com",
+        sehaId: 'SEHA_' + Math.random().toString(36).substr(2, 9),
+        nationalId: data?.nationalId || '1234567890',
+        fullName: 'أحمد محمد الأحمد',
+        fullNameEn: 'Ahmed Mohammed Al-Ahmad',
+        dateOfBirth: '1990-01-01',
+        gender: 'male',
+        nationality: 'Saudi',
+        phone: '+966501234567',
+        email: 'ahmed@example.com',
         address: {
-          city: "جدة",
-          district: "حي الصفا",
-          street: "شارع الأمير محمد بن عبدالعزيز",
-          postalCode: "12345",
+          city: 'جدة',
+          district: 'حي الصفا',
+          street: 'شارع الأمير محمد بن عبدالعزيز',
+          postalCode: '12345',
         },
         insurance: {
-          provider: "التعاونية",
-          policyNumber: "POL123456789",
-          expiryDate: "2025-12-31",
-          coverageType: "comprehensive",
+          provider: 'التعاونية',
+          policyNumber: 'POL123456789',
+          expiryDate: '2025-12-31',
+          coverageType: 'comprehensive',
         },
         medicalHistory: {
-          chronicConditions: ["السكري", "ارتفاع ضغط الدم"],
-          allergies: ["البنسلين"],
-          medications: ["ميتفورمين", "أملوديبين"],
-          previousSurgeries: ["استئصال الزائدة الدودية"],
+          chronicConditions: ['السكري', 'ارتفاع ضغط الدم'],
+          allergies: ['البنسلين'],
+          medications: ['ميتفورمين', 'أملوديبين'],
+          previousSurgeries: ['استئصال الزائدة الدودية'],
         },
         emergencyContact: {
-          name: "فاطمة الأحمد",
-          relationship: "زوجة",
-          phone: "+966501234568",
+          name: 'فاطمة الأحمد',
+          relationship: 'زوجة',
+          phone: '+966501234568',
         },
       },
     };
@@ -476,20 +476,20 @@ export class SaudiHealthSystemIntegration {
     provider: InsuranceProvider,
     method: string,
     endpoint: string,
-    data?: any,
+    data?: any
   ): Promise<any> {
     // In real implementation, this would make actual API calls to insurance providers
     // Mock response for development
     return {
       success: true,
       data: {
-        claimId: "CLAIM_" + Math.random().toString(36).substr(2, 9),
+        claimId: 'CLAIM_' + Math.random().toString(36).substr(2, 9),
         claimNumber:
-          "CL" + Math.random().toString(36).substr(2, 8).toUpperCase(),
-        status: "pending",
+          'CL' + Math.random().toString(36).substr(2, 8).toUpperCase(),
+        status: 'pending',
         covered: true,
-        coverageType: "comprehensive",
-        expiryDate: "2025-12-31",
+        coverageType: 'comprehensive',
+        expiryDate: '2025-12-31',
         remainingAmount: 50000,
       },
     };

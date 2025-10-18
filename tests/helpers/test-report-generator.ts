@@ -72,7 +72,7 @@ export class TestReportGenerator {
       failed: this.results.filter(r => r.status === 'failed').length,
       skipped: this.results.filter(r => r.status === 'skipped').length,
       duration,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     // Calculate coverage
@@ -86,7 +86,7 @@ export class TestReportGenerator {
       databaseStats,
       testResults: this.results,
       recommendations,
-      coverage
+      coverage,
     };
 
     return report;
@@ -100,31 +100,31 @@ export class TestReportGenerator {
         userManagement: 0,
         patientManagement: 0,
         adminPanel: 0,
-        databaseIntegration: 0
+        databaseIntegration: 0,
       };
     }
 
-    const authTests = this.results.filter(r => 
-      r.testName.includes('login') || 
-      r.testName.includes('register') || 
-      r.testName.includes('forgot-password')
+    const authTests = this.results.filter(
+      r =>
+        r.testName.includes('login') ||
+        r.testName.includes('register') ||
+        r.testName.includes('forgot-password')
     ).length;
 
-    const userMgmtTests = this.results.filter(r => 
-      r.testName.includes('user') || 
-      r.testName.includes('admin')
+    const userMgmtTests = this.results.filter(
+      r => r.testName.includes('user') || r.testName.includes('admin')
     ).length;
 
-    const patientMgmtTests = this.results.filter(r => 
+    const patientMgmtTests = this.results.filter(r =>
       r.testName.includes('patient')
     ).length;
 
-    const adminTests = this.results.filter(r => 
+    const adminTests = this.results.filter(r =>
       r.testName.includes('admin')
     ).length;
 
-    const dbTests = this.results.filter(r => 
-      r.databaseOperations.length > 0
+    const dbTests = this.results.filter(
+      r => r.databaseOperations.length > 0
     ).length;
 
     return {
@@ -132,7 +132,7 @@ export class TestReportGenerator {
       userManagement: Math.round((userMgmtTests / totalTests) * 100),
       patientManagement: Math.round((patientMgmtTests / totalTests) * 100),
       adminPanel: Math.round((adminTests / totalTests) * 100),
-      databaseIntegration: Math.round((dbTests / totalTests) * 100)
+      databaseIntegration: Math.round((dbTests / totalTests) * 100),
     };
   }
 
@@ -141,20 +141,26 @@ export class TestReportGenerator {
     const failedTests = this.results.filter(r => r.status === 'failed');
 
     if (failedTests.length > 0) {
-      recommendations.push(`Fix ${failedTests.length} failed tests to improve reliability`);
+      recommendations.push(
+        `Fix ${failedTests.length} failed tests to improve reliability`
+      );
     }
 
-    const dbOperationFailures = this.results.filter(r => 
+    const dbOperationFailures = this.results.filter(r =>
       r.databaseOperations.some(op => !op.success)
     );
 
     if (dbOperationFailures.length > 0) {
-      recommendations.push('Review database operations - some failed during testing');
+      recommendations.push(
+        'Review database operations - some failed during testing'
+      );
     }
 
     const slowTests = this.results.filter(r => r.duration > 10000);
     if (slowTests.length > 0) {
-      recommendations.push(`Optimize ${slowTests.length} slow tests (>10s) for better performance`);
+      recommendations.push(
+        `Optimize ${slowTests.length} slow tests (>10s) for better performance`
+      );
     }
 
     const coverage = this.calculateCoverage();
@@ -192,8 +198,9 @@ export class TestReportGenerator {
   }
 
   private generateHtmlReport(report: TestReport): string {
-    const { summary, databaseStats, testResults, recommendations, coverage } = report;
-    
+    const { summary, databaseStats, testResults, recommendations, coverage } =
+      report;
+
     return `
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
@@ -428,7 +435,9 @@ export class TestReportGenerator {
 
         <div class="test-results">
             <h2>نتائج الاختبارات التفصيلية</h2>
-            ${testResults.map(result => `
+            ${testResults
+              .map(
+                result => `
                 <div class="test-item">
                     <div class="test-header">
                         <div class="test-name">${result.testName}</div>
@@ -437,20 +446,30 @@ export class TestReportGenerator {
                     <div class="test-details">
                         <p><strong>المدة:</strong> ${result.duration}ms</p>
                         ${result.error ? `<p><strong>الخطأ:</strong> ${result.error}</p>` : ''}
-                        ${result.databaseOperations.length > 0 ? `
+                        ${
+                          result.databaseOperations.length > 0
+                            ? `
                             <div class="database-ops">
                                 <h4>عمليات قاعدة البيانات:</h4>
-                                ${result.databaseOperations.map(op => `
+                                ${result.databaseOperations
+                                  .map(
+                                    op => `
                                     <div class="db-op">
                                         ${op.operation} → ${op.table} (${op.success ? 'نجح' : 'فشل'}) - ${op.duration}ms
                                         ${op.error ? `<br><small>خطأ: ${op.error}</small>` : ''}
                                     </div>
-                                `).join('')}
+                                `
+                                  )
+                                  .join('')}
                             </div>
-                        ` : ''}
+                        `
+                            : ''
+                        }
                     </div>
                 </div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
 
         <div class="recommendations">

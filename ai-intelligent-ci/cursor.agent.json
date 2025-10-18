@@ -1,7 +1,7 @@
 {
   "name": "ai-self-healing-agent",
   "description": "Orchestrates incremental tests generation, targeted execution, and self-healing patches.",
-  "triggers": ["on_push","manual"],
+  "triggers": ["on_push", "manual"],
   "commands": ["node scripts/ai_self_test_and_fix.mjs --agent-mode=cursor"],
   "environment": {
     "NEXT_PUBLIC_SUPABASE_URL": "${NEXT_PUBLIC_SUPABASE_URL}",

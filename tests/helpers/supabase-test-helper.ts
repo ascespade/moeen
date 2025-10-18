@@ -16,8 +16,8 @@ if (!supabaseUrl || !supabaseServiceKey) {
 export const supabase = createClient(supabaseUrl, supabaseServiceKey, {
   auth: {
     autoRefreshToken: false,
-    persistSession: false
-  }
+    persistSession: false,
+  },
 });
 
 export interface TestUser {
@@ -53,15 +53,16 @@ export class SupabaseTestHelper {
     status?: string;
   }): Promise<TestUser> {
     // First create user in auth.users using Supabase Auth
-    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
-      email: userData.email,
-      password: userData.password || 'TestPassword123!',
-      email_confirm: true,
-      user_metadata: {
-        name: userData.name,
-        role: userData.role || 'agent'
-      }
-    });
+    const { data: authData, error: authError } =
+      await supabase.auth.admin.createUser({
+        email: userData.email,
+        password: userData.password || 'TestPassword123!',
+        email_confirm: true,
+        user_metadata: {
+          name: userData.name,
+          role: userData.role || 'agent',
+        },
+      });
 
     if (authError) {
       throw new Error(`Failed to create auth user: ${authError.message}`);
@@ -78,7 +79,7 @@ export class SupabaseTestHelper {
         status: userData.status || 'active',
         is_active: true,
         created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .select()
       .single();
@@ -93,7 +94,7 @@ export class SupabaseTestHelper {
       name: data.name,
       role: data.role,
       status: data.status,
-      created_at: data.created_at
+      created_at: data.created_at,
     };
 
     this.testUsers.push(testUser);
@@ -117,7 +118,7 @@ export class SupabaseTestHelper {
         email: patientData.email,
         phone: patientData.phone,
         created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .select()
       .single();
@@ -132,7 +133,7 @@ export class SupabaseTestHelper {
       last_name: data.last_name,
       email: data.email,
       phone: data.phone,
-      created_at: data.created_at
+      created_at: data.created_at,
     };
 
     this.testPatients.push(testPatient);
@@ -162,7 +163,7 @@ export class SupabaseTestHelper {
       name: data.name,
       role: data.role,
       status: data.status,
-      created_at: data.created_at
+      created_at: data.created_at,
     };
   }
 
@@ -189,7 +190,7 @@ export class SupabaseTestHelper {
       last_name: data.last_name,
       email: data.email,
       phone: data.phone,
-      created_at: data.created_at
+      created_at: data.created_at,
     };
   }
 
@@ -199,9 +200,9 @@ export class SupabaseTestHelper {
   async updateUserStatus(userId: string, status: string): Promise<void> {
     const { error } = await supabase
       .from('users')
-      .update({ 
+      .update({
         status,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', userId);
 
@@ -223,19 +224,17 @@ export class SupabaseTestHelper {
     ip_address?: string;
     user_agent?: string;
   }): Promise<void> {
-    const { error } = await supabase
-      .from('audit_logs')
-      .insert({
-        user_id: logData.user_id,
-        action: logData.action,
-        resource_type: logData.resource_type,
-        resource_id: logData.resource_id,
-        old_values: logData.old_values,
-        new_values: logData.new_values,
-        ip_address: logData.ip_address,
-        user_agent: logData.user_agent,
-        created_at: new Date().toISOString()
-      });
+    const { error } = await supabase.from('audit_logs').insert({
+      user_id: logData.user_id,
+      action: logData.action,
+      resource_type: logData.resource_type,
+      resource_id: logData.resource_id,
+      old_values: logData.old_values,
+      new_values: logData.new_values,
+      ip_address: logData.ip_address,
+      user_agent: logData.user_agent,
+      created_at: new Date().toISOString(),
+    });
 
     if (error) {
       throw new Error(`Failed to create audit log: ${error.message}`);
@@ -299,7 +298,7 @@ export class SupabaseTestHelper {
     const [usersResult, patientsResult, auditLogsResult] = await Promise.all([
       supabase.from('users').select('id', { count: 'exact' }),
       supabase.from('patients').select('id', { count: 'exact' }),
-      supabase.from('audit_logs').select('id', { count: 'exact' })
+      supabase.from('audit_logs').select('id', { count: 'exact' }),
     ]);
 
     const thirtyDaysAgo = new Date();
@@ -314,7 +313,7 @@ export class SupabaseTestHelper {
       totalUsers: usersResult.count || 0,
       totalPatients: patientsResult.count || 0,
       totalAuditLogs: auditLogsResult.count || 0,
-      recentUsers: recentUsersResult.count || 0
+      recentUsers: recentUsersResult.count || 0,
     };
   }
 
@@ -324,13 +323,16 @@ export class SupabaseTestHelper {
   async clearRateLimit(): Promise<void> {
     try {
       // Call the clear rate limit API
-      const response = await fetch('http://localhost:3001/api/test/clear-rate-limit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      
+      const response = await fetch(
+        'http://localhost:3001/api/test/clear-rate-limit',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
       if (response.ok) {
         console.log('Rate limiting cache cleared for testing');
       } else {

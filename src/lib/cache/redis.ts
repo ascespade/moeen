@@ -16,7 +16,7 @@ class RedisCache {
   constructor() {
     this.config = {
       ttl: 3600, // 1 hour default
-      prefix: "healthcare:",
+      prefix: 'healthcare:',
     };
   }
 
@@ -27,7 +27,7 @@ class RedisCache {
       const cached = this.getFromMemory(key);
       return cached ? JSON.parse(cached) : null;
     } catch (error) {
-      console.error("Cache get error:", error);
+      console.error('Cache get error:', error);
       return null;
     }
   }
@@ -41,7 +41,7 @@ class RedisCache {
       this.setInMemory(key, serialized, actualTtl);
       return true;
     } catch (error) {
-      console.error("Cache set error:", error);
+      console.error('Cache set error:', error);
       return false;
     }
   }
@@ -51,7 +51,7 @@ class RedisCache {
       this.deleteFromMemory(key);
       return true;
     } catch (error) {
-      console.error("Cache delete error:", error);
+      console.error('Cache delete error:', error);
       return false;
     }
   }
@@ -65,7 +65,7 @@ class RedisCache {
       this.flushMemory();
       return true;
     } catch (error) {
-      console.error("Cache flush error:", error);
+      console.error('Cache flush error:', error);
       return false;
     }
   }
@@ -109,12 +109,12 @@ class RedisCache {
 // Cache decorator for functions
 export function cached(
   ttl: number = 3600,
-  keyGenerator?: (...args: any[]) => string,
+  keyGenerator?: (...args: any[]) => string
 ) {
   return function (
     target: any,
     propertyName: string,
-    descriptor: PropertyDescriptor,
+    descriptor: PropertyDescriptor
   ) {
     const method = descriptor.value;
     const cache = new RedisCache();

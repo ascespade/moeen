@@ -30,6 +30,7 @@ psql -h <host> -U <user> -d <database> -f supabase/migrations/054_crm_and_health
 ## 🔧 التكاملات المتاحة
 
 ### 1. WhatsApp Business API
+
 ```typescript
 {
   "api_url": "https://graph.facebook.com/v17.0",
@@ -40,6 +41,7 @@ psql -h <host> -U <user> -d <database> -f supabase/migrations/054_crm_and_health
 ```
 
 ### 2. SMS (Twilio)
+
 ```typescript
 {
   "account_sid": "YOUR_ACCOUNT_SID",
@@ -49,6 +51,7 @@ psql -h <host> -U <user> -d <database> -f supabase/migrations/054_crm_and_health
 ```
 
 ### 3. Email (SendGrid)
+
 ```typescript
 {
   "api_key": "YOUR_SENDGRID_API_KEY",
@@ -58,6 +61,7 @@ psql -h <host> -U <user> -d <database> -f supabase/migrations/054_crm_and_health
 ```
 
 ### 4. Google Calendar
+
 ```typescript
 {
   "client_id": "YOUR_CLIENT_ID",
@@ -68,6 +72,7 @@ psql -h <host> -U <user> -d <database> -f supabase/migrations/054_crm_and_health
 ```
 
 ### 5. Slack
+
 ```typescript
 {
   "webhook_url": "https://hooks.slack.com/services/YOUR/WEBHOOK/URL",
@@ -76,6 +81,7 @@ psql -h <host> -U <user> -d <database> -f supabase/migrations/054_crm_and_health
 ```
 
 ### 6. Seha Platform
+
 ```typescript
 {
   "api_url": "https://api.seha.sa",
@@ -85,6 +91,7 @@ psql -h <host> -U <user> -d <database> -f supabase/migrations/054_crm_and_health
 ```
 
 ### 7. Tatman Insurance
+
 ```typescript
 {
   "api_url": "https://api.tatman.com.sa",
@@ -96,6 +103,7 @@ psql -h <host> -U <user> -d <database> -f supabase/migrations/054_crm_and_health
 ## 🔐 الأمان
 
 ⚠️ **مهم جداً:**
+
 - لا تحفظ المفاتيح والأسرار في الكود
 - استخدم متغيرات البيئة أو خدمة إدارة المفاتيح
 - الملف `src/lib/encryption.ts` الحالي هو **placeholder فقط**
@@ -108,11 +116,13 @@ psql -h <host> -U <user> -d <database> -f supabase/migrations/054_crm_and_health
 ## 🧪 الاختبار
 
 ### من واجهة الإدارة:
+
 1. اذهب إلى `/settings` → تبويب "التكاملات"
 2. أدخل إعدادات التكامل
 3. اضغط "اختبار الاتصال"
 
 ### من API مباشرة:
+
 ```bash
 curl -X POST http://localhost:3000/api/integrations/test \
   -H "Content-Type: application/json" \

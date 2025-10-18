@@ -3,9 +3,9 @@
  * Docker configuration and deployment utilities
  */
 
-import { writeFileSync } from "fs";
-import { join } from "path";
-import { logger } from "../monitoring/logger";
+import { writeFileSync } from 'fs';
+import { join } from 'path';
+import { logger } from '../monitoring/logger';
 
 class DockerConfigGenerator {
   static generateDockerfile(): string {
@@ -345,7 +345,7 @@ NEW_RELIC_LICENSE_KEY=your-new-relic-license-key`;
 
   static generateDeploymentScripts(): void {
     const scripts = {
-      "deploy.sh": `#!/bin/bash
+      'deploy.sh': `#!/bin/bash
 set -e
 
 echo "🚀 Starting deployment..."
@@ -380,7 +380,7 @@ curl -f http://localhost:3000/api/test/health || exit 1
 
 echo "✅ Deployment completed successfully!"`,
 
-      "rollback.sh": `#!/bin/bash
+      'rollback.sh': `#!/bin/bash
 set -e
 
 echo "🔄 Starting rollback..."
@@ -395,7 +395,7 @@ echo "🔄 Starting previous version..."
 
 echo "✅ Rollback completed!"`,
 
-      "backup.sh": `#!/bin/bash
+      'backup.sh': `#!/bin/bash
 set -e
 
 echo "💾 Starting backup..."
@@ -425,50 +425,47 @@ echo "✅ Backup completed: $BACKUP_DIR"`,
       writeFileSync(join(process.cwd(), filename), content);
     });
 
-    logger.info("Docker configuration files generated successfully");
+    logger.info('Docker configuration files generated successfully');
   }
 
   static generateAll(): void {
     try {
       // Generate Dockerfile
       writeFileSync(
-        join(process.cwd(), "Dockerfile"),
-        this.generateDockerfile(),
+        join(process.cwd(), 'Dockerfile'),
+        this.generateDockerfile()
       );
 
       // Generate docker-compose.yml
       writeFileSync(
-        join(process.cwd(), "docker-compose.yml"),
-        this.generateDockerCompose(),
+        join(process.cwd(), 'docker-compose.yml'),
+        this.generateDockerCompose()
       );
 
       // Generate nginx.conf
       writeFileSync(
-        join(process.cwd(), "nginx.conf"),
-        this.generateNginxConfig(),
+        join(process.cwd(), 'nginx.conf'),
+        this.generateNginxConfig()
       );
 
       // Generate .dockerignore
       writeFileSync(
-        join(process.cwd(), ".dockerignore"),
-        this.generateDockerIgnore(),
+        join(process.cwd(), '.dockerignore'),
+        this.generateDockerIgnore()
       );
 
       // Generate .env.template
       writeFileSync(
-        join(process.cwd(), ".env.template"),
-        this.generateEnvironmentTemplate(),
+        join(process.cwd(), '.env.template'),
+        this.generateEnvironmentTemplate()
       );
 
       // Generate deployment scripts
       this.generateDeploymentScripts();
 
-      logger.info("All Docker configuration files generated successfully");
+      logger.info('All Docker configuration files generated successfully');
     } catch (error) {
-      logger.error(
-        "Failed to generate Docker configuration",
-        error
-      );
+      logger.error('Failed to generate Docker configuration', error);
       throw error;
     }
   }

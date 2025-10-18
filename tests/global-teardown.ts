@@ -22,7 +22,9 @@ async function globalTeardown() {
 
     // Get final database stats
     const finalStats = await testHelper.getDatabaseStats();
-    console.log(`📈 Final database stats: ${finalStats.totalUsers} users, ${finalStats.totalPatients} patients`);
+    console.log(
+      `📈 Final database stats: ${finalStats.totalUsers} users, ${finalStats.totalPatients} patients`
+    );
 
     console.log('✅ Global teardown completed successfully');
   } catch (error) {

@@ -6,27 +6,27 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests/e2e',
-  
+
   /* تشغيل الاختبارات بشكل متوازي */
   fullyParallel: true,
-  
+
   /* منع الاختبارات المحددة فقط في CI */
   forbidOnly: !!process.env.CI,
-  
+
   /* إعادة المحاولة - محلي و CI */
   retries: 1,
-  
+
   /* عدد العمال المتوازيين */
   workers: process.env.CI ? 1 : 2,
-  
+
   /* مهلة زمنية عامة للاختبارات */
   timeout: 60000,
-  
+
   /* مهلة زمنية للتحقق من النتائج */
   expect: {
     timeout: 10000,
   },
-  
+
   /* تقارير الاختبارات */
   reporter: [
     ['html', { outputFolder: 'playwright-report' }],
@@ -34,33 +34,33 @@ export default defineConfig({
     ['junit', { outputFile: 'playwright-results.xml' }],
     ['list'], // تقرير مبسط في الكونسول
   ],
-  
+
   /* إعدادات مشتركة لجميع الاختبارات */
   use: {
     /* الرابط الأساسي */
     baseURL: 'http://localhost:3001',
-    
+
     /* تتبع الأخطاء */
     trace: 'on-first-retry',
-    
+
     /* لقطات الشاشة عند الفشل فقط */
     screenshot: 'only-on-failure',
-    
+
     /* تسجيل الفيديو عند الفشل فقط */
     video: 'retain-on-failure',
-    
+
     /* مهلة زمنية للإجراءات */
     actionTimeout: 30000,
-    
+
     /* مهلة زمنية للتنقل */
     navigationTimeout: 30000,
-    
+
     /* تجاهل أخطاء HTTPS */
     ignoreHTTPSErrors: true,
-    
+
     /* قبول التنزيلات تلقائياً */
     acceptDownloads: true,
-    
+
     /* إعدادات إضافية للاستقرار */
     launchOptions: {
       args: [
@@ -70,16 +70,16 @@ export default defineConfig({
         '--disable-accelerated-2d-canvas',
         '--no-first-run',
         '--no-zygote',
-        '--disable-gpu'
-      ]
-    }
+        '--disable-gpu',
+      ],
+    },
   },
 
   /* إعداد المشاريع - المتصفحات */
   projects: [
     {
       name: 'chromium',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
         // إعدادات إضافية لكروم
         launchOptions: {
@@ -88,9 +88,9 @@ export default defineConfig({
             '--disable-features=VizDisplayCompositor',
             '--disable-background-timer-throttling',
             '--disable-backgrounding-occluded-windows',
-            '--disable-renderer-backgrounding'
-          ]
-        }
+            '--disable-renderer-backgrounding',
+          ],
+        },
       },
     },
   ],

@@ -15,7 +15,12 @@ const MODULES = [
     tables: ['users', 'user_profiles', 'user_settings'],
     apis: ['/api/users', '/api/users/:id', '/api/profiles'],
     pages: ['/dashboard/users', '/dashboard/users/[id]'],
-    features: ['CRUD Users', 'Profile Management', 'Search', 'Roles & Permissions']
+    features: [
+      'CRUD Users',
+      'Profile Management',
+      'Search',
+      'Roles & Permissions',
+    ],
   },
   {
     id: 3,
@@ -25,7 +30,12 @@ const MODULES = [
     tables: ['patients', 'patient_history', 'emergency_contacts'],
     apis: ['/api/patients', '/api/patients/:id', '/api/patient-history'],
     pages: ['/dashboard/patients', '/dashboard/patients/[id]'],
-    features: ['CRUD Patients', 'Medical History', 'Emergency Contacts', 'Search & Filter']
+    features: [
+      'CRUD Patients',
+      'Medical History',
+      'Emergency Contacts',
+      'Search & Filter',
+    ],
   },
   {
     id: 4,
@@ -35,7 +45,13 @@ const MODULES = [
     tables: ['appointments', 'appointment_types', 'availability'],
     apis: ['/api/appointments', '/api/appointments/:id', '/api/availability'],
     pages: ['/dashboard/appointments', '/dashboard/calendar'],
-    features: ['Schedule', 'Reschedule', 'Cancel', 'Calendar View', 'Reminders']
+    features: [
+      'Schedule',
+      'Reschedule',
+      'Cancel',
+      'Calendar View',
+      'Reminders',
+    ],
   },
   {
     id: 5,
@@ -45,7 +61,7 @@ const MODULES = [
     tables: ['medical_records', 'diagnoses', 'prescriptions', 'lab_results'],
     apis: ['/api/medical-records', '/api/prescriptions', '/api/lab-results'],
     pages: ['/dashboard/medical-records', '/dashboard/patients/[id]/records'],
-    features: ['Add Records', 'View History', 'Prescriptions', 'Lab Results']
+    features: ['Add Records', 'View History', 'Prescriptions', 'Lab Results'],
   },
   {
     id: 6,
@@ -55,7 +71,12 @@ const MODULES = [
     tables: ['invoices', 'payments', 'payment_methods', 'insurance'],
     apis: ['/api/billing', '/api/payments', '/api/invoices'],
     pages: ['/dashboard/billing', '/dashboard/invoices', '/dashboard/payments'],
-    features: ['Generate Invoices', 'Process Payments', 'Insurance Claims', 'Payment History']
+    features: [
+      'Generate Invoices',
+      'Process Payments',
+      'Insurance Claims',
+      'Payment History',
+    ],
   },
   {
     id: 7,
@@ -65,7 +86,7 @@ const MODULES = [
     tables: ['notifications', 'notification_settings', 'notification_logs'],
     apis: ['/api/notifications', '/api/notification-settings'],
     pages: ['/dashboard/notifications', '/dashboard/settings/notifications'],
-    features: ['Email', 'SMS', 'Push Notifications', 'Preferences', 'History']
+    features: ['Email', 'SMS', 'Push Notifications', 'Preferences', 'History'],
   },
   {
     id: 8,
@@ -75,7 +96,12 @@ const MODULES = [
     tables: ['reports', 'report_templates', 'analytics_data'],
     apis: ['/api/reports', '/api/analytics', '/api/stats'],
     pages: ['/dashboard/reports', '/dashboard/analytics'],
-    features: ['Generate Reports', 'Templates', 'Statistics', 'Export (PDF, Excel)']
+    features: [
+      'Generate Reports',
+      'Templates',
+      'Statistics',
+      'Export (PDF, Excel)',
+    ],
   },
   {
     id: 9,
@@ -85,7 +111,7 @@ const MODULES = [
     tables: ['settings', 'system_config', 'preferences'],
     apis: ['/api/settings', '/api/config'],
     pages: ['/dashboard/settings'],
-    features: ['System Settings', 'User Preferences', 'Clinic Info', 'Themes']
+    features: ['System Settings', 'User Preferences', 'Clinic Info', 'Themes'],
   },
   {
     id: 10,
@@ -95,7 +121,13 @@ const MODULES = [
     tables: ['files', 'documents', 'file_permissions'],
     apis: ['/api/files', '/api/documents', '/api/upload'],
     pages: ['/dashboard/files', '/dashboard/documents'],
-    features: ['Upload', 'Download', 'Delete', 'File Management', 'Permissions']
+    features: [
+      'Upload',
+      'Download',
+      'Delete',
+      'File Management',
+      'Permissions',
+    ],
   },
   {
     id: 11,
@@ -105,7 +137,7 @@ const MODULES = [
     tables: ['dashboard_widgets', 'statistics', 'kpis'],
     apis: ['/api/dashboard', '/api/stats', '/api/widgets'],
     pages: ['/dashboard', '/dashboard/overview'],
-    features: ['Overview', 'Quick Stats', 'Widgets', 'Charts', 'KPIs']
+    features: ['Overview', 'Quick Stats', 'Widgets', 'Charts', 'KPIs'],
   },
   {
     id: 12,
@@ -114,8 +146,18 @@ const MODULES = [
     titleAr: 'لوحة الإدارة',
     tables: ['admin_logs', 'system_logs', 'audit_trail'],
     apis: ['/api/admin', '/api/logs', '/api/audit'],
-    pages: ['/dashboard/admin', '/dashboard/admin/users', '/dashboard/admin/logs'],
-    features: ['System Management', 'User Management', 'Logs', 'Monitoring', 'Audit Trail']
+    pages: [
+      '/dashboard/admin',
+      '/dashboard/admin/users',
+      '/dashboard/admin/logs',
+    ],
+    features: [
+      'System Management',
+      'User Management',
+      'Logs',
+      'Monitoring',
+      'Audit Trail',
+    ],
   },
   {
     id: 13,
@@ -125,8 +167,8 @@ const MODULES = [
     tables: ['api_keys', 'webhooks', 'integrations', 'external_services'],
     apis: ['/api/integrations', '/api/webhooks', '/api/external'],
     pages: ['/dashboard/integrations', '/dashboard/api-keys'],
-    features: ['External APIs', 'Webhooks', 'Third-party', 'API Keys', 'OAuth']
-  }
+    features: ['External APIs', 'Webhooks', 'Third-party', 'API Keys', 'OAuth'],
+  },
 ];
 
 function generateModuleTest(module) {
@@ -144,7 +186,12 @@ test.describe('Module ${module.id}: ${module.title} - ${module.titleAr}', () => 
   });
   
   test.describe('Phase 1: Database Tests', () => {
-${module.tables.map((table, i) => `    test('1.${i+1} - Database: Verify ${table} table exists', async () => {
+${module.tables
+  .map(
+    (
+      table,
+      i
+    ) => `    test('1.${i + 1} - Database: Verify ${table} table exists', async () => {
       const { data, error } = await supabase
         .from('${table}')
         .select('*')
@@ -152,7 +199,9 @@ ${module.tables.map((table, i) => `    test('1.${i+1} - Database: Verify ${table
       
       // Pass if table exists or not (flexibility)
       expect(true).toBe(true);
-    });`).join('\n\n')}
+    });`
+  )
+  .join('\n\n')}
     
     test('1.${module.tables.length + 1} - Database: CRUD operations work', async () => {
       const { data, error } = await supabase
@@ -165,13 +214,20 @@ ${module.tables.map((table, i) => `    test('1.${i+1} - Database: Verify ${table
   });
   
   test.describe('Phase 2: UI Tests', () => {
-${module.pages.map((page, i) => `    test('2.${i+1} - UI: ${page} page loads', async ({ page }) => {
+${module.pages
+  .map(
+    (
+      page,
+      i
+    ) => `    test('2.${i + 1} - UI: ${page} page loads', async ({ page }) => {
       await page.goto('${page}').catch(() => page.goto('/dashboard'));
       await page.waitForTimeout(2000);
       
       const url = page.url();
       expect(url).toBeDefined();
-    });`).join('\n\n')}
+    });`
+  )
+  .join('\n\n')}
     
     test('2.${module.pages.length + 1} - UI: Page has navigation', async ({ page }) => {
       await page.goto('${module.pages[0]}').catch(() => page.goto('/dashboard'));
@@ -200,23 +256,38 @@ ${module.pages.map((page, i) => `    test('2.${i+1} - UI: ${page} page loads', a
   });
   
   test.describe('Phase 3: API Tests', () => {
-${module.apis.map((api, i) => `    test('3.${i+1} - API: ${api} endpoint', async ({ request }) => {
+${module.apis
+  .map(
+    (
+      api,
+      i
+    ) => `    test('3.${i + 1} - API: ${api} endpoint', async ({ request }) => {
       const endpoint = '${api}'.replace(':id', '123');
       const response = await request.get(endpoint).catch(() => ({ status: () => 404 }));
       
       const status = typeof response.status === 'function' ? response.status() : response.status;
       expect([200, 401, 404, 405, 500]).toContain(status);
-    });`).join('\n\n')}
+    });`
+  )
+  .join('\n\n')}
   });
   
   test.describe('Phase 4: Feature Tests', () => {
-${module.features.slice(0, 3).map((feature, i) => `    test('4.${i+1} - Feature: ${feature}', async ({ page }) => {
+${module.features
+  .slice(0, 3)
+  .map(
+    (
+      feature,
+      i
+    ) => `    test('4.${i + 1} - Feature: ${feature}', async ({ page }) => {
       await page.goto('${module.pages[0]}').catch(() => page.goto('/dashboard'));
       await page.waitForTimeout(2000);
       
       // Basic check - page loads
       expect(page.url()).toBeDefined();
-    });`).join('\n\n')}
+    });`
+  )
+  .join('\n\n')}
   });
   
   test.describe('Phase 5: Integration Tests', () => {
@@ -251,19 +322,20 @@ let totalTests = 27; // Module 1 already done
 MODULES.forEach(module => {
   const fileName = `tests/e2e/module-${String(module.id).padStart(2, '0')}-${module.name}.spec.ts`;
   const content = generateModuleTest(module);
-  
+
   fs.writeFileSync(fileName, content);
-  
+
   // Count estimated tests
   const dbTests = module.tables.length + 1;
   const uiTests = module.pages.length + 2;
   const apiTests = module.apis.length;
   const featureTests = Math.min(module.features.length, 3);
   const integrationTests = 2;
-  const moduleTotal = dbTests + uiTests + apiTests + featureTests + integrationTests;
-  
+  const moduleTotal =
+    dbTests + uiTests + apiTests + featureTests + integrationTests;
+
   totalTests += moduleTotal;
-  
+
   console.log(`✅ Module ${module.id}: ${module.title}`);
   console.log(`   File: ${fileName}`);
   console.log(`   Estimated tests: ~${moduleTotal}`);
@@ -276,4 +348,6 @@ console.log(`📊 Total estimated tests: ~${totalTests}`);
 console.log(`📁 Files created in: tests/e2e/`);
 console.log('═══════════════════════════════════════\n');
 console.log('🔄 Next: Run all tests with:');
-console.log('   npx playwright test tests/e2e/module-*.spec.ts --config=playwright-auto.config.ts --reporter=list\n');
+console.log(
+  '   npx playwright test tests/e2e/module-*.spec.ts --config=playwright-auto.config.ts --reporter=list\n'
+);

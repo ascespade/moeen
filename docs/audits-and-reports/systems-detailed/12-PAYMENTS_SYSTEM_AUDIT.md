@@ -10,7 +10,9 @@
 ## 📋 نظرة عامة
 
 ### الغرض:
+
 نظام لإدارة المدفوعات والفواتير:
+
 - تسجيل المدفوعات
 - إصدار الفواتير
 - طرق الدفع المتعددة
@@ -24,6 +26,7 @@
 ### الجداول الموجودة:
 
 #### `payments`:
+
 ```sql
 CREATE TABLE payments (
   id UUID PRIMARY KEY,
@@ -71,12 +74,14 @@ CREATE TYPE payment_status AS ENUM (
 ### 1. ربط الدفع بالجلسة 🔴
 
 **المشكلة**:
+
 ```
 ❌ لا يوجد ربط بين payment و session
 ❌ لا نعرف أي جلسة تم دفعها
 ```
 
 **الحل**:
+
 ```sql
 ALTER TABLE payments ADD COLUMN session_id UUID REFERENCES sessions(id);
 ALTER TABLE payments ADD COLUMN service_type TEXT; -- للوضوح
@@ -90,6 +95,7 @@ ALTER TABLE payments ADD COLUMN service_type TEXT; -- للوضوح
 ### 2. إصدار الفواتير 🔴
 
 **المشكلة**:
+
 ```
 ❌ لا يوجد نظام فواتير
 ❌ لا يمكن طباعة إيصال
@@ -97,6 +103,7 @@ ALTER TABLE payments ADD COLUMN service_type TEXT; -- للوضوح
 ```
 
 **الحل**:
+
 ```sql
 CREATE TABLE invoices (
   id UUID PRIMARY KEY,
@@ -134,12 +141,14 @@ CREATE TABLE invoices (
 ### 3. بوابة دفع إلكتروني 🟡
 
 **المشكلة**:
+
 ```
 ⚠️  لا يوجد دفع أونلاين
 ⚠️  كل شيء يدوي
 ```
 
 **الحل (مستقبلاً)**:
+
 ```
 Options:
 1. Stripe (international)
@@ -158,18 +167,20 @@ Cost: 2.5-3% per transaction
 ### 4. متابعة المستحقات 🟡
 
 **المشكلة**:
+
 ```
 ⚠️  لا يوجد نظام لمتابعة المدفوعات المتأخرة
 ⚠️  لا توجد إشعارات
 ```
 
 **الحل**:
+
 ```typescript
 // Overdue payments dashboard
 <OverduePayments>
   <OverdueList>
     {overdueInvoices.map(invoice => (
-      <InvoiceRow 
+      <InvoiceRow
         invoice={invoice}
         daysOverdue={getDaysOverdue(invoice.due_date)}
         onSendReminder={sendReminderToGuardian}
@@ -186,13 +197,13 @@ Cost: 2.5-3% per transaction
 
 ## 📊 تقييم: **55/100** 🟡
 
-| المعيار | النقاط | الوزن | الإجمالي |
-|---------|--------|-------|----------|
-| **Basic Payments** | 80/100 | 30% | 24 |
-| **Invoicing** | 20/100 | 40% | 8 |
-| **Online Payment** | 0/100 | 20% | 0 |
-| **Collections** | 40/100 | 10% | 4 |
-| **المجموع** | - | - | **36** |
+| المعيار            | النقاط | الوزن | الإجمالي |
+| ------------------ | ------ | ----- | -------- |
+| **Basic Payments** | 80/100 | 30%   | 24       |
+| **Invoicing**      | 20/100 | 40%   | 8        |
+| **Online Payment** | 0/100  | 20%   | 0        |
+| **Collections**    | 40/100 | 10%   | 4        |
+| **المجموع**        | -      | -     | **36**   |
 
 ---
 
@@ -201,12 +212,14 @@ Cost: 2.5-3% per transaction
 ### Phase 1: Core Billing (Week 1)
 
 #### Task 1: Link Payment to Session (2-3h)
+
 ```sql
 ✅ Add session_id to payments
 ✅ Update UI
 ```
 
 #### Task 2: Invoicing System (12-16h)
+
 ```typescript
 ✅ جدول invoices
 ✅ Invoice generation
@@ -216,6 +229,7 @@ Cost: 2.5-3% per transaction
 ```
 
 #### Task 3: Payment Receipt (4-6h)
+
 ```typescript
 ✅ Receipt generation
 ✅ Print functionality
@@ -230,6 +244,7 @@ Cost: 2.5-3% per transaction
 ### Phase 2: Advanced Features (Future)
 
 #### Task 4: Overdue Management (8-10h)
+
 ```
 ✅ Overdue dashboard
 ✅ Reminders
@@ -237,6 +252,7 @@ Cost: 2.5-3% per transaction
 ```
 
 #### Task 5: Online Payment (16-20h)
+
 ```
 ✅ Payment gateway integration
 ✅ Online checkout
@@ -251,6 +267,7 @@ Cost: 2.5-3% per transaction
 ## 💰 التكلفة
 
 ### Payment Gateway (مستقبلاً):
+
 ```
 Moyasar (Saudi):
 - Setup: Free
@@ -270,6 +287,7 @@ Start: After 3-6 months (manual first)
 ## 🎓 التوصيات
 
 ### Must Have (Now):
+
 ```
 1. 🔴 Link payment to session
 2. 🔴 Invoicing system
@@ -277,6 +295,7 @@ Start: After 3-6 months (manual first)
 ```
 
 ### Nice to Have (Future):
+
 ```
 4. 🟡 Overdue management
 5. 🟡 Online payment gateway
@@ -290,6 +309,7 @@ Start: After 3-6 months (manual first)
 **الحالة**: 55% - يحتاج عمل 🟡
 
 **ما ينقص**:
+
 - 🔴 Invoicing (critical)
 - 🔴 Receipts
 - 🟡 Online payment (مستقبلاً)
@@ -300,6 +320,6 @@ Start: After 3-6 months (manual first)
 
 ---
 
-*Audit Date: 2025-10-17*  
-*System: Payments*  
-*Status: ⚠️  Needs Invoicing System*
+_Audit Date: 2025-10-17_  
+_System: Payments_  
+_Status: ⚠️ Needs Invoicing System_

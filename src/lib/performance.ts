@@ -1,4 +1,4 @@
-import logger from "@/lib/monitoring/logger";
+import logger from '@/lib/monitoring/logger';
 
 export class PerformanceMonitor {
   private static instance: PerformanceMonitor;
@@ -30,15 +30,15 @@ export class PerformanceMonitor {
   }
 
   measurePageLoad(): void {
-    if (typeof window !== "undefined") {
-      window.addEventListener("load", () => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('load', () => {
         const navigation = performance.getEntriesByType(
-          "navigation",
+          'navigation'
         )[0] as PerformanceNavigationTiming;
         const loadTime = navigation.loadEventEnd - navigation.fetchStart;
 
         // Send to analytics
-        this.sendMetric("page_load_time", loadTime);
+        this.sendMetric('page_load_time', loadTime);
       });
     }
   }
@@ -60,11 +60,11 @@ export class PerformanceMonitor {
   }
 
   private sendMetric(name: string, value: number): void {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === 'production') {
       // Send to analytics service
-      fetch("/api/analytics/metrics", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      fetch('/api/analytics/metrics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, value, timestamp: Date.now() }),
       }).catch(logger.error);
     }
@@ -72,7 +72,7 @@ export class PerformanceMonitor {
 
   // Memory usage monitoring
   checkMemoryUsage(): void {
-    if (typeof window !== "undefined" && "memory" in performance) {
+    if (typeof window !== 'undefined' && 'memory' in performance) {
       const memory = (performance as any).memory;
       const used = memory.usedJSHeapSize / 1024 / 1024; // MB
       const total = memory.totalJSHeapSize / 1024 / 1024; // MB
@@ -80,7 +80,7 @@ export class PerformanceMonitor {
       if (used > 100) {
         // Alert if using more than 100MB
         console.warn(
-          `High memory usage: ${used.toFixed(2)}MB / ${total.toFixed(2)}MB`,
+          `High memory usage: ${used.toFixed(2)}MB / ${total.toFixed(2)}MB`
         );
       }
     }

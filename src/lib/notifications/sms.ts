@@ -2,7 +2,7 @@ import logger from '@/lib/monitoring/logger';
 interface SMSData {
   to: string;
   message: string;
-  language?: "ar" | "en";
+  language?: 'ar' | 'en';
 }
 
 interface SMSResult {
@@ -16,8 +16,8 @@ export class SMSNotificationService {
   private apiUrl: string;
 
   constructor() {
-    this.apiKey = process.env.SMS_API_KEY || "";
-    this.apiUrl = process.env.SMS_API_URL || "https://api.sms.sa/v1";
+    this.apiKey = process.env.SMS_API_KEY || '';
+    this.apiUrl = process.env.SMS_API_URL || 'https://api.sms.sa/v1';
   }
 
   async sendSMS(data: SMSData): Promise<SMSResult> {
@@ -25,13 +25,13 @@ export class SMSNotificationService {
       if (!this.apiKey) {
         return {
           success: false,
-          error: "SMS service not configured",
+          error: 'SMS service not configured',
         };
       }
 
       // In development, just log the SMS
-      if (process.env.NODE_ENV === "development") {
-        console.log("SMS would be sent:", {
+      if (process.env.NODE_ENV === 'development') {
+        console.log('SMS would be sent:', {
           to: data.to,
           message: data.message,
           language: data.language,
@@ -73,7 +73,7 @@ export class SMSNotificationService {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : "SMS sending failed",
+        error: error instanceof Error ? error.message : 'SMS sending failed',
       };
     }
   }
@@ -90,7 +90,7 @@ export class SMSNotificationService {
     return this.sendSMS({
       to: data.patientPhone,
       message,
-      language: "ar",
+      language: 'ar',
     });
   }
 
@@ -105,7 +105,7 @@ export class SMSNotificationService {
     return this.sendSMS({
       to: data.patientPhone,
       message,
-      language: "ar",
+      language: 'ar',
     });
   }
 
@@ -121,7 +121,7 @@ export class SMSNotificationService {
     return this.sendSMS({
       to: data.patientPhone,
       message,
-      language: "ar",
+      language: 'ar',
     });
   }
 
@@ -133,17 +133,17 @@ export class SMSNotificationService {
   }) {
     const statusText =
       {
-        approved: "تم الموافقة على",
-        rejected: "تم رفض",
-        under_review: "قيد المراجعة",
-      }[data.claimStatus] || "تم تحديث حالة";
+        approved: 'تم الموافقة على',
+        rejected: 'تم رفض',
+        under_review: 'قيد المراجعة',
+      }[data.claimStatus] || 'تم تحديث حالة';
 
     const message = `عزيزي/عزيزتي ${data.patientName}، ${statusText} مطالبة التأمين الخاصة بك مع ${data.provider}. مركز الحمام`;
 
     return this.sendSMS({
       to: data.patientPhone,
       message,
-      language: "ar",
+      language: 'ar',
     });
   }
 }

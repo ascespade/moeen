@@ -1,4 +1,4 @@
-type ErrorSeverity = "low" | "medium" | "high" | "critical";
+type ErrorSeverity = 'low' | 'medium' | 'high' | 'critical';
 
 interface ErrorContext {
   userId?: string | undefined;
@@ -31,7 +31,7 @@ export class ErrorHandler {
   async reportError(
     error: Error,
     context: Partial<ErrorContext> = {},
-    componentStack?: string,
+    componentStack?: string
   ): Promise<void> {
     const errorReport: ErrorReport = {
       message: error.message,
@@ -39,9 +39,9 @@ export class ErrorHandler {
       context: {
         userId: context.userId,
         sessionId: context.sessionId,
-        url: typeof window !== "undefined" ? window.location.href : context.url,
+        url: typeof window !== 'undefined' ? window.location.href : context.url,
         userAgent:
-          typeof window !== "undefined"
+          typeof window !== 'undefined'
             ? navigator.userAgent
             : context.userAgent,
         timestamp: new Date().toISOString(),
@@ -60,26 +60,26 @@ export class ErrorHandler {
     }
 
     // Log to console in development
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === 'development') {
     }
   }
 
   private determineSeverity(error: Error): ErrorSeverity {
     const message = error.message.toLowerCase();
 
-    if (message.includes("network") || message.includes("fetch")) {
-      return "medium";
+    if (message.includes('network') || message.includes('fetch')) {
+      return 'medium';
     }
 
-    if (message.includes("auth") || message.includes("permission")) {
-      return "high";
+    if (message.includes('auth') || message.includes('permission')) {
+      return 'high';
     }
 
-    if (message.includes("critical") || message.includes("fatal")) {
-      return "critical";
+    if (message.includes('critical') || message.includes('fatal')) {
+      return 'critical';
     }
 
-    return "low";
+    return 'low';
   }
 
   private async processErrorQueue(): Promise<void> {
@@ -105,11 +105,11 @@ export class ErrorHandler {
   private async sendErrorReport(errorReport: ErrorReport): Promise<void> {
     try {
       // Send to analytics/monitoring service
-      if (process.env.NODE_ENV === "production") {
-        await fetch("/api/errors", {
-          method: "POST",
+      if (process.env.NODE_ENV === 'production') {
+        await fetch('/api/errors', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(errorReport),
         });
@@ -141,28 +141,28 @@ export class ErrorHandler {
     metric: string,
     value: number,
     threshold: number,
-    context: Partial<ErrorContext> = {},
+    context: Partial<ErrorContext> = {}
   ): Promise<void> {
     const error = new Error(
-      `Performance issue: ${metric} exceeded threshold (${value}ms > ${threshold}ms)`,
+      `Performance issue: ${metric} exceeded threshold (${value}ms > ${threshold}ms)`
     );
     await this.reportError(error, {
       ...context,
-      severity: "medium",
+      severity: 'medium',
     });
   }
 
   // User analytics (privacy-compliant)
   async trackUserAction(
     action: string,
-    context: Partial<ErrorContext> = {},
+    context: Partial<ErrorContext> = {}
   ): Promise<void> {
     try {
-      if (process.env.NODE_ENV === "production") {
-        await fetch("/api/analytics/action", {
-          method: "POST",
+      if (process.env.NODE_ENV === 'production') {
+        await fetch('/api/analytics/action', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             action,
@@ -180,21 +180,21 @@ export class ErrorHandler {
 export const errorHandler = ErrorHandler.getInstance();
 
 // Global error handler
-if (typeof window !== "undefined") {
-  window.addEventListener("error", (event) => {
+if (typeof window !== 'undefined') {
+  window.addEventListener('error', event => {
     errorHandler.reportError(event.error, {
       url: window.location.href,
       userAgent: navigator.userAgent,
     });
   });
 
-  window.addEventListener("unhandledrejection", (event) => {
+  window.addEventListener('unhandledrejection', event => {
     errorHandler.reportError(
       new Error(`Unhandled Promise Rejection: ${event.reason}`),
       {
         url: window.location.href,
         userAgent: navigator.userAgent,
-      },
+      }
     );
   });
 }

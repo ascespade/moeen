@@ -272,18 +272,18 @@ import { specificFunction } from 'large-library';
 
 ```typescript
 // Console logging
-console.log("Debug info:", { data, error });
+console.log('Debug info:', { data, error });
 
 // Error boundaries
 class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
-    console.error("Error caught by boundary:", error, errorInfo);
+    console.error('Error caught by boundary:', error, errorInfo);
   }
 }
 
 // Debug mode
-if (process.env.NODE_ENV === "development") {
-  console.log("Debug information");
+if (process.env.NODE_ENV === 'development') {
+  console.log('Debug information');
 }
 ```
 

@@ -64,17 +64,15 @@ import ThemeSwitcher from '@/components/ThemeSwitcher';
 
 function MyComponent() {
   const { theme, isDark, isLight, isSystem, toggleTheme } = useTheme();
-  
+
   return (
     <div>
       <h1>Current theme: {theme}</h1>
       <p>Is dark mode: {isDark ? 'Yes' : 'No'}</p>
-      
+
       <ThemeSwitcher />
-      
-      <button onClick={toggleTheme}>
-        Toggle Theme
-      </button>
+
+      <button onClick={toggleTheme}>Toggle Theme</button>
     </div>
   );
 }
@@ -87,17 +85,19 @@ import { useTheme } from '@/context/ThemeContext';
 
 function AdvancedComponent() {
   const { theme, setTheme, resolvedTheme } = useTheme();
-  
+
   // Set specific theme
   const handleSetLight = () => setTheme('light');
   const handleSetDark = () => setTheme('dark');
   const handleSetSystem = () => setTheme('system');
-  
+
   return (
     <div>
-      <h1>Theme: {theme} (Resolved: {resolvedTheme})</h1>
-      
-      <div className="theme-controls">
+      <h1>
+        Theme: {theme} (Resolved: {resolvedTheme})
+      </h1>
+
+      <div className='theme-controls'>
         <button onClick={handleSetLight}>Light</button>
         <button onClick={handleSetDark}>Dark</button>
         <button onClick={handleSetSystem}>System</button>
@@ -135,12 +135,12 @@ function AdvancedComponent() {
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
-  --brand-primary: #E46C0A;
-  --brand-primary-hover: #D45F08;
-  --brand-secondary: #6B4E16;
-  --brand-neutral-beige: #F2E7DC;
+  --brand-primary: #e46c0a;
+  --brand-primary-hover: #d45f08;
+  --brand-secondary: #6b4e16;
+  --brand-neutral-beige: #f2e7dc;
   --brand-accent: #007bff;
-  --brand-accent-deep: #C93C00;
+  --brand-accent-deep: #c93c00;
   --brand-success: #009688;
   --brand-warning: #f59e0b;
   --brand-error: #ef4444;
@@ -154,15 +154,15 @@ function AdvancedComponent() {
 ### Dark Theme Variables - متغيرات الثيم المظلم
 
 ```css
-[data-theme="dark"] {
+[data-theme='dark'] {
   --background: #0d1117;
   --foreground: #e5eef7;
-  --brand-primary: #E46C0A;
-  --brand-primary-hover: #D45F08;
-  --brand-secondary: #6B4E16;
-  --brand-neutral-beige: #2A2520;
+  --brand-primary: #e46c0a;
+  --brand-primary-hover: #d45f08;
+  --brand-secondary: #6b4e16;
+  --brand-neutral-beige: #2a2520;
   --brand-accent: #007bff;
-  --brand-accent-deep: #C93C00;
+  --brand-accent-deep: #c93c00;
   --brand-success: #00b39b;
   --brand-warning: #fbbf24;
   --brand-error: #f87171;
@@ -220,7 +220,7 @@ useEffect(() => {
 /* Use logical properties for RTL support */
 .my-component {
   margin-inline-start: 1rem; /* margin-left in LTR, margin-right in RTL */
-  margin-inline-end: 1rem;   /* margin-right in LTR, margin-left in RTL */
+  margin-inline-end: 1rem; /* margin-right in LTR, margin-left in RTL */
   padding-inline-start: 0.5rem;
   padding-inline-end: 0.5rem;
   text-align: start; /* left in LTR, right in RTL */
@@ -239,7 +239,7 @@ const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
     right: isRTL ? 30 : 30,
     left: isRTL ? 30 : 0,
   }}
-/>
+/>;
 ```
 
 ## Theme Switching - تبديل الثيم
@@ -253,7 +253,7 @@ function Header() {
   return (
     <header>
       <h1>My App</h1>
-      <ThemeSwitcher size="md" showLabel={true} />
+      <ThemeSwitcher size='md' showLabel={true} />
     </header>
   );
 }
@@ -270,15 +270,12 @@ function Header() {
 ```tsx
 function CustomThemeSwitcher() {
   const { theme, setTheme } = useTheme();
-  
+
   return (
-    <select 
-      value={theme} 
-      onChange={(e) => setTheme(e.target.value as Theme)}
-    >
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-      <option value="system">System</option>
+    <select value={theme} onChange={e => setTheme(e.target.value as Theme)}>
+      <option value='light'>Light</option>
+      <option value='dark'>Dark</option>
+      <option value='system'>System</option>
     </select>
   );
 }
@@ -319,15 +316,18 @@ Object.entries(themeVariables).forEach(([property, value]) => {
 
 ```tsx
 // Memoized theme values
-const value = useMemo(() => ({
-  theme,
-  resolvedTheme,
-  setTheme,
-  toggleTheme,
-  isDark: resolvedTheme === 'dark',
-  isLight: resolvedTheme === 'light',
-  isSystem: theme === 'system',
-}), [theme, resolvedTheme]);
+const value = useMemo(
+  () => ({
+    theme,
+    resolvedTheme,
+    setTheme,
+    toggleTheme,
+    isDark: resolvedTheme === 'dark',
+    isLight: resolvedTheme === 'light',
+    isSystem: theme === 'system',
+  }),
+  [theme, resolvedTheme]
+);
 ```
 
 ## Accessibility - إمكانية الوصول
@@ -363,7 +363,7 @@ const value = useMemo(() => ({
 // Test component with different themes
 function TestThemes() {
   const { theme, setTheme } = useTheme();
-  
+
   return (
     <div>
       <h1>Current theme: {theme}</h1>
@@ -383,7 +383,7 @@ function TestRTL() {
   useEffect(() => {
     document.documentElement.setAttribute('dir', 'rtl');
   }, []);
-  
+
   return <div>RTL Test Content</div>;
 }
 ```
@@ -423,7 +423,7 @@ if (process.env.NODE_ENV === 'development') {
     isDark,
     isLight,
     isSystem,
-    direction: document.documentElement.getAttribute('dir')
+    direction: document.documentElement.getAttribute('dir'),
   });
 }
 ```
@@ -434,12 +434,24 @@ if (process.env.NODE_ENV === 'development') {
 
 ```css
 /* Before */
-.light-theme { background: white; color: black; }
-.dark-theme { background: black; color: white; }
+.light-theme {
+  background: white;
+  color: black;
+}
+.dark-theme {
+  background: black;
+  color: white;
+}
 
 /* After */
-:root { --background: white; --foreground: black; }
-[data-theme="dark"] { --background: black; --foreground: white; }
+:root {
+  --background: white;
+  --foreground: black;
+}
+[data-theme='dark'] {
+  --background: black;
+  --foreground: white;
+}
 ```
 
 ### From Inline Styles - من الأنماط المضمنة

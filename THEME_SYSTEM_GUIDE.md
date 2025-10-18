@@ -38,11 +38,9 @@ import '@/styles/theme.css';
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang='ar' dir='rtl'>
       <body>
-        <ThemeProvider defaultTheme="system">
-          {children}
-        </ThemeProvider>
+        <ThemeProvider defaultTheme='system'>{children}</ThemeProvider>
       </body>
     </html>
   );
@@ -60,12 +58,8 @@ function MyComponent() {
 
   return (
     <div className={getThemeClass('bg-white', 'bg-gray-900')}>
-      <h1 className="text-text-primary">
-        الثيم الحالي: {theme}
-      </h1>
-      <button onClick={() => setTheme('dark')}>
-        تفعيل الثيم الداكن
-      </button>
+      <h1 className='text-text-primary'>الثيم الحالي: {theme}</h1>
+      <button onClick={() => setTheme('dark')}>تفعيل الثيم الداكن</button>
     </div>
   );
 }
@@ -75,13 +69,9 @@ function MyComponent() {
 
 ```tsx
 // استخدام ألوان الثيم
-<div className="bg-background text-text-primary">
-  <div className="bg-brand-primary text-white">
-    لون أساسي
-  </div>
-  <div className="bg-surface border border-border">
-    خلفية وحدود
-  </div>
+<div className='bg-background text-text-primary'>
+  <div className='bg-brand-primary text-white'>لون أساسي</div>
+  <div className='bg-surface border border-border'>خلفية وحدود</div>
 </div>
 ```
 
@@ -108,7 +98,7 @@ import { ThemeToggle, ThemeStatus } from '@/components/theme/ThemeToggle';
 import { ThemeTest } from '@/components/theme/ThemeTest';
 
 // صفحة اختبار شاملة
-<ThemeTest />
+<ThemeTest />;
 ```
 
 ## رموز التصميم - Design Tokens
@@ -120,7 +110,7 @@ import { useDesignTokens } from '@/core/theme';
 
 function ColorPalette() {
   const tokens = useDesignTokens();
-  
+
   return (
     <div>
       <div style={{ backgroundColor: tokens.colors.brand.primary }}>
@@ -153,19 +143,19 @@ function ColorPalette() {
 
 ```tsx
 // ألوان العلامة التجارية
-bg-brand-primary
-text-brand-primary
-border-brand-primary
+bg - brand - primary;
+text - brand - primary;
+border - brand - primary;
 
 // ألوان الثيم
-bg-background
-text-text-primary
-border-border
+bg - background;
+text - text - primary;
+border - border;
 
 // ألوان محايدة
-bg-neutral-100
-text-neutral-900
-border-neutral-200
+bg - neutral - 100;
+text - neutral - 900;
+border - neutral - 200;
 ```
 
 ### Classes المساعدة - Utility Classes
@@ -238,7 +228,8 @@ colors: {
 
 **السبب**: تعارض بين أنظمة ثيمات متعددة
 
-**الحل**: 
+**الحل**:
+
 1. تأكد من استخدام `ThemeProvider` الجديد فقط
 2. احذف أوامر `import` للثيمات القديمة
 3. تأكد من تحميل `theme.css` بدلاً من `unified.css`
@@ -248,6 +239,7 @@ colors: {
 **السبب**: عدم تطبيق متغيرات CSS بشكل صحيح
 
 **الحل**:
+
 1. تأكد من وجود `[data-theme="dark"]` في CSS
 2. تحقق من تطبيق المتغيرات في `ThemeManager`
 3. تأكد من عدم وجود CSS متضارب
@@ -256,7 +248,7 @@ colors: {
 
 **السبب**: اختلاف بين الخادم والعميل
 
-**الحل**: 
+**الحل**:
 النظام يتعامل مع هذه المشكلة تلقائياً باستخدام `suppressHydrationWarning`
 
 ## أفضل الممارسات - Best Practices
@@ -321,7 +313,7 @@ test('renders with theme', () => {
       <MyComponent />
     </ThemeProvider>
   );
-  
+
   expect(screen.getByText('الثيم الحالي')).toBeInTheDocument();
 });
 ```

@@ -4,11 +4,11 @@
  */
 
 import logger from '@/lib/monitoring/logger';
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { useAuthStore, useUIStore, useDataStore } from "../store";
-import { apiClient } from "../api/client";
-import { storageUtils, debounce } from "../utils/index";
-import { ApiResponse } from "../types";
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useAuthStore, useUIStore, useDataStore } from '../store';
+import { apiClient } from '../api/client';
+import { storageUtils, debounce } from '../utils/index';
+import { ApiResponse } from '../types';
 
 // Auth Hooks
 export const useAuth = () => {
@@ -33,28 +33,28 @@ export const useAuth = () => {
         const response = await apiClient.login(credentials);
         if (response.success && response.data) {
           login(response.data.user, response.data.token);
-          storageUtils.set("auth_token", response.data.token);
+          storageUtils.set('auth_token', response.data.token);
           return { success: true };
         } else {
-          setError(response.error || "فشل في تسجيل الدخول");
+          setError(response.error || 'فشل في تسجيل الدخول');
           return { success: false, error: response.error };
         }
       } catch (error) {
         const errorMessage =
-          error instanceof Error ? error.message : "حدث خطأ غير متوقع";
+          error instanceof Error ? error.message : 'حدث خطأ غير متوقع';
         setError(errorMessage);
         return { success: false, error: errorMessage };
       } finally {
         setLoading(false);
       }
     },
-    [login, setLoading, setError],
+    [login, setLoading, setError]
   );
 
   const logoutUser = useCallback(() => {
     logout();
-    storageUtils.remove("auth_token");
-    storageUtils.remove("refresh_token");
+    storageUtils.remove('auth_token');
+    storageUtils.remove('refresh_token');
   }, [logout]);
 
   const refreshUser = useCallback(async () => {
@@ -90,15 +90,15 @@ export const useTheme = () => {
   const { theme, setTheme } = useUIStore();
 
   const toggleTheme = useCallback(() => {
-    setTheme(theme === "light" ? "dark" : "light");
+    setTheme(theme === 'light' ? 'dark' : 'light');
   }, [theme, setTheme]);
 
   return {
     theme,
     setTheme,
     toggleTheme,
-    isDark: theme === "dark",
-    isLight: theme === "light",
+    isDark: theme === 'dark',
+    isLight: theme === 'light',
   };
 };
 
@@ -106,15 +106,15 @@ export const useLanguage = () => {
   const { language, setLanguage } = useUIStore();
 
   const toggleLanguage = useCallback(() => {
-    setLanguage(language === "ar" ? "en" : "ar");
+    setLanguage(language === 'ar' ? 'en' : 'ar');
   }, [language, setLanguage]);
 
   return {
     language,
     setLanguage,
     toggleLanguage,
-    isRTL: language === "ar",
-    isLTR: language === "en",
+    isRTL: language === 'ar',
+    isLTR: language === 'en',
   };
 };
 
@@ -137,7 +137,7 @@ export const useNotifications = () => {
   } = useUIStore();
 
   const showNotification = useCallback(
-    (notification: Omit<(typeof notifications)[0], "id" | "createdAt">) => {
+    (notification: Omit<(typeof notifications)[0], 'id' | 'createdAt'>) => {
       const newNotification = {
         ...notification,
         id: Math.random().toString(36).substr(2, 9),
@@ -150,7 +150,7 @@ export const useNotifications = () => {
         removeNotification(newNotification.id);
       }, 5000);
     },
-    [addNotification, removeNotification],
+    [addNotification, removeNotification]
   );
 
   return {
@@ -170,7 +170,7 @@ export const useModal = (modalId: string) => {
   const close = useCallback(() => closeModal(modalId), [modalId, closeModal]);
   const toggle = useCallback(
     () => (isOpen ? close() : open()),
-    [isOpen, open, close],
+    [isOpen, open, close]
   );
 
   return {
@@ -188,11 +188,11 @@ export const useLoading = (key: string) => {
 
   const startLoading = useCallback(
     () => setLoading(key, true),
-    [key, setLoading],
+    [key, setLoading]
   );
   const stopLoading = useCallback(
     () => setLoading(key, false),
-    [key, setLoading],
+    [key, setLoading]
   );
 
   return {
@@ -219,11 +219,11 @@ export const usePatients = () => {
       } catch (error) {
         return {
           success: false,
-          error: error instanceof Error ? error.message : "حدث خطأ",
+          error: error instanceof Error ? error.message : 'حدث خطأ',
         };
       }
     },
-    [setPatients],
+    [setPatients]
   );
 
   const createPatient = useCallback(
@@ -238,11 +238,11 @@ export const usePatients = () => {
       } catch (error) {
         return {
           success: false,
-          error: error instanceof Error ? error.message : "حدث خطأ",
+          error: error instanceof Error ? error.message : 'حدث خطأ',
         };
       }
     },
-    [addPatient],
+    [addPatient]
   );
 
   const updatePatientData = useCallback(
@@ -257,11 +257,11 @@ export const usePatients = () => {
       } catch (error) {
         return {
           success: false,
-          error: error instanceof Error ? error.message : "حدث خطأ",
+          error: error instanceof Error ? error.message : 'حدث خطأ',
         };
       }
     },
-    [updatePatient],
+    [updatePatient]
   );
 
   return {
@@ -294,11 +294,11 @@ export const useAppointments = () => {
       } catch (error) {
         return {
           success: false,
-          error: error instanceof Error ? error.message : "حدث خطأ",
+          error: error instanceof Error ? error.message : 'حدث خطأ',
         };
       }
     },
-    [setAppointments],
+    [setAppointments]
   );
 
   const createAppointment = useCallback(
@@ -313,11 +313,11 @@ export const useAppointments = () => {
       } catch (error) {
         return {
           success: false,
-          error: error instanceof Error ? error.message : "حدث خطأ",
+          error: error instanceof Error ? error.message : 'حدث خطأ',
         };
       }
     },
-    [addAppointment],
+    [addAppointment]
   );
 
   const updateAppointmentData = useCallback(
@@ -332,11 +332,11 @@ export const useAppointments = () => {
       } catch (error) {
         return {
           success: false,
-          error: error instanceof Error ? error.message : "حدث خطأ",
+          error: error instanceof Error ? error.message : 'حدث خطأ',
         };
       }
     },
-    [updateAppointment],
+    [updateAppointment]
   );
 
   return {
@@ -387,7 +387,7 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
         console.error(`Error setting localStorage key "${key}":`, error);
       }
     },
-    [key, storedValue],
+    [key, storedValue]
   );
 
   return [storedValue, setValue] as const;
@@ -395,27 +395,27 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
 
 export const useAsync = <T, E = string>(
   asyncFunction: () => Promise<T>,
-  immediate = true,
+  immediate = true
 ) => {
   const [status, setStatus] = useState<
-    "idle" | "pending" | "success" | "error"
-  >("idle");
+    'idle' | 'pending' | 'success' | 'error'
+  >('idle');
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<E | null>(null);
 
   const execute = useCallback(async () => {
-    setStatus("pending");
+    setStatus('pending');
     setData(null);
     setError(null);
 
     try {
       const result = await asyncFunction();
       setData(result);
-      setStatus("success");
+      setStatus('success');
       return result;
     } catch (err) {
       setError(err as E);
-      setStatus("error");
+      setStatus('error');
       throw err;
     }
   }, [asyncFunction]);
@@ -441,15 +441,15 @@ export const usePagination = <T>(data: T[], itemsPerPage: number = 10) => {
     (page: number) => {
       setCurrentPage(Math.max(1, Math.min(page, totalPages)));
     },
-    [totalPages],
+    [totalPages]
   );
 
   const nextPage = useCallback(() => {
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+    setCurrentPage(prev => Math.min(prev + 1, totalPages));
   }, [totalPages]);
 
   const prevPage = useCallback(() => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1));
+    setCurrentPage(prev => Math.max(prev - 1, 1));
   }, []);
 
   const reset = useCallback(() => {
@@ -472,22 +472,22 @@ export const usePagination = <T>(data: T[], itemsPerPage: number = 10) => {
 export const useSearch = <T>(
   data: T[],
   searchFields: (keyof T)[],
-  searchTerm: string,
+  searchTerm: string
 ) => {
   const filteredData = useMemo(() => {
     if (!searchTerm.trim()) return data;
 
-    return data.filter((item) =>
-      searchFields.some((field) => {
+    return data.filter(item =>
+      searchFields.some(field => {
         const value = item[field];
-        if (typeof value === "string") {
+        if (typeof value === 'string') {
           return value.toLowerCase().includes(searchTerm.toLowerCase());
         }
-        if (typeof value === "number") {
+        if (typeof value === 'number') {
           return value.toString().includes(searchTerm);
         }
         return false;
-      }),
+      })
     );
   }, [data, searchFields, searchTerm]);
 
@@ -497,7 +497,7 @@ export const useSearch = <T>(
 export const useSort = <T>(
   data: T[],
   sortField: keyof T | null,
-  sortDirection: "asc" | "desc" = "asc",
+  sortDirection: 'asc' | 'desc' = 'asc'
 ) => {
   const sortedData = useMemo(() => {
     if (!sortField) return data;
@@ -506,8 +506,8 @@ export const useSort = <T>(
       const aValue = a[sortField];
       const bValue = b[sortField];
 
-      if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
-      if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
       return 0;
     });
   }, [data, sortField, sortDirection]);

@@ -15,73 +15,94 @@ const supabase = createClient(
 );
 
 console.log('\n🚀 Applying Migrations Directly...\n');
-console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+console.log(
+  '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
+);
 
 async function applyMigrations() {
-  
   // Migration 074: Soft Delete - Add columns via ALTER TABLE
   console.log('📄 Migration 074: Soft Delete System\n');
   console.log('⚠️  This migration adds columns to existing tables.');
   console.log('   Due to Supabase API limitations, please apply manually:\n');
   console.log('   1. Open Supabase Dashboard → SQL Editor');
-  console.log('   2. Copy/paste: supabase/migrations/074_soft_delete_system.sql');
+  console.log(
+    '   2. Copy/paste: supabase/migrations/074_soft_delete_system.sql'
+  );
   console.log('   3. Click "Run"\n');
-  
+
   // Migration 075: Reminder System - Tables already exist
-  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+  console.log(
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
+  );
   console.log('📄 Migration 075: Reminder System\n');
-  
+
   const { data: reminderTable } = await supabase
     .from('reminder_outbox')
     .select('*')
     .limit(1);
-  
+
   if (reminderTable !== null) {
     console.log('   ✅ reminder_outbox table exists');
     console.log('   ✅ reminder_preferences table exists');
     console.log('   ⚠️  Functions need manual application (see SQL file)\n');
   }
-  
+
   // Migration 076: Booking Validation
-  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+  console.log(
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
+  );
   console.log('📄 Migration 076: Booking Validation\n');
   console.log('   ⚠️  Functions need manual application (see SQL file)\n');
-  
+
   // Migration 077: Search Functions
-  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+  console.log(
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
+  );
   console.log('📄 Migration 077: Search Functions\n');
-  console.log('   ⚠️  Columns and functions need manual application (see SQL file)\n');
-  
+  console.log(
+    '   ⚠️  Columns and functions need manual application (see SQL file)\n'
+  );
+
   // Summary
-  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+  console.log(
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
+  );
   console.log('📋 Summary:\n');
   console.log('   ✅ Tables created: 22/22 (100%)');
-  console.log('   ⚠️  Columns need manual add: deleted_at, deleted_by, search_vector');
+  console.log(
+    '   ⚠️  Columns need manual add: deleted_at, deleted_by, search_vector'
+  );
   console.log('   ⚠️  Functions need manual add: 9 functions');
   console.log('   ⚠️  Triggers need manual add: 6 triggers\n');
-  
+
   console.log('💡 To complete setup:\n');
   console.log('   Method 1: Supabase Dashboard (Recommended)');
-  console.log('   ──────────────────────────────────────────────────────────────────────────');
+  console.log(
+    '   ──────────────────────────────────────────────────────────────────────────'
+  );
   console.log('   1. Open: https://app.supabase.com');
   console.log('   2. Navigate to: SQL Editor');
   console.log('   3. Copy/paste each migration (074-077)');
   console.log('   4. Click "Run" for each\n');
-  
+
   console.log('   Method 2: Combined SQL (Faster)');
-  console.log('   ──────────────────────────────────────────────────────────────────────────');
+  console.log(
+    '   ──────────────────────────────────────────────────────────────────────────'
+  );
   console.log('   1. Open: https://app.supabase.com → SQL Editor');
   console.log('   2. Copy entire content from: tmp/db-auto-migrations.sql');
   console.log('   3. Paste and Run\n');
-  
+
   console.log('   Files to apply:');
   console.log('   - supabase/migrations/074_soft_delete_system.sql');
   console.log('   - supabase/migrations/075_reminder_system.sql');
   console.log('   - supabase/migrations/076_booking_validation.sql');
   console.log('   - supabase/migrations/077_search_functions.sql\n');
-  
-  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
-  
+
+  console.log(
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
+  );
+
   // Create instruction file
   const instructions = `
 # 🚀 Migration Application Instructions

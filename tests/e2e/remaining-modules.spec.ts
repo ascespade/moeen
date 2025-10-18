@@ -17,7 +17,7 @@ test.describe('Chatbot & AI Module', () => {
       .select('*')
       .limit(1)
       .single();
-    
+
     if (data) {
       expect(data).toHaveProperty('created_at');
       expect(data).toHaveProperty('updated_at');
@@ -36,7 +36,7 @@ test.describe('CRM Module', () => {
       .from('customers')
       .select('lead_score, lifecycle_stage')
       .limit(1);
-    
+
     expect(customers).toBeTruthy();
   });
 
@@ -46,10 +46,10 @@ test.describe('CRM Module', () => {
       .select('id')
       .limit(1)
       .single();
-    
+
     if (customer) {
       const { data } = await supabase.rpc('calculate_lead_score', {
-        p_customer_id: customer.id
+        p_customer_id: customer.id,
       });
       expect(data).toBeGreaterThanOrEqual(0);
     }
@@ -62,7 +62,7 @@ test.describe('Conversations Module', () => {
       .from('conversations')
       .select('priority, sentiment')
       .limit(1);
-    
+
     expect(data).toBeTruthy();
   });
 });
@@ -73,7 +73,7 @@ test.describe('Insurance Module', () => {
       .from('insurance_claims')
       .select('*')
       .limit(1);
-    
+
     expect(data).toBeDefined();
   });
 });
@@ -84,7 +84,7 @@ test.describe('Notifications Module', () => {
       .from('notifications')
       .select('delivery_status, sent_at')
       .limit(1);
-    
+
     expect(data).toBeDefined();
   });
 });
@@ -95,7 +95,7 @@ test.describe('Settings Module', () => {
       .from('settings')
       .select('version, updated_at')
       .limit(1);
-    
+
     expect(data).toBeDefined();
   });
 });

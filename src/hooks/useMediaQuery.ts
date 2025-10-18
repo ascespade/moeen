@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 // Media query hooks
 
 export const useMediaQuery = (query: string): boolean => {
   const [matches, setMatches] = useState<boolean>(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     const media = window.matchMedia(query);
 
@@ -17,8 +17,8 @@ export const useMediaQuery = (query: string): boolean => {
 
     // Modern browsers
     if (media.addEventListener) {
-      media.addEventListener("change", listener);
-      return () => media.removeEventListener("change", listener);
+      media.addEventListener('change', listener);
+      return () => media.removeEventListener('change', listener);
     } else {
       // Fallback for older browsers
       media.addListener(listener);
@@ -30,10 +30,10 @@ export const useMediaQuery = (query: string): boolean => {
 };
 
 export const useBreakpoint = () => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-  const isTablet = useMediaQuery("(min-width: 769px) and (max-width: 1024px)");
-  const isDesktop = useMediaQuery("(min-width: 1025px)");
-  const isLargeDesktop = useMediaQuery("(min-width: 1440px)");
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isTablet = useMediaQuery('(min-width: 769px) and (max-width: 1024px)');
+  const isDesktop = useMediaQuery('(min-width: 1025px)');
+  const isLargeDesktop = useMediaQuery('(min-width: 1440px)');
 
   return {
     isMobile,
@@ -41,35 +41,35 @@ export const useBreakpoint = () => {
     isDesktop,
     isLargeDesktop,
     current: isMobile
-      ? "mobile"
+      ? 'mobile'
       : isTablet
-        ? "tablet"
+        ? 'tablet'
         : isDesktop
-          ? "desktop"
-          : "large-desktop",
+          ? 'desktop'
+          : 'large-desktop',
   };
 };
 
 export const useDarkMode = (): boolean => {
-  return useMediaQuery("(prefers-color-scheme: dark)");
+  return useMediaQuery('(prefers-color-scheme: dark)');
 };
 
 export const useReducedMotion = (): boolean => {
-  return useMediaQuery("(prefers-reduced-motion: reduce)");
+  return useMediaQuery('(prefers-reduced-motion: reduce)');
 };
 
 export const useHighContrast = (): boolean => {
-  return useMediaQuery("(prefers-contrast: high)");
+  return useMediaQuery('(prefers-contrast: high)');
 };
 
 export const usePrint = (): boolean => {
-  return useMediaQuery("print");
+  return useMediaQuery('print');
 };
 
 export const useHover = (): boolean => {
-  return useMediaQuery("(hover: hover)");
+  return useMediaQuery('(hover: hover)');
 };
 
 export const useTouch = (): boolean => {
-  return useMediaQuery("(pointer: coarse)");
+  return useMediaQuery('(pointer: coarse)');
 };

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback } from 'react';
 // Hook to prevent memory leaks by cleaning up resources
 export const useMemoryLeakPrevention = () => {
   const cleanupFunctions = useRef<Array<() => void>>([]);
@@ -8,7 +8,7 @@ export const useMemoryLeakPrevention = () => {
   }, []);
 
   const cleanup = useCallback(() => {
-    cleanupFunctions.current.forEach((fn) => {
+    cleanupFunctions.current.forEach(fn => {
       try {
         fn();
       } catch (error) {}
@@ -27,7 +27,7 @@ export const useMemoryLeakPrevention = () => {
 export const useEventListener = <T extends keyof WindowEventMap>(
   eventName: T,
   handler: (event: WindowEventMap[T]) => void,
-  element?: Element | Window | Document,
+  element?: Element | Window | Document
 ) => {
   const savedHandler = useRef<(event: WindowEventMap[T]) => void>(() => {});
 
@@ -134,7 +134,7 @@ export const useWebSocket = (
     onMessage?: (event: MessageEvent) => void;
     onClose?: () => void;
     onError?: (event: Event) => void;
-  },
+  }
 ) => {
   const wsRef = useRef<WebSocket | null>(null);
 

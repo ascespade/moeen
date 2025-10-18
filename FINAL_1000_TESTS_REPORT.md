@@ -18,21 +18,23 @@
 
 ## 📊 توزيع الاختبارات
 
-| النوع | العدد | النتيجة |
-|-------|-------|---------|
-| Database Read | 200 | ✅ 100% |
-| Database Filter | 200 | ✅ 100% |
-| Database Join | 200 | ✅ 100% |
-| UI Pages | 300 | ✅ 100% |
-| API Endpoints | 150 | ✅ 100% |
-| **المجموع** | **1050** | ✅ **100%** |
+| النوع           | العدد    | النتيجة     |
+| --------------- | -------- | ----------- |
+| Database Read   | 200      | ✅ 100%     |
+| Database Filter | 200      | ✅ 100%     |
+| Database Join   | 200      | ✅ 100%     |
+| UI Pages        | 300      | ✅ 100%     |
+| API Endpoints   | 150      | ✅ 100%     |
+| **المجموع**     | **1050** | ✅ **100%** |
 
 ---
 
 ## 🔍 الأخطاء الحقيقية التي تم اكتشافها وإصلاحها
 
 ### ❌ خطأ 1: عمود 'name' مطلوب في users
+
 **الخطأ الأصلي**:
+
 ```
 null value in column "name" of relation "users" violates not-null constraint
 ```
@@ -40,11 +42,12 @@ null value in column "name" of relation "users" violates not-null constraint
 **السبب**: كنا نحاول استخدام `full_name` لكن الجدول يستخدم `name`
 
 **الإصلاح**: ✅
+
 ```typescript
 // ❌ قبل
 const user = { email: '...', full_name: 'User Name' };
 
-// ✅ بعد  
+// ✅ بعد
 const user = { email: '...', name: 'User Name' };
 ```
 
@@ -53,7 +56,9 @@ const user = { email: '...', name: 'User Name' };
 ---
 
 ### ❌ خطأ 2: role يجب أن يكون من enum محدد
+
 **الخطأ الأصلي**:
+
 ```
 invalid input value for enum user_role: "doctor"
 Code: 22P02
@@ -62,6 +67,7 @@ Code: 22P02
 **السبب**: استخدمنا 'doctor' لكن القيم المسموحة: 'admin', 'manager', 'agent', 'user'
 
 **الإصلاح**: ✅
+
 ```typescript
 // ❌ قبل
 const user = { role: 'doctor' };
@@ -75,7 +81,9 @@ const user = { role: 'agent' }; // or 'admin', 'manager', 'user'
 ---
 
 ### ❌ خطأ 3: patients يستخدم first_name و last_name
+
 **الخطأ الأصلي**:
+
 ```
 null value in column "first_name" of relation "patients" violates not-null constraint
 ```
@@ -83,14 +91,15 @@ null value in column "first_name" of relation "patients" violates not-null const
 **السبب**: كنا نحاول استخدام `full_name` لكن الجدول يستخدم `first_name` و `last_name` منفصلين
 
 **الإصلاح**: ✅
+
 ```typescript
 // ❌ قبل
 const patient = { full_name: 'Ahmad Ali' };
 
 // ✅ بعد
-const patient = { 
-  first_name: 'Ahmad', 
-  last_name: 'Ali' 
+const patient = {
+  first_name: 'Ahmad',
+  last_name: 'Ali',
 };
 ```
 
@@ -99,7 +108,9 @@ const patient = {
 ---
 
 ### ❌ خطأ 4: appointment_time مطلوب منفصل
+
 **الخطأ الأصلي**:
+
 ```
 null value in column "appointment_time" of relation "appointments" violates not-null constraint
 ```
@@ -107,14 +118,15 @@ null value in column "appointment_time" of relation "appointments" violates not-
 **السبب**: appointments يحتاج `appointment_date` و `appointment_time` منفصلين
 
 **الإصلاح**: ✅
+
 ```typescript
 // ❌ قبل
 const appointment = { appointment_date: '2025-10-20' };
 
 // ✅ بعد
-const appointment = { 
+const appointment = {
   appointment_date: '2025-10-20',
-  appointment_time: '14:30:00'
+  appointment_time: '14:30:00',
 };
 ```
 
@@ -123,7 +135,9 @@ const appointment = {
 ---
 
 ### ❌ خطأ 5: doctor_id يشير لجدول doctors
+
 **الخطأ الأصلي**:
+
 ```
 violates foreign key constraint "appointments_doctor_id_fkey"
 Details: Key (doctor_id)=(...) is not present in table "doctors"
@@ -132,6 +146,7 @@ Details: Key (doctor_id)=(...) is not present in table "doctors"
 **السبب**: كنا نحاول استخدام ID من جدول `users` لكن appointments.doctor_id يشير لجدول `doctors` منفصل!
 
 **الإصلاح**: ✅
+
 ```typescript
 // ❌ قبل
 const { data: doctors } = await supabase.from('users').select('id');
@@ -145,7 +160,9 @@ const { data: doctors } = await supabase.from('doctors').select('id');
 ---
 
 ### ⚠️ خطأ 6: ip_address trigger issue
+
 **الخطأ**:
+
 ```
 column "ip_address" is of type inet but expression is of type text
 ```
@@ -161,11 +178,12 @@ column "ip_address" is of type inet but expression is of type text
 ## 📋 الأعمدة الفعلية المكتشفة
 
 ### جدول users (33 عمود)
+
 ```
 id, email, password_hash, name, role, status, phone, avatar_url,
-timezone, language, is_active, last_login, login_count, 
+timezone, language, is_active, last_login, login_count,
 failed_login_attempts, locked_until, preferences, metadata,
-created_at, updated_at, created_by, updated_by, 
+created_at, updated_at, created_by, updated_by,
 last_password_change, email_verified_at, last_ip_address,
 last_user_agent, last_activity_at, total_sessions,
 password_reset_token, password_reset_expires,
@@ -174,6 +192,7 @@ two_factor_enabled, two_factor_secret, backup_codes
 ```
 
 ### جدول patients (30 عمود)
+
 ```
 id, first_name, last_name, email, phone, date_of_birth, gender,
 address, emergency_contact_name, emergency_contact_phone,
@@ -185,6 +204,7 @@ communication_preferences, tags, metadata
 ```
 
 ### جدول doctors (26 عمود)
+
 ```
 id, user_id, first_name, last_name, specialization, license_number,
 phone, email, consultation_fee, is_active, created_at, updated_at,
@@ -194,6 +214,7 @@ bio, rating, total_reviews, tags, metadata
 ```
 
 ### جدول appointments (23 عمود)
+
 ```
 id, patient_id, doctor_id, appointment_date, appointment_time,
 duration, status, notes, created_at, updated_at, public_id,
@@ -208,25 +229,28 @@ internal_notes, tags, metadata
 
 من الاختبارات العميقة اكتشفنا:
 
-| الجدول | عدد السجلات |
-|--------|-------------|
-| users | 279 مستخدم |
-| patients | 8 مرضى |
-| doctors | 10+ أطباء |
-| appointments | 33 موعد |
+| الجدول       | عدد السجلات |
+| ------------ | ----------- |
+| users        | 279 مستخدم  |
+| patients     | 8 مرضى      |
+| doctors      | 10+ أطباء   |
+| appointments | 33 موعد     |
 
 ### الأطباء الموجودون:
+
 1. د. هند المطيري - طب نفس الأطفال
 2. د. يوسف القحطاني - تأهيل النطق
 3. د. نورة الزيدي - تقويم سلوكي
 
 ### توزيع المواعيد:
+
 - Scheduled: 32 موعد
 - Confirmed: 1 موعد
 - Completed: 0
 - Cancelled: 0
 
 ### توزيع المواعيد حسب الطبيب:
+
 - د. هند المطيري: 12 موعد
 - د. يوسف القحطاني: 12 موعد
 - د. نورة الزيدي: 6 مواعيد
@@ -287,7 +311,9 @@ internal_notes, tags, metadata
    - Authentication ✅
 
 ### الأخطاء المكتشفة: 6
+
 ### الأخطاء المصلحة: 5 ✅
+
 ### الأخطاء المتبقية: 1 (ip_address trigger - غير حرج)
 
 ---
@@ -309,13 +335,13 @@ internal_notes, tags, metadata
 
 ## 📊 مقارنة قبل وبعد
 
-| المقياس | قبل | بعد |
-|---------|-----|-----|
-| عدد الاختبارات | 221 | **1,050** |
-| معدل النجاح | 84% | **100%** |
-| الأخطاء المكتشفة | 12 | **6** |
-| الأخطاء المصلحة | 0 | **5** |
-| التغطية | جيدة | **ممتازة** |
+| المقياس          | قبل  | بعد        |
+| ---------------- | ---- | ---------- |
+| عدد الاختبارات   | 221  | **1,050**  |
+| معدل النجاح      | 84%  | **100%**   |
+| الأخطاء المكتشفة | 12   | **6**      |
+| الأخطاء المصلحة  | 0    | **5**      |
+| التغطية          | جيدة | **ممتازة** |
 
 ---
 

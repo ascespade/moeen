@@ -7,7 +7,7 @@
  */
 
 // Types
-export * from "./types";
+export * from './types';
 
 // Re-export from core theme system
 export {
@@ -15,4 +15,4 @@ export {
   useThemeAware,
   useDesignTokens,
   useThemeColors,
-} from "@/core/theme";
+} from '@/core/theme';
