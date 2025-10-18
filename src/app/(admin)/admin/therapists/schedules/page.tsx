@@ -137,7 +137,7 @@ export default function TherapistSchedulesPage() {
     try {
       const supabase = createClient();
       const { error } = await supabase
-        .from("therapist_schedules")
+        .from(&quot;therapist_schedules&quot;)
         .delete()
         .eq(&quot;id&quot;, scheduleId);
 

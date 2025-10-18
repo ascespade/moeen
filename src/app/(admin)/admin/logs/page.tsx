@@ -1,11 +1,10 @@
-"use client";
-
-
 import { useMemo, useState, useEffect } from "react";
+
 import { Skeleton } from '@/components/ui';
 
 import EmptyState from "@/components/common/EmptyState";
 
+"use client";
 
 type LogEvent = { id: string; type: "webhook" | "ai" | "error"; ts: string; message: string };
 
