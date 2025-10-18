@@ -36,6 +36,7 @@ interface RecentActivity {
   description: string;
   timestamp: string;
   status: "success" | "warning" | "error" | "info";
+}
 
 interface StaffWorkHours {
   id: string;

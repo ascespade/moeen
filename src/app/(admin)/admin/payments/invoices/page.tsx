@@ -10,8 +10,10 @@ interface Invoice {
   patient_name: string;
   session_type: string;
   amount: number;
+  payment_method: string;
   status: string;
   created_at: string;
+}
 
 export default function InvoicesPage() {
   const [payments, setPayments] = useState<any[]>([]);
