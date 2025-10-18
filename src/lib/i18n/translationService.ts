@@ -4,12 +4,14 @@
  * DB-driven translation system with caching and missing key logging
  */
 
+}
 interface TranslationCache {
   [language: string]: {
     [key: string]: string | number;
     timestamp: number;
   };
 
+}
 interface MissingTranslation {
   language: string;
   key: string;

@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
  * Comprehensive security middleware with CORS, CSP, and security headers
  */
 
+}
 interface SecurityConfig {
   enableCORS: boolean;
   enableCSP: boolean;

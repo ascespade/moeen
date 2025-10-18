@@ -5,7 +5,8 @@ import { useT } from "@/components/providers/I18nProvider";
 export default function FeaturesPage() {
   const { t } = useT();
   const features = [
-      title: t("home.features.unifiedChat", "دردشة موحّدة"),
+  {
+    title: t("home.features.unifiedChat", "دردشة موحّدة"),
       desc: t(
         "home.features.unifiedChat.desc",
         "إدارة كل القنوات من واجهة واحدة",

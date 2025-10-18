@@ -8,6 +8,7 @@ import { useT } from "@/hooks/useT";
 // import { toast } from '@/components/ui/Toast';
 // import { logger } from '@/lib/logger';
 
+}
 interface ErrorHandlerOptions {
   showToast?: boolean;
   logError?: boolean;

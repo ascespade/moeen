@@ -1,6 +1,7 @@
 
 // Logger implementation
 
+}
 interface LogLevel {
   ERROR: "error";
   WARN: "warn";
@@ -16,6 +17,7 @@ const LOG_LEVELS: LogLevel = {
   DEBUG: "debug",
 };
 
+}
 interface LogEntry {
   level: string;
   message: string;

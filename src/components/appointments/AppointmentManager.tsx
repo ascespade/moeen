@@ -10,9 +10,9 @@ import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
 
   Trash2,
-} from "lucide-react";
 } from "@/components/ui/Select";
 
+}
 interface Appointment {
   id: string;
   patientName: string;
@@ -28,6 +28,7 @@ interface Appointment {
   createdAt: string;
   updatedAt: string;
 
+}
 interface Doctor {
   id: string;
   name: string;
@@ -35,7 +36,6 @@ interface Doctor {
   availableSlots: string[];
   maxPatientsPerDay: number;
 
-}
 
 const AppointmentManager: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);

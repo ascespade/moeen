@@ -12,6 +12,7 @@ import { useTheme } from "@/core/theme";
 LineChart as RechartsLineChart,
 } from "recharts";
 
+}
 interface LineChartProps {
   data: any[];
   dataKey: string;
@@ -29,7 +30,6 @@ interface LineChartProps {
   showTooltip?: boolean;
   smooth?: boolean;
 
-}
 
 export const LineChart: React.FC<LineChartProps> = ({
   data,

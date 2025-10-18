@@ -3,6 +3,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
+}
 interface TaskStatus {
   total_tasks: number;
   current_task: number;
@@ -13,6 +14,7 @@ interface TaskStatus {
   last_update: string;
   estimated_completion: string;
 
+}
 interface AgentStatus {
   status: string;
   message: string;
@@ -20,6 +22,7 @@ interface AgentStatus {
   restart_count: number;
   mode: string;
 
+}
 interface CompletionStatus {
   status: string;
   completion_time: string;

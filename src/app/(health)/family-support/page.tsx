@@ -9,10 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "lucide-react";
 
-} from "lucide-react";
-
+}
 interface FamilyMember {
   id: string;
   patient_id: string;
@@ -35,6 +34,7 @@ interface FamilyMember {
     avatar?: string;
   };
 
+}
 interface SupportSession {
   id: string;
   family_member_id: string;
@@ -62,6 +62,7 @@ interface SupportSession {
     avatar?: string;
   };
 
+}
 interface Resource {
   id: string;
   title: string;

@@ -14,6 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
   Trash2,
 } from "lucide-react";
 
+}
 interface Appointment {
   id: string;
   patient_id: string;
@@ -50,7 +51,6 @@ interface Appointment {
     age?: number;
   };
 
-}
 
 const AppointmentsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

@@ -8,6 +8,7 @@ import { logger } from "@/lib/logger";
  * Comprehensive health monitoring and system status
  */
 
+}
 interface HealthCheck {
   status: "healthy" | "degraded" | "unhealthy";
   timestamp: string;
@@ -29,6 +30,7 @@ interface HealthCheck {
     errorRate: number;
   };
 
+}
 interface ServiceStatus {
   status: "healthy" | "degraded" | "unhealthy";
   responseTime?: number;

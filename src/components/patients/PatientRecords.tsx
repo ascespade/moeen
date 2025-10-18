@@ -9,9 +9,9 @@ import { Badge } from "@/components/ui/Badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
   Trash2,
-} from "lucide-react";
 } from "@/components/ui/Select";
 
+}
 interface Patient {
   id: string;
   name: string;
@@ -39,6 +39,7 @@ interface Patient {
   lastVisit: string;
   status: "active" | "inactive" | "archived";
 
+}
 interface MedicalRecord {
   id: string;
   patientId: string;
@@ -51,7 +52,6 @@ interface MedicalRecord {
   followUpRequired: boolean;
   followUpDate?: string;
 
-}
 
 const PatientRecords: React.FC = () => {
   const [patients, setPatients] = useState<Patient[]>([]);

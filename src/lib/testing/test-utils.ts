@@ -7,12 +7,14 @@ import { logger } from "../monitoring/logger";
  * Comprehensive testing utilities and helpers
  */
 
+}
 interface TestUser {
   id: string;
   email: string;
   role: string;
   profile: Record<string, any>;
 
+}
 interface TestData {
   users: TestUser[];
   patients: any[];
@@ -326,4 +328,3 @@ export function createTestData() {
 export async function cleanupTestData(): Promise<void> {
   await testUtils.cleanup();
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}
-}

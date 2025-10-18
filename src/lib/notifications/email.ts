@@ -1,10 +1,12 @@
 import logger from "@/lib/monitoring/logger";
 
+}
 interface EmailTemplate {
   subject: string;
   html: string;
   text: string;
 
+}
 interface EmailData {
   to: string;
   template: string;

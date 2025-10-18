@@ -1,4 +1,5 @@
 
+}
 interface InsuranceProvider {
   id: string;
   name: string;
@@ -8,6 +9,7 @@ interface InsuranceProvider {
   supportedOperations: string[];
   isActive: boolean;
 
+}
 interface ClaimData {
   patientId: string;
   appointmentId: string;
@@ -18,6 +20,7 @@ interface ClaimData {
   treatment?: string;
   attachments?: string[];
 
+}
 interface ClaimResult {
   success: boolean;
   claimId?: string;

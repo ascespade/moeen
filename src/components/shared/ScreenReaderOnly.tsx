@@ -1,5 +1,6 @@
 import React from "react";
 
+}
 interface ScreenReaderOnlyProps {
   children: React.ReactNode;
 

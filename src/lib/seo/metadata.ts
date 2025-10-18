@@ -5,6 +5,7 @@ import { Metadata } from "next";
  * Professional metadata for all pages
  */
 
+}
 interface PageMetadata {
   title: string;
   description: string;

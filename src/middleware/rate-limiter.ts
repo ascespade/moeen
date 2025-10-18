@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
  * Rate limiting for API endpoints
  */
 
+}
 interface RateLimitConfig {
   windowMs: number;
   maxRequests: number;
@@ -121,4 +122,3 @@ setInterval(
   5 * 60 * 1000,
 ); // Clean up every 5 minutes
 }}}}
-}

@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import Image from "next/image";
 
+}
 interface AuditLog {
   id: string;
   user: string;

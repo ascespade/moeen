@@ -4,6 +4,7 @@
  * Professional accessibility helpers
  */
 
+}
 interface AriaLabelProps {
   label: string;
   describedBy?: string;

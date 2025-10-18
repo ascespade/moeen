@@ -9,6 +9,7 @@ import { useTheme } from "@/core/theme";
 import { Button } from "./Button";
 import { Card } from "./Card";
 
+}
 interface ThemeSwitchProps {
   variant?: "button" | "dropdown" | "toggle";
   size?: "sm" | "md" | "lg";
@@ -27,7 +28,8 @@ export function ThemeSwitch({
   const [isOpen, setIsOpen] = useState(false);
 
   const themes = [
-      value: "light" as const,
+  {
+    value: "light" as const,
       label: "فاتح",
       icon: Sun,
       description: "الوضع الفاتح",
@@ -170,4 +172,3 @@ export function ThemeSwitch({
     </div>
   );
 export default ThemeSwitch;
-}

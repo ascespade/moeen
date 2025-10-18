@@ -7,6 +7,7 @@ import { Languages } from "lucide-react";
 import { useI18n } from "@/hooks/useI18n";
 import { dynamicThemeManager } from "@/lib/dynamic-theme-manager";
 
+}
 interface LanguageSwitcherProps {
   className?: string;
   showLabel?: boolean;

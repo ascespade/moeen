@@ -1,5 +1,6 @@
 "use client";
 
+}
 interface EmptyStateProps {
   icon?: string;
   title: string;

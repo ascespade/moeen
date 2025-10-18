@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import { ROUTES } from "@/constants/routes";
 
+}
 interface Patient {
   id: string;
   name: string;
@@ -22,6 +23,7 @@ interface Patient {
   medicalHistory?: string[];
   allergies?: string[];
 
+}
 interface Session {
   id: string;
   date: string;
@@ -31,6 +33,7 @@ interface Session {
   status: "completed" | "cancelled" | "upcoming";
   notes?: string;
 
+}
 interface Document {
   id: string;
   name: string;

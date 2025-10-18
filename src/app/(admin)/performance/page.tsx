@@ -7,10 +7,9 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "lucide-react";
 
-} from "lucide-react";
-
+}
 interface PerformanceMetric {
   id: string;
   name: string;
@@ -20,6 +19,7 @@ interface PerformanceMetric {
   trend: "up" | "down" | "stable";
   threshold: number;
 
+}
 interface SystemHealth {
   cpu_usage: number;
   memory_usage: number;

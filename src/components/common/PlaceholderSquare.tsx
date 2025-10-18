@@ -1,5 +1,6 @@
 import React from "react";
 
+}
 type PlaceholderSquareProps = {
   title: string;
   description: string;

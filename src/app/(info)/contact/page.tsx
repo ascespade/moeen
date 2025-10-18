@@ -38,7 +38,8 @@ export default function ContactPage() {
   };
 
   const contactInfo = [
-      icon: <Mail className="h-6 w-6" />,
+  {
+    icon: <Mail className="h-6 w-6" />,
       title: "البريد الإلكتروني",
       value: "info@mu3een.com",
       link: "mailto:info@mu3een.com",

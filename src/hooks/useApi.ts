@@ -5,6 +5,7 @@ import { ApiResponse } from "@/types";
 
 // API hooks
 
+}
 interface UseApiState<T> {
   data: T | null;
   loading: boolean;
@@ -175,4 +176,3 @@ export const useApiDelete = <T = any>(
     execute,
   };
 };
-}

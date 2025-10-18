@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
 
+}
 interface CallRequest {
   id: string;
   requester: { full_name: string; phone: string };

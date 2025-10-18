@@ -13,6 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
 BarChart3,
 } from "lucide-react";
 
+}
 interface AnalyticsData {
   overview: {
     totalPatients: number;
@@ -58,7 +59,6 @@ interface AnalyticsData {
     appointmentTrends: Array<{ month: string; count: number }>;
   };
 
-}
 
 const AnalyticsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

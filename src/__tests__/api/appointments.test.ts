@@ -21,7 +21,8 @@ describe("/api/appointments", () => {
   describe("GET /api/appointments", () => {
     it("should return appointments with filters", async () => {
       const mockAppointments = [
-          id: "1",
+  {
+    id: "1",
           patient_id: "patient-1",
           doctor_id: "doctor-1",
           appointment_date: "2024-01-20",
@@ -63,7 +64,8 @@ describe("/api/appointments", () => {
 
     it("should filter by patient ID", async () => {
       const mockAppointments = [
-          id: "1",
+  {
+    id: "1",
           patient_id: "patient-1",
           doctor_id: "doctor-1",
           appointment_date: "2024-01-20",
@@ -91,7 +93,8 @@ describe("/api/appointments", () => {
 
     it("should filter by status", async () => {
       const mockAppointments = [
-          id: "1",
+  {
+    id: "1",
           patient_id: "patient-1",
           doctor_id: "doctor-1",
           appointment_date: "2024-01-20",

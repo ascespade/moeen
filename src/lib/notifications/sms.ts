@@ -1,10 +1,12 @@
 import logger from "@/lib/monitoring/logger";
 
+}
 interface SMSData {
   to: string;
   message: string;
   language?: "ar" | "en";
 
+}
 interface SMSResult {
   success: boolean;
   messageId?: string;

@@ -5,6 +5,7 @@ import logger from "@/lib/monitoring/logger";
  * Redis-based caching system for improved performance
  */
 
+}
 interface CacheConfig {
   ttl: number; // Time to live in seconds
   prefix: string;

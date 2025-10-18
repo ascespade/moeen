@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import { ROUTES } from "@/constants/routes";
 
+}
 interface Lead {
   id: string;
   name: string;

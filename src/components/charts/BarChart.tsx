@@ -12,6 +12,7 @@ import { useTheme } from "@/core/theme";
 BarChart as RechartsBarChart,
 } from "recharts";
 
+}
 interface BarChartProps {
   data: any[];
   dataKey: string;
@@ -28,7 +29,6 @@ interface BarChartProps {
   showTooltip?: boolean;
   horizontal?: boolean;
 
-}
 
 export const BarChart: React.FC<BarChartProps> = ({
   data,

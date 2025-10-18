@@ -5,6 +5,7 @@ import { logger } from "../monitoring/logger";
  * Performance monitoring and optimization utilities
  */
 
+}
 interface PerformanceMetrics {
   operation: string;
   startTime: number;

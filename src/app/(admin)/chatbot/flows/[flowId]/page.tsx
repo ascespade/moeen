@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import { ROUTES } from "@/constants/routes";
 
+}
 interface Node {
   id: string;
   type: "start" | "message" | "condition" | "action" | "end";
@@ -18,6 +19,7 @@ interface Node {
     action?: string;
   };
 
+}
 interface Connection {
   id: string;
   source: string;

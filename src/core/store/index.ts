@@ -11,6 +11,7 @@ import {
 } from "../types";
 
 // Auth Store
+}
 interface AuthState {
   user: User | null;
   token: string | null;
@@ -18,6 +19,7 @@ interface AuthState {
   isLoading: boolean;
   error: string | null;
 
+}
 interface AuthActions {
   login: (user: User, token: string) => void;
   logout: () => void;
@@ -85,6 +87,7 @@ export const useAuthStore = create<AuthState & AuthActions>()(
 );
 
 // UI Store
+}
 interface UIState {
   sidebarOpen: boolean;
   theme: "light" | "dark" | "system";
@@ -93,6 +96,7 @@ interface UIState {
   modals: Record<string, boolean>;
   loading: Record<string, boolean>;
 
+}
 interface UIActions {
   toggleSidebar: () => void;
   setSidebarOpen: (open: boolean) => void;
@@ -200,6 +204,7 @@ export const useUIStore = create<UIState & UIActions>()(
 );
 
 // Data Store
+}
 interface DataState {
   patients: Patient[];
   doctors: Doctor[];
@@ -210,6 +215,7 @@ interface DataState {
   isLoading: boolean;
   error: string | null;
 
+}
 interface DataActions {
   // Patients
   setPatients: (patients: Patient[]) => void;

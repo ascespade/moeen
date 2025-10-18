@@ -1,8 +1,10 @@
 
+}
 interface MoyasarConfig {
   apiKey: string;
   baseUrl: string;
 
+}
 interface MoyasarPaymentData {
   amount: number;
   currency: string;
@@ -11,6 +13,7 @@ interface MoyasarPaymentData {
   appointmentId: string;
   metadata?: Record<string, string>;
 
+}
 interface MoyasarPaymentResult {
   success: boolean;
   paymentId?: string;
@@ -174,4 +177,3 @@ export class MoyasarPaymentService {
 
 export const moyasarService = new MoyasarPaymentService();
 }}}}}}}}}
-}

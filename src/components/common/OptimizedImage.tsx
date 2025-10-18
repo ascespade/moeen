@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import Image, { ImageProps } from "next/image";
 
+}
 interface OptimizedImageProps extends Omit<ImageProps, "src"> {
   src: string;
   fallback?: string;

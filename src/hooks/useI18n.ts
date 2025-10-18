@@ -1,8 +1,8 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 import { dynamicContentManager } from "@/lib/dynamic-content-manager";
-
-("use client");
 
 export type Messages = Record<string, string>;
 

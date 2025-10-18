@@ -1,6 +1,7 @@
 
 type ErrorSeverity = "low" | "medium" | "high" | "critical";
 
+}
 interface ErrorContext {
   userId?: string | undefined;
   sessionId?: string | undefined;
@@ -9,6 +10,7 @@ interface ErrorContext {
   timestamp: string;
   severity: ErrorSeverity;
 
+}
 interface ErrorReport {
   message: string;
   stack?: string;

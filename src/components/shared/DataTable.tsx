@@ -1,5 +1,6 @@
 import React from "react";
 
+}
 interface Column {
   key: string;
   label: string;
@@ -7,6 +8,7 @@ interface Column {
   sortDirection?: "asc" | "desc" | "none";
   render?: (value: any, row: any) => React.ReactNode;
 
+}
 interface DataTableProps {
   columns: Column[];
   data: any[];

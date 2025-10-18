@@ -19,6 +19,7 @@ import { createClient } from "@/lib/supabase/client";
   decryptApiKey,
 } from "@/lib/encryption";
 
+}
 interface ApiKeyConfig {
   id: string;
   name: string;
@@ -33,7 +34,6 @@ interface ApiKeyConfig {
   placeholder: string;
   validation_url?: string;
 
-}
 
 const APIKeysSettingsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

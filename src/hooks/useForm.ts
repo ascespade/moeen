@@ -6,6 +6,7 @@ import { validateForm } from "@/utils/validation";
 
 // removed unused FormField interface
 
+}
 interface FormState<T> {
   values: T;
   errors: Partial<Record<keyof T, string>>;
@@ -14,6 +15,7 @@ interface FormState<T> {
   isSubmitting: boolean;
   isDirty: boolean;
 
+}
 interface FormOptions<T> {
   initialValues: T;
   validationRules?: Partial<

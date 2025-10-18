@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 
+}
 interface DashboardStats {
   totalPatients: number;
   activePatients: number;
@@ -28,6 +29,7 @@ interface DashboardStats {
   completedSessions: number;
   upcomingSessions: number;
 
+}
 interface RecentActivity {
   id: string;
   type: "appointment" | "claim" | "patient" | "staff" | "payment";
@@ -36,6 +38,7 @@ interface RecentActivity {
   timestamp: string;
   status: "success" | "warning" | "error" | "info";
 
+}
 interface StaffWorkHours {
   id: string;
   name: string;

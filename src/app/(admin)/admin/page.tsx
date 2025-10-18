@@ -34,6 +34,7 @@ import {
 // Admin Module with Role-Based Access Control
 // Provides user management, system configuration, and security features
 
+}
 interface User {
   id: string;
   email: string;
@@ -45,6 +46,7 @@ interface User {
   permissions: string[];
 }
 
+}
 interface SystemConfig {
   id: string;
   key: string;
@@ -55,6 +57,7 @@ interface SystemConfig {
 
 }
 
+}
 interface SecurityEvent {
   id: string;
   userId: string;
@@ -96,7 +99,8 @@ export default function AdminPage() {
   const loadAdminData = async () => {
     try {
       setLoading(true);
-      const [usersRes, configsRes, eventsRes] = await Promise.all([
+      try {
+        const [usersRes, configsRes, eventsRes] = await Promise.all([
         fetch("/api/admin/users"),
         fetch("/api/admin/configs"),
         fetch("/api/admin/security-events"),
@@ -106,7 +110,8 @@ export default function AdminPage() {
         throw new Error("Failed to load admin data");
 
       try {
-        const [usersData, configsData, eventsData] = await Promise.all([
+        try {
+          const [usersData, configsData, eventsData] = await Promise.all([
           usersRes.json(),
           configsRes.json(),
           eventsRes.json(),

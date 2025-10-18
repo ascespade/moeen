@@ -14,6 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
   Trash2,
 } from "lucide-react";
 
+}
 interface Contact {
   id: string;
   first_name: string;
@@ -42,6 +43,7 @@ interface Contact {
     facebook?: string;
   };
 
+}
 interface ContactActivity {
   id: string;
   contact_id: string;

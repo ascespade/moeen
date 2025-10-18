@@ -7,6 +7,7 @@ import { logger } from "../monitoring/logger";
  * Optimized database connection management
  */
 
+}
 interface ConnectionPoolConfig {
   maxConnections: number;
   minConnections: number;

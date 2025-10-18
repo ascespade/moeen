@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
 
+}
 interface Invoice {
   id: string;
   patient_name: string;

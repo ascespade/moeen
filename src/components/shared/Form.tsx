@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react";
 
+}
 interface FormFieldProps {
   label: string;
   error?: string;
@@ -31,6 +32,7 @@ export function FormField({
     </div>
   );
 
+}
 interface FormGroupProps {
   children: ReactNode;
   className?: string;
@@ -40,6 +42,7 @@ interface FormGroupProps {
 export function FormGroup({ children, className = "" }: FormGroupProps) {
   return <div className={`space-y-4 ${className}`}>{children}</div>;
 
+}
 interface FormRowProps {
   children: ReactNode;
   className?: string;
@@ -53,6 +56,7 @@ export function FormRow({ children, className = "" }: FormRowProps) {
     </div>
   );
 
+}
 interface FormActionsProps {
   children: ReactNode;
   className?: string;

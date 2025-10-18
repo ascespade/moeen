@@ -6,10 +6,9 @@ import { useT } from "@/hooks/useT";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from "lucide-react";
 
-} from "lucide-react";
-
+}
 interface ChecklistItem {
   id: string;
   title: string;
@@ -19,6 +18,7 @@ interface ChecklistItem {
   category: "documents" | "payment" | "health" | "appointment";
   icon: React.ReactNode;
 
+}
 interface PreVisitChecklistProps {
   appointmentId: string;
   patientId: string;
@@ -277,4 +277,3 @@ export default function PreVisitChecklist({
     </Card>
   );
 }}}
-}

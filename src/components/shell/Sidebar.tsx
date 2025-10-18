@@ -3,11 +3,10 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-import { useT } from "@/components/providers/I18nProvider";
-
-} from "lucide-react";
+import { useT } from "lucide-react";
 
 const adminItems = [
+  {
     href: "/dashboard",
     label: "nav.dashboard",
     icon: <LayoutDashboard className="h-4 w-4" />,
@@ -28,6 +27,7 @@ const adminItems = [
   { href: "/users", label: "nav.users", icon: <Users className="h-4 w-4" /> },
 ];
 const staffItems = [
+  {
     href: "/dashboard",
     label: "nav.dashboard",
     icon: <LayoutDashboard className="h-4 w-4" />,
@@ -38,6 +38,7 @@ const staffItems = [
   },
 ];
 const viewerItems = [
+  {
     href: "/dashboard",
     label: "nav.dashboard",
     icon: <LayoutDashboard className="h-4 w-4" />,

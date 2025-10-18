@@ -46,7 +46,8 @@ export default function UserDashboard() {
     return null;
 
   const stats = [
-      title: "المواعيد القادمة",
+  {
+    title: "المواعيد القادمة",
       value: "3",
       change: "+2 هذا الأسبوع",
       icon: Calendar,
@@ -77,7 +78,8 @@ export default function UserDashboard() {
   ];
 
   const recentActivities = [
-      id: 1,
+  {
+    id: 1,
       title: "تم تأكيد موعدك مع د. أحمد محمد",
       time: "منذ 2 ساعة",
       type: "appointment",

@@ -13,6 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
   Trash2,
 } from "lucide-react";
 
+}
 interface SecurityEvent {
   id: string;
   type:
@@ -36,6 +37,7 @@ interface SecurityEvent {
   details: string;
   risk_level: "low" | "medium" | "high" | "critical";
 
+}
 interface SecurityPolicy {
   id: string;
   name: string;
@@ -51,6 +53,7 @@ interface SecurityPolicy {
   last_updated: string;
   updated_by: string;
 
+}
 interface UserSession {
   id: string;
   user_id: string;
@@ -63,6 +66,7 @@ interface UserSession {
   last_activity: string;
   is_active: boolean;
 
+}
 interface SecurityAlert {
   id: string;
   title: string;

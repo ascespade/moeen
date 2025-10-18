@@ -1,8 +1,8 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 import clsx from "clsx";
-
-("use client");
 
 export function Toast({
   message,

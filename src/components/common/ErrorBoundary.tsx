@@ -9,11 +9,13 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { logger } from "@/lib/logger";
 
+}
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
 
+}
 interface State {
   hasError: boolean;
   error?: Error;
@@ -91,6 +93,7 @@ export default class ErrorBoundary extends Component<Props, State> {
     return this.props.children;
   }
 
+}
 interface ErrorFallbackProps {
   error?: Error;
   onRetry: () => void;

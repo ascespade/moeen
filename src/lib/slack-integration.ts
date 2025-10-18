@@ -480,7 +480,8 @@ export class SlackIntegration {
     channel: string = "general",
   ): Promise<void> {
     const blocks = [
-        type: "header",
+  {
+    type: "header",
         text: {
           type: "plain_text",
           text: "🚨 تنبيه طارئ",

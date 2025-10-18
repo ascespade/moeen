@@ -1,9 +1,10 @@
+"use client";
+
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import useI18n from "@/hooks/useI18n";
 
-("use client");
-
+}
 type Ctx = {
   t: (k: string, f?: string) => string;
   locale: "ar" | "en";

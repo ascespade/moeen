@@ -88,6 +88,7 @@ const defaultConfig: DesignSystemConfig = {
 };
 
 // Provider component
+}
 interface DesignSystemProviderProps {
   children: ReactNode;
   initialConfig?: Partial<DesignSystemConfig>;

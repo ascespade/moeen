@@ -12,6 +12,7 @@ createContext,
   useCallback,
 } from "react";
 
+}
 interface TranslationContextType {
   t: (key: string, fallback?: string) => string;
   locale: string;

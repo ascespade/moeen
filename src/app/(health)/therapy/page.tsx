@@ -9,10 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "lucide-react";
 
-} from "lucide-react";
-
+}
 interface TherapySession {
   id: string;
   patient_id: string;
@@ -43,6 +42,7 @@ interface TherapySession {
     avatar?: string;
   };
 
+}
 interface TherapyGoal {
   id: string;
   patient_id: string;
@@ -464,4 +464,3 @@ const TherapyPage: React.FC = () => {
 
 export default TherapyPage;
 }}}
-}

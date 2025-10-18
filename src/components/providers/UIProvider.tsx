@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 
 import { usePathname } from "next/navigation";
@@ -5,8 +7,6 @@ import { usePathname } from "next/navigation";
 import { atom } from "jotai";
 
 import useBrandColorFromLogo from "@/hooks/useBrandColorFromLogo";
-
-("use client");
 
 export type AppTheme = "light" | "dark";
 export type AppLang = "ar" | "en";
@@ -17,6 +17,7 @@ export const themeAtom = atom<AppTheme>("light");
 export const langAtom = atom<AppLang>("ar");
 
 declare global {
+}
   interface Window {
     HSStaticMethods?: { autoInit?: () => void };
   }

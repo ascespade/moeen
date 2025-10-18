@@ -10,10 +10,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import { ScrollArea } from "@/components/ui/ScrollArea";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "lucide-react";
 
-} from "lucide-react";
-
+}
 interface ChatMessage {
   id: string;
   type: "user" | "bot";
@@ -26,6 +25,7 @@ interface ChatMessage {
     appointmentTime?: string;
   };
 
+}
 interface AppointmentSuggestion {
   id: string;
   doctorName: string;

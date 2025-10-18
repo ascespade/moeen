@@ -9,6 +9,7 @@ import { logger } from "@/lib/logger";
  * This ensures all content is dynamic and database-driven
  */
 
+}
 interface Violation {
   file: string;
   line: number;

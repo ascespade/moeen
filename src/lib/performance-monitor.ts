@@ -5,6 +5,7 @@ import { realDB } from "./supabase-real";
 // Comprehensive Performance Monitoring System for Hemam Center
 
 // Performance metrics interface
+}
 interface PerformanceMetrics {
   timestamp: number;
   requestId: string;
@@ -20,6 +21,7 @@ interface PerformanceMetrics {
   error?: string | undefined;
 
 // Performance thresholds
+}
 interface PerformanceThresholds {
   responseTime: {
     warning: number; // ms
@@ -381,6 +383,7 @@ export class PerformanceMonitor {
   }
 
 // Performance alert interface
+}
 interface PerformanceAlert {
   {
   type: "WARNING" | "CRITICAL";
@@ -404,6 +407,7 @@ interface PerformanceAlert {
   url: string;
 
 // Performance statistics interface
+}
 interface PerformanceStats {
   totalRequests: number;
 },
@@ -464,6 +468,7 @@ interface PerformanceStats {
   }>;
 
 // Real-time metrics interface
+}
 interface RealTimeMetrics {
   requestsPerMinute: number;
 },

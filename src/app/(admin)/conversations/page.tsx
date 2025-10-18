@@ -5,6 +5,7 @@ import { useMemo, useState, useEffect } from "react";
 import EmptyState from "@/components/common/EmptyState";
 import { Skeleton } from "@/components/ui";
 
+}
 type Message = {
   id: string;
   from: "customer" | "agent" | "ai";
@@ -12,6 +13,7 @@ type Message = {
   ts: string;
 };
 
+}
 type Conversation = {
   id: string;
   title: string;

@@ -1,11 +1,11 @@
 import { getApiConfig, isWhatsAppConfigured } from "./config";
 
+}
 type SendTextPayload = {
   to: string;
   text: string;
 };
 
-}
 
 export const sendWhatsAppMessage = async (payload: SendTextPayload) => {
   const cfg = getApiConfig();

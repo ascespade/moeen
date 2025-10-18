@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/Input";
   Trash2,
 } from "lucide-react";
 
+}
 interface Patient {
   id: string;
   public_id: string;
@@ -32,6 +33,7 @@ interface Patient {
   created_at: string;
   updated_at: string;
 
+}
 interface PatientWithStats extends Patient {
   lastVisit: string;
   totalSessions: number;

@@ -2,6 +2,7 @@ import { useState, createContext, useContext } from "react";
 
 import clsx from "clsx";
 
+}
 interface TabsContextValue {
   value: string;
   onValueChange: (value: string) => void;

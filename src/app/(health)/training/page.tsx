@@ -9,10 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "lucide-react";
 
-} from "lucide-react";
-
+}
 interface TrainingProgram {
   id: string;
   title: string;
@@ -38,6 +37,7 @@ interface TrainingProgram {
     avatar?: string;
   };
 
+}
 interface TrainingProgress {
   id: string;
   participant_id: string;

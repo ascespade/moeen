@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 // Intersection Observer hook
 
+}
 interface UseIntersectionObserverOptions {
   threshold?: number | number[];
   root?: Element | null;

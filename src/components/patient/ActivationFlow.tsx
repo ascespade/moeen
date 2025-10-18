@@ -5,10 +5,9 @@ import { useState } from "react";
 import { useT } from "@/hooks/useT";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from "lucide-react";
 
-} from "lucide-react";
-
+}
 interface ActivationStep {
   id: string;
   title: string;
@@ -17,6 +16,7 @@ interface ActivationStep {
   required: boolean;
   icon: React.ReactNode;
 
+}
 interface ActivationFlowProps {
   patientId: string;
   onActivationComplete?: () => void;

@@ -13,6 +13,7 @@ import { LoadingSpinner } from "@/components/ui";
   BarChart3,
 } from "lucide-react";
 
+}
 interface SupervisorData {
   id: string;
   fullName: string;
@@ -45,7 +46,6 @@ interface SupervisorData {
     status: "ready" | "processing" | "failed";
   }>;
 
-}
 
 export default function SupervisorDashboard() {
   const { t } = useT();

@@ -12,7 +12,8 @@ async function seedHomepageContent() {
 
     // Hero slides content
     const heroSlides = [
-        id: 1,
+  {
+    id: 1,
         title: "مرحباً بك في مُعين",
         subtitle: "منصة الرعاية الصحية المتخصصة",
         description:
@@ -43,7 +44,8 @@ async function seedHomepageContent() {
 
     // Services content
     const services = [
-        id: 1,
+  {
+    id: 1,
         title: "إدارة المواعيد",
         description: "نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية",
         icon: "📅",
@@ -89,7 +91,8 @@ async function seedHomepageContent() {
 
     // Testimonials content
     const testimonials = [
-        id: 1,
+  {
+    id: 1,
         name: "د. أحمد محمد",
         role: "طبيب أسنان",
         content: "منصة مُعين ساعدتني في تنظيم مواعيدي وملفات المرضى بشكل ممتاز",
@@ -124,7 +127,8 @@ async function seedHomepageContent() {
 
     // FAQ content
     const faqs = [
-        id: 1,
+  {
+    id: 1,
         question: "كيف يمكنني حجز موعد؟",
         answer:
           "يمكنك حجز موعد بسهولة من خلال الموقع أو التطبيق، أو الاتصال بنا مباشرة",
@@ -272,7 +276,6 @@ async function seedHomepageContent() {
   } catch (error) {
     logger.error("❌ Error seeding homepage content:", error);
     throw error;
-  }
 
 // Run the seeding if this file is executed directly
 if (require.main === module) {

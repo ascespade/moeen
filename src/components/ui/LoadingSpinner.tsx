@@ -3,6 +3,7 @@
  * Loading Spinner Component
  */
 
+}
 interface LoadingSpinnerProps {
   size?: "sm" | "md" | "lg";
   className?: string;

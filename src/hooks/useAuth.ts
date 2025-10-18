@@ -10,12 +10,14 @@ import { User } from "@/types";
 } from "@/utils/storage";
 // Authentication hooks
 
+}
 interface AuthState {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
 
+}
 interface AuthActions {
   login: (user: User, token: string) => void;
   logout: () => void;

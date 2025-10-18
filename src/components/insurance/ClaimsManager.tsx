@@ -9,10 +9,9 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { Select } from "@/components/ui/Select";
+import { Select } from "lucide-react";
 
-} from "lucide-react";
-
+}
 interface Claim {
   id: string;
   patientName: string;
@@ -23,6 +22,7 @@ interface Claim {
   referenceNumber?: string;
   appointmentId: string;
 
+}
 interface ClaimsManagerProps {
   patientId?: string;
   onClaimUpdate?: () => void;

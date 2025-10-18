@@ -3,6 +3,7 @@ import { NextRequest } from "next/server";
 // Comprehensive Caching System for Hemam Center
 
 // Cache entry interface
+}
 interface CacheEntry<T> {
   data: T;
   timestamp: number;
@@ -10,6 +11,7 @@ interface CacheEntry<T> {
   hits: number;
 
 // Cache configuration
+}
 interface CacheConfig {
   maxSize: number;
   defaultTTL: number;

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { isWhatsAppConfigured, getApiConfig } from "@/lib/api/config";
 import PlaceholderSquare from "@/components/common/PlaceholderSquare";
 
+}
 type Settings = {
   provider: string;
   voice: { stt: string | null; tts: string | null };
@@ -36,7 +37,6 @@ const tabs = [
   { id: "users", label: "المستخدمون والأدوار" },
 ];
 
-}
 
 export default function SettingsTabs() {
   const [active, setActive] = useState<string>(tabs[0]?.id || "general");
