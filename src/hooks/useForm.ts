@@ -195,7 +195,7 @@ export const useForm = <T extends Record<string, unknown>>(
       try {
         await onSubmit(state.values);
       } catch (error) {
-        } finally {
+      } finally {
         setState((prev) => ({ ...prev, isSubmitting: false }));
       }
     },

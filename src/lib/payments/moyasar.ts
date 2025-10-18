@@ -25,17 +25,17 @@ export class MoyasarPaymentService {
   constructor() {
     this.config = {
       apiKey: process.env.MOYASAR_SECRET_KEY!,
-      baseUrl: 'https://api.moyasar.com/v1'
+      baseUrl: "https://api.moyasar.com/v1",
     };
   }
 
   async createPayment(data: MoyasarPaymentData): Promise<MoyasarPaymentResult> {
     try {
       const response = await fetch(`${this.config.baseUrl}/payments`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Authorization': `Basic ${Buffer.from(this.config.apiKey + ':').toString('base64')}`,
-          'Content-Type': 'application/json'
+          Authorization: `Basic ${Buffer.from(this.config.apiKey + ":").toString("base64")}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           amount: Math.round(data.amount * 100), // Convert to halalas
@@ -44,9 +44,9 @@ export class MoyasarPaymentService {
           metadata: {
             patient_id: data.patientId,
             appointment_id: data.appointmentId,
-            ...data.metadata
-          }
-        })
+            ...data.metadata,
+          },
+        }),
       });
 
       const result = await response.json();
@@ -54,85 +54,96 @@ export class MoyasarPaymentService {
       if (!response.ok) {
         return {
           success: false,
-          error: result.message || 'Payment creation failed'
+          error: result.message || "Payment creation failed",
         };
       }
 
       return {
         success: true,
         paymentId: result.id,
-        status: result.status
+        status: result.status,
       };
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Payment creation failed'
+        error:
+          error instanceof Error ? error.message : "Payment creation failed",
       };
     }
   }
 
   async getPayment(paymentId: string): Promise<MoyasarPaymentResult> {
     try {
-      const response = await fetch(`${this.config.baseUrl}/payments/${paymentId}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Basic ${Buffer.from(this.config.apiKey + ':').toString('base64')}`
-        }
-      });
+      const response = await fetch(
+        `${this.config.baseUrl}/payments/${paymentId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Basic ${Buffer.from(this.config.apiKey + ":").toString("base64")}`,
+          },
+        },
+      );
 
       const result = await response.json();
 
       if (!response.ok) {
         return {
           success: false,
-          error: result.message || 'Payment retrieval failed'
+          error: result.message || "Payment retrieval failed",
         };
       }
 
       return {
         success: true,
         paymentId: result.id,
-        status: result.status
+        status: result.status,
       };
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Payment retrieval failed'
+        error:
+          error instanceof Error ? error.message : "Payment retrieval failed",
       };
     }
   }
 
-  async refundPayment(paymentId: string, amount?: number): Promise<MoyasarPaymentResult> {
+  async refundPayment(
+    paymentId: string,
+    amount?: number,
+  ): Promise<MoyasarPaymentResult> {
     try {
-      const response = await fetch(`${this.config.baseUrl}/payments/${paymentId}/refund`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Basic ${Buffer.from(this.config.apiKey + ':').toString('base64')}`,
-          'Content-Type': 'application/json'
+      const response = await fetch(
+        `${this.config.baseUrl}/payments/${paymentId}/refund`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Basic ${Buffer.from(this.config.apiKey + ":").toString("base64")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: amount ? Math.round(amount * 100) : undefined,
+          }),
         },
-        body: JSON.stringify({
-          amount: amount ? Math.round(amount * 100) : undefined
-        })
-      });
+      );
 
       const result = await response.json();
 
       if (!response.ok) {
         return {
           success: false,
-          error: result.message || 'Refund failed'
+          error: result.message || "Refund failed",
         };
       }
 
       return {
         success: true,
         paymentId: result.id,
-        status: result.status
+        status: result.status,
       };
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Refund failed'
+        error: error instanceof Error ? error.message : "Refund failed",
       };
     }
   }
@@ -143,29 +154,30 @@ export class MoyasarPaymentService {
       const event = payload;
 
       switch (event.type) {
-        case 'payment.succeeded':
+        case "payment.succeeded":
           return {
             success: true,
             paymentId: event.data.id,
-            status: 'succeeded'
+            status: "succeeded",
           };
-        
-        case 'payment.failed':
+
+        case "payment.failed":
           return {
             success: false,
-            error: `Payment failed: ${event.data.failure_reason}`
+            error: `Payment failed: ${event.data.failure_reason}`,
           };
-        
+
         default:
           return {
             success: true,
-            paymentId: 'unknown_event'
+            paymentId: "unknown_event",
           };
       }
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Webhook processing failed'
+        error:
+          error instanceof Error ? error.message : "Webhook processing failed",
       };
     }
   }

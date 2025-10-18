@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { 
+import {
   Plus,
   Edit,
   Trash2,
@@ -17,20 +17,26 @@ import {
   Zap,
   ArrowRight,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 interface FlowStep {
   id: string;
-  type: "question" | "information" | "action" | "redirect" | "slack_notify" | "whatsapp_send";
+  type:
+    | "question"
+    | "information"
+    | "action"
+    | "redirect"
+    | "slack_notify"
+    | "whatsapp_send";
   content: string;
   options?: string[];
   nextStep?: string;
   slackChannel?: string;
   whatsappTemplate?: string;
-  notificationType?: 'appointment' | 'reminder' | 'emergency' | 'general';
+  notificationType?: "appointment" | "reminder" | "emergency" | "general";
 }
 
 interface ConversationFlow {
@@ -50,7 +56,9 @@ const FlowsManagementPage: React.FC = () => {
   const [flows, setFlows] = useState<ConversationFlow[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedFlow, setSelectedFlow] = useState<ConversationFlow | null>(null);
+  const [selectedFlow, setSelectedFlow] = useState<ConversationFlow | null>(
+    null,
+  );
   const [showFlowEditor, setShowFlowEditor] = useState(false);
 
   useEffect(() => {
@@ -79,16 +87,23 @@ const FlowsManagementPage: React.FC = () => {
               id: "welcome",
               type: "information",
               content: "أهلاً بك في مركز الهمم، أنا مُعين، مساعدك الرقمي.",
-              nextStep: "needs_assessment"
+              nextStep: "needs_assessment",
             },
             {
               id: "needs_assessment",
               type: "question",
-              content: "لفهم كيفية مساعدتك بشكل أفضل، هل يمكنك اختيار الفئة الأقرب لاحتياجك؟",
-              options: ["دعم نفسي", "دعم حركي وجسدي", "صعوبات تعلم", "استشارات أسرية", "غير ذلك"],
-              nextStep: "collect_info"
-            }
-          ]
+              content:
+                "لفهم كيفية مساعدتك بشكل أفضل، هل يمكنك اختيار الفئة الأقرب لاحتياجك؟",
+              options: [
+                "دعم نفسي",
+                "دعم حركي وجسدي",
+                "صعوبات تعلم",
+                "استشارات أسرية",
+                "غير ذلك",
+              ],
+              nextStep: "collect_info",
+            },
+          ],
         },
         {
           id: "appointment_slack",
@@ -104,7 +119,7 @@ const FlowsManagementPage: React.FC = () => {
               type: "question",
               content: "هل هذا موعد جديد أم متابعة؟",
               options: ["موعد جديد", "متابعة", "إعادة جدولة"],
-              nextStep: "check_schedule"
+              nextStep: "check_schedule",
             },
             {
               id: "slack_notification",
@@ -112,9 +127,9 @@ const FlowsManagementPage: React.FC = () => {
               content: "تم حجز موعد جديد",
               slackChannel: "appointments",
               notificationType: "appointment",
-              nextStep: "send_confirmation"
-            }
-          ]
+              nextStep: "send_confirmation",
+            },
+          ],
         },
         {
           id: "emergency_slack",
@@ -128,8 +143,9 @@ const FlowsManagementPage: React.FC = () => {
             {
               id: "emergency_detection",
               type: "action",
-              content: "🚨 تم اكتشاف حالة طوارئ! يرجى الاتصال فوراً بالرقم 997 أو 911.",
-              nextStep: "slack_alert"
+              content:
+                "🚨 تم اكتشاف حالة طوارئ! يرجى الاتصال فوراً بالرقم 997 أو 911.",
+              nextStep: "slack_alert",
             },
             {
               id: "slack_alert",
@@ -137,15 +153,15 @@ const FlowsManagementPage: React.FC = () => {
               content: "تنبيه طارئ من المريض",
               slackChannel: "emergency",
               notificationType: "emergency",
-              nextStep: "emergency_contacts"
-            }
-          ]
-        }
+              nextStep: "emergency_contacts",
+            },
+          ],
+        },
       ];
-      
+
       setFlows(mockFlows);
     } catch (error) {
-      } finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -153,11 +169,12 @@ const FlowsManagementPage: React.FC = () => {
   const handleToggleFlow = async (flowId: string) => {
     try {
       // في التطبيق الحقيقي، سيتم تحديث حالة الـ flow عبر API
-      setFlows(prev => prev.map(flow => 
-        flow.id === flowId ? { ...flow, isActive: !flow.isActive } : flow
-      ));
-    } catch (error) {
-      }
+      setFlows((prev) =>
+        prev.map((flow) =>
+          flow.id === flowId ? { ...flow, isActive: !flow.isActive } : flow,
+        ),
+      );
+    } catch (error) {}
   };
 
   const handleEditFlow = (flow: ConversationFlow) => {
@@ -166,35 +183,35 @@ const FlowsManagementPage: React.FC = () => {
   };
 
   const handleDeleteFlow = async (flowId: string) => {
-    if (!confirm('هل أنت متأكد من حذف هذا الـ Flow؟')) return;
+    if (!confirm("هل أنت متأكد من حذف هذا الـ Flow؟")) return;
 
     try {
       // في التطبيق الحقيقي، سيتم حذف الـ flow عبر API
-      setFlows(prev => prev.filter(flow => flow.id !== flowId));
-    } catch (error) {
-      }
+      setFlows((prev) => prev.filter((flow) => flow.id !== flowId));
+    } catch (error) {}
   };
 
   const getStepIcon = (type: string) => {
     switch (type) {
-      case 'question':
+      case "question":
         return <MessageCircle className="w-4 h-4 text-brand-primary" />;
-      case 'information':
+      case "information":
         return <Bot className="w-4 h-4 text-brand-success" />;
-      case 'action':
+      case "action":
         return <Zap className="w-4 h-4 text-brand-warning" />;
-      case 'slack_notify':
+      case "slack_notify":
         return <Settings className="w-4 h-4 text-purple-500" />;
-      case 'whatsapp_send':
+      case "whatsapp_send":
         return <MessageCircle className="w-4 h-4 text-brand-success" />;
       default:
         return <ArrowRight className="w-4 h-4 text-gray-500" />;
     }
   };
 
-  const filteredFlows = flows.filter(flow =>
-    flow.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    flow.description.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredFlows = flows.filter(
+    (flow) =>
+      flow.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      flow.description.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   if (!isAuthenticated) {
@@ -207,10 +224,14 @@ const FlowsManagementPage: React.FC = () => {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">إدارة Flows الشات بوت</h1>
-            <p className="text-gray-600 mt-2">إدارة سيناريوهات المحادثة والتفاعل</p>
+            <h1 className="text-3xl font-bold text-gray-900">
+              إدارة Flows الشات بوت
+            </h1>
+            <p className="text-gray-600 mt-2">
+              إدارة سيناريوهات المحادثة والتفاعل
+            </p>
           </div>
-          <Button 
+          <Button
             onClick={() => setShowFlowEditor(true)}
             className="bg-[var(--brand-primary)] hover:brightness-95"
           >
@@ -239,9 +260,11 @@ const FlowsManagementPage: React.FC = () => {
         <Card>
           <CardContent className="p-12 text-center">
             <Bot className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد Flows</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              لا توجد Flows
+            </h3>
             <p className="text-gray-600 mb-4">ابدأ بإنشاء أول Flow للشات بوت</p>
-            <Button 
+            <Button
               onClick={() => setShowFlowEditor(true)}
               className="bg-[var(--brand-primary)] hover:brightness-95"
             >
@@ -257,8 +280,10 @@ const FlowsManagementPage: React.FC = () => {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <CardTitle className="text-lg mb-2">{flow.name}</CardTitle>
-                    <p className="text-sm text-gray-600 mb-3">{flow.description}</p>
-                    
+                    <p className="text-sm text-gray-600 mb-3">
+                      {flow.description}
+                    </p>
+
                     <div className="flex items-center gap-2 mb-3">
                       <Badge variant={flow.isActive ? "primary" : "outline"}>
                         {flow.isActive ? "نشط" : "غير نشط"}
@@ -273,15 +298,23 @@ const FlowsManagementPage: React.FC = () => {
                       <p>آخر تحديث: {flow.updatedAt}</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex gap-1">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handleToggleFlow(flow.id)}
-                      className={flow.isActive ? "text-brand-error" : "text-brand-success"}
+                      className={
+                        flow.isActive
+                          ? "text-brand-error"
+                          : "text-brand-success"
+                      }
                     >
-                      {flow.isActive ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                      {flow.isActive ? (
+                        <Pause className="w-4 h-4" />
+                      ) : (
+                        <Play className="w-4 h-4" />
+                      )}
                     </Button>
                     <Button
                       variant="outline"
@@ -301,15 +334,22 @@ const FlowsManagementPage: React.FC = () => {
                   </div>
                 </div>
               </CardHeader>
-              
+
               <CardContent>
                 <div className="space-y-2">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2">خطوات الـ Flow:</h4>
+                  <h4 className="text-sm font-semibold text-gray-700 mb-2">
+                    خطوات الـ Flow:
+                  </h4>
                   {flow.steps.slice(0, 3).map((step, index) => (
-                    <div key={step.id} className="flex items-center gap-2 text-sm">
+                    <div
+                      key={step.id}
+                      className="flex items-center gap-2 text-sm"
+                    >
                       <span className="text-gray-500">{index + 1}.</span>
                       {getStepIcon(step.type)}
-                      <span className="text-gray-700 truncate">{step.content}</span>
+                      <span className="text-gray-700 truncate">
+                        {step.content}
+                      </span>
                     </div>
                   ))}
                   {flow.steps.length > 3 && (
@@ -330,7 +370,7 @@ const FlowsManagementPage: React.FC = () => {
           <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold">
-                {selectedFlow ? 'تعديل Flow' : 'إنشاء Flow جديد'}
+                {selectedFlow ? "تعديل Flow" : "إنشاء Flow جديد"}
               </h2>
               <Button
                 variant="outline"
@@ -342,7 +382,7 @@ const FlowsManagementPage: React.FC = () => {
                 إغلاق
               </Button>
             </div>
-            
+
             <div className="text-center py-8">
               <Settings className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-600">محرر الـ Flows قيد التطوير</p>

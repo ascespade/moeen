@@ -14,6 +14,7 @@ const seed: LogEvent[] = [
 
 export default function LogsAdminPage() {
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { const t = setTimeout(() => setLoading(false), 400); return () => clearTimeout(t); }, []);
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<string>("all");

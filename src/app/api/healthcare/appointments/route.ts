@@ -1,25 +1,26 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
 
 // GET /api/healthcare/appointments - جلب المواعيد
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const doctor_id = searchParams.get('doctor_id');
-    const patient_id = searchParams.get('patient_id');
-    const date = searchParams.get('date');
-    const status = searchParams.get('status');
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '10');
+    const doctor_id = searchParams.get("doctor_id");
+    const patient_id = searchParams.get("patient_id");
+    const date = searchParams.get("date");
+    const status = searchParams.get("status");
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "10");
 
     let query = supabase
-      .from('appointments')
-      .select(`
+      .from("appointments")
+      .select(
+        `
         *,
         patients (
           id,
@@ -33,23 +34,24 @@ export async function GET(request: NextRequest) {
           last_name,
           specialization
         )
-      `)
-      .order('appointment_date', { ascending: true });
+      `,
+      )
+      .order("appointment_date", { ascending: true });
 
     if (doctor_id) {
-      query = query.eq('doctor_id', doctor_id);
+      query = query.eq("doctor_id", doctor_id);
     }
 
     if (patient_id) {
-      query = query.eq('patient_id', patient_id);
+      query = query.eq("patient_id", patient_id);
     }
 
     if (date) {
-      query = query.eq('appointment_date', date);
+      query = query.eq("appointment_date", date);
     }
 
     if (status) {
-      query = query.eq('status', status);
+      query = query.eq("status", status);
     }
 
     // تطبيق الصفحات
@@ -69,11 +71,14 @@ export async function GET(request: NextRequest) {
         page,
         limit,
         total: count || 0,
-        pages: Math.ceil((count || 0) / limit)
-      }
+        pages: Math.ceil((count || 0) / limit),
+      },
     });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 
@@ -91,11 +96,11 @@ export async function POST(request: NextRequest) {
       notes,
       insurance_covered = false,
       insurance_company,
-      insurance_number
+      insurance_number,
     } = body;
 
     const { data: appointment, error } = await supabase
-      .from('appointments')
+      .from("appointments")
       .insert({
         patient_id,
         doctor_id,
@@ -104,10 +109,10 @@ export async function POST(request: NextRequest) {
         duration,
         type,
         notes,
-        status: 'scheduled',
+        status: "scheduled",
         insurance_covered,
         insurance_company,
-        insurance_number
+        insurance_number,
       })
       .select()
       .single();
@@ -118,6 +123,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ appointment }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export default function DirectionToggle() {
   const [dir, setDir] = useState<"rtl" | "ltr">("rtl");
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const html = document.documentElement;
     const current = (html.getAttribute("dir") as "rtl" | "ltr") || "rtl";

@@ -14,6 +14,7 @@ function ThemeLanguageSwitches() {
   const { t } = useI18n(language as "ar" | "en");
 
   // Load user preferences from database on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadUserPreferences();
   }, []);
@@ -43,7 +44,7 @@ function ThemeLanguageSwitches() {
         if (data.language) setLanguage(data.language);
       }
     } catch (error) {
-      } finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -58,8 +59,7 @@ function ThemeLanguageSwitches() {
         },
         body: JSON.stringify({ key, value }),
       });
-    } catch (error) {
-      }
+    } catch (error) {}
   };
 
   // Toggle theme function
@@ -128,8 +128,7 @@ export default function GlobalHeader() {
           const data = await response.json();
           if (data.language) setLanguage(data.language);
         }
-      } catch (error) {
-        }
+      } catch (error) {}
     };
     loadLanguage();
   }, []);

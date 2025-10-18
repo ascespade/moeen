@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
-import logger from '@/lib/monitoring/logger';
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import logger from "@/lib/monitoring/logger";
 
 interface Goal {
   id: string;
@@ -23,13 +23,14 @@ export default function SessionNotesPage() {
   const [saving, setSaving] = useState(false);
 
   // Form state
-  const [notes, setNotes] = useState('');
+  const [notes, setNotes] = useState("");
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
   const [goalProgress, setGoalProgress] = useState<Record<string, number>>({});
-  const [homeRecommendations, setHomeRecommendations] = useState('');
-  const [nextSessionFocus, setNextSessionFocus] = useState('');
+  const [homeRecommendations, setHomeRecommendations] = useState("");
+  const [nextSessionFocus, setNextSessionFocus] = useState("");
   const [sessionRating, setSessionRating] = useState(5);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadData();
   }, [sessionId]);
@@ -41,14 +42,16 @@ export default function SessionNotesPage() {
 
       // Load session details
       const { data: sessionData, error: sessionError } = await supabase
-        .from('appointments')
-        .select(`
+        .from("appointments")
+        .select(
+          `
           *,
           patient:patients(*),
           therapist:users!appointments_doctor_id_fkey(*),
           session_type:session_types(*)
-        `)
-        .eq('id', sessionId)
+        `,
+        )
+        .eq("id", sessionId)
         .single();
 
       if (sessionError) throw sessionError;
@@ -56,40 +59,41 @@ export default function SessionNotesPage() {
 
       // Load active IEP goals for this patient
       const { data: iepData } = await supabase
-        .from('ieps')
-        .select('id')
-        .eq('patient_id', sessionData.patient_id)
-        .eq('status', 'active')
+        .from("ieps")
+        .select("id")
+        .eq("patient_id", sessionData.patient_id)
+        .eq("status", "active")
         .single();
 
       if (iepData) {
         const { data: goalsData, error: goalsError } = await supabase
-          .from('iep_goals')
-          .select('*')
-          .eq('iep_id', iepData.id)
-          .in('status', ['not_started', 'in_progress']);
+          .from("iep_goals")
+          .select("*")
+          .eq("iep_id", iepData.id)
+          .in("status", ["not_started", "in_progress"]);
 
         if (goalsError) throw goalsError;
 
         // Get current progress for each goal
         const goalsWithProgress = await Promise.all(
           (goalsData || []).map(async (goal) => {
-            const { data: progressData } = await supabase
-              .rpc('calculate_goal_progress', { p_goal_id: goal.id });
+            const { data: progressData } = await supabase.rpc(
+              "calculate_goal_progress",
+              { p_goal_id: goal.id },
+            );
 
             return {
               ...goal,
               current_progress: progressData || 0,
             };
-          })
+          }),
         );
 
         setGoals(goalsWithProgress);
       }
-
     } catch (error) {
-      logger.error('Error loading session data', error);
-      alert('خطأ في تحميل البيانات');
+      logger.error("Error loading session data", error);
+      alert("خطأ في تحميل البيانات");
     } finally {
       setLoading(false);
     }
@@ -97,20 +101,22 @@ export default function SessionNotesPage() {
 
   const handleSaveNotes = async () => {
     if (!notes.trim()) {
-      alert('يرجى كتابة ملاحظات الجلسة');
+      alert("يرجى كتابة ملاحظات الجلسة");
       return;
     }
 
     setSaving(true);
     try {
       const supabase = createClient();
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-      if (!user) throw new Error('يجب تسجيل الدخول');
+      if (!user) throw new Error("يجب تسجيل الدخول");
 
       // Save session notes
       const { error: notesError } = await supabase
-        .from('session_notes')
+        .from("session_notes")
         .insert({
           session_id: sessionId,
           therapist_id: user.id,
@@ -127,35 +133,32 @@ export default function SessionNotesPage() {
       for (const goalId of selectedGoals) {
         const progress = goalProgress[goalId];
         if (progress !== undefined && progress >= 0) {
-          await supabase
-            .from('goal_progress')
-            .insert({
-              goal_id: goalId,
-              session_id: sessionId,
-              progress_percent: progress,
-              notes: `تم العمل على الهدف في جلسة ${session?.appointment_date}`,
-              recorded_by: user.id,
-            });
+          await supabase.from("goal_progress").insert({
+            goal_id: goalId,
+            session_id: sessionId,
+            progress_percent: progress,
+            notes: `تم العمل على الهدف في جلسة ${session?.appointment_date}`,
+            recorded_by: user.id,
+          });
         }
       }
 
       // Update session status to completed
       await supabase
-        .from('appointments')
-        .update({ status: 'completed' })
-        .eq('id', sessionId);
+        .from("appointments")
+        .update({ status: "completed" })
+        .eq("id", sessionId);
 
-      logger.info('Session notes saved successfully', {
+      logger.info("Session notes saved successfully", {
         sessionId,
         goalsCount: selectedGoals.length,
       });
 
-      alert('✅ تم حفظ ملاحظات الجلسة بنجاح!\n\nسيتم إرسال تحديث للأسرة.');
-      router.push('/admin/appointments');
-
+      alert("✅ تم حفظ ملاحظات الجلسة بنجاح!\n\nسيتم إرسال تحديث للأسرة.");
+      router.push("/admin/appointments");
     } catch (error: any) {
-      logger.error('Error saving session notes', error);
-      alert('خطأ: ' + (error.message || 'فشل في حفظ الملاحظات'));
+      logger.error("Error saving session notes", error);
+      alert("خطأ: " + (error.message || "فشل في حفظ الملاحظات"));
     } finally {
       setSaving(false);
     }
@@ -166,7 +169,9 @@ export default function SessionNotesPage() {
       <div className="container-app py-8">
         <div className="card p-12 text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--brand-primary)] mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">جاري التحميل...</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">
+            جاري التحميل...
+          </p>
         </div>
       </div>
     );
@@ -202,15 +207,17 @@ export default function SessionNotesPage() {
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-600 dark:text-gray-400">نوع الجلسة</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              نوع الجلسة
+            </p>
             <p className="font-bold text-gray-900 dark:text-white">
-              {session.session_type?.name_ar || 'غير محدد'}
+              {session.session_type?.name_ar || "غير محدد"}
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-600 dark:text-gray-400">التاريخ</p>
             <p className="font-bold text-gray-900 dark:text-white">
-              {new Date(session.appointment_date).toLocaleDateString('ar-SA')}
+              {new Date(session.appointment_date).toLocaleDateString("ar-SA")}
             </p>
           </div>
           <div>
@@ -248,7 +255,10 @@ export default function SessionNotesPage() {
               </label>
               <div className="space-y-4">
                 {goals.map((goal) => (
-                  <div key={goal.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                  <div
+                    key={goal.id}
+                    className="border border-gray-200 dark:border-gray-700 rounded-lg p-4"
+                  >
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input
                         type="checkbox"
@@ -256,9 +266,14 @@ export default function SessionNotesPage() {
                         onChange={(e) => {
                           if (e.target.checked) {
                             setSelectedGoals([...selectedGoals, goal.id]);
-                            setGoalProgress({ ...goalProgress, [goal.id]: goal.current_progress });
+                            setGoalProgress({
+                              ...goalProgress,
+                              [goal.id]: goal.current_progress,
+                            });
                           } else {
-                            setSelectedGoals(selectedGoals.filter(id => id !== goal.id));
+                            setSelectedGoals(
+                              selectedGoals.filter((id) => id !== goal.id),
+                            );
                             const newProgress = { ...goalProgress };
                             delete newProgress[goal.id];
                             setGoalProgress(newProgress);
@@ -283,17 +298,22 @@ export default function SessionNotesPage() {
                               type="range"
                               min="0"
                               max="100"
-                              value={goalProgress[goal.id] || goal.current_progress}
-                              onChange={(e) => setGoalProgress({
-                                ...goalProgress,
-                                [goal.id]: parseInt(e.target.value)
-                              })}
+                              value={
+                                goalProgress[goal.id] || goal.current_progress
+                              }
+                              onChange={(e) =>
+                                setGoalProgress({
+                                  ...goalProgress,
+                                  [goal.id]: parseInt(e.target.value),
+                                })
+                              }
                               className="w-full"
                             />
                             <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
                               <span>0%</span>
                               <span className="font-bold text-[var(--brand-primary)]">
-                                {goalProgress[goal.id] || goal.current_progress}%
+                                {goalProgress[goal.id] || goal.current_progress}
+                                %
                               </span>
                               <span>100%</span>
                             </div>
@@ -350,8 +370,8 @@ export default function SessionNotesPage() {
                   onClick={() => setSessionRating(star)}
                   className={`text-3xl transition-all ${
                     star <= sessionRating
-                      ? 'text-yellow-400 hover:scale-110'
-                      : 'text-gray-300 dark:text-gray-600 hover:text-yellow-200'
+                      ? "text-yellow-400 hover:scale-110"
+                      : "text-gray-300 dark:text-gray-600 hover:text-yellow-200"
                   }`}
                 >
                   ⭐
@@ -359,10 +379,15 @@ export default function SessionNotesPage() {
               ))}
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              {sessionRating === 5 ? 'ممتازة' :
-               sessionRating === 4 ? 'جيدة جداً' :
-               sessionRating === 3 ? 'جيدة' :
-               sessionRating === 2 ? 'مقبولة' : 'تحتاج تحسين'}
+              {sessionRating === 5
+                ? "ممتازة"
+                : sessionRating === 4
+                  ? "جيدة جداً"
+                  : sessionRating === 3
+                    ? "جيدة"
+                    : sessionRating === 2
+                      ? "مقبولة"
+                      : "تحتاج تحسين"}
             </p>
           </div>
 
@@ -374,7 +399,7 @@ export default function SessionNotesPage() {
             <div className="space-y-2 text-sm text-blue-800 dark:text-blue-200">
               <p>• الأهداف المختارة: {selectedGoals.length}</p>
               <p>• التقييم: {sessionRating}/5</p>
-              <p>• ملاحظات: {notes ? '✅' : '❌'}</p>
+              <p>• ملاحظات: {notes ? "✅" : "❌"}</p>
             </div>
           </div>
 
@@ -391,7 +416,7 @@ export default function SessionNotesPage() {
                   جاري الحفظ...
                 </span>
               ) : (
-                '✅ حفظ وإنهاء الجلسة'
+                "✅ حفظ وإنهاء الجلسة"
               )}
             </button>
 
@@ -406,11 +431,8 @@ export default function SessionNotesPage() {
           {/* Info */}
           <div className="card p-4 bg-green-50 dark:bg-green-900/20">
             <p className="text-xs text-green-800 dark:text-green-200">
-              💡 عند الحفظ، سيتم:
-              • حفظ الملاحظات
-              • تحديث تقدم الأهداف
-              • تحديث حالة الجلسة
-              • إرسال تحديث للأسرة
+              💡 عند الحفظ، سيتم: • حفظ الملاحظات • تحديث تقدم الأهداف • تحديث
+              حالة الجلسة • إرسال تحديث للأسرة
             </p>
           </div>
         </div>

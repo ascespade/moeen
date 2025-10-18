@@ -2,7 +2,7 @@
  * Performance monitoring hooks
  */
 
-import logger from '@/lib/monitoring/logger';
+import logger from "@/lib/monitoring/logger";
 import { useEffect, useRef, useCallback, useState, useMemo } from "react";
 
 export function usePerformanceMonitor(componentName: string) {

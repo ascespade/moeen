@@ -133,7 +133,7 @@ export class DatabaseManager {
       `);
 
       this.isConnected = true;
-      } catch (error) {
+    } catch (error) {
       this.isConnected = false;
     }
   }

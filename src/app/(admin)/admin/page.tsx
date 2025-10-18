@@ -7,7 +7,6 @@
 import React, { useState, useEffect } from "react";
 
 import {
-
   Card,
   CardContent,
   CardDescription,
@@ -25,7 +24,6 @@ import { Label } from "@/components/ui/Label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 import {
-
   Users,
   Settings,
   Shield,
@@ -88,10 +86,12 @@ export default function AdminPage() {
   });
   const [editingConfig, setEditingConfig] = useState<SystemConfig | null>(null);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadAdminData();
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     document.title = "Admin Panel - مُعين";
   }, []);
@@ -121,58 +121,58 @@ export default function AdminPage() {
       setCurrentUser(usersData.currentUser || null);
       setError(null);
     } catch (err) {
-      console.error('Error loading admin data:', err);
+      console.error("Error loading admin data:", err);
       // Set mock data if APIs fail
       setUsers([
         {
-          id: '1',
-          email: 'admin@example.com',
-          name: 'Admin User',
-          role: 'admin',
-          status: 'active',
+          id: "1",
+          email: "admin@example.com",
+          name: "Admin User",
+          role: "admin",
+          status: "active",
           lastLogin: new Date().toISOString(),
           createdAt: new Date().toISOString(),
-          permissions: ['all']
+          permissions: ["all"],
         },
         {
-          id: '2',
-          email: 'doctor@example.com',
-          name: 'Dr. Smith',
-          role: 'doctor',
-          status: 'active',
+          id: "2",
+          email: "doctor@example.com",
+          name: "Dr. Smith",
+          role: "doctor",
+          status: "active",
           lastLogin: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
           createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
-          permissions: ['read_patients', 'create_appointments']
-        }
+          permissions: ["read_patients", "create_appointments"],
+        },
       ]);
       setConfigs([
         {
-          id: '1',
-          key: 'maintenance_mode',
-          value: 'false',
-          description: 'Enable maintenance mode',
-          category: 'system',
-          isSecret: false
+          id: "1",
+          key: "maintenance_mode",
+          value: "false",
+          description: "Enable maintenance mode",
+          category: "system",
+          isSecret: false,
         },
         {
-          id: '2',
-          key: 'registration_enabled',
-          value: 'true',
-          description: 'Allow new user registrations',
-          category: 'auth',
-          isSecret: false
-        }
+          id: "2",
+          key: "registration_enabled",
+          value: "true",
+          description: "Allow new user registrations",
+          category: "auth",
+          isSecret: false,
+        },
       ]);
       setSecurityEvents([
         {
-          id: '1',
-          userId: '1',
-          action: 'user_login',
+          id: "1",
+          userId: "1",
+          action: "user_login",
           timestamp: new Date().toISOString(),
-          ipAddress: '192.168.1.100',
-          userAgent: 'Mozilla/5.0...',
-          success: true
-        }
+          ipAddress: "192.168.1.100",
+          userAgent: "Mozilla/5.0...",
+          success: true,
+        },
       ]);
       setError(null);
     } finally {
@@ -518,7 +518,11 @@ export default function AdminPage() {
               <CardContent>
                 <div className="space-y-4">
                   {configs.map((config) => (
-                    <div key={config.id} data-testid="config-item" className="p-4 border rounded-lg">
+                    <div
+                      key={config.id}
+                      data-testid="config-item"
+                      className="p-4 border rounded-lg"
+                    >
                       <div className="flex items-center justify-between mb-2">
                         <div>
                           <div className="font-medium">{config.key}</div>

@@ -61,7 +61,7 @@ export class ErrorHandler {
 
     // Log to console in development
     if (process.env.NODE_ENV === "development") {
-      }
+    }
   }
 
   private determineSeverity(error: Error): ErrorSeverity {
@@ -97,7 +97,7 @@ export class ErrorHandler {
         }
       }
     } catch (error) {
-      } finally {
+    } finally {
       this.isProcessing = false;
     }
   }
@@ -117,8 +117,7 @@ export class ErrorHandler {
 
       // Log to audit_logs table
       await this.logToAuditLogs(errorReport);
-    } catch (error) {
-      }
+    } catch (error) {}
   }
 
   private async logToAuditLogs(errorReport: ErrorReport): Promise<void> {
@@ -134,8 +133,7 @@ export class ErrorHandler {
       //   severity: errorReport.context.severity,
       //   created_at: errorReport.context.timestamp,
       // });
-    } catch (error) {
-      }
+    } catch (error) {}
   }
 
   // Performance monitoring
@@ -175,8 +173,7 @@ export class ErrorHandler {
           }),
         });
       }
-    } catch (error) {
-      }
+    } catch (error) {}
   }
 }
 

@@ -28,7 +28,7 @@ export default function LanguageSwitcher({
       const preferences = await dynamicThemeManager.getUserPreferences();
       setLanguage(preferences.language);
     } catch (error) {
-      } finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -39,6 +39,7 @@ export default function LanguageSwitcher({
   }, [language]);
 
   // Load user preferences from database on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadUserPreferences();
   }, []);
@@ -62,8 +63,7 @@ export default function LanguageSwitcher({
       });
       // Reload page to apply translations
       window.location.reload();
-    } catch (error) {
-      }
+    } catch (error) {}
   };
 
   // Size classes

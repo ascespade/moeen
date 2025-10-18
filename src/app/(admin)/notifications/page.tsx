@@ -5,12 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { 
-  Bell, 
-  BellRing, 
-  CheckCircle, 
-  AlertCircle, 
-  Info, 
+import {
+  Bell,
+  BellRing,
+  CheckCircle,
+  AlertCircle,
+  Info,
   Calendar,
   Users,
   MessageCircle,
@@ -26,7 +26,7 @@ import {
   Star,
   Settings,
   Send,
-  Plus
+  Plus,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
@@ -35,9 +35,16 @@ interface Notification {
   id: string;
   title: string;
   message: string;
-  type: 'info' | 'success' | 'warning' | 'error' | 'appointment' | 'reminder' | 'system';
-  priority: 'low' | 'medium' | 'high' | 'urgent';
-  status: 'unread' | 'read' | 'archived';
+  type:
+    | "info"
+    | "success"
+    | "warning"
+    | "error"
+    | "appointment"
+    | "reminder"
+    | "system";
+  priority: "low" | "medium" | "high" | "urgent";
+  status: "unread" | "read" | "archived";
   category: string;
   recipient_id: string;
   recipient_name: string;
@@ -77,7 +84,8 @@ const NotificationsPage: React.FC = () => {
   const [filterType, setFilterType] = useState<string>("all");
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [filterPriority, setFilterPriority] = useState<string>("all");
-  const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
+  const [selectedNotification, setSelectedNotification] =
+    useState<Notification | null>(null);
   const [showTemplates, setShowTemplates] = useState(false);
   const [showCompose, setShowCompose] = useState(false);
 
@@ -111,13 +119,14 @@ const NotificationsPage: React.FC = () => {
           action_text: "عرض الموعد",
           metadata: {
             patient_id: "pat-1",
-            appointment_id: "apt-123"
-          }
+            appointment_id: "apt-123",
+          },
         },
         {
           id: "2",
           title: "تذكير بجلسة علاج",
-          message: "تذكير: جلسة العلاج الطبيعي للمريض سارة أحمد في الساعة 2:00 مساءً",
+          message:
+            "تذكير: جلسة العلاج الطبيعي للمريض سارة أحمد في الساعة 2:00 مساءً",
           type: "reminder",
           priority: "high",
           status: "read",
@@ -132,8 +141,8 @@ const NotificationsPage: React.FC = () => {
           action_text: "عرض الجلسة",
           metadata: {
             patient_id: "pat-2",
-            therapy_session_id: "ts-456"
-          }
+            therapy_session_id: "ts-456",
+          },
         },
         {
           id: "3",
@@ -151,8 +160,8 @@ const NotificationsPage: React.FC = () => {
           action_url: "/patients/pat-3",
           action_text: "عرض المريض",
           metadata: {
-            patient_id: "pat-3"
-          }
+            patient_id: "pat-3",
+          },
         },
         {
           id: "4",
@@ -167,8 +176,8 @@ const NotificationsPage: React.FC = () => {
           sender_id: "system",
           sender_name: "النظام",
           created_at: "2024-01-15T06:00:00Z",
-          read_at: "2024-01-15T06:05:00Z"
-        }
+          read_at: "2024-01-15T06:05:00Z",
+        },
       ];
 
       const mockTemplates: NotificationTemplate[] = [
@@ -176,30 +185,32 @@ const NotificationsPage: React.FC = () => {
           id: "1",
           name: "تذكير الموعد",
           title: "تذكير بموعدك",
-          message: "عزيزي {patient_name}، نذكرك بموعدك في {appointment_date} في الساعة {appointment_time}",
+          message:
+            "عزيزي {patient_name}، نذكرك بموعدك في {appointment_date} في الساعة {appointment_time}",
           type: "reminder",
           category: "المواعيد",
           variables: ["patient_name", "appointment_date", "appointment_time"],
           is_active: true,
-          created_at: "2024-01-01T00:00:00Z"
+          created_at: "2024-01-01T00:00:00Z",
         },
         {
           id: "2",
           name: "تأكيد الموعد",
           title: "تأكيد حجز الموعد",
-          message: "تم تأكيد حجز موعدك في {appointment_date} مع {therapist_name}",
+          message:
+            "تم تأكيد حجز موعدك في {appointment_date} مع {therapist_name}",
           type: "success",
           category: "المواعيد",
           variables: ["appointment_date", "therapist_name"],
           is_active: true,
-          created_at: "2024-01-01T00:00:00Z"
-        }
+          created_at: "2024-01-01T00:00:00Z",
+        },
       ];
 
       setNotifications(mockNotifications);
       setTemplates(mockTemplates);
     } catch (error) {
-      setError('فشل في تحميل الإشعارات');
+      setError("فشل في تحميل الإشعارات");
     } finally {
       setLoading(false);
     }
@@ -207,17 +218,17 @@ const NotificationsPage: React.FC = () => {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'appointment':
+      case "appointment":
         return <Calendar className="w-4 h-4 text-brand-primary" />;
-      case 'reminder':
+      case "reminder":
         return <Clock className="w-4 h-4 text-brand-primary" />;
-      case 'success':
+      case "success":
         return <CheckCircle className="w-4 h-4 text-brand-success" />;
-      case 'warning':
+      case "warning":
         return <AlertCircle className="w-4 h-4 text-brand-warning" />;
-      case 'error':
+      case "error":
         return <AlertCircle className="w-4 h-4 text-brand-error" />;
-      case 'system':
+      case "system":
         return <Settings className="w-4 h-4 text-gray-500" />;
       default:
         return <Info className="w-4 h-4 text-brand-primary" />;
@@ -226,61 +237,76 @@ const NotificationsPage: React.FC = () => {
 
   const getPriorityBadge = (priority: string) => {
     const priorityMap = {
-      'low': { label: 'منخفض', variant: 'secondary' as const },
-      'medium': { label: 'متوسط', variant: 'primary' as const },
-      'high': { label: 'عالي', variant: 'primary' as const },
-      'urgent': { label: 'عاجل', variant: 'destructive' as const }
+      low: { label: "منخفض", variant: "secondary" as const },
+      medium: { label: "متوسط", variant: "primary" as const },
+      high: { label: "عالي", variant: "primary" as const },
+      urgent: { label: "عاجل", variant: "destructive" as const },
     };
-    
-    const priorityInfo = priorityMap[priority as keyof typeof priorityMap] || { label: priority, variant: 'primary' as const };
+
+    const priorityInfo = priorityMap[priority as keyof typeof priorityMap] || {
+      label: priority,
+      variant: "primary" as const,
+    };
     return <Badge variant={priorityInfo.variant}>{priorityInfo.label}</Badge>;
   };
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      'unread': { label: 'غير مقروء', variant: 'primary' as const },
-      'read': { label: 'مقروء', variant: 'secondary' as const },
-      'archived': { label: 'مؤرشف', variant: 'outline' as const }
+      unread: { label: "غير مقروء", variant: "primary" as const },
+      read: { label: "مقروء", variant: "secondary" as const },
+      archived: { label: "مؤرشف", variant: "outline" as const },
     };
-    
-    const statusInfo = statusMap[status as keyof typeof statusMap] || { label: status, variant: 'primary' as const };
+
+    const statusInfo = statusMap[status as keyof typeof statusMap] || {
+      label: status,
+      variant: "primary" as const,
+    };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 
   const markAsRead = (notificationId: string) => {
-    setNotifications(prev => 
-      prev.map(notif => 
-        notif.id === notificationId 
-          ? { ...notif, status: 'read' as const, read_at: new Date().toISOString() }
-          : notif
-      )
+    setNotifications((prev) =>
+      prev.map((notif) =>
+        notif.id === notificationId
+          ? {
+              ...notif,
+              status: "read" as const,
+              read_at: new Date().toISOString(),
+            }
+          : notif,
+      ),
     );
   };
 
   const markAsArchived = (notificationId: string) => {
-    setNotifications(prev => 
-      prev.map(notif => 
-        notif.id === notificationId 
-          ? { ...notif, status: 'archived' as const }
-          : notif
-      )
+    setNotifications((prev) =>
+      prev.map((notif) =>
+        notif.id === notificationId
+          ? { ...notif, status: "archived" as const }
+          : notif,
+      ),
     );
   };
 
-  const filteredNotifications = notifications.filter(notification => {
-    const matchesSearch = 
+  const filteredNotifications = notifications.filter((notification) => {
+    const matchesSearch =
       notification.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       notification.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      notification.recipient_name.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesType = filterType === "all" || notification.type === filterType;
-    const matchesStatus = filterStatus === "all" || notification.status === filterStatus;
-    const matchesPriority = filterPriority === "all" || notification.priority === filterPriority;
-    
+      notification.recipient_name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
+    const matchesType =
+      filterType === "all" || notification.type === filterType;
+    const matchesStatus =
+      filterStatus === "all" || notification.status === filterStatus;
+    const matchesPriority =
+      filterPriority === "all" || notification.priority === filterPriority;
+
     return matchesSearch && matchesType && matchesStatus && matchesPriority;
   });
 
-  const unreadCount = notifications.filter(n => n.status === 'unread').length;
+  const unreadCount = notifications.filter((n) => n.status === "unread").length;
 
   if (!isAuthenticated) {
     return null;
@@ -321,13 +347,15 @@ const NotificationsPage: React.FC = () => {
               <div className="flex items-center gap-2">
                 <Bell className="w-5 h-5 text-brand-primary" />
                 <div>
-                  <div className="text-2xl font-bold">{notifications.length}</div>
+                  <div className="text-2xl font-bold">
+                    {notifications.length}
+                  </div>
                   <div className="text-sm text-gray-600">إجمالي الإشعارات</div>
                 </div>
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
@@ -339,28 +367,31 @@ const NotificationsPage: React.FC = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-brand-success" />
                 <div>
                   <div className="text-2xl font-bold">
-                    {notifications.filter(n => n.type === 'appointment').length}
+                    {
+                      notifications.filter((n) => n.type === "appointment")
+                        .length
+                    }
                   </div>
                   <div className="text-sm text-gray-600">مواعيد</div>
                 </div>
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
                 <Clock className="w-5 h-5 text-purple-500" />
                 <div>
                   <div className="text-2xl font-bold">
-                    {notifications.filter(n => n.type === 'reminder').length}
+                    {notifications.filter((n) => n.type === "reminder").length}
                   </div>
                   <div className="text-sm text-gray-600">تذكيرات</div>
                 </div>
@@ -428,22 +459,26 @@ const NotificationsPage: React.FC = () => {
             <Card>
               <CardContent className="p-12 text-center">
                 <Bell className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">لا توجد إشعارات</h3>
-                <p className="text-gray-600 mb-4">ستظهر الإشعارات هنا عند توفرها</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  لا توجد إشعارات
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  ستظهر الإشعارات هنا عند توفرها
+                </p>
               </CardContent>
             </Card>
           ) : (
             filteredNotifications.map((notification) => (
-              <Card 
-                key={notification.id} 
+              <Card
+                key={notification.id}
                 className={`cursor-pointer transition-colors ${
-                  notification.status === 'unread' 
-                    ? 'border-l-4 border-l-blue-500 bg-surface' 
-                    : 'hover:bg-surface'
+                  notification.status === "unread"
+                    ? "border-l-4 border-l-blue-500 bg-surface"
+                    : "hover:bg-surface"
                 }`}
                 onClick={() => {
                   setSelectedNotification(notification);
-                  if (notification.status === 'unread') {
+                  if (notification.status === "unread") {
                     markAsRead(notification.id);
                   }
                 }}
@@ -456,16 +491,24 @@ const NotificationsPage: React.FC = () => {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <h3 className="text-lg font-semibold">{notification.title}</h3>
-                          {notification.status === 'unread' && (
+                          <h3 className="text-lg font-semibold">
+                            {notification.title}
+                          </h3>
+                          {notification.status === "unread" && (
                             <div className="w-2 h-2 bg-surface0 rounded-full"></div>
                           )}
                         </div>
-                        <p className="text-gray-700 mb-3">{notification.message}</p>
+                        <p className="text-gray-700 mb-3">
+                          {notification.message}
+                        </p>
                         <div className="flex items-center gap-4 text-sm text-gray-600">
                           <span>من: {notification.sender_name}</span>
                           <span>إلى: {notification.recipient_name}</span>
-                          <span>{new Date(notification.created_at).toLocaleDateString('ar-SA')}</span>
+                          <span>
+                            {new Date(
+                              notification.created_at,
+                            ).toLocaleDateString("ar-SA")}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -484,7 +527,7 @@ const NotificationsPage: React.FC = () => {
                       </Button>
                     </div>
                   </div>
-                  
+
                   {notification.action_url && (
                     <div className="mt-4 pt-4 border-t">
                       <Button
@@ -495,7 +538,7 @@ const NotificationsPage: React.FC = () => {
                           router.push(notification.action_url!);
                         }}
                       >
-                        {notification.action_text || 'عرض التفاصيل'}
+                        {notification.action_text || "عرض التفاصيل"}
                       </Button>
                     </div>
                   )}
@@ -518,17 +561,21 @@ const NotificationsPage: React.FC = () => {
                 <div key={template.id} className="p-4 border rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-semibold">{template.name}</h4>
-                    <Badge variant={template.is_active ? 'primary' : 'secondary'}>
-                      {template.is_active ? 'نشط' : 'غير نشط'}
+                    <Badge
+                      variant={template.is_active ? "primary" : "secondary"}
+                    >
+                      {template.is_active ? "نشط" : "غير نشط"}
                     </Badge>
                   </div>
                   <p className="text-sm text-gray-600 mb-2">{template.title}</p>
-                  <p className="text-sm text-gray-700 mb-3">{template.message}</p>
+                  <p className="text-sm text-gray-700 mb-3">
+                    {template.message}
+                  </p>
                   <div className="flex items-center gap-2">
                     <Badge variant="outline">{template.type}</Badge>
                     <Badge variant="outline">{template.category}</Badge>
                     <span className="text-xs text-gray-500">
-                      متغيرات: {template.variables.join(', ')}
+                      متغيرات: {template.variables.join(", ")}
                     </span>
                   </div>
                 </div>

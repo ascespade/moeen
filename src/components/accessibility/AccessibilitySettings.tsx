@@ -4,18 +4,24 @@ import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Switch } from "@/components/ui/Switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
-import { 
-  Settings, 
-  Eye, 
-  Volume2, 
-  Keyboard, 
-  Mouse, 
-  Palette, 
-  Type, 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/Select";
+import {
+  Settings,
+  Eye,
+  Volume2,
+  Keyboard,
+  Mouse,
+  Palette,
+  Type,
   Globe,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
 } from "lucide-react";
 import { useAccessibility } from "@/lib/accessibility";
 
@@ -68,16 +74,20 @@ const AccessibilitySettings: React.FC = () => {
                   <Eye className="w-5 h-5" />
                   الإعدادات البصرية
                 </h3>
-                
+
                 {/* Font Size */}
                 <div className="flex items-center justify-between">
                   <div>
                     <label className="text-sm font-medium">حجم الخط</label>
-                    <p className="text-xs text-gray-600">اختر حجم الخط المناسب لك</p>
+                    <p className="text-xs text-gray-600">
+                      اختر حجم الخط المناسب لك
+                    </p>
                   </div>
                   <Select
                     value={settings.fontSize}
-                    onValueChange={(value) => handleSettingChange('fontSize', value)}
+                    onValueChange={(value) =>
+                      handleSettingChange("fontSize", value)
+                    }
                   >
                     <SelectTrigger className="w-32">
                       <SelectValue />
@@ -95,11 +105,15 @@ const AccessibilitySettings: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <label className="text-sm font-medium">التباين</label>
-                    <p className="text-xs text-gray-600">تحسين التباين للرؤية الأفضل</p>
+                    <p className="text-xs text-gray-600">
+                      تحسين التباين للرؤية الأفضل
+                    </p>
                   </div>
                   <Select
                     value={settings.contrast}
-                    onValueChange={(value) => handleSettingChange('contrast', value)}
+                    onValueChange={(value) =>
+                      handleSettingChange("contrast", value)
+                    }
                   >
                     <SelectTrigger className="w-32">
                       <SelectValue />
@@ -115,24 +129,36 @@ const AccessibilitySettings: React.FC = () => {
                 {/* Color Blind Support */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <label className="text-sm font-medium">دعم عمى الألوان</label>
-                    <p className="text-xs text-gray-600">تحسين الألوان لذوي عمى الألوان</p>
+                    <label className="text-sm font-medium">
+                      دعم عمى الألوان
+                    </label>
+                    <p className="text-xs text-gray-600">
+                      تحسين الألوان لذوي عمى الألوان
+                    </p>
                   </div>
                   <Switch
                     checked={settings.colorBlindSupport}
-                    onCheckedChange={(checked) => handleSettingChange('colorBlindSupport', checked)}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("colorBlindSupport", checked)
+                    }
                   />
                 </div>
 
                 {/* Dyslexia Support */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <label className="text-sm font-medium">دعم عسر القراءة</label>
-                    <p className="text-xs text-gray-600">تحسين الخطوط لذوي عسر القراءة</p>
+                    <label className="text-sm font-medium">
+                      دعم عسر القراءة
+                    </label>
+                    <p className="text-xs text-gray-600">
+                      تحسين الخطوط لذوي عسر القراءة
+                    </p>
                   </div>
                   <Switch
                     checked={settings.dyslexiaSupport}
-                    onCheckedChange={(checked) => handleSettingChange('dyslexiaSupport', checked)}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("dyslexiaSupport", checked)
+                    }
                   />
                 </div>
               </div>
@@ -147,24 +173,36 @@ const AccessibilitySettings: React.FC = () => {
                 {/* Keyboard Navigation */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <label className="text-sm font-medium">التنقل بالكيبورد</label>
-                    <p className="text-xs text-gray-600">استخدام Tab للتنقل بين العناصر</p>
+                    <label className="text-sm font-medium">
+                      التنقل بالكيبورد
+                    </label>
+                    <p className="text-xs text-gray-600">
+                      استخدام Tab للتنقل بين العناصر
+                    </p>
                   </div>
                   <Switch
                     checked={settings.keyboardNavigation}
-                    onCheckedChange={(checked) => handleSettingChange('keyboardNavigation', checked)}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("keyboardNavigation", checked)
+                    }
                   />
                 </div>
 
                 {/* Focus Indicators */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <label className="text-sm font-medium">مؤشرات التركيز</label>
-                    <p className="text-xs text-gray-600">إظهار حدود العناصر المحددة</p>
+                    <label className="text-sm font-medium">
+                      مؤشرات التركيز
+                    </label>
+                    <p className="text-xs text-gray-600">
+                      إظهار حدود العناصر المحددة
+                    </p>
                   </div>
                   <Switch
                     checked={settings.focusIndicators}
-                    onCheckedChange={(checked) => handleSettingChange('focusIndicators', checked)}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("focusIndicators", checked)
+                    }
                   />
                 </div>
 
@@ -172,11 +210,15 @@ const AccessibilitySettings: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <label className="text-sm font-medium">التحكم الصوتي</label>
-                    <p className="text-xs text-gray-600">استخدام الأوامر الصوتية</p>
+                    <p className="text-xs text-gray-600">
+                      استخدام الأوامر الصوتية
+                    </p>
                   </div>
                   <Switch
                     checked={settings.voiceControl}
-                    onCheckedChange={(checked) => handleSettingChange('voiceControl', checked)}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("voiceControl", checked)
+                    }
                   />
                 </div>
               </div>
@@ -192,11 +234,15 @@ const AccessibilitySettings: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <label className="text-sm font-medium">تقليل الحركة</label>
-                    <p className="text-xs text-gray-600">تقليل الرسوم المتحركة والانتقالات</p>
+                    <p className="text-xs text-gray-600">
+                      تقليل الرسوم المتحركة والانتقالات
+                    </p>
                   </div>
                   <Switch
                     checked={settings.reducedMotion}
-                    onCheckedChange={(checked) => handleSettingChange('reducedMotion', checked)}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("reducedMotion", checked)
+                    }
                   />
                 </div>
               </div>
@@ -216,7 +262,9 @@ const AccessibilitySettings: React.FC = () => {
                   </div>
                   <Select
                     value={settings.language}
-                    onValueChange={(value) => handleSettingChange('language', value)}
+                    onValueChange={(value) =>
+                      handleSettingChange("language", value)
+                    }
                   >
                     <SelectTrigger className="w-32">
                       <SelectValue />
@@ -239,12 +287,18 @@ const AccessibilitySettings: React.FC = () => {
                 {/* Screen Reader Mode */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <label className="text-sm font-medium">وضع قارئ الشاشة</label>
-                    <p className="text-xs text-gray-600">تحسين الواجهة لقارئ الشاشة</p>
+                    <label className="text-sm font-medium">
+                      وضع قارئ الشاشة
+                    </label>
+                    <p className="text-xs text-gray-600">
+                      تحسين الواجهة لقارئ الشاشة
+                    </p>
                   </div>
                   <Switch
                     checked={settings.screenReader}
-                    onCheckedChange={(checked) => handleSettingChange('screenReader', checked)}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("screenReader", checked)
+                    }
                   />
                 </div>
               </div>
@@ -255,10 +309,10 @@ const AccessibilitySettings: React.FC = () => {
                   <Button
                     onClick={() => {
                       updateSettings({
-                        fontSize: 'large',
-                        contrast: 'high',
+                        fontSize: "large",
+                        contrast: "high",
                         focusIndicators: true,
-                        keyboardNavigation: true
+                        keyboardNavigation: true,
                       });
                     }}
                     variant="outline"
@@ -269,9 +323,9 @@ const AccessibilitySettings: React.FC = () => {
                   <Button
                     onClick={() => {
                       updateSettings({
-                        contrast: 'normal',
-                        fontSize: 'medium',
-                        screenReader: false
+                        contrast: "normal",
+                        fontSize: "medium",
+                        screenReader: false,
                       });
                     }}
                     variant="outline"
@@ -291,7 +345,10 @@ const AccessibilitySettings: React.FC = () => {
                     ) : (
                       <AlertCircle className="w-4 h-4 text-gray-400" />
                     )}
-                    <span>التنقل بالكيبورد {settings.keyboardNavigation ? 'مفعل' : 'معطل'}</span>
+                    <span>
+                      التنقل بالكيبورد{" "}
+                      {settings.keyboardNavigation ? "مفعل" : "معطل"}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     {settings.screenReader ? (
@@ -299,7 +356,9 @@ const AccessibilitySettings: React.FC = () => {
                     ) : (
                       <AlertCircle className="w-4 h-4 text-gray-400" />
                     )}
-                    <span>قارئ الشاشة {settings.screenReader ? 'مفعل' : 'معطل'}</span>
+                    <span>
+                      قارئ الشاشة {settings.screenReader ? "مفعل" : "معطل"}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     {settings.voiceControl ? (
@@ -307,7 +366,9 @@ const AccessibilitySettings: React.FC = () => {
                     ) : (
                       <AlertCircle className="w-4 h-4 text-gray-400" />
                     )}
-                    <span>التحكم الصوتي {settings.voiceControl ? 'مفعل' : 'معطل'}</span>
+                    <span>
+                      التحكم الصوتي {settings.voiceControl ? "مفعل" : "معطل"}
+                    </span>
                   </div>
                 </div>
               </div>

@@ -1,8 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { glob } from "glob";
-import { logger } from '@/lib/logger';
-
+import { logger } from "@/lib/logger";
 
 /**
  * Validation script to check for hardcoded content violations

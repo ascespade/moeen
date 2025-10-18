@@ -3,8 +3,14 @@
  * React hook for accessing translations with automatic re-rendering
  */
 
-import { useState, useEffect, useCallback, useContext, createContext } from 'react';
-import translationService from '@/lib/i18n/translationService';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+  createContext,
+} from "react";
+import translationService from "@/lib/i18n/translationService";
 
 interface TranslationContextType {
   language: string;
@@ -13,16 +19,23 @@ interface TranslationContextType {
   isLoading: boolean;
 }
 
-const TranslationContext = createContext<TranslationContextType | undefined>(undefined);
+const TranslationContext = createContext<TranslationContextType | undefined>(
+  undefined,
+);
 
-export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<string>('ar');
+export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [language, setLanguageState] = useState<string>("ar");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [translations, setTranslations] = useState<{ [key: string]: string }>({});
+  const [translations, setTranslations] = useState<{ [key: string]: string }>(
+    {},
+  );
 
   // Load language from localStorage on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') || 'ar';
+    const savedLanguage = localStorage.getItem("language") || "ar";
     setLanguageState(savedLanguage);
   }, []);
 
@@ -31,7 +44,8 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
     const loadTranslations = async () => {
       setIsLoading(true);
       try {
-        const fetchedTranslations = await translationService.fetchTranslations(language);
+        const fetchedTranslations =
+          await translationService.fetchTranslations(language);
         setTranslations(fetchedTranslations);
       } catch (error) {
         // Use cached translations as fallback
@@ -49,18 +63,21 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   const setLanguage = useCallback((lang: string) => {
     setLanguageState(lang);
-    localStorage.setItem('language', lang);
+    localStorage.setItem("language", lang);
   }, []);
 
-  const t = useCallback((key: string): string => {
-    // Return cached translation if available
-    if (translations[key]) {
-      return translations[key] as string;
-    }
+  const t = useCallback(
+    (key: string): string => {
+      // Return cached translation if available
+      if (translations[key]) {
+        return translations[key] as string;
+      }
 
-    // Return key as fallback
-    return key;
-  }, [translations]);
+      // Return key as fallback
+      return key;
+    },
+    [translations],
+  );
 
   const value: TranslationContextType = {
     language,
@@ -80,21 +97,21 @@ export const useT = (): TranslationContextType => {
   const context = useContext(TranslationContext);
   if (context === undefined) {
     // Return a fallback function during static generation
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return {
         t: (key: string) => key,
-        language: 'ar',
+        language: "ar",
         setLanguage: () => {},
-        isLoading: false
+        isLoading: false,
       };
     }
-    throw new Error('useT must be used within a TranslationProvider');
+    throw new Error("useT must be used within a TranslationProvider");
   }
   return {
     t: context.t,
     language: context.language,
     setLanguage: context.setLanguage,
-    isLoading: context.isLoading
+    isLoading: context.isLoading,
   };
 };
 

@@ -3,7 +3,7 @@
  * Performance monitoring and optimization utilities
  */
 
-import { logger } from '../monitoring/logger';
+import { logger } from "../monitoring/logger";
 
 interface PerformanceMetrics {
   operation: string;
@@ -22,10 +22,14 @@ class PerformanceMonitor {
     slowOperation: 5000, // 5 seconds
   };
 
-  startOperation(operationId: string, operation: string, metadata?: Record<string, any>): void {
+  startOperation(
+    operationId: string,
+    operation: string,
+    metadata?: Record<string, any>,
+  ): void {
     const startTime = performance.now();
     const memoryUsage = process.memoryUsage();
-    
+
     this.metrics.set(operationId, {
       operation,
       startTime,
@@ -48,22 +52,27 @@ class PerformanceMonitor {
       duration,
       memoryUsage: {
         rss: finalMemoryUsage.rss - (metric.memoryUsage?.rss || 0),
-        heapTotal: finalMemoryUsage.heapTotal - (metric.memoryUsage?.heapTotal || 0),
-        heapUsed: finalMemoryUsage.heapUsed - (metric.memoryUsage?.heapUsed || 0),
-        external: finalMemoryUsage.external - (metric.memoryUsage?.external || 0),
-        arrayBuffers: finalMemoryUsage.arrayBuffers - (metric.memoryUsage?.arrayBuffers || 0),
+        heapTotal:
+          finalMemoryUsage.heapTotal - (metric.memoryUsage?.heapTotal || 0),
+        heapUsed:
+          finalMemoryUsage.heapUsed - (metric.memoryUsage?.heapUsed || 0),
+        external:
+          finalMemoryUsage.external - (metric.memoryUsage?.external || 0),
+        arrayBuffers:
+          finalMemoryUsage.arrayBuffers -
+          (metric.memoryUsage?.arrayBuffers || 0),
       },
     };
 
     this.metrics.delete(operationId);
     this.logPerformance(completedMetric);
-    
+
     return completedMetric;
   }
 
   private logPerformance(metric: PerformanceMetrics): void {
     const { operation, duration, memoryUsage, metadata } = metric;
-    
+
     if (duration && duration > this.thresholds.slowOperation) {
       logger.warn(`Slow operation detected: ${operation}`, {
         duration: `${duration.toFixed(2)}ms`,
@@ -93,13 +102,18 @@ export const performanceMonitor = new PerformanceMonitor();
 
 // Performance decorator
 export function measurePerformance(operationName?: string) {
-  return function (target: any, propertyName: string, descriptor: PropertyDescriptor) {
+  return function (
+    target: any,
+    propertyName: string,
+    descriptor: PropertyDescriptor,
+  ) {
     const method = descriptor.value;
-    const operation = operationName || `${target.constructor.name}.${propertyName}`;
+    const operation =
+      operationName || `${target.constructor.name}.${propertyName}`;
 
     descriptor.value = async function (...args: any[]) {
       const operationId = `${operation}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
+
       performanceMonitor.startOperation(operationId, operation, {
         className: target.constructor.name,
         methodName: propertyName,
@@ -122,19 +136,22 @@ export function measurePerformance(operationName?: string) {
 export class QueryOptimizer {
   static optimizeQuery(query: string): string {
     // Remove unnecessary whitespace
-    let optimized = query.replace(/\s+/g, ' ').trim();
-    
+    let optimized = query.replace(/\s+/g, " ").trim();
+
     // Add query hints if needed
-    if (optimized.toLowerCase().includes('select') && !optimized.toLowerCase().includes('limit')) {
+    if (
+      optimized.toLowerCase().includes("select") &&
+      !optimized.toLowerCase().includes("limit")
+    ) {
       // Add default limit for large queries
-      optimized += ' LIMIT 1000';
+      optimized += " LIMIT 1000";
     }
-    
+
     return optimized;
   }
 
   static addIndexHints(tableName: string, columns: string[]): string {
-    return `/*+ USE_INDEX(${tableName}, ${columns.join(',')}) */`;
+    return `/*+ USE_INDEX(${tableName}, ${columns.join(",")}) */`;
   }
 }
 
@@ -143,7 +160,7 @@ export class MemoryOptimizer {
   static cleanup(): void {
     if (global.gc) {
       global.gc();
-      logger.debug('Garbage collection triggered');
+      logger.debug("Garbage collection triggered");
     }
   }
 
@@ -155,9 +172,9 @@ export class MemoryOptimizer {
     const usage = this.getMemoryUsage();
     const heapUsedMB = usage.heapUsed / 1024 / 1024;
     const heapTotalMB = usage.heapTotal / 1024 / 1024;
-    
+
     // Consider memory pressure if heap usage is over 80%
-    return (heapUsedMB / heapTotalMB) > 0.8;
+    return heapUsedMB / heapTotalMB > 0.8;
   }
 }
 
@@ -202,9 +219,9 @@ export class BundleOptimizer {
     return {
       totalSize: this.getBundleSize(),
       suggestions: [
-        'Consider code splitting for large components',
-        'Remove unused dependencies',
-        'Optimize images and assets',
+        "Consider code splitting for large components",
+        "Remove unused dependencies",
+        "Optimize images and assets",
       ],
     };
   }
@@ -214,14 +231,20 @@ export class BundleOptimizer {
 export class ResponseOptimizer {
   static compressResponse(data: any): any {
     // Remove null/undefined values
-    const cleaned = JSON.parse(JSON.stringify(data, (key, value) => 
-      value === null || value === undefined ? undefined : value
-    ));
-    
+    const cleaned = JSON.parse(
+      JSON.stringify(data, (key, value) =>
+        value === null || value === undefined ? undefined : value,
+      ),
+    );
+
     return cleaned;
   }
 
-  static paginateResponse(data: any[], page: number, limit: number): {
+  static paginateResponse(
+    data: any[],
+    page: number,
+    limit: number,
+  ): {
     data: any[];
     pagination: {
       page: number;
@@ -233,7 +256,7 @@ export class ResponseOptimizer {
     const startIndex = (page - 1) * limit;
     const endIndex = startIndex + limit;
     const paginatedData = data.slice(startIndex, endIndex);
-    
+
     return {
       data: paginatedData,
       pagination: {

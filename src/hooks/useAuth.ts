@@ -97,7 +97,7 @@ export const useAuth = (): AuthState & AuthActions => {
         method: "POST",
       });
     } catch (error) {
-      } finally {
+    } finally {
       // Clear local storage regardless of API call result
       clearAuth();
       setUserState(null);

@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       });
 
       if (error) {
-        }
+      }
     }
 
     return NextResponse.json({ success: true });

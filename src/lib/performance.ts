@@ -1,5 +1,4 @@
-import logger from '@/lib/monitoring/logger';
-import { logger } from '@/lib/logger';
+import logger from "@/lib/monitoring/logger";
 
 export class PerformanceMonitor {
   private static instance: PerformanceMonitor;
@@ -25,7 +24,7 @@ export class PerformanceMonitor {
 
     // Log slow operations
     if (duration > 1000) {
-      }
+    }
 
     return duration;
   }
@@ -80,7 +79,9 @@ export class PerformanceMonitor {
 
       if (used > 100) {
         // Alert if using more than 100MB
-        console.warn(`High memory usage: ${used.toFixed(2)}MB / ${total.toFixed(2)}MB`);
+        console.warn(
+          `High memory usage: ${used.toFixed(2)}MB / ${total.toFixed(2)}MB`,
+        );
       }
     }
   }

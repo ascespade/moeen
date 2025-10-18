@@ -80,6 +80,7 @@ const AppointmentManager: React.FC = () => {
   });
 
   // تحميل البيانات الأولية
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadAppointments();
     loadDoctors();

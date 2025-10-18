@@ -406,7 +406,7 @@ export class CommunicationAutomation {
     messagesToSend.forEach((message) => {
       message.sent = true;
       // Here you would integrate with actual messaging services
-      });
+    });
 
     return messagesToSend;
   }

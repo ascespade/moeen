@@ -4,11 +4,11 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { 
-  Activity, 
-  TrendingUp, 
-  TrendingDown, 
-  Clock, 
+import {
+  Activity,
+  TrendingUp,
+  TrendingDown,
+  Clock,
   Database,
   Server,
   Cpu,
@@ -17,7 +17,7 @@ import {
   AlertTriangle,
   CheckCircle,
   RefreshCw,
-  Settings
+  Settings,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
@@ -27,8 +27,8 @@ interface PerformanceMetric {
   name: string;
   value: number;
   unit: string;
-  status: 'good' | 'warning' | 'critical';
-  trend: 'up' | 'down' | 'stable';
+  status: "good" | "warning" | "critical";
+  trend: "up" | "down" | "stable";
   threshold: number;
 }
 
@@ -68,7 +68,7 @@ const PerformancePage: React.FC = () => {
           unit: "%",
           status: "good",
           trend: "stable",
-          threshold: 80
+          threshold: 80,
         },
         {
           id: "2",
@@ -77,7 +77,7 @@ const PerformancePage: React.FC = () => {
           unit: "%",
           status: "warning",
           trend: "up",
-          threshold: 70
+          threshold: 70,
         },
         {
           id: "3",
@@ -86,7 +86,7 @@ const PerformancePage: React.FC = () => {
           unit: "%",
           status: "good",
           trend: "stable",
-          threshold: 85
+          threshold: 85,
         },
         {
           id: "4",
@@ -95,7 +95,7 @@ const PerformancePage: React.FC = () => {
           unit: "ms",
           status: "good",
           trend: "down",
-          threshold: 500
+          threshold: 500,
         },
         {
           id: "5",
@@ -104,7 +104,7 @@ const PerformancePage: React.FC = () => {
           unit: "اتصال",
           status: "good",
           trend: "stable",
-          threshold: 100
+          threshold: 100,
         },
         {
           id: "6",
@@ -113,8 +113,8 @@ const PerformancePage: React.FC = () => {
           unit: "%",
           status: "good",
           trend: "down",
-          threshold: 5
-        }
+          threshold: 5,
+        },
       ];
 
       const mockSystemHealth: SystemHealth = {
@@ -124,40 +124,51 @@ const PerformancePage: React.FC = () => {
         network_latency: 12,
         database_connections: 23,
         response_time: 120,
-        uptime: "15 يوم، 4 ساعات"
+        uptime: "15 يوم، 4 ساعات",
       };
 
       setMetrics(mockMetrics);
       setSystemHealth(mockSystemHealth);
     } catch (error) {
-      } finally {
+    } finally {
       setLoading(false);
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'good': return <CheckCircle className="w-4 h-4 text-brand-success" />;
-      case 'warning': return <AlertTriangle className="w-4 h-4 text-brand-warning" />;
-      case 'critical': return <AlertTriangle className="w-4 h-4 text-brand-error" />;
-      default: return <Activity className="w-4 h-4 text-gray-500" />;
+      case "good":
+        return <CheckCircle className="w-4 h-4 text-brand-success" />;
+      case "warning":
+        return <AlertTriangle className="w-4 h-4 text-brand-warning" />;
+      case "critical":
+        return <AlertTriangle className="w-4 h-4 text-brand-error" />;
+      default:
+        return <Activity className="w-4 h-4 text-gray-500" />;
     }
   };
 
   const getTrendIcon = (trend: string) => {
     switch (trend) {
-      case 'up': return <TrendingUp className="w-4 h-4 text-brand-error" />;
-      case 'down': return <TrendingDown className="w-4 h-4 text-brand-success" />;
-      default: return <Activity className="w-4 h-4 text-gray-500" />;
+      case "up":
+        return <TrendingUp className="w-4 h-4 text-brand-error" />;
+      case "down":
+        return <TrendingDown className="w-4 h-4 text-brand-success" />;
+      default:
+        return <Activity className="w-4 h-4 text-gray-500" />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'good': return 'text-brand-success';
-      case 'warning': return 'text-yellow-600';
-      case 'critical': return 'text-brand-error';
-      default: return 'text-gray-600';
+      case "good":
+        return "text-brand-success";
+      case "warning":
+        return "text-yellow-600";
+      case "critical":
+        return "text-brand-error";
+      default:
+        return "text-gray-600";
     }
   };
 
@@ -187,9 +198,11 @@ const PerformancePage: React.FC = () => {
               <Cpu className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{systemHealth.cpu_usage}%</div>
+              <div className="text-2xl font-bold">
+                {systemHealth.cpu_usage}%
+              </div>
               <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                <div 
+                <div
                   className="bg-brand-primary h-2 rounded-full"
                   style={{ width: `${systemHealth.cpu_usage}%` }}
                 ></div>
@@ -203,9 +216,11 @@ const PerformancePage: React.FC = () => {
               <HardDrive className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{systemHealth.memory_usage}%</div>
+              <div className="text-2xl font-bold">
+                {systemHealth.memory_usage}%
+              </div>
               <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                <div 
+                <div
                   className="bg-brand-success h-2 rounded-full"
                   style={{ width: `${systemHealth.memory_usage}%` }}
                 ></div>
@@ -219,9 +234,11 @@ const PerformancePage: React.FC = () => {
               <Database className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{systemHealth.disk_usage}%</div>
+              <div className="text-2xl font-bold">
+                {systemHealth.disk_usage}%
+              </div>
               <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                <div 
+                <div
                   className="bg-surface0 h-2 rounded-full"
                   style={{ width: `${systemHealth.disk_usage}%` }}
                 ></div>
@@ -231,11 +248,15 @@ const PerformancePage: React.FC = () => {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">زمن الاستجابة</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                زمن الاستجابة
+              </CardTitle>
               <Clock className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{systemHealth.response_time}ms</div>
+              <div className="text-2xl font-bold">
+                {systemHealth.response_time}ms
+              </div>
               <p className="text-xs text-muted-foreground">متوسط الاستجابة</p>
             </CardContent>
           </Card>
@@ -259,22 +280,32 @@ const PerformancePage: React.FC = () => {
               <div className="text-3xl font-bold mb-2">
                 {metric.value} {metric.unit}
               </div>
-              
+
               <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div 
+                <div
                   className={`h-2 rounded-full ${
-                    metric.status === 'good' ? 'bg-brand-success' :
-                    metric.status === 'warning' ? 'bg-brand-warning' : 'bg-brand-error'
+                    metric.status === "good"
+                      ? "bg-brand-success"
+                      : metric.status === "warning"
+                        ? "bg-brand-warning"
+                        : "bg-brand-error"
                   }`}
-                  style={{ width: `${Math.min((metric.value / metric.threshold) * 100, 100)}%` }}
+                  style={{
+                    width: `${Math.min((metric.value / metric.threshold) * 100, 100)}%`,
+                  }}
                 ></div>
               </div>
 
               <div className="flex justify-between text-sm text-gray-600">
-                <span>الحد الأقصى: {metric.threshold} {metric.unit}</span>
+                <span>
+                  الحد الأقصى: {metric.threshold} {metric.unit}
+                </span>
                 <span className={getStatusColor(metric.status)}>
-                  {metric.status === 'good' ? 'جيد' : 
-                   metric.status === 'warning' ? 'تحذير' : 'حرج'}
+                  {metric.status === "good"
+                    ? "جيد"
+                    : metric.status === "warning"
+                      ? "تحذير"
+                      : "حرج"}
                 </span>
               </div>
             </CardContent>
@@ -293,15 +324,23 @@ const PerformancePage: React.FC = () => {
               <div className="space-y-4">
                 <div className="flex justify-between">
                   <span className="text-sm font-medium">وقت التشغيل:</span>
-                  <span className="text-sm text-gray-600">{systemHealth.uptime}</span>
+                  <span className="text-sm text-gray-600">
+                    {systemHealth.uptime}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm font-medium">اتصالات قاعدة البيانات:</span>
-                  <span className="text-sm text-gray-600">{systemHealth.database_connections}</span>
+                  <span className="text-sm font-medium">
+                    اتصالات قاعدة البيانات:
+                  </span>
+                  <span className="text-sm text-gray-600">
+                    {systemHealth.database_connections}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm font-medium">زمن الشبكة:</span>
-                  <span className="text-sm text-gray-600">{systemHealth.network_latency}ms</span>
+                  <span className="text-sm text-gray-600">
+                    {systemHealth.network_latency}ms
+                  </span>
                 </div>
               </div>
               <div className="space-y-4">
@@ -312,7 +351,7 @@ const PerformancePage: React.FC = () => {
                 <div className="flex justify-between">
                   <span className="text-sm font-medium">آخر تحديث:</span>
                   <span className="text-sm text-gray-600">
-                    {new Date().toLocaleString('ar-SA')}
+                    {new Date().toLocaleString("ar-SA")}
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -329,4 +368,3 @@ const PerformancePage: React.FC = () => {
 };
 
 export default PerformancePage;
-

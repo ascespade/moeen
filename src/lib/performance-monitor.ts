@@ -203,8 +203,7 @@ export class PerformanceMonitor {
       this.alertCallbacks.forEach((callback) => {
         try {
           callback(alert);
-        } catch (error) {
-          }
+        } catch (error) {}
       });
     });
   }
@@ -367,8 +366,7 @@ export class PerformanceMonitor {
           },
         });
       }
-    } catch (error) {
-      }
+    } catch (error) {}
   }
 
   // Generate unique request ID

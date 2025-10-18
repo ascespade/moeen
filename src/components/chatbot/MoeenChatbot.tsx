@@ -15,13 +15,16 @@ interface MoeenChatbotProps {
   position?: "bottom-right" | "bottom-left";
 }
 
-export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbotProps) {
+export default function MoeenChatbot({
+  position = "bottom-right",
+}: MoeenChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
       role: "assistant",
-      content: "أهلاً بك في مركز الهمم 👋\n\nأنا مُعين، مساعدك الرقمي. نحن هنا لتقديم الدعم لكل فرد.\n\nكيف يمكنني مساعدتك اليوم؟",
+      content:
+        "أهلاً بك في مركز الهمم 👋\n\nأنا مُعين، مساعدك الرقمي. نحن هنا لتقديم الدعم لكل فرد.\n\nكيف يمكنني مساعدتك اليوم؟",
       timestamp: new Date(),
     },
   ]);
@@ -156,15 +159,16 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
       logger.error("Chatbot error", error);
-      
+
       // Fallback response
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: "عذراً، يبدو أن هناك مشكلة في الاتصال. يرجى التواصل معنا عبر الواتساب: +966555381558",
+        content:
+          "عذراً، يبدو أن هناك مشكلة في الاتصال. يرجى التواصل معنا عبر الواتساب: +966555381558",
         timestamp: new Date(),
       };
-      
+
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
@@ -179,9 +183,8 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
     }
   };
 
-  const positionClasses = position === "bottom-right" 
-    ? "bottom-6 right-6" 
-    : "bottom-6 left-6";
+  const positionClasses =
+    position === "bottom-right" ? "bottom-6 right-6" : "bottom-6 left-6";
 
   return (
     <>
@@ -194,8 +197,18 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
         aria-label="فتح مساعد معين"
       >
         {isOpen ? (
-          <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          <svg
+            className="h-8 w-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         ) : (
           <div className="text-center">
@@ -207,9 +220,11 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
 
       {/* Notification Badge */}
       {!isOpen && messages.length > 1 && (
-        <div className={`fixed ${positionClasses} z-40 translate-x-8 -translate-y-8`}>
+        <div
+          className={`fixed ${positionClasses} z-40 translate-x-8 -translate-y-8`}
+        >
           <div className="h-6 w-6 rounded-full bg-red-500 flex items-center justify-center text-xs font-bold animate-bounce">
-            {messages.filter(m => m.role === "assistant").length - 1}
+            {messages.filter((m) => m.role === "assistant").length - 1}
           </div>
         </div>
       )}
@@ -252,10 +267,14 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
                       : "bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-md"
                   }`}
                 >
-                  <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                  <p className="whitespace-pre-wrap leading-relaxed">
+                    {message.content}
+                  </p>
                   <p
                     className={`mt-2 text-xs ${
-                      message.role === "user" ? "text-white/70" : "text-gray-500"
+                      message.role === "user"
+                        ? "text-white/70"
+                        : "text-gray-500"
                     }`}
                   >
                     {message.timestamp.toLocaleTimeString("ar-SA", {
@@ -272,8 +291,14 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
                 <div className="bg-white dark:bg-gray-800 rounded-2xl px-4 py-3 shadow-md">
                   <div className="flex gap-2">
                     <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce"></div>
-                    <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                    <div className="h-2 w-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0.4s" }}></div>
+                    <div
+                      className="h-2 w-2 rounded-full bg-gray-400 animate-bounce"
+                      style={{ animationDelay: "0.2s" }}
+                    ></div>
+                    <div
+                      className="h-2 w-2 rounded-full bg-gray-400 animate-bounce"
+                      style={{ animationDelay: "0.4s" }}
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -285,7 +310,9 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
           {/* Quick Actions */}
           {messages.length === 1 && (
             <div className="border-t dark:border-gray-700 p-4 bg-white dark:bg-gray-800">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">اختصارات سريعة:</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                اختصارات سريعة:
+              </p>
               <div className="grid grid-cols-2 gap-2">
                 {quickActions.map((action) => (
                   <button
@@ -318,8 +345,18 @@ export default function MoeenChatbot({ position = "bottom-right" }: MoeenChatbot
                 className="rounded-lg bg-[var(--brand-primary)] px-4 py-3 text-white transition-all hover:bg-[var(--brand-primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="إرسال"
               >
-                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                  />
                 </svg>
               </button>
             </div>

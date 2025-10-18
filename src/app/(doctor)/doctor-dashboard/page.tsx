@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useT } from '@/hooks/useT';
-import { useTheme } from '@/core/theme';
-import ProtectedRoute from '@/components/auth/ProtectedRoute';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
-import { LoadingSpinner } from '@/components/ui';
-import { 
-  Users, 
-  Calendar, 
-  FileText, 
+import { useState, useEffect } from "react";
+import { useT } from "@/hooks/useT";
+import { useTheme } from "@/core/theme";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import { LoadingSpinner } from "@/components/ui";
+import {
+  Users,
+  Calendar,
+  FileText,
   Clock,
   CheckCircle,
   AlertCircle,
-  Stethoscope
-} from 'lucide-react';
+  Stethoscope,
+} from "lucide-react";
 
 interface DoctorData {
   id: string;
@@ -26,7 +26,7 @@ interface DoctorData {
     id: string;
     patientName: string;
     time: string;
-    status: 'pending' | 'in_progress' | 'completed';
+    status: "pending" | "in_progress" | "completed";
     patientId: string;
   }>;
   recentPatients: Array<{
@@ -50,13 +50,13 @@ export default function DoctorDashboard() {
   useEffect(() => {
     const fetchDoctorData = async () => {
       try {
-        const response = await fetch('/api/doctors/me');
+        const response = await fetch("/api/doctors/me");
         if (response.ok) {
           const data = await response.json();
           setDoctorData(data);
         }
       } catch (error) {
-        } finally {
+      } finally {
         setIsLoading(false);
       }
     };
@@ -67,17 +67,16 @@ export default function DoctorDashboard() {
   const handleStartAppointment = async (appointmentId: string) => {
     try {
       const response = await fetch(`/api/appointments/${appointmentId}/start`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'in_progress' })
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "in_progress" }),
       });
-      
+
       if (response.ok) {
         // Refresh data
         window.location.reload();
       }
-    } catch (error) {
-      }
+    } catch (error) {}
   };
 
   if (isLoading) {
@@ -89,16 +88,16 @@ export default function DoctorDashboard() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['doctor']}>
+    <ProtectedRoute allowedRoles={["doctor"]}>
       <div className="min-h-screen bg-surface dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              {t('doctor.dashboard.welcome')}, Dr. {doctorData?.fullName}
+              {t("doctor.dashboard.welcome")}, Dr. {doctorData?.fullName}
             </h1>
             <p className="mt-2 text-gray-600 dark:text-gray-400">
-              {t('doctor.dashboard.subtitle')} - {doctorData?.speciality}
+              {t("doctor.dashboard.subtitle")} - {doctorData?.speciality}
             </p>
           </div>
 
@@ -109,7 +108,7 @@ export default function DoctorDashboard() {
                 <Calendar className="h-8 w-8 text-brand-primary mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('doctor.dashboard.today_appointments')}
+                    {t("doctor.dashboard.today_appointments")}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
                     {doctorData?.todayAppointments?.length || 0}
@@ -123,7 +122,7 @@ export default function DoctorDashboard() {
                 <Users className="h-8 w-8 text-brand-success mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('doctor.dashboard.total_patients')}
+                    {t("doctor.dashboard.total_patients")}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
                     {doctorData?.recentPatients?.length || 0}
@@ -137,10 +136,12 @@ export default function DoctorDashboard() {
                 <Clock className="h-8 w-8 text-brand-primary mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('doctor.dashboard.pending_appointments')}
+                    {t("doctor.dashboard.pending_appointments")}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {doctorData?.todayAppointments?.filter(apt => apt.status === 'pending').length || 0}
+                    {doctorData?.todayAppointments?.filter(
+                      (apt) => apt.status === "pending",
+                    ).length || 0}
                   </p>
                 </div>
               </div>
@@ -151,10 +152,12 @@ export default function DoctorDashboard() {
                 <CheckCircle className="h-8 w-8 text-purple-600 mr-4" />
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('doctor.dashboard.completed_today')}
+                    {t("doctor.dashboard.completed_today")}
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {doctorData?.todayAppointments?.filter(apt => apt.status === 'completed').length || 0}
+                    {doctorData?.todayAppointments?.filter(
+                      (apt) => apt.status === "completed",
+                    ).length || 0}
                   </p>
                 </div>
               </div>
@@ -167,12 +170,13 @@ export default function DoctorDashboard() {
             <div className="lg:col-span-2">
               <Card className="p-6">
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                  {t('doctor.dashboard.today_schedule')}
+                  {t("doctor.dashboard.today_schedule")}
                 </h2>
-                {doctorData?.todayAppointments && doctorData.todayAppointments.length > 0 ? (
+                {doctorData?.todayAppointments &&
+                doctorData.todayAppointments.length > 0 ? (
                   <div className="space-y-4">
                     {doctorData.todayAppointments.map((appointment) => (
-                      <div 
+                      <div
                         key={appointment.id}
                         className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-surface dark:hover:bg-gray-800"
                       >
@@ -192,28 +196,38 @@ export default function DoctorDashboard() {
                           </div>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <Badge 
+                          <Badge
                             variant={
-                              appointment.status === 'completed' ? 'primary' :
-                              appointment.status === 'in_progress' ? 'secondary' : 'outline'
+                              appointment.status === "completed"
+                                ? "primary"
+                                : appointment.status === "in_progress"
+                                  ? "secondary"
+                                  : "outline"
                             }
                           >
                             {t(`appointment.status.${appointment.status}`)}
                           </Badge>
-                          {appointment.status === 'pending' && (
+                          {appointment.status === "pending" && (
                             <Button
                               size="sm"
-                              onClick={() => handleStartAppointment(appointment.id)}
+                              onClick={() =>
+                                handleStartAppointment(appointment.id)
+                              }
                             >
-                              {t('doctor.actions.start_appointment')}
+                              {t("doctor.actions.start_appointment")}
                             </Button>
                           )}
                           <Button
                             size="sm"
                             variant="outline"
-                            onClick={() => window.open(`/doctor/patients/${appointment.patientId}`, '_blank')}
+                            onClick={() =>
+                              window.open(
+                                `/doctor/patients/${appointment.patientId}`,
+                                "_blank",
+                              )
+                            }
                           >
-                            {t('doctor.actions.view_file')}
+                            {t("doctor.actions.view_file")}
                           </Button>
                         </div>
                       </div>
@@ -223,7 +237,7 @@ export default function DoctorDashboard() {
                   <div className="text-center py-8">
                     <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                     <p className="text-gray-600 dark:text-gray-400">
-                      {t('doctor.dashboard.no_appointments_today')}
+                      {t("doctor.dashboard.no_appointments_today")}
                     </p>
                   </div>
                 )}
@@ -235,33 +249,43 @@ export default function DoctorDashboard() {
               {/* Recent Patients */}
               <Card className="p-6">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-                  {t('doctor.dashboard.recent_patients')}
+                  {t("doctor.dashboard.recent_patients")}
                 </h3>
-                {doctorData?.recentPatients && doctorData.recentPatients.length > 0 ? (
+                {doctorData?.recentPatients &&
+                doctorData.recentPatients.length > 0 ? (
                   <div className="space-y-3">
                     {doctorData.recentPatients.slice(0, 5).map((patient) => (
-                      <div key={patient.id} className="flex items-center justify-between p-3 bg-surface dark:bg-gray-800 rounded-lg">
+                      <div
+                        key={patient.id}
+                        className="flex items-center justify-between p-3 bg-surface dark:bg-gray-800 rounded-lg"
+                      >
                         <div>
                           <p className="font-medium text-gray-900 dark:text-white">
                             {patient.name}
                           </p>
                           <p className="text-sm text-gray-600 dark:text-gray-400">
-                            {t('doctor.dashboard.last_visit')}: {patient.lastVisit}
+                            {t("doctor.dashboard.last_visit")}:{" "}
+                            {patient.lastVisit}
                           </p>
                         </div>
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => window.open(`/doctor/patients/${patient.id}`, '_blank')}
+                          onClick={() =>
+                            window.open(
+                              `/doctor/patients/${patient.id}`,
+                              "_blank",
+                            )
+                          }
                         >
-                          {t('doctor.actions.view')}
+                          {t("doctor.actions.view")}
                         </Button>
                       </div>
                     ))}
                   </div>
                 ) : (
                   <p className="text-gray-600 dark:text-gray-400 text-center py-4">
-                    {t('doctor.dashboard.no_recent_patients')}
+                    {t("doctor.dashboard.no_recent_patients")}
                   </p>
                 )}
               </Card>
@@ -269,20 +293,20 @@ export default function DoctorDashboard() {
               {/* Quick Actions */}
               <Card className="p-6">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-                  {t('doctor.dashboard.quick_actions')}
+                  {t("doctor.dashboard.quick_actions")}
                 </h3>
                 <div className="space-y-3">
                   <Button className="w-full justify-start" variant="outline">
                     <FileText className="h-4 w-4 mr-2" />
-                    {t('doctor.actions.add_notes')}
+                    {t("doctor.actions.add_notes")}
                   </Button>
                   <Button className="w-full justify-start" variant="outline">
                     <Users className="h-4 w-4 mr-2" />
-                    {t('doctor.actions.view_all_patients')}
+                    {t("doctor.actions.view_all_patients")}
                   </Button>
                   <Button className="w-full justify-start" variant="outline">
                     <Calendar className="h-4 w-4 mr-2" />
-                    {t('doctor.actions.manage_schedule')}
+                    {t("doctor.actions.manage_schedule")}
                   </Button>
                 </div>
               </Card>

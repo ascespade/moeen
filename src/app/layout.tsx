@@ -1,10 +1,14 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
-import { generateMetadata as genMeta, pageMetadata, generateStructuredData } from '@/lib/seo/metadata';
-import MoeenChatbot from '@/components/chatbot/MoeenChatbot';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import {
+  generateMetadata as genMeta,
+  pageMetadata,
+  generateStructuredData,
+} from "@/lib/seo/metadata";
+import MoeenChatbot from "@/components/chatbot/MoeenChatbot";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = genMeta(pageMetadata.home);
 
@@ -13,7 +17,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const structuredData = generateStructuredData('website');
+  const structuredData = generateStructuredData("website");
 
   return (
     <html lang="ar" dir="rtl">
@@ -23,14 +27,14 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        
+
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        
+
         {/* Manifest */}
         <link rel="manifest" href="/manifest.json" />
-        
+
         {/* Theme Color */}
         <meta name="theme-color" content="#4F46E5" />
       </head>

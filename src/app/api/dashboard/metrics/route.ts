@@ -13,10 +13,14 @@ export async function GET(request: NextRequest) {
     const errorMessage = `[${timestamp}] Dashboard metrics error in ${context}: ${error.message || error}`;
     // Log to file if possible
     try {
-      const fs = require('fs');
-      const path = require('path');
-      const logFile = path.join(process.cwd(), 'logs', 'dashboard_refactor.log');
-      fs.appendFileSync(logFile, errorMessage + '\n');
+      const fs = require("fs");
+      const path = require("path");
+      const logFile = path.join(
+        process.cwd(),
+        "logs",
+        "dashboard_refactor.log",
+      );
+      fs.appendFileSync(logFile, errorMessage + "\n");
     } catch (logError) {
       // Ignore logging errors
     }
@@ -25,43 +29,74 @@ export async function GET(request: NextRequest) {
   try {
     // Check if database is accessible first
     const { data: healthCheck, error: healthError } = await supabase
-      .from('system_health')
-      .select('id')
+      .from("system_health")
+      .select("id")
       .limit(1);
 
     if (healthError) {
-      logError(healthError, 'database_connection');
+      logError(healthError, "database_connection");
       // Return fallback data when DB is down
       return NextResponse.json({
         timestamp: new Date().toISOString(),
         system: {
           health: [],
-          metrics: []
+          metrics: [],
         },
         automation: {
-          socialMedia: { totalPosts: 0, platforms: {}, engagement: { totalViews: 0, totalLikes: 0, totalComments: 0, totalShares: 0 } },
-          workflows: { totalWorkflows: 0, validWorkflows: 0, invalidWorkflows: 0, commonIssues: {} },
-          chatbot: { activeFlows: 0, totalNodes: 0, totalTemplates: 0, languages: [], categories: [] }
+          socialMedia: {
+            totalPosts: 0,
+            platforms: {},
+            engagement: {
+              totalViews: 0,
+              totalLikes: 0,
+              totalComments: 0,
+              totalShares: 0,
+            },
+          },
+          workflows: {
+            totalWorkflows: 0,
+            validWorkflows: 0,
+            invalidWorkflows: 0,
+            commonIssues: {},
+          },
+          chatbot: {
+            activeFlows: 0,
+            totalNodes: 0,
+            totalTemplates: 0,
+            languages: [],
+            categories: [],
+          },
         },
         healthcare: {
           patients: { total: 0, active: 0, newThisMonth: 0, growthRate: 0 },
-          appointments: { total: 0, today: 0, thisWeek: 0, completed: 0, cancelled: 0 },
+          appointments: {
+            total: 0,
+            today: 0,
+            thisWeek: 0,
+            completed: 0,
+            cancelled: 0,
+          },
           doctors: { total: 0, active: 0, specialties: [] },
-          revenue: { thisMonth: 0, lastMonth: 0, growthRate: 0, averagePerPatient: 0 }
+          revenue: {
+            thisMonth: 0,
+            lastMonth: 0,
+            growthRate: 0,
+            averagePerPatient: 0,
+          },
         },
         crm: {
           leads: { total: 0, new: 0, qualified: 0, converted: 0 },
           deals: { total: 0, won: 0, lost: 0, pipeline: 0 },
-          activities: { total: 0, calls: 0, meetings: 0, tasks: 0 }
+          activities: { total: 0, calls: 0, meetings: 0, tasks: 0 },
         },
         summary: {
           overallHealth: "unknown",
           activeServices: 0,
           totalAutomation: 0,
-          errorRate: 0
+          errorRate: 0,
         },
         fallback: true,
-        message: "Database connection failed, returning fallback data"
+        message: "Database connection failed, returning fallback data",
       });
     }
 
@@ -85,19 +120,92 @@ export async function GET(request: NextRequest) {
     ]);
 
     // Extract successful results or use fallback data
-    const systemHealthData = systemHealth.status === 'fulfilled' ? systemHealth.value : [];
-    const systemMetricsData = systemMetrics.status === 'fulfilled' ? systemMetrics.value : [];
-    const socialMediaMetricsData = socialMediaMetrics.status === 'fulfilled' ? socialMediaMetrics.value : { totalPosts: 0, platforms: {}, engagement: { totalViews: 0, totalLikes: 0, totalComments: 0, totalShares: 0 } };
-    const workflowMetricsData = workflowMetrics.status === 'fulfilled' ? workflowMetrics.value : { totalWorkflows: 0, validWorkflows: 0, invalidWorkflows: 0, commonIssues: {} };
-    const chatbotMetricsData = chatbotMetrics.status === 'fulfilled' ? chatbotMetrics.value : { activeFlows: 0, totalNodes: 0, totalTemplates: 0, languages: [], categories: [] };
-    const healthcareMetricsData = healthcareMetrics.status === 'fulfilled' ? healthcareMetrics.value : { patients: { total: 0, active: 0, newThisMonth: 0, growthRate: 0 }, appointments: { total: 0, today: 0, thisWeek: 0, completed: 0, cancelled: 0 }, doctors: { total: 0, active: 0, specialties: [] }, revenue: { thisMonth: 0, lastMonth: 0, growthRate: 0, averagePerPatient: 0 } };
-    const crmMetricsData = crmMetrics.status === 'fulfilled' ? crmMetrics.value : { leads: { total: 0, new: 0, qualified: 0, converted: 0 }, deals: { total: 0, won: 0, lost: 0, pipeline: 0 }, activities: { total: 0, calls: 0, meetings: 0, tasks: 0 } };
+    const systemHealthData =
+      systemHealth.status === "fulfilled" ? systemHealth.value : [];
+    const systemMetricsData =
+      systemMetrics.status === "fulfilled" ? systemMetrics.value : [];
+    const socialMediaMetricsData =
+      socialMediaMetrics.status === "fulfilled"
+        ? socialMediaMetrics.value
+        : {
+            totalPosts: 0,
+            platforms: {},
+            engagement: {
+              totalViews: 0,
+              totalLikes: 0,
+              totalComments: 0,
+              totalShares: 0,
+            },
+          };
+    const workflowMetricsData =
+      workflowMetrics.status === "fulfilled"
+        ? workflowMetrics.value
+        : {
+            totalWorkflows: 0,
+            validWorkflows: 0,
+            invalidWorkflows: 0,
+            commonIssues: {},
+          };
+    const chatbotMetricsData =
+      chatbotMetrics.status === "fulfilled"
+        ? chatbotMetrics.value
+        : {
+            activeFlows: 0,
+            totalNodes: 0,
+            totalTemplates: 0,
+            languages: [],
+            categories: [],
+          };
+    const healthcareMetricsData =
+      healthcareMetrics.status === "fulfilled"
+        ? healthcareMetrics.value
+        : {
+            patients: { total: 0, active: 0, newThisMonth: 0, growthRate: 0 },
+            appointments: {
+              total: 0,
+              today: 0,
+              thisWeek: 0,
+              completed: 0,
+              cancelled: 0,
+            },
+            doctors: { total: 0, active: 0, specialties: [] },
+            revenue: {
+              thisMonth: 0,
+              lastMonth: 0,
+              growthRate: 0,
+              averagePerPatient: 0,
+            },
+          };
+    const crmMetricsData =
+      crmMetrics.status === "fulfilled"
+        ? crmMetrics.value
+        : {
+            leads: { total: 0, new: 0, qualified: 0, converted: 0 },
+            deals: { total: 0, won: 0, lost: 0, pipeline: 0 },
+            activities: { total: 0, calls: 0, meetings: 0, tasks: 0 },
+          };
 
     // Log any failed promises
-    [systemHealth, systemMetrics, socialMediaMetrics, workflowMetrics, chatbotMetrics, healthcareMetrics, crmMetrics].forEach((result, index) => {
-      if (result.status === 'rejected') {
-        const contexts = ['systemHealth', 'systemMetrics', 'socialMediaMetrics', 'workflowMetrics', 'chatbotMetrics', 'healthcareMetrics', 'crmMetrics'];
-        logError(result.reason, contexts[index] || 'unknown');
+    [
+      systemHealth,
+      systemMetrics,
+      socialMediaMetrics,
+      workflowMetrics,
+      chatbotMetrics,
+      healthcareMetrics,
+      crmMetrics,
+    ].forEach((result, index) => {
+      if (result.status === "rejected") {
+        const contexts = [
+          "systemHealth",
+          "systemMetrics",
+          "socialMediaMetrics",
+          "workflowMetrics",
+          "chatbotMetrics",
+          "healthcareMetrics",
+          "crmMetrics",
+        ];
+        logError(result.reason, contexts[index] || "unknown");
       }
     });
 
@@ -126,13 +234,13 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(metrics);
   } catch (error) {
-    logError(error, 'main_handler');
+    logError(error, "main_handler");
     return NextResponse.json(
-      { 
+      {
         error: "Failed to fetch metrics",
         timestamp: new Date().toISOString(),
         fallback: true,
-        message: "System error occurred, returning fallback data"
+        message: "System error occurred, returning fallback data",
       },
       { status: 500 },
     );
@@ -147,7 +255,7 @@ async function getSystemHealth() {
       .select("id")
       .limit(1);
 
-    if (error && error.code === 'PGRST116') {
+    if (error && error.code === "PGRST116") {
       // Table doesn't exist, return empty array
       return [];
     }
@@ -181,7 +289,7 @@ async function getSystemMetrics() {
       .select("id")
       .limit(1);
 
-    if (error && error.code === 'PGRST116') {
+    if (error && error.code === "PGRST116") {
       // Table doesn't exist, return empty array
       return [];
     }
@@ -405,70 +513,87 @@ async function getHealthcareMetrics() {
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const thisWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
 
-    const patientsThisMonth = patients.filter(p => 
-      new Date(p.created_at) >= thisMonth
+    const patientsThisMonth = patients.filter(
+      (p) => new Date(p.created_at) >= thisMonth,
     ).length;
 
-    const appointmentsToday = appointments.filter(a => 
-      new Date(a.appointment_date).toDateString() === today.toDateString()
+    const appointmentsToday = appointments.filter(
+      (a) =>
+        new Date(a.appointment_date).toDateString() === today.toDateString(),
     ).length;
 
-    const appointmentsThisWeek = appointments.filter(a => 
-      new Date(a.appointment_date) >= thisWeek
+    const appointmentsThisWeek = appointments.filter(
+      (a) => new Date(a.appointment_date) >= thisWeek,
     ).length;
 
-    const completedAppointments = appointments.filter(a => 
-      a.status === 'completed'
+    const completedAppointments = appointments.filter(
+      (a) => a.status === "completed",
     ).length;
 
-    const cancelledAppointments = appointments.filter(a => 
-      a.status === 'cancelled'
+    const cancelledAppointments = appointments.filter(
+      (a) => a.status === "cancelled",
     ).length;
 
     // Group doctors by specialty
     const specialties = doctors.reduce((acc, doctor) => {
-      const specialty = doctor.specialty || 'غير محدد';
+      const specialty = doctor.specialty || "غير محدد";
       acc[specialty] = (acc[specialty] || 0) + 1;
       return acc;
     }, {});
 
-    const specialtiesArray = Object.entries(specialties).map(([name, count]) => ({
-      name,
-      count: count as number
-    }));
+    const specialtiesArray = Object.entries(specialties).map(
+      ([name, count]) => ({
+        name,
+        count: count as number,
+      }),
+    );
 
     return {
       patients: {
         total: patients.length,
-        active: patients.filter(p => p.status === 'active').length,
+        active: patients.filter((p) => p.status === "active").length,
         newThisMonth: patientsThisMonth,
-        growthRate: patients.length > 0 ? Math.round((patientsThisMonth / patients.length) * 100) : 0
+        growthRate:
+          patients.length > 0
+            ? Math.round((patientsThisMonth / patients.length) * 100)
+            : 0,
       },
       appointments: {
         total: appointments.length,
         today: appointmentsToday,
         thisWeek: appointmentsThisWeek,
         completed: completedAppointments,
-        cancelled: cancelledAppointments
+        cancelled: cancelledAppointments,
       },
       doctors: {
         total: doctors.length,
-        active: doctors.filter(d => d.status === 'active').length,
-        specialties: specialtiesArray
+        active: doctors.filter((d) => d.status === "active").length,
+        specialties: specialtiesArray,
       },
       revenue: {
         thisMonth: 0, // Would need revenue table
         lastMonth: 0,
         growthRate: 0,
-        averagePerPatient: 0
-      }
+        averagePerPatient: 0,
+      },
     };
   } catch (error) {
     return {
       patients: { total: 0, active: 0, newThisMonth: 0, growthRate: 0 },
-      appointments: { total: 0, today: 0, thisWeek: 0, completed: 0, cancelled: 0 },
+      appointments: {
+        total: 0,
+        today: 0,
+        thisWeek: 0,
+        completed: 0,
+        cancelled: 0,
+      },
       doctors: { total: 0, active: 0, specialties: [] },
-      revenue: { thisMonth: 0, lastMonth: 0, growthRate: 0, averagePerPatient: 0 }
+      revenue: {
+        thisMonth: 0,
+        lastMonth: 0,
+        growthRate: 0,
+        averagePerPatient: 0,
+      },
     };
   }
 }
@@ -499,67 +624,55 @@ async function getCrmMetrics() {
     const now = new Date();
     const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-    const newLeads = leads.filter(l => 
-      new Date(l.created_at) >= thisMonth
+    const newLeads = leads.filter(
+      (l) => new Date(l.created_at) >= thisMonth,
     ).length;
 
-    const qualifiedLeads = leads.filter(l => 
-      l.status === 'qualified'
+    const qualifiedLeads = leads.filter((l) => l.status === "qualified").length;
+
+    const convertedLeads = leads.filter((l) => l.status === "converted").length;
+
+    const wonDeals = deals.filter((d) => d.status === "won").length;
+
+    const lostDeals = deals.filter((d) => d.status === "lost").length;
+
+    const pipelineDeals = deals.filter((d) =>
+      ["prospecting", "qualification", "proposal", "negotiation"].includes(
+        d.status,
+      ),
     ).length;
 
-    const convertedLeads = leads.filter(l => 
-      l.status === 'converted'
-    ).length;
+    const calls = activities.filter((a) => a.type === "call").length;
 
-    const wonDeals = deals.filter(d => 
-      d.status === 'won'
-    ).length;
+    const meetings = activities.filter((a) => a.type === "meeting").length;
 
-    const lostDeals = deals.filter(d => 
-      d.status === 'lost'
-    ).length;
-
-    const pipelineDeals = deals.filter(d => 
-      ['prospecting', 'qualification', 'proposal', 'negotiation'].includes(d.status)
-    ).length;
-
-    const calls = activities.filter(a => 
-      a.type === 'call'
-    ).length;
-
-    const meetings = activities.filter(a => 
-      a.type === 'meeting'
-    ).length;
-
-    const tasks = activities.filter(a => 
-      a.type === 'task'
-    ).length;
+    const tasks = activities.filter((a) => a.type === "task").length;
 
     return {
       leads: {
         total: leads.length,
         new: newLeads,
         qualified: qualifiedLeads,
-        converted: convertedLeads
+        converted: convertedLeads,
       },
       deals: {
         total: deals.length,
         won: wonDeals,
         lost: lostDeals,
-        pipeline: pipelineDeals
+        pipeline: pipelineDeals,
       },
       activities: {
         total: activities.length,
         calls,
         meetings,
-        tasks
-      }
+        tasks,
+      },
     };
   } catch (error) {
     return {
       leads: { total: 0, new: 0, qualified: 0, converted: 0 },
       deals: { total: 0, won: 0, lost: 0, pipeline: 0 },
-      activities: { total: 0, calls: 0, meetings: 0, tasks: 0 }
+      activities: { total: 0, calls: 0, meetings: 0, tasks: 0 },
     };
   }
 }

@@ -3,8 +3,8 @@
  * Provides functions for testing various external integrations
  */
 
-import { log } from '@/lib/monitoring/logger';
-import { createClient } from '@/lib/supabase/client';
+import logger from '@/lib/monitoring/logger';
+import { createClient } from "@/lib/supabase/client";
 
 // ================================================================
 // INTERFACE DEFINITIONS
@@ -67,15 +67,15 @@ export async function logIntegrationTest(
   integrationConfigId: string,
   integrationType: string,
   testType: string,
-  status: 'success' | 'failed' | 'timeout',
+  status: "success" | "failed" | "timeout",
   requestData: any = null,
   responseData: any = null,
   errorMessage: string | null = null,
   durationMs: number | null = null,
-  testedBy: string | null = null
+  testedBy: string | null = null,
 ): Promise<void> {
   const supabase = createClient();
-  const { error } = await supabase.from('integration_test_logs').insert({
+  const { error } = await supabase.from("integration_test_logs").insert({
     integration_config_id: integrationConfigId,
     integration_type: integrationType,
     test_type: testType,
@@ -88,7 +88,7 @@ export async function logIntegrationTest(
   });
 
   if (error) {
-    console.error('Error logging integration test:', error);
+    console.error("Error logging integration test:", error);
   }
 }
 
@@ -99,7 +99,9 @@ export async function logIntegrationTest(
 /**
  * Test WhatsApp Business API connection
  */
-export async function testWhatsAppConnection(config: WhatsAppConfig): Promise<any> {
+export async function testWhatsAppConnection(
+  config: WhatsAppConfig,
+): Promise<any> {
   const startTime = Date.now();
 
   try {
@@ -107,12 +109,12 @@ export async function testWhatsAppConnection(config: WhatsAppConfig): Promise<an
     const response = await fetch(
       `${config.api_url}/${config.phone_number_id}`,
       {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${config.access_token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${config.access_token}`,
+          "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const durationMs = Date.now() - startTime;
@@ -121,7 +123,9 @@ export async function testWhatsAppConnection(config: WhatsAppConfig): Promise<an
       const errorData = await response.json().catch(() => null);
       return {
         success: false,
-        error: errorData?.error?.message || `HTTP ${response.status}: ${response.statusText}`,
+        error:
+          errorData?.error?.message ||
+          `HTTP ${response.status}: ${response.statusText}`,
         status_code: response.status,
         duration_ms: durationMs,
       };
@@ -131,7 +135,7 @@ export async function testWhatsAppConnection(config: WhatsAppConfig): Promise<an
 
     return {
       success: true,
-      message: 'WhatsApp connection successful',
+      message: "WhatsApp connection successful",
       data: data,
       duration_ms: durationMs,
     };
@@ -139,7 +143,7 @@ export async function testWhatsAppConnection(config: WhatsAppConfig): Promise<an
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
   }
@@ -157,13 +161,17 @@ export async function testSmsConnection(config: SMSConfig): Promise<any> {
 
   try {
     // Test Twilio API by fetching account details
-    const apiUrl = config.api_url || `https://api.twilio.com/2010-04-01/Accounts/${config.account_sid}.json`;
-    const credentials = Buffer.from(`${config.account_sid}:${config.auth_token}`).toString('base64');
+    const apiUrl =
+      config.api_url ||
+      `https://api.twilio.com/2010-04-01/Accounts/${config.account_sid}.json`;
+    const credentials = Buffer.from(
+      `${config.account_sid}:${config.auth_token}`,
+    ).toString("base64");
 
     const response = await fetch(apiUrl, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Authorization': `Basic ${credentials}`,
+        Authorization: `Basic ${credentials}`,
       },
     });
 
@@ -173,7 +181,9 @@ export async function testSmsConnection(config: SMSConfig): Promise<any> {
       const errorData = await response.json().catch(() => null);
       return {
         success: false,
-        error: errorData?.message || `HTTP ${response.status}: ${response.statusText}`,
+        error:
+          errorData?.message ||
+          `HTTP ${response.status}: ${response.statusText}`,
         status_code: response.status,
         duration_ms: durationMs,
       };
@@ -183,7 +193,7 @@ export async function testSmsConnection(config: SMSConfig): Promise<any> {
 
     return {
       success: true,
-      message: 'SMS connection successful',
+      message: "SMS connection successful",
       data: data,
       duration_ms: durationMs,
     };
@@ -191,7 +201,7 @@ export async function testSmsConnection(config: SMSConfig): Promise<any> {
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
   }
@@ -209,10 +219,10 @@ export async function testEmailConnection(config: EmailConfig): Promise<any> {
 
   try {
     // Test SendGrid API by validating the API key
-    const response = await fetch('https://api.sendgrid.com/v3/scopes', {
-      method: 'GET',
+    const response = await fetch("https://api.sendgrid.com/v3/scopes", {
+      method: "GET",
       headers: {
-        'Authorization': `Bearer ${config.api_key}`,
+        Authorization: `Bearer ${config.api_key}`,
       },
     });
 
@@ -222,7 +232,9 @@ export async function testEmailConnection(config: EmailConfig): Promise<any> {
       const errorData = await response.json().catch(() => null);
       return {
         success: false,
-        error: errorData?.errors?.[0]?.message || `HTTP ${response.status}: ${response.statusText}`,
+        error:
+          errorData?.errors?.[0]?.message ||
+          `HTTP ${response.status}: ${response.statusText}`,
         status_code: response.status,
         duration_ms: durationMs,
       };
@@ -232,7 +244,7 @@ export async function testEmailConnection(config: EmailConfig): Promise<any> {
 
     return {
       success: true,
-      message: 'Email service connection successful',
+      message: "Email service connection successful",
       data: data,
       duration_ms: durationMs,
     };
@@ -240,7 +252,7 @@ export async function testEmailConnection(config: EmailConfig): Promise<any> {
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
   }
@@ -253,21 +265,23 @@ export async function testEmailConnection(config: EmailConfig): Promise<any> {
 /**
  * Test Google Calendar API connection
  */
-export async function testGoogleCalendarConnection(config: GoogleCalendarConfig): Promise<any> {
+export async function testGoogleCalendarConnection(
+  config: GoogleCalendarConfig,
+): Promise<any> {
   const startTime = Date.now();
 
   try {
     // First, exchange refresh token for access token
-    const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
-      method: 'POST',
+    const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         client_id: config.client_id,
         client_secret: config.client_secret,
         refresh_token: config.refresh_token,
-        grant_type: 'refresh_token',
+        grant_type: "refresh_token",
       }),
     });
 
@@ -276,7 +290,9 @@ export async function testGoogleCalendarConnection(config: GoogleCalendarConfig)
       const durationMs = Date.now() - startTime;
       return {
         success: false,
-        error: errorData?.error_description || `HTTP ${tokenResponse.status}: ${tokenResponse.statusText}`,
+        error:
+          errorData?.error_description ||
+          `HTTP ${tokenResponse.status}: ${tokenResponse.statusText}`,
         status_code: tokenResponse.status,
         duration_ms: durationMs,
       };
@@ -289,11 +305,11 @@ export async function testGoogleCalendarConnection(config: GoogleCalendarConfig)
     const calendarResponse = await fetch(
       `https://www.googleapis.com/calendar/v3/users/me/calendarList/${config.calendar_id}`,
       {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
-      }
+      },
     );
 
     const durationMs = Date.now() - startTime;
@@ -302,7 +318,9 @@ export async function testGoogleCalendarConnection(config: GoogleCalendarConfig)
       const errorData = await calendarResponse.json().catch(() => null);
       return {
         success: false,
-        error: errorData?.error?.message || `HTTP ${calendarResponse.status}: ${calendarResponse.statusText}`,
+        error:
+          errorData?.error?.message ||
+          `HTTP ${calendarResponse.status}: ${calendarResponse.statusText}`,
         status_code: calendarResponse.status,
         duration_ms: durationMs,
       };
@@ -312,7 +330,7 @@ export async function testGoogleCalendarConnection(config: GoogleCalendarConfig)
 
     return {
       success: true,
-      message: 'Google Calendar connection successful',
+      message: "Google Calendar connection successful",
       data: data,
       duration_ms: durationMs,
     };
@@ -320,7 +338,7 @@ export async function testGoogleCalendarConnection(config: GoogleCalendarConfig)
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
   }
@@ -339,14 +357,14 @@ export async function testSlackConnection(config: SlackConfig): Promise<any> {
   try {
     // Test Slack webhook by sending a test message
     const response = await fetch(config.webhook_url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         channel: config.channel,
-        text: '✅ تم اختبار اتصال Slack بنجاح من نظام مُعين',
-        username: 'مُعين - نظام الإدارة',
+        text: "✅ تم اختبار اتصال Slack بنجاح من نظام مُعين",
+        username: "مُعين - نظام الإدارة",
       }),
     });
 
@@ -364,14 +382,14 @@ export async function testSlackConnection(config: SlackConfig): Promise<any> {
 
     return {
       success: true,
-      message: 'Slack connection successful',
+      message: "Slack connection successful",
       duration_ms: durationMs,
     };
   } catch (error: any) {
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
   }
@@ -389,13 +407,16 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
 
   try {
     // Test Seha API by making a health check or facility info request
-    const response = await fetch(`${config.api_url}/facilities/${config.facility_id}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${config.api_key}`,
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      `${config.api_url}/facilities/${config.facility_id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${config.api_key}`,
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
 
     const durationMs = Date.now() - startTime;
 
@@ -403,7 +424,9 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
       const errorData = await response.json().catch(() => null);
       return {
         success: false,
-        error: errorData?.message || `HTTP ${response.status}: ${response.statusText}`,
+        error:
+          errorData?.message ||
+          `HTTP ${response.status}: ${response.statusText}`,
         status_code: response.status,
         duration_ms: durationMs,
       };
@@ -413,7 +436,7 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
 
     return {
       success: true,
-      message: 'Seha Platform connection successful',
+      message: "Seha Platform connection successful",
       data: data,
       duration_ms: durationMs,
     };
@@ -421,7 +444,7 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
   }
@@ -439,13 +462,16 @@ export async function testTatmanConnection(config: TatmanConfig): Promise<any> {
 
   try {
     // Test Tatman API by making a provider info request
-    const response = await fetch(`${config.api_url}/providers/${config.provider_id}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${config.api_key}`,
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      `${config.api_url}/providers/${config.provider_id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${config.api_key}`,
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
 
     const durationMs = Date.now() - startTime;
 
@@ -453,7 +479,9 @@ export async function testTatmanConnection(config: TatmanConfig): Promise<any> {
       const errorData = await response.json().catch(() => null);
       return {
         success: false,
-        error: errorData?.message || `HTTP ${response.status}: ${response.statusText}`,
+        error:
+          errorData?.message ||
+          `HTTP ${response.status}: ${response.statusText}`,
         status_code: response.status,
         duration_ms: durationMs,
       };
@@ -463,7 +491,7 @@ export async function testTatmanConnection(config: TatmanConfig): Promise<any> {
 
     return {
       success: true,
-      message: 'Tatman Insurance connection successful',
+      message: "Tatman Insurance connection successful",
       data: data,
       duration_ms: durationMs,
     };
@@ -471,7 +499,7 @@ export async function testTatmanConnection(config: TatmanConfig): Promise<any> {
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error.message || "Unknown error",
       duration_ms: durationMs,
     };
   }

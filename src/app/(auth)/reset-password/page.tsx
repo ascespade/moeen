@@ -148,7 +148,9 @@ export default function ResetPasswordPage() {
                 disabled={isLoading}
               />
               {errors.password && (
-                <p className="mt-1 text-sm text-brand-error">{errors.password}</p>
+                <p className="mt-1 text-sm text-brand-error">
+                  {errors.password}
+                </p>
               )}
               <p className="mt-1 text-xs text-gray-500">
                 يجب أن تكون كلمة المرور 6 أحرف على الأقل

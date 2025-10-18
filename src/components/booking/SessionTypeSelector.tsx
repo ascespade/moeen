@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 interface SessionType {
   id: string;
@@ -23,6 +23,7 @@ export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
   const [sessionTypes, setSessionTypes] = useState<SessionType[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadSessionTypes();
   }, []);
@@ -31,15 +32,15 @@ export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
     try {
       const supabase = createClient();
       const { data, error } = await supabase
-        .from('session_types')
-        .select('*')
-        .eq('is_active', true)
-        .order('name_ar');
+        .from("session_types")
+        .select("*")
+        .eq("is_active", true)
+        .order("name_ar");
 
       if (error) throw error;
       setSessionTypes(data || []);
     } catch (error) {
-      console.error('Error loading session types:', error);
+      console.error("Error loading session types:", error);
     } finally {
       setLoading(false);
     }
@@ -67,8 +68,8 @@ export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
           onClick={() => onSelect(type)}
           className={`card p-6 text-right transition-all hover:shadow-lg ${
             selectedId === type.id
-              ? 'ring-2 ring-[var(--brand-primary)] bg-[var(--brand-primary)]/5'
-              : ''
+              ? "ring-2 ring-[var(--brand-primary)] bg-[var(--brand-primary)]/5"
+              : ""
           }`}
         >
           <div

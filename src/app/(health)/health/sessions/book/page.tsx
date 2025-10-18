@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
-import SessionTypeSelector from '@/components/booking/SessionTypeSelector';
-import AvailableSlotsPicker from '@/components/booking/AvailableSlotsPicker';
-import logger from '@/lib/monitoring/logger';
+import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+import SessionTypeSelector from "@/components/booking/SessionTypeSelector";
+import AvailableSlotsPicker from "@/components/booking/AvailableSlotsPicker";
+import logger from "@/lib/monitoring/logger";
 
 interface SessionType {
   id: string;
@@ -30,13 +30,14 @@ interface Slot {
 export default function BookSessionPage() {
   const router = useRouter();
   const [step, setStep] = useState(1); // 1: Session Type, 2: Date, 3: Time, 4: Confirm
-  const [selectedSessionType, setSelectedSessionType] = useState<SessionType | null>(null);
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedSessionType, setSelectedSessionType] =
+    useState<SessionType | null>(null);
+  const [selectedDate, setSelectedDate] = useState("");
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
-  const [patientName, setPatientName] = useState('');
-  const [notes, setNotes] = useState('');
+  const [patientName, setPatientName] = useState("");
+  const [notes, setNotes] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSelectSessionType = (type: SessionType) => {
     setSelectedSessionType(type);
@@ -50,28 +51,30 @@ export default function BookSessionPage() {
 
   const handleBookSession = async () => {
     if (!selectedSessionType || !selectedSlot || !patientName.trim()) {
-      setError('يرجى ملء جميع الحقول المطلوبة');
+      setError("يرجى ملء جميع الحقول المطلوبة");
       return;
     }
 
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
       const supabase = createClient();
 
       // Get current user
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
-        throw new Error('يجب تسجيل الدخول أولاً');
+        throw new Error("يجب تسجيل الدخول أولاً");
       }
 
       // Get or create patient
       let patientId;
       const { data: existingPatients } = await supabase
-        .from('patients')
-        .select('id')
-        .eq('first_name', patientName)
+        .from("patients")
+        .select("id")
+        .eq("first_name", patientName)
         .limit(1);
 
       if (existingPatients && existingPatients.length > 0) {
@@ -79,10 +82,10 @@ export default function BookSessionPage() {
       } else {
         // Create new patient
         const { data: newPatient, error: patientError } = await supabase
-          .from('patients')
+          .from("patients")
           .insert({
             first_name: patientName,
-            last_name: '',
+            last_name: "",
             date_of_birth: null,
           })
           .select()
@@ -94,7 +97,7 @@ export default function BookSessionPage() {
 
       // Create appointment
       const { error: appointmentError } = await supabase
-        .from('appointments')
+        .from("appointments")
         .insert({
           patient_id: patientId,
           doctor_id: selectedSlot.therapistId,
@@ -102,13 +105,13 @@ export default function BookSessionPage() {
           appointment_date: selectedSlot.date,
           appointment_time: selectedSlot.startTime,
           duration: selectedSessionType.duration,
-          status: 'scheduled',
+          status: "scheduled",
           notes: notes || null,
         });
 
       if (appointmentError) throw appointmentError;
 
-      logger.info('Session booked successfully', {
+      logger.info("Session booked successfully", {
         sessionTypeId: selectedSessionType.id,
         therapistId: selectedSlot.therapistId,
         date: selectedSlot.date,
@@ -116,24 +119,23 @@ export default function BookSessionPage() {
       });
 
       // Success!
-      alert('تم حجز الجلسة بنجاح! ✅\n\nسنرسل لك تذكيراً قبل موعد الجلسة.');
-      router.push('/health/appointments');
-
+      alert("تم حجز الجلسة بنجاح! ✅\n\nسنرسل لك تذكيراً قبل موعد الجلسة.");
+      router.push("/health/appointments");
     } catch (err: any) {
-      logger.error('Error booking session', err);
-      setError(err.message || 'حدث خطأ أثناء حجز الجلسة');
+      logger.error("Error booking session", err);
+      setError(err.message || "حدث خطأ أثناء حجز الجلسة");
     } finally {
       setLoading(false);
     }
   };
 
   // Get minimum date (today)
-  const today = new Date().toISOString().split('T')[0];
-  
+  const today = new Date().toISOString().split("T")[0];
+
   // Get maximum date (3 months from now)
   const maxDate = new Date();
   maxDate.setMonth(maxDate.getMonth() + 3);
-  const maxDateStr = maxDate.toISOString().split('T')[0];
+  const maxDateStr = maxDate.toISOString().split("T")[0];
 
   return (
     <div className="container-app py-8">
@@ -141,17 +143,17 @@ export default function BookSessionPage() {
       <div className="card p-6 mb-8">
         <div className="flex items-center justify-between">
           {[
-            { num: 1, label: 'نوع الجلسة' },
-            { num: 2, label: 'التاريخ' },
-            { num: 3, label: 'الوقت' },
-            { num: 4, label: 'التأكيد' },
+            { num: 1, label: "نوع الجلسة" },
+            { num: 2, label: "التاريخ" },
+            { num: 3, label: "الوقت" },
+            { num: 4, label: "التأكيد" },
           ].map((s, i) => (
             <div key={s.num} className="flex items-center flex-1">
               <div
                 className={`flex items-center justify-center w-10 h-10 rounded-full font-bold ${
                   step >= s.num
-                    ? 'bg-[var(--brand-primary)] text-white'
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-500'
+                    ? "bg-[var(--brand-primary)] text-white"
+                    : "bg-gray-200 dark:bg-gray-700 text-gray-500"
                 }`}
               >
                 {s.num}
@@ -159,8 +161,8 @@ export default function BookSessionPage() {
               <span
                 className={`mr-2 text-sm ${
                   step >= s.num
-                    ? 'text-gray-900 dark:text-white font-semibold'
-                    : 'text-gray-500'
+                    ? "text-gray-900 dark:text-white font-semibold"
+                    : "text-gray-500"
                 }`}
               >
                 {s.label}
@@ -168,7 +170,9 @@ export default function BookSessionPage() {
               {i < 3 && (
                 <div
                   className={`flex-1 h-1 mx-4 rounded ${
-                    step > s.num ? 'bg-[var(--brand-primary)]' : 'bg-gray-200 dark:bg-gray-700'
+                    step > s.num
+                      ? "bg-[var(--brand-primary)]"
+                      : "bg-gray-200 dark:bg-gray-700"
                   }`}
                 />
               )}
@@ -197,10 +201,7 @@ export default function BookSessionPage() {
       {/* Step 2: Select Date */}
       {step === 2 && selectedSessionType && (
         <div>
-          <button
-            onClick={() => setStep(1)}
-            className="btn btn-outline mb-6"
-          >
+          <button onClick={() => setStep(1)} className="btn btn-outline mb-6">
             ← العودة
           </button>
 
@@ -217,7 +218,8 @@ export default function BookSessionPage() {
                   {selectedSessionType.name_ar}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400">
-                  {selectedSessionType.duration} دقيقة • {selectedSessionType.price} ريال
+                  {selectedSessionType.duration} دقيقة •{" "}
+                  {selectedSessionType.price} ريال
                 </p>
               </div>
             </div>
@@ -251,10 +253,7 @@ export default function BookSessionPage() {
       {/* Step 3: Select Time Slot */}
       {step === 3 && selectedSessionType && selectedDate && (
         <div>
-          <button
-            onClick={() => setStep(2)}
-            className="btn btn-outline mb-6"
-          >
+          <button onClick={() => setStep(2)} className="btn btn-outline mb-6">
             ← العودة
           </button>
 
@@ -274,10 +273,7 @@ export default function BookSessionPage() {
       {/* Step 4: Confirmation */}
       {step === 4 && selectedSessionType && selectedSlot && (
         <div>
-          <button
-            onClick={() => setStep(3)}
-            className="btn btn-outline mb-6"
-          >
+          <button onClick={() => setStep(3)} className="btn btn-outline mb-6">
             ← العودة
           </button>
 
@@ -321,11 +317,11 @@ export default function BookSessionPage() {
                   <span className="text-2xl">📅</span>
                   <div>
                     <p className="font-semibold text-gray-900 dark:text-white">
-                      {new Date(selectedSlot.date).toLocaleDateString('ar-SA', {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
+                      {new Date(selectedSlot.date).toLocaleDateString("ar-SA", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
                       })}
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -411,7 +407,7 @@ export default function BookSessionPage() {
                       جاري الحجز...
                     </span>
                   ) : (
-                    'تأكيد الحجز'
+                    "تأكيد الحجز"
                   )}
                 </button>
 

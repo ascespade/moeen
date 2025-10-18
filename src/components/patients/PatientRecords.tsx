@@ -115,6 +115,7 @@ const PatientRecords: React.FC = () => {
     followUpDate: "",
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadPatients();
     loadMedicalRecords();

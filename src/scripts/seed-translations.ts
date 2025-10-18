@@ -1,5 +1,5 @@
 import { bulkInsertTranslations } from "../lib/translations-manager";
-import { logger } from '@/lib/logger';
+import { logger } from "@/lib/logger";
 
 /**
  * Seed Translations Script
