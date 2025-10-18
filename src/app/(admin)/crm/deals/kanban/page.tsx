@@ -1,3 +1,4 @@
+
 export default function DealsKanbanPage() {
   return (
     <main className="container-app py-8">

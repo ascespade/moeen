@@ -1,3 +1,4 @@
+
 // Centralized API configuration for Moeen (Hemam Center)
 export type AIProvider = "gemini" | "openai";
 

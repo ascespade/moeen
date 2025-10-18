@@ -1,3 +1,4 @@
+
 // Saudi Ministry of Health Integration
 export interface MinistryHealthRecord {
   nationalId: string;

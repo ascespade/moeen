@@ -1,3 +1,4 @@
+
 // Database type definitions
 // These types match the database schema defined in the migrations
 

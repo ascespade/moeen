@@ -1,3 +1,4 @@
+
 // Generated Supabase types for Hemam Center
 export type Json =
   | string

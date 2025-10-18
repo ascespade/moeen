@@ -1,3 +1,4 @@
+
 /**
  * Core Types - الأنواع الأساسية للنظام
  * Centralized type definitions for the entire application

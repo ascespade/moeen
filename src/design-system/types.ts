@@ -1,3 +1,4 @@
+
 /**
  * Design System Types - أنواع نظام التصميم
  * Basic types for design system compatibility

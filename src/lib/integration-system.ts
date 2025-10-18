@@ -1,3 +1,4 @@
+
 // Integration System for Hemam Center
 export interface PatientRecord {
   id: string;

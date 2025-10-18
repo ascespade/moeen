@@ -1,3 +1,4 @@
+
 // Date utilities
 export const addDays = (date: Date, days: number): Date => {
   const result = new Date(date);

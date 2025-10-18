@@ -1,3 +1,4 @@
+
 "use client";
 
 // Lightweight chart implementations using SVG and CSS only to minimize bundle size
