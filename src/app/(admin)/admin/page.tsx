@@ -143,6 +143,7 @@ export default function AdminPage() {
         },
       ]);
       setConfigs([
+        {
           id: "1",
           key: "maintenance_mode",
           value: "false",

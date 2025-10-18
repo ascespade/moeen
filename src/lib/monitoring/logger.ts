@@ -22,6 +22,7 @@ class Logger {
   constructor() {
     this.isDevelopment = process.env.NODE_ENV === "development";
     this.isServer = typeof window === "undefined";
+  }
 
   /**
    * Log debug information (only in development)
