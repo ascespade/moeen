@@ -34,7 +34,8 @@
     "agent:lib-fix": "node .agent-system/library-based-fix.js",
     "agent:syntax-fix": "node .agent-system/syntax-fixer.js",
     "agent:final-fix": "node .agent-system/final-fixer.js",
-    "agent:ast-fix": "node .agent-system/ast-fixer.js"
+    "agent:ast-fix": "node .agent-system/ast-fixer.js",
+    "agent:incremental": "node .agent-system/incremental-smart-fix.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

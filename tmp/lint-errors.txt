@@ -30,23 +30,14 @@ Error: Parsing error: Expression expected.
 ./src/app/(admin)/chatbot/flows/[flowId]/page.tsx
 Error: Parsing error: Property or signature expected.
 
-./src/app/(admin)/chatbot/flows/page.tsx
-Error: Parsing error: '}' expected.
-
 ./src/app/(admin)/chatbot/integrations/page.tsx
 276:20  Error: Parsing error: ',' expected.
 
 ./src/app/(admin)/chatbot/templates/[id]/page.tsx
 276:22  Error: Parsing error: '}' expected.
 
-./src/app/(admin)/chatbot/templates/page.tsx
-Error: Parsing error: '}' expected.
-
 ./src/app/(admin)/conversations/page.tsx
 28:2  Error: Parsing error: Expression or comma expected.
-
-./src/app/(admin)/crm/activities/page.tsx
-Error: Parsing error: '}' expected.
 
 ./src/app/(admin)/crm/contacts/[id]/page.tsx
 18:1  Error: Parsing error: Declaration or statement expected.
@@ -62,9 +53,6 @@ Error: Parsing error: Expression expected.
 
 ./src/app/(admin)/integrations/page.tsx
 Error: Parsing error: Declaration or statement expected.
-
-./src/app/(admin)/messages/page.tsx
-Error: Parsing error: '}' expected.
 
 ./src/app/(admin)/notifications/page.tsx
 Error: Parsing error: Expression expected.
@@ -102,9 +90,6 @@ Error: Parsing error: Declaration or statement expected.
 ./src/app/(health)/appointments/page.tsx
 Error: Parsing error: Expression expected.
 
-./src/app/(health)/approvals/page.tsx
-Error: Parsing error: '}' expected.
-
 ./src/app/(health)/family-support/page.tsx
 Error: Parsing error: Declaration or statement expected.
 
@@ -113,12 +98,6 @@ Error: Parsing error: Property or signature expected.
 
 ./src/app/(health)/health/sessions/book/page.tsx
 Error: Parsing error: Property or signature expected.
-
-./src/app/(health)/insurance/page.tsx
-Error: Parsing error: '}' expected.
-
-./src/app/(health)/insurance-claims/page.tsx
-Error: Parsing error: '}' expected.
 
 ./src/app/(health)/medical-file/page.tsx
 71:2  Error: Parsing error: Expression or comma expected.
@@ -131,9 +110,6 @@ Error: Parsing error: Expression expected.
 
 ./src/app/(health)/progress-tracking/page.tsx
 Error: Parsing error: Expression expected.
-
-./src/app/(health)/sessions/page.tsx
-Error: Parsing error: '}' expected.
 
 ./src/app/(health)/therapy/page.tsx
 Error: Parsing error: Declaration or statement expected.
@@ -172,7 +148,7 @@ Error: Parsing error: Expression expected.
 104:4  Error: Parsing error: 'try' expected.
 
 ./src/app/api/admin/security-events/route.ts
-70:10  Error: Parsing error: Property assignment expected.
+69:10  Error: Parsing error: Property assignment expected.
 
 ./src/app/api/admin/stats/route.ts
 146:4  Error: Parsing error: 'try' expected.
