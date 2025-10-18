@@ -54,6 +54,7 @@ export default function PatientIEPPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patientId]);
 
   const loadData = async () => {
