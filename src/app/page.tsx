@@ -551,12 +551,16 @@ export default function HomePage() {
 
             <div>
               <h4 className="mb-6 text-xl font-bold">خدماتنا</h4>
-              <ul className="space-y-3">
-                <li className="text-gray-300 hover:text-white transition-colors">التشخيص والتقييم</li>
-                <li className="text-gray-300 hover:text-white transition-colors">علاج النطق</li>
-                <li className="text-gray-300 hover:text-white transition-colors">العلاج الوظيفي</li>
-                <li className="text-gray-300 hover:text-white transition-colors">تعديل السلوك</li>
-                <li className="text-gray-300 hover:text-white transition-colors">الدعم الأسري</li>
+              <ul className="space-y-2 text-sm">
+                <li className="text-gray-300 hover:text-white transition-colors">• تعديل السلوك</li>
+                <li className="text-gray-300 hover:text-white transition-colors">• علاج وظيفي</li>
+                <li className="text-gray-300 hover:text-white transition-colors">• تكامل حسي</li>
+                <li className="text-gray-300 hover:text-white transition-colors">• تنمية مهارات</li>
+                <li className="text-gray-300 hover:text-white transition-colors">• التدخل المبكر</li>
+                <li className="text-gray-300 hover:text-white transition-colors">• البرنامج الشامل</li>
+                <li className="text-gray-300 hover:text-white transition-colors">• علاج التأتأة</li>
+                <li className="text-gray-300 hover:text-white transition-colors">• علاج مشاكل الصوت</li>
+                <li className="text-gray-300 hover:text-white transition-colors">• التأهيل السمعي</li>
               </ul>
             </div>
 
