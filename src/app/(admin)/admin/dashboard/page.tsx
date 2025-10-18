@@ -27,6 +27,7 @@ interface DashboardStats {
   totalSessions: number;
   completedSessions: number;
   upcomingSessions: number;
+}
 
 interface RecentActivity {
   id: string;

@@ -14,6 +14,7 @@ interface AuditLog {
   userAgent: string;
   timestamp: string;
   status: "success" | "failed" | "warning";
+}
 
 const mockAuditLogs: AuditLog[] = [
     id: "1",
