@@ -14,6 +14,8 @@ interface AriaLabelProps {
 /**
  * Generate ARIA attributes for form inputs
  */
+}
+
 export function getFormAriaProps(props: AriaLabelProps): Record<string, any> {
   const attrs: Record<string, any> = {
     "aria-label": props.label,

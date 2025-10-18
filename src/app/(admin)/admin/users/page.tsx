@@ -18,6 +18,8 @@ const seed: UserRow[] = [
   { id: "3", email: "viewer@example.com", role: "viewer", status: "suspended" },
 ];
 
+}
+
 export default function UsersAdminPage() {
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps

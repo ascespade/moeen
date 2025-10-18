@@ -43,6 +43,8 @@ interface MedicalRecord {
     therapist: string;
   }[];
 
+}
+
 const mockRecords: MedicalRecord[] = [
   {
     id: "1",
@@ -78,6 +80,7 @@ const mockRecords: MedicalRecord[] = [
       },
     ],
   },
+    {
     id: "2",
     patientName: "فاطمة عبدالله السعيد",
     patientId: "P002",
@@ -111,6 +114,7 @@ const mockRecords: MedicalRecord[] = [
       },
     ],
   },
+    {
     id: "3",
     patientName: "محمد سالم القحطاني",
     patientId: "P003",
@@ -144,6 +148,7 @@ const mockRecords: MedicalRecord[] = [
       },
     ],
   },
+    {
     id: "4",
     patientName: "نورا أحمد الزهراني",
     patientId: "P004",

@@ -32,6 +32,8 @@ interface AppointmentSuggestion {
   specialty: string;
   availableSlots: string[];
 
+}
+
 const HealthcareChatbot: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();

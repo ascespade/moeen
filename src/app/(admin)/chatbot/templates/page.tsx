@@ -20,6 +20,8 @@ interface Template {
   preview: string;
   usageCount: number;
 
+}
+
 const mockTemplates: Template[] = [
   {
     id: "1",
@@ -34,6 +36,7 @@ const mockTemplates: Template[] = [
     preview: "مرحباً {{اسم المريض}}، أهلاً وسهلاً بك في {{اسم المركز}}!",
     usageCount: 45,
   },
+    {
     id: "2",
     name: "تأكيد الموعد",
     description: "رسالة تأكيد المواعيد",
@@ -47,6 +50,7 @@ const mockTemplates: Template[] = [
       "تم تأكيد موعدك {{اسم المريض}} مع {{اسم الطبيب}} في {{التاريخ}} الساعة {{الوقت}}",
     usageCount: 32,
   },
+    {
     id: "3",
     name: "تذكير الموعد",
     description: "تذكير قبل 24 ساعة من الموعد",
@@ -60,6 +64,7 @@ const mockTemplates: Template[] = [
       "تذكير: لديك موعد غداً {{اسم المريض}} في {{التاريخ}} الساعة {{الوقت}}",
     usageCount: 28,
   },
+    {
     id: "4",
     name: "استفسار الخدمات",
     description: "رد على استفسارات الخدمات",
@@ -72,6 +77,7 @@ const mockTemplates: Template[] = [
     preview: "شكراً {{اسم المريض}} لاستفسارك، سنرد عليك قريباً",
     usageCount: 15,
   },
+    {
     id: "5",
     name: "Welcome Message",
     description: "Welcome message for new patients",

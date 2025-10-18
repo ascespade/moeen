@@ -28,6 +28,7 @@ interface Deal {
   lastActivity: string;
   notes?: string;
   tags: string[];
+}
 
 const mockDeals: Deal[] = [
   {
@@ -46,6 +47,7 @@ const mockDeals: Deal[] = [
     notes: "في مرحلة المفاوضات النهائية",
     tags: ["عالي القيمة", "مستشفى"],
   },
+  {
     id: "2",
     title: "نظام إدارة المرضى - عيادة الأسنان",
     value: 75000,

@@ -36,6 +36,8 @@ const tabs = [
   { id: "users", label: "المستخدمون والأدوار" },
 ];
 
+}
+
 export default function SettingsTabs() {
   const [active, setActive] = useState<string>(tabs[0]?.id || "general");
   const [settings, setSettings] = useState<Settings | null>(null);

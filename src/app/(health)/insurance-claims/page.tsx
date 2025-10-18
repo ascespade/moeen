@@ -22,6 +22,8 @@ interface InsuranceClaim {
   reviewer?: string;
   notes?: string;
 
+}
+
 const mockClaims: InsuranceClaim[] = [
   {
     id: "1",
@@ -39,6 +41,7 @@ const mockClaims: InsuranceClaim[] = [
     reviewer: "د. محمد العتيبي",
     notes: "تمت الموافقة على المطالبة بالكامل",
   },
+    {
     id: "2",
     patientName: "فاطمة السعيد",
     patientId: "2",
@@ -51,6 +54,7 @@ const mockClaims: InsuranceClaim[] = [
     description: "أشعة سينية للعمود الفقري",
     attachments: ["طلب الأشعة", "تقرير الأشعة"],
   },
+    {
     id: "3",
     patientName: "خالد القحطاني",
     patientId: "3",
@@ -66,6 +70,7 @@ const mockClaims: InsuranceClaim[] = [
     reviewer: "د. نورا محمد",
     notes: "المطالبة مرفوضة - العلاج غير مشمول بالتأمين",
   },
+    {
     id: "4",
     patientName: "نورا السعد",
     patientId: "4",

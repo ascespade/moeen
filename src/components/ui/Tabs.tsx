@@ -6,6 +6,8 @@ interface TabsContextValue {
   value: string;
   onValueChange: (value: string) => void;
 
+}
+
 const TabsContext = createContext<TabsContextValue | undefined>(undefined);
 
 export function Tabs({

@@ -24,6 +24,8 @@ interface PreVisitChecklistProps {
   patientId: string;
   onChecklistComplete?: () => void;
 
+}
+
 export default function PreVisitChecklist({
   appointmentId,
   patientId,

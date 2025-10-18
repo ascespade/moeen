@@ -67,7 +67,8 @@ export async function GET(request: NextRequest) {
             email: "admin@example.com",
             profile: { fullName: "Admin User" },
         },
-          id: "2",
+          {
+    id: "2",
           action: "user_created",
           entityType: "user",
           entityId: "user-2",
@@ -82,7 +83,8 @@ export async function GET(request: NextRequest) {
             email: "admin@example.com",
             profile: { fullName: "Admin User" },
         },
-          id: "3",
+          {
+    id: "3",
           action: "config_updated",
           entityType: "system_config",
           entityId: "config-1",
@@ -98,7 +100,8 @@ export async function GET(request: NextRequest) {
             email: "admin@example.com",
             profile: { fullName: "Admin User" },
         },
-          id: "4",
+          {
+    id: "4",
           action: "failed_login",
           entityType: "user",
           entityId: "user-3",
@@ -113,7 +116,8 @@ export async function GET(request: NextRequest) {
           createdAt: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(), // 6 hours ago
           user: null,
         },
-          id: "5",
+          {
+    id: "5",
           action: "user_logout",
           entityType: "user",
           entityId: "user-1",

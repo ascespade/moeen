@@ -31,6 +31,7 @@ interface Lead {
   lastActivity: string;
   notes?: string;
   tags: string[];
+}
 
 const mockLeads: Lead[] = [
   {
@@ -51,6 +52,7 @@ const mockLeads: Lead[] = [
     notes: "مهتم بحلول إدارة المواعيد",
     tags: ["تقنية", "عالي القيمة"],
   },
+  {
     id: "2",
     name: "فاطمة السعيد",
     email: "fatima@hospital.com",

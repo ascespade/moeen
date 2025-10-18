@@ -18,6 +18,8 @@ interface TranslationContextType {
   setLocale: (locale: string) => void;
   isLoading: boolean;
 
+}
+
 const TranslationContext = createContext<TranslationContextType | undefined>(
   undefined,
 );

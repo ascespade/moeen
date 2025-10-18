@@ -13,6 +13,8 @@ interface Goal {
   domain: string;
   current_progress: number;
 
+}
+
 export default function SessionNotesPage() {
   const params = useParams();
   const router = useRouter();

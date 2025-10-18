@@ -18,6 +18,8 @@ interface SecurityConfig {
   allowedHeaders: string[];
   maxAge: number;
 
+}
+
 const defaultSecurityConfig: SecurityConfig = {
   enableCORS: true,
   enableCSP: true,

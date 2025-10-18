@@ -29,6 +29,8 @@ interface SystemHealth {
   response_time: number;
   uptime: string;
 
+}
+
 const PerformancePage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
@@ -56,7 +58,8 @@ const PerformancePage: React.FC = () => {
           trend: "stable",
           threshold: 80,
         },
-          id: "2",
+          {
+    id: "2",
           name: "استخدام الذاكرة",
           value: 67,
           unit: "%",
@@ -64,7 +67,8 @@ const PerformancePage: React.FC = () => {
           trend: "up",
           threshold: 70,
         },
-          id: "3",
+          {
+    id: "3",
           name: "استخدام القرص الصلب",
           value: 34,
           unit: "%",
@@ -72,7 +76,8 @@ const PerformancePage: React.FC = () => {
           trend: "stable",
           threshold: 85,
         },
-          id: "4",
+          {
+    id: "4",
           name: "زمن الاستجابة",
           value: 120,
           unit: "ms",
@@ -80,7 +85,8 @@ const PerformancePage: React.FC = () => {
           trend: "down",
           threshold: 500,
         },
-          id: "5",
+          {
+    id: "5",
           name: "اتصالات قاعدة البيانات",
           value: 23,
           unit: "اتصال",
@@ -88,7 +94,8 @@ const PerformancePage: React.FC = () => {
           trend: "stable",
           threshold: 100,
         },
-          id: "6",
+          {
+    id: "6",
           name: "معدل الأخطاء",
           value: 0.2,
           unit: "%",

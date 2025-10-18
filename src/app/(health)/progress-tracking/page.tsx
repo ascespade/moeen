@@ -81,6 +81,8 @@ interface ProgressReport {
   next_review_date: string;
   created_at: string;
 
+}
+
 const ProgressTrackingPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
@@ -130,7 +132,8 @@ const ProgressTrackingPage: React.FC = () => {
               progress_percentage: 100,
               notes: "تم إنجاز الهدف بنجاح",
             },
-              id: "2",
+              {
+    id: "2",
               goal_id: "1",
               title: "المشي بمساعدة",
               description: "المشي لمسافة 5 أمتار بمساعدة شخص",

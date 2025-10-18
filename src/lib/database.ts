@@ -164,6 +164,8 @@ export class DatabaseManager {
     return result.rows[0];
 
   async getPatient(patientId: number) {
+}
+
     const query = "SELECT * FROM patients WHERE id = $1";
     const result = await this.pool.query(query, [patientId]);
     return result.rows[0];

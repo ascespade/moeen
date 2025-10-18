@@ -20,6 +20,8 @@ interface Template {
   updatedAt: string;
   usageCount: number;
 
+}
+
 const mockTemplate: Template = {
   id: "1",
   name: "ترحيب المرضى",

@@ -46,6 +46,8 @@ class Logger {
    * Log errors
    */
   error(message: string, error?: Error | any, context?: string): void {
+}
+
     const errorData =
       error instanceof Error
         ? {

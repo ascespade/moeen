@@ -27,6 +27,8 @@ interface Slot {
   endTime: string;
   duration: number;
 
+}
+
 export default function BookSessionPage() {
   const router = useRouter();
   const [step, setStep] = useState(1); // 1: Session Type, 2: Date, 3: Time, 4: Confirm

@@ -56,6 +56,8 @@ interface TrainingProgress {
     avatar?: string;
   };
 
+}
+
 const TrainingPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
@@ -108,7 +110,8 @@ const TrainingPage: React.FC = () => {
             specialty: "التأهيل المهني",
             avatar: "/logo.png",
           },
-          id: "2",
+          {
+    id: "2",
           title: "برنامج الحرف اليدوية والتقنية",
           description: "تعلم الحرف اليدوية والتقنيات الحديثة للعمل",
           category: "التأهيل المهني",

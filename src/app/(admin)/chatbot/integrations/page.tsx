@@ -18,6 +18,8 @@ interface Integration {
   icon: string;
   color: string;
 
+}
+
 const mockIntegrations: Integration[] = [
   {
     id: "1",
@@ -31,6 +33,7 @@ const mockIntegrations: Integration[] = [
     icon: "📱",
     color: "text-brand-success",
   },
+    {
     id: "2",
     name: "الموقع الإلكتروني",
     type: "web",
@@ -42,6 +45,7 @@ const mockIntegrations: Integration[] = [
     icon: "🌐",
     color: "text-brand-primary",
   },
+    {
     id: "3",
     name: "تيليجرام",
     type: "telegram",
@@ -51,6 +55,7 @@ const mockIntegrations: Integration[] = [
     icon: "✈️",
     color: "text-brand-primary",
   },
+    {
     id: "4",
     name: "فيسبوك ماسنجر",
     type: "facebook",

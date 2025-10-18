@@ -7,6 +7,8 @@ interface LogLevel {
   INFO: "info";
   DEBUG: "debug";
 
+}
+
 const LOG_LEVELS: LogLevel = {
   ERROR: "error",
   WARN: "warn",
@@ -47,6 +49,8 @@ class Logger {
 
   private log(level: string, message: string, context?: any) {
     if (!this.shouldLog(level)) return;
+
+}
 
     const logEntry = this.formatMessage(level, message, context);
 

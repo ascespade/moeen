@@ -146,6 +146,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
 
     // Check if doctor exists
+}
+
     const { data: doctor, error: doctorError } = await supabase
       .from("doctors")
       .select("id, speciality")

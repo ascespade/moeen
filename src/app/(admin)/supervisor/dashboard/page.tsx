@@ -13,6 +13,8 @@ interface CallRequest {
   status: string;
   created_at: string;
 
+}
+
 export default function SupervisorDashboardPage() {
   const [callRequests, setCallRequests] = useState<CallRequest[]>([]);
   const [stats, setStats] = useState({

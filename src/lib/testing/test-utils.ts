@@ -38,6 +38,8 @@ class TestUtils {
     role: string = "patient",
     overrides: Partial<TestUser> = {},
   ): Promise<TestUser> {
+}
+
     const testUser: TestUser = {
       id: `test_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       email: `test_${Date.now()}@example.com`,

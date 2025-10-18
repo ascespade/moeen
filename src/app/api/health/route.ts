@@ -35,6 +35,8 @@ interface ServiceStatus {
   error?: string;
   lastChecked: string;
 
+}
+
 export async function GET(request: NextRequest) {
   const startTime = Date.now();
 

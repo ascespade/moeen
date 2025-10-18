@@ -25,6 +25,8 @@ interface ClaimResult {
   error?: string;
   referenceNumber?: string;
 
+}
+
 export class InsuranceProviderService {
   private providers: Map<string, InsuranceProvider> = new Map();
 
@@ -42,7 +44,8 @@ export class InsuranceProviderService {
         supportedOperations: ["verify_member", "create_claim", "check_status"],
         isActive: true,
       },
-        id: "shoon",
+        {
+    id: "shoon",
         name: "SHOON",
         code: "SHOON",
         apiEndpoint:
@@ -51,7 +54,8 @@ export class InsuranceProviderService {
         supportedOperations: ["verify_member", "create_claim", "check_status"],
         isActive: true,
       },
-        id: "tatman",
+        {
+    id: "tatman",
         name: "TATMAN",
         code: "TATMAN",
         apiEndpoint:

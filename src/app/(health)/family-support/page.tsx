@@ -73,6 +73,8 @@ interface Resource {
   tags: string[];
   created_at: string;
 
+}
+
 const FamilySupportPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
@@ -119,7 +121,8 @@ const FamilySupportPage: React.FC = () => {
             condition: "شلل دماغي",
             avatar: "/logo.png",
           },
-          id: "2",
+          {
+    id: "2",
           patient_id: "pat-1",
           first_name: "عبدالله",
           last_name: "محمد",
@@ -179,7 +182,8 @@ const FamilySupportPage: React.FC = () => {
           tags: ["دعم", "أسرة", "تعليم"],
           created_at: "2024-01-01T00:00:00Z",
         },
-          id: "2",
+          {
+    id: "2",
           title: "فيديو: استراتيجيات التعامل مع التوتر",
           description:
             "فيديو تعليمي حول كيفية التعامل مع التوتر في رعاية الطفل",

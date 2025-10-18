@@ -17,6 +17,8 @@ interface MoyasarPaymentResult {
   status?: string;
   error?: string;
 
+}
+
 export class MoyasarPaymentService {
   private config: MoyasarConfig;
 

@@ -53,6 +53,8 @@ interface TherapyGoal {
   status: "active" | "completed" | "paused";
   created_at: string;
 
+}
+
 const TherapyPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();

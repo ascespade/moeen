@@ -53,6 +53,8 @@ interface NotificationTemplate {
   is_active: boolean;
   created_at: string;
 
+}
+
 const NotificationsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
@@ -100,7 +102,8 @@ const NotificationsPage: React.FC = () => {
             patient_id: "pat-1",
             appointment_id: "apt-123",
           },
-          id: "2",
+          {
+    id: "2",
           title: "تذكير بجلسة علاج",
           message:
             "تذكير: جلسة العلاج الطبيعي للمريض سارة أحمد في الساعة 2:00 مساءً",
@@ -120,7 +123,8 @@ const NotificationsPage: React.FC = () => {
             patient_id: "pat-2",
             therapy_session_id: "ts-456",
           },
-          id: "3",
+          {
+    id: "3",
           title: "تحديث حالة المريض",
           message: "تم تحديث حالة المريض نورا الزهراني إلى 'مكتمل العلاج'",
           type: "success",
@@ -137,7 +141,8 @@ const NotificationsPage: React.FC = () => {
           metadata: {
             patient_id: "pat-3",
           },
-          id: "4",
+          {
+    id: "4",
           title: "تنبيه نظام",
           message: "تم إجراء نسخة احتياطية من قاعدة البيانات بنجاح",
           type: "system",
@@ -166,7 +171,8 @@ const NotificationsPage: React.FC = () => {
           is_active: true,
           created_at: "2024-01-01T00:00:00Z",
         },
-          id: "2",
+          {
+    id: "2",
           name: "تأكيد الموعد",
           title: "تأكيد حجز الموعد",
           message:

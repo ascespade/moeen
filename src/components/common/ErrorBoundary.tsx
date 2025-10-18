@@ -19,6 +19,8 @@ interface State {
   error?: Error;
   errorInfo?: ErrorInfo;
 
+}
+
 export default class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -93,6 +95,8 @@ interface ErrorFallbackProps {
   error?: Error;
   onRetry: () => void;
   onGoHome: () => void;
+
+}
 
 function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
   const { t } = useT();

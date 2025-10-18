@@ -29,6 +29,8 @@ interface AppointmentSuggestion {
   availableSlots: string[];
   date: string;
 
+}
+
 const MoainChatbot: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState("");
@@ -202,7 +204,8 @@ const MoainChatbot: React.FC = () => {
             availableSlots: ["09:00", "10:00", "11:00", "14:00"],
             date: "2024-01-15",
           },
-            id: "2",
+            {
+    id: "2",
             doctorName: "د. محمد حسن",
             specialty: "العلاج الطبيعي",
             availableSlots: ["08:00", "09:30", "11:00", "13:30"],

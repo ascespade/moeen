@@ -15,6 +15,8 @@ interface ThemeSwitchProps {
   showLabel?: boolean;
   className?: string;
 
+}
+
 export function ThemeSwitch({
   variant = "dropdown",
   size = "md",

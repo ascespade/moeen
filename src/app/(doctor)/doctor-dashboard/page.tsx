@@ -34,6 +34,8 @@ interface DoctorData {
     breaks: string[];
   };
 
+}
+
 export default function DoctorDashboard() {
   const { t } = useT();
   const { theme } = useTheme();

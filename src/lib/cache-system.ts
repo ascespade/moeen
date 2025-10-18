@@ -16,6 +16,8 @@ interface CacheConfig {
   cleanupInterval: number;
 
 // Memory cache implementation
+}
+
 export class MemoryCache {
   private cache = new Map<string, CacheEntry<any>>();
   private config: CacheConfig;

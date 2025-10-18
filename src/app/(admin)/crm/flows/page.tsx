@@ -39,6 +39,8 @@ interface ConversationFlow {
   createdAt: string;
   updatedAt: string;
 
+}
+
 const FlowsManagementPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
@@ -78,7 +80,8 @@ const FlowsManagementPage: React.FC = () => {
               content: "أهلاً بك في مركز الهمم، أنا مُعين، مساعدك الرقمي.",
               nextStep: "needs_assessment",
             },
-              id: "needs_assessment",
+              {
+    id: "needs_assessment",
               type: "question",
               content:
                 "لفهم كيفية مساعدتك بشكل أفضل، هل يمكنك اختيار الفئة الأقرب لاحتياجك؟",
@@ -93,7 +96,8 @@ const FlowsManagementPage: React.FC = () => {
             },
           ],
         },
-          id: "appointment_slack",
+          {
+    id: "appointment_slack",
           name: "حجز المواعيد مع Slack",
           description: "نظام حجز المواعيد مع إشعارات Slack للطاقم الطبي",
           entryPoints: ["موعد", "حجز", "جدولة", "appointment"],
@@ -109,7 +113,8 @@ const FlowsManagementPage: React.FC = () => {
               options: ["موعد جديد", "متابعة", "إعادة جدولة"],
               nextStep: "check_schedule",
             },
-              id: "slack_notification",
+              {
+    id: "slack_notification",
               type: "slack_notify",
               content: "تم حجز موعد جديد",
               slackChannel: "appointments",
@@ -118,7 +123,8 @@ const FlowsManagementPage: React.FC = () => {
             },
           ],
         },
-          id: "emergency_slack",
+          {
+    id: "emergency_slack",
           name: "الطوارئ مع Slack",
           description: "نظام طوارئ متكامل مع إشعارات Slack",
           entryPoints: ["طارئ", "عاجل", "خطر", "إسعاف"],
@@ -134,7 +140,8 @@ const FlowsManagementPage: React.FC = () => {
                 "🚨 تم اكتشاف حالة طوارئ! يرجى الاتصال فوراً بالرقم 997 أو 911.",
               nextStep: "slack_alert",
             },
-              id: "slack_alert",
+              {
+    id: "slack_alert",
               type: "slack_notify",
               content: "تنبيه طارئ من المريض",
               slackChannel: "emergency",

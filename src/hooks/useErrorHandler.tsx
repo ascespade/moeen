@@ -13,6 +13,8 @@ interface ErrorHandlerOptions {
   logError?: boolean;
   fallbackMessage?: string;
 
+}
+
 export function useErrorHandler() {
   const { t } = useT();
 

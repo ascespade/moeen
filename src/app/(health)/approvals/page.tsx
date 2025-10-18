@@ -38,6 +38,8 @@ interface Approval {
   attachments: string[];
   notes?: string;
 
+}
+
 const mockApprovals: Approval[] = [
   {
     id: "1",
@@ -61,6 +63,7 @@ const mockApprovals: Approval[] = [
     attachments: ["التقرير الطبي.pdf", "الأشعة.pdf"],
     notes: "تمت الموافقة مع تعديل عدد الجلسات من 20 إلى 18 جلسة",
   },
+    {
     id: "2",
     patientName: "فاطمة عبدالله السعيد",
     patientId: "P002",
@@ -78,6 +81,7 @@ const mockApprovals: Approval[] = [
     hasOutstandingBalance: false,
     attachments: ["التقرير النفسي.pdf"],
   },
+    {
     id: "3",
     patientName: "محمد سالم القحطاني",
     patientId: "P003",
@@ -98,6 +102,7 @@ const mockApprovals: Approval[] = [
     outstandingAmount: 5000,
     attachments: ["التقرير الجراحي.pdf", "الأشعة المقطعية.pdf"],
   },
+    {
     id: "4",
     patientName: "نورا أحمد الزهراني",
     patientId: "P004",
@@ -115,6 +120,7 @@ const mockApprovals: Approval[] = [
     hasOutstandingBalance: false,
     attachments: ["التقرير الطبي.pdf", "أشعة الركبة.pdf"],
   },
+    {
     id: "5",
     patientName: "سعد عبدالرحمن الغامدي",
     patientId: "P005",

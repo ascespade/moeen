@@ -10,6 +10,8 @@ interface RateLimitConfig {
   maxRequests: number;
   message: string;
 
+}
+
 const rateLimitConfigs: Record<string, RateLimitConfig> = {
   "/api/auth/login": {
     windowMs: 15 * 60 * 1000, // 15 minutes

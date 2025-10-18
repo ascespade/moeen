@@ -38,6 +38,8 @@ interface PatientData {
     lastPayment: string;
   };
 
+}
+
 export default function PatientDashboard() {
   const { t } = useT();
   const { theme } = useTheme();

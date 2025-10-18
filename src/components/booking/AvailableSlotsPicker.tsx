@@ -19,6 +19,8 @@ interface Props {
   onSelect: (slot: Slot) => void;
   selectedSlot?: Slot;
 
+}
+
 export default function AvailableSlotsPicker({
   sessionTypeId,
   selectedDate,

@@ -11,6 +11,8 @@ interface UseApiState<T> {
   error: string | null;
   refetch: () => Promise<void>;
 
+}
+
 export const useApi = <T = any>(
   endpoint: string,
   options?: RequestInit,

@@ -14,6 +14,8 @@ class RateLimiter {
 
     // Clean up expired entries every minute
     setInterval(() => {
+}
+
       const now = Date.now();
       for (const [key, value] of this.requests.entries()) {
         if (now > value.resetTime) {

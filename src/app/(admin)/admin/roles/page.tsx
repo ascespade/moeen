@@ -30,6 +30,7 @@ const mockRoles: Role[] = [
     userCount: 5,
     createdAt: "2024-01-01",
   },
+    {
     id: "3",
     name: "طبيب",
     description: "إدارة المرضى والمواعيد",
@@ -37,6 +38,7 @@ const mockRoles: Role[] = [
     userCount: 12,
     createdAt: "2024-01-01",
   },
+    {
     id: "4",
     name: "ممرض",
     description: "إدارة الجلسات والمرضى",
@@ -166,6 +168,8 @@ export default function RolesPage() {
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {role.permissions.map((permission) => {
+}
+
                         const perm = allPermissions.find(
                           (p) => p.id === permission,
                         );

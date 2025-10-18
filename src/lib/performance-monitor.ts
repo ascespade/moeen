@@ -35,6 +35,8 @@ interface PerformanceThresholds {
   };
 
 // Performance monitor class
+}
+
 export class PerformanceMonitor {
   private static instance: PerformanceMonitor;
   private metrics: PerformanceMetrics[] = [];
@@ -484,6 +486,8 @@ interface RealTimeMetrics {
   uptime: number;
 
 // Performance middleware
+}
+
 export function withPerformanceMonitoring(handler: Function) {
   return async (request: NextRequest, ...args: any[]) => {
     const monitor = PerformanceMonitor.getInstance();

@@ -43,6 +43,8 @@ interface StaffData {
     timestamp: string;
   }>;
 
+}
+
 export default function StaffDashboard() {
   const { t } = useT();
   const { theme } = useTheme();

@@ -35,6 +35,8 @@ interface Doctor {
   availableSlots: string[];
   maxPatientsPerDay: number;
 
+}
+
 const AppointmentManager: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
@@ -88,7 +90,8 @@ const AppointmentManager: React.FC = () => {
         createdAt: "2024-01-10T09:00:00Z",
         updatedAt: "2024-01-10T09:00:00Z",
       },
-        id: "2",
+        {
+    id: "2",
         patientName: "فاطمة علي",
         patientPhone: "+966502345678",
         patientEmail: "fatima@example.com",
@@ -115,13 +118,15 @@ const AppointmentManager: React.FC = () => {
         availableSlots: ["09:00", "10:00", "11:00", "14:00", "15:00"],
         maxPatientsPerDay: 20,
       },
-        id: "2",
+        {
+    id: "2",
         name: "د. محمد حسن",
         specialty: "العلاج الطبيعي",
         availableSlots: ["08:00", "09:30", "11:00", "13:30", "15:00"],
         maxPatientsPerDay: 15,
       },
-        id: "3",
+        {
+    id: "3",
         name: "د. نورا سالم",
         specialty: "العلاج الوظيفي",
         availableSlots: ["09:00", "10:30", "12:00", "14:30", "16:00"],

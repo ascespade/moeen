@@ -10,6 +10,8 @@ interface SMSResult {
   messageId?: string;
   error?: string;
 
+}
+
 export class SMSNotificationService {
   private apiKey: string;
   private apiUrl: string;

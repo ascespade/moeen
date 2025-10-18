@@ -15,6 +15,8 @@ interface ErrorReport {
   context: ErrorContext;
   componentStack?: string;
 
+}
+
 export class ErrorHandler {
   private static instance: ErrorHandler;
   private errorQueue: ErrorReport[] = [];

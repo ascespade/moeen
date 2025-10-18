@@ -23,6 +23,8 @@ class RedisCache {
     try {
       // In a real implementation, this would use Redis
       // For now, we'll use a simple in-memory cache
+}
+
       const cached = this.getFromMemory(key);
       return cached ? JSON.parse(cached) : null;
     } catch (error) {

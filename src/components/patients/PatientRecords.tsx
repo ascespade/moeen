@@ -51,6 +51,8 @@ interface MedicalRecord {
   followUpRequired: boolean;
   followUpDate?: string;
 
+}
+
 const PatientRecords: React.FC = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [medicalRecords, setMedicalRecords] = useState<MedicalRecord[]>([]);
@@ -134,7 +136,8 @@ const PatientRecords: React.FC = () => {
         lastVisit: "2024-01-10T00:00:00Z",
         status: "active",
       },
-        id: "2",
+        {
+    id: "2",
         name: "فاطمة علي السالم",
         phone: "+966502345678",
         email: "fatima@example.com",
@@ -179,7 +182,8 @@ const PatientRecords: React.FC = () => {
         followUpRequired: true,
         followUpDate: "2024-02-10",
       },
-        id: "2",
+        {
+    id: "2",
         patientId: "2",
         date: "2024-01-12",
         doctorName: "د. محمد حسن",

@@ -32,7 +32,8 @@ const seed: Conversation[] = [
         text: "مرحبا، لدي استفسار.",
         ts: new Date().toISOString(),
       },
-        id: "m2",
+        {
+    id: "m2",
         from: "agent",
         text: "أهلاً بك! كيف أستطيع المساعدة؟",
         ts: new Date().toISOString(),
@@ -59,6 +60,8 @@ export default function ConversationsPage() {
 
   function send() {
     if (!input.trim() || !active) return;
+}
+
     const newMsg: Message = {
       id: Math.random().toString(36).slice(2),
       from: "agent",

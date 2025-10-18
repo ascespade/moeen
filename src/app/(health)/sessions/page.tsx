@@ -16,6 +16,8 @@ interface Session {
   status: "upcoming" | "in-progress" | "completed" | "cancelled";
   notes?: string;
 
+}
+
 const mockSessions: Session[] = [
   {
     id: "1",
@@ -27,6 +29,7 @@ const mockSessions: Session[] = [
     status: "in-progress",
     notes: "جلسة علاج طبيعي للظهر",
   },
+    {
     id: "2",
     patientName: "فاطمة السعيد",
     doctorName: "د. محمد حسن",
@@ -35,6 +38,7 @@ const mockSessions: Session[] = [
     endTime: "11:15",
     status: "upcoming",
   },
+    {
     id: "3",
     patientName: "خالد القحطاني",
     doctorName: "د. نورا محمد",
@@ -43,6 +47,7 @@ const mockSessions: Session[] = [
     endTime: "14:30",
     status: "completed",
   },
+    {
     id: "4",
     patientName: "نورا السعد",
     doctorName: "د. خالد العتيبي",

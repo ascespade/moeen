@@ -46,6 +46,8 @@ interface DashboardStats {
   totalPatients: number;
   totalDoctors: number;
 
+}
+
 const CRMDashboard: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();

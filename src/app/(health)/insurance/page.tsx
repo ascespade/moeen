@@ -25,6 +25,8 @@ interface InsuranceClaim {
   hasOutstandingBalance: boolean;
   outstandingAmount?: number;
 
+}
+
 const mockClaims: InsuranceClaim[] = [
   {
     id: "1",
@@ -40,6 +42,7 @@ const mockClaims: InsuranceClaim[] = [
     isBlocked: false,
     hasOutstandingBalance: false,
   },
+    {
     id: "2",
     patientName: "فاطمة عبدالله السعيد",
     patientId: "P002",
@@ -52,6 +55,7 @@ const mockClaims: InsuranceClaim[] = [
     isBlocked: false,
     hasOutstandingBalance: false,
   },
+    {
     id: "3",
     patientName: "محمد سالم القحطاني",
     patientId: "P003",
@@ -66,6 +70,7 @@ const mockClaims: InsuranceClaim[] = [
     hasOutstandingBalance: true,
     outstandingAmount: 1200,
   },
+    {
     id: "4",
     patientName: "نورا أحمد الزهراني",
     patientId: "P004",

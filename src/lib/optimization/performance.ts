@@ -26,6 +26,8 @@ class PerformanceMonitor {
     operation: string,
     metadata?: Record<string, any>,
   ): void {
+}
+
     const startTime = performance.now();
     const memoryUsage = process.memoryUsage();
 

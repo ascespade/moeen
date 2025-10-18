@@ -27,6 +27,8 @@ interface ClaimsManagerProps {
   patientId?: string;
   onClaimUpdate?: () => void;
 
+}
+
 export default function ClaimsManager({
   patientId,
   onClaimUpdate,

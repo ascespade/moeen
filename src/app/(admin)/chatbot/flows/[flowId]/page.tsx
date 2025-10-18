@@ -23,6 +23,8 @@ interface Connection {
   source: string;
   target: string;
 
+}
+
 const mockFlow = {
   id: "1",
   name: "استقبال المرضى",
@@ -33,7 +35,8 @@ const mockFlow = {
       type: "start",
       position: { x: 100, y: 100 },
       data: { label: "بداية المحادثة" },
-      id: "welcome",
+      {
+    id: "welcome",
       type: "message",
       position: { x: 300, y: 100 },
       data: {
@@ -41,7 +44,8 @@ const mockFlow = {
         content:
           "مرحباً بك في مركز الهمم للرعاية الصحية المتخصصة! كيف يمكنني مساعدتك اليوم؟",
       },
-      id: "menu",
+      {
+    id: "menu",
       type: "message",
       position: { x: 500, y: 100 },
       data: {
@@ -49,21 +53,24 @@ const mockFlow = {
         content:
           "يرجى اختيار إحدى الخدمات التالية:\n1️⃣ حجز موعد\n2️⃣ استفسار عن الخدمات\n3️⃣ التواصل معنا\n4️⃣ معلومات الاتصال",
       },
-      id: "condition1",
+      {
+    id: "condition1",
       type: "condition",
       position: { x: 700, y: 50 },
       data: {
         label: "هل يريد حجز موعد؟",
         condition: "user_input == '1'",
       },
-      id: "appointment",
+      {
+    id: "appointment",
       type: "action",
       position: { x: 900, y: 50 },
       data: {
         label: "حجز موعد",
         action: "redirect_to_appointment",
       },
-      id: "services",
+      {
+    id: "services",
       type: "message",
       position: { x: 700, y: 200 },
       data: {
@@ -71,7 +78,8 @@ const mockFlow = {
         content:
           "نقدم خدمات متخصصة في:\n• العلاج الطبيعي\n• العلاج النفسي\n• العلاج الوظيفي\n• الاستشارات الطبية",
       },
-      id: "end",
+      {
+    id: "end",
       type: "end",
       position: { x: 1100, y: 100 },
       data: { label: "نهاية المحادثة" },

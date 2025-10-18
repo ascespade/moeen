@@ -31,6 +31,8 @@ class TranslationService {
     try {
       // Check cache first
       if (this.cache[language] && this.isCacheValid(language)) {
+}
+
         const cached = this.cache[language];
         const translations: { [key: string]: string } = {};
         for (const key in cached) {

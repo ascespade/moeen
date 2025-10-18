@@ -49,7 +49,8 @@ export async function GET(request: NextRequest) {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         },
-          id: "2",
+          {
+    id: "2",
           key: "registration_enabled",
           value: "true",
           description: "Allow new user registrations",
@@ -58,7 +59,8 @@ export async function GET(request: NextRequest) {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         },
-          id: "3",
+          {
+    id: "3",
           key: "max_users",
           value: "1000",
           description: "Maximum number of users allowed",
@@ -67,7 +69,8 @@ export async function GET(request: NextRequest) {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         },
-          id: "4",
+          {
+    id: "4",
           key: "session_timeout",
           value: "3600",
           description: "Session timeout in seconds",
@@ -76,7 +79,8 @@ export async function GET(request: NextRequest) {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         },
-          id: "5",
+          {
+    id: "5",
           key: "api_rate_limit",
           value: "100",
           description: "API rate limit per minute",

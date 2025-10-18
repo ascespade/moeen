@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 
-import {
-
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -46,6 +44,8 @@ interface SecurityEvent {
   ipAddress: string;
   userAgent: string;
   success: boolean;
+
+}
 
 export default function AdminPage() {
   const [users, setUsers] = useState<User[]>([]);
@@ -110,7 +110,8 @@ export default function AdminPage() {
           createdAt: new Date().toISOString(),
           permissions: ["all"],
         },
-          id: "2",
+          {
+    id: "2",
           email: "doctor@example.com",
           name: "Dr. Smith",
           role: "doctor",
@@ -128,7 +129,8 @@ export default function AdminPage() {
           category: "system",
           isSecret: false,
         },
-          id: "2",
+          {
+    id: "2",
           key: "registration_enabled",
           value: "true",
           description: "Allow new user registrations",

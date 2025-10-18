@@ -14,6 +14,8 @@ interface Message {
 interface MoeenChatbotProps {
   position?: "bottom-right" | "bottom-left";
 
+}
+
 export default function MoeenChatbot({
   position = "bottom-right",
 }: MoeenChatbotProps) {

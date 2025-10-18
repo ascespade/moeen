@@ -20,6 +20,8 @@ interface Activity {
   createdAt: string;
   completedAt?: string;
 
+}
+
 const mockActivities: Activity[] = [
   {
     id: "1",
@@ -34,6 +36,7 @@ const mockActivities: Activity[] = [
     priority: "high",
     createdAt: "2024-01-15",
   },
+    {
     id: "2",
     type: "meeting",
     title: "اجتماع مع فريق مستشفى الملك فهد",
@@ -47,6 +50,7 @@ const mockActivities: Activity[] = [
     createdAt: "2024-01-10",
     completedAt: "2024-01-18",
   },
+    {
     id: "3",
     type: "task",
     title: "إعداد عرض تقديمي للعميل",

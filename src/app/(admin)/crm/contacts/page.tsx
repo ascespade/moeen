@@ -52,6 +52,8 @@ interface ContactActivity {
   user_id: string;
   user_name: string;
 
+}
+
 const ContactsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
@@ -103,7 +105,8 @@ const ContactsPage: React.FC = () => {
             linkedin: "ahmed-mohammed",
             twitter: "@ahmed_m",
           },
-          id: "2",
+          {
+    id: "2",
           first_name: "فاطمة",
           last_name: "العلي",
           email: "fatima@example.com",
@@ -133,7 +136,8 @@ const ContactsPage: React.FC = () => {
           user_id: "user-1",
           user_name: "سارة أحمد",
         },
-          id: "2",
+          {
+    id: "2",
           contact_id: "1",
           type: "meeting",
           subject: "اجتماع تقديم الخدمات",

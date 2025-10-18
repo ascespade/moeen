@@ -21,6 +21,8 @@ interface ActivationFlowProps {
   patientId: string;
   onActivationComplete?: () => void;
 
+}
+
 export default function ActivationFlow({
   patientId,
   onActivationComplete,
@@ -37,21 +39,24 @@ export default function ActivationFlow({
       required: true,
       icon: <FileText className="h-5 w-5" />,
     },
-      id: "insurance_verified",
+      {
+    id: "insurance_verified",
       title: t("patient.activation.steps.insurance_verified"),
       description: t("patient.activation.steps.insurance_verified_desc"),
       completed: false,
       required: true,
       icon: <Shield className="h-5 w-5" />,
     },
-      id: "payment_settled",
+      {
+    id: "payment_settled",
       title: t("patient.activation.steps.payment_settled"),
       description: t("patient.activation.steps.payment_settled_desc"),
       completed: false,
       required: true,
       icon: <CreditCard className="h-5 w-5" />,
     },
-      id: "first_visit_completed",
+      {
+    id: "first_visit_completed",
       title: t("patient.activation.steps.first_visit"),
       description: t("patient.activation.steps.first_visit_desc"),
       completed: false,

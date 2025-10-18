@@ -22,6 +22,8 @@ interface Integration {
   config: any;
   health_score: number;
 
+}
+
 const IntegrationsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
@@ -67,7 +69,8 @@ const IntegrationsPage: React.FC = () => {
               apiKeys.find((k: any) => k.id === "supabase_anon")?.status ||
               "inactive",
           },
-          id: "whatsapp",
+          {
+    id: "whatsapp",
           name: "WhatsApp Business API",
           description: "تكامل مع واتساب لإرسال الرسائل والتذكيرات التلقائية",
           type: "api",
@@ -89,7 +92,8 @@ const IntegrationsPage: React.FC = () => {
               apiKeys.find((k: any) => k.id === "whatsapp_token")?.status ||
               "inactive",
           },
-          id: "google",
+          {
+    id: "google",
           name: "Google Calendar",
           description: "مزامنة المواعيد تلقائياً مع تقويم جوجل",
           type: "oauth",
@@ -110,7 +114,8 @@ const IntegrationsPage: React.FC = () => {
               : "غير مُعد",
             calendar_sync: "bidirectional",
           },
-          id: "stripe",
+          {
+    id: "stripe",
           name: "Stripe Payments",
           description: "معالجة الدفعات الإلكترونية والاشتراكات",
           type: "api",
@@ -131,7 +136,8 @@ const IntegrationsPage: React.FC = () => {
               : "غير مُعد",
             webhooks: "enabled",
           },
-          id: "smtp",
+          {
+    id: "smtp",
           name: "Email / SMTP",
           description: "إرسال الإشعارات والتقارير عبر البريد الإلكتروني",
           type: "email",

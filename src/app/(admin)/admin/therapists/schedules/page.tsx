@@ -30,6 +30,8 @@ const DAYS = [
   "السبت",
 ];
 
+}
+
 export default function TherapistSchedulesPage() {
   const [therapists, setTherapists] = useState<Therapist[]>([]);
   const [selectedTherapist, setSelectedTherapist] = useState<string>(&quot;&quot;);

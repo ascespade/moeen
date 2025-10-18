@@ -11,6 +11,8 @@ interface PerformanceOptimizedImageProps {
   placeholder?: string;
   priority?: boolean;
 
+}
+
 export function PerformanceOptimizedImage({
   src,
   alt,

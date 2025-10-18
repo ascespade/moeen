@@ -78,6 +78,8 @@ interface SecurityAlert {
   resolved_at?: string;
   assigned_to?: string;
 
+}
+
 const SecurityPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
@@ -123,7 +125,8 @@ const SecurityPage: React.FC = () => {
           details: "تسجيل دخول ناجح",
           risk_level: "low",
         },
-          id: "2",
+          {
+    id: "2",
           type: "failed_login",
           user_id: "unknown",
           user_name: "مجهول",
@@ -138,7 +141,8 @@ const SecurityPage: React.FC = () => {
           details: "محاولة تسجيل دخول فاشلة - كلمة مرور خاطئة",
           risk_level: "high",
         },
-          id: "3",
+          {
+    id: "3",
           type: "data_access",
           user_id: "user-2",
           user_name: "أ. محمد السعد",
@@ -172,7 +176,8 @@ const SecurityPage: React.FC = () => {
           last_updated: "2024-01-01T00:00:00Z",
           updated_by: "مدير النظام",
         },
-          id: "2",
+          {
+    id: "2",
           name: "سياسة الوصول إلى البيانات",
           description: "قواعد الوصول إلى البيانات الطبية",
           category: "data_protection",
@@ -201,7 +206,8 @@ const SecurityPage: React.FC = () => {
           last_activity: "2024-01-15T10:30:00Z",
           is_active: true,
         },
-          id: "2",
+          {
+    id: "2",
           user_id: "user-2",
           user_name: "أ. محمد السعد",
           ip_address: "192.168.1.105",
@@ -225,7 +231,8 @@ const SecurityPage: React.FC = () => {
           created_at: "2024-01-15T09:45:00Z",
           assigned_to: "فريق الأمان",
         },
-          id: "2",
+          {
+    id: "2",
           title: "وصول غير عادي للبيانات",
           description: "تم الوصول إلى ملفات حساسة في وقت غير عادي",
           severity: "medium",

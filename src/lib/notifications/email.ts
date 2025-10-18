@@ -11,6 +11,8 @@ interface EmailData {
   data: Record<string, any>;
   language?: "ar" | "en";
 
+}
+
 export class EmailNotificationService {
   private templates: Map<string, EmailTemplate> = new Map();
 

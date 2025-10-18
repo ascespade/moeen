@@ -92,6 +92,8 @@ interface DesignSystemProviderProps {
   children: ReactNode;
   initialConfig?: Partial<DesignSystemConfig>;
 
+}
+
 export function DesignSystemProvider({
   children,
   initialConfig = {},

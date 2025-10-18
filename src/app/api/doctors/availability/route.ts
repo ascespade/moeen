@@ -8,6 +8,8 @@ interface TimeSlot {
   timeString: string;
   available: boolean;
 
+}
+
 export async function GET(request: NextRequest) {
   try {
     const { user, error: authError } = await authorize(request);

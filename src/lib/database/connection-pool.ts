@@ -46,6 +46,8 @@ class DatabaseConnectionPool {
   private async initializePool(): Promise<void> {
     // Initialize minimum connections
     for (let i = 0; i < this.config.minConnections; i++) {
+}
+
       const connection = await this.createConnection();
       this.connections.push(connection);
 
