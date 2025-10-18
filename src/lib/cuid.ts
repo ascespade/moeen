@@ -1,3 +1,4 @@
+
 /**
  * CUID (Collision-resistant Unique Identifier) Generator
  * A centralized system for generating unique IDs across the application
@@ -53,7 +54,6 @@ function hostname(): string {
  * Generate a CUID (Legacy implementation for backward compatibility)
  * Format: c + timestamp + counter + random + hostname
  */
-export function generateCuid(): string {
   counter++;
 
   const timestampPart = timestamp();
@@ -68,14 +68,12 @@ export function generateCuid(): string {
  * Generate a CUID for database records
  * Includes prefix for easy identification
  */
-export function generateDbCuid(prefix: string = "db"): string {
   return `${prefix}_${generateCuid()}`;
 }
 
 /**
  * Generate CUID for specific entity types
  */
-export const cuid = {
   // User related
   user: () => generateDbCuid("usr"),
   userRole: () => generateDbCuid("rol"),
@@ -102,7 +100,6 @@ export const cuid = {
 /**
  * Validate CUID format
  */
-export function isValidCuid(id: string): boolean {
   const cuidRegex = /^c[a-z0-9]{24}$/;
   const dbCuidRegex = /^[a-z]+_[a-z0-9]{25}$/;
 
@@ -112,7 +109,6 @@ export function isValidCuid(id: string): boolean {
 /**
  * Extract prefix from CUID
  */
-export function extractPrefix(id: string): string | null {
   const match = id.match(/^([a-z]+)_/);
   return match && typeof match[1] === "string" ? match[1] : null;
 }
@@ -120,7 +116,6 @@ export function extractPrefix(id: string): string | null {
 /**
  * Generate multiple CUIDs at once
  */
-export function generateMultipleCuid(count: number, prefix?: string): string[] {
   return Array.from({ length: count }, () =>
     prefix ? generateDbCuid(prefix) : generateCuid(),
   );
@@ -132,7 +127,6 @@ export function generateMultipleCuid(count: number, prefix?: string): string[] {
  * Generate a production-grade CUID using @paralleldrive/cuid2
  * This is the recommended method for new implementations
  */
-export function generateProductionCuid(): string {
   return createId();
 }
 
@@ -141,7 +135,6 @@ export function generateProductionCuid(): string {
  * @param prefix - Prefix for the ID (default: 'pub')
  * @returns Formatted public ID
  */
-export function generatePublicId(prefix: string = "pub"): string {
   return `${prefix}_${createId()}`;
 }
 
@@ -149,14 +142,12 @@ export function generatePublicId(prefix: string = "pub"): string {
  * Generate a short ID (last 8 characters)
  * @returns Short ID string
  */
-export function generateShortId(): string {
   return createId().slice(-8);
 }
 
 /**
  * Entity-specific CUID generators for all database tables
  */
-export const cuidEntity = {
   // Healthcare entities
   patient: () => generatePublicId("pat"),
   appointment: () => generatePublicId("apt"),
@@ -193,4 +184,17 @@ export const cuidEntity = {
   custom: (prefix: string) => generatePublicId(prefix),
 };
 
+
+
+// Exports
+export function generateCuid(): string {
+export function generateDbCuid(prefix: string = "db"): string {
+export const cuid = {
+export function isValidCuid(id: string): boolean {
+export function extractPrefix(id: string): string | null {
+export function generateMultipleCuid(count: number, prefix?: string): string[] {
+export function generateProductionCuid(): string {
+export function generatePublicId(prefix: string = "pub"): string {
+export function generateShortId(): string {
+export const cuidEntity = {
 export default generateCuid;

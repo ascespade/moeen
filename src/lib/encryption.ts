@@ -1,3 +1,4 @@
+
 /**
  * Professional Encryption Utility
  * Using AES-256-GCM encryption via crypto-js
@@ -25,7 +26,6 @@ const getEncryptionKey = (): string => {
  * @param data - String or object to encrypt
  * @returns Encrypted string
  */
-export function encrypt(data: string | object): string {
   try {
     const plaintext = typeof data === 'string' ? data : JSON.stringify(data);
     const key = getEncryptionKey();
@@ -46,7 +46,6 @@ export function encrypt(data: string | object): string {
  * @param parseJSON - Whether to parse result as JSON
  * @returns Decrypted string or object
  */
-export function decrypt<T = string>(encryptedData: string, parseJSON: boolean = false): T {
   try {
     const key = getEncryptionKey();
     
@@ -75,7 +74,6 @@ export function decrypt<T = string>(encryptedData: string, parseJSON: boolean = 
  * @param data - Data to hash
  * @returns Hashed string
  */
-export function hash(data: string): string {
   return CryptoJS.SHA256(data).toString();
 }
 
@@ -85,7 +83,6 @@ export function hash(data: string): string {
  * @param secret - Secret key (optional, uses env key)
  * @returns HMAC signature
  */
-export function sign(data: string, secret?: string): string {
   const key = secret || getEncryptionKey();
   return CryptoJS.HmacSHA256(data, key).toString();
 }
@@ -97,7 +94,6 @@ export function sign(data: string, secret?: string): string {
  * @param secret - Secret key (optional, uses env key)
  * @returns true if valid, false otherwise
  */
-export function verify(data: string, signature: string, secret?: string): boolean {
   const expectedSignature = sign(data, secret);
   return expectedSignature === signature;
 }
@@ -107,7 +103,6 @@ export function verify(data: string, signature: string, secret?: string): boolea
  * @param length - Token length (default: 32)
  * @returns Random token string
  */
-export function generateToken(length: number = 32): string {
   const bytes = CryptoJS.lib.WordArray.random(length);
   return bytes.toString(CryptoJS.enc.Hex);
 }
@@ -117,7 +112,6 @@ export function generateToken(length: number = 32): string {
  * @param apiKey - API key to encrypt
  * @returns Encrypted API key
  */
-export function encryptApiKey(apiKey: string): string {
   return encrypt(apiKey);
 }
 
@@ -126,7 +120,6 @@ export function encryptApiKey(apiKey: string): string {
  * @param encryptedKey - Encrypted API key
  * @returns Decrypted API key
  */
-export function decryptApiKey(encryptedKey: string): string {
   return decrypt(encryptedKey);
 }
 
@@ -134,7 +127,6 @@ export function decryptApiKey(encryptedKey: string): string {
  * Legacy: Backward compatibility for Base64 (DEPRECATED)
  * @deprecated Use encrypt() instead
  */
-export function encodeBase64(data: string): string {
   console.warn('⚠️ encodeBase64 is deprecated. Use encrypt() instead for better security.');
   return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(data));
 }
@@ -143,13 +135,11 @@ export function encodeBase64(data: string): string {
  * Legacy: Backward compatibility for Base64 (DEPRECATED)
  * @deprecated Use decrypt() instead
  */
-export function decodeBase64(encoded: string): string {
   console.warn('⚠️ decodeBase64 is deprecated. Use decrypt() instead for better security.');
   return CryptoJS.enc.Base64.parse(encoded).toString(CryptoJS.enc.Utf8);
 }
 
 // Export everything as default for convenience
-export default {
   encrypt,
   decrypt,
   hash,
@@ -162,3 +152,17 @@ export default {
   encodeBase64,
   decodeBase64,
 };
+
+
+// Exports
+export function encrypt(data: string | object): string {
+export function decrypt<T = string>(encryptedData: string, parseJSON: boolean = false): T {
+export function hash(data: string): string {
+export function sign(data: string, secret?: string): string {
+export function verify(data: string, signature: string, secret?: string): boolean {
+export function generateToken(length: number = 32): string {
+export function encryptApiKey(apiKey: string): string {
+export function decryptApiKey(encryptedKey: string): string {
+export function encodeBase64(data: string): string {
+export function decodeBase64(encoded: string): string {
+export default {

@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react";
-export type Column<T> = { key: keyof T; header: string };
-
 export function DataTable<T extends Record<string, unknown>>({
+export type Column<T> = { key: keyof T; header: string };
+import { useMemo, useState } from "react";
+
   data,
   columns,
   pageSize = 10,

@@ -8,7 +8,6 @@ interface TabsContextValue {
 
 const TabsContext = createContext<TabsContextValue | undefined>(undefined);
 
-export function Tabs({
   defaultValue,
   value,
   onValueChange,
@@ -32,7 +31,6 @@ export function Tabs({
   );
 }
 
-export function TabsList({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
@@ -47,7 +45,6 @@ export function TabsList({
   );
 }
 
-export function TabsTrigger({
   value,
   className,
   ...props
@@ -76,7 +73,6 @@ export function TabsTrigger({
   );
 }
 
-export function TabsContent({
   value,
   className,
   ...props
@@ -103,4 +99,11 @@ export function TabsContent({
   );
 }
 
+
+
+// Exports
+export function Tabs({
+export function TabsList({
+export function TabsTrigger({
+export function TabsContent({
 export default Tabs;

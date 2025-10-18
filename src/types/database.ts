@@ -1,7 +1,7 @@
+
 // Database type definitions
 // These types match the database schema defined in the migrations
 
-export interface UserPreferences {
   id: string;
   user_id: string;
   theme: "light" | "dark" | "system";
@@ -14,7 +14,6 @@ export interface UserPreferences {
   updated_at: string;
 }
 
-export interface Translation {
   id: string;
   locale: string;
   namespace: string;
@@ -24,7 +23,6 @@ export interface Translation {
   updated_at: string;
 }
 
-export interface User {
   id: string;
   email: string;
   password_hash?: string;
@@ -38,7 +36,6 @@ export interface User {
   updated_at: string;
 }
 
-export interface Profile {
   id: string;
   bio?: string;
   specialization?: string;
@@ -49,7 +46,6 @@ export interface Profile {
   updated_at: string;
 }
 
-export interface Patient {
   id: string;
   public_id: string;
   name: string;
@@ -62,7 +58,6 @@ export interface Patient {
   updated_at: string;
 }
 
-export interface Doctor {
   id: string;
   public_id: string;
   name: string;
@@ -73,7 +68,6 @@ export interface Doctor {
   updated_at: string;
 }
 
-export interface Appointment {
   id: string;
   public_id: string;
   patient_id: string;
@@ -87,7 +81,6 @@ export interface Appointment {
   updated_at: string;
 }
 
-export interface Session {
   id: string;
   public_id: string;
   patient_id: string;
@@ -102,7 +95,6 @@ export interface Session {
   updated_at: string;
 }
 
-export interface InsuranceClaim {
   id: string;
   public_id: string;
   patient_id: string;
@@ -117,7 +109,6 @@ export interface InsuranceClaim {
 }
 
 // Chatbot related types
-export interface ChatbotFlow {
   id: string;
   public_id: string;
   name: string;
@@ -128,7 +119,6 @@ export interface ChatbotFlow {
   updated_at: string;
 }
 
-export interface ChatbotNode {
   id: string;
   public_id: string;
   flow_id: string;
@@ -141,7 +131,6 @@ export interface ChatbotNode {
   updated_at: string;
 }
 
-export interface ChatbotEdge {
   id: string;
   public_id: string;
   flow_id: string;
@@ -153,7 +142,6 @@ export interface ChatbotEdge {
 }
 
 // CRM related types
-export interface CRMLead {
   id: string;
   public_id: string;
   name: string;
@@ -175,7 +163,6 @@ export interface CRMLead {
   updated_at: string;
 }
 
-export interface CRMDeal {
   id: string;
   public_id: string;
   name: string;
@@ -196,7 +183,6 @@ export interface CRMDeal {
   updated_at: string;
 }
 
-export interface CRMActivity {
   id: string;
   public_id: string;
   type: "call" | "email" | "meeting" | "task" | "note";
@@ -212,7 +198,6 @@ export interface CRMActivity {
 }
 
 // System types
-export interface Notification {
   id: string;
   public_id: string;
   user_id: string;
@@ -225,7 +210,6 @@ export interface Notification {
   updated_at: string;
 }
 
-export interface InternalMessage {
   id: string;
   public_id: string;
   sender_id: string;
@@ -237,7 +221,6 @@ export interface InternalMessage {
   updated_at: string;
 }
 
-export interface AuditLog {
   id: string;
   public_id: string;
   user_id?: string;
@@ -251,7 +234,6 @@ export interface AuditLog {
   created_at: string;
 }
 
-export interface Setting {
   id: string;
   key: string;
   value: any; // JSONB
@@ -262,14 +244,12 @@ export interface Setting {
 }
 
 // API Response types
-export interface ApiResponse<T = any> {
   success: boolean;
   data?: T;
   error?: string;
   message?: string;
 }
 
-export interface PaginatedResponse<T = any> {
   success: boolean;
   data: T[];
   pagination: {
@@ -280,16 +260,40 @@ export interface PaginatedResponse<T = any> {
   };
 }
 
-export interface UserPreferencesResponse {
   theme: string;
   language: string;
   timezone: string;
   notifications_enabled: boolean;
 }
 
-export interface TranslationResponse {
   locale: string;
   ns: string;
   messages: Record<string, string>;
   source: "database" | "fallback";
 }
+
+
+// Exports
+export interface UserPreferences {
+export interface Translation {
+export interface User {
+export interface Profile {
+export interface Patient {
+export interface Doctor {
+export interface Appointment {
+export interface Session {
+export interface InsuranceClaim {
+export interface ChatbotFlow {
+export interface ChatbotNode {
+export interface ChatbotEdge {
+export interface CRMLead {
+export interface CRMDeal {
+export interface CRMActivity {
+export interface Notification {
+export interface InternalMessage {
+export interface AuditLog {
+export interface Setting {
+export interface ApiResponse<T = any> {
+export interface PaginatedResponse<T = any> {
+export interface UserPreferencesResponse {
+export interface TranslationResponse {

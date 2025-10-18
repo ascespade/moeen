@@ -1,3 +1,4 @@
+
 // Validation constants
 export const VALIDATION_RULES = {
   EMAIL: {

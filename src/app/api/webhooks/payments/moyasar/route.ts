@@ -1,8 +1,8 @@
+export async function POST(request: NextRequest) {
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { moyasarService } from '@/lib/payments/moyasar';
 
-export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 

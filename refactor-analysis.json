@@ -1,0 +1,949 @@
+{
+  "timestamp": "2025-10-18T04:11:56.931Z",
+  "totalFiles": 375,
+  "categories": {
+    "components": [
+      "src/types/components.ts",
+      "src/components/common/PerformanceOptimizedImage.tsx",
+      "src/components/common/LiveDot.tsx",
+      "src/components/common/LanguageSwitcher.tsx",
+      "src/components/common/index.ts",
+      "src/components/common/EmptyState.tsx",
+      "src/components/common/StatusBanner.tsx",
+      "src/components/common/OptimizedImage.tsx",
+      "src/components/common/ErrorBoundary.tsx",
+      "src/components/common/DirectionToggle.tsx",
+      "src/components/common/PlaceholderSquare.tsx",
+      "src/components/auth/ProtectedRoute.tsx",
+      "src/components/dashboard/KpiCard.tsx",
+      "src/components/dashboard/Charts.tsx",
+      "src/components/shell/Sidebar.tsx",
+      "src/components/shell/HeaderSimple.tsx",
+      "src/components/ui/Label.tsx",
+      "src/components/ui/Textarea.tsx",
+      "src/components/ui/Skeleton.tsx",
+      "src/components/ui/ScrollArea.tsx",
+      "src/components/ui/Tooltip.tsx",
+      "src/components/ui/Button.tsx",
+      "src/components/ui/Table.tsx",
+      "src/components/ui/Modal.tsx",
+      "src/components/ui/LoadingSpinner.tsx",
+      "src/components/ui/Switch.tsx",
+      "src/components/ui/Tabs.tsx",
+      "src/components/ui/index.ts",
+      "src/components/ui/Badge.tsx",
+      "src/components/ui/Input.tsx",
+      "src/components/ui/ThemeSwitch.tsx",
+      "src/components/ui/Toast.tsx",
+      "src/components/ui/Checkbox.tsx",
+      "src/components/ui/Card.tsx",
+      "src/components/ui/Select.tsx",
+      "src/components/ui/DataTable.tsx",
+      "src/components/accessibility/AccessibilitySettings.tsx",
+      "src/components/LanguageSwitcher.tsx",
+      "src/components/appointments/AppointmentManager.tsx",
+      "src/components/index.ts",
+      "src/components/shared/Modal.tsx",
+      "src/components/shared/LiveRegion.tsx",
+      "src/components/shared/Tabs.tsx",
+      "src/components/shared/index.ts",
+      "src/components/shared/EmptyState.tsx",
+      "src/components/shared/ScreenReaderOnly.tsx",
+      "src/components/shared/DataTable.tsx",
+      "src/components/shared/Form.tsx",
+      "src/components/patients/PatientRecords.tsx",
+      "src/components/insurance/ClaimsManager.tsx",
+      "src/components/settings/SettingsTabs.tsx",
+      "src/components/settings/KeywordEditor.tsx",
+      "src/components/layout/SmartHeader.tsx",
+      "src/components/layout/GlobalHeader.tsx",
+      "src/components/charts/LineChart.tsx",
+      "src/components/charts/AreaChart.tsx",
+      "src/components/charts/index.ts",
+      "src/components/charts/BarChart.tsx",
+      "src/components/patient/ActivationFlow.tsx",
+      "src/components/patient/PreVisitChecklist.tsx",
+      "src/components/chatbot/MoainChatbot.tsx",
+      "src/components/chatbot/MoeenChatbot.tsx",
+      "src/components/providers/I18nProvider.tsx",
+      "src/components/providers/UIProvider.tsx",
+      "src/components/providers/DesignSystemProvider.tsx"
+    ],
+    "services": [
+      "src/lib/i18n/translationService.ts",
+      "src/services/index.ts"
+    ],
+    "utils": [
+      "src/scripts/seed-complete-translations.js",
+      "src/scripts/validate-business-logic.js",
+      "src/scripts/validate-system.js",
+      "src/scripts/validate-dynamic-content.ts",
+      "src/scripts/system-validation.js",
+      "src/scripts/complete-translations.ts",
+      "src/scripts/cleanup-console-logs.js",
+      "src/scripts/seed-translations.ts",
+      "src/design-system/index.ts",
+      "src/context/TranslationProvider.tsx",
+      "src/__tests__/auth/login.test.tsx",
+      "src/__tests__/auth/reset-password.test.tsx",
+      "src/__tests__/auth/forgot-password.test.tsx",
+      "src/__tests__/auth/register.test.tsx",
+      "src/__tests__/whatsapp-integration.test.ts",
+      "src/__tests__/setup.ts",
+      "src/__tests__/ai-assistant.test.ts",
+      "src/__tests__/saudi-health-integration.test.ts",
+      "src/__tests__/whatsapp-business-api.test.ts",
+      "src/lib/notifications/email.ts",
+      "src/lib/notifications/sms.ts",
+      "src/lib/responsive-design.ts",
+      "src/lib/slack-integration.ts",
+      "src/lib/seo/metadata.ts",
+      "src/lib/encryption.ts",
+      "src/lib/monitoring/logger.ts",
+      "src/lib/errors/api-errors.ts",
+      "src/lib/cache-system.ts",
+      "src/lib/performance-monitor.ts",
+      "src/lib/auth/authorize.ts",
+      "src/lib/auth/roles.ts",
+      "src/lib/auth/index.ts",
+      "src/lib/database-utils.ts",
+      "src/lib/saudi-ministry-health-integration.ts",
+      "src/lib/whatsapp-integration.ts",
+      "src/lib/payments/stripe.ts",
+      "src/lib/payments/moyasar.ts",
+      "src/lib/supabase-real.ts",
+      "src/lib/translations-manager.ts",
+      "src/lib/logger.ts",
+      "src/lib/file-upload.ts",
+      "src/lib/security.ts",
+      "src/lib/analytics-stubs.ts",
+      "src/lib/saudi-health-integration.ts",
+      "src/lib/cache/redis.ts",
+      "src/lib/validation.ts",
+      "src/lib/optimization/performance.ts",
+      "src/lib/ai-assistant.ts",
+      "src/lib/whatsapp-business-api.ts",
+      "src/lib/design-tokens.ts",
+      "src/lib/conversation-flows.ts",
+      "src/lib/performance.ts",
+      "src/lib/accessibility/aria-utils.ts",
+      "src/lib/cn.ts",
+      "src/lib/rate-limiter.ts",
+      "src/lib/error-handler.ts",
+      "src/lib/cuid.ts",
+      "src/lib/integration-system.ts",
+      "src/lib/theme.ts",
+      "src/lib/dynamic-content-manager.ts",
+      "src/lib/utils.ts",
+      "src/lib/index.ts",
+      "src/lib/database.ts",
+      "src/lib/supabase.ts",
+      "src/lib/insurance/providers.ts",
+      "src/lib/supabaseClient.ts",
+      "src/lib/private-center-integration.ts",
+      "src/lib/performance-optimizations.ts",
+      "src/lib/accessibility.ts",
+      "src/lib/utils/request-helpers.ts",
+      "src/lib/validation/security.ts",
+      "src/lib/validation/schemas.ts",
+      "src/lib/dynamic-theme-manager.ts",
+      "src/lib/database/connection-pool.ts",
+      "src/lib/deployment/docker.ts",
+      "src/lib/supabase/server.ts",
+      "src/lib/supabase/client.ts",
+      "src/lib/testing/test-utils.ts",
+      "src/theme/index.ts",
+      "src/core/errors/index.ts",
+      "src/core/design-system/index.ts",
+      "src/core/utils.ts",
+      "src/core/theme/index.ts",
+      "src/core/index.ts",
+      "src/core/utils/index.ts",
+      "src/core/validation/index.ts",
+      "src/core/store/index.ts",
+      "src/middleware.disabled.ts",
+      "src/middleware/security.ts",
+      "src/middleware/rate-limiter.ts",
+      "src/middleware/auth.ts",
+      "src/utils/storage.ts",
+      "src/utils/validation.ts",
+      "src/utils/api.ts",
+      "src/utils/date.ts",
+      "src/utils/format.ts",
+      "src/utils/index.ts",
+      "src/utils/string.ts",
+      "src/utils/api-client.ts",
+      "src/middleware.prod.ts",
+      "src/middleware.backup.ts",
+      "src/app/layout.minimal.tsx",
+      "src/app/not-found.tsx",
+      "src/app/robots.ts",
+      "src/app/(info)/layout.tsx",
+      "src/app/error.tsx",
+      "src/app/(legal)/layout.tsx",
+      "src/app/sitemap.ts",
+      "src/app/layout.tsx",
+      "src/app/(auth)/layout.tsx"
+    ],
+    "types": [
+      "src/types/api.ts",
+      "src/types/index.ts",
+      "src/types/database.ts",
+      "src/types/auth.ts",
+      "src/types/supabase.ts",
+      "src/types/shims.d.ts",
+      "src/types/common.ts",
+      "src/design-system/types.ts",
+      "src/core/types/index.ts"
+    ],
+    "constants": [
+      "src/constants/routes.ts",
+      "src/constants/storage.ts",
+      "src/constants/validation.ts",
+      "src/constants/api.ts",
+      "src/constants/i18n-keys.ts",
+      "src/constants/roles.ts",
+      "src/constants/theme.ts",
+      "src/constants/index.ts",
+      "src/constants/ui.ts",
+      "src/core/constants/index.ts"
+    ],
+    "hooks": [
+      "src/hooks/useDebounce.ts",
+      "src/hooks/usePerformance.ts",
+      "src/hooks/usePageI18n.ts",
+      "src/hooks/usePrevious.ts",
+      "src/hooks/useAsync.ts",
+      "src/hooks/useAuth.ts",
+      "src/hooks/useLocalStorage.ts",
+      "src/hooks/useKeyboardNavigation.ts",
+      "src/hooks/useForm.ts",
+      "src/hooks/useMediaQuery.ts",
+      "src/hooks/useBrandColorFromLogo.ts",
+      "src/hooks/useT.tsx",
+      "src/hooks/index.ts",
+      "src/hooks/useErrorHandler.tsx",
+      "src/hooks/useThrottle.ts",
+      "src/hooks/useToggle.ts",
+      "src/hooks/useMemoryLeakPrevention.ts",
+      "src/hooks/useI18n.ts",
+      "src/hooks/useClickOutside.ts",
+      "src/hooks/useIntersectionObserver.ts",
+      "src/hooks/useCounter.ts",
+      "src/hooks/useTranslation.ts",
+      "src/hooks/useApi.ts",
+      "src/hooks/useKeyPress.ts",
+      "src/core/hooks/index.ts",
+      "src/app/api/payments/webhook/stripe/route.ts",
+      "src/app/api/webhook/whatsapp/route.ts",
+      "src/app/api/slack/webhook/route.ts",
+      "src/app/api/webhooks/payments/moyasar/route.ts",
+      "src/app/api/webhooks/payments/stripe/route.ts"
+    ],
+    "pages": [
+      "src/scripts/seed-homepage-content.ts",
+      "src/app/dashboard/staff/page.tsx",
+      "src/app/dashboard/supervisor/page.tsx",
+      "src/app/dashboard/page.tsx",
+      "src/app/dashboard/user/page.tsx",
+      "src/app/dashboard/patient/page.tsx",
+      "src/app/dashboard/doctor/page.tsx",
+      "src/app/page.tsx",
+      "src/app/(marketing)/faq/page.tsx",
+      "src/app/(marketing)/pricing/page.tsx",
+      "src/app/(marketing)/features/page.tsx",
+      "src/app/(public)/chatbot/page.tsx",
+      "src/app/uikit/page.tsx",
+      "src/app/uikit/guidelines/page.tsx",
+      "src/app/(admin)/notifications/page.tsx",
+      "src/app/(admin)/messages/page.tsx",
+      "src/app/(admin)/crm/contacts/page.tsx",
+      "src/app/(admin)/crm/contacts/[id]/page.tsx",
+      "src/app/(admin)/crm/flows/page.tsx",
+      "src/app/(admin)/crm/dashboard/page.tsx",
+      "src/app/(admin)/crm/leads/page.tsx",
+      "src/app/(admin)/crm/deals/page.tsx",
+      "src/app/(admin)/crm/deals/kanban/page.tsx",
+      "src/app/(admin)/crm/activities/page.tsx",
+      "src/app/(admin)/analytics/page.tsx",
+      "src/app/(admin)/conversations/page.tsx",
+      "src/app/(admin)/flow/page.tsx",
+      "src/app/(admin)/integrations/page.tsx",
+      "src/app/(admin)/admin/audit-logs/page.tsx",
+      "src/app/(admin)/admin/dashboard/page.tsx",
+      "src/app/(admin)/admin/channels/page.tsx",
+      "src/app/(admin)/admin/page.tsx",
+      "src/app/(admin)/admin/logs/page.tsx",
+      "src/app/(admin)/admin/roles/page.tsx",
+      "src/app/(admin)/admin/users/page.tsx",
+      "src/app/(admin)/performance/page.tsx",
+      "src/app/(admin)/settings/page.tsx",
+      "src/app/(admin)/settings/api-keys/page.tsx",
+      "src/app/(admin)/review/page.tsx",
+      "src/app/(admin)/chatbot/flows/page.tsx",
+      "src/app/(admin)/chatbot/flows/[flowId]/page.tsx",
+      "src/app/(admin)/chatbot/templates/page.tsx",
+      "src/app/(admin)/chatbot/templates/[id]/page.tsx",
+      "src/app/(admin)/chatbot/analytics/page.tsx",
+      "src/app/(admin)/chatbot/integrations/page.tsx",
+      "src/app/(admin)/security/page.tsx",
+      "src/app/(admin)/profile/page.tsx",
+      "src/app/(admin)/agent-dashboard/page.tsx",
+      "src/app/(supervisor)/supervisor-dashboard/page.tsx",
+      "src/app/(info)/contact/page.tsx",
+      "src/app/(info)/about/page.tsx",
+      "src/app/(legal)/privacy/page.tsx",
+      "src/app/(legal)/terms/page.tsx",
+      "src/app/(doctor)/doctor-dashboard/page.tsx",
+      "src/app/(staff)/staff-dashboard/page.tsx",
+      "src/app/(patient)/patient-dashboard/page.tsx",
+      "src/app/(auth)/register/page.tsx",
+      "src/app/(auth)/reset-password/page.tsx",
+      "src/app/(auth)/forgot-password/page.tsx",
+      "src/app/(auth)/verify-email/page.tsx",
+      "src/app/(auth)/login/page.tsx",
+      "src/app/(health)/insurance-claims/page.tsx",
+      "src/app/(health)/therapy/page.tsx",
+      "src/app/(health)/appointments/page.tsx",
+      "src/app/(health)/medical-file/page.tsx",
+      "src/app/(health)/patients/page.tsx",
+      "src/app/(health)/patients/[id]/page.tsx",
+      "src/app/(health)/insurance/page.tsx",
+      "src/app/(health)/sessions/page.tsx",
+      "src/app/(health)/family-support/page.tsx",
+      "src/app/(health)/approvals/page.tsx",
+      "src/app/(health)/training/page.tsx",
+      "src/app/(health)/progress-tracking/page.tsx"
+    ],
+    "api": [
+      "src/__tests__/api/auth/login.test.ts",
+      "src/__tests__/api/patients.test.ts",
+      "src/__tests__/api/appointments.test.ts",
+      "src/lib/api/whatsapp.ts",
+      "src/lib/api/config.ts",
+      "src/lib/router.ts",
+      "src/core/api/base-handler.ts",
+      "src/core/api/client.ts",
+      "src/app/api/notifications/templates/route.ts",
+      "src/app/api/notifications/send/route.ts",
+      "src/app/api/health/route.ts",
+      "src/app/api/errors/route.ts",
+      "src/app/api/audit-logs/route.ts",
+      "src/app/api/auth/register/route.ts",
+      "src/app/api/auth/logout/route.ts",
+      "src/app/api/auth/reset-password/route.ts",
+      "src/app/api/auth/forgot-password/route.ts",
+      "src/app/api/auth/me/route.ts",
+      "src/app/api/auth/login/route.ts",
+      "src/app/api/dashboard/health/route.ts",
+      "src/app/api/dashboard/metrics/route.ts",
+      "src/app/api/dashboard/logs/route.ts",
+      "src/app/api/agent/completion/route.ts",
+      "src/app/api/agent/tasks/route.ts",
+      "src/app/api/agent/logs/route.ts",
+      "src/app/api/agent/status/route.ts",
+      "src/app/api/user/preferences/route.ts",
+      "src/app/api/crm/contacts/route.ts",
+      "src/app/api/crm/stats/route.ts",
+      "src/app/api/crm/leads/route.ts",
+      "src/app/api/reports/export/route.ts",
+      "src/app/api/reports/dashboard-metrics/route.ts",
+      "src/app/api/analytics/action/route.ts",
+      "src/app/api/analytics/metrics/route.ts",
+      "src/app/api/healthcare/appointments/route.ts",
+      "src/app/api/healthcare/patients/route.ts",
+      "src/app/api/slack/notify/route.ts",
+      "src/app/api/medical-records/route.ts",
+      "src/app/api/medical-records/upload/route.ts",
+      "src/app/api/admin/stats/route.ts",
+      "src/app/api/admin/configs/route.ts",
+      "src/app/api/admin/system-config/route.ts",
+      "src/app/api/admin/users/route.ts",
+      "src/app/api/admin/users/[id]/route.ts",
+      "src/app/api/admin/security-events/route.ts",
+      "src/app/api/appointments/route.ts",
+      "src/app/api/appointments/book/route.ts",
+      "src/app/api/appointments/conflict-check/route.ts",
+      "src/app/api/appointments/[id]/route.ts",
+      "src/app/api/appointments/availability/route.ts",
+      "src/app/api/upload/route.ts",
+      "src/app/api/patients/journey/route.ts",
+      "src/app/api/patients/[id]/activation/step/route.ts",
+      "src/app/api/patients/[id]/activate/route.ts",
+      "src/app/api/insurance/claims/route.ts",
+      "src/app/api/insurance/claims/[id]/submit/route.ts",
+      "src/app/api/i18n/route.ts",
+      "src/app/api/translations/missing/route.ts",
+      "src/app/api/translations/[lang]/route.ts",
+      "src/app/api/doctors/availability/route.ts",
+      "src/app/api/chatbot/messages/route.ts",
+      "src/app/api/chatbot/flows/route.ts",
+      "src/app/api/chatbot/intents/route.ts",
+      "src/app/api/chatbot/message/route.ts",
+      "src/app/api/chatbot/conversations/route.ts",
+      "src/app/api/chatbot/appointments/route.ts",
+      "src/app/api/chatbot/config/route.ts",
+      "src/app/api/test/clear-rate-limit/route.ts"
+    ],
+    "tests": [
+      "src/scripts/test-apis.js",
+      "src/lib/integrations/test-helpers.ts"
+    ],
+    "config": [
+      "src/core/config/index.ts",
+      "src/config/env.ts",
+      "src/config/api.ts",
+      "src/config/database.ts",
+      "src/config/auth.ts",
+      "src/config/app.ts"
+    ]
+  },
+  "recommendations": [
+    {
+      "type": "split_large_file",
+      "file": "src/components/accessibility/AccessibilitySettings.tsx",
+      "reason": "ملف كبير جداً (322 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/components/appointments/AppointmentManager.tsx",
+      "reason": "ملف كبير جداً (547 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/components/patients/PatientRecords.tsx",
+      "reason": "ملف كبير جداً (805 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/components/insurance/ClaimsManager.tsx",
+      "reason": "ملف كبير جداً (359 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/components/settings/SettingsTabs.tsx",
+      "reason": "ملف كبير جداً (636 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/components/chatbot/MoainChatbot.tsx",
+      "reason": "ملف كبير جداً (533 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/scripts/seed-complete-translations.js",
+      "reason": "ملف كبير جداً (359 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/scripts/validate-business-logic.js",
+      "reason": "ملف كبير جداً (466 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/scripts/validate-system.js",
+      "reason": "ملف كبير جداً (337 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/scripts/complete-translations.ts",
+      "reason": "ملف كبير جداً (364 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/scripts/seed-translations.ts",
+      "reason": "ملف كبير جداً (1311 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/__tests__/whatsapp-business-api.test.ts",
+      "reason": "ملف كبير جداً (356 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/responsive-design.ts",
+      "reason": "ملف كبير جداً (323 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/slack-integration.ts",
+      "reason": "ملف كبير جداً (508 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/cache-system.ts",
+      "reason": "ملف كبير جداً (422 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/performance-monitor.ts",
+      "reason": "ملف كبير جداً (462 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/saudi-ministry-health-integration.ts",
+      "reason": "ملف كبير جداً (543 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/whatsapp-integration.ts",
+      "reason": "ملف كبير جداً (415 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/supabase-real.ts",
+      "reason": "ملف كبير جداً (638 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/file-upload.ts",
+      "reason": "ملف كبير جداً (512 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/saudi-health-integration.ts",
+      "reason": "ملف كبير جداً (509 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/whatsapp-business-api.ts",
+      "reason": "ملف كبير جداً (550 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/conversation-flows.ts",
+      "reason": "ملف كبير جداً (523 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/integration-system.ts",
+      "reason": "ملف كبير جداً (479 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/dynamic-content-manager.ts",
+      "reason": "ملف كبير جداً (335 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/database.ts",
+      "reason": "ملف كبير جداً (364 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/supabase.ts",
+      "reason": "ملف كبير جداً (407 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/private-center-integration.ts",
+      "reason": "ملف كبير جداً (505 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/accessibility.ts",
+      "reason": "ملف كبير جداً (352 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/deployment/docker.ts",
+      "reason": "ملف كبير جداً (459 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/testing/test-utils.ts",
+      "reason": "ملف كبير جداً (329 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/theme/index.ts",
+      "reason": "ملف كبير جداً (625 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/core/errors/index.ts",
+      "reason": "ملف كبير جداً (463 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/core/validation/index.ts",
+      "reason": "ملف كبير جداً (379 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/core/store/index.ts",
+      "reason": "ملف كبير جداً (495 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/types/supabase.ts",
+      "reason": "ملف كبير جداً (620 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/core/types/index.ts",
+      "reason": "ملف كبير جداً (339 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/core/constants/index.ts",
+      "reason": "ملف كبير جداً (314 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/core/hooks/index.ts",
+      "reason": "ملف كبير جداً (435 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/scripts/seed-homepage-content.ts",
+      "reason": "ملف كبير جداً (327 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/dashboard/staff/page.tsx",
+      "reason": "ملف كبير جداً (350 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/dashboard/supervisor/page.tsx",
+      "reason": "ملف كبير جداً (335 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/page.tsx",
+      "reason": "ملف كبير جداً (630 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(public)/chatbot/page.tsx",
+      "reason": "ملف كبير جداً (343 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/notifications/page.tsx",
+      "reason": "ملف كبير جداً (543 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/messages/page.tsx",
+      "reason": "ملف كبير جداً (397 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/crm/contacts/page.tsx",
+      "reason": "ملف كبير جداً (579 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/crm/flows/page.tsx",
+      "reason": "ملف كبير جداً (360 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/crm/dashboard/page.tsx",
+      "reason": "ملف كبير جداً (460 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/crm/leads/page.tsx",
+      "reason": "ملف كبير جداً (555 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/crm/deals/page.tsx",
+      "reason": "ملف كبير جداً (511 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/crm/activities/page.tsx",
+      "reason": "ملف كبير جداً (479 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/analytics/page.tsx",
+      "reason": "ملف كبير جداً (655 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/admin/audit-logs/page.tsx",
+      "reason": "ملف كبير جداً (345 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/admin/dashboard/page.tsx",
+      "reason": "ملف كبير جداً (578 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/admin/page.tsx",
+      "reason": "ملف كبير جداً (643 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/performance/page.tsx",
+      "reason": "ملف كبير جداً (332 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/settings/page.tsx",
+      "reason": "ملف كبير جداً (364 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/settings/api-keys/page.tsx",
+      "reason": "ملف كبير جداً (462 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/chatbot/flows/page.tsx",
+      "reason": "ملف كبير جداً (402 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/chatbot/flows/[flowId]/page.tsx",
+      "reason": "ملف كبير جداً (531 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/chatbot/templates/page.tsx",
+      "reason": "ملف كبير جداً (572 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/chatbot/templates/[id]/page.tsx",
+      "reason": "ملف كبير جداً (422 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/chatbot/analytics/page.tsx",
+      "reason": "ملف كبير جداً (364 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/chatbot/integrations/page.tsx",
+      "reason": "ملف كبير جداً (378 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(admin)/security/page.tsx",
+      "reason": "ملف كبير جداً (739 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(supervisor)/supervisor-dashboard/page.tsx",
+      "reason": "ملف كبير جداً (335 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(info)/contact/page.tsx",
+      "reason": "ملف كبير جداً (397 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(staff)/staff-dashboard/page.tsx",
+      "reason": "ملف كبير جداً (350 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(auth)/register/page.tsx",
+      "reason": "ملف كبير جداً (353 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(health)/insurance-claims/page.tsx",
+      "reason": "ملف كبير جداً (618 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(health)/therapy/page.tsx",
+      "reason": "ملف كبير جداً (442 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(health)/appointments/page.tsx",
+      "reason": "ملف كبير جداً (376 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(health)/medical-file/page.tsx",
+      "reason": "ملف كبير جداً (824 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(health)/patients/page.tsx",
+      "reason": "ملف كبير جداً (404 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(health)/patients/[id]/page.tsx",
+      "reason": "ملف كبير جداً (684 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(health)/insurance/page.tsx",
+      "reason": "ملف كبير جداً (494 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(health)/sessions/page.tsx",
+      "reason": "ملف كبير جداً (339 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(health)/family-support/page.tsx",
+      "reason": "ملف كبير جداً (708 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(health)/approvals/page.tsx",
+      "reason": "ملف كبير جداً (732 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(health)/training/page.tsx",
+      "reason": "ملف كبير جداً (478 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/(health)/progress-tracking/page.tsx",
+      "reason": "ملف كبير جداً (698 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/__tests__/api/appointments.test.ts",
+      "reason": "ملف كبير جداً (388 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/core/api/client.ts",
+      "reason": "ملف كبير جداً (306 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/api/health/route.ts",
+      "reason": "ملف كبير جداً (350 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/api/dashboard/metrics/route.ts",
+      "reason": "ملف كبير جداً (565 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/api/admin/users/route.ts",
+      "reason": "ملف كبير جداً (348 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/api/patients/journey/route.ts",
+      "reason": "ملف كبير جداً (337 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/app/api/insurance/claims/route.ts",
+      "reason": "ملف كبير جداً (344 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/scripts/test-apis.js",
+      "reason": "ملف كبير جداً (365 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    },
+    {
+      "type": "split_large_file",
+      "file": "src/lib/integrations/test-helpers.ts",
+      "reason": "ملف كبير جداً (478 سطر)",
+      "suggestion": "يُنصح بتقسيمه إلى ملفات أصغر"
+    }
+  ]
+}

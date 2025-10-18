@@ -4,7 +4,6 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
   apiVersion: '2023-10-16',
 }) : null;
 
-export interface PaymentIntentData {
   amount: number;
   currency: string;
   patientId: string;
@@ -12,14 +11,12 @@ export interface PaymentIntentData {
   metadata?: Record<string, string>;
 }
 
-export interface PaymentResult {
   success: boolean;
   paymentIntentId?: string;
   clientSecret?: string;
   error?: string;
 }
 
-export class StripePaymentService {
   async createPaymentIntent(data: PaymentIntentData): Promise<PaymentResult> {
     if (!stripe) {
       return {
@@ -156,4 +153,9 @@ export class StripePaymentService {
   }
 }
 
+
+// Exports
+export interface PaymentIntentData {
+export interface PaymentResult {
+export class StripePaymentService {
 export const stripeService = new StripePaymentService();

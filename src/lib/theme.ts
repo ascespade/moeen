@@ -1,6 +1,4 @@
-export type ThemeMode = "light" | "dark";
 
-export const brand = {
   primary: "#F58220",
   primaryHover: "#d66f15",
   secondary: "#009688",
@@ -10,7 +8,6 @@ export const brand = {
   error: "#ef4444",
 };
 
-export const neutrals = {
   lightBg: "#FFFFFF",
   lightSurface: "#F9FAFB",
   darkBg: "#0D1117",
@@ -21,7 +18,6 @@ export const neutrals = {
   borderDark: "#1f2937",
 };
 
-export const typography = {
   fontFamilyArabic: "var(--font-cairo)",
   fontFamilyLatin: "var(--font-inter)",
   scale: {
@@ -36,7 +32,6 @@ export const typography = {
   },
 };
 
-export const spacing = {
   x0_5: "0.125rem",
   x1: "0.25rem",
   x1_5: "0.375rem",
@@ -48,12 +43,10 @@ export const spacing = {
   x12: "3rem",
 };
 
-export const elevation = {
   soft: "0 1px 2px rgba(0,0,0,0.03), 0 8px 24px rgba(0,0,0,0.04)",
   softDark: "0 1px 2px rgba(0,0,0,0.35), 0 8px 24px rgba(0,0,0,0.25)",
 };
 
-export const motion = {
   duration: {
     fast: 150,
     normal: 200,
@@ -65,8 +58,18 @@ export const motion = {
   },
 };
 
-export const dirForLocale = (locale: string): "rtl" | "ltr" =>
   locale?.toLowerCase() === "ar" ? "rtl" : "ltr";
 
-export const langForLocale = (locale: string): "ar" | "en" =>
   locale?.toLowerCase() === "ar" ? "ar" : "en";
+
+
+// Exports
+export const brand = {
+export type ThemeMode = "light" | "dark";
+export const neutrals = {
+export const typography = {
+export const spacing = {
+export const elevation = {
+export const motion = {
+export const dirForLocale = (locale: string): "rtl" | "ltr" =>
+export const langForLocale = (locale: string): "ar" | "en" =>

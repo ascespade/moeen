@@ -1,3 +1,4 @@
+
 /**
  * Language Switcher Component
  * مبدل اللغة مع دعم RTL

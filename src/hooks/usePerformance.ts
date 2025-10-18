@@ -1,3 +1,4 @@
+
 /**
  * Performance monitoring hooks
  */
@@ -5,7 +6,6 @@
 import logger from '@/lib/monitoring/logger';
 import { useEffect, useRef, useCallback, useState, useMemo } from "react";
 
-export function usePerformanceMonitor(componentName: string) {
   const renderCount = useRef(0);
   const startTime = useRef(performance.now());
 
@@ -24,7 +24,6 @@ export function usePerformanceMonitor(componentName: string) {
   return { renderCount: renderCount.current };
 }
 
-export function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
@@ -40,7 +39,6 @@ export function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
-export function useThrottle<T extends (...args: any[]) => any>(
   callback: T,
   delay: number,
 ): T {
@@ -57,7 +55,6 @@ export function useThrottle<T extends (...args: any[]) => any>(
   );
 }
 
-export function useIntersectionObserver(
   callback: (entries: IntersectionObserverEntry[]) => void,
   options?: IntersectionObserverInit,
 ) {
@@ -76,7 +73,6 @@ export function useIntersectionObserver(
   return observerRef.current;
 }
 
-export function useVirtualization(
   itemCount: number,
   itemHeight: number,
   containerHeight: number,
@@ -98,3 +94,11 @@ export function useVirtualization(
 
   return visibleRange;
 }
+
+
+// Exports
+export function usePerformanceMonitor(componentName: string) {
+export function useDebounce<T>(value: T, delay: number): T {
+export function useThrottle<T extends (...args: any[]) => any>(
+export function useIntersectionObserver(
+export function useVirtualization(

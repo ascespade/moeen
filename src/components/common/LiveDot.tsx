@@ -1,4 +1,5 @@
 export default function LiveDot({ color = "#16A34A" }: { color?: string }) {
+
   return (
     <span className="relative inline-flex h-2.5 w-2.5">
       <span

@@ -1,3 +1,4 @@
+
 /**
  * Core Configuration - التكوين الأساسي للنظام
  * Centralized configuration management
@@ -6,7 +7,6 @@
 import { SystemConfig } from '../types';
 
 // Environment Configuration
-export const ENV = {
   NODE_ENV: process.env.NODE_ENV || 'development',
   IS_DEVELOPMENT: process.env.NODE_ENV === 'development',
   IS_PRODUCTION: process.env.NODE_ENV === 'production',
@@ -14,7 +14,6 @@ export const ENV = {
 } as const;
 
 // Database Configuration
-export const DATABASE_CONFIG = {
   URL: process.env.DATABASE_URL || '',
   MAX_CONNECTIONS: parseInt(process.env.DB_MAX_CONNECTIONS || '10'),
   CONNECTION_TIMEOUT: parseInt(process.env.DB_CONNECTION_TIMEOUT || '30000'),
@@ -22,7 +21,6 @@ export const DATABASE_CONFIG = {
 } as const;
 
 // Supabase Configuration
-export const SUPABASE_CONFIG = {
   URL: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
   ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
   SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
@@ -30,7 +28,6 @@ export const SUPABASE_CONFIG = {
 } as const;
 
 // API Configuration
-export const API_CONFIG = {
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || '/api',
   TIMEOUT: parseInt(process.env.API_TIMEOUT || '30000'),
   RATE_LIMIT: {
@@ -44,7 +41,6 @@ export const API_CONFIG = {
 } as const;
 
 // Authentication Configuration
-export const AUTH_CONFIG = {
   JWT_SECRET: process.env.JWT_SECRET || '',
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '24h',
   REFRESH_TOKEN_EXPIRES_IN: process.env.REFRESH_TOKEN_EXPIRES_IN || '7d',
@@ -55,7 +51,6 @@ export const AUTH_CONFIG = {
 } as const;
 
 // Payment Configuration
-export const PAYMENT_CONFIG = {
   STRIPE: {
     SECRET_KEY: process.env.STRIPE_SECRET_KEY || '',
     PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
@@ -73,7 +68,6 @@ export const PAYMENT_CONFIG = {
 } as const;
 
 // Insurance Configuration
-export const INSURANCE_CONFIG = {
   PROVIDERS: {
     SEHA: {
       API_URL: process.env.SEHA_API_URL || '',
@@ -96,7 +90,6 @@ export const INSURANCE_CONFIG = {
 } as const;
 
 // Notification Configuration
-export const NOTIFICATION_CONFIG = {
   EMAIL: {
     PROVIDER: process.env.EMAIL_PROVIDER || 'smtp',
     SMTP_HOST: process.env.SMTP_HOST || '',
@@ -122,7 +115,6 @@ export const NOTIFICATION_CONFIG = {
 } as const;
 
 // File Upload Configuration
-export const UPLOAD_CONFIG = {
   MAX_FILE_SIZE: parseInt(process.env.MAX_FILE_SIZE || '10485760'), // 10MB
   ALLOWED_TYPES: process.env.ALLOWED_FILE_TYPES?.split(',') || [
     'image/jpeg',
@@ -138,7 +130,6 @@ export const UPLOAD_CONFIG = {
 } as const;
 
 // Security Configuration
-export const SECURITY_CONFIG = {
   ENCRYPTION_KEY: process.env.ENCRYPTION_KEY || '',
   HASH_ROUNDS: parseInt(process.env.HASH_ROUNDS || '12'),
   CORS_ORIGINS: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'],
@@ -156,7 +147,6 @@ export const SECURITY_CONFIG = {
 } as const;
 
 // Application Configuration
-export const APP_CONFIG = {
   NAME: 'مركز الحمام الطبي',
   VERSION: '1.0.0',
   DESCRIPTION: 'منصة طبية متكاملة لإدارة المرضى والمواعيد',
@@ -173,7 +163,6 @@ export const APP_CONFIG = {
 
 
 // Default System Configuration
-export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [
   {
     id: 'app-name',
     key: 'app_name',
@@ -225,3 +214,18 @@ export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [
     updatedAt: new Date(),
   },
 ];
+
+
+// Exports
+export const ENV = {
+export const DATABASE_CONFIG = {
+export const SUPABASE_CONFIG = {
+export const API_CONFIG = {
+export const AUTH_CONFIG = {
+export const PAYMENT_CONFIG = {
+export const INSURANCE_CONFIG = {
+export const NOTIFICATION_CONFIG = {
+export const UPLOAD_CONFIG = {
+export const SECURITY_CONFIG = {
+export const APP_CONFIG = {
+export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [

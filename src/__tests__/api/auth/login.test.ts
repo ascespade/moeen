@@ -1,5 +1,5 @@
-import { POST } from '@/app/api/auth/login/route';
 import { NextRequest } from 'next/server';
+import { POST } from '@/app/api/auth/login/route';
 
 // Mock Supabase
 jest.mock('@/lib/supabaseClient', () => ({

@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+
 // Supabase Integration for Hemam Center
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -6,10 +7,8 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE!;
 
 // Client for client-side operations
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Admin client for server-side operations
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
   auth: {
     autoRefreshToken: false,
     persistSession: false,
@@ -17,7 +16,6 @@ export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
 });
 
 // Database Types
-export interface Patient {
   id: string;
   national_id: string;
   name: string;
@@ -41,7 +39,6 @@ export interface Patient {
   status: "active" | "inactive" | "suspended";
 }
 
-export interface Doctor {
   id: string;
   national_id: string;
   name: string;
@@ -56,7 +53,6 @@ export interface Doctor {
   status: "active" | "inactive";
 }
 
-export interface Appointment {
   id: string;
   patient_id: string;
   doctor_id: string;
@@ -77,7 +73,6 @@ export interface Appointment {
   updated_at: string;
 }
 
-export interface Session {
   id: string;
   patient_id: string;
   doctor_id: string;
@@ -91,7 +86,6 @@ export interface Session {
   created_at: string;
 }
 
-export interface InsuranceClaim {
   id: string;
   patient_id: string;
   appointment_id?: string;
@@ -106,7 +100,6 @@ export interface InsuranceClaim {
 }
 
 // Supabase Database Manager
-export class SupabaseDatabaseManager {
   // Patient Management
   async createPatient(
     patientData: Omit<Patient, "id" | "created_at" | "updated_at">,
@@ -404,4 +397,15 @@ export class SupabaseDatabaseManager {
   }
 }
 
+
+
+// Exports
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+export interface Patient {
+export interface Doctor {
+export interface Appointment {
+export interface Session {
+export interface InsuranceClaim {
+export class SupabaseDatabaseManager {
 export const db = new SupabaseDatabaseManager();

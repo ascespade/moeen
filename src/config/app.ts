@@ -1,3 +1,4 @@
+
 // Application configuration
 export const appConfig = {
   name: 'Moeen',

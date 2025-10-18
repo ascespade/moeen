@@ -1,3 +1,4 @@
+
 /**
  * Core Error Handling - معالجة الأخطاء الأساسية
  * Centralized error handling system
@@ -6,7 +7,6 @@
 import { ERROR_MESSAGES } from '../constants';
 
 // Base Error Class
-export abstract class BaseError extends Error {
   abstract readonly statusCode: number;
   abstract readonly isOperational: boolean;
   abstract readonly code: string;
@@ -31,7 +31,6 @@ export abstract class BaseError extends Error {
 }
 
 // Validation Error
-export class ValidationError extends BaseError {
   readonly statusCode = 400;
   readonly isOperational = true;
   readonly code = 'VALIDATION_ERROR';
@@ -58,7 +57,6 @@ export class ValidationError extends BaseError {
 }
 
 // Authentication Error
-export class AuthenticationError extends BaseError {
   readonly statusCode = 401;
   readonly isOperational = true;
   readonly code = 'AUTHENTICATION_ERROR';
@@ -83,7 +81,6 @@ export class AuthenticationError extends BaseError {
 }
 
 // Authorization Error
-export class AuthorizationError extends BaseError {
   readonly statusCode = 403;
   readonly isOperational = true;
   readonly code = 'AUTHORIZATION_ERROR';
@@ -108,7 +105,6 @@ export class AuthorizationError extends BaseError {
 }
 
 // Not Found Error
-export class NotFoundError extends BaseError {
   readonly statusCode = 404;
   readonly isOperational = true;
   readonly code = 'NOT_FOUND_ERROR';
@@ -133,7 +129,6 @@ export class NotFoundError extends BaseError {
 }
 
 // Conflict Error
-export class ConflictError extends BaseError {
   readonly statusCode = 409;
   readonly isOperational = true;
   readonly code = 'CONFLICT_ERROR';
@@ -158,7 +153,6 @@ export class ConflictError extends BaseError {
 }
 
 // Rate Limit Error
-export class RateLimitError extends BaseError {
   readonly statusCode = 429;
   readonly isOperational = true;
   readonly code = 'RATE_LIMIT_ERROR';
@@ -183,7 +177,6 @@ export class RateLimitError extends BaseError {
 }
 
 // Internal Server Error
-export class InternalServerError extends BaseError {
   readonly statusCode = 500;
   readonly isOperational = false;
   readonly code = 'INTERNAL_SERVER_ERROR';
@@ -208,7 +201,6 @@ export class InternalServerError extends BaseError {
 }
 
 // Database Error
-export class DatabaseError extends BaseError {
   readonly statusCode = 500;
   readonly isOperational = false;
   readonly code = 'DATABASE_ERROR';
@@ -233,7 +225,6 @@ export class DatabaseError extends BaseError {
 }
 
 // External Service Error
-export class ExternalServiceError extends BaseError {
   readonly statusCode = 502;
   readonly isOperational = true;
   readonly code = 'EXTERNAL_SERVICE_ERROR';
@@ -260,7 +251,6 @@ export class ExternalServiceError extends BaseError {
 }
 
 // Business Logic Error
-export class BusinessLogicError extends BaseError {
   readonly statusCode = 422;
   readonly isOperational = true;
   readonly code = 'BUSINESS_LOGIC_ERROR';
@@ -285,7 +275,6 @@ export class BusinessLogicError extends BaseError {
 }
 
 // Error Handler Class
-export class ErrorHandler {
   private static instance: ErrorHandler;
   private logger: any;
 
@@ -354,7 +343,6 @@ export class ErrorHandler {
 }
 
 // Error Factory
-export class ErrorFactory {
   public static createValidationError(
     message: string,
     field?: string,
@@ -415,7 +403,6 @@ export class ErrorFactory {
 }
 
 // Error Response Formatter
-export class ErrorResponseFormatter {
   public static format(error: Error | BaseError, context?: Record<string, any>): {
     success: false;
     error: {
@@ -445,14 +432,12 @@ export class ErrorResponseFormatter {
 }
 
 // Async Error Wrapper
-export const asyncHandler = (fn: Function) => {
   return (req: any, res: any, next: any) => {
     Promise.resolve(fn(req, res, next)).catch(next);
   };
 };
 
 // Error Boundary for React Components
-export class ErrorBoundary extends Error {
   constructor(
     message: string,
     public readonly componentStack?: string,
@@ -462,3 +447,21 @@ export class ErrorBoundary extends Error {
     this.name = 'ErrorBoundary';
   }
 }
+
+// Exports
+export abstract class BaseError extends Error {
+export class ValidationError extends BaseError {
+export class AuthenticationError extends BaseError {
+export class AuthorizationError extends BaseError {
+export class NotFoundError extends BaseError {
+export class ConflictError extends BaseError {
+export class RateLimitError extends BaseError {
+export class InternalServerError extends BaseError {
+export class DatabaseError extends BaseError {
+export class ExternalServiceError extends BaseError {
+export class BusinessLogicError extends BaseError {
+export class ErrorHandler {
+export class ErrorFactory {
+export class ErrorResponseFormatter {
+export const asyncHandler = (fn: Function) => {
+export class ErrorBoundary extends Error {

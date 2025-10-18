@@ -1,3 +1,4 @@
+
 /**
  * Base API Handler - معالج API الأساسي
  * Unified API request handler with error handling and validation
@@ -11,7 +12,6 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { authorize } from '@/lib/auth/authorize';
 
-export interface ApiHandlerConfig {
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   auth?: boolean;
   roles?: string[];
@@ -25,7 +25,6 @@ export interface ApiHandlerConfig {
   };
 }
 
-export class BaseApiHandler {
   private errorHandler: ErrorHandler;
 
   constructor() {
@@ -238,12 +237,16 @@ export class BaseApiHandler {
 }
 
 // Export singleton instance
-export const baseApiHandler = new BaseApiHandler();
 
 // Helper function to create API handlers
-export const createApiHandler = <T = any>(
   handler: (req: NextRequest, context: any) => Promise<NextResponse<T>>,
   config: ApiHandlerConfig
 ) => {
   return baseApiHandler.createHandler(handler, config);
 };
+
+// Exports
+export interface ApiHandlerConfig {
+export class BaseApiHandler {
+export const baseApiHandler = new BaseApiHandler();
+export const createApiHandler = <T = any>(

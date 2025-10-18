@@ -1,10 +1,10 @@
+
 /**
  * Design System - نظام التصميم الموحد
  * Centralized design tokens and components
  */
 
 // Color Palette
-export const colors = {
   primary: {
     50: '#fef7ed',
     100: '#fdedd3',
@@ -80,7 +80,6 @@ export const colors = {
 } as const;
 
 // Typography
-export const typography = {
   fontFamily: {
     sans: ['Cairo', 'Inter', 'system-ui', 'sans-serif'],
     mono: ['JetBrains Mono', 'Consolas', 'monospace'],
@@ -110,7 +109,6 @@ export const typography = {
 } as const;
 
 // Spacing
-export const spacing = {
   0: '0',
   1: '0.25rem',   // 4px
   2: '0.5rem',    // 8px
@@ -128,7 +126,6 @@ export const spacing = {
 } as const;
 
 // Border Radius
-export const borderRadius = {
   none: '0',
   sm: '0.125rem',   // 2px
   md: '0.375rem',   // 6px
@@ -140,7 +137,6 @@ export const borderRadius = {
 } as const;
 
 // Shadows
-export const shadows = {
   sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
   md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
   lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
@@ -150,7 +146,6 @@ export const shadows = {
 } as const;
 
 // Breakpoints
-export const breakpoints = {
   sm: '640px',
   md: '768px',
   lg: '1024px',
@@ -159,7 +154,6 @@ export const breakpoints = {
 } as const;
 
 // Z-Index
-export const zIndex = {
   hide: -1,
   auto: 'auto',
   base: 0,
@@ -176,7 +170,6 @@ export const zIndex = {
 } as const;
 
 // Animation
-export const animation = {
   duration: {
     fast: '150ms',
     normal: '300ms',
@@ -192,7 +185,6 @@ export const animation = {
 } as const;
 
 // Theme Configuration
-export const theme = {
   light: {
     colors: {
       background: colors.neutral[50],
@@ -222,3 +214,14 @@ export const theme = {
     },
   },
 } as const;
+
+// Exports
+export const colors = {
+export const typography = {
+export const spacing = {
+export const borderRadius = {
+export const shadows = {
+export const breakpoints = {
+export const zIndex = {
+export const animation = {
+export const theme = {

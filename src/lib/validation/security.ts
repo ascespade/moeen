@@ -1,3 +1,4 @@
+
 /**
  * Security Validation - التحقق الأمني
  * Security-focused validation and sanitization
@@ -7,7 +8,6 @@ import { z } from 'zod';
 import DOMPurify from 'isomorphic-dompurify';
 
 // XSS Protection
-export function sanitizeInput(input: string): string {
   return DOMPurify.sanitize(input, {
     ALLOWED_TAGS: [],
     ALLOWED_ATTR: [],
@@ -15,7 +15,6 @@ export function sanitizeInput(input: string): string {
 }
 
 // SQL Injection Protection
-export function escapeSqlString(input: string): string {
   return input
     .replace(/'/g, "''")
     .replace(/\\/g, '\\\\')
@@ -26,7 +25,6 @@ export function escapeSqlString(input: string): string {
 }
 
 // Input validation schemas
-export const securitySchemas = {
   // Email validation with additional security checks
   secureEmail: z.string()
     .email('Invalid email format')
@@ -143,13 +141,11 @@ export const securitySchemas = {
 };
 
 // Rate limiting validation
-export function validateRateLimit(ip: string, endpoint: string, requests: number, limit: number): boolean {
   // This would integrate with actual rate limiting logic
   return requests <= limit;
 }
 
 // Input sanitization
-export function sanitizeObject<T extends Record<string, any>>(obj: T): T {
   const sanitized = {} as T;
   
   for (const [key, value] of Object.entries(obj)) {
@@ -166,18 +162,15 @@ export function sanitizeObject<T extends Record<string, any>>(obj: T): T {
 }
 
 // CSRF token validation
-export function validateCSRFToken(token: string, sessionToken: string): boolean {
   return token === sessionToken && token.length > 0;
 }
 
 // File type validation
-export function validateFileType(filename: string, allowedTypes: string[]): boolean {
   const extension = filename.toLowerCase().substring(filename.lastIndexOf('.'));
   return allowedTypes.includes(extension);
 }
 
 // Content Security Policy validation
-export function validateCSPHeader(header: string): boolean {
   const requiredDirectives = [
     'default-src',
     'script-src',
@@ -188,3 +181,13 @@ export function validateCSPHeader(header: string): boolean {
   
   return requiredDirectives.every(directive => header.includes(directive));
 }
+
+// Exports
+export function sanitizeInput(input: string): string {
+export function escapeSqlString(input: string): string {
+export const securitySchemas = {
+export function validateRateLimit(ip: string, endpoint: string, requests: number, limit: number): boolean {
+export function sanitizeObject<T extends Record<string, any>>(obj: T): T {
+export function validateCSRFToken(token: string, sessionToken: string): boolean {
+export function validateFileType(filename: string, allowedTypes: string[]): boolean {
+export function validateCSPHeader(header: string): boolean {

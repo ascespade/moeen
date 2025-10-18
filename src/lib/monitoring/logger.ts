@@ -1,4 +1,5 @@
 import { log } from '@/lib/monitoring/logger';
+
 /**
  * Professional Logging System
  * Replaces console.log with structured logging

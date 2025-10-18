@@ -1,15 +1,13 @@
-import { z } from "zod";
 import DOMPurify from "isomorphic-dompurify";
+import { z } from "zod";
 
 // Sanitization helpers
-export function sanitizeHtml(html: string): string {
   return DOMPurify.sanitize(html, {
     ALLOWED_TAGS: ["b", "i", "em", "strong", "p", "br"],
     ALLOWED_ATTR: [],
   });
 }
 
-export function sanitizeText(text: string): string {
   return text
     .replace(/[<>]/g, "") // Remove potential HTML tags
     .trim()
@@ -17,7 +15,6 @@ export function sanitizeText(text: string): string {
 }
 
 // Enhanced validation schemas
-export const validationSchemas = {
   patient: z.object({
     full_name: z
       .string()
@@ -118,7 +115,6 @@ export const validationSchemas = {
 };
 
 // Validation middleware
-export function validateRequest<T>(schema: z.ZodSchema<T>) {
   return async (request: Request): Promise<T> => {
     try {
       const body = await request.json();
@@ -135,18 +131,25 @@ export function validateRequest<T>(schema: z.ZodSchema<T>) {
 }
 
 // CSRF protection
-export function generateCSRFToken(): string {
   return (
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15)
   );
 }
 
-export function validateCSRFToken(
   token: string,
   sessionToken: string,
 ): boolean {
   return token === sessionToken && token.length > 0;
 }
 
+
+
+// Exports
+export function sanitizeHtml(html: string): string {
+export function sanitizeText(text: string): string {
+export const validationSchemas = {
+export function validateRequest<T>(schema: z.ZodSchema<T>) {
+export function generateCSRFToken(): string {
+export function validateCSRFToken(
 export default validationSchemas;

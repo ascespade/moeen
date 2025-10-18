@@ -1,3 +1,4 @@
+
 /**
  * Performance Optimization - تحسين الأداء
  * Performance monitoring and optimization utilities
@@ -89,10 +90,8 @@ class PerformanceMonitor {
 }
 
 // Singleton instance
-export const performanceMonitor = new PerformanceMonitor();
 
 // Performance decorator
-export function measurePerformance(operationName?: string) {
   return function (target: any, propertyName: string, descriptor: PropertyDescriptor) {
     const method = descriptor.value;
     const operation = operationName || `${target.constructor.name}.${propertyName}`;
@@ -119,7 +118,6 @@ export function measurePerformance(operationName?: string) {
 }
 
 // Database query optimization
-export class QueryOptimizer {
   static optimizeQuery(query: string): string {
     // Remove unnecessary whitespace
     let optimized = query.replace(/\s+/g, ' ').trim();
@@ -139,7 +137,6 @@ export class QueryOptimizer {
 }
 
 // Memory optimization
-export class MemoryOptimizer {
   static cleanup(): void {
     if (global.gc) {
       global.gc();
@@ -162,7 +159,6 @@ export class MemoryOptimizer {
 }
 
 // Caching optimization
-export class CacheOptimizer {
   private static cacheHits = 0;
   private static cacheMisses = 0;
 
@@ -190,7 +186,6 @@ export class CacheOptimizer {
 }
 
 // Bundle optimization
-export class BundleOptimizer {
   static getBundleSize(): number {
     // This would integrate with webpack-bundle-analyzer
     // For now, return a placeholder
@@ -211,7 +206,6 @@ export class BundleOptimizer {
 }
 
 // API response optimization
-export class ResponseOptimizer {
   static compressResponse(data: any): any {
     // Remove null/undefined values
     const cleaned = JSON.parse(JSON.stringify(data, (key, value) => 
@@ -245,3 +239,12 @@ export class ResponseOptimizer {
     };
   }
 }
+
+// Exports
+export const performanceMonitor = new PerformanceMonitor();
+export function measurePerformance(operationName?: string) {
+export class QueryOptimizer {
+export class MemoryOptimizer {
+export class CacheOptimizer {
+export class BundleOptimizer {
+export class ResponseOptimizer {

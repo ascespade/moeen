@@ -1,3 +1,4 @@
+
 /**
  * SEO Metadata Generator
  * Professional metadata for all pages
@@ -20,7 +21,6 @@ const defaultImage = `${baseUrl}/og-image.png`;
 /**
  * Generate complete metadata for a page
  */
-export function generateMetadata(config: PageMetadata): Metadata {
   const {
     title,
     description,
@@ -100,7 +100,6 @@ export function generateMetadata(config: PageMetadata): Metadata {
 /**
  * Predefined metadata for common pages
  */
-export const pageMetadata = {
   home: {
     title: 'معين - نظام إدارة المراكز الصحية',
     description: 'نظام متكامل لإدارة المراكز الصحية والعيادات - حجز المواعيد، السجلات الطبية، إدارة المرضى',
@@ -209,7 +208,6 @@ export const pageMetadata = {
 /**
  * Generate JSON-LD structured data
  */
-export function generateStructuredData(type: 'organization' | 'website' | 'healthClinic') {
   const baseData = {
     '@context': 'https://schema.org',
   };
@@ -263,8 +261,14 @@ export function generateStructuredData(type: 'organization' | 'website' | 'healt
   }
 }
 
-export default {
   generateMetadata,
   pageMetadata,
   generateStructuredData,
 };
+
+
+// Exports
+export function generateMetadata(config: PageMetadata): Metadata {
+export const pageMetadata = {
+export function generateStructuredData(type: 'organization' | 'website' | 'healthClinic') {
+export default {

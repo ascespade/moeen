@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
 import { authorize } from '@/lib/auth/authorize';
+import { createClient } from '@/lib/supabase/server';
 
 interface TimeSlot {
   time: string;

@@ -1,6 +1,6 @@
+export function getClientIP(request: NextRequest | undefined): string {
 import { NextRequest } from 'next/server';
 
-export function getClientIP(request: NextRequest | undefined): string {
   try {
     return request?.headers?.get('x-forwarded-for')?.split(',')[0]?.trim() || 
            request?.headers?.get('x-real-ip') || 

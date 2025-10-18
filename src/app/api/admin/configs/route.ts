@@ -1,3 +1,4 @@
+
 /**
  * Admin System Configuration API - إعدادات النظام
  * Manage system configuration settings
@@ -17,7 +18,6 @@ const configSchema = z.object({
   isSecret: z.boolean().default(false),
 });
 
-export async function GET(request: NextRequest) {
   try {
     // Authorize admin or supervisor
     const authResult = await requireAuth(['admin', 'supervisor'])(request);
@@ -107,7 +107,6 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
@@ -177,7 +176,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function PUT(request: NextRequest) {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
@@ -242,7 +240,6 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
@@ -286,3 +283,10 @@ export async function DELETE(request: NextRequest) {
     return ErrorHandler.getInstance().handle(error);
   }
 }
+
+
+// Exports
+export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
+export async function PUT(request: NextRequest) {
+export async function DELETE(request: NextRequest) {

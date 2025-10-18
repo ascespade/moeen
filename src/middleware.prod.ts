@@ -1,7 +1,7 @@
+import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 import { CSRFProtection, RateLimiter, securityHeaders } from "@/lib/security";
 import type { NextRequest } from "next/server";
-import jwt from "jsonwebtoken";
 
 // Authentication middleware with proper JWT validation
 export function middleware(request: NextRequest) {

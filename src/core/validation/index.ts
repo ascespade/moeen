@@ -1,3 +1,4 @@
+
 /**
  * Core Validation - التحقق من البيانات الأساسي
  * Centralized validation system
@@ -8,7 +9,6 @@ import { REGEX_PATTERNS } from '../constants';
 import { ValidationError } from '../errors';
 
 // Base Validation Schemas
-export const baseSchemas = {
   id: z.string().uuid('معرف غير صحيح'),
   email: z.string().email('البريد الإلكتروني غير صحيح'),
   phone: z.string().regex(REGEX_PATTERNS.PHONE, 'رقم الهاتف غير صحيح'),
@@ -22,7 +22,6 @@ export const baseSchemas = {
 } as const;
 
 // User Validation Schemas
-export const userSchemas = {
   create: z.object({
     email: baseSchemas.email,
     password: baseSchemas.password,
@@ -58,7 +57,6 @@ export const userSchemas = {
 } as const;
 
 // Patient Validation Schemas
-export const patientSchemas = {
   create: z.object({
     userId: baseSchemas.id,
     medicalRecordNumber: baseSchemas.medicalRecordNumber,
@@ -91,7 +89,6 @@ export const patientSchemas = {
 } as const;
 
 // Doctor Validation Schemas
-export const doctorSchemas = {
   create: z.object({
     userId: baseSchemas.id,
     speciality: baseSchemas.nonEmptyString,
@@ -141,7 +138,6 @@ export const doctorSchemas = {
 } as const;
 
 // Appointment Validation Schemas
-export const appointmentSchemas = {
   create: z.object({
     patientId: baseSchemas.id,
     doctorId: baseSchemas.id,
@@ -173,7 +169,6 @@ export const appointmentSchemas = {
 } as const;
 
 // Payment Validation Schemas
-export const paymentSchemas = {
   create: z.object({
     appointmentId: baseSchemas.id,
     amount: baseSchemas.positiveNumber,
@@ -196,7 +191,6 @@ export const paymentSchemas = {
 } as const;
 
 // Insurance Validation Schemas
-export const insuranceSchemas = {
   create: z.object({
     patientId: baseSchemas.id,
     appointmentId: baseSchemas.id,
@@ -221,7 +215,6 @@ export const insuranceSchemas = {
 } as const;
 
 // File Upload Validation Schemas
-export const fileUploadSchemas = {
   upload: z.object({
     file: z.any(), // File object
     type: z.enum(['medical_record', 'insurance_claim', 'profile', 'other']),
@@ -238,7 +231,6 @@ export const fileUploadSchemas = {
 } as const;
 
 // Notification Validation Schemas
-export const notificationSchemas = {
   send: z.object({
     userId: baseSchemas.id,
     type: z.enum(['appointment_reminder', 'payment_confirmation', 'insurance_update', 'system_alert']),
@@ -259,7 +251,6 @@ export const notificationSchemas = {
 } as const;
 
 // Validation Helper Functions
-export class ValidationHelper {
   public static validate<T>(
     schema: z.ZodSchema<T>,
     data: unknown,
@@ -340,7 +331,6 @@ export class ValidationHelper {
 }
 
 // Middleware for API Routes
-export const validateRequest = <T>(
   schema: z.ZodSchema<T>,
   context?: Record<string, any>
 ) => {
@@ -359,7 +349,6 @@ export const validateRequest = <T>(
   };
 };
 
-export const validateQuery = <T>(
   schema: z.ZodSchema<T>,
   context?: Record<string, any>
 ) => {
@@ -378,3 +367,17 @@ export const validateQuery = <T>(
     next();
   };
 };
+
+// Exports
+export const baseSchemas = {
+export const userSchemas = {
+export const patientSchemas = {
+export const doctorSchemas = {
+export const appointmentSchemas = {
+export const paymentSchemas = {
+export const insuranceSchemas = {
+export const fileUploadSchemas = {
+export const notificationSchemas = {
+export class ValidationHelper {
+export const validateRequest = <T>(
+export const validateQuery = <T>(

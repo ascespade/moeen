@@ -1,5 +1,5 @@
 import { ROUTES } from "@/constants/routes";
-export interface User {
+
   id: string;
   email: string;
   role: "admin" | "user" | "doctor" | "nurse" | "staff" | "supervisor" | "patient" | "agent" | "manager" | "demo" | "moderator";
@@ -9,7 +9,6 @@ export interface User {
 /**
  * Get the default route for a user based on their role
  */
-export function getDefaultRouteForUser(user: User | null): string {
   if (!user) {
     return ROUTES.LOGIN;
   }
@@ -39,7 +38,6 @@ export function getDefaultRouteForUser(user: User | null): string {
 /**
  * Check if a route requires authentication
  */
-export function isProtectedRoute(pathname: string): boolean {
   return !((ROUTES as any).PUBLIC_ROUTES as readonly string[]).includes(
     pathname,
   );
@@ -48,14 +46,12 @@ export function isProtectedRoute(pathname: string): boolean {
 /**
  * Check if a route requires admin privileges
  */
-export function isAdminRoute(pathname: string): boolean {
   return pathname.startsWith("/admin");
 }
 
 /**
  * Check if user has permission to access a route
  */
-export function canAccessRoute(user: User | null, pathname: string): boolean {
   if (!user) {
     return !isProtectedRoute(pathname);
   }
@@ -70,7 +66,6 @@ export function canAccessRoute(user: User | null, pathname: string): boolean {
 /**
  * Get navigation items based on user role
  */
-export function getNavigationItems(user: User | null) {
   if (!user) {
     return [
       { label: "الرئيسية", href: ROUTES.HOME },
@@ -97,3 +92,12 @@ export function getNavigationItems(user: User | null) {
 
   return baseItems;
 }
+
+
+// Exports
+export interface User {
+export function getDefaultRouteForUser(user: User | null): string {
+export function isProtectedRoute(pathname: string): boolean {
+export function isAdminRoute(pathname: string): boolean {
+export function canAccessRoute(user: User | null, pathname: string): boolean {
+export function getNavigationItems(user: User | null) {

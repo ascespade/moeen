@@ -1,3 +1,4 @@
+
 /**
  * Security Middleware - أمان النظام
  * Comprehensive security middleware with CORS, CSP, and security headers
@@ -48,7 +49,6 @@ const defaultSecurityConfig: SecurityConfig = {
   maxAge: 86400, // 24 hours
 };
 
-export class SecurityMiddleware {
   private config: SecurityConfig;
 
   constructor(config: Partial<SecurityConfig> = {}) {
@@ -268,28 +268,23 @@ export class SecurityMiddleware {
   }
 }
 
-export function createSecurityMiddleware(config: Partial<SecurityConfig> = {}): SecurityMiddleware {
   return new SecurityMiddleware(config);
 }
 
-export async function securityMiddleware(req: NextRequest): Promise<NextResponse | null> {
   const security = createSecurityMiddleware();
   return await security.handleRequest(req);
 }
 
 // Specific security configurations for different environments
-export const developmentSecurityConfig: Partial<SecurityConfig> = {
   allowedOrigins: ['http://localhost:3000', 'https://localhost:3000', 'http://localhost:3002', 'https://localhost:3002'],
   enableHSTS: false, // Disable HSTS in development
 };
 
-export const productionSecurityConfig: Partial<SecurityConfig> = {
   allowedOrigins: [process.env.NEXT_PUBLIC_APP_URL || 'https://yourdomain.com'],
   enableHSTS: true,
   enableCSP: true,
 };
 
-export const stagingSecurityConfig: Partial<SecurityConfig> = {
   allowedOrigins: [
     'https://staging.yourdomain.com',
     'https://yourdomain.com',
@@ -297,3 +292,11 @@ export const stagingSecurityConfig: Partial<SecurityConfig> = {
   enableHSTS: true,
   enableCSP: true,
 };
+
+// Exports
+export class SecurityMiddleware {
+export function createSecurityMiddleware(config: Partial<SecurityConfig> = {}): SecurityMiddleware {
+export async function securityMiddleware(req: NextRequest): Promise<NextResponse | null> {
+export const developmentSecurityConfig: Partial<SecurityConfig> = {
+export const productionSecurityConfig: Partial<SecurityConfig> = {
+export const stagingSecurityConfig: Partial<SecurityConfig> = {

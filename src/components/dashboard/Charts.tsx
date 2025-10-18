@@ -1,3 +1,4 @@
+
 "use client";
 
 // Lightweight chart implementations using SVG and CSS only to minimize bundle size
@@ -13,7 +14,6 @@ const pie = [
   { name: "Other", value: 10, color: "#f59e0b" },
 ];
 
-export function ChartsA() {
   const width = 600;
   const height = 220;
   const padding = 30;
@@ -64,7 +64,6 @@ export function ChartsA() {
   );
 }
 
-export function ChartsB() {
   const maxY =
     Math.max(...data.map((d) => Math.max(d.messages, d.conversations))) * 1.1;
   return (
@@ -87,7 +86,6 @@ export function ChartsB() {
   );
 }
 
-export function ChartsC() {
   const total = pie.reduce((a, b) => a + b.value, 0);
   const gradientStops = pie
     .reduce<{ start: number; end: number; color: string }[]>((acc, seg) => {
@@ -125,4 +123,10 @@ export function ChartsC() {
     </div>
   );
 }
+
+
+// Exports
+export function ChartsA() {
+export function ChartsB() {
+export function ChartsC() {
 export default ChartsA;

@@ -1,16 +1,12 @@
+
 "use client";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { atom } from "jotai";
 import useBrandColorFromLogo from "@/hooks/useBrandColorFromLogo";
 
-export type AppTheme = "light" | "dark";
-export type AppLang = "ar" | "en";
-export type AppRole = "admin" | "staff" | "viewer";
 
 // Jotai atoms for global state
-export const themeAtom = atom<AppTheme>("light");
-export const langAtom = atom<AppLang>("ar");
 
 declare global {
   interface Window {
@@ -18,7 +14,6 @@ declare global {
   }
 }
 
-export default function UIProvider({
   children,
 }: {
   children: React.ReactNode;
@@ -35,3 +30,12 @@ export default function UIProvider({
 
   return <div>{children}</div>;
 }
+
+
+// Exports
+export type AppTheme = "light" | "dark";
+export type AppLang = "ar" | "en";
+export type AppRole = "admin" | "staff" | "viewer";
+export const themeAtom = atom<AppTheme>("light");
+export const langAtom = atom<AppLang>("ar");
+export default function UIProvider({

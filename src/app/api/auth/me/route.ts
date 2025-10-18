@@ -1,7 +1,7 @@
+export async function GET(request: NextRequest) {
 import { NextRequest, NextResponse } from 'next/server';
 import { authorize } from '@/lib/auth/authorize';
 
-export async function GET(request: NextRequest) {
   try {
     const { user, error } = await authorize(request);
     

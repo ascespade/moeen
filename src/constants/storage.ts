@@ -1,5 +1,5 @@
+
 // Storage constants
-export const STORAGE_KEYS = {
   // Authentication
   AUTH_TOKEN: "auth_token",
   REFRESH_TOKEN: "refresh_token",
@@ -38,21 +38,25 @@ export const STORAGE_KEYS = {
   UPLOAD_PROGRESS: "upload_progress",
 } as const;
 
-export const STORAGE_TYPES = {
   LOCAL: "localStorage",
   SESSION: "sessionStorage",
   INDEXED_DB: "indexedDB",
 } as const;
 
-export const CACHE_DURATION = {
   SHORT: 5 * 60 * 1000, // 5 minutes
   MEDIUM: 30 * 60 * 1000, // 30 minutes
   LONG: 2 * 60 * 60 * 1000, // 2 hours
   VERY_LONG: 24 * 60 * 60 * 1000, // 24 hours
 } as const;
 
-export const STORAGE_QUOTAS = {
   LOCAL_STORAGE: 5 * 1024 * 1024, // 5MB
   SESSION_STORAGE: 5 * 1024 * 1024, // 5MB
   INDEXED_DB: 50 * 1024 * 1024, // 50MB
 } as const;
+
+
+// Exports
+export const STORAGE_KEYS = {
+export const STORAGE_TYPES = {
+export const CACHE_DURATION = {
+export const STORAGE_QUOTAS = {

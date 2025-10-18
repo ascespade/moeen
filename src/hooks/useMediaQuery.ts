@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
+
 // Media query hooks
 
-export const useMediaQuery = (query: string): boolean => {
   const [matches, setMatches] = useState<boolean>(false);
 
   useEffect(() => {
@@ -29,7 +29,6 @@ export const useMediaQuery = (query: string): boolean => {
   return matches;
 };
 
-export const useBreakpoint = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const isTablet = useMediaQuery("(min-width: 769px) and (max-width: 1024px)");
   const isDesktop = useMediaQuery("(min-width: 1025px)");
@@ -50,26 +49,31 @@ export const useBreakpoint = () => {
   };
 };
 
-export const useDarkMode = (): boolean => {
   return useMediaQuery("(prefers-color-scheme: dark)");
 };
 
-export const useReducedMotion = (): boolean => {
   return useMediaQuery("(prefers-reduced-motion: reduce)");
 };
 
-export const useHighContrast = (): boolean => {
   return useMediaQuery("(prefers-contrast: high)");
 };
 
-export const usePrint = (): boolean => {
   return useMediaQuery("print");
 };
 
-export const useHover = (): boolean => {
   return useMediaQuery("(hover: hover)");
 };
 
-export const useTouch = (): boolean => {
   return useMediaQuery("(pointer: coarse)");
 };
+
+
+// Exports
+export const useMediaQuery = (query: string): boolean => {
+export const useBreakpoint = () => {
+export const useDarkMode = (): boolean => {
+export const useReducedMotion = (): boolean => {
+export const useHighContrast = (): boolean => {
+export const usePrint = (): boolean => {
+export const useHover = (): boolean => {
+export const useTouch = (): boolean => {

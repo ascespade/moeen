@@ -1,19 +1,16 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
-export interface User {
   id: string;
   email: string;
   role: 'patient' | 'doctor' | 'staff' | 'supervisor' | 'admin';
   meta?: Record<string, any>;
 }
 
-export interface AuthResult {
   user: User | null;
   error: string | null;
 }
 
-export async function authorize(request: NextRequest): Promise<AuthResult> {
   try {
     const supabase = await createClient();
     
@@ -49,11 +46,9 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
   }
 }
 
-export function requireRole(allowedRoles: User['role'][]): (user: User) => boolean {
   return (user: User) => allowedRoles.includes(user.role);
 }
 
-export function requireAuth(allowedRoles?: User['role'][]) {
   return async (request: NextRequest) => {
     const { user, error } = await authorize(request);
     
@@ -68,3 +63,10 @@ export function requireAuth(allowedRoles?: User['role'][]) {
     return { authorized: true, user, error: null };
   };
 }
+
+// Exports
+export interface User {
+export interface AuthResult {
+export async function authorize(request: NextRequest): Promise<AuthResult> {
+export function requireRole(allowedRoles: User['role'][]): (user: User) => boolean {
+export function requireAuth(allowedRoles?: User['role'][]) {

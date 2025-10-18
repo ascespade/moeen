@@ -1,10 +1,9 @@
+
 // Validation utilities
-export const isValidEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
-export const isValidPassword = (
   password: string,
 ): { isValid: boolean; errors: string[] } => {
   const errors: string[] = [];
@@ -35,12 +34,10 @@ export const isValidPassword = (
   };
 };
 
-export const isValidPhoneNumber = (phone: string): boolean => {
   const phoneRegex = /^\+?[\d\s\-\(\)]{10,}$/;
   return phoneRegex.test(phone);
 };
 
-export const isValidUrl = (url: string): boolean => {
   try {
     new URL(url);
     return true;
@@ -49,13 +46,11 @@ export const isValidUrl = (url: string): boolean => {
   }
 };
 
-export const isValidUuid = (uuid: string): boolean => {
   const uuidRegex =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   return uuidRegex.test(uuid);
 };
 
-export const isNotEmpty = (value: any): boolean => {
   if (typeof value === "string") {
     return value.trim().length > 0;
   }
@@ -68,35 +63,27 @@ export const isNotEmpty = (value: any): boolean => {
   return value !== null && value !== undefined;
 };
 
-export const isNumeric = (value: any): boolean => {
   return !isNaN(parseFloat(value)) && isFinite(value);
 };
 
-export const isInteger = (value: any): boolean => {
   return Number.isInteger(Number(value));
 };
 
-export const isPositive = (value: number): boolean => {
   return value > 0;
 };
 
-export const isInRange = (value: number, min: number, max: number): boolean => {
   return value >= min && value <= max;
 };
 
-export const hasMinLength = (value: string, minLength: number): boolean => {
   return value.length >= minLength;
 };
 
-export const hasMaxLength = (value: string, maxLength: number): boolean => {
   return value.length <= maxLength;
 };
 
-export const matchesPattern = (value: string, pattern: RegExp): boolean => {
   return pattern.test(value);
 };
 
-export const validateForm = <T extends Record<string, any>>(
   data: T,
   rules: Record<keyof T, (value: any) => { isValid: boolean; error?: string }>,
 ): { isValid: boolean; errors: Record<keyof T, string> } => {
@@ -113,3 +100,20 @@ export const validateForm = <T extends Record<string, any>>(
 
   return { isValid, errors };
 };
+
+
+// Exports
+export const isValidEmail = (email: string): boolean => {
+export const isValidPassword = (
+export const isValidPhoneNumber = (phone: string): boolean => {
+export const isValidUrl = (url: string): boolean => {
+export const isValidUuid = (uuid: string): boolean => {
+export const isNotEmpty = (value: any): boolean => {
+export const isNumeric = (value: any): boolean => {
+export const isInteger = (value: any): boolean => {
+export const isPositive = (value: number): boolean => {
+export const isInRange = (value: number, min: number, max: number): boolean => {
+export const hasMinLength = (value: string, minLength: number): boolean => {
+export const hasMaxLength = (value: string, maxLength: number): boolean => {
+export const matchesPattern = (value: string, pattern: RegExp): boolean => {
+export const validateForm = <T extends Record<string, any>>(

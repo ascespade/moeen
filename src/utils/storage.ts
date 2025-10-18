@@ -1,5 +1,5 @@
+
 // Storage utilities
-export const storage = {
   // Local Storage
   get: <T = any>(key: string, defaultValue?: T): T | null => {
     if (typeof window === "undefined") return defaultValue || null;
@@ -80,7 +80,6 @@ export const storage = {
 };
 
 // Specific storage keys
-export const STORAGE_KEYS = {
   USER: "user",
   TOKEN: "token",
   REFRESH_TOKEN: "refreshToken",
@@ -92,35 +91,40 @@ export const STORAGE_KEYS = {
 } as const;
 
 // Storage helpers
-export const getUser = () => storage.get(STORAGE_KEYS.USER);
-export const setUser = (user: any) => storage.set(STORAGE_KEYS.USER, user);
-export const removeUser = () => storage.remove(STORAGE_KEYS.USER);
 
-export const getToken = () => storage.get(STORAGE_KEYS.TOKEN);
-export const setToken = (token: string) =>
   storage.set(STORAGE_KEYS.TOKEN, token);
-export const removeToken = () => storage.remove(STORAGE_KEYS.TOKEN);
 
-export const getRefreshToken = () => storage.get(STORAGE_KEYS.REFRESH_TOKEN);
-export const setRefreshToken = (token: string) =>
   storage.set(STORAGE_KEYS.REFRESH_TOKEN, token);
-export const removeRefreshToken = () =>
   storage.remove(STORAGE_KEYS.REFRESH_TOKEN);
 
-export const getTheme = () => storage.get(STORAGE_KEYS.THEME, "system");
-export const setTheme = (theme: string) =>
   storage.set(STORAGE_KEYS.THEME, theme);
 
-export const getLanguage = () => storage.get(STORAGE_KEYS.LANGUAGE, "en");
-export const setLanguage = (language: string) =>
   storage.set(STORAGE_KEYS.LANGUAGE, language);
 
-export const getSettings = () => storage.get(STORAGE_KEYS.SETTINGS);
-export const setSettings = (settings: any) =>
   storage.set(STORAGE_KEYS.SETTINGS, settings);
 
-export const clearAuth = () => {
   removeUser();
   removeToken();
   removeRefreshToken();
 };
+
+
+// Exports
+export const storage = {
+export const STORAGE_KEYS = {
+export const getUser = () => storage.get(STORAGE_KEYS.USER);
+export const setUser = (user: any) => storage.set(STORAGE_KEYS.USER, user);
+export const removeUser = () => storage.remove(STORAGE_KEYS.USER);
+export const getToken = () => storage.get(STORAGE_KEYS.TOKEN);
+export const setToken = (token: string) =>
+export const removeToken = () => storage.remove(STORAGE_KEYS.TOKEN);
+export const getRefreshToken = () => storage.get(STORAGE_KEYS.REFRESH_TOKEN);
+export const setRefreshToken = (token: string) =>
+export const removeRefreshToken = () =>
+export const getTheme = () => storage.get(STORAGE_KEYS.THEME, "system");
+export const setTheme = (theme: string) =>
+export const getLanguage = () => storage.get(STORAGE_KEYS.LANGUAGE, "en");
+export const setLanguage = (language: string) =>
+export const getSettings = () => storage.get(STORAGE_KEYS.SETTINGS);
+export const setSettings = (settings: any) =>
+export const clearAuth = () => {

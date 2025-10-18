@@ -1,3 +1,4 @@
+
 /**
  * Bar Chart Component - مكون الرسم البياني العمودي
  * RTL-compatible bar chart with brand colors and theme support

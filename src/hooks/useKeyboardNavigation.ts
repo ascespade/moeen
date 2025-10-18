@@ -1,6 +1,6 @@
+export function useKeyboardNavigation() {
 import { useEffect, useCallback } from "react";
 
-export function useKeyboardNavigation() {
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     // Global keyboard shortcuts
     switch (event.key) {

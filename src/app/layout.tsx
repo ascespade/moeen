@@ -1,8 +1,8 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
-import { generateMetadata as genMeta, pageMetadata, generateStructuredData } from '@/lib/seo/metadata';
+import { Inter } from 'next/font/google';
 import MoeenChatbot from '@/components/chatbot/MoeenChatbot';
+import { generateMetadata as genMeta, pageMetadata, generateStructuredData } from '@/lib/seo/metadata';
+import type { Metadata } from 'next';
 
 const inter = Inter({ subsets: ['latin'] });
 

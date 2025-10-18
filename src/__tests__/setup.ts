@@ -119,7 +119,6 @@ beforeEach(() => {
 });
 
 // Global test utilities
-export const mockUser = {
   id: 'test-user-id',
   email: 'test@example.com',
   name: 'Test User',
@@ -127,9 +126,7 @@ export const mockUser = {
   created_at: new Date().toISOString(),
 };
 
-export const mockToken = 'mock-jwt-token-123456789';
 
-export const mockAuthResponse = {
   success: true,
   data: {
     user: mockUser,
@@ -137,7 +134,12 @@ export const mockAuthResponse = {
   },
 };
 
-export const mockErrorResponse = {
   success: false,
   error: 'Authentication failed',
 };
+
+// Exports
+export const mockUser = {
+export const mockToken = 'mock-jwt-token-123456789';
+export const mockAuthResponse = {
+export const mockErrorResponse = {

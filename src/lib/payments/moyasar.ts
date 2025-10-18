@@ -1,3 +1,4 @@
+
 interface MoyasarConfig {
   apiKey: string;
   baseUrl: string;

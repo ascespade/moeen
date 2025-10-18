@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useT } from "@/components/providers/I18nProvider";

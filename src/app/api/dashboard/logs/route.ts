@@ -1,3 +1,4 @@
+
 // src/app/api/dashboard/logs/route.ts
 // Activity logs API endpoint for dashboard
 // Provides real-time logs and activity monitoring

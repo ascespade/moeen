@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 // Browser-compatible crypto functions
 const getCrypto = () => {
   if (typeof window !== "undefined" && window.crypto) {
@@ -13,7 +14,6 @@ const getCrypto = () => {
 };
 
 // CSRF token generation and validation
-export class CSRFProtection {
   private static readonly CSRF_TOKEN_HEADER = "x-csrf-token";
   private static readonly CSRF_TOKEN_COOKIE = "csrf-token";
 
@@ -54,7 +54,6 @@ export class CSRFProtection {
 }
 
 // Rate limiting
-export class RateLimiter {
   private static readonly requests = new Map<
     string,
     { count: number; resetTime: number }
@@ -92,7 +91,6 @@ export class RateLimiter {
 }
 
 // Input sanitization
-export class InputSanitizer {
   static sanitizeString(input: string): string {
     return input
       .trim()
@@ -115,7 +113,6 @@ export class InputSanitizer {
 }
 
 // Security headers
-export const securityHeaders = {
   "X-Frame-Options": "DENY",
   "X-Content-Type-Options": "nosniff",
   "Referrer-Policy": "origin-when-cross-origin",
@@ -135,7 +132,6 @@ export const securityHeaders = {
 };
 
 // Password validation
-export class PasswordValidator {
   static validate(password: string): { isValid: boolean; errors: string[] } {
     const errors: string[] = [];
 
@@ -167,7 +163,6 @@ export class PasswordValidator {
 }
 
 // Session security
-export class SessionSecurity {
   static generateSessionId(): string {
     const crypto = getCrypto();
     if (crypto.randomBytes) {
@@ -214,3 +209,12 @@ export class SessionSecurity {
     return this.hashSessionId(sessionId) === hashedSessionId;
   }
 }
+
+
+// Exports
+export class CSRFProtection {
+export class RateLimiter {
+export class InputSanitizer {
+export const securityHeaders = {
+export class PasswordValidator {
+export class SessionSecurity {

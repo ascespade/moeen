@@ -71,6 +71,21 @@
         "testSecurityRules": true,
         "maxTestRetries": 3,
         "testTimeout": 30000
+      },
+      "refactor": {
+        "enabled": true,
+        "autoOrganize": true,
+        "mergeSmallFiles": true,
+        "splitLargeFiles": true,
+        "reorganizeImports": true,
+        "reorganizeExports": true,
+        "optimizeFolders": true,
+        "addIndexFiles": true,
+        "cleanupUnused": true,
+        "updateReferences": true,
+        "maxFileSize": 500,
+        "minFileSize": 20,
+        "protectedFiles": ["index.ts", "main.ts", "app.ts"]
       }
     },
   "quality": {

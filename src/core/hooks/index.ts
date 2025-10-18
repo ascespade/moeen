@@ -1,3 +1,4 @@
+
 /**
  * Core Hooks - الخطافات الأساسية
  * Centralized custom hooks for common functionality
@@ -11,7 +12,6 @@ import { storageUtils, debounce } from '../utils/index';
 import { ApiResponse } from '../types';
 
 // Auth Hooks
-export const useAuth = () => {
   const { user, isAuthenticated, isLoading, error, login, logout, setLoading, setError, updateUser } = useAuthStore();
   
   const loginUser = useCallback(async (credentials: { email: string; password: string }) => {
@@ -72,7 +72,6 @@ export const useAuth = () => {
 };
 
 // UI Hooks
-export const useTheme = () => {
   const { theme, setTheme } = useUIStore();
   
   const toggleTheme = useCallback(() => {
@@ -88,7 +87,6 @@ export const useTheme = () => {
   };
 };
 
-export const useLanguage = () => {
   const { language, setLanguage } = useUIStore();
   
   const toggleLanguage = useCallback(() => {
@@ -104,7 +102,6 @@ export const useLanguage = () => {
   };
 };
 
-export const useSidebar = () => {
   const { sidebarOpen, toggleSidebar, setSidebarOpen } = useUIStore();
   
   return {
@@ -114,7 +111,6 @@ export const useSidebar = () => {
   };
 };
 
-export const useNotifications = () => {
   const { notifications, addNotification, removeNotification, clearNotifications } = useUIStore();
   
   const showNotification = useCallback((notification: Omit<typeof notifications[0], 'id' | 'createdAt'>) => {
@@ -139,7 +135,6 @@ export const useNotifications = () => {
   };
 };
 
-export const useModal = (modalId: string) => {
   const { modals, openModal, closeModal } = useUIStore();
   
   const isOpen = modals[modalId] || false;
@@ -156,7 +151,6 @@ export const useModal = (modalId: string) => {
   };
 };
 
-export const useLoading = (key: string) => {
   const { loading, setLoading } = useUIStore();
   
   const isLoading = loading[key] || false;
@@ -172,7 +166,6 @@ export const useLoading = (key: string) => {
 };
 
 // Data Hooks
-export const usePatients = () => {
   const { patients, setPatients, addPatient, updatePatient, removePatient } = useDataStore();
   
   const fetchPatients = useCallback(async (params?: any) => {
@@ -223,7 +216,6 @@ export const usePatients = () => {
   };
 };
 
-export const useAppointments = () => {
   const { appointments, setAppointments, addAppointment, updateAppointment, removeAppointment } = useDataStore();
   
   const fetchAppointments = useCallback(async (params?: any) => {
@@ -275,7 +267,6 @@ export const useAppointments = () => {
 };
 
 // Utility Hooks
-export const useDebounce = <T>(value: T, delay: number): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
@@ -291,7 +282,6 @@ export const useDebounce = <T>(value: T, delay: number): T => {
   return debouncedValue;
 };
 
-export const useLocalStorage = <T>(key: string, initialValue: T) => {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       const item = storageUtils.get(key);
@@ -315,7 +305,6 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
   return [storedValue, setValue] as const;
 };
 
-export const useAsync = <T, E = string>(
   asyncFunction: () => Promise<T>,
   immediate = true
 ) => {
@@ -349,7 +338,6 @@ export const useAsync = <T, E = string>(
   return { execute, status, data, error };
 };
 
-export const usePagination = <T>(
   data: T[],
   itemsPerPage: number = 10
 ) => {
@@ -389,7 +377,6 @@ export const usePagination = <T>(
   };
 };
 
-export const useSearch = <T>(
   data: T[],
   searchFields: (keyof T)[],
   searchTerm: string
@@ -414,7 +401,6 @@ export const useSearch = <T>(
   return filteredData;
 };
 
-export const useSort = <T>(
   data: T[],
   sortField: keyof T | null,
   sortDirection: 'asc' | 'desc' = 'asc'
@@ -434,3 +420,20 @@ export const useSort = <T>(
 
   return sortedData;
 };
+
+// Exports
+export const useAuth = () => {
+export const useTheme = () => {
+export const useLanguage = () => {
+export const useSidebar = () => {
+export const useNotifications = () => {
+export const useModal = (modalId: string) => {
+export const useLoading = (key: string) => {
+export const usePatients = () => {
+export const useAppointments = () => {
+export const useDebounce = <T>(value: T, delay: number): T => {
+export const useLocalStorage = <T>(key: string, initialValue: T) => {
+export const useAsync = <T, E = string>(
+export const usePagination = <T>(
+export const useSearch = <T>(
+export const useSort = <T>(

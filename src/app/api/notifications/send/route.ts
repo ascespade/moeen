@@ -1,10 +1,10 @@
+export async function POST(request: NextRequest) {
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
 import { authorize } from '@/lib/auth/authorize';
+import { createClient } from '@/lib/supabase/server';
 import { emailService } from '@/lib/notifications/email';
 import { smsService } from '@/lib/notifications/sms';
 
-export async function POST(request: NextRequest) {
   try {
     const { user, error: authError } = await authorize(request);
     

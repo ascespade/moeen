@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { authorize } from '@/lib/auth/authorize';
-import { validateData, appointmentSchema } from '@/lib/validation/schemas';
-import { getClientInfo } from '@/lib/utils/request-helpers';
-
 export async function GET(request: NextRequest) {
+import { NextRequest, NextResponse } from 'next/server';
+import { authorize } from '@/lib/auth/authorize';
+import { createClient } from '@/lib/supabase/server';
+import { getClientInfo } from '@/lib/utils/request-helpers';
+import { validateData, appointmentSchema } from '@/lib/validation/schemas';
+
   const startTime = Date.now();
   
   try {

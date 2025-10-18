@@ -1,7 +1,6 @@
-import { createClient } from "./supabase/client";
 import { I18N_KEYS } from "@/constants/i18n-keys";
+import { createClient } from "./supabase/client";
 
-export interface DynamicContent {
   id: string;
   key: string;
   value: any;
@@ -11,7 +10,6 @@ export interface DynamicContent {
   updated_at: string;
 }
 
-export interface HomepageContent {
   heroSlides: HeroSlide[];
   services: Service[];
   testimonials: Testimonial[];
@@ -19,7 +17,6 @@ export interface HomepageContent {
   faqs: FAQ[];
 }
 
-export interface HeroSlide {
   id: number;
   title: string;
   subtitle: string;
@@ -29,7 +26,6 @@ export interface HeroSlide {
   ctaLink: string;
 }
 
-export interface Service {
   id: number;
   title: string;
   description: string;
@@ -38,7 +34,6 @@ export interface Service {
   bgColor: string;
 }
 
-export interface Testimonial {
   id: number;
   name: string;
   role: string;
@@ -47,13 +42,11 @@ export interface Testimonial {
   rating: number;
 }
 
-export interface GalleryImage {
   id: number;
   src: string;
   alt: string;
 }
 
-export interface FAQ {
   id: number;
   question: string;
   answer: string;
@@ -331,5 +324,15 @@ class DynamicContentManager {
 }
 
 // Export singleton instance
+
+
+// Exports
+export interface DynamicContent {
+export interface HomepageContent {
+export interface HeroSlide {
+export interface Service {
+export interface Testimonial {
+export interface GalleryImage {
+export interface FAQ {
 export const dynamicContentManager = new DynamicContentManager();
 export default dynamicContentManager;

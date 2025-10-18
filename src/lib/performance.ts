@@ -1,7 +1,7 @@
+export class PerformanceMonitor {
 import logger from '@/lib/monitoring/logger';
 import { logger } from '@/lib/logger';
 
-export class PerformanceMonitor {
   private static instance: PerformanceMonitor;
   private metrics: Map<string, number> = new Map();
 

@@ -1,5 +1,5 @@
+
 // Formatting utilities
-export const formatDate = (
   date: Date | string,
   format: "short" | "long" | "time" = "short",
 ): string => {
@@ -25,7 +25,6 @@ export const formatDate = (
   }
 };
 
-export const formatRelativeTime = (date: Date | string): string => {
   const d = new Date(date);
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - d.getTime()) / 1000);
@@ -52,14 +51,12 @@ export const formatRelativeTime = (date: Date | string): string => {
   return formatDate(d, "short");
 };
 
-export const formatNumber = (num: number, decimals: number = 0): string => {
   return new Intl.NumberFormat("en-US", {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   }).format(num);
 };
 
-export const formatCurrency = (
   amount: number,
   currency: string = "USD",
 ): string => {
@@ -69,7 +66,6 @@ export const formatCurrency = (
   }).format(amount);
 };
 
-export const formatFileSize = (bytes: number): string => {
   if (bytes === 0) return "0 Bytes";
 
   const k = 1024;
@@ -79,7 +75,6 @@ export const formatFileSize = (bytes: number): string => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 };
 
-export const formatPhoneNumber = (phone: string): string => {
   const cleaned = phone.replace(/\D/g, "");
   const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
 
@@ -90,19 +85,28 @@ export const formatPhoneNumber = (phone: string): string => {
   return phone;
 };
 
-export const truncateText = (text: string, maxLength: number): string => {
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength) + "...";
 };
 
-export const capitalizeFirst = (str: string): string => {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 
-export const formatInitials = (name: string): string => {
   return name
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase())
     .join("")
     .slice(0, 2);
 };
+
+
+// Exports
+export const formatDate = (
+export const formatRelativeTime = (date: Date | string): string => {
+export const formatNumber = (num: number, decimals: number = 0): string => {
+export const formatCurrency = (
+export const formatFileSize = (bytes: number): string => {
+export const formatPhoneNumber = (phone: string): string => {
+export const truncateText = (text: string, maxLength: number): string => {
+export const capitalizeFirst = (str: string): string => {
+export const formatInitials = (name: string): string => {

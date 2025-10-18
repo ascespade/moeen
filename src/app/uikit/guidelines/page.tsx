@@ -1,4 +1,5 @@
 export default function GuidelinesPage() {
+
   return (
     <main className="p-6 grid gap-6">
       <h1 className="text-2xl font-semibold">UI Guidelines</h1>

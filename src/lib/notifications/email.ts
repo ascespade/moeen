@@ -1,4 +1,5 @@
 import { log } from '@/lib/monitoring/logger';
+
 interface EmailTemplate {
   subject: string;
   html: string;

@@ -1,6 +1,6 @@
+export function canViewAdmin(role: Role | undefined) {
 export type Role = "admin" | "staff" | "viewer";
 
-export function canViewAdmin(role: Role | undefined) {
   return role === "admin";
 }
 

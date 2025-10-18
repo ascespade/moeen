@@ -1,3 +1,4 @@
+
 /**
  * Appointment Booking API - حجز المواعيد
  * Comprehensive appointment booking with availability checking and conflict validation

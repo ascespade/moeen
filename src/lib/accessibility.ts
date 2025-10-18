@@ -1,5 +1,5 @@
+
 // Accessibility utilities for users with special needs
-export interface AccessibilitySettings {
   fontSize: 'small' | 'medium' | 'large' | 'extra-large';
   contrast: 'normal' | 'high' | 'extra-high';
   screenReader: boolean;
@@ -12,7 +12,6 @@ export interface AccessibilitySettings {
   language: 'ar' | 'en';
 }
 
-export class AccessibilityManager {
   private settings: AccessibilitySettings;
   private listeners: Map<string, Function[]> = new Map();
 
@@ -323,10 +322,8 @@ export class AccessibilityManager {
 }
 
 // Global accessibility manager instance
-export const accessibilityManager = new AccessibilityManager();
 
 // React hook for accessibility
-export function useAccessibility() {
   const [settings, setSettings] = React.useState(accessibilityManager.getSettings());
 
   React.useEffect(() => {
@@ -350,3 +347,10 @@ export function useAccessibility() {
 
 // Import React for the hook
 import React from 'react';
+
+
+// Exports
+export interface AccessibilitySettings {
+export class AccessibilityManager {
+export const accessibilityManager = new AccessibilityManager();
+export function useAccessibility() {

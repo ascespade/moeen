@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { authorize } from '@/lib/auth/authorize';
-
 export async function GET(request: NextRequest) {
+import { NextRequest, NextResponse } from 'next/server';
+import { authorize } from '@/lib/auth/authorize';
+import { createClient } from '@/lib/supabase/server';
+
   try {
     const { user, error: authError } = await authorize(request);
     

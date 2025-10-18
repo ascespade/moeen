@@ -1,5 +1,5 @@
+
 // API constants
-export const API_ENDPOINTS = {
   // Auth
   AUTH: {
     LOGIN: "/auth/login",
@@ -96,7 +96,6 @@ export const API_ENDPOINTS = {
   },
 } as const;
 
-export const HTTP_STATUS = {
   OK: 200,
   CREATED: 201,
   NO_CONTENT: 204,
@@ -112,15 +111,20 @@ export const HTTP_STATUS = {
   SERVICE_UNAVAILABLE: 503,
 } as const;
 
-export const API_TIMEOUTS = {
   DEFAULT: 10000,
   UPLOAD: 30000,
   DOWNLOAD: 60000,
   LONG_RUNNING: 120000,
 } as const;
 
-export const PAGINATION = {
   DEFAULT_PAGE: 1,
   DEFAULT_LIMIT: 20,
   MAX_LIMIT: 100,
 } as const;
+
+
+// Exports
+export const API_ENDPOINTS = {
+export const HTTP_STATUS = {
+export const API_TIMEOUTS = {
+export const PAGINATION = {

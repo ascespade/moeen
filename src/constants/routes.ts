@@ -1,5 +1,5 @@
+
 // Route constants
-export const ROUTES = {
   AUTH: {
     LOGIN: "/login",
     REGISTER: "/register",
@@ -139,7 +139,6 @@ export const ROUTES = {
   },
 } as const;
 
-export const PROTECTED_ROUTES = [
   ROUTES.DASHBOARD,
   ROUTES.ADMIN.DASHBOARD,
   ROUTES.ADMIN.USERS,
@@ -185,7 +184,6 @@ export const PROTECTED_ROUTES = [
   ROUTES.SETTINGS,
 ] as const;
 
-export const ADMIN_ROUTES = [
   ROUTES.ADMIN.DASHBOARD,
   ROUTES.ADMIN.USERS,
   ROUTES.ADMIN.CHANNELS,
@@ -203,7 +201,6 @@ export const ADMIN_ROUTES = [
   ROUTES.ADMIN.PERFORMANCE,
 ] as const;
 
-export const PUBLIC_ROUTES = [
   ROUTES.HOME,
   ROUTES.LOGIN,
   ROUTES.REGISTER,
@@ -218,3 +215,10 @@ export const PUBLIC_ROUTES = [
   ROUTES.LEGAL.PRIVACY,
   ROUTES.LEGAL.TERMS,
 ] as const;
+
+
+// Exports
+export const ROUTES = {
+export const PROTECTED_ROUTES = [
+export const ADMIN_ROUTES = [
+export const PUBLIC_ROUTES = [

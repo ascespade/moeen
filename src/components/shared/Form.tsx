@@ -1,3 +1,4 @@
+
 "use client";
 import { ReactNode } from "react";
 interface FormFieldProps {
@@ -8,7 +9,6 @@ interface FormFieldProps {
   className?: string;
 }
 
-export function FormField({
   label,
   error,
   required,
@@ -34,7 +34,6 @@ interface FormGroupProps {
   className?: string;
 }
 
-export function FormGroup({ children, className = "" }: FormGroupProps) {
   return <div className={`space-y-4 ${className}`}>{children}</div>;
 }
 
@@ -43,7 +42,6 @@ interface FormRowProps {
   className?: string;
 }
 
-export function FormRow({ children, className = "" }: FormRowProps) {
   return (
     <div className={`grid grid-cols-1 gap-4 md:grid-cols-2 ${className}`}>
       {children}
@@ -56,7 +54,6 @@ interface FormActionsProps {
   className?: string;
 }
 
-export function FormActions({ children, className = "" }: FormActionsProps) {
   return (
     <div
       className={`flex gap-3 border-t border-gray-200 pt-6 dark:border-gray-700 ${className}`}
@@ -65,3 +62,10 @@ export function FormActions({ children, className = "" }: FormActionsProps) {
     </div>
   );
 }
+
+
+// Exports
+export function FormField({
+export function FormGroup({ children, className = "" }: FormGroupProps) {
+export function FormRow({ children, className = "" }: FormRowProps) {
+export function FormActions({ children, className = "" }: FormActionsProps) {

@@ -1,3 +1,4 @@
+
 /**
  * Area Chart Component - مكون الرسم البياني المساحي
  * RTL-compatible area chart with brand colors and theme support

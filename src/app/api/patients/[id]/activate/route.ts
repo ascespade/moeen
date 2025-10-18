@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { authorize } from '@/lib/auth/authorize';
-
 export async function POST(
+import { NextRequest, NextResponse } from 'next/server';
+import { authorize } from '@/lib/auth/authorize';
+import { createClient } from '@/lib/supabase/server';
+
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {

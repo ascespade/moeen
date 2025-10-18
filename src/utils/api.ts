@@ -1,9 +1,9 @@
 import { ApiResponse } from "@/types";
+
 // API utilities
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
 
-export class ApiError extends Error {
   constructor(
     message: string,
     public status: number,
@@ -14,7 +14,6 @@ export class ApiError extends Error {
   }
 }
 
-export const api = {
   async request<T = any>(
     endpoint: string,
     options: RequestInit = {},
@@ -91,7 +90,6 @@ export const api = {
 };
 
 // Request interceptors
-export const addRequestInterceptor = (
   interceptor: (config: RequestInit) => RequestInit,
 ) => {
   // This would be implemented with a more sophisticated interceptor system
@@ -104,7 +102,6 @@ export const addRequestInterceptor = (
 };
 
 // Response interceptors
-export const addResponseInterceptor = (
   onSuccess?: (response: any) => any,
   onError?: (error: ApiError) => any,
 ) => {
@@ -123,7 +120,6 @@ export const addResponseInterceptor = (
 };
 
 // Utility functions
-export const buildQueryString = (params: Record<string, any>): string => {
   const searchParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
@@ -139,7 +135,6 @@ export const buildQueryString = (params: Record<string, any>): string => {
   return searchParams.toString();
 };
 
-export const buildUrl = (
   endpoint: string,
   params?: Record<string, any>,
 ): string => {
@@ -152,7 +147,6 @@ export const buildUrl = (
 };
 
 // Error handling
-export const handleApiError = (error: unknown): string => {
   if (error instanceof ApiError) {
     return error.message;
   }
@@ -165,7 +159,6 @@ export const handleApiError = (error: unknown): string => {
 };
 
 // Retry logic
-export const withRetry = async <T>(
   fn: () => Promise<T>,
   maxRetries: number = 3,
   delay: number = 1000,
@@ -191,3 +184,14 @@ export const withRetry = async <T>(
 
   throw lastError!;
 };
+
+
+// Exports
+export class ApiError extends Error {
+export const api = {
+export const addRequestInterceptor = (
+export const addResponseInterceptor = (
+export const buildQueryString = (params: Record<string, any>): string => {
+export const buildUrl = (
+export const handleApiError = (error: unknown): string => {
+export const withRetry = async <T>(

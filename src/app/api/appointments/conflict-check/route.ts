@@ -1,3 +1,4 @@
+
 /**
  * Appointment Conflict Check API - فحص تعارض المواعيد
  * Check for appointment conflicts and availability

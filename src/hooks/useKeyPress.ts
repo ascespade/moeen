@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from "react";
+
 // Key press hooks
 
-export const useKeyPress = (
   targetKey: string | string[],
   handler: (event: KeyboardEvent) => void,
   options: {
@@ -47,15 +47,12 @@ export const useKeyPress = (
   }, [handleKeyPress, enabled]);
 };
 
-export const useEscapeKey = (handler: () => void, enabled: boolean = true) => {
   useKeyPress("Escape", handler, { enabled });
 };
 
-export const useEnterKey = (handler: () => void, enabled: boolean = true) => {
   useKeyPress("Enter", handler, { enabled });
 };
 
-export const useArrowKeys = (
   handler: (direction: "up" | "down" | "left" | "right") => void,
   enabled: boolean = true,
 ) => {
@@ -90,7 +87,6 @@ export const useArrowKeys = (
   );
 };
 
-export const useHotkey = (
   key: string,
   handler: () => void,
   options: {
@@ -138,3 +134,11 @@ export const useHotkey = (
     };
   }, [handleHotkey, enabled]);
 };
+
+
+// Exports
+export const useKeyPress = (
+export const useEscapeKey = (handler: () => void, enabled: boolean = true) => {
+export const useEnterKey = (handler: () => void, enabled: boolean = true) => {
+export const useArrowKeys = (
+export const useHotkey = (

@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { GET, POST } from "@/app/api/patients/route";
 import { realDB } from "@/lib/supabase-real";
 import { whatsappAPI } from "@/lib/whatsapp-business-api";
+
 // Comprehensive API Tests for Patients
 
 // Mock dependencies

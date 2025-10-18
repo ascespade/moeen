@@ -1,3 +1,4 @@
+
 /**
  * Line Chart Component - مكون الرسم البياني الخطي
  * RTL-compatible line chart with brand colors and theme support

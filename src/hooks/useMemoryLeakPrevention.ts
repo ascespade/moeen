@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from "react";
+
 // Hook to prevent memory leaks by cleaning up resources
-export const useMemoryLeakPrevention = () => {
   const cleanupFunctions = useRef<Array<() => void>>([]);
 
   const addCleanup = useCallback((cleanup: () => void) => {
@@ -25,7 +25,6 @@ export const useMemoryLeakPrevention = () => {
 };
 
 // Hook for managing event listeners with automatic cleanup
-export const useEventListener = <T extends keyof WindowEventMap>(
   eventName: T,
   handler: (event: WindowEventMap[T]) => void,
   element?: Element | Window | Document,
@@ -56,7 +55,6 @@ export const useEventListener = <T extends keyof WindowEventMap>(
 };
 
 // Hook for managing intervals with automatic cleanup
-export const useInterval = (callback: () => void, delay: number | null) => {
   const savedCallback = useRef<() => void>();
 
   useEffect(() => {
@@ -77,7 +75,6 @@ export const useInterval = (callback: () => void, delay: number | null) => {
 };
 
 // Hook for managing timeouts with automatic cleanup
-export const useTimeout = (callback: () => void, delay: number | null) => {
   const savedCallback = useRef<() => void>();
 
   useEffect(() => {
@@ -98,7 +95,6 @@ export const useTimeout = (callback: () => void, delay: number | null) => {
 };
 
 // Hook for managing AbortController with automatic cleanup
-export const useAbortController = () => {
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const createAbortController = useCallback(() => {
@@ -128,7 +124,6 @@ export const useAbortController = () => {
 };
 
 // Hook for managing WebSocket connections with automatic cleanup
-export const useWebSocket = (
   url: string,
   options?: {
     onOpen?: () => void;
@@ -182,3 +177,12 @@ export const useWebSocket = (
 
   return { sendMessage, close };
 };
+
+
+// Exports
+export const useMemoryLeakPrevention = () => {
+export const useEventListener = <T extends keyof WindowEventMap>(
+export const useInterval = (callback: () => void, delay: number | null) => {
+export const useTimeout = (callback: () => void, delay: number | null) => {
+export const useAbortController = () => {
+export const useWebSocket = (

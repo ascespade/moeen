@@ -1,14 +1,10 @@
+
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 // Design System Types
-export type Theme = 'light' | 'dark' | 'system';
-export type Language = 'ar' | 'en';
-export type Direction = 'rtl' | 'ltr';
-export type Spacing = 'compact' | 'normal' | 'comfortable';
 
-export interface DesignSystemConfig {
   theme: Theme;
   language: Language;
   direction: Direction;
@@ -22,7 +18,6 @@ export interface DesignSystemConfig {
   focusVisible: boolean;
 }
 
-export interface DesignSystemContextValue {
   // Current values
   theme: Theme;
   language: Language;
@@ -84,7 +79,6 @@ interface DesignSystemProviderProps {
   initialConfig?: Partial<DesignSystemConfig>;
 }
 
-export function DesignSystemProvider({ 
   children, 
   initialConfig = {} 
 }: DesignSystemProviderProps) {
@@ -274,10 +268,19 @@ export function DesignSystemProvider({
 }
 
 // Hook to use design system context
-export function useDesignSystem(): DesignSystemContextValue {
   const context = useContext(DesignSystemContext);
   if (!context) {
     throw new Error("useDesignSystem must be used within a DesignSystemProvider");
   }
   return context;
 }
+
+// Exports
+export type Theme = 'light' | 'dark' | 'system';
+export type Language = 'ar' | 'en';
+export type Direction = 'rtl' | 'ltr';
+export type Spacing = 'compact' | 'normal' | 'comfortable';
+export interface DesignSystemConfig {
+export interface DesignSystemContextValue {
+export function DesignSystemProvider({ 
+export function useDesignSystem(): DesignSystemContextValue {

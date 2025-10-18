@@ -1,5 +1,5 @@
+
 // Global type definitions
-export interface User {
   id: string;
   email: string;
   name: string;
@@ -9,7 +9,6 @@ export interface User {
   updatedAt: Date;
 }
 
-export interface Channel {
   id: string;
   name: string;
   description?: string;
@@ -19,7 +18,6 @@ export interface Channel {
   updatedAt: Date;
 }
 
-export interface Message {
   id: string;
   content: string;
   channelId: string;
@@ -29,7 +27,6 @@ export interface Message {
   deleted?: boolean;
 }
 
-export interface Conversation {
   id: string;
   participants: string[];
   lastMessage?: Message;
@@ -38,21 +35,18 @@ export interface Conversation {
   updatedAt: Date;
 }
 
-export interface ApiResponse<T = any> {
   success: boolean;
   data?: T;
   error?: string;
   message?: string;
 }
 
-export interface PaginationParams {
   page: number;
   limit: number;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
 }
 
-export interface PaginatedResponse<T> extends ApiResponse<T[]> {
   pagination: {
     page: number;
     limit: number;
@@ -62,12 +56,10 @@ export interface PaginatedResponse<T> extends ApiResponse<T[]> {
 }
 
 // Component Props Types
-export interface BaseComponentProps {
   className?: string;
   children?: React.ReactNode;
 }
 
-export interface ButtonProps extends BaseComponentProps {
   variant?: "primary" | "secondary" | "danger" | "ghost";
   size?: "sm" | "md" | "lg";
   disabled?: boolean;
@@ -75,7 +67,6 @@ export interface ButtonProps extends BaseComponentProps {
   onClick?: () => void;
 }
 
-export interface InputProps extends BaseComponentProps {
   type?: "text" | "email" | "password" | "number";
   placeholder?: string;
   value?: string;
@@ -85,14 +76,12 @@ export interface InputProps extends BaseComponentProps {
 }
 
 // Dashboard Types
-export interface DashboardStats {
   totalUsers: number;
   totalChannels: number;
   totalMessages: number;
   activeUsers: number;
 }
 
-export interface ChartData {
   labels: string[];
   datasets: {
     label: string;
@@ -103,7 +92,6 @@ export interface ChartData {
 }
 
 // Settings Types
-export interface AppSettings {
   theme: "light" | "dark" | "system";
   language: string;
   notifications: {
@@ -118,20 +106,17 @@ export interface AppSettings {
 }
 
 // Error Types
-export interface AppError {
   code: string;
   message: string;
   details?: any;
 }
 
 // Form Types
-export interface LoginForm {
   email: string;
   password: string;
   rememberMe?: boolean;
 }
 
-export interface RegisterForm {
   name: string;
   email: string;
   password: string;
@@ -139,10 +124,29 @@ export interface RegisterForm {
 }
 
 // Webhook Types
-export interface WebhookEvent {
   id: string;
   type: string;
   data: any;
   timestamp: Date;
   processed: boolean;
 }
+
+
+// Exports
+export interface User {
+export interface Channel {
+export interface Message {
+export interface Conversation {
+export interface ApiResponse<T = any> {
+export interface PaginationParams {
+export interface PaginatedResponse<T> extends ApiResponse<T[]> {
+export interface BaseComponentProps {
+export interface ButtonProps extends BaseComponentProps {
+export interface InputProps extends BaseComponentProps {
+export interface DashboardStats {
+export interface ChartData {
+export interface AppSettings {
+export interface AppError {
+export interface LoginForm {
+export interface RegisterForm {
+export interface WebhookEvent {
