@@ -47,7 +47,7 @@ jobs:
 
       - name: 📥 تثبيت التبعيات
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm install js-yaml sqlite3
 
       - name: 🧠 تهيئة نظام التعلم
@@ -147,7 +147,7 @@ jobs:
 
       - name: 📥 تثبيت التبعيات
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm install js-yaml sqlite3
 
       - name: 📥 تحميل تحليل الفشل
@@ -280,7 +280,7 @@ jobs:
 
       - name: 📥 تثبيت التبعيات
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm install js-yaml sqlite3
 
       - name: 📥 تحميل استجابة Cursor
