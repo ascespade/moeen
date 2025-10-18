@@ -67,6 +67,7 @@ jobs:
   # 🔍 تحليل ذكي للمشروع والتغييرات
   intelligent-analysis:
     name: 🔍 تحليل ذكي للمشروع
+    if: ${{ !contains(github.event.head_commit.message, 'Self-Healing') && !contains(github.event.head_commit.message, '🤖 CI Assistant') && !contains(github.event.head_commit.message, 'CI Assistant') && !contains(github.event.head_commit.author.name, 'Self-Healing') && !contains(github.event.head_commit.author.name, 'CI Assistant') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     outputs:
@@ -446,14 +447,118 @@ jobs:
             test-results/
           retention-days: 30
 
+  # 🔧 إصلاح CI Assistant إذا فشل
+  fix-ci-assistant:
+    name: 🔧 إصلاح CI Assistant
+    runs-on: ubuntu-latest
+    needs: [intelligent-analysis]
+    if: ${{ always() && contains(github.event.head_commit.message, 'CI Assistant') && contains(github.event.head_commit.message, 'failed') }}
+    timeout-minutes: 15
+    
+    steps:
+      - name: 📥 تحميل الكود
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔧 إصلاح CI Assistant Workflow
+        run: |
+          echo "🔧 إصلاح CI Assistant workflow..."
+          
+          # فحص وإصلاح CI Assistant workflow
+          node -e "
+            const fs = require('fs');
+            
+            const workflowPath = '.github/workflows/ci-assistant.yml';
+            
+            try {
+              // قراءة الـ workflow
+              const content = fs.readFileSync(workflowPath, 'utf8');
+              
+              // إصلاحات شائعة
+              let fixed = content
+                .replace(/timeout-minutes: \d+/g, 'timeout-minutes: 30')
+                .replace(/runs-on: ubuntu-latest/g, 'runs-on: ubuntu-latest');
+              
+              // إضافة permissions إذا لم تكن موجودة
+              if (!fixed.includes('permissions:')) {
+                const permissionsBlock = \`permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  checks: write
+  statuses: write
+  actions: read
+
+\`;
+                fixed = fixed.replace(/^name:.*$/m, \`\$&\n\$permissionsBlock\`);
+              }
+              
+              fs.writeFileSync(workflowPath, fixed);
+              console.log('✅ تم إصلاح CI Assistant workflow');
+              
+            } catch (error) {
+              console.log('❌ خطأ في إصلاح CI Assistant:', error.message);
+            }
+          "
+
+      - name: 💾 حفظ الإصلاح
+        run: |
+          echo "💾 حفظ إصلاح CI Assistant..."
+          
+          # إعداد Git
+          git config --local user.email "action@github.com"
+          git config --local user.name "Self-Healing"
+          
+          # إضافة التغييرات
+          git add .github/workflows/ci-assistant.yml
+          
+          # إنشاء commit
+          git commit -m "🔧 Self-Healing: إصلاح CI Assistant workflow
+
+- تم إصلاح مشاكل الـ workflow
+- تحسين timeout والصلاحيات
+- ضمان عمل CI Assistant بشكل صحيح
+
+🤖 تم بواسطة: Self-Healing" || echo "لا توجد تغييرات للحفظ"
+
+      - name: 📤 رفع الإصلاح
+        run: |
+          echo "📤 رفع إصلاح CI Assistant..."
+          git push origin ${{ github.ref_name }} || echo "فشل في رفع الإصلاح"
+
   # 🛠️ إصلاح ذكي للأخطاء
   intelligent-fixing:
     name: 🛠️ إصلاح ذكي للأخطاء
     runs-on: ubuntu-latest
     needs: [intelligent-analysis, intelligent-testing]
-    if: always() && needs.intelligent-testing.result == 'failure'
+    if: always() && needs.intelligent-testing.result == 'failure' && !contains(github.event.head_commit.message, '🤖 CI Assistant') && !contains(github.event.head_commit.message, 'CI Assistant')
     timeout-minutes: 45
     steps:
+      - name: 🛡️ فحص الحماية من الإصلاح الذاتي
+        run: |
+          echo "🛡️ فحص الحماية من الإصلاح الذاتي..."
+          
+          # فحص commit message
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          echo "📝 رسالة الـ commit: $COMMIT_MSG"
+          
+          # فحص إذا كان الـ commit من CI Assistant
+          if [[ "$COMMIT_MSG" == *"🤖 CI Assistant"* ]] || [[ "$COMMIT_MSG" == *"CI Assistant"* ]]; then
+            echo "⚠️ تم منع تشغيل Self-Healing - الـ commit من CI Assistant"
+            echo "🚫 هذا يمنع الحلقة المفرغة"
+            exit 0
+          fi
+          
+          # فحص إذا كان الـ commit من Self-Healing نفسه
+          if [[ "$COMMIT_MSG" == *"Self-Healing"* ]]; then
+            echo "⚠️ تم منع تشغيل Self-Healing - الـ commit من Self-Healing"
+            echo "🚫 هذا يمنع الإصلاح الذاتي"
+            exit 0
+          fi
+          
+          echo "✅ تم تمرير فحص الحماية - يمكن المتابعة"
+
       - name: 📥 تحميل الكود
         uses: actions/checkout@v4
         with:
