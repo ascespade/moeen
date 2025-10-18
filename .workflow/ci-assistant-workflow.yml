@@ -2,7 +2,7 @@ name: 🤖 CI Assistant Workflow - Error Resolver
 
 on:
   workflow_run:
-    workflows: ["🚀 Master CI Workflow - Smart Testing & Auto-Healing"]
+    workflows: ['🚀 Master CI Workflow - Smart Testing & Auto-Healing']
     types: [completed]
     branches: [main, develop, feature/*, hotfix/*]
 
@@ -31,7 +31,7 @@ jobs:
       failure-reason: ${{ steps.analyze-failure.outputs.failure-reason }}
       error-logs: ${{ steps.analyze-failure.outputs.error-logs }}
       fix-required: ${{ steps.analyze-failure.outputs.fix-required }}
-    
+
     steps:
       - name: 📥 تحميل الكود
         uses: actions/checkout@v4
@@ -59,10 +59,10 @@ jobs:
         id: analyze-failure
         run: |
           echo "🔍 تحليل فشل Master Workflow..."
-          
+
           # إنشاء مجلدات التحليل
           mkdir -p analysis/ logs/ learning/
-          
+
           # تحليل سبب الفشل
           echo "📊 تحليل سبب الفشل..."
           node -e "
@@ -131,7 +131,7 @@ jobs:
       cursor-response: ${{ steps.cursor-api.outputs.cursor-response }}
       fixes-received: ${{ steps.cursor-api.outputs.fixes-received }}
       fix-count: ${{ steps.cursor-api.outputs.fix-count }}
-    
+
     steps:
       - name: 📥 تحميل الكود
         uses: actions/checkout@v4
@@ -160,10 +160,10 @@ jobs:
         id: cursor-api
         run: |
           echo "🤖 إرسال الخطأ لـ Cursor API للإصلاح..."
-          
+
           # قراءة تحليل الفشل
           const analysis = JSON.parse(require('fs').readFileSync('analysis/failure-analysis.json', 'utf8'));
-          
+
           # إرسال لـ Cursor API
           node -e "
             const https = require('https');
@@ -264,7 +264,7 @@ jobs:
       fixes-applied: ${{ steps.apply-fixes.outputs.fixes-applied }}
       success-count: ${{ steps.apply-fixes.outputs.success-count }}
       failure-count: ${{ steps.apply-fixes.outputs.failure-count }}
-    
+
     steps:
       - name: 📥 تحميل الكود
         uses: actions/checkout@v4
@@ -293,7 +293,7 @@ jobs:
         id: apply-fixes
         run: |
           echo "🔧 تطبيق الإصلاحات من Cursor API..."
-          
+
           if [ -f "analysis/cursor-response.json" ]; then
             node -e "
               const fs = require('fs');
@@ -355,13 +355,13 @@ jobs:
       - name: 🔍 فحص الإصلاحات المطبقة
         run: |
           echo "🔍 فحص الإصلاحات المطبقة..."
-          
+
           # فحص الـ workflows
           node scripts/validate-workflows.js > logs/post-fix-validation.log 2>&1
-          
+
           # فحص الكود
           npm run lint > logs/post-fix-lint.log 2>&1 || echo "Lint check completed"
-          
+
           # تحليل النتائج
           node -e "
             const fs = require('fs');
@@ -410,7 +410,7 @@ jobs:
     outputs:
       commit-hash: ${{ steps.commit.outputs.commit-hash }}
       push-success: ${{ steps.push.outputs.push-success }}
-    
+
     steps:
       - name: 📥 تحميل الكود
         uses: actions/checkout@v4
@@ -428,17 +428,17 @@ jobs:
         id: commit
         run: |
           echo "💾 إنشاء Commit للإصلاحات..."
-          
+
           # إعداد Git
           git config --local user.email "ci-assistant@github.com"
           git config --local user.name "CI Assistant"
-          
+
           # إضافة جميع التغييرات
           git add .
-          
+
           # إنشاء commit
           git commit -m "🤖 CI Assistant: إصلاح فشل Master Workflow" || echo "لا توجد تغييرات للحفظ"
-          
+
           # الحصول على hash الـ commit
           COMMIT_HASH=$(git rev-parse HEAD)
           echo "commit-hash=$COMMIT_HASH"
@@ -447,7 +447,7 @@ jobs:
         id: push
         run: |
           echo "📤 رفع الإصلاحات..."
-          
+
           # رفع التغييرات
           if git push origin ${{ github.ref_name }}; then
             echo "push-success=true"
@@ -461,10 +461,16 @@ jobs:
   # 📊 Job 5: Generate Assistant Report
   generate-assistant-report:
     if: always()
-    needs: [analyze-master-failure, send-to-cursor-api, apply-cursor-fixes, commit-and-push]
+    needs:
+      [
+        analyze-master-failure,
+        send-to-cursor-api,
+        apply-cursor-fixes,
+        commit-and-push,
+      ]
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    
+
     steps:
       - name: 📥 تحميل الكود
         uses: actions/checkout@v4
@@ -481,37 +487,37 @@ jobs:
       - name: 📊 إنشاء تقرير CI Assistant
         run: |
           echo "📊 إنشاء تقرير CI Assistant..."
-          
+
           # إنشاء التقرير
           cat > CI_ASSISTANT_REPORT.md << 'EOF'
           # 🤖 CI Assistant Workflow - التقرير النهائي
-          
+
           ## 📋 ملخص التنفيذ
           - **التاريخ:** $(date)
           - **الفرع:** ${{ github.ref_name }}
           - **الكوميت:** ${{ github.sha }}
           - **المشغل:** ${{ github.actor }}
-          
+
           ## 🔍 تحليل فشل Master Workflow
           - **سبب الفشل:** ${{ needs.analyze-master-failure.outputs.failure-reason }}
           - **حالة الإصلاح:** ${{ needs.analyze-master-failure.outputs.fix-required }}
-          
+
           ## 🤖 تفاعل Cursor API
           - **استجابة Cursor:** ${{ needs.send-to-cursor-api.outputs.cursor-response }}
           - **الإصلاحات المستلمة:** ${{ needs.send-to-cursor-api.outputs.fixes-received }}
-          
+
           ## 🔧 تطبيق الإصلاحات
           - **الإصلاحات المطبقة:** ${{ needs.apply-cursor-fixes.outputs.fixes-applied }}
           - **نجح:** ${{ needs.apply-cursor-fixes.outputs.success-count }}
           - **فشل:** ${{ needs.apply-cursor-fixes.outputs.failure-count }}
-          
+
           ## 💾 النتيجة النهائية
           - **Commit Hash:** ${{ needs.commit-and-push.outputs.commit-hash }}
           - **رفع ناجح:** ${{ needs.commit-and-push.outputs.push-success }}
-          
+
           ## ✅ الحالة النهائية
           EOF
-          
+
           # إضافة التفاصيل
           if [ -f "analysis/fix-report.json" ]; then
             node -e "
@@ -524,11 +530,11 @@ jobs:
           - **نجح:** \${report.successCount}
           - **فشل:** \${report.failureCount}
           - **معدل النجاح:** \${report.fixesApplied > 0 ? (report.successCount / report.fixesApplied * 100).toFixed(2) : 0}%
-          
+
           ### 🎯 التوصيات
           \${report.failureCount > 0 ? '⚠️ بعض الإصلاحات فشلت - يحتاج مراجعة' : '✅ جميع الإصلاحات نجحت'}
           \${report.successCount > 0 ? '✅ تم إصلاح المشكلة - Master Workflow سيعمل مرة أخرى' : '❌ لم يتم إصلاح المشكلة'}
-          
+
           ### 🚀 الخطوات التالية
           1. Master Workflow سيعمل تلقائياً مرة أخرى
           2. مراقبة النتائج
@@ -542,14 +548,14 @@ jobs:
       - name: 💾 حفظ التقرير
         run: |
           echo "💾 حفظ التقرير..."
-          
+
           # إعداد Git
           git config --local user.email "ci-assistant@github.com"
           git config --local user.name "CI Assistant"
-          
+
           # إضافة التقرير
           git add CI_ASSISTANT_REPORT.md
-          
+
           # إنشاء commit للتقرير
           git commit -m "📊 CI Assistant Report - $(date '+%Y-%m-%d %H:%M:%S')" || echo "لا توجد تغييرات للحفظ"
 
