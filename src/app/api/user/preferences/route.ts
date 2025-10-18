@@ -99,7 +99,8 @@ export async function POST(request: NextRequest) {
         [key]: value,
         updated_at: new Date().toISOString(),
       },
-        onConflict: "user_id",
+  {
+    onConflict: "user_id",
       },
     );
 

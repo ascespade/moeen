@@ -28,7 +28,8 @@ describe("/api/patients", () => {
           email: "ahmed@example.com",
           role: "patient",
         },
-          id: "2",
+  {
+    id: "2",
           name: "فاطمة علي",
           age: 30,
           phone: "+966501234568",

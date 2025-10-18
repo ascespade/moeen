@@ -333,7 +333,8 @@ async function requestFileAccess(request: NextRequest, body: any) {
         files: files || [],
         count: files?.length || 0,
       },
-      message: "File access granted",
+  {
+    message: "File access granted",
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);

@@ -120,7 +120,8 @@ function LoginForm() {
         "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg shadow-red-500/50",
       route: "/dashboard",
     },
-      role: "supervisor",
+  {
+    role: "supervisor",
       email: "supervisor@moeen.com",
       password: "super123",
       label: "👔 مشرف",
@@ -128,7 +129,8 @@ function LoginForm() {
         "bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 shadow-lg shadow-purple-500/50",
       route: "/supervisor-dashboard",
     },
-      role: "agent",
+  {
+    role: "agent",
       email: "test@moeen.com",
       password: "test123",
       label: "🏥 مريض",
@@ -136,7 +138,8 @@ function LoginForm() {
         "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 shadow-lg shadow-green-500/50",
       route: "/dashboard/user",
     },
-      role: "agent",
+  {
+    role: "agent",
       email: "user@moeen.com",
       password: "user123",
       label: "👨‍⚕️ موظف",
@@ -144,7 +147,8 @@ function LoginForm() {
         "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg shadow-blue-500/50",
       route: "/staff-dashboard",
     },
-      role: "agent",
+  {
+    role: "agent",
       email: "doctor@moeen.com",
       password: "doctor123",
       label: "⚕️ طبيب",

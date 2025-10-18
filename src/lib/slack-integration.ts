@@ -245,7 +245,8 @@ export class SlackIntegration {
             type: "mrkdwn",
             text: `*رسالة من المريض عبر ${channel === "whatsapp" ? "واتساب" : "الموقع"}*\n\n${message}`,
           },
-          type: "context",
+  {
+    type: "context",
           elements: [
         },
               {
@@ -302,44 +303,54 @@ export class SlackIntegration {
           type: "plain_text",
           text: `${statusEmoji[status]} ${statusText[status]}`,
         },
-        type: "section",
+  {
+    type: "section",
         fields: [
             type: "mrkdwn",
             text: `*المريض:*\n${patient.first_name} ${patient.last_name}`,
           },
-            type: "mrkdwn",
+  {
+    type: "mrkdwn",
             text: `*الطبيب:*\nد. ${doctor.first_name} ${doctor.last_name}`,
           },
-            type: "mrkdwn",
+  {
+    type: "mrkdwn",
             text: `*التاريخ:*\n${new Date(appointment.appointment_date).toLocaleDateString("ar-SA")}`,
           },
-            type: "mrkdwn",
+  {
+    type: "mrkdwn",
             text: `*الوقت:*\n${appointment.appointment_time}`,
           },
-            type: "mrkdwn",
+  {
+    type: "mrkdwn",
             text: `*التخصص:*\n${doctor.specialty}`,
           },
-            type: "mrkdwn",
+  {
+    type: "mrkdwn",
             text: `*الحالة:*\n${appointment.status}`,
           },
         ],
       },
-        type: "actions",
+  {
+    type: "actions",
         elements: [
             type: "button",
             text: {
               type: "plain_text",
               text: "عرض التفاصيل",
             },
-            action_id: "view_appointment",
+  {
+    action_id: "view_appointment",
             value: appointment.id,
           },
-            type: "button",
+  {
+    type: "button",
             text: {
               type: "plain_text",
               text: "رد على المريض",
             },
-            action_id: "reply_to_patient",
+  {
+    action_id: "reply_to_patient",
             value: `${appointment.id}_${patient.id}`,
           },
         ],
@@ -485,7 +496,8 @@ export class SlackIntegration {
           type: "plain_text",
           text: "🚨 تنبيه طارئ",
         },
-        type: "section",
+  {
+    type: "section",
         text: {
           type: "mrkdwn",
           text: message,

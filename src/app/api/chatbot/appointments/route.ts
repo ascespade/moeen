@@ -134,7 +134,8 @@ export async function POST(request: NextRequest) {
         specialty: appointment.doctors.specialty,
         status: appointment.status,
       },
-      message: "تم حجز الموعد بنجاح!",
+  {
+    message: "تم حجز الموعد بنجاح!",
     });
   } catch (error) {
     return NextResponse.json(

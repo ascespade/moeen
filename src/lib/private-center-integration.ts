@@ -447,7 +447,8 @@ export class PrivateCenterIntegration {
             therapy: 300,
             assessment: 500,
           },
-          status: "active",
+  {
+    status: "active",
         },
       ],
     };

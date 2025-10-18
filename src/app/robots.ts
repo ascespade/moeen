@@ -7,6 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: ["/", "/features", "/pricing", "/faq"],
       disallow: ["/api", "/admin"],
     },
+  {
     sitemap: "https://example.com/sitemap.xml",
   };
 }

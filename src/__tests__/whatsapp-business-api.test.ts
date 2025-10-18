@@ -247,7 +247,8 @@ describe("WhatsAppBusinessAPI", () => {
                   },
                   contacts: [
                       profile: { name: "أحمد" },
-                      wa_id: "966501234567",
+  {
+    wa_id: "966501234567",
                     },
                   ],
                   messages: [
@@ -266,7 +267,8 @@ describe("WhatsAppBusinessAPI", () => {
                     },
                   ],
                 },
-                field: "messages",
+  {
+    field: "messages",
               },
             ],
           },

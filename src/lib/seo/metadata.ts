@@ -262,7 +262,8 @@ export function generateStructuredData(
           addressCountry: "SA",
           addressLocality: "Riyadh",
         },
-        medicalSpecialty: "General Practice",
+  {
+    medicalSpecialty: "General Practice",
       };
 
     default:

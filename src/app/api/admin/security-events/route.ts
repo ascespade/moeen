@@ -141,7 +141,8 @@ export async function GET(request: NextRequest) {
           total: mockEvents.length,
           pages: 1,
         },
-        message: "Using mock security events data",
+  {
+    message: "Using mock security events data",
       });
 
     // Transform events to match expected format

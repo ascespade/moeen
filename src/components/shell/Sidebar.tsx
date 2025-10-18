@@ -12,15 +12,18 @@ const adminItems = [
     label: "nav.dashboard",
     icon: <LayoutDashboard className="h-4 w-4" />,
   },
+  {
     href: "/conversations",
     label: "nav.conversations",
     icon: <MessagesSquare className="h-4 w-4" />,
   },
   { href: "/flow", label: "nav.flow", icon: <Workflow className="h-4 w-4" /> },
+  {
     href: "/review",
     label: "nav.review",
     icon: <ShieldCheck className="h-4 w-4" />,
   },
+  {
     href: "/settings",
     label: "nav.settings",
     icon: <Settings className="h-4 w-4" />,
@@ -32,6 +35,7 @@ const staffItems = [
     label: "nav.dashboard",
     icon: <LayoutDashboard className="h-4 w-4" />,
   },
+  {
     href: "/conversations",
     label: "nav.conversations",
     icon: <MessagesSquare className="h-4 w-4" />,
@@ -42,6 +46,7 @@ const viewerItems = [
     label: "nav.dashboard",
     icon: <LayoutDashboard className="h-4 w-4" />,
   },
+  {
     href: "/conversations",
     label: "nav.conversations",
     icon: <MessagesSquare className="h-4 w-4" />,

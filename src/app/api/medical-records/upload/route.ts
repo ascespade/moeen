@@ -165,7 +165,8 @@ export async function POST(request: NextRequest) {
         fileName: file.name,
         fileSize: file.size,
       },
-      message: "File uploaded successfully",
+  {
+    message: "File uploaded successfully",
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);

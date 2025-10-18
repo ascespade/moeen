@@ -133,7 +133,8 @@ const PatientRecords: React.FC = () => {
           policyNumber: "INS-001",
           expiryDate: "2024-12-31",
         },
-        createdAt: "2024-01-01T00:00:00Z",
+  {
+    createdAt: "2024-01-01T00:00:00Z",
         lastVisit: "2024-01-10T00:00:00Z",
         status: "active",
   },
@@ -160,7 +161,8 @@ const PatientRecords: React.FC = () => {
           policyNumber: "INS-002",
           expiryDate: "2024-11-30",
         },
-        createdAt: "2024-01-02T00:00:00Z",
+  {
+    createdAt: "2024-01-02T00:00:00Z",
         lastVisit: "2024-01-12T00:00:00Z",
         status: "active",
       },

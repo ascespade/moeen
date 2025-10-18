@@ -172,7 +172,8 @@ export async function POST(request: NextRequest) {
         ...claim,
         submissionResult,
       },
-      message: "Insurance claim created successfully",
+  {
+    message: "Insurance claim created successfully",
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
