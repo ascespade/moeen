@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import {
+
   /**
    * Store Management - إدارة الحالة الموحدة
    * Centralized state management using Zustand
@@ -78,7 +79,6 @@ export const useAuthStore = create<AuthState & AuthActions>()(
             }
           }),
       })),
-      {
         name: "auth-store",
         partialize: (state) => ({
           user: state.user,
@@ -195,7 +195,6 @@ export const useUIStore = create<UIState & UIActions>()(
             state.loading[key] = loading;
           }),
       })),
-      {
         name: "ui-store",
         partialize: (state) => ({
           theme: state.theme,
@@ -546,7 +545,6 @@ export const useDataStore = create<DataState & DataActions>()(
             state.error = null;
           }),
       })),
-      {
         name: "data-store",
         partialize: (state) => ({
           patients: state.patients,

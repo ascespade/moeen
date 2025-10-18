@@ -1,3 +1,4 @@
+
 /**
  * Components Central Export - التصدير المركزي للمكونات
  *
@@ -62,30 +63,33 @@ export * from "./common";
  * import ErrorBoundary from '@/components/common/ErrorBoundary';
  */
 
-export { default as Sidebar } from "./shell/Sidebar";
-export { default as HeaderSimple } from "./shell/HeaderSimple";
-export { default as GlobalHeader } from "./layout/GlobalHeader";
-export { default as SmartHeader } from "./layout/SmartHeader";
-export { default as ProtectedRoute } from "./auth/ProtectedRoute";
-export { default as KpiCard } from "./dashboard/KpiCard";
-export { default as Charts } from "./dashboard/Charts";
-export { LineChart } from "./charts/LineChart";
-export { BarChart } from "./charts/BarChart";
-export { AreaChart } from "./charts/AreaChart";
-export { default as AppointmentManager } from "./appointments/AppointmentManager";
-export { default as PatientRecords } from "./patients/PatientRecords";
-export { default as PreVisitChecklist } from "./patient/PreVisitChecklist";
-export { default as ActivationFlow } from "./patient/ActivationFlow";
-export { default as ClaimsManager } from "./insurance/ClaimsManager";
-export { default as SettingsTabs } from "./settings/SettingsTabs";
-export { default as KeywordEditor } from "./settings/KeywordEditor";
-export { default as AccessibilitySettings } from "./accessibility/AccessibilitySettings";
-export { default as MoainChatbot } from "./chatbot/MoainChatbot";
-export { default as UIProvider } from "./providers/UIProvider";
-export { default as I18nProvider } from "./providers/I18nProvider";
-export { default as DataTable } from "./shared/DataTable";
-export { default as Modal } from "./shared/Modal";
-export { default as Tabs } from "./shared/Tabs";
-export { default as EmptyState } from "./shared/EmptyState";
-export { default as LiveRegion } from "./shared/LiveRegion";
-export { default as ScreenReaderOnly } from "./shared/ScreenReaderOnly";
+ from "./shell/Sidebar";
+ from "./shell/HeaderSimple";
+ from "./layout/GlobalHeader";
+ from "./layout/SmartHeader";
+ from "./auth/ProtectedRoute";
+ from "./dashboard/KpiCard";
+ from "./dashboard/Charts";
+ from "./charts/LineChart";
+ from "./charts/BarChart";
+ from "./charts/AreaChart";
+ from "./appointments/AppointmentManager";
+ from "./patients/PatientRecords";
+ from "./patient/PreVisitChecklist";
+ from "./patient/ActivationFlow";
+ from "./insurance/ClaimsManager";
+ from "./settings/SettingsTabs";
+ from "./settings/KeywordEditor";
+ from "./accessibility/AccessibilitySettings";
+ from "./chatbot/MoainChatbot";
+ from "./providers/UIProvider";
+ from "./providers/I18nProvider";
+ from "./shared/DataTable";
+ from "./shared/Modal";
+ from "./shared/Tabs";
+ from "./shared/EmptyState";
+ from "./shared/LiveRegion";
+ from "./shared/ScreenReaderOnly";
+
+
+export { default as Sidebar }

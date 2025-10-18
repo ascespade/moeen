@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
 
-import {
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -65,7 +63,6 @@ const IntegrationsPage: React.FC = () => {
 
       // Build integrations based on configured API keys
       const integrations: Integration[] = [
-        {
           id: "supabase",
           name: "Supabase Database",
           description: "قاعدة البيانات الرئيسية - PostgreSQL + Realtime",
@@ -88,7 +85,6 @@ const IntegrationsPage: React.FC = () => {
               "inactive",
           },
         },
-        {
           id: "whatsapp",
           name: "WhatsApp Business API",
           description: "تكامل مع واتساب لإرسال الرسائل والتذكيرات التلقائية",
@@ -112,7 +108,6 @@ const IntegrationsPage: React.FC = () => {
               "inactive",
           },
         },
-        {
           id: "google",
           name: "Google Calendar",
           description: "مزامنة المواعيد تلقائياً مع تقويم جوجل",
@@ -135,7 +130,6 @@ const IntegrationsPage: React.FC = () => {
             calendar_sync: "bidirectional",
           },
         },
-        {
           id: "stripe",
           name: "Stripe Payments",
           description: "معالجة الدفعات الإلكترونية والاشتراكات",
@@ -158,7 +152,6 @@ const IntegrationsPage: React.FC = () => {
             webhooks: "enabled",
           },
         },
-        {
           id: "smtp",
           name: "Email / SMTP",
           description: "إرسال الإشعارات والتقارير عبر البريد الإلكتروني",

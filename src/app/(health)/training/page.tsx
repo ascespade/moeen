@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import {
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -104,7 +102,6 @@ const TrainingPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockPrograms: TrainingProgram[] = [
-        {
           id: "1",
           title: "برنامج المهارات الحياتية الأساسية",
           description: "تطوير المهارات الأساسية للحياة اليومية والاستقلالية",
@@ -134,7 +131,6 @@ const TrainingPage: React.FC = () => {
             avatar: "/logo.png",
           },
         },
-        {
           id: "2",
           title: "برنامج الحرف اليدوية والتقنية",
           description: "تعلم الحرف اليدوية والتقنيات الحديثة للعمل",
@@ -167,7 +163,6 @@ const TrainingPage: React.FC = () => {
       ];
 
       const mockProgress: TrainingProgress[] = [
-        {
           id: "1",
           participant_id: "part-1",
           program_id: "1",

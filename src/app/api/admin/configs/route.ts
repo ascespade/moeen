@@ -40,7 +40,6 @@ export async function GET(request: NextRequest) {
       console.error("Error fetching configs:", error);
       // Return default configs if table doesn't exist
       const defaultConfigs = [
-        {
           id: "1",
           key: "maintenance_mode",
           value: "false",
@@ -50,7 +49,6 @@ export async function GET(request: NextRequest) {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         },
-        {
           id: "2",
           key: "registration_enabled",
           value: "true",
@@ -60,7 +58,6 @@ export async function GET(request: NextRequest) {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         },
-        {
           id: "3",
           key: "max_users",
           value: "1000",
@@ -70,7 +67,6 @@ export async function GET(request: NextRequest) {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         },
-        {
           id: "4",
           key: "session_timeout",
           value: "3600",
@@ -80,7 +76,6 @@ export async function GET(request: NextRequest) {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         },
-        {
           id: "5",
           key: "api_rate_limit",
           value: "100",
@@ -123,7 +118,6 @@ export async function POST(request: NextRequest) {
     const validation = configSchema.safeParse(body);
     if (!validation.success) {
       return NextResponse.json(
-        {
           error: "Invalid configuration data",
           details: validation.error.issues,
         },
@@ -211,7 +205,6 @@ export async function PUT(request: NextRequest) {
     const validation = configSchema.partial().safeParse(body);
     if (!validation.success) {
       return NextResponse.json(
-        {
           error: "Invalid configuration data",
           details: validation.error.issues,
         },

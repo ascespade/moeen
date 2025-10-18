@@ -187,22 +187,18 @@ export default function SettingsPage() {
                   <h2 className="mb-6 text-xl font-semibold">التكاملات</h2>
                   <div className="space-y-4">
                     {[
-                      {
                         name: "واتساب بزنس",
                         status: "connected",
                         description: "متصل",
                       },
-                      {
                         name: "تيليجرام",
                         status: "disconnected",
                         description: "غير متصل",
                       },
-                      {
                         name: "فيسبوك ماسنجر",
                         status: "error",
                         description: "خطأ في الاتصال",
                       },
-                      {
                         name: "الموقع الإلكتروني",
                         status: "connected",
                         description: "متصل",

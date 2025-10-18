@@ -32,7 +32,6 @@ export async function POST(request: NextRequest) {
 
     if (!type || !patientId) {
       return NextResponse.json(
-        {
           error: "Missing required fields: type, patientId",
         },
         { status: 400 },
@@ -141,7 +140,6 @@ export async function POST(request: NextRequest) {
           const { amount, paymentMethod, transactionId } = notificationData;
           if (!amount || !paymentMethod || !transactionId) {
             return NextResponse.json(
-              {
                 error:
                   "Missing payment data: amount, paymentMethod, transactionId",
               },
@@ -242,7 +240,6 @@ export async function POST(request: NextRequest) {
                 appointmentDate: smsAppointmentDate.toLocaleDateString("ar-SA"),
                 appointmentTime: smsAppointmentDate.toLocaleTimeString(
                   "ar-SA",
-                  {
                     hour: "2-digit",
                     minute: "2-digit",
                   },
@@ -319,7 +316,6 @@ export async function POST(request: NextRequest) {
     const failedResults = results.filter((result) => !result.success);
     if (failedResults.length > 0) {
       return NextResponse.json(
-        {
           error: "Some notifications failed",
           details: failedResults,
         },

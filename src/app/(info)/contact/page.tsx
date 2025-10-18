@@ -38,25 +38,21 @@ export default function ContactPage() {
   };
 
   const contactInfo = [
-    {
       icon: <Mail className="h-6 w-6" />,
       title: "البريد الإلكتروني",
       value: "info@mu3een.com",
       link: "mailto:info@mu3een.com",
     },
-    {
       icon: <Phone className="h-6 w-6" />,
       title: "الهاتف",
       value: "+966 50 123 4567",
       link: "tel:+966501234567",
     },
-    {
       icon: <MapPin className="h-6 w-6" />,
       title: "العنوان",
       value: "الرياض، المملكة العربية السعودية",
       link: "#",
     },
-    {
       icon: <Clock className="h-6 w-6" />,
       title: "ساعات العمل",
       value: "الأحد - الخميس: 8:00 - 17:00",

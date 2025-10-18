@@ -29,7 +29,6 @@ export interface ButtonProps
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    {
       className,
       variant = "primary",
       size = "md",
@@ -89,5 +88,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = "Button";
+
 
 export { Button };

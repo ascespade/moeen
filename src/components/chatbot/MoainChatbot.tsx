@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import {
-
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
@@ -214,14 +212,12 @@ const MoainChatbot: React.FC = () => {
         content:
           "أفهم أنك تريد حجز موعد. دعني أساعدك في العثور على أفضل وقت متاح.",
         appointmentSuggestions: [
-          {
             id: "1",
             doctorName: "د. سارة أحمد",
             specialty: "طب الأطفال",
             availableSlots: ["09:00", "10:00", "11:00", "14:00"],
             date: "2024-01-15",
           },
-          {
             id: "2",
             doctorName: "د. محمد حسن",
             specialty: "العلاج الطبيعي",

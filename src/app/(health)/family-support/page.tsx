@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import {
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -127,7 +125,6 @@ const FamilySupportPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockFamilyMembers: FamilyMember[] = [
-        {
           id: "1",
           patient_id: "pat-1",
           first_name: "فاطمة",
@@ -149,7 +146,6 @@ const FamilySupportPage: React.FC = () => {
             avatar: "/logo.png",
           },
         },
-        {
           id: "2",
           patient_id: "pat-1",
           first_name: "عبدالله",
@@ -172,7 +168,6 @@ const FamilySupportPage: React.FC = () => {
       ];
 
       const mockSupportSessions: SupportSession[] = [
-        {
           id: "1",
           family_member_id: "1",
           counselor_id: "coun-1",
@@ -202,7 +197,6 @@ const FamilySupportPage: React.FC = () => {
       ];
 
       const mockResources: Resource[] = [
-        {
           id: "1",
           title: "دليل دعم الأسر",
           description: "دليل شامل لدعم أسر ذوي الاحتياجات الخاصة",
@@ -212,7 +206,6 @@ const FamilySupportPage: React.FC = () => {
           tags: ["دعم", "أسرة", "تعليم"],
           created_at: "2024-01-01T00:00:00Z",
         },
-        {
           id: "2",
           title: "فيديو: استراتيجيات التعامل مع التوتر",
           description:

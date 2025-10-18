@@ -1,7 +1,5 @@
 import React from "react";
 
-import {
-
 import { useTheme } from "@/core/theme";
 
 /**
@@ -58,7 +56,6 @@ export const LineChart: React.FC<LineChartProps> = ({
     lines.length > 0
       ? lines
       : [
-          {
             dataKey: dataKey,
             color: "var(--brand-primary)",
             name: "Value",

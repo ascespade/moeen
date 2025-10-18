@@ -74,7 +74,6 @@ export async function POST(request: NextRequest) {
 
     if (!ALLOWED_FILE_TYPES.includes(file.type)) {
       return NextResponse.json(
-        {
           error: "File type not allowed",
           allowedTypes: ALLOWED_FILE_TYPES,
         },
@@ -84,7 +83,6 @@ export async function POST(request: NextRequest) {
 
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
-        {
           error: "File too large",
           maxSize: MAX_FILE_SIZE,
         },

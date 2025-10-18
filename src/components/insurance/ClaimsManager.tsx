@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
 import logger from '@/lib/monitoring/logger';
-import {
 
 import { useT } from "@/hooks/useT";
 import { Card } from "@/components/ui/Card";

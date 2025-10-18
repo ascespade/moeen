@@ -1,3 +1,4 @@
+
 // Private Medical Centers Integration (مثل مركز الهمم)
 export interface PrivateCenterLicense {
   centerId: string;
@@ -443,7 +444,6 @@ export class PrivateCenterIntegration {
     return {
       centerId: this.centerId,
       insuranceProviders: [
-        {
           provider: "التعاونية",
           contractNumber: "CONTRACT-001",
           contractDate: "2024-01-01",

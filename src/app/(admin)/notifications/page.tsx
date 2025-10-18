@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
 
-import {
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -106,7 +104,6 @@ const NotificationsPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockNotifications: Notification[] = [
-        {
           id: "1",
           title: "موعد جديد مجدول",
           message: "تم جدولة موعد جديد للمريض أحمد محمد في 15 يناير 2024",
@@ -126,7 +123,6 @@ const NotificationsPage: React.FC = () => {
             appointment_id: "apt-123",
           },
         },
-        {
           id: "2",
           title: "تذكير بجلسة علاج",
           message:
@@ -148,7 +144,6 @@ const NotificationsPage: React.FC = () => {
             therapy_session_id: "ts-456",
           },
         },
-        {
           id: "3",
           title: "تحديث حالة المريض",
           message: "تم تحديث حالة المريض نورا الزهراني إلى 'مكتمل العلاج'",
@@ -167,7 +162,6 @@ const NotificationsPage: React.FC = () => {
             patient_id: "pat-3",
           },
         },
-        {
           id: "4",
           title: "تنبيه نظام",
           message: "تم إجراء نسخة احتياطية من قاعدة البيانات بنجاح",
@@ -185,7 +179,6 @@ const NotificationsPage: React.FC = () => {
       ];
 
       const mockTemplates: NotificationTemplate[] = [
-        {
           id: "1",
           name: "تذكير الموعد",
           title: "تذكير بموعدك",
@@ -197,7 +190,6 @@ const NotificationsPage: React.FC = () => {
           is_active: true,
           created_at: "2024-01-01T00:00:00Z",
         },
-        {
           id: "2",
           name: "تأكيد الموعد",
           title: "تأكيد حجز الموعد",
@@ -378,7 +370,6 @@ const NotificationsPage: React.FC = () => {
                 <Calendar className="w-5 h-5 text-brand-success" />
                 <div>
                   <div className="text-2xl font-bold">
-                    {
                       notifications.filter((n) => n.type === "appointment")
                         .length
                     }

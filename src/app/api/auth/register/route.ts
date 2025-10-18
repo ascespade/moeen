@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import logger from "@/lib/monitoring/logger";
 import { z } from "zod";
 import { createClient as createServiceClient } from "@supabase/supabase-js";
 
+import logger from "@/lib/monitoring/logger";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -56,7 +56,6 @@ export async function POST(request: NextRequest) {
         message: err.message,
       }));
       return NextResponse.json(
-        {
           success: false,
           errors,
         },
@@ -78,7 +77,6 @@ export async function POST(request: NextRequest) {
 
     if (existingUser) {
       return NextResponse.json(
-        {
           success: false,
           errors: [
             { field: "email", message: "البريد الإلكتروني مستخدم بالفعل" },
@@ -92,7 +90,6 @@ export async function POST(request: NextRequest) {
     const supabaseAdmin = createServiceClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!,
-      {
         auth: {
           autoRefreshToken: false,
           persistSession: false,
@@ -114,10 +111,8 @@ export async function POST(request: NextRequest) {
     if (authError) {
       console.error("Auth creation error:", authError);
       return NextResponse.json(
-        {
           success: false,
           errors: [
-            {
               field: "general",
               message: `حدث خطأ أثناء إنشاء الحساب: ${authError.message}`,
             },
@@ -129,7 +124,6 @@ export async function POST(request: NextRequest) {
 
     if (!authData.user) {
       return NextResponse.json(
-        {
           success: false,
           errors: [{ field: "general", message: "فشل إنشاء حساب المصادقة" }],
         },
@@ -183,10 +177,8 @@ export async function POST(request: NextRequest) {
       }
 
       return NextResponse.json(
-        {
           success: false,
           errors: [
-            {
               field: "general",
               message: `فشل إنشاء الملف الشخصي: ${profileError.message}`,
             },
@@ -224,7 +216,6 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      {
         success: true,
         message: "تم إنشاء الحساب بنجاح",
         data: {
@@ -238,10 +229,8 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Registration error:", error);
     return NextResponse.json(
-      {
         success: false,
         errors: [
-          {
             field: "general",
             message: `حدث خطأ غير متوقع: ${error instanceof Error ? error.message : "Unknown error"}`,
           },

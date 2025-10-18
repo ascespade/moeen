@@ -39,7 +39,6 @@ export async function GET() {
     });
   } catch (error: any) {
     return NextResponse.json(
-      {
         status: "unhealthy",
         timestamp: new Date().toISOString(),
         error: error.message,

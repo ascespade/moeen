@@ -1,3 +1,4 @@
+
 interface MoyasarConfig {
   apiKey: string;
   baseUrl: string;
@@ -76,7 +77,6 @@ export class MoyasarPaymentService {
     try {
       const response = await fetch(
         `${this.config.baseUrl}/payments/${paymentId}`,
-        {
           method: "GET",
           headers: {
             Authorization: `Basic ${Buffer.from(this.config.apiKey + ":").toString("base64")}`,
@@ -114,7 +114,6 @@ export class MoyasarPaymentService {
     try {
       const response = await fetch(
         `${this.config.baseUrl}/payments/${paymentId}/refund`,
-        {
           method: "POST",
           headers: {
             Authorization: `Basic ${Buffer.from(this.config.apiKey + ":").toString("base64")}`,

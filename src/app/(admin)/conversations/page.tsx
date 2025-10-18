@@ -20,18 +20,15 @@ type Conversation = {
 };
 
 const seed: Conversation[] = [
-  {
     id: "c1",
     title: "سؤال عن المنتج",
     status: "open",
     messages: [
-      {
         id: "m1",
         from: "customer",
         text: "مرحبا، لدي استفسار.",
         ts: new Date().toISOString(),
       },
-      {
         id: "m2",
         from: "agent",
         text: "أهلاً بك! كيف أستطيع المساعدة؟",

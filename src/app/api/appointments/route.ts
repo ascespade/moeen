@@ -122,7 +122,6 @@ export async function POST(request: NextRequest) {
 
     if (!validation.success) {
       return NextResponse.json(
-        {
           error: "Validation failed",
           details: validation.errors,
         },
@@ -183,7 +182,6 @@ export async function POST(request: NextRequest) {
 
     if (conflicts && conflicts.length > 0) {
       return NextResponse.json(
-        {
           error: "Doctor has a conflicting appointment at this time",
         },
         { status: 409 },

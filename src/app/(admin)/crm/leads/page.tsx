@@ -34,7 +34,6 @@ interface Lead {
 }
 
 const mockLeads: Lead[] = [
-  {
     id: "1",
     name: "أحمد العتيبي",
     email: "ahmed@company.com",
@@ -52,7 +51,6 @@ const mockLeads: Lead[] = [
     notes: "مهتم بحلول إدارة المواعيد",
     tags: ["تقنية", "عالي القيمة"],
   },
-  {
     id: "2",
     name: "فاطمة السعيد",
     email: "fatima@hospital.com",

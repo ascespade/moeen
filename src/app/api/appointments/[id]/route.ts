@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import {
-
 import { createClient } from "@/lib/supabase/server";
 import { authorize } from "@/lib/auth/authorize";
 import { getClientInfo } from "@/lib/utils/request-helpers";
@@ -123,7 +121,6 @@ export async function PATCH(
 
     if (!validation.success) {
       return NextResponse.json(
-        {
           error: "Validation failed",
           details: validation.errors,
         },

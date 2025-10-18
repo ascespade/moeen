@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import {
-import {
 
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
@@ -92,7 +91,6 @@ const AppointmentManager: React.FC = () => {
   const loadAppointments = async () => {
     // محاكاة تحميل المواعيد من قاعدة البيانات
     const mockAppointments: Appointment[] = [
-      {
         id: "1",
         patientName: "أحمد محمد",
         patientPhone: "+966501234567",
@@ -107,7 +105,6 @@ const AppointmentManager: React.FC = () => {
         createdAt: "2024-01-10T09:00:00Z",
         updatedAt: "2024-01-10T09:00:00Z",
       },
-      {
         id: "2",
         patientName: "فاطمة علي",
         patientPhone: "+966502345678",
@@ -128,21 +125,18 @@ const AppointmentManager: React.FC = () => {
 
   const loadDoctors = async () => {
     const mockDoctors: Doctor[] = [
-      {
         id: "1",
         name: "د. سارة أحمد",
         specialty: "طب الأطفال",
         availableSlots: ["09:00", "10:00", "11:00", "14:00", "15:00"],
         maxPatientsPerDay: 20,
       },
-      {
         id: "2",
         name: "د. محمد حسن",
         specialty: "العلاج الطبيعي",
         availableSlots: ["08:00", "09:30", "11:00", "13:30", "15:00"],
         maxPatientsPerDay: 15,
       },
-      {
         id: "3",
         name: "د. نورا سالم",
         specialty: "العلاج الوظيفي",

@@ -1,3 +1,4 @@
+
 interface InsuranceProvider {
   id: string;
   name: string;
@@ -36,7 +37,6 @@ export class InsuranceProviderService {
 
   private initializeProviders() {
     const providers: InsuranceProvider[] = [
-      {
         id: "seha",
         name: "SEHA",
         code: "SEHA",
@@ -45,7 +45,6 @@ export class InsuranceProviderService {
         supportedOperations: ["verify_member", "create_claim", "check_status"],
         isActive: true,
       },
-      {
         id: "shoon",
         name: "SHOON",
         code: "SHOON",
@@ -55,7 +54,6 @@ export class InsuranceProviderService {
         supportedOperations: ["verify_member", "create_claim", "check_status"],
         isActive: true,
       },
-      {
         id: "tatman",
         name: "TATMAN",
         code: "TATMAN",
@@ -179,7 +177,6 @@ export class InsuranceProviderService {
     try {
       const response = await fetch(
         `${provider.apiEndpoint}/claims/${claimId}`,
-        {
           method: "GET",
           headers: {
             Authorization: `Bearer ${provider.apiKey}`,
@@ -222,7 +219,6 @@ export class InsuranceProviderService {
     try {
       const response = await fetch(
         `${provider.apiEndpoint}/claims/${claimId}/submit`,
-        {
           method: "POST",
           headers: {
             Authorization: `Bearer ${provider.apiKey}`,

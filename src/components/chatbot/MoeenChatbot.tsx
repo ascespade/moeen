@@ -21,7 +21,6 @@ export default function MoeenChatbot({
 }: MoeenChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    {
       id: "welcome",
       role: "assistant",
       content:

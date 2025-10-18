@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import {
-
 import { useT } from "@/hooks/useT";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -40,7 +38,6 @@ export default function ActivationFlow({
   const [currentStep, setCurrentStep] = useState(0);
 
   const [steps, setSteps] = useState<ActivationStep[]>([
-    {
       id: "profile_complete",
       title: t("patient.activation.steps.profile_complete"),
       description: t("patient.activation.steps.profile_complete_desc"),
@@ -48,7 +45,6 @@ export default function ActivationFlow({
       required: true,
       icon: <FileText className="h-5 w-5" />,
     },
-    {
       id: "insurance_verified",
       title: t("patient.activation.steps.insurance_verified"),
       description: t("patient.activation.steps.insurance_verified_desc"),
@@ -56,7 +52,6 @@ export default function ActivationFlow({
       required: true,
       icon: <Shield className="h-5 w-5" />,
     },
-    {
       id: "payment_settled",
       title: t("patient.activation.steps.payment_settled"),
       description: t("patient.activation.steps.payment_settled_desc"),
@@ -64,7 +59,6 @@ export default function ActivationFlow({
       required: true,
       icon: <CreditCard className="h-5 w-5" />,
     },
-    {
       id: "first_visit_completed",
       title: t("patient.activation.steps.first_visit"),
       description: t("patient.activation.steps.first_visit_desc"),
@@ -80,7 +74,6 @@ export default function ActivationFlow({
     try {
       const response = await fetch(
         `/api/patients/${patientId}/activation/step`,
-        {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ stepId, completed: true }),

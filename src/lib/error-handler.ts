@@ -1,3 +1,4 @@
+
 type ErrorSeverity = "low" | "medium" | "high" | "critical";
 
 interface ErrorContext {
@@ -191,7 +192,6 @@ if (typeof window !== "undefined") {
   window.addEventListener("unhandledrejection", (event) => {
     errorHandler.reportError(
       new Error(`Unhandled Promise Rejection: ${event.reason}`),
-      {
         url: window.location.href,
         userAgent: navigator.userAgent,
       },

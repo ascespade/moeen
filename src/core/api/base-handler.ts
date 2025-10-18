@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import logger from "@/lib/monitoring/logger";
 import { z } from "zod";
 
+import logger from "@/lib/monitoring/logger";
 import { createClient } from "@/lib/supabase/server";
 import { authorize } from "@/lib/auth/authorize";
 
@@ -44,7 +44,6 @@ export class BaseApiHandler {
         // Method validation
         if (req.method !== config.method) {
           return NextResponse.json(
-            {
               success: false,
               error: {
                 message: "Method not allowed",
@@ -61,7 +60,6 @@ export class BaseApiHandler {
 
           if (authError || !user) {
             return NextResponse.json(
-              {
                 success: false,
                 error: { message: "Unauthorized", code: "UNAUTHORIZED" },
               },
@@ -72,7 +70,6 @@ export class BaseApiHandler {
           // Role-based access control
           if (config.roles && !config.roles.includes(user.role)) {
             return NextResponse.json(
-              {
                 success: false,
                 error: { message: "Forbidden", code: "FORBIDDEN" },
               },
@@ -153,7 +150,6 @@ export class BaseApiHandler {
         const handledError = this.errorHandler.handle(error as Error);
 
         return NextResponse.json(
-          {
             success: false,
             error: {
               code: handledError.code,
@@ -229,7 +225,6 @@ export class BaseApiHandler {
     statusCode: number = 400,
   ) {
     return NextResponse.json(
-      {
         success: false,
         error: {
           code,

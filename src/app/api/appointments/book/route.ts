@@ -73,7 +73,6 @@ export async function POST(request: NextRequest) {
     );
     if (!doctorAvailability.available) {
       return NextResponse.json(
-        {
           error: "Doctor not available at this time",
           conflicts: doctorAvailability.conflicts,
         },
@@ -89,7 +88,6 @@ export async function POST(request: NextRequest) {
     );
     if (conflicts.length > 0) {
       return NextResponse.json(
-        {
           error: "Time slot conflicts with existing appointments",
           conflicts,
         },

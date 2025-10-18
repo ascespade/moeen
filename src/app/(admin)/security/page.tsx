@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
 
-import {
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -137,7 +135,6 @@ const SecurityPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockEvents: SecurityEvent[] = [
-        {
           id: "1",
           type: "login",
           user_id: "user-1",
@@ -154,7 +151,6 @@ const SecurityPage: React.FC = () => {
           details: "تسجيل دخول ناجح",
           risk_level: "low",
         },
-        {
           id: "2",
           type: "failed_login",
           user_id: "unknown",
@@ -170,7 +166,6 @@ const SecurityPage: React.FC = () => {
           details: "محاولة تسجيل دخول فاشلة - كلمة مرور خاطئة",
           risk_level: "high",
         },
-        {
           id: "3",
           type: "data_access",
           user_id: "user-2",
@@ -190,7 +185,6 @@ const SecurityPage: React.FC = () => {
       ];
 
       const mockPolicies: SecurityPolicy[] = [
-        {
           id: "1",
           name: "سياسة كلمات المرور",
           description: "متطلبات كلمات المرور القوية",
@@ -205,7 +199,6 @@ const SecurityPage: React.FC = () => {
           last_updated: "2024-01-01T00:00:00Z",
           updated_by: "مدير النظام",
         },
-        {
           id: "2",
           name: "سياسة الوصول إلى البيانات",
           description: "قواعد الوصول إلى البيانات الطبية",
@@ -223,7 +216,6 @@ const SecurityPage: React.FC = () => {
       ];
 
       const mockSessions: UserSession[] = [
-        {
           id: "1",
           user_id: "user-1",
           user_name: "د. فاطمة العلي",
@@ -235,7 +227,6 @@ const SecurityPage: React.FC = () => {
           last_activity: "2024-01-15T10:30:00Z",
           is_active: true,
         },
-        {
           id: "2",
           user_id: "user-2",
           user_name: "أ. محمد السعد",
@@ -250,7 +241,6 @@ const SecurityPage: React.FC = () => {
       ];
 
       const mockAlerts: SecurityAlert[] = [
-        {
           id: "1",
           title: "محاولات تسجيل دخول مشبوهة",
           description: "تم رصد 5 محاولات تسجيل دخول فاشلة من نفس العنوان IP",
@@ -260,7 +250,6 @@ const SecurityPage: React.FC = () => {
           created_at: "2024-01-15T09:45:00Z",
           assigned_to: "فريق الأمان",
         },
-        {
           id: "2",
           title: "وصول غير عادي للبيانات",
           description: "تم الوصول إلى ملفات حساسة في وقت غير عادي",
@@ -430,7 +419,6 @@ const SecurityPage: React.FC = () => {
             <CardContent>
               <div className="text-2xl font-bold">{securityEvents.length}</div>
               <p className="text-xs text-muted-foreground">
-                {
                   securityEvents.filter(
                     (e) =>
                       e.risk_level === "high" || e.risk_level === "critical",
@@ -463,7 +451,6 @@ const SecurityPage: React.FC = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {
                   alerts.filter(
                     (a) => a.status === "new" || a.status === "investigating",
                   ).length

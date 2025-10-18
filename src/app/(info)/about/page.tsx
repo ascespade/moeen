@@ -7,36 +7,30 @@ import { Users, Target, Heart, Award, Globe, Shield } from "lucide-react";
 
 export default function AboutPage() {
   const features = [
-    {
       icon: <Users className="h-8 w-8" />,
       title: "مجتمع متكامل",
       description:
         "نوفر منصة شاملة تجمع المستفيدين والمتطوعين والمتبرعين في مكان واحد",
     },
-    {
       icon: <Target className="h-8 w-8" />,
       title: "رؤية واضحة",
       description:
         "نسعى لبناء مجتمع داعم ومتضامن يساعد الجميع على تحقيق أهدافهم",
     },
-    {
       icon: <Heart className="h-8 w-8" />,
       title: "قيم إنسانية",
       description: "نؤمن بقوة التضامن والتعاون في بناء مجتمع أفضل للجميع",
     },
-    {
       icon: <Award className="h-8 w-8" />,
       title: "جودة عالية",
       description:
         "نلتزم بتقديم خدمات عالية الجودة تلبي احتياجات جميع المستخدمين",
     },
-    {
       icon: <Globe className="h-8 w-8" />,
       title: "وصول عالمي",
       description:
         "نعمل على توسيع نطاق خدماتنا لتشمل أكبر عدد ممكن من المحتاجين",
     },
-    {
       icon: <Shield className="h-8 w-8" />,
       title: "أمان وخصوصية",
       description: "نضمن أمان وخصوصية جميع البيانات والمعلومات الشخصية",

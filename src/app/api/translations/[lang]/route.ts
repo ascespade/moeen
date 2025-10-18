@@ -28,7 +28,6 @@ export async function GET(
     if (tableError && tableError.code === "PGRST116") {
       // Table doesn't exist, return default translations
       return NextResponse.json(
-        {
           ar: getDefaultTranslations("ar"),
           en: getDefaultTranslations("en"),
         },

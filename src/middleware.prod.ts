@@ -22,7 +22,6 @@ export function middleware(request: NextRequest) {
 
     if (RateLimiter.isRateLimited(ip)) {
       return NextResponse.json(
-        {
           success: false,
           error: "Too many requests",
           code: "RATE_LIMIT_EXCEEDED",
@@ -50,7 +49,6 @@ export function middleware(request: NextRequest) {
   ) {
     if (!CSRFProtection.validateToken(request)) {
       return NextResponse.json(
-        {
           success: false,
           error: "CSRF token validation failed",
           code: "CSRF_TOKEN_INVALID",
@@ -98,7 +96,6 @@ export function middleware(request: NextRequest) {
 
     // Return 401 for API routes
     return NextResponse.json(
-      {
         success: false,
         error: "Authentication required",
         code: "AUTHENTICATION_REQUIRED",
@@ -135,7 +132,6 @@ export function middleware(request: NextRequest) {
     // Clear invalid token
     const response = pathname.startsWith("/api")
       ? NextResponse.json(
-          {
             success: false,
             error: "Invalid or expired token",
             code: "INVALID_TOKEN",

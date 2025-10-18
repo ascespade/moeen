@@ -3,8 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import {
-
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
@@ -77,7 +75,6 @@ const HealthcareChatbot: React.FC = () => {
 
   const loadChatHistory = async () => {
     const mockMessages: ChatMessage[] = [
-      {
         id: "1",
         type: "bot",
         content:

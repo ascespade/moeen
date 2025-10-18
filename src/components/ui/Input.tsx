@@ -25,7 +25,6 @@ export interface InputProps
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   (
-    {
       className,
       type = "text",
       label,
@@ -145,5 +144,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 );
 
 Input.displayName = "Input";
+
 
 export { Input };

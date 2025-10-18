@@ -50,7 +50,6 @@ export async function PATCH(
 
     if (claim.claim_status !== "draft") {
       return NextResponse.json(
-        {
           error: "Only draft claims can be submitted",
         },
         { status: 400 },
@@ -60,7 +59,6 @@ export async function PATCH(
     // Submit claim to insurance provider
     const submissionResult = await insuranceService.createClaim(
       claim.provider,
-      {
         patientId: claim.patient_id,
         appointmentId: claim.appointment_id,
         provider: claim.provider,
@@ -73,7 +71,6 @@ export async function PATCH(
 
     if (!submissionResult.success) {
       return NextResponse.json(
-        {
           error: `Insurance submission failed: ${submissionResult.error}`,
         },
         { status: 400 },

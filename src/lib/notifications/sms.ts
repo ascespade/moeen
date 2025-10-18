@@ -133,7 +133,6 @@ export class SMSNotificationService {
     provider: string;
   }) {
     const statusText =
-      {
         approved: "تم الموافقة على",
         rejected: "تم رفض",
         under_review: "قيد المراجعة",

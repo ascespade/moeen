@@ -1,3 +1,4 @@
+
 // Saudi Health System Integration
 export interface SaudiHealthRecord {
   nationalId: string;
@@ -219,7 +220,6 @@ export class SaudiHealthSystemIntegration {
         provider,
         "POST",
         "/verify-coverage",
-        {
           nationalId,
           serviceDate: new Date().toISOString(),
         },
@@ -270,7 +270,6 @@ export class SaudiHealthSystemIntegration {
         provider,
         "POST",
         "/submit-claim",
-        {
           nationalId: claimData.nationalId,
           serviceCode: claimData.serviceCode,
           diagnosisCode: claimData.diagnosisCode,

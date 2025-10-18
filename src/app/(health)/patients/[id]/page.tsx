@@ -58,7 +58,6 @@ const mockPatient: Patient = {
 };
 
 const mockSessions: Session[] = [
-  {
     id: "1",
     date: "2024-01-15",
     doctor: "د. سارة أحمد",
@@ -67,7 +66,6 @@ const mockSessions: Session[] = [
     status: "completed",
     notes: "جلسة علاج طبيعي للظهر - تحسن ملحوظ",
   },
-  {
     id: "2",
     date: "2024-01-10",
     doctor: "د. سارة أحمد",
@@ -76,7 +74,6 @@ const mockSessions: Session[] = [
     status: "completed",
     notes: "تمارين تقوية عضلات الظهر",
   },
-  {
     id: "3",
     date: "2024-01-20",
     doctor: "د. سارة أحمد",
@@ -87,21 +84,18 @@ const mockSessions: Session[] = [
 ];
 
 const mockDocuments: Document[] = [
-  {
     id: "1",
     name: "تقرير الأشعة السينية",
     type: "PDF",
     uploadDate: "2024-01-10",
     size: "2.3 MB",
   },
-  {
     id: "2",
     name: "تحليل الدم",
     type: "PDF",
     uploadDate: "2024-01-08",
     size: "1.1 MB",
   },
-  {
     id: "3",
     name: "صورة الأشعة المقطعية",
     type: "JPG",

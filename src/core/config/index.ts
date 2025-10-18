@@ -176,8 +176,7 @@ export const APP_CONFIG = {
 } as const;
 
 // Default System Configuration
-export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [
-  {
+export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [ {
     id: "app-name",
     key: "app_name",
     value: APP_CONFIG.NAME,
@@ -187,7 +186,6 @@ export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  {
     id: "app-version",
     key: "app_version",
     value: APP_CONFIG.VERSION,
@@ -197,7 +195,6 @@ export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  {
     id: "maintenance-mode",
     key: "maintenance_mode",
     value: false,
@@ -207,7 +204,6 @@ export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  {
     id: "max-appointment-duration",
     key: "max_appointment_duration",
     value: 120,
@@ -217,7 +213,6 @@ export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  {
     id: "appointment-reminder-time",
     key: "appointment_reminder_time",
     value: 24,

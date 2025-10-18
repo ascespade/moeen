@@ -51,7 +51,6 @@ export async function GET(request: NextRequest) {
       console.error("Error fetching security events:", error);
       // Return mock data if table doesn't exist
       const mockEvents = [
-        {
           id: "1",
           action: "user_login",
           entityType: "user",
@@ -70,7 +69,6 @@ export async function GET(request: NextRequest) {
             profile: { fullName: "Admin User" },
           },
         },
-        {
           id: "2",
           action: "user_created",
           entityType: "user",
@@ -87,7 +85,6 @@ export async function GET(request: NextRequest) {
             profile: { fullName: "Admin User" },
           },
         },
-        {
           id: "3",
           action: "config_updated",
           entityType: "system_config",
@@ -105,7 +102,6 @@ export async function GET(request: NextRequest) {
             profile: { fullName: "Admin User" },
           },
         },
-        {
           id: "4",
           action: "failed_login",
           entityType: "user",
@@ -121,7 +117,6 @@ export async function GET(request: NextRequest) {
           createdAt: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(), // 6 hours ago
           user: null,
         },
-        {
           id: "5",
           action: "user_logout",
           entityType: "user",

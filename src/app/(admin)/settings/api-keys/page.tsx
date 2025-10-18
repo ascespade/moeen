@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import {
-import {
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -65,7 +64,6 @@ const APIKeysSettingsPage: React.FC = () => {
 
   // Predefined API key configurations
   const defaultApiKeys: Omit<ApiKeyConfig, "key_value" | "status">[] = [
-    {
       id: "supabase_url",
       name: "Supabase URL",
       service: "supabase",
@@ -75,7 +73,6 @@ const APIKeysSettingsPage: React.FC = () => {
       description: "عنوان URL لقاعدة بيانات Supabase",
       placeholder: "https://xxxxx.supabase.co",
     },
-    {
       id: "supabase_anon",
       name: "Supabase Anon Key",
       service: "supabase",
@@ -85,7 +82,6 @@ const APIKeysSettingsPage: React.FC = () => {
       description: "مفتاح Supabase العام (Anon Key)",
       placeholder: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     },
-    {
       id: "supabase_service",
       name: "Supabase Service Key",
       service: "supabase",
@@ -95,7 +91,6 @@ const APIKeysSettingsPage: React.FC = () => {
       description: "مفتاح Supabase الخاص (Service Role)",
       placeholder: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     },
-    {
       id: "whatsapp_token",
       name: "WhatsApp Business Token",
       service: "whatsapp",
@@ -106,7 +101,6 @@ const APIKeysSettingsPage: React.FC = () => {
       placeholder: "EAAxxxxxxxxxxxxxx",
       validation_url: "https://graph.facebook.com/v18.0/me",
     },
-    {
       id: "whatsapp_phone",
       name: "WhatsApp Phone Number ID",
       service: "whatsapp",
@@ -116,7 +110,6 @@ const APIKeysSettingsPage: React.FC = () => {
       description: "معرف رقم الهاتف في واتساب بزنس",
       placeholder: "123456789012345",
     },
-    {
       id: "google_client_id",
       name: "Google Client ID",
       service: "google",
@@ -126,7 +119,6 @@ const APIKeysSettingsPage: React.FC = () => {
       description: "معرف عميل Google (لتقويم جوجل)",
       placeholder: "xxxxx-xxxxx.apps.googleusercontent.com",
     },
-    {
       id: "google_client_secret",
       name: "Google Client Secret",
       service: "google",
@@ -136,7 +128,6 @@ const APIKeysSettingsPage: React.FC = () => {
       description: "سر العميل لـ Google",
       placeholder: "GOCSPX-xxxxxxxxxxxxx",
     },
-    {
       id: "stripe_public",
       name: "Stripe Public Key",
       service: "stripe",
@@ -146,7 +137,6 @@ const APIKeysSettingsPage: React.FC = () => {
       description: "مفتاح Stripe العام",
       placeholder: "pk_test_xxxxxxxxxxxxx",
     },
-    {
       id: "stripe_secret",
       name: "Stripe Secret Key",
       service: "stripe",
@@ -156,7 +146,6 @@ const APIKeysSettingsPage: React.FC = () => {
       description: "مفتاح Stripe السري",
       placeholder: "sk_test_xxxxxxxxxxxxx",
     },
-    {
       id: "smtp_host",
       name: "SMTP Host",
       service: "email",
@@ -166,7 +155,6 @@ const APIKeysSettingsPage: React.FC = () => {
       description: "عنوان خادم البريد الإلكتروني",
       placeholder: "smtp.gmail.com",
     },
-    {
       id: "smtp_user",
       name: "SMTP Username",
       service: "email",
@@ -176,7 +164,6 @@ const APIKeysSettingsPage: React.FC = () => {
       description: "اسم مستخدم SMTP",
       placeholder: "your-email@gmail.com",
     },
-    {
       id: "smtp_pass",
       name: "SMTP Password",
       service: "email",

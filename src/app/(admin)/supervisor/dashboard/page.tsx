@@ -364,7 +364,6 @@ export default function SupervisorDashboardPage() {
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                       {new Date(request.created_at).toLocaleTimeString(
                         "ar-SA",
-                        {
                           hour: "2-digit",
                           minute: "2-digit",
                         },

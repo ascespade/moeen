@@ -320,7 +320,6 @@ export default function OwnerDashboardPage() {
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       {new Date(activity.created_at).toLocaleTimeString(
                         "ar-SA",
-                        {
                           hour: "2-digit",
                           minute: "2-digit",
                         },

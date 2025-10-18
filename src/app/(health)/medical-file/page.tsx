@@ -45,7 +45,6 @@ interface MedicalRecord {
 }
 
 const mockRecords: MedicalRecord[] = [
-  {
     id: "1",
     patientName: "أحمد محمد العتيبي",
     patientId: "P001",
@@ -67,7 +66,6 @@ const mockRecords: MedicalRecord[] = [
     insuranceCompany: "شركة التعاونية للتأمين",
     insuranceNumber: "INS-001-2024",
     treatmentPlan: [
-      {
         id: "TP001",
         type: "علاج طبيعي",
         sessions: 20,
@@ -78,7 +76,6 @@ const mockRecords: MedicalRecord[] = [
       },
     ],
   },
-  {
     id: "2",
     patientName: "فاطمة عبدالله السعيد",
     patientId: "P002",
@@ -100,7 +97,6 @@ const mockRecords: MedicalRecord[] = [
     insuranceCompany: "شركة الأهلي للتأمين",
     insuranceNumber: "INS-002-2024",
     treatmentPlan: [
-      {
         id: "TP002",
         type: "علاج نفسي",
         sessions: 15,
@@ -111,7 +107,6 @@ const mockRecords: MedicalRecord[] = [
       },
     ],
   },
-  {
     id: "3",
     patientName: "محمد سالم القحطاني",
     patientId: "P003",
@@ -132,7 +127,6 @@ const mockRecords: MedicalRecord[] = [
     outstandingAmount: 2500,
     insuranceStatus: "rejected",
     treatmentPlan: [
-      {
         id: "TP003",
         type: "علاج وظيفي",
         sessions: 30,
@@ -144,7 +138,6 @@ const mockRecords: MedicalRecord[] = [
       },
     ],
   },
-  {
     id: "4",
     patientName: "نورا أحمد الزهراني",
     patientId: "P004",
@@ -166,7 +159,6 @@ const mockRecords: MedicalRecord[] = [
     insuranceCompany: "شركة الراجحي للتأمين",
     insuranceNumber: "INS-004-2024",
     treatmentPlan: [
-      {
         id: "TP004",
         type: "علاج طبيعي",
         sessions: 12,
@@ -344,7 +336,6 @@ export default function MedicalFilePage() {
           </Card>
           <Card className="p-6 text-center">
             <div className="mb-2 text-3xl font-bold text-brand-success">
-              {
                 mockRecords.filter(
                   (r) => !r.isBlocked && !r.hasOutstandingBalance,
                 ).length

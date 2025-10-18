@@ -1,3 +1,4 @@
+
 // Slack Integration System for Hemam Center
 export interface SlackMessage {
   id: string;
@@ -251,17 +252,14 @@ export class SlackIntegration {
       }
 
       const blocks = [
-        {
           type: "section",
           text: {
             type: "mrkdwn",
             text: `*رسالة من المريض عبر ${channel === "whatsapp" ? "واتساب" : "الموقع"}*\n\n${message}`,
           },
         },
-        {
           type: "context",
           elements: [
-            {
               type: "mrkdwn",
               text: `المريض: ${patientId} | القناة: ${channel}`,
             },
@@ -312,46 +310,36 @@ export class SlackIntegration {
     };
 
     return [
-      {
         type: "header",
         text: {
           type: "plain_text",
           text: `${statusEmoji[status]} ${statusText[status]}`,
         },
       },
-      {
         type: "section",
         fields: [
-          {
             type: "mrkdwn",
             text: `*المريض:*\n${patient.first_name} ${patient.last_name}`,
           },
-          {
             type: "mrkdwn",
             text: `*الطبيب:*\nد. ${doctor.first_name} ${doctor.last_name}`,
           },
-          {
             type: "mrkdwn",
             text: `*التاريخ:*\n${new Date(appointment.appointment_date).toLocaleDateString("ar-SA")}`,
           },
-          {
             type: "mrkdwn",
             text: `*الوقت:*\n${appointment.appointment_time}`,
           },
-          {
             type: "mrkdwn",
             text: `*التخصص:*\n${doctor.specialty}`,
           },
-          {
             type: "mrkdwn",
             text: `*الحالة:*\n${appointment.status}`,
           },
         ],
       },
-      {
         type: "actions",
         elements: [
-          {
             type: "button",
             text: {
               type: "plain_text",
@@ -360,7 +348,6 @@ export class SlackIntegration {
             action_id: "view_appointment",
             value: appointment.id,
           },
-          {
             type: "button",
             text: {
               type: "plain_text",
@@ -522,14 +509,12 @@ export class SlackIntegration {
     channel: string = "general",
   ): Promise<void> {
     const blocks = [
-      {
         type: "header",
         text: {
           type: "plain_text",
           text: "🚨 تنبيه طارئ",
         },
       },
-      {
         type: "section",
         text: {
           type: "mrkdwn",

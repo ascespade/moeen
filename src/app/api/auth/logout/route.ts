@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import logger from "@/lib/monitoring/logger";
 import { createClient as createServiceClient } from "@supabase/supabase-js";
 
+import logger from "@/lib/monitoring/logger";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -64,7 +64,6 @@ export async function POST(request: NextRequest) {
       const supabaseAdmin = createServiceClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        {
           auth: {
             autoRefreshToken: false,
             persistSession: false,

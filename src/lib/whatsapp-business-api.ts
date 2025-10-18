@@ -1,3 +1,4 @@
+
 // WhatsApp Business API Integration
 export interface WhatsAppMessage {
   to: string;
@@ -123,7 +124,6 @@ export class WhatsAppBusinessAPI {
     try {
       const response = await fetch(
         `${this.baseUrl}/${this.phoneNumberId}/messages`,
-        {
           method: "POST",
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
@@ -184,7 +184,6 @@ export class WhatsAppBusinessAPI {
       // Add parameters if provided
       if (parameters.length > 0) {
         messageData.template.components = [
-          {
             type: "body",
             parameters: parameters.map((param) => ({
               type: "text",
@@ -196,7 +195,6 @@ export class WhatsAppBusinessAPI {
 
       const response = await fetch(
         `${this.baseUrl}/${this.phoneNumberId}/messages`,
-        {
           method: "POST",
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
@@ -236,7 +234,6 @@ export class WhatsAppBusinessAPI {
     try {
       const response = await fetch(
         `${this.baseUrl}/${this.phoneNumberId}/messages`,
-        {
           method: "POST",
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
@@ -285,7 +282,6 @@ export class WhatsAppBusinessAPI {
     try {
       const response = await fetch(
         `${this.baseUrl}/${this.phoneNumberId}/messages`,
-        {
           method: "POST",
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
@@ -357,7 +353,6 @@ export class WhatsAppBusinessAPI {
     try {
       const response = await fetch(
         `${this.baseUrl}/${this.businessAccountId}/message_templates`,
-        {
           method: "GET",
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
@@ -384,7 +379,6 @@ export class WhatsAppBusinessAPI {
     try {
       const response = await fetch(
         `${this.baseUrl}/${this.businessAccountId}/message_templates`,
-        {
           method: "POST",
           headers: {
             Authorization: `Bearer ${this.accessToken}`,

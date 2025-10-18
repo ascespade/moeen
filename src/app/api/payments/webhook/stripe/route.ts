@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 
-import logger from "@/lib/monitoring/logger";
 import Stripe from "stripe";
 
+import logger from "@/lib/monitoring/logger";
 import { createClient } from "@/lib/supabase/server";
 
 /**

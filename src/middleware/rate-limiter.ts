@@ -80,11 +80,9 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
   if (current.count >= config.maxRequests) {
     // Rate limit exceeded
     return NextResponse.json(
-      {
         error: config.message,
         retryAfter: Math.ceil((current.resetTime - now) / 1000),
       },
-      {
         status: 429,
         headers: {
           "Retry-After": Math.ceil((current.resetTime - now) / 1000).toString(),

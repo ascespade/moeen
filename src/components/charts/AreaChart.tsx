@@ -1,7 +1,5 @@
 import React from "react";
 
-import {
-
 import { useTheme } from "@/core/theme";
 
 /**
@@ -55,7 +53,6 @@ export const AreaChart: React.FC<AreaChartProps> = ({
     areas.length > 0
       ? areas
       : [
-          {
             dataKey: dataKey,
             color: "var(--brand-primary)",
             name: "Value",

@@ -5,18 +5,15 @@ import { useT } from "@/components/providers/I18nProvider";
 export default function FeaturesPage() {
   const { t } = useT();
   const features = [
-    {
       title: t("home.features.unifiedChat", "دردشة موحّدة"),
       desc: t(
         "home.features.unifiedChat.desc",
         "إدارة كل القنوات من واجهة واحدة",
       ),
     },
-    {
       title: t("home.features.reports", "تقارير لحظية"),
       desc: t("home.features.reports.desc", "لوحات ذكية ومؤشرات أداء"),
     },
-    {
       title: t("home.hero.subtitle", "تلقائية وذكاء"),
       desc: "AI assisted flows",
     },

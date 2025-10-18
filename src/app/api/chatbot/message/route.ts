@@ -98,7 +98,6 @@ export async function POST(request: NextRequest) {
     logger.error("Chatbot API error", error);
 
     return NextResponse.json(
-      {
         success: false,
         response:
           "عذراً، حدث خطأ. يرجى التواصل معنا عبر:\n📱 واتساب: +966555381558\n📞 هاتف: +966126173693",

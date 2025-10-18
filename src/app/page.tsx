@@ -12,7 +12,6 @@ import { useT } from "@/components/providers/I18nProvider";
 
 // Hero Slider Data - مركز الهمم
 const heroSlides = (t: any) => [
-  {
     id: 1,
     title: "مركز الهمم",
     subtitle: "طاقات تتجدد، أحلام تتحقق، مستقبل واعد",
@@ -22,7 +21,6 @@ const heroSlides = (t: any) => [
     cta: "احجز موعد تقييم مجاني",
     ctaLink: ROUTES.HEALTH.APPOINTMENTS,
   },
-  {
     id: 2,
     title: "برامج تأهيلية متكاملة",
     subtitle: "علاج نطق - علاج وظيفي - تعديل سلوك",
@@ -31,7 +29,6 @@ const heroSlides = (t: any) => [
     cta: "تعرف على خدماتنا",
     ctaLink: "#services",
   },
-  {
     id: 3,
     title: "دعم أسري شامل",
     subtitle: "لأن الأسرة شريك أساسي في رحلة التأهيل",
@@ -44,7 +41,6 @@ const heroSlides = (t: any) => [
 
 // Services Data - الخدمات الفعلية لمركز الهمم
 const getServices = (t: any) => [
-  {
     id: 1,
     title: "التشخيص والتقييم الشامل",
     description:
@@ -53,7 +49,6 @@ const getServices = (t: any) => [
     color: "text-blue-600",
     bgColor: "bg-blue-100",
   },
-  {
     id: 2,
     title: "علاج النطق والتخاطب",
     description:
@@ -62,7 +57,6 @@ const getServices = (t: any) => [
     color: "text-green-600",
     bgColor: "bg-green-100",
   },
-  {
     id: 3,
     title: "العلاج الوظيفي والتكامل الحسي",
     description:
@@ -71,7 +65,6 @@ const getServices = (t: any) => [
     color: "text-purple-600",
     bgColor: "bg-purple-100",
   },
-  {
     id: 4,
     title: "تعديل السلوك (ABA)",
     description: "خطط سلوكية فردية مبنية على منهج تحليل السلوك التطبيقي",
@@ -79,7 +72,6 @@ const getServices = (t: any) => [
     color: "text-yellow-600",
     bgColor: "bg-yellow-100",
   },
-  {
     id: 5,
     title: "الدعم النفسي والإرشاد الأسري",
     description: "توعية وتمكين الأسر لتكون شريكاً فعالاً في رحلة التأهيل",
@@ -87,7 +79,6 @@ const getServices = (t: any) => [
     color: "text-pink-600",
     bgColor: "bg-pink-100",
   },
-  {
     id: 6,
     title: "برامج الرعاية النهارية والدمج",
     description: "إعداد الأطفال للبيئة المدرسية والدمج المجتمعي الفعّال",
@@ -99,29 +90,25 @@ const getServices = (t: any) => [
 
 // المميزات التنافسية
 const features = [
-  {
     id: 1,
     icon: "⭐",
     title: "فريق عمل مؤهل",
     description: "أخصائيون مرخصون وذوو خبرة عالية في مختلف التخصصات العلاجية",
   },
-  {
     id: 2,
     icon: "📚",
     title: "منهجيات علمية حديثة",
     description:
       "الاعتماد على ممارسات مبنية على الأدلة (Evidence-Based Practices)",
   },
-  {
     id: 3,
     icon: "📋",
     title: "خطط علاج فردية (IEPs)",
     description: "كل طفل يحصل على خطة مخصصة تلبي احتياجاته الدقيقة",
   },
-  {
     id: 4,
     title: "مرافق متطورة",
-    description: "بيئة آمنة، محفزة، ومجهزة بأحدث التقنيات العلاجية",
+    description: &quot;بيئة آمنة، محفزة، ومجهزة بأحدث التقنيات العلاجية&quot;,
     icon: &quot;🏥&quot;,
   },
 ];
@@ -239,7 +226,7 @@ export default function HomePage() {
               onClick={() => setCurrentSlide(index)}
               className={`h-3 w-3 rounded-full transition-all ${
                 index === currentSlide
-                  ? "bg-[var(--brand-primary)] w-8"
+                  ? &quot;bg-[var(--brand-primary)] w-8&quot;
                   : &quot;bg-white/50 hover:bg-white/80&quot;
               }`}
               aria-label={`Slide ${index + 1}`}

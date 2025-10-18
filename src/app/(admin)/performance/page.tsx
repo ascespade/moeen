@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
 
-import {
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -65,7 +63,6 @@ const PerformancePage: React.FC = () => {
     try {
       setLoading(true);
       const mockMetrics: PerformanceMetric[] = [
-        {
           id: "1",
           name: "استخدام المعالج",
           value: 45,
@@ -74,7 +71,6 @@ const PerformancePage: React.FC = () => {
           trend: "stable",
           threshold: 80,
         },
-        {
           id: "2",
           name: "استخدام الذاكرة",
           value: 67,
@@ -83,7 +79,6 @@ const PerformancePage: React.FC = () => {
           trend: "up",
           threshold: 70,
         },
-        {
           id: "3",
           name: "استخدام القرص الصلب",
           value: 34,
@@ -92,7 +87,6 @@ const PerformancePage: React.FC = () => {
           trend: "stable",
           threshold: 85,
         },
-        {
           id: "4",
           name: "زمن الاستجابة",
           value: 120,
@@ -101,7 +95,6 @@ const PerformancePage: React.FC = () => {
           trend: "down",
           threshold: 500,
         },
-        {
           id: "5",
           name: "اتصالات قاعدة البيانات",
           value: 23,
@@ -110,7 +103,6 @@ const PerformancePage: React.FC = () => {
           trend: "stable",
           threshold: 100,
         },
-        {
           id: "6",
           name: "معدل الأخطاء",
           value: 0.2,

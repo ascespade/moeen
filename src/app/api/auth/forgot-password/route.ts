@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import logger from "@/lib/monitoring/logger";
 import { createClient as createServiceClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
+import logger from "@/lib/monitoring/logger";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -44,7 +44,6 @@ export async function POST(request: NextRequest) {
     const validation = forgotPasswordSchema.safeParse(body);
     if (!validation.success) {
       return NextResponse.json(
-        {
           success: false,
           errors: validation.error.issues.map((err) => ({
             field: err.path[0],
@@ -86,7 +85,6 @@ export async function POST(request: NextRequest) {
     const supabaseAdmin = createServiceClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!,
-      {
         auth: {
           autoRefreshToken: false,
           persistSession: false,
@@ -143,7 +141,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Forgot password error:", error);
     return NextResponse.json(
-      {
         success: false,
         error: "حدث خطأ أثناء معالجة طلبك",
       },

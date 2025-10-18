@@ -12,7 +12,6 @@ async function seedHomepageContent() {
 
     // Hero slides content
     const heroSlides = [
-      {
         id: 1,
         title: "مرحباً بك في مُعين",
         subtitle: "منصة الرعاية الصحية المتخصصة",
@@ -22,7 +21,6 @@ async function seedHomepageContent() {
         cta: "اكتشف خدماتنا",
         ctaLink: "#services",
       },
-      {
         id: 2,
         title: "إدارة المواعيد الذكية",
         subtitle: "نظام تقويم متطور",
@@ -32,7 +30,6 @@ async function seedHomepageContent() {
         cta: "احجز موعدك",
         ctaLink: "/appointments",
       },
-      {
         id: 3,
         title: "شات بوت ذكي",
         subtitle: "مساعدك الصحي الشخصي",
@@ -46,7 +43,6 @@ async function seedHomepageContent() {
 
     // Services content
     const services = [
-      {
         id: 1,
         title: "إدارة المواعيد",
         description: "نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية",
@@ -54,7 +50,6 @@ async function seedHomepageContent() {
         color: "text-blue-600",
         bgColor: "bg-blue-50",
       },
-      {
         id: 2,
         title: "إدارة المرضى",
         description: "ملفات مرضى شاملة مع سجل طبي مفصل",
@@ -62,7 +57,6 @@ async function seedHomepageContent() {
         color: "text-green-600",
         bgColor: "bg-green-50",
       },
-      {
         id: 3,
         title: "المطالبات التأمينية",
         description: "إدارة وتتبع المطالبات التأمينية بسهولة",
@@ -70,7 +64,6 @@ async function seedHomepageContent() {
         color: "text-purple-600",
         bgColor: "bg-purple-50",
       },
-      {
         id: 4,
         title: "الشات بوت الذكي",
         description: "مساعد ذكي للرد على استفسارات المرضى",
@@ -78,7 +71,6 @@ async function seedHomepageContent() {
         color: "text-orange-600",
         bgColor: "bg-orange-50",
       },
-      {
         id: 5,
         title: "إدارة الموظفين",
         description: "تتبع ساعات العمل والأداء للموظفين",
@@ -86,7 +78,6 @@ async function seedHomepageContent() {
         color: "text-red-600",
         bgColor: "bg-red-50",
       },
-      {
         id: 6,
         title: "التقارير والتحليلات",
         description: "تقارير شاملة وإحصائيات مفصلة",
@@ -98,7 +89,6 @@ async function seedHomepageContent() {
 
     // Testimonials content
     const testimonials = [
-      {
         id: 1,
         name: "د. أحمد محمد",
         role: "طبيب أسنان",
@@ -106,7 +96,6 @@ async function seedHomepageContent() {
         image: "/logo.jpg",
         rating: 5,
       },
-      {
         id: 2,
         name: "م. فاطمة السعيد",
         role: "مدير عيادة",
@@ -114,7 +103,6 @@ async function seedHomepageContent() {
         image: "/logo.jpg",
         rating: 5,
       },
-      {
         id: 3,
         name: "د. خالد العتيبي",
         role: "طبيب عام",
@@ -136,24 +124,20 @@ async function seedHomepageContent() {
 
     // FAQ content
     const faqs = [
-      {
         id: 1,
         question: "كيف يمكنني حجز موعد؟",
         answer:
           "يمكنك حجز موعد بسهولة من خلال الموقع أو التطبيق، أو الاتصال بنا مباشرة",
       },
-      {
         id: 2,
         question: "هل الشات بوت متاح 24/7؟",
         answer: "نعم، الشات بوت متاح على مدار الساعة للإجابة على استفساراتكم",
       },
-      {
         id: 3,
         question: "كيف يمكنني تتبع مطالباتي التأمينية؟",
         answer:
           "يمكنك تتبع حالة مطالباتك التأمينية من خلال لوحة التحكم الخاصة بك",
       },
-      {
         id: 4,
         question: "هل البيانات محمية؟",
         answer: "نعم، نستخدم أحدث تقنيات التشفير لحماية بياناتكم وخصوصيتكم",
@@ -174,62 +158,52 @@ async function seedHomepageContent() {
     // Also seed translations for the homepage
     const translations = [
       // Arabic translations
-      {
         locale: "ar",
         namespace: "common",
         key: "homepage.services.title",
         value: "خدماتنا المتكاملة",
       },
-      {
         locale: "ar",
         namespace: "common",
         key: "homepage.services.subtitle",
         value:
           "نقدم مجموعة شاملة من الخدمات الصحية المتطورة لضمان أفضل رعاية لمرضانا",
       },
-      {
         locale: "ar",
         namespace: "common",
         key: "homepage.testimonials.title",
         value: "آراء عملائنا",
       },
-      {
         locale: "ar",
         namespace: "common",
         key: "homepage.testimonials.subtitle",
         value: "اكتشف ما يقوله عملاؤنا عن خدماتنا",
       },
-      {
         locale: "ar",
         namespace: "common",
         key: "homepage.gallery.title",
         value: "معرض الصور",
       },
-      {
         locale: "ar",
         namespace: "common",
         key: "homepage.gallery.subtitle",
         value: "اكتشف بيئة العمل المتطورة في عياداتنا",
       },
-      {
         locale: "ar",
         namespace: "common",
         key: "homepage.faq.title",
         value: "الأسئلة الشائعة",
       },
-      {
         locale: "ar",
         namespace: "common",
         key: "homepage.faq.subtitle",
         value: "إجابات على أكثر الأسئلة شيوعاً",
       },
-      {
         locale: "ar",
         namespace: "common",
         key: "homepage.contact.title",
         value: "ابدأ رحلتك الصحية معنا",
       },
-      {
         locale: "ar",
         namespace: "common",
         key: "homepage.contact.subtitle",
@@ -237,62 +211,52 @@ async function seedHomepageContent() {
       },
 
       // English translations
-      {
         locale: "en",
         namespace: "common",
         key: "homepage.services.title",
         value: "Our Integrated Services",
       },
-      {
         locale: "en",
         namespace: "common",
         key: "homepage.services.subtitle",
         value:
           "We provide a comprehensive range of advanced healthcare services to ensure the best care for our patients",
       },
-      {
         locale: "en",
         namespace: "common",
         key: "homepage.testimonials.title",
         value: "Client Testimonials",
       },
-      {
         locale: "en",
         namespace: "common",
         key: "homepage.testimonials.subtitle",
         value: "Discover what our clients say about our services",
       },
-      {
         locale: "en",
         namespace: "common",
         key: "homepage.gallery.title",
         value: "Photo Gallery",
       },
-      {
         locale: "en",
         namespace: "common",
         key: "homepage.gallery.subtitle",
         value: "Discover the advanced work environment in our clinics",
       },
-      {
         locale: "en",
         namespace: "common",
         key: "homepage.faq.title",
         value: "Frequently Asked Questions",
       },
-      {
         locale: "en",
         namespace: "common",
         key: "homepage.faq.subtitle",
         value: "Answers to the most common questions",
       },
-      {
         locale: "en",
         namespace: "common",
         key: "homepage.contact.title",
         value: "Start Your Health Journey With Us",
       },
-      {
         locale: "en",
         namespace: "common",
         key: "homepage.contact.subtitle",

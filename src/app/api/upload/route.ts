@@ -49,7 +49,6 @@ export async function POST(request: NextRequest) {
 
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
-        {
           error:
             "Invalid file type. Allowed types: JPG, PNG, GIF, PDF, DOC, DOCX, TXT",
         },

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
 
-import {
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -78,7 +76,6 @@ const FlowsManagementPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب الـ flows من API
       const mockFlows: ConversationFlow[] = [
-        {
           id: "new_beneficiary",
           name: "المستفيد الجديد",
           description: "تسهيل عملية الانضمام وجمع المعلومات الأولية",
@@ -87,13 +84,11 @@ const FlowsManagementPage: React.FC = () => {
           createdAt: "2024-01-15",
           updatedAt: "2024-01-15",
           steps: [
-            {
               id: "welcome",
               type: "information",
               content: "أهلاً بك في مركز الهمم، أنا مُعين، مساعدك الرقمي.",
               nextStep: "needs_assessment",
             },
-            {
               id: "needs_assessment",
               type: "question",
               content:
@@ -109,7 +104,6 @@ const FlowsManagementPage: React.FC = () => {
             },
           ],
         },
-        {
           id: "appointment_slack",
           name: "حجز المواعيد مع Slack",
           description: "نظام حجز المواعيد مع إشعارات Slack للطاقم الطبي",
@@ -118,14 +112,12 @@ const FlowsManagementPage: React.FC = () => {
           createdAt: "2024-01-15",
           updatedAt: "2024-01-15",
           steps: [
-            {
               id: "appointment_type",
               type: "question",
               content: "هل هذا موعد جديد أم متابعة؟",
               options: ["موعد جديد", "متابعة", "إعادة جدولة"],
               nextStep: "check_schedule",
             },
-            {
               id: "slack_notification",
               type: "slack_notify",
               content: "تم حجز موعد جديد",
@@ -135,7 +127,6 @@ const FlowsManagementPage: React.FC = () => {
             },
           ],
         },
-        {
           id: "emergency_slack",
           name: "الطوارئ مع Slack",
           description: "نظام طوارئ متكامل مع إشعارات Slack",
@@ -144,14 +135,12 @@ const FlowsManagementPage: React.FC = () => {
           createdAt: "2024-01-15",
           updatedAt: "2024-01-15",
           steps: [
-            {
               id: "emergency_detection",
               type: "action",
               content:
                 "🚨 تم اكتشاف حالة طوارئ! يرجى الاتصال فوراً بالرقم 997 أو 911.",
               nextStep: "slack_alert",
             },
-            {
               id: "slack_alert",
               type: "slack_notify",
               content: "تنبيه طارئ من المريض",

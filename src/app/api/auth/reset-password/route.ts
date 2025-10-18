@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import logger from "@/lib/monitoring/logger";
 import { z } from "zod";
 
+import logger from "@/lib/monitoring/logger";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -28,7 +28,6 @@ export async function POST(request: NextRequest) {
     const validation = resetPasswordSchema.safeParse(body);
     if (!validation.success) {
       return NextResponse.json(
-        {
           success: false,
           errors: validation.error.issues.map((err) => ({
             field: err.path[0],
@@ -50,7 +49,6 @@ export async function POST(request: NextRequest) {
 
     if (userError || !user) {
       return NextResponse.json(
-        {
           success: false,
           error: "غير مصرح. الرجاء استخدام رابط إعادة التعيين الصحيح.",
         },
@@ -66,7 +64,6 @@ export async function POST(request: NextRequest) {
     if (updateError) {
       console.error("Password update error:", updateError);
       return NextResponse.json(
-        {
           success: false,
           error: "فشل تحديث كلمة المرور. حاول مرة أخرى.",
         },
@@ -105,7 +102,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Reset password error:", error);
     return NextResponse.json(
-      {
         success: false,
         error: "حدث خطأ أثناء معالجة طلبك",
       },

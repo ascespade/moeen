@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import {
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -138,7 +136,6 @@ const ProgressTrackingPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockGoals: ProgressGoal[] = [
-        {
           id: "1",
           patient_id: "pat-1",
           goal_title: "تحسين المشي",
@@ -148,7 +145,6 @@ const ProgressTrackingPage: React.FC = () => {
           progress_percentage: 65,
           status: "active",
           milestones: [
-            {
               id: "1",
               goal_id: "1",
               title: "الوقوف بدون مساعدة",
@@ -159,7 +155,6 @@ const ProgressTrackingPage: React.FC = () => {
               progress_percentage: 100,
               notes: "تم إنجاز الهدف بنجاح",
             },
-            {
               id: "2",
               goal_id: "1",
               title: "المشي بمساعدة",
@@ -183,7 +178,6 @@ const ProgressTrackingPage: React.FC = () => {
       ];
 
       const mockAssessments: Assessment[] = [
-        {
           id: "1",
           patient_id: "pat-1",
           assessor_id: "ass-1",
@@ -207,7 +201,6 @@ const ProgressTrackingPage: React.FC = () => {
       ];
 
       const mockReports: ProgressReport[] = [
-        {
           id: "1",
           patient_id: "pat-1",
           report_date: "2024-01-31",

@@ -103,14 +103,12 @@ export class FlowManager {
       description: "تسهيل عملية الانضمام وجمع المعلومات الأولية",
       entryPoints: ["new_user", "first_time", "تقييم أولي"],
       steps: [
-        {
           id: "welcome",
           type: "information",
           content:
             "أهلاً بك في مركز الهمم، أنا مُعين، مساعدك الرقمي. نحن هنا لتقديم الدعم لكل فرد.",
           nextStep: "needs_assessment",
         },
-        {
           id: "needs_assessment",
           type: "question",
           content:
@@ -124,14 +122,12 @@ export class FlowManager {
           ],
           nextStep: "collect_info",
         },
-        {
           id: "collect_info",
           type: "question",
           content:
             "شكراً لك. هل يمكنك مشاركة بعض المعلومات الأساسية؟ (العمر، نبذة بسيطة عن التحدي)",
           nextStep: "schedule_appointment",
         },
-        {
           id: "schedule_appointment",
           type: "action",
           content:
@@ -149,26 +145,22 @@ export class FlowManager {
       description: "أتمتة كاملة لعملية الجدولة",
       entryPoints: ["موعد", "حجز", "جدولة"],
       steps: [
-        {
           id: "appointment_type",
           type: "question",
           content: "هل هذا موعد جديد أم متابعة؟",
           options: ["موعد جديد", "متابعة", "إعادة جدولة"],
           nextStep: "check_schedule",
         },
-        {
           id: "check_schedule",
           type: "action",
           content: "دعني أتحقق من المواعيد المتاحة...",
           nextStep: "show_availability",
         },
-        {
           id: "show_availability",
           type: "information",
           content: "المواعيد المتاحة:",
           nextStep: "confirm_appointment",
         },
-        {
           id: "confirm_appointment",
           type: "action",
           content: "هل تود تأكيد هذا الموعد؟",
@@ -185,21 +177,18 @@ export class FlowManager {
       description: "بروتوكول الطوارئ والأزمات",
       entryPoints: ["crisis", "emergency", "urgent"],
       steps: [
-        {
           id: "crisis_detection",
           type: "action",
           content:
             "أرى أنك قد تحتاج لمساعدة عاجلة. يرجى الاتصال فوراً بالرقم 997 أو 911.",
           nextStep: "emergency_contacts",
         },
-        {
           id: "emergency_contacts",
           type: "information",
           content:
             "أرقام الطوارئ: 997 (الطوارئ العامة) - 911 (الإسعاف) - مركز الهمم: +966501234567",
           nextStep: "follow_up",
         },
-        {
           id: "follow_up",
           type: "action",
           content: "هل تريد مني التواصل مع فريقنا الطبي فوراً؟",
@@ -216,14 +205,12 @@ export class FlowManager {
       description: "توسيع دائرة الدعم للعائلة",
       entryPoints: ["عائلة", "ولي أمر", "مقدم رعاية"],
       steps: [
-        {
           id: "family_welcome",
           type: "information",
           content:
             "نحن نقدر دوركم كعائلة في رحلة الرعاية. كيف يمكنني مساعدتكم؟",
           nextStep: "family_options",
         },
-        {
           id: "family_options",
           type: "question",
           content: "يمكنني مساعدتكم في:",
@@ -235,7 +222,6 @@ export class FlowManager {
           ],
           nextStep: "family_action",
         },
-        {
           id: "family_action",
           type: "action",
           content: "ممتاز! دعني أساعدكم في هذا الأمر.",
@@ -251,7 +237,6 @@ export class FlowManager {
       description: "جعل المساعد أداة تواصل موثوقة بين الجلسات",
       entryPoints: ["دعم", "متابعة", "تحديث"],
       steps: [
-        {
           id: "support_check",
           type: "question",
           content: "كيف يمكنني دعمك اليوم؟",
@@ -263,7 +248,6 @@ export class FlowManager {
           ],
           nextStep: "support_action",
         },
-        {
           id: "support_action",
           type: "action",
           content: "بناءً على خطة طبيبك، هذا ما يمكنني تقديمه لك اليوم.",
@@ -279,20 +263,17 @@ export class FlowManager {
       description: "تسهيل التواصل بين المريض والطبيب عبر Slack",
       entryPoints: ["طبيب", "استشارة", "سؤال طبي", "تواصل مع الطبيب"],
       steps: [
-        {
           id: "doctor_question",
           type: "question",
           content: "ما هو سؤالك أو استفسارك الطبي؟",
           nextStep: "collect_question",
         },
-        {
           id: "collect_question",
           type: "action",
           content:
             "شكراً لك على سؤالك. سأقوم بإرساله للطبيب المختص وستحصل على رد قريباً.",
           nextStep: "notify_doctor",
         },
-        {
           id: "notify_doctor",
           type: "slack_notify",
           content: "تم إرسال استفسار المريض للطبيب عبر Slack",
@@ -310,14 +291,12 @@ export class FlowManager {
       description: "نظام طوارئ متكامل مع إشعارات Slack",
       entryPoints: ["طارئ", "عاجل", "خطر", "إسعاف"],
       steps: [
-        {
           id: "emergency_detection",
           type: "action",
           content:
             "🚨 تم اكتشاف حالة طوارئ! يرجى الاتصال فوراً بالرقم 997 أو 911.",
           nextStep: "slack_alert",
         },
-        {
           id: "slack_alert",
           type: "slack_notify",
           content: "تنبيه طارئ من المريض",
@@ -325,14 +304,12 @@ export class FlowManager {
           notificationType: "emergency",
           nextStep: "emergency_contacts",
         },
-        {
           id: "emergency_contacts",
           type: "information",
           content:
             "أرقام الطوارئ: 997 (الطوارئ العامة) - 911 (الإسعاف) - مركز الهمم: +966501234567",
           nextStep: "follow_up",
         },
-        {
           id: "follow_up",
           type: "action",
           content: "هل تريد مني التواصل مع فريقنا الطبي فوراً؟",
@@ -349,33 +326,28 @@ export class FlowManager {
       description: "نظام حجز المواعيد مع إشعارات Slack للطاقم الطبي",
       entryPoints: ["موعد", "حجز", "جدولة", "appointment"],
       steps: [
-        {
           id: "appointment_type",
           type: "question",
           content: "هل هذا موعد جديد أم متابعة؟",
           options: ["موعد جديد", "متابعة", "إعادة جدولة"],
           nextStep: "check_schedule",
         },
-        {
           id: "check_schedule",
           type: "action",
           content: "دعني أتحقق من المواعيد المتاحة...",
           nextStep: "show_availability",
         },
-        {
           id: "show_availability",
           type: "information",
           content: "المواعيد المتاحة:",
           nextStep: "confirm_appointment",
         },
-        {
           id: "confirm_appointment",
           type: "action",
           content: "هل تود تأكيد هذا الموعد؟",
           options: ["نعم، أؤكد", "لا، موعد آخر", "إلغاء"],
           nextStep: "slack_notification",
         },
-        {
           id: "slack_notification",
           type: "slack_notify",
           content: "تم حجز موعد جديد",
@@ -383,7 +355,6 @@ export class FlowManager {
           notificationType: "appointment",
           nextStep: "send_confirmation",
         },
-        {
           id: "send_confirmation",
           type: "whatsapp_send",
           content: "تم إرسال رسالة تأكيد عبر واتساب",

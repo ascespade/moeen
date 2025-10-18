@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import {
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -98,7 +96,6 @@ const ContactsPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockContacts: Contact[] = [
-        {
           id: "1",
           first_name: "أحمد",
           last_name: "المحمد",
@@ -125,7 +122,6 @@ const ContactsPage: React.FC = () => {
             twitter: "@ahmed_m",
           },
         },
-        {
           id: "2",
           first_name: "فاطمة",
           last_name: "العلي",
@@ -146,7 +142,6 @@ const ContactsPage: React.FC = () => {
       ];
 
       const mockActivities: ContactActivity[] = [
-        {
           id: "1",
           contact_id: "1",
           type: "call",
@@ -156,7 +151,6 @@ const ContactsPage: React.FC = () => {
           user_id: "user-1",
           user_name: "سارة أحمد",
         },
-        {
           id: "2",
           contact_id: "1",
           type: "meeting",
@@ -332,7 +326,6 @@ const ContactsPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {
                 activities.filter(
                   (a) =>
                     new Date(a.date).toDateString() ===
@@ -353,7 +346,6 @@ const ContactsPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {
                 contacts.filter((c) => new Date(c.next_follow_up) > new Date())
                   .length
               }

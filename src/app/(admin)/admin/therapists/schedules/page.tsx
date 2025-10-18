@@ -147,7 +147,7 @@ export default function TherapistSchedulesPage() {
       await loadSchedules();
       alert("تم الحذف بنجاح");
     } catch (error) {
-      logger.error("Error deleting schedule", error);
+      logger.error(&quot;Error deleting schedule&quot;, error);
       alert(&quot;فشل في الحذف&quot;);
     }
   };
@@ -233,7 +233,7 @@ export default function TherapistSchedulesPage() {
                           onChange={(e) =>
                             updateSchedule(
                               schedule.id,
-                              "start_time",
+                              &quot;start_time&quot;,
                               e.target.value,
                             )
                           }
@@ -251,7 +251,7 @@ export default function TherapistSchedulesPage() {
                           onChange={(e) =>
                             updateSchedule(
                               schedule.id,
-                              "end_time",
+                              &quot;end_time&quot;,
                               e.target.value,
                             )
                           }
@@ -266,7 +266,7 @@ export default function TherapistSchedulesPage() {
                           onChange={(e) =>
                             updateSchedule(
                               schedule.id,
-                              "is_available",
+                              &quot;is_available&quot;,
                               e.target.checked,
                             )
                           }

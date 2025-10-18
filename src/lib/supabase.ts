@@ -298,7 +298,6 @@ export class SupabaseDatabaseManager {
     const { data, error } = await supabaseAdmin
       .from("insurance_claims")
       .insert([
-        {
           ...claimData,
           submitted_at: new Date().toISOString(),
         },

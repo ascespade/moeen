@@ -1,7 +1,5 @@
 import React from "react";
 
-import {
-
 import { useTheme } from "@/core/theme";
 
 /**
@@ -57,7 +55,6 @@ export const BarChart: React.FC<BarChartProps> = ({
     bars.length > 0
       ? bars
       : [
-          {
             dataKey: dataKey,
             color: "var(--brand-primary)",
             name: "Value",

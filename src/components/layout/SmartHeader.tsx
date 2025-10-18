@@ -156,7 +156,6 @@ export default function SmartHeader() {
       return [
         { href: "/", label: t("nav.dashboard", "لوحة التحكم") },
         { href: ROUTES.HEALTH.PATIENTS, label: t("nav.patients", "المرضى") },
-        {
           href: ROUTES.HEALTH.APPOINTMENTS,
           label: t("nav.appointments", "المواعيد"),
         },

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import {
-import {
 
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -122,7 +121,6 @@ export default function AdminPage() {
       console.error("Error loading admin data:", err);
       // Set mock data if APIs fail
       setUsers([
-        {
           id: "1",
           email: "admin@example.com",
           name: "Admin User",
@@ -132,7 +130,6 @@ export default function AdminPage() {
           createdAt: new Date().toISOString(),
           permissions: ["all"],
         },
-        {
           id: "2",
           email: "doctor@example.com",
           name: "Dr. Smith",
@@ -144,7 +141,6 @@ export default function AdminPage() {
         },
       ]);
       setConfigs([
-        {
           id: "1",
           key: "maintenance_mode",
           value: "false",
@@ -152,7 +148,6 @@ export default function AdminPage() {
           category: "system",
           isSecret: false,
         },
-        {
           id: "2",
           key: "registration_enabled",
           value: "true",
@@ -162,7 +157,6 @@ export default function AdminPage() {
         },
       ]);
       setSecurityEvents([
-        {
           id: "1",
           userId: "1",
           action: "user_login",

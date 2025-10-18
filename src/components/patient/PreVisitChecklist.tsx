@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 
-import {
-
 import { useT } from "@/hooks/useT";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -70,7 +68,6 @@ export default function PreVisitChecklist({
     try {
       const response = await fetch(
         `/api/appointments/${appointmentId}/checklist/${itemId}`,
-        {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ completed }),
@@ -96,7 +93,6 @@ export default function PreVisitChecklist({
     try {
       const response = await fetch(
         `/api/appointments/${appointmentId}/checklist/submit`,
-        {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         },

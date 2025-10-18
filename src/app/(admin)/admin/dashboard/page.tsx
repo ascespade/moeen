@@ -74,7 +74,6 @@ const mockStats: DashboardStats = {
 };
 
 const mockRecentActivities: RecentActivity[] = [
-  {
     id: "1",
     type: "appointment",
     title: "موعد جديد",
@@ -82,7 +81,6 @@ const mockRecentActivities: RecentActivity[] = [
     timestamp: "منذ 5 دقائق",
     status: "success",
   },
-  {
     id: "2",
     type: "claim",
     title: "مطالبة تأمين",
@@ -90,7 +88,6 @@ const mockRecentActivities: RecentActivity[] = [
     timestamp: "منذ 15 دقيقة",
     status: "success",
   },
-  {
     id: "3",
     type: "patient",
     title: "مريض محظور",
@@ -98,7 +95,6 @@ const mockRecentActivities: RecentActivity[] = [
     timestamp: "منذ 30 دقيقة",
     status: "error",
   },
-  {
     id: "4",
     type: "staff",
     title: "تسجيل دخول",
@@ -106,7 +102,6 @@ const mockRecentActivities: RecentActivity[] = [
     timestamp: "منذ ساعة",
     status: "info",
   },
-  {
     id: "5",
     type: "payment",
     title: "دفعة مستلمة",
@@ -117,7 +112,6 @@ const mockRecentActivities: RecentActivity[] = [
 ];
 
 const mockStaffWorkHours: StaffWorkHours[] = [
-  {
     id: "1",
     name: "د. سارة أحمد",
     position: "طبيبة علاج طبيعي",
@@ -128,7 +122,6 @@ const mockStaffWorkHours: StaffWorkHours[] = [
     isOnDuty: true,
     lastCheckIn: "08:00",
   },
-  {
     id: "2",
     name: "د. محمد حسن",
     position: "طبيب نفسي",
@@ -139,7 +132,6 @@ const mockStaffWorkHours: StaffWorkHours[] = [
     isOnDuty: true,
     lastCheckIn: "07:30",
   },
-  {
     id: "3",
     name: "د. نورا محمد",
     position: "طبيبة علاج وظيفي",
@@ -151,7 +143,6 @@ const mockStaffWorkHours: StaffWorkHours[] = [
     lastCheckIn: "08:00",
     lastCheckOut: "16:00",
   },
-  {
     id: "4",
     name: "د. خالد العتيبي",
     position: "طبيب علاج طبيعي",
@@ -162,7 +153,6 @@ const mockStaffWorkHours: StaffWorkHours[] = [
     isOnDuty: true,
     lastCheckIn: "09:00",
   },
-  {
     id: "5",
     name: "أ. فاطمة السعيد",
     position: "ممرضة",

@@ -21,7 +21,6 @@ describe("/api/appointments", () => {
   describe("GET /api/appointments", () => {
     it("should return appointments with filters", async () => {
       const mockAppointments = [
-        {
           id: "1",
           patient_id: "patient-1",
           doctor_id: "doctor-1",
@@ -64,7 +63,6 @@ describe("/api/appointments", () => {
 
     it("should filter by patient ID", async () => {
       const mockAppointments = [
-        {
           id: "1",
           patient_id: "patient-1",
           doctor_id: "doctor-1",
@@ -93,7 +91,6 @@ describe("/api/appointments", () => {
 
     it("should filter by status", async () => {
       const mockAppointments = [
-        {
           id: "1",
           patient_id: "patient-1",
           doctor_id: "doctor-1",
@@ -174,7 +171,6 @@ describe("/api/appointments", () => {
 
       const request = new NextRequest(
         "http://localhost:3000/api/appointments",
-        {
           method: "POST",
           body: JSON.stringify(appointmentData),
           headers: {
@@ -216,7 +212,6 @@ describe("/api/appointments", () => {
 
       const request = new NextRequest(
         "http://localhost:3000/api/appointments",
-        {
           method: "POST",
           body: JSON.stringify(invalidData),
           headers: {
@@ -265,7 +260,6 @@ describe("/api/appointments", () => {
 
       const request = new NextRequest(
         "http://localhost:3000/api/appointments",
-        {
           method: "POST",
           body: JSON.stringify(appointmentData),
           headers: {
@@ -296,7 +290,6 @@ describe("/api/appointments", () => {
 
       const request = new NextRequest(
         "http://localhost:3000/api/appointments",
-        {
           method: "POST",
           body: JSON.stringify(appointmentData),
           headers: {
@@ -334,7 +327,6 @@ describe("/api/appointments", () => {
 
       const request = new NextRequest(
         "http://localhost:3000/api/appointments",
-        {
           method: "PUT",
           body: JSON.stringify(updateData),
           headers: {
@@ -370,7 +362,6 @@ describe("/api/appointments", () => {
 
       const request = new NextRequest(
         "http://localhost:3000/api/appointments",
-        {
           method: "PUT",
           body: JSON.stringify(updateData),
           headers: {

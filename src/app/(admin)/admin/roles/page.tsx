@@ -14,7 +14,6 @@ interface Role {
 }
 
 const mockRoles: Role[] = [
-  {
     id: "1",
     name: "مدير النظام",
     description: "صلاحيات كاملة لإدارة النظام",
@@ -22,7 +21,6 @@ const mockRoles: Role[] = [
     userCount: 2,
     createdAt: "2024-01-01",
   },
-  {
     id: "2",
     name: "مدير الرعاية الصحية",
     description: "إدارة وحدة الرعاية الصحية",
@@ -30,7 +28,6 @@ const mockRoles: Role[] = [
     userCount: 5,
     createdAt: "2024-01-01",
   },
-  {
     id: "3",
     name: "طبيب",
     description: "إدارة المرضى والمواعيد",
@@ -38,7 +35,6 @@ const mockRoles: Role[] = [
     userCount: 12,
     createdAt: "2024-01-01",
   },
-  {
     id: "4",
     name: "ممرض",
     description: "إدارة الجلسات والمرضى",

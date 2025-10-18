@@ -85,7 +85,6 @@ export const useArrowKeys = (
   useKeyPress(
     ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"],
     handleArrowKey,
-    {
       enabled,
     },
   );

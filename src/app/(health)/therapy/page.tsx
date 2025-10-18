@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import {
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -100,7 +98,6 @@ const TherapyPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockSessions: TherapySession[] = [
-        {
           id: "1",
           patient_id: "pat-1",
           therapist_id: "ther-1",
@@ -133,7 +130,6 @@ const TherapyPage: React.FC = () => {
       ];
 
       const mockGoals: TherapyGoal[] = [
-        {
           id: "1",
           patient_id: "pat-1",
           goal_title: "تحسين المشي",
@@ -289,7 +285,6 @@ const TherapyPage: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {
                 sessions.filter(
                   (s) =>
                     new Date(s.session_date).toDateString() ===

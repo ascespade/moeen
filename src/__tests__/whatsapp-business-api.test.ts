@@ -188,7 +188,6 @@ describe("WhatsAppBusinessAPI", () => {
         json: () =>
           Promise.resolve({
             data: [
-              {
                 name: "appointment_confirmation",
                 status: "APPROVED",
                 category: "UTILITY",
@@ -220,7 +219,6 @@ describe("WhatsAppBusinessAPI", () => {
         category: "UTILITY" as const,
         language: "ar",
         components: [
-          {
             type: "BODY" as const,
             text: "Hello {{1}}",
           },
@@ -239,10 +237,8 @@ describe("WhatsAppBusinessAPI", () => {
       const webhookEvent = {
         object: "whatsapp_business_account",
         entry: [
-          {
             id: "entry_123",
             changes: [
-              {
                 value: {
                   messaging_product: "whatsapp",
                   metadata: {
@@ -250,13 +246,11 @@ describe("WhatsAppBusinessAPI", () => {
                     phone_number_id: "phone_123",
                   },
                   contacts: [
-                    {
                       profile: { name: "أحمد" },
                       wa_id: "966501234567",
                     },
                   ],
                   messages: [
-                    {
                       from: "966501234567",
                       id: "msg_123",
                       timestamp: "1640995200",
@@ -265,7 +259,6 @@ describe("WhatsAppBusinessAPI", () => {
                     },
                   ],
                   statuses: [
-                    {
                       id: "msg_123",
                       status: "delivered",
                       timestamp: "1640995200",

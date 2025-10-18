@@ -18,7 +18,6 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
   (
-    {
       className,
       variant = "default",
       padding = "md",
@@ -129,5 +128,6 @@ CardFooter.displayName = "CardFooter";
 // Legacy exports for backward compatibility
 export const CardTitle = CardHeader;
 export const CardDescription = CardContent;
+
 
 export { Card, CardHeader, CardContent, CardFooter };

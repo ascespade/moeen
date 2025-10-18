@@ -237,7 +237,6 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     logError(error, "main_handler");
     return NextResponse.json(
-      {
         error: "Failed to fetch metrics",
         timestamp: new Date().toISOString(),
         fallback: true,

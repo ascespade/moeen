@@ -174,7 +174,6 @@ class DynamicThemeManager {
   ): Promise<void> {
     try {
       const { error } = await this.supabase.from("user_preferences").upsert(
-        {
           user_id: userId,
           ...preferences,
           updated_at: new Date().toISOString(),
@@ -199,7 +198,6 @@ class DynamicThemeManager {
   async updateThemeConfig(config: Partial<ThemeConfig>): Promise<void> {
     try {
       const { error } = await this.supabase.from("settings").upsert(
-        {
           key: "theme_config",
           value: config,
           category: "theme",

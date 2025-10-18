@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import {
-import {
 
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
@@ -127,7 +126,6 @@ const PatientRecords: React.FC = () => {
   const loadPatients = async () => {
     // محاكاة تحميل المرضى من قاعدة البيانات
     const mockPatients: Patient[] = [
-      {
         id: "1",
         name: "أحمد محمد الأحمد",
         phone: "+966501234567",
@@ -154,7 +152,6 @@ const PatientRecords: React.FC = () => {
         lastVisit: "2024-01-10T00:00:00Z",
         status: "active",
       },
-      {
         id: "2",
         name: "فاطمة علي السالم",
         phone: "+966502345678",
@@ -188,7 +185,6 @@ const PatientRecords: React.FC = () => {
   const loadMedicalRecords = async () => {
     // محاكاة تحميل السجلات الطبية
     const mockRecords: MedicalRecord[] = [
-      {
         id: "1",
         patientId: "1",
         date: "2024-01-10",
@@ -200,7 +196,6 @@ const PatientRecords: React.FC = () => {
         followUpRequired: true,
         followUpDate: "2024-02-10",
       },
-      {
         id: "2",
         patientId: "2",
         date: "2024-01-12",

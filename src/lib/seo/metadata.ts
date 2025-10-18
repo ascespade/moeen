@@ -50,7 +50,6 @@ export function generateMetadata(config: PageMetadata): Metadata {
       url: baseUrl,
       siteName: appName,
       images: [
-        {
           url: image,
           width: 1200,
           height: 630,

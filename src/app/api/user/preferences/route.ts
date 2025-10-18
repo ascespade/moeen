@@ -103,12 +103,10 @@ export async function POST(request: NextRequest) {
 
     // Upsert user preference
     const { error } = await supabase.from("user_preferences").upsert(
-      {
         user_id: user.id,
         [key]: value,
         updated_at: new Date().toISOString(),
       },
-      {
         onConflict: "user_id",
       },
     );

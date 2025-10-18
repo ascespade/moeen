@@ -20,7 +20,6 @@ interface Integration {
 }
 
 const mockIntegrations: Integration[] = [
-  {
     id: "1",
     name: "واتساب بزنس",
     type: "whatsapp",
@@ -32,7 +31,6 @@ const mockIntegrations: Integration[] = [
     icon: "📱",
     color: "text-brand-success",
   },
-  {
     id: "2",
     name: "الموقع الإلكتروني",
     type: "web",
@@ -44,7 +42,6 @@ const mockIntegrations: Integration[] = [
     icon: "🌐",
     color: "text-brand-primary",
   },
-  {
     id: "3",
     name: "تيليجرام",
     type: "telegram",
@@ -54,7 +51,6 @@ const mockIntegrations: Integration[] = [
     icon: "✈️",
     color: "text-brand-primary",
   },
-  {
     id: "4",
     name: "فيسبوك ماسنجر",
     type: "facebook",
@@ -272,19 +268,16 @@ export default function ChatbotIntegrationsPage() {
           </h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             {[
-              {
                 name: "واتساب بزنس",
                 icon: "📱",
                 description: "رسائل واتساب التجارية",
               },
               { name: "تيليجرام", icon: "✈️", description: "بوت تيليجرام" },
-              {
                 name: "فيسبوك ماسنجر",
                 icon: "💬",
                 description: "فيسبوك ماسنجر",
               },
               { name: "إنستغرام", icon: "📷", description: "رسائل إنستغرام" },
-              {
                 name: "تويتر",
                 icon: "🐦",
                 description: "رسائل تويتر المباشرة",

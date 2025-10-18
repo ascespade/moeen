@@ -1,5 +1,4 @@
 import logger from "@/lib/monitoring/logger";
-
 import { createClient } from "@/lib/supabase/client";
 
 /**
@@ -106,7 +105,6 @@ export async function testWhatsAppConnection(
     // Test WhatsApp API by fetching phone number details
     const response = await fetch(
       `${config.api_url}/${config.phone_number_id}`,
-      {
         method: "GET",
         headers: {
           Authorization: `Bearer ${config.access_token}`,
@@ -299,7 +297,6 @@ export async function testGoogleCalendarConnection(
     // Test by fetching calendar list
     const calendarResponse = await fetch(
       `https://www.googleapis.com/calendar/v3/users/me/calendarList/${config.calendar_id}`,
-      {
         method: "GET",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -402,7 +399,6 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
     // Test Seha API by making a health check or facility info request
     const response = await fetch(
       `${config.api_url}/facilities/${config.facility_id}`,
-      {
         method: "GET",
         headers: {
           Authorization: `Bearer ${config.api_key}`,
@@ -456,7 +452,6 @@ export async function testTatmanConnection(config: TatmanConfig): Promise<any> {
     // Test Tatman API by making a provider info request
     const response = await fetch(
       `${config.api_url}/providers/${config.provider_id}`,
-      {
         method: "GET",
         headers: {
           Authorization: `Bearer ${config.api_key}`,

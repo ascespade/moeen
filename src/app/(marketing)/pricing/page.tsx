@@ -5,7 +5,6 @@ import { useT } from "@/components/providers/I18nProvider";
 export default function PricingPage() {
   const { t } = useT();
   const tiers = [
-    {
       name: t("pricing.basic", "أساسي"),
       price: t("pricing.free", "مجاني"),
       features: [
@@ -13,12 +12,10 @@ export default function PricingPage() {
         t("pricing.f2", "محادثات محدودة"),
       ],
     },
-    {
       name: t("pricing.pro", "محترف"),
       price: "$29",
       features: [t("pricing.f3", "3 قنوات"), t("pricing.f4", "تقارير أساسية")],
     },
-    {
       name: t("pricing.enterprise", "مؤسسات"),
       price: t("pricing.custom", "مخصص"),
       features: [
