@@ -4,7 +4,21 @@
   "private": true,
   "scripts": {
     "start-dashboard": "node dashboard/server.mjs",
-    "self-heal": "node scripts/ai_self_test_and_fix.mjs"
+    "self-heal": "node scripts/ai_self_test_and_fix.mjs",
+    "e2e-healer": "node scripts/ai_orchestrator.mjs",
+    "generate-tests": "node scripts/ai_test_generator.mjs",
+    "apply-fixes": "node scripts/ai_automated_fixer.mjs",
+    "generate-reports": "node scripts/ai_report_generator.mjs",
+    "manage-pr": "node scripts/ai_pr_manager.mjs",
+    "test:playwright": "npx playwright test tests/generated/playwright/",
+    "test:supawright": "npx playwright test tests/generated/supawright/",
+    "test:all": "npx playwright test tests/generated/",
+    "test:ui": "npx playwright test --ui",
+    "test:debug": "npx playwright test --debug",
+    "lint": "npx eslint src --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "npx eslint src --fix --ext .ts,.tsx,.js,.jsx",
+    "format": "npx prettier --write src",
+    "type-check": "npx tsc --noEmit"
   },
   "devDependencies": {
     "playwright": "^1.36.0",
