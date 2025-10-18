@@ -1,248 +1,307 @@
 #!/usr/bin/env node
 
 /**
- * GitHub Actions Workflow Validator
- * Validates workflow syntax, dependencies, and best practices
+ * Workflow Validation Script
+ * Validates GitHub Actions workflows for syntax and best practices
  */
 
-const { readFileSync, readdirSync, statSync } = require('fs');
-const { join, dirname } = require('path');
+const fs = require('fs');
+const path = require('path');
 const yaml = require('js-yaml');
+const { execSync } = require('child_process');
 
-const projectRoot = join(__dirname, '..');
+class WorkflowValidator {
+  constructor() {
+    this.errors = [];
+    this.warnings = [];
+    this.workflows = [];
+  }
 
-// Color codes for console output
-const colors = {
-  reset: '\x1b[0m',
-  bright: '\x1b[1m',
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  magenta: '\x1b[35m',
-  cyan: '\x1b[36m',
-};
-
-function log(message, color = 'reset') {
-  console.log(`${colors[color]}${message}${colors.reset}`);
-}
-
-function validateWorkflow(filePath) {
-  const issues = [];
-  const warnings = [];
-
-  try {
-    const content = readFileSync(filePath, 'utf8');
-    const workflow = yaml.load(content);
-
-    log(`\n🔍 Validating ${filePath}`, 'cyan');
-
-    // Check required fields
-    if (!workflow.name) {
-      issues.push('Missing workflow name');
+  async validateAll() {
+    console.log('🔍 Starting workflow validation...');
+    
+    const workflowsDir = '.github/workflows';
+    if (!fs.existsSync(workflowsDir)) {
+      console.error('❌ .github/workflows directory not found');
+      return false;
     }
 
-    if (!workflow.on) {
-      issues.push('Missing trigger configuration');
-    }
+    const workflowFiles = fs.readdirSync(workflowsDir)
+      .filter(file => file.endsWith('.yml') || file.endsWith('.yaml'));
 
-    if (!workflow.jobs || Object.keys(workflow.jobs).length === 0) {
-      issues.push('No jobs defined');
-    }
+    console.log(`📁 Found ${workflowFiles.length} workflow files`);
 
-    // Validate jobs
-    for (const [jobName, job] of Object.entries(workflow.jobs)) {
-      if (!job['runs-on']) {
-        issues.push(`Job '${jobName}' missing runs-on`);
-      }
-
-      if (!job.steps || job.steps.length === 0) {
-        issues.push(`Job '${jobName}' has no steps`);
-      }
-
-      // Check for common issues in steps
-      job.steps?.forEach((step, index) => {
-        if (!step.name) {
-          issues.push(`Job '${jobName}' step ${index + 1} missing name`);
-        }
-
-        if (!step.uses && !step.run) {
-          issues.push(
-            `Job '${jobName}' step '${step.name}' missing uses or run`
-          );
-        }
-
-        // Check for deprecated actions
-        if (step.uses) {
-          if (
-            step.uses.includes('actions/checkout@v1') ||
-            step.uses.includes('actions/checkout@v2')
-          ) {
-            warnings.push(
-              `Job '${jobName}' step '${step.name}' uses deprecated checkout version`
-            );
-          }
-
-          if (
-            step.uses.includes('actions/setup-node@v1') ||
-            step.uses.includes('actions/setup-node@v2')
-          ) {
-            warnings.push(
-              `Job '${jobName}' step '${step.name}' uses deprecated setup-node version`
-            );
-          }
-        }
+    for (const file of workflowFiles) {
+      const filePath = path.join(workflowsDir, file);
+      console.log(`\n🔍 Validating ${file}...`);
+      
+      const isValid = await this.validateWorkflow(filePath);
+      this.workflows.push({
+        file,
+        path: filePath,
+        valid: isValid,
+        errors: [...this.errors],
+        warnings: [...this.warnings]
       });
+
+      // Clear errors/warnings for next file
+      this.errors = [];
+      this.warnings = [];
     }
 
-    // Check for security issues
-    if (
-      content.includes('${{ secrets.GITHUB_TOKEN }}') &&
-      !workflow.permissions
-    ) {
-      warnings.push('Using GITHUB_TOKEN without explicit permissions');
-    }
-
-    // Check for hardcoded values
-    if (content.includes('ubuntu-18.04')) {
-      warnings.push('Using deprecated ubuntu-18.04 runner');
-    }
-
-    if (content.includes('node-version: 16')) {
-      warnings.push('Using Node.js 16 (consider upgrading to 18 or 20)');
-    }
-
-    return { issues, warnings, valid: issues.length === 0 };
-  } catch (error) {
-    return {
-      issues: [`YAML parsing error: ${error.message}`],
-      warnings: [],
-      valid: false,
-    };
-  }
-}
-
-function checkPackageJsonScripts() {
-  const packageJsonPath = join(projectRoot, 'package.json');
-  const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
-  const scripts = packageJson.scripts || {};
-
-  log('\n📦 Checking package.json scripts', 'cyan');
-
-  const missingScripts = [];
-  const requiredScripts = [
-    'lint:check',
-    'lint:fix',
-    'type:check',
-    'test:unit',
-    'test:integration',
-    'test:e2e',
-    'test:coverage',
-    'agent:auto',
-    'agent:fix',
-    'agent:test',
-    'agent:optimize',
-    'agent:refactor',
-    'agent:background',
-    'agent:monitor',
-    'agent:heal',
-    'security:audit',
-    'security:fix',
-    'deploy:prod',
-  ];
-
-  requiredScripts.forEach(script => {
-    if (!scripts[script]) {
-      missingScripts.push(script);
-    }
-  });
-
-  if (missingScripts.length > 0) {
-    log(`❌ Missing scripts: ${missingScripts.join(', ')}`, 'red');
-  } else {
-    log('✅ All required scripts found', 'green');
+    return this.generateReport();
   }
 
-  return missingScripts;
-}
+  async validateWorkflow(filePath) {
+    let isValid = true;
 
-function generateWorkflowReport(workflows, missingScripts) {
-  log('\n📊 Workflow Validation Report', 'bright');
-  log('='.repeat(50), 'bright');
+    try {
+      // Read and parse YAML
+      const content = fs.readFileSync(filePath, 'utf8');
+      const workflow = yaml.load(content);
 
-  let totalIssues = 0;
-  let totalWarnings = 0;
+      // Basic YAML validation
+      if (!workflow) {
+        this.addError('Empty or invalid YAML file');
+        return false;
+      }
 
-  workflows.forEach(({ file, result }) => {
-    log(`\n📁 ${file}`, 'blue');
+      // Required fields validation
+      this.validateRequiredFields(workflow, filePath);
 
-    if (result.valid) {
-      log('✅ Valid workflow', 'green');
+      // Workflow structure validation
+      this.validateWorkflowStructure(workflow, filePath);
+
+      // Best practices validation
+      this.validateBestPractices(workflow, filePath);
+
+      // Security validation
+      this.validateSecurity(workflow, filePath);
+
+      // Performance validation
+      this.validatePerformance(workflow, filePath);
+
+    } catch (error) {
+      this.addError(`YAML parsing error: ${error.message}`);
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  validateRequiredFields(workflow, filePath) {
+    const required = ['name', 'on'];
+    
+    for (const field of required) {
+      if (!workflow[field]) {
+        this.addError(`Missing required field: ${field}`);
+      }
+    }
+
+    // Validate 'on' field
+    if (workflow.on) {
+      if (typeof workflow.on !== 'object') {
+        this.addError("'on' field must be an object");
+      }
+    }
+  }
+
+  validateWorkflowStructure(workflow, filePath) {
+    // Validate jobs
+    if (workflow.jobs) {
+      if (typeof workflow.jobs !== 'object') {
+        this.addError("'jobs' must be an object");
+        return;
+      }
+
+      for (const [jobName, job] of Object.entries(workflow.jobs)) {
+        this.validateJob(jobName, job, filePath);
+      }
     } else {
-      log('❌ Invalid workflow', 'red');
+      this.addWarning("No jobs defined in workflow");
+    }
+  }
+
+  validateJob(jobName, job, filePath) {
+    // Required job fields
+    if (!job['runs-on'] && !job.runs_on) {
+      this.addError(`Job '${jobName}' missing 'runs-on' field`);
     }
 
-    if (result.issues.length > 0) {
-      log('Issues:', 'red');
-      result.issues.forEach(issue => log(`  • ${issue}`, 'red'));
-      totalIssues += result.issues.length;
+    // Validate steps
+    if (job.steps) {
+      if (!Array.isArray(job.steps)) {
+        this.addError(`Job '${jobName}' steps must be an array`);
+        return;
+      }
+
+      for (let i = 0; i < job.steps.length; i++) {
+        this.validateStep(jobName, job.steps[i], i, filePath);
+      }
+    }
+  }
+
+  validateStep(jobName, step, stepIndex, filePath) {
+    if (!step.name) {
+      this.addError(`Job '${jobName}' step ${stepIndex + 1} missing 'name' field`);
     }
 
-    if (result.warnings.length > 0) {
-      log('Warnings:', 'yellow');
-      result.warnings.forEach(warning => log(`  • ${warning}`, 'yellow'));
-      totalWarnings += result.warnings.length;
+    if (!step.run && !step.uses && !step.if) {
+      this.addError(`Job '${jobName}' step ${stepIndex + 1} must have 'run', 'uses', or 'if' field`);
     }
-  });
 
-  log('\n📈 Summary', 'bright');
-  log(`Total workflows: ${workflows.length}`, 'blue');
-  log(`Total issues: ${totalIssues}`, totalIssues > 0 ? 'red' : 'green');
-  log(
-    `Total warnings: ${totalWarnings}`,
-    totalWarnings > 0 ? 'yellow' : 'green'
-  );
-  log(
-    `Missing scripts: ${missingScripts.length}`,
-    missingScripts.length > 0 ? 'red' : 'green'
-  );
+    // Validate timeout
+    if (step.timeout_minutes && (step.timeout_minutes < 1 || step.timeout_minutes > 360)) {
+      this.addWarning(`Job '${jobName}' step ${stepIndex + 1} has unusual timeout: ${step.timeout_minutes} minutes`);
+    }
+  }
 
-  return {
-    totalWorkflows: workflows.length,
-    totalIssues,
-    totalWarnings,
-    missingScripts: missingScripts.length,
-    allValid: totalIssues === 0,
-  };
-}
+  validateBestPractices(workflow, filePath) {
+    // Check for permissions
+    if (!workflow.permissions) {
+      this.addWarning("Workflow missing 'permissions' field - consider adding explicit permissions");
+    }
 
-async function main() {
-  log('🚀 GitHub Actions Workflow Validator', 'bright');
-  log('='.repeat(40), 'bright');
+    // Check for environment variables
+    if (workflow.env) {
+      for (const [key, value] of Object.entries(workflow.env)) {
+        if (typeof value === 'string' && value.includes('${{') && !value.includes('secrets.')) {
+          this.addWarning(`Environment variable '${key}' uses GitHub context without secrets - ensure this is intentional`);
+        }
+      }
+    }
 
-  const workflowsDir = join(projectRoot, '.github', 'workflows');
-  const workflowFiles = readdirSync(workflowsDir)
-    .filter(file => file.endsWith('.yml') || file.endsWith('.yaml'))
-    .map(file => join(workflowsDir, file));
+    // Check for proper artifact handling
+    const content = fs.readFileSync(filePath, 'utf8');
+    if (content.includes('actions/upload-artifact') && !content.includes('actions/download-artifact')) {
+      this.addWarning("Workflow uploads artifacts but doesn't download them - ensure this is intentional");
+    }
+  }
 
-  const workflows = workflowFiles.map(file => ({
-    file: file.replace(projectRoot + '/', ''),
-    result: validateWorkflow(file),
-  }));
+  validateSecurity(workflow, filePath) {
+    const content = fs.readFileSync(filePath, 'utf8');
 
-  const missingScripts = checkPackageJsonScripts();
-  const report = generateWorkflowReport(workflows, missingScripts);
+    // Check for hardcoded secrets
+    const secretPatterns = [
+      /password\s*:\s*['"][^'"]+['"]/i,
+      /token\s*:\s*['"][^'"]+['"]/i,
+      /key\s*:\s*['"][^'"]+['"]/i
+    ];
 
-  if (report.allValid && missingScripts.length === 0) {
-    log('\n🎉 All workflows are valid!', 'green');
-    process.exit(0);
-  } else {
-    log('\n⚠️ Some issues found. Please review and fix.', 'yellow');
-    process.exit(1);
+    for (const pattern of secretPatterns) {
+      if (pattern.test(content)) {
+        this.addWarning("Potential hardcoded secret detected - use GitHub secrets instead");
+      }
+    }
+
+    // Check for dangerous actions
+    const dangerousActions = [
+      'actions/checkout@v1',
+      'actions/checkout@v2'
+    ];
+
+    for (const action of dangerousActions) {
+      if (content.includes(action)) {
+        this.addWarning(`Using potentially vulnerable action: ${action} - consider updating to latest version`);
+      }
+    }
+  }
+
+  validatePerformance(workflow, filePath) {
+    // Check for excessive parallelism
+    if (workflow.jobs) {
+      const jobCount = Object.keys(workflow.jobs).length;
+      if (jobCount > 20) {
+        this.addWarning(`Workflow has ${jobCount} jobs - consider splitting into multiple workflows`);
+      }
+    }
+
+    // Check for long-running jobs
+    const content = fs.readFileSync(filePath, 'utf8');
+    const timeoutMatches = content.match(/timeout-minutes:\s*(\d+)/g);
+    if (timeoutMatches) {
+      for (const match of timeoutMatches) {
+        const minutes = parseInt(match.split(':')[1].trim());
+        if (minutes > 120) {
+          this.addWarning(`Job timeout is ${minutes} minutes - consider optimizing for faster execution`);
+        }
+      }
+    }
+  }
+
+  addError(message) {
+    this.errors.push(message);
+  }
+
+  addWarning(message) {
+    this.warnings.push(message);
+  }
+
+  generateReport() {
+    console.log('\n📊 Validation Report');
+    console.log('='.repeat(50));
+
+    let totalErrors = 0;
+    let totalWarnings = 0;
+    let validWorkflows = 0;
+
+    for (const workflow of this.workflows) {
+      console.log(`\n📄 ${workflow.file}`);
+      console.log(`   Status: ${workflow.valid ? '✅ Valid' : '❌ Invalid'}`);
+      
+      if (workflow.errors.length > 0) {
+        console.log('   Errors:');
+        workflow.errors.forEach(error => console.log(`     ❌ ${error}`));
+        totalErrors += workflow.errors.length;
+      }
+      
+      if (workflow.warnings.length > 0) {
+        console.log('   Warnings:');
+        workflow.warnings.forEach(warning => console.log(`     ⚠️  ${warning}`));
+        totalWarnings += workflow.warnings.length;
+      }
+
+      if (workflow.valid) {
+        validWorkflows++;
+      }
+    }
+
+    console.log('\n📈 Summary');
+    console.log(`   Total workflows: ${this.workflows.length}`);
+    console.log(`   Valid workflows: ${validWorkflows}`);
+    console.log(`   Total errors: ${totalErrors}`);
+    console.log(`   Total warnings: ${totalWarnings}`);
+
+    // Save detailed report
+    const report = {
+      timestamp: new Date().toISOString(),
+      summary: {
+        totalWorkflows: this.workflows.length,
+        validWorkflows,
+        totalErrors,
+        totalWarnings
+      },
+      workflows: this.workflows
+    };
+
+    fs.mkdirSync('reports', { recursive: true });
+    fs.writeFileSync('reports/workflow-validation-report.json', JSON.stringify(report, null, 2));
+    console.log('\n💾 Detailed report saved to: reports/workflow-validation-report.json');
+
+    return totalErrors === 0;
   }
 }
 
-main().catch(error => {
-  log(`❌ Error: ${error.message}`, 'red');
-  process.exit(1);
-});
+// CLI interface
+if (require.main === module) {
+  const validator = new WorkflowValidator();
+
+  async function main() {
+    const isValid = await validator.validateAll();
+    process.exit(isValid ? 0 : 1);
+  }
+
+  main().catch(console.error);
+}
+
+module.exports = WorkflowValidator;

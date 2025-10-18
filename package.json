@@ -59,7 +59,10 @@
     "workflow:optimize": "node scripts/optimize-workflows.js",
     "workflow:docs": "node scripts/generate-workflow-docs.js",
     "ci:assistant": "echo '🤖 CI Assistant - Self-Healing Error Resolver'",
-    "ci:learn": "node -e \"console.log('🧠 تحليل أخطاء CI والتعلم منها...')\"",
+    "ci:learn": "node scripts/ci-learning-db.js report",
+    "ci:heal": "node scripts/ci-self-healing-manager.js fix",
+    "ci:validate": "node scripts/validate-workflows.js",
+    "ci:test": "node scripts/test-workflows.js comprehensive",
     "prepare": "husky"
   },
   "dependencies": {
