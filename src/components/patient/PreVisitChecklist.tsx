@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 import { useT } from "@/hooks/useT";
@@ -6,15 +8,6 @@ import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Badge } from "@/components/ui/Badge";
 
-"use client";
-
-CheckCircle,
-  AlertCircle,
-  Clock,
-  FileText,
-  Shield,
-  CreditCard,
-  Stethoscope,
 } from "lucide-react";
 
 interface ChecklistItem {
@@ -93,7 +86,6 @@ export default function PreVisitChecklist({
         `/api/appointments/${appointmentId}/checklist/submit`,
           method: "POST",
           headers: { "Content-Type": "application/json" },
-        },
       );
 
       if (response.ok) {
@@ -283,3 +275,4 @@ export default function PreVisitChecklist({
     </Card>
   );
 }}}
+}

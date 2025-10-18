@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,32 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-TrendingUp,
-  Calendar,
-  Clock,
-  User,
-  Target,
   BarChart3,
-  FileText,
-  Video,
-  Plus,
-  Search,
-  Filter,
-  MoreVertical,
-  Edit,
-  Eye,
-  CheckCircle,
-  AlertCircle,
-  Award,
-  BookOpen,
-  Users,
-  Star,
-  Activity,
-  Brain,
-  Heart,
-  Zap,
 } from "lucide-react";
 
 interface ProgressGoal {
@@ -172,7 +149,6 @@ const ProgressTrackingPage: React.FC = () => {
             condition: "شلل دماغي",
             avatar: "/logo.png",
           },
-        },
       ];
 
       const mockAssessments: Assessment[] = [
@@ -196,7 +172,6 @@ const ProgressTrackingPage: React.FC = () => {
             specialty: "العلاج الطبيعي",
             avatar: "/logo.png",
           },
-        },
       ];
 
       const mockReports: ProgressReport[] = [
@@ -812,3 +787,4 @@ const ProgressTrackingPage: React.FC = () => {
 
 export default ProgressTrackingPage;
 }}}}
+}}

@@ -90,7 +90,6 @@ export const INSURANCE_CONFIG = {
       API_KEY: process.env.TATMAN_API_KEY || "",
       ENABLED: process.env.TATMAN_ENABLED === "true",
     },
-  },
   CLAIM_TIMEOUT: parseInt(process.env.INSURANCE_CLAIM_TIMEOUT || "86400000"), // 24 hours
   RETRY_ATTEMPTS: parseInt(process.env.INSURANCE_RETRY_ATTEMPTS || "3"),
 } as const;

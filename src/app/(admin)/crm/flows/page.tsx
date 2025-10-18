@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -8,20 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-Plus,
-  Edit,
   Trash2,
-  Play,
-  Pause,
-  Settings,
-  MessageCircle,
-  Bot,
-  Zap,
-  ArrowRight,
-  CheckCircle,
-  AlertCircle,
 } from "lucide-react";
 
 interface FlowStep {

@@ -174,7 +174,6 @@ export class WhatsAppBusinessAPI {
           language: {
             code: languageCode,
           },
-        },
       };
 
       // Add parameters if provided
@@ -349,7 +348,6 @@ export class WhatsAppBusinessAPI {
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
           },
-        },
       );
 
       const data = await response.json();
@@ -532,3 +530,4 @@ export class WhatsAppBusinessAPI {
 
 export const whatsappAPI = new WhatsAppBusinessAPI();
 }}}}}}}}}}}}}}}}}}
+}}

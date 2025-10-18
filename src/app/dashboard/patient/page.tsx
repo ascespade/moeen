@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 import { useT } from "@/hooks/useT";
@@ -8,15 +10,6 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { LoadingSpinner } from "@/components/ui";
 
-"use client";
-
-CalendarDays,
-  FileText,
-  CreditCard,
-  Shield,
-  Clock,
-  CheckCircle,
-  AlertCircle,
 } from "lucide-react";
 
 interface PatientData {

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,25 +11,7 @@ import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 import { createClient } from "@/lib/supabase/client";
 
-"use client";
-
-Key,
-  Eye,
-  EyeOff,
-  Save,
-  RefreshCw,
-  CheckCircle,
-  AlertCircle,
-  Copy,
   Trash2,
-  Plus,
-  Shield,
-  Globe,
-  MessageSquare,
-  Mail,
-  Phone,
-  Calendar,
-  CreditCard,
 } from "lucide-react";
   encrypt,
   decrypt,

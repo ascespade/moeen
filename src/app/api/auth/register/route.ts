@@ -91,7 +91,6 @@ export async function POST(request: NextRequest) {
           autoRefreshToken: false,
           persistSession: false,
         },
-      },
     );
 
     // Create user in Supabase Auth
@@ -215,7 +214,6 @@ export async function POST(request: NextRequest) {
           email: authData.user.email,
           name: name,
         },
-      },
       { status: 201 },
     );
   } catch (error) {

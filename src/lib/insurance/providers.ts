@@ -170,7 +170,6 @@ export class InsuranceProviderService {
           headers: {
             Authorization: `Bearer ${provider.apiKey}`,
           },
-        },
       );
 
       const result = await response.json();
@@ -210,7 +209,6 @@ export class InsuranceProviderService {
             Authorization: `Bearer ${provider.apiKey}`,
             "Content-Type": "application/json",
           },
-        },
       );
 
       const result = await response.json();
@@ -244,3 +242,4 @@ export class InsuranceProviderService {
 
 export const insuranceService = new InsuranceProviderService();
 }}}}}}}}}}}}}}}
+}}

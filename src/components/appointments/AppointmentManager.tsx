@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -7,24 +9,8 @@ import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
 
-"use client";
-
-Calendar,
-  Clock,
-  User,
-  Phone,
-  Mail,
-  MapPin,
-  Plus,
-  Edit,
   Trash2,
-  CheckCircle,
-  XCircle,
 } from "lucide-react";
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
 } from "@/components/ui/Select";
 
 interface Appointment {

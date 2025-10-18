@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -6,19 +8,6 @@ import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import { ScrollArea } from "@/components/ui/ScrollArea";
 
-"use client";
-
-Send,
-  Bot,
-  User,
-  Calendar,
-  Phone,
-  Mail,
-  MapPin,
-  Clock,
-  MessageCircle,
-  Settings,
-  Brain,
 } from "lucide-react";
 
 interface ChatMessage {

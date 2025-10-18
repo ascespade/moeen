@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, Suspense } from "react";
 
 import { useRouter, useSearchParams } from "next/navigation";
@@ -8,8 +10,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { ROUTES } from "@/constants/routes";
 import { getDefaultRouteForUser } from "@/lib/router";
 import { useT } from "@/components/providers/I18nProvider";
-
-"use client";
 
 function LoginForm() {
   const { loginWithCredentials, isLoading, isAuthenticated } = useAuth();

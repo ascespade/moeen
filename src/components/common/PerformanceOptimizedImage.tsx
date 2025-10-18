@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
-
 "use client";
+
+import { useState, useRef, useEffect } from "react";
 
 interface PerformanceOptimizedImageProps {
   src: string;

@@ -117,7 +117,6 @@ class TestUtils {
         4: { isWorking: true, startTime: "09:00", endTime: "17:00" },
         5: { isWorking: true, startTime: "09:00", endTime: "17:00" },
         6: { isWorking: false, startTime: "09:00", endTime: "17:00" },
-      },
     };
 
     const { error } = await this.supabase.from("doctors").insert(doctor);
@@ -325,3 +324,4 @@ export function createTestData() {
 export async function cleanupTestData(): Promise<void> {
   await testUtils.cleanup();
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}

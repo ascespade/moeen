@@ -1,8 +1,8 @@
+"use client";
+
 import React from "react";
 
 import { useTheme } from "@/core/theme";
-
-"use client";
 
 /**
  * Bar Chart Component - مكون الرسم البياني العمودي
@@ -10,13 +10,6 @@ import { useTheme } from "@/core/theme";
  */
 
 BarChart as RechartsBarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
 } from "recharts";
 
 interface BarChartProps {

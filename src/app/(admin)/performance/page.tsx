@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -7,21 +9,6 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-Activity,
-  TrendingUp,
-  TrendingDown,
-  Clock,
-  Database,
-  Server,
-  Cpu,
-  HardDrive,
-  Wifi,
-  AlertTriangle,
-  CheckCircle,
-  RefreshCw,
-  Settings,
 } from "lucide-react";
 
 interface PerformanceMetric {

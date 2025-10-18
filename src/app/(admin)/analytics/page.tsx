@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -8,28 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
 BarChart3,
-  TrendingUp,
-  TrendingDown,
-  Users,
-  Calendar,
-  Clock,
-  Target,
-  Activity,
-  Heart,
-  Brain,
-  Zap,
-  Star,
-  Award,
-  FileText,
-  Download,
-  Filter,
-  RefreshCw,
-  Eye,
-  PieChart,
-  LineChart,
 } from "lucide-react";
 
 interface AnalyticsData {

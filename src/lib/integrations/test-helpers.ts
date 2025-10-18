@@ -102,7 +102,6 @@ export async function testWhatsAppConnection(
           Authorization: `Bearer ${config.access_token}`,
           "Content-Type": "application/json",
         },
-      },
     );
 
     const durationMs = Date.now() - startTime;
@@ -286,7 +285,6 @@ export async function testGoogleCalendarConnection(
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      },
     );
 
     const durationMs = Date.now() - startTime;
@@ -385,7 +383,6 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
           Authorization: `Bearer ${config.api_key}`,
           "Content-Type": "application/json",
         },
-      },
     );
 
     const durationMs = Date.now() - startTime;
@@ -436,7 +433,6 @@ export async function testTatmanConnection(config: TatmanConfig): Promise<any> {
           Authorization: `Bearer ${config.api_key}`,
           "Content-Type": "application/json",
         },
-      },
     );
 
     const durationMs = Date.now() - startTime;

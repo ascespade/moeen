@@ -1,8 +1,8 @@
+"use client";
+
 import React from "react";
 
 import { useTheme } from "@/core/theme";
-
-"use client";
 
 /**
  * Line Chart Component - مكون الرسم البياني الخطي
@@ -10,13 +10,6 @@ import { useTheme } from "@/core/theme";
  */
 
 LineChart as RechartsLineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
 } from "recharts";
 
 interface LineChartProps {

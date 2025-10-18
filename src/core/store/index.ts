@@ -8,13 +8,6 @@ import {
    * Centralized state management using Zustand
    */
 
-  User,
-  Patient,
-  Doctor,
-  Appointment,
-  Payment,
-  InsuranceClaim,
-  Notification,
 } from "../types";
 
 // Auth Store

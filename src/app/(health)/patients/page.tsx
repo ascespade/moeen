@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 import Image from "next/image";
@@ -10,31 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 
-"use client";
-
-Users,
-  Phone,
-  Mail,
-  MapPin,
-  Calendar,
-  Plus,
-  Search,
-  Filter,
-  MoreVertical,
-  Edit,
-  Eye,
   Trash2,
-  UserPlus,
-  MessageCircle,
-  Star,
-  Clock,
-  Activity,
-  Heart,
-  AlertCircle,
-  CheckCircle,
-  TrendingUp,
-  Target,
-  FileText,
 } from "lucide-react";
 
 interface Patient {

@@ -48,7 +48,6 @@ export async function PATCH(
           completed_at: completed ? new Date().toISOString() : null,
           completed_by: completed ? user.id : null,
         },
-      },
     };
 
     const { error: updateError } = await supabase
@@ -127,3 +126,4 @@ export async function GET(
     );
   }
 }}}}}}}}
+}

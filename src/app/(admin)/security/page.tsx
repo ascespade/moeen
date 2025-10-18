@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -8,33 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-Shield,
-  Lock,
-  Eye,
-  EyeOff,
-  AlertTriangle,
-  CheckCircle,
-  XCircle,
-  Users,
-  Activity,
-  Clock,
-  MapPin,
-  Monitor,
-  Smartphone,
-  Globe,
-  Key,
-  Fingerprint,
-  Database,
-  FileText,
-  Settings,
-  RefreshCw,
-  Download,
-  Upload,
   Trash2,
-  Edit,
-  Plus,
 } from "lucide-react";
 
 interface SecurityEvent {

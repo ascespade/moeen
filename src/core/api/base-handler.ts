@@ -47,7 +47,6 @@ export class BaseApiHandler {
                 message: "Method not allowed",
                 code: "METHOD_NOT_ALLOWED",
               },
-            },
             { status: 405 },
           );
 
@@ -59,7 +58,6 @@ export class BaseApiHandler {
             return NextResponse.json(
                 success: false,
                 error: { message: "Unauthorized", code: "UNAUTHORIZED" },
-              },
               { status: 401 },
             );
 
@@ -68,7 +66,6 @@ export class BaseApiHandler {
             return NextResponse.json(
                 success: false,
                 error: { message: "Forbidden", code: "FORBIDDEN" },
-              },
               { status: 403 },
             );
 
@@ -144,7 +141,6 @@ export class BaseApiHandler {
                 stack: (error as Error).stack,
               }),
             },
-          },
           { status: handledError.statusCode },
         );
       }
@@ -209,7 +205,6 @@ export class BaseApiHandler {
           code,
           message,
         },
-      },
       { status: statusCode },
     );
 

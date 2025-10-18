@@ -65,7 +65,6 @@ export async function POST(request: NextRequest) {
             autoRefreshToken: false,
             persistSession: false,
           },
-        },
       );
 
       try {
@@ -120,3 +119,4 @@ export async function POST(request: NextRequest) {
     return response;
   }
 }}}}
+}

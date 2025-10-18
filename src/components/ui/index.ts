@@ -11,17 +11,7 @@
 
 // Base UI Components
 
-  Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-  CardTitle,
-  CardDescription,
 } from "./Card";
-  CardProps,
-  CardHeaderProps,
-  CardContentProps,
-  CardFooterProps,
 } from "./Card";
 
 // Loading & Skeleton

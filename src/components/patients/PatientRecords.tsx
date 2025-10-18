@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -6,25 +8,8 @@ import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
-"use client";
-
-User,
-  Phone,
-  Mail,
-  Calendar,
-  FileText,
-  Plus,
-  Edit,
   Trash2,
-  Search,
-  Filter,
-  Download,
-  Eye,
 } from "lucide-react";
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
 } from "@/components/ui/Select";
 
 interface Patient {

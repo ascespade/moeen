@@ -41,7 +41,6 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
         email: userData.email,
         role: userData.role as User["role"],
         meta: userData.meta || {},
-      },
       error: null,
     };
   } catch (error) {
@@ -66,3 +65,4 @@ export function requireAuth(allowedRoles?: User["role"][]) {
     return { authorized: true, user, error: null };
   };
 }}}}}}}}}
+}

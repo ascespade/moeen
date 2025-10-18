@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -7,24 +9,6 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-Plug,
-  Settings,
-  CheckCircle,
-  XCircle,
-  AlertCircle,
-  RefreshCw,
-  ExternalLink,
-  Key,
-  Globe,
-  MessageSquare,
-  Phone,
-  Mail,
-  Calendar,
-  Database,
-  Cloud,
-  Shield,
 } from "lucide-react";
 
 interface Integration {
@@ -83,7 +67,6 @@ const IntegrationsPage: React.FC = () => {
               apiKeys.find((k: any) => k.id === "supabase_anon")?.status ||
               "inactive",
           },
-        },
           id: "whatsapp",
           name: "WhatsApp Business API",
           description: "تكامل مع واتساب لإرسال الرسائل والتذكيرات التلقائية",
@@ -106,7 +89,6 @@ const IntegrationsPage: React.FC = () => {
               apiKeys.find((k: any) => k.id === "whatsapp_token")?.status ||
               "inactive",
           },
-        },
           id: "google",
           name: "Google Calendar",
           description: "مزامنة المواعيد تلقائياً مع تقويم جوجل",
@@ -128,7 +110,6 @@ const IntegrationsPage: React.FC = () => {
               : "غير مُعد",
             calendar_sync: "bidirectional",
           },
-        },
           id: "stripe",
           name: "Stripe Payments",
           description: "معالجة الدفعات الإلكترونية والاشتراكات",
@@ -150,7 +131,6 @@ const IntegrationsPage: React.FC = () => {
               : "غير مُعد",
             webhooks: "enabled",
           },
-        },
           id: "smtp",
           name: "Email / SMTP",
           description: "إرسال الإشعارات والتقارير عبر البريد الإلكتروني",
@@ -170,7 +150,6 @@ const IntegrationsPage: React.FC = () => {
               "غير مُعد",
             port: "587",
           },
-        },
       ];
 
       setIntegrations(integrations);

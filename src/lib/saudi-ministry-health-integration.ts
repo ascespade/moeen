@@ -465,7 +465,6 @@ export class SaudiMinistryHealthIntegration {
           relationship: "زوجة",
           phone: "+966501234568",
         },
-      },
     };
 
   private async callShoonAPI(
@@ -487,7 +486,6 @@ export class SaudiMinistryHealthIntegration {
           gender: "male",
           phone: "+966501234567",
         },
-      },
     };
 
   private async callTatmanAPI(
@@ -516,3 +514,4 @@ export class SaudiMinistryHealthIntegration {
 
 export const ministryHealthIntegration = new SaudiMinistryHealthIntegration();
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,28 +11,6 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-GraduationCap,
-  Calendar,
-  Clock,
-  User,
-  Target,
-  TrendingUp,
-  FileText,
-  Video,
-  Plus,
-  Search,
-  Filter,
-  MoreVertical,
-  Edit,
-  Eye,
-  CheckCircle,
-  AlertCircle,
-  Award,
-  BookOpen,
-  Users,
-  Star,
 } from "lucide-react";
 
 interface TrainingProgram {
@@ -128,7 +108,6 @@ const TrainingPage: React.FC = () => {
             specialty: "التأهيل المهني",
             avatar: "/logo.png",
           },
-        },
           id: "2",
           title: "برنامج الحرف اليدوية والتقنية",
           description: "تعلم الحرف اليدوية والتقنيات الحديثة للعمل",
@@ -157,7 +136,6 @@ const TrainingPage: React.FC = () => {
             specialty: "التدريب المهني",
             avatar: "/logo.png",
           },
-        },
       ];
 
       const mockProgress: TrainingProgress[] = [
@@ -178,7 +156,6 @@ const TrainingPage: React.FC = () => {
             condition: "متلازمة داون",
             avatar: "/logo.png",
           },
-        },
       ];
 
       setPrograms(mockPrograms);
@@ -536,3 +513,4 @@ const TrainingPage: React.FC = () => {
 
 export default TrainingPage;
 }}
+}}}

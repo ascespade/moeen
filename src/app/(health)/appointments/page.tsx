@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,20 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-Calendar,
-  Clock,
-  User,
-  Phone,
-  MapPin,
-  Plus,
-  Search,
-  Filter,
-  MoreVertical,
-  Edit,
   Trash2,
-  Eye,
 } from "lucide-react";
 
 interface Appointment {

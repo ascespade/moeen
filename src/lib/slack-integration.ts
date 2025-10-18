@@ -245,7 +245,6 @@ export class SlackIntegration {
             type: "mrkdwn",
             text: `*رسالة من المريض عبر ${channel === "whatsapp" ? "واتساب" : "الموقع"}*\n\n${message}`,
           },
-        },
           type: "context",
           elements: [
         },
@@ -303,7 +302,6 @@ export class SlackIntegration {
           type: "plain_text",
           text: `${statusEmoji[status]} ${statusText[status]}`,
         },
-      },
         type: "section",
         fields: [
             type: "mrkdwn",
@@ -487,13 +485,11 @@ export class SlackIntegration {
           type: "plain_text",
           text: "🚨 تنبيه طارئ",
         },
-      },
         type: "section",
         text: {
           type: "mrkdwn",
           text: message,
         },
-      },
     ];
 
     await this.sendMessage(channel, "تنبيه طارئ", { blocks });

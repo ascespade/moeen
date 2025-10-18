@@ -86,7 +86,6 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
           "X-RateLimit-Remaining": "0",
           "X-RateLimit-Reset": new Date(current.resetTime).toISOString(),
         },
-      },
     );
 
   // Increment count
@@ -120,3 +119,4 @@ setInterval(
   5 * 60 * 1000,
 ); // Clean up every 5 minutes
 }}}}
+}

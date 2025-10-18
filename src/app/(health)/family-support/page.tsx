@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,31 +11,6 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-Heart,
-  Calendar,
-  Clock,
-  User,
-  Users,
-  MessageCircle,
-  FileText,
-  Video,
-  Plus,
-  Search,
-  Filter,
-  MoreVertical,
-  Edit,
-  Eye,
-  CheckCircle,
-  AlertCircle,
-  Phone,
-  Mail,
-  MapPin,
-  Star,
-  BookOpen,
-  Shield,
-  Lightbulb,
 } from "lucide-react";
 
 interface FamilyMember {
@@ -142,7 +119,6 @@ const FamilySupportPage: React.FC = () => {
             condition: "شلل دماغي",
             avatar: "/logo.png",
           },
-        },
           id: "2",
           patient_id: "pat-1",
           first_name: "عبدالله",
@@ -161,7 +137,6 @@ const FamilySupportPage: React.FC = () => {
             condition: "شلل دماغي",
             avatar: "/logo.png",
           },
-        },
       ];
 
       const mockSupportSessions: SupportSession[] = [
@@ -191,7 +166,6 @@ const FamilySupportPage: React.FC = () => {
             specialty: "الاستشارة النفسية للأسر",
             avatar: "/logo.png",
           },
-        },
       ];
 
       const mockResources: Resource[] = [
@@ -788,3 +762,4 @@ const FamilySupportPage: React.FC = () => {
 
 export default FamilySupportPage;
 }}}}
+}}}

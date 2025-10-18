@@ -1,9 +1,9 @@
+"use client";
+
 import React, {
 
 import logger from "@/lib/monitoring/logger";
 import { createClient } from "@/lib/supabase/client";
-
-"use client";
 
 createContext,
   useContext,

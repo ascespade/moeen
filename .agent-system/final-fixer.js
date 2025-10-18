@@ -15,10 +15,17 @@ console.log('✅ Backup created\n');
 
 // Get error files directly from lint
 let errorFiles = [];
+
+// Save lint output to file first
 try {
-  execSync('npm run lint', { stdio: 'pipe' });
+  execSync('npm run lint > tmp/lint-errors.txt 2>&1', { stdio: 'pipe' });
 } catch (err) {
-  const output = (err.stdout || '').toString();
+  // Lint always fails when there are errors, that's ok
+}
+
+// Read the file
+if (fs.existsSync('tmp/lint-errors.txt')) {
+  const output = fs.readFileSync('tmp/lint-errors.txt', 'utf8');
   const lines = output.split('\n');
   
   for (const line of lines) {

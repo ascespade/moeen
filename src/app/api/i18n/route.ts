@@ -35,7 +35,6 @@ function getFallbackMessages(locale: string, ns: string) {
         error: "خطأ",
         success: "نجح",
       },
-    },
     en: {
       homepage: {
         "hero.slide1.title": "Welcome to Mu3een",
@@ -63,7 +62,6 @@ function getFallbackMessages(locale: string, ns: string) {
         error: "Error",
         success: "Success",
       },
-    },
   };
 
   return NextResponse.json({
@@ -100,3 +98,4 @@ export async function GET(request: Request) {
     return getFallbackMessages(locale, ns);
   }
 }}}}}
+}}

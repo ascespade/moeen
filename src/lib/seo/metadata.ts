@@ -76,7 +76,6 @@ export function generateMetadata(config: PageMetadata): Metadata {
         index: !noIndex,
         follow: !noIndex,
       },
-    },
 
     // Additional
     alternates: {
@@ -85,7 +84,6 @@ export function generateMetadata(config: PageMetadata): Metadata {
         "ar-SA": baseUrl,
         "en-US": `${baseUrl}/en`,
       },
-    },
 
     // App links
     appleWebApp: {
@@ -276,4 +274,5 @@ const metadata = {
 };
 
 export default metadata;
+}}
 }}

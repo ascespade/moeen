@@ -75,7 +75,6 @@ export class MoyasarPaymentService {
           headers: {
             Authorization: `Basic ${Buffer.from(this.config.apiKey + ":").toString("base64")}`,
           },
-        },
       );
 
       const result = await response.json();
@@ -173,3 +172,4 @@ export class MoyasarPaymentService {
 
 export const moyasarService = new MoyasarPaymentService();
 }}}}}}}}}
+}

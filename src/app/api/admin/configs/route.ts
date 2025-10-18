@@ -39,7 +39,8 @@ export async function GET(request: NextRequest) {
       console.error("Error fetching configs:", error);
       // Return default configs if table doesn't exist
       const defaultConfigs = [
-          id: "1",
+  {
+    id: "1",
           key: "maintenance_mode",
           value: "false",
           description: "Enable maintenance mode",
@@ -285,3 +286,4 @@ export async function DELETE(request: NextRequest) {
     return ErrorHandler.getInstance().handle(error);
   }
 }}}}}}}}}}
+}

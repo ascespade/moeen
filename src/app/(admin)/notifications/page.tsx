@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -8,29 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-Bell,
-  BellRing,
-  CheckCircle,
-  AlertCircle,
-  Info,
-  Calendar,
-  Users,
-  MessageCircle,
-  Phone,
-  Mail,
-  Clock,
-  Filter,
-  Search,
-  MoreVertical,
-  Eye,
   Trash2,
-  Archive,
-  Star,
-  Settings,
-  Send,
-  Plus,
 } from "lucide-react";
 
 interface Notification {
@@ -120,7 +100,6 @@ const NotificationsPage: React.FC = () => {
             patient_id: "pat-1",
             appointment_id: "apt-123",
           },
-        },
           id: "2",
           title: "تذكير بجلسة علاج",
           message:
@@ -141,7 +120,6 @@ const NotificationsPage: React.FC = () => {
             patient_id: "pat-2",
             therapy_session_id: "ts-456",
           },
-        },
           id: "3",
           title: "تحديث حالة المريض",
           message: "تم تحديث حالة المريض نورا الزهراني إلى 'مكتمل العلاج'",
@@ -159,7 +137,6 @@ const NotificationsPage: React.FC = () => {
           metadata: {
             patient_id: "pat-3",
           },
-        },
           id: "4",
           title: "تنبيه نظام",
           message: "تم إجراء نسخة احتياطية من قاعدة البيانات بنجاح",
@@ -580,3 +557,4 @@ const NotificationsPage: React.FC = () => {
 };
 
 export default NotificationsPage;
+}}}

@@ -109,7 +109,6 @@ export async function POST(request: NextRequest) {
               autoRefreshToken: false,
               persistSession: false,
             },
-          },
         );
 
         try {
@@ -185,7 +184,6 @@ export async function POST(request: NextRequest) {
           autoRefreshToken: false,
           persistSession: false,
         },
-      },
     );
 
     try {
@@ -235,7 +233,6 @@ export async function POST(request: NextRequest) {
           expiresAt: session.expires_at,
           expiresIn: session.expires_in,
         },
-      },
     });
 
     // Set authentication cookie
@@ -256,3 +253,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }}}}}}}
+}}}

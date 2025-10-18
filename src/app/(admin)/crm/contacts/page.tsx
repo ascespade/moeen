@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,25 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-Users,
-  Phone,
-  Mail,
-  MapPin,
-  Calendar,
-  Plus,
-  Search,
-  Filter,
-  MoreVertical,
-  Edit,
-  Eye,
   Trash2,
-  UserPlus,
-  MessageCircle,
-  Star,
-  Clock,
-  Activity,
 } from "lucide-react";
 
 interface Contact {
@@ -119,7 +103,6 @@ const ContactsPage: React.FC = () => {
             linkedin: "ahmed-mohammed",
             twitter: "@ahmed_m",
           },
-        },
           id: "2",
           first_name: "فاطمة",
           last_name: "العلي",
@@ -630,4 +613,5 @@ const ContactsPage: React.FC = () => {
 };
 
 export default ContactsPage;
+}
 }

@@ -53,13 +53,11 @@ export async function GET(request: NextRequest) {
               totalComments: 0,
               totalShares: 0,
             },
-          },
           workflows: {
             totalWorkflows: 0,
             validWorkflows: 0,
             invalidWorkflows: 0,
             commonIssues: {},
-          },
           chatbot: {
             activeFlows: 0,
             totalNodes: 0,
@@ -67,7 +65,6 @@ export async function GET(request: NextRequest) {
             languages: [],
             categories: [],
           },
-        },
         healthcare: {
           patients: { total: 0, active: 0, newThisMonth: 0, growthRate: 0 },
           appointments: {
@@ -84,12 +81,10 @@ export async function GET(request: NextRequest) {
             growthRate: 0,
             averagePerPatient: 0,
           },
-        },
         crm: {
           leads: { total: 0, new: 0, qualified: 0, converted: 0 },
           deals: { total: 0, won: 0, lost: 0, pipeline: 0 },
           activities: { total: 0, calls: 0, meetings: 0, tasks: 0 },
-        },
         summary: {
           overallHealth: "unknown",
           activeServices: 0,

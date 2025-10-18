@@ -1,8 +1,8 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
-
-"use client";
 
 interface AuditLog {
   id: string;
@@ -28,7 +28,6 @@ const mockAuditLogs: AuditLog[] = [
     timestamp: "2024-01-15 10:30:25",
     status: "success",
   },
-  },
   {
     id: "2",
     user: "سارة أحمد",
@@ -40,7 +39,6 @@ const mockAuditLogs: AuditLog[] = [
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
     timestamp: "2024-01-15 10:25:15",
     status: "success",
-  },
   },
   {
     id: "3",
@@ -54,7 +52,6 @@ const mockAuditLogs: AuditLog[] = [
     timestamp: "2024-01-15 10:20:45",
     status: "success",
   },
-  },
   {
     id: "4",
     user: "نورا محمد",
@@ -66,7 +63,6 @@ const mockAuditLogs: AuditLog[] = [
     timestamp: "2024-01-15 10:15:30",
     status: "failed",
   },
-  },
   {
     id: "5",
     user: "محمد حسن",
@@ -77,7 +73,6 @@ const mockAuditLogs: AuditLog[] = [
     userAgent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
     timestamp: "2024-01-15 10:10:20",
     status: "success",
-  },
   },
 ];
 
@@ -348,3 +343,4 @@ export default function AuditLogsPage() {
       </main>
     </div>
   );
+}

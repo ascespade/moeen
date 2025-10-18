@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
@@ -5,24 +7,8 @@ import { Button } from "@/components/ui/Button";
 import { Switch } from "@/components/ui/Switch";
 import { useAccessibility } from "@/lib/accessibility";
 
-"use client";
-
-Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
 } from "@/components/ui/Select";
-  Settings,
-  Eye,
   Volume2,
-  Keyboard,
-  Mouse,
-  Palette,
-  Type,
-  Globe,
-  CheckCircle,
-  AlertCircle,
 } from "lucide-react";
 
 const AccessibilitySettings: React.FC = () => {

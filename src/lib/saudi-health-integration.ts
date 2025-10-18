@@ -441,7 +441,6 @@ export class SaudiHealthSystemIntegration {
           relationship: "زوجة",
           phone: "+966501234568",
         },
-      },
     };
 
   private async callInsuranceAPI(
@@ -479,3 +478,4 @@ export class SaudiHealthSystemIntegration {
 
 export const saudiHealthSystem = new SaudiHealthSystemIntegration();
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}

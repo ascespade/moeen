@@ -90,7 +90,6 @@ export async function GET(request: NextRequest) {
       metadata: {
         count: appointments?.length || 0,
         filters: { patientId, doctorId, date, status },
-      },
       duration_ms: Date.now() - startTime,
     });
 
@@ -252,3 +251,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }}}}}}}}}}}
+}

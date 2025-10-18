@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,27 +11,6 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-Activity,
-  Calendar,
-  Clock,
-  User,
-  Target,
-  TrendingUp,
-  FileText,
-  Video,
-  Plus,
-  Search,
-  Filter,
-  MoreVertical,
-  Edit,
-  Eye,
-  CheckCircle,
-  AlertCircle,
-  Heart,
-  Brain,
-  Zap,
 } from "lucide-react";
 
 interface TherapySession {
@@ -124,7 +105,6 @@ const TherapyPage: React.FC = () => {
             specialty: "العلاج الطبيعي للأطفال",
             avatar: "/logo.png",
           },
-        },
       ];
 
       const mockGoals: TherapyGoal[] = [
@@ -482,3 +462,4 @@ const TherapyPage: React.FC = () => {
 
 export default TherapyPage;
 }}}
+}

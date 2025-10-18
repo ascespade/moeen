@@ -86,7 +86,6 @@ export async function POST(request: NextRequest) {
           autoRefreshToken: false,
           persistSession: false,
         },
-      },
     );
 
     if (user) {
@@ -144,3 +143,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }}
+}

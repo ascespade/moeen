@@ -416,7 +416,6 @@ export class PrivateCenterIntegration {
           lat: 21.4858,
           lng: 39.1925,
         },
-      },
     };
 
   private getDefaultAccreditation(): PrivateCenterAccreditation {
@@ -500,3 +499,4 @@ export class PrivateCenterIntegration {
 
 export const privateCenterIntegration = new PrivateCenterIntegration();
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}

@@ -1,8 +1,8 @@
+"use client";
+
 import React, { forwardRef } from "react";
 
 import { cn } from "@/lib/cn";
-
-"use client";
 
 /**
  * Card Component - مكون البطاقة
