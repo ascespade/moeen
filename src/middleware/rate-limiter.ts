@@ -10,6 +10,7 @@ interface RateLimitConfig {
   maxRequests: number;
   message: string;
 
+}
 
 const rateLimitConfigs: Record<string, RateLimitConfig> = {
   "/api/auth/login": {

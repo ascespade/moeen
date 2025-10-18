@@ -1,6 +1,3 @@
-"use client";
-
-
 import { useT } from "@/components/providers/I18nProvider";
 
 ("use client");
@@ -20,3 +17,4 @@ export default function TermsPage() {
       </p>
     </div>
   );
+}

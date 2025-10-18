@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState, useEffect } from "react";
 
 import Image from "next/image";
@@ -52,6 +51,7 @@ interface PatientWithStats extends Patient {
     relationship: string;
   };
 
+}
 
 export default function PatientsPage() {
   const [patients, setPatients] = useState<PatientWithStats[]>([]);

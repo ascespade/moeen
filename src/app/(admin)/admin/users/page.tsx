@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useMemo, useState, useEffect } from "react";
 
 import EmptyState from "@/components/common/EmptyState";

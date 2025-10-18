@@ -1,6 +1,3 @@
-"use client";
-
-
 import * as React from "react";
 
 ("use client");
@@ -24,3 +21,4 @@ export function Tooltip({
   );
 
   export default Tooltip;
+}

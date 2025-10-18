@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 
 import Image from "next/image";
@@ -192,18 +191,15 @@ export default function SettingsPage() {
                         status: "connected",
                         description: "متصل",
                       },
-  {
-    name: "تيليجرام",
+                        name: "تيليجرام",
                         status: "disconnected",
                         description: "غير متصل",
                       },
-  {
-    name: "فيسبوك ماسنجر",
+                        name: "فيسبوك ماسنجر",
                         status: "error",
                         description: "خطأ في الاتصال",
                       },
-  {
-    name: "الموقع الإلكتروني",
+                        name: "الموقع الإلكتروني",
                         status: "connected",
                         description: "متصل",
                       },

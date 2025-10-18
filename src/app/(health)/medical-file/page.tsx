@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 
 import Image from "next/image";
@@ -44,10 +43,10 @@ interface MedicalRecord {
     therapist: string;
   }[];
 
+}
 
 const mockRecords: MedicalRecord[] = [
   {
-
     id: "1",
     patientName: "أحمد محمد العتيبي",
     patientId: "P001",

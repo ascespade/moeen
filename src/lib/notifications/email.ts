@@ -11,6 +11,7 @@ interface EmailData {
   data: Record<string, any>;
   language?: "ar" | "en";
 
+}
 
 export class EmailNotificationService {
   private templates: Map<string, EmailTemplate> = new Map();
@@ -164,6 +165,7 @@ export class EmailNotificationService {
         success: false,
         error: error instanceof Error ? error.message : "Email sending failed",
       };
+    }
 
   async sendAppointmentConfirmation(data: {
     patientEmail: string;
@@ -208,6 +210,7 @@ export class EmailNotificationService {
       data,
       language: "ar",
     });
+  }
 
 export const emailService = new EmailNotificationService();
 }}}}}}}}}}

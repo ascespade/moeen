@@ -1,6 +1,5 @@
 "use client";
 
-
 import React from "react";
 
 import { useTheme } from "@/core/theme";
@@ -29,6 +28,7 @@ interface BarChartProps {
   showTooltip?: boolean;
   horizontal?: boolean;
 
+}
 
 export const BarChart: React.FC<BarChartProps> = ({
   data,

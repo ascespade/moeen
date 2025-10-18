@@ -12,6 +12,7 @@ export class ApiError extends Error {
   ) {
     super(message);
     this.name = "ApiError";
+  }
 
 export const api = {
   async request<T = any>(
@@ -177,6 +178,7 @@ export const withRetry = async <T>(
       await new Promise((resolve) =>
         setTimeout(resolve, delay * Math.pow(2, i)),
       );
+    }
 
   throw lastError!;
 };

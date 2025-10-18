@@ -45,6 +45,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
     };
   } catch (error) {
     return { user: null, error: "Authorization failed" };
+  }
 
 export function requireRole(
   allowedRoles: User["role"][],

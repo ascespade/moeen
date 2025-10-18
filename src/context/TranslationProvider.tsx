@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, {
 
 import logger from "@/lib/monitoring/logger";
@@ -19,6 +18,7 @@ interface TranslationContextType {
   setLocale: (locale: string) => void;
   isLoading: boolean;
 
+}
 
 const TranslationContext = createContext<TranslationContextType | undefined>(
   undefined,

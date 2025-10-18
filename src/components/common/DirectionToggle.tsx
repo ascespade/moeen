@@ -1,6 +1,3 @@
-"use client";
-
-
 import { useEffect, useState } from "react";
 
 ("use client");
@@ -33,3 +30,4 @@ export default function DirectionToggle() {
       {dir === "rtl" ? "RTL" : "LTR"}
     </button>
   );
+}

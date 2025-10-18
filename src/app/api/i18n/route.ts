@@ -68,7 +68,6 @@ function getFallbackMessages(locale: string, ns: string) {
     locale,
     ns,
     messages: fallbackMessages[locale]?.[ns] || {},
-  {
     source: "fallback",
   });
 

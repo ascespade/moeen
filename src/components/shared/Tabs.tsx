@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 
 interface Tab {
@@ -14,6 +13,7 @@ interface TabsProps {
   defaultTab?: string;
   className?: string;
 
+}
 
 export default function Tabs({ tabs, defaultTab, className = "" }: TabsProps) {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);

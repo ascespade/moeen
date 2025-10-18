@@ -18,6 +18,7 @@ interface SecurityConfig {
   allowedHeaders: string[];
   maxAge: number;
 
+}
 
 const defaultSecurityConfig: SecurityConfig = {
   enableCORS: true,
@@ -65,6 +66,7 @@ export class SecurityMiddleware {
       const corsResponse = this.handleCORS(req, response);
       if (corsResponse) {
         return corsResponse;
+      }
 
     // Handle preflight requests
     if (req.method === "OPTIONS") {
@@ -203,6 +205,7 @@ export class SecurityMiddleware {
           { error: "CORS policy violation: Invalid headers" },
           { status: 400 },
         );
+      }
 
     const response = NextResponse.json({}, { status: 200 });
 
@@ -278,6 +281,7 @@ export class SecurityMiddleware {
     // Add request ID for tracking
     const requestId = `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     response.headers.set("X-Request-ID", requestId);
+  }
 
 export function createSecurityMiddleware(
   config: Partial<SecurityConfig> = {},

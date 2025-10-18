@@ -67,8 +67,7 @@ export const PAYMENT_CONFIG = {
     PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_MOYASAR_PUBLISHABLE_KEY || "",
     WEBHOOK_SECRET: process.env.MOYASAR_WEBHOOK_SECRET || "",
   },
-  {
-    DEFAULT_CURRENCY: "SAR",
+  DEFAULT_CURRENCY: "SAR",
   MIN_AMOUNT: 1,
   MAX_AMOUNT: 100000,
 } as const;
@@ -177,7 +176,7 @@ export const APP_CONFIG = {
 
 // Default System Configuration
 export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [ {
-
+    {
     id: "app-name",
     key: "app_name",
     value: APP_CONFIG.NAME,

@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 
 import Image from "next/image";
@@ -38,10 +37,10 @@ interface Approval {
   outstandingAmount?: number;
   attachments: string[];
   notes?: string;
+}
 
 const mockApprovals: Approval[] = [
   {
-
     id: "1",
     patientName: "أحمد محمد العتيبي",
     patientId: "P001",
@@ -237,6 +236,7 @@ export default function ApprovalsPage() {
           <span className="text-sm font-medium">نشط</span>
         </div>
       );
+    }
 
     const getOutstandingBalance = (approval: Approval) => {
       if (approval.hasOutstandingBalance) {
@@ -254,6 +254,7 @@ export default function ApprovalsPage() {
             <span className="text-sm font-medium">لا يوجد رصيد مستحق</span>
           </div>
         );
+      }
 
       const getCostBreakdown = (approval: Approval) => {
         if (!approval.estimatedCost) return null;
@@ -745,3 +746,4 @@ export default function ApprovalsPage() {
       );
     };
   };
+}

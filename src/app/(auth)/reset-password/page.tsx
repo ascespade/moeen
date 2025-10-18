@@ -1,6 +1,3 @@
-"use client";
-
-
 import { useState } from "react";
 
 import Link from "next/link";
@@ -50,6 +47,7 @@ export default function ResetPasswordPage() {
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
+      }
 
       const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -236,3 +234,4 @@ export default function ResetPasswordPage() {
       };
     }
   };
+}

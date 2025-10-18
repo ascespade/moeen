@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -34,6 +33,7 @@ interface ApiKeyConfig {
   placeholder: string;
   validation_url?: string;
 
+}
 
 const APIKeysSettingsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

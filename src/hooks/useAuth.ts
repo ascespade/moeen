@@ -26,6 +26,7 @@ interface AuthActions {
     rememberMe?: boolean,
   ) => Promise<{ success: boolean }>;
 
+}
 
 export const useAuth = (): AuthState & AuthActions => {
   const [user, setUserState] = useState<User | null>(null);

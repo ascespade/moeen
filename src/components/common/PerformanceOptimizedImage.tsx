@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState, useRef, useEffect } from "react";
 
 interface PerformanceOptimizedImageProps {
@@ -12,6 +11,7 @@ interface PerformanceOptimizedImageProps {
   placeholder?: string;
   priority?: boolean;
 
+}
 
 export function PerformanceOptimizedImage({
   src,

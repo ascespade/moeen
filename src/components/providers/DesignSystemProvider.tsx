@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, {
 
 createContext,
@@ -93,6 +92,7 @@ interface DesignSystemProviderProps {
   children: ReactNode;
   initialConfig?: Partial<DesignSystemConfig>;
 
+}
 
 export function DesignSystemProvider({
   children,

@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useEffect, useRef } from "react";
 
 import clsx from "clsx";

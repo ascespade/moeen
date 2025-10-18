@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, { Component, ErrorInfo, ReactNode } from "react";
 
 import { AlertTriangle, RefreshCw, Home } from "lucide-react";
@@ -20,6 +19,7 @@ interface State {
   error?: Error;
   errorInfo?: ErrorInfo;
 
+}
 
 export default class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
@@ -89,12 +89,14 @@ export default class ErrorBoundary extends Component<Props, State> {
       );
 
     return this.props.children;
+  }
 
 interface ErrorFallbackProps {
   error?: Error;
   onRetry: () => void;
   onGoHome: () => void;
 
+}
 
 function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
   const { t } = useT();

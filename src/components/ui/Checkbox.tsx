@@ -1,6 +1,5 @@
 "use client";
 
-
 import React from "react";
 
 import { cn } from "@/lib/utils";
@@ -49,6 +48,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 
 Checkbox.displayName = "Checkbox";
 
+}
 
 
 export { Checkbox };

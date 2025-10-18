@@ -1,12 +1,13 @@
 "use client";
 
-
 import { useState } from "react";
 
 import { useT } from "@/hooks/useT";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "lucide-react";
+import { Badge } from "@/components/ui/Badge";
+
+} from "lucide-react";
 
 interface ActivationStep {
   id: string;
@@ -20,6 +21,7 @@ interface ActivationFlowProps {
   patientId: string;
   onActivationComplete?: () => void;
 
+}
 
 export default function ActivationFlow({
   patientId,

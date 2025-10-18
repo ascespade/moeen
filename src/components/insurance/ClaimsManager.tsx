@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState, useEffect, useCallback } from "react";
 
 import logger from '@/lib/monitoring/logger';
@@ -10,7 +9,9 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { Select } from "lucide-react";
+import { Select } from "@/components/ui/Select";
+
+} from "lucide-react";
 
 interface Claim {
   id: string;
@@ -26,6 +27,7 @@ interface ClaimsManagerProps {
   patientId?: string;
   onClaimUpdate?: () => void;
 
+}
 
 export default function ClaimsManager({
   patientId,

@@ -134,6 +134,7 @@ export class DatabaseManager {
       this.isConnected = true;
     } catch (error) {
       this.isConnected = false;
+    }
 
   // Patient Management
   async createPatient(patientData: {
@@ -339,6 +340,7 @@ export class DatabaseManager {
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
       return { status: "unhealthy", error: message };
+    }
 
   // Close connection
   async close() {

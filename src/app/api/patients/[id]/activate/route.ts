@@ -76,6 +76,7 @@ export async function POST(
       { error: "Internal server error" },
       { status: 500 },
     );
+  }
 
 export async function GET(
   request: NextRequest,

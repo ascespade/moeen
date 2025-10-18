@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
@@ -28,6 +27,7 @@ interface Slot {
   endTime: string;
   duration: number;
 
+}
 
 export default function BookSessionPage() {
   const router = useRouter();

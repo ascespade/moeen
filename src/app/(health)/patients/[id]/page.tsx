@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 
 import Image from "next/image";
@@ -39,6 +38,7 @@ interface Document {
   uploadDate: string;
   size: string;
 
+}
 
 const mockPatient: Patient = {
   id: "1",
@@ -58,7 +58,6 @@ const mockPatient: Patient = {
 
 const mockSessions: Session[] = [
   {
-
     id: "1",
     date: "2024-01-15",
     doctor: "د. سارة أحمد",
@@ -88,7 +87,6 @@ const mockSessions: Session[] = [
 
 const mockDocuments: Document[] = [
   {
-
     id: "1",
     name: "تقرير الأشعة السينية",
     type: "PDF",

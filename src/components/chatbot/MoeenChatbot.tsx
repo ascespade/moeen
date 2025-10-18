@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState, useEffect, useRef } from "react";
 
 import { createClient } from "@/lib/supabase/client";
@@ -15,6 +14,7 @@ interface Message {
 interface MoeenChatbotProps {
   position?: "bottom-right" | "bottom-left";
 
+}
 
 export default function MoeenChatbot({
   position = "bottom-right",

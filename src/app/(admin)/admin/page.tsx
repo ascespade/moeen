@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, { useState, useEffect } from "react";
 
 import { Badge } from "@/components/ui/Badge";
@@ -44,6 +43,7 @@ interface User {
   lastLogin: string;
   createdAt: string;
   permissions: string[];
+}
 
 interface SystemConfig {
   id: string;
@@ -53,6 +53,7 @@ interface SystemConfig {
   category: string;
   isSecret: boolean;
 
+}
 
 interface SecurityEvent {
   id: string;
@@ -63,6 +64,7 @@ interface SecurityEvent {
   userAgent: string;
   success: boolean;
 
+}
 
 export default function AdminPage() {
   const [users, setUsers] = useState<User[]>([]);

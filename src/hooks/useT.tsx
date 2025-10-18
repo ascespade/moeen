@@ -20,6 +20,7 @@ interface TranslationContextType {
   t: (key: string) => string;
   isLoading: boolean;
 
+}
 
 const TranslationContext = createContext<TranslationContextType | undefined>(
   undefined,

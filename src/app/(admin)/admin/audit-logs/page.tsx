@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 
 import Image from "next/image";
@@ -15,10 +14,10 @@ interface AuditLog {
   userAgent: string;
   timestamp: string;
   status: "success" | "failed" | "warning";
+}
 
 const mockAuditLogs: AuditLog[] = [
   {
-
     id: "1",
     user: "أحمد العتيبي",
     action: "تسجيل دخول",
@@ -344,3 +343,4 @@ export default function AuditLogsPage() {
       </main>
     </div>
   );
+}

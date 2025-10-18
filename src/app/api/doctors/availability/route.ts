@@ -8,6 +8,7 @@ interface TimeSlot {
   timeString: string;
   available: boolean;
 
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -131,14 +132,15 @@ export async function GET(request: NextRequest) {
 
           if (!isBreakTime && !isBooked) {
             slots.push({
-
+              {
               time: slotTime,
               timeString,
               available: true,
             });
+          }
 
         return {
-
+          {
           doctorId: doctor.id,
           speciality: doctor.speciality,
           email: doctor.users.email,

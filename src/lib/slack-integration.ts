@@ -82,6 +82,7 @@ export class SlackIntegration {
       return true;
     } catch (error) {
       return false;
+    }
 
   // Load channels
   private async loadChannels(): Promise<void> {
@@ -164,6 +165,7 @@ export class SlackIntegration {
       }
     } catch (error) {
       return null;
+    }
 
   // Send appointment notification
   async sendAppointmentNotification(
@@ -243,8 +245,7 @@ export class SlackIntegration {
             type: "mrkdwn",
             text: `*رسالة من المريض عبر ${channel === "whatsapp" ? "واتساب" : "الموقع"}*\n\n${message}`,
           },
-  {
-    type: "context",
+          type: "context",
           elements: [
         },
               {
@@ -301,54 +302,44 @@ export class SlackIntegration {
           type: "plain_text",
           text: `${statusEmoji[status]} ${statusText[status]}`,
         },
-  {
-    type: "section",
+        type: "section",
         fields: [
             type: "mrkdwn",
             text: `*المريض:*\n${patient.first_name} ${patient.last_name}`,
           },
-  {
-    type: "mrkdwn",
+            type: "mrkdwn",
             text: `*الطبيب:*\nد. ${doctor.first_name} ${doctor.last_name}`,
           },
-  {
-    type: "mrkdwn",
+            type: "mrkdwn",
             text: `*التاريخ:*\n${new Date(appointment.appointment_date).toLocaleDateString("ar-SA")}`,
           },
-  {
-    type: "mrkdwn",
+            type: "mrkdwn",
             text: `*الوقت:*\n${appointment.appointment_time}`,
           },
-  {
-    type: "mrkdwn",
+            type: "mrkdwn",
             text: `*التخصص:*\n${doctor.specialty}`,
           },
-  {
-    type: "mrkdwn",
+            type: "mrkdwn",
             text: `*الحالة:*\n${appointment.status}`,
           },
         ],
       },
-  {
-    type: "actions",
+        type: "actions",
         elements: [
             type: "button",
             text: {
               type: "plain_text",
               text: "عرض التفاصيل",
             },
-  {
-    action_id: "view_appointment",
+            action_id: "view_appointment",
             value: appointment.id,
           },
-  {
-    type: "button",
+            type: "button",
             text: {
               type: "plain_text",
               text: "رد على المريض",
             },
-  {
-    action_id: "reply_to_patient",
+            action_id: "reply_to_patient",
             value: `${appointment.id}_${patient.id}`,
           },
         ],
@@ -384,6 +375,7 @@ export class SlackIntegration {
       }
     } catch (error) {
       return null;
+    }
 
   // Handle Slack events
   async handleSlackEvent(event: any): Promise<void> {
@@ -414,6 +406,7 @@ export class SlackIntegration {
     if (isInThread) {
       // This is a response in a thread - likely a doctor responding
       await this.handleDoctorResponse(event);
+    }
 
   // Handle app mentions
   private async handleAppMention(event: any): Promise<void> {
@@ -430,6 +423,7 @@ export class SlackIntegration {
       case "reply_to_patient":
         await this.handleReplyToPatient(action.value);
         break;
+    }
 
   // Handle doctor response
   private async handleDoctorResponse(event: any): Promise<void> {
@@ -491,8 +485,7 @@ export class SlackIntegration {
           type: "plain_text",
           text: "🚨 تنبيه طارئ",
         },
-  {
-    type: "section",
+        type: "section",
         text: {
           type: "mrkdwn",
           text: message,

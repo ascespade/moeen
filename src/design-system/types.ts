@@ -15,3 +15,4 @@ export interface DesignSystemConfig {
   breakpoint: "sm" | "md" | "lg" | "xl" | "2xl";
   fontSize: "sm" | "base" | "lg" | "xl";
   spacing: "compact" | "normal" | "relaxed";
+}

@@ -13,3 +13,4 @@ export default function ChannelsAdminPage() {
       </div>
     </main>
   );
+}

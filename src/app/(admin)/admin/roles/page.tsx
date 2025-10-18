@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 
 import Image from "next/image";
@@ -12,10 +11,10 @@ interface Role {
   permissions: string[];
   userCount: number;
   createdAt: string;
+}
 
 const mockRoles: Role[] = [
   {
-
     id: "1",
     name: "مدير النظام",
     description: "صلاحيات كاملة لإدارة النظام",
@@ -48,6 +47,7 @@ const mockRoles: Role[] = [
     createdAt: "2024-01-01",
   },
 ];
+}
 
 const allPermissions = [
   { id: "users", name: "إدارة المستخدمين" },

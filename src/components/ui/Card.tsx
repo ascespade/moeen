@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, { forwardRef } from "react";
 
 import { cn } from "@/lib/cn";
@@ -128,6 +127,7 @@ CardFooter.displayName = "CardFooter";
 export const CardTitle = CardHeader;
 export const CardDescription = CardContent;
 
+}
 
 
 export { Card, CardHeader, CardContent, CardFooter };

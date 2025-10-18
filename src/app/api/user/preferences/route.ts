@@ -43,6 +43,7 @@ export async function GET() {
       { error: "Internal server error" },
       { status: 500 },
     );
+  }
 
 export async function POST(request: NextRequest) {
   try {
@@ -98,8 +99,7 @@ export async function POST(request: NextRequest) {
         [key]: value,
         updated_at: new Date().toISOString(),
       },
-  {
-    onConflict: "user_id",
+        onConflict: "user_id",
       },
     );
 

@@ -7,6 +7,7 @@ interface LogLevel {
   INFO: "info";
   DEBUG: "debug";
 
+}
 
 const LOG_LEVELS: LogLevel = {
   ERROR: "error",
@@ -49,6 +50,7 @@ class Logger {
   private log(level: string, message: string, context?: any) {
     if (!this.shouldLog(level)) return;
 
+}
 
     const logEntry = this.formatMessage(level, message, context);
 
@@ -70,6 +72,7 @@ class Logger {
     // Send to external service in production
     if (this.isProduction && level === "error") {
       this.sendToExternalService(logEntry);
+    }
 
   private async sendToExternalService(logEntry: LogEntry) {
     try {
@@ -81,6 +84,7 @@ class Logger {
     } catch (error) {
       // Fallback to console if external service fails
       logger.error("Failed to send log to external service:", error);
+    }
 
   error(message: string, context?: any) {
     this.log(LOG_LEVELS.ERROR, message, context);
@@ -93,6 +97,7 @@ class Logger {
 
   debug(message: string, context?: any) {
     this.log(LOG_LEVELS.DEBUG, message, context);
+  }
 
 export const logger = new Logger();
 }}}}}}}}}}

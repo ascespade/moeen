@@ -21,6 +21,7 @@ function getClientIP(request: NextRequest): string {
     );
   } catch {
     return "127.0.0.1";
+  }
 
 const forgotPasswordSchema = z.object({
   email: z.string().email("البريد الإلكتروني غير صحيح"),
@@ -126,6 +127,7 @@ export async function POST(request: NextRequest) {
         });
       } catch (auditError) {
         console.error("Audit log error (non-critical):", auditError);
+      }
 
     return NextResponse.json({
       success: true,

@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useEffect, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
@@ -14,6 +13,7 @@ interface Invoice {
   payment_method: string;
   status: string;
   created_at: string;
+}
 
 export default function InvoicesPage() {
   const [payments, setPayments] = useState<any[]>([]);

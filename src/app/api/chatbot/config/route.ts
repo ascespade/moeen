@@ -46,6 +46,7 @@ export async function GET(request: NextRequest) {
       { error: "Internal server error" },
       { status: 500 },
     );
+  }
 
 // POST /api/chatbot/config - حفظ إعدادات الشات بوت
 export async function POST(request: NextRequest) {

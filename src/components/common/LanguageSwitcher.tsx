@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useEffect, useState, useCallback } from "react";
 
 import { Languages } from "lucide-react";
@@ -14,6 +13,7 @@ interface LanguageSwitcherProps {
   size?: "sm" | "md" | "lg";
   variant?: "button" | "dropdown";
 
+}
 
 export default function LanguageSwitcher({
   className = "",

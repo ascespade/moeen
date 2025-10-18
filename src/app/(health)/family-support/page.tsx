@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -10,7 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { useAuth } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+
+} from "lucide-react";
 
 interface FamilyMember {
   id: string;
@@ -72,6 +73,7 @@ interface Resource {
   tags: string[];
   created_at: string;
 
+}
 
 const FamilySupportPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -99,7 +101,6 @@ const FamilySupportPage: React.FC = () => {
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockFamilyMembers: FamilyMember[] = [
   {
-
     id: "1",
           patient_id: "pat-1",
           first_name: "فاطمة",
@@ -143,7 +144,6 @@ const FamilySupportPage: React.FC = () => {
 
       const mockSupportSessions: SupportSession[] = [
   {
-
     id: "1",
           family_member_id: "1",
           counselor_id: "coun-1",
@@ -173,7 +173,6 @@ const FamilySupportPage: React.FC = () => {
 
       const mockResources: Resource[] = [
   {
-
     id: "1",
           title: "دليل دعم الأسر",
           description: "دليل شامل لدعم أسر ذوي الاحتياجات الخاصة",

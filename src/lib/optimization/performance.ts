@@ -84,12 +84,14 @@ class PerformanceMonitor {
         memoryUsage,
         metadata,
       });
+    }
 
   getMetrics(): PerformanceMetrics[] {
     return Array.from(this.metrics.values());
 
   clearMetrics(): void {
     this.metrics.clear();
+  }
 
 // Singleton instance
 export const performanceMonitor = new PerformanceMonitor();
@@ -143,6 +145,7 @@ export class QueryOptimizer {
 
   static addIndexHints(tableName: string, columns: string[]): string {
     return `/*+ USE_INDEX(${tableName}, ${columns.join(",")}) */`;
+  }
 
 // Memory optimization
 export class MemoryOptimizer {
@@ -150,6 +153,7 @@ export class MemoryOptimizer {
     if (global.gc) {
       global.gc();
       logger.debug("Garbage collection triggered");
+    }
 
   static getMemoryUsage(): NodeJS.MemoryUsage {
     return process.memoryUsage();
@@ -161,6 +165,7 @@ export class MemoryOptimizer {
 
     // Consider memory pressure if heap usage is over 80%
     return heapUsedMB / heapTotalMB > 0.8;
+  }
 
 // Caching optimization
 export class CacheOptimizer {
@@ -184,6 +189,7 @@ export class CacheOptimizer {
   static resetStats(): void {
     this.cacheHits = 0;
     this.cacheMisses = 0;
+  }
 
 // Bundle optimization
 export class BundleOptimizer {
@@ -202,6 +208,7 @@ export class BundleOptimizer {
         "Optimize images and assets",
       ],
     };
+  }
 
 // API response optimization
 export class ResponseOptimizer {

@@ -581,6 +581,7 @@ export class RealSupabaseManager {
         error: err.message,
         timestamp: new Date().toISOString(),
       };
+    }
 
   // Audit Logging
   async logAudit(auditData: {
@@ -602,6 +603,7 @@ export class RealSupabaseManager {
     if (error) {
       return null;
     return data;
+  }
 
 export const realDB = new RealSupabaseManager();
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

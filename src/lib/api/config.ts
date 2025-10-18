@@ -65,3 +65,4 @@ export const isAIConfigured = (cfg: ApiConfig = getApiConfig()) =>
   cfg.ai.provider === "gemini"
     ? Boolean(cfg.ai.geminiApiKey)
     : Boolean(cfg.ai.openaiApiKey);
+}
