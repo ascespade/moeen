@@ -32,7 +32,6 @@ interface PerformanceMetric {
   status: "good" | "warning" | "critical";
   trend: "up" | "down" | "stable";
   threshold: number;
-}
 
 interface SystemHealth {
   cpu_usage: number;
@@ -42,7 +41,6 @@ interface SystemHealth {
   database_connections: number;
   response_time: number;
   uptime: string;
-}
 
 const PerformancePage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -55,7 +53,6 @@ const PerformancePage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadPerformanceData();
   }, [isAuthenticated, router]);
 

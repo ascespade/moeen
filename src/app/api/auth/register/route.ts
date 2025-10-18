@@ -22,7 +22,6 @@ function getClientIP(request: NextRequest): string {
   } catch {
     return "127.0.0.1";
   }
-}
 
 const registerSchema = z
   .object({
@@ -61,7 +60,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 },
       );
-    }
 
     const { name, email, password } = validation.data;
 
@@ -84,7 +82,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 409 },
       );
-    }
 
     // Create admin client for auth operations
     const supabaseAdmin = createServiceClient(
@@ -120,7 +117,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 500 },
       );
-    }
 
     if (!authData.user) {
       return NextResponse.json(
@@ -129,7 +125,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 500 },
       );
-    }
 
     // Create user profile in users table
     const { data: userProfile, error: profileError } = await supabaseAdmin
@@ -174,7 +169,6 @@ export async function POST(request: NextRequest) {
           "Failed to delete auth user after profile creation failure:",
           deleteError,
         );
-      }
 
       return NextResponse.json(
           success: false,
@@ -186,7 +180,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 500 },
       );
-    }
 
     // Create audit log (optional, don't fail if this fails)
     try {
@@ -213,7 +206,6 @@ export async function POST(request: NextRequest) {
       });
     } catch (auditError) {
       console.error("Audit log error (non-critical):", auditError);
-    }
 
     return NextResponse.json(
         success: true,
@@ -239,4 +231,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

@@ -27,7 +27,6 @@ export interface DesignSystemConfig {
   reducedMotion: boolean;
   highContrast: boolean;
   focusVisible: boolean;
-}
 
 export interface DesignSystemContextValue {
   // Current values
@@ -67,7 +66,6 @@ export interface DesignSystemContextValue {
 
   // Reset function
   resetToDefaults: () => void;
-}
 
 // Create context
 const DesignSystemContext = createContext<DesignSystemContextValue | undefined>(
@@ -93,7 +91,6 @@ const defaultConfig: DesignSystemConfig = {
 interface DesignSystemProviderProps {
   children: ReactNode;
   initialConfig?: Partial<DesignSystemConfig>;
-}
 
 export function DesignSystemProvider({
   children,
@@ -293,7 +290,6 @@ export function DesignSystemProvider({
       {children}
     </DesignSystemContext.Provider>
   );
-}
 
 // Hook to use design system context
 export function useDesignSystem(): DesignSystemContextValue {
@@ -302,6 +298,4 @@ export function useDesignSystem(): DesignSystemContextValue {
     throw new Error(
       "useDesignSystem must be used within a DesignSystemProvider",
     );
-  }
   return context;
-}

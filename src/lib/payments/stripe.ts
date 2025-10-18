@@ -12,14 +12,12 @@ export interface PaymentIntentData {
   patientId: string;
   appointmentId: string;
   metadata?: Record<string, string>;
-}
 
 export interface PaymentResult {
   success: boolean;
   paymentIntentId?: string;
   clientSecret?: string;
   error?: string;
-}
 
 export class StripePaymentService {
   async createPaymentIntent(data: PaymentIntentData): Promise<PaymentResult> {
@@ -28,7 +26,6 @@ export class StripePaymentService {
         success: false,
         error: "Stripe not configured",
       };
-    }
 
     try {
       const paymentIntent = await stripe.paymentIntents.create({
@@ -56,7 +53,6 @@ export class StripePaymentService {
           error instanceof Error ? error.message : "Payment creation failed",
       };
     }
-  }
 
   async confirmPayment(paymentIntentId: string): Promise<PaymentResult> {
     if (!stripe) {
@@ -64,7 +60,6 @@ export class StripePaymentService {
         success: false,
         error: "Stripe not configured",
       };
-    }
 
     try {
       const paymentIntent =
@@ -75,7 +70,6 @@ export class StripePaymentService {
           success: true,
           paymentIntentId: paymentIntent.id,
         };
-      }
 
       return {
         success: false,
@@ -90,7 +84,6 @@ export class StripePaymentService {
             : "Payment confirmation failed",
       };
     }
-  }
 
   async refundPayment(
     paymentIntentId: string,
@@ -101,7 +94,6 @@ export class StripePaymentService {
         success: false,
         error: "Stripe not configured",
       };
-    }
 
     try {
       const refund = await stripe.refunds.create({
@@ -119,7 +111,6 @@ export class StripePaymentService {
         error: error instanceof Error ? error.message : "Refund failed",
       };
     }
-  }
 
   async handleWebhook(
     payload: string,
@@ -130,7 +121,6 @@ export class StripePaymentService {
         success: false,
         error: "Stripe not configured",
       };
-    }
 
     try {
       const event = stripe.webhooks.constructEvent(
@@ -168,6 +158,5 @@ export class StripePaymentService {
       };
     }
   }
-}
 
 export const stripeService = new StripePaymentService();

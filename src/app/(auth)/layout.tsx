@@ -13,4 +13,3 @@ export default function AuthLayout({
   return (
     <div className="min-h-screen bg-surface dark:bg-gray-900">{children}</div>
   );
-}

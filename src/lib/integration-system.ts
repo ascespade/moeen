@@ -17,7 +17,6 @@ export interface PatientRecord {
   familyMembers: FamilyMember[];
   lastVisit: Date;
   nextAppointment?: Date;
-}
 
 export interface Session {
   id: string;
@@ -27,7 +26,6 @@ export interface Session {
   notes: string;
   exercises: Exercise[];
   completed: boolean;
-}
 
 export interface Exercise {
   id: string;
@@ -37,7 +35,6 @@ export interface Exercise {
   duration: string;
   instructions: string;
   completed: boolean;
-}
 
 export interface FamilyMember {
   id: string;
@@ -46,7 +43,6 @@ export interface FamilyMember {
   phone: string;
   email?: string;
   notifications: boolean;
-}
 
 export interface Doctor {
   id: string;
@@ -55,7 +51,6 @@ export interface Doctor {
   schedule: ScheduleSlot[];
   patients: string[];
   templates: MessageTemplate[];
-}
 
 export interface ScheduleSlot {
   date: Date;
@@ -64,7 +59,6 @@ export interface ScheduleSlot {
   available: boolean;
   patientId?: string;
   type: "assessment" | "treatment" | "follow_up" | "break";
-}
 
 export interface MessageTemplate {
   id: string;
@@ -72,7 +66,6 @@ export interface MessageTemplate {
   type: "motivational" | "reminder" | "educational" | "follow_up";
   content: string;
   triggerConditions: string[];
-}
 
 export class EHRSystem {
   private patients: Map<string, PatientRecord> = new Map();
@@ -88,11 +81,9 @@ export class EHRSystem {
     };
     this.patients.set(id, patient);
     return id;
-  }
 
   getPatient(patientId: string): PatientRecord | undefined {
     return this.patients.get(patientId);
-  }
 
   updatePatient(patientId: string, updates: Partial<PatientRecord>): boolean {
     const patient = this.patients.get(patientId);
@@ -101,7 +92,6 @@ export class EHRSystem {
     const updatedPatient = { ...patient, ...updates };
     this.patients.set(patientId, updatedPatient);
     return true;
-  }
 
   addSession(patientId: string, session: Session): boolean {
     const patient = this.patients.get(patientId);
@@ -111,7 +101,6 @@ export class EHRSystem {
     patient.lastVisit = session.date;
     this.patients.set(patientId, patient);
     return true;
-  }
 
   // Doctor Management
   createDoctor(doctorData: Omit<Doctor, "id">): string {
@@ -122,11 +111,9 @@ export class EHRSystem {
     };
     this.doctors.set(id, doctor);
     return id;
-  }
 
   getDoctor(doctorId: string): Doctor | undefined {
     return this.doctors.get(doctorId);
-  }
 
   updateDoctorSchedule(doctorId: string, schedule: ScheduleSlot[]): boolean {
     const doctor = this.doctors.get(doctorId);
@@ -135,7 +122,6 @@ export class EHRSystem {
     doctor.schedule = schedule;
     this.doctors.set(doctorId, doctor);
     return true;
-  }
 
   // Appointment Management
   bookAppointment(
@@ -164,10 +150,8 @@ export class EHRSystem {
     if (patient) {
       patient.nextAppointment = date;
       this.patients.set(patientId, patient);
-    }
 
     return true;
-  }
 
   getAvailableSlots(doctorId: string, date: Date): ScheduleSlot[] {
     const doctor = this.doctors.get(doctorId);
@@ -177,7 +161,6 @@ export class EHRSystem {
       (slot) =>
         slot.date.toDateString() === date.toDateString() && slot.available,
     );
-  }
 
   // Family Support
   addFamilyMember(patientId: string, familyMember: FamilyMember): boolean {
@@ -187,12 +170,10 @@ export class EHRSystem {
     patient.familyMembers.push(familyMember);
     this.patients.set(patientId, patient);
     return true;
-  }
 
   getFamilyMembers(patientId: string): FamilyMember[] {
     const patient = this.patients.get(patientId);
     return patient?.familyMembers || [];
-  }
 
   // Exercise and Progress Tracking
   addExercise(patientId: string, exercise: Exercise): boolean {
@@ -207,9 +188,7 @@ export class EHRSystem {
       lastSession.exercises.push(exercise);
       this.patients.set(patientId, patient);
       return true;
-    }
     return false;
-  }
 
   markExerciseComplete(patientId: string, exerciseId: string): boolean {
     const patient = this.patients.get(patientId);
@@ -226,15 +205,12 @@ export class EHRSystem {
         this.patients.set(patientId, patient);
         return true;
       }
-    }
     return false;
-  }
 
   // Generate unique ID
   private generateId(): string {
     return Math.random().toString(36).substr(2, 9);
   }
-}
 
 export class CalendarAPI {
   private schedules: Map<string, ScheduleSlot[]> = new Map();
@@ -242,7 +218,6 @@ export class CalendarAPI {
   // Schedule Management
   createSchedule(doctorId: string, schedule: ScheduleSlot[]): void {
     this.schedules.set(doctorId, schedule);
-  }
 
   getSchedule(doctorId: string, date: Date): ScheduleSlot[] {
     const schedule = this.schedules.get(doctorId);
@@ -251,14 +226,12 @@ export class CalendarAPI {
     return schedule.filter(
       (slot) => slot.date.toDateString() === date.toDateString(),
     );
-  }
 
   getAvailableTimeSlots(doctorId: string, date: Date): string[] {
     const schedule = this.getSchedule(doctorId, date);
     return schedule
       .filter((slot) => slot.available)
       .map((slot) => slot.startTime);
-  }
 
   // Recurring Appointments
   createRecurringAppointment(
@@ -297,12 +270,10 @@ export class CalendarAPI {
           currentDate.setMonth(currentDate.getMonth() + 1);
           break;
       }
-    }
 
     schedule.push(...appointments);
     this.schedules.set(doctorId, schedule);
     return true;
-  }
 
   private calculateEndTime(startTime: string, durationMinutes: number): string {
     const [hoursRaw, minutesRaw] = startTime.split(":");
@@ -313,7 +284,6 @@ export class CalendarAPI {
     const endMinutes = totalMinutes % 60;
     return `${endHours.toString().padStart(2, "0")}:${endMinutes.toString().padStart(2, "0")}`;
   }
-}
 
 export interface Message {
   id: string;
@@ -323,7 +293,6 @@ export interface Message {
   scheduledTime: Date;
   sent: boolean;
   patientId?: string;
-}
 
 export class CommunicationAutomation {
   messageQueue: Message[] = [];
@@ -349,7 +318,6 @@ export class CommunicationAutomation {
 
     this.messageQueue.push(message);
     return message.id;
-  }
 
   // Automated Reminders
   scheduleAppointmentReminder(patientId: string, appointmentDate: Date): void {
@@ -364,7 +332,6 @@ export class CommunicationAutomation {
       "whatsapp",
       patientId,
     );
-  }
 
   // Motivational Messages
   scheduleMotivationalMessage(
@@ -379,7 +346,6 @@ export class CommunicationAutomation {
       "whatsapp",
       patientId,
     );
-  }
 
   // Family Notifications
   notifyFamilyMember(
@@ -394,7 +360,6 @@ export class CommunicationAutomation {
       "whatsapp",
       patientId,
     );
-  }
 
   // Process scheduled messages
   processScheduledMessages(): Message[] {
@@ -409,12 +374,10 @@ export class CommunicationAutomation {
     });
 
     return messagesToSend;
-  }
 
   private generateId(): string {
     return Math.random().toString(36).substr(2, 9);
   }
-}
 
 export class DoctorsDashboard {
   private doctors: Map<string, Doctor> = new Map();
@@ -455,7 +418,6 @@ export class DoctorsDashboard {
       patientUpdates,
       messages: [], // Would contain conversation summaries
     };
-  }
 
   // Update Doctor Schedule
   updateSchedule(doctorId: string, schedule: ScheduleSlot[]): boolean {
@@ -465,7 +427,6 @@ export class DoctorsDashboard {
     doctor.schedule = schedule;
     this.doctors.set(doctorId, doctor);
     return true;
-  }
 
   // Add Message Template
   addMessageTemplate(doctorId: string, template: MessageTemplate): boolean {
@@ -476,4 +437,3 @@ export class DoctorsDashboard {
     this.doctors.set(doctorId, doctor);
     return true;
   }
-}

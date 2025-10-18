@@ -50,7 +50,6 @@ interface ApiKeyConfig {
   description: string;
   placeholder: string;
   validation_url?: string;
-}
 
 const APIKeysSettingsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -180,7 +179,6 @@ const APIKeysSettingsPage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadApiKeys();
   }, [isAuthenticated, router]);
 
@@ -221,7 +219,6 @@ const APIKeysSettingsPage: React.FC = () => {
             ...key,
             key_value: encryptApiKey(key.key_value),
           };
-        }
         return key;
       });
 
@@ -260,7 +257,6 @@ const APIKeysSettingsPage: React.FC = () => {
                   ...k,
                   status: "active",
                   last_tested: new Date().toISOString(),
-                }
               : k,
           ),
         );
@@ -285,7 +281,6 @@ const APIKeysSettingsPage: React.FC = () => {
         newSet.delete(keyId);
       } else {
         newSet.add(keyId);
-      }
       return newSet;
     });
   };
@@ -312,7 +307,6 @@ const APIKeysSettingsPage: React.FC = () => {
       if (!service) return acc;
       if (!acc[service]) {
         acc[service] = [];
-      }
       acc[service]!.push(key);
       return acc;
     },
@@ -413,7 +407,6 @@ const APIKeysSettingsPage: React.FC = () => {
                               : keyConfig.status === "invalid"
                                 ? "secondary"
                                 : "secondary"
-                          }
                         >
                           {keyConfig.status === "active" && "✅ نشط"}
                           {keyConfig.status === "invalid" && "❌ غير صالح"}
@@ -428,7 +421,6 @@ const APIKeysSettingsPage: React.FC = () => {
                             value={keyConfig.key_value}
                             onChange={(e) =>
                               updateKeyValue(keyConfig.id, e.target.value)
-                            }
                             placeholder={keyConfig.placeholder}
                             className="pr-24 font-mono text-sm"
                           />
@@ -449,7 +441,6 @@ const APIKeysSettingsPage: React.FC = () => {
                                 type="button"
                                 onClick={() =>
                                   copyToClipboard(keyConfig.key_value)
-                                }
                                 className="p-1 hover:bg-gray-100 rounded"
                               >
                                 <Copy className="w-4 h-4" />
@@ -466,7 +457,6 @@ const APIKeysSettingsPage: React.FC = () => {
                             disabled={
                               !keyConfig.key_value ||
                               testingKey === keyConfig.id
-                            }
                           >
                             {testingKey === keyConfig.id ? (
                               <RefreshCw className="w-4 h-4 animate-spin" />

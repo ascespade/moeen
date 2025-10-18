@@ -21,7 +21,6 @@ function getClientIP(request: NextRequest): string {
   } catch {
     return "127.0.0.1";
   }
-}
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
@@ -38,7 +37,6 @@ export async function POST(request: NextRequest) {
         { success: false, error: "البريد الإلكتروني وكلمة المرور مطلوبان" },
         { status: 400 },
       );
-    }
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -47,7 +45,6 @@ export async function POST(request: NextRequest) {
         { success: false, error: "البريد الإلكتروني غير صحيح" },
         { status: 400 },
       );
-    }
 
     // Get client info
     const ipAddress = getClientIP(request) || "127.0.0.1";
@@ -102,7 +99,6 @@ export async function POST(request: NextRequest) {
             { status: 423 }, // Locked
           );
         }
-      }
 
       // Increment failed login attempts only if user exists
       if (userCheck) {
@@ -123,7 +119,6 @@ export async function POST(request: NextRequest) {
         } catch (err) {
           console.error("Error incrementing failed login attempts:", err);
         }
-      }
 
       // Log failed login attempt
       await supabase.from("audit_logs").insert({
@@ -148,7 +143,6 @@ export async function POST(request: NextRequest) {
         { success: false, error: "بيانات الدخول غير صحيحة" },
         { status: 401 }, // Always 401 for security
       );
-    }
 
     const { session, user } = authData;
 
@@ -182,7 +176,6 @@ export async function POST(request: NextRequest) {
         { success: false, error: "الحساب غير نشط. تواصل مع الإدارة." },
         { status: 403 },
       );
-    }
 
     // Use database function to update last login with full tracking
     const supabaseAdmin = createServiceClient(
@@ -203,7 +196,6 @@ export async function POST(request: NextRequest) {
       });
     } catch (err) {
       console.error("Error updating last login:", err);
-    }
 
     // Create comprehensive audit log for successful login
     try {
@@ -227,7 +219,6 @@ export async function POST(request: NextRequest) {
       });
     } catch (auditError) {
       console.error("Audit log error (non-critical):", auditError);
-    }
 
     const response = NextResponse.json({
       success: true,
@@ -264,4 +255,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

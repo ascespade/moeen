@@ -25,7 +25,6 @@ export async function GET(request: NextRequest) {
     const authResult = await requireAuth(["admin", "supervisor"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
 
@@ -92,7 +91,6 @@ export async function GET(request: NextRequest) {
         data: defaultConfigs,
         message: "Using default configuration",
       });
-    }
 
     return NextResponse.json({
       success: true,
@@ -101,7 +99,6 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -109,7 +106,6 @@ export async function POST(request: NextRequest) {
     const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const body = await request.json();
@@ -123,7 +119,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 },
       );
-    }
 
     const configData = validation.data;
 
@@ -139,7 +134,6 @@ export async function POST(request: NextRequest) {
         { error: "Configuration key already exists" },
         { status: 409 },
       );
-    }
 
     // Create new configuration
     const { data: newConfig, error } = await supabase
@@ -156,7 +150,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to create configuration" },
         { status: 500 },
       );
-    }
 
     // Create audit log
     await supabase.from("audit_logs").insert({
@@ -178,7 +171,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 export async function PUT(request: NextRequest) {
   try {
@@ -186,7 +178,6 @@ export async function PUT(request: NextRequest) {
     const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -197,7 +188,6 @@ export async function PUT(request: NextRequest) {
         { error: "Configuration ID required" },
         { status: 400 },
       );
-    }
 
     const body = await request.json();
 
@@ -210,7 +200,6 @@ export async function PUT(request: NextRequest) {
         },
         { status: 400 },
       );
-    }
 
     const updateData = validation.data;
 
@@ -231,7 +220,6 @@ export async function PUT(request: NextRequest) {
         { error: "Failed to update configuration" },
         { status: 500 },
       );
-    }
 
     // Create audit log
     await supabase.from("audit_logs").insert({
@@ -250,7 +238,6 @@ export async function PUT(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 export async function DELETE(request: NextRequest) {
   try {
@@ -258,7 +245,6 @@ export async function DELETE(request: NextRequest) {
     const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -269,7 +255,6 @@ export async function DELETE(request: NextRequest) {
         { error: "Configuration ID required" },
         { status: 400 },
       );
-    }
 
     // Delete configuration
     const { error } = await supabase
@@ -282,7 +267,6 @@ export async function DELETE(request: NextRequest) {
         { error: "Failed to delete configuration" },
         { status: 500 },
       );
-    }
 
     // Create audit log
     await supabase.from("audit_logs").insert({
@@ -300,4 +284,3 @@ export async function DELETE(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}

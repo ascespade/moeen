@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
         { error: "Invalid analytics data" },
         { status: 400 },
       );
-    }
 
     // Only track in production
     if (process.env.NODE_ENV === "production") {
@@ -29,7 +28,6 @@ export async function POST(request: NextRequest) {
 
       if (error) {
       }
-    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -38,4 +36,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

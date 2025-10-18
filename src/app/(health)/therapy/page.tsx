@@ -61,7 +61,6 @@ interface TherapySession {
     specialty: string;
     avatar?: string;
   };
-}
 
 interface TherapyGoal {
   id: string;
@@ -72,7 +71,6 @@ interface TherapyGoal {
   progress_percentage: number;
   status: "active" | "completed" | "paused";
   created_at: string;
-}
 
 const TherapyPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -89,7 +87,6 @@ const TherapyPage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadTherapyData();
   }, [isAuthenticated, router]);
 
@@ -200,7 +197,6 @@ const TherapyPage: React.FC = () => {
 
   if (!isAuthenticated) {
     return null;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8" dir="rtl">
@@ -290,7 +286,6 @@ const TherapyPage: React.FC = () => {
                     new Date(s.session_date).toDateString() ===
                     new Date().toDateString(),
                 ).length
-              }
             </div>
             <p className="text-xs text-muted-foreground">جلسات مجدولة</p>
           </CardContent>

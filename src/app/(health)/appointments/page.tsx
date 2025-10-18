@@ -60,7 +60,6 @@ interface Appointment {
     condition?: string;
     age?: number;
   };
-}
 
 const AppointmentsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -83,7 +82,6 @@ const AppointmentsPage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadAppointments();
   }, [isAuthenticated, router]);
 
@@ -176,7 +174,6 @@ const AppointmentsPage: React.FC = () => {
 
   if (!isAuthenticated) {
     return null;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8" dir="rtl">
@@ -225,7 +222,6 @@ const AppointmentsPage: React.FC = () => {
                   <p className="text-2xl font-bold">
                       appointments.filter((apt) => apt.status === "completed")
                         .length
-                    }
                   </p>
                 </div>
               </div>

@@ -8,7 +8,6 @@ interface ModalProps {
   children: React.ReactNode;
   size?: "sm" | "md" | "lg" | "xl";
   showCloseButton?: boolean;
-}
 
 export default function Modal({
   isOpen,
@@ -23,7 +22,6 @@ export default function Modal({
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
-    }
 
     return () => {
       document.body.style.overflow = "unset";
@@ -39,7 +37,6 @@ export default function Modal({
 
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
-    }
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
@@ -90,4 +87,3 @@ export default function Modal({
       </div>
     </div>
   );
-}

@@ -21,7 +21,6 @@ function getClientIP(request: NextRequest): string {
   } catch {
     return "127.0.0.1";
   }
-}
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
@@ -38,7 +37,6 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error("Supabase logout error:", error);
-    }
 
     // Get client info
     const ipAddress = getClientIP(request) || "127.0.0.1";
@@ -57,7 +55,6 @@ export async function POST(request: NextRequest) {
         sessionDuration =
           Date.now() - new Date(userProfile.last_login).getTime();
       }
-    }
 
     // Create comprehensive audit log
     if (user) {
@@ -91,7 +88,6 @@ export async function POST(request: NextRequest) {
       } catch (auditError) {
         console.error("Audit log error (non-critical):", auditError);
       }
-    }
 
     // Clear auth cookie
     const response = NextResponse.json({
@@ -123,4 +119,3 @@ export async function POST(request: NextRequest) {
 
     return response;
   }
-}

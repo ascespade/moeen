@@ -14,7 +14,6 @@ export class DatabaseUtils {
    */
   static generateEntityId(entityType: keyof typeof cuidEntity): string {
     return cuidEntity[entityType]("");
-  }
 
   /**
    * Generate public_id for multiple entities
@@ -24,14 +23,12 @@ export class DatabaseUtils {
     count: number,
   ): string[] {
     return Array.from({ length: count }, () => cuidEntity[entityType](""));
-  }
 
   /**
    * Validate if a string is a valid public_id format
    */
   static isValidPublicId(id: string): boolean {
     return /^[a-z]+_[a-z0-9]{25}$/.test(id);
-  }
 
   /**
    * Extract entity type from public_id
@@ -39,7 +36,6 @@ export class DatabaseUtils {
   static extractEntityType(publicId: string): string | null {
     const match = publicId.match(/^([a-z]+)_/);
     return match && typeof match[1] === "string" ? (match[1] as string) : null;
-  }
 
   /**
    * Create database insert data with auto-generated public_id
@@ -52,7 +48,6 @@ export class DatabaseUtils {
       ...data,
       public_id: cuidEntity[entityType](""),
     } as unknown as T;
-  }
 
   /**
    * Create multiple insert records with auto-generated public_ids
@@ -63,7 +58,6 @@ export class DatabaseUtils {
   ): T[] {
     return dataArray.map((data) => this.createInsertData(entityType, data));
   }
-}
 
 /**
  * Query builder helpers for common database operations
@@ -74,14 +68,12 @@ export class QueryBuilder {
    */
   static wherePublicId(publicId: string): { public_id: string } {
     return { public_id: publicId };
-  }
 
   /**
    * Build WHERE clause for multiple public_ids
    */
   static wherePublicIds(publicIds: string[]): { public_id: { in: string[] } } {
     return { public_id: { in: publicIds } };
-  }
 
   /**
    * Build pagination parameters
@@ -97,7 +89,6 @@ export class QueryBuilder {
       offset: (page - 1) * limit,
       limit,
     };
-  }
 
   /**
    * Build sorting parameters
@@ -112,7 +103,6 @@ export class QueryBuilder {
       orderBy: { [field]: direction },
     };
   }
-}
 
 /**
  * Entity-specific database operations
@@ -177,7 +167,6 @@ export class EntityOperations {
       DatabaseUtils.createMultipleInsertData("deal", dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
-}
 
 /**
  * Database validation helpers
@@ -199,20 +188,17 @@ export class DatabaseValidation {
       ) {
         errors.push(`Field '${String(field)}' is required`);
       }
-    }
 
     return {
       isValid: errors.length === 0,
       errors,
     };
-  }
 
   /**
    * Validate public_id format
    */
   static validatePublicId(publicId: string): boolean {
     return DatabaseUtils.isValidPublicId(publicId);
-  }
 
   /**
    * Validate email format
@@ -220,7 +206,6 @@ export class DatabaseValidation {
   static validateEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  }
 
   /**
    * Validate phone number format (Saudi format)
@@ -229,7 +214,6 @@ export class DatabaseValidation {
     const phoneRegex = /^(\+966|966|0)?[5-9][0-9]{8}$/;
     return phoneRegex.test(phone.replace(/\s/g, ""));
   }
-}
 
 /**
  * Database migration helpers
@@ -246,7 +230,6 @@ export class MigrationHelpers {
       id: record.id,
       public_id: cuidEntity[entityType](""),
     }));
-  }
 
   /**
    * Create migration log entry
@@ -263,6 +246,5 @@ export class MigrationHelpers {
       details,
     };
   }
-}
 
 export default DatabaseUtils;

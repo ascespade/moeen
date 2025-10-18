@@ -43,7 +43,6 @@ interface Appointment {
   insuranceInfo?: string;
   createdAt: string;
   updatedAt: string;
-}
 
 interface Doctor {
   id: string;
@@ -51,7 +50,6 @@ interface Doctor {
   specialty: string;
   availableSlots: string[];
   maxPatientsPerDay: number;
-}
 
 const AppointmentManager: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -156,7 +154,6 @@ const AppointmentManager: React.FC = () => {
     ) {
       alert("يرجى ملء جميع الحقول المطلوبة");
       return;
-    }
 
     const selectedDoctor = doctors.find(
       (d) => d.id === newAppointment.doctorId,
@@ -389,7 +386,6 @@ const AppointmentManager: React.FC = () => {
                         ...prev,
                         patientName: e.target.value,
                       }))
-                    }
                     placeholder="أدخل اسم المريض"
                   />
                 </div>
@@ -404,7 +400,6 @@ const AppointmentManager: React.FC = () => {
                         ...prev,
                         patientPhone: e.target.value,
                       }))
-                    }
                     placeholder="+966501234567"
                   />
                 </div>
@@ -421,7 +416,6 @@ const AppointmentManager: React.FC = () => {
                       ...prev,
                       patientEmail: e.target.value,
                     }))
-                  }
                   placeholder="patient@example.com"
                 />
               </div>
@@ -436,7 +430,6 @@ const AppointmentManager: React.FC = () => {
                         ...prev,
                         doctorId: value,
                       }))
-                    }
                   >
                     <SelectTrigger>
                       <span className="text-gray-400">اختر الطبيب</span>
@@ -462,7 +455,6 @@ const AppointmentManager: React.FC = () => {
                         ...prev,
                         date: e.target.value,
                       }))
-                    }
                   />
                 </div>
               </div>
@@ -474,7 +466,6 @@ const AppointmentManager: React.FC = () => {
                     value={newAppointment.time}
                     onValueChange={(value) =>
                       setNewAppointment((prev) => ({ ...prev, time: value }))
-                    }
                   >
                     <SelectTrigger>
                       <span className="text-gray-400">اختر الوقت</span>
@@ -501,7 +492,6 @@ const AppointmentManager: React.FC = () => {
                         ...prev,
                         insuranceInfo: e.target.value,
                       }))
-                    }
                     placeholder="شركة التأمين"
                   />
                 </div>
@@ -517,7 +507,6 @@ const AppointmentManager: React.FC = () => {
                       ...prev,
                       notes: e.target.value,
                     }))
-                  }
                   placeholder="أي ملاحظات إضافية..."
                   rows={3}
                 />

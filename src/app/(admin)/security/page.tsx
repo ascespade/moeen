@@ -59,7 +59,6 @@ interface SecurityEvent {
   status: "success" | "failed" | "blocked";
   details: string;
   risk_level: "low" | "medium" | "high" | "critical";
-}
 
 interface SecurityPolicy {
   id: string;
@@ -75,7 +74,6 @@ interface SecurityPolicy {
   rules: string[];
   last_updated: string;
   updated_by: string;
-}
 
 interface UserSession {
   id: string;
@@ -88,7 +86,6 @@ interface UserSession {
   login_time: string;
   last_activity: string;
   is_active: boolean;
-}
 
 interface SecurityAlert {
   id: string;
@@ -104,7 +101,6 @@ interface SecurityAlert {
   created_at: string;
   resolved_at?: string;
   assigned_to?: string;
-}
 
 const SecurityPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -126,7 +122,6 @@ const SecurityPage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadSecurityData();
   }, [isAuthenticated, router]);
 
@@ -382,7 +377,6 @@ const SecurityPage: React.FC = () => {
 
   if (!isAuthenticated) {
     return null;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8" dir="rtl">
@@ -454,7 +448,6 @@ const SecurityPage: React.FC = () => {
                   alerts.filter(
                     (a) => a.status === "new" || a.status === "investigating",
                   ).length
-                }
               </div>
               <p className="text-xs text-muted-foreground">تنبيه نشط</p>
             </CardContent>
@@ -703,7 +696,6 @@ const SecurityPage: React.FC = () => {
                           <Badge
                             variant={
                               session.is_active ? "primary" : "secondary"
-                            }
                           >
                             {session.is_active ? "نشط" : "غير نشط"}
                           </Badge>
@@ -814,7 +806,6 @@ const SecurityPage: React.FC = () => {
                             <Badge
                               variant={
                                 policy.is_active ? "primary" : "secondary"
-                              }
                             >
                               {policy.is_active ? "نشط" : "غير نشط"}
                             </Badge>

@@ -7,7 +7,6 @@ if (process.env.NODE_ENV === "production") {
   logger.info = () => {};
   logger.warn = () => {};
   logger.error = () => {};
-}
 
 // Optimize memory usage
 export const optimizeMemory = () => {

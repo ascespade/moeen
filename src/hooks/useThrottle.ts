@@ -20,7 +20,6 @@ export const useThrottle = <T>(value: T, delay: number): T => {
       }, delay - timeSinceLastExecution);
 
       return () => clearTimeout(timer);
-    }
 
     return undefined;
   }, [value, delay]);
@@ -46,7 +45,6 @@ export const useThrottledCallback = <T extends (...args: any[]) => any>(
       } else {
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
-        }
 
         timeoutRef.current = setTimeout(() => {
           callback(...args);
@@ -90,7 +88,6 @@ export const useThrottledValue = <T>(
       } else {
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
-        }
 
         timeoutRef.current = setTimeout(() => {
           setThrottledValue(newValue);

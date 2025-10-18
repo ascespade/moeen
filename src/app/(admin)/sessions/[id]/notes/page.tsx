@@ -12,7 +12,6 @@ interface Goal {
   goal_text: string;
   domain: string;
   current_progress: number;
-}
 
 export default function SessionNotesPage() {
   const params = useParams();
@@ -105,7 +104,6 @@ export default function SessionNotesPage() {
     if (!notes.trim()) {
       alert("يرجى كتابة ملاحظات الجلسة");
       return;
-    }
 
     setSaving(true);
     try {
@@ -143,7 +141,6 @@ export default function SessionNotesPage() {
             recorded_by: user.id,
           });
         }
-      }
 
       // Update session status to completed
       await supabase
@@ -177,7 +174,6 @@ export default function SessionNotesPage() {
         </div>
       </div>
     );
-  }
 
   if (!session) {
     return (
@@ -188,7 +184,6 @@ export default function SessionNotesPage() {
         </div>
       </div>
     );
-  }
 
   return (
     <div className="container-app py-8">
@@ -302,13 +297,11 @@ export default function SessionNotesPage() {
                               max="100"
                               value={
                                 goalProgress[goal.id] || goal.current_progress
-                              }
                               onChange={(e) =>
                                 setGoalProgress({
                                   ...goalProgress,
                                   [goal.id]: parseInt(e.target.value),
                                 })
-                              }
                               className="w-full"
                             />
                             <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
@@ -441,4 +434,3 @@ export default function SessionNotesPage() {
       </div>
     </div>
   );
-}

@@ -17,7 +17,6 @@ export async function GET(request: NextRequest) {
         restart_count: 0,
         mode: "none",
       });
-    }
 
     const statusData = JSON.parse(fs.readFileSync(statusFile, "utf8"));
     return NextResponse.json(statusData);
@@ -27,4 +26,3 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}

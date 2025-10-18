@@ -12,7 +12,6 @@ export function useKeyboardNavigation() {
             '[data-testid="search-input"]',
           ) as HTMLInputElement;
           searchInput?.focus();
-        }
         break;
 
       case "Escape":
@@ -25,7 +24,6 @@ export function useKeyboardNavigation() {
             '[data-testid="close-button"]',
           ) as HTMLButtonElement;
           closeButton?.click();
-        }
         break;
 
       case "Enter":
@@ -36,7 +34,6 @@ export function useKeyboardNavigation() {
         ) {
           event.preventDefault();
           event.target.click();
-        }
         break;
 
       case "Tab":
@@ -63,7 +60,6 @@ export function useKeyboardNavigation() {
           if (currentIndex < focusableElements.length - 1) {
             (focusableElements[currentIndex + 1] as HTMLElement)?.focus();
           }
-        }
         break;
     }
   }, []);
@@ -72,6 +68,5 @@ export function useKeyboardNavigation() {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
-}
 
 export default useKeyboardNavigation;

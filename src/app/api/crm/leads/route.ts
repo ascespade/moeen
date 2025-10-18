@@ -31,11 +31,9 @@ export async function GET(request: NextRequest) {
 
     if (status) {
       query = query.eq("status", status);
-    }
 
     if (owner_id) {
       query = query.eq("owner_id", owner_id);
-    }
 
     // تطبيق الصفحات
     const from = (page - 1) * limit;
@@ -46,7 +44,6 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({
       leads,
@@ -63,7 +60,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 // POST /api/crm/leads - إنشاء عميل محتمل جديد
 export async function POST(request: NextRequest) {
@@ -100,7 +96,6 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({ lead }, { status: 201 });
   } catch (error) {
@@ -109,4 +104,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

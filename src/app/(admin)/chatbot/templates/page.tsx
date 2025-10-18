@@ -19,7 +19,6 @@ interface Template {
   variables: string[];
   preview: string;
   usageCount: number;
-}
 
 const mockTemplates: Template[] = [
     id: "1",
@@ -567,4 +566,3 @@ export default function ChatbotTemplatesPage() {
       )}
     </div>
   );
-}

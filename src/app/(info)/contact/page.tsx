@@ -102,7 +102,6 @@ export default function ContactPage() {
         </div>
       </div>
     );
-  }
 
   return (
     <div className="min-h-screen bg-surface dark:bg-gray-900">
@@ -392,4 +391,3 @@ export default function ContactPage() {
       </footer>
     </div>
   );
-}

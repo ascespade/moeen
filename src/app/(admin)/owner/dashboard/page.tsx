@@ -153,7 +153,6 @@ export default function OwnerDashboardPage() {
         </div>
       </div>
     );
-  }
 
   return (
     <div className="container-app py-8">
@@ -373,4 +372,3 @@ export default function OwnerDashboardPage() {
       </div>
     </div>
   );
-}

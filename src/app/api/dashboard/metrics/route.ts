@@ -99,7 +99,6 @@ export async function GET(request: NextRequest) {
         fallback: true,
         message: "Database connection failed, returning fallback data",
       });
-    }
 
     // Get system metrics from multiple sources with individual error handling
     const [
@@ -245,7 +244,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 async function getSystemHealth() {
   try {
@@ -258,7 +256,6 @@ async function getSystemHealth() {
     if (error && error.code === "PGRST116") {
       // Table doesn't exist, return empty array
       return [];
-    }
 
     if (error) throw error;
 
@@ -279,7 +276,6 @@ async function getSystemHealth() {
   } catch (error) {
     return [];
   }
-}
 
 async function getSystemMetrics() {
   try {
@@ -292,7 +288,6 @@ async function getSystemMetrics() {
     if (error && error.code === "PGRST116") {
       // Table doesn't exist, return empty array
       return [];
-    }
 
     if (error) throw error;
 
@@ -313,7 +308,6 @@ async function getSystemMetrics() {
           lastUpdate: metric.timestamp,
           metrics: metric.metrics,
         };
-      }
       return acc;
     }, {});
 
@@ -321,7 +315,6 @@ async function getSystemMetrics() {
   } catch (error) {
     return [];
   }
-}
 
 async function getSocialMediaMetrics() {
   try {
@@ -354,7 +347,6 @@ async function getSocialMediaMetrics() {
           comments: 0,
           shares: 0,
         };
-      }
 
       summary.platforms[platform].posts++;
       summary.platforms[platform].views += metric.metrics.views || 0;
@@ -381,7 +373,6 @@ async function getSocialMediaMetrics() {
       },
     };
   }
-}
 
 async function getWorkflowMetrics() {
   try {
@@ -416,7 +407,6 @@ async function getWorkflowMetrics() {
       commonIssues: {},
     };
   }
-}
 
 async function getChatbotMetrics() {
   try {
@@ -448,7 +438,6 @@ async function getChatbotMetrics() {
       categories: [],
     };
   }
-}
 
 function calculateOverallHealth(systemHealth: any[]) {
   if (systemHealth.length === 0) return "unknown";
@@ -464,11 +453,9 @@ function calculateOverallHealth(systemHealth: any[]) {
   if (healthPercentage >= 75) return "good";
   if (healthPercentage >= 50) return "fair";
   return "poor";
-}
 
 function countActiveServices(systemHealth: any[]) {
   return systemHealth.filter((service) => service.status === "healthy").length;
-}
 
 function calculateErrorRate(systemMetrics: any[]) {
   if (systemMetrics.length === 0) return 0;
@@ -482,7 +469,6 @@ function calculateErrorRate(systemMetrics: any[]) {
   }, 0);
 
   return totalOperations > 0 ? (totalErrors / totalOperations) * 100 : 0;
-}
 
 async function getHealthcareMetrics() {
   try {
@@ -596,7 +582,6 @@ async function getHealthcareMetrics() {
       },
     };
   }
-}
 
 async function getCrmMetrics() {
   try {
@@ -675,4 +660,3 @@ async function getCrmMetrics() {
       activities: { total: 0, calls: 0, meetings: 0, tasks: 0 },
     };
   }
-}

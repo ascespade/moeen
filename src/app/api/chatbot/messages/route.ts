@@ -34,7 +34,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch messages" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({
       success: true,
@@ -47,7 +46,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -64,7 +62,6 @@ export async function POST(request: NextRequest) {
         { error: "conversationId, senderType, and messageText are required" },
         { status: 400 },
       );
-    }
 
     const supabase = await createClient();
 
@@ -87,7 +84,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to save message" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({
       success: true,
@@ -99,4 +95,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

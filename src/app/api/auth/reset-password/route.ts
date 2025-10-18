@@ -36,7 +36,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 },
       );
-    }
 
     const { password } = validation.data;
     const supabase = await createClient();
@@ -54,7 +53,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 401 },
       );
-    }
 
     // Update password
     const { error: updateError } = await supabase.auth.updateUser({
@@ -69,7 +67,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 500 },
       );
-    }
 
     // Update last_password_change in users table
     await supabase
@@ -93,7 +90,6 @@ export async function POST(request: NextRequest) {
       });
     } catch (auditError) {
       console.error("Audit log error (non-critical):", auditError);
-    }
 
     return NextResponse.json({
       success: true,
@@ -108,4 +104,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

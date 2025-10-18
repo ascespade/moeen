@@ -28,7 +28,6 @@ export function middleware(request: NextRequest) {
         },
         { status: 429 },
       );
-    }
 
     // Add rate limit headers
     response.headers.set("X-RateLimit-Limit", "100");
@@ -40,7 +39,6 @@ export function middleware(request: NextRequest) {
       "X-RateLimit-Reset",
       RateLimiter.getResetTime(ip).toString(),
     );
-  }
 
   // CSRF protection for state-changing operations
   if (
@@ -56,7 +54,6 @@ export function middleware(request: NextRequest) {
         { status: 403 },
       );
     }
-  }
 
   // Public routes that don't require authentication
   const publicRoutes = ["/login", "/register", "/forgot-password", "/"];
@@ -79,9 +76,7 @@ export function middleware(request: NextRequest) {
     // Set CSRF token for public routes
     if (isPublicRoute) {
       CSRFProtection.setCSRFToken(response);
-    }
     return response;
-  }
 
   // Check for authentication token
   const token = request.cookies.get("auth-token")?.value;
@@ -92,7 +87,6 @@ export function middleware(request: NextRequest) {
       const url = request.nextUrl.clone();
       url.pathname = "/login";
       return NextResponse.redirect(url);
-    }
 
     // Return 401 for API routes
     return NextResponse.json(
@@ -102,7 +96,6 @@ export function middleware(request: NextRequest) {
       },
       { status: 401 },
     );
-  }
 
   // Verify JWT token
   try {
@@ -125,7 +118,6 @@ export function middleware(request: NextRequest) {
           headers: requestHeaders,
         },
       });
-    }
 
     return NextResponse.next();
   } catch (error) {
@@ -159,7 +151,6 @@ export function middleware(request: NextRequest) {
 
     return response;
   }
-}
 
 export const config = {
   matcher: [

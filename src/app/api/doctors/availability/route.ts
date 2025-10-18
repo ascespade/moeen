@@ -7,7 +7,6 @@ interface TimeSlot {
   time: string;
   timeString: string;
   available: boolean;
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -15,7 +14,6 @@ export async function GET(request: NextRequest) {
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const { searchParams } = new URL(request.url);
     const doctorId = searchParams.get("doctorId");
@@ -27,7 +25,6 @@ export async function GET(request: NextRequest) {
         { error: "Date parameter is required" },
         { status: 400 },
       );
-    }
 
     const supabase = await createClient();
 
@@ -46,10 +43,8 @@ export async function GET(request: NextRequest) {
 
     if (doctorId) {
       query = query.eq("id", doctorId);
-    }
     if (speciality) {
       query = query.eq("speciality", speciality);
-    }
 
     const { data: doctors, error: doctorsError } = await query;
 
@@ -58,7 +53,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch doctors" },
         { status: 500 },
       );
-    }
 
     // Get existing appointments for the date
     const startOfDay = new Date(date);
@@ -78,7 +72,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch appointments" },
         { status: 500 },
       );
-    }
 
     // Generate available time slots for each doctor
     const availableSlots =
@@ -142,7 +135,6 @@ export async function GET(request: NextRequest) {
               available: true,
             });
           }
-        }
 
         return {
           doctorId: doctor.id,
@@ -162,4 +154,3 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}

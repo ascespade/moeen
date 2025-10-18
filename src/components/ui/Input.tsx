@@ -21,7 +21,6 @@ export interface InputProps
   rightIcon?: React.ReactNode;
   showPasswordToggle?: boolean;
   variant?: "default" | "filled" | "outlined";
-}
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   (

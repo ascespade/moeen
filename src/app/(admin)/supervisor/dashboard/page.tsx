@@ -12,7 +12,6 @@ interface CallRequest {
   priority: string;
   status: string;
   created_at: string;
-}
 
 export default function SupervisorDashboardPage() {
   const [callRequests, setCallRequests] = useState<CallRequest[]>([]);
@@ -167,7 +166,6 @@ export default function SupervisorDashboardPage() {
         </div>
       </div>
     );
-  }
 
   const pendingRequests = callRequests.filter((r) => r.status === "pending");
 
@@ -378,4 +376,3 @@ export default function SupervisorDashboardPage() {
       </div>
     </div>
   );
-}

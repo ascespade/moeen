@@ -30,7 +30,6 @@ export const useDebouncedCallback = <T extends (...args: any[]) => any>(
     (...args: Parameters<T>) => {
       if (debounceTimer) {
         clearTimeout(debounceTimer);
-      }
 
       const newTimer = setTimeout(() => {
         callback(...args);

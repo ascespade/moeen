@@ -21,7 +21,6 @@ interface InsuranceClaim {
   attachments: string[];
   reviewer?: string;
   notes?: string;
-}
 
 const mockClaims: InsuranceClaim[] = [
     id: "1",
@@ -614,4 +613,3 @@ export default function InsuranceClaimsPage() {
       )}
     </div>
   );
-}

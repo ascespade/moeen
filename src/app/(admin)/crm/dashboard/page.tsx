@@ -52,7 +52,6 @@ interface Appointment {
     phone?: string;
     email?: string;
   };
-}
 
 interface DashboardStats {
   totalAppointments: number;
@@ -61,7 +60,6 @@ interface DashboardStats {
   completedAppointments: number;
   totalPatients: number;
   totalDoctors: number;
-}
 
 const CRMDashboard: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -84,7 +82,6 @@ const CRMDashboard: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadDashboardData();
   }, [isAuthenticated, router]);
 
@@ -98,7 +95,6 @@ const CRMDashboard: React.FC = () => {
 
       if (appointmentsData.success) {
         setAppointments(appointmentsData.appointments || []);
-      }
 
       // جلب الإحصائيات
       const statsResponse = await fetch("/api/crm/stats");
@@ -205,14 +201,12 @@ const CRMDashboard: React.FC = () => {
             ?.toLowerCase()
             .includes(searchTerm.toLowerCase()),
       );
-    }
 
     // فلترة حسب الحالة
     if (statusFilter !== "all") {
       filtered = filtered.filter(
         (appointment) => appointment.status === statusFilter,
       );
-    }
 
     // فلترة حسب التاريخ
     const today = new Date().toISOString().split("T")[0];
@@ -226,7 +220,6 @@ const CRMDashboard: React.FC = () => {
       filtered = filtered.filter(
         (appointment) => new Date(appointment.appointment_date) >= weekAgo,
       );
-    }
 
     return filtered;
   };
@@ -235,7 +228,6 @@ const CRMDashboard: React.FC = () => {
 
   if (!isAuthenticated) {
     return null;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8" dir="rtl">
@@ -493,7 +485,6 @@ const CRMDashboard: React.FC = () => {
                             size="sm"
                             onClick={() =>
                               handleStatusUpdate(appointment.id, "confirmed")
-                            }
                             className="text-brand-success hover:text-green-700"
                           >
                             <CheckCircle className="w-4 h-4 mr-1" />
@@ -504,7 +495,6 @@ const CRMDashboard: React.FC = () => {
                             size="sm"
                             onClick={() =>
                               handleStatusUpdate(appointment.id, "cancelled")
-                            }
                             className="text-brand-error hover:text-red-700"
                           >
                             <XCircle className="w-4 h-4 mr-1" />
@@ -519,7 +509,6 @@ const CRMDashboard: React.FC = () => {
                           size="sm"
                           onClick={() =>
                             handleStatusUpdate(appointment.id, "completed")
-                          }
                           className="text-brand-primary hover:text-blue-700"
                         >
                           <CheckCircle className="w-4 h-4 mr-1" />

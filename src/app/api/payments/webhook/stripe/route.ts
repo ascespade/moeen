@@ -27,7 +27,6 @@ export async function POST(request: NextRequest) {
         { error: "No signature provided" },
         { status: 400 },
       );
-    }
 
     let event: Stripe.Event;
 
@@ -36,7 +35,6 @@ export async function POST(request: NextRequest) {
     } catch (err) {
       console.error("Webhook signature verification failed:", err);
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
-    }
 
     const supabase = await createClient();
 
@@ -62,7 +60,6 @@ export async function POST(request: NextRequest) {
         break;
       default:
         console.log(`Unhandled event type: ${event.type}`);
-    }
 
     return NextResponse.json({ received: true });
   } catch (error) {
@@ -72,7 +69,6 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 async function handlePaymentSucceeded(
   paymentIntent: Stripe.PaymentIntent,
@@ -83,7 +79,6 @@ async function handlePaymentSucceeded(
   if (!appointmentId) {
     console.error("No appointment ID in payment intent metadata");
     return;
-  }
 
   // Update payment status
   const { error: paymentError } = await supabase
@@ -100,7 +95,6 @@ async function handlePaymentSucceeded(
   if (paymentError) {
     console.error("Failed to update payment status:", paymentError);
     return;
-  }
 
   // Update appointment payment status
   const { error: appointmentError } = await supabase
@@ -114,7 +108,6 @@ async function handlePaymentSucceeded(
       appointmentError,
     );
     return;
-  }
 
   // Create audit log
   await supabase.from("audit_logs").insert({
@@ -130,7 +123,6 @@ async function handlePaymentSucceeded(
   });
 
   console.log(`Payment succeeded for appointment ${appointmentId}`);
-}
 
 async function handlePaymentFailed(
   paymentIntent: Stripe.PaymentIntent,
@@ -141,7 +133,6 @@ async function handlePaymentFailed(
   if (!appointmentId) {
     console.error("No appointment ID in payment intent metadata");
     return;
-  }
 
   // Update payment status
   const { error: paymentError } = await supabase
@@ -158,7 +149,6 @@ async function handlePaymentFailed(
   if (paymentError) {
     console.error("Failed to update payment status:", paymentError);
     return;
-  }
 
   // Create audit log
   await supabase.from("audit_logs").insert({
@@ -175,7 +165,6 @@ async function handlePaymentFailed(
   });
 
   console.log(`Payment failed for appointment ${appointmentId}`);
-}
 
 async function handlePaymentCanceled(
   paymentIntent: Stripe.PaymentIntent,
@@ -186,7 +175,6 @@ async function handlePaymentCanceled(
   if (!appointmentId) {
     console.error("No appointment ID in payment intent metadata");
     return;
-  }
 
   // Update payment status
   const { error: paymentError } = await supabase
@@ -203,7 +191,6 @@ async function handlePaymentCanceled(
   if (paymentError) {
     console.error("Failed to update payment status:", paymentError);
     return;
-  }
 
   // Create audit log
   await supabase.from("audit_logs").insert({
@@ -219,4 +206,3 @@ async function handlePaymentCanceled(
   });
 
   console.log(`Payment canceled for appointment ${appointmentId}`);
-}

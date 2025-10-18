@@ -17,4 +17,3 @@ export default function EmptyState({
       {cta && <div className="mt-4">{cta}</div>}
     </div>
   );
-}

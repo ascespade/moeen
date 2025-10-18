@@ -15,12 +15,10 @@ export async function POST(request: NextRequest) {
     // Handle URL verification
     if (type === "url_verification") {
       return NextResponse.json({ challenge });
-    }
 
     // Handle events
     if (type === "event_callback" && event) {
       await handleSlackEvent(event);
-    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -29,14 +27,11 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 async function handleSlackEvent(event: any) {
   try {
     await slack.handleSlackEvent(event);
   } catch (error) {}
-}
 
 export async function GET(request: NextRequest) {
   return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
-}

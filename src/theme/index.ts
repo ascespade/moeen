@@ -77,7 +77,6 @@ export interface ColorPalette {
     focus: string;
     disabled: string;
   };
-}
 
 // ========================================
 // TYPOGRAPHY SYSTEM - نظام الطباعة
@@ -136,7 +135,6 @@ export interface Typography {
     wider: string;
     widest: string;
   };
-}
 
 // ========================================
 // SPACING SYSTEM - نظام المسافات
@@ -190,7 +188,6 @@ export interface Spacing {
     "2xl": string;
     inner: string;
   };
-}
 
 // ========================================
 // BREAKPOINTS - نقاط التوقف
@@ -201,7 +198,6 @@ export interface Breakpoints {
   lg: string;
   xl: string;
   "2xl": string;
-}
 
 // ========================================
 // ANIMATION - الرسوم المتحركة
@@ -218,7 +214,6 @@ export interface Animation {
     easeOut: string;
     easeInOut: string;
   };
-}
 
 // ========================================
 // THEME CONFIGURATIONS - إعدادات الثيم
@@ -477,7 +472,6 @@ export const animation: Animation = {
 
 export function getThemeColors(theme: ResolvedTheme): ColorPalette {
   return theme === "dark" ? darkTheme : lightTheme;
-}
 
 export function generateCSSVariables(
   theme: ResolvedTheme,
@@ -617,4 +611,3 @@ export function generateCSSVariables(
     "--panel": colors.panel,
     "--focus-ring": colors.interactive.focus,
   };
-}

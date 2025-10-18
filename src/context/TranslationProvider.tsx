@@ -17,7 +17,6 @@ interface TranslationContextType {
   locale: string;
   setLocale: (locale: string) => void;
   isLoading: boolean;
-}
 
 const TranslationContext = createContext<TranslationContextType | undefined>(
   undefined,
@@ -44,7 +43,6 @@ export function TranslationProvider({
       if (error) {
         console.error("Error loading translations:", error);
         return;
-      }
 
       if (data) {
         const translationsMap = data.reduce(
@@ -79,12 +77,9 @@ export function TranslationProvider({
       {children}
     </TranslationContext.Provider>
   );
-}
 
 export function useTranslation() {
   const context = useContext(TranslationContext);
   if (!context) {
     throw new Error("useTranslation must be used within TranslationProvider");
-  }
   return context;
-}

@@ -6,13 +6,11 @@ interface Tab {
   label: string;
   icon?: string;
   content: React.ReactNode;
-}
 
 interface TabsProps {
   tabs: Tab[];
   defaultTab?: string;
   className?: string;
-}
 
 export default function Tabs({ tabs, defaultTab, className = "" }: TabsProps) {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
@@ -44,4 +42,3 @@ export default function Tabs({ tabs, defaultTab, className = "" }: TabsProps) {
       <div className="mt-6">{activeTabContent}</div>
     </div>
   );
-}

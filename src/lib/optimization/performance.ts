@@ -12,7 +12,6 @@ interface PerformanceMetrics {
   duration?: number;
   memoryUsage?: NodeJS.MemoryUsage;
   metadata?: Record<string, any>;
-}
 
 class PerformanceMonitor {
   private metrics: Map<string, PerformanceMetrics> = new Map();
@@ -36,7 +35,6 @@ class PerformanceMonitor {
       memoryUsage,
       metadata,
     });
-  }
 
   endOperation(operationId: string): PerformanceMetrics | null {
     const metric = this.metrics.get(operationId);
@@ -68,7 +66,6 @@ class PerformanceMonitor {
     this.logPerformance(completedMetric);
 
     return completedMetric;
-  }
 
   private logPerformance(metric: PerformanceMetrics): void {
     const { operation, duration, memoryUsage, metadata } = metric;
@@ -86,16 +83,13 @@ class PerformanceMonitor {
         metadata,
       });
     }
-  }
 
   getMetrics(): PerformanceMetrics[] {
     return Array.from(this.metrics.values());
-  }
 
   clearMetrics(): void {
     this.metrics.clear();
   }
-}
 
 // Singleton instance
 export const performanceMonitor = new PerformanceMonitor();
@@ -130,7 +124,6 @@ export function measurePerformance(operationName?: string) {
       }
     };
   };
-}
 
 // Database query optimization
 export class QueryOptimizer {
@@ -145,15 +138,12 @@ export class QueryOptimizer {
     ) {
       // Add default limit for large queries
       optimized += " LIMIT 1000";
-    }
 
     return optimized;
-  }
 
   static addIndexHints(tableName: string, columns: string[]): string {
     return `/*+ USE_INDEX(${tableName}, ${columns.join(",")}) */`;
   }
-}
 
 // Memory optimization
 export class MemoryOptimizer {
@@ -162,11 +152,9 @@ export class MemoryOptimizer {
       global.gc();
       logger.debug("Garbage collection triggered");
     }
-  }
 
   static getMemoryUsage(): NodeJS.MemoryUsage {
     return process.memoryUsage();
-  }
 
   static isMemoryPressure(): boolean {
     const usage = this.getMemoryUsage();
@@ -176,7 +164,6 @@ export class MemoryOptimizer {
     // Consider memory pressure if heap usage is over 80%
     return heapUsedMB / heapTotalMB > 0.8;
   }
-}
 
 // Caching optimization
 export class CacheOptimizer {
@@ -185,11 +172,9 @@ export class CacheOptimizer {
 
   static recordCacheHit(): void {
     this.cacheHits++;
-  }
 
   static recordCacheMiss(): void {
     this.cacheMisses++;
-  }
 
   static getCacheStats(): { hits: number; misses: number; hitRate: number } {
     const total = this.cacheHits + this.cacheMisses;
@@ -198,13 +183,11 @@ export class CacheOptimizer {
       misses: this.cacheMisses,
       hitRate: total > 0 ? (this.cacheHits / total) * 100 : 0,
     };
-  }
 
   static resetStats(): void {
     this.cacheHits = 0;
     this.cacheMisses = 0;
   }
-}
 
 // Bundle optimization
 export class BundleOptimizer {
@@ -212,7 +195,6 @@ export class BundleOptimizer {
     // This would integrate with webpack-bundle-analyzer
     // For now, return a placeholder
     return 0;
-  }
 
   static analyzeBundle(): Record<string, any> {
     // This would analyze the bundle and return optimization suggestions
@@ -225,7 +207,6 @@ export class BundleOptimizer {
       ],
     };
   }
-}
 
 // API response optimization
 export class ResponseOptimizer {
@@ -238,7 +219,6 @@ export class ResponseOptimizer {
     );
 
     return cleaned;
-  }
 
   static paginateResponse(
     data: any[],
@@ -267,4 +247,3 @@ export class ResponseOptimizer {
       },
     };
   }
-}

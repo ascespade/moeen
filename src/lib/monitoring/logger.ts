@@ -12,7 +12,6 @@ interface LogEntry {
   context?: string;
   data?: any;
   stack?: string;
-}
 
 class Logger {
   private isDevelopment: boolean;
@@ -21,7 +20,6 @@ class Logger {
   constructor() {
     this.isDevelopment = process.env.NODE_ENV === "development";
     this.isServer = typeof window === "undefined";
-  }
 
   /**
    * Log debug information (only in development)
@@ -30,21 +28,18 @@ class Logger {
     if (this.isDevelopment) {
       this.log("debug", message, data, context);
     }
-  }
 
   /**
    * Log informational messages
    */
   info(message: string, data?: any, context?: string): void {
     this.log("info", message, data, context);
-  }
 
   /**
    * Log warnings
    */
   warn(message: string, data?: any, context?: string): void {
     this.log("warn", message, data, context);
-  }
 
   /**
    * Log errors
@@ -56,11 +51,9 @@ class Logger {
             message: error.message,
             stack: error.stack,
             name: error.name,
-          }
         : error;
 
     this.log("error", message, errorData, context, error?.stack);
-  }
 
   /**
    * Internal logging method
@@ -84,13 +77,11 @@ class Logger {
     // In development, log to console with colors
     if (this.isDevelopment) {
       this.logToConsole(entry);
-    }
 
     // In production, send to logging service
     if (!this.isDevelopment) {
       this.sendToLoggingService(entry);
     }
-  }
 
   /**
    * Log to console (development only)
@@ -118,7 +109,6 @@ class Logger {
         console.error(fullMessage, entry.data, entry.stack);
         break;
     }
-  }
 
   /**
    * Send logs to external logging service (production)
@@ -127,7 +117,6 @@ class Logger {
     // Only send errors and warns to external service
     if (entry.level === "debug" || entry.level === "info") {
       return;
-    }
 
     try {
       // In production, send to your logging service (e.g., Sentry, LogRocket, etc.)
@@ -141,7 +130,6 @@ class Logger {
     } catch (error) {
       // Fail silently - don't break the app
     }
-  }
 
   /**
    * Sanitize sensitive data before logging
@@ -173,14 +161,11 @@ class Logger {
         } else if (typeof sanitized[key] === "object") {
           sanitized[key] = this.sanitizeData(sanitized[key]);
         }
-      }
 
       return sanitized;
-    }
 
     return data;
   }
-}
 
 // Export singleton instance
 export const logger = new Logger();

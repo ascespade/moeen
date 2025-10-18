@@ -12,7 +12,6 @@ export async function POST(
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     // Only staff, supervisor, and admin can activate patients
     if (!["staff", "supervisor", "admin"].includes(user.role)) {
@@ -20,7 +19,6 @@ export async function POST(
         { error: "Insufficient permissions" },
         { status: 403 },
       );
-    }
 
     const supabase = await createClient();
     const patientId = params.id;
@@ -34,7 +32,6 @@ export async function POST(
 
     if (patientError || !patient) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
-    }
 
     // Check if patient is already activated
     if (patient.activated) {
@@ -42,7 +39,6 @@ export async function POST(
         { error: "Patient already activated" },
         { status: 400 },
       );
-    }
 
     // Activate patient
     const { error: updateError } = await supabase
@@ -58,7 +54,6 @@ export async function POST(
         { error: "Failed to activate patient" },
         { status: 500 },
       );
-    }
 
     // Log activation event
     await supabase.from("audit_logs").insert({
@@ -82,7 +77,6 @@ export async function POST(
       { status: 500 },
     );
   }
-}
 
 export async function GET(
   request: NextRequest,
@@ -93,7 +87,6 @@ export async function GET(
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const patientId = params.id;
@@ -107,7 +100,6 @@ export async function GET(
 
     if (patientError || !patient) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
-    }
 
     return NextResponse.json({
       patient_id: patient.id,
@@ -121,4 +113,3 @@ export async function GET(
       { status: 500 },
     );
   }
-}

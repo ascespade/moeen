@@ -50,7 +50,6 @@ export async function POST(request: NextRequest) {
     );
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const body = await request.json();
@@ -62,7 +61,6 @@ export async function POST(request: NextRequest) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     const {
       appointmentId,
@@ -99,7 +97,6 @@ export async function POST(request: NextRequest) {
         { error: "Appointment not found" },
         { status: 404 },
       );
-    }
 
     // Verify patient has insurance
     if (!appointment.patients.insuranceProvider) {
@@ -107,7 +104,6 @@ export async function POST(request: NextRequest) {
         { error: "Patient has no insurance provider" },
         { status: 400 },
       );
-    }
 
     // Generate claim reference
     const claimReference = `CLM${Date.now()}${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
@@ -139,7 +135,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to create insurance claim" },
         { status: 500 },
       );
-    }
 
     // Submit to insurance provider
     const submissionResult = await submitToInsuranceProvider(claim, provider);
@@ -156,7 +151,6 @@ export async function POST(request: NextRequest) {
 
     if (updateError) {
       console.error("Failed to update claim submission status:", updateError);
-    }
 
     // Create audit log
     await supabase.from("audit_logs").insert({
@@ -183,7 +177,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -193,7 +186,6 @@ export async function GET(request: NextRequest) {
     );
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -222,13 +214,10 @@ export async function GET(request: NextRequest) {
 
     if (status) {
       query = query.eq("status", status);
-    }
     if (provider) {
       query = query.eq("provider", provider);
-    }
     if (patientId) {
       query = query.eq("patientId", patientId);
-    }
 
     const { data: claims, error, count } = await query;
 
@@ -237,7 +226,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch insurance claims" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({
       success: true,
@@ -252,7 +240,6 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 export async function PUT(request: NextRequest) {
   try {
@@ -260,7 +247,6 @@ export async function PUT(request: NextRequest) {
     const authResult = await requireAuth(["supervisor", "admin"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -268,7 +254,6 @@ export async function PUT(request: NextRequest) {
 
     if (!claimId) {
       return NextResponse.json({ error: "Claim ID required" }, { status: 400 });
-    }
 
     const body = await request.json();
 
@@ -282,7 +267,6 @@ export async function PUT(request: NextRequest) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     const updateData = validation.data;
 
@@ -303,7 +287,6 @@ export async function PUT(request: NextRequest) {
         { error: "Failed to update claim" },
         { status: 500 },
       );
-    }
 
     // Create audit log
     await supabase.from("audit_logs").insert({
@@ -322,7 +305,6 @@ export async function PUT(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 async function submitToInsuranceProvider(claim: any, provider: string) {
   try {
@@ -344,7 +326,6 @@ async function submitToInsuranceProvider(claim: any, provider: string) {
         success: false,
         response: "Provider integration not available",
       };
-    }
 
     // Simulate API call
     const response = await fetch(endpoint, {
@@ -382,4 +363,3 @@ async function submitToInsuranceProvider(claim: any, provider: string) {
       response: `Provider integration error: ${error}`,
     };
   }
-}

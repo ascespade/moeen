@@ -10,7 +10,6 @@ interface UseApiState<T> {
   loading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
-}
 
 export const useApi = <T = any>(
   endpoint: string,

@@ -37,14 +37,12 @@ interface ChatMessage {
     appointmentDate?: string;
     appointmentTime?: string;
   };
-}
 
 interface AppointmentSuggestion {
   id: string;
   doctorName: string;
   specialty: string;
   availableSlots: string[];
-}
 
 const HealthcareChatbot: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -214,7 +212,6 @@ const HealthcareChatbot: React.FC = () => {
         </Button>
       </div>
     );
-  }
 
   return (
     <div className="fixed bottom-4 right-4 z-50 w-96 h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">

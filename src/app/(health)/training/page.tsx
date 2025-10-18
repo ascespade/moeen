@@ -57,7 +57,6 @@ interface TrainingProgram {
     specialty: string;
     avatar?: string;
   };
-}
 
 interface TrainingProgress {
   id: string;
@@ -76,7 +75,6 @@ interface TrainingProgress {
     condition: string;
     avatar?: string;
   };
-}
 
 const TrainingPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -93,7 +91,6 @@ const TrainingPage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadTrainingData();
   }, [isAuthenticated, router]);
 
@@ -246,7 +243,6 @@ const TrainingPage: React.FC = () => {
 
   if (!isAuthenticated) {
     return null;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8" dir="rtl">

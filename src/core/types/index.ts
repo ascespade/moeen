@@ -10,7 +10,6 @@ export interface BaseEntity {
   updatedAt: Date;
   createdBy?: string;
   updatedBy?: string;
-}
 
 // User & Authentication Types
 export interface User extends BaseEntity {
@@ -20,7 +19,6 @@ export interface User extends BaseEntity {
   lastLoginAt?: Date;
   profile: UserProfile;
   preferences: UserPreferences;
-}
 
 export interface UserProfile {
   firstName: string;
@@ -30,14 +28,12 @@ export interface UserProfile {
   dateOfBirth?: Date;
   gender?: "male" | "female" | "other";
   address?: Address;
-}
 
 export interface UserPreferences {
   language: "ar" | "en";
   theme: "light" | "dark" | "system";
   notifications: NotificationSettings;
   privacy: PrivacySettings;
-}
 
 export type UserRole = "patient" | "doctor" | "staff" | "supervisor" | "admin";
 
@@ -51,14 +47,12 @@ export interface Patient extends BaseEntity {
   medicalHistory: MedicalHistory[];
   isActivated: boolean;
   activationDate?: Date;
-}
 
 export interface EmergencyContact {
   name: string;
   relationship: string;
   phone: string;
   email?: string;
-}
 
 export interface MedicalHistory {
   id: string;
@@ -68,7 +62,6 @@ export interface MedicalHistory {
   date: Date;
   doctor: string;
   attachments: string[];
-}
 
 // Doctor Types
 export interface Doctor extends BaseEntity {
@@ -80,26 +73,22 @@ export interface Doctor extends BaseEntity {
   schedule: DoctorSchedule;
   rating: number;
   isAvailable: boolean;
-}
 
 export interface Education {
   degree: string;
   institution: string;
   year: number;
   specialization?: string;
-}
 
 export interface DoctorSchedule {
   workingDays: number[];
   workingHours: TimeRange;
   breaks: TimeRange[];
   vacationDays: Date[];
-}
 
 export interface TimeRange {
   start: string; // HH:MM format
   end: string; // HH:MM format
-}
 
 // Appointment Types
 export interface Appointment extends BaseEntity {
@@ -115,7 +104,6 @@ export interface Appointment extends BaseEntity {
   prescription?: Prescription;
   followUpRequired: boolean;
   followUpDate?: Date;
-}
 
 export type AppointmentType =
   | "consultation"
@@ -147,7 +135,6 @@ export interface Payment extends BaseEntity {
   gatewayResponse?: any;
   refundAmount?: number;
   refundReason?: string;
-}
 
 export type PaymentMethod =
   | "cash"
@@ -169,7 +156,6 @@ export interface InsuranceClaim extends BaseEntity {
   rejectedAt?: Date;
   rejectionReason?: string;
   documents: string[];
-}
 
 export type ClaimStatus =
   | "draft"
@@ -190,7 +176,6 @@ export interface Notification extends BaseEntity {
   priority: NotificationPriority;
   channels: NotificationChannel[];
   metadata?: any;
-}
 
 export type NotificationType =
   | "appointment_reminder"
@@ -207,7 +192,6 @@ export interface SystemConfig extends BaseEntity {
   category: string;
   description?: string;
   isPublic: boolean;
-}
 
 export interface AuditLog extends BaseEntity {
   action: string;
@@ -217,7 +201,6 @@ export interface AuditLog extends BaseEntity {
   metadata: any;
   ipAddress?: string;
   userAgent?: string;
-}
 
 // API Response Types
 export interface ApiResponse<T = any> {
@@ -226,7 +209,6 @@ export interface ApiResponse<T = any> {
   error?: string;
   message?: string;
   pagination?: PaginationInfo;
-}
 
 export interface PaginationInfo {
   page: number;
@@ -235,7 +217,6 @@ export interface PaginationInfo {
   totalPages: number;
   hasNext: boolean;
   hasPrev: boolean;
-}
 
 // Form Types
 export interface FormField {
@@ -255,19 +236,16 @@ export interface FormField {
   placeholder?: string;
   options?: SelectOption[];
   validation?: ValidationRule[];
-}
 
 export interface SelectOption {
   value: string;
   label: string;
   disabled?: boolean;
-}
 
 export interface ValidationRule {
   type: "required" | "email" | "min" | "max" | "pattern";
   value?: any;
   message: string;
-}
 
 // UI Types
 export interface Theme {
@@ -276,7 +254,6 @@ export interface Theme {
   typography: Typography;
   spacing: Spacing;
   borderRadius: BorderRadius;
-}
 
 export interface ColorPalette {
   primary: string;
@@ -290,7 +267,6 @@ export interface ColorPalette {
   text: string;
   textSecondary: string;
   border: string;
-}
 
 export interface Typography {
   fontFamily: string;
@@ -314,7 +290,6 @@ export interface Typography {
     normal: number;
     relaxed: number;
   };
-}
 
 export interface Spacing {
   xs: string;
@@ -323,14 +298,12 @@ export interface Spacing {
   lg: string;
   xl: string;
   "2xl": string;
-}
 
 export interface BorderRadius {
   sm: string;
   md: string;
   lg: string;
   full: string;
-}
 
 // Utility Types
 export type Status = "idle" | "loading" | "success" | "error";
@@ -347,7 +320,6 @@ export interface Address {
     lat: number;
     lng: number;
   };
-}
 
 export interface Prescription {
   id: string;
@@ -355,7 +327,6 @@ export interface Prescription {
   instructions: string;
   validUntil: Date;
   doctorId: string;
-}
 
 export interface Medication {
   name: string;
@@ -363,17 +334,14 @@ export interface Medication {
   frequency: string;
   duration: string;
   instructions: string;
-}
 
 export interface NotificationSettings {
   email: boolean;
   sms: boolean;
   push: boolean;
   inApp: boolean;
-}
 
 export interface PrivacySettings {
   profileVisibility: "public" | "private" | "contacts_only";
   dataSharing: boolean;
   marketingEmails: boolean;
-}

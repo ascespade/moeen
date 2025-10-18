@@ -217,7 +217,6 @@ export const componentSizes = {
  */
 export function getColor(category: keyof typeof colors, key: string): string {
   return (colors[category] as any)[key] || colors.text.primary;
-}
 
 /**
  * Get spacing value
@@ -225,7 +224,6 @@ export function getColor(category: keyof typeof colors, key: string): string {
  */
 export function getSpacing(size: keyof typeof spacing): string {
   return spacing[size];
-}
 
 /**
  * Build className from design tokens
@@ -251,7 +249,6 @@ export function buildClassName(tokens: {
   if (tokens.m) classes.push(`m-${tokens.m}`);
 
   return classes.join(" ");
-}
 
 // ============================================
 // TYPE EXPORTS

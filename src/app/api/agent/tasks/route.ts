@@ -20,7 +20,6 @@ export async function GET(request: NextRequest) {
         last_update: new Date().toISOString(),
         estimated_completion: null,
       });
-    }
 
     const taskData = JSON.parse(fs.readFileSync(taskFile, "utf8"));
     return NextResponse.json(taskData);
@@ -30,4 +29,3 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}

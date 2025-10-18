@@ -13,12 +13,10 @@ interface SessionType {
   price: number;
   color: string;
   icon: string;
-}
 
 interface Props {
   onSelect: (sessionType: SessionType) => void;
   selectedId?: string;
-}
 
 export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
   const [sessionTypes, setSessionTypes] = useState<SessionType[]>([]);
@@ -59,7 +57,6 @@ export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
         ))}
       </div>
     );
-  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -97,4 +94,3 @@ export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
       ))}
     </div>
   );
-}

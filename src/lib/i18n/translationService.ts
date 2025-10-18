@@ -8,13 +8,11 @@ interface TranslationCache {
     [key: string]: string | number;
     timestamp: number;
   };
-}
 
 interface MissingTranslation {
   language: string;
   key: string;
   requestedAt: Date;
-}
 
 class TranslationService {
   private cache: TranslationCache = {};
@@ -37,9 +35,7 @@ class TranslationService {
           if (key !== "timestamp") {
             translations[key] = cached[key] as string;
           }
-        }
         return translations;
-      }
 
       // Fetch from API
       const response = await fetch(`/api/translations/${language}`, {
@@ -50,7 +46,6 @@ class TranslationService {
 
       if (!response.ok) {
         throw new Error(`Failed to fetch translations for ${language}`);
-      }
 
       const translations = await response.json();
 
@@ -83,7 +78,6 @@ class TranslationService {
       // Return default translations
       return this.getDefaultTranslations(language);
     }
-  }
 
   /**
    * Get translation by key with fallback
@@ -93,13 +87,11 @@ class TranslationService {
       // Ensure translations are loaded
       if (!this.cache[language] || !this.isCacheValid(language)) {
         await this.fetchTranslations(language);
-      }
 
       const translation = this.cache[language]?.[key];
 
       if (translation && typeof translation === "string") {
         return translation;
-      }
 
       // Log missing key
       this.logMissingKey(key, language);
@@ -110,14 +102,12 @@ class TranslationService {
         if (fallbackTranslation && typeof fallbackTranslation === "string") {
           return fallbackTranslation;
         }
-      }
 
       // Return key as fallback
       return key;
     } catch (error) {
       return key;
     }
-  }
 
   /**
    * Get multiple translations at once
@@ -130,10 +120,8 @@ class TranslationService {
 
     for (const key of keys) {
       translations[key] = await this.get(key, language);
-    }
 
     return translations;
-  }
 
   /**
    * Check if cache is valid
@@ -143,7 +131,6 @@ class TranslationService {
     if (!cached) return false;
 
     return Date.now() - cached.timestamp < this.cacheExpiry;
-  }
 
   /**
    * Log missing translation key
@@ -177,7 +164,6 @@ class TranslationService {
     } finally {
       this.isLoggingMissing = false;
     }
-  }
 
   /**
    * Get default translations
@@ -250,14 +236,12 @@ class TranslationService {
       defaultTranslations[language as keyof typeof defaultTranslations] ||
       defaultTranslations.en
     );
-  }
 
   /**
    * Clear cache
    */
   clearCache(): void {
     this.cache = {};
-  }
 
   /**
    * Get cached translations
@@ -270,18 +254,14 @@ class TranslationService {
         if (key !== "timestamp") {
           translations[key] = cached[key] as string;
         }
-      }
       return translations;
-    }
     return null;
-  }
 
   /**
    * Get missing keys count
    */
   getMissingKeysCount(): number {
     return this.missingKeys.length;
-  }
 
   /**
    * Get missing keys
@@ -289,7 +269,6 @@ class TranslationService {
   getMissingKeys(): MissingTranslation[] {
     return [...this.missingKeys];
   }
-}
 
 // Export singleton instance
 export const translationService = new TranslationService();

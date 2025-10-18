@@ -13,7 +13,6 @@ export class ApiError extends Error {
     super(message);
     this.name = "ApiError";
   }
-}
 
 export const api = {
   async request<T = any>(
@@ -31,7 +30,6 @@ export const api = {
       typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (token) {
       defaultHeaders.Authorization = `Bearer ${token}`;
-    }
 
     const config: RequestInit = {
       ...options,
@@ -51,13 +49,11 @@ export const api = {
           response.status,
           data,
         );
-      }
 
       return data;
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
-      }
 
       throw new ApiError("Network error occurred", 0, { originalError: error });
     }
@@ -117,7 +113,6 @@ export const addResponseInterceptor = (
     } catch (error) {
       if (error instanceof ApiError && onError) {
         return onError(error);
-      }
       throw error;
     }
   };
@@ -146,7 +141,6 @@ export const buildUrl = (
 ): string => {
   if (!params || Object.keys(params).length === 0) {
     return endpoint;
-  }
 
   const queryString = buildQueryString(params);
   return `${endpoint}?${queryString}`;
@@ -156,11 +150,9 @@ export const buildUrl = (
 export const handleApiError = (error: unknown): string => {
   if (error instanceof ApiError) {
     return error.message;
-  }
 
   if (error instanceof Error) {
     return error.message;
-  }
 
   return "An unexpected error occurred";
 };
@@ -181,14 +173,12 @@ export const withRetry = async <T>(
 
       if (i === maxRetries) {
         throw lastError;
-      }
 
       // Wait before retrying
       await new Promise((resolve) =>
         setTimeout(resolve, delay * Math.pow(2, i)),
       );
     }
-  }
 
   throw lastError!;
 };

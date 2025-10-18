@@ -17,7 +17,6 @@ export async function PATCH(
     const authHeader = request.headers.get("authorization");
     if (!authHeader) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const currentUser = await getCurrentUser(authHeader);
     if (!currentUser || !["admin", "manager"].includes(currentUser.role)) {
@@ -25,7 +24,6 @@ export async function PATCH(
         { error: "Insufficient permissions" },
         { status: 403 },
       );
-    }
 
     const { status, role } = await request.json();
     const userId = params.id;
@@ -36,7 +34,6 @@ export async function PATCH(
         { error: "No valid fields to update" },
         { status: 400 },
       );
-    }
 
     // Build update object
     const updateData: any = {};
@@ -72,7 +69,6 @@ export async function PATCH(
           role_id: roleData.id,
         });
       }
-    }
 
     // Log admin action
     await logAdminAction(currentUser.id, "UPDATE_USER", {
@@ -90,7 +86,6 @@ export async function PATCH(
       { status: 500 },
     );
   }
-}
 
 export async function DELETE(
   request: NextRequest,
@@ -101,7 +96,6 @@ export async function DELETE(
     const authHeader = request.headers.get("authorization");
     if (!authHeader) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const currentUser = await getCurrentUser(authHeader);
     if (!currentUser || currentUser.role !== "admin") {
@@ -109,7 +103,6 @@ export async function DELETE(
         { error: "Only admins can delete users" },
         { status: 403 },
       );
-    }
 
     const userId = params.id;
 
@@ -119,7 +112,6 @@ export async function DELETE(
         { error: "Cannot delete your own account" },
         { status: 400 },
       );
-    }
 
     // Soft delete user (set status to deleted)
     const { error } = await supabase
@@ -146,7 +138,6 @@ export async function DELETE(
       { status: 500 },
     );
   }
-}
 
 async function getCurrentUser(authHeader: string) {
   try {
@@ -169,7 +160,6 @@ async function getCurrentUser(authHeader: string) {
   } catch (error) {
     return null;
   }
-}
 
 async function logAdminAction(userId: string, action: string, details: any) {
   try {
@@ -182,4 +172,3 @@ async function logAdminAction(userId: string, action: string, details: any) {
       user_agent: "Admin Panel",
     });
   } catch (error) {}
-}

@@ -18,7 +18,6 @@ export async function POST(request: NextRequest) {
     const verifyToken = request.headers.get("x-verify-token");
     if (verifyToken !== process.env.WHATSAPP_VERIFY_TOKEN) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     // معالجة رسائل WhatsApp
     if (body.object === "whatsapp_business_account") {
@@ -31,7 +30,6 @@ export async function POST(request: NextRequest) {
           }
         }
       }
-    }
 
     return NextResponse.json({ status: "success" });
   } catch (error) {
@@ -40,7 +38,6 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 // GET /api/webhook/whatsapp - التحقق من webhook
 export async function GET(request: NextRequest) {
@@ -51,10 +48,8 @@ export async function GET(request: NextRequest) {
 
   if (mode === "subscribe" && token === process.env.WHATSAPP_VERIFY_TOKEN) {
     return new NextResponse(challenge);
-  }
 
   return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-}
 
 async function processWhatsAppMessage(message: any, value: any) {
   try {
@@ -84,7 +79,6 @@ async function processWhatsAppMessage(message: any, value: any) {
         .single();
 
       conversation = newConversation;
-    }
 
     // حفظ الرسالة
     await supabase.from("chatbot_messages").insert({
@@ -105,7 +99,6 @@ async function processWhatsAppMessage(message: any, value: any) {
     // معالجة الرسالة بواسطة AI
     await processMessageWithAI(conversation.id, messageText, phoneNumber);
   } catch (error) {}
-}
 
 async function processMessageWithAI(
   conversationId: string,
@@ -131,16 +124,13 @@ async function processMessageWithAI(
           confidence = 0.8;
           break;
         }
-      }
       if (matchedIntent) break;
-    }
 
     // إذا لم يتم العثور على نية، استخدم النية العامة
     if (!matchedIntent) {
       matchedIntent =
         intents?.find((i) => i.action_type === "general") || intents?.[0];
       confidence = 0.3;
-    }
 
     let responseText =
       (matchedIntent as any)?.response_template ||
@@ -165,7 +155,6 @@ async function processMessageWithAI(
         messageText,
         phoneNumber,
       );
-    }
 
     // حفظ رد البوت
     await supabase.from("chatbot_messages").insert({
@@ -181,7 +170,6 @@ async function processMessageWithAI(
     // إرسال الرد عبر WhatsApp API
     await sendWhatsAppMessage(phoneNumber, responseText);
   } catch (error) {}
-}
 
 async function handleAppointmentIntent(
   conversationId: string,
@@ -190,7 +178,6 @@ async function handleAppointmentIntent(
 ): Promise<string> {
   // منطق حجز المواعيد
   return "أهلاً بك! سأساعدك في حجز موعد جديد. ما نوع الخدمة التي تحتاجها؟\n1️⃣ العلاج الطبيعي\n2️⃣ العلاج النفسي\n3️⃣ العلاج الوظيفي\n4️⃣ الاستشارات الأسرية";
-}
 
 async function handleCancelIntent(
   conversationId: string,
@@ -199,7 +186,6 @@ async function handleCancelIntent(
 ): Promise<string> {
   // منطق إلغاء المواعيد
   return "أفهم أنك تريد إلغاء موعدك. يرجى إرسال رقم الموعد أو اسمك ورقم هاتفك لتتمكن من إلغاء الموعد.";
-}
 
 async function handleReminderIntent(
   conversationId: string,
@@ -208,7 +194,6 @@ async function handleReminderIntent(
 ): Promise<string> {
   // منطق تذكير المواعيد
   return "سأتحقق من موعدك القادم. يرجى إرسال اسمك ورقم هاتفك للتحقق من موعدك.";
-}
 
 async function sendWhatsAppMessage(phoneNumber: string, message: string) {
   try {
@@ -234,4 +219,3 @@ async function sendWhatsAppMessage(phoneNumber: string, message: string) {
       logger.error("Failed to send WhatsApp message:", await response.text());
     }
   } catch (error) {}
-}

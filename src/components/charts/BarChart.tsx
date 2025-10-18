@@ -34,7 +34,6 @@ interface BarChartProps {
   showLegend?: boolean;
   showTooltip?: boolean;
   horizontal?: boolean;
-}
 
 export const BarChart: React.FC<BarChartProps> = ({
   data,

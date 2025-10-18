@@ -49,7 +49,6 @@ export async function POST(request: NextRequest) {
     const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const body = await request.json();
@@ -64,7 +63,6 @@ export async function POST(request: NextRequest) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     const { email, password, role, profile, isActive, permissions } =
       validation.data;
@@ -81,7 +79,6 @@ export async function POST(request: NextRequest) {
         { error: "User already exists" },
         { status: 409 },
       );
-    }
 
     // Create user account
     const { data: user, error: userError } =
@@ -96,7 +93,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to create user account" },
         { status: 500 },
       );
-    }
 
     // Create user profile
     const { data: userProfile, error: profileError } = await supabase
@@ -120,14 +116,12 @@ export async function POST(request: NextRequest) {
         { error: "Failed to create user profile" },
         { status: 500 },
       );
-    }
 
     // Create role-specific profile
     if (role === "patient") {
       await createPatientProfile(user.user.id, profile);
     } else if (role === "doctor") {
       await createDoctorProfile(user.user.id, profile);
-    }
 
     // Create audit log
     await supabase.from("audit_logs").insert({
@@ -150,7 +144,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -158,7 +151,6 @@ export async function GET(request: NextRequest) {
     const authResult = await requireAuth(["admin", "supervisor"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -186,10 +178,8 @@ export async function GET(request: NextRequest) {
 
     if (role) {
       query = query.eq("role", role);
-    }
     if (isActive !== null) {
       query = query.eq("isActive", isActive === "true");
-    }
 
     const { data: users, error, count } = await query;
 
@@ -198,7 +188,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch users" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({
       success: true,
@@ -213,7 +202,6 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 export async function PUT(request: NextRequest) {
   try {
@@ -221,7 +209,6 @@ export async function PUT(request: NextRequest) {
     const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -229,7 +216,6 @@ export async function PUT(request: NextRequest) {
 
     if (!userId) {
       return NextResponse.json({ error: "User ID required" }, { status: 400 });
-    }
 
     const body = await request.json();
 
@@ -243,7 +229,6 @@ export async function PUT(request: NextRequest) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     const updateData = validation.data;
 
@@ -264,7 +249,6 @@ export async function PUT(request: NextRequest) {
         { error: "Failed to update user" },
         { status: 500 },
       );
-    }
 
     // Create audit log
     await supabase.from("audit_logs").insert({
@@ -283,7 +267,6 @@ export async function PUT(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 export async function DELETE(request: NextRequest) {
   try {
@@ -291,7 +274,6 @@ export async function DELETE(request: NextRequest) {
     const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -299,7 +281,6 @@ export async function DELETE(request: NextRequest) {
 
     if (!userId) {
       return NextResponse.json({ error: "User ID required" }, { status: 400 });
-    }
 
     // Prevent self-deletion
     if (userId === authResult.user!.id) {
@@ -307,7 +288,6 @@ export async function DELETE(request: NextRequest) {
         { error: "Cannot delete your own account" },
         { status: 400 },
       );
-    }
 
     // Soft delete user
     const { error: updateError } = await supabase
@@ -324,7 +304,6 @@ export async function DELETE(request: NextRequest) {
         { error: "Failed to delete user" },
         { status: 500 },
       );
-    }
 
     // Create audit log
     await supabase.from("audit_logs").insert({
@@ -342,7 +321,6 @@ export async function DELETE(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 async function createPatientProfile(userId: string, profile: any) {
   const supabase = await createClient();
@@ -358,7 +336,6 @@ async function createPatientProfile(userId: string, profile: any) {
   });
 
   return error;
-}
 
 async function createDoctorProfile(userId: string, profile: any) {
   const supabase = await createClient();
@@ -381,4 +358,3 @@ async function createDoctorProfile(userId: string, profile: any) {
   });
 
   return error;
-}

@@ -39,12 +39,10 @@ export function I18nProvider({
     [t, resolvedLocale, loading],
   );
   return <I18nCtx.Provider value={value}>{children}</I18nCtx.Provider>;
-}
 
 export function useT() {
   const ctx = useContext(I18nCtx);
   if (!ctx) throw new Error("useT must be used within I18nProvider");
   return ctx;
-}
 
 export default I18nProvider;

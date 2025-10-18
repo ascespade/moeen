@@ -9,7 +9,6 @@ interface RateLimitConfig {
   windowMs: number;
   maxRequests: number;
   message: string;
-}
 
 const rateLimitConfigs: Record<string, RateLimitConfig> = {
   "/api/auth/login": {
@@ -44,7 +43,6 @@ const requestCounts = new Map<string, { count: number; resetTime: number }>();
 // Function to clear rate limiting cache (for testing)
 export function clearRateLimitCache(): void {
   requestCounts.clear();
-}
 
 export function rateLimiter(request: NextRequest): NextResponse | null {
   const ip = request.ip || request.headers.get("x-forwarded-for") || "unknown";
@@ -60,7 +58,6 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
         break;
       }
     }
-  }
 
   const config = (foundConfig ?? rateLimitConfigs.default) as RateLimitConfig;
 
@@ -75,7 +72,6 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
       resetTime: now + config.windowMs,
     });
     return null; // Allow request
-  }
 
   if (current.count >= config.maxRequests) {
     // Rate limit exceeded
@@ -92,7 +88,6 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
         },
       },
     );
-  }
 
   // Increment count
   current.count++;
@@ -111,7 +106,6 @@ export function rateLimiter(request: NextRequest): NextResponse | null {
   );
 
   return null; // Allow request
-}
 
 // Clean up old entries periodically
 setInterval(

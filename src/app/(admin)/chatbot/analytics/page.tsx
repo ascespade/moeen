@@ -32,7 +32,6 @@ interface AnalyticsData {
     count: number;
     percentage: number;
   }>;
-}
 
 const mockAnalytics: AnalyticsData = {
   totalMessages: 15420,
@@ -372,4 +371,3 @@ export default function ChatbotAnalyticsPage() {
       </main>
     </div>
   );
-}

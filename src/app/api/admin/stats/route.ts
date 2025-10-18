@@ -15,7 +15,6 @@ export async function GET(request: NextRequest) {
     const authResult = await requireAuth(["admin", "supervisor"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
 
@@ -26,7 +25,6 @@ export async function GET(request: NextRequest) {
 
     if (usersError) {
       console.error("Error fetching users:", usersError);
-    }
 
     // Calculate user stats
     const totalUsers = users?.length || 0;
@@ -87,7 +85,6 @@ export async function GET(request: NextRequest) {
       }
     } catch (error) {
       console.log("Appointments table not found, using default stats");
-    }
 
     // Get system configuration
     let systemConfig = {
@@ -128,7 +125,6 @@ export async function GET(request: NextRequest) {
       }
     } catch (error) {
       console.log("System config table not found, using default config");
-    }
 
     const stats = {
       users: {
@@ -150,4 +146,3 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}

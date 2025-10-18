@@ -56,7 +56,6 @@ interface ProgressGoal {
     condition: string;
     avatar?: string;
   };
-}
 
 interface Milestone {
   id: string;
@@ -68,7 +67,6 @@ interface Milestone {
   status: "pending" | "in_progress" | "completed" | "cancelled";
   progress_percentage: number;
   notes?: string;
-}
 
 interface Assessment {
   id: string;
@@ -90,7 +88,6 @@ interface Assessment {
     specialty: string;
     avatar?: string;
   };
-}
 
 interface ProgressReport {
   id: string;
@@ -106,7 +103,6 @@ interface ProgressReport {
   recommendations: string[];
   next_review_date: string;
   created_at: string;
-}
 
 const ProgressTrackingPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -127,7 +123,6 @@ const ProgressTrackingPage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadProgressData();
   }, [isAuthenticated, router]);
 
@@ -279,7 +274,6 @@ const ProgressTrackingPage: React.FC = () => {
 
   if (!isAuthenticated) {
     return null;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8" dir="rtl">
@@ -596,7 +590,6 @@ const ProgressTrackingPage: React.FC = () => {
                     <Button
                       onClick={() =>
                         router.push("/progress-tracking/assessments/new")
-                      }
                       className="bg-[var(--brand-primary)] hover:brightness-95"
                     >
                       إنشاء تقييم جديد

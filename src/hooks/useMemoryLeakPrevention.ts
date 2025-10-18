@@ -104,7 +104,6 @@ export const useAbortController = () => {
   const createAbortController = useCallback(() => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
-    }
     abortControllerRef.current = new AbortController();
     return abortControllerRef.current;
   }, []);
@@ -147,19 +146,15 @@ export const useWebSocket = (
 
     if (options?.onOpen) {
       ws.onopen = options.onOpen;
-    }
 
     if (options?.onMessage) {
       ws.onmessage = options.onMessage;
-    }
 
     if (options?.onClose) {
       ws.onclose = options.onClose;
-    }
 
     if (options?.onError) {
       ws.onerror = options.onError;
-    }
 
     return () => {
       if (ws.readyState === WebSocket.OPEN) {

@@ -7,12 +7,10 @@ export interface User {
   email: string;
   role: "patient" | "doctor" | "staff" | "supervisor" | "admin";
   meta?: Record<string, any>;
-}
 
 export interface AuthResult {
   user: User | null;
   error: string | null;
-}
 
 export async function authorize(request: NextRequest): Promise<AuthResult> {
   try {
@@ -26,7 +24,6 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
 
     if (sessionError || !session) {
       return { user: null, error: "Unauthorized" };
-    }
 
     // Get user data with role
     const { data: userData, error: userError } = await supabase
@@ -37,7 +34,6 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
 
     if (userError || !userData) {
       return { user: null, error: "User not found" };
-    }
 
     return {
       user: {
@@ -51,13 +47,11 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
   } catch (error) {
     return { user: null, error: "Authorization failed" };
   }
-}
 
 export function requireRole(
   allowedRoles: User["role"][],
 ): (user: User) => boolean {
   return (user: User) => allowedRoles.includes(user.role);
-}
 
 export function requireAuth(allowedRoles?: User["role"][]) {
   return async (request: NextRequest) => {
@@ -65,12 +59,9 @@ export function requireAuth(allowedRoles?: User["role"][]) {
 
     if (error || !user) {
       return { authorized: false, user: null, error };
-    }
 
     if (allowedRoles && !allowedRoles.includes(user.role)) {
       return { authorized: false, user, error: "Insufficient permissions" };
-    }
 
     return { authorized: true, user, error: null };
   };
-}

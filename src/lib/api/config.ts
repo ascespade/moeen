@@ -17,7 +17,6 @@ export interface ApiConfig {
     geminiApiKey?: string;
     openaiApiKey?: string;
   };
-}
 
 export const getApiConfig = (): ApiConfig => {
   const whatsappToken =

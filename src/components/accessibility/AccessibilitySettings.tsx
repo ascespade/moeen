@@ -89,7 +89,6 @@ const AccessibilitySettings: React.FC = () => {
                     value={settings.fontSize}
                     onValueChange={(value) =>
                       handleSettingChange("fontSize", value)
-                    }
                   >
                     <SelectTrigger className="w-32">
                       <SelectValue />
@@ -115,7 +114,6 @@ const AccessibilitySettings: React.FC = () => {
                     value={settings.contrast}
                     onValueChange={(value) =>
                       handleSettingChange("contrast", value)
-                    }
                   >
                     <SelectTrigger className="w-32">
                       <SelectValue />
@@ -142,7 +140,6 @@ const AccessibilitySettings: React.FC = () => {
                     checked={settings.colorBlindSupport}
                     onCheckedChange={(checked) =>
                       handleSettingChange("colorBlindSupport", checked)
-                    }
                   />
                 </div>
 
@@ -160,7 +157,6 @@ const AccessibilitySettings: React.FC = () => {
                     checked={settings.dyslexiaSupport}
                     onCheckedChange={(checked) =>
                       handleSettingChange("dyslexiaSupport", checked)
-                    }
                   />
                 </div>
               </div>
@@ -186,7 +182,6 @@ const AccessibilitySettings: React.FC = () => {
                     checked={settings.keyboardNavigation}
                     onCheckedChange={(checked) =>
                       handleSettingChange("keyboardNavigation", checked)
-                    }
                   />
                 </div>
 
@@ -204,7 +199,6 @@ const AccessibilitySettings: React.FC = () => {
                     checked={settings.focusIndicators}
                     onCheckedChange={(checked) =>
                       handleSettingChange("focusIndicators", checked)
-                    }
                   />
                 </div>
 
@@ -220,7 +214,6 @@ const AccessibilitySettings: React.FC = () => {
                     checked={settings.voiceControl}
                     onCheckedChange={(checked) =>
                       handleSettingChange("voiceControl", checked)
-                    }
                   />
                 </div>
               </div>
@@ -244,7 +237,6 @@ const AccessibilitySettings: React.FC = () => {
                     checked={settings.reducedMotion}
                     onCheckedChange={(checked) =>
                       handleSettingChange("reducedMotion", checked)
-                    }
                   />
                 </div>
               </div>
@@ -266,7 +258,6 @@ const AccessibilitySettings: React.FC = () => {
                     value={settings.language}
                     onValueChange={(value) =>
                       handleSettingChange("language", value)
-                    }
                   >
                     <SelectTrigger className="w-32">
                       <SelectValue />
@@ -300,7 +291,6 @@ const AccessibilitySettings: React.FC = () => {
                     checked={settings.screenReader}
                     onCheckedChange={(checked) =>
                       handleSettingChange("screenReader", checked)
-                    }
                   />
                 </div>
               </div>

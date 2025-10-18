@@ -9,7 +9,6 @@ export function Table({
       <table className={clsx("min-w-full text-sm", className)} {...props} />
     </div>
   );
-}
 
 export function THead({
   className,
@@ -21,7 +20,6 @@ export function THead({
       {...props}
     />
   );
-}
 
 export function TBody({
   className,
@@ -33,7 +31,6 @@ export function TBody({
       {...props}
     />
   );
-}
 
 export function TR({
   className,
@@ -45,7 +42,6 @@ export function TR({
       {...props}
     />
   );
-}
 
 export function TH({
   className,
@@ -60,13 +56,11 @@ export function TH({
       {...props}
     />
   );
-}
 
 export function TD({
   className,
   ...props
 }: React.TdHTMLAttributes<HTMLTableCellElement>) {
   return <td className={clsx("px-4 py-3", className)} {...props} />;
-}
 
 export default Table;

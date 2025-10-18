@@ -5,7 +5,6 @@
 interface LoadingSpinnerProps {
   size?: "sm" | "md" | "lg";
   className?: string;
-}
 
 export function LoadingSpinner({
   size = "md",
@@ -22,7 +21,6 @@ export function LoadingSpinner({
       className={`animate-spin rounded-full border-2 border-[var(--brand-primary)] border-t-transparent ${sizeClasses[size]} ${className}`}
     />
   );
-}
 
 export function LoadingScreen() {
   return (
@@ -33,4 +31,3 @@ export function LoadingScreen() {
       </div>
     </div>
   );
-}

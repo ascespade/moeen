@@ -19,7 +19,6 @@ interface Template {
   createdAt: string;
   updatedAt: string;
   usageCount: number;
-}
 
 const mockTemplate: Template = {
   id: "1",
@@ -272,7 +271,6 @@ export default function TemplateEditorPage({
                           ...prev,
                           name: e.target.value,
                         }))
-                      }
                       className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                     />
                   </div>
@@ -289,7 +287,6 @@ export default function TemplateEditorPage({
                           ...prev,
                           description: e.target.value,
                         }))
-                      }
                       className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                     />
                   </div>
@@ -396,7 +393,6 @@ export default function TemplateEditorPage({
                             ...prev,
                             [variable]: e.target.value,
                           }))
-                        }
                         className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
                         placeholder={`أدخل قيمة ${variable}`}
                       />
@@ -422,4 +418,3 @@ export default function TemplateEditorPage({
       )}
     </div>
   );
-}

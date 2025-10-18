@@ -7,13 +7,10 @@ export class PerformanceMonitor {
   static getInstance(): PerformanceMonitor {
     if (!PerformanceMonitor.instance) {
       PerformanceMonitor.instance = new PerformanceMonitor();
-    }
     return PerformanceMonitor.instance;
-  }
 
   startTiming(label: string): void {
     this.metrics.set(label, performance.now());
-  }
 
   endTiming(label: string): number {
     const startTime = this.metrics.get(label);
@@ -24,10 +21,8 @@ export class PerformanceMonitor {
 
     // Log slow operations
     if (duration > 1000) {
-    }
 
     return duration;
-  }
 
   measurePageLoad(): void {
     if (typeof window !== "undefined") {
@@ -41,23 +36,18 @@ export class PerformanceMonitor {
         this.sendMetric("page_load_time", loadTime);
       });
     }
-  }
 
   measureComponentRender(componentName: string): void {
     this.startTiming(`component_${componentName}_render`);
-  }
 
   endComponentRender(componentName: string): number {
     return this.endTiming(`component_${componentName}_render`);
-  }
 
   measureAsyncOperation(operationName: string): void {
     this.startTiming(`async_${operationName}`);
-  }
 
   endAsyncOperation(operationName: string): number {
     return this.endTiming(`async_${operationName}`);
-  }
 
   private sendMetric(name: string, value: number): void {
     if (process.env.NODE_ENV === "production") {
@@ -68,7 +58,6 @@ export class PerformanceMonitor {
         body: JSON.stringify({ name, value, timestamp: Date.now() }),
       }).catch(logger.error);
     }
-  }
 
   // Memory usage monitoring
   checkMemoryUsage(): void {
@@ -85,6 +74,5 @@ export class PerformanceMonitor {
       }
     }
   }
-}
 
 export default PerformanceMonitor;

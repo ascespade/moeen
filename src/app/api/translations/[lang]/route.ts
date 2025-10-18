@@ -33,7 +33,6 @@ export async function GET(
         },
         { headers },
       );
-    }
 
     if (tableError) throw tableError;
 
@@ -64,7 +63,6 @@ export async function GET(
         ),
         { headers },
       );
-    }
 
     // Convert to key-value object
     const translationObject = translations.reduce(
@@ -85,7 +83,6 @@ export async function GET(
       },
     });
   }
-}
 
 async function logMissingTranslationKeys(
   requestedLang: string,
@@ -114,7 +111,6 @@ async function logMissingTranslationKeys(
       );
     }
   } catch (error) {}
-}
 
 function getDefaultTranslations(lang: string) {
   const defaultTranslations = {
@@ -170,4 +166,3 @@ function getDefaultTranslations(lang: string) {
     defaultTranslations[lang as keyof typeof defaultTranslations] ||
     defaultTranslations.en
   );
-}

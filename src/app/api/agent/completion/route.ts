@@ -14,7 +14,6 @@ export async function GET(request: NextRequest) {
         status: "in_progress",
         message: "Tasks still running",
       });
-    }
 
     const completionData = JSON.parse(fs.readFileSync(completionFile, "utf8"));
     return NextResponse.json(completionData);
@@ -24,4 +23,3 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}

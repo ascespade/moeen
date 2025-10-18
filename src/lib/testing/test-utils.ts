@@ -12,7 +12,6 @@ interface TestUser {
   email: string;
   role: string;
   profile: Record<string, any>;
-}
 
 interface TestData {
   users: TestUser[];
@@ -20,7 +19,6 @@ interface TestData {
   doctors: any[];
   appointments: any[];
   payments: any[];
-}
 
 class TestUtils {
   private supabase: any;
@@ -34,7 +32,6 @@ class TestUtils {
 
   constructor() {
     this.supabase = createClient();
-  }
 
   // Create test user
   async createTestUser(
@@ -64,11 +61,9 @@ class TestUtils {
 
     if (error) {
       throw new Error(`Failed to create test user: ${error.message}`);
-    }
 
     this.testData.users.push(testUser);
     return testUser;
-  }
 
   // Create test patient
   async createTestPatient(userId?: string): Promise<any> {
@@ -94,11 +89,9 @@ class TestUtils {
 
     if (error) {
       throw new Error(`Failed to create test patient: ${error.message}`);
-    }
 
     this.testData.patients.push(patient);
     return patient;
-  }
 
   // Create test doctor
   async createTestDoctor(userId?: string): Promise<any> {
@@ -131,11 +124,9 @@ class TestUtils {
 
     if (error) {
       throw new Error(`Failed to create test doctor: ${error.message}`);
-    }
 
     this.testData.doctors.push(doctor);
     return doctor;
-  }
 
   // Create test appointment
   async createTestAppointment(
@@ -168,11 +159,9 @@ class TestUtils {
 
     if (error) {
       throw new Error(`Failed to create test appointment: ${error.message}`);
-    }
 
     this.testData.appointments.push(appointment);
     return appointment;
-  }
 
   // Create test payment
   async createTestPayment(appointmentId?: string): Promise<any> {
@@ -195,11 +184,9 @@ class TestUtils {
 
     if (error) {
       throw new Error(`Failed to create test payment: ${error.message}`);
-    }
 
     this.testData.payments.push(payment);
     return payment;
-  }
 
   // Clean up test data
   async cleanup(): Promise<void> {
@@ -213,7 +200,6 @@ class TestUtils {
             "id",
             this.testData.payments.map((p) => p.id),
           );
-      }
 
       if (this.testData.appointments.length > 0) {
         await this.supabase
@@ -223,7 +209,6 @@ class TestUtils {
             "id",
             this.testData.appointments.map((a) => a.id),
           );
-      }
 
       if (this.testData.patients.length > 0) {
         await this.supabase
@@ -233,7 +218,6 @@ class TestUtils {
             "id",
             this.testData.patients.map((p) => p.id),
           );
-      }
 
       if (this.testData.doctors.length > 0) {
         await this.supabase
@@ -243,7 +227,6 @@ class TestUtils {
             "id",
             this.testData.doctors.map((d) => d.id),
           );
-      }
 
       if (this.testData.users.length > 0) {
         await this.supabase
@@ -253,7 +236,6 @@ class TestUtils {
             "id",
             this.testData.users.map((u) => u.id),
           );
-      }
 
       // Clear test data
       this.testData = {
@@ -269,12 +251,10 @@ class TestUtils {
       logger.error("Failed to cleanup test data", error);
       throw error;
     }
-  }
 
   // Get test data
   getTestData(): TestData {
     return this.testData;
-  }
 
   // Mock API request
   mockRequest(
@@ -291,7 +271,6 @@ class TestUtils {
       },
       body: body ? JSON.stringify(body) : undefined,
     });
-  }
 
   // Mock NextRequest
   mockNextRequest(
@@ -307,12 +286,10 @@ class TestUtils {
       headers: new Headers(headers),
       json: async () => body || {},
     };
-  }
 
   // Wait for async operations
   async wait(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
-  }
 
   // Retry function
   async retry<T>(
@@ -330,15 +307,12 @@ class TestUtils {
 
         if (attempt === maxAttempts) {
           throw lastError;
-        }
 
         await this.wait(delay * attempt);
       }
-    }
 
     throw lastError!;
   }
-}
 
 // Export singleton instance
 export const testUtils = new TestUtils();
@@ -346,9 +320,7 @@ export const testUtils = new TestUtils();
 // Export test data factory
 export function createTestData() {
   return new TestUtils();
-}
 
 // Export cleanup function
 export async function cleanupTestData(): Promise<void> {
   await testUtils.cleanup();
-}

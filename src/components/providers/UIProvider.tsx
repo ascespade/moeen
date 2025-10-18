@@ -20,7 +20,6 @@ declare global {
   interface Window {
     HSStaticMethods?: { autoInit?: () => void };
   }
-}
 
 export default function UIProvider({
   children,
@@ -38,4 +37,3 @@ export default function UIProvider({
   }, [pathname]);
 
   return <div>{children}</div>;
-}

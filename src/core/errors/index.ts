@@ -18,7 +18,6 @@ export abstract class BaseError extends Error {
     super(message);
     this.name = this.constructor.name;
     Error.captureStackTrace(this, this.constructor);
-  }
 
   abstract toJSON(): {
     name: string;
@@ -28,7 +27,6 @@ export abstract class BaseError extends Error {
     context?: Record<string, any>;
     timestamp: string;
   };
-}
 
 // Validation Error
 export class ValidationError extends BaseError {
@@ -42,7 +40,6 @@ export class ValidationError extends BaseError {
     context?: Record<string, any>,
   ) {
     super(message, context);
-  }
 
   toJSON() {
     return {
@@ -55,7 +52,6 @@ export class ValidationError extends BaseError {
       timestamp: new Date().toISOString(),
     };
   }
-}
 
 // Authentication Error
 export class AuthenticationError extends BaseError {
@@ -68,7 +64,6 @@ export class AuthenticationError extends BaseError {
     context?: Record<string, any>,
   ) {
     super(message, context);
-  }
 
   toJSON() {
     return {
@@ -80,7 +75,6 @@ export class AuthenticationError extends BaseError {
       timestamp: new Date().toISOString(),
     };
   }
-}
 
 // Authorization Error
 export class AuthorizationError extends BaseError {
@@ -93,7 +87,6 @@ export class AuthorizationError extends BaseError {
     context?: Record<string, any>,
   ) {
     super(message, context);
-  }
 
   toJSON() {
     return {
@@ -105,7 +98,6 @@ export class AuthorizationError extends BaseError {
       timestamp: new Date().toISOString(),
     };
   }
-}
 
 // Not Found Error
 export class NotFoundError extends BaseError {
@@ -118,7 +110,6 @@ export class NotFoundError extends BaseError {
     context?: Record<string, any>,
   ) {
     super(message, context);
-  }
 
   toJSON() {
     return {
@@ -130,7 +121,6 @@ export class NotFoundError extends BaseError {
       timestamp: new Date().toISOString(),
     };
   }
-}
 
 // Conflict Error
 export class ConflictError extends BaseError {
@@ -140,7 +130,6 @@ export class ConflictError extends BaseError {
 
   constructor(message: string, context?: Record<string, any>) {
     super(message, context);
-  }
 
   toJSON() {
     return {
@@ -152,7 +141,6 @@ export class ConflictError extends BaseError {
       timestamp: new Date().toISOString(),
     };
   }
-}
 
 // Rate Limit Error
 export class RateLimitError extends BaseError {
@@ -165,7 +153,6 @@ export class RateLimitError extends BaseError {
     context?: Record<string, any>,
   ) {
     super(message, context);
-  }
 
   toJSON() {
     return {
@@ -177,7 +164,6 @@ export class RateLimitError extends BaseError {
       timestamp: new Date().toISOString(),
     };
   }
-}
 
 // Internal Server Error
 export class InternalServerError extends BaseError {
@@ -190,7 +176,6 @@ export class InternalServerError extends BaseError {
     context?: Record<string, any>,
   ) {
     super(message, context);
-  }
 
   toJSON() {
     return {
@@ -202,7 +187,6 @@ export class InternalServerError extends BaseError {
       timestamp: new Date().toISOString(),
     };
   }
-}
 
 // Database Error
 export class DatabaseError extends BaseError {
@@ -215,7 +199,6 @@ export class DatabaseError extends BaseError {
     context?: Record<string, any>,
   ) {
     super(message, context);
-  }
 
   toJSON() {
     return {
@@ -227,7 +210,6 @@ export class DatabaseError extends BaseError {
       timestamp: new Date().toISOString(),
     };
   }
-}
 
 // External Service Error
 export class ExternalServiceError extends BaseError {
@@ -241,7 +223,6 @@ export class ExternalServiceError extends BaseError {
     context?: Record<string, any>,
   ) {
     super(message, context);
-  }
 
   toJSON() {
     return {
@@ -254,7 +235,6 @@ export class ExternalServiceError extends BaseError {
       timestamp: new Date().toISOString(),
     };
   }
-}
 
 // Business Logic Error
 export class BusinessLogicError extends BaseError {
@@ -264,7 +244,6 @@ export class BusinessLogicError extends BaseError {
 
   constructor(message: string, context?: Record<string, any>) {
     super(message, context);
-  }
 
   toJSON() {
     return {
@@ -276,7 +255,6 @@ export class BusinessLogicError extends BaseError {
       timestamp: new Date().toISOString(),
     };
   }
-}
 
 // Error Handler Class
 export class ErrorHandler {
@@ -286,14 +264,11 @@ export class ErrorHandler {
   private constructor() {
     // Initialize logger
     this.logger = console; // Replace with actual logger
-  }
 
   public static getInstance(): ErrorHandler {
     if (!ErrorHandler.instance) {
       ErrorHandler.instance = new ErrorHandler();
-    }
     return ErrorHandler.instance;
-  }
 
   public handle(
     error: Error | BaseError,
@@ -315,7 +290,6 @@ export class ErrorHandler {
         code: error.code,
         isOperational: true,
       };
-    }
 
     // Handle unexpected errors
     return {
@@ -324,7 +298,6 @@ export class ErrorHandler {
       code: "INTERNAL_SERVER_ERROR",
       isOperational: false,
     };
-  }
 
   private logError(
     error: Error | BaseError,
@@ -343,15 +316,12 @@ export class ErrorHandler {
     } else {
       this.logger.error("Unexpected Error:", errorInfo);
     }
-  }
 
   public isOperationalError(error: Error): boolean {
     if (error instanceof BaseError) {
       return error.isOperational;
-    }
     return false;
   }
-}
 
 // Error Factory
 export class ErrorFactory {
@@ -361,49 +331,42 @@ export class ErrorFactory {
     context?: Record<string, any>,
   ): ValidationError {
     return new ValidationError(message, field, context);
-  }
 
   public static createAuthenticationError(
     message?: string,
     context?: Record<string, any>,
   ): AuthenticationError {
     return new AuthenticationError(message, context);
-  }
 
   public static createAuthorizationError(
     message?: string,
     context?: Record<string, any>,
   ): AuthorizationError {
     return new AuthorizationError(message, context);
-  }
 
   public static createNotFoundError(
     message?: string,
     context?: Record<string, any>,
   ): NotFoundError {
     return new NotFoundError(message, context);
-  }
 
   public static createConflictError(
     message: string,
     context?: Record<string, any>,
   ): ConflictError {
     return new ConflictError(message, context);
-  }
 
   public static createBusinessLogicError(
     message: string,
     context?: Record<string, any>,
   ): BusinessLogicError {
     return new BusinessLogicError(message, context);
-  }
 
   public static createDatabaseError(
     message?: string,
     context?: Record<string, any>,
   ): DatabaseError {
     return new DatabaseError(message, context);
-  }
 
   public static createExternalServiceError(
     message?: string,
@@ -412,7 +375,6 @@ export class ErrorFactory {
   ): ExternalServiceError {
     return new ExternalServiceError(message, serviceName, context);
   }
-}
 
 // Error Response Formatter
 export class ErrorResponseFormatter {
@@ -446,7 +408,6 @@ export class ErrorResponseFormatter {
       },
     };
   }
-}
 
 // Async Error Wrapper
 export const asyncHandler = (fn: Function) => {
@@ -465,4 +426,3 @@ export class ErrorBoundary extends Error {
     super(message);
     this.name = "ErrorBoundary";
   }
-}

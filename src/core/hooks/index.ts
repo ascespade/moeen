@@ -66,7 +66,6 @@ export const useAuth = () => {
       if (response.success && response.data) {
         updateUser(response.data);
         return { success: true };
-      }
       return { success: false };
     } catch (error) {
       return { success: false };
@@ -216,7 +215,6 @@ export const usePatients = () => {
         if (response.success && response.data) {
           setPatients(response.data);
           return { success: true, data: response.data };
-        }
         return { success: false, error: response.error };
       } catch (error) {
         return {
@@ -235,7 +233,6 @@ export const usePatients = () => {
         if (response.success && response.data) {
           addPatient(response.data);
           return { success: true, data: response.data };
-        }
         return { success: false, error: response.error };
       } catch (error) {
         return {
@@ -254,7 +251,6 @@ export const usePatients = () => {
         if (response.success && response.data) {
           updatePatient(id, response.data);
           return { success: true, data: response.data };
-        }
         return { success: false, error: response.error };
       } catch (error) {
         return {
@@ -291,7 +287,6 @@ export const useAppointments = () => {
         if (response.success && response.data) {
           setAppointments(response.data);
           return { success: true, data: response.data };
-        }
         return { success: false, error: response.error };
       } catch (error) {
         return {
@@ -310,7 +305,6 @@ export const useAppointments = () => {
         if (response.success && response.data) {
           addAppointment(response.data);
           return { success: true, data: response.data };
-        }
         return { success: false, error: response.error };
       } catch (error) {
         return {
@@ -329,7 +323,6 @@ export const useAppointments = () => {
         if (response.success && response.data) {
           updateAppointment(id, response.data);
           return { success: true, data: response.data };
-        }
         return { success: false, error: response.error };
       } catch (error) {
         return {
@@ -484,10 +477,8 @@ export const useSearch = <T>(
         const value = item[field];
         if (typeof value === "string") {
           return value.toLowerCase().includes(searchTerm.toLowerCase());
-        }
         if (typeof value === "number") {
           return value.toString().includes(searchTerm);
-        }
         return false;
       }),
     );

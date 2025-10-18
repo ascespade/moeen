@@ -37,7 +37,6 @@ export async function POST(request: NextRequest) {
     );
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const body = await request.json();
@@ -52,7 +51,6 @@ export async function POST(request: NextRequest) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     const {
       patientId,
@@ -78,7 +76,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 409 },
       );
-    }
 
     // Check for conflicts
     const conflicts = await checkAppointmentConflicts(
@@ -93,7 +90,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 409 },
       );
-    }
 
     // Verify patient exists and is active
     const { data: patient, error: patientError } = await supabase
@@ -104,14 +100,12 @@ export async function POST(request: NextRequest) {
 
     if (patientError || !patient) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
-    }
 
     if (!patient.isActivated) {
       return NextResponse.json(
         { error: "Patient account not activated" },
         { status: 400 },
       );
-    }
 
     // Verify doctor exists and is available
     const { data: doctor, error: doctorError } = await supabase
@@ -122,7 +116,6 @@ export async function POST(request: NextRequest) {
 
     if (doctorError || !doctor) {
       return NextResponse.json({ error: "Doctor not found" }, { status: 404 });
-    }
 
     // Create appointment with full tracking
     const { data: appointment, error: appointmentError } = await supabase
@@ -150,7 +143,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to create appointment" },
         { status: 500 },
       );
-    }
 
     // Create audit log with full tracking
     await supabase.from("audit_logs").insert({
@@ -185,7 +177,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 async function checkDoctorAvailability(
   doctorId: string,
@@ -203,7 +194,6 @@ async function checkDoctorAvailability(
 
   if (!doctor?.schedule) {
     return { available: false, conflicts: ["No schedule configured"] };
-  }
 
   const appointmentDate = new Date(scheduledAt);
   const dayOfWeek = appointmentDate.getDay();
@@ -213,15 +203,12 @@ async function checkDoctorAvailability(
   const schedule = doctor.schedule[dayOfWeek];
   if (!schedule || !schedule.isWorking) {
     return { available: false, conflicts: ["Doctor not working on this day"] };
-  }
 
   // Check if appointment time is within working hours
   if (time < schedule.startTime || time > schedule.endTime) {
     return { available: false, conflicts: ["Outside working hours"] };
-  }
 
   return { available: true, conflicts: [] };
-}
 
 async function checkAppointmentConflicts(
   doctorId: string,
@@ -242,9 +229,7 @@ async function checkAppointmentConflicts(
     .lte("scheduledAt", endTime.toISOString());
 
   return conflicts || [];
-}
 
 async function sendAppointmentConfirmation(appointmentId: string) {
   // This will be implemented in the notification system
   console.log(`Sending appointment confirmation for ${appointmentId}`);
-}

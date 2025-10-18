@@ -38,23 +38,19 @@ export async function GET(request: NextRequest) {
       query = query.or(
         `first_name.ilike.%${search}%,last_name.ilike.%${search}%,phone.ilike.%${search}%`,
       );
-    }
 
     if (gender) {
       query = query.eq("gender", gender);
-    }
 
     if (age_min) {
       const min_date = new Date();
       min_date.setFullYear(min_date.getFullYear() - parseInt(age_min));
       query = query.lte("date_of_birth", min_date.toISOString().split("T")[0]);
-    }
 
     if (age_max) {
       const max_date = new Date();
       max_date.setFullYear(max_date.getFullYear() - parseInt(age_max));
       query = query.gte("date_of_birth", max_date.toISOString().split("T")[0]);
-    }
 
     // تطبيق الصفحات
     const from = (page - 1) * limit;
@@ -65,7 +61,6 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({
       patients,
@@ -82,7 +77,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 // POST /api/healthcare/patients - إنشاء مريض جديد
 export async function POST(request: NextRequest) {
@@ -127,7 +121,6 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({ patient }, { status: 201 });
   } catch (error) {
@@ -136,4 +129,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

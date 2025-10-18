@@ -58,7 +58,6 @@ ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
 CMD ["node", "server.js"]`;
-  }
 
   static generateDockerCompose(): string {
     return `version: '3.8'
@@ -115,17 +114,14 @@ services:
 volumes:
   postgres_data:
   redis_data:`;
-  }
 
   static generateNginxConfig(): string {
     return `events {
     worker_connections 1024;
-}
 
 http {
     upstream app {
         server app:3000;
-    }
 
     server {
         listen 80;
@@ -133,7 +129,6 @@ http {
 
         # Redirect HTTP to HTTPS
         return 301 https://$server_name$request_uri;
-    }
 
     server {
         listen 443 ssl http2;
@@ -163,7 +158,6 @@ http {
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto $scheme;
             proxy_cache_bypass $http_upgrade;
-        }
 
         location /api/ {
             limit_req zone=api burst=20 nodelay;
@@ -173,7 +167,6 @@ http {
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto $scheme;
-        }
 
         location /api/auth/login {
             limit_req zone=login burst=5 nodelay;
@@ -183,7 +176,6 @@ http {
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto $scheme;
-        }
 
         # Static files caching
         location ~* \\.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
@@ -193,7 +185,6 @@ http {
         }
     }
 }`;
-  }
 
   static generateDockerIgnore(): string {
     return `# Dependencies
@@ -285,7 +276,6 @@ jspm_packages/
 
 # TernJS port file
 .tern-port`;
-  }
 
   static generateEnvironmentTemplate(): string {
     return `# Database
@@ -342,7 +332,6 @@ TRUSTED_PROXIES=127.0.0.1
 # Monitoring
 SENTRY_DSN=your-sentry-dsn
 NEW_RELIC_LICENSE_KEY=your-new-relic-license-key`;
-  }
 
   static generateDeploymentScripts(): void {
     const scripts = {
@@ -427,7 +416,6 @@ echo "✅ Backup completed: $BACKUP_DIR"`,
     });
 
     logger.info("Docker configuration files generated successfully");
-  }
 
   static generateAll(): void {
     try {
@@ -470,7 +458,6 @@ echo "✅ Backup completed: $BACKUP_DIR"`,
       throw error;
     }
   }
-}
 
 // Export for use
 

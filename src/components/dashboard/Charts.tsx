@@ -62,7 +62,6 @@ export function ChartsA() {
       </svg>
     </div>
   );
-}
 
 export function ChartsB() {
   const maxY =
@@ -85,7 +84,6 @@ export function ChartsB() {
       ))}
     </div>
   );
-}
 
 export function ChartsC() {
   const total = pie.reduce((a, b) => a + b.value, 0);
@@ -124,5 +122,4 @@ export function ChartsC() {
       </div>
     </div>
   );
-}
 export default ChartsA;

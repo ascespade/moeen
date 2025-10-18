@@ -183,13 +183,11 @@ export function validateData<T>(
           (err) => `${err.path.join(".")}: ${err.message}`,
         ),
       };
-    }
     return {
       success: false,
       errors: ["Validation failed"],
     };
   }
-}
 
 export function validateQueryParams<T>(
   schema: z.ZodSchema<T>,
@@ -206,7 +204,5 @@ export function validateQueryParams<T>(
     } else {
       params[key] = value;
     }
-  }
 
   return validateData(schema, params);
-}

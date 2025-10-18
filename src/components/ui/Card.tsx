@@ -14,7 +14,6 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   padding?: "none" | "sm" | "md" | "lg";
   hover?: boolean;
   clickable?: boolean;
-}
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
   (
@@ -71,7 +70,6 @@ export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   subtitle?: string;
   action?: React.ReactNode;
-}
 
 const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className, title, subtitle, action, children, ...props }, ref) => (

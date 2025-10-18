@@ -14,46 +14,39 @@ export interface WhatsAppConfig {
   access_token: string;
   phone_number_id: string;
   webhook_verify_token: string;
-}
 
 export interface SMSConfig {
   account_sid: string;
   auth_token: string;
   from_number: string;
   api_url?: string; // Optional for Twilio, required for other providers
-}
 
 export interface EmailConfig {
   api_key: string;
   from_email: string;
   from_name: string;
   provider?: string; // 'sendgrid', 'mailgun', 'ses', etc.
-}
 
 export interface GoogleCalendarConfig {
   client_id: string;
   client_secret: string;
   refresh_token: string;
   calendar_id: string;
-}
 
 export interface SlackConfig {
   webhook_url: string;
   channel: string;
   bot_token?: string;
-}
 
 export interface SehaConfig {
   api_url: string;
   api_key: string;
   facility_id: string;
-}
 
 export interface TatmanConfig {
   api_url: string;
   api_key: string;
   provider_id: string;
-}
 
 // ================================================================
 // LOGGING FUNCTION
@@ -88,7 +81,6 @@ export async function logIntegrationTest(
   if (error) {
     console.error("Error logging integration test:", error);
   }
-}
 
 // ================================================================
 // WHATSAPP TESTING
@@ -125,7 +117,6 @@ export async function testWhatsAppConnection(
         status_code: response.status,
         duration_ms: durationMs,
       };
-    }
 
     const data = await response.json();
 
@@ -143,7 +134,6 @@ export async function testWhatsAppConnection(
       duration_ms: durationMs,
     };
   }
-}
 
 // ================================================================
 // SMS TESTING (Twilio)
@@ -182,7 +172,6 @@ export async function testSmsConnection(config: SMSConfig): Promise<any> {
         status_code: response.status,
         duration_ms: durationMs,
       };
-    }
 
     const data = await response.json();
 
@@ -200,7 +189,6 @@ export async function testSmsConnection(config: SMSConfig): Promise<any> {
       duration_ms: durationMs,
     };
   }
-}
 
 // ================================================================
 // EMAIL TESTING (SendGrid)
@@ -232,7 +220,6 @@ export async function testEmailConnection(config: EmailConfig): Promise<any> {
         status_code: response.status,
         duration_ms: durationMs,
       };
-    }
 
     const data = await response.json();
 
@@ -250,7 +237,6 @@ export async function testEmailConnection(config: EmailConfig): Promise<any> {
       duration_ms: durationMs,
     };
   }
-}
 
 // ================================================================
 // GOOGLE CALENDAR TESTING
@@ -289,7 +275,6 @@ export async function testGoogleCalendarConnection(
         status_code: tokenResponse.status,
         duration_ms: durationMs,
       };
-    }
 
     const tokenData = await tokenResponse.json();
     const accessToken = tokenData.access_token;
@@ -316,7 +301,6 @@ export async function testGoogleCalendarConnection(
         status_code: calendarResponse.status,
         duration_ms: durationMs,
       };
-    }
 
     const data = await calendarResponse.json();
 
@@ -334,7 +318,6 @@ export async function testGoogleCalendarConnection(
       duration_ms: durationMs,
     };
   }
-}
 
 // ================================================================
 // SLACK TESTING
@@ -369,7 +352,6 @@ export async function testSlackConnection(config: SlackConfig): Promise<any> {
         status_code: response.status,
         duration_ms: durationMs,
       };
-    }
 
     return {
       success: true,
@@ -384,7 +366,6 @@ export async function testSlackConnection(config: SlackConfig): Promise<any> {
       duration_ms: durationMs,
     };
   }
-}
 
 // ================================================================
 // SEHA PLATFORM TESTING
@@ -419,7 +400,6 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
         status_code: response.status,
         duration_ms: durationMs,
       };
-    }
 
     const data = await response.json();
 
@@ -437,7 +417,6 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
       duration_ms: durationMs,
     };
   }
-}
 
 // ================================================================
 // TATMAN INSURANCE TESTING
@@ -472,7 +451,6 @@ export async function testTatmanConnection(config: TatmanConfig): Promise<any> {
         status_code: response.status,
         duration_ms: durationMs,
       };
-    }
 
     const data = await response.json();
 
@@ -490,4 +468,3 @@ export async function testTatmanConnection(config: TatmanConfig): Promise<any> {
       duration_ms: durationMs,
     };
   }
-}

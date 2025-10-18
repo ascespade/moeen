@@ -37,6 +37,5 @@ export function useI18n(locale: "ar" | "en" = "ar", ns: string = "common") {
   const t = (key: string, fallback?: string) =>
     messages[key] ?? fallback ?? key;
   return { t, messages, loading };
-}
 
 export default useI18n;

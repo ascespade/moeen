@@ -7,7 +7,6 @@ interface InsuranceProvider {
   apiKey: string;
   supportedOperations: string[];
   isActive: boolean;
-}
 
 interface ClaimData {
   patientId: string;
@@ -18,7 +17,6 @@ interface ClaimData {
   diagnosis?: string;
   treatment?: string;
   attachments?: string[];
-}
 
 interface ClaimResult {
   success: boolean;
@@ -26,14 +24,12 @@ interface ClaimResult {
   status?: string;
   error?: string;
   referenceNumber?: string;
-}
 
 export class InsuranceProviderService {
   private providers: Map<string, InsuranceProvider> = new Map();
 
   constructor() {
     this.initializeProviders();
-  }
 
   private initializeProviders() {
     const providers: InsuranceProvider[] = [
@@ -68,7 +64,6 @@ export class InsuranceProviderService {
     providers.forEach((provider) => {
       this.providers.set(provider.code, provider);
     });
-  }
 
   async verifyMember(
     providerCode: string,
@@ -78,7 +73,6 @@ export class InsuranceProviderService {
     const provider = this.providers.get(providerCode);
     if (!provider || !provider.isActive) {
       return { success: false, error: "Provider not found or inactive" };
-    }
 
     try {
       const response = await fetch(`${provider.apiEndpoint}/members/verify`, {
@@ -100,7 +94,6 @@ export class InsuranceProviderService {
           success: false,
           error: result.message || "Member verification failed",
         };
-      }
 
       return {
         success: true,
@@ -113,7 +106,6 @@ export class InsuranceProviderService {
         error: error instanceof Error ? error.message : "Verification failed",
       };
     }
-  }
 
   async createClaim(
     providerCode: string,
@@ -122,7 +114,6 @@ export class InsuranceProviderService {
     const provider = this.providers.get(providerCode);
     if (!provider || !provider.isActive) {
       return { success: false, error: "Provider not found or inactive" };
-    }
 
     try {
       const response = await fetch(`${provider.apiEndpoint}/claims`, {
@@ -149,7 +140,6 @@ export class InsuranceProviderService {
           success: false,
           error: result.message || "Claim creation failed",
         };
-      }
 
       return {
         success: true,
@@ -163,7 +153,6 @@ export class InsuranceProviderService {
         error: error instanceof Error ? error.message : "Claim creation failed",
       };
     }
-  }
 
   async checkClaimStatus(
     providerCode: string,
@@ -172,7 +161,6 @@ export class InsuranceProviderService {
     const provider = this.providers.get(providerCode);
     if (!provider || !provider.isActive) {
       return { success: false, error: "Provider not found or inactive" };
-    }
 
     try {
       const response = await fetch(
@@ -191,7 +179,6 @@ export class InsuranceProviderService {
           success: false,
           error: result.message || "Status check failed",
         };
-      }
 
       return {
         success: true,
@@ -205,7 +192,6 @@ export class InsuranceProviderService {
         error: error instanceof Error ? error.message : "Status check failed",
       };
     }
-  }
 
   async submitClaim(
     providerCode: string,
@@ -214,7 +200,6 @@ export class InsuranceProviderService {
     const provider = this.providers.get(providerCode);
     if (!provider || !provider.isActive) {
       return { success: false, error: "Provider not found or inactive" };
-    }
 
     try {
       const response = await fetch(
@@ -234,7 +219,6 @@ export class InsuranceProviderService {
           success: false,
           error: result.message || "Claim submission failed",
         };
-      }
 
       return {
         success: true,
@@ -249,15 +233,12 @@ export class InsuranceProviderService {
           error instanceof Error ? error.message : "Claim submission failed",
       };
     }
-  }
 
   getProviders(): InsuranceProvider[] {
     return Array.from(this.providers.values()).filter((p) => p.isActive);
-  }
 
   getProvider(code: string): InsuranceProvider | undefined {
     return this.providers.get(code);
   }
-}
 
 export const insuranceService = new InsuranceProviderService();

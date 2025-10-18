@@ -15,11 +15,9 @@ export default function KeywordEditor({
     if (!v) return;
     onChange(Array.from(new Set([...(keywords || []), v])));
     setValue("");
-  }
 
   function remove(k: string) {
     onChange((keywords || []).filter((x) => x !== k));
-  }
 
   return (
     <div className="grid gap-3">
@@ -50,4 +48,3 @@ export default function KeywordEditor({
       </div>
     </div>
   );
-}

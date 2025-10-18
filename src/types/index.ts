@@ -7,7 +7,6 @@ export interface User {
   avatar?: string;
   createdAt: Date;
   updatedAt: Date;
-}
 
 export interface Channel {
   id: string;
@@ -17,7 +16,6 @@ export interface Channel {
   members: string[];
   createdAt: Date;
   updatedAt: Date;
-}
 
 export interface Message {
   id: string;
@@ -27,7 +25,6 @@ export interface Message {
   timestamp: Date;
   edited?: boolean;
   deleted?: boolean;
-}
 
 export interface Conversation {
   id: string;
@@ -36,21 +33,18 @@ export interface Conversation {
   unreadCount: number;
   createdAt: Date;
   updatedAt: Date;
-}
 
 export interface ApiResponse<T = any> {
   success: boolean;
   data?: T;
   error?: string;
   message?: string;
-}
 
 export interface PaginationParams {
   page: number;
   limit: number;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
-}
 
 export interface PaginatedResponse<T> extends ApiResponse<T[]> {
   pagination: {
@@ -59,13 +53,11 @@ export interface PaginatedResponse<T> extends ApiResponse<T[]> {
     total: number;
     totalPages: number;
   };
-}
 
 // Component Props Types
 export interface BaseComponentProps {
   className?: string;
   children?: React.ReactNode;
-}
 
 export interface ButtonProps extends BaseComponentProps {
   variant?: "primary" | "secondary" | "danger" | "ghost";
@@ -73,7 +65,6 @@ export interface ButtonProps extends BaseComponentProps {
   disabled?: boolean;
   loading?: boolean;
   onClick?: () => void;
-}
 
 export interface InputProps extends BaseComponentProps {
   type?: "text" | "email" | "password" | "number";
@@ -82,7 +73,6 @@ export interface InputProps extends BaseComponentProps {
   onChange?: (value: string) => void;
   error?: string;
   disabled?: boolean;
-}
 
 // Dashboard Types
 export interface DashboardStats {
@@ -90,7 +80,6 @@ export interface DashboardStats {
   totalChannels: number;
   totalMessages: number;
   activeUsers: number;
-}
 
 export interface ChartData {
   labels: string[];
@@ -100,7 +89,6 @@ export interface ChartData {
     backgroundColor?: string;
     borderColor?: string;
   }[];
-}
 
 // Settings Types
 export interface AppSettings {
@@ -115,28 +103,24 @@ export interface AppSettings {
     showOnlineStatus: boolean;
     allowDirectMessages: boolean;
   };
-}
 
 // Error Types
 export interface AppError {
   code: string;
   message: string;
   details?: any;
-}
 
 // Form Types
 export interface LoginForm {
   email: string;
   password: string;
   rememberMe?: boolean;
-}
 
 export interface RegisterForm {
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
-}
 
 // Webhook Types
 export interface WebhookEvent {
@@ -145,4 +129,3 @@ export interface WebhookEvent {
   data: any;
   timestamp: Date;
   processed: boolean;
-}

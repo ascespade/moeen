@@ -9,7 +9,6 @@ interface EmptyStateProps {
     onClick: () => void;
   };
   className?: string;
-}
 
 export default function EmptyState({
   icon = "📋",
@@ -39,4 +38,3 @@ export default function EmptyState({
       )}
     </div>
   );
-}

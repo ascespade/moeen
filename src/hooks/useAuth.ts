@@ -17,7 +17,6 @@ interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-}
 
 interface AuthActions {
   login: (user: User, token: string) => void;
@@ -28,7 +27,6 @@ interface AuthActions {
     password: string,
     rememberMe?: boolean,
   ) => Promise<{ success: boolean }>;
-}
 
 export const useAuth = (): AuthState & AuthActions => {
   const [user, setUserState] = useState<User | null>(null);
@@ -78,7 +76,6 @@ export const useAuth = (): AuthState & AuthActions => {
 
         if (!response.ok) {
           throw new Error(data.error || "Login failed");
-        }
 
         if (data.success) {
           login(data.data.user, data.data.token);
@@ -166,7 +163,6 @@ export const useRole = (requiredRole: string | string[]) => {
 
     if (Array.isArray(requiredRole)) {
       return hasAnyRole(requiredRole);
-    }
 
     return hasRole(requiredRole);
   }, [user, requiredRole, hasRole, hasAnyRole]);

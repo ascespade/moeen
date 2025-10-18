@@ -4,21 +4,18 @@ interface EmailTemplate {
   subject: string;
   html: string;
   text: string;
-}
 
 interface EmailData {
   to: string;
   template: string;
   data: Record<string, any>;
   language?: "ar" | "en";
-}
 
 export class EmailNotificationService {
   private templates: Map<string, EmailTemplate> = new Map();
 
   constructor() {
     this.initializeTemplates();
-  }
 
   private initializeTemplates() {
     // Appointment confirmation template
@@ -121,7 +118,6 @@ export class EmailNotificationService {
         شكراً لاختياركم مركز الحمام.
       `,
     });
-  }
 
   async sendEmail(
     emailData: EmailData,
@@ -130,7 +126,6 @@ export class EmailNotificationService {
       const template = this.templates.get(emailData.template);
       if (!template) {
         return { success: false, error: "Template not found" };
-      }
 
       // Replace template variables
       let subject = template.subject;
@@ -153,7 +148,6 @@ export class EmailNotificationService {
           text,
         });
         return { success: true };
-      }
 
       // TODO: Implement actual email sending service
       // await emailService.send({
@@ -170,7 +164,6 @@ export class EmailNotificationService {
         error: error instanceof Error ? error.message : "Email sending failed",
       };
     }
-  }
 
   async sendAppointmentConfirmation(data: {
     patientEmail: string;
@@ -186,7 +179,6 @@ export class EmailNotificationService {
       data,
       language: "ar",
     });
-  }
 
   async sendPaymentConfirmation(data: {
     patientEmail: string;
@@ -202,7 +194,6 @@ export class EmailNotificationService {
       data,
       language: "ar",
     });
-  }
 
   async sendAppointmentReminder(data: {
     patientEmail: string;
@@ -218,6 +209,5 @@ export class EmailNotificationService {
       language: "ar",
     });
   }
-}
 
 export const emailService = new EmailNotificationService();

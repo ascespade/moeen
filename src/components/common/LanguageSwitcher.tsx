@@ -12,7 +12,6 @@ interface LanguageSwitcherProps {
   showLabel?: boolean;
   size?: "sm" | "md" | "lg";
   variant?: "button" | "dropdown";
-}
 
 export default function LanguageSwitcher({
   className = "",
@@ -106,7 +105,6 @@ export default function LanguageSwitcher({
         </select>
       </div>
     );
-  }
 
   return (
     <button
@@ -129,4 +127,3 @@ export default function LanguageSwitcher({
       )}
     </button>
   );
-}

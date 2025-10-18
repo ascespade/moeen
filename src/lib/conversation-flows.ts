@@ -10,31 +10,24 @@ export class IntentAnalyzer {
     // Medical intents
     if (lowerMessage.includes("appointment") || lowerMessage.includes("موعد")) {
       return "appointment";
-    }
     if (lowerMessage.includes("emergency") || lowerMessage.includes("طوارئ")) {
       return "emergency";
-    }
     if (
       lowerMessage.includes("prescription") ||
       lowerMessage.includes("وصفة")
     ) {
       return "prescription";
-    }
     if (lowerMessage.includes("payment") || lowerMessage.includes("دفع")) {
       return "payment";
-    }
 
     // General intents
     if (lowerMessage.includes("hello") || lowerMessage.includes("مرحبا")) {
       return "greeting";
-    }
     if (lowerMessage.includes("help") || lowerMessage.includes("مساعدة")) {
       return "help";
-    }
 
     return "general";
   }
-}
 
 // Action Executor
 export class ActionExecutor {
@@ -53,7 +46,6 @@ export class ActionExecutor {
         return { success: false, error: "Unknown action" };
     }
   }
-}
 
 export interface FlowStep {
   id: string;
@@ -71,14 +63,12 @@ export interface FlowStep {
   slackChannel?: string;
   whatsappTemplate?: string;
   notificationType?: "appointment" | "reminder" | "emergency" | "general";
-}
 
 export interface FlowCondition {
   field: string;
   operator: "equals" | "contains" | "greater_than" | "less_than";
   value: any;
   nextStep: string;
-}
 
 export interface ConversationFlow {
   id: string;
@@ -86,14 +76,12 @@ export interface ConversationFlow {
   description: string;
   steps: FlowStep[];
   entryPoints: string[];
-}
 
 export class FlowManager {
   private flows: Map<string, ConversationFlow> = new Map();
 
   constructor() {
     this.initializeFlows();
-  }
 
   private initializeFlows() {
     // New Beneficiary Flow
@@ -363,12 +351,10 @@ export class FlowManager {
         },
       ],
     });
-  }
 
   // Get flow by ID
   getFlow(flowId: string): ConversationFlow | undefined {
     return this.flows.get(flowId);
-  }
 
   // Get flow by entry point
   getFlowByEntryPoint(entryPoint: string): ConversationFlow | undefined {
@@ -376,9 +362,7 @@ export class FlowManager {
       if (flow.entryPoints.includes(entryPoint)) {
         return flow;
       }
-    }
     return undefined;
-  }
 
   // Get next step in flow
   getNextStep(
@@ -399,15 +383,12 @@ export class FlowManager {
           return flow.steps.find((step) => step.id === condition.nextStep);
         }
       }
-    }
 
     // Return next step based on nextStep property
     if (currentStep.nextStep) {
       return flow.steps.find((step) => step.id === currentStep.nextStep);
-    }
 
     return undefined;
-  }
 
   // Execute step action (Slack notifications, WhatsApp sending, etc.)
   async executeStepAction(step: FlowStep, context: any = {}): Promise<boolean> {
@@ -422,12 +403,10 @@ export class FlowManager {
         default:
           // No action needed for other step types
           break;
-      }
       return true;
     } catch (error) {
       return false;
     }
-  }
 
   // Execute Slack notification
   private async executeSlackNotification(
@@ -453,7 +432,6 @@ export class FlowManager {
         console.error("Failed to send message:", await response.text());
       }
     } catch (error) {}
-  }
 
   // Execute WhatsApp send
   private async executeWhatsAppSend(
@@ -463,7 +441,6 @@ export class FlowManager {
     try {
       // This would integrate with the existing WhatsApp system
     } catch (error) {}
-  }
 
   // Evaluate condition
   private evaluateCondition(
@@ -484,25 +461,20 @@ export class FlowManager {
       default:
         return false;
     }
-  }
 
   // Get all available flows
   getAllFlows(): ConversationFlow[] {
     return Array.from(this.flows.values());
-  }
 
   // Add new flow
   addFlow(flow: ConversationFlow): void {
     this.flows.set(flow.id, flow);
-  }
 
   // Update existing flow
   updateFlow(flowId: string, flow: ConversationFlow): void {
     this.flows.set(flowId, flow);
-  }
 
   // Delete flow
   deleteFlow(flowId: string): void {
     this.flows.delete(flowId);
   }
-}

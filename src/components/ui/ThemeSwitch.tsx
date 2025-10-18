@@ -14,7 +14,6 @@ interface ThemeSwitchProps {
   size?: "sm" | "md" | "lg";
   showLabel?: boolean;
   className?: string;
-}
 
 export function ThemeSwitch({
   variant = "dropdown",
@@ -78,7 +77,6 @@ export function ThemeSwitch({
         )}
       </Button>
     );
-  }
 
   if (variant === "toggle") {
     return (
@@ -107,7 +105,6 @@ export function ThemeSwitch({
         />
       </div>
     );
-  }
 
   return (
     <div className={`relative ${className}`}>
@@ -170,5 +167,4 @@ export function ThemeSwitch({
       )}
     </div>
   );
-}
 export default ThemeSwitch;

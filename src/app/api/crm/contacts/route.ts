@@ -27,15 +27,12 @@ export async function GET(request: NextRequest) {
       query = query.or(
         `name.ilike.%${search}%,email.ilike.%${search}%,phone.ilike.%${search}%`,
       );
-    }
 
     if (status) {
       query = query.eq("customer_type", status);
-    }
 
     if (source) {
       query = query.eq("preferred_channel", source);
-    }
 
     // تطبيق الصفحات
     const from = (page - 1) * limit;
@@ -46,7 +43,6 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({
       contacts,
@@ -63,7 +59,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 // POST /api/crm/contacts - إنشاء جهة اتصال جديدة
 export async function POST(request: NextRequest) {
@@ -113,7 +108,6 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({ contact }, { status: 201 });
   } catch (error) {
@@ -122,4 +116,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

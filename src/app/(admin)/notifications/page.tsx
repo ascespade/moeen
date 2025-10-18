@@ -61,7 +61,6 @@ interface Notification {
     appointment_id?: string;
     therapy_session_id?: string;
   };
-}
 
 interface NotificationTemplate {
   id: string;
@@ -73,7 +72,6 @@ interface NotificationTemplate {
   variables: string[];
   is_active: boolean;
   created_at: string;
-}
 
 const NotificationsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -95,7 +93,6 @@ const NotificationsPage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadNotifications();
   }, [isAuthenticated, router]);
 
@@ -268,7 +265,6 @@ const NotificationsPage: React.FC = () => {
               ...notif,
               status: "read" as const,
               read_at: new Date().toISOString(),
-            }
           : notif,
       ),
     );
@@ -306,7 +302,6 @@ const NotificationsPage: React.FC = () => {
 
   if (!isAuthenticated) {
     return null;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8" dir="rtl">
@@ -372,7 +367,6 @@ const NotificationsPage: React.FC = () => {
                   <div className="text-2xl font-bold">
                       notifications.filter((n) => n.type === "appointment")
                         .length
-                    }
                   </div>
                   <div className="text-sm text-gray-600">مواعيد</div>
                 </div>

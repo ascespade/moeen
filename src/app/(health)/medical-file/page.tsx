@@ -42,7 +42,6 @@ interface MedicalRecord {
     endDate?: string;
     therapist: string;
   }[];
-}
 
 const mockRecords: MedicalRecord[] = [
     id: "1",
@@ -246,7 +245,6 @@ export default function MedicalFilePage() {
           )}
         </div>
       );
-    }
     return (
       <div className="flex items-center gap-2 text-brand-success">
         <span className="h-2 w-2 rounded-full bg-brand-success"></span>
@@ -265,7 +263,6 @@ export default function MedicalFilePage() {
           </span>
         </div>
       );
-    }
     return (
       <div className="flex items-center gap-2 text-brand-success">
         <span className="h-2 w-2 rounded-full bg-brand-success"></span>
@@ -284,7 +281,6 @@ export default function MedicalFilePage() {
       (monthDiff === 0 && today.getDate() < birthDate.getDate())
     ) {
       age--;
-    }
     return age;
   };
 
@@ -339,7 +335,6 @@ export default function MedicalFilePage() {
                 mockRecords.filter(
                   (r) => !r.isBlocked && !r.hasOutstandingBalance,
                 ).length
-              }
             </div>
             <div className="text-gray-600 dark:text-gray-300">ملفات نشطة</div>
           </Card>
@@ -815,4 +810,3 @@ export default function MedicalFilePage() {
       )}
     </div>
   );
-}

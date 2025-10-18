@@ -7,14 +7,12 @@ export function sanitizeHtml(html: string): string {
     ALLOWED_TAGS: ["b", "i", "em", "strong", "p", "br"],
     ALLOWED_ATTR: [],
   });
-}
 
 export function sanitizeText(text: string): string {
   return text
     .replace(/[<>]/g, "") // Remove potential HTML tags
     .trim()
     .slice(0, 1000); // Limit length
-}
 
 // Enhanced validation schemas
 export const validationSchemas = {
@@ -128,11 +126,9 @@ export function validateRequest<T>(schema: z.ZodSchema<T>) {
         throw new Error(
           `Validation error: ${error.issues.map((e) => e.message).join(", ")}`,
         );
-      }
       throw error;
     }
   };
-}
 
 // CSRF protection
 export function generateCSRFToken(): string {
@@ -140,13 +136,11 @@ export function generateCSRFToken(): string {
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15)
   );
-}
 
 export function validateCSRFToken(
   token: string,
   sessionToken: string,
 ): boolean {
   return token === sessionToken && token.length > 0;
-}
 
 export default validationSchemas;

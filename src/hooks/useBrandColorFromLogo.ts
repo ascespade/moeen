@@ -33,7 +33,6 @@ export default function useBrandColorFromLogo(logoPath: string) {
           g += gg;
           b += bb;
           n++;
-        }
         if (n === 0) return;
         r = Math.round(r / n);
         g = Math.round(g / n);
@@ -59,4 +58,3 @@ export default function useBrandColorFromLogo(logoPath: string) {
       // no-op: keep defaults
     }
   }, [logoPath]);
-}

@@ -15,7 +15,6 @@ export async function GET(request: NextRequest) {
         { error: "sessionTypeId and date are required" },
         { status: 400 },
       );
-    }
 
     const supabase = await createClient();
 
@@ -31,7 +30,6 @@ export async function GET(request: NextRequest) {
         { error: "Session type not found" },
         { status: 404 },
       );
-    }
 
     // 2. Get day of week (0=Sunday)
     const dateObj = new Date(date);
@@ -60,7 +58,6 @@ export async function GET(request: NextRequest) {
 
     if (therapistId) {
       therapistsQuery = therapistsQuery.eq("therapist_id", therapistId);
-    }
 
     const { data: schedules, error: schedulesError } = await therapistsQuery;
 
@@ -70,7 +67,6 @@ export async function GET(request: NextRequest) {
         { error: "Error fetching schedules" },
         { status: 500 },
       );
-    }
 
     if (!schedules || schedules.length === 0) {
       return NextResponse.json({
@@ -78,7 +74,6 @@ export async function GET(request: NextRequest) {
         slots: [],
         message: "No therapists available for this session type on this day",
       });
-    }
 
     // 4. For each therapist, get their booked appointments
     const { data: bookedAppointments, error: appointmentsError } =
@@ -94,7 +89,6 @@ export async function GET(request: NextRequest) {
 
     if (appointmentsError) {
       logger.error("Error fetching appointments", appointmentsError);
-    }
 
     // 5. Generate available slots
     const slots: any[] = [];
@@ -141,7 +135,6 @@ export async function GET(request: NextRequest) {
           });
         }
       }
-    }
 
     // Sort by time
     slots.sort((a, b) => a.startTime.localeCompare(b.startTime));
@@ -170,7 +163,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 // Helper functions
 
@@ -186,12 +178,9 @@ function generateTimeSlots(
     const next = addMinutes(current, duration);
     if (next <= endTime) {
       slots.push({ start: current, end: next });
-    }
     current = addMinutes(current, 15); // 15 minutes increment
-  }
 
   return slots;
-}
 
 function addMinutes(time: string, minutes: number): string {
   const [hours, mins] = time.split(":").map(Number);
@@ -199,7 +188,6 @@ function addMinutes(time: string, minutes: number): string {
   const newHours = Math.floor(totalMinutes / 60);
   const newMins = totalMinutes % 60;
   return `${String(newHours).padStart(2, "0")}:${String(newMins).padStart(2, "0")}`;
-}
 
 function timesOverlap(
   start1: string,
@@ -208,4 +196,3 @@ function timesOverlap(
   end2: string,
 ): boolean {
   return start1 < end2 && end1 > start2;
-}

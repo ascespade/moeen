@@ -48,11 +48,9 @@ export default function UserDashboard() {
         </div>
       </div>
     );
-  }
 
   if (!isAuthenticated) {
     return null;
-  }
 
   const stats = [
       title: "المواعيد القادمة",
@@ -239,4 +237,3 @@ export default function UserDashboard() {
       </main>
     </div>
   );
-}

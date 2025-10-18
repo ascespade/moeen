@@ -56,7 +56,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to create user: ${error.message}`);
     return data;
-  }
 
   async getUser(userId: string) {
     const { data, error } = await admin
@@ -67,7 +66,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to get user: ${error.message}`);
     return data;
-  }
 
   async getUserByPhone(phone: string) {
     const { data, error } = await admin
@@ -78,7 +76,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to get user by phone: ${error.message}`);
     return data;
-  }
 
   async updateUser(userId: string, updates: any) {
     const { data, error } = await admin
@@ -90,7 +87,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to update user: ${error.message}`);
     return data;
-  }
 
   async searchUsers(searchTerm: string, role?: string) {
     let query = supabaseAdmin
@@ -103,13 +99,11 @@ export class RealSupabaseManager {
 
     if (role) {
       query = query.eq("role", role);
-    }
 
     const { data, error } = await query;
 
     if (error) throw new Error(`Failed to search users: ${error.message}`);
     return data;
-  }
 
   // Doctor Management
   async createDoctor(doctorData: {
@@ -130,7 +124,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to create doctor: ${error.message}`);
     return data;
-  }
 
   async getDoctor(doctorId: string) {
     const { data, error } = await admin
@@ -146,7 +139,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to get doctor: ${error.message}`);
     return data;
-  }
 
   async getDoctorsBySpecialty(specialty: string) {
     const { data, error } = await admin
@@ -163,7 +155,6 @@ export class RealSupabaseManager {
     if (error)
       throw new Error(`Failed to get doctors by specialty: ${error.message}`);
     return data;
-  }
 
   // Patient Management
   async createPatient(patientData: {
@@ -186,7 +177,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to create patient: ${error.message}`);
     return data;
-  }
 
   async getPatient(patientId: string) {
     const { data, error } = await supabaseAdmin
@@ -204,7 +194,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to get patient: ${error.message}`);
     return data;
-  }
 
   async getPatientsByDoctor(doctorId: string) {
     const { data, error } = await supabaseAdmin
@@ -220,7 +209,6 @@ export class RealSupabaseManager {
     if (error)
       throw new Error(`Failed to get patients by doctor: ${error.message}`);
     return data;
-  }
 
   // Appointment Management
   async createAppointment(appointmentData: {
@@ -256,7 +244,6 @@ export class RealSupabaseManager {
     if (error)
       throw new Error(`Failed to create appointment: ${error.message}`);
     return data;
-  }
 
   async getAppointments(
     filters: {
@@ -298,7 +285,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to get appointments: ${error.message}`);
     return data;
-  }
 
   async updateAppointment(appointmentId: string, updates: any) {
     const { data, error } = await admin
@@ -311,7 +297,6 @@ export class RealSupabaseManager {
     if (error)
       throw new Error(`Failed to update appointment: ${error.message}`);
     return data;
-  }
 
   // Session Management
   async createSession(sessionData: {
@@ -346,7 +331,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to create session: ${error.message}`);
     return data;
-  }
 
   async getSessions(patientId: string, limit?: number) {
     let query = admin
@@ -369,7 +353,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to get sessions: ${error.message}`);
     return data;
-  }
 
   async updateSession(sessionId: string, updates: any) {
     const { data, error } = await admin
@@ -381,7 +364,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to update session: ${error.message}`);
     return data;
-  }
 
   // Conversation Management
   async logConversation(conversationData: {
@@ -408,7 +390,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to log conversation: ${error.message}`);
     return data;
-  }
 
   async getConversations(patientId: string, limit?: number) {
     let query = admin
@@ -423,7 +404,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to get conversations: ${error.message}`);
     return data;
-  }
 
   // Insurance Claims
   async createInsuranceClaim(claimData: {
@@ -446,7 +426,6 @@ export class RealSupabaseManager {
     if (error)
       throw new Error(`Failed to create insurance claim: ${error.message}`);
     return data;
-  }
 
   async getInsuranceClaims(patientId: string) {
     const { data, error } = await admin
@@ -458,7 +437,6 @@ export class RealSupabaseManager {
     if (error)
       throw new Error(`Failed to get insurance claims: ${error.message}`);
     return data;
-  }
 
   async updateInsuranceClaim(claimId: string, updates: any) {
     const { data, error } = await admin
@@ -471,7 +449,6 @@ export class RealSupabaseManager {
     if (error)
       throw new Error(`Failed to update insurance claim: ${error.message}`);
     return data;
-  }
 
   // Notifications
   async createNotification(notificationData: {
@@ -491,7 +468,6 @@ export class RealSupabaseManager {
     if (error)
       throw new Error(`Failed to create notification: ${error.message}`);
     return data;
-  }
 
   async getNotifications(userId: string, unreadOnly?: boolean) {
     let query = admin
@@ -506,7 +482,6 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to get notifications: ${error.message}`);
     return data;
-  }
 
   async markNotificationAsRead(notificationId: string) {
     const { data, error } = await admin
@@ -519,7 +494,6 @@ export class RealSupabaseManager {
     if (error)
       throw new Error(`Failed to mark notification as read: ${error.message}`);
     return data;
-  }
 
   // Analytics
   async getPatientStats() {
@@ -540,7 +514,6 @@ export class RealSupabaseManager {
     }).length;
 
     return { total, active, newLast30Days };
-  }
 
   async getAppointmentStats() {
     const { data, error } = await admin
@@ -563,7 +536,6 @@ export class RealSupabaseManager {
     }).length;
 
     return { total, completed, cancelled, upcoming };
-  }
 
   async getConversationStats() {
     const { data, error } = await admin
@@ -585,7 +557,6 @@ export class RealSupabaseManager {
     }).length;
 
     return { total, crisis, recent };
-  }
 
   // Health Check
   async healthCheck() {
@@ -611,7 +582,6 @@ export class RealSupabaseManager {
         timestamp: new Date().toISOString(),
       };
     }
-  }
 
   // Audit Logging
   async logAudit(auditData: {
@@ -632,9 +602,7 @@ export class RealSupabaseManager {
 
     if (error) {
       return null;
-    }
     return data;
   }
-}
 
 export const realDB = new RealSupabaseManager();

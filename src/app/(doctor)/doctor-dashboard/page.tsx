@@ -40,7 +40,6 @@ interface DoctorData {
     workingHours: string;
     breaks: string[];
   };
-}
 
 export default function DoctorDashboard() {
   const { t } = useT();
@@ -86,7 +85,6 @@ export default function DoctorDashboard() {
         <LoadingSpinner size="lg" />
       </div>
     );
-  }
 
   return (
     <ProtectedRoute allowedRoles={["doctor"]}>
@@ -204,7 +202,6 @@ export default function DoctorDashboard() {
                                 : appointment.status === "in_progress"
                                   ? "secondary"
                                   : "outline"
-                            }
                           >
                             {t(`appointment.status.${appointment.status}`)}
                           </Badge>
@@ -213,7 +210,6 @@ export default function DoctorDashboard() {
                               size="sm"
                               onClick={() =>
                                 handleStartAppointment(appointment.id)
-                              }
                             >
                               {t("doctor.actions.start_appointment")}
                             </Button>
@@ -226,7 +222,6 @@ export default function DoctorDashboard() {
                                 `/doctor/patients/${appointment.patientId}`,
                                 "_blank",
                               )
-                            }
                           >
                             {t("doctor.actions.view_file")}
                           </Button>
@@ -277,7 +272,6 @@ export default function DoctorDashboard() {
                               `/doctor/patients/${patient.id}`,
                               "_blank",
                             )
-                          }
                         >
                           {t("doctor.actions.view")}
                         </Button>
@@ -317,4 +311,3 @@ export default function DoctorDashboard() {
       </div>
     </ProtectedRoute>
   );
-}

@@ -9,7 +9,6 @@ export async function POST(request: NextRequest) {
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const formData = await request.formData();
     const file = formData.get("file") as File;
@@ -18,14 +17,12 @@ export async function POST(request: NextRequest) {
 
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
-    }
 
     if (
       !type ||
       !["medical_record", "insurance_claim", "profile"].includes(type)
     ) {
       return NextResponse.json({ error: "Invalid file type" }, { status: 400 });
-    }
 
     // Validate file size (10MB max)
     const maxSize = 10 * 1024 * 1024; // 10MB
@@ -34,7 +31,6 @@ export async function POST(request: NextRequest) {
         { error: "File too large. Maximum size is 10MB" },
         { status: 400 },
       );
-    }
 
     // Validate file type
     const allowedTypes = [
@@ -54,7 +50,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 },
       );
-    }
 
     const supabase = await createClient();
 
@@ -80,7 +75,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to upload file" },
         { status: 500 },
       );
-    }
 
     // Get public URL
     const { data: urlData } = supabase.storage
@@ -112,7 +106,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to save file metadata" },
         { status: 500 },
       );
-    }
 
     // Log file upload
     await supabase.from("audit_logs").insert({
@@ -146,7 +139,6 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -154,7 +146,6 @@ export async function GET(request: NextRequest) {
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const { searchParams } = new URL(request.url);
     const patientId = searchParams.get("patientId");
@@ -185,7 +176,6 @@ export async function GET(request: NextRequest) {
     // Role-based access control
     if (user.role === "patient") {
       query = query.eq("patients.user_id", user.id);
-    }
 
     const { data: files, error: filesError } = await query;
 
@@ -194,7 +184,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch files" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({ files: files || [] });
   } catch (error) {
@@ -203,4 +192,3 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}

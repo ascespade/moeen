@@ -25,7 +25,6 @@ export interface ButtonProps
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   fullWidth?: boolean;
-}
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (

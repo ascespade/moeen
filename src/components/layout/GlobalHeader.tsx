@@ -116,7 +116,6 @@ function ThemeLanguageSwitches() {
       </button>
     </>
   );
-}
 
 // Main Header Component
 export default function GlobalHeader() {
@@ -179,4 +178,3 @@ export default function GlobalHeader() {
       </div>
     </nav>
   );
-}

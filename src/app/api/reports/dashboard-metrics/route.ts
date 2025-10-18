@@ -9,7 +9,6 @@ export async function GET(request: NextRequest) {
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     // Only staff, supervisor, and admin can access reports
     if (!["staff", "supervisor", "admin"].includes(user.role)) {
@@ -17,7 +16,6 @@ export async function GET(request: NextRequest) {
         { error: "Insufficient permissions" },
         { status: 403 },
       );
-    }
 
     const { searchParams } = new URL(request.url);
     const period = searchParams.get("period") || "30"; // days
@@ -43,7 +41,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch patient data" },
         { status: 500 },
       );
-    }
 
     // Get appointment statistics
     const { data: appointments, error: appointmentsError } = await supabase
@@ -57,7 +54,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch appointment data" },
         { status: 500 },
       );
-    }
 
     // Get payment statistics
     const { data: payments, error: paymentsError } = await supabase
@@ -71,7 +67,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch payment data" },
         { status: 500 },
       );
-    }
 
     // Get insurance claims statistics
     const { data: claims, error: claimsError } = await supabase
@@ -85,7 +80,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch claims data" },
         { status: 500 },
       );
-    }
 
     // Calculate metrics
     const totalPatients = patients?.length || 0;
@@ -186,7 +180,6 @@ export async function GET(request: NextRequest) {
         appointments: dayAppointments,
         revenue: dayRevenue,
       });
-    }
 
     const metrics = {
       period: {
@@ -230,4 +223,3 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}

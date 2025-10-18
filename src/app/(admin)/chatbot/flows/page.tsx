@@ -17,7 +17,6 @@ interface Flow {
   tags: string[];
   messageCount: number;
   lastUsed?: string;
-}
 
 const mockFlows: Flow[] = [
     id: "1",
@@ -398,4 +397,3 @@ export default function ChatbotFlowsPage() {
       )}
     </div>
   );
-}

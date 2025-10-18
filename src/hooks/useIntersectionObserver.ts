@@ -7,7 +7,6 @@ interface UseIntersectionObserverOptions {
   root?: Element | null;
   rootMargin?: string;
   freezeOnceVisible?: boolean;
-}
 
 export const useIntersectionObserver = (
   options: UseIntersectionObserverOptions = {},
@@ -53,11 +52,9 @@ export const useIntersectionObserver = (
   useEffect(() => {
     if (prevNode.current) {
       observer.current?.unobserve(prevNode.current);
-    }
 
     if (node) {
       observer.current?.observe(node);
-    }
 
     prevNode.current = node;
   }, [node]);

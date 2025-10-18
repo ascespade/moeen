@@ -31,21 +31,18 @@ export interface MinistryHealthRecord {
     relationship: string;
     phone: string;
   };
-}
 
 export interface SehaIntegration {
   patientId: string;
   sehaId: string;
   lastSync: string;
   status: "active" | "inactive" | "pending";
-}
 
 export interface ShoonIntegration {
   patientId: string;
   shoonId: string;
   lastSync: string;
   status: "active" | "inactive" | "pending";
-}
 
 export interface TatmanIntegration {
   patientId: string;
@@ -54,7 +51,6 @@ export interface TatmanIntegration {
   policyNumber: string;
   coverageStatus: "active" | "inactive" | "expired";
   lastSync: string;
-}
 
 export class SaudiMinistryHealthIntegration {
   // Keep private properties but use them to satisfy noUnusedLocals with demonstration getters
@@ -69,7 +65,6 @@ export class SaudiMinistryHealthIntegration {
       process.env.SHOON_API_ENDPOINT || "https://api.shoon.sa";
     this.tatmanApiEndpoint =
       process.env.TATMAN_API_ENDPOINT || "https://api.tatman.sa";
-  }
 
   // Expose read-only endpoints for debugging and future use (prevents unused warnings)
   get endpoints() {
@@ -78,7 +73,6 @@ export class SaudiMinistryHealthIntegration {
       shoon: this.shoonApiEndpoint,
       tatman: this.tatmanApiEndpoint,
     } as const;
-  }
 
   // SEHA Integration - النظام الوطني الموحد للمعلومات الصحية
   async syncWithSeha(
@@ -109,7 +103,6 @@ export class SaudiMinistryHealthIntegration {
         status: "inactive",
       };
     }
-  }
 
   async getSehaHealthRecord(
     nationalId: string,
@@ -122,13 +115,11 @@ export class SaudiMinistryHealthIntegration {
 
       if (response.success) {
         return this.mapSehaToHealthRecord(response.data);
-      }
 
       return null;
     } catch (error) {
       return null;
     }
-  }
 
   // SHOON Integration - نظام شؤون المرضى
   async syncWithShoon(
@@ -159,7 +150,6 @@ export class SaudiMinistryHealthIntegration {
         status: "inactive",
       };
     }
-  }
 
   async getShoonPatientData(nationalId: string): Promise<any> {
     try {
@@ -171,7 +161,6 @@ export class SaudiMinistryHealthIntegration {
     } catch (error) {
       return null;
     }
-  }
 
   // TATMAN Integration - نظام تطمن للتأمين الصحي
   async syncWithTatman(
@@ -207,7 +196,6 @@ export class SaudiMinistryHealthIntegration {
         lastSync: new Date().toISOString(),
       };
     }
-  }
 
   async verifyTatmanCoverage(
     nationalId: string,
@@ -232,7 +220,6 @@ export class SaudiMinistryHealthIntegration {
           remainingAmount: response.data.remainingAmount,
           requiresApproval: response.data.requiresApproval,
         };
-      }
 
       return {
         covered: false,
@@ -248,7 +235,6 @@ export class SaudiMinistryHealthIntegration {
         requiresApproval: false,
       };
     }
-  }
 
   // Submit to Ministry Systems
   async submitToMinistry(
@@ -318,7 +304,6 @@ export class SaudiMinistryHealthIntegration {
     } catch (error) {}
 
     return results;
-  }
 
   // Ministry Health Regulations Compliance
   async validateMinistryCompliance(
@@ -337,17 +322,14 @@ export class SaudiMinistryHealthIntegration {
       !this.isValidSaudiNationalId(patientData.nationalId)
     ) {
       violations.push("رقم الهوية الوطنية غير صحيح");
-    }
 
     // Phone number validation
     if (patientData.phone && !this.isValidSaudiPhoneNumber(patientData.phone)) {
       violations.push("رقم الهاتف غير صحيح");
-    }
 
     // Address validation
     if (patientData.address && !this.isValidSaudiAddress(patientData.address)) {
       violations.push("العنوان غير مكتمل أو غير صحيح");
-    }
 
     // Insurance validation
     if (
@@ -355,7 +337,6 @@ export class SaudiMinistryHealthIntegration {
       !this.isValidInsuranceData(patientData.insurance)
     ) {
       violations.push("بيانات التأمين غير صحيحة أو منتهية الصلاحية");
-    }
 
     // Medical history validation
     if (
@@ -363,7 +344,6 @@ export class SaudiMinistryHealthIntegration {
       !this.isValidMedicalHistory(patientData.medicalHistory)
     ) {
       violations.push("السجل الطبي غير مكتمل");
-    }
 
     // Generate recommendations
     if (violations.length === 0) {
@@ -371,14 +351,12 @@ export class SaudiMinistryHealthIntegration {
     } else {
       recommendations.push("يرجى تصحيح الأخطاء المذكورة أعلاه");
       recommendations.push("تأكد من تحديث البيانات بانتظام");
-    }
 
     return {
       compliant: violations.length === 0,
       violations,
       recommendations,
     };
-  }
 
   // Utility Functions
   private mapSehaToHealthRecord(sehaData: any): MinistryHealthRecord {
@@ -415,21 +393,17 @@ export class SaudiMinistryHealthIntegration {
         phone: sehaData.emergencyContact.phone,
       },
     };
-  }
 
   private isValidSaudiNationalId(nationalId: string): boolean {
     const saudiIdRegex = /^[0-9]{10}$/;
     return saudiIdRegex.test(nationalId);
-  }
 
   private isValidSaudiPhoneNumber(phone: string): boolean {
     const saudiPhoneRegex = /^(\+966|966)[0-9]{9}$/;
     return saudiPhoneRegex.test(phone);
-  }
 
   private isValidSaudiAddress(address: any): boolean {
     return !!(address.city && address.district && address.street);
-  }
 
   private isValidInsuranceData(insurance: any): boolean {
     return !!(
@@ -437,7 +411,6 @@ export class SaudiMinistryHealthIntegration {
       insurance.policyNumber &&
       insurance.expiryDate
     );
-  }
 
   private isValidMedicalHistory(medicalHistory: any): boolean {
     return (
@@ -445,7 +418,6 @@ export class SaudiMinistryHealthIntegration {
       Array.isArray(medicalHistory.allergies) &&
       Array.isArray(medicalHistory.medications)
     );
-  }
 
   // API Call Methods
   private async callSehaAPI(
@@ -491,7 +463,6 @@ export class SaudiMinistryHealthIntegration {
         },
       },
     };
-  }
 
   private async callShoonAPI(
     method: string,
@@ -512,7 +483,6 @@ export class SaudiMinistryHealthIntegration {
         },
       },
     };
-  }
 
   private async callTatmanAPI(
     method: string,
@@ -535,6 +505,5 @@ export class SaudiMinistryHealthIntegration {
       },
     };
   }
-}
 
 export const ministryHealthIntegration = new SaudiMinistryHealthIntegration();

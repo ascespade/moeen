@@ -22,12 +22,10 @@ interface ActivationStep {
   completed: boolean;
   required: boolean;
   icon: React.ReactNode;
-}
 
 interface ActivationFlowProps {
   patientId: string;
   onActivationComplete?: () => void;
-}
 
 export default function ActivationFlow({
   patientId,
@@ -237,4 +235,3 @@ export default function ActivationFlow({
       )}
     </Card>
   );
-}

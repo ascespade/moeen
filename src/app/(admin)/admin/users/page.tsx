@@ -34,7 +34,6 @@ export default function UsersAdminPage() {
 
   function updateRole(id: string, role: UserRow["role"]) {
     setRows((prev) => prev.map((r) => (r.id === id ? { ...r, role } : r)));
-  }
 
   function toggleStatus(id: string) {
     setRows((prev) =>
@@ -44,7 +43,6 @@ export default function UsersAdminPage() {
           : r,
       ),
     );
-  }
 
   return (
     <main className="min-h-screen bg-[var(--brand-surface)]">
@@ -110,7 +108,6 @@ export default function UsersAdminPage() {
                           value={r.role}
                           onChange={(e) =>
                             updateRole(r.id, e.target.value as UserRow["role"])
-                          }
                         >
                           <option value="admin">Admin</option>
                           <option value="staff">Staff</option>
@@ -147,4 +144,3 @@ export default function UsersAdminPage() {
       </div>
     </main>
   );
-}

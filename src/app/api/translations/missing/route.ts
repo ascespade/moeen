@@ -13,7 +13,6 @@ export async function POST(request: NextRequest) {
         { error: "Language and key are required" },
         { status: 400 },
       );
-    }
 
     // Create missing_translations table if it doesn't exist
     await supabase.rpc("exec_sql", {
@@ -40,7 +39,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to log missing translation" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
@@ -49,7 +47,6 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -63,7 +60,6 @@ export async function GET(request: NextRequest) {
 
     if (language) {
       query = query.eq("language", language);
-    }
 
     const { data, error } = await query;
 
@@ -72,7 +68,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch missing translations" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({ data });
   } catch (error) {
@@ -81,4 +76,3 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}

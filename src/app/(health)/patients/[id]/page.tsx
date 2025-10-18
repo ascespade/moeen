@@ -21,7 +21,6 @@ interface Patient {
   emergencyContact?: string;
   medicalHistory?: string[];
   allergies?: string[];
-}
 
 interface Session {
   id: string;
@@ -31,7 +30,6 @@ interface Session {
   duration: number;
   status: "completed" | "cancelled" | "upcoming";
   notes?: string;
-}
 
 interface Document {
   id: string;
@@ -39,7 +37,6 @@ interface Document {
   type: string;
   uploadDate: string;
   size: string;
-}
 
 const mockPatient: Patient = {
   id: "1",
@@ -678,4 +675,3 @@ export default function PatientDetailsPage({
       )}
     </div>
   );
-}

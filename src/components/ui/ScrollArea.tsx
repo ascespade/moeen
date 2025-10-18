@@ -2,7 +2,6 @@ import clsx from "clsx";
 
 export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
   // Extends all div attributes
-}
 
 export function ScrollArea({ className, ...props }: ScrollAreaProps) {
   return (
@@ -14,6 +13,5 @@ export function ScrollArea({ className, ...props }: ScrollAreaProps) {
       {...props}
     />
   );
-}
 
 export default ScrollArea;

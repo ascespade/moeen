@@ -9,7 +9,6 @@ export const sendWhatsAppMessage = async (payload: SendTextPayload) => {
   const cfg = getApiConfig();
   if (!isWhatsAppConfigured(cfg)) {
     return { success: true, note: "Connect WhatsApp API in Admin Settings." };
-  }
 
   try {
     const url = `${cfg.whatsapp.baseUrl}/${cfg.whatsapp.phoneNumberId}/messages`;
@@ -30,7 +29,6 @@ export const sendWhatsAppMessage = async (payload: SendTextPayload) => {
     if (!res.ok) {
       const err = await res.text();
       return { success: false, error: err };
-    }
     return { success: true };
   } catch (e: any) {
     return { success: false, error: e?.message || "Unknown error" };
@@ -41,7 +39,6 @@ export const handleWhatsAppWebhook = async (_body: any) => {
   // Placeholder structure for webhook handling
   if (!isWhatsAppConfigured()) {
     return { success: true };
-  }
   // TODO: parse statuses, messages, and delivery receipts as needed
   return { success: true };
 };

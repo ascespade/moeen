@@ -25,13 +25,11 @@ interface ChecklistItem {
   completed: boolean;
   category: "documents" | "payment" | "health" | "appointment";
   icon: React.ReactNode;
-}
 
 interface PreVisitChecklistProps {
   appointmentId: string;
   patientId: string;
   onChecklistComplete?: () => void;
-}
 
 export default function PreVisitChecklist({
   appointmentId,
@@ -149,7 +147,6 @@ export default function PreVisitChecklist({
     (acc, item) => {
       if (!acc[item.category]) {
         acc[item.category] = [];
-      }
       acc[item.category]!.push(item);
       return acc;
     },
@@ -172,7 +169,6 @@ export default function PreVisitChecklist({
         </div>
       </Card>
     );
-  }
 
   return (
     <Card className="p-6">
@@ -228,7 +224,6 @@ export default function PreVisitChecklist({
                     checked={item.completed}
                     onCheckedChange={(checked) =>
                       handleItemToggle(item.id, checked as boolean)
-                    }
                     disabled={isSaving}
                     className="mt-1 mr-4"
                   />
@@ -287,4 +282,3 @@ export default function PreVisitChecklist({
       </div>
     </Card>
   );
-}

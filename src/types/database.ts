@@ -12,7 +12,6 @@ export interface UserPreferences {
   dashboard_layout: "grid" | "list";
   created_at: string;
   updated_at: string;
-}
 
 export interface Translation {
   id: string;
@@ -22,7 +21,6 @@ export interface Translation {
   value: string;
   created_at: string;
   updated_at: string;
-}
 
 export interface User {
   id: string;
@@ -36,7 +34,6 @@ export interface User {
   last_login_at?: string;
   created_at: string;
   updated_at: string;
-}
 
 export interface Profile {
   id: string;
@@ -47,7 +44,6 @@ export interface Profile {
   address?: string;
   created_at: string;
   updated_at: string;
-}
 
 export interface Patient {
   id: string;
@@ -60,7 +56,6 @@ export interface Patient {
   medical_history: string[];
   created_at: string;
   updated_at: string;
-}
 
 export interface Doctor {
   id: string;
@@ -71,7 +66,6 @@ export interface Doctor {
   email?: string;
   created_at: string;
   updated_at: string;
-}
 
 export interface Appointment {
   id: string;
@@ -85,7 +79,6 @@ export interface Appointment {
   notes?: string;
   created_at: string;
   updated_at: string;
-}
 
 export interface Session {
   id: string;
@@ -100,7 +93,6 @@ export interface Session {
   completed: boolean;
   created_at: string;
   updated_at: string;
-}
 
 export interface InsuranceClaim {
   id: string;
@@ -114,7 +106,6 @@ export interface InsuranceClaim {
   processed_at?: string;
   created_at: string;
   updated_at: string;
-}
 
 // Chatbot related types
 export interface ChatbotFlow {
@@ -126,7 +117,6 @@ export interface ChatbotFlow {
   status: "draft" | "active" | "paused" | "archived";
   created_at: string;
   updated_at: string;
-}
 
 export interface ChatbotNode {
   id: string;
@@ -139,7 +129,6 @@ export interface ChatbotNode {
   position_y: number;
   created_at: string;
   updated_at: string;
-}
 
 export interface ChatbotEdge {
   id: string;
@@ -150,7 +139,6 @@ export interface ChatbotEdge {
   condition?: any; // JSONB
   created_at: string;
   updated_at: string;
-}
 
 // CRM related types
 export interface CRMLead {
@@ -173,7 +161,6 @@ export interface CRMLead {
   owner_id: string;
   created_at: string;
   updated_at: string;
-}
 
 export interface CRMDeal {
   id: string;
@@ -194,7 +181,6 @@ export interface CRMDeal {
   owner_id: string;
   created_at: string;
   updated_at: string;
-}
 
 export interface CRMActivity {
   id: string;
@@ -209,7 +195,6 @@ export interface CRMActivity {
   completed: boolean;
   created_at: string;
   updated_at: string;
-}
 
 // System types
 export interface Notification {
@@ -223,7 +208,6 @@ export interface Notification {
   data?: any; // JSONB
   created_at: string;
   updated_at: string;
-}
 
 export interface InternalMessage {
   id: string;
@@ -235,7 +219,6 @@ export interface InternalMessage {
   read: boolean;
   created_at: string;
   updated_at: string;
-}
 
 export interface AuditLog {
   id: string;
@@ -249,7 +232,6 @@ export interface AuditLog {
   ip_address?: string;
   user_agent?: string;
   created_at: string;
-}
 
 export interface Setting {
   id: string;
@@ -259,7 +241,6 @@ export interface Setting {
   category: string;
   created_at: string;
   updated_at: string;
-}
 
 // API Response types
 export interface ApiResponse<T = any> {
@@ -267,7 +248,6 @@ export interface ApiResponse<T = any> {
   data?: T;
   error?: string;
   message?: string;
-}
 
 export interface PaginatedResponse<T = any> {
   success: boolean;
@@ -278,18 +258,15 @@ export interface PaginatedResponse<T = any> {
     total: number;
     total_pages: number;
   };
-}
 
 export interface UserPreferencesResponse {
   theme: string;
   language: string;
   timezone: string;
   notifications_enabled: boolean;
-}
 
 export interface TranslationResponse {
   locale: string;
   ns: string;
   messages: Record<string, string>;
   source: "database" | "fallback";
-}

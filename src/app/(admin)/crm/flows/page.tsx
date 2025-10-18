@@ -39,7 +39,6 @@ interface FlowStep {
   slackChannel?: string;
   whatsappTemplate?: string;
   notificationType?: "appointment" | "reminder" | "emergency" | "general";
-}
 
 interface ConversationFlow {
   id: string;
@@ -50,7 +49,6 @@ interface ConversationFlow {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
-}
 
 const FlowsManagementPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -67,7 +65,6 @@ const FlowsManagementPage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadFlows();
   }, [isAuthenticated, router]);
 
@@ -209,7 +206,6 @@ const FlowsManagementPage: React.FC = () => {
 
   if (!isAuthenticated) {
     return null;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8" dir="rtl">
@@ -301,7 +297,6 @@ const FlowsManagementPage: React.FC = () => {
                         flow.isActive
                           ? "text-brand-error"
                           : "text-brand-success"
-                      }
                     >
                       {flow.isActive ? (
                         <Pause className="w-4 h-4" />

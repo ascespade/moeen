@@ -21,7 +21,6 @@ export interface PrivateCenterLicense {
       lng: number;
     };
   };
-}
 
 export interface PrivateCenterAccreditation {
   centerId: string;
@@ -33,7 +32,6 @@ export interface PrivateCenterAccreditation {
   status: "active" | "expired" | "under_review";
   standards: string[];
   score?: number;
-}
 
 export interface PrivateCenterInsurance {
   centerId: string;
@@ -50,7 +48,6 @@ export interface PrivateCenterInsurance {
     };
     status: "active" | "expired" | "suspended";
   }>;
-}
 
 export interface PrivateCenterReporting {
   centerId: string;
@@ -69,7 +66,6 @@ export interface PrivateCenterReporting {
       safetyIncidents: number;
     };
   };
-}
 
 export class PrivateCenterIntegration {
   private centerId: string;
@@ -89,7 +85,6 @@ export class PrivateCenterIntegration {
       process.env.SFDA_API_ENDPOINT || "https://api.sfda.gov.sa";
     this.cchiApiEndpoint =
       process.env.CCHI_API_ENDPOINT || "https://api.cchi.gov.sa";
-  }
 
   // MOH Integration - وزارة الصحة للمراكز الخاصة
   async syncWithMOH(): Promise<{
@@ -109,7 +104,6 @@ export class PrivateCenterIntegration {
           centerData: response.data,
           lastSync: new Date().toISOString(),
         };
-      }
 
       throw new Error("Failed to sync with MOH");
     } catch (error) {
@@ -119,7 +113,6 @@ export class PrivateCenterIntegration {
         lastSync: new Date().toISOString(),
       };
     }
-  }
 
   async submitMOHReport(reportData: PrivateCenterReporting): Promise<{
     success: boolean;
@@ -139,7 +132,6 @@ export class PrivateCenterIntegration {
           reportId: response.data.reportId,
           status: "submitted",
         };
-      }
 
       throw new Error("Failed to submit MOH report");
     } catch (error) {
@@ -148,7 +140,6 @@ export class PrivateCenterIntegration {
         status: "failed",
       };
     }
-  }
 
   // SFDA Integration - الهيئة العامة للغذاء والدواء
   async syncWithSFDA(): Promise<{
@@ -168,7 +159,6 @@ export class PrivateCenterIntegration {
           accreditation: response.data,
           lastSync: new Date().toISOString(),
         };
-      }
 
       throw new Error("Failed to sync with SFDA");
     } catch (error) {
@@ -178,7 +168,6 @@ export class PrivateCenterIntegration {
         lastSync: new Date().toISOString(),
       };
     }
-  }
 
   async submitSFDAQualityReport(qualityData: {
     centerId: string;
@@ -215,7 +204,6 @@ export class PrivateCenterIntegration {
           reportId: response.data.reportId,
           status: "submitted",
         };
-      }
 
       throw new Error("Failed to submit SFDA quality report");
     } catch (error) {
@@ -224,7 +212,6 @@ export class PrivateCenterIntegration {
         status: "failed",
       };
     }
-  }
 
   // CCHI Integration - مجلس الضمان الصحي التعاوني
   async syncWithCCHI(): Promise<{
@@ -244,7 +231,6 @@ export class PrivateCenterIntegration {
           insuranceData: response.data,
           lastSync: new Date().toISOString(),
         };
-      }
 
       throw new Error("Failed to sync with CCHI");
     } catch (error) {
@@ -254,7 +240,6 @@ export class PrivateCenterIntegration {
         lastSync: new Date().toISOString(),
       };
     }
-  }
 
   async submitCCHIClaim(claimData: {
     patientId: string;
@@ -281,7 +266,6 @@ export class PrivateCenterIntegration {
           status: response.data.status,
           approvalRequired: response.data.approvalRequired,
         };
-      }
 
       throw new Error("Failed to submit CCHI claim");
     } catch (error) {
@@ -291,7 +275,6 @@ export class PrivateCenterIntegration {
         approvalRequired: false,
       };
     }
-  }
 
   // Private Center Compliance
   async validateCenterCompliance(): Promise<{
@@ -310,21 +293,18 @@ export class PrivateCenterIntegration {
       if (!mohSync.success) {
         violations.push("فشل في المزامنة مع وزارة الصحة");
         score -= 20;
-      }
 
       // Check SFDA compliance
       const sfdSync = await this.syncWithSFDA();
       if (!sfdSync.success) {
         violations.push("فشل في المزامنة مع الهيئة العامة للغذاء والدواء");
         score -= 15;
-      }
 
       // Check CCHI compliance
       const cchiSync = await this.syncWithCCHI();
       if (!cchiSync.success) {
         violations.push("فشل في المزامنة مع مجلس الضمان الصحي التعاوني");
         score -= 10;
-      }
 
       // Generate recommendations
       if (violations.length === 0) {
@@ -334,7 +314,6 @@ export class PrivateCenterIntegration {
         recommendations.push("يرجى حل المشاكل المذكورة أعلاه");
         recommendations.push("تأكد من تحديث البيانات بانتظام");
         recommendations.push("تواصل مع الجهات المختصة لحل أي مشاكل");
-      }
 
       return {
         compliant: violations.length === 0,
@@ -350,7 +329,6 @@ export class PrivateCenterIntegration {
         score: 0,
       };
     }
-  }
 
   // Private Center Analytics
   async getCenterAnalytics(
@@ -398,7 +376,6 @@ export class PrivateCenterIntegration {
         complianceScore: 0,
       };
     }
-  }
 
   // Utility Functions
   private getDefaultCenterData(): PrivateCenterLicense {
@@ -424,7 +401,6 @@ export class PrivateCenterIntegration {
         },
       },
     };
-  }
 
   private getDefaultAccreditation(): PrivateCenterAccreditation {
     return {
@@ -438,7 +414,6 @@ export class PrivateCenterIntegration {
       standards: ["ISO 9001", "ISO 15189", "JCI"],
       score: 95,
     };
-  }
 
   private getDefaultInsuranceData(): PrivateCenterInsurance {
     return {
@@ -458,7 +433,6 @@ export class PrivateCenterIntegration {
         },
       ],
     };
-  }
 
   // API Call Methods
   private async callMOHAPI(
@@ -471,7 +445,6 @@ export class PrivateCenterIntegration {
       success: true,
       data: this.getDefaultCenterData(),
     };
-  }
 
   private async callSFDAPI(
     method: string,
@@ -483,7 +456,6 @@ export class PrivateCenterIntegration {
       success: true,
       data: this.getDefaultAccreditation(),
     };
-  }
 
   private async callCCHIAPI(
     method: string,
@@ -500,6 +472,5 @@ export class PrivateCenterIntegration {
       },
     };
   }
-}
 
 export const privateCenterIntegration = new PrivateCenterIntegration();

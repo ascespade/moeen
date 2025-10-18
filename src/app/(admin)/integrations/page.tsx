@@ -37,7 +37,6 @@ interface Integration {
   last_sync: string;
   config: any;
   health_score: number;
-}
 
 const IntegrationsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -49,7 +48,6 @@ const IntegrationsPage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadIntegrations();
   }, [isAuthenticated, router]);
 
@@ -258,7 +256,6 @@ const IntegrationsPage: React.FC = () => {
                   <Badge
                     variant={
                       integration.status === "active" ? "primary" : "secondary"
-                    }
                   >
                     {integration.status === "active" ? "نشط" : "غير نشط"}
                   </Badge>
@@ -278,7 +275,6 @@ const IntegrationsPage: React.FC = () => {
                       integration.health_score > 80
                         ? "text-brand-success"
                         : "text-brand-error"
-                    }
                   >
                     {integration.health_score}%
                   </span>

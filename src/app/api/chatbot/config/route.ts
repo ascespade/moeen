@@ -39,7 +39,6 @@ export async function GET(request: NextRequest) {
       };
 
       return NextResponse.json({ config: defaultConfig });
-    }
 
     return NextResponse.json({ config });
   } catch (error) {
@@ -48,7 +47,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 // POST /api/chatbot/config - حفظ إعدادات الشات بوت
 export async function POST(request: NextRequest) {
@@ -120,14 +118,12 @@ export async function POST(request: NextRequest) {
         .single();
 
       result = { data, error };
-    }
 
     if (result.error) {
       return NextResponse.json(
         { error: result.error.message },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({ config: result.data });
   } catch (error) {
@@ -136,4 +132,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

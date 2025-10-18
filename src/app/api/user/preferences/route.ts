@@ -14,7 +14,6 @@ export async function GET() {
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     // Fetch user preferences
     const { data: preferences, error } = await supabase
@@ -29,7 +28,6 @@ export async function GET() {
         { error: "Failed to fetch preferences" },
         { status: 500 },
       );
-    }
 
     // Return default preferences if none exist
     const defaultPreferences = {
@@ -46,7 +44,6 @@ export async function GET() {
       { status: 500 },
     );
   }
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -60,7 +57,6 @@ export async function POST(request: NextRequest) {
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const { key, value } = await request.json();
 
@@ -69,7 +65,6 @@ export async function POST(request: NextRequest) {
         { error: "Key and value are required" },
         { status: 400 },
       );
-    }
 
     // Validate key
     const validKeys = [
@@ -83,7 +78,6 @@ export async function POST(request: NextRequest) {
         { error: "Invalid preference key" },
         { status: 400 },
       );
-    }
 
     // Validate theme value
     if (key === "theme" && !["light", "dark", "system"].includes(value)) {
@@ -91,7 +85,6 @@ export async function POST(request: NextRequest) {
         { error: "Invalid theme value" },
         { status: 400 },
       );
-    }
 
     // Validate language value
     if (key === "language" && !["ar", "en"].includes(value)) {
@@ -99,7 +92,6 @@ export async function POST(request: NextRequest) {
         { error: "Invalid language value" },
         { status: 400 },
       );
-    }
 
     // Upsert user preference
     const { error } = await supabase.from("user_preferences").upsert(
@@ -116,7 +108,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to save preference" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -125,4 +116,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

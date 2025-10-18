@@ -28,7 +28,6 @@ interface Deal {
   lastActivity: string;
   notes?: string;
   tags: string[];
-}
 
 const mockDeals: Deal[] = [
     id: "1",
@@ -509,4 +508,3 @@ export default function CRMDealsPage() {
       )}
     </div>
   );
-}

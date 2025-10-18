@@ -76,7 +76,6 @@ interface AnalyticsData {
     revenueGrowth: Array<{ month: string; amount: number }>;
     appointmentTrends: Array<{ month: string; count: number }>;
   };
-}
 
 const AnalyticsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -93,7 +92,6 @@ const AnalyticsPage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadAnalyticsData();
   }, [isAuthenticated, router, selectedPeriod]);
 
@@ -229,7 +227,6 @@ const AnalyticsPage: React.FC = () => {
 
   if (!isAuthenticated) {
     return null;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8" dir="rtl">

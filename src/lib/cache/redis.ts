@@ -8,7 +8,6 @@ import logger from "@/lib/monitoring/logger";
 interface CacheConfig {
   ttl: number; // Time to live in seconds
   prefix: string;
-}
 
 class RedisCache {
   private client: any;
@@ -19,7 +18,6 @@ class RedisCache {
       ttl: 3600, // 1 hour default
       prefix: "healthcare:",
     };
-  }
 
   async get<T>(key: string): Promise<T | null> {
     try {
@@ -31,7 +29,6 @@ class RedisCache {
       console.error("Cache get error:", error);
       return null;
     }
-  }
 
   async set<T>(key: string, value: T, ttl?: number): Promise<boolean> {
     try {
@@ -45,7 +42,6 @@ class RedisCache {
       console.error("Cache set error:", error);
       return false;
     }
-  }
 
   async del(key: string): Promise<boolean> {
     try {
@@ -55,11 +51,9 @@ class RedisCache {
       console.error("Cache delete error:", error);
       return false;
     }
-  }
 
   async exists(key: string): Promise<boolean> {
     return this.existsInMemory(key);
-  }
 
   async flush(): Promise<boolean> {
     try {
@@ -69,7 +63,6 @@ class RedisCache {
       console.error("Cache flush error:", error);
       return false;
     }
-  }
 
   // Memory-based cache (fallback)
   private memoryCache = new Map<string, { value: string; expires: number }>();
@@ -81,31 +74,25 @@ class RedisCache {
     if (Date.now() > item.expires) {
       this.memoryCache.delete(key);
       return null;
-    }
 
     return item.value;
-  }
 
   private setInMemory(key: string, value: string, ttl: number): void {
     this.memoryCache.set(key, {
       value,
       expires: Date.now() + ttl * 1000,
     });
-  }
 
   private deleteFromMemory(key: string): void {
     this.memoryCache.delete(key);
-  }
 
   private existsInMemory(key: string): boolean {
     const item = this.memoryCache.get(key);
     return item ? Date.now() <= item.expires : false;
-  }
 
   private flushMemory(): void {
     this.memoryCache.clear();
   }
-}
 
 // Cache decorator for functions
 export function cached(
@@ -129,7 +116,6 @@ export function cached(
       const cached = await cache.get(cacheKey);
       if (cached !== null) {
         return cached;
-      }
 
       // Execute method and cache result
       const result = await method.apply(this, args);
@@ -138,7 +124,6 @@ export function cached(
       return result;
     };
   };
-}
 
 // Cache manager instance
 export const cache = new RedisCache();

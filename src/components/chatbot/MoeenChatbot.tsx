@@ -10,11 +10,9 @@ interface Message {
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
-}
 
 interface MoeenChatbotProps {
   position?: "bottom-right" | "bottom-left";
-}
 
 export default function MoeenChatbot({
   position = "bottom-right",
@@ -54,7 +52,6 @@ export default function MoeenChatbot({
     if (action === "request_call") {
       await handleCallRequest();
       return;
-    }
 
     const actionMessages: Record<string, string> = {
       book_appointment: "أريد حجز موعد",
@@ -365,4 +362,3 @@ export default function MoeenChatbot({
       )}
     </>
   );
-}

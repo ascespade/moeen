@@ -13,26 +13,22 @@ interface Props {
   children: ReactNode;
   fallback?: ReactNode;
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
-}
 
 interface State {
   hasError: boolean;
   error?: Error;
   errorInfo?: ErrorInfo;
-}
 
 export default class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
-  }
 
   static getDerivedStateFromError(error: Error): State {
     return {
       hasError: true,
       error,
     };
-  }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.setState({
@@ -45,7 +41,6 @@ export default class ErrorBoundary extends Component<Props, State> {
 
     // Call custom error handler
     this.props.onError?.(error, errorInfo);
-  }
 
   private logError = (error: Error, errorInfo: ErrorInfo) => {
     // Send error to logging service
@@ -82,7 +77,6 @@ export default class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       if (this.props.fallback) {
         return this.props.fallback;
-      }
 
       return (
         <ErrorFallback
@@ -91,17 +85,14 @@ export default class ErrorBoundary extends Component<Props, State> {
           onGoHome={this.handleGoHome}
         />
       );
-    }
 
     return this.props.children;
   }
-}
 
 interface ErrorFallbackProps {
   error?: Error;
   onRetry: () => void;
   onGoHome: () => void;
-}
 
 function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
   const { t } = useT();
@@ -148,7 +139,6 @@ function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
       </Card>
     </div>
   );
-}
 
 // Hook for functional components
 export function useErrorHandler() {
@@ -174,4 +164,3 @@ export function useErrorHandler() {
   };
 
   return { handleError };
-}

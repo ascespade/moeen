@@ -4,13 +4,11 @@ interface SMSData {
   to: string;
   message: string;
   language?: "ar" | "en";
-}
 
 interface SMSResult {
   success: boolean;
   messageId?: string;
   error?: string;
-}
 
 export class SMSNotificationService {
   private apiKey: string;
@@ -19,7 +17,6 @@ export class SMSNotificationService {
   constructor() {
     this.apiKey = process.env.SMS_API_KEY || "";
     this.apiUrl = process.env.SMS_API_URL || "https://api.sms.sa/v1";
-  }
 
   async sendSMS(data: SMSData): Promise<SMSResult> {
     try {
@@ -28,7 +25,6 @@ export class SMSNotificationService {
           success: false,
           error: "SMS service not configured",
         };
-      }
 
       // In development, just log the SMS
       if (process.env.NODE_ENV === "development") {
@@ -41,7 +37,6 @@ export class SMSNotificationService {
           success: true,
           messageId: `dev_${Date.now()}`,
         };
-      }
 
       // TODO: Implement actual SMS service integration
       // const response = await fetch(`${this.apiUrl}/send`, {
@@ -77,7 +72,6 @@ export class SMSNotificationService {
         error: error instanceof Error ? error.message : "SMS sending failed",
       };
     }
-  }
 
   async sendAppointmentConfirmation(data: {
     patientPhone: string;
@@ -93,7 +87,6 @@ export class SMSNotificationService {
       message,
       language: "ar",
     });
-  }
 
   async sendPaymentConfirmation(data: {
     patientPhone: string;
@@ -108,7 +101,6 @@ export class SMSNotificationService {
       message,
       language: "ar",
     });
-  }
 
   async sendAppointmentReminder(data: {
     patientPhone: string;
@@ -124,7 +116,6 @@ export class SMSNotificationService {
       message,
       language: "ar",
     });
-  }
 
   async sendInsuranceClaimUpdate(data: {
     patientPhone: string;
@@ -146,6 +137,5 @@ export class SMSNotificationService {
       language: "ar",
     });
   }
-}
 
 export const smsService = new SMSNotificationService();

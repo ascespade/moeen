@@ -32,7 +32,6 @@ interface ChatMessage {
     appointmentDate?: string;
     appointmentTime?: string;
   };
-}
 
 interface AppointmentSuggestion {
   id: string;
@@ -40,7 +39,6 @@ interface AppointmentSuggestion {
   specialty: string;
   availableSlots: string[];
   date: string;
-}
 
 const MoainChatbot: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -158,13 +156,10 @@ const MoainChatbot: React.FC = () => {
         // تحديث حالة الـ Flow
         if (data.metadata?.flow) {
           setCurrentFlow(data.metadata.flow);
-        }
         if (data.metadata?.step) {
           setCurrentStep(data.metadata.step);
-        }
         if (data.metadata?.options) {
           setFlowOptions(data.metadata.options);
-        }
 
         if (data.appointmentSuggestions) {
           setAppointmentSuggestions(data.appointmentSuggestions);
@@ -226,7 +221,6 @@ const MoainChatbot: React.FC = () => {
           },
         ],
       };
-    }
 
     if (input.includes("إلغاء") || input.includes("تغيير")) {
       return {
@@ -236,7 +230,6 @@ const MoainChatbot: React.FC = () => {
           appointmentId: "APT-001",
         },
       };
-    }
 
     if (
       input.includes("ساعات") ||
@@ -251,7 +244,6 @@ const MoainChatbot: React.FC = () => {
           appointmentTime: "09:00",
         },
       };
-    }
 
     if (
       input.includes("عنوان") ||
@@ -266,7 +258,6 @@ const MoainChatbot: React.FC = () => {
           appointmentTime: "09:00",
         },
       };
-    }
 
     if (
       input.includes("تأمين") ||
@@ -281,7 +272,6 @@ const MoainChatbot: React.FC = () => {
           appointmentTime: "09:00",
         },
       };
-    }
 
     // استجابة عامة مع تعلم
     return {
@@ -473,7 +463,6 @@ const MoainChatbot: React.FC = () => {
                         size="sm"
                         onClick={() =>
                           handleAppointmentSelect(appointment, time)
-                        }
                         className="text-xs"
                       >
                         <Clock className="w-3 h-3 mr-1" />

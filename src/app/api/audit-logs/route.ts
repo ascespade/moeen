@@ -28,7 +28,6 @@ export async function GET(request: NextRequest) {
     const authResult = await requireAuth(["supervisor", "admin"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -48,7 +47,6 @@ export async function GET(request: NextRequest) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     const { action, entityType, userId, startDate, endDate, page, limit } =
       validation.data!;
@@ -66,19 +64,14 @@ export async function GET(request: NextRequest) {
 
     if (action) {
       query = query.eq("action", action);
-    }
     if (entityType) {
       query = query.eq("entityType", entityType);
-    }
     if (userId) {
       query = query.eq("userId", userId);
-    }
     if (startDate) {
       query = query.gte("createdAt", startDate);
-    }
     if (endDate) {
       query = query.lte("createdAt", endDate);
-    }
 
     const { data: logs, error, count } = await query;
 
@@ -87,7 +80,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch audit logs" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({
       success: true,
@@ -102,4 +94,3 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}

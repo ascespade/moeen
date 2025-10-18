@@ -8,7 +8,6 @@ export async function GET(request: NextRequest) {
 
     if (error || !user) {
       return NextResponse.json({ error }, { status: 401 });
-    }
 
     return NextResponse.json(user);
   } catch (error) {
@@ -17,4 +16,3 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}

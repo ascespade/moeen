@@ -12,7 +12,6 @@ interface ErrorHandlerOptions {
   showToast?: boolean;
   logError?: boolean;
   fallbackMessage?: string;
-}
 
 export function useErrorHandler() {
   const { t } = useT();
@@ -35,7 +34,6 @@ export function useErrorHandler() {
         errorMessage = error;
       } else if (error && typeof error === "object" && "message" in error) {
         errorMessage = (error as any).message;
-      }
 
       // Log error if enabled
       if (logError) {
@@ -53,12 +51,10 @@ export function useErrorHandler() {
             }),
           }).catch(console.error);
         }
-      }
 
       // Show toast if enabled
       if (showToast) {
         console.error("Error:", errorMessage);
-      }
 
       return {
         message: errorMessage,
@@ -83,4 +79,3 @@ export function useErrorHandler() {
     handleError,
     handleAsyncError,
   };
-}

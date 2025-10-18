@@ -37,7 +37,6 @@ export async function GET(request: NextRequest) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     const { doctorId, date, duration } = validation.data!;
 
@@ -50,7 +49,6 @@ export async function GET(request: NextRequest) {
 
     if (doctorError || !doctor) {
       return NextResponse.json({ error: "Doctor not found" }, { status: 404 });
-    }
 
     const requestedDate = new Date(date);
     const dayOfWeek = requestedDate.getDay();
@@ -62,7 +60,6 @@ export async function GET(request: NextRequest) {
         slots: [],
         message: "Doctor not working on this day",
       });
-    }
 
     // Generate time slots
     const slots = generateTimeSlots(
@@ -122,7 +119,6 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 function generateTimeSlots(
   startTime: string,
@@ -138,18 +134,14 @@ function generateTimeSlots(
       time: minutesToTime(time),
       available: true,
     });
-  }
 
   return slots;
-}
 
 function timeToMinutes(time: string): number {
   const [hours, minutes] = time.split(":").map(Number);
   return (hours || 0) * 60 + (minutes || 0);
-}
 
 function minutesToTime(minutes: number): string {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
   return `${hours.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}`;
-}

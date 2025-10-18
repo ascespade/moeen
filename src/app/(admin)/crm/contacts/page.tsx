@@ -57,7 +57,6 @@ interface Contact {
     twitter?: string;
     facebook?: string;
   };
-}
 
 interface ContactActivity {
   id: string;
@@ -68,7 +67,6 @@ interface ContactActivity {
   date: string;
   user_id: string;
   user_name: string;
-}
 
 const ContactsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -87,7 +85,6 @@ const ContactsPage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadContacts();
   }, [isAuthenticated, router]);
 
@@ -226,7 +223,6 @@ const ContactsPage: React.FC = () => {
 
   if (!isAuthenticated) {
     return null;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8" dir="rtl">
@@ -331,7 +327,6 @@ const ContactsPage: React.FC = () => {
                     new Date(a.date).toDateString() ===
                     new Date().toDateString(),
                 ).length
-              }
             </div>
             <p className="text-xs text-muted-foreground">نشاط</p>
           </CardContent>
@@ -348,7 +343,6 @@ const ContactsPage: React.FC = () => {
             <div className="text-2xl font-bold">
                 contacts.filter((c) => new Date(c.next_follow_up) > new Date())
                   .length
-              }
             </div>
             <p className="text-xs text-muted-foreground">متابعة</p>
           </CardContent>

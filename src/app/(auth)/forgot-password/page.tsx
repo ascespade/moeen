@@ -19,12 +19,10 @@ export default function ForgotPasswordPage() {
     if (!email.trim()) {
       setError("البريد الإلكتروني مطلوب");
       return;
-    }
 
     if (!/\S+@\S+\.\S+/.test(email)) {
       setError("البريد الإلكتروني غير صحيح");
       return;
-    }
 
     setIsLoading(true);
     setError("");
@@ -89,7 +87,6 @@ export default function ForgotPasswordPage() {
         </div>
       </div>
     );
-  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[var(--brand-surface)] p-4">
@@ -195,4 +192,3 @@ export default function ForgotPasswordPage() {
       </div>
     </div>
   );
-}

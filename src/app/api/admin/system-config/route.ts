@@ -27,7 +27,6 @@ export async function POST(request: NextRequest) {
     const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const body = await request.json();
@@ -39,7 +38,6 @@ export async function POST(request: NextRequest) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     const { key, value, type, description, isPublic, category } =
       validation.data;
@@ -64,7 +62,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to save configuration" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({
       success: true,
@@ -74,7 +71,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -90,10 +86,8 @@ export async function GET(request: NextRequest) {
 
     if (category) {
       query = query.eq("category", category);
-    }
     if (isPublic) {
       query = query.eq("isPublic", true);
-    }
 
     const { data: configs, error } = await query;
 
@@ -102,7 +96,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch configurations" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({
       success: true,
@@ -112,4 +105,3 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}

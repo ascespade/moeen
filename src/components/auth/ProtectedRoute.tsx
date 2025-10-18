@@ -11,7 +11,6 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
   allowedRoles?: ("patient" | "doctor" | "staff" | "supervisor" | "admin")[];
   fallback?: React.ReactNode;
-}
 
 export default function ProtectedRoute({
   children,
@@ -32,7 +31,6 @@ export default function ProtectedRoute({
         if (!response.ok) {
           router.push("/login");
           return;
-        }
 
         const user = await response.json();
         setUserRole(user.role);
@@ -40,7 +38,6 @@ export default function ProtectedRoute({
         if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
           router.push("/unauthorized");
           return;
-        }
 
         setIsAuthorized(true);
       } catch (error) {
@@ -60,7 +57,6 @@ export default function ProtectedRoute({
         <span className="ml-2">{t("common.loading")}</span>
       </div>
     );
-  }
 
   if (!isAuthorized) {
     return (
@@ -83,7 +79,5 @@ export default function ProtectedRoute({
         </div>
       )
     );
-  }
 
   return <>{children}</>;
-}

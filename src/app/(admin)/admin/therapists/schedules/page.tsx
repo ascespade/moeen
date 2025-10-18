@@ -9,7 +9,6 @@ interface Therapist {
   id: string;
   full_name: string;
   email: string;
-}
 
 interface Schedule {
   id: string;
@@ -17,7 +16,6 @@ interface Schedule {
   start_time: string;
   end_time: string;
   is_available: boolean;
-}
 
 const DAYS = [
   "الأحد",
@@ -159,7 +157,6 @@ export default function TherapistSchedulesPage() {
     if (dayOfWeek !== undefined && dayOfWeek !== null) {
       if (!schedulesByDay[dayOfWeek]) {
         schedulesByDay[dayOfWeek] = [];
-      }  
       schedulesByDay[dayOfWeek]!.push(schedule);
     }
   });
@@ -236,7 +233,6 @@ export default function TherapistSchedulesPage() {
                               &quot;start_time&quot;,
                               e.target.value,
                             )
-                          }
                           className=&quot;px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white&quot;
                         />
                       </div>
@@ -254,7 +250,6 @@ export default function TherapistSchedulesPage() {
                               &quot;end_time&quot;,
                               e.target.value,
                             )
-                          }
                           className=&quot;px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white&quot;
                         />
                       </div>
@@ -269,7 +264,6 @@ export default function TherapistSchedulesPage() {
                               &quot;is_available&quot;,
                               e.target.checked,
                             )
-                          }
                           className=&quot;w-5 h-5 rounded border-gray-300 dark:border-gray-600&quot;
                         />
                         <span className="text-sm text-gray-700 dark:text-gray-300">
@@ -310,4 +304,3 @@ export default function TherapistSchedulesPage() {
       </div>
     </div>
   );
-}

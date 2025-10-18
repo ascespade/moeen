@@ -67,7 +67,6 @@ export async function POST(request: NextRequest) {
 
     if (!message || typeof message !== "string") {
       return NextResponse.json({ error: "Invalid message" }, { status: 400 });
-    }
 
     // Normalize message
     const normalizedMessage = message.toLowerCase().trim();
@@ -82,7 +81,6 @@ export async function POST(request: NextRequest) {
         response = reply;
         break;
       }
-    }
 
     // Log interaction
     logger.info("Chatbot interaction", {
@@ -105,4 +103,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

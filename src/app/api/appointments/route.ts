@@ -13,7 +13,6 @@ export async function GET(request: NextRequest) {
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const { ipAddress, userAgent } = getClientInfo(request);
 
@@ -57,7 +56,6 @@ export async function GET(request: NextRequest) {
       query = query.eq("patients.user_id", user.id);
     } else if (user.role === "doctor") {
       query = query.eq("doctors.user_id", user.id);
-    }
 
     const { data: appointments, error: appointmentsError } = await query;
 
@@ -79,7 +77,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch appointments" },
         { status: 500 },
       );
-    }
 
     // Log successful fetch
     await supabase.from("audit_logs").insert({
@@ -104,7 +101,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
@@ -114,7 +110,6 @@ export async function POST(request: NextRequest) {
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const { ipAddress, userAgent } = getClientInfo(request);
     const body = await request.json();
@@ -127,7 +122,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 },
       );
-    }
 
     const {
       patientId,
@@ -147,12 +141,10 @@ export async function POST(request: NextRequest) {
 
     if (patientError || !patient) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
-    }
 
     // Check permissions
     if (user.role === "patient" && patient.user_id !== user.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-    }
 
     // Check if doctor exists
     const { data: doctor, error: doctorError } = await supabase
@@ -163,7 +155,6 @@ export async function POST(request: NextRequest) {
 
     if (doctorError || !doctor) {
       return NextResponse.json({ error: "Doctor not found" }, { status: 404 });
-    }
 
     // Check for appointment conflicts
     const { data: conflicts, error: conflictError } = await supabase
@@ -178,7 +169,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to check conflicts" },
         { status: 500 },
       );
-    }
 
     if (conflicts && conflicts.length > 0) {
       return NextResponse.json(
@@ -186,7 +176,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 409 },
       );
-    }
 
     // Create appointment with tracking
     const { data: appointment, error: appointmentError } = await supabase
@@ -222,7 +211,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to create appointment" },
         { status: 500 },
       );
-    }
 
     // Log appointment creation with full tracking
     await supabase.from("audit_logs").insert({
@@ -263,4 +251,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

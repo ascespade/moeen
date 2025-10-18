@@ -46,7 +46,6 @@ export interface FileMetadata {
   expiresAt?: Date;
   downloadCount: number;
   lastAccessedAt?: Date;
-}
 
 // File upload handler class
 export class FileUploadHandler {
@@ -57,9 +56,7 @@ export class FileUploadHandler {
   static getInstance(): FileUploadHandler {
     if (!FileUploadHandler.instance) {
       FileUploadHandler.instance = new FileUploadHandler();
-    }
     return FileUploadHandler.instance;
-  }
 
   // Validate file
   validateFile(
@@ -76,7 +73,6 @@ export class FileUploadHandler {
         valid: false,
         error: `File size ${file.size} exceeds maximum allowed size ${maxSize}`,
       };
-    }
 
     // Check file type
     const fileExtension = extname(file.name).toLowerCase().slice(1);
@@ -85,7 +81,6 @@ export class FileUploadHandler {
         valid: false,
         error: `File type .${fileExtension} is not allowed. Allowed types: ${allowedTypes.join(", ")}`,
       };
-    }
 
     // Check MIME type
     const allowedMimeTypes = this.getAllowedMimeTypes(allowedTypes);
@@ -94,10 +89,8 @@ export class FileUploadHandler {
         valid: false,
         error: `MIME type ${file.type} is not allowed`,
       };
-    }
 
     return { valid: true };
-  }
 
   // Get allowed MIME types for file extensions
   private getAllowedMimeTypes(extensions: string[]): string[] {
@@ -131,7 +124,6 @@ export class FileUploadHandler {
     };
 
     return extensions.flatMap((ext) => mimeTypeMap[ext] || []);
-  }
 
   // Generate unique filename
   generateFileName(originalName: string, userId: string): string {
@@ -142,7 +134,6 @@ export class FileUploadHandler {
     const sanitizedBaseName = baseName.replace(/[^a-zA-Z0-9]/g, "_");
 
     return `${userId}_${timestamp}_${randomString}_${sanitizedBaseName}${extension}`;
-  }
 
   // Calculate file checksum
   async calculateChecksum(file: File): Promise<string> {
@@ -150,7 +141,6 @@ export class FileUploadHandler {
     const hash = createHash("sha256");
     hash.update(Buffer.from(buffer));
     return hash.digest("hex");
-  }
 
   // Determine file type from extension
   getFileType(
@@ -172,7 +162,6 @@ export class FileUploadHandler {
       return "medical";
 
     return "document"; // Default fallback
-  }
 
   // Get max file size for file type
   getMaxFileSize(fileType: string): number {
@@ -190,7 +179,6 @@ export class FileUploadHandler {
       default:
         return MAX_FILE_SIZES.documents;
     }
-  }
 
   // Get allowed extensions for file type
   getAllowedExtensions(fileType: string): string[] {
@@ -209,7 +197,6 @@ export class FileUploadHandler {
         return [...ALLOWED_FILE_TYPES.documents];
     }
   }
-}
 
 // File storage interface
 export interface FileStorage {
@@ -229,7 +216,6 @@ export interface FileStorage {
     fileId: string,
     updates: Partial<FileMetadata>,
   ): Promise<FileMetadata>;
-}
 
 // Local file storage implementation
 export class LocalFileStorage implements FileStorage {
@@ -239,7 +225,6 @@ export class LocalFileStorage implements FileStorage {
   constructor() {
     this.uploadDir = process.env.UPLOAD_DIR || "./uploads";
     this.fileHandler = FileUploadHandler.getInstance();
-  }
 
   async upload(
     file: File,
@@ -257,7 +242,6 @@ export class LocalFileStorage implements FileStorage {
     );
     if (!validation.valid) {
       throw new Error(validation.error);
-    }
 
     // Generate metadata
     const fileId = `file_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
@@ -307,13 +291,11 @@ export class LocalFileStorage implements FileStorage {
     });
 
     return fileMetadata;
-  }
 
   async download(_fileId: string): Promise<Buffer> {
     // In a real implementation, read file from disk
     // For now, return empty buffer
     return Buffer.from("");
-  }
 
   async delete(fileId: string): Promise<boolean> {
     // In a real implementation, delete file from disk
@@ -325,13 +307,11 @@ export class LocalFileStorage implements FileStorage {
     });
 
     return true;
-  }
 
   async getMetadata(_fileId: string): Promise<FileMetadata | null> {
     // In a real implementation, query database for file metadata
     // For now, return null
     return null;
-  }
 
   async listFiles(_filters: {
     userId?: string;
@@ -344,7 +324,6 @@ export class LocalFileStorage implements FileStorage {
     // In a real implementation, query database for files
     // For now, return empty array
     return [];
-  }
 
   async updateMetadata(
     _fileId: string,
@@ -354,7 +333,6 @@ export class LocalFileStorage implements FileStorage {
     // For now, return empty metadata
     return {} as FileMetadata;
   }
-}
 
 // File upload API handler
 export async function handleFileUpload(
@@ -376,14 +354,12 @@ export async function handleFileUpload(
         { success: false, error: "No file provided" },
         { status: 400 },
       );
-    }
 
     if (!userId) {
       return NextResponse.json(
         { success: false, error: "User ID is required" },
         { status: 400 },
       );
-    }
 
     const storage = new LocalFileStorage();
 
@@ -416,7 +392,6 @@ export async function handleFileUpload(
       { status: 500 },
     );
   }
-}
 
 // File download API handler
 export async function handleFileDownload(
@@ -431,13 +406,11 @@ export async function handleFileDownload(
         { success: false, error: "File not found" },
         { status: 404 },
       );
-    }
 
     // Check if file is public or user has access
     if (!metadata.isPublic) {
       // In a real implementation, check user permissions
       // For now, allow download
-    }
 
     const fileBuffer = await storage.download(fileId);
     const arrayBuffer = fileBuffer.buffer.slice(
@@ -464,7 +437,6 @@ export async function handleFileDownload(
       { status: 500 },
     );
   }
-}
 
 // File list API handler
 export async function handleFileList(
@@ -509,7 +481,6 @@ export async function handleFileList(
       { status: 500 },
     );
   }
-}
 
 // Export file upload handler instance
 export const fileUploadHandler = FileUploadHandler.getInstance();

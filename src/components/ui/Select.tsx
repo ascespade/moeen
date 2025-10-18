@@ -158,6 +158,3 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
   SelectScrollUpButton,
   SelectScrollDownButton,
 };
-
-
-export {

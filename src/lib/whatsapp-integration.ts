@@ -7,7 +7,6 @@ export interface WhatsAppMessage {
   timestamp: Date;
   type: "text" | "image" | "audio" | "document";
   status: "sent" | "delivered" | "read" | "failed";
-}
 
 export interface WhatsAppContact {
   phone: string;
@@ -18,7 +17,6 @@ export interface WhatsAppContact {
   familyMemberId?: string;
   lastInteraction: Date;
   preferredLanguage: "ar" | "en";
-}
 
 export interface WhatsAppTemplate {
   id: string;
@@ -32,7 +30,6 @@ export interface WhatsAppTemplate {
   content: string;
   variables: string[];
   approved: boolean;
-}
 
 export class WhatsAppIntegration {
   private contacts: Map<string, WhatsAppContact> = new Map();
@@ -41,7 +38,6 @@ export class WhatsAppIntegration {
 
   constructor() {
     this.initializeTemplates();
-  }
 
   private initializeTemplates() {
     // Appointment Templates
@@ -107,16 +103,13 @@ export class WhatsAppIntegration {
       variables: [],
       approved: true,
     });
-  }
 
   // Contact Management
   addContact(contact: WhatsAppContact): void {
     this.contacts.set(contact.phone, contact);
-  }
 
   getContact(phone: string): WhatsAppContact | undefined {
     return this.contacts.get(phone);
-  }
 
   updateContact(phone: string, updates: Partial<WhatsAppContact>): boolean {
     const contact = this.contacts.get(phone);
@@ -125,7 +118,6 @@ export class WhatsAppIntegration {
     const updatedContact = { ...contact, ...updates };
     this.contacts.set(phone, updatedContact);
     return true;
-  }
 
   // Message Sending
   async sendMessage(
@@ -148,7 +140,6 @@ export class WhatsAppIntegration {
 
     // Simulate sending (in real implementation, this would call WhatsApp API)
     return messageId;
-  }
 
   // Template Message Sending
   async sendTemplateMessage(
@@ -159,7 +150,6 @@ export class WhatsAppIntegration {
     const template = this.templates.get(templateId);
     if (!template) {
       throw new Error(`Template ${templateId} not found`);
-    }
 
     let content = template.content;
 
@@ -169,7 +159,6 @@ export class WhatsAppIntegration {
     });
 
     return this.sendMessage(to, content);
-  }
 
   // Automated Messages
   async sendAppointmentReminder(
@@ -179,7 +168,6 @@ export class WhatsAppIntegration {
     return this.sendTemplateMessage("appointment_reminder", patientPhone, {
       time: appointmentTime,
     });
-  }
 
   async sendMotivationalMessage(
     patientPhone: string,
@@ -188,7 +176,6 @@ export class WhatsAppIntegration {
     return this.sendTemplateMessage("daily_motivation", patientPhone, {
       name: patientName,
     });
-  }
 
   async sendMilestoneCelebration(
     patientPhone: string,
@@ -199,7 +186,6 @@ export class WhatsAppIntegration {
       name: patientName,
       milestone,
     });
-  }
 
   async sendExerciseReminder(
     patientPhone: string,
@@ -210,11 +196,9 @@ export class WhatsAppIntegration {
       name: patientName,
       exercise: exerciseName,
     });
-  }
 
   async sendCrisisSupport(patientPhone: string): Promise<string> {
     return this.sendTemplateMessage("crisis_support", patientPhone, {});
-  }
 
   // Family Notifications
   async notifyFamilyMember(
@@ -237,10 +221,8 @@ export class WhatsAppIntegration {
         break;
       default:
         content = `تحديث: ${details} لـ ${patientName}`;
-    }
 
     return this.sendMessage(familyPhone, content);
-  }
 
   // Message Processing
   async processIncomingMessage(
@@ -253,7 +235,6 @@ export class WhatsAppIntegration {
     // Update last interaction
     if (contact) {
       this.updateContact(from, { lastInteraction: new Date() });
-    }
 
     // Process based on message type
     if (messageType === "text") {
@@ -262,10 +243,8 @@ export class WhatsAppIntegration {
       return this.processAudioMessage(from);
     } else if (messageType === "image") {
       return this.processImageMessage(from);
-    }
 
     return "شكراً لك على رسالتك. سنقوم بالرد عليك قريباً.";
-  }
 
   private async processTextMessage(
     from: string,
@@ -277,35 +256,28 @@ export class WhatsAppIntegration {
     if (this.detectCrisisKeywords(lowerContent)) {
       await this.sendCrisisSupport(from);
       return "تم إرسال معلومات الدعم العاجل. يرجى التواصل مع الأرقام المذكورة فوراً.";
-    }
 
     // Appointment related
     if (lowerContent.includes("موعد") || lowerContent.includes("حجز")) {
       return "يمكنني مساعدتك في حجز موعد. هل تود حجز موعد جديد أم إعادة جدولة موعد موجود؟";
-    }
 
     // General inquiry
     if (lowerContent.includes("معلومات") || lowerContent.includes("خدمات")) {
       return "مرحباً بك في مركز الهمم! يمكنني مساعدتك في:\n1️⃣ معلومات عن المركز\n2️⃣ الخدمات المتاحة\n3️⃣ الفعاليات والورش\n4️⃣ التواصل مع الفريق الطبي";
-    }
 
     // Support request
     if (lowerContent.includes("مساعدة") || lowerContent.includes("دعم")) {
       return "نحن هنا لمساعدتك! كيف يمكنني دعمك اليوم؟";
-    }
 
     // Default response
     return "شكراً لك على رسالتك. يمكنني مساعدتك في حجز المواعيد، تقديم المعلومات، أو التواصل مع الفريق الطبي. ما الذي تحتاجه؟";
-  }
 
   private async processAudioMessage(_from: string): Promise<string> {
     // In real implementation, this would use speech-to-text
     return "شكراً لك على الرسالة الصوتية. يرجى إرسال رسالة نصية لمساعدتي في فهم طلبك بشكل أفضل.";
-  }
 
   private async processImageMessage(_from: string): Promise<string> {
     return "شكراً لك على الصورة. يرجى إرسال رسالة نصية لمساعدتي في فهم ما تحتاجه.";
-  }
 
   // Crisis Detection
   private detectCrisisKeywords(content: string): boolean {
@@ -327,7 +299,6 @@ export class WhatsAppIntegration {
     ];
 
     return crisisKeywords.some((keyword) => content.includes(keyword));
-  }
 
   // Message Status Tracking
   updateMessageStatus(
@@ -339,7 +310,6 @@ export class WhatsAppIntegration {
 
     message.status = status;
     return true;
-  }
 
   // Analytics and Reporting
   getMessageStats(): {
@@ -370,25 +340,20 @@ export class WhatsAppIntegration {
       readMessages,
       failedMessages,
     };
-  }
 
   // Template Management
   addTemplate(template: WhatsAppTemplate): void {
     this.templates.set(template.id, template);
-  }
 
   getTemplate(templateId: string): WhatsAppTemplate | undefined {
     return this.templates.get(templateId);
-  }
 
   getAllTemplates(): WhatsAppTemplate[] {
     return Array.from(this.templates.values());
-  }
 
   // Utility Functions
   private generateMessageId(): string {
     return `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  }
 
   // Accessibility Features
   generateAccessibleResponse(options: string[]): string {
@@ -398,7 +363,6 @@ export class WhatsAppIntegration {
     });
     response += "\n\nيمكنك الكتابة أو إرسال رسالة صوتية بطلبك.";
     return response;
-  }
 
   // Multi-language Support
   generateMultilingualResponse(
@@ -412,4 +376,3 @@ export class WhatsAppIntegration {
       return englishText;
     }
   }
-}

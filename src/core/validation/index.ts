@@ -352,10 +352,8 @@ export class ValidationHelper {
           context,
         );
         return { success: false, error: validationError };
-      }
       throw error;
     }
-  }
 
   public static async validateAsync<T>(
     schema: z.ZodSchema<T>,
@@ -377,13 +375,11 @@ export class ValidationHelper {
           context,
         );
         return { success: false, error: validationError };
-      }
       return {
         success: false,
         error: new ValidationError("Unknown validation error"),
       };
     }
-  }
 
   public static validateQueryParams<T>(
     schema: z.ZodSchema<T>,
@@ -396,19 +392,15 @@ export class ValidationHelper {
       // Try to parse as number
       if (!isNaN(Number(value))) {
         params[key] = Number(value);
-      }
       // Try to parse as boolean
       else if (value === "true" || value === "false") {
         params[key] = value === "true";
-      }
       // Keep as string
       else {
         params[key] = value;
       }
-    }
 
     return this.validate(schema, params, context);
-  }
 
   public static validateRequestBody<T>(
     schema: z.ZodSchema<T>,
@@ -417,7 +409,6 @@ export class ValidationHelper {
   ): { success: true; data: T } | { success: false; error: ValidationError } {
     return this.validate(schema, body, context);
   }
-}
 
 // Middleware for API Routes
 export const validateRequest = <T>(
@@ -436,7 +427,6 @@ export const validateRequest = <T>(
         success: false,
         error: validation.error.toJSON(),
       });
-    }
 
     req.validatedData = validation.data;
     next();
@@ -460,7 +450,6 @@ export const validateQuery = <T>(
         success: false,
         error: validation.error.toJSON(),
       });
-    }
 
     req.validatedQuery = validation.data;
     next();

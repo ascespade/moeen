@@ -7,7 +7,6 @@ export const formatDate = (
 
   if (isNaN(d.getTime())) {
     return "Invalid Date";
-  }
 
   switch (format) {
     case "short":
@@ -32,22 +31,18 @@ export const formatRelativeTime = (date: Date | string): string => {
 
   if (diffInSeconds < 60) {
     return "just now";
-  }
 
   const diffInMinutes = Math.floor(diffInSeconds / 60);
   if (diffInMinutes < 60) {
     return `${diffInMinutes}m ago`;
-  }
 
   const diffInHours = Math.floor(diffInMinutes / 60);
   if (diffInHours < 24) {
     return `${diffInHours}h ago`;
-  }
 
   const diffInDays = Math.floor(diffInHours / 24);
   if (diffInDays < 7) {
     return `${diffInDays}d ago`;
-  }
 
   return formatDate(d, "short");
 };
@@ -85,7 +80,6 @@ export const formatPhoneNumber = (phone: string): string => {
 
   if (match) {
     return `(${match[1]}) ${match[2]}-${match[3]}`;
-  }
 
   return phone;
 };

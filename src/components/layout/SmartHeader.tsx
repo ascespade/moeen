@@ -117,7 +117,6 @@ function ThemeLanguageSwitches() {
       </button>
     </>
   );
-}
 
 // Main Smart Header Component
 export default function SmartHeader() {
@@ -268,4 +267,3 @@ export default function SmartHeader() {
       </div>
     </nav>
   );
-}

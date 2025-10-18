@@ -47,7 +47,6 @@ export function usePageI18n(locale: "ar" | "en" = "ar") {
           break;
         }
       }
-    }
 
     setCurrentNamespace(namespace);
   }, [pathname]);
@@ -66,7 +65,6 @@ export function usePageI18n(locale: "ar" | "en" = "ar") {
       if (commonTranslation !== key) {
         translation = commonTranslation;
       }
-    }
 
     return translation;
   };
@@ -78,7 +76,6 @@ export function usePageI18n(locale: "ar" | "en" = "ar") {
     namespace: currentNamespace,
     locale,
   };
-}
 
 /**
  * Hook for getting translation with specific namespace
@@ -96,11 +93,9 @@ export function useNamespaceI18n(
     namespace,
     locale,
   };
-}
 
 /**
  * Hook for common translations (always uses 'common' namespace)
  */
 export function useCommonI18n(locale: "ar" | "en" = "ar") {
   return useNamespaceI18n("common", locale);
-}

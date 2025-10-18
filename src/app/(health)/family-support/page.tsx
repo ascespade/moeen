@@ -57,7 +57,6 @@ interface FamilyMember {
     condition: string;
     avatar?: string;
   };
-}
 
 interface SupportSession {
   id: string;
@@ -85,7 +84,6 @@ interface SupportSession {
     specialty: string;
     avatar?: string;
   };
-}
 
 interface Resource {
   id: string;
@@ -97,7 +95,6 @@ interface Resource {
   file_path?: string;
   tags: string[];
   created_at: string;
-}
 
 const FamilySupportPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -116,7 +113,6 @@ const FamilySupportPage: React.FC = () => {
     if (!isAuthenticated) {
       router.push("/login");
       return;
-    }
     loadFamilySupportData();
   }, [isAuthenticated, router]);
 
@@ -300,7 +296,6 @@ const FamilySupportPage: React.FC = () => {
 
   if (!isAuthenticated) {
     return null;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8" dir="rtl">
@@ -568,7 +563,6 @@ const FamilySupportPage: React.FC = () => {
                     <Button
                       onClick={() =>
                         router.push("/family-support/sessions/new")
-                      }
                       className="bg-[var(--brand-primary)] hover:brightness-95"
                     >
                       جدولة جلسة دعم
@@ -708,7 +702,6 @@ const FamilySupportPage: React.FC = () => {
                     <Button
                       onClick={() =>
                         router.push("/family-support/resources/new")
-                      }
                       className="bg-[var(--brand-primary)] hover:brightness-95"
                     >
                       إضافة مورد جديد

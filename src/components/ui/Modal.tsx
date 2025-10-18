@@ -9,7 +9,6 @@ export interface ModalProps {
   onClose: () => void;
   title?: string;
   children?: React.ReactNode;
-}
 
 export function Modal({ open, onClose, title, children }: ModalProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null);
@@ -68,6 +67,5 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
       </div>
     </div>
   );
-}
 
 export default Modal;

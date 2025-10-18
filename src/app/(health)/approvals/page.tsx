@@ -37,7 +37,6 @@ interface Approval {
   outstandingAmount?: number;
   attachments: string[];
   notes?: string;
-}
 
 const mockApprovals: Approval[] = [
     id: "1",
@@ -225,7 +224,6 @@ export default function ApprovalsPage() {
           )}
         </div>
       );
-    }
     return (
       <div className="flex items-center gap-2 text-brand-success">
         <span className="h-2 w-2 rounded-full bg-brand-success"></span>
@@ -244,7 +242,6 @@ export default function ApprovalsPage() {
           </span>
         </div>
       );
-    }
     return (
       <div className="flex items-center gap-2 text-brand-success">
         <span className="h-2 w-2 rounded-full bg-brand-success"></span>
@@ -726,4 +723,3 @@ export default function ApprovalsPage() {
       )}
     </div>
   );
-}

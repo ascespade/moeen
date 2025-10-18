@@ -61,7 +61,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 async function activatePatient(request: NextRequest, body: any) {
   try {
@@ -71,7 +70,6 @@ async function activatePatient(request: NextRequest, body: any) {
     );
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const { patientId, activationReason, notes } = body;
@@ -86,7 +84,6 @@ async function activatePatient(request: NextRequest, body: any) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     // Verify patient exists and is not already activated
     const { data: patient, error: patientError } = await supabase
@@ -97,14 +94,12 @@ async function activatePatient(request: NextRequest, body: any) {
 
     if (patientError || !patient) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
-    }
 
     if (patient.isActivated) {
       return NextResponse.json(
         { error: "Patient already activated" },
         { status: 400 },
       );
-    }
 
     // Activate patient
     const { data: updatedPatient, error: updateError } = await supabase
@@ -125,7 +120,6 @@ async function activatePatient(request: NextRequest, body: any) {
         { error: "Failed to activate patient" },
         { status: 500 },
       );
-    }
 
     // Create patient file
     await createPatientFile(patientId, supabase);
@@ -153,7 +147,6 @@ async function activatePatient(request: NextRequest, body: any) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 async function updateChecklist(request: NextRequest, body: any) {
   try {
@@ -163,7 +156,6 @@ async function updateChecklist(request: NextRequest, body: any) {
     );
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const { patientId, appointmentId, checklistItems } = body;
@@ -178,7 +170,6 @@ async function updateChecklist(request: NextRequest, body: any) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     // Verify appointment exists and belongs to patient
     const { data: appointment, error: appointmentError } = await supabase
@@ -193,7 +184,6 @@ async function updateChecklist(request: NextRequest, body: any) {
         { error: "Appointment not found" },
         { status: 404 },
       );
-    }
 
     // Update or create checklist
     const { data: checklist, error: checklistError } = await supabase
@@ -215,7 +205,6 @@ async function updateChecklist(request: NextRequest, body: any) {
         { error: "Failed to update checklist" },
         { status: 500 },
       );
-    }
 
     // Create audit log
     await supabase.from("audit_logs").insert({
@@ -240,7 +229,6 @@ async function updateChecklist(request: NextRequest, body: any) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 async function requestFileAccess(request: NextRequest, body: any) {
   try {
@@ -250,7 +238,6 @@ async function requestFileAccess(request: NextRequest, body: any) {
     );
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const { patientId, fileType, accessReason } = body;
@@ -265,7 +252,6 @@ async function requestFileAccess(request: NextRequest, body: any) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     // Verify patient exists and is activated
     const { data: patient, error: patientError } = await supabase
@@ -276,14 +262,12 @@ async function requestFileAccess(request: NextRequest, body: any) {
 
     if (patientError || !patient) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
-    }
 
     if (!patient.isActivated) {
       return NextResponse.json(
         { error: "Patient not activated" },
         { status: 400 },
       );
-    }
 
     // Get files based on type
     let files;
@@ -327,7 +311,6 @@ async function requestFileAccess(request: NextRequest, body: any) {
           { error: "Invalid file type" },
           { status: 400 },
         );
-    }
 
     // Create audit log
     await supabase.from("audit_logs").insert({
@@ -355,7 +338,6 @@ async function requestFileAccess(request: NextRequest, body: any) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 async function createPatientFile(patientId: string, supabase: any) {
   // Create initial patient file structure
@@ -370,7 +352,6 @@ async function createPatientFile(patientId: string, supabase: any) {
   if (error) {
     console.error("Failed to create patient file:", error);
   }
-}
 
 async function sendActivationNotification(patient: any, supabase: any) {
   // Send activation notification to patient
@@ -383,4 +364,3 @@ async function sendActivationNotification(patient: any, supabase: any) {
     channels: ["email", "in_app"],
     priority: "normal",
   });
-}

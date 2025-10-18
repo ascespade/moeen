@@ -13,7 +13,6 @@ export async function PATCH(
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     // Only staff, supervisor, and admin can submit claims
     if (!["staff", "supervisor", "admin"].includes(user.role)) {
@@ -21,7 +20,6 @@ export async function PATCH(
         { error: "Insufficient permissions" },
         { status: 403 },
       );
-    }
 
     const supabase = await createClient();
     const claimId = params.id;
@@ -46,7 +44,6 @@ export async function PATCH(
 
     if (claimError || !claim) {
       return NextResponse.json({ error: "Claim not found" }, { status: 404 });
-    }
 
     if (claim.claim_status !== "draft") {
       return NextResponse.json(
@@ -54,7 +51,6 @@ export async function PATCH(
         },
         { status: 400 },
       );
-    }
 
     // Submit claim to insurance provider
     const submissionResult = await insuranceService.createClaim(
@@ -75,7 +71,6 @@ export async function PATCH(
         },
         { status: 400 },
       );
-    }
 
     // Update claim status in database
     const { error: updateError } = await supabase
@@ -98,7 +93,6 @@ export async function PATCH(
         { error: "Failed to update claim status" },
         { status: 500 },
       );
-    }
 
     // Log claim submission
     await supabase.from("audit_logs").insert({
@@ -130,7 +124,6 @@ export async function PATCH(
       { status: 500 },
     );
   }
-}
 
 export async function GET(
   request: NextRequest,
@@ -141,7 +134,6 @@ export async function GET(
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const claimId = params.id;
@@ -169,12 +161,10 @@ export async function GET(
 
     if (claimError || !claim) {
       return NextResponse.json({ error: "Claim not found" }, { status: 404 });
-    }
 
     // Check if user has permission to view this claim
     if (user.role === "patient" && claim.patients.id !== user.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-    }
 
     return NextResponse.json({
       claim: {
@@ -199,4 +189,3 @@ export async function GET(
       { status: 500 },
     );
   }
-}

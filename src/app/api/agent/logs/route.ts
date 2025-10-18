@@ -11,7 +11,6 @@ export async function GET(request: NextRequest) {
 
     if (!fs.existsSync(logFile)) {
       return NextResponse.json({ logs: [] });
-    }
 
     const logContent = fs.readFileSync(logFile, "utf8");
     const logs = logContent
@@ -23,4 +22,3 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error: "Failed to read logs" }, { status: 500 });
   }
-}

@@ -17,13 +17,11 @@ export function usePerformanceMonitor(componentName: string) {
 
     if (process.env.NODE_ENV === "development") {
       console.log(`${componentName} rendered in ${renderTime.toFixed(2)}ms`);
-    }
 
     startTime.current = performance.now();
   });
 
   return { renderCount: renderCount.current };
-}
 
 export function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -39,7 +37,6 @@ export function useDebounce<T>(value: T, delay: number): T {
   }, [value, delay]);
 
   return debouncedValue;
-}
 
 export function useThrottle<T extends (...args: any[]) => any>(
   callback: T,
@@ -56,7 +53,6 @@ export function useThrottle<T extends (...args: any[]) => any>(
     }) as T,
     [callback, delay],
   );
-}
 
 export function useIntersectionObserver(
   callback: (entries: IntersectionObserverEntry[]) => void,
@@ -75,7 +71,6 @@ export function useIntersectionObserver(
   }, [callback, options]);
 
   return observerRef.current;
-}
 
 export function useVirtualization(
   itemCount: number,
@@ -98,4 +93,3 @@ export function useVirtualization(
   }, [itemCount, itemHeight, containerHeight, scrollTop]);
 
   return visibleRange;
-}

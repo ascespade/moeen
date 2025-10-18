@@ -26,14 +26,12 @@ export interface ApiHandlerConfig {
     windowMs: number;
     maxRequests: number;
   };
-}
 
 export class BaseApiHandler {
   private errorHandler: ErrorHandler;
 
   constructor() {
     this.errorHandler = ErrorHandler.getInstance();
-  }
 
   public createHandler<T = any>(
     handler: (req: NextRequest, context: any) => Promise<NextResponse<T>>,
@@ -52,7 +50,6 @@ export class BaseApiHandler {
             },
             { status: 405 },
           );
-        }
 
         // Authentication check
         if (config.auth) {
@@ -65,7 +62,6 @@ export class BaseApiHandler {
               },
               { status: 401 },
             );
-          }
 
           // Role-based access control
           if (config.roles && !config.roles.includes(user.role)) {
@@ -75,11 +71,9 @@ export class BaseApiHandler {
               },
               { status: 403 },
             );
-          }
 
           // Add user to context
           context.user = user;
-        }
 
         // Request validation
         if (config.validation) {
@@ -96,10 +90,8 @@ export class BaseApiHandler {
                 { success: false, error: validation.error.toJSON() },
                 { status: 400 },
               );
-            }
 
             context.validatedBody = validation.data;
-          }
 
           // Query validation
           if (config.validation.query) {
@@ -112,16 +104,13 @@ export class BaseApiHandler {
               // Try to parse as number
               if (!isNaN(Number(value))) {
                 queryParams[key] = Number(value);
-              }
               // Try to parse as boolean
               else if (value === "true" || value === "false") {
                 queryParams[key] = value === "true";
-              }
               // Keep as string
               else {
                 queryParams[key] = value;
               }
-            }
 
             const validation = ValidationHelper.validate(
               config.validation.query,
@@ -133,16 +122,13 @@ export class BaseApiHandler {
                 { success: false, error: validation.error.toJSON() },
                 { status: 400 },
               );
-            }
 
             context.validatedQuery = validation.data;
           }
-        }
 
         // Rate limiting (basic implementation)
         if (config.rateLimit) {
           // TODO: Implement rate limiting logic
-        }
 
         // Execute handler
         return await handler(req, context);
@@ -163,20 +149,16 @@ export class BaseApiHandler {
         );
       }
     };
-  }
 
   // Helper methods for common operations
   public async getSupabaseClient() {
     return createClient();
-  }
 
   public async getCurrentUser(req: NextRequest) {
     const { user, error } = await authorize(req);
     if (error || !user) {
       throw ErrorFactory.createAuthenticationError();
-    }
     return user;
-  }
 
   public async checkResourceAccess(
     resourceType: string,
@@ -187,7 +169,6 @@ export class BaseApiHandler {
     // Implement resource access checking logic
     // This would check if the user has access to the specific resource
     return true;
-  }
 
   public async auditLog(
     action: string,
@@ -209,7 +190,6 @@ export class BaseApiHandler {
     } catch (error) {
       console.error("Failed to create audit log:", error);
     }
-  }
 
   public createSuccessResponse<T>(data: T, message?: string) {
     return NextResponse.json({
@@ -217,7 +197,6 @@ export class BaseApiHandler {
       data,
       message,
     });
-  }
 
   public createErrorResponse(
     message: string,
@@ -233,7 +212,6 @@ export class BaseApiHandler {
       },
       { status: statusCode },
     );
-  }
 
   public createPaginatedResponse<T>(
     data: T[],
@@ -256,7 +234,6 @@ export class BaseApiHandler {
       },
     });
   }
-}
 
 // Export singleton instance
 export const baseApiHandler = new BaseApiHandler();

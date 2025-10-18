@@ -63,5 +63,4 @@
 
 
 export type { ButtonProps } from "./Button";
-export {
 export { Button }

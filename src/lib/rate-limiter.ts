@@ -3,7 +3,6 @@ import { NextRequest } from "next/server";
 interface RateLimitConfig {
   windowMs: number;
   maxRequests: number;
-}
 
 class RateLimiter {
   private requests: Map<string, { count: number; resetTime: number }> =
@@ -22,7 +21,6 @@ class RateLimiter {
         }
       }
     }, 60000);
-  }
 
   isAllowed(identifier: string): boolean {
     const now = Date.now();
@@ -37,28 +35,23 @@ class RateLimiter {
         resetTime: now + this.config.windowMs,
       });
       return true;
-    }
 
     if (current.count >= this.config.maxRequests) {
       return false;
-    }
 
     current.count++;
     return true;
-  }
 
   getRemainingRequests(identifier: string): number {
     const current = this.requests.get(identifier);
     if (!current) return this.config.maxRequests;
 
     return Math.max(0, this.config.maxRequests - current.count);
-  }
 
   getResetTime(identifier: string): number {
     const current = this.requests.get(identifier);
     return current?.resetTime || Date.now() + this.config.windowMs;
   }
-}
 
 // Rate limiters for different endpoints
 export const authRateLimiter = new RateLimiter({

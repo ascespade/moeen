@@ -28,7 +28,6 @@ export interface WhatsAppMessage {
     filename: string;
     caption?: string;
   };
-}
 
 export interface WhatsAppTemplate {
   name: string;
@@ -45,7 +44,6 @@ export interface WhatsAppTemplate {
       phone_number?: string;
     }>;
   }>;
-}
 
 export interface WhatsAppWebhookEvent {
   object: string;
@@ -99,7 +97,6 @@ export interface WhatsAppWebhookEvent {
       field: string;
     }>;
   }>;
-}
 
 export class WhatsAppBusinessAPI {
   private accessToken: string;
@@ -114,7 +111,6 @@ export class WhatsAppBusinessAPI {
     this.businessAccountId = process.env.WHATSAPP_BUSINESS_ACCOUNT_ID || "";
     this.apiVersion = "v18.0";
     this.baseUrl = `https://graph.facebook.com/${this.apiVersion}`;
-  }
 
   // Send Text Message
   async sendTextMessage(
@@ -159,7 +155,6 @@ export class WhatsAppBusinessAPI {
         error: (error as Error).message,
       };
     }
-  }
 
   // Send Template Message
   async sendTemplateMessage(
@@ -191,7 +186,6 @@ export class WhatsAppBusinessAPI {
             })),
           },
         ];
-      }
 
       const response = await fetch(
         `${this.baseUrl}/${this.phoneNumberId}/messages`,
@@ -223,7 +217,6 @@ export class WhatsAppBusinessAPI {
         error: (error as Error).message,
       };
     }
-  }
 
   // Send Image Message
   async sendImageMessage(
@@ -270,7 +263,6 @@ export class WhatsAppBusinessAPI {
         error: (error as Error).message,
       };
     }
-  }
 
   // Send Document Message
   async sendDocumentMessage(
@@ -319,7 +311,6 @@ export class WhatsAppBusinessAPI {
         error: (error as Error).message,
       };
     }
-  }
 
   // Get Message Status
   async getMessageStatus(
@@ -340,13 +331,11 @@ export class WhatsAppBusinessAPI {
           status: data.status,
           timestamp: data.timestamp,
         };
-      }
 
       return null;
     } catch (error) {
       return null;
     }
-  }
 
   // Get Templates
   async getTemplates(): Promise<WhatsAppTemplate[]> {
@@ -364,13 +353,11 @@ export class WhatsAppBusinessAPI {
 
       if (response.ok) {
         return data.data || [];
-      }
 
       return [];
     } catch (error) {
       return [];
     }
-  }
 
   // Create Template
   async createTemplate(
@@ -407,7 +394,6 @@ export class WhatsAppBusinessAPI {
         error: (error as Error).message,
       };
     }
-  }
 
   // Process Webhook Event
   processWebhookEvent(event: WhatsAppWebhookEvent): {
@@ -444,7 +430,6 @@ export class WhatsAppBusinessAPI {
                 message.document,
             });
           });
-        }
 
         if (change.value.statuses) {
           change.value.statuses.forEach((status) => {
@@ -460,13 +445,11 @@ export class WhatsAppBusinessAPI {
     });
 
     return { messages, statuses };
-  }
 
   // Verify Webhook
   verifyWebhook(mode: string, token: string, _challenge: string): boolean {
     const verifyToken = process.env.WHATSAPP_VERIFY_TOKEN;
     return mode === "subscribe" && token === verifyToken;
-  }
 
   // Get Business Profile
   async getBusinessProfile(): Promise<{
@@ -501,7 +484,6 @@ export class WhatsAppBusinessAPI {
         error: (error as Error).message,
       };
     }
-  }
 
   // Update Business Profile
   async updateBusinessProfile(profileData: {
@@ -539,6 +521,5 @@ export class WhatsAppBusinessAPI {
       };
     }
   }
-}
 
 export const whatsappAPI = new WhatsAppBusinessAPI();

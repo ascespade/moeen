@@ -17,7 +17,6 @@ interface Integration {
   messageCount: number;
   icon: string;
   color: string;
-}
 
 const mockIntegrations: Integration[] = [
     id: "1",
@@ -371,4 +370,3 @@ export default function ChatbotIntegrationsPage() {
       )}
     </div>
   );
-}

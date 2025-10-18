@@ -40,17 +40,14 @@ function LoginForm() {
     if (!formData.email) {
       setError(t("auth.email.required", "البريد الإلكتروني مطلوب"));
       return;
-    }
 
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
       setError(t("auth.email.invalid", "البريد الإلكتروني غير صحيح"));
       return;
-    }
 
     if (!formData.password) {
       setError(t("auth.password.required", "كلمة المرور مطلوبة"));
       return;
-    }
 
     setSubmitting(true);
     try {
@@ -294,7 +291,6 @@ function LoginForm() {
                         account.email,
                         account.password,
                       )
-                    }
                     disabled={submitting || isLoading}
                     className={`${account.color} text-white px-4 py-4 rounded-xl font-bold text-sm transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex flex-col items-center justify-center gap-2 relative overflow-hidden group`}
                   >
@@ -332,7 +328,6 @@ function LoginForm() {
       </div>
     </div>
   );
-}
 
 export default function LoginPage() {
   return (
@@ -341,9 +336,7 @@ export default function LoginPage() {
         <div className="flex min-h-screen items-center justify-center">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-brand-primary"></div>
         </div>
-      }
     >
       <LoginForm />
     </Suspense>
   );
-}

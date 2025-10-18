@@ -10,7 +10,6 @@ export interface DynamicContent {
   is_public: boolean;
   created_at: string;
   updated_at: string;
-}
 
 export interface HomepageContent {
   heroSlides: HeroSlide[];
@@ -18,7 +17,6 @@ export interface HomepageContent {
   testimonials: Testimonial[];
   galleryImages: GalleryImage[];
   faqs: FAQ[];
-}
 
 export interface HeroSlide {
   id: number;
@@ -28,7 +26,6 @@ export interface HeroSlide {
   image: string;
   cta: string;
   ctaLink: string;
-}
 
 export interface Service {
   id: number;
@@ -37,7 +34,6 @@ export interface Service {
   icon: string;
   color: string;
   bgColor: string;
-}
 
 export interface Testimonial {
   id: number;
@@ -46,19 +42,16 @@ export interface Testimonial {
   content: string;
   image: string;
   rating: number;
-}
 
 export interface GalleryImage {
   id: number;
   src: string;
   alt: string;
-}
 
 export interface FAQ {
   id: number;
   question: string;
   answer: string;
-}
 
 /**
  * Dynamic Content Manager
@@ -82,7 +75,6 @@ class DynamicContentManager {
       if (Date.now() - cached.timestamp < this.cacheExpiry) {
         return cached.data;
       }
-    }
 
     try {
       // Load all homepage content from settings table
@@ -99,7 +91,6 @@ class DynamicContentManager {
 
       if (error) {
         throw new Error(`Failed to load homepage content: ${error.message}`);
-      }
 
       // Parse settings into structured content
       const content: HomepageContent = {
@@ -127,7 +118,6 @@ class DynamicContentManager {
         faqs: [],
       };
     }
-  }
 
   /**
    * Get translations for a specific locale and namespace
@@ -144,7 +134,6 @@ class DynamicContentManager {
       if (Date.now() - cached.timestamp < this.cacheExpiry) {
         return cached.data;
       }
-    }
 
     try {
       const { data, error } = await this.supabase
@@ -155,7 +144,6 @@ class DynamicContentManager {
 
       if (error) {
         throw new Error(`Failed to load translations: ${error.message}`);
-      }
 
       const translations: Record<string, string> = {};
       data?.forEach((item) => {
@@ -172,7 +160,6 @@ class DynamicContentManager {
     } catch (error) {
       return {};
     }
-  }
 
   /**
    * Get system settings
@@ -186,7 +173,6 @@ class DynamicContentManager {
       if (Date.now() - cached.timestamp < this.cacheExpiry) {
         return cached.data;
       }
-    }
 
     try {
       const { data, error } = await this.supabase
@@ -196,7 +182,6 @@ class DynamicContentManager {
 
       if (error) {
         throw new Error(`Failed to load settings: ${error.message}`);
-      }
 
       const settings: Record<string, any> = {};
       data?.forEach((item) => {
@@ -213,7 +198,6 @@ class DynamicContentManager {
     } catch (error) {
       return {};
     }
-  }
 
   /**
    * Update homepage content in database
@@ -236,7 +220,6 @@ class DynamicContentManager {
           category: "homepage",
           is_public: true,
         });
-      }
 
       if (content.services) {
         updates.push({
@@ -245,7 +228,6 @@ class DynamicContentManager {
           category: "homepage",
           is_public: true,
         });
-      }
 
       if (content.testimonials) {
         updates.push({
@@ -254,7 +236,6 @@ class DynamicContentManager {
           category: "homepage",
           is_public: true,
         });
-      }
 
       if (content.galleryImages) {
         updates.push({
@@ -263,7 +244,6 @@ class DynamicContentManager {
           category: "homepage",
           is_public: true,
         });
-      }
 
       if (content.faqs) {
         updates.push({
@@ -272,21 +252,18 @@ class DynamicContentManager {
           category: "homepage",
           is_public: true,
         });
-      }
 
       // Upsert settings
       for (const update of updates) {
         await this.supabase
           .from("settings")
           .upsert(update, { onConflict: "key" });
-      }
 
       // Clear cache
       this.cache.clear();
     } catch (error) {
       throw error;
     }
-  }
 
   /**
    * Update translations in database
@@ -313,14 +290,12 @@ class DynamicContentManager {
     } catch (error) {
       throw error;
     }
-  }
 
   /**
    * Clear all caches
    */
   clearCache(): void {
     this.cache.clear();
-  }
 
   /**
    * Parse setting value from database result
@@ -329,7 +304,6 @@ class DynamicContentManager {
     const setting = settings.find((s) => s.key === key);
     return setting ? setting.value : defaultValue;
   }
-}
 
 // Export singleton instance
 export const dynamicContentManager = new DynamicContentManager();

@@ -273,7 +273,6 @@ async function seedHomepageContent() {
     logger.error("❌ Error seeding homepage content:", error);
     throw error;
   }
-}
 
 // Run the seeding if this file is executed directly
 if (require.main === module) {
@@ -286,6 +285,5 @@ if (require.main === module) {
       logger.error("❌ Seeding failed:", error);
       process.exit(1);
     });
-}
 
 export default seedHomepageContent;

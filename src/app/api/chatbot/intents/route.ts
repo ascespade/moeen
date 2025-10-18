@@ -17,7 +17,6 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({ intents });
   } catch (error) {
@@ -26,7 +25,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 // POST /api/chatbot/intents - إنشاء نية جديدة
 export async function POST(request: NextRequest) {
@@ -57,7 +55,6 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({ intent }, { status: 201 });
   } catch (error) {
@@ -66,4 +63,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

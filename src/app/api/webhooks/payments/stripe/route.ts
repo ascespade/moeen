@@ -13,7 +13,6 @@ export async function POST(request: NextRequest) {
         { error: "Missing stripe signature" },
         { status: 400 },
       );
-    }
 
     // Verify webhook signature
     const result = await stripeService.handleWebhook(body, signature);
@@ -23,7 +22,6 @@ export async function POST(request: NextRequest) {
         { error: "Webhook verification failed" },
         { status: 400 },
       );
-    }
 
     const supabase = await createClient();
 
@@ -39,7 +37,6 @@ export async function POST(request: NextRequest) {
         { error: "Payment record not found" },
         { status: 404 },
       );
-    }
 
     // Update payment status based on webhook event
     const newStatus = result.paymentIntentId ? "completed" : "failed";
@@ -57,7 +54,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to update payment status" },
         { status: 500 },
       );
-    }
 
     // If payment completed, update appointment payment status
     if (newStatus === "completed") {
@@ -81,7 +77,6 @@ export async function POST(request: NextRequest) {
           webhook_event: "payment_intent.succeeded",
         },
       });
-    }
 
     return NextResponse.json({ received: true });
   } catch (error) {
@@ -90,4 +85,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

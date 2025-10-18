@@ -4,7 +4,6 @@ export class ApiClient {
 
   constructor(baseURL: string = "/api") {
     this.baseURL = baseURL;
-  }
 
   private async request<T>(
     endpoint: string,
@@ -32,13 +31,11 @@ export class ApiClient {
         throw new Error(
           errorData.error || `HTTP ${response.status}: ${response.statusText}`,
         );
-      }
 
       return await response.json();
     } catch (error) {
       throw error;
     }
-  }
 
   // Authentication methods
   async login(email: string, password: string, rememberMe: boolean = false) {
@@ -46,47 +43,39 @@ export class ApiClient {
       method: "POST",
       body: JSON.stringify({ email, password, rememberMe }),
     });
-  }
 
   async logout() {
     return this.request("/auth/logout", {
       method: "POST",
     });
-  }
 
   async refreshToken() {
     return this.request("/auth/refresh", {
       method: "POST",
     });
-  }
 
   async getCurrentUser() {
     return this.request("/auth/me");
-  }
 
   // Generic API methods
   async get<T>(endpoint: string): Promise<T> {
     return this.request<T>(endpoint, { method: "GET" });
-  }
 
   async post<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
       method: "POST",
       body: data ? JSON.stringify(data) : null,
     });
-  }
 
   async put<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
       method: "PUT",
       body: data ? JSON.stringify(data) : null,
     });
-  }
 
   async delete<T>(endpoint: string): Promise<T> {
     return this.request<T>(endpoint, { method: "DELETE" });
   }
-}
 
 // Create a default API client instance
 export const apiClient = new ApiClient();

@@ -50,7 +50,6 @@ interface StaffData {
     patientName: string;
     timestamp: string;
   }>;
-}
 
 export default function StaffDashboard() {
   const { t } = useT();
@@ -111,7 +110,6 @@ export default function StaffDashboard() {
         <LoadingSpinner size="lg" />
       </div>
     );
-  }
 
   return (
     <ProtectedRoute allowedRoles={["staff", "supervisor", "admin"]}>
@@ -353,4 +351,3 @@ export default function StaffDashboard() {
       </div>
     </ProtectedRoute>
   );
-}

@@ -72,7 +72,6 @@ function getFallbackMessages(locale: string, ns: string) {
     messages: fallbackMessages[locale]?.[ns] || {},
     source: "fallback",
   });
-}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -89,18 +88,14 @@ export async function GET(request: Request) {
 
     if (error) {
       return getFallbackMessages(locale, ns);
-    }
 
     if (data && data.length > 0) {
       const messages: Record<string, string> = {};
       for (const row of data) {
         messages[row.key] = row.value;
-      }
       return NextResponse.json({ locale, ns, messages, source: "database" });
-    }
 
     return getFallbackMessages(locale, ns);
   } catch (error) {
     return getFallbackMessages(locale, ns);
   }
-}

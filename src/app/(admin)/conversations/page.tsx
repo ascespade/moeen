@@ -68,7 +68,6 @@ export default function ConversationsPage() {
       ),
     );
     setInput("");
-  }
 
   async function aiReply() {
     const res = await fetch("/api/ai/respond", {
@@ -93,7 +92,6 @@ export default function ConversationsPage() {
         ),
       );
     }
-  }
 
   const filtered = useMemo(() => {
     return conversations.filter((c) => {
@@ -221,4 +219,3 @@ export default function ConversationsPage() {
       </div>
     </main>
   );
-}

@@ -9,7 +9,6 @@ export interface User extends BaseEntity {
   is_active: boolean;
   last_login?: string;
   login_count: number;
-}
 
 export type UserRole =
   | "admin"
@@ -27,10 +26,8 @@ export interface LoginRequest {
   email: string;
   password: string;
   rememberMe?: boolean;
-}
 
 export interface LoginResponse {
   user: User;
   token: string;
   refreshToken: string;
-}

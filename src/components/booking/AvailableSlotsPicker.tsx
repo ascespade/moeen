@@ -11,7 +11,6 @@ interface Slot {
   startTime: string;
   endTime: string;
   duration: number;
-}
 
 interface Props {
   sessionTypeId: string;
@@ -19,7 +18,6 @@ interface Props {
   therapistId?: string;
   onSelect: (slot: Slot) => void;
   selectedSlot?: Slot;
-}
 
 export default function AvailableSlotsPicker({
   sessionTypeId,
@@ -50,14 +48,12 @@ export default function AvailableSlotsPicker({
 
       if (therapistId) {
         params.append("therapistId", therapistId);
-      }
 
       const response = await fetch(`/api/sessions/available-slots?${params}`);
       const data = await response.json();
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to load slots");
-      }
 
       setSlots(data.slots || []);
 
@@ -81,7 +77,6 @@ export default function AvailableSlotsPicker({
         </p>
       </div>
     );
-  }
 
   if (error) {
     return (
@@ -93,7 +88,6 @@ export default function AvailableSlotsPicker({
         </button>
       </div>
     );
-  }
 
   if (slots.length === 0) {
     return (
@@ -107,7 +101,6 @@ export default function AvailableSlotsPicker({
         </p>
       </div>
     );
-  }
 
   // Group slots by therapist
   const slotsByTherapist = slots.reduce((acc: any, slot) => {
@@ -116,7 +109,6 @@ export default function AvailableSlotsPicker({
         name: slot.therapistName,
         slots: [],
       };
-    }
     acc[slot.therapistId].slots.push(slot);
     return acc;
   }, {});
@@ -159,4 +151,3 @@ export default function AvailableSlotsPicker({
       ))}
     </div>
   );
-}

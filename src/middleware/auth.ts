@@ -26,7 +26,6 @@ export async function authMiddleware(request: NextRequest) {
     pathname.startsWith("/public")
   ) {
     return NextResponse.next();
-  }
 
   // Check if route requires specific role
   const requiredRole = Object.entries(roleRoutes).find(([route]) =>
@@ -38,11 +37,9 @@ export async function authMiddleware(request: NextRequest) {
 
     if (error || !user) {
       return NextResponse.redirect(new URL("/login", request.url));
-    }
 
     if (!requiredRole[1].includes(user.role)) {
       return NextResponse.redirect(new URL("/unauthorized", request.url));
-    }
 
     // Add user info to headers for API routes
     const response = NextResponse.next();
@@ -51,7 +48,5 @@ export async function authMiddleware(request: NextRequest) {
     response.headers.set("x-user-email", user.email);
 
     return response;
-  }
 
   return NextResponse.next();
-}

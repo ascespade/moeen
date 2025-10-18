@@ -12,7 +12,6 @@ interface ConnectionPoolConfig {
   minConnections: number;
   idleTimeout: number;
   connectionTimeout: number;
-}
 
 class DatabaseConnectionPool {
   private config: ConnectionPoolConfig;
@@ -34,20 +33,17 @@ class DatabaseConnectionPool {
   ) {
     this.config = config;
     this.initializePool();
-  }
 
   private async initializePool(): Promise<void> {
     // Initialize minimum connections
     for (let i = 0; i < this.config.minConnections; i++) {
       const connection = await this.createConnection();
       this.connections.push(connection);
-    }
 
     logger.info("Database connection pool initialized", {
       minConnections: this.config.minConnections,
       maxConnections: this.config.maxConnections,
     });
-  }
 
   private async createConnection(): Promise<any> {
     try {
@@ -58,7 +54,6 @@ class DatabaseConnectionPool {
       logger.error("Failed to create database connection", error);
       throw error;
     }
-  }
 
   async getConnection(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -67,13 +62,11 @@ class DatabaseConnectionPool {
         const connection = this.connections.pop();
         resolve(connection);
         return;
-      }
 
       // Check if we can create a new connection
       if (this.activeConnections < this.config.maxConnections) {
         this.createConnection().then(resolve).catch(reject);
         return;
-      }
 
       // Add to waiting queue
       this.waitingQueue.push({
@@ -93,7 +86,6 @@ class DatabaseConnectionPool {
         }
       }, this.config.connectionTimeout);
     });
-  }
 
   releaseConnection(connection: any): void {
     if (this.waitingQueue.length > 0) {
@@ -104,7 +96,6 @@ class DatabaseConnectionPool {
       // Return connection to pool
       this.connections.push(connection);
     }
-  }
 
   async closeConnection(connection: any): Promise<void> {
     try {
@@ -118,7 +109,6 @@ class DatabaseConnectionPool {
     } catch (error) {
       logger.error("Error closing database connection", error);
     }
-  }
 
   async closeAllConnections(): Promise<void> {
     const closePromises = this.connections.map((conn) =>
@@ -136,7 +126,6 @@ class DatabaseConnectionPool {
     this.waitingQueue = [];
 
     logger.info("All database connections closed");
-  }
 
   getStats(): {
     activeConnections: number;
@@ -150,7 +139,6 @@ class DatabaseConnectionPool {
       waitingRequests: this.waitingQueue.length,
       maxConnections: this.config.maxConnections,
     };
-  }
 
   // Health check
   async healthCheck(): Promise<boolean> {
@@ -164,7 +152,6 @@ class DatabaseConnectionPool {
       return false;
     }
   }
-}
 
 // Singleton instance
 export const connectionPool = new DatabaseConnectionPool();

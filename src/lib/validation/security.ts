@@ -12,7 +12,6 @@ export function sanitizeInput(input: string): string {
     ALLOWED_TAGS: [],
     ALLOWED_ATTR: [],
   });
-}
 
 // SQL Injection Protection
 export function escapeSqlString(input: string): string {
@@ -23,7 +22,6 @@ export function escapeSqlString(input: string): string {
     .replace(/\n/g, "\\n")
     .replace(/\r/g, "\\r")
     .replace(/\x1a/g, "\\Z");
-}
 
 // Input validation schemas
 export const securitySchemas = {
@@ -188,7 +186,6 @@ export function validateRateLimit(
 ): boolean {
   // This would integrate with actual rate limiting logic
   return requests <= limit;
-}
 
 // Input sanitization
 export function sanitizeObject<T extends Record<string, any>>(obj: T): T {
@@ -202,10 +199,8 @@ export function sanitizeObject<T extends Record<string, any>>(obj: T): T {
     } else {
       sanitized[key as keyof T] = value;
     }
-  }
 
   return sanitized;
-}
 
 // CSRF token validation
 export function validateCSRFToken(
@@ -213,7 +208,6 @@ export function validateCSRFToken(
   sessionToken: string,
 ): boolean {
   return token === sessionToken && token.length > 0;
-}
 
 // File type validation
 export function validateFileType(
@@ -222,7 +216,6 @@ export function validateFileType(
 ): boolean {
   const extension = filename.toLowerCase().substring(filename.lastIndexOf("."));
   return allowedTypes.includes(extension);
-}
 
 // Content Security Policy validation
 export function validateCSPHeader(header: string): boolean {
@@ -235,4 +228,3 @@ export function validateCSPHeader(header: string): boolean {
   ];
 
   return requiredDirectives.every((directive) => header.includes(directive));
-}

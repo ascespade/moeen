@@ -11,23 +11,18 @@ export const isValidPassword = (
 
   if (password.length < 8) {
     errors.push("Password must be at least 8 characters long");
-  }
 
   if (!/[A-Z]/.test(password)) {
     errors.push("Password must contain at least one uppercase letter");
-  }
 
   if (!/[a-z]/.test(password)) {
     errors.push("Password must contain at least one lowercase letter");
-  }
 
   if (!/\d/.test(password)) {
     errors.push("Password must contain at least one number");
-  }
 
   if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
     errors.push("Password must contain at least one special character");
-  }
 
   return {
     isValid: errors.length === 0,
@@ -58,13 +53,10 @@ export const isValidUuid = (uuid: string): boolean => {
 export const isNotEmpty = (value: any): boolean => {
   if (typeof value === "string") {
     return value.trim().length > 0;
-  }
   if (Array.isArray(value)) {
     return value.length > 0;
-  }
   if (typeof value === "object" && value !== null) {
     return Object.keys(value).length > 0;
-  }
   return value !== null && value !== undefined;
 };
 
@@ -109,7 +101,6 @@ export const validateForm = <T extends Record<string, any>>(
       errors[field as keyof T] = result.error || "Invalid value";
       isValid = false;
     }
-  }
 
   return { isValid, errors };
 };

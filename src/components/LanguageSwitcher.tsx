@@ -43,7 +43,6 @@ export default function LanguageSwitcher() {
         <Globe className="h-4 w-4" />
       </button>
     );
-  }
 
   return (
     <button
@@ -57,4 +56,3 @@ export default function LanguageSwitcher() {
       </span>
     </button>
   );
-}

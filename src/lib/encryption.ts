@@ -19,7 +19,6 @@ const getEncryptionKey = (): string => {
       process.env.NEXT_PUBLIC_ENCRYPTION_KEY ||
       "CHANGE_THIS_CLIENT_KEY_IN_PRODUCTION_2024"
     );
-  }
   // Server-side: use server key
   return (
     process.env.ENCRYPTION_KEY || "CHANGE_THIS_SERVER_KEY_IN_PRODUCTION_2024"
@@ -44,7 +43,6 @@ export function encrypt(data: string | object): string {
     console.error("Encryption error:", error);
     throw new Error("Failed to encrypt data");
   }
-}
 
 /**
  * Decrypt data using AES-256
@@ -65,18 +63,15 @@ export function decrypt<T = string>(
 
     if (!plaintext) {
       throw new Error("Decryption failed - invalid key or corrupted data");
-    }
 
     if (parseJSON) {
       return JSON.parse(plaintext) as T;
-    }
 
     return plaintext as T;
   } catch (error) {
     console.error("Decryption error:", error);
     throw new Error("Failed to decrypt data");
   }
-}
 
 /**
  * Hash data using SHA-256 (one-way)
@@ -86,7 +81,6 @@ export function decrypt<T = string>(
  */
 export function hash(data: string): string {
   return CryptoJS.SHA256(data).toString();
-}
 
 /**
  * Generate HMAC for data integrity verification
@@ -97,7 +91,6 @@ export function hash(data: string): string {
 export function sign(data: string, secret?: string): string {
   const key = secret || getEncryptionKey();
   return CryptoJS.HmacSHA256(data, key).toString();
-}
 
 /**
  * Verify HMAC signature
@@ -113,7 +106,6 @@ export function verify(
 ): boolean {
   const expectedSignature = sign(data, secret);
   return expectedSignature === signature;
-}
 
 /**
  * Generate a random token
@@ -123,7 +115,6 @@ export function verify(
 export function generateToken(length: number = 32): string {
   const bytes = CryptoJS.lib.WordArray.random(length);
   return bytes.toString(CryptoJS.enc.Hex);
-}
 
 /**
  * Encrypt sensitive API keys for storage
@@ -132,7 +123,6 @@ export function generateToken(length: number = 32): string {
  */
 export function encryptApiKey(apiKey: string): string {
   return encrypt(apiKey);
-}
 
 /**
  * Decrypt API keys from storage
@@ -141,7 +131,6 @@ export function encryptApiKey(apiKey: string): string {
  */
 export function decryptApiKey(encryptedKey: string): string {
   return decrypt(encryptedKey);
-}
 
 /**
  * Legacy: Backward compatibility for Base64 (DEPRECATED)
@@ -152,7 +141,6 @@ export function encodeBase64(data: string): string {
     "⚠️ encodeBase64 is deprecated. Use encrypt() instead for better security.",
   );
   return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(data));
-}
 
 /**
  * Legacy: Backward compatibility for Base64 (DEPRECATED)
@@ -163,7 +151,6 @@ export function decodeBase64(encoded: string): string {
     "⚠️ decodeBase64 is deprecated. Use decrypt() instead for better security.",
   );
   return CryptoJS.enc.Base64.parse(encoded).toString(CryptoJS.enc.Utf8);
-}
 
 // Export everything as default for convenience
 const encryption = {

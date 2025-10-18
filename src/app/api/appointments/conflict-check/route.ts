@@ -37,7 +37,6 @@ export async function POST(request: NextRequest) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     const { doctorId, scheduledAt, duration, excludeAppointmentId } =
       validation.data!;
@@ -56,7 +55,6 @@ export async function POST(request: NextRequest) {
 
     if (excludeAppointmentId) {
       query = query.neq("id", excludeAppointmentId);
-    }
 
     const { data: conflicts, error } = await query;
 
@@ -65,7 +63,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to check conflicts" },
         { status: 500 },
       );
-    }
 
     const hasConflicts = conflicts && conflicts.length > 0;
 
@@ -105,4 +102,3 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}

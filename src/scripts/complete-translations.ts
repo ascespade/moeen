@@ -299,10 +299,8 @@ async function seedTranslations() {
         } else {
           result.push({ key: fullKey, value: value as string });
         }
-      }
 
       return result;
-    }
 
     const flatTranslations = flattenKeys(translationKeys);
 
@@ -313,7 +311,6 @@ async function seedTranslations() {
         key: translation.key,
         value: translation.value,
       });
-    }
 
     // Insert English translations (basic fallbacks)
     for (const translation of flatTranslations) {
@@ -324,7 +321,6 @@ async function seedTranslations() {
         key: translation.key,
         value: englishValue,
       });
-    }
 
     logger.info(`📊 Total translations to insert: ${translations.length}`);
 
@@ -344,14 +340,12 @@ async function seedTranslations() {
           `✅ Inserted batch ${i / batchSize + 1}/${Math.ceil(translations.length / batchSize)}`,
         );
       }
-    }
 
     logger.info("🎉 Comprehensive translation seeding completed!");
   } catch (error) {
     logger.error("❌ Translation seeding failed:", error);
     throw error;
   }
-}
 
 // Run if called directly
 if (require.main === module) {
@@ -364,6 +358,5 @@ if (require.main === module) {
       logger.error("💥 Translation seeding failed:", error);
       process.exit(1);
     });
-}
 
 export { seedTranslations };

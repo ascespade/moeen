@@ -20,7 +20,6 @@ export async function POST(request: NextRequest) {
     });
 
     if (error) {
-    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -29,7 +28,6 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -50,7 +48,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch errors" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({ errors });
   } catch (error) {
@@ -59,4 +56,3 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}

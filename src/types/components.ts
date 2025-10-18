@@ -2,7 +2,6 @@
 export interface ComponentProps {
   className?: string;
   children?: React.ReactNode;
-}
 
 export interface ButtonProps extends ComponentProps {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "danger";
@@ -10,7 +9,6 @@ export interface ButtonProps extends ComponentProps {
   disabled?: boolean;
   loading?: boolean;
   onClick?: () => void;
-}
 
 export interface InputProps extends ComponentProps {
   type?: "text" | "email" | "password" | "number" | "tel" | "url";
@@ -20,4 +18,3 @@ export interface InputProps extends ComponentProps {
   error?: string;
   disabled?: boolean;
   required?: boolean;
-}

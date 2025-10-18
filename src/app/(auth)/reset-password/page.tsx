@@ -39,13 +39,11 @@ export default function ResetPasswordPage() {
       newErrors.password = "كلمة المرور مطلوبة";
     } else if (formData.password.length < 6) {
       newErrors.password = "كلمة المرور يجب أن تكون 6 أحرف على الأقل";
-    }
 
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = "تأكيد كلمة المرور مطلوب";
     } else if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "كلمة المرور غير متطابقة";
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -56,7 +54,6 @@ export default function ResetPasswordPage() {
 
     if (!validateForm()) {
       return;
-    }
 
     setIsLoading(true);
 
@@ -96,7 +93,6 @@ export default function ResetPasswordPage() {
         </div>
       </div>
     );
-  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[var(--brand-surface)] p-4">
@@ -232,4 +228,3 @@ export default function ResetPasswordPage() {
       </div>
     </div>
   );
-}

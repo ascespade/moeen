@@ -9,7 +9,6 @@ export interface DatabaseConfig {
   username: string;
   password: string;
   ssl: boolean;
-}
 
 export class DatabaseManager {
   private pool: Pool;
@@ -29,7 +28,6 @@ export class DatabaseManager {
     });
 
     this.initializeTables();
-  }
 
   private async initializeTables() {
     try {
@@ -137,7 +135,6 @@ export class DatabaseManager {
     } catch (error) {
       this.isConnected = false;
     }
-  }
 
   // Patient Management
   async createPatient(patientData: {
@@ -165,19 +162,16 @@ export class DatabaseManager {
 
     const result = await this.pool.query(query, values);
     return result.rows[0];
-  }
 
   async getPatient(patientId: number) {
     const query = "SELECT * FROM patients WHERE id = $1";
     const result = await this.pool.query(query, [patientId]);
     return result.rows[0];
-  }
 
   async getPatientByPhone(phone: string) {
     const query = "SELECT * FROM patients WHERE phone = $1";
     const result = await this.pool.query(query, [phone]);
     return result.rows[0];
-  }
 
   async updatePatient(patientId: number, updates: any) {
     const fields = Object.keys(updates);
@@ -195,7 +189,6 @@ export class DatabaseManager {
 
     const result = await this.pool.query(query, [patientId, ...values]);
     return result.rows[0];
-  }
 
   // Appointment Management
   async createAppointment(appointmentData: {
@@ -223,7 +216,6 @@ export class DatabaseManager {
 
     const result = await this.pool.query(query, values);
     return result.rows[0];
-  }
 
   async getAppointments(patientId?: number, doctorId?: number, date?: string) {
     let query =
@@ -236,29 +228,24 @@ export class DatabaseManager {
       conditions.push(`a.patient_id = $${paramCount}`);
       values.push(patientId);
       paramCount++;
-    }
 
     if (doctorId) {
       conditions.push(`a.doctor_id = $${paramCount}`);
       values.push(doctorId);
       paramCount++;
-    }
 
     if (date) {
       conditions.push(`a.appointment_date = $${paramCount}`);
       values.push(date);
       paramCount++;
-    }
 
     if (conditions.length > 0) {
       query += " WHERE " + conditions.join(" AND ");
-    }
 
     query += " ORDER BY a.appointment_date, a.appointment_time";
 
     const result = await this.pool.query(query, values);
     return result.rows;
-  }
 
   // Session Management
   async createSession(sessionData: {
@@ -288,7 +275,6 @@ export class DatabaseManager {
 
     const result = await this.pool.query(query, values);
     return result.rows[0];
-  }
 
   // Conversation Logging
   async logConversation(conversationData: {
@@ -318,7 +304,6 @@ export class DatabaseManager {
 
     const result = await this.pool.query(query, values);
     return result.rows[0];
-  }
 
   // Analytics
   async getPatientStats() {
@@ -332,7 +317,6 @@ export class DatabaseManager {
 
     const result = await this.pool.query(query);
     return result.rows[0];
-  }
 
   async getConversationStats() {
     const query = `
@@ -345,7 +329,6 @@ export class DatabaseManager {
 
     const result = await this.pool.query(query);
     return result.rows[0];
-  }
 
   // Health Check
   async healthCheck() {
@@ -356,10 +339,8 @@ export class DatabaseManager {
       const message = error instanceof Error ? error.message : "Unknown error";
       return { status: "unhealthy", error: message };
     }
-  }
 
   // Close connection
   async close() {
     await this.pool.end();
   }
-}

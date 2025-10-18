@@ -45,7 +45,6 @@ interface User {
   lastLogin: string;
   createdAt: string;
   permissions: string[];
-}
 
 interface SystemConfig {
   id: string;
@@ -54,7 +53,6 @@ interface SystemConfig {
   description: string;
   category: string;
   isSecret: boolean;
-}
 
 interface SecurityEvent {
   id: string;
@@ -64,7 +62,6 @@ interface SecurityEvent {
   ipAddress: string;
   userAgent: string;
   success: boolean;
-}
 
 export default function AdminPage() {
   const [users, setUsers] = useState<User[]>([]);
@@ -104,7 +101,6 @@ export default function AdminPage() {
 
       if (!usersRes.ok || !configsRes.ok || !eventsRes.ok) {
         throw new Error("Failed to load admin data");
-      }
 
       const [usersData, configsData, eventsData] = await Promise.all([
         usersRes.json(),
@@ -262,7 +258,6 @@ export default function AdminPage() {
         </div>
       </div>
     );
-  }
 
   if (error) {
     return (
@@ -274,7 +269,6 @@ export default function AdminPage() {
         </div>
       </div>
     );
-  }
 
   return (
     <div className="min-h-screen bg-[var(--brand-surface)]">
@@ -406,7 +400,6 @@ export default function AdminPage() {
                               variant="outline"
                               onClick={() =>
                                 handleUpdateUserStatus(user.id, "suspended")
-                              }
                             >
                               <UserMinus className="h-4 w-4" />
                             </Button>
@@ -416,7 +409,6 @@ export default function AdminPage() {
                               variant="outline"
                               onClick={() =>
                                 handleUpdateUserStatus(user.id, "active")
-                              }
                             >
                               <UserPlus className="h-4 w-4" />
                             </Button>
@@ -446,7 +438,6 @@ export default function AdminPage() {
                         value={newUser.email}
                         onChange={(e) =>
                           setNewUser({ ...newUser, email: e.target.value })
-                        }
                         required
                       />
                     </div>
@@ -457,7 +448,6 @@ export default function AdminPage() {
                         value={newUser.name}
                         onChange={(e) =>
                           setNewUser({ ...newUser, name: e.target.value })
-                        }
                         required
                       />
                     </div>
@@ -468,7 +458,6 @@ export default function AdminPage() {
                         value={newUser.role}
                         onChange={(e) =>
                           setNewUser({ ...newUser, role: e.target.value })
-                        }
                         className="w-full p-2 border rounded-md"
                       >
                         <option value="agent">Agent</option>
@@ -485,7 +474,6 @@ export default function AdminPage() {
                         value={newUser.password}
                         onChange={(e) =>
                           setNewUser({ ...newUser, password: e.target.value })
-                        }
                         required
                       />
                     </div>
@@ -538,18 +526,15 @@ export default function AdminPage() {
                               ...config,
                               value: e.target.value,
                             })
-                          }
                           className="flex-1"
                         />
                         <Button
                           size="sm"
                           onClick={() =>
                             editingConfig && handleUpdateConfig(editingConfig)
-                          }
                           disabled={
                             !editingConfig ||
                             editingConfig.value === config.value
-                          }
                         >
                           Save
                         </Button>
@@ -636,4 +621,3 @@ export default function AdminPage() {
       </div>
     </div>
   );
-}

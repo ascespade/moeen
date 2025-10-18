@@ -12,7 +12,6 @@ interface TaskStatus {
   status: string;
   last_update: string;
   estimated_completion: string;
-}
 
 interface AgentStatus {
   status: string;
@@ -20,7 +19,6 @@ interface AgentStatus {
   last_update: string;
   restart_count: number;
   mode: string;
-}
 
 interface CompletionStatus {
   status: string;
@@ -32,7 +30,6 @@ interface CompletionStatus {
   failed_tasks: number;
   success_rate: string;
   message: string;
-}
 
 export default function AgentDashboard() {
   const [taskStatus, setTaskStatus] = useState<TaskStatus | null>(null);
@@ -49,21 +46,18 @@ export default function AgentDashboard() {
       if (taskResponse.ok) {
         const taskData = await taskResponse.json();
         setTaskStatus(taskData);
-      }
 
       // Fetch agent status
       const agentResponse = await fetch("/api/agent/status");
       if (agentResponse.ok) {
         const agentData = await agentResponse.json();
         setAgentStatus(agentData);
-      }
 
       // Fetch completion status
       const completionResponse = await fetch("/api/agent/completion");
       if (completionResponse.ok) {
         const completionData = await completionResponse.json();
         setCompletionStatus(completionData);
-      }
 
       // Fetch recent logs
       const logsResponse = await fetch("/api/agent/logs");
@@ -113,7 +107,6 @@ export default function AgentDashboard() {
         </div>
       </div>
     );
-  }
 
   return (
     <div className="min-h-screen bg-[var(--brand-surface)] py-8">
@@ -256,4 +249,3 @@ export default function AgentDashboard() {
       </div>
     </div>
   );
-}

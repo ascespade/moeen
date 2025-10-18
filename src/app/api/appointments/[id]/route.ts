@@ -20,7 +20,6 @@ export async function GET(
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const appointmentId = params.id;
@@ -50,15 +49,12 @@ export async function GET(
         { error: "Appointment not found" },
         { status: 404 },
       );
-    }
 
     // Check permissions
     if (user.role === "patient" && appointment.patients.user_id !== user.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-    }
     if (user.role === "doctor" && appointment.doctors.user_id !== user.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-    }
 
     // Log appointment view
     const supabase2 = await createClient();
@@ -100,7 +96,6 @@ export async function GET(
       { status: 500 },
     );
   }
-}
 
 export async function PATCH(
   request: NextRequest,
@@ -114,7 +109,6 @@ export async function PATCH(
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const body = await request.json();
     const validation = validateData(appointmentUpdateSchema, body);
@@ -126,7 +120,6 @@ export async function PATCH(
         },
         { status: 400 },
       );
-    }
 
     const supabase = await createClient();
     const appointmentId = params.id;
@@ -152,7 +145,6 @@ export async function PATCH(
         { error: "Appointment not found" },
         { status: 404 },
       );
-    }
 
     // Check permissions
     if (
@@ -160,13 +152,11 @@ export async function PATCH(
       currentAppointment.patients.user_id !== user.id
     ) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-    }
     if (
       user.role === "doctor" &&
       currentAppointment.doctors.user_id !== user.id
     ) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-    }
 
     // Update appointment with tracking
     const { data: appointment, error: updateError } = await supabase
@@ -198,7 +188,6 @@ export async function PATCH(
         { error: "Failed to update appointment" },
         { status: 500 },
       );
-    }
 
     // Log appointment update with full tracking
     await supabase.from("audit_logs").insert({
@@ -237,4 +226,3 @@ export async function PATCH(
       { status: 500 },
     );
   }
-}

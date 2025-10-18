@@ -13,7 +13,6 @@ interface FormState<T> {
   isValid: boolean;
   isSubmitting: boolean;
   isDirty: boolean;
-}
 
 interface FormOptions<T> {
   initialValues: T;
@@ -23,7 +22,6 @@ interface FormOptions<T> {
   onSubmit?: (values: T) => void | Promise<void>;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
-}
 
 export const useForm = <T extends Record<string, unknown>>(
   options: FormOptions<T>,
@@ -51,7 +49,6 @@ export const useForm = <T extends Record<string, unknown>>(
   const validate = useCallback(() => {
     if (Object.keys(validationRules).length === 0) {
       return { isValid: true, errors: {} };
-    }
 
     const rules = validationRules as Record<
       keyof T,

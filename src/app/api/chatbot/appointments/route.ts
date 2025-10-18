@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
         { error: "Doctor ID, appointment time, and patient ID are required" },
         { status: 400 },
       );
-    }
 
     const supabase = await createClient();
 
@@ -25,7 +24,6 @@ export async function POST(request: NextRequest) {
 
     if (patientError || !patient) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
-    }
 
     // التحقق من وجود الطبيب
     const { data: doctor, error: doctorError } = await supabase
@@ -36,7 +34,6 @@ export async function POST(request: NextRequest) {
 
     if (doctorError || !doctor) {
       return NextResponse.json({ error: "Doctor not found" }, { status: 404 });
-    }
 
     // تحديد تاريخ الموعد (اليوم أو غداً)
     const today = new Date();
@@ -60,7 +57,6 @@ export async function POST(request: NextRequest) {
         { error: "This time slot is already booked" },
         { status: 409 },
       );
-    }
 
     // إنشاء رمز تأكيد
     const confirmationCode = `APT${Date.now().toString().slice(-6)}`;
@@ -103,7 +99,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to create appointment" },
         { status: 500 },
       );
-    }
 
     // إرسال رسالة تأكيد عبر WhatsApp (إذا كان متاحاً)
     try {
@@ -112,7 +107,6 @@ export async function POST(request: NextRequest) {
       }
     } catch (whatsappError) {
       // لا نفشل العملية إذا فشل إرسال WhatsApp
-    }
 
     // حفظ سجل في chatbot_appointments
     await supabase.from("chatbot_appointments").insert({
@@ -148,7 +142,6 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -189,11 +182,9 @@ export async function GET(request: NextRequest) {
       if (patient) {
         query = query.eq("patient_id", patient.id);
       }
-    }
 
     if (doctorId) {
       query = query.eq("doctor_id", doctorId);
-    }
 
     const { data: appointments, error } = await query;
 
@@ -202,7 +193,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch appointments" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({
       success: true,
@@ -214,7 +204,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 async function sendWhatsAppConfirmation(phone: string, appointment: any) {
   // هذا مثال لإرسال رسالة WhatsApp
@@ -233,4 +222,3 @@ async function sendWhatsAppConfirmation(phone: string, appointment: any) {
 
   // هنا يمكنك إضافة كود إرسال WhatsApp الفعلي
   // await whatsappAPI.sendMessage(phone, message);
-}

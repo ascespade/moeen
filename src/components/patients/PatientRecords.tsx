@@ -55,7 +55,6 @@ interface Patient {
   createdAt: string;
   lastVisit: string;
   status: "active" | "inactive" | "archived";
-}
 
 interface MedicalRecord {
   id: string;
@@ -68,7 +67,6 @@ interface MedicalRecord {
   attachments: string[];
   followUpRequired: boolean;
   followUpDate?: string;
-}
 
 const PatientRecords: React.FC = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -215,7 +213,6 @@ const PatientRecords: React.FC = () => {
     if (!newPatient.name || !newPatient.phone) {
       alert("يرجى ملء الحقول المطلوبة");
       return;
-    }
 
     const patient: Patient = {
       id: Date.now().toString(),
@@ -256,7 +253,6 @@ const PatientRecords: React.FC = () => {
     if (!selectedPatient || !newRecord.date || !newRecord.doctorName) {
       alert("يرجى ملء الحقول المطلوبة");
       return;
-    }
 
     const record: MedicalRecord = {
       id: Date.now().toString(),
@@ -671,7 +667,6 @@ const PatientRecords: React.FC = () => {
                         ...prev,
                         name: e.target.value,
                       }))
-                    }
                     placeholder="أدخل الاسم الكامل"
                   />
                 </div>
@@ -686,7 +681,6 @@ const PatientRecords: React.FC = () => {
                         ...prev,
                         phone: e.target.value,
                       }))
-                    }
                     placeholder="+966501234567"
                   />
                 </div>
@@ -705,7 +699,6 @@ const PatientRecords: React.FC = () => {
                         ...prev,
                         email: e.target.value,
                       }))
-                    }
                     placeholder="patient@example.com"
                   />
                 </div>
@@ -721,7 +714,6 @@ const PatientRecords: React.FC = () => {
                         ...prev,
                         dateOfBirth: e.target.value,
                       }))
-                    }
                   />
                 </div>
               </div>
@@ -735,7 +727,6 @@ const PatientRecords: React.FC = () => {
                     value={newPatient.gender}
                     onValueChange={(value: any) =>
                       setNewPatient((prev) => ({ ...prev, gender: value }))
-                    }
                   >
                     <SelectTrigger>
                       <span className="text-gray-400">اختر الجنس</span>
@@ -757,7 +748,6 @@ const PatientRecords: React.FC = () => {
                         ...prev,
                         nationalId: e.target.value,
                       }))
-                    }
                     placeholder="1234567890"
                   />
                 </div>
@@ -774,7 +764,6 @@ const PatientRecords: React.FC = () => {
                       ...prev,
                       address: e.target.value,
                     }))
-                  }
                   placeholder="العنوان الكامل"
                 />
               </div>

@@ -40,27 +40,22 @@ export default function RegisterPage() {
 
     if (!formData.name.trim()) {
       newErrors.name = "الاسم مطلوب";
-    }
 
     if (!formData.email.trim()) {
       newErrors.email = "البريد الإلكتروني مطلوب";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "البريد الإلكتروني غير صحيح";
-    }
 
     if (!formData.password) {
       newErrors.password = "كلمة المرور مطلوبة";
     } else if (formData.password.length < 6) {
       newErrors.password = "كلمة المرور يجب أن تكون 6 أحرف على الأقل";
-    }
 
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "كلمة المرور غير متطابقة";
-    }
 
     if (!formData.agreeToTerms) {
       newErrors.agreeToTerms = "يجب الموافقة على الشروط والأحكام";
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -71,7 +66,6 @@ export default function RegisterPage() {
 
     if (!validateForm()) {
       return;
-    }
 
     setIsLoading(true);
 
@@ -105,9 +99,7 @@ export default function RegisterPage() {
             general:
               data.message || "حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى.",
           });
-        }
         return;
-      }
 
       // Success - show success message
       setSuccess(true);
@@ -148,7 +140,6 @@ export default function RegisterPage() {
         </div>
       </div>
     );
-  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[var(--brand-surface)] p-4">
@@ -354,4 +345,3 @@ export default function RegisterPage() {
       </div>
     </div>
   );
-}

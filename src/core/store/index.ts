@@ -24,7 +24,6 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-}
 
 interface AuthActions {
   login: (user: User, token: string) => void;
@@ -32,7 +31,6 @@ interface AuthActions {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   updateUser: (user: Partial<User>) => void;
-}
 
 export const useAuthStore = create<AuthState & AuthActions>()(
   devtools(
@@ -99,7 +97,6 @@ interface UIState {
   notifications: Notification[];
   modals: Record<string, boolean>;
   loading: Record<string, boolean>;
-}
 
 interface UIActions {
   toggleSidebar: () => void;
@@ -115,7 +112,6 @@ interface UIActions {
   openModal: (modalId: string) => void;
   closeModal: (modalId: string) => void;
   setLoading: (key: string, loading: boolean) => void;
-}
 
 export const useUIStore = create<UIState & UIActions>()(
   devtools(
@@ -216,7 +212,6 @@ interface DataState {
   notifications: Notification[];
   isLoading: boolean;
   error: string | null;
-}
 
 interface DataActions {
   // Patients
@@ -287,7 +282,6 @@ interface DataActions {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   clearError: () => void;
-}
 
 export const useDataStore = create<DataState & DataActions>()(
   devtools(

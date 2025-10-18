@@ -36,6 +36,5 @@ export function Badge({
   } as const;
 
   return <span className={clsx(styles[variant], className)} {...props} />;
-}
 
 export default Badge;

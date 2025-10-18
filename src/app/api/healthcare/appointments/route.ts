@@ -41,19 +41,15 @@ export async function GET(request: NextRequest) {
 
     if (doctor_id) {
       query = query.eq("doctor_id", doctor_id);
-    }
 
     if (patient_id) {
       query = query.eq("patient_id", patient_id);
-    }
 
     if (date) {
       query = query.eq("appointment_date", date);
-    }
 
     if (status) {
       query = query.eq("status", status);
-    }
 
     // تطبيق الصفحات
     const from = (page - 1) * limit;
@@ -64,7 +60,6 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({
       appointments,
@@ -81,7 +76,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 // POST /api/healthcare/appointments - إنشاء موعد جديد
 export async function POST(request: NextRequest) {
@@ -120,7 +114,6 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({ appointment }, { status: 201 });
   } catch (error) {
@@ -129,4 +122,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

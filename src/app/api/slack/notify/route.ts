@@ -22,7 +22,6 @@ export async function POST(request: NextRequest) {
         { error: "Notification type is required" },
         { status: 400 },
       );
-    }
 
     const supabase = await createClient();
 
@@ -86,7 +85,6 @@ export async function POST(request: NextRequest) {
           { error: "Unknown notification type" },
           { status: 400 },
         );
-    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -95,7 +93,6 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 async function handleAppointmentCreated(
   appointmentId: string,
@@ -135,7 +132,6 @@ async function handleAppointmentCreated(
       );
     }
   } catch (error) {}
-}
 
 async function handleAppointmentConfirmed(
   appointmentId: string,
@@ -174,7 +170,6 @@ async function handleAppointmentConfirmed(
       );
     }
   } catch (error) {}
-}
 
 async function handleAppointmentCancelled(
   appointmentId: string,
@@ -213,7 +208,6 @@ async function handleAppointmentCancelled(
       );
     }
   } catch (error) {}
-}
 
 async function handleAppointmentReminder(
   appointmentId: string,
@@ -252,7 +246,6 @@ async function handleAppointmentReminder(
       );
     }
   } catch (error) {}
-}
 
 async function handlePatientMessage(
   patientId: string,
@@ -278,7 +271,6 @@ async function handlePatientMessage(
       );
     }
   } catch (error) {}
-}
 
 async function handleDoctorResponse(
   patientId: string,
@@ -298,7 +290,6 @@ async function handleDoctorResponse(
       await slack.sendDoctorResponse(patientId, doctorId, message);
     }
   } catch (error) {}
-}
 
 async function handleEmergencyAlert(
   message: string,
@@ -308,4 +299,3 @@ async function handleEmergencyAlert(
   try {
     await slack.sendEmergencyAlert(message, channel);
   } catch (error) {}
-}

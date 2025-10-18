@@ -47,7 +47,6 @@ export async function POST(request: NextRequest) {
     const authResult = await requireAuth(["doctor", "staff", "admin"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const formData = await request.formData();
@@ -65,12 +64,10 @@ export async function POST(request: NextRequest) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     // Validate file
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
-    }
 
     if (!ALLOWED_FILE_TYPES.includes(file.type)) {
       return NextResponse.json(
@@ -79,7 +76,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 },
       );
-    }
 
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
@@ -88,7 +84,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 },
       );
-    }
 
     // Verify patient exists
     const { data: patient, error: patientError } = await supabase
@@ -99,7 +94,6 @@ export async function POST(request: NextRequest) {
 
     if (patientError || !patient) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
-    }
 
     // Generate unique filename
     const fileExt = file.name.split(".").pop();
@@ -119,7 +113,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to upload file" },
         { status: 500 },
       );
-    }
 
     // Get public URL
     const { data: urlData } = supabase.storage
@@ -149,7 +142,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to create medical record" },
         { status: 500 },
       );
-    }
 
     // Create audit log
     await supabase.from("audit_logs").insert({
@@ -178,7 +170,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -192,7 +183,6 @@ export async function GET(request: NextRequest) {
         { error: "Patient ID required" },
         { status: 400 },
       );
-    }
 
     let query = supabase
       .from("medical_records")
@@ -207,7 +197,6 @@ export async function GET(request: NextRequest) {
 
     if (recordType) {
       query = query.eq("recordType", recordType);
-    }
 
     const { data: records, error } = await query;
 
@@ -216,7 +205,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch records" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({
       success: true,
@@ -226,4 +214,3 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}

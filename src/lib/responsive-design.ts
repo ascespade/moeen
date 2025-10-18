@@ -61,7 +61,6 @@ export function useScreenSize() {
   }, []);
 
   return screenSize;
-}
 
 // Responsive utility functions
 export const responsive = {
@@ -280,7 +279,6 @@ export function useResponsive() {
       return values.default;
     },
   };
-}
 
 // Responsive component wrapper
 export function ResponsiveWrapper({
@@ -305,7 +303,6 @@ export function ResponsiveWrapper({
   classes = classes.trim();
 
   return React.createElement("div", { className: classes }, children);
-}
 
 // Export all utilities
 export default {

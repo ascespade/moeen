@@ -10,7 +10,6 @@ interface PerformanceOptimizedImageProps {
   className?: string;
   placeholder?: string;
   priority?: boolean;
-}
 
 export function PerformanceOptimizedImage({
   src,
@@ -43,7 +42,6 @@ export function PerformanceOptimizedImage({
 
     if (imgRef.current) {
       observer.observe(imgRef.current);
-    }
 
     return () => observer.disconnect();
   }, [priority, isInView]);
@@ -100,6 +98,5 @@ export function PerformanceOptimizedImage({
       )}
     </div>
   );
-}
 
 export default PerformanceOptimizedImage;

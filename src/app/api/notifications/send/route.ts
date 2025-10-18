@@ -11,7 +11,6 @@ export async function POST(request: NextRequest) {
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     // Only staff, supervisor, and admin can send notifications
     if (!["staff", "supervisor", "admin"].includes(user.role)) {
@@ -19,7 +18,6 @@ export async function POST(request: NextRequest) {
         { error: "Insufficient permissions" },
         { status: 403 },
       );
-    }
 
     const {
       type,
@@ -36,7 +34,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 },
       );
-    }
 
     const supabase = await createClient();
 
@@ -49,7 +46,6 @@ export async function POST(request: NextRequest) {
 
     if (patientError || !patient) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
-    }
 
     // Get user email and phone if patient doesn't have direct contact info
     let patientEmail = patient.email;
@@ -66,21 +62,18 @@ export async function POST(request: NextRequest) {
         if (!patientEmail) patientEmail = user.email;
         if (!patientPhone) patientPhone = user.meta?.phone;
       }
-    }
 
     if (channels.includes("email") && !patientEmail) {
       return NextResponse.json(
         { error: "Patient email not found" },
         { status: 400 },
       );
-    }
 
     if (channels.includes("sms") && !patientPhone) {
       return NextResponse.json(
         { error: "Patient phone not found" },
         { status: 400 },
       );
-    }
 
     const results: Array<{
       channel: string;
@@ -100,7 +93,6 @@ export async function POST(request: NextRequest) {
               { error: "Appointment ID required for appointment confirmation" },
               { status: 400 },
             );
-          }
 
           // Get appointment details
           const { data: appointment, error: appointmentError } = await supabase
@@ -120,7 +112,6 @@ export async function POST(request: NextRequest) {
               { error: "Appointment not found" },
               { status: 404 },
             );
-          }
 
           const appointmentDate = new Date(appointment.scheduled_at);
           emailResult = await emailService.sendAppointmentConfirmation({
@@ -145,7 +136,6 @@ export async function POST(request: NextRequest) {
               },
               { status: 400 },
             );
-          }
 
           emailResult = await emailService.sendPaymentConfirmation({
             patientEmail,
@@ -163,7 +153,6 @@ export async function POST(request: NextRequest) {
               { error: "Appointment ID required for appointment reminder" },
               { status: 400 },
             );
-          }
 
           // Get appointment details for reminder
           const { data: reminderAppointment, error: reminderError } =
@@ -184,7 +173,6 @@ export async function POST(request: NextRequest) {
               { error: "Appointment not found" },
               { status: 404 },
             );
-          }
 
           const reminderDate = new Date(reminderAppointment.scheduled_at);
           emailResult = await emailService.sendAppointmentReminder({
@@ -204,12 +192,10 @@ export async function POST(request: NextRequest) {
             { error: "Invalid notification type" },
             { status: 400 },
           );
-      }
 
       if (emailResult) {
         results.push({ channel: "email", ...emailResult });
       }
-    }
 
     // Send SMS notifications
     if (channels.includes("sms") || channels.includes("both")) {
@@ -246,7 +232,6 @@ export async function POST(request: NextRequest) {
                 ),
               });
             }
-          }
           break;
 
         case "payment_confirmation":
@@ -258,7 +243,6 @@ export async function POST(request: NextRequest) {
               amount,
               paymentMethod,
             });
-          }
           break;
 
         case "appointment_reminder":
@@ -291,7 +275,6 @@ export async function POST(request: NextRequest) {
                 }),
               });
             }
-          }
           break;
 
         case "insurance_claim_update":
@@ -303,14 +286,11 @@ export async function POST(request: NextRequest) {
               claimStatus,
               provider,
             });
-          }
           break;
-      }
 
       if (smsResult) {
         results.push({ channel: "sms", ...smsResult });
       }
-    }
 
     // Check if any notification failed
     const failedResults = results.filter((result) => !result.success);
@@ -321,7 +301,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 500 },
       );
-    }
 
     // Log notification
     await supabase.from("audit_logs").insert({
@@ -347,4 +326,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

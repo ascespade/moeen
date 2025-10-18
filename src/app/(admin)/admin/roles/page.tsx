@@ -11,7 +11,6 @@ interface Role {
   permissions: string[];
   userCount: number;
   createdAt: string;
-}
 
 const mockRoles: Role[] = [
     id: "1",
@@ -281,4 +280,3 @@ export default function RolesPage() {
       )}
     </div>
   );
-}

@@ -12,7 +12,6 @@ export interface CheckboxProps
   label?: string;
   description?: string;
   onCheckedChange?: (checked: boolean) => void;
-}
 
 const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
   ({ className, label, description, onCheckedChange, ...props }, ref) => {

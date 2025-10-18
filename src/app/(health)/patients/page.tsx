@@ -53,7 +53,6 @@ interface Patient {
   allergies?: string;
   created_at: string;
   updated_at: string;
-}
 
 interface PatientWithStats extends Patient {
   lastVisit: string;
@@ -73,7 +72,6 @@ interface PatientWithStats extends Patient {
     phone: string;
     relationship: string;
   };
-}
 
 export default function PatientsPage() {
   const [patients, setPatients] = useState<PatientWithStats[]>([]);
@@ -250,7 +248,6 @@ export default function PatientsPage() {
         </div>
       </div>
     );
-  }
 
   if (error) {
     return (
@@ -267,7 +264,6 @@ export default function PatientsPage() {
         </div>
       </div>
     );
-  }
 
   return (
     <main className="min-h-screen bg-[var(--brand-surface)]">
@@ -427,4 +423,3 @@ export default function PatientsPage() {
       </div>
     </main>
   );
-}

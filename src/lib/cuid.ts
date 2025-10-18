@@ -20,16 +20,13 @@ function randomString(length: number): string {
   let result = "";
   for (let i = 0; i < length; i++) {
     result += ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
-  }
   return result;
-}
 
 /**
  * Get current timestamp in base 36
  */
 function timestamp(): string {
   return Date.now().toString(36);
-}
 
 // Note: pid() omitted intentionally to avoid unused symbol; timestamp/counter ensure uniqueness
 
@@ -46,9 +43,7 @@ function hostname(): string {
       }, 0)
       .toString(36)
       .slice(-2);
-  }
   return "00";
-}
 
 /**
  * Generate a CUID (Legacy implementation for backward compatibility)
@@ -63,7 +58,6 @@ export function generateCuid(): string {
   const hostnamePart = hostname();
 
   return `c${timestampPart}${counterPart}${randomPart}${hostnamePart}`;
-}
 
 /**
  * Generate a CUID for database records
@@ -71,7 +65,6 @@ export function generateCuid(): string {
  */
 export function generateDbCuid(prefix: string = "db"): string {
   return `${prefix}_${generateCuid()}`;
-}
 
 /**
  * Generate CUID for specific entity types
@@ -108,7 +101,6 @@ export function isValidCuid(id: string): boolean {
   const dbCuidRegex = /^[a-z]+_[a-z0-9]{25}$/;
 
   return cuidRegex.test(id) || dbCuidRegex.test(id);
-}
 
 /**
  * Extract prefix from CUID
@@ -116,7 +108,6 @@ export function isValidCuid(id: string): boolean {
 export function extractPrefix(id: string): string | null {
   const match = id.match(/^([a-z]+)_/);
   return match && typeof match[1] === "string" ? match[1] : null;
-}
 
 /**
  * Generate multiple CUIDs at once
@@ -125,7 +116,6 @@ export function generateMultipleCuid(count: number, prefix?: string): string[] {
   return Array.from({ length: count }, () =>
     prefix ? generateDbCuid(prefix) : generateCuid(),
   );
-}
 
 // ===== PRODUCTION CUID IMPLEMENTATION =====
 
@@ -135,7 +125,6 @@ export function generateMultipleCuid(count: number, prefix?: string): string[] {
  */
 export function generateProductionCuid(): string {
   return createId();
-}
 
 /**
  * Generate a public ID with prefix for API use
@@ -144,7 +133,6 @@ export function generateProductionCuid(): string {
  */
 export function generatePublicId(prefix: string = "pub"): string {
   return `${prefix}_${createId()}`;
-}
 
 /**
  * Generate a short ID (last 8 characters)
@@ -152,7 +140,6 @@ export function generatePublicId(prefix: string = "pub"): string {
  */
 export function generateShortId(): string {
   return createId().slice(-8);
-}
 
 /**
  * Entity-specific CUID generators for all database tables

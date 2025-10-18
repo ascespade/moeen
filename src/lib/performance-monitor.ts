@@ -18,7 +18,6 @@ interface PerformanceMetrics {
   ip?: string | undefined;
   userId?: string | undefined;
   error?: string | undefined;
-}
 
 // Performance thresholds
 interface PerformanceThresholds {
@@ -34,7 +33,6 @@ interface PerformanceThresholds {
     warning: number; // percentage
     critical: number; // percentage
   };
-}
 
 // Performance monitor class
 export class PerformanceMonitor {
@@ -59,14 +57,11 @@ export class PerformanceMonitor {
         critical: 10, // 10%
       },
     };
-  }
 
   static getInstance(): PerformanceMonitor {
     if (!PerformanceMonitor.instance) {
       PerformanceMonitor.instance = new PerformanceMonitor();
-    }
     return PerformanceMonitor.instance;
-  }
 
   // Start monitoring a request
   startMonitoring(request: NextRequest): string {
@@ -83,7 +78,6 @@ export class PerformanceMonitor {
     };
 
     return requestId;
-  }
 
   // End monitoring a request
   endMonitoring(
@@ -119,7 +113,6 @@ export class PerformanceMonitor {
 
     this.recordMetrics(metrics);
     this.checkThresholds(metrics);
-  }
 
   // Record metrics
   private recordMetrics(metrics: PerformanceMetrics): void {
@@ -128,13 +121,11 @@ export class PerformanceMonitor {
     // Keep only the last N metrics
     if (this.metrics.length > this.maxMetrics) {
       this.metrics = this.metrics.slice(-this.maxMetrics);
-    }
 
     // Log to database periodically
     if (this.metrics.length % 100 === 0) {
       this.logMetricsToDatabase();
     }
-  }
 
   // Check performance thresholds
   private checkThresholds(metrics: PerformanceMetrics): void {
@@ -161,7 +152,6 @@ export class PerformanceMonitor {
         requestId: metrics.requestId,
         url: metrics.url,
       });
-    }
 
     // Check memory usage
     const memoryUsageMB = metrics.memoryUsage.heapUsed / 1024 / 1024;
@@ -185,7 +175,6 @@ export class PerformanceMonitor {
         requestId: metrics.requestId,
         url: metrics.url,
       });
-    }
 
     // Check for errors
     if (metrics.statusCode >= 500) {
@@ -198,7 +187,6 @@ export class PerformanceMonitor {
         requestId: metrics.requestId,
         url: metrics.url,
       });
-    }
 
     // Trigger alert callbacks
     alerts.forEach((alert) => {
@@ -208,7 +196,6 @@ export class PerformanceMonitor {
         } catch (error) {}
       });
     });
-  }
 
   // Get performance statistics
   getStats(timeWindow?: number): PerformanceStats {
@@ -238,7 +225,6 @@ export class PerformanceMonitor {
         topSlowEndpoints: [],
         topErrorEndpoints: [],
       };
-    }
 
     const responseTimes = recentMetrics.map((m) => m.responseTime);
     const memoryUsages = recentMetrics.map(
@@ -306,7 +292,6 @@ export class PerformanceMonitor {
       topSlowEndpoints,
       topErrorEndpoints,
     };
-  }
 
   // Get real-time metrics
   getRealTimeMetrics(): RealTimeMetrics {
@@ -336,12 +321,10 @@ export class PerformanceMonitor {
       cpuUsage: process.cpuUsage(),
       uptime: process.uptime(),
     };
-  }
 
   // Add alert callback
   addAlertCallback(callback: (alert: PerformanceAlert) => void): void {
     this.alertCallbacks.push(callback);
-  }
 
   // Log metrics to database
   private async logMetricsToDatabase(): Promise<void> {
@@ -369,23 +352,19 @@ export class PerformanceMonitor {
         });
       }
     } catch (error) {}
-  }
 
   // Generate unique request ID
   private generateRequestId(): string {
     return `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  }
 
   // Set custom thresholds
   setThresholds(thresholds: Partial<PerformanceThresholds>): void {
     this.thresholds = { ...this.thresholds, ...thresholds };
-  }
 
   // Clear metrics
   clearMetrics(): void {
     this.metrics = [];
   }
-}
 
 // Performance alert interface
 interface PerformanceAlert {
@@ -396,7 +375,6 @@ interface PerformanceAlert {
   message: string;
   requestId: string;
   url: string;
-}
 
 // Performance statistics interface
 interface PerformanceStats {
@@ -425,7 +403,6 @@ interface PerformanceStats {
     errorCount: number;
     errorRate: number;
   }>;
-}
 
 // Real-time metrics interface
 interface RealTimeMetrics {
@@ -436,7 +413,6 @@ interface RealTimeMetrics {
   memoryUsage: NodeJS.MemoryUsage;
   cpuUsage: NodeJS.CpuUsage;
   uptime: number;
-}
 
 // Performance middleware
 export function withPerformanceMonitoring(handler: Function) {
@@ -456,7 +432,6 @@ export function withPerformanceMonitoring(handler: Function) {
       throw error;
     }
   };
-}
 
 // Export singleton instance
 export const performanceMonitor = PerformanceMonitor.getInstance();

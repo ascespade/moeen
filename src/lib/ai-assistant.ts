@@ -8,7 +8,6 @@ export interface AssistantPersona {
   };
   capabilities: string[];
   limitations: string[];
-}
 
 export interface ConversationContext {
   userId: string;
@@ -21,7 +20,6 @@ export interface ConversationContext {
   currentFlow: string;
   previousInteractions: Interaction[];
   emergencyLevel: "normal" | "urgent" | "crisis";
-}
 
 export interface Interaction {
   timestamp: Date;
@@ -29,14 +27,12 @@ export interface Interaction {
   response: string;
   sentiment: "positive" | "neutral" | "negative" | "crisis";
   actionTaken: string;
-}
 
 export interface CrisisKeywords {
   selfHarm: string[];
   emergency: string[];
   danger: string[];
   urgent: string[];
-}
 
 export class HemamAssistant {
   private readonly persona: AssistantPersona;
@@ -87,11 +83,9 @@ export class HemamAssistant {
       medical: "+966501234567", // Center's emergency line
       admin: "+966501234568", // Admin emergency line
     };
-  }
 
   public getPersona(): AssistantPersona {
     return this.persona;
-  }
 
   // Analyze message for crisis indicators
   analyzeCrisisLevel(message: string): "normal" | "urgent" | "crisis" {
@@ -102,22 +96,18 @@ export class HemamAssistant {
       if (lowerMessage.includes(keyword)) {
         return "crisis";
       }
-    }
 
     for (const keyword of this.crisisKeywords.emergency) {
       if (lowerMessage.includes(keyword)) {
         return "urgent";
       }
-    }
 
     for (const keyword of this.crisisKeywords.danger) {
       if (lowerMessage.includes(keyword)) {
         return "urgent";
       }
-    }
 
     return "normal";
-  }
 
   // Generate empathetic response
   generateEmpatheticResponse(
@@ -128,11 +118,9 @@ export class HemamAssistant {
 
     if (crisisLevel === "crisis") {
       return this.handleCrisisResponse();
-    }
 
     if (crisisLevel === "urgent") {
       return this.handleUrgentResponse();
-    }
 
     // Normal empathetic response
     const empatheticStarters = [
@@ -147,17 +135,14 @@ export class HemamAssistant {
       empatheticStarters[Math.floor(Math.random() * empatheticStarters.length)];
 
     return `${randomStarter}. ${this.generateContextualResponse(context, userMessage)}`;
-  }
 
   // Handle crisis situations
   private handleCrisisResponse(): string {
     return `أرى أنك قد تحتاج لمساعدة عاجلة. يرجى الاتصال فوراً بالرقم ${this.emergencyContacts.crisis} أو ${this.emergencyContacts.medical}. نحن هنا لمساعدتك في هذه اللحظة الصعبة.`;
-  }
 
   // Handle urgent situations
   private handleUrgentResponse(): string {
     return `أفهم أن هذا أمر عاجل. يمكنني مساعدتك في التواصل مع فريقنا الطبي فوراً. هل تود أن أتصل بك الآن؟`;
-  }
 
   // Generate contextual response based on conversation flow
   private generateContextualResponse(
@@ -176,7 +161,6 @@ export class HemamAssistant {
       default:
         return this.handleDefaultFlow(userMessage);
     }
-  }
 
   // New beneficiary onboarding flow
   private handleNewBeneficiaryFlow(_message: string): string {
@@ -184,7 +168,6 @@ export class HemamAssistant {
 1️⃣ استفسار جديد
 2️⃣ حجز تقييم أولي  
 3️⃣ معلومات عن خدماتنا`;
-  }
 
   // Appointment booking flow
   private handleAppointmentFlow(_message: string): string {
@@ -193,7 +176,6 @@ export class HemamAssistant {
 2️⃣ إعادة جدولة موعد
 3️⃣ تأكيد موعد موجود
 4️⃣ إلغاء موعد`;
-  }
 
   // General inquiry handling
   private handleGeneralInquiry(_message: string): string {
@@ -202,7 +184,6 @@ export class HemamAssistant {
 2️⃣ الخدمات المتاحة
 3️⃣ الفعاليات والورش
 4️⃣ التواصل مع الفريق الطبي`;
-  }
 
   // Family support flow
   private handleFamilySupportFlow(_message: string): string {
@@ -211,7 +192,6 @@ export class HemamAssistant {
 2️⃣ الحصول على التحديثات
 3️⃣ المواد التعليمية
 4️⃣ التواصل مع الطبيب`;
-  }
 
   // Default flow
   private handleDefaultFlow(_message: string): string {
@@ -220,7 +200,6 @@ export class HemamAssistant {
 2️⃣ التواصل مع طبيبك
 3️⃣ معلومات عن المركز
 4️⃣ الدعم النفسي`;
-  }
 
   // Generate motivational message
   generateMotivationalMessage(patientName: string, milestone?: string): string {
@@ -233,13 +212,11 @@ export class HemamAssistant {
 
     if (milestone) {
       return `تهانينا الحارة يا بطل! لقد أكملت بنجاح ${milestone}. نحن في مركز الهمم فخورون جداً بإصرارك وهمتك العالية. إلى الأمام دائماً!`;
-    }
 
     const idx = Math.floor(Math.random() * motivationalMessages.length);
     const selected = motivationalMessages[idx];
     const fallback: string = "نحن معك وكل خطوة تُحدث فرقاً — استمر!";
     return selected ?? fallback;
-  }
 
   // Generate proactive care message
   generateProactiveCareMessage(
@@ -250,7 +227,6 @@ export class HemamAssistant {
 👍 نعم، أتممته
 💬 أحتاج مساعدة
 ⏰ سأقوم به لاحقاً`;
-  }
 
   // Generate family notification
   generateFamilyNotification(
@@ -268,7 +244,6 @@ export class HemamAssistant {
       default:
         return `تحديث: ${details} لـ ${patientName}`;
     }
-  }
 
   // Generate accessibility-friendly response
   generateAccessibleResponse(options: string[]): string {
@@ -279,4 +254,3 @@ export class HemamAssistant {
     response += "\n\nيمكنك الكتابة أو إرسال رسالة صوتية بطلبك.";
     return response;
   }
-}

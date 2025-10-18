@@ -15,7 +15,6 @@ export async function GET(request: NextRequest) {
     const authResult = await requireAuth(["admin", "supervisor"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -43,7 +42,6 @@ export async function GET(request: NextRequest) {
 
     if (action) {
       query = query.eq("action", action);
-    }
 
     const { data: events, error, count } = await query;
 
@@ -148,7 +146,6 @@ export async function GET(request: NextRequest) {
         },
         message: "Using mock security events data",
       });
-    }
 
     // Transform events to match expected format
     const transformedEvents =
@@ -165,7 +162,6 @@ export async function GET(request: NextRequest) {
               id: event.user.id,
               email: event.user.email,
               profile: event.user.profile,
-            }
           : null,
       })) || [];
 
@@ -182,7 +178,6 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -190,7 +185,6 @@ export async function POST(request: NextRequest) {
     const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const body = await request.json();
@@ -215,7 +209,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to create security event" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({
       success: true,
@@ -225,4 +218,3 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}

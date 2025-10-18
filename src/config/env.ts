@@ -111,7 +111,6 @@ export const getConfig = () => {
       debug: true,
       logging: "debug",
     };
-  }
 
   if (env.IS_PRODUCTION) {
     return {
@@ -119,7 +118,6 @@ export const getConfig = () => {
       debug: false,
       logging: "error",
     };
-  }
 
   return baseConfig;
 };

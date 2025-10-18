@@ -15,7 +15,6 @@ interface Violation {
   content: string;
   type: "hardcoded_string" | "static_array" | "mock_data" | "fallback_data";
   severity: "error" | "warning";
-}
 
 class DynamicContentValidator {
   private violations: Violation[] = [];
@@ -72,7 +71,6 @@ class DynamicContentValidator {
       // Skip utility files, types, scripts, and config files
       if (this.shouldSkipFile(filePath)) {
         return;
-      }
 
       const content = fs.readFileSync(filePath, "utf-8");
       const lines = content.split("\n");
@@ -86,7 +84,6 @@ class DynamicContentValidator {
           line.trim().startsWith("import ")
         ) {
           return;
-        }
 
         // Check for disallowed patterns
         this.disallowedPatterns.forEach((pattern) => {
@@ -113,7 +110,6 @@ class DynamicContentValidator {
     } catch (error) {
       logger.error(`Error reading file ${filePath}:`, error);
     }
-  }
 
   private shouldSkipFile(filePath: string): boolean {
     const skipPatterns = [
@@ -134,26 +130,21 @@ class DynamicContentValidator {
     ];
 
     return skipPatterns.some((pattern) => pattern.test(filePath));
-  }
 
   private getViolationType(pattern: RegExp): Violation["type"] {
     if (pattern.source.includes("mock|fixture|simulation|sampleData")) {
       return "mock_data";
-    }
     if (
       pattern.source.includes("const.*=.*\\[") ||
       pattern.source.includes("export.*=.*\\[")
     ) {
       return "static_array";
-    }
     if (
       pattern.source.includes("getDefault") ||
       pattern.source.includes("fallback")
     ) {
       return "fallback_data";
-    }
     return "hardcoded_string";
-  }
 
   async validateDirectory(dirPath: string): Promise<void> {
     const files = await glob("**/*.{ts,tsx,js,jsx}", {
@@ -167,7 +158,6 @@ class DynamicContentValidator {
       const fullPath = path.join(dirPath, file);
       await this.validateFile(fullPath);
     }
-  }
 
   generateReport(): void {
     logger.info("\n📊 Dynamic Content Validation Report");
@@ -178,14 +168,12 @@ class DynamicContentValidator {
         "✅ No violations found! All content is dynamic and database-driven.",
       );
       return;
-    }
 
     // Group violations by type
     const violationsByType = this.violations.reduce(
       (acc, violation) => {
         if (!acc[violation.type]) {
           acc[violation.type] = [];
-        }
         acc[violation.type].push(violation);
         return acc;
       },
@@ -219,12 +207,10 @@ class DynamicContentValidator {
       logger.info("\n🚨 Build should be blocked due to violations!");
       process.exit(1);
     }
-  }
 
   getViolations(): Violation[] {
     return this.violations;
   }
-}
 
 async function main() {
   const validator = new DynamicContentValidator();
@@ -236,11 +222,9 @@ async function main() {
 
   // Generate report
   validator.generateReport();
-}
 
 // Run validation if this file is executed directly
 if (require.main === module) {
   main().catch(logger.error);
-}
 
 export default DynamicContentValidator;

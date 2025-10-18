@@ -18,7 +18,6 @@ export default function DashboardPage() {
         // Redirect to login if not authenticated
         router.push("/login");
         return;
-      }
 
       // Redirect to role-specific dashboard
       const defaultRoute = getDefaultRouteForUser(user);
@@ -37,4 +36,3 @@ export default function DashboardPage() {
       </div>
     </div>
   );
-}

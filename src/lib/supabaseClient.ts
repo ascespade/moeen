@@ -7,7 +7,6 @@ export function getBrowserSupabase() {
     process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-key";
   return createBrowserClient(url, anon);
-}
 
 export async function getServerSupabase() {
   const url =
@@ -26,7 +25,6 @@ export async function getServerSupabase() {
       },
     },
   });
-}
 
 export function getServiceSupabase() {
   const { createClient } = require("@supabase/supabase-js");
@@ -35,4 +33,3 @@ export function getServiceSupabase() {
   const service =
     process.env.SUPABASE_SERVICE_ROLE_KEY || "placeholder-service-key";
   return createClient(url, service);
-}

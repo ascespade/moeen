@@ -12,7 +12,6 @@ interface Invoice {
   amount: number;
   status: string;
   created_at: string;
-}
 
 export default function InvoicesPage() {
   const [payments, setPayments] = useState<any[]>([]);
@@ -62,7 +61,6 @@ export default function InvoicesPage() {
         </div>
       </div>
     );
-  }
 
   return (
     <div className="container-app py-8">
@@ -196,4 +194,3 @@ export default function InvoicesPage() {
       </div>
     </div>
   );
-}

@@ -24,7 +24,6 @@ interface InsuranceClaim {
   isBlocked: boolean;
   hasOutstandingBalance: boolean;
   outstandingAmount?: number;
-}
 
 const mockClaims: InsuranceClaim[] = [
     id: "1",
@@ -116,7 +115,6 @@ export default function InsurancePage() {
           <span className="text-sm font-medium">محظور</span>
         </div>
       );
-    }
     return (
       <div className="flex items-center gap-2 text-brand-success">
         <span className="h-2 w-2 rounded-full bg-brand-success"></span>
@@ -135,7 +133,6 @@ export default function InsurancePage() {
           </span>
         </div>
       );
-    }
     return (
       <div className="flex items-center gap-2 text-brand-success">
         <span className="h-2 w-2 rounded-full bg-brand-success"></span>
@@ -484,4 +481,3 @@ export default function InsurancePage() {
       )}
     </div>
   );
-}

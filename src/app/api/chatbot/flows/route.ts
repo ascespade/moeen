@@ -17,7 +17,6 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({ flows });
   } catch (error) {
@@ -26,7 +25,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 // POST /api/chatbot/flows - إنشاء تدفق جديد
 export async function POST(request: NextRequest) {
@@ -48,7 +46,6 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({ flow }, { status: 201 });
   } catch (error) {
@@ -57,4 +54,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

@@ -13,7 +13,6 @@ interface IEP {
   start_date: string;
   end_date: string | null;
   status: string;
-}
 
 interface Goal {
   id: string;
@@ -24,7 +23,6 @@ interface Goal {
   status: string;
   target_date: string | null;
   progress: number;
-}
 
 const DOMAIN_LABELS: Record<string, string> = {
   behavioral: "سلوكي",
@@ -133,7 +131,6 @@ export default function PatientIEPPage() {
         </div>
       </div>
     );
-  }
 
   if (!patient) {
     return (
@@ -146,7 +143,6 @@ export default function PatientIEPPage() {
         </div>
       </div>
     );
-  }
 
   return (
     <div className="container-app py-8">
@@ -336,4 +332,3 @@ export default function PatientIEPPage() {
       )}
     </div>
   );
-}

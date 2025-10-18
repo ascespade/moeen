@@ -30,12 +30,10 @@ interface Claim {
   createdAt: string;
   referenceNumber?: string;
   appointmentId: string;
-}
 
 interface ClaimsManagerProps {
   patientId?: string;
   onClaimUpdate?: () => void;
-}
 
 export default function ClaimsManager({
   patientId,
@@ -192,7 +190,6 @@ export default function ClaimsManager({
         </div>
       </Card>
     );
-  }
 
   return (
     <Card className="p-6">
@@ -247,7 +244,6 @@ export default function ClaimsManager({
                   value={newClaim.provider}
                   onValueChange={(value) =>
                     setNewClaim((prev) => ({ ...prev, provider: value }))
-                  }
                   required
                 >
                   <option value="">
@@ -268,7 +264,6 @@ export default function ClaimsManager({
                   value={newClaim.amount}
                   onChange={(e) =>
                     setNewClaim((prev) => ({ ...prev, amount: e.target.value }))
-                  }
                   placeholder="0.00"
                   required
                 />
@@ -285,7 +280,6 @@ export default function ClaimsManager({
                     ...prev,
                     description: e.target.value,
                   }))
-                }
                 placeholder={t("insurance.claims.description_placeholder")}
                 required
               />
@@ -302,7 +296,6 @@ export default function ClaimsManager({
                       ...prev,
                       diagnosis: e.target.value,
                     }))
-                  }
                   placeholder={t("insurance.claims.diagnosis_placeholder")}
                 />
               </div>
@@ -317,7 +310,6 @@ export default function ClaimsManager({
                       ...prev,
                       treatment: e.target.value,
                     }))
-                  }
                   placeholder={t("insurance.claims.treatment_placeholder")}
                 />
               </div>
@@ -382,7 +374,6 @@ export default function ClaimsManager({
                   variant="outline"
                   onClick={() =>
                     window.open(`/insurance/claims/${claim.id}`, "_blank")
-                  }
                 >
                   <Eye className="h-4 w-4" />
                 </Button>
@@ -400,4 +391,3 @@ export default function ClaimsManager({
       </div>
     </Card>
   );
-}

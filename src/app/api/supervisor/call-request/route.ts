@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
     } = await supabase.auth.getUser();
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     // Get user details
     const { data: userData } = await supabase
@@ -36,7 +35,6 @@ export async function POST(request: NextRequest) {
         { error: "No supervisor available" },
         { status: 503 },
       );
-    }
 
     // Get supervisor details
     const { data: supervisor } = await supabase
@@ -64,7 +62,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to create call request" },
         { status: 500 },
       );
-    }
 
     // Send WhatsApp to supervisor (مجاني!)
     try {
@@ -93,7 +90,6 @@ export async function POST(request: NextRequest) {
             message: whatsappMessage,
           }),
         });
-      }
 
       // Create in-app notification
       await supabase.from("notifications").insert({
@@ -113,7 +109,6 @@ export async function POST(request: NextRequest) {
     } catch (notificationError) {
       logger.error("Error sending notifications", notificationError);
       // Continue anyway - request is created
-    }
 
     logger.info("Call request created and supervisor notified", {
       requestId: callRequest.id,
@@ -133,7 +128,6 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 // GET: للمشرف لرؤية الطلبات
 export async function GET(request: NextRequest) {
@@ -146,7 +140,6 @@ export async function GET(request: NextRequest) {
     } = await supabase.auth.getUser();
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const { data: userData } = await supabase
       .from("users")
@@ -156,7 +149,6 @@ export async function GET(request: NextRequest) {
 
     if (!userData || !["supervisor", "admin"].includes(userData.role)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
 
     // Get call requests
     const { data: requests, error } = await supabase
@@ -177,7 +169,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch requests" },
         { status: 500 },
       );
-    }
 
     return NextResponse.json({
       success: true,
@@ -190,4 +181,3 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}

@@ -34,7 +34,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 async function getActivityLogs(filters: {
   service?: string | null;
@@ -55,11 +54,9 @@ async function getActivityLogs(filters: {
 
     if (filters.service) {
       query = query.eq("service_name", filters.service);
-    }
 
     if (filters.level) {
       query = query.eq("level", filters.level);
-    }
 
     const { data, error } = await query;
 
@@ -81,7 +78,6 @@ async function getActivityLogs(filters: {
   } catch (error) {
     return [];
   }
-}
 
 function generateLogSummary(logs: any[]) {
   const summary = {
@@ -117,4 +113,3 @@ function generateLogSummary(logs: any[]) {
     summary.total > 0 ? ((summary.byLevel.warn || 0) / summary.total) * 100 : 0;
 
   return summary;
-}

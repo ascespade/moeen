@@ -23,7 +23,6 @@ export function useTranslation(namespace: string = "common") {
       if (error) {
         console.error("Error loading translations:", error);
         return;
-      }
 
       if (data) {
         const translationsMap = data.reduce(
@@ -54,4 +53,3 @@ export function useTranslation(namespace: string = "common") {
   );
 
   return { t, locale, setLocale, isLoading };
-}

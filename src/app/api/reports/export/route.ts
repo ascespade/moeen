@@ -27,7 +27,6 @@ export async function POST(request: NextRequest) {
     );
     if (!authResult.authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const body = await request.json();
@@ -39,7 +38,6 @@ export async function POST(request: NextRequest) {
         { error: validation.error.message },
         { status: 400 },
       );
-    }
 
     const { reportId, format, includeCharts, customFields } = validation.data;
 
@@ -52,7 +50,6 @@ export async function POST(request: NextRequest) {
 
     if (reportError || !report) {
       return NextResponse.json({ error: "Report not found" }, { status: 404 });
-    }
 
     // Generate export based on format
     let exportData;
@@ -83,7 +80,6 @@ export async function POST(request: NextRequest) {
         break;
       default:
         return NextResponse.json({ error: "Invalid format" }, { status: 400 });
-    }
 
     // Create audit log
     await supabase.from("audit_logs").insert({
@@ -108,7 +104,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
-}
 
 async function generateCSV(data: any, customFields?: string[]) {
   // Simple CSV generation
@@ -121,17 +116,14 @@ async function generateCSV(data: any, customFields?: string[]) {
   ].join("\n");
 
   return csvContent;
-}
 
 async function generatePDF(data: any, includeCharts: boolean) {
   // PDF generation would use a library like puppeteer or jsPDF
   // For now, return a simple text representation
   const pdfContent = `Report Data:\n${JSON.stringify(data, null, 2)}`;
   return Buffer.from(pdfContent);
-}
 
 async function generateExcel(data: any, customFields?: string[]) {
   // Excel generation would use a library like xlsx
   // For now, return CSV format
   return await generateCSV(data, customFields);
-}

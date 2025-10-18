@@ -2,7 +2,6 @@
 interface MoyasarConfig {
   apiKey: string;
   baseUrl: string;
-}
 
 interface MoyasarPaymentData {
   amount: number;
@@ -11,14 +10,12 @@ interface MoyasarPaymentData {
   patientId: string;
   appointmentId: string;
   metadata?: Record<string, string>;
-}
 
 interface MoyasarPaymentResult {
   success: boolean;
   paymentId?: string;
   status?: string;
   error?: string;
-}
 
 export class MoyasarPaymentService {
   private config: MoyasarConfig;
@@ -28,7 +25,6 @@ export class MoyasarPaymentService {
       apiKey: process.env.MOYASAR_SECRET_KEY!,
       baseUrl: "https://api.moyasar.com/v1",
     };
-  }
 
   async createPayment(data: MoyasarPaymentData): Promise<MoyasarPaymentResult> {
     try {
@@ -57,7 +53,6 @@ export class MoyasarPaymentService {
           success: false,
           error: result.message || "Payment creation failed",
         };
-      }
 
       return {
         success: true,
@@ -71,7 +66,6 @@ export class MoyasarPaymentService {
           error instanceof Error ? error.message : "Payment creation failed",
       };
     }
-  }
 
   async getPayment(paymentId: string): Promise<MoyasarPaymentResult> {
     try {
@@ -91,7 +85,6 @@ export class MoyasarPaymentService {
           success: false,
           error: result.message || "Payment retrieval failed",
         };
-      }
 
       return {
         success: true,
@@ -105,7 +98,6 @@ export class MoyasarPaymentService {
           error instanceof Error ? error.message : "Payment retrieval failed",
       };
     }
-  }
 
   async refundPayment(
     paymentId: string,
@@ -132,7 +124,6 @@ export class MoyasarPaymentService {
           success: false,
           error: result.message || "Refund failed",
         };
-      }
 
       return {
         success: true,
@@ -145,7 +136,6 @@ export class MoyasarPaymentService {
         error: error instanceof Error ? error.message : "Refund failed",
       };
     }
-  }
 
   async handleWebhook(payload: any): Promise<MoyasarPaymentResult> {
     try {
@@ -180,6 +170,5 @@ export class MoyasarPaymentService {
       };
     }
   }
-}
 
 export const moyasarService = new MoyasarPaymentService();

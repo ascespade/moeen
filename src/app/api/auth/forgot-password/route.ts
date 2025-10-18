@@ -22,7 +22,6 @@ function getClientIP(request: NextRequest): string {
   } catch {
     return "127.0.0.1";
   }
-}
 
 const forgotPasswordSchema = z.object({
   email: z.string().email("البريد الإلكتروني غير صحيح"),
@@ -52,7 +51,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 },
       );
-    }
 
     const { email } = validation.data;
     const supabase = await createClient();
@@ -79,7 +77,6 @@ export async function POST(request: NextRequest) {
         message:
           "إذا كان البريد الإلكتروني مسجلاً، سيتم إرسال رابط إعادة تعيين كلمة المرور",
       });
-    }
 
     // Create comprehensive audit log
     const supabaseAdmin = createServiceClient(
@@ -132,7 +129,6 @@ export async function POST(request: NextRequest) {
       } catch (auditError) {
         console.error("Audit log error (non-critical):", auditError);
       }
-    }
 
     return NextResponse.json({
       success: true,
@@ -147,4 +143,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

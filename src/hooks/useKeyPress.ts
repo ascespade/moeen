@@ -27,10 +27,8 @@ export const useKeyPress = (
       if (isTargetKey) {
         if (preventDefault) {
           event.preventDefault();
-        }
         if (stopPropagation) {
           event.stopPropagation();
-        }
         handler(event);
       }
     },

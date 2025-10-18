@@ -17,7 +17,6 @@ interface SecurityConfig {
   allowedMethods: string[];
   allowedHeaders: string[];
   maxAge: number;
-}
 
 const defaultSecurityConfig: SecurityConfig = {
   enableCORS: true,
@@ -53,7 +52,6 @@ export class SecurityMiddleware {
 
   constructor(config: Partial<SecurityConfig> = {}) {
     this.config = { ...defaultSecurityConfig, ...config };
-  }
 
   async handleRequest(req: NextRequest): Promise<NextResponse | null> {
     const response = NextResponse.next();
@@ -67,18 +65,15 @@ export class SecurityMiddleware {
       if (corsResponse) {
         return corsResponse;
       }
-    }
 
     // Handle preflight requests
     if (req.method === "OPTIONS") {
       return this.handlePreflightRequest(req);
-    }
 
     // Apply additional security checks
     this.applyAdditionalSecurityChecks(req, response);
 
     return null;
-  }
 
   private applySecurityHeaders(response: NextResponse): void {
     // Content Security Policy
@@ -99,7 +94,6 @@ export class SecurityMiddleware {
       ].join("; ");
 
       response.headers.set("Content-Security-Policy", csp);
-    }
 
     // HTTP Strict Transport Security
     if (this.config.enableHSTS) {
@@ -107,22 +101,18 @@ export class SecurityMiddleware {
         "Strict-Transport-Security",
         "max-age=31536000; includeSubDomains; preload",
       );
-    }
 
     // X-Content-Type-Options
     if (this.config.enableContentTypeOptions) {
       response.headers.set("X-Content-Type-Options", "nosniff");
-    }
 
     // X-Frame-Options
     if (this.config.enableFrameOptions) {
       response.headers.set("X-Frame-Options", "DENY");
-    }
 
     // X-XSS-Protection
     if (this.config.enableXSSProtection) {
       response.headers.set("X-XSS-Protection", "1; mode=block");
-    }
 
     // Referrer Policy
     if (this.config.enableReferrerPolicy) {
@@ -130,7 +120,6 @@ export class SecurityMiddleware {
         "Referrer-Policy",
         "strict-origin-when-cross-origin",
       );
-    }
 
     // Additional security headers
     response.headers.set("X-Permitted-Cross-Domain-Policies", "none");
@@ -141,7 +130,6 @@ export class SecurityMiddleware {
       "Permissions-Policy",
       "camera=(), microphone=(), geolocation=()",
     );
-  }
 
   private handleCORS(
     req: NextRequest,
@@ -156,7 +144,6 @@ export class SecurityMiddleware {
         { error: "CORS policy violation: Origin not allowed" },
         { status: 403 },
       );
-    }
 
     // Check if method is allowed
     if (!this.config.allowedMethods.includes(method)) {
@@ -164,12 +151,10 @@ export class SecurityMiddleware {
         { error: "CORS policy violation: Method not allowed" },
         { status: 405 },
       );
-    }
 
     // Set CORS headers
     if (origin && this.isOriginAllowed(origin)) {
       response.headers.set("Access-Control-Allow-Origin", origin);
-    }
 
     response.headers.set(
       "Access-Control-Allow-Methods",
@@ -186,7 +171,6 @@ export class SecurityMiddleware {
     );
 
     return null;
-  }
 
   private handlePreflightRequest(req: NextRequest): NextResponse {
     const origin = req.headers.get("origin");
@@ -199,7 +183,6 @@ export class SecurityMiddleware {
         { error: "CORS policy violation: Origin not allowed" },
         { status: 403 },
       );
-    }
 
     // Check method
     if (!method || !this.config.allowedMethods.includes(method)) {
@@ -207,7 +190,6 @@ export class SecurityMiddleware {
         { error: "CORS policy violation: Method not allowed" },
         { status: 405 },
       );
-    }
 
     // Check headers
     if (headers) {
@@ -222,7 +204,6 @@ export class SecurityMiddleware {
           { status: 400 },
         );
       }
-    }
 
     const response = NextResponse.json({}, { status: 200 });
 
@@ -242,7 +223,6 @@ export class SecurityMiddleware {
     );
 
     return response;
-  }
 
   private isOriginAllowed(origin: string): boolean {
     return this.config.allowedOrigins.some((allowedOrigin) => {
@@ -250,10 +230,8 @@ export class SecurityMiddleware {
       if (allowedOrigin.startsWith("*.")) {
         const domain = allowedOrigin.substring(2);
         return origin.endsWith(domain);
-      }
       return origin === allowedOrigin;
     });
-  }
 
   private applyAdditionalSecurityChecks(
     req: NextRequest,
@@ -279,7 +257,6 @@ export class SecurityMiddleware {
         "X-Security-Warning",
         "Suspicious user agent detected",
       );
-    }
 
     // Check for common attack patterns in URL
     const url = req.nextUrl.pathname + req.nextUrl.search;
@@ -298,26 +275,22 @@ export class SecurityMiddleware {
         "X-Security-Warning",
         "Potential attack pattern detected",
       );
-    }
 
     // Add request ID for tracking
     const requestId = `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     response.headers.set("X-Request-ID", requestId);
   }
-}
 
 export function createSecurityMiddleware(
   config: Partial<SecurityConfig> = {},
 ): SecurityMiddleware {
   return new SecurityMiddleware(config);
-}
 
 export async function securityMiddleware(
   req: NextRequest,
 ): Promise<NextResponse | null> {
   const security = createSecurityMiddleware();
   return await security.handleRequest(req);
-}
 
 // Specific security configurations for different environments
 export const developmentSecurityConfig: Partial<SecurityConfig> = {

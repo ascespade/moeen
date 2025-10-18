@@ -19,7 +19,6 @@ interface TranslationContextType {
   setLanguage: (lang: string) => void;
   t: (key: string) => string;
   isLoading: boolean;
-}
 
 const TranslationContext = createContext<TranslationContextType | undefined>(
   undefined,
@@ -73,7 +72,6 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({
       // Return cached translation if available
       if (translations[key]) {
         return translations[key] as string;
-      }
 
       // Return key as fallback
       return key;
@@ -106,9 +104,7 @@ export const useT = (): TranslationContextType => {
         setLanguage: () => {},
         isLoading: false,
       };
-    }
     throw new Error("useT must be used within a TranslationProvider");
-  }
   return {
     t: context.t,
     language: context.language,

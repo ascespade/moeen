@@ -44,7 +44,6 @@ interface PatientData {
     outstanding: number;
     lastPayment: string;
   };
-}
 
 export default function PatientDashboard() {
   const { t } = useT();
@@ -75,7 +74,6 @@ export default function PatientDashboard() {
         <LoadingSpinner size="lg" />
       </div>
     );
-  }
 
   return (
     <ProtectedRoute allowedRoles={["patient"]}>
@@ -245,7 +243,6 @@ export default function PatientDashboard() {
                         patientData?.activated
                           ? "bg-green-100 text-green-800"
                           : "bg-orange-100 text-orange-800"
-                      }
                     >
                       {patientData?.activated
                         ? t("common.activated")
@@ -294,4 +291,3 @@ export default function PatientDashboard() {
       </div>
     </ProtectedRoute>
   );
-}

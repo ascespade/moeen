@@ -6,13 +6,11 @@ interface AsyncState<T> {
   data: T | null;
   loading: boolean;
   error: Error | null;
-}
 
 interface AsyncOptions {
   immediate?: boolean;
   onSuccess?: (data: any) => void;
   onError?: (error: Error) => void;
-}
 
 export const useAsync = <T>(
   asyncFunction: (...args: any[]) => Promise<T>,
@@ -38,7 +36,6 @@ export const useAsync = <T>(
         if (isMountedRef.current) {
           setState({ data, loading: false, error: null });
           onSuccess?.(data);
-        }
 
         return data;
       } catch (error) {
@@ -48,7 +45,6 @@ export const useAsync = <T>(
         if (isMountedRef.current) {
           setState((prev) => ({ ...prev, loading: false, error: errorObj }));
           onError?.(errorObj);
-        }
 
         throw error;
       }

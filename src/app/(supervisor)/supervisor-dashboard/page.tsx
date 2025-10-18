@@ -51,7 +51,6 @@ interface SupervisorData {
     generatedAt: string;
     status: "ready" | "processing" | "failed";
   }>;
-}
 
 export default function SupervisorDashboard() {
   const { t } = useT();
@@ -99,7 +98,6 @@ export default function SupervisorDashboard() {
         <LoadingSpinner size="lg" />
       </div>
     );
-  }
 
   return (
     <ProtectedRoute allowedRoles={["supervisor", "admin"]}>
@@ -229,7 +227,6 @@ export default function SupervisorDashboard() {
                                 : staff.efficiency >= 60
                                   ? "secondary"
                                   : "destructive"
-                            }
                           >
                             {staff.efficiency >= 80
                               ? t("common.excellent")
@@ -357,4 +354,3 @@ export default function SupervisorDashboard() {
       </div>
     </ProtectedRoute>
   );
-}

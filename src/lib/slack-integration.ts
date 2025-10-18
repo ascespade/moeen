@@ -9,7 +9,6 @@ export interface SlackMessage {
   thread_ts?: string;
   blocks?: any[];
   attachments?: any[];
-}
 
 export interface SlackChannel {
   id: string;
@@ -18,7 +17,6 @@ export interface SlackChannel {
   purpose?: string;
   members: string[];
   is_archived: boolean;
-}
 
 export interface SlackUser {
   id: string;
@@ -33,7 +31,6 @@ export interface SlackUser {
     phone?: string;
     image_original?: string;
   };
-}
 
 export interface SlackAppointment {
   id: string;
@@ -45,7 +42,6 @@ export interface SlackAppointment {
   channel_id: string;
   thread_ts?: string;
   created_at: string;
-}
 
 export interface SlackNotification {
   type:
@@ -59,7 +55,6 @@ export interface SlackNotification {
   message: string;
   data?: any;
   priority: "low" | "medium" | "high" | "urgent";
-}
 
 export class SlackIntegration {
   private botToken: string;
@@ -71,7 +66,6 @@ export class SlackIntegration {
   constructor() {
     this.botToken = process.env.SLACK_BOT_TOKEN || "";
     this.appToken = process.env.SLACK_APP_TOKEN || "";
-  }
 
   // Initialize Slack connection
   async initialize(): Promise<boolean> {
@@ -80,7 +74,6 @@ export class SlackIntegration {
       const botTest = await this.makeSlackRequest("auth.test");
       if (!botTest.ok) {
         return false;
-      }
 
       // Load channels and users
       await this.loadChannels();
@@ -90,7 +83,6 @@ export class SlackIntegration {
     } catch (error) {
       return false;
     }
-  }
 
   // Load channels
   private async loadChannels(): Promise<void> {
@@ -119,7 +111,6 @@ export class SlackIntegration {
         });
       }
     } catch (error) {}
-  }
 
   // Load users
   private async loadUsers(): Promise<void> {
@@ -147,7 +138,6 @@ export class SlackIntegration {
         });
       }
     } catch (error) {}
-  }
 
   // Send message to Slack
   async sendMessage(
@@ -176,7 +166,6 @@ export class SlackIntegration {
     } catch (error) {
       return null;
     }
-  }
 
   // Send appointment notification
   async sendAppointmentNotification(
@@ -190,7 +179,6 @@ export class SlackIntegration {
       const channel = this.getAppointmentChannel(doctor.id);
       if (!channel) {
         return;
-      }
 
       let message = "";
       let blocks: any[] = [];
@@ -232,11 +220,9 @@ export class SlackIntegration {
             "reminder",
           );
           break;
-      }
 
       await this.sendMessage(channel, message, { blocks });
     } catch (error) {}
-  }
 
   // Send patient message to doctor
   async sendPatientMessage(
@@ -249,7 +235,6 @@ export class SlackIntegration {
       const doctorChannel = this.getAppointmentChannel(doctorId);
       if (!doctorChannel) {
         return;
-      }
 
       const blocks = [
           type: "section",
@@ -269,7 +254,6 @@ export class SlackIntegration {
 
       await this.sendMessage(doctorChannel, `رسالة من المريض`, { blocks });
     } catch (error) {}
-  }
 
   // Send doctor response to patient
   async sendDoctorResponse(
@@ -286,7 +270,6 @@ export class SlackIntegration {
       // 2. Send via website chatbot if the conversation started there
       // 3. Update the conversation thread in Slack
     } catch (error) {}
-  }
 
   // Create appointment blocks for Slack
   private createAppointmentBlocks(
@@ -359,7 +342,6 @@ export class SlackIntegration {
         ],
       },
     ];
-  }
 
   // Get or create appointment channel for doctor
   private getAppointmentChannel(doctorId: string): string | null {
@@ -370,7 +352,6 @@ export class SlackIntegration {
 
     // For now, return a general appointments channel
     return process.env.SLACK_APPOINTMENTS_CHANNEL || "general";
-  }
 
   // Create doctor channel
   async createDoctorChannel(
@@ -392,7 +373,6 @@ export class SlackIntegration {
     } catch (error) {
       return null;
     }
-  }
 
   // Handle Slack events
   async handleSlackEvent(event: any): Promise<void> {
@@ -410,7 +390,6 @@ export class SlackIntegration {
         default:
       }
     } catch (error) {}
-  }
 
   // Handle incoming messages
   private async handleMessage(event: any): Promise<void> {
@@ -425,12 +404,10 @@ export class SlackIntegration {
       // This is a response in a thread - likely a doctor responding
       await this.handleDoctorResponse(event);
     }
-  }
 
   // Handle app mentions
   private async handleAppMention(event: any): Promise<void> {
     // Handle when the bot is mentioned
-  }
 
   // Handle interactive messages (button clicks, etc.)
   private async handleInteractiveMessage(event: any): Promise<void> {
@@ -444,23 +421,19 @@ export class SlackIntegration {
         await this.handleReplyToPatient(action.value);
         break;
     }
-  }
 
   // Handle doctor response
   private async handleDoctorResponse(event: any): Promise<void> {
     // Extract appointment and patient info from thread context
     // Send response back to patient via appropriate channel
-  }
 
   // Handle view appointment action
   private async handleViewAppointment(appointmentId: string): Promise<void> {
     // Show detailed appointment information
-  }
 
   // Handle reply to patient action
   private async handleReplyToPatient(value: string): Promise<void> {
     // Open a dialog or thread for doctor to respond
-  }
 
   // Make Slack API request
   private async makeSlackRequest(
@@ -479,29 +452,24 @@ export class SlackIntegration {
     });
 
     return await response.json();
-  }
 
   // Get channel by name
   getChannelByName(name: string): SlackChannel | undefined {
     return Array.from(this.channels.values()).find(
       (channel) => channel.name === name,
     );
-  }
 
   // Get user by name
   getUserByName(name: string): SlackUser | undefined {
     return Array.from(this.users.values()).find((user) => user.name === name);
-  }
 
   // Get all channels
   getAllChannels(): SlackChannel[] {
     return Array.from(this.channels.values());
-  }
 
   // Get all users
   getAllUsers(): SlackUser[] {
     return Array.from(this.users.values());
-  }
 
   // Send emergency alert
   async sendEmergencyAlert(
@@ -524,7 +492,6 @@ export class SlackIntegration {
     ];
 
     await this.sendMessage(channel, "تنبيه طارئ", { blocks });
-  }
 
   // Send daily summary
   async sendDailySummary(channel: string = "general"): Promise<void> {
@@ -532,4 +499,3 @@ export class SlackIntegration {
     const message = "📊 ملخص يومي للمواعيد والرسائل";
     await this.sendMessage(channel, message);
   }
-}

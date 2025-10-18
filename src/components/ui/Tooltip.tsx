@@ -19,6 +19,5 @@ export function Tooltip({
       </span>
     </span>
   );
-}
 
 export default Tooltip;

@@ -1088,7 +1088,6 @@ export async function seedTranslations(): Promise<void> {
     logger.error("❌ Failed to seed translations:", error);
     throw error;
   }
-}
 
 /**
  * Run the seeding process
@@ -1103,4 +1102,3 @@ if (require.main === module) {
       logger.error("💥 Translation seeding failed:", error);
       process.exit(1);
     });
-}

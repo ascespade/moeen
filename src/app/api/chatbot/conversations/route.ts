@@ -31,17 +31,14 @@ export async function GET(request: NextRequest) {
 
     if (whatsapp_number) {
       query = query.eq("whatsapp_number", whatsapp_number);
-    }
 
     if (status) {
       query = query.eq("conversation_state", status);
-    }
 
     const { data: conversations, error } = await query;
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({ conversations });
   } catch (error) {
@@ -50,7 +47,6 @@ export async function GET(request: NextRequest) {
       { status: 500 },
     );
   }
-}
 
 // POST /api/chatbot/conversations - إنشاء محادثة جديدة
 export async function POST(request: NextRequest) {
@@ -77,7 +73,6 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
-    }
 
     return NextResponse.json({ conversation }, { status: 201 });
   } catch (error) {
@@ -86,4 +81,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

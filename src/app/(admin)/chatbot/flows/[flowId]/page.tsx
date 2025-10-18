@@ -17,13 +17,11 @@ interface Node {
     condition?: string;
     action?: string;
   };
-}
 
 interface Connection {
   id: string;
   source: string;
   target: string;
-}
 
 const mockFlow = {
   id: "1",
@@ -524,4 +522,3 @@ export default function FlowBuilderPage({
       )}
     </div>
   );
-}

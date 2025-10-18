@@ -9,7 +9,6 @@ interface AriaLabelProps {
   required?: boolean;
   invalid?: boolean;
   hidden?: boolean;
-}
 
 /**
  * Generate ARIA attributes for form inputs
@@ -21,22 +20,17 @@ export function getFormAriaProps(props: AriaLabelProps): Record<string, any> {
 
   if (props.describedBy) {
     attrs["aria-describedby"] = props.describedBy;
-  }
 
   if (props.required) {
     attrs["aria-required"] = "true";
-  }
 
   if (props.invalid) {
     attrs["aria-invalid"] = "true";
-  }
 
   if (props.hidden) {
     attrs["aria-hidden"] = "true";
-  }
 
   return attrs;
-}
 
 /**
  * Generate ARIA attributes for buttons
@@ -56,22 +50,17 @@ export function getButtonAriaProps(
 
   if (options?.pressed !== undefined) {
     attrs["aria-pressed"] = String(options.pressed);
-  }
 
   if (options?.expanded !== undefined) {
     attrs["aria-expanded"] = String(options.expanded);
-  }
 
   if (options?.disabled) {
     attrs["aria-disabled"] = "true";
-  }
 
   if (options?.controls) {
     attrs["aria-controls"] = options.controls;
-  }
 
   return attrs;
-}
 
 /**
  * Generate ARIA attributes for navigation
@@ -84,7 +73,6 @@ export function getNavAriaProps(
     "aria-label": label,
     "aria-current": current ? "page" : undefined,
   };
-}
 
 /**
  * Generate ARIA attributes for modals/dialogs
@@ -99,7 +87,6 @@ export function getDialogAriaProps(
     "aria-labelledby": title,
     "aria-describedby": describedBy,
   };
-}
 
 /**
  * Generate ARIA attributes for alerts
@@ -112,7 +99,6 @@ export function getAlertAriaProps(
     "aria-live": type === "error" ? "assertive" : "polite",
     "aria-atomic": "true",
   };
-}
 
 /**
  * Generate ARIA attributes for tables
@@ -122,7 +108,6 @@ export function getTableAriaProps(caption: string): Record<string, any> {
     role: "table",
     "aria-label": caption,
   };
-}
 
 /**
  * Generate ARIA attributes for tabs
@@ -139,7 +124,6 @@ export function getTabAriaProps(
     id,
     tabIndex: selected ? 0 : -1,
   };
-}
 
 /**
  * Generate ARIA attributes for tab panels
@@ -156,7 +140,6 @@ export function getTabPanelAriaProps(
     "aria-hidden": String(hidden),
     tabIndex: 0,
   };
-}
 
 /**
  * Generate ARIA live region
@@ -169,7 +152,6 @@ export function getLiveRegionAriaProps(
     "aria-atomic": "true",
     role: "status",
   };
-}
 
 /**
  * Screen reader only CSS class
@@ -211,7 +193,6 @@ export function handleKeyboardNav(
       onArrowDown?.();
       break;
   }
-}
 
 const ariautils = {
   getFormAriaProps,

@@ -12,7 +12,6 @@ export async function PATCH(
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const patientId = params.id;
@@ -27,7 +26,6 @@ export async function PATCH(
     ];
     if (!validSteps.includes(stepId)) {
       return NextResponse.json({ error: "Invalid step ID" }, { status: 400 });
-    }
 
     // Check if patient exists
     const { data: patient, error: patientError } = await supabase
@@ -38,7 +36,6 @@ export async function PATCH(
 
     if (patientError || !patient) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
-    }
 
     // Update activation step in patient meta
     const currentMeta = patient.meta || {};
@@ -67,7 +64,6 @@ export async function PATCH(
         { error: "Failed to update activation step" },
         { status: 500 },
       );
-    }
 
     // Log step completion
     await supabase.from("audit_logs").insert({
@@ -93,7 +89,6 @@ export async function PATCH(
       { status: 500 },
     );
   }
-}
 
 export async function GET(
   request: NextRequest,
@@ -104,7 +99,6 @@ export async function GET(
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const supabase = await createClient();
     const patientId = params.id;
@@ -118,7 +112,6 @@ export async function GET(
 
     if (patientError || !patient) {
       return NextResponse.json({ error: "Patient not found" }, { status: 404 });
-    }
 
     const activationSteps = patient.meta?.activation_steps || {};
 
@@ -133,4 +126,3 @@ export async function GET(
       { status: 500 },
     );
   }
-}

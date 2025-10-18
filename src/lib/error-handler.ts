@@ -8,14 +8,12 @@ interface ErrorContext {
   userAgent?: string | undefined;
   timestamp: string;
   severity: ErrorSeverity;
-}
 
 interface ErrorReport {
   message: string;
   stack?: string;
   context: ErrorContext;
   componentStack?: string;
-}
 
 export class ErrorHandler {
   private static instance: ErrorHandler;
@@ -25,9 +23,7 @@ export class ErrorHandler {
   static getInstance(): ErrorHandler {
     if (!ErrorHandler.instance) {
       ErrorHandler.instance = new ErrorHandler();
-    }
     return ErrorHandler.instance;
-  }
 
   async reportError(
     error: Error,
@@ -58,35 +54,28 @@ export class ErrorHandler {
     // Process queue if not already processing
     if (!this.isProcessing) {
       this.processErrorQueue();
-    }
 
     // Log to console in development
     if (process.env.NODE_ENV === "development") {
     }
-  }
 
   private determineSeverity(error: Error): ErrorSeverity {
     const message = error.message.toLowerCase();
 
     if (message.includes("network") || message.includes("fetch")) {
       return "medium";
-    }
 
     if (message.includes("auth") || message.includes("permission")) {
       return "high";
-    }
 
     if (message.includes("critical") || message.includes("fatal")) {
       return "critical";
-    }
 
     return "low";
-  }
 
   private async processErrorQueue(): Promise<void> {
     if (this.isProcessing || this.errorQueue.length === 0) {
       return;
-    }
 
     this.isProcessing = true;
 
@@ -101,7 +90,6 @@ export class ErrorHandler {
     } finally {
       this.isProcessing = false;
     }
-  }
 
   private async sendErrorReport(errorReport: ErrorReport): Promise<void> {
     try {
@@ -114,12 +102,10 @@ export class ErrorHandler {
           },
           body: JSON.stringify(errorReport),
         });
-      }
 
       // Log to audit_logs table
       await this.logToAuditLogs(errorReport);
     } catch (error) {}
-  }
 
   private async logToAuditLogs(errorReport: ErrorReport): Promise<void> {
     try {
@@ -135,7 +121,6 @@ export class ErrorHandler {
       //   created_at: errorReport.context.timestamp,
       // });
     } catch (error) {}
-  }
 
   // Performance monitoring
   async reportPerformanceIssue(
@@ -151,7 +136,6 @@ export class ErrorHandler {
       ...context,
       severity: "medium",
     });
-  }
 
   // User analytics (privacy-compliant)
   async trackUserAction(
@@ -176,7 +160,6 @@ export class ErrorHandler {
       }
     } catch (error) {}
   }
-}
 
 export const errorHandler = ErrorHandler.getInstance();
 
@@ -197,6 +180,5 @@ if (typeof window !== "undefined") {
       },
     );
   });
-}
 
 export default errorHandler;

@@ -27,7 +27,6 @@ interface DashboardStats {
   totalSessions: number;
   completedSessions: number;
   upcomingSessions: number;
-}
 
 interface RecentActivity {
   id: string;
@@ -36,7 +35,6 @@ interface RecentActivity {
   description: string;
   timestamp: string;
   status: "success" | "warning" | "error" | "info";
-}
 
 interface StaffWorkHours {
   id: string;
@@ -49,7 +47,6 @@ interface StaffWorkHours {
   isOnDuty: boolean;
   lastCheckIn?: string;
   lastCheckOut?: string;
-}
 
 // TODO: Replace mock with live API once endpoints ready
 const mockStats: DashboardStats = {
@@ -209,7 +206,6 @@ export default function AdminDashboard() {
           <span className="text-sm font-medium">في الخدمة</span>
         </div>
       );
-    }
     return (
       <div className="flex items-center gap-2 text-gray-600">
         <span className="h-2 w-2 rounded-full bg-gray-400"></span>
@@ -567,4 +563,3 @@ export default function AdminDashboard() {
       </main>
     </div>
   );
-}

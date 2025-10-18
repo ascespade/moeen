@@ -40,7 +40,6 @@ export interface Patient {
   created_at: string;
   updated_at: string;
   status: "active" | "inactive" | "suspended";
-}
 
 export interface Doctor {
   id: string;
@@ -55,7 +54,6 @@ export interface Doctor {
   experience_years: number;
   created_at: string;
   status: "active" | "inactive";
-}
 
 export interface Appointment {
   id: string;
@@ -76,7 +74,6 @@ export interface Appointment {
   insurance_approval_number?: string;
   created_at: string;
   updated_at: string;
-}
 
 export interface Session {
   id: string;
@@ -90,7 +87,6 @@ export interface Session {
   completed: boolean;
   insurance_claim_number?: string;
   created_at: string;
-}
 
 export interface InsuranceClaim {
   id: string;
@@ -104,7 +100,6 @@ export interface InsuranceClaim {
   submitted_at: string;
   processed_at?: string;
   rejection_reason?: string;
-}
 
 // Supabase Database Manager
 export class SupabaseDatabaseManager {
@@ -120,7 +115,6 @@ export class SupabaseDatabaseManager {
 
     if (error) throw new Error(`Failed to create patient: ${error.message}`);
     return data;
-  }
 
   async getPatient(patientId: string) {
     const { data, error } = await supabaseAdmin
@@ -131,7 +125,6 @@ export class SupabaseDatabaseManager {
 
     if (error) throw new Error(`Failed to get patient: ${error.message}`);
     return data;
-  }
 
   async getPatientByNationalId(nationalId: string) {
     const { data, error } = await supabaseAdmin
@@ -143,7 +136,6 @@ export class SupabaseDatabaseManager {
     if (error)
       throw new Error(`Failed to get patient by national ID: ${error.message}`);
     return data;
-  }
 
   async updatePatient(patientId: string, updates: Partial<Patient>) {
     const { data, error } = await supabaseAdmin
@@ -155,7 +147,6 @@ export class SupabaseDatabaseManager {
 
     if (error) throw new Error(`Failed to update patient: ${error.message}`);
     return data;
-  }
 
   async searchPatients(searchTerm: string) {
     const { data, error } = await supabaseAdmin
@@ -168,7 +159,6 @@ export class SupabaseDatabaseManager {
 
     if (error) throw new Error(`Failed to search patients: ${error.message}`);
     return data;
-  }
 
   // Doctor Management
   async createDoctor(doctorData: Omit<Doctor, "id" | "created_at">) {
@@ -180,7 +170,6 @@ export class SupabaseDatabaseManager {
 
     if (error) throw new Error(`Failed to create doctor: ${error.message}`);
     return data;
-  }
 
   async getDoctor(doctorId: string) {
     const { data, error } = await supabaseAdmin
@@ -191,7 +180,6 @@ export class SupabaseDatabaseManager {
 
     if (error) throw new Error(`Failed to get doctor: ${error.message}`);
     return data;
-  }
 
   async getDoctorsBySpecialty(specialty: string) {
     const { data, error } = await supabaseAdmin
@@ -203,7 +191,6 @@ export class SupabaseDatabaseManager {
     if (error)
       throw new Error(`Failed to get doctors by specialty: ${error.message}`);
     return data;
-  }
 
   // Appointment Management
   async createAppointment(
@@ -218,7 +205,6 @@ export class SupabaseDatabaseManager {
     if (error)
       throw new Error(`Failed to create appointment: ${error.message}`);
     return data;
-  }
 
   async getAppointments(
     filters: {
@@ -245,7 +231,6 @@ export class SupabaseDatabaseManager {
 
     if (error) throw new Error(`Failed to get appointments: ${error.message}`);
     return data;
-  }
 
   async updateAppointment(
     appointmentId: string,
@@ -261,7 +246,6 @@ export class SupabaseDatabaseManager {
     if (error)
       throw new Error(`Failed to update appointment: ${error.message}`);
     return data;
-  }
 
   // Session Management
   async createSession(sessionData: Omit<Session, "id" | "created_at">) {
@@ -273,7 +257,6 @@ export class SupabaseDatabaseManager {
 
     if (error) throw new Error(`Failed to create session: ${error.message}`);
     return data;
-  }
 
   async getSessions(patientId: string) {
     const { data, error } = await supabaseAdmin
@@ -289,7 +272,6 @@ export class SupabaseDatabaseManager {
 
     if (error) throw new Error(`Failed to get sessions: ${error.message}`);
     return data;
-  }
 
   // Insurance Claims
   async createInsuranceClaim(
@@ -308,7 +290,6 @@ export class SupabaseDatabaseManager {
     if (error)
       throw new Error(`Failed to create insurance claim: ${error.message}`);
     return data;
-  }
 
   async getInsuranceClaims(patientId: string) {
     const { data, error } = await supabaseAdmin
@@ -320,7 +301,6 @@ export class SupabaseDatabaseManager {
     if (error)
       throw new Error(`Failed to get insurance claims: ${error.message}`);
     return data;
-  }
 
   async updateInsuranceClaim(
     claimId: string,
@@ -336,7 +316,6 @@ export class SupabaseDatabaseManager {
     if (error)
       throw new Error(`Failed to update insurance claim: ${error.message}`);
     return data;
-  }
 
   // Analytics
   async getPatientStats() {
@@ -356,7 +335,6 @@ export class SupabaseDatabaseManager {
     }).length;
 
     return { total, active, newLast30Days };
-  }
 
   async getAppointmentStats() {
     const { data, error } = await supabaseAdmin
@@ -375,7 +353,6 @@ export class SupabaseDatabaseManager {
     }).length;
 
     return { total, completed, cancelled, upcoming };
-  }
 
   // Health Check
   async healthCheck() {
@@ -402,6 +379,5 @@ export class SupabaseDatabaseManager {
       };
     }
   }
-}
 
 export const db = new SupabaseDatabaseManager();

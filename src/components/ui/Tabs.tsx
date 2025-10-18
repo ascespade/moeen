@@ -5,7 +5,6 @@ import clsx from "clsx";
 interface TabsContextValue {
   value: string;
   onValueChange: (value: string) => void;
-}
 
 const TabsContext = createContext<TabsContextValue | undefined>(undefined);
 
@@ -31,7 +30,6 @@ export function Tabs({
       <div className={clsx("w-full", className)} {...props} />
     </TabsContext.Provider>
   );
-}
 
 export function TabsList({
   className,
@@ -46,7 +44,6 @@ export function TabsList({
       {...props}
     />
   );
-}
 
 export function TabsTrigger({
   value,
@@ -58,7 +55,6 @@ export function TabsTrigger({
   const context = useContext(TabsContext);
   if (!context) {
     throw new Error("TabsTrigger must be used within a Tabs component");
-  }
 
   const isActive = context.value === value;
 
@@ -75,7 +71,6 @@ export function TabsTrigger({
       {...props}
     />
   );
-}
 
 export function TabsContent({
   value,
@@ -87,11 +82,9 @@ export function TabsContent({
   const context = useContext(TabsContext);
   if (!context) {
     throw new Error("TabsContent must be used within a Tabs component");
-  }
 
   if (context.value !== value) {
     return null;
-  }
 
   return (
     <div
@@ -102,6 +95,5 @@ export function TabsContent({
       {...props}
     />
   );
-}
 
 export default Tabs;

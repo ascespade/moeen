@@ -10,14 +10,12 @@ export interface ThemeConfig {
   borderRadius: string;
   fontFamily: string;
   customCSS?: string;
-}
 
 export interface UserPreferences {
   theme: ThemeMode;
   language: "ar" | "en";
   fontSize: "sm" | "md" | "lg";
   direction: "ltr" | "rtl";
-}
 
 /**
  * Dynamic Theme Manager
@@ -41,7 +39,6 @@ class DynamicThemeManager {
       if (Date.now() - cached.timestamp < this.cacheExpiry) {
         return cached.data;
       }
-    }
 
     try {
       if (userId) {
@@ -55,7 +52,6 @@ class DynamicThemeManager {
         if (error && error.code !== "PGRST116") {
           // Not found error
           throw new Error(`Failed to load user preferences: ${error.message}`);
-        }
 
         const preferences: UserPreferences = {
           theme: data?.theme || "system",
@@ -83,7 +79,6 @@ class DynamicThemeManager {
           throw new Error(
             `Failed to load default preferences: ${error.message}`,
           );
-        }
 
         const preferences: UserPreferences = data?.value || {
           theme: "system",
@@ -109,7 +104,6 @@ class DynamicThemeManager {
         direction: "rtl",
       };
     }
-  }
 
   /**
    * Get theme configuration from database
@@ -123,7 +117,6 @@ class DynamicThemeManager {
       if (Date.now() - cached.timestamp < this.cacheExpiry) {
         return cached.data;
       }
-    }
 
     try {
       const { data, error } = await this.supabase
@@ -134,7 +127,6 @@ class DynamicThemeManager {
 
       if (error) {
         throw new Error(`Failed to load theme config: ${error.message}`);
-      }
 
       const config: ThemeConfig = data?.value || {
         mode: "system",
@@ -163,7 +155,6 @@ class DynamicThemeManager {
         fontFamily: "var(--font-cairo)",
       };
     }
-  }
 
   /**
    * Update user preferences in database
@@ -183,14 +174,12 @@ class DynamicThemeManager {
 
       if (error) {
         throw new Error(`Failed to update user preferences: ${error.message}`);
-      }
 
       // Clear cache
       this.cache.delete(`user_preferences_${userId}`);
     } catch (error) {
       throw error;
     }
-  }
 
   /**
    * Update theme configuration in database
@@ -209,14 +198,12 @@ class DynamicThemeManager {
 
       if (error) {
         throw new Error(`Failed to update theme config: ${error.message}`);
-      }
 
       // Clear cache
       this.cache.delete("theme_config");
     } catch (error) {
       throw error;
     }
-  }
 
   /**
    * Apply theme to document
@@ -241,10 +228,8 @@ class DynamicThemeManager {
         styleElement = document.createElement("style");
         styleElement.id = "dynamic-theme-css";
         document.head.appendChild(styleElement);
-      }
       styleElement.textContent = config.customCSS;
     }
-  }
 
   /**
    * Apply language and direction to document
@@ -253,7 +238,6 @@ class DynamicThemeManager {
     const html = document.documentElement;
     html.setAttribute("lang", language);
     html.setAttribute("dir", language === "ar" ? "rtl" : "ltr");
-  }
 
   /**
    * Get system theme preference
@@ -263,7 +247,6 @@ class DynamicThemeManager {
     return window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
-  }
 
   /**
    * Resolve actual theme mode (system -> light/dark)
@@ -271,9 +254,7 @@ class DynamicThemeManager {
   resolveThemeMode(theme: ThemeMode): "light" | "dark" {
     if (theme === "system") {
       return this.getSystemTheme();
-    }
     return theme;
-  }
 
   /**
    * Clear all caches
@@ -281,7 +262,6 @@ class DynamicThemeManager {
   clearCache(): void {
     this.cache.clear();
   }
-}
 
 // Export singleton instance
 export const dynamicThemeManager = new DynamicThemeManager();

@@ -73,11 +73,9 @@ export default function SettingsTabs() {
     } finally {
       setSaving(false);
     }
-  }
 
   if (loading) {
     return <div className="rounded-xl border p-4">جاري التحميل...</div>;
-  }
 
   return (
     <div className="grid gap-4">
@@ -108,7 +106,6 @@ export default function SettingsTabs() {
                     organizationName: e.target.value,
                   },
                 })
-              }
             />
           </div>
           <div className="grid gap-2">
@@ -124,7 +121,6 @@ export default function SettingsTabs() {
                     timezone: e.target.value,
                   },
                 })
-              }
             />
           </div>
           <div className="grid gap-2">
@@ -140,7 +136,6 @@ export default function SettingsTabs() {
                     language: e.target.value,
                   },
                 })
-              }
             />
           </div>
           <div>
@@ -167,7 +162,6 @@ export default function SettingsTabs() {
                   ...(settings as Settings),
                   provider: e.target.value,
                 })
-              }
             >
               <option value="gemini">Gemini Pro</option>
               <option value="flash">Gemini Flash 2.5</option>
@@ -216,7 +210,6 @@ export default function SettingsTabs() {
                     tts: settings?.voice?.tts || null,
                   },
                 })
-              }
             >
               <option value="whisper">OpenAI Whisper</option>
               <option value="gemini-stt">Gemini Audio (إن توفر)</option>
@@ -235,7 +228,6 @@ export default function SettingsTabs() {
                     tts: e.target.value,
                   },
                 })
-              }
             >
               <option value="">غير مفعّل</option>
               <option value="openai-tts">OpenAI TTS</option>
@@ -248,7 +240,6 @@ export default function SettingsTabs() {
               className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() =>
                 save({ voice: settings?.voice || { stt: null, tts: null } })
-              }
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
@@ -287,7 +278,6 @@ export default function SettingsTabs() {
                     whatsappAccessToken: e.target.value,
                   },
                 })
-              }
               placeholder="EAAG..."
             />
           </div>
@@ -320,7 +310,6 @@ export default function SettingsTabs() {
                     googleApiKey: e.target.value,
                   },
                 })
-              }
               placeholder="AIza..."
             />
           </div>
@@ -337,7 +326,6 @@ export default function SettingsTabs() {
                     openaiApiKey: e.target.value,
                   },
                 })
-              }
               placeholder="sk-..."
             />
           </div>
@@ -354,7 +342,6 @@ export default function SettingsTabs() {
                     whatsappAccessToken: e.target.value,
                   },
                 })
-              }
               placeholder="EAAG..."
             />
           </div>
@@ -385,7 +372,6 @@ export default function SettingsTabs() {
                     whatsappWebhookUrl: e.target.value,
                   },
                 })
-              }
               placeholder="https://.../api/webhooks/whatsapp"
             />
           </div>
@@ -402,7 +388,6 @@ export default function SettingsTabs() {
                     phoneNumberId: e.target.value,
                   },
                 })
-              }
             />
           </div>
           <div>
@@ -433,7 +418,6 @@ export default function SettingsTabs() {
                     dataRetentionDays: Number(e.target.value),
                   },
                 })
-              }
             />
           </div>
           <div className="flex items-center gap-2">
@@ -449,7 +433,6 @@ export default function SettingsTabs() {
                     piiMasking: e.target.checked,
                   },
                 })
-              }
             />
             <label htmlFor="pii" className="text-sm">
               إخفاء بيانات حساسة (PII)
@@ -482,7 +465,6 @@ export default function SettingsTabs() {
                     slackWebhookUrl: e.target.value,
                   },
                 })
-              }
               placeholder="https://hooks.slack.com/services/..."
             />
           </div>
@@ -492,7 +474,6 @@ export default function SettingsTabs() {
               className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() =>
                 save({ notifications: settings?.notifications || {} })
-              }
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
@@ -526,7 +507,6 @@ export default function SettingsTabs() {
               className="h-10 rounded-md bg-gray-900 text-white px-4"
               onClick={() =>
                 save({ emergency: settings?.emergency || { keywords: [] } })
-              }
             >
               {saving ? "جارٍ الحفظ..." : "حفظ"}
             </button>
@@ -549,7 +529,6 @@ export default function SettingsTabs() {
                     name: e.target.value,
                   },
                 })
-              }
             />
           </div>
           <div className="grid gap-2">
@@ -565,7 +544,6 @@ export default function SettingsTabs() {
                     email: e.target.value,
                   },
                 })
-              }
             />
           </div>
           <div className="grid gap-2">
@@ -581,7 +559,6 @@ export default function SettingsTabs() {
                     locale: e.target.value,
                   },
                 })
-              }
             />
           </div>
           <div>
@@ -619,7 +596,6 @@ export default function SettingsTabs() {
                     dailyAiBudgetUsd: Number(e.target.value),
                   },
                 })
-              }
             />
           </div>
           <div>
@@ -635,4 +611,3 @@ export default function SettingsTabs() {
       )}
     </div>
   );
-}

@@ -14,7 +14,6 @@ export async function POST(request: NextRequest) {
       { error: "Not available in production" },
       { status: 403 },
     );
-  }
 
   try {
     clearRateLimitCache();
@@ -28,4 +27,3 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
-}

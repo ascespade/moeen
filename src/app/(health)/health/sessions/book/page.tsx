@@ -18,7 +18,6 @@ interface SessionType {
   price: number;
   color: string;
   icon: string;
-}
 
 interface Slot {
   therapistId: string;
@@ -27,7 +26,6 @@ interface Slot {
   startTime: string;
   endTime: string;
   duration: number;
-}
 
 export default function BookSessionPage() {
   const router = useRouter();
@@ -55,7 +53,6 @@ export default function BookSessionPage() {
     if (!selectedSessionType || !selectedSlot || !patientName.trim()) {
       setError("يرجى ملء جميع الحقول المطلوبة");
       return;
-    }
 
     setLoading(true);
     setError("");
@@ -69,7 +66,6 @@ export default function BookSessionPage() {
       } = await supabase.auth.getUser();
       if (!user) {
         throw new Error("يجب تسجيل الدخول أولاً");
-      }
 
       // Get or create patient
       let patientId;
@@ -95,7 +91,6 @@ export default function BookSessionPage() {
 
         if (patientError) throw patientError;
         patientId = newPatient.id;
-      }
 
       // Create appointment
       const { error: appointmentError } = await supabase
@@ -423,4 +418,3 @@ export default function BookSessionPage() {
       )}
     </div>
   );
-}
