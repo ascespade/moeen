@@ -81,6 +81,7 @@ interface ProgressReport {
   next_review_date: string;
   created_at: string;
 
+}
 
 const ProgressTrackingPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -110,6 +111,7 @@ const ProgressTrackingPage: React.FC = () => {
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockGoals: ProgressGoal[] = [
   {
+        {
     id: "1",
           patient_id: "pat-1",
           goal_title: "تحسين المشي",
@@ -155,6 +157,7 @@ const ProgressTrackingPage: React.FC = () => {
 
       const mockAssessments: Assessment[] = [
   {
+        {
     id: "1",
           patient_id: "pat-1",
           assessor_id: "ass-1",
@@ -178,6 +181,7 @@ const ProgressTrackingPage: React.FC = () => {
 
       const mockReports: ProgressReport[] = [
   {
+        {
     id: "1",
           patient_id: "pat-1",
           report_date: "2024-01-31",

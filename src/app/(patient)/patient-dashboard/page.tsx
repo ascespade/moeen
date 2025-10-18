@@ -8,7 +8,9 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { LoadingSpinner } from "lucide-react";
+import { LoadingSpinner } from "@/components/ui";
+
+} from "lucide-react";
 
 interface PatientData {
   id: string;
@@ -36,6 +38,7 @@ interface PatientData {
     lastPayment: string;
   };
 
+}
 
 export default function PatientDashboard() {
   const { t } = useT();

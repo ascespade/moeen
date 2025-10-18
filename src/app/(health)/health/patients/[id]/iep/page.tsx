@@ -24,6 +24,7 @@ interface Goal {
   target_date: string | null;
   progress: number;
 
+}
 
 const DOMAIN_LABELS: Record<string, string> = {
   behavioral: "سلوكي",

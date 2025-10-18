@@ -10,6 +10,7 @@ interface RateLimitConfig {
   maxRequests: number;
   message: string;
 
+}
 
 const rateLimitConfigs: Record<string, RateLimitConfig> = {
   "/api/auth/login": {
@@ -120,3 +121,4 @@ setInterval(
   5 * 60 * 1000,
 ); // Clean up every 5 minutes
 }}}}
+}

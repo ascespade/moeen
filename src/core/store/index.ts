@@ -11,7 +11,6 @@ import {
 } from "../types";
 
 // Auth Store
-}
 interface AuthState {
   user: User | null;
   token: string | null;
@@ -26,6 +25,7 @@ interface AuthActions {
   setError: (error: string | null) => void;
   updateUser: (user: Partial<User>) => void;
 
+}
 
 export const useAuthStore = create<AuthState & AuthActions>()(
   devtools(
@@ -85,7 +85,6 @@ export const useAuthStore = create<AuthState & AuthActions>()(
 );
 
 // UI Store
-}
 interface UIState {
   sidebarOpen: boolean;
   theme: "light" | "dark" | "system";
@@ -109,6 +108,7 @@ interface UIActions {
   closeModal: (modalId: string) => void;
   setLoading: (key: string, loading: boolean) => void;
 
+}
 
 export const useUIStore = create<UIState & UIActions>()(
   devtools(
@@ -200,7 +200,6 @@ export const useUIStore = create<UIState & UIActions>()(
 );
 
 // Data Store
-}
 interface DataState {
   patients: Patient[];
   doctors: Doctor[];
@@ -281,6 +280,7 @@ interface DataActions {
   setError: (error: string | null) => void;
   clearError: () => void;
 
+}
 
 export const useDataStore = create<DataState & DataActions>()(
   devtools(

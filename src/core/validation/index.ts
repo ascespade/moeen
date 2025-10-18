@@ -353,6 +353,7 @@ export class ValidationHelper {
         );
         return { success: false, error: validationError };
       throw error;
+    }
 
   public static async validateAsync<T>(
     schema: z.ZodSchema<T>,
@@ -378,6 +379,7 @@ export class ValidationHelper {
         success: false,
         error: new ValidationError("Unknown validation error"),
       };
+    }
 
   public static validateQueryParams<T>(
     schema: z.ZodSchema<T>,
@@ -396,6 +398,7 @@ export class ValidationHelper {
       // Keep as string
       else {
         params[key] = value;
+      }
 
     return this.validate(schema, params, context);
 
@@ -405,6 +408,7 @@ export class ValidationHelper {
     context?: Record<string, any>,
   ): { success: true; data: T } | { success: false; error: ValidationError } {
     return this.validate(schema, body, context);
+  }
 
 // Middleware for API Routes
 export const validateRequest = <T>(

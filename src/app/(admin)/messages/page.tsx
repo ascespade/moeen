@@ -14,8 +14,10 @@ interface Message {
   status: "sent" | "delivered" | "read" | "failed";
   createdAt: string;
   priority: "low" | "medium" | "high";
+}
 
 const mockMessages: Message[] = [
+  {
   {
     id: "1",
     sender: "نظام المواعيد",

@@ -21,8 +21,7 @@ describe("/api/patients", () => {
   describe("GET /api/patients", () => {
     it("should return patients with pagination", async () => {
       const mockPatients = [
-  {
-    id: "1",
+          id: "1",
           name: "أحمد محمد",
           age: 25,
           phone: "+966501234567",
@@ -39,8 +38,7 @@ describe("/api/patients", () => {
       ];
 
       const mockPatientDetails = [
-  {
-    id: "1",
+          id: "1",
           name: "أحمد محمد",
           age: 25,
           phone: "+966501234567",
@@ -50,8 +48,7 @@ describe("/api/patients", () => {
       ];
 
       const mockAppointments = [
-  {
-    id: "1",
+          id: "1",
           appointment_date: "2024-01-20",
           appointment_time: "10:00",
         },
@@ -80,8 +77,7 @@ describe("/api/patients", () => {
 
     it("should handle search functionality", async () => {
       const mockPatients = [
-  {
-    id: "1",
+          id: "1",
           name: "أحمد محمد",
           age: 25,
           phone: "+966501234567",

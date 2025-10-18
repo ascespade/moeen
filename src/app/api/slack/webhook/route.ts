@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
       { error: "Webhook processing failed" },
       { status: 500 },
     );
+  }
 
 async function handleSlackEvent(event: any) {
   try {

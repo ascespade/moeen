@@ -112,6 +112,7 @@ export class PrivateCenterIntegration {
         centerData: this.getDefaultCenterData(),
         lastSync: new Date().toISOString(),
       };
+    }
 
   async submitMOHReport(reportData: PrivateCenterReporting): Promise<{
     success: boolean;
@@ -138,6 +139,7 @@ export class PrivateCenterIntegration {
         success: false,
         status: "failed",
       };
+    }
 
   // SFDA Integration - الهيئة العامة للغذاء والدواء
   async syncWithSFDA(): Promise<{
@@ -165,6 +167,7 @@ export class PrivateCenterIntegration {
         accreditation: this.getDefaultAccreditation(),
         lastSync: new Date().toISOString(),
       };
+    }
 
   async submitSFDAQualityReport(qualityData: {
     centerId: string;
@@ -208,6 +211,7 @@ export class PrivateCenterIntegration {
         success: false,
         status: "failed",
       };
+    }
 
   // CCHI Integration - مجلس الضمان الصحي التعاوني
   async syncWithCCHI(): Promise<{
@@ -235,6 +239,7 @@ export class PrivateCenterIntegration {
         insuranceData: this.getDefaultInsuranceData(),
         lastSync: new Date().toISOString(),
       };
+    }
 
   async submitCCHIClaim(claimData: {
     patientId: string;
@@ -269,6 +274,7 @@ export class PrivateCenterIntegration {
         status: "failed",
         approvalRequired: false,
       };
+    }
 
   // Private Center Compliance
   async validateCenterCompliance(): Promise<{
@@ -323,6 +329,7 @@ export class PrivateCenterIntegration {
         recommendations: ["تواصل مع الدعم الفني"],
         score: 0,
       };
+    }
 
   // Private Center Analytics
   async getCenterAnalytics(
@@ -384,6 +391,7 @@ export class PrivateCenterIntegration {
         },
         complianceScore: 0,
       };
+    }
 
   // Utility Functions
   private getDefaultCenterData(): PrivateCenterLicense {
@@ -487,6 +495,7 @@ export class PrivateCenterIntegration {
         approvalRequired: false,
       },
     };
+  }
 
 export const privateCenterIntegration = new PrivateCenterIntegration();
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

@@ -18,8 +18,10 @@ interface Integration {
   icon: string;
   color: string;
 
+}
 
 const mockIntegrations: Integration[] = [
+  {
   {
     id: "1",
     name: "واتساب بزنس",

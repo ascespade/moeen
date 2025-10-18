@@ -43,8 +43,10 @@ interface MedicalRecord {
     therapist: string;
   }[];
 
+}
 
 const mockRecords: MedicalRecord[] = [
+  {
   {
     id: "1",
     patientName: "أحمد محمد العتيبي",

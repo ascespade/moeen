@@ -15,6 +15,7 @@ interface ThemeSwitchProps {
   showLabel?: boolean;
   className?: string;
 
+}
 
 export function ThemeSwitch({
   variant = "dropdown",
@@ -26,8 +27,7 @@ export function ThemeSwitch({
   const [isOpen, setIsOpen] = useState(false);
 
   const themes = [
-  {
-    value: "light" as const,
+      value: "light" as const,
       label: "فاتح",
       icon: Sun,
       description: "الوضع الفاتح",
@@ -170,3 +170,4 @@ export function ThemeSwitch({
     </div>
   );
 export default ThemeSwitch;
+}

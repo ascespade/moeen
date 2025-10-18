@@ -251,6 +251,7 @@ class TestUtils {
     } catch (error) {
       logger.error("Failed to cleanup test data", error);
       throw error;
+    }
 
   // Get test data
   getTestData(): TestData {
@@ -309,8 +310,10 @@ class TestUtils {
           throw lastError;
 
         await this.wait(delay * attempt);
+      }
 
     throw lastError!;
+  }
 
 // Export singleton instance
 export const testUtils = new TestUtils();
@@ -323,3 +326,4 @@ export function createTestData() {
 export async function cleanupTestData(): Promise<void> {
   await testUtils.cleanup();
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}

@@ -6,7 +6,9 @@ import { useT } from "@/hooks/useT";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
-import { Badge } from "lucide-react";
+import { Badge } from "@/components/ui/Badge";
+
+} from "lucide-react";
 
 interface ChecklistItem {
   id: string;
@@ -22,6 +24,7 @@ interface PreVisitChecklistProps {
   patientId: string;
   onChecklistComplete?: () => void;
 
+}
 
 export default function PreVisitChecklist({
   appointmentId,
@@ -274,3 +277,4 @@ export default function PreVisitChecklist({
     </Card>
   );
 }}}
+}

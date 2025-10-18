@@ -11,3 +11,4 @@ export default function InfoLayout({
   children: React.ReactNode;
 }) {
   return children;
+}

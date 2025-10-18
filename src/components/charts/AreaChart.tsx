@@ -27,6 +27,7 @@ interface AreaChartProps {
   showLegend?: boolean;
   showTooltip?: boolean;
 
+}
 
 export const AreaChart: React.FC<AreaChartProps> = ({
   data,

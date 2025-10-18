@@ -18,6 +18,7 @@ interface Props {
   onSelect: (sessionType: SessionType) => void;
   selectedId?: string;
 
+}
 
 export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
   const [sessionTypes, setSessionTypes] = useState<SessionType[]>([]);

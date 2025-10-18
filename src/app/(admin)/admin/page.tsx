@@ -43,6 +43,7 @@ interface User {
   lastLogin: string;
   createdAt: string;
   permissions: string[];
+}
 
 interface SystemConfig {
   id: string;
@@ -52,6 +53,7 @@ interface SystemConfig {
   category: string;
   isSecret: boolean;
 
+}
 
 interface SecurityEvent {
   id: string;
@@ -62,6 +64,7 @@ interface SecurityEvent {
   userAgent: string;
   success: boolean;
 
+}
 
 export default function AdminPage() {
   const [users, setUsers] = useState<User[]>([]);
@@ -93,8 +96,7 @@ export default function AdminPage() {
   const loadAdminData = async () => {
     try {
       setLoading(true);
-      try {
-        const [usersRes, configsRes, eventsRes] = await Promise.all([
+      const [usersRes, configsRes, eventsRes] = await Promise.all([
         fetch("/api/admin/users"),
         fetch("/api/admin/configs"),
         fetch("/api/admin/security-events"),
@@ -104,8 +106,7 @@ export default function AdminPage() {
         throw new Error("Failed to load admin data");
 
       try {
-        try {
-          const [usersData, configsData, eventsData] = await Promise.all([
+        const [usersData, configsData, eventsData] = await Promise.all([
           usersRes.json(),
           configsRes.json(),
           eventsRes.json(),

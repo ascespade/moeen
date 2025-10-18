@@ -12,6 +12,7 @@ interface ProtectedRouteProps {
   allowedRoles?: ("patient" | "doctor" | "staff" | "supervisor" | "admin")[];
   fallback?: React.ReactNode;
 
+}
 
 export default function ProtectedRoute({
   children,

@@ -112,8 +112,7 @@ function LoginForm() {
   };
 
   const testAccounts = [
-  {
-    role: "manager",
+      role: "manager",
       email: "admin@moeen.com",
       password: "admin123",
       label: "👨‍💼 مدير",

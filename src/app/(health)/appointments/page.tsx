@@ -50,6 +50,7 @@ interface Appointment {
     age?: number;
   };
 
+}
 
 const AppointmentsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

@@ -4,6 +4,8 @@ import { useAtom } from "jotai";
 
 import { langAtom, themeAtom } from "@/components/providers/UIProvider";
 
+("use client");
+
 export default function ProfilePage() {
   const [theme, setTheme] = useAtom(themeAtom);
   const [lang, setLang] = useAtom(langAtom);
@@ -62,3 +64,4 @@ export default function ProfilePage() {
       </div>
     </main>
   );
+}

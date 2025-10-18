@@ -11,6 +11,7 @@ interface UseApiState<T> {
   error: string | null;
   refetch: () => Promise<void>;
 
+}
 
 export const useApi = <T = any>(
   endpoint: string,
@@ -174,3 +175,4 @@ export const useApiDelete = <T = any>(
     execute,
   };
 };
+}

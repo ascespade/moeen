@@ -7,6 +7,8 @@ import Image from "next/image";
 
 import { Mail, CheckCircle, RefreshCw } from "lucide-react";
 
+("use client");
+
 export default function VerifyEmailPage() {
   const [isResending, setIsResending] = useState(false);
   const [isResent, setIsResent] = useState(false);
@@ -113,3 +115,4 @@ export default function VerifyEmailPage() {
       </div>
     </div>
   );
+}

@@ -13,6 +13,7 @@ interface ErrorHandlerOptions {
   logError?: boolean;
   fallbackMessage?: string;
 
+}
 
 export function useErrorHandler() {
   const { t } = useT();
@@ -51,6 +52,7 @@ export function useErrorHandler() {
               url: window.location.href,
             }),
           }).catch(console.error);
+        }
 
       // Show toast if enabled
       if (showToast) {

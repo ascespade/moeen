@@ -13,6 +13,7 @@ interface Invoice {
   payment_method: string;
   status: string;
   created_at: string;
+}
 
 export default function InvoicesPage() {
   const [payments, setPayments] = useState<any[]>([]);

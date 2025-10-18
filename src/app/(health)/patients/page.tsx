@@ -51,6 +51,7 @@ interface PatientWithStats extends Patient {
     relationship: string;
   };
 
+}
 
 export default function PatientsPage() {
   const [patients, setPatients] = useState<PatientWithStats[]>([]);

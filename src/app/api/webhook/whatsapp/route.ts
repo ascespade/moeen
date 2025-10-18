@@ -37,6 +37,7 @@ export async function POST(request: NextRequest) {
       { error: "Internal server error" },
       { status: 500 },
     );
+  }
 
 // GET /api/webhook/whatsapp - التحقق من webhook
 export async function GET(request: NextRequest) {

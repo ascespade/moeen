@@ -23,6 +23,7 @@ interface FormOptions<T> {
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
 
+}
 
 export const useForm = <T extends Record<string, unknown>>(
   options: FormOptions<T>,

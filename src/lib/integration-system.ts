@@ -211,6 +211,7 @@ export class EHRSystem {
   // Generate unique ID
   private generateId(): string {
     return Math.random().toString(36).substr(2, 9);
+  }
 
 export class CalendarAPI {
   private schedules: Map<string, ScheduleSlot[]> = new Map();
@@ -272,6 +273,7 @@ export class CalendarAPI {
         case "monthly":
           currentDate.setMonth(currentDate.getMonth() + 1);
           break;
+      }
 
     schedule.push(...appointments);
     this.schedules.set(doctorId, schedule);
@@ -285,6 +287,7 @@ export class CalendarAPI {
     const endHours = Math.floor(totalMinutes / 60);
     const endMinutes = totalMinutes % 60;
     return `${endHours.toString().padStart(2, "0")}:${endMinutes.toString().padStart(2, "0")}`;
+  }
 
 export interface Message {
   {
@@ -397,6 +400,7 @@ export class CommunicationAutomation {
 
   private generateId(): string {
     return Math.random().toString(36).substr(2, 9);
+  }
 
 export class DoctorsDashboard {
   private doctors: Map<string, Doctor> = new Map();

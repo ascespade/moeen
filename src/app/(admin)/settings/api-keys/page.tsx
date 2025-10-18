@@ -33,6 +33,7 @@ interface ApiKeyConfig {
   placeholder: string;
   validation_url?: string;
 
+}
 
 const APIKeysSettingsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

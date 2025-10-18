@@ -45,6 +45,7 @@ interface SupervisorData {
     status: "ready" | "processing" | "failed";
   }>;
 
+}
 
 export default function SupervisorDashboard() {
   const { t } = useT();

@@ -8,6 +8,7 @@ interface UseIntersectionObserverOptions {
   rootMargin?: string;
   freezeOnceVisible?: boolean;
 
+}
 
 export const useIntersectionObserver = (
   options: UseIntersectionObserverOptions = {},

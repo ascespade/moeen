@@ -97,7 +97,6 @@ const getServices = (t: any) => [
 
 // المميزات التنافسية
 const features = [
-  {
     id: 1,
     icon: "⭐",
     title: "فريق عمل مؤهل",

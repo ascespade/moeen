@@ -9,7 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import { useAuth } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+
+} from "lucide-react";
 
 interface TrainingProgram {
   id: string;
@@ -54,6 +56,7 @@ interface TrainingProgress {
     avatar?: string;
   };
 
+}
 
 const TrainingPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -79,6 +82,7 @@ const TrainingPage: React.FC = () => {
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockPrograms: TrainingProgram[] = [
   {
+        {
     id: "1",
           title: "برنامج المهارات الحياتية الأساسية",
           description: "تطوير المهارات الأساسية للحياة اليومية والاستقلالية",
@@ -140,6 +144,7 @@ const TrainingPage: React.FC = () => {
 
       const mockProgress: TrainingProgress[] = [
   {
+        {
     id: "1",
           participant_id: "part-1",
           program_id: "1",

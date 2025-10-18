@@ -31,8 +31,10 @@ interface Lead {
   lastActivity: string;
   notes?: string;
   tags: string[];
+}
 
 const mockLeads: Lead[] = [
+  {
   {
     id: "1",
     name: "أحمد العتيبي",

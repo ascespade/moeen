@@ -15,6 +15,7 @@ interface ErrorReport {
   context: ErrorContext;
   componentStack?: string;
 
+}
 
 export class ErrorHandler {
   private static instance: ErrorHandler;
@@ -91,6 +92,7 @@ export class ErrorHandler {
     } catch (error) {
     } finally {
       this.isProcessing = false;
+    }
 
   private async sendErrorReport(errorReport: ErrorReport): Promise<void> {
     try {

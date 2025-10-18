@@ -8,6 +8,8 @@ import { atom } from "jotai";
 
 import useBrandColorFromLogo from "@/hooks/useBrandColorFromLogo";
 
+("use client");
+
 export type AppTheme = "light" | "dark";
 export type AppLang = "ar" | "en";
 export type AppRole = "admin" | "staff" | "viewer";
@@ -17,9 +19,9 @@ export const themeAtom = atom<AppTheme>("light");
 export const langAtom = atom<AppLang>("ar");
 
 declare global {
-}
   interface Window {
     HSStaticMethods?: { autoInit?: () => void };
+  }
 
   export default function UIProvider({
     children,

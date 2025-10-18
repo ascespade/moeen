@@ -23,6 +23,7 @@ interface Connection {
   source: string;
   target: string;
 
+}
 
 const mockFlow = {
   id: "1",

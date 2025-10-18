@@ -2,6 +2,7 @@
 interface Props {
   params: { id: string };
 
+}
 
 export default function ContactDetailsPage({ params }: Props) {
   return (

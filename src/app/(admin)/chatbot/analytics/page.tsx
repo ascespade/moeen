@@ -33,6 +33,7 @@ interface AnalyticsData {
     percentage: number;
   }>;
 
+}
 
 const mockAnalytics: AnalyticsData = {
   totalMessages: 15420,

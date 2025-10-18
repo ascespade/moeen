@@ -7,3 +7,4 @@ export function Label({
   return <label className={clsx("form-label", className)} {...props} />;
 
   export default Label;
+}

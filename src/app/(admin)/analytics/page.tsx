@@ -58,6 +58,7 @@ interface AnalyticsData {
     appointmentTrends: Array<{ month: string; count: number }>;
   };
 
+}
 
 const AnalyticsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

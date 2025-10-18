@@ -9,3 +9,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "https://example.com/privacy", lastModified: new Date() },
     { url: "https://example.com/terms", lastModified: new Date() },
   ];
+}

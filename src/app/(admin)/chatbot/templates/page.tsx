@@ -19,8 +19,10 @@ interface Template {
   variables: string[];
   preview: string;
   usageCount: number;
+}
 
 const mockTemplates: Template[] = [
+  {
   {
     id: "1",
     name: "ترحيب المرضى",

@@ -10,7 +10,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import { ScrollArea } from "@/components/ui/ScrollArea";
-import { useAuth } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+
+} from "lucide-react";
 
 interface ChatMessage {
   id: string;
@@ -30,6 +32,7 @@ interface AppointmentSuggestion {
   specialty: string;
   availableSlots: string[];
 
+}
 
 const HealthcareChatbot: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -61,6 +64,7 @@ const HealthcareChatbot: React.FC = () => {
   const loadChatHistory = async () => {
     const mockMessages: ChatMessage[] = [
   {
+      {
     id: "1",
         type: "bot",
         content:

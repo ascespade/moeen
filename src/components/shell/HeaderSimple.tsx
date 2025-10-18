@@ -6,6 +6,8 @@ import Image from "next/image";
 
 import { Sun, Moon, Languages } from "lucide-react";
 
+("use client");
+
 export default function HeaderSimple() {
   const [theme, setTheme] = useState<string>("light");
   const [dir, setDir] = useState<"rtl" | "ltr">("rtl");
@@ -140,3 +142,4 @@ export default function HeaderSimple() {
       </div>
     </header>
   );
+}

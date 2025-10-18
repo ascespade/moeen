@@ -1087,6 +1087,7 @@ export async function seedTranslations(): Promise<void> {
   } catch (error) {
     logger.error("❌ Failed to seed translations:", error);
     throw error;
+  }
 
 /**
  * Run the seeding process

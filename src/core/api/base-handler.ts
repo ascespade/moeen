@@ -107,6 +107,7 @@ export class BaseApiHandler {
               // Keep as string
               else {
                 queryParams[key] = value;
+              }
 
             const validation = ValidationHelper.validate(
               config.validation.query,
@@ -120,6 +121,7 @@ export class BaseApiHandler {
               );
 
             context.validatedQuery = validation.data;
+          }
 
         // Rate limiting (basic implementation)
         if (config.rateLimit) {
@@ -183,6 +185,7 @@ export class BaseApiHandler {
       });
     } catch (error) {
       console.error("Failed to create audit log:", error);
+    }
 
   public createSuccessResponse<T>(data: T, message?: string) {
     return NextResponse.json({
@@ -225,6 +228,7 @@ export class BaseApiHandler {
         hasPrev: page > 1,
       },
     });
+  }
 
 // Export singleton instance
 export const baseApiHandler = new BaseApiHandler();

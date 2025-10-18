@@ -7,7 +7,9 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { useAuth } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+
+} from "lucide-react";
 
 interface PerformanceMetric {
   id: string;
@@ -27,6 +29,7 @@ interface SystemHealth {
   response_time: number;
   uptime: string;
 
+}
 
 const PerformancePage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -47,6 +50,7 @@ const PerformancePage: React.FC = () => {
       setLoading(true);
       const mockMetrics: PerformanceMetric[] = [
   {
+        {
     id: "1",
           name: "استخدام المعالج",
           value: 45,

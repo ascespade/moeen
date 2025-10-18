@@ -8,7 +8,9 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { LoadingSpinner } from "lucide-react";
+import { LoadingSpinner } from "@/components/ui";
+
+} from "lucide-react";
 
 interface DoctorData {
   id: string;
@@ -32,6 +34,7 @@ interface DoctorData {
     breaks: string[];
   };
 
+}
 
 export default function DoctorDashboard() {
   const { t } = useT();

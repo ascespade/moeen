@@ -154,6 +154,7 @@ export class WhatsAppBusinessAPI {
         success: false,
         error: (error as Error).message,
       };
+    }
 
   // Send Template Message
   async sendTemplateMessage(
@@ -217,6 +218,7 @@ export class WhatsAppBusinessAPI {
         success: false,
         error: (error as Error).message,
       };
+    }
 
   // Send Image Message
   async sendImageMessage(
@@ -262,6 +264,7 @@ export class WhatsAppBusinessAPI {
         success: false,
         error: (error as Error).message,
       };
+    }
 
   // Send Document Message
   async sendDocumentMessage(
@@ -309,6 +312,7 @@ export class WhatsAppBusinessAPI {
         success: false,
         error: (error as Error).message,
       };
+    }
 
   // Get Message Status
   async getMessageStatus(
@@ -333,6 +337,7 @@ export class WhatsAppBusinessAPI {
       return null;
     } catch (error) {
       return null;
+    }
 
   // Get Templates
   async getTemplates(): Promise<WhatsAppTemplate[]> {
@@ -353,6 +358,7 @@ export class WhatsAppBusinessAPI {
       return [];
     } catch (error) {
       return [];
+    }
 
   // Create Template
   async createTemplate(
@@ -388,6 +394,7 @@ export class WhatsAppBusinessAPI {
         success: false,
         error: (error as Error).message,
       };
+    }
 
   // Process Webhook Event
   processWebhookEvent(event: WhatsAppWebhookEvent): {
@@ -480,6 +487,7 @@ export class WhatsAppBusinessAPI {
         success: false,
         error: (error as Error).message,
       };
+    }
 
   // Update Business Profile
   async updateBusinessProfile(profileData: {

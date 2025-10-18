@@ -31,6 +31,7 @@ interface CompletionStatus {
   success_rate: string;
   message: string;
 
+}
 
 export default function AgentDashboard() {
   const [taskStatus, setTaskStatus] = useState<TaskStatus | null>(null);

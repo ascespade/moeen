@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
       { error: "Failed to process error report" },
       { status: 500 },
     );
+  }
 
 export async function GET(request: NextRequest) {
   try {

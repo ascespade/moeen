@@ -127,6 +127,7 @@ CardFooter.displayName = "CardFooter";
 export const CardTitle = CardHeader;
 export const CardDescription = CardContent;
 
+}
 
 
 export { Card, CardHeader, CardContent, CardFooter };

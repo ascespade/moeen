@@ -10,6 +10,7 @@ interface EmptyStateProps {
   };
   className?: string;
 
+}
 
 export default function EmptyState({
   icon = "📋",

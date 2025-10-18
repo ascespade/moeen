@@ -75,6 +75,7 @@ export async function GET(request: NextRequest) {
       { error: "Internal server error" },
       { status: 500 },
     );
+  }
 
 export async function POST(request: NextRequest) {
   try {
@@ -136,6 +137,7 @@ export async function POST(request: NextRequest) {
           { error: "Doctor not assigned to this patient" },
           { status: 403 },
         );
+      }
 
     // Create medical record
     const { data: record, error: recordError } = await supabase

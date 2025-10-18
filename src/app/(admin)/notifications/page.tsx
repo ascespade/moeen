@@ -53,6 +53,7 @@ interface NotificationTemplate {
   is_active: boolean;
   created_at: string;
 
+}
 
 const NotificationsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -83,6 +84,7 @@ const NotificationsPage: React.FC = () => {
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockNotifications: Notification[] = [
   {
+        {
     id: "1",
           title: "موعد جديد مجدول",
           message: "تم جدولة موعد جديد للمريض أحمد محمد في 15 يناير 2024",
@@ -159,6 +161,7 @@ const NotificationsPage: React.FC = () => {
 
       const mockTemplates: NotificationTemplate[] = [
   {
+        {
     id: "1",
           name: "تذكير الموعد",
           title: "تذكير بموعدك",

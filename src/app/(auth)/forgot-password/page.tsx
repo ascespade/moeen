@@ -7,6 +7,8 @@ import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
+("use client");
+
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -196,3 +198,4 @@ export default function ForgotPasswordPage() {
       }
     }
   };
+}

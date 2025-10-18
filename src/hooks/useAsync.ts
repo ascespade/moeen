@@ -12,6 +12,7 @@ interface AsyncOptions {
   onSuccess?: (data: any) => void;
   onError?: (error: Error) => void;
 
+}
 
 export const useAsync = <T>(
   asyncFunction: (...args: any[]) => Promise<T>,

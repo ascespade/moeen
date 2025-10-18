@@ -21,6 +21,7 @@ type Conversation = {
 
 const seed: Conversation[] = [
   {
+  {
     id: "c1",
     title: "سؤال عن المنتج",
     status: "open",
@@ -60,6 +61,7 @@ export default function ConversationsPage() {
 
   function send() {
     if (!input.trim() || !active) return;
+}
 
     const newMsg: Message = {
       id: Math.random().toString(36).slice(2),
@@ -96,6 +98,7 @@ export default function ConversationsPage() {
           c.id === active.id ? { ...c, messages: [...c.messages, aiMsg] } : c,
         ),
       );
+    }
 
   const filtered = useMemo(() => {
     return conversations.filter((c) => {

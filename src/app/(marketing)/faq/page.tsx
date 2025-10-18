@@ -5,8 +5,7 @@ import { useT } from "@/components/providers/I18nProvider";
 export default function FAQPage() {
   const { t } = useT();
   const faqs = [
-  {
-    q: t("faq.q1", "هل تدعمون RTL؟"),
+      q: t("faq.q1", "هل تدعمون RTL؟"),
       a: t("faq.a1", "نعم، دعم كامل للعربية مع تبديل تلقائي للاتجاه."),
     },
       q: t("faq.q2", "هل يوجد نسخة مجانية؟"),

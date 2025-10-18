@@ -20,6 +20,7 @@ function getClientIP(request: NextRequest): string {
     );
   } catch {
     return "127.0.0.1";
+  }
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
@@ -97,6 +98,7 @@ export async function POST(request: NextRequest) {
             },
             { status: 423 }, // Locked
           );
+        }
 
       // Increment failed login attempts only if user exists
       if (userCheck) {
@@ -115,6 +117,7 @@ export async function POST(request: NextRequest) {
           });
         } catch (err) {
           console.error("Error incrementing failed login attempts:", err);
+        }
 
       // Log failed login attempt
       await supabase.from("audit_logs").insert({

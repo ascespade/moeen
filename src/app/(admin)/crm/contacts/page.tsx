@@ -52,6 +52,7 @@ interface ContactActivity {
   user_id: string;
   user_name: string;
 
+}
 
 const ContactsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -79,6 +80,7 @@ const ContactsPage: React.FC = () => {
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockContacts: Contact[] = [
   {
+        {
     id: "1",
           first_name: "أحمد",
           last_name: "المحمد",
@@ -126,6 +128,7 @@ const ContactsPage: React.FC = () => {
 
       const mockActivities: ContactActivity[] = [
   {
+        {
     id: "1",
           contact_id: "1",
           type: "call",

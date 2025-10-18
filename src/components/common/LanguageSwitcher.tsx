@@ -13,6 +13,7 @@ interface LanguageSwitcherProps {
   size?: "sm" | "md" | "lg";
   variant?: "button" | "dropdown";
 
+}
 
 export default function LanguageSwitcher({
   className = "",

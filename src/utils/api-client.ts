@@ -36,6 +36,7 @@ export class ApiClient {
       return await response.json();
     } catch (error) {
       throw error;
+    }
 
   // Authentication methods
   async login(email: string, password: string, rememberMe: boolean = false) {
@@ -75,6 +76,7 @@ export class ApiClient {
 
   async delete<T>(endpoint: string): Promise<T> {
     return this.request<T>(endpoint, { method: "DELETE" });
+  }
 
 // Create a default API client instance
 export const apiClient = new ApiClient();

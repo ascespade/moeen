@@ -7,7 +7,9 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { useAuth } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+
+} from "lucide-react";
 
 interface Integration {
   id: string;
@@ -20,6 +22,7 @@ interface Integration {
   config: any;
   health_score: number;
 
+}
 
 const IntegrationsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -45,6 +48,7 @@ const IntegrationsPage: React.FC = () => {
       // Build integrations based on configured API keys
       const integrations: Integration[] = [
   {
+        {
     id: "supabase",
           name: "Supabase Database",
           description: "قاعدة البيانات الرئيسية - PostgreSQL + Realtime",

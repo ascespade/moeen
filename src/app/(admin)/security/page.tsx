@@ -78,6 +78,7 @@ interface SecurityAlert {
   resolved_at?: string;
   assigned_to?: string;
 
+}
 
 const SecurityPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -108,6 +109,7 @@ const SecurityPage: React.FC = () => {
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockEvents: SecurityEvent[] = [
   {
+        {
     id: "1",
           type: "login",
           user_id: "user-1",
@@ -161,6 +163,7 @@ const SecurityPage: React.FC = () => {
 
       const mockPolicies: SecurityPolicy[] = [
   {
+        {
     id: "1",
           name: "سياسة كلمات المرور",
           description: "متطلبات كلمات المرور القوية",
@@ -194,6 +197,7 @@ const SecurityPage: React.FC = () => {
 
       const mockSessions: UserSession[] = [
   {
+        {
     id: "1",
           user_id: "user-1",
           user_name: "د. فاطمة العلي",
@@ -221,6 +225,7 @@ const SecurityPage: React.FC = () => {
 
       const mockAlerts: SecurityAlert[] = [
   {
+        {
     id: "1",
           title: "محاولات تسجيل دخول مشبوهة",
           description: "تم رصد 5 محاولات تسجيل دخول فاشلة من نفس العنوان IP",

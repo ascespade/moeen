@@ -78,6 +78,7 @@ class ApiClient {
         success: false,
         error: handledError.message,
       };
+    }
 
   private buildURL(endpoint: string, params?: Record<string, any>): string {
     const url = new URL(endpoint, this.baseURL);
@@ -308,6 +309,7 @@ class ApiClient {
       body: formData,
       headers: {}, // Let browser set Content-Type for FormData
     });
+  }
 
 // Create singleton instance
 export const apiClient = new ApiClient();

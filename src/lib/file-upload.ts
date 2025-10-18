@@ -178,6 +178,7 @@ export class FileUploadHandler {
         return MAX_FILE_SIZES.medical;
       default:
         return MAX_FILE_SIZES.documents;
+    }
 
   // Get allowed extensions for file type
   getAllowedExtensions(fileType: string): string[] {
@@ -331,6 +332,7 @@ export class LocalFileStorage implements FileStorage {
     // In a real implementation, update file metadata in database
     // For now, return empty metadata
     return {} as FileMetadata;
+  }
 
 // File upload API handler
 export async function handleFileUpload(
@@ -389,6 +391,7 @@ export async function handleFileUpload(
       { success: false, error: "File upload failed" },
       { status: 500 },
     );
+  }
 
 // File download API handler
 export async function handleFileDownload(
@@ -433,6 +436,7 @@ export async function handleFileDownload(
       { success: false, error: "File download failed" },
       { status: 500 },
     );
+  }
 
 // File list API handler
 export async function handleFileList(
@@ -476,6 +480,7 @@ export async function handleFileList(
       { success: false, error: "Failed to list files" },
       { status: 500 },
     );
+  }
 
 // Export file upload handler instance
 export const fileUploadHandler = FileUploadHandler.getInstance();

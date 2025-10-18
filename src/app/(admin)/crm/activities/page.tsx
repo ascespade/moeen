@@ -19,8 +19,10 @@ interface Activity {
   priority: "low" | "medium" | "high";
   createdAt: string;
   completedAt?: string;
+}
 
 const mockActivities: Activity[] = [
+  {
   {
     id: "1",
     type: "call",

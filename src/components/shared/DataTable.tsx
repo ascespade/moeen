@@ -15,6 +15,7 @@ interface DataTableProps {
   caption?: string;
   className?: string;
 
+}
 
 export function DataTable({
   columns,

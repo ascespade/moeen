@@ -43,6 +43,7 @@ export function getDefaultRouteForUser(user: User | null): string {
     case "user":
     default:
       return "/dashboard";
+  }
 
 /**
  * Check if a route requires authentication

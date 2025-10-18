@@ -8,6 +8,7 @@ interface TimeSlot {
   timeString: string;
   available: boolean;
 
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -136,6 +137,7 @@ export async function GET(request: NextRequest) {
               timeString,
               available: true,
             });
+          }
 
         return {
           {

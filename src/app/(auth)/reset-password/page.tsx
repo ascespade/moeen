@@ -7,6 +7,8 @@ import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
+("use client");
+
 export default function ResetPasswordPage() {
   const [formData, setFormData] = useState({
     password: "",
@@ -47,6 +49,7 @@ export default function ResetPasswordPage() {
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
+      }
 
       const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -233,3 +236,4 @@ export default function ResetPasswordPage() {
       };
     }
   };
+}

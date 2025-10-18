@@ -12,6 +12,7 @@ interface LogEntry {
   context?: string;
   data?: any;
   stack?: string;
+}
 
 class Logger {
   private isDevelopment: boolean;
@@ -20,6 +21,7 @@ class Logger {
   constructor() {
     this.isDevelopment = process.env.NODE_ENV === "development";
     this.isServer = typeof window === "undefined";
+  }
 
   /**
    * Log debug information (only in development)
@@ -35,12 +37,14 @@ class Logger {
    */
   info(message: string, data?: any, context?: string): void {
     this.log("info", message, data, context);
+  }
 
   /**
    * Log warnings
    */
   warn(message: string, data?: any, context?: string): void {
     this.log("warn", message, data, context);
+  }
 
   /**
    * Log errors
@@ -56,6 +60,7 @@ class Logger {
         : error;
 
     this.log("error", message, errorData, context);
+  }
 
   /**
    * Core logging function
@@ -85,6 +90,7 @@ class Logger {
         message,
         data || "",
       );
+    }
 
     // Server-side: could send to external service
     if (this.isServer && level === "error") {

@@ -195,6 +195,7 @@ export function handleKeyboardNav(
       event.preventDefault();
       onArrowDown?.();
       break;
+  }
 
 const ariautils = {
   getFormAriaProps,

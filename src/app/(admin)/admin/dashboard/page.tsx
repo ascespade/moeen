@@ -73,6 +73,7 @@ const mockStats: DashboardStats = {
 
 const mockRecentActivities: RecentActivity[] = [
   {
+  {
     id: "1",
     type: "appointment",
     title: "موعد جديد",
@@ -115,6 +116,7 @@ const mockRecentActivities: RecentActivity[] = [
 ];
 
 const mockStaffWorkHours: StaffWorkHours[] = [
+  {
   {
     id: "1",
     name: "د. سارة أحمد",

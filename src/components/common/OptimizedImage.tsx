@@ -9,6 +9,7 @@ interface OptimizedImageProps extends Omit<ImageProps, "src"> {
   fallback?: string;
   alt: string;
 
+}
 
 export default function OptimizedImage({
   src,

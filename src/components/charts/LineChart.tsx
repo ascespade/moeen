@@ -29,6 +29,7 @@ interface LineChartProps {
   showTooltip?: boolean;
   smooth?: boolean;
 
+}
 
 export const LineChart: React.FC<LineChartProps> = ({
   data,

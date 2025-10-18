@@ -39,6 +39,7 @@ interface ConversationFlow {
   createdAt: string;
   updatedAt: string;
 
+}
 
 const FlowsManagementPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -64,6 +65,7 @@ const FlowsManagementPage: React.FC = () => {
       // في التطبيق الحقيقي، سيتم جلب الـ flows من API
       const mockFlows: ConversationFlow[] = [
   {
+        {
     id: "new_beneficiary",
           name: "المستفيد الجديد",
           description: "تسهيل عملية الانضمام وجمع المعلومات الأولية",

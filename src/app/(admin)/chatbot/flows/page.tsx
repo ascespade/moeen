@@ -17,8 +17,10 @@ interface Flow {
   tags: string[];
   messageCount: number;
   lastUsed?: string;
+}
 
 const mockFlows: Flow[] = [
+  {
   {
     id: "1",
     name: "استقبال المرضى",

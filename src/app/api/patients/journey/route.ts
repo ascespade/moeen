@@ -60,6 +60,7 @@ export async function POST(request: NextRequest) {
     }
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
+  }
 
 async function activatePatient(request: NextRequest, body: any) {
   try {
@@ -145,6 +146,7 @@ async function activatePatient(request: NextRequest, body: any) {
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
+  }
 
 async function updateChecklist(request: NextRequest, body: any) {
   try {
@@ -226,6 +228,7 @@ async function updateChecklist(request: NextRequest, body: any) {
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
+  }
 
 async function requestFileAccess(request: NextRequest, body: any) {
   try {
@@ -334,6 +337,7 @@ async function requestFileAccess(request: NextRequest, body: any) {
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
+  }
 
 async function createPatientFile(patientId: string, supabase: any) {
   // Create initial patient file structure
@@ -347,6 +351,7 @@ async function createPatientFile(patientId: string, supabase: any) {
 
   if (error) {
     console.error("Failed to create patient file:", error);
+  }
 
 async function sendActivationNotification(patient: any, supabase: any) {
   // Send activation notification to patient
