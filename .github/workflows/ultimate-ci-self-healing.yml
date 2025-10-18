@@ -67,7 +67,7 @@ jobs:
   # 🔍 تحليل ذكي للمشروع والتغييرات
   intelligent-analysis:
     name: 🔍 تحليل ذكي للمشروع
-    if: ${{ !contains(github.event.head_commit.message, 'Self-Healing') && !contains(github.event.head_commit.message, '🤖 CI Assistant') && !contains(github.event.head_commit.message, 'CI Assistant') && github.event.head_commit.author.name != 'Self-Healing' && github.event.head_commit.author.name != 'CI Assistant' }}
+    if: ${{ github.event.head_commit.author.name != github.actor }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     outputs:
@@ -407,7 +407,7 @@ jobs:
     name: 🔧 إصلاح CI Assistant
     runs-on: ubuntu-latest
     needs: [intelligent-analysis]
-    if: ${{ always() && contains(github.event.head_commit.message, 'CI Assistant') && contains(github.event.head_commit.message, 'failed') }}
+    if: ${{ always() && (contains(github.event.head_commit.message, 'CI Assistant') && contains(github.event.head_commit.message, 'failed')) || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.name == '🤖 CI Assistant - Self-Healing Error Resolver') }}
     timeout-minutes: 15
     
     steps:
