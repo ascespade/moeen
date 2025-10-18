@@ -161,6 +161,7 @@ export default function AdminPage() {
         },
       ]);
       setSecurityEvents([
+        {
           id: "1",
           userId: "1",
           action: "user_login",

@@ -119,7 +119,6 @@ const mockRecentActivities: RecentActivity[] = [
 
 const mockStaffWorkHours: StaffWorkHours[] = [
   {
-  {
     id: "1",
     name: "د. سارة أحمد",
     position: "طبيبة علاج طبيعي",
