@@ -482,16 +482,8 @@ jobs:
               
               // إضافة permissions إذا لم تكن موجودة
               if (!fixed.includes('permissions:')) {
-                const permissionsBlock = \`permissions:
-  contents: write
-  pull-requests: write
-  issues: write
-  checks: write
-  statuses: write
-  actions: read
-
-\`;
-                fixed = fixed.replace(/^name:.*$/m, \`\$&\n\$permissionsBlock\`);
+                const permissionsBlock = 'permissions:\n  contents: write\n  pull-requests: write\n  issues: write\n  checks: write\n  statuses: write\n  actions: read\n\n';
+                fixed = fixed.replace(/^name:.*$/m, '$&\\n' + permissionsBlock);
               }
               
               fs.writeFileSync(workflowPath, fixed);
