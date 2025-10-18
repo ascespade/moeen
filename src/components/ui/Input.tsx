@@ -11,8 +11,6 @@ import { cn } from "@/lib/cn";
  * Unified input component with validation states
  */
 
-();
-
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;

@@ -6,8 +6,6 @@ import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-();
-
 interface Session {
   id: string;
   patientName: string;

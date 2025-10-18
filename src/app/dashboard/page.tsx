@@ -8,8 +8,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { getDefaultRouteForUser } from "@/lib/router";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
-();
-
 export default function DashboardPage() {
   const router = useRouter();
   const { user, isLoading } = useAuth();

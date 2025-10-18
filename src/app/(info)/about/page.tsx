@@ -5,8 +5,6 @@ import Link from "next/link";
 
 import { Users, Target, Heart, Award, Globe, Shield } from "lucide-react";
 
-();
-
 export default function AboutPage() {
   const features = [
       icon: <Users className="h-8 w-8" />,

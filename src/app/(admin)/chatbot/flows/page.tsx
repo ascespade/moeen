@@ -7,8 +7,6 @@ import Link from "next/link";
 
 import { ROUTES } from "@/constants/routes";
 
-();
-
 interface Flow {
   id: string;
   name: string;

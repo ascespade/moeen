@@ -6,8 +6,6 @@ import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-();
-
 interface InsuranceClaim {
   id: string;
   patientName: string;

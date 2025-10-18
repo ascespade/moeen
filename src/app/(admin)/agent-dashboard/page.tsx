@@ -3,8 +3,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-();
-
 interface TaskStatus {
   total_tasks: number;
   current_task: number;

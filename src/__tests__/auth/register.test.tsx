@@ -24,7 +24,7 @@ describe("RegisterPage", () => {
 
     expect(screen.getByText("إنشاء حساب جديد")).toBeInTheDocument();
     expect(
-      screen.getByText("انضم إلى منصة الرعاية الصحية المتخصصة")
+      screen.getByText("انضم إلى منصة الرعاية الصحية المتخصصة"),
     ).toBeInTheDocument();
     expect(screen.getByLabelText("الاسم الكامل")).toBeInTheDocument();
     expect(screen.getByLabelText("البريد الإلكتروني")).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe("RegisterPage", () => {
     expect(screen.getByLabelText("تأكيد كلمة المرور")).toBeInTheDocument();
     expect(screen.getByText("أوافق على")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /إنشاء الحساب/ })
+      screen.getByRole("button", { name: /إنشاء الحساب/ }),
     ).toBeInTheDocument();
   });
 
@@ -71,7 +71,7 @@ describe("RegisterPage", () => {
       expect(screen.getByText("البريد الإلكتروني مطلوب")).toBeInTheDocument();
       expect(screen.getByText("كلمة المرور مطلوبة")).toBeInTheDocument();
       expect(
-        screen.getByText("يجب الموافقة على الشروط والأحكام")
+        screen.getByText("يجب الموافقة على الشروط والأحكام"),
       ).toBeInTheDocument();
     });
   });
@@ -87,7 +87,7 @@ describe("RegisterPage", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("البريد الإلكتروني غير صحيح")
+        screen.getByText("البريد الإلكتروني غير صحيح"),
       ).toBeInTheDocument();
     });
   });
@@ -103,7 +103,7 @@ describe("RegisterPage", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("كلمة المرور يجب أن تكون 6 أحرف على الأقل")
+        screen.getByText("كلمة المرور يجب أن تكون 6 أحرف على الأقل"),
       ).toBeInTheDocument();
     });
   });
@@ -149,8 +149,8 @@ describe("RegisterPage", () => {
       expect(screen.getByText("تم إنشاء الحساب بنجاح!")).toBeInTheDocument();
       expect(
         screen.getByText(
-          "مرحباً بك في مُعين. يمكنك الآن تسجيل الدخول باستخدام بياناتك."
-        )
+          "مرحباً بك في مُعين. يمكنك الآن تسجيل الدخول باستخدام بياناتك.",
+        ),
       ).toBeInTheDocument();
     });
   });

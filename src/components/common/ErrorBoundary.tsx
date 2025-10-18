@@ -9,8 +9,6 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { logger } from "@/lib/logger";
 
-();
-
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;

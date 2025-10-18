@@ -9,8 +9,6 @@ import SessionTypeSelector from "@/components/booking/SessionTypeSelector";
 import AvailableSlotsPicker from "@/components/booking/AvailableSlotsPicker";
 import logger from "@/lib/monitoring/logger";
 
-();
-
 interface SessionType {
   id: string;
   name_ar: string;

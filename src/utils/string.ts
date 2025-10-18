@@ -51,7 +51,7 @@ export const sentenceCase = (text: string): string => {
 export const truncate = (
   text: string,
   length: number,
-  suffix: string = "..."
+  suffix: string = "...",
 ): string => {
   if (text.length <= length) return text;
   return text.slice(0, length - suffix.length) + suffix;
@@ -60,7 +60,7 @@ export const truncate = (
 export const truncateWords = (
   text: string,
   wordCount: number,
-  suffix: string = "..."
+  suffix: string = "...",
 ): string => {
   const words = text.split(" ");
   if (words.length <= wordCount) return text;
@@ -144,7 +144,7 @@ export const generateRandomString = (length: number = 8): string => {
   export const highlightText = (
     text: string,
     searchTerm: string,
-    className: string = "highlight"
+    className: string = "highlight",
   ): string => {
     if (!searchTerm) return text;
 
@@ -159,7 +159,7 @@ export const generateRandomString = (length: number = 8): string => {
   export const pluralize = (
     count: number,
     singular: string,
-    plural?: string
+    plural?: string,
   ): string => {
     if (count === 1) return singular;
     return plural || singular + "s";
@@ -180,7 +180,7 @@ export const generateRandomString = (length: number = 8): string => {
 
         export const initials = (
           name: string,
-          maxLength: number = 2
+          maxLength: number = 2,
         ): string => {
           return name
             .split(" ")

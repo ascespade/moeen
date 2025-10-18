@@ -4,8 +4,6 @@ import { useState } from "react";
 
 import LiveDot from "./LiveDot";
 
-();
-
 export default function StatusBanner() {
   const [visible, setVisible] = useState(false);
   // Toggle this to simulate maintenance or critical notice

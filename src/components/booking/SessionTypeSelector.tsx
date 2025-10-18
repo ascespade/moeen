@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
 
-();
-
 interface SessionType {
   id: string;
   name_ar: string;

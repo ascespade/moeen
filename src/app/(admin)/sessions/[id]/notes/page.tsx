@@ -7,8 +7,6 @@ import { useParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
 
-();
-
 interface Goal {
   id: string;
   goal_text: string;

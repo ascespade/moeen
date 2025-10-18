@@ -5,8 +5,6 @@ import { useState, useEffect, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
 
-();
-
 interface Message {
   id: string;
   role: "user" | "assistant";

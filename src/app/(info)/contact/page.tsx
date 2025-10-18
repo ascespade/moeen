@@ -7,8 +7,6 @@ import Link from "next/link";
 
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
 
-();
-
 export default function ContactPage() {
   const [isSending, setIsSending] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);

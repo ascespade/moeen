@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
 
-();
-
 export default function OwnerDashboardPage() {
   const [stats, setStats] = useState({
     today_revenue: 0,

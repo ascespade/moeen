@@ -2,8 +2,6 @@
 
 import * as React from "react";
 
-();
-
 export function Tooltip({
   label,
   children,
@@ -22,5 +20,5 @@ export function Tooltip({
     </span>
   );
 
-export default Tooltip;
+  export default Tooltip;
 }

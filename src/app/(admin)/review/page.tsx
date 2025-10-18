@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 
-();
-
 type Item = { id: string; user: string; suggestion: string; createdAt: string };
 const seed: Item[] = Array.from({ length: 6 }).map((_, i) => ({
   id: String(i + 1),

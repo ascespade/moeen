@@ -11,8 +11,6 @@ import { cn } from "@/lib/cn";
  * Unified button component with multiple variants and states
  */
 
-();
-
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:

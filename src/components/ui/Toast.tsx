@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 
 import clsx from "clsx";
 
-();
-
 export function Toast({
   message,
   open,
@@ -38,5 +36,5 @@ export function Toast({
     </div>
   );
 
-export default Toast;
+  export default Toast;
 }

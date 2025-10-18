@@ -9,8 +9,6 @@ import { cn } from "@/lib/cn";
  * Unified card component with multiple variants
  */
 
-();
-
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "elevated" | "outlined" | "filled";
   padding?: "none" | "sm" | "md" | "lg";

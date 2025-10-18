@@ -2,8 +2,6 @@
 
 import { useT } from "@/components/providers/I18nProvider";
 
-();
-
 export default function PrivacyPage() {
   const { t } = useT();
   return (

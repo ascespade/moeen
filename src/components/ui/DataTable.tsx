@@ -36,7 +36,7 @@ export function DataTable<T extends Record<string, unknown>>({
     setSort((prev) =>
       !prev || prev.key !== key
         ? { key, dir: "asc" }
-        : { key, dir: prev.dir === "asc" ? "desc" : "asc" }
+        : { key, dir: prev.dir === "asc" ? "desc" : "asc" },
     );
 
   return (

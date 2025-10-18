@@ -4,8 +4,6 @@ import { useEffect, useRef } from "react";
 
 import clsx from "clsx";
 
-();
-
 export interface ModalProps {
   open: boolean;
   onClose: () => void;

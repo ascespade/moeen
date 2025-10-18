@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 
 import { dynamicContentManager } from "@/lib/dynamic-content-manager";
 
-();
-
 export type Messages = Record<string, string>;
 
 export function useI18n(locale: "ar" | "en" = "ar", ns: string = "common") {
@@ -40,5 +38,5 @@ export function useI18n(locale: "ar" | "en" = "ar", ns: string = "common") {
     messages[key] ?? fallback ?? key;
   return { t, messages, loading };
 
-export default useI18n;
+  export default useI18n;
 }

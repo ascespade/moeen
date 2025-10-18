@@ -11,8 +11,6 @@ import { ROUTES } from "@/constants/routes";
 import { getDefaultRouteForUser } from "@/lib/router";
 import { useT } from "@/components/providers/I18nProvider";
 
-();
-
 function LoginForm() {
   const { loginWithCredentials, isLoading, isAuthenticated } = useAuth();
   const { t } = useT();

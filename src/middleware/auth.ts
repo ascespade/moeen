@@ -29,7 +29,7 @@ export async function authMiddleware(request: NextRequest) {
 
     // Check if route requires specific role
     const requiredRole = Object.entries(roleRoutes).find(([route]) =>
-      pathname.startsWith(route)
+      pathname.startsWith(route),
     );
 
     if (requiredRole) {

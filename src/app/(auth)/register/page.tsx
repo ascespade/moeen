@@ -7,8 +7,6 @@ import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-();
-
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
     name: "",

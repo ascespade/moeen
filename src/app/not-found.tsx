@@ -5,8 +5,6 @@ import Image from "next/image";
 
 import { Home, ArrowLeft, Search, HelpCircle } from "lucide-react";
 
-();
-
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-surface dark:bg-gray-900 flex items-center justify-center p-4">

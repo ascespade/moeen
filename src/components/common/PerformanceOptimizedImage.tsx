@@ -2,8 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 
-();
-
 interface PerformanceOptimizedImageProps {
   src: string;
   alt: string;

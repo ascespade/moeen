@@ -50,17 +50,17 @@ describe("LoginPage", () => {
 
     expect(screen.getByText("مرحباً بعودتك")).toBeInTheDocument();
     expect(
-      screen.getByText("سجل دخولك للوصول إلى لوحة التحكم")
+      screen.getByText("سجل دخولك للوصول إلى لوحة التحكم"),
     ).toBeInTheDocument();
     expect(screen.getByLabelText("البريد الإلكتروني")).toBeInTheDocument();
     expect(screen.getByLabelText("كلمة المرور")).toBeInTheDocument();
     expect(screen.getByText("تذكرني")).toBeInTheDocument();
     expect(screen.getByText("نسيت كلمة المرور؟")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /تسجيل الدخول/ })
+      screen.getByRole("button", { name: /تسجيل الدخول/ }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /تسجيل دخول سريع/ })
+      screen.getByRole("button", { name: /تسجيل دخول سريع/ }),
     ).toBeInTheDocument();
   });
 
@@ -116,7 +116,7 @@ describe("LoginPage", () => {
       expect(mockLoginWithCredentials).toHaveBeenCalledWith(
         "test@example.com",
         "password123",
-        true
+        true,
       );
     });
   });
@@ -165,7 +165,7 @@ describe("LoginPage", () => {
       expect(mockLoginWithCredentials).toHaveBeenCalledWith(
         "test@moeen.com",
         "test123",
-        false
+        false,
       );
     });
   });
@@ -174,7 +174,7 @@ describe("LoginPage", () => {
     const mockLoginWithCredentials = jest
       .fn()
       .mockImplementation(
-        () => new Promise((resolve) => setTimeout(resolve, 100))
+        () => new Promise((resolve) => setTimeout(resolve, 100)),
       );
     (useAuth as jest.Mock).mockReturnValue({
       ...mockUseAuth,
@@ -216,7 +216,7 @@ describe("LoginPage", () => {
 
     expect(forgotPasswordLink.closest("a")).toHaveAttribute(
       "href",
-      "/forgot-password"
+      "/forgot-password",
     );
     expect(registerLink.closest("a")).toHaveAttribute("href", "/register");
   });

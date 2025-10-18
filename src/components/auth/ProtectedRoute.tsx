@@ -7,8 +7,6 @@ import { useRouter } from "next/navigation";
 import { useT } from "@/hooks/useT";
 import { LoadingSpinner } from "@/components/ui";
 
-();
-
 interface ProtectedRouteProps {
   children: React.ReactNode;
   allowedRoles?: ("patient" | "doctor" | "staff" | "supervisor" | "admin")[];

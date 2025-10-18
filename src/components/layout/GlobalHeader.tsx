@@ -10,8 +10,6 @@ import { Sun, Moon, Languages } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { useI18n } from "@/hooks/useI18n";
 
-();
-
 // Theme and Language Switches Component
 function ThemeLanguageSwitches() {
   const [theme, setTheme] = useState<string>("light");
@@ -119,65 +117,66 @@ function ThemeLanguageSwitches() {
     </>
   );
 
-// Main Header Component
-export default function GlobalHeader() {
-  const [language, setLanguage] = useState<string>("ar");
-  const { t } = useI18n(language as "ar" | "en");
+  // Main Header Component
+  export default function GlobalHeader() {
+    const [language, setLanguage] = useState<string>("ar");
+    const { t } = useI18n(language as "ar" | "en");
 
-  // Load language preference on mount
-  useEffect(() => {
-    const loadLanguage = async () => {
-      try {
-        const response = await fetch("/api/user/preferences");
-        if (response.ok) {
-          const data = await response.json();
-          if (data.language) setLanguage(data.language);
-        }
-      } catch (error) {}
-    };
-    loadLanguage();
-  }, []);
+    // Load language preference on mount
+    useEffect(() => {
+      const loadLanguage = async () => {
+        try {
+          const response = await fetch("/api/user/preferences");
+          if (response.ok) {
+            const data = await response.json();
+            if (data.language) setLanguage(data.language);
+          }
+        } catch (error) {}
+      };
+      loadLanguage();
+    }, []);
 
-  return (
-    <nav className="nav sticky top-0 z-50">
-      <div className="container-app py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Image
-              src="/logo.png"
-              alt="مُعين"
-              width={50}
-              height={50}
-              className="rounded-lg"
-            />
-            <h1 className="text-brand text-2xl font-bold">مُعين</h1>
-          </div>
-          <div className="hidden items-center gap-6 md:flex">
-            <Link href="#services" className="nav-link">
-              {t("nav.services", "الخدمات")}
-            </Link>
-            <Link href="#about" className="nav-link">
-              {t("nav.about", "عن معين")}
-            </Link>
-            <Link href="#gallery" className="nav-link">
-              {t("nav.gallery", "المعرض")}
-            </Link>
-            <Link href="#contact" className="nav-link">
-              {t("nav.contact", "اتصل بنا")}
-            </Link>
-          </div>
-          <div className="flex items-center gap-3">
-            {/* Theme and Language Switches */}
-            <ThemeLanguageSwitches />
-            <Link href={ROUTES.LOGIN} className="btn btn-outline">
-              {t("auth.login", "تسجيل الدخول")}
-            </Link>
-            <Link href={ROUTES.REGISTER} className="btn btn-brand">
-              {t("auth.register", "إنشاء حساب")}
-            </Link>
+    return (
+      <nav className="nav sticky top-0 z-50">
+        <div className="container-app py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Image
+                src="/logo.png"
+                alt="مُعين"
+                width={50}
+                height={50}
+                className="rounded-lg"
+              />
+              <h1 className="text-brand text-2xl font-bold">مُعين</h1>
+            </div>
+            <div className="hidden items-center gap-6 md:flex">
+              <Link href="#services" className="nav-link">
+                {t("nav.services", "الخدمات")}
+              </Link>
+              <Link href="#about" className="nav-link">
+                {t("nav.about", "عن معين")}
+              </Link>
+              <Link href="#gallery" className="nav-link">
+                {t("nav.gallery", "المعرض")}
+              </Link>
+              <Link href="#contact" className="nav-link">
+                {t("nav.contact", "اتصل بنا")}
+              </Link>
+            </div>
+            <div className="flex items-center gap-3">
+              {/* Theme and Language Switches */}
+              <ThemeLanguageSwitches />
+              <Link href={ROUTES.LOGIN} className="btn btn-outline">
+                {t("auth.login", "تسجيل الدخول")}
+              </Link>
+              <Link href={ROUTES.REGISTER} className="btn btn-brand">
+                {t("auth.register", "إنشاء حساب")}
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
-  );
-}}
+      </nav>
+    );
+  }
+}
