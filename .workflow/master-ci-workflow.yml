@@ -4,7 +4,7 @@ on:
   push:
     branches: [main, develop, feature/*, hotfix/*]
   workflow_run:
-    workflows: ["🤖 CI Assistant Workflow"]
+    workflows: ['🤖 CI Assistant Workflow']
     types: [completed]
     branches: [main, develop, feature/*, hotfix/*]
 
@@ -50,7 +50,7 @@ jobs:
       enable-database: ${{ steps.change-analysis.outputs.enable-database }}
       enable-security: ${{ steps.change-analysis.outputs.enable-security }}
       parallel-strategy: ${{ steps.change-analysis.outputs.parallel-strategy }}
-    
+
     steps:
       - name: 📥 تحميل الكود مع التاريخ
         uses: actions/checkout@v4
@@ -78,10 +78,10 @@ jobs:
         id: change-analysis
         run: |
           echo "🔍 تحليل التغييرات الذكي..."
-          
+
           # إنشاء مجلدات التحليل
           mkdir -p analysis/ logs/ reports/ learning/
-          
+
           # تحليل التغييرات
           echo "📊 تحليل التغييرات في الكوميت..."
           node -e "
@@ -207,7 +207,7 @@ jobs:
       - name: 📊 إنشاء مصفوفة الاختبارات الذكية
         run: |
           echo "📊 إنشاء مصفوفة الاختبارات الذكية..."
-          
+
           node -e "
             const fs = require('fs');
             const analysis = JSON.parse(fs.readFileSync('analysis/change-analysis.json', 'utf8'));
@@ -274,7 +274,7 @@ jobs:
       fix-count: ${{ steps.fix-summary.outputs.fix-count }}
       remaining-errors: ${{ steps.fix-summary.outputs.remaining-errors }}
       parallel-jobs: ${{ steps.fix-summary.outputs.parallel-jobs }}
-    
+
     steps:
       - name: 📥 تحميل الكود
         uses: actions/checkout@v4
@@ -309,10 +309,10 @@ jobs:
         id: cursor-fix
         run: |
           echo "🤖 إرسال الأخطاء لـ Cursor API للإصلاح..."
-          
+
           # قراءة نتائج التحليل
           const analysis = JSON.parse(require('fs').readFileSync('analysis/error-analysis.json', 'utf8'));
-          
+
           # إرسال لـ Cursor API
           node -e "
             const https = require('https');
@@ -380,7 +380,7 @@ jobs:
       - name: 🔧 تطبيق الإصلاحات
         run: |
           echo "🔧 تطبيق الإصلاحات من Cursor API..."
-          
+
           if [ -f "analysis/cursor-fixes.json" ]; then
             node -e "
               const fs = require('fs');
@@ -411,10 +411,10 @@ jobs:
         id: fix-summary
         run: |
           echo "🔍 فحص الإصلاحات المطبقة..."
-          
+
           # فحص الـ workflows مرة أخرى
           node scripts/validate-workflows.js > logs/post-fix-validation.log 2>&1
-          
+
           # تحليل النتائج
           node -e "
             const fs = require('fs');
@@ -456,7 +456,7 @@ jobs:
       max-parallel: 1
       matrix:
         iteration: [1, 2, 3, 4, 5]
-    
+
     steps:
       - name: 📥 تحميل الكود
         uses: actions/checkout@v4
@@ -479,10 +479,10 @@ jobs:
       - name: 🔄 تكرار الإصلاح ${{ matrix.iteration }}
         run: |
           echo "🔄 تكرار الإصلاح رقم ${{ matrix.iteration }}..."
-          
+
           # فحص الأخطاء المتبقية
           node scripts/validate-workflows.js > logs/iteration-${{ matrix.iteration }}.log 2>&1
-          
+
           # إرسال لـ Cursor API مرة أخرى
           node -e "
             const https = require('https');
@@ -562,7 +562,7 @@ jobs:
       critical-issues: ${{ steps.test-summary.outputs.critical-issues }}
       parallel-tests: ${{ steps.test-summary.outputs.parallel-tests }}
       incremental-success: ${{ steps.test-summary.outputs.incremental-success }}
-    
+
     steps:
       - name: 📥 تحميل الكود
         uses: actions/checkout@v4
@@ -585,10 +585,10 @@ jobs:
       - name: 🧪 إعداد اختبارات Playwright
         run: |
           echo "🧪 إعداد اختبارات Playwright..."
-          
+
           # إنشاء مجلد الاختبارات
           mkdir -p tests/playwright
-          
+
           # إنشاء ملف التكوين
           cat > playwright.config.js << 'EOF'
           module.exports = {
@@ -607,11 +607,11 @@ jobs:
             ],
           };
           EOF
-          
+
           # إنشاء اختبارات أساسية
           cat > tests/playwright/basic-tests.spec.js << 'EOF'
           const { test, expect } = require('@playwright/test');
-          
+
           test.describe('Basic Application Tests', () => {
             test('should load the application', async ({ page }) => {
               // اختبار تحميل التطبيق
@@ -638,15 +638,15 @@ jobs:
       - name: 🧪 إعداد اختبارات Superwright
         run: |
           echo "🧪 إعداد اختبارات Superwright..."
-          
+
           # إنشاء مجلد اختبارات Superwright
           mkdir -p tests/superwright
-          
+
           # إنشاء اختبارات قاعدة البيانات
           cat > tests/superwright/database-tests.js << 'EOF'
           const { test, expect } = require('@playwright/test');
           const { chromium } = require('playwright');
-          
+
           test.describe('Database Tests', () => {
             test('should connect to database', async () => {
               // اختبار الاتصال بقاعدة البيانات
@@ -691,7 +691,7 @@ jobs:
       - name: 🚀 تشغيل التطبيق للاختبار
         run: |
           echo "🚀 تشغيل التطبيق للاختبار..."
-          
+
           # تشغيل التطبيق في الخلفية
           if [ -f "package.json" ]; then
             npm start &
@@ -707,10 +707,10 @@ jobs:
       - name: 🧪 تشغيل اختبارات Playwright
         run: |
           echo "🧪 تشغيل اختبارات Playwright..."
-          
+
           # تشغيل الاختبارات
           npx playwright test --reporter=json > test-results.json 2>&1 || echo "Some tests failed"
-          
+
           # تحليل النتائج
           if [ -f "test-results.json" ]; then
             node -e "
@@ -740,10 +740,10 @@ jobs:
       - name: 🧪 تشغيل اختبارات Superwright
         run: |
           echo "🧪 تشغيل اختبارات Superwright..."
-          
+
           # تشغيل اختبارات قاعدة البيانات
           node tests/superwright/database-tests.js > superwright-results.json 2>&1 || echo "Some database tests failed"
-          
+
           # تحليل النتائج
           if [ -f "superwright-results.json" ]; then
             node -e "
@@ -768,7 +768,7 @@ jobs:
         id: test-summary
         run: |
           echo "📊 تحليل نتائج الاختبارات..."
-          
+
           node -e "
             const fs = require('fs');
             let testResults = { total: 0, passed: 0, failed: 0, successRate: 0 };
@@ -836,7 +836,7 @@ jobs:
     needs: [initial-analysis, smart-error-fixing, comprehensive-testing]
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    
+
     steps:
       - name: 📥 تحميل الكود
         uses: actions/checkout@v4
@@ -853,33 +853,33 @@ jobs:
       - name: 📊 إنشاء التقرير النهائي
         run: |
           echo "📊 إنشاء التقرير النهائي..."
-          
+
           # إنشاء التقرير
           cat > MASTER_CI_REPORT.md << 'EOF'
           # 🚀 Master CI Workflow - التقرير النهائي
-          
+
           ## 📋 ملخص التنفيذ
           - **التاريخ:** $(date)
           - **الفرع:** ${{ github.ref_name }}
           - **الكوميت:** ${{ github.sha }}
           - **المشغل:** ${{ github.actor }}
-          
+
           ## 🔍 نتائج التحليل الأولي
           - **عدد الأخطاء المكتشفة:** ${{ needs.initial-analysis.outputs.error-count }}
           - **ملخص الأخطاء:** ${{ needs.initial-analysis.outputs.error-summary }}
-          
+
           ## 🔧 نتائج الإصلاح الذكي
           - **عدد الإصلاحات المطبقة:** ${{ needs.smart-error-fixing.outputs.fix-count }}
           - **الأخطاء المتبقية:** ${{ needs.smart-error-fixing.outputs.remaining-errors }}
-          
+
           ## 🧪 نتائج الاختبارات الشاملة
           - **إجمالي الاختبارات:** ${{ needs.comprehensive-testing.outputs.test-results }}
           - **معدل النجاح:** ${{ needs.comprehensive-testing.outputs.test-coverage }}%
           - **المشاكل الحرجة:** ${{ needs.comprehensive-testing.outputs.critical-issues }}
-          
+
           ## ✅ الحالة النهائية
           EOF
-          
+
           # إضافة التفاصيل
           if [ -f "results/comprehensive-test-report.json" ]; then
             node -e "
@@ -894,12 +894,12 @@ jobs:
           - **معدل النجاح:** \${report.testResults.successRate}%
           - **التغطية:** \${report.testCoverage}%
           - **المشاكل الحرجة:** \${report.criticalIssues}
-          
+
           ### 🎯 التوصيات
           \${report.criticalIssues > 0 ? '⚠️ يوجد مشاكل حرجة تحتاج مراجعة' : '✅ لا توجد مشاكل حرجة'}
           \${report.testResults.successRate < 80 ? '⚠️ معدل النجاح منخفض - يحتاج تحسين' : '✅ معدل النجاح ممتاز'}
           \${report.testCoverage < 70 ? '⚠️ التغطية منخفضة - يحتاج اختبارات إضافية' : '✅ التغطية ممتازة'}
-          
+
           ### 🚀 الخطوات التالية
           1. مراجعة التقرير
           2. معالجة المشاكل الحرجة إن وجدت
@@ -914,14 +914,14 @@ jobs:
       - name: 💾 حفظ التقرير
         run: |
           echo "💾 حفظ التقرير..."
-          
+
           # إعداد Git
           git config --local user.email "action@github.com"
           git config --local user.name "Master CI Workflow"
-          
+
           # إضافة التقرير
           git add MASTER_CI_REPORT.md
-          
+
           # إنشاء commit
           git commit -m "📊 Master CI Report - $(date '+%Y-%m-%d %H:%M:%S')" || echo "لا توجد تغييرات للحفظ"
 
