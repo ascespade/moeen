@@ -17,6 +17,7 @@ interface AuditLog {
 }
 
 const mockAuditLogs: AuditLog[] = [
+  {
     id: "1",
     user: "أحمد العتيبي",
     action: "تسجيل دخول",
@@ -27,6 +28,8 @@ const mockAuditLogs: AuditLog[] = [
     timestamp: "2024-01-15 10:30:25",
     status: "success",
   },
+  },
+  {
     id: "2",
     user: "سارة أحمد",
     action: "إنشاء موعد",
@@ -38,6 +41,8 @@ const mockAuditLogs: AuditLog[] = [
     timestamp: "2024-01-15 10:25:15",
     status: "success",
   },
+  },
+  {
     id: "3",
     user: "خالد القحطاني",
     action: "تحديث بيانات المريض",
@@ -49,6 +54,8 @@ const mockAuditLogs: AuditLog[] = [
     timestamp: "2024-01-15 10:20:45",
     status: "success",
   },
+  },
+  {
     id: "4",
     user: "نورا محمد",
     action: "محاولة تسجيل دخول",
@@ -59,6 +66,8 @@ const mockAuditLogs: AuditLog[] = [
     timestamp: "2024-01-15 10:15:30",
     status: "failed",
   },
+  },
+  {
     id: "5",
     user: "محمد حسن",
     action: "حذف رسالة",
@@ -68,6 +77,7 @@ const mockAuditLogs: AuditLog[] = [
     userAgent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
     timestamp: "2024-01-15 10:10:20",
     status: "success",
+  },
   },
 ];
 

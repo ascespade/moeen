@@ -74,6 +74,7 @@ const mockStats: DashboardStats = {
 };
 
 const mockRecentActivities: RecentActivity[] = [
+  {
     id: "1",
     type: "appointment",
     title: "موعد جديد",
