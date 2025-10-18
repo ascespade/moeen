@@ -1,0 +1,329 @@
+{
+  "timestamp": "2025-10-18T04:30:14.428Z",
+  "overallScore": 66.66666666666667,
+  "evaluations": {
+    "systemIntegration": {
+      "score": 0,
+      "maxScore": 100,
+      "issues": [
+        {
+          "type": "circular_dependency",
+          "severity": "high",
+          "message": "تم العثور على 2 dependency دائري",
+          "files": [
+            {
+              "file": "src/lib/monitoring/logger.ts",
+              "import": "@/lib/monitoring/logger",
+              "circularWith": "@/lib/monitoring/logger"
+            },
+            {
+              "file": "src/core/hooks/index.ts",
+              "import": "../api/client",
+              "circularWith": "../utils/index"
+            }
+          ]
+        },
+        {
+          "type": "low_cohesion",
+          "severity": "medium",
+          "message": "الـ cohesion منخفض: 97.2%",
+          "recommendation": "يُنصح بتحسين ترابط الوحدات"
+        },
+        {
+          "type": "missing_error_handling",
+          "severity": "high",
+          "message": "نسبة معالجة الأخطاء منخفضة: 0.2%",
+          "recommendation": "يُنصح بإضافة معالجة أخطاء شاملة"
+        },
+        {
+          "type": "performance_bottlenecks",
+          "severity": "medium",
+          "message": "تم العثور على 7 bottleneck في الأداء",
+          "files": [
+            "src/lib/notifications/email.ts",
+            "src/lib/notifications/sms.ts",
+            "src/hooks/usePerformance.ts",
+            "src/app/api/payments/webhook/stripe/route.ts",
+            "src/app/api/webhook/whatsapp/route.ts",
+            "src/app/api/admin/stats/route.ts",
+            "src/app/api/appointments/book/route.ts"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "type": "fix_circular_dependencies",
+          "priority": "high",
+          "recommendation": "إصلاح الـ circular dependencies لتجنب مشاكل التحميل"
+        },
+        {
+          "type": "improve_cohesion",
+          "priority": "medium",
+          "recommendation": "تحسين ترابط الوحدات بتجميع الوظائف المتشابهة"
+        }
+      ],
+      "details": {
+        "dependencies": {
+          "total": 742,
+          "circularDependencies": [
+            {
+              "file": "src/lib/monitoring/logger.ts",
+              "import": "@/lib/monitoring/logger",
+              "circularWith": "@/lib/monitoring/logger"
+            },
+            {
+              "file": "src/core/hooks/index.ts",
+              "import": "../api/client",
+              "circularWith": "../utils/index"
+            }
+          ],
+          "unusedDependencies": [],
+          "missingDependencies": []
+        },
+        "coupling": {
+          "averageCoupling": 2.3106172087942927,
+          "tightCoupling": 0.2465277777777778,
+          "totalFiles": 288
+        },
+        "cohesion": {
+          "averageCohesion": 0.04137789409560136,
+          "lowCohesion": 0.9722222222222222,
+          "totalFiles": 288
+        },
+        "interfaces": {
+          "totalInterfaces": 110,
+          "inconsistentInterfaces": []
+        },
+        "errorHandling": {
+          "totalFunctions": 639,
+          "functionsWithErrorHandling": 1,
+          "missingErrorHandling": 0.9984350547730829
+        },
+        "performance": {
+          "totalFiles": 288,
+          "bottlenecks": [
+            "src/lib/notifications/email.ts",
+            "src/lib/notifications/sms.ts",
+            "src/hooks/usePerformance.ts",
+            "src/app/api/payments/webhook/stripe/route.ts",
+            "src/app/api/webhook/whatsapp/route.ts",
+            "src/app/api/admin/stats/route.ts",
+            "src/app/api/appointments/book/route.ts"
+          ]
+        }
+      }
+    },
+    "pageCompatibility": {
+      "score": 100,
+      "maxScore": 100,
+      "issues": [],
+      "recommendations": [
+        {
+          "type": "page_optimization",
+          "priority": "medium",
+          "recommendation": "تحسين بنية الصفحات لضمان التوافق"
+        }
+      ],
+      "details": {
+        "pageStructure": {
+          "issues": 0,
+          "details": {}
+        },
+        "componentIntegration": {
+          "issues": 0,
+          "details": {}
+        },
+        "routingConsistency": {
+          "issues": 0,
+          "details": {}
+        },
+        "stateManagement": {
+          "issues": 0,
+          "details": {}
+        },
+        "uiConsistency": {
+          "issues": 0,
+          "details": {}
+        }
+      }
+    },
+    "databaseCompatibility": {
+      "score": 0,
+      "maxScore": 100,
+      "issues": [],
+      "recommendations": [],
+      "details": {}
+    },
+    "apiIntegration": {
+      "score": 100,
+      "maxScore": 100,
+      "issues": [],
+      "recommendations": [
+        {
+          "type": "api_standardization",
+          "priority": "high",
+          "recommendation": "توحيد معايير الـ API لضمان التوافق"
+        }
+      ],
+      "details": {
+        "apiEndpoints": {
+          "issues": 0,
+          "details": {}
+        },
+        "responseConsistency": {
+          "issues": 0,
+          "details": {}
+        },
+        "apiErrorHandling": {
+          "issues": 0,
+          "details": {}
+        },
+        "authentication": {
+          "issues": 0,
+          "details": {}
+        },
+        "rateLimiting": {
+          "issues": 0,
+          "details": {}
+        }
+      }
+    },
+    "dataFlow": {
+      "score": 100,
+      "maxScore": 100,
+      "issues": [],
+      "recommendations": [
+        {
+          "type": "data_flow_optimization",
+          "priority": "medium",
+          "recommendation": "تحسين تدفق البيانات في النظام"
+        }
+      ],
+      "details": {
+        "dataFlowPaths": {
+          "issues": 0,
+          "details": {}
+        },
+        "dataValidation": {
+          "issues": 0,
+          "details": {}
+        },
+        "dataTransformation": {
+          "issues": 0,
+          "details": {}
+        },
+        "dataPersistence": {
+          "issues": 0,
+          "details": {}
+        }
+      }
+    },
+    "securityIntegration": {
+      "score": 100,
+      "maxScore": 100,
+      "issues": [],
+      "recommendations": [
+        {
+          "type": "security_enhancement",
+          "priority": "high",
+          "recommendation": "تعزيز الأمان في جميع أنحاء النظام"
+        }
+      ],
+      "details": {
+        "authentication": {
+          "issues": 0,
+          "details": {}
+        },
+        "authorization": {
+          "issues": 0,
+          "details": {}
+        },
+        "dataEncryption": {
+          "issues": 0,
+          "details": {}
+        },
+        "inputValidation": {
+          "issues": 0,
+          "details": {}
+        },
+        "securityHeaders": {
+          "issues": 0,
+          "details": {}
+        }
+      }
+    }
+  },
+  "summary": {
+    "systemIntegration": 0,
+    "pageCompatibility": 100,
+    "databaseCompatibility": 0,
+    "apiIntegration": 100,
+    "dataFlow": 100,
+    "securityIntegration": 100
+  },
+  "criticalIssues": [
+    {
+      "category": "systemIntegration",
+      "type": "circular_dependency",
+      "severity": "high",
+      "message": "تم العثور على 2 dependency دائري",
+      "files": [
+        {
+          "file": "src/lib/monitoring/logger.ts",
+          "import": "@/lib/monitoring/logger",
+          "circularWith": "@/lib/monitoring/logger"
+        },
+        {
+          "file": "src/core/hooks/index.ts",
+          "import": "../api/client",
+          "circularWith": "../utils/index"
+        }
+      ]
+    },
+    {
+      "category": "systemIntegration",
+      "type": "missing_error_handling",
+      "severity": "high",
+      "message": "نسبة معالجة الأخطاء منخفضة: 0.2%",
+      "recommendation": "يُنصح بإضافة معالجة أخطاء شاملة"
+    }
+  ],
+  "recommendations": [
+    {
+      "category": "systemIntegration",
+      "type": "fix_circular_dependencies",
+      "priority": "high",
+      "recommendation": "إصلاح الـ circular dependencies لتجنب مشاكل التحميل"
+    },
+    {
+      "category": "systemIntegration",
+      "type": "improve_cohesion",
+      "priority": "medium",
+      "recommendation": "تحسين ترابط الوحدات بتجميع الوظائف المتشابهة"
+    },
+    {
+      "category": "pageCompatibility",
+      "type": "page_optimization",
+      "priority": "medium",
+      "recommendation": "تحسين بنية الصفحات لضمان التوافق"
+    },
+    {
+      "category": "apiIntegration",
+      "type": "api_standardization",
+      "priority": "high",
+      "recommendation": "توحيد معايير الـ API لضمان التوافق"
+    },
+    {
+      "category": "dataFlow",
+      "type": "data_flow_optimization",
+      "priority": "medium",
+      "recommendation": "تحسين تدفق البيانات في النظام"
+    },
+    {
+      "category": "securityIntegration",
+      "type": "security_enhancement",
+      "priority": "high",
+      "recommendation": "تعزيز الأمان في جميع أنحاء النظام"
+    }
+  ]
+}

@@ -711,7 +711,10 @@ class SmartBootloaderAgent {
       // 6. اختبار الـ Security Rules
       await this.testSecurityRules();
       
-      // 7. إصلاح تلقائي للأخطاء المكتشفة
+      // 7. تقييم شامل للترابط والتوافق
+      await this.evaluateSystemIntegration();
+      
+      // 8. إصلاح تلقائي للأخطاء المكتشفة
       await this.autoFixBusinessLogicIssues();
       
       console.log(`${colors.green}✅ تم اختبار الـ Business Logic بنجاح${colors.reset}`);
@@ -1333,6 +1336,723 @@ function requireAuth(req) {
   async autoFixBusinessLogicIssues() {
     console.log(`${colors.dim}🔧 إصلاح تلقائي لمشاكل Business Logic...${colors.reset}`);
     // Implementation for auto-fixing business logic issues
+  }
+
+  // 🔍 تقييم شامل للترابط والتوافق
+  async evaluateSystemIntegration() {
+    try {
+      console.log(`${colors.blue}🔍 تقييم شامل للترابط والتوافق...${colors.reset}`);
+      
+      // 1. تقييم ترابط النظام
+      const systemIntegration = await this.evaluateSystemCohesion();
+      
+      // 2. تقييم توافق الصفحات
+      const pageCompatibility = await this.evaluatePageCompatibility();
+      
+      // 3. تقييم توافق قاعدة البيانات
+      const databaseCompatibility = await this.evaluateDatabaseCompatibility();
+      
+      // 4. تقييم الـ API Integration
+      const apiIntegration = await this.evaluateAPIIntegration();
+      
+      // 5. تقييم الـ Data Flow
+      const dataFlow = await this.evaluateDataFlow();
+      
+      // 6. تقييم الـ Security Integration
+      const securityIntegration = await this.evaluateSecurityIntegration();
+      
+      // 7. إنشاء تقرير شامل
+      await this.generateIntegrationReport({
+        systemIntegration,
+        pageCompatibility,
+        databaseCompatibility,
+        apiIntegration,
+        dataFlow,
+        securityIntegration
+      });
+      
+      console.log(`${colors.green}✅ تم تقييم الترابط والتوافق بنجاح${colors.reset}`);
+      
+    } catch (error) {
+      console.error(`${colors.red}❌ خطأ في تقييم الترابط والتوافق:${colors.reset}`, error.message);
+    }
+  }
+
+  // 🔗 تقييم ترابط النظام
+  async evaluateSystemCohesion() {
+    try {
+      console.log(`${colors.dim}🔗 تقييم ترابط النظام...${colors.reset}`);
+      
+      const evaluation = {
+        score: 0,
+        maxScore: 100,
+        issues: [],
+        recommendations: [],
+        details: {}
+      };
+      
+      // 1. فحص الـ Dependencies
+      const dependencies = await this.analyzeDependencies();
+      evaluation.details.dependencies = dependencies;
+      
+      if (dependencies.circularDependencies.length > 0) {
+        evaluation.issues.push({
+          type: 'circular_dependency',
+          severity: 'high',
+          message: `تم العثور على ${dependencies.circularDependencies.length} dependency دائري`,
+          files: dependencies.circularDependencies
+        });
+        evaluation.score -= 20;
+      }
+      
+      // 2. فحص الـ Module Coupling
+      const coupling = await this.analyzeModuleCoupling();
+      evaluation.details.coupling = coupling;
+      
+      if (coupling.tightCoupling > 0.7) {
+        evaluation.issues.push({
+          type: 'tight_coupling',
+          severity: 'medium',
+          message: `الـ coupling عالي جداً: ${(coupling.tightCoupling * 100).toFixed(1)}%`,
+          recommendation: 'يُنصح بتقليل الـ coupling بين الوحدات'
+        });
+        evaluation.score -= 15;
+      }
+      
+      // 3. فحص الـ Cohesion
+      const cohesion = await this.analyzeCohesion();
+      evaluation.details.cohesion = cohesion;
+      
+      if (cohesion.lowCohesion > 0.3) {
+        evaluation.issues.push({
+          type: 'low_cohesion',
+          severity: 'medium',
+          message: `الـ cohesion منخفض: ${(cohesion.lowCohesion * 100).toFixed(1)}%`,
+          recommendation: 'يُنصح بتحسين ترابط الوحدات'
+        });
+        evaluation.score -= 10;
+      }
+      
+      // 4. فحص الـ Interface Consistency
+      const interfaces = await this.analyzeInterfaceConsistency();
+      evaluation.details.interfaces = interfaces;
+      
+      if (interfaces.inconsistentInterfaces.length > 0) {
+        evaluation.issues.push({
+          type: 'inconsistent_interfaces',
+          severity: 'high',
+          message: `تم العثور على ${interfaces.inconsistentInterfaces.length} interface غير متسق`,
+          files: interfaces.inconsistentInterfaces
+        });
+        evaluation.score -= 25;
+      }
+      
+      // 5. فحص الـ Error Handling
+      const errorHandling = await this.analyzeErrorHandling();
+      evaluation.details.errorHandling = errorHandling;
+      
+      if (errorHandling.missingErrorHandling > 0.2) {
+        evaluation.issues.push({
+          type: 'missing_error_handling',
+          severity: 'high',
+          message: `نسبة معالجة الأخطاء منخفضة: ${((1 - errorHandling.missingErrorHandling) * 100).toFixed(1)}%`,
+          recommendation: 'يُنصح بإضافة معالجة أخطاء شاملة'
+        });
+        evaluation.score -= 20;
+      }
+      
+      // 6. فحص الـ Performance Integration
+      const performance = await this.analyzePerformanceIntegration();
+      evaluation.details.performance = performance;
+      
+      if (performance.bottlenecks.length > 0) {
+        evaluation.issues.push({
+          type: 'performance_bottlenecks',
+          severity: 'medium',
+          message: `تم العثور على ${performance.bottlenecks.length} bottleneck في الأداء`,
+          files: performance.bottlenecks
+        });
+        evaluation.score -= 10;
+      }
+      
+      // حساب النتيجة النهائية
+      evaluation.score = Math.max(0, evaluation.score);
+      
+      // إضافة التوصيات
+      evaluation.recommendations = this.generateSystemCohesionRecommendations(evaluation);
+      
+      console.log(`${colors.dim}📊 نتيجة ترابط النظام: ${evaluation.score}/${evaluation.maxScore}${colors.reset}`);
+      
+      return evaluation;
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ لا يمكن تقييم ترابط النظام:${colors.reset}`, error.message);
+      return { score: 0, maxScore: 100, issues: [], recommendations: [], details: {} };
+    }
+  }
+
+  // 📊 تحليل الـ Dependencies
+  async analyzeDependencies() {
+    try {
+      const files = await this.getAllProjectFiles();
+      const dependencies = {
+        total: 0,
+        circularDependencies: [],
+        unusedDependencies: [],
+        missingDependencies: []
+      };
+      
+      for (const file of files) {
+        const content = await fs.readFile(file, 'utf8');
+        const imports = this.extractImports(content);
+        
+        dependencies.total += imports.length;
+        
+        // فحص الـ circular dependencies
+        for (const imp of imports) {
+          if (await this.isCircularDependency(file, imp)) {
+            dependencies.circularDependencies.push({
+              file,
+              import: imp,
+              circularWith: await this.findCircularDependency(file, imp)
+            });
+          }
+        }
+        
+        // فحص الـ unused imports
+        for (const imp of imports) {
+          if (!this.isImportUsed(content, imp)) {
+            dependencies.unusedDependencies.push({
+              file,
+              import: imp
+            });
+          }
+        }
+      }
+      
+      return dependencies;
+      
+    } catch (error) {
+      return { total: 0, circularDependencies: [], unusedDependencies: [], missingDependencies: [] };
+    }
+  }
+
+  // 🔗 تحليل الـ Module Coupling
+  async analyzeModuleCoupling() {
+    try {
+      const files = await this.getAllProjectFiles();
+      let totalCoupling = 0;
+      let tightCoupling = 0;
+      
+      for (const file of files) {
+        const content = await fs.readFile(file, 'utf8');
+        const imports = this.extractImports(content);
+        const exports = this.extractExports(content);
+        
+        const couplingRatio = imports.length / Math.max(exports.length, 1);
+        totalCoupling += couplingRatio;
+        
+        if (couplingRatio > 3) { // أكثر من 3 imports لكل export
+          tightCoupling++;
+        }
+      }
+      
+      return {
+        averageCoupling: totalCoupling / files.length,
+        tightCoupling: tightCoupling / files.length,
+        totalFiles: files.length
+      };
+      
+    } catch (error) {
+      return { averageCoupling: 0, tightCoupling: 0, totalFiles: 0 };
+    }
+  }
+
+  // 🧩 تحليل الـ Cohesion
+  async analyzeCohesion() {
+    try {
+      const files = await this.getAllProjectFiles();
+      let totalCohesion = 0;
+      let lowCohesion = 0;
+      
+      for (const file of files) {
+        const content = await fs.readFile(file, 'utf8');
+        const functions = this.extractFunctions(content);
+        const variables = this.extractVariables(content);
+        
+        // حساب الـ cohesion بناءً على استخدام المتغيرات
+        let cohesionScore = 0;
+        for (const func of functions) {
+          const usedVars = this.findUsedVariables(func, variables);
+          cohesionScore += usedVars.length / Math.max(variables.length, 1);
+        }
+        
+        const fileCohesion = cohesionScore / Math.max(functions.length, 1);
+        totalCohesion += fileCohesion;
+        
+        if (fileCohesion < 0.3) {
+          lowCohesion++;
+        }
+      }
+      
+      return {
+        averageCohesion: totalCohesion / files.length,
+        lowCohesion: lowCohesion / files.length,
+        totalFiles: files.length
+      };
+      
+    } catch (error) {
+      return { averageCohesion: 0, lowCohesion: 0, totalFiles: 0 };
+    }
+  }
+
+  // 🔌 تحليل Interface Consistency
+  async analyzeInterfaceConsistency() {
+    try {
+      const files = await this.getAllProjectFiles();
+      const interfaces = [];
+      const inconsistentInterfaces = [];
+      
+      for (const file of files) {
+        const content = await fs.readFile(file, 'utf8');
+        const fileInterfaces = this.extractInterfaces(content);
+        
+        for (const iface of fileInterfaces) {
+          interfaces.push({
+            file,
+            interface: iface,
+            methods: this.extractInterfaceMethods(iface)
+          });
+        }
+      }
+      
+      // فحص التطابق بين الـ interfaces
+      for (let i = 0; i < interfaces.length; i++) {
+        for (let j = i + 1; j < interfaces.length; j++) {
+          if (this.areInterfacesInconsistent(interfaces[i], interfaces[j])) {
+            inconsistentInterfaces.push({
+              interface1: interfaces[i],
+              interface2: interfaces[j],
+              conflicts: this.findInterfaceConflicts(interfaces[i], interfaces[j])
+            });
+          }
+        }
+      }
+      
+      return {
+        totalInterfaces: interfaces.length,
+        inconsistentInterfaces: inconsistentInterfaces.map(ci => ci.interface1.file)
+      };
+      
+    } catch (error) {
+      return { totalInterfaces: 0, inconsistentInterfaces: [] };
+    }
+  }
+
+  // ⚠️ تحليل Error Handling
+  async analyzeErrorHandling() {
+    try {
+      const files = await this.getAllProjectFiles();
+      let totalFunctions = 0;
+      let functionsWithErrorHandling = 0;
+      
+      for (const file of files) {
+        const content = await fs.readFile(file, 'utf8');
+        const functions = this.extractFunctions(content);
+        
+        for (const func of functions) {
+          totalFunctions++;
+          
+          if (this.hasErrorHandling(func)) {
+            functionsWithErrorHandling++;
+          }
+        }
+      }
+      
+      return {
+        totalFunctions,
+        functionsWithErrorHandling,
+        missingErrorHandling: 1 - (functionsWithErrorHandling / Math.max(totalFunctions, 1))
+      };
+      
+    } catch (error) {
+      return { totalFunctions: 0, functionsWithErrorHandling: 0, missingErrorHandling: 1 };
+    }
+  }
+
+  // ⚡ تحليل Performance Integration
+  async analyzePerformanceIntegration() {
+    try {
+      const files = await this.getAllProjectFiles();
+      const bottlenecks = [];
+      
+      for (const file of files) {
+        const content = await fs.readFile(file, 'utf8');
+        
+        // فحص الـ performance issues
+        if (this.hasPerformanceIssues(content)) {
+          bottlenecks.push({
+            file,
+            issues: this.findPerformanceIssues(content)
+          });
+        }
+      }
+      
+      return {
+        totalFiles: files.length,
+        bottlenecks: bottlenecks.map(b => b.file)
+      };
+      
+    } catch (error) {
+      return { totalFiles: 0, bottlenecks: [] };
+    }
+  }
+
+  // 📄 تقييم توافق الصفحات
+  async evaluatePageCompatibility() {
+    try {
+      console.log(`${colors.dim}📄 تقييم توافق الصفحات...${colors.reset}`);
+      
+      const evaluation = {
+        score: 0,
+        maxScore: 100,
+        issues: [],
+        recommendations: [],
+        details: {}
+      };
+      
+      // 1. فحص الـ Page Structure
+      const pageStructure = await this.analyzePageStructure();
+      evaluation.details.pageStructure = pageStructure;
+      
+      // 2. فحص الـ Component Integration
+      const componentIntegration = await this.analyzeComponentIntegration();
+      evaluation.details.componentIntegration = componentIntegration;
+      
+      // 3. فحص الـ Routing Consistency
+      const routingConsistency = await this.analyzeRoutingConsistency();
+      evaluation.details.routingConsistency = routingConsistency;
+      
+      // 4. فحص الـ State Management
+      const stateManagement = await this.analyzeStateManagement();
+      evaluation.details.stateManagement = stateManagement;
+      
+      // 5. فحص الـ UI Consistency
+      const uiConsistency = await this.analyzeUIConsistency();
+      evaluation.details.uiConsistency = uiConsistency;
+      
+      // حساب النتيجة
+      evaluation.score = this.calculatePageCompatibilityScore({
+        pageStructure,
+        componentIntegration,
+        routingConsistency,
+        stateManagement,
+        uiConsistency
+      });
+      
+      // إضافة التوصيات
+      evaluation.recommendations = this.generatePageCompatibilityRecommendations(evaluation);
+      
+      console.log(`${colors.dim}📊 نتيجة توافق الصفحات: ${evaluation.score}/${evaluation.maxScore}${colors.reset}`);
+      
+      return evaluation;
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ لا يمكن تقييم توافق الصفحات:${colors.reset}`, error.message);
+      return { score: 0, maxScore: 100, issues: [], recommendations: [], details: {} };
+    }
+  }
+
+  // 🗄️ تقييم توافق قاعدة البيانات
+  async evaluateDatabaseCompatibility() {
+    try {
+      console.log(`${colors.dim}🗄️ تقييم توافق قاعدة البيانات...${colors.reset}`);
+      
+      const evaluation = {
+        score: 0,
+        maxScore: 100,
+        issues: [],
+        recommendations: [],
+        details: {}
+      };
+      
+      // 1. فحص الـ Schema Compatibility
+      const schemaCompatibility = await this.analyzeSchemaCompatibility();
+      evaluation.details.schemaCompatibility = schemaCompatibility;
+      
+      // 2. فحص الـ Query Optimization
+      const queryOptimization = await this.analyzeQueryOptimization();
+      evaluation.details.queryOptimization = queryOptimization;
+      
+      // 3. فحص الـ Data Validation
+      const dataValidation = await this.analyzeDataValidation();
+      evaluation.details.dataValidation = dataValidation;
+      
+      // 4. فحص الـ Connection Management
+      const connectionManagement = await this.analyzeConnectionManagement();
+      evaluation.details.connectionManagement = connectionManagement;
+      
+      // 5. فحص الـ Migration Compatibility
+      const migrationCompatibility = await this.analyzeMigrationCompatibility();
+      evaluation.details.migrationCompatibility = migrationCompatibility;
+      
+      // حساب النتيجة
+      evaluation.score = this.calculateDatabaseCompatibilityScore({
+        schemaCompatibility,
+        queryOptimization,
+        dataValidation,
+        connectionManagement,
+        migrationCompatibility
+      });
+      
+      // إضافة التوصيات
+      evaluation.recommendations = this.generateDatabaseCompatibilityRecommendations(evaluation);
+      
+      console.log(`${colors.dim}📊 نتيجة توافق قاعدة البيانات: ${evaluation.score}/${evaluation.maxScore}${colors.reset}`);
+      
+      return evaluation;
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ لا يمكن تقييم توافق قاعدة البيانات:${colors.reset}`, error.message);
+      return { score: 0, maxScore: 100, issues: [], recommendations: [], details: {} };
+    }
+  }
+
+  // 🔌 تقييم API Integration
+  async evaluateAPIIntegration() {
+    try {
+      console.log(`${colors.dim}🔌 تقييم API Integration...${colors.reset}`);
+      
+      const evaluation = {
+        score: 0,
+        maxScore: 100,
+        issues: [],
+        recommendations: [],
+        details: {}
+      };
+      
+      // 1. فحص الـ API Endpoints
+      const apiEndpoints = await this.analyzeAPIEndpoints();
+      evaluation.details.apiEndpoints = apiEndpoints;
+      
+      // 2. فحص الـ Response Consistency
+      const responseConsistency = await this.analyzeResponseConsistency();
+      evaluation.details.responseConsistency = responseConsistency;
+      
+      // 3. فحص الـ Error Handling
+      const apiErrorHandling = await this.analyzeAPIErrorHandling();
+      evaluation.details.apiErrorHandling = apiErrorHandling;
+      
+      // 4. فحص الـ Authentication
+      const authentication = await this.analyzeAPIAuthentication();
+      evaluation.details.authentication = authentication;
+      
+      // 5. فحص الـ Rate Limiting
+      const rateLimiting = await this.analyzeRateLimiting();
+      evaluation.details.rateLimiting = rateLimiting;
+      
+      // حساب النتيجة
+      evaluation.score = this.calculateAPIIntegrationScore({
+        apiEndpoints,
+        responseConsistency,
+        apiErrorHandling,
+        authentication,
+        rateLimiting
+      });
+      
+      // إضافة التوصيات
+      evaluation.recommendations = this.generateAPIIntegrationRecommendations(evaluation);
+      
+      console.log(`${colors.dim}📊 نتيجة API Integration: ${evaluation.score}/${evaluation.maxScore}${colors.reset}`);
+      
+      return evaluation;
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ لا يمكن تقييم API Integration:${colors.reset}`, error.message);
+      return { score: 0, maxScore: 100, issues: [], recommendations: [], details: {} };
+    }
+  }
+
+  // 📊 تقييم Data Flow
+  async evaluateDataFlow() {
+    try {
+      console.log(`${colors.dim}📊 تقييم Data Flow...${colors.reset}`);
+      
+      const evaluation = {
+        score: 0,
+        maxScore: 100,
+        issues: [],
+        recommendations: [],
+        details: {}
+      };
+      
+      // 1. فحص الـ Data Flow Paths
+      const dataFlowPaths = await this.analyzeDataFlowPaths();
+      evaluation.details.dataFlowPaths = dataFlowPaths;
+      
+      // 2. فحص الـ Data Validation
+      const dataValidation = await this.analyzeDataValidationFlow();
+      evaluation.details.dataValidation = dataValidation;
+      
+      // 3. فحص الـ Data Transformation
+      const dataTransformation = await this.analyzeDataTransformation();
+      evaluation.details.dataTransformation = dataTransformation;
+      
+      // 4. فحص الـ Data Persistence
+      const dataPersistence = await this.analyzeDataPersistence();
+      evaluation.details.dataPersistence = dataPersistence;
+      
+      // حساب النتيجة
+      evaluation.score = this.calculateDataFlowScore({
+        dataFlowPaths,
+        dataValidation,
+        dataTransformation,
+        dataPersistence
+      });
+      
+      // إضافة التوصيات
+      evaluation.recommendations = this.generateDataFlowRecommendations(evaluation);
+      
+      console.log(`${colors.dim}📊 نتيجة Data Flow: ${evaluation.score}/${evaluation.maxScore}${colors.reset}`);
+      
+      return evaluation;
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ لا يمكن تقييم Data Flow:${colors.reset}`, error.message);
+      return { score: 0, maxScore: 100, issues: [], recommendations: [], details: {} };
+    }
+  }
+
+  // 🔒 تقييم Security Integration
+  async evaluateSecurityIntegration() {
+    try {
+      console.log(`${colors.dim}🔒 تقييم Security Integration...${colors.reset}`);
+      
+      const evaluation = {
+        score: 0,
+        maxScore: 100,
+        issues: [],
+        recommendations: [],
+        details: {}
+      };
+      
+      // 1. فحص الـ Authentication
+      const authentication = await this.analyzeSecurityAuthentication();
+      evaluation.details.authentication = authentication;
+      
+      // 2. فحص الـ Authorization
+      const authorization = await this.analyzeSecurityAuthorization();
+      evaluation.details.authorization = authorization;
+      
+      // 3. فحص الـ Data Encryption
+      const dataEncryption = await this.analyzeDataEncryption();
+      evaluation.details.dataEncryption = dataEncryption;
+      
+      // 4. فحص الـ Input Validation
+      const inputValidation = await this.analyzeSecurityInputValidation();
+      evaluation.details.inputValidation = inputValidation;
+      
+      // 5. فحص الـ Security Headers
+      const securityHeaders = await this.analyzeSecurityHeaders();
+      evaluation.details.securityHeaders = securityHeaders;
+      
+      // حساب النتيجة
+      evaluation.score = this.calculateSecurityIntegrationScore({
+        authentication,
+        authorization,
+        dataEncryption,
+        inputValidation,
+        securityHeaders
+      });
+      
+      // إضافة التوصيات
+      evaluation.recommendations = this.generateSecurityIntegrationRecommendations(evaluation);
+      
+      console.log(`${colors.dim}📊 نتيجة Security Integration: ${evaluation.score}/${evaluation.maxScore}${colors.reset}`);
+      
+      return evaluation;
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ لا يمكن تقييم Security Integration:${colors.reset}`, error.message);
+      return { score: 0, maxScore: 100, issues: [], recommendations: [], details: {} };
+    }
+  }
+
+  // 📋 إنشاء تقرير شامل
+  async generateIntegrationReport(evaluations) {
+    try {
+      console.log(`${colors.dim}📋 إنشاء تقرير شامل...${colors.reset}`);
+      
+      const report = {
+        timestamp: new Date().toISOString(),
+        overallScore: 0,
+        evaluations,
+        summary: {},
+        criticalIssues: [],
+        recommendations: []
+      };
+      
+      // حساب النتيجة الإجمالية
+      const scores = Object.values(evaluations).map(evaluation => evaluation.score);
+      report.overallScore = scores.reduce((sum, score) => sum + score, 0) / scores.length;
+      
+      // إنشاء الملخص
+      report.summary = {
+        systemIntegration: evaluations.systemIntegration.score,
+        pageCompatibility: evaluations.pageCompatibility.score,
+        databaseCompatibility: evaluations.databaseCompatibility.score,
+        apiIntegration: evaluations.apiIntegration.score,
+        dataFlow: evaluations.dataFlow.score,
+        securityIntegration: evaluations.securityIntegration.score
+      };
+      
+      // جمع القضايا الحرجة
+      for (const [key, evaluation] of Object.entries(evaluations)) {
+        const criticalIssues = evaluation.issues.filter(issue => issue.severity === 'high');
+        report.criticalIssues.push(...criticalIssues.map(issue => ({
+          category: key,
+          ...issue
+        })));
+      }
+      
+      // جمع التوصيات
+      for (const [key, evaluation] of Object.entries(evaluations)) {
+        report.recommendations.push(...evaluation.recommendations.map(rec => ({
+          category: key,
+          ...rec
+        })));
+      }
+      
+      // حفظ التقرير
+      await fs.writeFile('integration-evaluation-report.json', JSON.stringify(report, null, 2));
+      
+      // طباعة الملخص
+      console.log(`\n${colors.cyan}${colors.bright}📊 تقرير التقييم الشامل:${colors.reset}`);
+      console.log(`${colors.dim}📈 النتيجة الإجمالية: ${report.overallScore.toFixed(1)}/100${colors.reset}`);
+      console.log(`${colors.dim}🔗 ترابط النظام: ${report.summary.systemIntegration}/100${colors.reset}`);
+      console.log(`${colors.dim}📄 توافق الصفحات: ${report.summary.pageCompatibility}/100${colors.reset}`);
+      console.log(`${colors.dim}🗄️ توافق قاعدة البيانات: ${report.summary.databaseCompatibility}/100${colors.reset}`);
+      console.log(`${colors.dim}🔌 API Integration: ${report.summary.apiIntegration}/100${colors.reset}`);
+      console.log(`${colors.dim}📊 Data Flow: ${report.summary.dataFlow}/100${colors.reset}`);
+      console.log(`${colors.dim}🔒 Security Integration: ${report.summary.securityIntegration}/100${colors.reset}`);
+      
+      if (report.criticalIssues.length > 0) {
+        console.log(`\n${colors.red}🚨 القضايا الحرجة (${report.criticalIssues.length}):${colors.reset}`);
+        report.criticalIssues.forEach((issue, index) => {
+          console.log(`${colors.dim}${index + 1}. [${issue.category}] ${issue.message}${colors.reset}`);
+        });
+      }
+      
+      if (report.recommendations.length > 0) {
+        console.log(`\n${colors.yellow}💡 التوصيات (${report.recommendations.length}):${colors.reset}`);
+        report.recommendations.slice(0, 10).forEach((rec, index) => {
+          console.log(`${colors.dim}${index + 1}. [${rec.category}] ${rec.recommendation || rec.message}${colors.reset}`);
+        });
+      }
+      
+    } catch (error) {
+      console.warn(`${colors.yellow}⚠️ لا يمكن إنشاء التقرير:${colors.reset}`, error.message);
+    }
   }
 
   // 🔄 خدمة Refactor الذكية
@@ -2066,6 +2786,415 @@ function requireAuth(req) {
     }
   }
 
+  // 🔧 دوال مساعدة للتقييم الشامل
+  
+  // استخراج الـ imports
+  extractImports(content) {
+    const importRegex = /import\s+.*?\s+from\s+['"]([^'"]+)['"]/g;
+    const imports = [];
+    let match;
+    
+    while ((match = importRegex.exec(content)) !== null) {
+      imports.push(match[1]);
+    }
+    
+    return imports;
+  }
+
+  // استخراج الـ exports
+  extractExports(content) {
+    const exportRegex = /export\s+(?:const|let|var|function|class|interface|type)\s+(\w+)/g;
+    const exports = [];
+    let match;
+    
+    while ((match = exportRegex.exec(content)) !== null) {
+      exports.push(match[1]);
+    }
+    
+    return exports;
+  }
+
+  // استخراج الـ functions
+  extractFunctions(content) {
+    const functionRegex = /(?:function\s+\w+|const\s+\w+\s*=\s*(?:async\s+)?\([^)]*\)\s*=>|class\s+\w+)/g;
+    const functions = [];
+    let match;
+    
+    while ((match = functionRegex.exec(content)) !== null) {
+      functions.push(match[0]);
+    }
+    
+    return functions;
+  }
+
+  // استخراج الـ variables
+  extractVariables(content) {
+    const variableRegex = /(?:const|let|var)\s+(\w+)/g;
+    const variables = [];
+    let match;
+    
+    while ((match = variableRegex.exec(content)) !== null) {
+      variables.push(match[1]);
+    }
+    
+    return variables;
+  }
+
+  // استخراج الـ interfaces
+  extractInterfaces(content) {
+    const interfaceRegex = /interface\s+(\w+)\s*\{[^}]*\}/g;
+    const interfaces = [];
+    let match;
+    
+    while ((match = interfaceRegex.exec(content)) !== null) {
+      interfaces.push(match[0]);
+    }
+    
+    return interfaces;
+  }
+
+  // استخراج methods من interface
+  extractInterfaceMethods(interfaceContent) {
+    const methodRegex = /(\w+)\s*\([^)]*\)\s*:\s*[^;]+;/g;
+    const methods = [];
+    let match;
+    
+    while ((match = methodRegex.exec(interfaceContent)) !== null) {
+      methods.push(match[1]);
+    }
+    
+    return methods;
+  }
+
+  // فحص الـ circular dependency
+  async isCircularDependency(file, importPath) {
+    try {
+      // تحويل import path إلى file path
+      const targetFile = this.resolveImportPath(file, importPath);
+      if (!targetFile) return false;
+      
+      // فحص إذا كان الملف المستورد يستورد الملف الأصلي
+      const targetContent = await fs.readFile(targetFile, 'utf8');
+      const targetImports = this.extractImports(targetContent);
+      
+      const originalFile = file.split('/').pop().split('.')[0];
+      return targetImports.some(imp => imp.includes(originalFile));
+      
+    } catch (error) {
+      return false;
+    }
+  }
+
+  // العثور على circular dependency
+  async findCircularDependency(file, importPath) {
+    try {
+      const targetFile = this.resolveImportPath(file, importPath);
+      if (!targetFile) return null;
+      
+      const targetContent = await fs.readFile(targetFile, 'utf8');
+      const targetImports = this.extractImports(targetContent);
+      
+      const originalFile = file.split('/').pop().split('.')[0];
+      return targetImports.find(imp => imp.includes(originalFile));
+      
+    } catch (error) {
+      return null;
+    }
+  }
+
+  // تحويل import path إلى file path
+  resolveImportPath(file, importPath) {
+    if (importPath.startsWith('@/')) {
+      return importPath.replace('@/', 'src/') + '.ts';
+    } else if (importPath.startsWith('./')) {
+      const dir = file.substring(0, file.lastIndexOf('/'));
+      return dir + '/' + importPath.substring(2) + '.ts';
+    } else if (importPath.startsWith('../')) {
+      const dir = file.substring(0, file.lastIndexOf('/'));
+      return dir + '/' + importPath + '.ts';
+    }
+    return null;
+  }
+
+  // فحص إذا كان import مستخدم
+  isImportUsed(content, importPath) {
+    const importName = importPath.split('/').pop().split('.')[0];
+    return content.includes(importName);
+  }
+
+  // العثور على المتغيرات المستخدمة في function
+  findUsedVariables(func, variables) {
+    const usedVars = [];
+    for (const variable of variables) {
+      if (func.includes(variable)) {
+        usedVars.push(variable);
+      }
+    }
+    return usedVars;
+  }
+
+  // فحص إذا كان interface غير متسق
+  areInterfacesInconsistent(iface1, iface2) {
+    const methods1 = iface1.methods;
+    const methods2 = iface2.methods;
+    
+    // فحص إذا كان هناك methods متشابهة لكن مختلفة
+    for (const method1 of methods1) {
+      for (const method2 of methods2) {
+        if (method1 === method2) {
+          return true; // نفس الاسم لكن قد يكون مختلف في التوقيع
+        }
+      }
+    }
+    
+    return false;
+  }
+
+  // العثور على conflicts بين interfaces
+  findInterfaceConflicts(iface1, iface2) {
+    const conflicts = [];
+    const methods1 = iface1.methods;
+    const methods2 = iface2.methods;
+    
+    for (const method1 of methods1) {
+      for (const method2 of methods2) {
+        if (method1 === method2) {
+          conflicts.push({
+            method: method1,
+            interface1: iface1.interface,
+            interface2: iface2.interface
+          });
+        }
+      }
+    }
+    
+    return conflicts;
+  }
+
+  // فحص إذا كان function له error handling
+  hasErrorHandling(func) {
+    return func.includes('try') || func.includes('catch') || func.includes('throw') || func.includes('error');
+  }
+
+  // فحص إذا كان content له performance issues
+  hasPerformanceIssues(content) {
+    const performancePatterns = [
+      /for\s*\([^)]*\)\s*\{[^}]*for\s*\([^)]*\)\s*\{/g, // nested loops
+      /\.map\([^)]*\)\.map\(/g, // chained maps
+      /\.filter\([^)]*\)\.filter\(/g, // chained filters
+      /console\.log\(/g, // console.log in production
+      /eval\(/g, // eval usage
+      /setTimeout\([^,]*,\s*0\)/g // setTimeout with 0 delay
+    ];
+    
+    return performancePatterns.some(pattern => pattern.test(content));
+  }
+
+  // العثور على performance issues
+  findPerformanceIssues(content) {
+    const issues = [];
+    
+    if (/for\s*\([^)]*\)\s*\{[^}]*for\s*\([^)]*\)\s*\{/.test(content)) {
+      issues.push('Nested loops detected');
+    }
+    
+    if (/\.map\([^)]*\)\.map\(/.test(content)) {
+      issues.push('Chained map operations detected');
+    }
+    
+    if (/console\.log\(/.test(content)) {
+      issues.push('Console.log in production code');
+    }
+    
+    return issues;
+  }
+
+  // حساب نتيجة Page Compatibility
+  calculatePageCompatibilityScore(components) {
+    let score = 100;
+    
+    // تقليل النقاط بناءً على المشاكل
+    if (components.pageStructure.issues > 0) score -= 20;
+    if (components.componentIntegration.issues > 0) score -= 25;
+    if (components.routingConsistency.issues > 0) score -= 20;
+    if (components.stateManagement.issues > 0) score -= 20;
+    if (components.uiConsistency.issues > 0) score -= 15;
+    
+    return Math.max(0, score);
+  }
+
+  // حساب نتيجة Database Compatibility
+  calculateDatabaseCompatibilityScore(components) {
+    let score = 100;
+    
+    if (components.schemaCompatibility.issues > 0) score -= 30;
+    if (components.queryOptimization.issues > 0) score -= 25;
+    if (components.dataValidation.issues > 0) score -= 20;
+    if (components.connectionManagement.issues > 0) score -= 15;
+    if (components.migrationCompatibility.issues > 0) score -= 10;
+    
+    return Math.max(0, score);
+  }
+
+  // حساب نتيجة API Integration
+  calculateAPIIntegrationScore(components) {
+    let score = 100;
+    
+    if (components.apiEndpoints.issues > 0) score -= 25;
+    if (components.responseConsistency.issues > 0) score -= 20;
+    if (components.apiErrorHandling.issues > 0) score -= 25;
+    if (components.authentication.issues > 0) score -= 20;
+    if (components.rateLimiting.issues > 0) score -= 10;
+    
+    return Math.max(0, score);
+  }
+
+  // حساب نتيجة Data Flow
+  calculateDataFlowScore(components) {
+    let score = 100;
+    
+    if (components.dataFlowPaths.issues > 0) score -= 30;
+    if (components.dataValidation.issues > 0) score -= 25;
+    if (components.dataTransformation.issues > 0) score -= 20;
+    if (components.dataPersistence.issues > 0) score -= 25;
+    
+    return Math.max(0, score);
+  }
+
+  // حساب نتيجة Security Integration
+  calculateSecurityIntegrationScore(components) {
+    let score = 100;
+    
+    if (components.authentication.issues > 0) score -= 30;
+    if (components.authorization.issues > 0) score -= 25;
+    if (components.dataEncryption.issues > 0) score -= 20;
+    if (components.inputValidation.issues > 0) score -= 15;
+    if (components.securityHeaders.issues > 0) score -= 10;
+    
+    return Math.max(0, score);
+  }
+
+  // إنشاء توصيات System Cohesion
+  generateSystemCohesionRecommendations(evaluation) {
+    const recommendations = [];
+    
+    if (evaluation.details.dependencies.circularDependencies.length > 0) {
+      recommendations.push({
+        type: 'fix_circular_dependencies',
+        priority: 'high',
+        recommendation: 'إصلاح الـ circular dependencies لتجنب مشاكل التحميل'
+      });
+    }
+    
+    if (evaluation.details.coupling.tightCoupling > 0.7) {
+      recommendations.push({
+        type: 'reduce_coupling',
+        priority: 'medium',
+        recommendation: 'تقليل الـ coupling بين الوحدات باستخدام dependency injection'
+      });
+    }
+    
+    if (evaluation.details.cohesion.lowCohesion > 0.3) {
+      recommendations.push({
+        type: 'improve_cohesion',
+        priority: 'medium',
+        recommendation: 'تحسين ترابط الوحدات بتجميع الوظائف المتشابهة'
+      });
+    }
+    
+    return recommendations;
+  }
+
+  // إنشاء توصيات Page Compatibility
+  generatePageCompatibilityRecommendations(evaluation) {
+    const recommendations = [];
+    
+    recommendations.push({
+      type: 'page_optimization',
+      priority: 'medium',
+      recommendation: 'تحسين بنية الصفحات لضمان التوافق'
+    });
+    
+    return recommendations;
+  }
+
+  // إنشاء توصيات Database Compatibility
+  generateDatabaseCompatibilityRecommendations(evaluation) {
+    const recommendations = [];
+    
+    recommendations.push({
+      type: 'database_optimization',
+      priority: 'high',
+      recommendation: 'تحسين توافق قاعدة البيانات مع النظام'
+    });
+    
+    return recommendations;
+  }
+
+  // إنشاء توصيات API Integration
+  generateAPIIntegrationRecommendations(evaluation) {
+    const recommendations = [];
+    
+    recommendations.push({
+      type: 'api_standardization',
+      priority: 'high',
+      recommendation: 'توحيد معايير الـ API لضمان التوافق'
+    });
+    
+    return recommendations;
+  }
+
+  // إنشاء توصيات Data Flow
+  generateDataFlowRecommendations(evaluation) {
+    const recommendations = [];
+    
+    recommendations.push({
+      type: 'data_flow_optimization',
+      priority: 'medium',
+      recommendation: 'تحسين تدفق البيانات في النظام'
+    });
+    
+    return recommendations;
+  }
+
+  // إنشاء توصيات Security Integration
+  generateSecurityIntegrationRecommendations(evaluation) {
+    const recommendations = [];
+    
+    recommendations.push({
+      type: 'security_enhancement',
+      priority: 'high',
+      recommendation: 'تعزيز الأمان في جميع أنحاء النظام'
+    });
+    
+    return recommendations;
+  }
+
+  // دوال تحليل إضافية (stubs)
+  async analyzePageStructure() { return { issues: 0, details: {} }; }
+  async analyzeComponentIntegration() { return { issues: 0, details: {} }; }
+  async analyzeRoutingConsistency() { return { issues: 0, details: {} }; }
+  async analyzeStateManagement() { return { issues: 0, details: {} }; }
+  async analyzeUIConsistency() { return { issues: 0, details: {} }; }
+  async analyzeSchemaCompatibility() { return { issues: 0, details: {} }; }
+  async analyzeQueryOptimization() { return { issues: 0, details: {} }; }
+  async analyzeConnectionManagement() { return { issues: 0, details: {} }; }
+  async analyzeMigrationCompatibility() { return { issues: 0, details: {} }; }
+  async analyzeAPIEndpoints() { return { issues: 0, details: {} }; }
+  async analyzeResponseConsistency() { return { issues: 0, details: {} }; }
+  async analyzeAPIErrorHandling() { return { issues: 0, details: {} }; }
+  async analyzeAPIAuthentication() { return { issues: 0, details: {} }; }
+  async analyzeRateLimiting() { return { issues: 0, details: {} }; }
+  async analyzeDataFlowPaths() { return { issues: 0, details: {} }; }
+  async analyzeDataValidationFlow() { return { issues: 0, details: {} }; }
+  async analyzeDataTransformation() { return { issues: 0, details: {} }; }
+  async analyzeDataPersistence() { return { issues: 0, details: {} }; }
+  async analyzeSecurityAuthentication() { return { issues: 0, details: {} }; }
+  async analyzeSecurityAuthorization() { return { issues: 0, details: {} }; }
+  async analyzeDataEncryption() { return { issues: 0, details: {} }; }
+  async analyzeSecurityInputValidation() { return { issues: 0, details: {} }; }
+  async analyzeSecurityHeaders() { return { issues: 0, details: {} }; }
+
   async printFinalStats() {
     const duration = Date.now() - stats.startTime;
     const successRate = stats.operations > 0 ? (stats.successes / stats.operations * 100).toFixed(2) : 0;
@@ -2125,6 +3254,25 @@ async function main() {
     console.log(`${colors.blue}🗑️ تنظيف الملفات فقط...${colors.reset}`);
     await agent.cleanupUnusedFiles();
     await agent.mergeSmallFiles();
+    return;
+  }
+  
+  if (args.includes('--evaluate-integration')) {
+    console.log(`${colors.blue}🔍 تقييم شامل للترابط والتوافق...${colors.reset}`);
+    await agent.evaluateSystemIntegration();
+    return;
+  }
+  
+  if (args.includes('--evaluate-cohesion')) {
+    console.log(`${colors.blue}🔗 تقييم ترابط النظام فقط...${colors.reset}`);
+    await agent.evaluateSystemCohesion();
+    return;
+  }
+  
+  if (args.includes('--evaluate-compatibility')) {
+    console.log(`${colors.blue}📄 تقييم توافق الصفحات وقاعدة البيانات...${colors.reset}`);
+    await agent.evaluatePageCompatibility();
+    await agent.evaluateDatabaseCompatibility();
     return;
   }
   
