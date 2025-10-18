@@ -145,7 +145,7 @@ export default function TherapistSchedulesPage() {
 
       if (error) throw error;
       await loadSchedules();
-      alert("تم الحذف بنجاح");
+      alert(&quot;تم الحذف بنجاح&quot;);
     } catch (error) {
       logger.error(&quot;Error deleting schedule&quot;, error);
       alert(&quot;فشل في الحذف&quot;);

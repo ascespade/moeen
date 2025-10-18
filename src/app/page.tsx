@@ -107,7 +107,7 @@ const features = [
     description: "كل طفل يحصل على خطة مخصصة تلبي احتياجاته الدقيقة",
   },
     id: 4,
-    title: "مرافق متطورة",
+    title: &quot;مرافق متطورة&quot;,
     description: &quot;بيئة آمنة، محفزة، ومجهزة بأحدث التقنيات العلاجية&quot;,
     icon: &quot;🏥&quot;,
   },
