@@ -7,8 +7,27 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/Card";
+import {
+  Users,
+  Settings,
+  Shield,
+  Activity,
+  UserPlus,
+  UserMinus,
+  Key,
+  Lock,
+  Unlock,
+  AlertTriangle,
+  CheckCircle,
+  Clock,
+  RefreshCw,
 } from "lucide-react";
 
 // src/app/admin/page.tsx
