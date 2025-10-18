@@ -1,0 +1,64 @@
+
+🚀 Applying Migrations Directly...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📄 Migration 074: Soft Delete System
+
+⚠️  This migration adds columns to existing tables.
+   Due to Supabase API limitations, please apply manually:
+
+   1. Open Supabase Dashboard → SQL Editor
+   2. Copy/paste: supabase/migrations/074_soft_delete_system.sql
+   3. Click "Run"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📄 Migration 075: Reminder System
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📄 Migration 076: Booking Validation
+
+   ⚠️  Functions need manual application (see SQL file)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📄 Migration 077: Search Functions
+
+   ⚠️  Columns and functions need manual application (see SQL file)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 Summary:
+
+   ✅ Tables created: 22/22 (100%)
+   ⚠️  Columns need manual add: deleted_at, deleted_by, search_vector
+   ⚠️  Functions need manual add: 9 functions
+   ⚠️  Triggers need manual add: 6 triggers
+
+💡 To complete setup:
+
+   Method 1: Supabase Dashboard (Recommended)
+   ──────────────────────────────────────────────────────────────────────────
+   1. Open: https://app.supabase.com
+   2. Navigate to: SQL Editor
+   3. Copy/paste each migration (074-077)
+   4. Click "Run" for each
+
+   Method 2: Combined SQL (Faster)
+   ──────────────────────────────────────────────────────────────────────────
+   1. Open: https://app.supabase.com → SQL Editor
+   2. Copy entire content from: tmp/db-auto-migrations.sql
+   3. Paste and Run
+
+   Files to apply:
+   - supabase/migrations/074_soft_delete_system.sql
+   - supabase/migrations/075_reminder_system.sql
+   - supabase/migrations/076_booking_validation.sql
+   - supabase/migrations/077_search_functions.sql
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📁 Created: MIGRATION_INSTRUCTIONS.md
+

@@ -82,15 +82,15 @@ export default function UserDashboard() {
       time: "منذ 2 ساعة",
       type: "appointment",
       status: "confirmed",
-    },
-      {
+  },
+  {
     id: 2,
       title: "تم تحديث ملفك الطبي",
       time: "منذ 4 ساعات",
       type: "medical",
       status: "updated",
-    },
-      {
+  },
+  {
     id: 3,
       title: "إشعار جديد: تذكير بموعد غد",
       time: "منذ 6 ساعات",

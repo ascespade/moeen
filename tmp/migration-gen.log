@@ -1,0 +1,42 @@
+
+🚀 Starting Migration Generation...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+📝 Generating Soft Delete Migration...
+
+✅ Generated soft delete for 20 tables
+
+📝 Generating Reminder System Migration...
+
+✅ Generated reminder system
+
+📝 Generating Booking Validation Migration...
+
+✅ Generated booking validation
+
+📝 Generating Search Functions Migration...
+
+✅ Generated search functions
+
+✅ Created: supabase/migrations/074_soft_delete_system.sql
+
+✅ Created: supabase/migrations/075_reminder_system.sql
+
+✅ Created: supabase/migrations/076_booking_validation.sql
+
+✅ Created: supabase/migrations/077_search_functions.sql
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Generated 4 migrations successfully!
+
+📁 Files created:
+   - supabase/migrations/074_soft_delete_system.sql
+   - supabase/migrations/075_reminder_system.sql
+   - supabase/migrations/076_booking_validation.sql
+   - supabase/migrations/077_search_functions.sql
+   - tmp/db-auto-migrations.sql (combined)
+   - tmp/migrations-metadata.json
+

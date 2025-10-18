@@ -1,0 +1,160 @@
+
+⚡ Final Fixer - إصلاح شامل
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Backup created
+
+Files with errors: 265
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Fixing files...
+
+✅ src/app/(admin)/admin/audit-logs/page.tsx
+✅ src/app/(admin)/admin/dashboard/page.tsx
+✅ src/app/(admin)/admin/page.tsx
+✅ src/app/(admin)/admin/roles/page.tsx
+✅ src/app/(admin)/admin/therapists/schedules/page.tsx
+✅ src/app/(admin)/admin/users/page.tsx
+✅ src/app/(admin)/agent-dashboard/page.tsx
+✅ src/app/(admin)/analytics/page.tsx
+✅ src/app/(admin)/chatbot/analytics/page.tsx
+✅ src/app/(admin)/chatbot/flows/[flowId]/page.tsx
+✅ src/app/(admin)/chatbot/flows/page.tsx
+✅ src/app/(admin)/chatbot/integrations/page.tsx
+✅ src/app/(admin)/chatbot/templates/[id]/page.tsx
+✅ src/app/(admin)/chatbot/templates/page.tsx
+✅ src/app/(admin)/conversations/page.tsx
+✅ src/app/(admin)/crm/activities/page.tsx
+✅ src/app/(admin)/crm/contacts/page.tsx
+✅ src/app/(admin)/crm/dashboard/page.tsx
+✅ src/app/(admin)/crm/deals/page.tsx
+✅ src/app/(admin)/crm/flows/page.tsx
+✅ src/app/(admin)/crm/leads/page.tsx
+✅ src/app/(admin)/integrations/page.tsx
+✅ src/app/(admin)/messages/page.tsx
+✅ src/app/(admin)/notifications/page.tsx
+✅ src/app/(admin)/owner/dashboard/page.tsx
+✅ src/app/(admin)/performance/page.tsx
+✅ src/app/(admin)/security/page.tsx
+✅ src/app/(admin)/sessions/[id]/notes/page.tsx
+✅ src/app/(admin)/settings/api-keys/page.tsx
+✅ src/app/(admin)/settings/page.tsx
+✅ src/app/(admin)/supervisor/dashboard/page.tsx
+✅ src/app/(auth)/login/page.tsx
+✅ src/app/(auth)/register/page.tsx
+✅ src/app/(doctor)/doctor-dashboard/page.tsx
+✅ src/app/(health)/appointments/page.tsx
+✅ src/app/(health)/approvals/page.tsx
+✅ src/app/(health)/family-support/page.tsx
+✅ src/app/(health)/health/patients/[id]/iep/page.tsx
+✅ src/app/(health)/health/sessions/book/page.tsx
+✅ src/app/(health)/insurance/page.tsx
+✅ src/app/(health)/insurance-claims/page.tsx
+✅ src/app/(health)/medical-file/page.tsx
+✅ src/app/(health)/patients/[id]/page.tsx
+✅ src/app/(health)/patients/page.tsx
+✅ src/app/(health)/progress-tracking/page.tsx
+✅ src/app/(health)/sessions/page.tsx
+✅ src/app/(health)/therapy/page.tsx
+✅ src/app/(health)/training/page.tsx
+✅ src/app/(info)/about/page.tsx
+✅ src/app/(info)/contact/page.tsx
+✅ src/app/(marketing)/faq/page.tsx
+✅ src/app/(marketing)/features/page.tsx
+✅ src/app/(marketing)/pricing/page.tsx
+✅ src/app/(patient)/patient-dashboard/page.tsx
+✅ src/app/(public)/chatbot/page.tsx
+✅ src/app/(staff)/staff-dashboard/page.tsx
+✅ src/app/(supervisor)/supervisor-dashboard/page.tsx
+✅ src/app/api/admin/configs/route.ts
+✅ src/app/api/admin/security-events/route.ts
+✅ src/app/api/appointments/route.ts
+✅ src/app/api/auth/forgot-password/route.ts
+✅ src/app/api/auth/login/route.ts
+✅ src/app/api/auth/logout/route.ts
+✅ src/app/api/auth/register/route.ts
+✅ src/app/api/dashboard/metrics/route.ts
+✅ src/app/api/i18n/route.ts
+✅ src/app/api/patients/[id]/activation/step/route.ts
+✅ src/app/dashboard/doctor/page.tsx
+✅ src/app/dashboard/page.tsx
+✅ src/app/dashboard/patient/page.tsx
+✅ src/app/dashboard/staff/page.tsx
+✅ src/app/dashboard/supervisor/page.tsx
+✅ src/app/dashboard/user/page.tsx
+✅ src/app/page.tsx
+✅ src/components/accessibility/AccessibilitySettings.tsx
+✅ src/components/appointments/AppointmentManager.tsx
+✅ src/components/auth/ProtectedRoute.tsx
+✅ src/components/booking/AvailableSlotsPicker.tsx
+✅ src/components/booking/SessionTypeSelector.tsx
+✅ src/components/charts/AreaChart.tsx
+✅ src/components/charts/BarChart.tsx
+✅ src/components/charts/LineChart.tsx
+✅ src/components/chatbot/MoainChatbot.tsx
+✅ src/components/chatbot/MoeenChatbot.tsx
+✅ src/components/common/ErrorBoundary.tsx
+✅ src/components/common/LanguageSwitcher.tsx
+✅ src/components/common/OptimizedImage.tsx
+✅ src/components/common/PerformanceOptimizedImage.tsx
+✅ src/components/insurance/ClaimsManager.tsx
+✅ src/components/layout/SmartHeader.tsx
+✅ src/components/patient/ActivationFlow.tsx
+✅ src/components/patient/PreVisitChecklist.tsx
+✅ src/components/patients/PatientRecords.tsx
+✅ src/components/providers/DesignSystemProvider.tsx
+✅ src/components/settings/SettingsTabs.tsx
+✅ src/components/shared/EmptyState.tsx
+✅ src/components/shared/Form.tsx
+✅ src/components/shared/Modal.tsx
+✅ src/components/shared/Tabs.tsx
+✅ src/components/shell/Sidebar.tsx
+✅ src/components/ui/Button.tsx
+✅ src/components/ui/Card.tsx
+✅ src/components/ui/Checkbox.tsx
+✅ src/components/ui/Input.tsx
+✅ src/components/ui/Modal.tsx
+✅ src/components/ui/Select.tsx
+✅ src/components/ui/ThemeSwitch.tsx
+✅ src/components/ui/index.ts
+✅ src/context/TranslationProvider.tsx
+✅ src/core/api/base-handler.ts
+✅ src/core/config/index.ts
+✅ src/core/store/index.ts
+✅ src/hooks/useBrandColorFromLogo.ts
+✅ src/hooks/useErrorHandler.tsx
+✅ src/hooks/useTranslation.ts
+✅ src/lib/auth/authorize.ts
+✅ src/lib/insurance/providers.ts
+✅ src/lib/integrations/test-helpers.ts
+✅ src/lib/payments/moyasar.ts
+✅ src/lib/private-center-integration.ts
+✅ src/lib/saudi-health-integration.ts
+✅ src/lib/saudi-ministry-health-integration.ts
+✅ src/lib/seo/metadata.ts
+✅ src/lib/slack-integration.ts
+✅ src/lib/supabase/server.ts
+✅ src/lib/testing/test-utils.ts
+✅ src/lib/whatsapp-business-api.ts
+✅ src/middleware/rate-limiter.ts
+
+✅ Fixed 128 files
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Applying Prettier + ESLint...
+
+✅ Libraries applied (with warnings)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Final verification...
+
+⚠️  Lint: 0 errors
+
+⚠️  Build: 0 errors
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+

@@ -1,0 +1,32 @@
+
+> moeen@0.1.0 lint
+> next lint
+
+
+./src/app/(admin)/admin/therapists/schedules/page.tsx
+47:6  Warning: React Hook useEffect has a missing dependency: 'loadSchedules'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+303:24  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+303:29  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/(admin)/sessions/[id]/notes/page.tsx
+36:6  Warning: React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/(admin)/settings/api-keys/page.tsx
+194:6  Warning: React Hook useEffect has a missing dependency: 'loadApiKeys'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/(admin)/supervisor/dashboard/page.tsx
+48:6  Warning: React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/(health)/health/patients/[id]/iep/page.tsx
+57:6  Warning: React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/page.tsx
+295:17  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+295:47  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+524:26  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+524:36  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/components/booking/AvailableSlotsPicker.tsx
+39:6  Warning: React Hook useEffect has a missing dependency: 'loadAvailableSlots'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules

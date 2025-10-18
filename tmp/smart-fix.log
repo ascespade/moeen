@@ -1,0 +1,134 @@
+
+🧠 Smart Fix Agent Starting...
+
+📝 Fixing logger imports...
+
+   ✅ Fixed: src/components/insurance/ClaimsManager.tsx
+   ✅ Fixed: src/lib/notifications/email.ts
+   ✅ Fixed: src/lib/notifications/sms.ts
+   ✅ Fixed: src/lib/monitoring/logger.ts
+   ✅ Fixed: src/lib/cache/redis.ts
+   ✅ Fixed: src/lib/integrations/test-helpers.ts
+   ✅ Fixed: src/core/api/base-handler.ts
+   ✅ Fixed: src/core/hooks/index.ts
+   ✅ Fixed: src/app/api/auth/register/route.ts
+   ✅ Fixed: src/app/api/auth/logout/route.ts
+   ✅ Fixed: src/app/api/auth/reset-password/route.ts
+   ✅ Fixed: src/app/api/auth/forgot-password/route.ts
+   ✅ Fixed: src/app/api/auth/login/route.ts
+   ✅ Fixed: src/app/api/payments/webhook/stripe/route.ts
+
+   Fixed 14 logger import files
+
+🔍 Fixing "possibly undefined" errors...
+
+
+   Fixed 0 undefined files
+
+🔧 Fixing Supabase client usage...
+
+
+   Fixed 0 Supabase files
+
+⚛️  Fixing React Hooks exhaustive-deps...
+
+   ✅ Fixed: src/components/booking/SessionTypeSelector.tsx
+   ✅ Fixed: src/components/common/LanguageSwitcher.tsx
+   ✅ Fixed: src/components/common/DirectionToggle.tsx
+   ✅ Fixed: src/components/LanguageSwitcher.tsx
+   ✅ Fixed: src/components/appointments/AppointmentManager.tsx
+   ✅ Fixed: src/components/patients/PatientRecords.tsx
+   ✅ Fixed: src/components/layout/SmartHeader.tsx
+   ✅ Fixed: src/components/layout/GlobalHeader.tsx
+   ✅ Fixed: src/components/chatbot/MoainChatbot.tsx
+   ✅ Fixed: src/hooks/useT.tsx
+   ✅ Fixed: src/app/dashboard/user/page.tsx
+   ✅ Fixed: src/app/(public)/chatbot/page.tsx
+   ✅ Fixed: src/app/(admin)/conversations/page.tsx
+   ✅ Fixed: src/app/(admin)/admin/payments/invoices/page.tsx
+   ✅ Fixed: src/app/(admin)/admin/page.tsx
+   ✅ Fixed: src/app/(admin)/admin/therapists/schedules/page.tsx
+   ✅ Fixed: src/app/(admin)/admin/logs/page.tsx
+   ✅ Fixed: src/app/(admin)/admin/users/page.tsx
+   ✅ Fixed: src/app/(admin)/agent-dashboard/page.tsx
+
+   Fixed 19 React Hooks files
+
+📝 Fixing unescaped entities...
+
+   ✅ Fixed: src/app/page.tsx
+   ✅ Fixed: src/app/(admin)/admin/therapists/schedules/page.tsx
+
+   Fixed 2 entity files
+
+📦 Fixing export errors...
+
+   ✅ Fixed: src/lib/accessibility/aria-utils.ts
+   ✅ Fixed: src/lib/encryption.ts
+   ✅ Fixed: src/lib/seo/metadata.ts
+
+   Fixed 3 export files
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 Smart Fix Summary:
+
+   Logger Imports: 14 fixes
+   Possibly Undefined: 0 fixes
+   Supabase Client: 0 fixes
+   React Hooks Deps: 19 fixes
+   Unescaped Entities: 2 fixes
+   Export Errors: 3 fixes
+
+   Total: 38 files fixed
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔄 Re-running checks...
+
+
+> moeen@0.1.0 lint
+> next lint
+
+
+./src/app/(admin)/admin/therapists/schedules/page.tsx
+33:69  Error: Parsing error: Expression expected.
+
+./src/app/(admin)/sessions/[id]/notes/page.tsx
+35:6  Warning: React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/(admin)/settings/api-keys/page.tsx
+193:6  Warning: React Hook useEffect has a missing dependency: 'loadApiKeys'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/(admin)/supervisor/dashboard/page.tsx
+47:6  Warning: React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/(health)/health/patients/[id]/iep/page.tsx
+56:6  Warning: React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/page.tsx
+122:10  Error: Parsing error: Expression expected.
+
+./src/components/booking/AvailableSlotsPicker.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'loadAvailableSlots'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+Error: Command failed: npm run lint
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at checkExecSyncError (node:child_process:916:11)
+    at execSync (node:child_process:988:15)
+    at main (/workspace/.agent-system/smart-fix.js:296:3)
+    at Object.<anonymous> (/workspace/.agent-system/smart-fix.js:299:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12) {
+  status: 1,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 178722,
+  stdout: null,
+  stderr: null
+}

@@ -86,7 +86,7 @@ const mockRecentActivities: RecentActivity[] = [
     timestamp: "منذ 5 دقائق",
     status: "success",
   },
-    {
+  {
     id: "2",
     type: "claim",
     title: "مطالبة تأمين",
@@ -94,7 +94,7 @@ const mockRecentActivities: RecentActivity[] = [
     timestamp: "منذ 15 دقيقة",
     status: "success",
   },
-    {
+  {
     id: "3",
     type: "patient",
     title: "مريض محظور",
@@ -102,7 +102,7 @@ const mockRecentActivities: RecentActivity[] = [
     timestamp: "منذ 30 دقيقة",
     status: "error",
   },
-    {
+  {
     id: "4",
     type: "staff",
     title: "تسجيل دخول",
@@ -110,7 +110,7 @@ const mockRecentActivities: RecentActivity[] = [
     timestamp: "منذ ساعة",
     status: "info",
   },
-    {
+  {
     id: "5",
     type: "payment",
     title: "دفعة مستلمة",

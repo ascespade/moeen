@@ -1,0 +1,679 @@
+{
+  "pages": {
+    "src/app/(admin)/admin/page.tsx": [
+      "admin-summary-card",
+      "user-item",
+      "config-item"
+    ],
+    "src/app/(admin)/admin/therapists/schedules/page.tsx": [
+      "id",
+      "full_name",
+      "email",
+      "*",
+      "therapist_id",
+      "day_of_week",
+      "start_time",
+      "end_time",
+      "is_available"
+    ],
+    "src/app/(admin)/settings/api-keys/page.tsx": [
+      "NEXT_PUBLIC_SUPABASE_URL",
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      "SUPABASE_SERVICE_ROLE",
+      "WHATSAPP_ACCESS_TOKEN",
+      "WHATSAPP_PHONE_NUMBER_ID",
+      "GOOGLE_CLIENT_ID",
+      "GOOGLE_CLIENT_SECRET",
+      "NEXT_PUBLIC_STRIPE_PUBLIC_KEY",
+      "STRIPE_SECRET_KEY",
+      "SMTP_HOST",
+      "SMTP_USER",
+      "SMTP_PASS"
+    ],
+    "src/app/(admin)/sessions/[id]/notes/page.tsx": [
+      "id",
+      "*",
+      "session_id",
+      "therapist_id",
+      "goals_worked_on",
+      "home_recommendations",
+      "next_session_focus",
+      "session_rating"
+    ],
+    "src/app/(admin)/owner/dashboard/page.tsx": [
+      "amount",
+      "*",
+      "patient:patients(first_name)",
+      "therapist:users!appointments_doctor_id_fkey(name)"
+    ],
+    "src/app/(info)/contact/page.tsx": [
+      "name",
+      "email",
+      "subject",
+      "message"
+    ],
+    "src/app/layout.tsx": [
+      "theme-color"
+    ],
+    "src/app/(auth)/register/page.tsx": [
+      "name",
+      "email",
+      "password",
+      "confirmPassword",
+      "agreeToTerms"
+    ],
+    "src/app/(auth)/reset-password/page.tsx": [
+      "password",
+      "confirmPassword"
+    ],
+    "src/app/(auth)/login/page.tsx": [
+      "email",
+      "password",
+      "rememberMe"
+    ],
+    "src/app/(health)/health/patients/[id]/iep/page.tsx": [
+      "*"
+    ],
+    "src/app/(health)/health/sessions/book/page.tsx": [
+      "id",
+      "first_name",
+      "last_name",
+      "date_of_birth",
+      "patient_id",
+      "doctor_id",
+      "session_type_id",
+      "appointment_date",
+      "appointment_time",
+      "duration",
+      "status",
+      "notes"
+    ]
+  },
+  "components": {
+    "src/components/booking/SessionTypeSelector.tsx": [
+      "*"
+    ],
+    "src/components/dashboard/Charts.tsx": [
+      "WhatsApp",
+      "Web",
+      "Other"
+    ],
+    "src/components/charts/LineChart.tsx": [
+      "Value"
+    ],
+    "src/components/charts/AreaChart.tsx": [
+      "Value"
+    ],
+    "src/components/charts/BarChart.tsx": [
+      "Value"
+    ]
+  },
+  "api_endpoints": {
+    "src/core/api/base-handler.ts": [
+      "resource_type",
+      "resource_id",
+      "user_id",
+      "created_at"
+    ],
+    "src/app/api/notifications/templates/route.ts": [
+      "*",
+      "variables",
+      "createdBy"
+    ],
+    "src/app/api/notifications/send/route.ts": [
+      "id",
+      "full_name",
+      "email",
+      "user_id",
+      "meta"
+    ],
+    "src/app/api/health/route.ts": [
+      "id"
+    ],
+    "src/app/api/errors/route.ts": [
+      "*",
+      "error_name",
+      "error_message",
+      "error_stack",
+      "error_info",
+      "user_agent",
+      "url",
+      "timestamp"
+    ],
+    "src/app/api/auth/register/route.ts": [
+      "email",
+      "general",
+      "id"
+    ],
+    "src/app/api/auth/logout/route.ts": [
+      "last_login"
+    ],
+    "src/app/api/auth/forgot-password/route.ts": [
+      "id",
+      "email"
+    ],
+    "src/app/api/auth/login/route.ts": [
+      "id",
+      "locked_until",
+      "failed_login_attempts",
+      "email",
+      "name",
+      "role",
+      "status",
+      "is_active",
+      "login_count",
+      "total_sessions"
+    ],
+    "src/app/api/supervisor/call-request/route.ts": [
+      "full_name",
+      "phone",
+      "role",
+      "requester_id",
+      "reason",
+      "status",
+      "assigned_to",
+      "recipient_id",
+      "channel"
+    ],
+    "src/app/api/dashboard/metrics/route.ts": [
+      "id",
+      "*",
+      "created_at",
+      "status",
+      "appointment_date",
+      "specialty",
+      "type"
+    ],
+    "src/app/api/dashboard/logs/route.ts": [
+      "*"
+    ],
+    "src/app/api/webhook/whatsapp/route.ts": [
+      "*",
+      "conversation_id",
+      "whatsapp_message_id",
+      "sender_type",
+      "message_text",
+      "message_type",
+      "is_handled",
+      "intent_id",
+      "confidence_score"
+    ],
+    "src/app/api/user/preferences/route.ts": [
+      "theme",
+      "language",
+      "timezone",
+      "notifications_enabled"
+    ],
+    "src/app/api/crm/contacts/route.ts": [
+      "*",
+      "is_active",
+      "total_conversations",
+      "total_messages",
+      "satisfaction_avg"
+    ],
+    "src/app/api/reports/export/route.ts": [
+      "${filename}",
+      "*"
+    ],
+    "src/app/api/reports/dashboard-metrics/route.ts": [
+      "id",
+      "created_at",
+      "activated",
+      "status",
+      "payment_status",
+      "scheduled_at",
+      "amount",
+      "method",
+      "claim_status"
+    ],
+    "src/app/api/analytics/action/route.ts": [
+      "user_id",
+      "session_id",
+      "created_at"
+    ],
+    "src/app/api/analytics/metrics/route.ts": [
+      "metric_name",
+      "metric_value",
+      "timestamp"
+    ],
+    "src/app/api/healthcare/appointments/route.ts": [
+      "status"
+    ],
+    "src/app/api/healthcare/patients/route.ts": [
+      "is_active"
+    ],
+    "src/app/api/slack/notify/route.ts": [
+      "first_name",
+      "last_name",
+      "phone",
+      "specialty"
+    ],
+    "src/app/api/medical-records/route.ts": [
+      "id",
+      "full_name",
+      "user_id",
+      "patient_id",
+      "record_type",
+      "created_by"
+    ],
+    "src/app/api/medical-records/upload/route.ts": [
+      "id",
+      "userId",
+      "patientId",
+      "recordType",
+      "title",
+      "content",
+      "attachments",
+      "tags",
+      "isConfidential",
+      "uploadedBy"
+    ],
+    "src/app/api/admin/stats/route.ts": [
+      "role",
+      "isActive",
+      "createdAt",
+      "scheduledAt",
+      "key",
+      "value"
+    ],
+    "src/app/api/admin/configs/route.ts": [
+      "*",
+      "id",
+      "createdBy",
+      "action",
+      "entityType",
+      "entityId",
+      "userId",
+      "metadata"
+    ],
+    "src/app/api/admin/system-config/route.ts": [
+      "*"
+    ],
+    "src/app/api/admin/users/route.ts": [
+      "id",
+      "permissions",
+      "createdBy",
+      "action",
+      "entityType",
+      "entityId",
+      "userId",
+      "metadata"
+    ],
+    "src/app/api/admin/users/[id]/route.ts": [
+      "id",
+      "email",
+      "name",
+      "role",
+      "status",
+      "user_id",
+      "role_id",
+      "timestamp",
+      "ip_address",
+      "user_agent"
+    ],
+    "src/app/api/appointments/route.ts": [
+      "id",
+      "user_id",
+      "full_name",
+      "speciality",
+      "action",
+      "resource_type",
+      "ip_address",
+      "user_agent",
+      "status",
+      "severity",
+      "error_message",
+      "duration_ms",
+      "patient_id",
+      "doctor_id",
+      "scheduled_at",
+      "payment_status",
+      "booking_source",
+      "type",
+      "created_by",
+      "last_activity_at"
+    ],
+    "src/app/api/appointments/book/route.ts": [
+      "id",
+      "isActivated",
+      "userId",
+      "speciality",
+      "schedule",
+      "scheduledAt",
+      "duration",
+      "patientId",
+      "status",
+      "paymentStatus",
+      "createdBy",
+      "bookingSource",
+      "lastActivityAt"
+    ],
+    "src/app/api/appointments/conflict-check/route.ts": [
+      "id",
+      "scheduledAt",
+      "duration",
+      "status",
+      "patients(fullName)"
+    ],
+    "src/app/api/appointments/[id]/route.ts": [
+      "action",
+      "user_id",
+      "resource_type",
+      "resource_id",
+      "ip_address",
+      "user_agent",
+      "status",
+      "severity",
+      "duration_ms"
+    ],
+    "src/app/api/appointments/availability/route.ts": [
+      "schedule",
+      "speciality",
+      "scheduledAt",
+      "duration"
+    ],
+    "src/app/api/upload/route.ts": [
+      "user_id",
+      "patient_id",
+      "file_name",
+      "file_path",
+      "file_url",
+      "file_type",
+      "file_size",
+      "upload_type",
+      "uploaded_at"
+    ],
+    "src/app/api/patients/journey/route.ts": [
+      "id",
+      "isActivated",
+      "fullName",
+      "email",
+      "patientId",
+      "scheduledAt",
+      "status",
+      "*",
+      "fileType",
+      "title",
+      "content",
+      "isActive",
+      "type",
+      "recipientId",
+      "recipientType",
+      "message",
+      "channels",
+      "priority"
+    ],
+    "src/app/api/patients/[id]/activation/step/route.ts": [
+      "*",
+      "id",
+      "activated",
+      "meta"
+    ],
+    "src/app/api/patients/[id]/activate/route.ts": [
+      "*",
+      "id",
+      "activated",
+      "created_at",
+      "updated_at"
+    ],
+    "src/app/api/insurance/claims/route.ts": [
+      "patientId",
+      "attachments",
+      "status",
+      "createdBy",
+      "action",
+      "entityType",
+      "entityId",
+      "userId",
+      "metadata"
+    ],
+    "src/app/api/i18n/route.ts": [
+      "key",
+      "value"
+    ],
+    "src/app/api/translations/missing/route.ts": [
+      "*",
+      "requested_at"
+    ],
+    "src/app/api/translations/[lang]/route.ts": [
+      "id",
+      "key",
+      "value"
+    ],
+    "src/app/api/sessions/available-slots/route.ts": [
+      "*",
+      "doctor_id",
+      "appointment_time",
+      "duration"
+    ],
+    "src/app/api/doctors/availability/route.ts": [
+      "doctor_id",
+      "scheduled_at",
+      "status"
+    ],
+    "src/app/api/chatbot/flows/route.ts": [
+      "*"
+    ],
+    "src/app/api/chatbot/intents/route.ts": [
+      "*",
+      "is_active"
+    ],
+    "src/app/api/chatbot/conversations/route.ts": [
+      "conversation_state"
+    ],
+    "src/app/api/chatbot/appointments/route.ts": [
+      "*",
+      "id",
+      "patient_id",
+      "doctor_id",
+      "appointment_date",
+      "appointment_time",
+      "duration_minutes",
+      "type",
+      "status",
+      "notes",
+      "created_by",
+      "confirmation_code"
+    ],
+    "src/app/api/chatbot/config/route.ts": [
+      "*",
+      "id"
+    ],
+    "src/app/api/webhooks/payments/moyasar/route.ts": [
+      "*"
+    ],
+    "src/app/api/webhooks/payments/stripe/route.ts": [
+      "*"
+    ]
+  },
+  "all_fields": [
+    "${filename}",
+    "${metadata.originalName}",
+    "*",
+    "AuthStore",
+    "DataStore",
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
+    "Moeen",
+    "NEXT_PUBLIC_STRIPE_PUBLIC_KEY",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "Other",
+    "SEHA",
+    "SHOON",
+    "SMTP_HOST",
+    "SMTP_PASS",
+    "SMTP_USER",
+    "STRIPE_SECRET_KEY",
+    "SUPABASE_SERVICE_ROLE",
+    "TATMAN",
+    "UIStore",
+    "Value",
+    "WHATSAPP_ACCESS_TOKEN",
+    "WHATSAPP_PHONE_NUMBER_ID",
+    "Web",
+    "WhatsApp",
+    "action",
+    "activated",
+    "admin-summary-card",
+    "agreeToTerms",
+    "amount",
+    "appointment_confirmation",
+    "appointment_date",
+    "appointment_time",
+    "assigned_to",
+    "attachments",
+    "bookingSource",
+    "booking_source",
+    "channel",
+    "channels",
+    "claim_status",
+    "close-button",
+    "confidence_score",
+    "config-item",
+    "confirmPassword",
+    "confirmation_code",
+    "content",
+    "conversation_id",
+    "conversation_state",
+    "count",
+    "createdAt",
+    "createdBy",
+    "created_at",
+    "created_by",
+    "crisis_level",
+    "date_of_birth",
+    "day_of_week",
+    "details",
+    "doctor_id",
+    "duration",
+    "duration_minutes",
+    "duration_ms",
+    "email",
+    "end_time",
+    "entityId",
+    "entityType",
+    "error_info",
+    "error_message",
+    "error_name",
+    "error_stack",
+    "failed_login_attempts",
+    "fileType",
+    "file_metadata",
+    "file_name",
+    "file_path",
+    "file_size",
+    "file_type",
+    "file_url",
+    "first_name",
+    "fullName",
+    "full_name",
+    "general",
+    "goals_worked_on",
+    "home_recommendations",
+    "id",
+    "integration_config_id",
+    "integration_type",
+    "intent_id",
+    "ip_address",
+    "isActivated",
+    "isActive",
+    "isConfidential",
+    "is_active",
+    "is_available",
+    "is_handled",
+    "key",
+    "language",
+    "lastActivityAt",
+    "last_activity_at",
+    "last_login",
+    "last_name",
+    "locale",
+    "locked_until",
+    "login_count",
+    "message",
+    "message_text",
+    "message_type",
+    "messages",
+    "meta",
+    "metadata",
+    "method",
+    "metric_name",
+    "metric_value",
+    "modal",
+    "name",
+    "namespace",
+    "next_session_focus",
+    "notes",
+    "notifications_enabled",
+    "password",
+    "patient:patients(first_name)",
+    "patientId",
+    "patient_id",
+    "patients(fullName)",
+    "paymentStatus",
+    "payment_status",
+    "performance_metrics",
+    "permissions",
+    "phone",
+    "priority",
+    "profile",
+    "reason",
+    "recipientId",
+    "recipientType",
+    "recipient_id",
+    "recordType",
+    "record_type",
+    "rememberMe",
+    "request_data",
+    "requested_at",
+    "requester_id",
+    "resource_id",
+    "resource_type",
+    "response_data",
+    "role",
+    "role_id",
+    "satisfaction_avg",
+    "schedule",
+    "scheduledAt",
+    "scheduled_at",
+    "search-input",
+    "sender_type",
+    "session_id",
+    "session_rating",
+    "session_type_id",
+    "severity",
+    "speciality",
+    "specialty",
+    "start_time",
+    "status",
+    "subject",
+    "tags",
+    "test_template",
+    "test_type",
+    "tested_by",
+    "theme",
+    "theme-color",
+    "therapist:users!appointments_doctor_id_fkey(name)",
+    "therapist_id",
+    "timestamp",
+    "timezone",
+    "title",
+    "total_conversations",
+    "total_messages",
+    "total_sessions",
+    "type",
+    "updated_at",
+    "upload_type",
+    "uploadedBy",
+    "uploaded_at",
+    "url",
+    "user-item",
+    "userId",
+    "user_agent",
+    "user_id",
+    "value",
+    "variables",
+    "whatsapp_message_id"
+  ]
+}

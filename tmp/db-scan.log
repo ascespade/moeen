@@ -1,0 +1,76 @@
+
+🔍 Introspecting database schema...
+
+⚠️  Using fallback table detection...
+✅ Found 20 tables
+
+📊 Analyzing: users
+   - 280 rows
+   - 34 columns
+📊 Analyzing: patients
+   - 8 rows
+   - 30 columns
+📊 Analyzing: appointments
+   - 33 rows
+   - 23 columns
+📊 Analyzing: session_types
+   - 0 rows
+   - 0 columns
+📊 Analyzing: therapist_schedules
+   - 0 rows
+   - 0 columns
+📊 Analyzing: therapist_specializations
+   - 0 rows
+   - 0 columns
+📊 Analyzing: therapist_time_off
+   - 0 rows
+   - 0 columns
+📊 Analyzing: ieps
+   - 0 rows
+   - 0 columns
+📊 Analyzing: iep_goals
+   - 0 rows
+   - 0 columns
+📊 Analyzing: goal_progress
+   - 0 rows
+   - 0 columns
+📊 Analyzing: session_notes
+   - 0 rows
+   - 0 columns
+📊 Analyzing: call_requests
+   - 0 rows
+   - 0 columns
+📊 Analyzing: notification_rules
+   - 0 rows
+   - 0 columns
+📊 Analyzing: supervisor_notification_preferences
+   - 0 rows
+   - 0 columns
+📊 Analyzing: notification_logs
+   - 0 rows
+   - 0 columns
+📊 Analyzing: notifications
+   - 1 rows
+   - 16 columns
+📊 Analyzing: payments
+   - 0 rows
+   - 0 columns
+📊 Analyzing: insurance_claims
+   - 0 rows
+   - 0 columns
+📊 Analyzing: chat_conversations
+   - 0 rows
+   - 0 columns
+📊 Analyzing: chat_messages
+   - 0 rows
+   - 0 columns
+
+✅ Database introspection complete
+
+📊 Summary:
+   - Total tables: 20
+   - Total rows: 322
+   - Tables with data: 4
+
+📁 Saved: tmp/db-schema-scan.json
+

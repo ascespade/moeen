@@ -1,0 +1,406 @@
+
+🚀 Smart Auto-Fix Starting...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Backup created
+
+⚠️  Installing Prettier...
+
+✅ ESLint loaded
+
+🔍 Finding files...
+
+Found 382 files
+
+🔧 Phase 1: Syntax Fixes
+
+   ✅ src/app/(admin)/admin/audit-logs/page.tsx
+   ✅ src/app/(admin)/admin/dashboard/page.tsx
+   ✅ src/app/(admin)/admin/logs/page.tsx
+   ✅ src/app/(admin)/admin/page.tsx
+   ✅ src/app/(admin)/admin/payments/invoices/page.tsx
+   ✅ src/app/(admin)/admin/roles/page.tsx
+   ✅ src/app/(admin)/admin/therapists/schedules/page.tsx
+   ✅ src/app/(admin)/admin/users/page.tsx
+   ✅ src/app/(admin)/agent-dashboard/page.tsx
+   ✅ src/app/(admin)/analytics/page.tsx
+   ✅ src/app/(admin)/chatbot/analytics/page.tsx
+   ✅ src/app/(admin)/chatbot/flows/[flowId]/page.tsx
+   ✅ src/app/(admin)/chatbot/flows/page.tsx
+   ✅ src/app/(admin)/chatbot/integrations/page.tsx
+   ✅ src/app/(admin)/chatbot/templates/[id]/page.tsx
+   ✅ src/app/(admin)/chatbot/templates/page.tsx
+   ✅ src/app/(admin)/conversations/page.tsx
+   ✅ src/app/(admin)/crm/activities/page.tsx
+   ✅ src/app/(admin)/crm/contacts/[id]/page.tsx
+   ✅ src/app/(admin)/crm/contacts/page.tsx
+   ✅ src/app/(admin)/crm/dashboard/page.tsx
+   ✅ src/app/(admin)/crm/deals/kanban/page.tsx
+   ✅ src/app/(admin)/crm/deals/page.tsx
+   ✅ src/app/(admin)/crm/flows/page.tsx
+   ✅ src/app/(admin)/crm/leads/page.tsx
+   ✅ src/app/(admin)/flow/page.tsx
+   ✅ src/app/(admin)/integrations/page.tsx
+   ✅ src/app/(admin)/messages/page.tsx
+   ✅ src/app/(admin)/notifications/page.tsx
+   ✅ src/app/(admin)/owner/dashboard/page.tsx
+   ✅ src/app/(admin)/performance/page.tsx
+   ✅ src/app/(admin)/profile/page.tsx
+   ✅ src/app/(admin)/review/page.tsx
+   ✅ src/app/(admin)/security/page.tsx
+   ✅ src/app/(admin)/sessions/[id]/notes/page.tsx
+   ✅ src/app/(admin)/settings/api-keys/page.tsx
+   ✅ src/app/(admin)/settings/page.tsx
+   ✅ src/app/(admin)/supervisor/dashboard/page.tsx
+   ✅ src/app/(auth)/forgot-password/page.tsx
+   ✅ src/app/(auth)/layout.tsx
+   ✅ src/app/(auth)/login/page.tsx
+   ✅ src/app/(auth)/register/page.tsx
+   ✅ src/app/(auth)/reset-password/page.tsx
+   ✅ src/app/(auth)/verify-email/page.tsx
+   ✅ src/app/(doctor)/doctor-dashboard/page.tsx
+   ✅ src/app/(health)/appointments/page.tsx
+   ✅ src/app/(health)/approvals/page.tsx
+   ✅ src/app/(health)/family-support/page.tsx
+   ✅ src/app/(health)/health/patients/[id]/iep/page.tsx
+   ✅ src/app/(health)/health/sessions/book/page.tsx
+   ✅ src/app/(health)/insurance/page.tsx
+   ✅ src/app/(health)/insurance-claims/page.tsx
+   ✅ src/app/(health)/medical-file/page.tsx
+   ✅ src/app/(health)/patients/[id]/page.tsx
+   ✅ src/app/(health)/patients/page.tsx
+   ✅ src/app/(health)/progress-tracking/page.tsx
+   ✅ src/app/(health)/sessions/page.tsx
+   ✅ src/app/(health)/therapy/page.tsx
+   ✅ src/app/(health)/training/page.tsx
+   ✅ src/app/(info)/about/page.tsx
+   ✅ src/app/(info)/contact/page.tsx
+   ✅ src/app/(info)/layout.tsx
+   ✅ src/app/(legal)/layout.tsx
+   ✅ src/app/(legal)/privacy/page.tsx
+   ✅ src/app/(legal)/terms/page.tsx
+   ✅ src/app/(marketing)/faq/page.tsx
+   ✅ src/app/(marketing)/features/page.tsx
+   ✅ src/app/(marketing)/pricing/page.tsx
+   ✅ src/app/(patient)/patient-dashboard/page.tsx
+   ✅ src/app/(public)/chatbot/page.tsx
+   ✅ src/app/(staff)/staff-dashboard/page.tsx
+   ✅ src/app/(supervisor)/supervisor-dashboard/page.tsx
+   ✅ src/app/api/admin/configs/route.ts
+   ✅ src/app/api/admin/security-events/route.ts
+   ✅ src/app/api/admin/stats/route.ts
+   ✅ src/app/api/admin/system-config/route.ts
+   ✅ src/app/api/admin/users/[id]/route.ts
+   ✅ src/app/api/admin/users/route.ts
+   ✅ src/app/api/agent/completion/route.ts
+   ✅ src/app/api/agent/logs/route.ts
+   ✅ src/app/api/agent/status/route.ts
+   ✅ src/app/api/agent/tasks/route.ts
+   ✅ src/app/api/analytics/action/route.ts
+   ✅ src/app/api/analytics/metrics/route.ts
+   ✅ src/app/api/appointments/[id]/route.ts
+   ✅ src/app/api/appointments/availability/route.ts
+   ✅ src/app/api/appointments/book/route.ts
+   ✅ src/app/api/appointments/conflict-check/route.ts
+   ✅ src/app/api/appointments/route.ts
+   ✅ src/app/api/audit-logs/route.ts
+   ✅ src/app/api/auth/forgot-password/route.ts
+   ✅ src/app/api/auth/login/route.ts
+   ✅ src/app/api/auth/logout/route.ts
+   ✅ src/app/api/auth/me/route.ts
+   ✅ src/app/api/auth/reset-password/route.ts
+   ✅ src/app/api/chatbot/appointments/route.ts
+   ✅ src/app/api/chatbot/config/route.ts
+   ✅ src/app/api/chatbot/conversations/route.ts
+   ✅ src/app/api/chatbot/flows/route.ts
+   ✅ src/app/api/chatbot/intents/route.ts
+   ✅ src/app/api/chatbot/message/route.ts
+   ✅ src/app/api/chatbot/messages/route.ts
+   ✅ src/app/api/crm/contacts/route.ts
+   ✅ src/app/api/crm/leads/route.ts
+   ✅ src/app/api/crm/stats/route.ts
+   ✅ src/app/api/dashboard/logs/route.ts
+   ✅ src/app/api/dashboard/metrics/route.ts
+   ✅ src/app/api/doctors/availability/route.ts
+   ✅ src/app/api/errors/route.ts
+   ✅ src/app/api/health/route.ts
+   ✅ src/app/api/healthcare/appointments/route.ts
+   ✅ src/app/api/healthcare/patients/route.ts
+   ✅ src/app/api/i18n/route.ts
+   ✅ src/app/api/insurance/claims/[id]/submit/route.ts
+   ✅ src/app/api/insurance/claims/route.ts
+   ✅ src/app/api/medical-records/route.ts
+   ✅ src/app/api/medical-records/upload/route.ts
+   ✅ src/app/api/notifications/send/route.ts
+   ✅ src/app/api/notifications/templates/route.ts
+   ✅ src/app/api/patients/[id]/activate/route.ts
+   ✅ src/app/api/patients/[id]/activation/step/route.ts
+   ✅ src/app/api/patients/journey/route.ts
+   ✅ src/app/api/payments/webhook/stripe/route.ts
+   ✅ src/app/api/reports/dashboard-metrics/route.ts
+   ✅ src/app/api/reports/export/route.ts
+   ✅ src/app/api/sessions/available-slots/route.ts
+   ✅ src/app/api/slack/notify/route.ts
+   ✅ src/app/api/slack/webhook/route.ts
+   ✅ src/app/api/supervisor/call-request/route.ts
+   ✅ src/app/api/test/clear-rate-limit/route.ts
+   ✅ src/app/api/translations/[lang]/route.ts
+   ✅ src/app/api/translations/missing/route.ts
+   ✅ src/app/api/upload/route.ts
+   ✅ src/app/api/user/preferences/route.ts
+   ✅ src/app/api/webhook/whatsapp/route.ts
+   ✅ src/app/api/webhooks/payments/moyasar/route.ts
+   ✅ src/app/api/webhooks/payments/stripe/route.ts
+   ✅ src/app/dashboard/doctor/page.tsx
+   ✅ src/app/dashboard/page.tsx
+   ✅ src/app/dashboard/patient/page.tsx
+   ✅ src/app/dashboard/staff/page.tsx
+   ✅ src/app/dashboard/supervisor/page.tsx
+   ✅ src/app/dashboard/user/page.tsx
+   ✅ src/app/error.tsx
+   ✅ src/app/layout.minimal.tsx
+   ✅ src/app/not-found.tsx
+   ✅ src/app/page.tsx
+   ✅ src/app/robots.ts
+   ✅ src/app/sitemap.ts
+   ✅ src/app/uikit/guidelines/page.tsx
+   ✅ src/app/uikit/page.tsx
+   ✅ src/components/LanguageSwitcher.tsx
+   ✅ src/components/accessibility/AccessibilitySettings.tsx
+   ✅ src/components/appointments/AppointmentManager.tsx
+   ✅ src/components/auth/ProtectedRoute.tsx
+   ✅ src/components/booking/AvailableSlotsPicker.tsx
+   ✅ src/components/booking/SessionTypeSelector.tsx
+   ✅ src/components/charts/AreaChart.tsx
+   ✅ src/components/charts/BarChart.tsx
+   ✅ src/components/charts/LineChart.tsx
+   ✅ src/components/chatbot/MoainChatbot.tsx
+   ✅ src/components/chatbot/MoeenChatbot.tsx
+   ✅ src/components/common/DirectionToggle.tsx
+   ✅ src/components/common/EmptyState.tsx
+   ✅ src/components/common/ErrorBoundary.tsx
+   ✅ src/components/common/LanguageSwitcher.tsx
+   ✅ src/components/common/LiveDot.tsx
+   ✅ src/components/common/OptimizedImage.tsx
+   ✅ src/components/common/PerformanceOptimizedImage.tsx
+   ✅ src/components/common/PlaceholderSquare.tsx
+   ✅ src/components/common/StatusBanner.tsx
+   ✅ src/components/dashboard/Charts.tsx
+   ✅ src/components/dashboard/KpiCard.tsx
+   ✅ src/components/insurance/ClaimsManager.tsx
+   ✅ src/components/layout/GlobalHeader.tsx
+   ✅ src/components/layout/SmartHeader.tsx
+   ✅ src/components/patient/ActivationFlow.tsx
+   ✅ src/components/patient/PreVisitChecklist.tsx
+   ✅ src/components/patients/PatientRecords.tsx
+   ✅ src/components/providers/DesignSystemProvider.tsx
+   ✅ src/components/providers/I18nProvider.tsx
+   ✅ src/components/providers/UIProvider.tsx
+   ✅ src/components/settings/KeywordEditor.tsx
+   ✅ src/components/settings/SettingsTabs.tsx
+   ✅ src/components/shared/DataTable.tsx
+   ✅ src/components/shared/EmptyState.tsx
+   ✅ src/components/shared/Form.tsx
+   ✅ src/components/shared/LiveRegion.tsx
+   ✅ src/components/shared/Modal.tsx
+   ✅ src/components/shared/ScreenReaderOnly.tsx
+   ✅ src/components/shared/Tabs.tsx
+   ✅ src/components/shell/HeaderSimple.tsx
+   ✅ src/components/shell/Sidebar.tsx
+   ✅ src/components/ui/Badge.tsx
+   ✅ src/components/ui/Button.tsx
+   ✅ src/components/ui/Card.tsx
+   ✅ src/components/ui/Checkbox.tsx
+   ✅ src/components/ui/DataTable.tsx
+   ✅ src/components/ui/Input.tsx
+   ✅ src/components/ui/Label.tsx
+   ✅ src/components/ui/LoadingSpinner.tsx
+   ✅ src/components/ui/Modal.tsx
+   ✅ src/components/ui/ScrollArea.tsx
+   ✅ src/components/ui/Select.tsx
+   ✅ src/components/ui/Skeleton.tsx
+   ✅ src/components/ui/Switch.tsx
+   ✅ src/components/ui/Table.tsx
+   ✅ src/components/ui/Tabs.tsx
+   ✅ src/components/ui/Textarea.tsx
+   ✅ src/components/ui/ThemeSwitch.tsx
+   ✅ src/components/ui/Toast.tsx
+   ✅ src/components/ui/Tooltip.tsx
+   ✅ src/config/env.ts
+   ✅ src/context/TranslationProvider.tsx
+   ✅ src/core/api/base-handler.ts
+   ✅ src/core/api/client.ts
+   ✅ src/core/config/index.ts
+   ✅ src/core/errors/index.ts
+   ✅ src/core/hooks/index.ts
+   ✅ src/core/store/index.ts
+   ✅ src/core/types/index.ts
+   ✅ src/core/validation/index.ts
+   ✅ src/design-system/types.ts
+   ✅ src/hooks/useApi.ts
+   ✅ src/hooks/useAsync.ts
+   ✅ src/hooks/useAuth.ts
+   ✅ src/hooks/useBrandColorFromLogo.ts
+   ✅ src/hooks/useDebounce.ts
+   ✅ src/hooks/useErrorHandler.tsx
+   ✅ src/hooks/useForm.ts
+   ✅ src/hooks/useI18n.ts
+   ✅ src/hooks/useIntersectionObserver.ts
+   ✅ src/hooks/useKeyPress.ts
+   ✅ src/hooks/useKeyboardNavigation.ts
+   ✅ src/hooks/useMediaQuery.ts
+   ✅ src/hooks/useMemoryLeakPrevention.ts
+   ✅ src/hooks/usePageI18n.ts
+   ✅ src/hooks/usePerformance.ts
+   ✅ src/hooks/useT.tsx
+   ✅ src/hooks/useThrottle.ts
+   ✅ src/hooks/useTranslation.ts
+   ✅ src/lib/accessibility/aria-utils.ts
+   ✅ src/lib/accessibility.ts
+   ✅ src/lib/ai-assistant.ts
+   ✅ src/lib/analytics-stubs.ts
+   ✅ src/lib/api/config.ts
+   ✅ src/lib/api/whatsapp.ts
+   ✅ src/lib/auth/authorize.ts
+   ✅ src/lib/auth/roles.ts
+   ✅ src/lib/cache/redis.ts
+   ✅ src/lib/cache-system.ts
+   ✅ src/lib/cn.ts
+   ✅ src/lib/cuid.ts
+   ✅ src/lib/database/connection-pool.ts
+   ✅ src/lib/database-utils.ts
+   ✅ src/lib/database.ts
+   ✅ src/lib/deployment/docker.ts
+   ✅ src/lib/design-tokens.ts
+   ✅ src/lib/dynamic-content-manager.ts
+   ✅ src/lib/dynamic-theme-manager.ts
+   ✅ src/lib/encryption.ts
+   ✅ src/lib/error-handler.ts
+   ✅ src/lib/errors/api-errors.ts
+   ✅ src/lib/file-upload.ts
+   ✅ src/lib/i18n/translationService.ts
+   ✅ src/lib/insurance/providers.ts
+   ✅ src/lib/integration-system.ts
+   ✅ src/lib/integrations/test-helpers.ts
+   ✅ src/lib/logger.ts
+   ✅ src/lib/monitoring/logger.ts
+   ✅ src/lib/notifications/email.ts
+   ✅ src/lib/notifications/sms.ts
+   ✅ src/lib/optimization/performance.ts
+   ✅ src/lib/payments/moyasar.ts
+   ✅ src/lib/payments/stripe.ts
+   ✅ src/lib/performance-monitor.ts
+   ✅ src/lib/performance-optimizations.ts
+   ✅ src/lib/performance.ts
+   ✅ src/lib/private-center-integration.ts
+   ✅ src/lib/rate-limiter.ts
+   ✅ src/lib/responsive-design.ts
+   ✅ src/lib/router.ts
+   ✅ src/lib/saudi-health-integration.ts
+   ✅ src/lib/saudi-ministry-health-integration.ts
+   ✅ src/lib/security.ts
+   ✅ src/lib/seo/metadata.ts
+   ✅ src/lib/slack-integration.ts
+   ✅ src/lib/supabase-real.ts
+   ✅ src/lib/supabase.ts
+   ✅ src/lib/supabaseClient.ts
+   ✅ src/lib/testing/test-utils.ts
+   ✅ src/lib/translations-manager.ts
+   ✅ src/lib/utils/request-helpers.ts
+   ✅ src/lib/utils.ts
+   ✅ src/lib/validation/schemas.ts
+   ✅ src/lib/validation/security.ts
+   ✅ src/lib/validation.ts
+   ✅ src/lib/whatsapp-business-api.ts
+   ✅ src/lib/whatsapp-integration.ts
+   ✅ src/middleware/auth.ts
+   ✅ src/middleware/rate-limiter.ts
+   ✅ src/middleware/security.ts
+   ✅ src/middleware.backup.ts
+   ✅ src/middleware.disabled.ts
+   ✅ src/middleware.prod.ts
+   ✅ src/scripts/complete-translations.ts
+   ✅ src/scripts/validate-dynamic-content.ts
+   ✅ src/theme/index.ts
+   ✅ src/types/api.ts
+   ✅ src/types/auth.ts
+   ✅ src/types/common.ts
+   ✅ src/types/components.ts
+   ✅ src/types/database.ts
+   ✅ src/types/index.ts
+   ✅ src/types/supabase.ts
+   ✅ src/utils/api-client.ts
+   ✅ src/utils/api.ts
+   ✅ src/utils/date.ts
+   ✅ src/utils/format.ts
+   ✅ src/utils/string.ts
+   ✅ src/utils/validation.ts
+
+✅ Phase 1 complete: 321 files
+
+🎨 Phase 2: Prettier Format
+
+
+✅ Phase 2 complete: 50 files formatted
+
+🔧 Phase 3: ESLint Fix
+
+
+✅ Phase 3 complete: 0 files
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 Total fixed: 321 files
+
+⚠️  677 errors:
+
+   appointments.test.ts: Prettier failed: ',' expected. (24:13)
+  22 |     it("should return appointments with filters", async () => {
+  23 |       const mockAppointments = [
+> 24 |           id: "1",
+     |             ^
+  25 |           patient_id: "patient-1",
+  26 |           doctor_id: "doctor-1",
+  27 |           appointment_date: "2024-01-20",
+   patients.test.ts: Prettier failed: ',' expected. (24:13)
+  22 |     it("should return patients with pagination", async () => {
+  23 |       const mockPatients = [
+> 24 |           id: "1",
+     |             ^
+  25 |           name: "أحمد محمد",
+  26 |           age: 25,
+  27 |           phone: "+966501234567",
+   setup.ts: Prettier failed: '>' expected. (22:17)
+  20 |   default: (props: any) => {
+  21 |     // eslint-disable-next-line @next/next/no-img-element
+> 22 |     return <img {...props} />;
+     |                 ^
+  23 |   },
+  24 | }));
+  25 |
+   whatsapp-business-api.test.ts: Prettier failed: ',' expected. (191:21)
+  189 |           Promise.resolve({
+  190 |             data: [
+> 191 |                 name: "appointment_confirmation",
+      |                     ^
+  192 |                 status: "APPROVED",
+  193 |                 category: "UTILITY",
+  194 |                 language: "ar",
+   page.tsx: Prettier failed: Expression expected. (7:2)
+   5 | import Image from "next/image";
+   6 |
+>  7 | ();
+     |  ^
+   8 |
+   9 | interface AuditLog {
+  10 |   id: string;
+
+🧪 Verifying build...
+
+⚠️  Build has issues
+
+   0 build errors
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+

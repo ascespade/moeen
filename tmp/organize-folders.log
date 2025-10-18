@@ -1,0 +1,809 @@
+[2025-10-18T07:17:24.782Z] [INFO] Creating backup...
+[2025-10-18T07:17:24.824Z] [SUCCESS] ✅ Backup created at tmp/backup-folders-1760771844782
+[2025-10-18T07:17:24.824Z] [INFO] 
+📦 Organizing components...
+[2025-10-18T07:17:24.825Z] [INFO] 
+   Organized 0 components
+
+[2025-10-18T07:17:24.825Z] [INFO] 📚 Organizing lib...
+[2025-10-18T07:17:24.825Z] [SUCCESS]    ✅ Created: lib/hooks/
+[2025-10-18T07:17:24.826Z] [SUCCESS]    ✅ Created: lib/constants/
+[2025-10-18T07:17:24.826Z] [SUCCESS]    ✅ Created: lib/types/
+[2025-10-18T07:17:24.826Z] [SUCCESS]    ✅ Created: lib/config/
+[2025-10-18T07:17:24.826Z] [SUCCESS]    ✅ Created: lib/validations/
+[2025-10-18T07:17:24.826Z] [SUCCESS]    ✅ Created: lib/helpers/
+[2025-10-18T07:17:24.826Z] [SUCCESS]    ✅ Created: lib/services/
+[2025-10-18T07:17:24.826Z] [INFO] 
+   Organized 7 lib folders
+
+[2025-10-18T07:17:24.827Z] [INFO] 🔍 Finding duplicate files...
+[2025-10-18T07:17:24.843Z] [WARN] 
+   ⚠️  Found 5 duplicate files:
+[2025-10-18T07:17:24.843Z] [WARN]       src/app/(doctor)/doctor-dashboard/page.tsx
+[2025-10-18T07:17:24.843Z] [WARN]       src/app/dashboard/doctor/page.tsx
+[2025-10-18T07:17:24.843Z] [INFO] 
+[2025-10-18T07:17:24.843Z] [WARN]       src/app/(patient)/patient-dashboard/page.tsx
+[2025-10-18T07:17:24.843Z] [WARN]       src/app/dashboard/patient/page.tsx
+[2025-10-18T07:17:24.843Z] [INFO] 
+[2025-10-18T07:17:24.843Z] [WARN]       src/app/(staff)/staff-dashboard/page.tsx
+[2025-10-18T07:17:24.843Z] [WARN]       src/app/dashboard/staff/page.tsx
+[2025-10-18T07:17:24.843Z] [INFO] 
+[2025-10-18T07:17:24.843Z] [WARN]       src/app/(supervisor)/supervisor-dashboard/page.tsx
+[2025-10-18T07:17:24.843Z] [WARN]       src/app/dashboard/supervisor/page.tsx
+[2025-10-18T07:17:24.843Z] [INFO] 
+[2025-10-18T07:17:24.843Z] [WARN]       src/lib/index.ts
+[2025-10-18T07:17:24.843Z] [WARN]       src/services/index.ts
+[2025-10-18T07:17:24.844Z] [INFO] 
+[2025-10-18T07:17:24.844Z] [INFO] 
+🌐 Organizing API routes...
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/agent
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/analytics
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/audit-logs
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/chatbot
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/crm
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/dashboard
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/doctors
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/errors
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/health
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/healthcare
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/i18n
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/insurance
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/medical-records
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/sessions
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/slack
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/supervisor
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/test
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/translations
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/upload
+[2025-10-18T07:17:24.844Z] [WARN]    ⚠️  Uncategorized route: /api/user
+[2025-10-18T07:17:24.845Z] [WARN]    ⚠️  Uncategorized route: /api/webhook
+[2025-10-18T07:17:24.845Z] [WARN]    ⚠️  Uncategorized route: /api/webhooks
+[2025-10-18T07:17:24.845Z] [INFO] 
+   Checked API routes organization
+
+[2025-10-18T07:17:24.845Z] [INFO] 📄 Creating index.ts files...
+[2025-10-18T07:17:24.845Z] [SUCCESS]    ✅ Created: src/components/layout/index.ts
+[2025-10-18T07:17:24.845Z] [SUCCESS]    ✅ Created: src/lib/utils/index.ts
+[2025-10-18T07:17:24.845Z] [INFO] 
+   Created 2 index files
+
+[2025-10-18T07:17:24.845Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:17:24.845Z] [INFO] 
+📊 Folder Organization Report:
+
+[2025-10-18T07:17:24.846Z] [INFO]    Components organized: 0
+[2025-10-18T07:17:24.846Z] [INFO]    Lib folders created: 7
+[2025-10-18T07:17:24.846Z] [INFO]    Duplicate files found: 5
+[2025-10-18T07:17:24.846Z] [INFO]    Index files created: 2
+[2025-10-18T07:17:24.846Z] [INFO] 
+   Total actions: 9
+[2025-10-18T07:17:24.846Z] [WARN] 
+   ⚠️  Please review duplicate files manually
+[2025-10-18T07:17:24.846Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:17:24.846Z] [INFO] 📁 Report saved: tmp/organize-folders-report.json
+
+[2025-10-18T07:17:24.846Z] [SUCCESS] ✅ Folder organization complete!
+
+[2025-10-18T07:20:39.180Z] [INFO] Creating backup...
+[2025-10-18T07:20:39.217Z] [SUCCESS] ✅ Backup created at tmp/backup-folders-1760772039180
+[2025-10-18T07:20:39.217Z] [INFO] 
+📦 Organizing components...
+[2025-10-18T07:20:39.218Z] [INFO] 
+   Organized 0 components
+
+[2025-10-18T07:20:39.218Z] [INFO] 📚 Organizing lib...
+[2025-10-18T07:20:39.218Z] [INFO] 
+   Organized 0 lib folders
+
+[2025-10-18T07:20:39.218Z] [INFO] 🔍 Finding duplicate files...
+[2025-10-18T07:20:39.234Z] [WARN] 
+   ⚠️  Found 5 duplicate files:
+[2025-10-18T07:20:39.234Z] [WARN]       src/app/(doctor)/doctor-dashboard/page.tsx
+[2025-10-18T07:20:39.234Z] [WARN]       src/app/dashboard/doctor/page.tsx
+[2025-10-18T07:20:39.234Z] [INFO] 
+[2025-10-18T07:20:39.234Z] [WARN]       src/app/(patient)/patient-dashboard/page.tsx
+[2025-10-18T07:20:39.234Z] [WARN]       src/app/dashboard/patient/page.tsx
+[2025-10-18T07:20:39.234Z] [INFO] 
+[2025-10-18T07:20:39.234Z] [WARN]       src/app/(staff)/staff-dashboard/page.tsx
+[2025-10-18T07:20:39.234Z] [WARN]       src/app/dashboard/staff/page.tsx
+[2025-10-18T07:20:39.234Z] [INFO] 
+[2025-10-18T07:20:39.234Z] [WARN]       src/app/(supervisor)/supervisor-dashboard/page.tsx
+[2025-10-18T07:20:39.234Z] [WARN]       src/app/dashboard/supervisor/page.tsx
+[2025-10-18T07:20:39.234Z] [INFO] 
+[2025-10-18T07:20:39.234Z] [WARN]       src/lib/index.ts
+[2025-10-18T07:20:39.234Z] [WARN]       src/services/index.ts
+[2025-10-18T07:20:39.234Z] [INFO] 
+[2025-10-18T07:20:39.235Z] [INFO] 
+🌐 Organizing API routes...
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/agent
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/analytics
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/audit-logs
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/chatbot
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/crm
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/dashboard
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/doctors
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/errors
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/health
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/healthcare
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/i18n
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/insurance
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/medical-records
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/sessions
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/slack
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/supervisor
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/test
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/translations
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/upload
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/user
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/webhook
+[2025-10-18T07:20:39.235Z] [WARN]    ⚠️  Uncategorized route: /api/webhooks
+[2025-10-18T07:20:39.235Z] [INFO] 
+   Checked API routes organization
+
+[2025-10-18T07:20:39.235Z] [INFO] 📄 Creating index.ts files...
+[2025-10-18T07:20:39.235Z] [INFO] 
+   Created 0 index files
+
+[2025-10-18T07:20:39.235Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:20:39.235Z] [INFO] 
+📊 Folder Organization Report:
+
+[2025-10-18T07:20:39.235Z] [INFO]    Components organized: 0
+[2025-10-18T07:20:39.235Z] [INFO]    Lib folders created: 0
+[2025-10-18T07:20:39.235Z] [INFO]    Duplicate files found: 5
+[2025-10-18T07:20:39.235Z] [INFO]    Index files created: 0
+[2025-10-18T07:20:39.235Z] [INFO] 
+   Total actions: 0
+[2025-10-18T07:20:39.235Z] [WARN] 
+   ⚠️  Please review duplicate files manually
+[2025-10-18T07:20:39.235Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:20:39.235Z] [INFO] 📁 Report saved: tmp/organize-folders-report.json
+
+[2025-10-18T07:20:39.236Z] [SUCCESS] ✅ Folder organization complete!
+
+[2025-10-18T07:20:50.294Z] [INFO] Creating backup...
+[2025-10-18T07:20:50.330Z] [SUCCESS] ✅ Backup created at tmp/backup-folders-1760772050294
+[2025-10-18T07:20:50.330Z] [INFO] 
+📦 Organizing components...
+[2025-10-18T07:20:50.330Z] [INFO] 
+   Organized 0 components
+
+[2025-10-18T07:20:50.331Z] [INFO] 📚 Organizing lib...
+[2025-10-18T07:20:50.331Z] [INFO] 
+   Organized 0 lib folders
+
+[2025-10-18T07:20:50.331Z] [INFO] 🔍 Finding duplicate files...
+[2025-10-18T07:20:50.346Z] [WARN] 
+   ⚠️  Found 5 duplicate files:
+[2025-10-18T07:20:50.346Z] [WARN]       src/app/(doctor)/doctor-dashboard/page.tsx
+[2025-10-18T07:20:50.346Z] [WARN]       src/app/dashboard/doctor/page.tsx
+[2025-10-18T07:20:50.346Z] [INFO] 
+[2025-10-18T07:20:50.346Z] [WARN]       src/app/(patient)/patient-dashboard/page.tsx
+[2025-10-18T07:20:50.346Z] [WARN]       src/app/dashboard/patient/page.tsx
+[2025-10-18T07:20:50.346Z] [INFO] 
+[2025-10-18T07:20:50.346Z] [WARN]       src/app/(staff)/staff-dashboard/page.tsx
+[2025-10-18T07:20:50.346Z] [WARN]       src/app/dashboard/staff/page.tsx
+[2025-10-18T07:20:50.346Z] [INFO] 
+[2025-10-18T07:20:50.346Z] [WARN]       src/app/(supervisor)/supervisor-dashboard/page.tsx
+[2025-10-18T07:20:50.346Z] [WARN]       src/app/dashboard/supervisor/page.tsx
+[2025-10-18T07:20:50.346Z] [INFO] 
+[2025-10-18T07:20:50.346Z] [WARN]       src/lib/index.ts
+[2025-10-18T07:20:50.346Z] [WARN]       src/services/index.ts
+[2025-10-18T07:20:50.346Z] [INFO] 
+[2025-10-18T07:20:50.346Z] [INFO] 
+🌐 Organizing API routes...
+[2025-10-18T07:20:50.346Z] [WARN]    ⚠️  Uncategorized route: /api/agent
+[2025-10-18T07:20:50.346Z] [WARN]    ⚠️  Uncategorized route: /api/analytics
+[2025-10-18T07:20:50.346Z] [WARN]    ⚠️  Uncategorized route: /api/audit-logs
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/chatbot
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/crm
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/dashboard
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/doctors
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/errors
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/health
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/healthcare
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/i18n
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/insurance
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/medical-records
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/sessions
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/slack
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/supervisor
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/test
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/translations
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/upload
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/user
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/webhook
+[2025-10-18T07:20:50.347Z] [WARN]    ⚠️  Uncategorized route: /api/webhooks
+[2025-10-18T07:20:50.347Z] [INFO] 
+   Checked API routes organization
+
+[2025-10-18T07:20:50.347Z] [INFO] 📄 Creating index.ts files...
+[2025-10-18T07:20:50.347Z] [INFO] 
+   Created 0 index files
+
+[2025-10-18T07:20:50.347Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:20:50.347Z] [INFO] 
+📊 Folder Organization Report:
+
+[2025-10-18T07:20:50.347Z] [INFO]    Components organized: 0
+[2025-10-18T07:20:50.347Z] [INFO]    Lib folders created: 0
+[2025-10-18T07:20:50.347Z] [INFO]    Duplicate files found: 5
+[2025-10-18T07:20:50.347Z] [INFO]    Index files created: 0
+[2025-10-18T07:20:50.347Z] [INFO] 
+   Total actions: 0
+[2025-10-18T07:20:50.347Z] [WARN] 
+   ⚠️  Please review duplicate files manually
+[2025-10-18T07:20:50.347Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:20:50.347Z] [INFO] 📁 Report saved: tmp/organize-folders-report.json
+
+[2025-10-18T07:20:50.347Z] [SUCCESS] ✅ Folder organization complete!
+
+[2025-10-18T07:23:51.680Z] [INFO] Creating backup...
+[2025-10-18T07:23:51.715Z] [SUCCESS] ✅ Backup created at tmp/backup-folders-1760772231680
+[2025-10-18T07:23:51.715Z] [INFO] 
+📦 Organizing components...
+[2025-10-18T07:23:51.716Z] [INFO] 
+   Organized 0 components
+
+[2025-10-18T07:23:51.716Z] [INFO] 📚 Organizing lib...
+[2025-10-18T07:23:51.716Z] [INFO] 
+   Organized 0 lib folders
+
+[2025-10-18T07:23:51.716Z] [INFO] 🔍 Finding duplicate files...
+[2025-10-18T07:23:51.731Z] [WARN] 
+   ⚠️  Found 5 duplicate files:
+[2025-10-18T07:23:51.731Z] [WARN]       src/app/(doctor)/doctor-dashboard/page.tsx
+[2025-10-18T07:23:51.732Z] [WARN]       src/app/dashboard/doctor/page.tsx
+[2025-10-18T07:23:51.732Z] [INFO] 
+[2025-10-18T07:23:51.732Z] [WARN]       src/app/(patient)/patient-dashboard/page.tsx
+[2025-10-18T07:23:51.732Z] [WARN]       src/app/dashboard/patient/page.tsx
+[2025-10-18T07:23:51.732Z] [INFO] 
+[2025-10-18T07:23:51.732Z] [WARN]       src/app/(staff)/staff-dashboard/page.tsx
+[2025-10-18T07:23:51.732Z] [WARN]       src/app/dashboard/staff/page.tsx
+[2025-10-18T07:23:51.732Z] [INFO] 
+[2025-10-18T07:23:51.732Z] [WARN]       src/app/(supervisor)/supervisor-dashboard/page.tsx
+[2025-10-18T07:23:51.732Z] [WARN]       src/app/dashboard/supervisor/page.tsx
+[2025-10-18T07:23:51.732Z] [INFO] 
+[2025-10-18T07:23:51.732Z] [WARN]       src/lib/index.ts
+[2025-10-18T07:23:51.732Z] [WARN]       src/services/index.ts
+[2025-10-18T07:23:51.732Z] [INFO] 
+[2025-10-18T07:23:51.732Z] [INFO] 
+🌐 Organizing API routes...
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/agent
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/analytics
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/audit-logs
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/chatbot
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/crm
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/dashboard
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/doctors
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/errors
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/health
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/healthcare
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/i18n
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/insurance
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/medical-records
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/sessions
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/slack
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/supervisor
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/test
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/translations
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/upload
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/user
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/webhook
+[2025-10-18T07:23:51.732Z] [WARN]    ⚠️  Uncategorized route: /api/webhooks
+[2025-10-18T07:23:51.733Z] [INFO] 
+   Checked API routes organization
+
+[2025-10-18T07:23:51.733Z] [INFO] 📄 Creating index.ts files...
+[2025-10-18T07:23:51.733Z] [INFO] 
+   Created 0 index files
+
+[2025-10-18T07:23:51.733Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:23:51.733Z] [INFO] 
+📊 Folder Organization Report:
+
+[2025-10-18T07:23:51.733Z] [INFO]    Components organized: 0
+[2025-10-18T07:23:51.733Z] [INFO]    Lib folders created: 0
+[2025-10-18T07:23:51.733Z] [INFO]    Duplicate files found: 5
+[2025-10-18T07:23:51.733Z] [INFO]    Index files created: 0
+[2025-10-18T07:23:51.733Z] [INFO] 
+   Total actions: 0
+[2025-10-18T07:23:51.733Z] [WARN] 
+   ⚠️  Please review duplicate files manually
+[2025-10-18T07:23:51.733Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:23:51.733Z] [INFO] 📁 Report saved: tmp/organize-folders-report.json
+
+[2025-10-18T07:23:51.733Z] [SUCCESS] ✅ Folder organization complete!
+
+[2025-10-18T07:24:01.408Z] [INFO] Creating backup...
+[2025-10-18T07:24:01.437Z] [SUCCESS] ✅ Backup created at tmp/backup-folders-1760772241407
+[2025-10-18T07:24:01.437Z] [INFO] 
+📦 Organizing components...
+[2025-10-18T07:24:01.438Z] [INFO] 
+   Organized 0 components
+
+[2025-10-18T07:24:01.438Z] [INFO] 📚 Organizing lib...
+[2025-10-18T07:24:01.438Z] [INFO] 
+   Organized 0 lib folders
+
+[2025-10-18T07:24:01.438Z] [INFO] 🔍 Finding duplicate files...
+[2025-10-18T07:24:01.454Z] [WARN] 
+   ⚠️  Found 5 duplicate files:
+[2025-10-18T07:24:01.454Z] [WARN]       src/app/(doctor)/doctor-dashboard/page.tsx
+[2025-10-18T07:24:01.454Z] [WARN]       src/app/dashboard/doctor/page.tsx
+[2025-10-18T07:24:01.454Z] [INFO] 
+[2025-10-18T07:24:01.454Z] [WARN]       src/app/(patient)/patient-dashboard/page.tsx
+[2025-10-18T07:24:01.454Z] [WARN]       src/app/dashboard/patient/page.tsx
+[2025-10-18T07:24:01.454Z] [INFO] 
+[2025-10-18T07:24:01.454Z] [WARN]       src/app/(staff)/staff-dashboard/page.tsx
+[2025-10-18T07:24:01.454Z] [WARN]       src/app/dashboard/staff/page.tsx
+[2025-10-18T07:24:01.454Z] [INFO] 
+[2025-10-18T07:24:01.454Z] [WARN]       src/app/(supervisor)/supervisor-dashboard/page.tsx
+[2025-10-18T07:24:01.454Z] [WARN]       src/app/dashboard/supervisor/page.tsx
+[2025-10-18T07:24:01.454Z] [INFO] 
+[2025-10-18T07:24:01.454Z] [WARN]       src/lib/index.ts
+[2025-10-18T07:24:01.455Z] [WARN]       src/services/index.ts
+[2025-10-18T07:24:01.455Z] [INFO] 
+[2025-10-18T07:24:01.455Z] [INFO] 
+🌐 Organizing API routes...
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/agent
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/analytics
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/audit-logs
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/chatbot
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/crm
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/dashboard
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/doctors
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/errors
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/health
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/healthcare
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/i18n
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/insurance
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/medical-records
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/sessions
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/slack
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/supervisor
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/test
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/translations
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/upload
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/user
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/webhook
+[2025-10-18T07:24:01.455Z] [WARN]    ⚠️  Uncategorized route: /api/webhooks
+[2025-10-18T07:24:01.455Z] [INFO] 
+   Checked API routes organization
+
+[2025-10-18T07:24:01.455Z] [INFO] 📄 Creating index.ts files...
+[2025-10-18T07:24:01.455Z] [INFO] 
+   Created 0 index files
+
+[2025-10-18T07:24:01.455Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:24:01.455Z] [INFO] 
+📊 Folder Organization Report:
+
+[2025-10-18T07:24:01.455Z] [INFO]    Components organized: 0
+[2025-10-18T07:24:01.455Z] [INFO]    Lib folders created: 0
+[2025-10-18T07:24:01.455Z] [INFO]    Duplicate files found: 5
+[2025-10-18T07:24:01.455Z] [INFO]    Index files created: 0
+[2025-10-18T07:24:01.455Z] [INFO] 
+   Total actions: 0
+[2025-10-18T07:24:01.455Z] [WARN] 
+   ⚠️  Please review duplicate files manually
+[2025-10-18T07:24:01.456Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:24:01.456Z] [INFO] 📁 Report saved: tmp/organize-folders-report.json
+
+[2025-10-18T07:24:01.456Z] [SUCCESS] ✅ Folder organization complete!
+
+[2025-10-18T07:24:08.171Z] [INFO] Creating backup...
+[2025-10-18T07:24:08.206Z] [SUCCESS] ✅ Backup created at tmp/backup-folders-1760772248171
+[2025-10-18T07:24:08.207Z] [INFO] 
+📦 Organizing components...
+[2025-10-18T07:24:08.207Z] [INFO] 
+   Organized 0 components
+
+[2025-10-18T07:24:08.207Z] [INFO] 📚 Organizing lib...
+[2025-10-18T07:24:08.207Z] [INFO] 
+   Organized 0 lib folders
+
+[2025-10-18T07:24:08.207Z] [INFO] 🔍 Finding duplicate files...
+[2025-10-18T07:24:08.223Z] [WARN] 
+   ⚠️  Found 5 duplicate files:
+[2025-10-18T07:24:08.223Z] [WARN]       src/app/(doctor)/doctor-dashboard/page.tsx
+[2025-10-18T07:24:08.223Z] [WARN]       src/app/dashboard/doctor/page.tsx
+[2025-10-18T07:24:08.223Z] [INFO] 
+[2025-10-18T07:24:08.223Z] [WARN]       src/app/(patient)/patient-dashboard/page.tsx
+[2025-10-18T07:24:08.223Z] [WARN]       src/app/dashboard/patient/page.tsx
+[2025-10-18T07:24:08.223Z] [INFO] 
+[2025-10-18T07:24:08.223Z] [WARN]       src/app/(staff)/staff-dashboard/page.tsx
+[2025-10-18T07:24:08.223Z] [WARN]       src/app/dashboard/staff/page.tsx
+[2025-10-18T07:24:08.223Z] [INFO] 
+[2025-10-18T07:24:08.223Z] [WARN]       src/app/(supervisor)/supervisor-dashboard/page.tsx
+[2025-10-18T07:24:08.223Z] [WARN]       src/app/dashboard/supervisor/page.tsx
+[2025-10-18T07:24:08.223Z] [INFO] 
+[2025-10-18T07:24:08.223Z] [WARN]       src/lib/index.ts
+[2025-10-18T07:24:08.223Z] [WARN]       src/services/index.ts
+[2025-10-18T07:24:08.223Z] [INFO] 
+[2025-10-18T07:24:08.224Z] [INFO] 
+🌐 Organizing API routes...
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/agent
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/analytics
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/audit-logs
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/chatbot
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/crm
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/dashboard
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/doctors
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/errors
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/health
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/healthcare
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/i18n
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/insurance
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/medical-records
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/sessions
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/slack
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/supervisor
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/test
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/translations
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/upload
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/user
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/webhook
+[2025-10-18T07:24:08.224Z] [WARN]    ⚠️  Uncategorized route: /api/webhooks
+[2025-10-18T07:24:08.224Z] [INFO] 
+   Checked API routes organization
+
+[2025-10-18T07:24:08.224Z] [INFO] 📄 Creating index.ts files...
+[2025-10-18T07:24:08.224Z] [INFO] 
+   Created 0 index files
+
+[2025-10-18T07:24:08.224Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:24:08.224Z] [INFO] 
+📊 Folder Organization Report:
+
+[2025-10-18T07:24:08.224Z] [INFO]    Components organized: 0
+[2025-10-18T07:24:08.224Z] [INFO]    Lib folders created: 0
+[2025-10-18T07:24:08.224Z] [INFO]    Duplicate files found: 5
+[2025-10-18T07:24:08.224Z] [INFO]    Index files created: 0
+[2025-10-18T07:24:08.225Z] [INFO] 
+   Total actions: 0
+[2025-10-18T07:24:08.225Z] [WARN] 
+   ⚠️  Please review duplicate files manually
+[2025-10-18T07:24:08.225Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:24:08.225Z] [INFO] 📁 Report saved: tmp/organize-folders-report.json
+
+[2025-10-18T07:24:08.225Z] [SUCCESS] ✅ Folder organization complete!
+
+[2025-10-18T07:29:33.854Z] [INFO] Creating backup...
+[2025-10-18T07:29:33.888Z] [SUCCESS] ✅ Backup created at tmp/backup-folders-1760772573854
+[2025-10-18T07:29:33.889Z] [INFO] 
+📦 Organizing components...
+[2025-10-18T07:29:33.890Z] [INFO] 
+   Organized 0 components
+
+[2025-10-18T07:29:33.890Z] [INFO] 📚 Organizing lib...
+[2025-10-18T07:29:33.890Z] [INFO] 
+   Organized 0 lib folders
+
+[2025-10-18T07:29:33.891Z] [INFO] 🔍 Finding duplicate files...
+[2025-10-18T07:29:33.906Z] [WARN] 
+   ⚠️  Found 5 duplicate files:
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/(doctor)/doctor-dashboard/page.tsx
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/dashboard/doctor/page.tsx
+[2025-10-18T07:29:33.906Z] [INFO] 
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/(patient)/patient-dashboard/page.tsx
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/dashboard/patient/page.tsx
+[2025-10-18T07:29:33.906Z] [INFO] 
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/(staff)/staff-dashboard/page.tsx
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/dashboard/staff/page.tsx
+[2025-10-18T07:29:33.906Z] [INFO] 
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/(supervisor)/supervisor-dashboard/page.tsx
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/dashboard/supervisor/page.tsx
+[2025-10-18T07:29:33.906Z] [INFO] 
+[2025-10-18T07:29:33.906Z] [WARN]       src/lib/index.ts
+[2025-10-18T07:29:33.906Z] [WARN]       src/services/index.ts
+[2025-10-18T07:29:33.906Z] [INFO] 
+[2025-10-18T07:29:33.907Z] [INFO] 
+🌐 Organizing API routes...
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/agent
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/analytics
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/audit-logs
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/chatbot
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/crm
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/dashboard
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/doctors
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/errors
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/health
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/healthcare
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/i18n
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/insurance
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/medical-records
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/sessions
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/slack
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/supervisor
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/test
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/translations
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/upload
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/user
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/webhook
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/webhooks
+[2025-10-18T07:29:33.908Z] [INFO] 
+   Checked API routes organization
+
+[2025-10-18T07:29:33.908Z] [INFO] 📄 Creating index.ts files...
+[2025-10-18T07:29:33.908Z] [INFO] 
+   Created 0 index files
+
+[2025-10-18T07:29:33.908Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:29:33.908Z] [INFO] 
+📊 Folder Organization Report:
+
+[2025-10-18T07:29:33.908Z] [INFO]    Components organized: 0
+[2025-10-18T07:29:33.908Z] [INFO]    Lib folders created: 0
+[2025-10-18T07:29:33.908Z] [INFO]    Duplicate files found: 5
+[2025-10-18T07:29:33.908Z] [INFO]    Index files created: 0
+[2025-10-18T07:29:33.908Z] [INFO] 
+   Total actions: 0
+[2025-10-18T07:29:33.908Z] [WARN] 
+   ⚠️  Please review duplicate files manually
+[2025-10-18T07:29:33.908Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:29:33.910Z] [INFO] 📁 Report saved: tmp/organize-folders-report.json
+
+[2025-10-18T07:29:33.910Z] [SUCCESS] ✅ Folder organization complete!
+
+[2025-10-18T07:46:23.957Z] [INFO] Creating backup...
+[2025-10-18T07:46:23.993Z] [SUCCESS] ✅ Backup created at tmp/backup-folders-1760773583957
+[2025-10-18T07:46:23.994Z] [INFO] 
+📦 Organizing components...
+[2025-10-18T07:46:23.994Z] [INFO] 
+   Organized 0 components
+
+[2025-10-18T07:46:23.994Z] [INFO] 📚 Organizing lib...
+[2025-10-18T07:46:23.995Z] [INFO] 
+   Organized 0 lib folders
+
+[2025-10-18T07:46:23.995Z] [INFO] 🔍 Finding duplicate files...
+[2025-10-18T07:46:24.010Z] [WARN] 
+   ⚠️  Found 5 duplicate files:
+[2025-10-18T07:46:24.010Z] [WARN]       src/app/(doctor)/doctor-dashboard/page.tsx
+[2025-10-18T07:46:24.011Z] [WARN]       src/app/dashboard/doctor/page.tsx
+[2025-10-18T07:46:24.011Z] [INFO] 
+[2025-10-18T07:46:24.011Z] [WARN]       src/app/(patient)/patient-dashboard/page.tsx
+[2025-10-18T07:46:24.011Z] [WARN]       src/app/dashboard/patient/page.tsx
+[2025-10-18T07:46:24.011Z] [INFO] 
+[2025-10-18T07:46:24.011Z] [WARN]       src/app/(staff)/staff-dashboard/page.tsx
+[2025-10-18T07:46:24.011Z] [WARN]       src/app/dashboard/staff/page.tsx
+[2025-10-18T07:46:24.011Z] [INFO] 
+[2025-10-18T07:46:24.011Z] [WARN]       src/app/(supervisor)/supervisor-dashboard/page.tsx
+[2025-10-18T07:46:24.011Z] [WARN]       src/app/dashboard/supervisor/page.tsx
+[2025-10-18T07:46:24.011Z] [INFO] 
+[2025-10-18T07:46:24.011Z] [WARN]       src/lib/index.ts
+[2025-10-18T07:46:24.011Z] [WARN]       src/services/index.ts
+[2025-10-18T07:46:24.011Z] [INFO] 
+[2025-10-18T07:46:24.011Z] [INFO] 
+🌐 Organizing API routes...
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/agent
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/analytics
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/audit-logs
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/chatbot
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/crm
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/dashboard
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/doctors
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/errors
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/health
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/healthcare
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/i18n
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/insurance
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/medical-records
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/sessions
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/slack
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/supervisor
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/test
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/translations
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/upload
+[2025-10-18T07:46:24.011Z] [WARN]    ⚠️  Uncategorized route: /api/user
+[2025-10-18T07:46:24.012Z] [WARN]    ⚠️  Uncategorized route: /api/webhook
+[2025-10-18T07:46:24.012Z] [WARN]    ⚠️  Uncategorized route: /api/webhooks
+[2025-10-18T07:46:24.012Z] [INFO] 
+   Checked API routes organization
+
+[2025-10-18T07:46:24.012Z] [INFO] 📄 Creating index.ts files...
+[2025-10-18T07:46:24.012Z] [INFO] 
+   Created 0 index files
+
+[2025-10-18T07:46:24.012Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:46:24.012Z] [INFO] 
+📊 Folder Organization Report:
+
+[2025-10-18T07:46:24.012Z] [INFO]    Components organized: 0
+[2025-10-18T07:46:24.012Z] [INFO]    Lib folders created: 0
+[2025-10-18T07:46:24.012Z] [INFO]    Duplicate files found: 5
+[2025-10-18T07:46:24.012Z] [INFO]    Index files created: 0
+[2025-10-18T07:46:24.012Z] [INFO] 
+   Total actions: 0
+[2025-10-18T07:46:24.012Z] [WARN] 
+   ⚠️  Please review duplicate files manually
+[2025-10-18T07:46:24.012Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:46:24.012Z] [INFO] 📁 Report saved: tmp/organize-folders-report.json
+
+[2025-10-18T07:46:24.012Z] [SUCCESS] ✅ Folder organization complete!
+
+[2025-10-18T07:50:05.094Z] [INFO] Creating backup...
+[2025-10-18T07:50:05.135Z] [SUCCESS] ✅ Backup created at tmp/backup-folders-1760773805094
+[2025-10-18T07:50:05.135Z] [INFO] 
+📦 Organizing components...
+[2025-10-18T07:50:05.136Z] [INFO] 
+   Organized 0 components
+
+[2025-10-18T07:50:05.136Z] [INFO] 📚 Organizing lib...
+[2025-10-18T07:50:05.137Z] [INFO] 
+   Organized 0 lib folders
+
+[2025-10-18T07:50:05.137Z] [INFO] 🔍 Finding duplicate files...
+[2025-10-18T07:50:05.161Z] [WARN] 
+   ⚠️  Found 5 duplicate files:
+[2025-10-18T07:50:05.161Z] [WARN]       src/app/(doctor)/doctor-dashboard/page.tsx
+[2025-10-18T07:50:05.161Z] [WARN]       src/app/dashboard/doctor/page.tsx
+[2025-10-18T07:50:05.161Z] [INFO] 
+[2025-10-18T07:50:05.161Z] [WARN]       src/app/(patient)/patient-dashboard/page.tsx
+[2025-10-18T07:50:05.161Z] [WARN]       src/app/dashboard/patient/page.tsx
+[2025-10-18T07:50:05.161Z] [INFO] 
+[2025-10-18T07:50:05.161Z] [WARN]       src/app/(staff)/staff-dashboard/page.tsx
+[2025-10-18T07:50:05.161Z] [WARN]       src/app/dashboard/staff/page.tsx
+[2025-10-18T07:50:05.161Z] [INFO] 
+[2025-10-18T07:50:05.161Z] [WARN]       src/app/(supervisor)/supervisor-dashboard/page.tsx
+[2025-10-18T07:50:05.161Z] [WARN]       src/app/dashboard/supervisor/page.tsx
+[2025-10-18T07:50:05.161Z] [INFO] 
+[2025-10-18T07:50:05.161Z] [WARN]       src/lib/index.ts
+[2025-10-18T07:50:05.161Z] [WARN]       src/services/index.ts
+[2025-10-18T07:50:05.161Z] [INFO] 
+[2025-10-18T07:50:05.161Z] [INFO] 
+🌐 Organizing API routes...
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/agent
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/analytics
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/audit-logs
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/chatbot
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/crm
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/dashboard
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/doctors
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/errors
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/health
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/healthcare
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/i18n
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/insurance
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/medical-records
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/sessions
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/slack
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/supervisor
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/test
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/translations
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/upload
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/user
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/webhook
+[2025-10-18T07:50:05.162Z] [WARN]    ⚠️  Uncategorized route: /api/webhooks
+[2025-10-18T07:50:05.162Z] [INFO] 
+   Checked API routes organization
+
+[2025-10-18T07:50:05.162Z] [INFO] 📄 Creating index.ts files...
+[2025-10-18T07:50:05.163Z] [INFO] 
+   Created 0 index files
+
+[2025-10-18T07:50:05.163Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:50:05.163Z] [INFO] 
+📊 Folder Organization Report:
+
+[2025-10-18T07:50:05.163Z] [INFO]    Components organized: 0
+[2025-10-18T07:50:05.163Z] [INFO]    Lib folders created: 0
+[2025-10-18T07:50:05.163Z] [INFO]    Duplicate files found: 5
+[2025-10-18T07:50:05.163Z] [INFO]    Index files created: 0
+[2025-10-18T07:50:05.163Z] [INFO] 
+   Total actions: 0
+[2025-10-18T07:50:05.163Z] [WARN] 
+   ⚠️  Please review duplicate files manually
+[2025-10-18T07:50:05.163Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:50:05.163Z] [INFO] 📁 Report saved: tmp/organize-folders-report.json
+
+[2025-10-18T07:50:05.163Z] [SUCCESS] ✅ Folder organization complete!
+
+[2025-10-18T08:10:28.398Z] [INFO] Creating backup...
+[2025-10-18T08:10:28.431Z] [SUCCESS] ✅ Backup created at tmp/backup-folders-1760775028398
+[2025-10-18T08:10:28.431Z] [INFO] 
+📦 Organizing components...
+[2025-10-18T08:10:28.431Z] [INFO] 
+   Organized 0 components
+
+[2025-10-18T08:10:28.432Z] [INFO] 📚 Organizing lib...
+[2025-10-18T08:10:28.432Z] [INFO] 
+   Organized 0 lib folders
+
+[2025-10-18T08:10:28.432Z] [INFO] 🔍 Finding duplicate files...
+[2025-10-18T08:10:28.447Z] [WARN] 
+   ⚠️  Found 5 duplicate files:
+[2025-10-18T08:10:28.447Z] [WARN]       src/app/(doctor)/doctor-dashboard/page.tsx
+[2025-10-18T08:10:28.447Z] [WARN]       src/app/dashboard/doctor/page.tsx
+[2025-10-18T08:10:28.447Z] [INFO] 
+[2025-10-18T08:10:28.447Z] [WARN]       src/app/(patient)/patient-dashboard/page.tsx
+[2025-10-18T08:10:28.447Z] [WARN]       src/app/dashboard/patient/page.tsx
+[2025-10-18T08:10:28.447Z] [INFO] 
+[2025-10-18T08:10:28.447Z] [WARN]       src/app/(staff)/staff-dashboard/page.tsx
+[2025-10-18T08:10:28.447Z] [WARN]       src/app/dashboard/staff/page.tsx
+[2025-10-18T08:10:28.447Z] [INFO] 
+[2025-10-18T08:10:28.447Z] [WARN]       src/app/(supervisor)/supervisor-dashboard/page.tsx
+[2025-10-18T08:10:28.447Z] [WARN]       src/app/dashboard/supervisor/page.tsx
+[2025-10-18T08:10:28.448Z] [INFO] 
+[2025-10-18T08:10:28.448Z] [WARN]       src/lib/index.ts
+[2025-10-18T08:10:28.448Z] [WARN]       src/services/index.ts
+[2025-10-18T08:10:28.448Z] [INFO] 
+[2025-10-18T08:10:28.448Z] [INFO] 
+🌐 Organizing API routes...
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/agent
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/analytics
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/audit-logs
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/chatbot
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/crm
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/dashboard
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/doctors
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/errors
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/health
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/healthcare
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/i18n
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/insurance
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/medical-records
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/sessions
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/slack
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/supervisor
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/test
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/translations
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/upload
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/user
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/webhook
+[2025-10-18T08:10:28.448Z] [WARN]    ⚠️  Uncategorized route: /api/webhooks
+[2025-10-18T08:10:28.448Z] [INFO] 
+   Checked API routes organization
+
+[2025-10-18T08:10:28.449Z] [INFO] 📄 Creating index.ts files...
+[2025-10-18T08:10:28.449Z] [INFO] 
+   Created 0 index files
+
+[2025-10-18T08:10:28.449Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T08:10:28.449Z] [INFO] 
+📊 Folder Organization Report:
+
+[2025-10-18T08:10:28.449Z] [INFO]    Components organized: 0
+[2025-10-18T08:10:28.449Z] [INFO]    Lib folders created: 0
+[2025-10-18T08:10:28.449Z] [INFO]    Duplicate files found: 5
+[2025-10-18T08:10:28.449Z] [INFO]    Index files created: 0
+[2025-10-18T08:10:28.449Z] [INFO] 
+   Total actions: 0
+[2025-10-18T08:10:28.449Z] [WARN] 
+   ⚠️  Please review duplicate files manually
+[2025-10-18T08:10:28.449Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T08:10:28.449Z] [INFO] 📁 Report saved: tmp/organize-folders-report.json
+
+[2025-10-18T08:10:28.449Z] [SUCCESS] ✅ Folder organization complete!
+

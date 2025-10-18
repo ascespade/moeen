@@ -17,7 +17,6 @@ interface Flow {
   tags: string[];
   messageCount: number;
   lastUsed?: string;
-
 }
 
 const mockFlows: Flow[] = [
@@ -32,7 +31,7 @@ const mockFlows: Flow[] = [
     messageCount: 12,
     lastUsed: "2024-01-15",
   },
-    {
+  {
     id: "2",
     name: "حجز المواعيد",
     description: "مساعدة المرضى في حجز المواعيد",
@@ -43,7 +42,7 @@ const mockFlows: Flow[] = [
     messageCount: 8,
     lastUsed: "2024-01-14",
   },
-    {
+  {
     id: "3",
     name: "استفسارات عامة",
     description: "الرد على الاستفسارات العامة حول الخدمات",
@@ -53,7 +52,7 @@ const mockFlows: Flow[] = [
     tags: ["استفسارات", "خدمات"],
     messageCount: 5,
   },
-    {
+  {
     id: "4",
     name: "تأكيد المواعيد",
     description: "تأكيد المواعيد قبل 24 ساعة",
@@ -403,3 +402,4 @@ export default function ChatbotFlowsPage() {
       )}
     </div>
   );
+}

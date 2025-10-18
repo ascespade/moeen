@@ -1,0 +1,12 @@
+{
+  "timestamp": "2025-10-18T08:10:32.715Z",
+  "results": {
+    "buildFiles": 1,
+    "tempFiles": 0,
+    "nodeModules": false,
+    "unusedFiles": 11,
+    "duplicates": 0,
+    "sizeSaved": 64081313
+  },
+  "total": 1
+}

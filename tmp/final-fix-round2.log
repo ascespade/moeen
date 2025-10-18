@@ -1,0 +1,57 @@
+
+> moeen@0.1.0 agent:final-fix
+> node .agent-system/final-fixer.js
+
+
+⚡ Final Fixer - إصلاح شامل
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Backup created
+
+Files with errors: 262
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Fixing files...
+
+✅ src/app/(admin)/admin/dashboard/page.tsx
+✅ src/app/(admin)/chatbot/flows/page.tsx
+✅ src/app/(admin)/chatbot/templates/page.tsx
+✅ src/app/(admin)/crm/activities/page.tsx
+✅ src/app/(admin)/crm/contacts/page.tsx
+✅ src/app/(admin)/messages/page.tsx
+✅ src/app/(admin)/notifications/page.tsx
+✅ src/app/(admin)/performance/page.tsx
+✅ src/app/(health)/approvals/page.tsx
+✅ src/app/(health)/family-support/page.tsx
+✅ src/app/(health)/insurance/page.tsx
+✅ src/app/(health)/insurance-claims/page.tsx
+✅ src/app/(health)/patients/[id]/page.tsx
+✅ src/app/(health)/sessions/page.tsx
+✅ src/app/api/admin/security-events/route.ts
+✅ src/app/dashboard/user/page.tsx
+✅ src/components/appointments/AppointmentManager.tsx
+✅ src/components/patients/PatientRecords.tsx
+✅ src/core/config/index.ts
+✅ src/lib/insurance/providers.ts
+✅ src/lib/supabase/server.ts
+
+✅ Fixed 21 files
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Applying Prettier + ESLint...
+
+✅ Libraries applied (with warnings)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Final verification...
+
+⚠️  Lint: 0 errors
+
+⚠️  Build: 0 errors
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+

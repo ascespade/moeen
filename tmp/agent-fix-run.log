@@ -1,0 +1,57 @@
+
+> moeen@0.1.0 agent:fix
+> node .agent-system/auto-fix.js
+
+
+🤖 Auto-Fix Agent System Starting...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:57:29.953Z] [INFO] 
+📝 Fixing ESLint issues...
+[2025-10-18T07:58:21.001Z] [WARN] ⚠️  Some ESLint issues could not be auto-fixed
+[2025-10-18T07:58:21.001Z] [INFO] 
+🎨 Formatting with Prettier...
+[2025-10-18T07:58:23.818Z] [WARN] ⚠️  Prettier formatting failed
+[2025-10-18T07:58:23.818Z] [INFO] 
+🧹 Removing unused imports...
+[2025-10-18T07:59:16.972Z] [WARN] ⚠️  Could not auto-remove all unused imports
+[2025-10-18T07:59:16.973Z] [INFO] 
+🔷 Checking TypeScript errors...
+[2025-10-18T07:59:21.229Z] [WARN] ⚠️  Found 7071 TypeScript errors
+[2025-10-18T07:59:21.229Z] [WARN] 
+🔍 TypeScript Errors Found:
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(20,7): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(21,9): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(22,11): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(23,13): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(24,12): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(25,14): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(26,14): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(27,14): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(28,11): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(29,3): error TS1137: Expression or comma expected.
+[2025-10-18T07:59:21.230Z] [WARN]    ... and 7061 more
+[2025-10-18T07:59:21.230Z] [INFO] 
+🏗️  Checking build...
+[2025-10-18T07:59:23.876Z] [ERROR] ❌ Build failed
+[2025-10-18T07:59:23.876Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:59:23.877Z] [INFO] 
+📊 Auto-Fix Report:
+[2025-10-18T07:59:23.877Z] [INFO] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:59:23.877Z] [ERROR] ❌ ESLint Fix
+[2025-10-18T07:59:23.877Z] [ERROR] ❌ Prettier Format
+[2025-10-18T07:59:23.877Z] [ERROR] ❌ Unused Imports
+[2025-10-18T07:59:23.877Z] [ERROR] ❌ TypeScript Check
+[2025-10-18T07:59:23.877Z] [ERROR] ❌ Build Check
+[2025-10-18T07:59:23.877Z] [INFO] 
+📈 Success Rate: 0% (0/5)
+
+[2025-10-18T07:59:23.877Z] [ERROR] 🔴 Many issues remain, manual fixes required
+[2025-10-18T07:59:23.877Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:59:23.877Z] [INFO] 📁 Report saved: tmp/auto-fix-report.json
+

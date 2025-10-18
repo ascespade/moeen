@@ -66,7 +66,6 @@ export async function GET(request: NextRequest) {
             id: "user-1",
             email: "admin@example.com",
             profile: { fullName: "Admin User" },
-        },
           {
     id: "2",
           action: "user_created",
@@ -82,7 +81,6 @@ export async function GET(request: NextRequest) {
             id: "user-1",
             email: "admin@example.com",
             profile: { fullName: "Admin User" },
-        },
           {
     id: "3",
           action: "config_updated",
@@ -99,7 +97,6 @@ export async function GET(request: NextRequest) {
             id: "user-1",
             email: "admin@example.com",
             profile: { fullName: "Admin User" },
-        },
           {
     id: "4",
           action: "failed_login",
@@ -133,7 +130,6 @@ export async function GET(request: NextRequest) {
             id: "user-1",
             email: "admin@example.com",
             profile: { fullName: "Admin User" },
-        },
       ];
 
       return NextResponse.json({

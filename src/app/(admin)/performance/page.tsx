@@ -356,3 +356,4 @@ const PerformancePage: React.FC = () => {
 };
 
 export default PerformancePage;
+}

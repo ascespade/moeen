@@ -1,0 +1,55 @@
+
+🤖 Auto-Fix Agent System Starting...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T06:43:16.308Z] [INFO] Creating backup...
+[2025-10-18T06:43:16.365Z] [SUCCESS] ✅ Backup created at tmp/backup-1760769796308
+[2025-10-18T06:43:16.365Z] [INFO] 
+📝 Fixing ESLint issues...
+[2025-10-18T06:43:28.419Z] [WARN] ⚠️  Some ESLint issues could not be auto-fixed
+[2025-10-18T06:43:28.420Z] [INFO] 
+🎨 Formatting with Prettier...
+[2025-10-18T06:43:35.266Z] [WARN] ⚠️  Prettier formatting failed
+[2025-10-18T06:43:35.267Z] [INFO] 
+🧹 Removing unused imports...
+[2025-10-18T06:43:46.197Z] [WARN] ⚠️  Could not auto-remove all unused imports
+[2025-10-18T06:43:46.198Z] [INFO] 
+🔷 Checking TypeScript errors...
+[2025-10-18T06:43:58.348Z] [WARN] ⚠️  Found 48 TypeScript errors
+[2025-10-18T06:43:58.349Z] [WARN] 
+🔍 TypeScript Errors Found:
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/(admin)/admin/therapists/schedules/page.tsx(159,5): error TS2532: Object is possibly 'undefined'.
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/(admin)/admin/therapists/schedules/page.tsx(214,15): error TS2532: Object is possibly 'undefined'.
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/(admin)/admin/therapists/schedules/page.tsx(216,20): error TS2532: Object is possibly 'undefined'.
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/(admin)/settings/api-keys/page.tsx(322,7): error TS2532: Object is possibly 'undefined'.
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/api/auth/forgot-password/route.ts(6,10): error TS2614: Module '"@/lib/monitoring/logger"' has no exported member 'log'. Did you mean to use 'import log from "@/lib/monitoring/logger"' instead?
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/api/auth/login/route.ts(6,10): error TS2614: Module '"@/lib/monitoring/logger"' has no exported member 'log'. Did you mean to use 'import log from "@/lib/monitoring/logger"' instead?
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/api/auth/logout/route.ts(6,10): error TS2614: Module '"@/lib/monitoring/logger"' has no exported member 'log'. Did you mean to use 'import log from "@/lib/monitoring/logger"' instead?
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/api/auth/register/route.ts(6,10): error TS2614: Module '"@/lib/monitoring/logger"' has no exported member 'log'. Did you mean to use 'import log from "@/lib/monitoring/logger"' instead?
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/api/auth/reset-password/route.ts(6,10): error TS2614: Module '"@/lib/monitoring/logger"' has no exported member 'log'. Did you mean to use 'import log from "@/lib/monitoring/logger"' instead?
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/api/payments/webhook/stripe/route.ts(6,10): error TS2614: Module '"@/lib/monitoring/logger"' has no exported member 'log'. Did you mean to use 'import log from "@/lib/monitoring/logger"' instead?
+[2025-10-18T06:43:58.349Z] [WARN]    ... and 38 more
+[2025-10-18T06:43:58.350Z] [INFO] 
+🏗️  Checking build...
+[2025-10-18T06:44:15.444Z] [ERROR] ❌ Build failed
+[2025-10-18T06:44:15.445Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T06:44:15.445Z] [INFO] 
+📊 Auto-Fix Report:
+[2025-10-18T06:44:15.445Z] [INFO] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T06:44:15.446Z] [ERROR] ❌ ESLint Fix
+[2025-10-18T06:44:15.446Z] [ERROR] ❌ Prettier Format
+[2025-10-18T06:44:15.446Z] [ERROR] ❌ Unused Imports
+[2025-10-18T06:44:15.446Z] [ERROR] ❌ TypeScript Check
+[2025-10-18T06:44:15.446Z] [ERROR] ❌ Build Check
+[2025-10-18T06:44:15.446Z] [INFO] 
+📈 Success Rate: 0% (0/5)
+
+[2025-10-18T06:44:15.446Z] [ERROR] 🔴 Many issues remain, manual fixes required
+[2025-10-18T06:44:15.446Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T06:44:15.446Z] [INFO] 📁 Report saved: tmp/auto-fix-report.json
+

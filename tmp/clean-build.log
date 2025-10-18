@@ -1,0 +1,161 @@
+
+> moeen@0.1.0 build
+> next build
+
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+  ▲ Next.js 14.2.32
+  - Environments: .env.local
+  - Experiments (use with caution):
+    · optimizeCss
+
+   Creating an optimized production build ...
+Failed to compile.
+
+./src/app/(admin)/admin/dashboard/page.tsx
+Error: 
+  [31mx[0m Expected ',', got ':'
+    ,-[[36;1;4m/workspace/src/app/(admin)/admin/dashboard/page.tsx[0m:82:1]
+ [2m82[0m |     timestamp: "منذ 5 دقائق",
+ [2m83[0m |     status: "success",
+ [2m84[0m |   },
+ [2m85[0m |     id: "2",
+    : [31;1m      ^[0m
+ [2m86[0m |     type: "claim",
+ [2m87[0m |     title: "مطالبة تأمين",
+ [2m88[0m |     description: "تمت الموافقة على مطالبة تأمين بقيمة 1,500 ريال",
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/(admin)/admin/dashboard/page.tsx
+
+./src/app/(admin)/admin/logs/page.tsx
+Error: 
+  [31mx[0m The "use client" directive must be placed before other expressions. Move it to the top of the file to resolve this issue.
+   ,-[[36;1;4m/workspace/src/app/(admin)/admin/logs/page.tsx[0m:3:1]
+ [2m3[0m | import { Skeleton } from "@/components/ui";
+ [2m4[0m | import EmptyState from "@/components/common/EmptyState";
+ [2m5[0m | 
+ [2m6[0m | "use client";
+   : [31;1m^^^^^^^^^^^^^[0m
+ [2m7[0m | 
+ [2m8[0m | type LogEvent = {
+ [2m9[0m |   id: string;
+   `----
+
+  [31mx[0m You're importing a component that needs useState. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
+  [31m|[0m Learn more: https://nextjs.org/docs/getting-started/react-essentials
+  [31m|[0m 
+  [31m|[0m 
+   ,-[[36;1;4m/workspace/src/app/(admin)/admin/logs/page.tsx[0m:1:1]
+ [2m1[0m | import { useMemo, useState, useEffect } from "react";
+   : [31;1m                  ^^^^^^^^[0m
+ [2m2[0m | 
+ [2m3[0m | import { Skeleton } from "@/components/ui";
+ [2m4[0m | import EmptyState from "@/components/common/EmptyState";
+   `----
+
+  [31mx[0m You're importing a component that needs useEffect. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
+  [31m|[0m Learn more: https://nextjs.org/docs/getting-started/react-essentials
+  [31m|[0m 
+  [31m|[0m 
+   ,-[[36;1;4m/workspace/src/app/(admin)/admin/logs/page.tsx[0m:1:1]
+ [2m1[0m | import { useMemo, useState, useEffect } from "react";
+   : [31;1m                            ^^^^^^^^^[0m
+ [2m2[0m | 
+ [2m3[0m | import { Skeleton } from "@/components/ui";
+ [2m4[0m | import EmptyState from "@/components/common/EmptyState";
+   `----
+
+Import trace for requested module:
+./src/app/(admin)/admin/logs/page.tsx
+
+./src/app/(admin)/admin/page.tsx
+Error: 
+  [31mx[0m cannot import as reserved word
+    ,-[[36;1;4m/workspace/src/app/(admin)/admin/page.tsx[0m:4:1]
+ [2m 4[0m | 
+ [2m 5[0m | import {
+ [2m 6[0m | 
+ [2m 7[0m | import { Badge } from "@/components/ui/Badge";
+    : [31;1m^^^^^^[0m
+ [2m 8[0m | import { Button } from "@/components/ui/Button";
+ [2m 9[0m | import { Input } from "@/components/ui/Input";
+ [2m10[0m | import { Label } from "@/components/ui/Label";
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/(admin)/admin/page.tsx
+
+./src/app/(admin)/admin/payments/invoices/page.tsx
+Error: 
+  [31mx[0m The "use client" directive must be placed before other expressions. Move it to the top of the file to resolve this issue.
+   ,-[[36;1;4m/workspace/src/app/(admin)/admin/payments/invoices/page.tsx[0m:3:1]
+ [2m3[0m | import { createClient } from "@/lib/supabase/client";
+ [2m4[0m | import logger from "@/lib/monitoring/logger";
+ [2m5[0m | 
+ [2m6[0m | ("use client");
+   : [31;1m^^^^^^^^^^^^^^^[0m
+ [2m7[0m | 
+ [2m8[0m | interface Invoice {
+ [2m9[0m |   id: string;
+   `----
+
+  [31mx[0m You're importing a component that needs useEffect. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
+  [31m|[0m Learn more: https://nextjs.org/docs/getting-started/react-essentials
+  [31m|[0m 
+  [31m|[0m 
+   ,-[[36;1;4m/workspace/src/app/(admin)/admin/payments/invoices/page.tsx[0m:1:1]
+ [2m1[0m | import { useEffect, useState } from "react";
+   : [31;1m         ^^^^^^^^^[0m
+ [2m2[0m | 
+ [2m3[0m | import { createClient } from "@/lib/supabase/client";
+ [2m4[0m | import logger from "@/lib/monitoring/logger";
+   `----
+
+  [31mx[0m You're importing a component that needs useState. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
+  [31m|[0m Learn more: https://nextjs.org/docs/getting-started/react-essentials
+  [31m|[0m 
+  [31m|[0m 
+   ,-[[36;1;4m/workspace/src/app/(admin)/admin/payments/invoices/page.tsx[0m:1:1]
+ [2m1[0m | import { useEffect, useState } from "react";
+   : [31;1m                    ^^^^^^^^[0m
+ [2m2[0m | 
+ [2m3[0m | import { createClient } from "@/lib/supabase/client";
+ [2m4[0m | import logger from "@/lib/monitoring/logger";
+   `----
+
+Import trace for requested module:
+./src/app/(admin)/admin/payments/invoices/page.tsx
+
+./src/app/(admin)/admin/roles/page.tsx
+Error: 
+  [31mx[0m Expected ';', got 'mockRoles'
+    ,-[[36;1;4m/workspace/src/app/(admin)/admin/roles/page.tsx[0m:12:1]
+ [2m12[0m |   userCount: number;
+ [2m13[0m |   createdAt: string;
+ [2m14[0m | 
+ [2m15[0m | const mockRoles: Role[] = [
+    : [31;1m      ^^^^^^^^^[0m
+ [2m16[0m |   {
+ [2m17[0m |     id: "1",
+ [2m18[0m |     name: "مدير النظام",
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/(admin)/admin/roles/page.tsx
+
+
+> Build failed because of webpack errors

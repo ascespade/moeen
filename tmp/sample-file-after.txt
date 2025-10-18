@@ -1,0 +1,20 @@
+import { useState, useEffect } from "react";
+
+import Image from "next/image";
+import Link from "next/link";
+
+import { ROUTES } from "@/constants/routes";
+import { ThemeSwitch as ThemeSwitcher } from "@/components/ui";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useT } from "@/components/providers/I18nProvider";
+
+"use client";
+
+// Hero Slider Data - مركز الهمم
+const heroSlides = (t: any) => [
+    id: 1,
+    title: "مركز الهمم",
+    subtitle: "طاقات تتجدد، أحلام تتحقق، مستقبل واعد",
+    description:
+      "نؤمن بقدراتهم، ونعمل لتمكينهم - مركز رائد في رعاية وتأهيل أصحاب الهمم",
+    image: "/hero-1.jpg",

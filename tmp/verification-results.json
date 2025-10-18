@@ -1,0 +1,51 @@
+{
+  "timestamp": "2025-10-18T04:11:15.645Z",
+  "results": {
+    "tables": {
+      "found": [
+        "users",
+        "patients",
+        "appointments",
+        "payments",
+        "notifications",
+        "insurance_claims",
+        "chat_conversations",
+        "chat_messages",
+        "session_types",
+        "therapist_schedules",
+        "therapist_specializations",
+        "therapist_time_off",
+        "ieps",
+        "iep_goals",
+        "goal_progress",
+        "session_notes",
+        "call_requests",
+        "notification_rules",
+        "supervisor_notification_preferences",
+        "notification_logs",
+        "reminder_outbox",
+        "reminder_preferences"
+      ],
+      "missing": []
+    },
+    "columns": {
+      "found": [],
+      "missing": [
+        "users.deleted_at",
+        "patients.deleted_at",
+        "appointments.deleted_at",
+        "patients.search_vector",
+        "users.search_vector"
+      ]
+    },
+    "functions": {
+      "found": [],
+      "missing": [
+        "search_patients",
+        "search_users",
+        "process_pending_reminders"
+      ]
+    }
+  },
+  "overallPercent": 61
+}

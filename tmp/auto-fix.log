@@ -1,0 +1,290 @@
+[2025-10-18T06:43:16.308Z] [INFO] Creating backup...
+[2025-10-18T06:43:16.365Z] [SUCCESS] ✅ Backup created at tmp/backup-1760769796308
+[2025-10-18T06:43:16.365Z] [INFO] 
+📝 Fixing ESLint issues...
+[2025-10-18T06:43:28.419Z] [WARN] ⚠️  Some ESLint issues could not be auto-fixed
+[2025-10-18T06:43:28.420Z] [INFO] 
+🎨 Formatting with Prettier...
+[2025-10-18T06:43:35.266Z] [WARN] ⚠️  Prettier formatting failed
+[2025-10-18T06:43:35.267Z] [INFO] 
+🧹 Removing unused imports...
+[2025-10-18T06:43:46.197Z] [WARN] ⚠️  Could not auto-remove all unused imports
+[2025-10-18T06:43:46.198Z] [INFO] 
+🔷 Checking TypeScript errors...
+[2025-10-18T06:43:58.348Z] [WARN] ⚠️  Found 48 TypeScript errors
+[2025-10-18T06:43:58.349Z] [WARN] 
+🔍 TypeScript Errors Found:
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/(admin)/admin/therapists/schedules/page.tsx(159,5): error TS2532: Object is possibly 'undefined'.
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/(admin)/admin/therapists/schedules/page.tsx(214,15): error TS2532: Object is possibly 'undefined'.
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/(admin)/admin/therapists/schedules/page.tsx(216,20): error TS2532: Object is possibly 'undefined'.
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/(admin)/settings/api-keys/page.tsx(322,7): error TS2532: Object is possibly 'undefined'.
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/api/auth/forgot-password/route.ts(6,10): error TS2614: Module '"@/lib/monitoring/logger"' has no exported member 'log'. Did you mean to use 'import log from "@/lib/monitoring/logger"' instead?
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/api/auth/login/route.ts(6,10): error TS2614: Module '"@/lib/monitoring/logger"' has no exported member 'log'. Did you mean to use 'import log from "@/lib/monitoring/logger"' instead?
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/api/auth/logout/route.ts(6,10): error TS2614: Module '"@/lib/monitoring/logger"' has no exported member 'log'. Did you mean to use 'import log from "@/lib/monitoring/logger"' instead?
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/api/auth/register/route.ts(6,10): error TS2614: Module '"@/lib/monitoring/logger"' has no exported member 'log'. Did you mean to use 'import log from "@/lib/monitoring/logger"' instead?
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/api/auth/reset-password/route.ts(6,10): error TS2614: Module '"@/lib/monitoring/logger"' has no exported member 'log'. Did you mean to use 'import log from "@/lib/monitoring/logger"' instead?
+[2025-10-18T06:43:58.349Z] [WARN]    src/app/api/payments/webhook/stripe/route.ts(6,10): error TS2614: Module '"@/lib/monitoring/logger"' has no exported member 'log'. Did you mean to use 'import log from "@/lib/monitoring/logger"' instead?
+[2025-10-18T06:43:58.349Z] [WARN]    ... and 38 more
+[2025-10-18T06:43:58.350Z] [INFO] 
+🏗️  Checking build...
+[2025-10-18T06:44:15.444Z] [ERROR] ❌ Build failed
+[2025-10-18T06:44:15.445Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T06:44:15.445Z] [INFO] 
+📊 Auto-Fix Report:
+[2025-10-18T06:44:15.445Z] [INFO] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T06:44:15.446Z] [ERROR] ❌ ESLint Fix
+[2025-10-18T06:44:15.446Z] [ERROR] ❌ Prettier Format
+[2025-10-18T06:44:15.446Z] [ERROR] ❌ Unused Imports
+[2025-10-18T06:44:15.446Z] [ERROR] ❌ TypeScript Check
+[2025-10-18T06:44:15.446Z] [ERROR] ❌ Build Check
+[2025-10-18T06:44:15.446Z] [INFO] 
+📈 Success Rate: 0% (0/5)
+
+[2025-10-18T06:44:15.446Z] [ERROR] 🔴 Many issues remain, manual fixes required
+[2025-10-18T06:44:15.446Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T06:44:15.446Z] [INFO] 📁 Report saved: tmp/auto-fix-report.json
+
+[2025-10-18T07:21:09.583Z] [INFO] 
+📝 Fixing ESLint issues...
+[2025-10-18T07:21:37.967Z] [WARN] ⚠️  Some ESLint issues could not be auto-fixed
+[2025-10-18T07:21:37.968Z] [INFO] 
+🎨 Formatting with Prettier...
+[2025-10-18T07:21:42.459Z] [WARN] ⚠️  Prettier formatting failed
+[2025-10-18T07:21:42.459Z] [INFO] 
+🧹 Removing unused imports...
+[2025-10-18T07:22:07.420Z] [WARN] ⚠️  Could not auto-remove all unused imports
+[2025-10-18T07:22:07.421Z] [INFO] 
+🔷 Checking TypeScript errors...
+[2025-10-18T07:22:17.573Z] [WARN] ⚠️  Found 402 TypeScript errors
+[2025-10-18T07:22:17.574Z] [WARN] 
+🔍 TypeScript Errors Found:
+[2025-10-18T07:22:17.574Z] [WARN]    src/app/(admin)/admin/page.tsx(4,1): error TS1003: Identifier expected.
+[2025-10-18T07:22:17.574Z] [WARN]    src/app/(admin)/admin/page.tsx(4,8): error TS1005: ',' expected.
+[2025-10-18T07:22:17.574Z] [WARN]    src/app/(admin)/admin/page.tsx(6,8): error TS1005: ':' expected.
+[2025-10-18T07:22:17.574Z] [WARN]    src/app/(admin)/admin/page.tsx(6,18): error TS1005: ',' expected.
+[2025-10-18T07:22:17.574Z] [WARN]    src/app/(admin)/admin/page.tsx(6,23): error TS1005: ',' expected.
+[2025-10-18T07:22:17.574Z] [WARN]    src/app/(admin)/admin/page.tsx(6,46): error TS1005: ':' expected.
+[2025-10-18T07:22:17.574Z] [WARN]    src/app/(admin)/admin/page.tsx(7,8): error TS1005: ':' expected.
+[2025-10-18T07:22:17.574Z] [WARN]    src/app/(admin)/admin/page.tsx(7,19): error TS1005: ',' expected.
+[2025-10-18T07:22:17.574Z] [WARN]    src/app/(admin)/admin/page.tsx(7,24): error TS1005: ',' expected.
+[2025-10-18T07:22:17.574Z] [WARN]    src/app/(admin)/admin/page.tsx(7,48): error TS1005: ':' expected.
+[2025-10-18T07:22:17.574Z] [WARN]    ... and 392 more
+[2025-10-18T07:22:17.574Z] [INFO] 
+🏗️  Checking build...
+[2025-10-18T07:22:23.780Z] [ERROR] ❌ Build failed
+[2025-10-18T07:22:23.781Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:22:23.781Z] [INFO] 
+📊 Auto-Fix Report:
+[2025-10-18T07:22:23.781Z] [INFO] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:22:23.781Z] [ERROR] ❌ ESLint Fix
+[2025-10-18T07:22:23.781Z] [ERROR] ❌ Prettier Format
+[2025-10-18T07:22:23.781Z] [ERROR] ❌ Unused Imports
+[2025-10-18T07:22:23.781Z] [ERROR] ❌ TypeScript Check
+[2025-10-18T07:22:23.781Z] [ERROR] ❌ Build Check
+[2025-10-18T07:22:23.781Z] [INFO] 
+📈 Success Rate: 0% (0/5)
+
+[2025-10-18T07:22:23.782Z] [ERROR] 🔴 Many issues remain, manual fixes required
+[2025-10-18T07:22:23.782Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:22:23.782Z] [INFO] 📁 Report saved: tmp/auto-fix-report.json
+
+[2025-10-18T07:27:59.834Z] [INFO] 
+📝 Fixing ESLint issues...
+[2025-10-18T07:28:37.123Z] [WARN] ⚠️  Some ESLint issues could not be auto-fixed
+[2025-10-18T07:28:37.124Z] [INFO] 
+🎨 Formatting with Prettier...
+[2025-10-18T07:28:40.605Z] [WARN] ⚠️  Prettier formatting failed
+[2025-10-18T07:28:40.606Z] [INFO] 
+🧹 Removing unused imports...
+[2025-10-18T07:29:17.851Z] [WARN] ⚠️  Could not auto-remove all unused imports
+[2025-10-18T07:29:17.851Z] [INFO] 
+🔷 Checking TypeScript errors...
+[2025-10-18T07:29:25.451Z] [WARN] ⚠️  Found 4340 TypeScript errors
+[2025-10-18T07:29:25.451Z] [WARN] 
+🔍 TypeScript Errors Found:
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(20,7): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(21,9): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(22,11): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(23,13): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(24,12): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(25,14): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(26,14): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(27,14): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(28,11): error TS1005: ',' expected.
+[2025-10-18T07:29:25.452Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(29,3): error TS1137: Expression or comma expected.
+[2025-10-18T07:29:25.452Z] [WARN]    ... and 4330 more
+[2025-10-18T07:29:25.452Z] [INFO] 
+🏗️  Checking build...
+[2025-10-18T07:29:32.193Z] [ERROR] ❌ Build failed
+[2025-10-18T07:29:32.193Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:29:32.193Z] [INFO] 
+📊 Auto-Fix Report:
+[2025-10-18T07:29:32.193Z] [INFO] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:29:32.193Z] [ERROR] ❌ ESLint Fix
+[2025-10-18T07:29:32.193Z] [ERROR] ❌ Prettier Format
+[2025-10-18T07:29:32.193Z] [ERROR] ❌ Unused Imports
+[2025-10-18T07:29:32.193Z] [ERROR] ❌ TypeScript Check
+[2025-10-18T07:29:32.193Z] [ERROR] ❌ Build Check
+[2025-10-18T07:29:32.193Z] [INFO] 
+📈 Success Rate: 0% (0/5)
+
+[2025-10-18T07:29:32.193Z] [ERROR] 🔴 Many issues remain, manual fixes required
+[2025-10-18T07:29:32.193Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:29:32.194Z] [INFO] 📁 Report saved: tmp/auto-fix-report.json
+
+[2025-10-18T07:44:29.723Z] [INFO] 
+📝 Fixing ESLint issues...
+[2025-10-18T07:45:16.551Z] [WARN] ⚠️  Some ESLint issues could not be auto-fixed
+[2025-10-18T07:45:16.551Z] [INFO] 
+🎨 Formatting with Prettier...
+[2025-10-18T07:45:19.277Z] [WARN] ⚠️  Prettier formatting failed
+[2025-10-18T07:45:19.277Z] [INFO] 
+🧹 Removing unused imports...
+[2025-10-18T07:46:08.902Z] [WARN] ⚠️  Could not auto-remove all unused imports
+[2025-10-18T07:46:08.902Z] [INFO] 
+🔷 Checking TypeScript errors...
+[2025-10-18T07:46:18.171Z] [WARN] ⚠️  Found 7036 TypeScript errors
+[2025-10-18T07:46:18.171Z] [WARN] 
+🔍 TypeScript Errors Found:
+[2025-10-18T07:46:18.172Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(18,7): error TS1005: ';' expected.
+[2025-10-18T07:46:18.172Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(19,7): error TS1005: ',' expected.
+[2025-10-18T07:46:18.172Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(20,9): error TS1005: ',' expected.
+[2025-10-18T07:46:18.172Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(21,11): error TS1005: ',' expected.
+[2025-10-18T07:46:18.172Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(22,13): error TS1005: ',' expected.
+[2025-10-18T07:46:18.172Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(23,12): error TS1005: ',' expected.
+[2025-10-18T07:46:18.172Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(24,14): error TS1005: ',' expected.
+[2025-10-18T07:46:18.172Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(25,14): error TS1005: ',' expected.
+[2025-10-18T07:46:18.172Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(26,14): error TS1005: ',' expected.
+[2025-10-18T07:46:18.172Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(27,11): error TS1005: ',' expected.
+[2025-10-18T07:46:18.172Z] [WARN]    ... and 7026 more
+[2025-10-18T07:46:18.172Z] [INFO] 
+🏗️  Checking build...
+[2025-10-18T07:46:22.376Z] [ERROR] ❌ Build failed
+[2025-10-18T07:46:22.376Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:46:22.377Z] [INFO] 
+📊 Auto-Fix Report:
+[2025-10-18T07:46:22.377Z] [INFO] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:46:22.377Z] [ERROR] ❌ ESLint Fix
+[2025-10-18T07:46:22.377Z] [ERROR] ❌ Prettier Format
+[2025-10-18T07:46:22.377Z] [ERROR] ❌ Unused Imports
+[2025-10-18T07:46:22.377Z] [ERROR] ❌ TypeScript Check
+[2025-10-18T07:46:22.377Z] [ERROR] ❌ Build Check
+[2025-10-18T07:46:22.377Z] [INFO] 
+📈 Success Rate: 0% (0/5)
+
+[2025-10-18T07:46:22.377Z] [ERROR] 🔴 Many issues remain, manual fixes required
+[2025-10-18T07:46:22.377Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:46:22.377Z] [INFO] 📁 Report saved: tmp/auto-fix-report.json
+
+[2025-10-18T07:57:29.953Z] [INFO] 
+📝 Fixing ESLint issues...
+[2025-10-18T07:58:21.001Z] [WARN] ⚠️  Some ESLint issues could not be auto-fixed
+[2025-10-18T07:58:21.001Z] [INFO] 
+🎨 Formatting with Prettier...
+[2025-10-18T07:58:23.818Z] [WARN] ⚠️  Prettier formatting failed
+[2025-10-18T07:58:23.818Z] [INFO] 
+🧹 Removing unused imports...
+[2025-10-18T07:59:16.972Z] [WARN] ⚠️  Could not auto-remove all unused imports
+[2025-10-18T07:59:16.973Z] [INFO] 
+🔷 Checking TypeScript errors...
+[2025-10-18T07:59:21.229Z] [WARN] ⚠️  Found 7071 TypeScript errors
+[2025-10-18T07:59:21.229Z] [WARN] 
+🔍 TypeScript Errors Found:
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(20,7): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(21,9): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(22,11): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(23,13): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(24,12): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(25,14): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(26,14): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(27,14): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(28,11): error TS1005: ',' expected.
+[2025-10-18T07:59:21.230Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(29,3): error TS1137: Expression or comma expected.
+[2025-10-18T07:59:21.230Z] [WARN]    ... and 7061 more
+[2025-10-18T07:59:21.230Z] [INFO] 
+🏗️  Checking build...
+[2025-10-18T07:59:23.876Z] [ERROR] ❌ Build failed
+[2025-10-18T07:59:23.876Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:59:23.877Z] [INFO] 
+📊 Auto-Fix Report:
+[2025-10-18T07:59:23.877Z] [INFO] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:59:23.877Z] [ERROR] ❌ ESLint Fix
+[2025-10-18T07:59:23.877Z] [ERROR] ❌ Prettier Format
+[2025-10-18T07:59:23.877Z] [ERROR] ❌ Unused Imports
+[2025-10-18T07:59:23.877Z] [ERROR] ❌ TypeScript Check
+[2025-10-18T07:59:23.877Z] [ERROR] ❌ Build Check
+[2025-10-18T07:59:23.877Z] [INFO] 
+📈 Success Rate: 0% (0/5)
+
+[2025-10-18T07:59:23.877Z] [ERROR] 🔴 Many issues remain, manual fixes required
+[2025-10-18T07:59:23.877Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:59:23.877Z] [INFO] 📁 Report saved: tmp/auto-fix-report.json
+
+[2025-10-18T08:08:17.642Z] [INFO] 
+📝 Fixing ESLint issues...
+[2025-10-18T08:09:16.803Z] [WARN] ⚠️  Some ESLint issues could not be auto-fixed
+[2025-10-18T08:09:16.804Z] [INFO] 
+🎨 Formatting with Prettier...
+[2025-10-18T08:09:19.428Z] [WARN] ⚠️  Prettier formatting failed
+[2025-10-18T08:09:19.428Z] [INFO] 
+🧹 Removing unused imports...
+[2025-10-18T08:10:14.782Z] [WARN] ⚠️  Could not auto-remove all unused imports
+[2025-10-18T08:10:14.782Z] [INFO] 
+🔷 Checking TypeScript errors...
+[2025-10-18T08:10:23.829Z] [WARN] ⚠️  Found 7631 TypeScript errors
+[2025-10-18T08:10:23.829Z] [WARN] 
+🔍 TypeScript Errors Found:
+[2025-10-18T08:10:23.829Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(31,3): error TS1137: Expression or comma expected.
+[2025-10-18T08:10:23.830Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(31,4): error TS1128: Declaration or statement expected.
+[2025-10-18T08:10:23.830Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(34,9): error TS1005: ';' expected.
+[2025-10-18T08:10:23.830Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(35,11): error TS1005: ';' expected.
+[2025-10-18T08:10:23.830Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(36,13): error TS1005: ';' expected.
+[2025-10-18T08:10:23.830Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(37,12): error TS1005: ';' expected.
+[2025-10-18T08:10:23.830Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(38,14): error TS1005: ';' expected.
+[2025-10-18T08:10:23.830Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(39,14): error TS1005: ';' expected.
+[2025-10-18T08:10:23.830Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(41,14): error TS1005: ';' expected.
+[2025-10-18T08:10:23.830Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(42,11): error TS1005: ';' expected.
+[2025-10-18T08:10:23.830Z] [WARN]    ... and 7621 more
+[2025-10-18T08:10:23.830Z] [INFO] 
+🏗️  Checking build...
+[2025-10-18T08:10:26.587Z] [ERROR] ❌ Build failed
+[2025-10-18T08:10:26.588Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T08:10:26.588Z] [INFO] 
+📊 Auto-Fix Report:
+[2025-10-18T08:10:26.588Z] [INFO] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T08:10:26.588Z] [ERROR] ❌ ESLint Fix
+[2025-10-18T08:10:26.588Z] [ERROR] ❌ Prettier Format
+[2025-10-18T08:10:26.588Z] [ERROR] ❌ Unused Imports
+[2025-10-18T08:10:26.588Z] [ERROR] ❌ TypeScript Check
+[2025-10-18T08:10:26.588Z] [ERROR] ❌ Build Check
+[2025-10-18T08:10:26.588Z] [INFO] 
+📈 Success Rate: 0% (0/5)
+
+[2025-10-18T08:10:26.588Z] [ERROR] 🔴 Many issues remain, manual fixes required
+[2025-10-18T08:10:26.588Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T08:10:26.588Z] [INFO] 📁 Report saved: tmp/auto-fix-report.json
+

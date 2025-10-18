@@ -1,0 +1,89 @@
+
+🔍 Verifying Migrations...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 Checking Tables...
+
+   ✅ users: 280 rows
+   ✅ patients: 8 rows
+   ✅ appointments: 33 rows
+   ✅ payments: 0 rows
+   ✅ notifications: 1 rows
+   ✅ insurance_claims: 0 rows
+   ✅ chat_conversations: 0 rows
+   ✅ chat_messages: 0 rows
+   ✅ session_types: 0 rows
+   ✅ therapist_schedules: 0 rows
+   ✅ therapist_specializations: 0 rows
+   ✅ therapist_time_off: 0 rows
+   ✅ ieps: 0 rows
+   ✅ iep_goals: 0 rows
+   ✅ goal_progress: 0 rows
+   ✅ session_notes: 0 rows
+   ✅ call_requests: 0 rows
+   ✅ notification_rules: 0 rows
+   ✅ supervisor_notification_preferences: 0 rows
+   ✅ notification_logs: 0 rows
+   ✅ reminder_outbox: 0 rows
+   ✅ reminder_preferences: 0 rows
+
+   Summary: 22/22 tables found
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🗑️  Checking Soft Delete Columns...
+
+   ❌ users: deleted_at/deleted_by not found
+   ❌ patients: deleted_at/deleted_by not found
+   ❌ appointments: deleted_at/deleted_by not found
+
+   Summary: 0/3 tables have soft delete
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔍 Checking Search Columns...
+
+   ❌ patients: search_vector not found
+   ❌ users: search_vector not found
+
+   Summary: -3/2 tables have search
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚙️  Checking Functions...
+
+   ❌ search_patients: Not found or error
+   ❌ search_users: Not found or error
+   ❌ process_pending_reminders: Not found or error
+
+   Summary: 0/9 functions working
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 Final Report:
+
+   Tables:    22/22 (100%)
+   Columns:   0/5 (0%)
+   Functions: 0/9 (0%)
+
+⚠️  Missing Columns:
+   - users.deleted_at
+   - patients.deleted_at
+   - appointments.deleted_at
+   - patients.search_vector
+   - users.search_vector
+
+⚠️  Missing Functions:
+   - search_patients
+   - search_users
+   - process_pending_reminders
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔴 Overall: 61% - NEEDS ATTENTION
+
+💡 Apply missing migrations via Supabase Dashboard → SQL Editor
+
+📁 Results saved: tmp/verification-results.json
+

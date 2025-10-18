@@ -1,0 +1,33 @@
+🔍 Scanning codebase for UI fields...
+
+✅ Scanned 386 files
+✅ Found 188 unique UI fields
+   - Pages: 12
+   - Components: 5
+   - API Endpoints: 51
+
+📁 Saved: tmp/ui-fields-scan.json
+
+📋 Sample fields found:
+   - ${filename}
+   - ${metadata.originalName}
+   - *
+   - AuthStore
+   - DataStore
+   - GOOGLE_CLIENT_ID
+   - GOOGLE_CLIENT_SECRET
+   - Moeen
+   - NEXT_PUBLIC_STRIPE_PUBLIC_KEY
+   - NEXT_PUBLIC_SUPABASE_ANON_KEY
+   - NEXT_PUBLIC_SUPABASE_URL
+   - Other
+   - SEHA
+   - SHOON
+   - SMTP_HOST
+   - SMTP_PASS
+   - SMTP_USER
+   - STRIPE_SECRET_KEY
+   - SUPABASE_SERVICE_ROLE
+   - TATMAN
+   ... and 168 more
+

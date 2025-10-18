@@ -1,0 +1,1176 @@
+
+> moeen@0.1.0 agent:start
+> node .agent-system/run-all.js
+
+
+🚀 Running All Agent Systems...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 Systems to run:
+
+   1. 🤖 Auto-Fix - إصلاح الأخطاء تلقائياً
+   2. 🧠 Smart-Fix - إصلاحات ذكية
+   3. 📁 Organize Folders - تنظيم المجلدات
+   4. 🎨 Organize Code - تنظيم الكود
+   5. 🧹 Cleanup Project - تنظيف المشروع
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:27:59.812Z] 
+🤖 Auto-Fix - إصلاح الأخطاء تلقائياً
+[2025-10-18T07:27:59.813Z] Running: auto-fix.js...
+
+
+🤖 Auto-Fix Agent System Starting...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:27:59.834Z] [INFO] 
+📝 Fixing ESLint issues...
+[2025-10-18T07:28:37.123Z] [WARN] ⚠️  Some ESLint issues could not be auto-fixed
+[2025-10-18T07:28:37.124Z] [INFO] 
+🎨 Formatting with Prettier...
+[2025-10-18T07:28:40.605Z] [WARN] ⚠️  Prettier formatting failed
+[2025-10-18T07:28:40.606Z] [INFO] 
+🧹 Removing unused imports...
+[2025-10-18T07:29:17.851Z] [WARN] ⚠️  Could not auto-remove all unused imports
+[2025-10-18T07:29:17.851Z] [INFO] 
+🔷 Checking TypeScript errors...
+[2025-10-18T07:29:25.451Z] [WARN] ⚠️  Found 4340 TypeScript errors
+[2025-10-18T07:29:25.451Z] [WARN] 
+🔍 TypeScript Errors Found:
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(20,7): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(21,9): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(22,11): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(23,13): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(24,12): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(25,14): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(26,14): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(27,14): error TS1005: ',' expected.
+[2025-10-18T07:29:25.451Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(28,11): error TS1005: ',' expected.
+[2025-10-18T07:29:25.452Z] [WARN]    src/app/(admin)/admin/audit-logs/page.tsx(29,3): error TS1137: Expression or comma expected.
+[2025-10-18T07:29:25.452Z] [WARN]    ... and 4330 more
+[2025-10-18T07:29:25.452Z] [INFO] 
+🏗️  Checking build...
+[2025-10-18T07:29:32.193Z] [ERROR] ❌ Build failed
+[2025-10-18T07:29:32.193Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:29:32.193Z] [INFO] 
+📊 Auto-Fix Report:
+[2025-10-18T07:29:32.193Z] [INFO] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:29:32.193Z] [ERROR] ❌ ESLint Fix
+[2025-10-18T07:29:32.193Z] [ERROR] ❌ Prettier Format
+[2025-10-18T07:29:32.193Z] [ERROR] ❌ Unused Imports
+[2025-10-18T07:29:32.193Z] [ERROR] ❌ TypeScript Check
+[2025-10-18T07:29:32.193Z] [ERROR] ❌ Build Check
+[2025-10-18T07:29:32.193Z] [INFO] 
+📈 Success Rate: 0% (0/5)
+
+[2025-10-18T07:29:32.193Z] [ERROR] 🔴 Many issues remain, manual fixes required
+[2025-10-18T07:29:32.193Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:29:32.194Z] [INFO] 📁 Report saved: tmp/auto-fix-report.json
+
+[2025-10-18T07:29:32.202Z] ❌ 🤖 Auto-Fix failed: Command failed: node .agent-system/auto-fix.js
+
+[2025-10-18T07:29:32.204Z] 
+🧠 Smart-Fix - إصلاحات ذكية
+[2025-10-18T07:29:32.204Z] Running: smart-fix.js...
+
+
+🧠 Smart Fix Agent Starting...
+
+📝 Fixing logger imports...
+
+
+   Fixed 0 logger import files
+
+🔍 Fixing "possibly undefined" errors...
+
+
+   Fixed 0 undefined files
+
+🔧 Fixing Supabase client usage...
+
+
+   Fixed 0 Supabase files
+
+⚛️  Fixing React Hooks exhaustive-deps...
+
+   ✅ Fixed: src/components/booking/SessionTypeSelector.tsx
+   ✅ Fixed: src/components/common/LanguageSwitcher.tsx
+   ✅ Fixed: src/components/common/DirectionToggle.tsx
+   ✅ Fixed: src/components/LanguageSwitcher.tsx
+   ✅ Fixed: src/components/appointments/AppointmentManager.tsx
+   ✅ Fixed: src/components/patients/PatientRecords.tsx
+   ✅ Fixed: src/components/layout/SmartHeader.tsx
+   ✅ Fixed: src/components/layout/GlobalHeader.tsx
+   ✅ Fixed: src/components/chatbot/MoainChatbot.tsx
+   ✅ Fixed: src/hooks/useT.tsx
+   ✅ Fixed: src/app/dashboard/user/page.tsx
+   ✅ Fixed: src/app/(public)/chatbot/page.tsx
+   ✅ Fixed: src/app/(admin)/conversations/page.tsx
+   ✅ Fixed: src/app/(admin)/admin/payments/invoices/page.tsx
+   ✅ Fixed: src/app/(admin)/admin/page.tsx
+   ✅ Fixed: src/app/(admin)/admin/therapists/schedules/page.tsx
+   ✅ Fixed: src/app/(admin)/admin/logs/page.tsx
+   ✅ Fixed: src/app/(admin)/admin/users/page.tsx
+   ✅ Fixed: src/app/(admin)/agent-dashboard/page.tsx
+
+   Fixed 19 React Hooks files
+
+📝 Fixing unescaped entities...
+
+   ✅ Fixed: src/app/page.tsx
+   ✅ Fixed: src/app/(admin)/admin/therapists/schedules/page.tsx
+
+   Fixed 2 entity files
+
+📦 Fixing export errors...
+
+
+   Fixed 0 export files
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 Smart Fix Summary:
+
+   Logger Imports: 0 fixes
+   Possibly Undefined: 0 fixes
+   Supabase Client: 0 fixes
+   React Hooks Deps: 19 fixes
+   Unescaped Entities: 2 fixes
+   Export Errors: 0 fixes
+
+   Total: 21 files fixed
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔄 Re-running checks...
+
+
+> moeen@0.1.0 lint
+> next lint
+
+
+./src/app/(admin)/admin/audit-logs/page.tsx
+20:6  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/admin/dashboard/page.tsx
+77:6  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/admin/page.tsx
+Error: Parsing error: Identifier expected.
+
+./src/app/(admin)/admin/roles/page.tsx
+17:6  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/admin/therapists/schedules/page.tsx
+34:69  Error: Parsing error: Expression expected.
+
+./src/app/(admin)/analytics/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/chatbot/flows/[flowId]/page.tsx
+34:8  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/chatbot/flows/page.tsx
+23:6  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/chatbot/integrations/page.tsx
+23:6  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/chatbot/templates/page.tsx
+25:6  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/conversations/page.tsx
+23:6  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/crm/activities/page.tsx
+25:6  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/crm/contacts/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/crm/dashboard/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/crm/deals/page.tsx
+34:6  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/crm/flows/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/crm/leads/page.tsx
+37:6  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/integrations/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/messages/page.tsx
+20:6  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/notifications/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/owner/dashboard/page.tsx
+323:30  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/performance/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/security/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(admin)/sessions/[id]/notes/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/(admin)/settings/api-keys/page.tsx
+Error: Parsing error: Identifier expected.
+
+./src/app/(admin)/settings/page.tsx
+190:28  Error: Parsing error: ',' expected.
+
+./src/app/(admin)/supervisor/dashboard/page.tsx
+367:30  Error: Parsing error: ',' expected.
+
+./src/app/(auth)/login/page.tsx
+118:10  Error: Parsing error: ',' expected.
+
+./src/app/(doctor)/doctor-dashboard/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(health)/appointments/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(health)/approvals/page.tsx
+43:6  Error: Parsing error: ',' expected.
+
+./src/app/(health)/family-support/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(health)/health/patients/[id]/iep/page.tsx
+59:6  Warning: React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/(health)/insurance/page.tsx
+30:6  Error: Parsing error: ',' expected.
+
+./src/app/(health)/insurance-claims/page.tsx
+27:6  Error: Parsing error: ',' expected.
+
+./src/app/(health)/medical-file/page.tsx
+48:6  Error: Parsing error: ',' expected.
+
+./src/app/(health)/patients/[id]/page.tsx
+61:6  Error: Parsing error: ',' expected.
+
+./src/app/(health)/patients/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(health)/progress-tracking/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(health)/sessions/page.tsx
+21:6  Error: Parsing error: ',' expected.
+
+./src/app/(health)/therapy/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(health)/training/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(info)/about/page.tsx
+10:10  Error: Parsing error: ',' expected.
+
+./src/app/(info)/contact/page.tsx
+41:10  Error: Parsing error: ',' expected.
+
+./src/app/(marketing)/faq/page.tsx
+8:7  Error: Parsing error: ',' expected.
+
+./src/app/(marketing)/features/page.tsx
+8:11  Error: Parsing error: ',' expected.
+
+./src/app/(marketing)/pricing/page.tsx
+8:10  Error: Parsing error: ',' expected.
+
+./src/app/(patient)/patient-dashboard/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(public)/chatbot/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(staff)/staff-dashboard/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/(supervisor)/supervisor-dashboard/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/api/admin/configs/route.ts
+43:12  Error: Parsing error: ',' expected.
+
+./src/app/api/admin/security-events/route.ts
+54:12  Error: Parsing error: ',' expected.
+
+./src/app/api/appointments/[id]/route.ts
+Error: Parsing error: Expression expected.
+
+./src/app/api/appointments/book/route.ts
+76:15  Error: Parsing error: ',' expected.
+
+./src/app/api/appointments/route.ts
+125:15  Error: Parsing error: ',' expected.
+
+./src/app/api/auth/forgot-password/route.ts
+47:17  Error: Parsing error: ',' expected.
+
+./src/app/api/auth/login/route.ts
+98:21  Error: Parsing error: ',' expected.
+
+./src/app/api/auth/logout/route.ts
+67:14  Error: Parsing error: ',' expected.
+
+./src/app/api/auth/register/route.ts
+59:17  Error: Parsing error: ',' expected.
+
+./src/app/api/auth/reset-password/route.ts
+31:17  Error: Parsing error: ',' expected.
+
+./src/app/api/chatbot/message/route.ts
+101:15  Error: Parsing error: ',' expected.
+
+./src/app/api/dashboard/health/route.ts
+42:14  Error: Parsing error: ',' expected.
+
+./src/app/api/dashboard/metrics/route.ts
+240:13  Error: Parsing error: ',' expected.
+
+./src/app/api/insurance/claims/[id]/submit/route.ts
+53:15  Error: Parsing error: ',' expected.
+
+./src/app/api/medical-records/route.ts
+105:15  Error: Parsing error: ',' expected.
+
+./src/app/api/medical-records/upload/route.ts
+77:15  Error: Parsing error: ',' expected.
+
+./src/app/api/notifications/send/route.ts
+35:15  Error: Parsing error: ',' expected.
+
+./src/app/api/translations/[lang]/route.ts
+31:12  Error: Parsing error: ',' expected.
+
+./src/app/api/upload/route.ts
+52:15  Error: Parsing error: ',' expected.
+
+./src/app/api/user/preferences/route.ts
+106:15  Error: Parsing error: ',' expected.
+
+./src/app/api/webhook/whatsapp/route.ts
+217:14  Error: Parsing error: ',' expected.
+
+./src/app/dashboard/doctor/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/dashboard/patient/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/dashboard/staff/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/dashboard/supervisor/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/dashboard/user/page.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/layout.tsx
+Error: Parsing error: Expression expected.
+
+./src/app/page.tsx
+15:6  Error: Parsing error: ',' expected.
+
+./src/components/accessibility/AccessibilitySettings.tsx
+Error: Parsing error: Identifier expected.
+
+./src/components/appointments/AppointmentManager.tsx
+Error: Parsing error: Identifier expected.
+
+./src/components/booking/AvailableSlotsPicker.tsx
+40:6  Warning: React Hook useEffect has a missing dependency: 'loadAvailableSlots'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/components/charts/AreaChart.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/charts/BarChart.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/charts/LineChart.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/charts/index.ts
+9:1  Error: Parsing error: Unexpected keyword or identifier.
+
+./src/components/chatbot/MoainChatbot.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/chatbot/MoeenChatbot.tsx
+24:8  Error: Parsing error: ',' expected.
+
+./src/components/common/index.ts
+8:1  Error: Parsing error: Unexpected keyword or identifier.
+
+./src/components/index.ts
+66:1  Error: Parsing error: Unexpected keyword or identifier.
+
+./src/components/insurance/ClaimsManager.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/layout/SmartHeader.tsx
+160:14  Error: Parsing error: ',' expected.
+
+./src/components/patient/ActivationFlow.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/patient/PreVisitChecklist.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/patients/PatientRecords.tsx
+Error: Parsing error: Identifier expected.
+
+./src/components/providers/DesignSystemProvider.tsx
+Error: Parsing error: Identifier expected.
+
+./src/components/shared/index.ts
+2:1  Error: Parsing error: Unexpected keyword or identifier.
+
+./src/components/shell/Sidebar.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/ui/Button.tsx
+41:6  Error: Parsing error: Expression expected.
+
+./src/components/ui/Card.tsx
+26:6  Error: Parsing error: Expression expected.
+
+./src/components/ui/Input.tsx
+39:6  Error: Parsing error: Expression expected.
+
+./src/components/ui/Select.tsx
+Error: Parsing error: Expression expected.
+
+./src/components/ui/ThemeSwitch.tsx
+29:11  Error: Parsing error: ',' expected.
+
+./src/components/ui/index.ts
+Error: Parsing error: Expression expected.
+
+./src/context/TranslationProvider.tsx
+Error: Parsing error: Identifier expected.
+
+./src/core/api/base-handler.ts
+47:21  Error: Parsing error: ',' expected.
+
+./src/core/config/index.ts
+189:6  Error: Parsing error: ',' expected.
+
+./src/core/index.ts
+40:1  Error: Parsing error: Unexpected keyword or identifier.
+
+./src/core/store/index.ts
+82:12  Error: Parsing error: ',' expected.
+
+./src/design-system/index.ts
+Error: Parsing error: Expression expected.
+
+./src/hooks/useAuth.ts
+Error: Parsing error: Identifier expected.
+
+./src/hooks/useKeyPress.ts
+89:4  Error: Parsing error: Argument expression expected.
+
+./src/hooks/useT.tsx
+Error: Parsing error: Identifier expected.
+
+./src/lib/auth/index.ts
+8:4  Error: Parsing error: Declaration or statement expected.
+
+./src/lib/conversation-flows.ts
+106:12  Error: Parsing error: ',' expected.
+
+./src/lib/dynamic-theme-manager.ts
+177:17  Error: Parsing error: ',' expected.
+
+./src/lib/error-handler.ts
+195:11  Error: Parsing error: ',' expected.
+
+./src/lib/insurance/providers.ts
+40:10  Error: Parsing error: ',' expected.
+
+./src/lib/integrations/test-helpers.ts
+108:14  Error: Parsing error: ',' expected.
+
+./src/lib/notifications/sms.ts
+136:16  Error: Parsing error: ',' expected.
+
+./src/lib/payments/moyasar.ts
+80:16  Error: Parsing error: ',' expected.
+
+./src/lib/private-center-integration.ts
+447:18  Error: Parsing error: ',' expected.
+
+./src/lib/saudi-health-integration.ts
+224:21  Error: Parsing error: ',' expected.
+
+./src/lib/seo/metadata.ts
+53:13  Error: Parsing error: ',' expected.
+
+./src/lib/slack-integration.ts
+255:14  Error: Parsing error: ',' expected.
+
+./src/lib/supabase/server.ts
+11:13  Error: Parsing error: ',' expected.
+
+./src/lib/supabase.ts
+302:22  Error: Parsing error: ',' expected.
+
+./src/lib/whatsapp-business-api.ts
+127:16  Error: Parsing error: ',' expected.
+
+./src/middleware/rate-limiter.ts
+83:13  Error: Parsing error: ',' expected.
+
+./src/middleware.prod.ts
+25:17  Error: Parsing error: ',' expected.
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+Error: Command failed: npm run lint
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at checkExecSyncError (node:child_process:916:11)
+    at execSync (node:child_process:988:15)
+    at main (/workspace/.agent-system/smart-fix.js:296:3)
+    at Object.<anonymous> (/workspace/.agent-system/smart-fix.js:299:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12) {
+  status: 1,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 200047,
+  stdout: null,
+  stderr: null
+}
+[2025-10-18T07:29:33.828Z] ✅ 🧠 Smart-Fix completed!
+
+[2025-10-18T07:29:33.829Z] 
+📁 Organize Folders - تنظيم المجلدات
+[2025-10-18T07:29:33.829Z] Running: organize-folders.js...
+
+
+📁 Organize Folders Agent Starting...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:29:33.854Z] [INFO] Creating backup...
+[2025-10-18T07:29:33.888Z] [SUCCESS] ✅ Backup created at tmp/backup-folders-1760772573854
+[2025-10-18T07:29:33.889Z] [INFO] 
+📦 Organizing components...
+[2025-10-18T07:29:33.890Z] [INFO] 
+   Organized 0 components
+
+[2025-10-18T07:29:33.890Z] [INFO] 📚 Organizing lib...
+[2025-10-18T07:29:33.890Z] [INFO] 
+   Organized 0 lib folders
+
+[2025-10-18T07:29:33.891Z] [INFO] 🔍 Finding duplicate files...
+[2025-10-18T07:29:33.906Z] [WARN] 
+   ⚠️  Found 5 duplicate files:
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/(doctor)/doctor-dashboard/page.tsx
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/dashboard/doctor/page.tsx
+[2025-10-18T07:29:33.906Z] [INFO] 
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/(patient)/patient-dashboard/page.tsx
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/dashboard/patient/page.tsx
+[2025-10-18T07:29:33.906Z] [INFO] 
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/(staff)/staff-dashboard/page.tsx
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/dashboard/staff/page.tsx
+[2025-10-18T07:29:33.906Z] [INFO] 
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/(supervisor)/supervisor-dashboard/page.tsx
+[2025-10-18T07:29:33.906Z] [WARN]       src/app/dashboard/supervisor/page.tsx
+[2025-10-18T07:29:33.906Z] [INFO] 
+[2025-10-18T07:29:33.906Z] [WARN]       src/lib/index.ts
+[2025-10-18T07:29:33.906Z] [WARN]       src/services/index.ts
+[2025-10-18T07:29:33.906Z] [INFO] 
+[2025-10-18T07:29:33.907Z] [INFO] 
+🌐 Organizing API routes...
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/agent
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/analytics
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/audit-logs
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/chatbot
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/crm
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/dashboard
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/doctors
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/errors
+[2025-10-18T07:29:33.907Z] [WARN]    ⚠️  Uncategorized route: /api/health
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/healthcare
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/i18n
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/insurance
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/medical-records
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/sessions
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/slack
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/supervisor
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/test
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/translations
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/upload
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/user
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/webhook
+[2025-10-18T07:29:33.908Z] [WARN]    ⚠️  Uncategorized route: /api/webhooks
+[2025-10-18T07:29:33.908Z] [INFO] 
+   Checked API routes organization
+
+[2025-10-18T07:29:33.908Z] [INFO] 📄 Creating index.ts files...
+[2025-10-18T07:29:33.908Z] [INFO] 
+   Created 0 index files
+
+[2025-10-18T07:29:33.908Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:29:33.908Z] [INFO] 
+📊 Folder Organization Report:
+
+[2025-10-18T07:29:33.908Z] [INFO]    Components organized: 0
+[2025-10-18T07:29:33.908Z] [INFO]    Lib folders created: 0
+[2025-10-18T07:29:33.908Z] [INFO]    Duplicate files found: 5
+[2025-10-18T07:29:33.908Z] [INFO]    Index files created: 0
+[2025-10-18T07:29:33.908Z] [INFO] 
+   Total actions: 0
+[2025-10-18T07:29:33.908Z] [WARN] 
+   ⚠️  Please review duplicate files manually
+[2025-10-18T07:29:33.908Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:29:33.910Z] [INFO] 📁 Report saved: tmp/organize-folders-report.json
+
+[2025-10-18T07:29:33.910Z] [SUCCESS] ✅ Folder organization complete!
+
+[2025-10-18T07:29:33.914Z] ✅ 📁 Organize Folders completed!
+
+[2025-10-18T07:29:33.914Z] 
+🎨 Organize Code - تنظيم الكود
+[2025-10-18T07:29:33.914Z] Running: organize-code.js...
+
+
+🎨 Organize Code Agent Starting...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:29:33.936Z] [INFO] Creating backup...
+[2025-10-18T07:29:33.976Z] [SUCCESS] ✅ Backup created at tmp/backup-code-1760772573936
+[2025-10-18T07:29:33.976Z] [INFO] 
+📝 Organizing code in files...
+[2025-10-18T07:29:33.977Z] [SUCCESS]    ✅ Organized imports: src/__tests__/ai-assistant.test.ts
+[2025-10-18T07:29:33.978Z] [SUCCESS]    ✅ Organized imports: src/__tests__/api/appointments.test.ts
+[2025-10-18T07:29:33.979Z] [SUCCESS]    ✅ Organized imports: src/__tests__/api/auth/login.test.ts
+[2025-10-18T07:29:33.980Z] [SUCCESS]    ✅ Organized imports: src/__tests__/api/patients.test.ts
+[2025-10-18T07:29:33.981Z] [SUCCESS]    ✅ Organized imports: src/__tests__/auth/forgot-password.test.tsx
+[2025-10-18T07:29:33.982Z] [SUCCESS]    ✅ Organized imports: src/__tests__/auth/login.test.tsx
+[2025-10-18T07:29:33.982Z] [SUCCESS]    ✅ Organized imports: src/__tests__/auth/register.test.tsx
+[2025-10-18T07:29:33.983Z] [SUCCESS]    ✅ Organized imports: src/__tests__/auth/reset-password.test.tsx
+[2025-10-18T07:29:33.984Z] [SUCCESS]    ✅ Organized imports: src/__tests__/saudi-health-integration.test.ts
+[2025-10-18T07:29:33.984Z] [SUCCESS]    ✅ Organized imports: src/__tests__/setup.ts
+[2025-10-18T07:29:33.984Z] [SUCCESS]    ✅ Organized imports: src/__tests__/whatsapp-business-api.test.ts
+[2025-10-18T07:29:33.985Z] [SUCCESS]    ✅ Organized imports: src/__tests__/whatsapp-integration.test.ts
+[2025-10-18T07:29:33.986Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/admin/audit-logs/page.tsx
+[2025-10-18T07:29:33.987Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/admin/channels/page.tsx
+[2025-10-18T07:29:33.988Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/admin/dashboard/page.tsx
+[2025-10-18T07:29:33.989Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/admin/logs/page.tsx
+[2025-10-18T07:29:33.990Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/admin/page.tsx
+[2025-10-18T07:29:33.991Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/admin/payments/invoices/page.tsx
+[2025-10-18T07:29:33.991Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/admin/roles/page.tsx
+[2025-10-18T07:29:33.992Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/admin/therapists/schedules/page.tsx
+[2025-10-18T07:29:33.993Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/admin/users/page.tsx
+[2025-10-18T07:29:33.993Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/agent-dashboard/page.tsx
+[2025-10-18T07:29:33.994Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/analytics/page.tsx
+[2025-10-18T07:29:33.995Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/chatbot/analytics/page.tsx
+[2025-10-18T07:29:33.995Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/chatbot/flows/[flowId]/page.tsx
+[2025-10-18T07:29:33.996Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/chatbot/flows/page.tsx
+[2025-10-18T07:29:33.997Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/chatbot/integrations/page.tsx
+[2025-10-18T07:29:33.998Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/chatbot/templates/[id]/page.tsx
+[2025-10-18T07:29:33.999Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/chatbot/templates/page.tsx
+[2025-10-18T07:29:34.004Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/conversations/page.tsx
+[2025-10-18T07:29:34.005Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/crm/activities/page.tsx
+[2025-10-18T07:29:34.006Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/crm/contacts/[id]/page.tsx
+[2025-10-18T07:29:34.006Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/crm/contacts/page.tsx
+[2025-10-18T07:29:34.007Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/crm/dashboard/page.tsx
+[2025-10-18T07:29:34.009Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/crm/deals/kanban/page.tsx
+[2025-10-18T07:29:34.010Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/crm/deals/page.tsx
+[2025-10-18T07:29:34.011Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/crm/flows/page.tsx
+[2025-10-18T07:29:34.012Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/crm/leads/page.tsx
+[2025-10-18T07:29:34.012Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/flow/page.tsx
+[2025-10-18T07:29:34.013Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/integrations/page.tsx
+[2025-10-18T07:29:34.014Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/messages/page.tsx
+[2025-10-18T07:29:34.015Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/notifications/page.tsx
+[2025-10-18T07:29:34.015Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/owner/dashboard/page.tsx
+[2025-10-18T07:29:34.017Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/performance/page.tsx
+[2025-10-18T07:29:34.018Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/profile/page.tsx
+[2025-10-18T07:29:34.018Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/review/page.tsx
+[2025-10-18T07:29:34.019Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/security/page.tsx
+[2025-10-18T07:29:34.021Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/sessions/[id]/notes/page.tsx
+[2025-10-18T07:29:34.021Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/settings/api-keys/page.tsx
+[2025-10-18T07:29:34.023Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/settings/page.tsx
+[2025-10-18T07:29:34.024Z] [SUCCESS]    ✅ Organized imports: src/app/(admin)/supervisor/dashboard/page.tsx
+[2025-10-18T07:29:34.024Z] [SUCCESS]    ✅ Organized imports: src/app/(auth)/forgot-password/page.tsx
+[2025-10-18T07:29:34.028Z] [SUCCESS]    ✅ Organized imports: src/app/(auth)/layout.tsx
+[2025-10-18T07:29:34.028Z] [SUCCESS]    ✅ Organized imports: src/app/(auth)/login/page.tsx
+[2025-10-18T07:29:34.029Z] [SUCCESS]    ✅ Organized imports: src/app/(auth)/register/page.tsx
+[2025-10-18T07:29:34.030Z] [SUCCESS]    ✅ Organized imports: src/app/(auth)/reset-password/page.tsx
+[2025-10-18T07:29:34.030Z] [SUCCESS]    ✅ Organized imports: src/app/(auth)/verify-email/page.tsx
+[2025-10-18T07:29:34.030Z] [SUCCESS]    ✅ Organized imports: src/app/(doctor)/doctor-dashboard/page.tsx
+[2025-10-18T07:29:34.032Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/appointments/page.tsx
+[2025-10-18T07:29:34.033Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/approvals/page.tsx
+[2025-10-18T07:29:34.034Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/family-support/page.tsx
+[2025-10-18T07:29:34.035Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/health/patients/[id]/iep/page.tsx
+[2025-10-18T07:29:34.036Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/health/sessions/book/page.tsx
+[2025-10-18T07:29:34.037Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/insurance/page.tsx
+[2025-10-18T07:29:34.038Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/insurance-claims/page.tsx
+[2025-10-18T07:29:34.039Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/medical-file/page.tsx
+[2025-10-18T07:29:34.040Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/patients/[id]/page.tsx
+[2025-10-18T07:29:34.041Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/patients/page.tsx
+[2025-10-18T07:29:34.043Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/progress-tracking/page.tsx
+[2025-10-18T07:29:34.044Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/sessions/page.tsx
+[2025-10-18T07:29:34.045Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/therapy/page.tsx
+[2025-10-18T07:29:34.046Z] [SUCCESS]    ✅ Organized imports: src/app/(health)/training/page.tsx
+[2025-10-18T07:29:34.047Z] [SUCCESS]    ✅ Organized imports: src/app/(info)/about/page.tsx
+[2025-10-18T07:29:34.048Z] [SUCCESS]    ✅ Organized imports: src/app/(info)/contact/page.tsx
+[2025-10-18T07:29:34.048Z] [SUCCESS]    ✅ Organized imports: src/app/(info)/layout.tsx
+[2025-10-18T07:29:34.049Z] [SUCCESS]    ✅ Organized imports: src/app/(legal)/layout.tsx
+[2025-10-18T07:29:34.049Z] [SUCCESS]    ✅ Organized imports: src/app/(legal)/privacy/page.tsx
+[2025-10-18T07:29:34.050Z] [SUCCESS]    ✅ Organized imports: src/app/(legal)/terms/page.tsx
+[2025-10-18T07:29:34.051Z] [SUCCESS]    ✅ Organized imports: src/app/(marketing)/faq/page.tsx
+[2025-10-18T07:29:34.051Z] [SUCCESS]    ✅ Organized imports: src/app/(marketing)/features/page.tsx
+[2025-10-18T07:29:34.052Z] [SUCCESS]    ✅ Organized imports: src/app/(marketing)/pricing/page.tsx
+[2025-10-18T07:29:34.052Z] [SUCCESS]    ✅ Organized imports: src/app/(patient)/patient-dashboard/page.tsx
+[2025-10-18T07:29:34.053Z] [SUCCESS]    ✅ Organized imports: src/app/(public)/chatbot/page.tsx
+[2025-10-18T07:29:34.054Z] [SUCCESS]    ✅ Organized imports: src/app/(staff)/staff-dashboard/page.tsx
+[2025-10-18T07:29:34.055Z] [SUCCESS]    ✅ Organized imports: src/app/(supervisor)/supervisor-dashboard/page.tsx
+[2025-10-18T07:29:34.056Z] [SUCCESS]    ✅ Organized imports: src/app/api/admin/configs/route.ts
+[2025-10-18T07:29:34.057Z] [SUCCESS]    ✅ Organized imports: src/app/api/admin/security-events/route.ts
+[2025-10-18T07:29:34.058Z] [SUCCESS]    ✅ Organized imports: src/app/api/admin/stats/route.ts
+[2025-10-18T07:29:34.059Z] [SUCCESS]    ✅ Organized imports: src/app/api/admin/system-config/route.ts
+[2025-10-18T07:29:34.060Z] [SUCCESS]    ✅ Organized imports: src/app/api/admin/users/[id]/route.ts
+[2025-10-18T07:29:34.063Z] [SUCCESS]    ✅ Organized imports: src/app/api/admin/users/route.ts
+[2025-10-18T07:29:34.063Z] [SUCCESS]    ✅ Organized imports: src/app/api/agent/completion/route.ts
+[2025-10-18T07:29:34.065Z] [SUCCESS]    ✅ Organized imports: src/app/api/agent/logs/route.ts
+[2025-10-18T07:29:34.066Z] [SUCCESS]    ✅ Organized imports: src/app/api/agent/status/route.ts
+[2025-10-18T07:29:34.067Z] [SUCCESS]    ✅ Organized imports: src/app/api/agent/tasks/route.ts
+[2025-10-18T07:29:34.071Z] [SUCCESS]    ✅ Organized imports: src/app/api/analytics/action/route.ts
+[2025-10-18T07:29:34.071Z] [SUCCESS]    ✅ Organized imports: src/app/api/analytics/metrics/route.ts
+[2025-10-18T07:29:34.072Z] [SUCCESS]    ✅ Organized imports: src/app/api/appointments/[id]/route.ts
+[2025-10-18T07:29:34.073Z] [SUCCESS]    ✅ Organized imports: src/app/api/appointments/availability/route.ts
+[2025-10-18T07:29:34.073Z] [SUCCESS]    ✅ Organized imports: src/app/api/appointments/book/route.ts
+[2025-10-18T07:29:34.074Z] [SUCCESS]    ✅ Organized imports: src/app/api/appointments/conflict-check/route.ts
+[2025-10-18T07:29:34.075Z] [SUCCESS]    ✅ Organized imports: src/app/api/appointments/route.ts
+[2025-10-18T07:29:34.077Z] [SUCCESS]    ✅ Organized imports: src/app/api/audit-logs/route.ts
+[2025-10-18T07:29:34.078Z] [SUCCESS]    ✅ Organized imports: src/app/api/auth/forgot-password/route.ts
+[2025-10-18T07:29:34.079Z] [SUCCESS]    ✅ Organized imports: src/app/api/auth/login/route.ts
+[2025-10-18T07:29:34.079Z] [SUCCESS]    ✅ Organized imports: src/app/api/auth/logout/route.ts
+[2025-10-18T07:29:34.080Z] [SUCCESS]    ✅ Organized imports: src/app/api/auth/me/route.ts
+[2025-10-18T07:29:34.082Z] [SUCCESS]    ✅ Organized imports: src/app/api/auth/register/route.ts
+[2025-10-18T07:29:34.082Z] [SUCCESS]    ✅ Organized imports: src/app/api/auth/reset-password/route.ts
+[2025-10-18T07:29:34.083Z] [SUCCESS]    ✅ Organized imports: src/app/api/chatbot/appointments/route.ts
+[2025-10-18T07:29:34.084Z] [SUCCESS]    ✅ Organized imports: src/app/api/chatbot/config/route.ts
+[2025-10-18T07:29:34.084Z] [SUCCESS]    ✅ Organized imports: src/app/api/chatbot/conversations/route.ts
+[2025-10-18T07:29:34.085Z] [SUCCESS]    ✅ Organized imports: src/app/api/chatbot/flows/route.ts
+[2025-10-18T07:29:34.085Z] [SUCCESS]    ✅ Organized imports: src/app/api/chatbot/intents/route.ts
+[2025-10-18T07:29:34.086Z] [SUCCESS]    ✅ Organized imports: src/app/api/chatbot/message/route.ts
+[2025-10-18T07:29:34.086Z] [SUCCESS]    ✅ Organized imports: src/app/api/chatbot/messages/route.ts
+[2025-10-18T07:29:34.087Z] [SUCCESS]    ✅ Organized imports: src/app/api/crm/contacts/route.ts
+[2025-10-18T07:29:34.088Z] [SUCCESS]    ✅ Organized imports: src/app/api/crm/leads/route.ts
+[2025-10-18T07:29:34.088Z] [SUCCESS]    ✅ Organized imports: src/app/api/crm/stats/route.ts
+[2025-10-18T07:29:34.089Z] [SUCCESS]    ✅ Organized imports: src/app/api/dashboard/health/route.ts
+[2025-10-18T07:29:34.089Z] [SUCCESS]    ✅ Organized imports: src/app/api/dashboard/logs/route.ts
+[2025-10-18T07:29:34.089Z] [SUCCESS]    ✅ Organized imports: src/app/api/dashboard/metrics/route.ts
+[2025-10-18T07:29:34.090Z] [SUCCESS]    ✅ Organized imports: src/app/api/doctors/availability/route.ts
+[2025-10-18T07:29:34.090Z] [SUCCESS]    ✅ Organized imports: src/app/api/errors/route.ts
+[2025-10-18T07:29:34.090Z] [SUCCESS]    ✅ Organized imports: src/app/api/health/route.ts
+[2025-10-18T07:29:34.091Z] [SUCCESS]    ✅ Organized imports: src/app/api/healthcare/appointments/route.ts
+[2025-10-18T07:29:34.092Z] [SUCCESS]    ✅ Organized imports: src/app/api/healthcare/patients/route.ts
+[2025-10-18T07:29:34.092Z] [SUCCESS]    ✅ Organized imports: src/app/api/i18n/route.ts
+[2025-10-18T07:29:34.092Z] [SUCCESS]    ✅ Organized imports: src/app/api/insurance/claims/[id]/submit/route.ts
+[2025-10-18T07:29:34.093Z] [SUCCESS]    ✅ Organized imports: src/app/api/insurance/claims/route.ts
+[2025-10-18T07:29:34.093Z] [SUCCESS]    ✅ Organized imports: src/app/api/medical-records/route.ts
+[2025-10-18T07:29:34.093Z] [SUCCESS]    ✅ Organized imports: src/app/api/medical-records/upload/route.ts
+[2025-10-18T07:29:34.094Z] [SUCCESS]    ✅ Organized imports: src/app/api/notifications/send/route.ts
+[2025-10-18T07:29:34.094Z] [SUCCESS]    ✅ Organized imports: src/app/api/notifications/templates/route.ts
+[2025-10-18T07:29:34.095Z] [SUCCESS]    ✅ Organized imports: src/app/api/patients/[id]/activate/route.ts
+[2025-10-18T07:29:34.095Z] [SUCCESS]    ✅ Organized imports: src/app/api/patients/[id]/activation/step/route.ts
+[2025-10-18T07:29:34.095Z] [SUCCESS]    ✅ Organized imports: src/app/api/patients/journey/route.ts
+[2025-10-18T07:29:34.096Z] [SUCCESS]    ✅ Organized imports: src/app/api/payments/webhook/stripe/route.ts
+[2025-10-18T07:29:34.096Z] [SUCCESS]    ✅ Organized imports: src/app/api/reports/dashboard-metrics/route.ts
+[2025-10-18T07:29:34.096Z] [SUCCESS]    ✅ Organized imports: src/app/api/reports/export/route.ts
+[2025-10-18T07:29:34.097Z] [SUCCESS]    ✅ Organized imports: src/app/api/sessions/available-slots/route.ts
+[2025-10-18T07:29:34.098Z] [SUCCESS]    ✅ Organized imports: src/app/api/slack/notify/route.ts
+[2025-10-18T07:29:34.098Z] [SUCCESS]    ✅ Organized imports: src/app/api/slack/webhook/route.ts
+[2025-10-18T07:29:34.098Z] [SUCCESS]    ✅ Organized imports: src/app/api/supervisor/call-request/route.ts
+[2025-10-18T07:29:34.099Z] [SUCCESS]    ✅ Organized imports: src/app/api/test/clear-rate-limit/route.ts
+[2025-10-18T07:29:34.099Z] [SUCCESS]    ✅ Organized imports: src/app/api/translations/[lang]/route.ts
+[2025-10-18T07:29:34.100Z] [SUCCESS]    ✅ Organized imports: src/app/api/translations/missing/route.ts
+[2025-10-18T07:29:34.101Z] [SUCCESS]    ✅ Organized imports: src/app/api/upload/route.ts
+[2025-10-18T07:29:34.101Z] [SUCCESS]    ✅ Organized imports: src/app/api/user/preferences/route.ts
+[2025-10-18T07:29:34.102Z] [SUCCESS]    ✅ Organized imports: src/app/api/webhook/whatsapp/route.ts
+[2025-10-18T07:29:34.102Z] [SUCCESS]    ✅ Organized imports: src/app/api/webhooks/payments/moyasar/route.ts
+[2025-10-18T07:29:34.102Z] [SUCCESS]    ✅ Organized imports: src/app/api/webhooks/payments/stripe/route.ts
+[2025-10-18T07:29:34.103Z] [SUCCESS]    ✅ Organized imports: src/app/dashboard/doctor/page.tsx
+[2025-10-18T07:29:34.103Z] [SUCCESS]    ✅ Organized imports: src/app/dashboard/page.tsx
+[2025-10-18T07:29:34.104Z] [SUCCESS]    ✅ Organized imports: src/app/dashboard/patient/page.tsx
+[2025-10-18T07:29:34.104Z] [SUCCESS]    ✅ Organized imports: src/app/dashboard/staff/page.tsx
+[2025-10-18T07:29:34.105Z] [SUCCESS]    ✅ Organized imports: src/app/dashboard/supervisor/page.tsx
+[2025-10-18T07:29:34.106Z] [SUCCESS]    ✅ Organized imports: src/app/dashboard/user/page.tsx
+[2025-10-18T07:29:34.106Z] [SUCCESS]    ✅ Organized imports: src/app/error.tsx
+[2025-10-18T07:29:34.106Z] [SUCCESS]    ✅ Organized imports: src/app/layout.minimal.tsx
+[2025-10-18T07:29:34.106Z] [SUCCESS]    ✅ Organized imports: src/app/layout.tsx
+[2025-10-18T07:29:34.107Z] [SUCCESS]    ✅ Organized imports: src/app/not-found.tsx
+[2025-10-18T07:29:34.108Z] [SUCCESS]    ✅ Organized imports: src/app/page.tsx
+[2025-10-18T07:29:34.109Z] [SUCCESS]    ✅ Organized imports: src/app/robots.ts
+[2025-10-18T07:29:34.110Z] [SUCCESS]    ✅ Organized imports: src/app/sitemap.ts
+[2025-10-18T07:29:34.112Z] [SUCCESS]    ✅ Organized imports: src/app/uikit/guidelines/page.tsx
+[2025-10-18T07:29:34.112Z] [SUCCESS]    ✅ Organized imports: src/app/uikit/page.tsx
+[2025-10-18T07:29:34.112Z] [SUCCESS]    ✅ Organized imports: src/components/LanguageSwitcher.tsx
+[2025-10-18T07:29:34.113Z] [SUCCESS]    ✅ Organized imports: src/components/accessibility/AccessibilitySettings.tsx
+[2025-10-18T07:29:34.113Z] [SUCCESS]    ✅ Organized imports: src/components/appointments/AppointmentManager.tsx
+[2025-10-18T07:29:34.114Z] [SUCCESS]    ✅ Organized imports: src/components/auth/ProtectedRoute.tsx
+[2025-10-18T07:29:34.115Z] [SUCCESS]    ✅ Organized imports: src/components/booking/AvailableSlotsPicker.tsx
+[2025-10-18T07:29:34.115Z] [SUCCESS]    ✅ Organized imports: src/components/booking/SessionTypeSelector.tsx
+[2025-10-18T07:29:34.115Z] [SUCCESS]    ✅ Organized imports: src/components/charts/AreaChart.tsx
+[2025-10-18T07:29:34.116Z] [SUCCESS]    ✅ Organized imports: src/components/charts/BarChart.tsx
+[2025-10-18T07:29:34.116Z] [SUCCESS]    ✅ Organized imports: src/components/charts/LineChart.tsx
+[2025-10-18T07:29:34.117Z] [SUCCESS]    ✅ Organized imports: src/components/chatbot/MoainChatbot.tsx
+[2025-10-18T07:29:34.117Z] [SUCCESS]    ✅ Organized imports: src/components/chatbot/MoeenChatbot.tsx
+[2025-10-18T07:29:34.118Z] [SUCCESS]    ✅ Organized imports: src/components/common/DirectionToggle.tsx
+[2025-10-18T07:29:34.118Z] [SUCCESS]    ✅ Organized imports: src/components/common/EmptyState.tsx
+[2025-10-18T07:29:34.118Z] [SUCCESS]    ✅ Organized imports: src/components/common/ErrorBoundary.tsx
+[2025-10-18T07:29:34.119Z] [SUCCESS]    ✅ Organized imports: src/components/common/LanguageSwitcher.tsx
+[2025-10-18T07:29:34.119Z] [SUCCESS]    ✅ Organized imports: src/components/common/LiveDot.tsx
+[2025-10-18T07:29:34.119Z] [SUCCESS]    ✅ Organized imports: src/components/common/OptimizedImage.tsx
+[2025-10-18T07:29:34.119Z] [SUCCESS]    ✅ Organized imports: src/components/common/PerformanceOptimizedImage.tsx
+[2025-10-18T07:29:34.120Z] [SUCCESS]    ✅ Organized imports: src/components/common/PlaceholderSquare.tsx
+[2025-10-18T07:29:34.120Z] [SUCCESS]    ✅ Organized imports: src/components/dashboard/Charts.tsx
+[2025-10-18T07:29:34.120Z] [SUCCESS]    ✅ Organized imports: src/components/dashboard/KpiCard.tsx
+[2025-10-18T07:29:34.121Z] [SUCCESS]    ✅ Organized imports: src/components/insurance/ClaimsManager.tsx
+[2025-10-18T07:29:34.121Z] [SUCCESS]    ✅ Organized imports: src/components/layout/GlobalHeader.tsx
+[2025-10-18T07:29:34.122Z] [SUCCESS]    ✅ Organized imports: src/components/layout/SmartHeader.tsx
+[2025-10-18T07:29:34.122Z] [SUCCESS]    ✅ Organized imports: src/components/layout/index.ts
+[2025-10-18T07:29:34.122Z] [SUCCESS]    ✅ Organized imports: src/components/patient/ActivationFlow.tsx
+[2025-10-18T07:29:34.123Z] [SUCCESS]    ✅ Organized imports: src/components/patient/PreVisitChecklist.tsx
+[2025-10-18T07:29:34.123Z] [SUCCESS]    ✅ Organized imports: src/components/patients/PatientRecords.tsx
+[2025-10-18T07:29:34.124Z] [SUCCESS]    ✅ Organized imports: src/components/providers/DesignSystemProvider.tsx
+[2025-10-18T07:29:34.124Z] [SUCCESS]    ✅ Organized imports: src/components/providers/I18nProvider.tsx
+[2025-10-18T07:29:34.125Z] [SUCCESS]    ✅ Organized imports: src/components/providers/UIProvider.tsx
+[2025-10-18T07:29:34.125Z] [SUCCESS]    ✅ Organized imports: src/components/settings/KeywordEditor.tsx
+[2025-10-18T07:29:34.126Z] [SUCCESS]    ✅ Organized imports: src/components/settings/SettingsTabs.tsx
+[2025-10-18T07:29:34.126Z] [SUCCESS]    ✅ Organized imports: src/components/shared/DataTable.tsx
+[2025-10-18T07:29:34.127Z] [SUCCESS]    ✅ Organized imports: src/components/shared/EmptyState.tsx
+[2025-10-18T07:29:34.127Z] [SUCCESS]    ✅ Organized imports: src/components/shared/Form.tsx
+[2025-10-18T07:29:34.127Z] [SUCCESS]    ✅ Organized imports: src/components/shared/LiveRegion.tsx
+[2025-10-18T07:29:34.127Z] [SUCCESS]    ✅ Organized imports: src/components/shared/Modal.tsx
+[2025-10-18T07:29:34.128Z] [SUCCESS]    ✅ Organized imports: src/components/shared/ScreenReaderOnly.tsx
+[2025-10-18T07:29:34.128Z] [SUCCESS]    ✅ Organized imports: src/components/shared/Tabs.tsx
+[2025-10-18T07:29:34.128Z] [SUCCESS]    ✅ Organized imports: src/components/shell/HeaderSimple.tsx
+[2025-10-18T07:29:34.129Z] [SUCCESS]    ✅ Organized imports: src/components/shell/Sidebar.tsx
+[2025-10-18T07:29:34.129Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Badge.tsx
+[2025-10-18T07:29:34.129Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Button.tsx
+[2025-10-18T07:29:34.129Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Card.tsx
+[2025-10-18T07:29:34.130Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Checkbox.tsx
+[2025-10-18T07:29:34.130Z] [SUCCESS]    ✅ Organized imports: src/components/ui/DataTable.tsx
+[2025-10-18T07:29:34.130Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Input.tsx
+[2025-10-18T07:29:34.131Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Label.tsx
+[2025-10-18T07:29:34.131Z] [SUCCESS]    ✅ Organized imports: src/components/ui/LoadingSpinner.tsx
+[2025-10-18T07:29:34.131Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Modal.tsx
+[2025-10-18T07:29:34.131Z] [SUCCESS]    ✅ Organized imports: src/components/ui/ScrollArea.tsx
+[2025-10-18T07:29:34.131Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Select.tsx
+[2025-10-18T07:29:34.132Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Skeleton.tsx
+[2025-10-18T07:29:34.132Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Switch.tsx
+[2025-10-18T07:29:34.132Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Table.tsx
+[2025-10-18T07:29:34.132Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Tabs.tsx
+[2025-10-18T07:29:34.133Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Textarea.tsx
+[2025-10-18T07:29:34.134Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Toast.tsx
+[2025-10-18T07:29:34.134Z] [SUCCESS]    ✅ Organized imports: src/components/ui/Tooltip.tsx
+[2025-10-18T07:29:34.135Z] [SUCCESS]    ✅ Organized imports: src/config/api.ts
+[2025-10-18T07:29:34.136Z] [SUCCESS]    ✅ Organized imports: src/config/app.ts
+[2025-10-18T07:29:34.136Z] [SUCCESS]    ✅ Organized imports: src/config/auth.ts
+[2025-10-18T07:29:34.136Z] [SUCCESS]    ✅ Organized imports: src/config/database.ts
+[2025-10-18T07:29:34.137Z] [SUCCESS]    ✅ Organized imports: src/config/env.ts
+[2025-10-18T07:29:34.137Z] [SUCCESS]    ✅ Organized imports: src/constants/api.ts
+[2025-10-18T07:29:34.138Z] [SUCCESS]    ✅ Organized imports: src/constants/i18n-keys.ts
+[2025-10-18T07:29:34.138Z] [SUCCESS]    ✅ Organized imports: src/constants/index.ts
+[2025-10-18T07:29:34.139Z] [SUCCESS]    ✅ Organized imports: src/constants/roles.ts
+[2025-10-18T07:29:34.139Z] [SUCCESS]    ✅ Organized imports: src/constants/routes.ts
+[2025-10-18T07:29:34.139Z] [SUCCESS]    ✅ Organized imports: src/constants/storage.ts
+[2025-10-18T07:29:34.140Z] [SUCCESS]    ✅ Organized imports: src/constants/theme.ts
+[2025-10-18T07:29:34.141Z] [SUCCESS]    ✅ Organized imports: src/constants/ui.ts
+[2025-10-18T07:29:34.141Z] [SUCCESS]    ✅ Organized imports: src/constants/validation.ts
+[2025-10-18T07:29:34.142Z] [SUCCESS]    ✅ Organized imports: src/context/TranslationProvider.tsx
+[2025-10-18T07:29:34.144Z] [SUCCESS]    ✅ Organized imports: src/core/constants/index.ts
+[2025-10-18T07:29:34.144Z] [SUCCESS]    ✅ Organized imports: src/core/design-system/index.ts
+[2025-10-18T07:29:34.145Z] [SUCCESS]    ✅ Organized imports: src/core/store/index.ts
+[2025-10-18T07:29:34.146Z] [SUCCESS]    ✅ Organized imports: src/core/theme/index.ts
+[2025-10-18T07:29:34.146Z] [SUCCESS]    ✅ Organized imports: src/core/types/index.ts
+[2025-10-18T07:29:34.146Z] [SUCCESS]    ✅ Organized imports: src/core/utils/index.ts
+[2025-10-18T07:29:34.146Z] [SUCCESS]    ✅ Organized imports: src/core/utils.ts
+[2025-10-18T07:29:34.147Z] [SUCCESS]    ✅ Organized imports: src/design-system/types.ts
+[2025-10-18T07:29:34.147Z] [SUCCESS]    ✅ Organized imports: src/hooks/index.ts
+[2025-10-18T07:29:34.147Z] [SUCCESS]    ✅ Organized imports: src/hooks/useApi.ts
+[2025-10-18T07:29:34.147Z] [SUCCESS]    ✅ Organized imports: src/hooks/useAsync.ts
+[2025-10-18T07:29:34.148Z] [SUCCESS]    ✅ Organized imports: src/hooks/useAuth.ts
+[2025-10-18T07:29:34.148Z] [SUCCESS]    ✅ Organized imports: src/hooks/useBrandColorFromLogo.ts
+[2025-10-18T07:29:34.148Z] [SUCCESS]    ✅ Organized imports: src/hooks/useClickOutside.ts
+[2025-10-18T07:29:34.149Z] [SUCCESS]    ✅ Organized imports: src/hooks/useCounter.ts
+[2025-10-18T07:29:34.149Z] [SUCCESS]    ✅ Organized imports: src/hooks/useDebounce.ts
+[2025-10-18T07:29:34.149Z] [SUCCESS]    ✅ Organized imports: src/hooks/useErrorHandler.tsx
+[2025-10-18T07:29:34.150Z] [SUCCESS]    ✅ Organized imports: src/hooks/useForm.ts
+[2025-10-18T07:29:34.150Z] [SUCCESS]    ✅ Organized imports: src/hooks/useI18n.ts
+[2025-10-18T07:29:34.150Z] [SUCCESS]    ✅ Organized imports: src/hooks/useIntersectionObserver.ts
+[2025-10-18T07:29:34.151Z] [SUCCESS]    ✅ Organized imports: src/hooks/useKeyPress.ts
+[2025-10-18T07:29:34.151Z] [SUCCESS]    ✅ Organized imports: src/hooks/useKeyboardNavigation.ts
+[2025-10-18T07:29:34.151Z] [SUCCESS]    ✅ Organized imports: src/hooks/useLocalStorage.ts
+[2025-10-18T07:29:34.152Z] [SUCCESS]    ✅ Organized imports: src/hooks/useMediaQuery.ts
+[2025-10-18T07:29:34.153Z] [SUCCESS]    ✅ Organized imports: src/hooks/useMemoryLeakPrevention.ts
+[2025-10-18T07:29:34.153Z] [SUCCESS]    ✅ Organized imports: src/hooks/usePerformance.ts
+[2025-10-18T07:29:34.153Z] [SUCCESS]    ✅ Organized imports: src/hooks/usePrevious.ts
+[2025-10-18T07:29:34.154Z] [SUCCESS]    ✅ Organized imports: src/hooks/useT.tsx
+[2025-10-18T07:29:34.154Z] [SUCCESS]    ✅ Organized imports: src/hooks/useThrottle.ts
+[2025-10-18T07:29:34.154Z] [SUCCESS]    ✅ Organized imports: src/hooks/useToggle.ts
+[2025-10-18T07:29:34.154Z] [SUCCESS]    ✅ Organized imports: src/hooks/useTranslation.ts
+[2025-10-18T07:29:34.155Z] [SUCCESS]    ✅ Organized imports: src/lib/accessibility/aria-utils.ts
+[2025-10-18T07:29:34.155Z] [SUCCESS]    ✅ Organized imports: src/lib/accessibility.ts
+[2025-10-18T07:29:34.155Z] [SUCCESS]    ✅ Organized imports: src/lib/ai-assistant.ts
+[2025-10-18T07:29:34.156Z] [SUCCESS]    ✅ Organized imports: src/lib/analytics-stubs.ts
+[2025-10-18T07:29:34.156Z] [SUCCESS]    ✅ Organized imports: src/lib/api/config.ts
+[2025-10-18T07:29:34.156Z] [SUCCESS]    ✅ Organized imports: src/lib/auth/authorize.ts
+[2025-10-18T07:29:34.157Z] [SUCCESS]    ✅ Organized imports: src/lib/auth/roles.ts
+[2025-10-18T07:29:34.157Z] [SUCCESS]    ✅ Organized imports: src/lib/cache/redis.ts
+[2025-10-18T07:29:34.158Z] [SUCCESS]    ✅ Organized imports: src/lib/cache-system.ts
+[2025-10-18T07:29:34.158Z] [SUCCESS]    ✅ Organized imports: src/lib/cn.ts
+[2025-10-18T07:29:34.159Z] [SUCCESS]    ✅ Organized imports: src/lib/conversation-flows.ts
+[2025-10-18T07:29:34.160Z] [SUCCESS]    ✅ Organized imports: src/lib/cuid.ts
+[2025-10-18T07:29:34.161Z] [SUCCESS]    ✅ Organized imports: src/lib/database-utils.ts
+[2025-10-18T07:29:34.161Z] [SUCCESS]    ✅ Organized imports: src/lib/database.ts
+[2025-10-18T07:29:34.162Z] [SUCCESS]    ✅ Organized imports: src/lib/design-tokens.ts
+[2025-10-18T07:29:34.162Z] [SUCCESS]    ✅ Organized imports: src/lib/encryption.ts
+[2025-10-18T07:29:34.163Z] [SUCCESS]    ✅ Organized imports: src/lib/errors/api-errors.ts
+[2025-10-18T07:29:34.164Z] [SUCCESS]    ✅ Organized imports: src/lib/i18n/translationService.ts
+[2025-10-18T07:29:34.164Z] [SUCCESS]    ✅ Organized imports: src/lib/index.ts
+[2025-10-18T07:29:34.165Z] [SUCCESS]    ✅ Organized imports: src/lib/integration-system.ts
+[2025-10-18T07:29:34.165Z] [SUCCESS]    ✅ Organized imports: src/lib/integrations/test-helpers.ts
+[2025-10-18T07:29:34.166Z] [SUCCESS]    ✅ Organized imports: src/lib/logger.ts
+[2025-10-18T07:29:34.166Z] [SUCCESS]    ✅ Organized imports: src/lib/monitoring/logger.ts
+[2025-10-18T07:29:34.166Z] [SUCCESS]    ✅ Organized imports: src/lib/notifications/email.ts
+[2025-10-18T07:29:34.166Z] [SUCCESS]    ✅ Organized imports: src/lib/notifications/sms.ts
+[2025-10-18T07:29:34.167Z] [SUCCESS]    ✅ Organized imports: src/lib/payments/stripe.ts
+[2025-10-18T07:29:34.168Z] [SUCCESS]    ✅ Organized imports: src/lib/performance-optimizations.ts
+[2025-10-18T07:29:34.169Z] [SUCCESS]    ✅ Organized imports: src/lib/performance.ts
+[2025-10-18T07:29:34.169Z] [SUCCESS]    ✅ Organized imports: src/lib/rate-limiter.ts
+[2025-10-18T07:29:34.170Z] [SUCCESS]    ✅ Organized imports: src/lib/responsive-design.ts
+[2025-10-18T07:29:34.170Z] [SUCCESS]    ✅ Organized imports: src/lib/router.ts
+[2025-10-18T07:29:34.171Z] [SUCCESS]    ✅ Organized imports: src/lib/saudi-ministry-health-integration.ts
+[2025-10-18T07:29:34.171Z] [SUCCESS]    ✅ Organized imports: src/lib/security.ts
+[2025-10-18T07:29:34.172Z] [SUCCESS]    ✅ Organized imports: src/lib/seo/metadata.ts
+[2025-10-18T07:29:34.172Z] [SUCCESS]    ✅ Organized imports: src/lib/supabase/client.ts
+[2025-10-18T07:29:34.173Z] [SUCCESS]    ✅ Organized imports: src/lib/supabase/server.ts
+[2025-10-18T07:29:34.173Z] [SUCCESS]    ✅ Organized imports: src/lib/supabase-real.ts
+[2025-10-18T07:29:34.174Z] [SUCCESS]    ✅ Organized imports: src/lib/supabase.ts
+[2025-10-18T07:29:34.174Z] [SUCCESS]    ✅ Organized imports: src/lib/supabaseClient.ts
+[2025-10-18T07:29:34.175Z] [SUCCESS]    ✅ Organized imports: src/lib/theme.ts
+[2025-10-18T07:29:34.175Z] [SUCCESS]    ✅ Organized imports: src/lib/utils/index.ts
+[2025-10-18T07:29:34.175Z] [SUCCESS]    ✅ Organized imports: src/lib/utils/request-helpers.ts
+[2025-10-18T07:29:34.176Z] [SUCCESS]    ✅ Organized imports: src/lib/utils.ts
+[2025-10-18T07:29:34.176Z] [SUCCESS]    ✅ Organized imports: src/lib/validation/schemas.ts
+[2025-10-18T07:29:34.177Z] [SUCCESS]    ✅ Organized imports: src/lib/validation/security.ts
+[2025-10-18T07:29:34.178Z] [SUCCESS]    ✅ Organized imports: src/lib/validation.ts
+[2025-10-18T07:29:34.179Z] [SUCCESS]    ✅ Organized imports: src/lib/whatsapp-integration.ts
+[2025-10-18T07:29:34.179Z] [SUCCESS]    ✅ Organized imports: src/middleware/auth.ts
+[2025-10-18T07:29:34.180Z] [SUCCESS]    ✅ Organized imports: src/middleware/rate-limiter.ts
+[2025-10-18T07:29:34.180Z] [SUCCESS]    ✅ Organized imports: src/middleware/security.ts
+[2025-10-18T07:29:34.180Z] [SUCCESS]    ✅ Organized imports: src/middleware.backup.ts
+[2025-10-18T07:29:34.181Z] [SUCCESS]    ✅ Organized imports: src/middleware.disabled.ts
+[2025-10-18T07:29:34.181Z] [SUCCESS]    ✅ Organized imports: src/middleware.prod.ts
+[2025-10-18T07:29:34.182Z] [SUCCESS]    ✅ Organized imports: src/scripts/complete-translations.ts
+[2025-10-18T07:29:34.183Z] [SUCCESS]    ✅ Organized imports: src/scripts/validate-dynamic-content.ts
+[2025-10-18T07:29:34.184Z] [SUCCESS]    ✅ Organized imports: src/services/index.ts
+[2025-10-18T07:29:34.184Z] [SUCCESS]    ✅ Organized imports: src/theme/index.ts
+[2025-10-18T07:29:34.185Z] [SUCCESS]    ✅ Organized imports: src/types/common.ts
+[2025-10-18T07:29:34.185Z] [SUCCESS]    ✅ Organized imports: src/types/components.ts
+[2025-10-18T07:29:34.185Z] [SUCCESS]    ✅ Organized imports: src/types/database.ts
+[2025-10-18T07:29:34.185Z] [SUCCESS]    ✅ Organized imports: src/types/index.ts
+[2025-10-18T07:29:34.185Z] [SUCCESS]    ✅ Organized imports: src/types/shims.d.ts
+[2025-10-18T07:29:34.185Z] [SUCCESS]    ✅ Organized imports: src/types/supabase.ts
+[2025-10-18T07:29:34.186Z] [SUCCESS]    ✅ Organized imports: src/utils/api-client.ts
+[2025-10-18T07:29:34.186Z] [SUCCESS]    ✅ Organized imports: src/utils/api.ts
+[2025-10-18T07:29:34.186Z] [SUCCESS]    ✅ Organized imports: src/utils/date.ts
+[2025-10-18T07:29:34.186Z] [SUCCESS]    ✅ Organized imports: src/utils/format.ts
+[2025-10-18T07:29:34.187Z] [SUCCESS]    ✅ Organized imports: src/utils/index.ts
+[2025-10-18T07:29:34.187Z] [SUCCESS]    ✅ Organized imports: src/utils/storage.ts
+[2025-10-18T07:29:34.187Z] [SUCCESS]    ✅ Organized imports: src/utils/string.ts
+[2025-10-18T07:29:34.187Z] [SUCCESS]    ✅ Organized imports: src/utils/validation.ts
+[2025-10-18T07:29:34.187Z] [INFO] 
+   Organized 344 files
+[2025-10-18T07:29:34.187Z] [INFO]    Cleaned 284 files
+
+[2025-10-18T07:29:34.187Z] [INFO] 📤 Organizing exports...
+[2025-10-18T07:29:34.205Z] [SUCCESS]    ✅ Organized exports: src/components/charts/index.ts
+[2025-10-18T07:29:34.206Z] [SUCCESS]    ✅ Organized exports: src/components/common/index.ts
+[2025-10-18T07:29:34.206Z] [SUCCESS]    ✅ Organized exports: src/components/index.ts
+[2025-10-18T07:29:34.208Z] [SUCCESS]    ✅ Organized exports: src/components/shared/index.ts
+[2025-10-18T07:29:34.208Z] [SUCCESS]    ✅ Organized exports: src/components/ui/Button.tsx
+[2025-10-18T07:29:34.208Z] [SUCCESS]    ✅ Organized exports: src/components/ui/Card.tsx
+[2025-10-18T07:29:34.208Z] [SUCCESS]    ✅ Organized exports: src/components/ui/Checkbox.tsx
+[2025-10-18T07:29:34.209Z] [SUCCESS]    ✅ Organized exports: src/components/ui/Input.tsx
+[2025-10-18T07:29:34.209Z] [SUCCESS]    ✅ Organized exports: src/components/ui/Select.tsx
+[2025-10-18T07:29:34.209Z] [SUCCESS]    ✅ Organized exports: src/components/ui/Switch.tsx
+[2025-10-18T07:29:34.209Z] [SUCCESS]    ✅ Organized exports: src/components/ui/index.ts
+[2025-10-18T07:29:34.210Z] [SUCCESS]    ✅ Organized exports: src/core/index.ts
+[2025-10-18T07:29:34.211Z] [SUCCESS]    ✅ Organized exports: src/core/utils/index.ts
+[2025-10-18T07:29:34.211Z] [SUCCESS]    ✅ Organized exports: src/core/utils.ts
+[2025-10-18T07:29:34.211Z] [SUCCESS]    ✅ Organized exports: src/design-system/index.ts
+[2025-10-18T07:29:34.213Z] [SUCCESS]    ✅ Organized exports: src/lib/cn.ts
+[2025-10-18T07:29:34.213Z] [SUCCESS]    ✅ Organized exports: src/lib/deployment/docker.ts
+[2025-10-18T07:29:34.217Z] [SUCCESS]    ✅ Organized exports: src/scripts/complete-translations.ts
+[2025-10-18T07:29:34.219Z] [INFO] 
+   Fixed 18 files
+
+[2025-10-18T07:29:34.219Z] [INFO] 🎨 Running Prettier...
+[2025-10-18T07:29:38.147Z] [WARN]    ⚠️  Prettier had some issues
+
+[2025-10-18T07:29:38.149Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:29:38.149Z] [INFO] 
+📊 Code Organization Report:
+
+[2025-10-18T07:29:38.149Z] [INFO]    Files with organized imports: 344
+[2025-10-18T07:29:38.149Z] [INFO]    Files cleaned: 284
+[2025-10-18T07:29:38.149Z] [INFO]    Files with organized exports: 18
+[2025-10-18T07:29:38.149Z] [INFO]    Prettier: ⚠️
+[2025-10-18T07:29:38.149Z] [INFO] 
+   Total actions: 646
+[2025-10-18T07:29:38.149Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:29:38.149Z] [INFO] 📁 Report saved: tmp/organize-code-report.json
+
+[2025-10-18T07:29:38.149Z] [SUCCESS] ✅ Code organization complete!
+
+[2025-10-18T07:29:38.154Z] ✅ 🎨 Organize Code completed!
+
+[2025-10-18T07:29:38.154Z] 
+🧹 Cleanup Project - تنظيف المشروع
+[2025-10-18T07:29:38.154Z] Running: cleanup-project.js...
+
+
+🧹 Cleanup Project Agent Starting...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:29:38.180Z] [INFO] Creating backup...
+[2025-10-18T07:29:38.221Z] [SUCCESS] ✅ Backup created at tmp/backup-cleanup-1760772578180
+[2025-10-18T07:29:38.221Z] [INFO] 📊 Analyzing project size...
+[2025-10-18T07:29:38.456Z] [INFO] 
+   Project size breakdown:
+[2025-10-18T07:29:38.457Z] [INFO]       src             2.53 MB      (0.4%)
+[2025-10-18T07:29:38.457Z] [INFO]       node_modules    554.03 MB    (89.7%)
+[2025-10-18T07:29:38.457Z] [INFO]       .next           60.72 MB     (9.8%)
+[2025-10-18T07:29:38.457Z] [INFO]       public          493.25 KB    (0.1%)
+[2025-10-18T07:29:38.457Z] [INFO]       TOTAL           617.76 MB
+[2025-10-18T07:29:38.457Z] [INFO] 
+[2025-10-18T07:29:38.457Z] [INFO] 
+🗑️  Cleaning build files...
+[2025-10-18T07:29:38.491Z] [SUCCESS]    ✅ Deleted: .next/ (60.72 MB)
+[2025-10-18T07:29:38.492Z] [INFO] 
+   Deleted 1 build directories
+
+[2025-10-18T07:29:38.492Z] [INFO] 🗂️  Cleaning temporary files...
+[2025-10-18T07:29:38.492Z] [INFO] 
+   Deleted 0 temporary files
+
+[2025-10-18T07:29:38.492Z] [INFO] 📦 Cleaning node_modules...
+[2025-10-18T07:29:38.654Z] [INFO]    Current size: 554.03 MB
+[2025-10-18T07:29:38.654Z] [INFO]    Running npm prune...
+[2025-10-18T07:29:39.525Z] [SUCCESS]    ✅ Already clean
+[2025-10-18T07:29:39.526Z] [INFO] 
+[2025-10-18T07:29:39.526Z] [INFO] 🔍 Finding unused files...
+[2025-10-18T07:29:39.547Z] [WARN] 
+   ⚠️  Found 11 potential unused files:
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/ai-assistant.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/api/appointments.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/api/auth/login.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/api/patients.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/saudi-health-integration.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/whatsapp-business-api.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/whatsapp-integration.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/auth/forgot-password.test.tsx
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/auth/login.test.tsx
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/auth/register.test.tsx
+[2025-10-18T07:29:39.547Z] [WARN]       ... and 1 more
+[2025-10-18T07:29:39.547Z] [INFO] 
+   💡 Review these files manually before deletion
+[2025-10-18T07:29:39.547Z] [INFO] 
+[2025-10-18T07:29:39.548Z] [INFO] 📄 Checking package.json...
+[2025-10-18T07:29:39.548Z] [SUCCESS]    ✅ No duplicate dependencies
+[2025-10-18T07:29:39.548Z] [INFO] 
+[2025-10-18T07:29:39.548Z] [INFO] 📊 Analyzing project size...
+[2025-10-18T07:29:39.688Z] [INFO] 
+   Project size breakdown:
+[2025-10-18T07:29:39.688Z] [INFO]       src             2.53 MB      (0.5%)
+[2025-10-18T07:29:39.688Z] [INFO]       node_modules    554.03 MB    (99.5%)
+[2025-10-18T07:29:39.688Z] [INFO]       public          493.25 KB    (0.1%)
+[2025-10-18T07:29:39.688Z] [INFO]       TOTAL           557.04 MB
+[2025-10-18T07:29:39.688Z] [INFO] 
+[2025-10-18T07:29:39.688Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:29:39.688Z] [INFO] 
+📊 Cleanup Report:
+
+[2025-10-18T07:29:39.688Z] [INFO]    Build directories deleted: 1
+[2025-10-18T07:29:39.688Z] [INFO]    Temporary files deleted: 0
+[2025-10-18T07:29:39.688Z] [INFO]    Node modules cleaned: ⚠️
+[2025-10-18T07:29:39.688Z] [INFO]    Unused files found: 11
+[2025-10-18T07:29:39.688Z] [INFO]    Duplicate dependencies: 0
+[2025-10-18T07:29:39.688Z] [INFO] 
+   Total deletions: 1
+[2025-10-18T07:29:39.688Z] [SUCCESS]    💾 Space saved: 60.72 MB
+[2025-10-18T07:29:39.688Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:29:39.688Z] [INFO] 📁 Report saved: tmp/cleanup-project-report.json
+
+[2025-10-18T07:29:39.688Z] [SUCCESS] ✅ Project cleanup complete!
+
+[2025-10-18T07:29:39.695Z] ✅ 🧹 Cleanup Project completed!
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 Final Summary:
+
+   ❌ 🤖 Auto-Fix
+   ✅ 🧠 Smart-Fix
+   ✅ 📁 Organize Folders
+   ✅ 🎨 Organize Code
+   ✅ 🧹 Cleanup Project
+
+   Success Rate: 80% (4/5)
+   Duration: 100s
+
+📁 Reports generated:
+   ✅ tmp/auto-fix-report.json
+   ✅ tmp/organize-folders-report.json
+   ✅ tmp/organize-code-report.json
+   ✅ tmp/cleanup-project-report.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🟡 Most systems completed, some issues remain
+

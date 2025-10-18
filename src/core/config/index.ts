@@ -227,3 +227,4 @@ export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [ {
     updatedAt: new Date(),
   },
 ];
+}}

@@ -1,0 +1,35 @@
+{
+  "generated_at": "2025-10-18T04:01:34.428Z",
+  "run_id": "db-sync-20251017-auto",
+  "migrations": [
+    {
+      "number": 74,
+      "name": "074_soft_delete_system",
+      "safety": "safe",
+      "description": "Add soft delete columns and functions to all tables"
+    },
+    {
+      "number": 75,
+      "name": "075_reminder_system",
+      "safety": "safe",
+      "description": "Automated reminder system with WhatsApp/SMS/Email"
+    },
+    {
+      "number": 76,
+      "name": "076_booking_validation",
+      "safety": "safe",
+      "description": "Booking conflict detection and validation functions"
+    },
+    {
+      "number": 77,
+      "name": "077_search_functions",
+      "safety": "safe",
+      "description": "Full-text search with Arabic support"
+    }
+  ],
+  "total_migrations": 4,
+  "safety_summary": {
+    "safe": 4,
+    "requires_review": 0
+  }
+}

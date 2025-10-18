@@ -1,0 +1,108 @@
+
+> moeen@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.32
+  - Environments: .env.local
+  - Experiments (use with caution):
+    · optimizeCss
+
+   Creating an optimized production build ...
+Failed to compile.
+
+./src/app/(admin)/admin/audit-logs/page.tsx
+Error: 
+  [31mx[0m Expected ';', got 'mockAuditLogs'
+    ,-[[36;1;4m/workspace/src/app/(admin)/admin/audit-logs/page.tsx[0m:15:1]
+ [2m15[0m |   timestamp: string;
+ [2m16[0m |   status: "success" | "failed" | "warning";
+ [2m17[0m | 
+ [2m18[0m | const mockAuditLogs: AuditLog[] = [
+    : [31;1m      ^^^^^^^^^^^^^[0m
+ [2m19[0m |     id: "1",
+ [2m20[0m |     user: "أحمد العتيبي",
+ [2m21[0m |     action: "تسجيل دخول",
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/(admin)/admin/audit-logs/page.tsx
+
+./src/app/(admin)/admin/channels/page.tsx
+Error: 
+  [31mx[0m Expected '}', got '<eof>'
+    ,-[[36;1;4m/workspace/src/app/(admin)/admin/channels/page.tsx[0m:13:1]
+ [2m13[0m |         </div>
+ [2m14[0m |       </div>
+ [2m15[0m |     </main>
+ [2m16[0m |   );
+    : [31;1m   ^[0m
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/(admin)/admin/channels/page.tsx
+
+./src/app/(admin)/admin/dashboard/page.tsx
+Error: 
+  [31mx[0m Expected ';', got 'RecentActivity'
+    ,-[[36;1;4m/workspace/src/app/(admin)/admin/dashboard/page.tsx[0m:28:1]
+ [2m28[0m |   completedSessions: number;
+ [2m29[0m |   upcomingSessions: number;
+ [2m30[0m | 
+ [2m31[0m | interface RecentActivity {
+    : [31;1m          ^^^^^^^^^^^^^^[0m
+ [2m32[0m |   id: string;
+ [2m33[0m |   type: "appointment" | "claim" | "patient" | "staff" | "payment";
+ [2m34[0m |   title: string;
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/(admin)/admin/dashboard/page.tsx
+
+./src/app/(admin)/admin/logs/page.tsx
+Error: 
+  [31mx[0m Expected '}', got '<eof>'
+    ,-[[36;1;4m/workspace/src/app/(admin)/admin/logs/page.tsx[0m:64:1]
+ [2m64[0m |       </div>
+ [2m65[0m |       )}
+ [2m66[0m |     </main>
+ [2m67[0m |   );
+    : [31;1m   ^[0m
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/(admin)/admin/logs/page.tsx
+
+./src/app/(admin)/admin/page.tsx
+Error: 
+  [31mx[0m cannot import as reserved word
+   ,-[[36;1;4m/workspace/src/app/(admin)/admin/page.tsx[0m:2:1]
+ [2m2[0m | 
+ [2m3[0m | import {
+ [2m4[0m | 
+ [2m5[0m | import { Badge } from "@/components/ui/Badge";
+   : [31;1m^^^^^^[0m
+ [2m6[0m | import { Button } from "@/components/ui/Button";
+ [2m7[0m | import { Input } from "@/components/ui/Input";
+ [2m8[0m | import { Label } from "@/components/ui/Label";
+   `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/(admin)/admin/page.tsx
+
+
+> Build failed because of webpack errors

@@ -1,0 +1,828 @@
+{
+  "tables": [
+    "users",
+    "patients",
+    "appointments",
+    "session_types",
+    "therapist_schedules",
+    "therapist_specializations",
+    "therapist_time_off",
+    "ieps",
+    "iep_goals",
+    "goal_progress",
+    "session_notes",
+    "call_requests",
+    "notification_rules",
+    "supervisor_notification_preferences",
+    "notification_logs",
+    "notifications",
+    "payments",
+    "insurance_claims",
+    "chat_conversations",
+    "chat_messages"
+  ],
+  "columns": {
+    "users": [
+      {
+        "column_name": "id",
+        "data_type": "string"
+      },
+      {
+        "column_name": "email",
+        "data_type": "string"
+      },
+      {
+        "column_name": "password_hash",
+        "data_type": "string"
+      },
+      {
+        "column_name": "name",
+        "data_type": "string"
+      },
+      {
+        "column_name": "role",
+        "data_type": "string"
+      },
+      {
+        "column_name": "status",
+        "data_type": "string"
+      },
+      {
+        "column_name": "phone",
+        "data_type": "string"
+      },
+      {
+        "column_name": "avatar_url",
+        "data_type": "object"
+      },
+      {
+        "column_name": "timezone",
+        "data_type": "string"
+      },
+      {
+        "column_name": "language",
+        "data_type": "string"
+      },
+      {
+        "column_name": "is_active",
+        "data_type": "boolean"
+      },
+      {
+        "column_name": "last_login",
+        "data_type": "object"
+      },
+      {
+        "column_name": "login_count",
+        "data_type": "number"
+      },
+      {
+        "column_name": "failed_login_attempts",
+        "data_type": "number"
+      },
+      {
+        "column_name": "locked_until",
+        "data_type": "object"
+      },
+      {
+        "column_name": "preferences",
+        "data_type": "object"
+      },
+      {
+        "column_name": "metadata",
+        "data_type": "object"
+      },
+      {
+        "column_name": "created_at",
+        "data_type": "string"
+      },
+      {
+        "column_name": "updated_at",
+        "data_type": "string"
+      },
+      {
+        "column_name": "created_by",
+        "data_type": "object"
+      },
+      {
+        "column_name": "updated_by",
+        "data_type": "object"
+      },
+      {
+        "column_name": "last_password_change",
+        "data_type": "string"
+      },
+      {
+        "column_name": "email_verified_at",
+        "data_type": "object"
+      },
+      {
+        "column_name": "last_ip_address",
+        "data_type": "object"
+      },
+      {
+        "column_name": "last_user_agent",
+        "data_type": "object"
+      },
+      {
+        "column_name": "last_activity_at",
+        "data_type": "string"
+      },
+      {
+        "column_name": "total_sessions",
+        "data_type": "number"
+      },
+      {
+        "column_name": "password_reset_token",
+        "data_type": "object"
+      },
+      {
+        "column_name": "password_reset_expires",
+        "data_type": "object"
+      },
+      {
+        "column_name": "email_verification_token",
+        "data_type": "object"
+      },
+      {
+        "column_name": "email_verification_expires",
+        "data_type": "object"
+      },
+      {
+        "column_name": "two_factor_enabled",
+        "data_type": "boolean"
+      },
+      {
+        "column_name": "two_factor_secret",
+        "data_type": "object"
+      },
+      {
+        "column_name": "backup_codes",
+        "data_type": "object"
+      }
+    ],
+    "patients": [
+      {
+        "column_name": "id",
+        "data_type": "string"
+      },
+      {
+        "column_name": "first_name",
+        "data_type": "string"
+      },
+      {
+        "column_name": "last_name",
+        "data_type": "string"
+      },
+      {
+        "column_name": "email",
+        "data_type": "string"
+      },
+      {
+        "column_name": "phone",
+        "data_type": "string"
+      },
+      {
+        "column_name": "date_of_birth",
+        "data_type": "string"
+      },
+      {
+        "column_name": "gender",
+        "data_type": "string"
+      },
+      {
+        "column_name": "address",
+        "data_type": "object"
+      },
+      {
+        "column_name": "emergency_contact_name",
+        "data_type": "object"
+      },
+      {
+        "column_name": "emergency_contact_phone",
+        "data_type": "object"
+      },
+      {
+        "column_name": "medical_history",
+        "data_type": "object"
+      },
+      {
+        "column_name": "allergies",
+        "data_type": "object"
+      },
+      {
+        "column_name": "created_at",
+        "data_type": "string"
+      },
+      {
+        "column_name": "updated_at",
+        "data_type": "string"
+      },
+      {
+        "column_name": "public_id",
+        "data_type": "string"
+      },
+      {
+        "column_name": "customer_id",
+        "data_type": "object"
+      },
+      {
+        "column_name": "created_by",
+        "data_type": "object"
+      },
+      {
+        "column_name": "updated_by",
+        "data_type": "object"
+      },
+      {
+        "column_name": "last_activity_at",
+        "data_type": "string"
+      },
+      {
+        "column_name": "emergency_contact_relation",
+        "data_type": "object"
+      },
+      {
+        "column_name": "insurance_provider",
+        "data_type": "object"
+      },
+      {
+        "column_name": "insurance_number",
+        "data_type": "object"
+      },
+      {
+        "column_name": "medications",
+        "data_type": "object"
+      },
+      {
+        "column_name": "blood_type",
+        "data_type": "object"
+      },
+      {
+        "column_name": "height_cm",
+        "data_type": "object"
+      },
+      {
+        "column_name": "weight_kg",
+        "data_type": "object"
+      },
+      {
+        "column_name": "preferred_language",
+        "data_type": "string"
+      },
+      {
+        "column_name": "communication_preferences",
+        "data_type": "object"
+      },
+      {
+        "column_name": "tags",
+        "data_type": "object"
+      },
+      {
+        "column_name": "metadata",
+        "data_type": "object"
+      }
+    ],
+    "appointments": [
+      {
+        "column_name": "id",
+        "data_type": "string"
+      },
+      {
+        "column_name": "patient_id",
+        "data_type": "string"
+      },
+      {
+        "column_name": "doctor_id",
+        "data_type": "string"
+      },
+      {
+        "column_name": "appointment_date",
+        "data_type": "string"
+      },
+      {
+        "column_name": "appointment_time",
+        "data_type": "string"
+      },
+      {
+        "column_name": "duration",
+        "data_type": "number"
+      },
+      {
+        "column_name": "status",
+        "data_type": "string"
+      },
+      {
+        "column_name": "notes",
+        "data_type": "string"
+      },
+      {
+        "column_name": "created_at",
+        "data_type": "string"
+      },
+      {
+        "column_name": "updated_at",
+        "data_type": "string"
+      },
+      {
+        "column_name": "public_id",
+        "data_type": "string"
+      },
+      {
+        "column_name": "created_by",
+        "data_type": "object"
+      },
+      {
+        "column_name": "updated_by",
+        "data_type": "object"
+      },
+      {
+        "column_name": "last_activity_at",
+        "data_type": "string"
+      },
+      {
+        "column_name": "status_reason",
+        "data_type": "object"
+      },
+      {
+        "column_name": "priority",
+        "data_type": "number"
+      },
+      {
+        "column_name": "reminder_sent",
+        "data_type": "boolean"
+      },
+      {
+        "column_name": "reminder_sent_at",
+        "data_type": "object"
+      },
+      {
+        "column_name": "follow_up_required",
+        "data_type": "boolean"
+      },
+      {
+        "column_name": "follow_up_date",
+        "data_type": "object"
+      },
+      {
+        "column_name": "internal_notes",
+        "data_type": "object"
+      },
+      {
+        "column_name": "tags",
+        "data_type": "object"
+      },
+      {
+        "column_name": "metadata",
+        "data_type": "object"
+      }
+    ],
+    "notifications": [
+      {
+        "column_name": "id",
+        "data_type": "string"
+      },
+      {
+        "column_name": "user_id",
+        "data_type": "object"
+      },
+      {
+        "column_name": "title",
+        "data_type": "string"
+      },
+      {
+        "column_name": "message",
+        "data_type": "string"
+      },
+      {
+        "column_name": "type",
+        "data_type": "string"
+      },
+      {
+        "column_name": "is_read",
+        "data_type": "boolean"
+      },
+      {
+        "column_name": "read_at",
+        "data_type": "object"
+      },
+      {
+        "column_name": "action_url",
+        "data_type": "object"
+      },
+      {
+        "column_name": "metadata",
+        "data_type": "object"
+      },
+      {
+        "column_name": "created_at",
+        "data_type": "string"
+      },
+      {
+        "column_name": "created_by",
+        "data_type": "object"
+      },
+      {
+        "column_name": "scheduled_for",
+        "data_type": "object"
+      },
+      {
+        "column_name": "sent_at",
+        "data_type": "object"
+      },
+      {
+        "column_name": "delivery_status",
+        "data_type": "string"
+      },
+      {
+        "column_name": "retry_count",
+        "data_type": "number"
+      },
+      {
+        "column_name": "updated_at",
+        "data_type": "string"
+      }
+    ]
+  },
+  "indexes": {},
+  "foreign_keys": {},
+  "triggers": {},
+  "functions": {},
+  "sample_data": {
+    "users": [
+      {
+        "id": "968def37-30b7-4220-a48b-e74a38fc5323",
+        "email": "manager@alhemamcenter.com",
+        "password_hash": "$2a$06$0NtRJQ7vzN9u.HHl3MBHjujO5XHHcXocw94MlojXT15JmJCGndisW",
+        "name": "مدير الفريق",
+        "role": "manager",
+        "status": "active",
+        "phone": "+966501234568",
+        "avatar_url": null,
+        "timezone": "Asia/Riyadh",
+        "language": "ar",
+        "is_active": true,
+        "last_login": null,
+        "login_count": 0,
+        "failed_login_attempts": 0,
+        "locked_until": null,
+        "preferences": {
+          "theme": "light",
+          "language": "ar"
+        },
+        "metadata": {},
+        "created_at": "2025-10-04T00:42:30.336386+00:00",
+        "updated_at": "2025-10-04T00:42:30.336386+00:00",
+        "created_by": null,
+        "updated_by": null,
+        "last_password_change": "2025-10-17T00:40:03.883678+00:00",
+        "email_verified_at": null,
+        "last_ip_address": null,
+        "last_user_agent": null,
+        "last_activity_at": "2025-10-17T00:40:03.883678+00:00",
+        "total_sessions": 0,
+        "password_reset_token": null,
+        "password_reset_expires": null,
+        "email_verification_token": null,
+        "email_verification_expires": null,
+        "two_factor_enabled": false,
+        "two_factor_secret": null,
+        "backup_codes": []
+      },
+      {
+        "id": "11a449d2-6b5b-43a7-b2bc-3268c86d1a13",
+        "email": "supervisor@alhemamcenter.com",
+        "password_hash": "$2a$06$eUWxr8M2eQojXBUP277O4eUfmgqEfcOatla8cU2PigHSR1qN0BFz2",
+        "name": "مشرف الفريق",
+        "role": "supervisor",
+        "status": "active",
+        "phone": "+966501234569",
+        "avatar_url": null,
+        "timezone": "Asia/Riyadh",
+        "language": "ar",
+        "is_active": true,
+        "last_login": null,
+        "login_count": 0,
+        "failed_login_attempts": 0,
+        "locked_until": null,
+        "preferences": {
+          "theme": "light",
+          "language": "ar"
+        },
+        "metadata": {},
+        "created_at": "2025-10-04T00:42:30.336386+00:00",
+        "updated_at": "2025-10-04T00:42:30.336386+00:00",
+        "created_by": null,
+        "updated_by": null,
+        "last_password_change": "2025-10-17T00:40:03.883678+00:00",
+        "email_verified_at": null,
+        "last_ip_address": null,
+        "last_user_agent": null,
+        "last_activity_at": "2025-10-17T00:40:03.883678+00:00",
+        "total_sessions": 0,
+        "password_reset_token": null,
+        "password_reset_expires": null,
+        "email_verification_token": null,
+        "email_verification_expires": null,
+        "two_factor_enabled": false,
+        "two_factor_secret": null,
+        "backup_codes": []
+      },
+      {
+        "id": "fb2420b4-6c23-4f7c-be0b-d0b70415f7dd",
+        "email": "agent@alhemamcenter.com",
+        "password_hash": "$2a$06$0rXw.awZRr76swq5D0GTuuSlbxxsKBtZrjqoKxE5SiIjs72R23g8a",
+        "name": "وكيل خدمة العملاء",
+        "role": "agent",
+        "status": "active",
+        "phone": "+966501234570",
+        "avatar_url": null,
+        "timezone": "Asia/Riyadh",
+        "language": "ar",
+        "is_active": true,
+        "last_login": null,
+        "login_count": 0,
+        "failed_login_attempts": 0,
+        "locked_until": null,
+        "preferences": {
+          "theme": "light",
+          "language": "ar"
+        },
+        "metadata": {},
+        "created_at": "2025-10-04T00:42:30.336386+00:00",
+        "updated_at": "2025-10-04T00:42:30.336386+00:00",
+        "created_by": null,
+        "updated_by": null,
+        "last_password_change": "2025-10-17T00:40:03.883678+00:00",
+        "email_verified_at": null,
+        "last_ip_address": null,
+        "last_user_agent": null,
+        "last_activity_at": "2025-10-17T00:40:03.883678+00:00",
+        "total_sessions": 0,
+        "password_reset_token": null,
+        "password_reset_expires": null,
+        "email_verification_token": null,
+        "email_verification_expires": null,
+        "two_factor_enabled": false,
+        "two_factor_secret": null,
+        "backup_codes": []
+      }
+    ],
+    "patients": [
+      {
+        "id": "4af68a42-c3ac-488e-a8f9-8dff5e731162",
+        "first_name": "محمد",
+        "last_name": "الزهراني",
+        "email": "m.zahrani@example.sa",
+        "phone": "+966512345001",
+        "date_of_birth": "2012-03-14",
+        "gender": "male",
+        "address": null,
+        "emergency_contact_name": null,
+        "emergency_contact_phone": null,
+        "medical_history": null,
+        "allergies": null,
+        "created_at": "2025-10-10T16:57:27.64616",
+        "updated_at": "2025-10-10T16:57:27.64616",
+        "public_id": "pat_of3jlrd",
+        "customer_id": null,
+        "created_by": null,
+        "updated_by": null,
+        "last_activity_at": "2025-10-17T03:14:34.74851+00:00",
+        "emergency_contact_relation": null,
+        "insurance_provider": null,
+        "insurance_number": null,
+        "medications": null,
+        "blood_type": null,
+        "height_cm": null,
+        "weight_kg": null,
+        "preferred_language": "ar",
+        "communication_preferences": {},
+        "tags": null,
+        "metadata": {}
+      },
+      {
+        "id": "a3b461a7-1ede-47ab-8442-e0f45abbf038",
+        "first_name": "سارة",
+        "last_name": "الشهري",
+        "email": "s.alshahri@example.sa",
+        "phone": "+966512345002",
+        "date_of_birth": "2015-06-22",
+        "gender": "female",
+        "address": null,
+        "emergency_contact_name": null,
+        "emergency_contact_phone": null,
+        "medical_history": null,
+        "allergies": null,
+        "created_at": "2025-10-10T16:57:27.88575",
+        "updated_at": "2025-10-10T16:57:27.88575",
+        "public_id": "pat_1fp5vpn",
+        "customer_id": null,
+        "created_by": null,
+        "updated_by": null,
+        "last_activity_at": "2025-10-17T03:14:34.74851+00:00",
+        "emergency_contact_relation": null,
+        "insurance_provider": null,
+        "insurance_number": null,
+        "medications": null,
+        "blood_type": null,
+        "height_cm": null,
+        "weight_kg": null,
+        "preferred_language": "ar",
+        "communication_preferences": {},
+        "tags": null,
+        "metadata": {}
+      },
+      {
+        "id": "9d91cd92-9f33-4d3b-8f3c-9bc1facab450",
+        "first_name": "عبدالله",
+        "last_name": "الحربي",
+        "email": "a.alharbi@example.sa",
+        "phone": "+966512345003",
+        "date_of_birth": "2010-11-02",
+        "gender": "male",
+        "address": null,
+        "emergency_contact_name": null,
+        "emergency_contact_phone": null,
+        "medical_history": null,
+        "allergies": null,
+        "created_at": "2025-10-10T16:57:28.140014",
+        "updated_at": "2025-10-10T16:57:28.140014",
+        "public_id": "pat_eoc41ok",
+        "customer_id": null,
+        "created_by": null,
+        "updated_by": null,
+        "last_activity_at": "2025-10-17T03:14:34.74851+00:00",
+        "emergency_contact_relation": null,
+        "insurance_provider": null,
+        "insurance_number": null,
+        "medications": null,
+        "blood_type": null,
+        "height_cm": null,
+        "weight_kg": null,
+        "preferred_language": "ar",
+        "communication_preferences": {},
+        "tags": null,
+        "metadata": {}
+      }
+    ],
+    "appointments": [
+      {
+        "id": "fea4dcdc-8085-4d2c-ac48-d1419fc197b4",
+        "patient_id": "4af68a42-c3ac-488e-a8f9-8dff5e731162",
+        "doctor_id": "8241775b-d2ff-4364-af07-733b760f757b",
+        "appointment_date": "2025-10-11",
+        "appointment_time": "09:00:00",
+        "duration": 30,
+        "status": "scheduled",
+        "notes": "تم الحجز عبر الشات بوت معين",
+        "created_at": "2025-10-10T16:58:48.602962",
+        "updated_at": "2025-10-10T16:58:48.602962",
+        "public_id": "appt_hsknbfx",
+        "created_by": null,
+        "updated_by": null,
+        "last_activity_at": "2025-10-17T03:14:34.74851+00:00",
+        "status_reason": null,
+        "priority": 3,
+        "reminder_sent": false,
+        "reminder_sent_at": null,
+        "follow_up_required": false,
+        "follow_up_date": null,
+        "internal_notes": null,
+        "tags": null,
+        "metadata": {}
+      },
+      {
+        "id": "42edbc67-3405-4302-8e9b-0a2e5ceab722",
+        "patient_id": "a3b461a7-1ede-47ab-8442-e0f45abbf038",
+        "doctor_id": "63e9428d-c5d6-44e3-b71d-5680f57c80e2",
+        "appointment_date": "2025-10-12",
+        "appointment_time": "09:01:00",
+        "duration": 30,
+        "status": "scheduled",
+        "notes": "تم الحجز عبر الشات بوت معين",
+        "created_at": "2025-10-10T16:58:48.840229",
+        "updated_at": "2025-10-10T16:58:48.840229",
+        "public_id": "appt_bsz7swq",
+        "created_by": null,
+        "updated_by": null,
+        "last_activity_at": "2025-10-17T03:14:34.74851+00:00",
+        "status_reason": null,
+        "priority": 3,
+        "reminder_sent": false,
+        "reminder_sent_at": null,
+        "follow_up_required": false,
+        "follow_up_date": null,
+        "internal_notes": null,
+        "tags": null,
+        "metadata": {}
+      },
+      {
+        "id": "2ceb5fac-c54b-468a-ae9f-b0f7190e81e1",
+        "patient_id": "9d91cd92-9f33-4d3b-8f3c-9bc1facab450",
+        "doctor_id": "eff445be-f407-472c-8312-c312c05218ae",
+        "appointment_date": "2025-10-13",
+        "appointment_time": "09:02:00",
+        "duration": 30,
+        "status": "scheduled",
+        "notes": "تم الحجز عبر الشات بوت معين",
+        "created_at": "2025-10-10T16:58:49.064522",
+        "updated_at": "2025-10-10T16:58:49.064522",
+        "public_id": "appt_e13a619",
+        "created_by": null,
+        "updated_by": null,
+        "last_activity_at": "2025-10-17T03:14:34.74851+00:00",
+        "status_reason": null,
+        "priority": 3,
+        "reminder_sent": false,
+        "reminder_sent_at": null,
+        "follow_up_required": false,
+        "follow_up_date": null,
+        "internal_notes": null,
+        "tags": null,
+        "metadata": {}
+      }
+    ],
+    "notifications": [
+      {
+        "id": "c6bfeba1-7724-4b7a-b6e7-17a9c0e9f38a",
+        "user_id": null,
+        "title": "مرحبًا من مركز الهمم",
+        "message": "تم تهيئة النظام وتجهيز الحسابات الأساسية.",
+        "type": "info",
+        "is_read": false,
+        "read_at": null,
+        "action_url": null,
+        "metadata": {},
+        "created_at": "2025-10-15T00:46:18.760121+00:00",
+        "created_by": null,
+        "scheduled_for": null,
+        "sent_at": null,
+        "delivery_status": "pending",
+        "retry_count": 0,
+        "updated_at": "2025-10-17T03:00:50.4354+00:00"
+      }
+    ]
+  },
+  "statistics": {
+    "users": {
+      "row_count": 280
+    },
+    "patients": {
+      "row_count": 8
+    },
+    "appointments": {
+      "row_count": 33
+    },
+    "session_types": {
+      "row_count": 0
+    },
+    "therapist_schedules": {
+      "row_count": 0
+    },
+    "therapist_specializations": {
+      "row_count": 0
+    },
+    "therapist_time_off": {
+      "row_count": 0
+    },
+    "ieps": {
+      "row_count": 0
+    },
+    "iep_goals": {
+      "row_count": 0
+    },
+    "goal_progress": {
+      "row_count": 0
+    },
+    "session_notes": {
+      "row_count": 0
+    },
+    "call_requests": {
+      "row_count": 0
+    },
+    "notification_rules": {
+      "row_count": 0
+    },
+    "supervisor_notification_preferences": {
+      "row_count": 0
+    },
+    "notification_logs": {
+      "row_count": 0
+    },
+    "notifications": {
+      "row_count": 1
+    },
+    "payments": {
+      "row_count": 0
+    },
+    "insurance_claims": {
+      "row_count": 0
+    },
+    "chat_conversations": {
+      "row_count": 0
+    },
+    "chat_messages": {
+      "row_count": 0
+    }
+  }
+}

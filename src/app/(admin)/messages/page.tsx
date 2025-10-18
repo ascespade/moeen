@@ -14,7 +14,6 @@ interface Message {
   status: "sent" | "delivered" | "read" | "failed";
   createdAt: string;
   priority: "low" | "medium" | "high";
-
 }
 
 const mockMessages: Message[] = [
@@ -29,7 +28,7 @@ const mockMessages: Message[] = [
     createdAt: "2024-01-15 09:30",
     priority: "medium",
   },
-    {
+  {
     id: "2",
     sender: "نظام التذكير",
     recipient: "فاطمة العتيبي",
@@ -41,7 +40,7 @@ const mockMessages: Message[] = [
     createdAt: "2024-01-15 08:15",
     priority: "high",
   },
-    {
+  {
     id: "3",
     sender: "نظام الاستفسارات",
     recipient: "محمد السعد",
@@ -397,3 +396,4 @@ export default function MessagesPage() {
       )}
     </div>
   );
+}

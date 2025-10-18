@@ -1,0 +1,150 @@
+
+🎯 Library-Based Auto-Fix Starting...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Backup created
+
+✅ Prettier loaded
+✅ ESLint loaded
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Phase 1: ESLint Auto-Fix
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Processing 382 files with ESLint...
+
+⚠️  ESLint error: ESLint is not defined 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Phase 2: Prettier Format
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   ⚠️  appointments.test.ts: ',' expected. (24:13)
+   ⚠️  patients.test.ts: ',' expected. (24:13)
+   ⚠️  setup.ts: '>' expected. (22:17)
+   ⚠️  whatsapp-business-api.test.ts: ',' expected. (191:21)
+   ⚠️  page.tsx: Expression expected. (7:2)
+
+✅ Prettier formatted 1 files
+⚠️  294 files had formatting errors (skipped)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Phase 3: Minimal Manual Fixes (only critical syntax)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   ✅ app/(admin)/admin/audit-logs/page.tsx
+   ✅ app/(admin)/admin/dashboard/page.tsx
+   ✅ app/(admin)/admin/roles/page.tsx
+   ✅ app/(admin)/admin/users/page.tsx
+   ✅ app/(admin)/agent-dashboard/page.tsx
+   ✅ app/(admin)/chatbot/analytics/page.tsx
+   ✅ app/(admin)/chatbot/flows/[flowId]/page.tsx
+   ✅ app/(admin)/chatbot/flows/page.tsx
+   ✅ app/(admin)/chatbot/integrations/page.tsx
+   ✅ app/(admin)/chatbot/templates/[id]/page.tsx
+   ✅ app/(admin)/chatbot/templates/page.tsx
+   ✅ app/(admin)/conversations/page.tsx
+   ✅ app/(admin)/crm/activities/page.tsx
+   ✅ app/(admin)/crm/deals/page.tsx
+   ✅ app/(admin)/crm/leads/page.tsx
+   ✅ app/(admin)/messages/page.tsx
+   ✅ app/(admin)/owner/dashboard/page.tsx
+   ✅ app/(admin)/profile/page.tsx
+   ✅ app/(admin)/review/page.tsx
+   ✅ app/(admin)/sessions/[id]/notes/page.tsx
+   ✅ app/(admin)/settings/page.tsx
+   ✅ app/(admin)/supervisor/dashboard/page.tsx
+   ✅ app/(auth)/forgot-password/page.tsx
+   ✅ app/(auth)/login/page.tsx
+   ✅ app/(auth)/register/page.tsx
+   ✅ app/(auth)/reset-password/page.tsx
+   ✅ app/(auth)/verify-email/page.tsx
+   ✅ app/(health)/approvals/page.tsx
+   ✅ app/(health)/health/patients/[id]/iep/page.tsx
+   ✅ app/(health)/health/sessions/book/page.tsx
+   ✅ app/(health)/insurance/page.tsx
+   ✅ app/(health)/insurance-claims/page.tsx
+   ✅ app/(health)/medical-file/page.tsx
+   ✅ app/(health)/patients/[id]/page.tsx
+   ✅ app/(health)/sessions/page.tsx
+   ✅ app/(info)/about/page.tsx
+   ✅ app/(info)/contact/page.tsx
+   ✅ app/(legal)/privacy/page.tsx
+   ✅ app/(legal)/terms/page.tsx
+   ✅ app/(marketing)/faq/page.tsx
+   ✅ app/(marketing)/features/page.tsx
+   ✅ app/(marketing)/pricing/page.tsx
+   ✅ app/dashboard/page.tsx
+   ✅ app/error.tsx
+   ✅ app/not-found.tsx
+   ✅ components/LanguageSwitcher.tsx
+   ✅ components/auth/ProtectedRoute.tsx
+   ✅ components/booking/AvailableSlotsPicker.tsx
+   ✅ components/booking/SessionTypeSelector.tsx
+   ✅ components/chatbot/MoeenChatbot.tsx
+   ✅ components/common/DirectionToggle.tsx
+   ✅ components/common/ErrorBoundary.tsx
+   ✅ components/common/LanguageSwitcher.tsx
+   ✅ components/common/OptimizedImage.tsx
+   ✅ components/common/PerformanceOptimizedImage.tsx
+   ✅ components/common/StatusBanner.tsx
+   ✅ components/layout/GlobalHeader.tsx
+   ✅ components/layout/SmartHeader.tsx
+   ✅ components/providers/I18nProvider.tsx
+   ✅ components/providers/UIProvider.tsx
+   ✅ components/settings/KeywordEditor.tsx
+   ✅ components/settings/SettingsTabs.tsx
+   ✅ components/shared/Form.tsx
+   ✅ components/shared/Modal.tsx
+   ✅ components/shared/Tabs.tsx
+   ✅ components/shell/HeaderSimple.tsx
+   ✅ components/ui/Button.tsx
+   ✅ components/ui/Card.tsx
+   ✅ components/ui/Checkbox.tsx
+   ✅ components/ui/Input.tsx
+   ✅ components/ui/Modal.tsx
+   ✅ components/ui/Switch.tsx
+   ✅ components/ui/ThemeSwitch.tsx
+   ✅ components/ui/Toast.tsx
+   ✅ components/ui/Tooltip.tsx
+   ✅ hooks/useBrandColorFromLogo.ts
+   ✅ hooks/useErrorHandler.tsx
+   ✅ hooks/useI18n.ts
+   ✅ hooks/useTranslation.ts
+
+✅ Manual fixes: 79 files
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Phase 4: Re-format after manual fixes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Re-formatted 38 files
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 Summary:
+
+   ESLint fixes: Applied
+   Prettier formatted: 1 files
+   Manual fixes: 79 files (critical only)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📁 Report: tmp/library-fix-report.json
+
+🧪 Testing build...
+
+⚠️  Build has 0 errors
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+

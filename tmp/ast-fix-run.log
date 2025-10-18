@@ -1,0 +1,40 @@
+
+🧬 AST Fixer Starting...
+
+✅ Backup created
+
+📦 Installing @babel/parser...
+
+
+added 10 packages, and audited 585 packages in 960ms
+
+176 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+Files to fix: 0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+✅ Fixed: 0 files
+⏭️  Skipped: 0 files
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Running Prettier...
+
+⚠️  Prettier completed with some issues
+
+Running ESLint --fix...
+
+✅ ESLint applied (with warnings)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Testing final build...
+
+⚠️  Build has 0 errors
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+

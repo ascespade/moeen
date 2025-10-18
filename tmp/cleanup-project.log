@@ -1,0 +1,370 @@
+[2025-10-18T07:20:39.976Z] [INFO] Creating backup...
+[2025-10-18T07:20:40.011Z] [SUCCESS] ✅ Backup created at tmp/backup-cleanup-1760772039976
+[2025-10-18T07:20:40.012Z] [INFO] 📊 Analyzing project size...
+[2025-10-18T07:20:40.250Z] [INFO] 
+   Project size breakdown:
+[2025-10-18T07:20:40.250Z] [INFO]       src             2.54 MB      (0.3%)
+[2025-10-18T07:20:40.250Z] [INFO]       node_modules    554.03 MB    (64.8%)
+[2025-10-18T07:20:40.250Z] [INFO]       .next           298.09 MB    (34.9%)
+[2025-10-18T07:20:40.250Z] [INFO]       public          493.25 KB    (0.1%)
+[2025-10-18T07:20:40.250Z] [INFO]       TOTAL           855.14 MB
+[2025-10-18T07:20:40.250Z] [INFO] 
+[2025-10-18T07:20:40.250Z] [INFO] 
+🗑️  Cleaning build files...
+[2025-10-18T07:20:40.382Z] [SUCCESS]    ✅ Deleted: .next/ (298.09 MB)
+[2025-10-18T07:20:40.382Z] [INFO] 
+   Deleted 1 build directories
+
+[2025-10-18T07:20:40.382Z] [INFO] 🗂️  Cleaning temporary files...
+[2025-10-18T07:20:40.383Z] [INFO] 
+   Deleted 0 temporary files
+
+[2025-10-18T07:20:40.383Z] [INFO] 📦 Cleaning node_modules...
+[2025-10-18T07:20:40.519Z] [INFO]    Current size: 554.03 MB
+[2025-10-18T07:20:40.519Z] [INFO]    Running npm prune...
+[2025-10-18T07:20:41.475Z] [SUCCESS]    ✅ Already clean
+[2025-10-18T07:20:41.475Z] [INFO] 
+[2025-10-18T07:20:41.476Z] [INFO] 🔍 Finding unused files...
+[2025-10-18T07:20:41.497Z] [WARN] 
+   ⚠️  Found 11 potential unused files:
+[2025-10-18T07:20:41.497Z] [WARN]       src/__tests__/ai-assistant.test.ts
+[2025-10-18T07:20:41.497Z] [WARN]       src/__tests__/api/appointments.test.ts
+[2025-10-18T07:20:41.497Z] [WARN]       src/__tests__/api/auth/login.test.ts
+[2025-10-18T07:20:41.497Z] [WARN]       src/__tests__/api/patients.test.ts
+[2025-10-18T07:20:41.497Z] [WARN]       src/__tests__/saudi-health-integration.test.ts
+[2025-10-18T07:20:41.497Z] [WARN]       src/__tests__/whatsapp-business-api.test.ts
+[2025-10-18T07:20:41.497Z] [WARN]       src/__tests__/whatsapp-integration.test.ts
+[2025-10-18T07:20:41.497Z] [WARN]       src/__tests__/auth/forgot-password.test.tsx
+[2025-10-18T07:20:41.497Z] [WARN]       src/__tests__/auth/login.test.tsx
+[2025-10-18T07:20:41.497Z] [WARN]       src/__tests__/auth/register.test.tsx
+[2025-10-18T07:20:41.497Z] [WARN]       ... and 1 more
+[2025-10-18T07:20:41.497Z] [INFO] 
+   💡 Review these files manually before deletion
+[2025-10-18T07:20:41.497Z] [INFO] 
+[2025-10-18T07:20:41.498Z] [INFO] 📄 Checking package.json...
+[2025-10-18T07:20:41.498Z] [SUCCESS]    ✅ No duplicate dependencies
+[2025-10-18T07:20:41.498Z] [INFO] 
+[2025-10-18T07:20:41.498Z] [INFO] 📊 Analyzing project size...
+[2025-10-18T07:20:41.641Z] [INFO] 
+   Project size breakdown:
+[2025-10-18T07:20:41.641Z] [INFO]       src             2.54 MB      (0.5%)
+[2025-10-18T07:20:41.641Z] [INFO]       node_modules    554.03 MB    (99.5%)
+[2025-10-18T07:20:41.641Z] [INFO]       public          493.25 KB    (0.1%)
+[2025-10-18T07:20:41.641Z] [INFO]       TOTAL           557.05 MB
+[2025-10-18T07:20:41.641Z] [INFO] 
+[2025-10-18T07:20:41.641Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:20:41.641Z] [INFO] 
+📊 Cleanup Report:
+
+[2025-10-18T07:20:41.641Z] [INFO]    Build directories deleted: 1
+[2025-10-18T07:20:41.641Z] [INFO]    Temporary files deleted: 0
+[2025-10-18T07:20:41.641Z] [INFO]    Node modules cleaned: ⚠️
+[2025-10-18T07:20:41.641Z] [INFO]    Unused files found: 11
+[2025-10-18T07:20:41.641Z] [INFO]    Duplicate dependencies: 0
+[2025-10-18T07:20:41.641Z] [INFO] 
+   Total deletions: 1
+[2025-10-18T07:20:41.641Z] [SUCCESS]    💾 Space saved: 298.09 MB
+[2025-10-18T07:20:41.641Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:20:41.642Z] [INFO] 📁 Report saved: tmp/cleanup-project-report.json
+
+[2025-10-18T07:20:41.642Z] [SUCCESS] ✅ Project cleanup complete!
+
+[2025-10-18T07:24:00.913Z] [INFO] Creating backup...
+[2025-10-18T07:24:00.946Z] [SUCCESS] ✅ Backup created at tmp/backup-cleanup-1760772240912
+[2025-10-18T07:24:00.946Z] [INFO] 📊 Analyzing project size...
+[2025-10-18T07:24:01.180Z] [INFO] 
+   Project size breakdown:
+[2025-10-18T07:24:01.181Z] [INFO]       src             2.53 MB      (0.4%)
+[2025-10-18T07:24:01.181Z] [INFO]       node_modules    554.03 MB    (88.9%)
+[2025-10-18T07:24:01.181Z] [INFO]       .next           66.33 MB     (10.6%)
+[2025-10-18T07:24:01.181Z] [INFO]       public          493.25 KB    (0.1%)
+[2025-10-18T07:24:01.181Z] [INFO]       TOTAL           623.37 MB
+[2025-10-18T07:24:01.181Z] [INFO] 
+[2025-10-18T07:24:01.181Z] [INFO] 
+🗑️  Cleaning build files...
+[2025-10-18T07:24:01.215Z] [SUCCESS]    ✅ Deleted: .next/ (66.33 MB)
+[2025-10-18T07:24:01.215Z] [INFO] 
+   Deleted 1 build directories
+
+[2025-10-18T07:24:01.216Z] [INFO] 🗂️  Cleaning temporary files...
+[2025-10-18T07:24:01.216Z] [INFO] 
+   Deleted 0 temporary files
+
+[2025-10-18T07:24:01.216Z] [INFO] 📦 Cleaning node_modules...
+[2025-10-18T07:24:01.352Z] [INFO]    Current size: 554.03 MB
+[2025-10-18T07:24:01.352Z] [INFO]    Running npm prune...
+[2025-10-18T07:24:02.171Z] [SUCCESS]    ✅ Already clean
+[2025-10-18T07:24:02.172Z] [INFO] 
+[2025-10-18T07:24:02.172Z] [INFO] 🔍 Finding unused files...
+[2025-10-18T07:24:02.195Z] [WARN] 
+   ⚠️  Found 11 potential unused files:
+[2025-10-18T07:24:02.195Z] [WARN]       src/__tests__/ai-assistant.test.ts
+[2025-10-18T07:24:02.195Z] [WARN]       src/__tests__/api/appointments.test.ts
+[2025-10-18T07:24:02.195Z] [WARN]       src/__tests__/api/auth/login.test.ts
+[2025-10-18T07:24:02.195Z] [WARN]       src/__tests__/api/patients.test.ts
+[2025-10-18T07:24:02.195Z] [WARN]       src/__tests__/saudi-health-integration.test.ts
+[2025-10-18T07:24:02.195Z] [WARN]       src/__tests__/whatsapp-business-api.test.ts
+[2025-10-18T07:24:02.195Z] [WARN]       src/__tests__/whatsapp-integration.test.ts
+[2025-10-18T07:24:02.195Z] [WARN]       src/__tests__/auth/forgot-password.test.tsx
+[2025-10-18T07:24:02.195Z] [WARN]       src/__tests__/auth/login.test.tsx
+[2025-10-18T07:24:02.195Z] [WARN]       src/__tests__/auth/register.test.tsx
+[2025-10-18T07:24:02.195Z] [WARN]       ... and 1 more
+[2025-10-18T07:24:02.195Z] [INFO] 
+   💡 Review these files manually before deletion
+[2025-10-18T07:24:02.195Z] [INFO] 
+[2025-10-18T07:24:02.195Z] [INFO] 📄 Checking package.json...
+[2025-10-18T07:24:02.195Z] [SUCCESS]    ✅ No duplicate dependencies
+[2025-10-18T07:24:02.195Z] [INFO] 
+[2025-10-18T07:24:02.195Z] [INFO] 📊 Analyzing project size...
+[2025-10-18T07:24:02.367Z] [INFO] 
+   Project size breakdown:
+[2025-10-18T07:24:02.367Z] [INFO]       src             2.53 MB      (0.5%)
+[2025-10-18T07:24:02.367Z] [INFO]       node_modules    554.03 MB    (99.5%)
+[2025-10-18T07:24:02.367Z] [INFO]       public          493.25 KB    (0.1%)
+[2025-10-18T07:24:02.367Z] [INFO]       TOTAL           557.04 MB
+[2025-10-18T07:24:02.367Z] [INFO] 
+[2025-10-18T07:24:02.367Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:24:02.367Z] [INFO] 
+📊 Cleanup Report:
+
+[2025-10-18T07:24:02.367Z] [INFO]    Build directories deleted: 1
+[2025-10-18T07:24:02.367Z] [INFO]    Temporary files deleted: 0
+[2025-10-18T07:24:02.367Z] [INFO]    Node modules cleaned: ⚠️
+[2025-10-18T07:24:02.367Z] [INFO]    Unused files found: 11
+[2025-10-18T07:24:02.367Z] [INFO]    Duplicate dependencies: 0
+[2025-10-18T07:24:02.367Z] [INFO] 
+   Total deletions: 1
+[2025-10-18T07:24:02.367Z] [SUCCESS]    💾 Space saved: 66.33 MB
+[2025-10-18T07:24:02.367Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:24:02.368Z] [INFO] 📁 Report saved: tmp/cleanup-project-report.json
+
+[2025-10-18T07:24:02.368Z] [SUCCESS] ✅ Project cleanup complete!
+
+[2025-10-18T07:29:38.180Z] [INFO] Creating backup...
+[2025-10-18T07:29:38.221Z] [SUCCESS] ✅ Backup created at tmp/backup-cleanup-1760772578180
+[2025-10-18T07:29:38.221Z] [INFO] 📊 Analyzing project size...
+[2025-10-18T07:29:38.456Z] [INFO] 
+   Project size breakdown:
+[2025-10-18T07:29:38.457Z] [INFO]       src             2.53 MB      (0.4%)
+[2025-10-18T07:29:38.457Z] [INFO]       node_modules    554.03 MB    (89.7%)
+[2025-10-18T07:29:38.457Z] [INFO]       .next           60.72 MB     (9.8%)
+[2025-10-18T07:29:38.457Z] [INFO]       public          493.25 KB    (0.1%)
+[2025-10-18T07:29:38.457Z] [INFO]       TOTAL           617.76 MB
+[2025-10-18T07:29:38.457Z] [INFO] 
+[2025-10-18T07:29:38.457Z] [INFO] 
+🗑️  Cleaning build files...
+[2025-10-18T07:29:38.491Z] [SUCCESS]    ✅ Deleted: .next/ (60.72 MB)
+[2025-10-18T07:29:38.492Z] [INFO] 
+   Deleted 1 build directories
+
+[2025-10-18T07:29:38.492Z] [INFO] 🗂️  Cleaning temporary files...
+[2025-10-18T07:29:38.492Z] [INFO] 
+   Deleted 0 temporary files
+
+[2025-10-18T07:29:38.492Z] [INFO] 📦 Cleaning node_modules...
+[2025-10-18T07:29:38.654Z] [INFO]    Current size: 554.03 MB
+[2025-10-18T07:29:38.654Z] [INFO]    Running npm prune...
+[2025-10-18T07:29:39.525Z] [SUCCESS]    ✅ Already clean
+[2025-10-18T07:29:39.526Z] [INFO] 
+[2025-10-18T07:29:39.526Z] [INFO] 🔍 Finding unused files...
+[2025-10-18T07:29:39.547Z] [WARN] 
+   ⚠️  Found 11 potential unused files:
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/ai-assistant.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/api/appointments.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/api/auth/login.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/api/patients.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/saudi-health-integration.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/whatsapp-business-api.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/whatsapp-integration.test.ts
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/auth/forgot-password.test.tsx
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/auth/login.test.tsx
+[2025-10-18T07:29:39.547Z] [WARN]       src/__tests__/auth/register.test.tsx
+[2025-10-18T07:29:39.547Z] [WARN]       ... and 1 more
+[2025-10-18T07:29:39.547Z] [INFO] 
+   💡 Review these files manually before deletion
+[2025-10-18T07:29:39.547Z] [INFO] 
+[2025-10-18T07:29:39.548Z] [INFO] 📄 Checking package.json...
+[2025-10-18T07:29:39.548Z] [SUCCESS]    ✅ No duplicate dependencies
+[2025-10-18T07:29:39.548Z] [INFO] 
+[2025-10-18T07:29:39.548Z] [INFO] 📊 Analyzing project size...
+[2025-10-18T07:29:39.688Z] [INFO] 
+   Project size breakdown:
+[2025-10-18T07:29:39.688Z] [INFO]       src             2.53 MB      (0.5%)
+[2025-10-18T07:29:39.688Z] [INFO]       node_modules    554.03 MB    (99.5%)
+[2025-10-18T07:29:39.688Z] [INFO]       public          493.25 KB    (0.1%)
+[2025-10-18T07:29:39.688Z] [INFO]       TOTAL           557.04 MB
+[2025-10-18T07:29:39.688Z] [INFO] 
+[2025-10-18T07:29:39.688Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:29:39.688Z] [INFO] 
+📊 Cleanup Report:
+
+[2025-10-18T07:29:39.688Z] [INFO]    Build directories deleted: 1
+[2025-10-18T07:29:39.688Z] [INFO]    Temporary files deleted: 0
+[2025-10-18T07:29:39.688Z] [INFO]    Node modules cleaned: ⚠️
+[2025-10-18T07:29:39.688Z] [INFO]    Unused files found: 11
+[2025-10-18T07:29:39.688Z] [INFO]    Duplicate dependencies: 0
+[2025-10-18T07:29:39.688Z] [INFO] 
+   Total deletions: 1
+[2025-10-18T07:29:39.688Z] [SUCCESS]    💾 Space saved: 60.72 MB
+[2025-10-18T07:29:39.688Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:29:39.688Z] [INFO] 📁 Report saved: tmp/cleanup-project-report.json
+
+[2025-10-18T07:29:39.688Z] [SUCCESS] ✅ Project cleanup complete!
+
+[2025-10-18T07:46:26.947Z] [INFO] Creating backup...
+[2025-10-18T07:46:26.980Z] [SUCCESS] ✅ Backup created at tmp/backup-cleanup-1760773586947
+[2025-10-18T07:46:26.981Z] [INFO] 📊 Analyzing project size...
+[2025-10-18T07:46:27.214Z] [INFO] 
+   Project size breakdown:
+[2025-10-18T07:46:27.215Z] [INFO]       src             2.52 MB      (0.4%)
+[2025-10-18T07:46:27.215Z] [INFO]       node_modules    554.03 MB    (95.1%)
+[2025-10-18T07:46:27.215Z] [INFO]       .next           25.41 MB     (4.4%)
+[2025-10-18T07:46:27.215Z] [INFO]       public          493.25 KB    (0.1%)
+[2025-10-18T07:46:27.215Z] [INFO]       TOTAL           582.44 MB
+[2025-10-18T07:46:27.215Z] [INFO] 
+[2025-10-18T07:46:27.215Z] [INFO] 
+🗑️  Cleaning build files...
+[2025-10-18T07:46:27.242Z] [SUCCESS]    ✅ Deleted: .next/ (25.41 MB)
+[2025-10-18T07:46:27.242Z] [INFO] 
+   Deleted 1 build directories
+
+[2025-10-18T07:46:27.243Z] [INFO] 🗂️  Cleaning temporary files...
+[2025-10-18T07:46:27.243Z] [INFO] 
+   Deleted 0 temporary files
+
+[2025-10-18T07:46:27.243Z] [INFO] 📦 Cleaning node_modules...
+[2025-10-18T07:46:27.383Z] [INFO]    Current size: 554.03 MB
+[2025-10-18T07:46:27.383Z] [INFO]    Running npm prune...
+[2025-10-18T07:46:28.158Z] [SUCCESS]    ✅ Already clean
+[2025-10-18T07:46:28.159Z] [INFO] 
+[2025-10-18T07:46:28.159Z] [INFO] 🔍 Finding unused files...
+[2025-10-18T07:46:28.180Z] [WARN] 
+   ⚠️  Found 11 potential unused files:
+[2025-10-18T07:46:28.180Z] [WARN]       src/__tests__/ai-assistant.test.ts
+[2025-10-18T07:46:28.180Z] [WARN]       src/__tests__/api/appointments.test.ts
+[2025-10-18T07:46:28.180Z] [WARN]       src/__tests__/api/auth/login.test.ts
+[2025-10-18T07:46:28.180Z] [WARN]       src/__tests__/api/patients.test.ts
+[2025-10-18T07:46:28.180Z] [WARN]       src/__tests__/saudi-health-integration.test.ts
+[2025-10-18T07:46:28.180Z] [WARN]       src/__tests__/whatsapp-business-api.test.ts
+[2025-10-18T07:46:28.180Z] [WARN]       src/__tests__/whatsapp-integration.test.ts
+[2025-10-18T07:46:28.180Z] [WARN]       src/__tests__/auth/forgot-password.test.tsx
+[2025-10-18T07:46:28.180Z] [WARN]       src/__tests__/auth/login.test.tsx
+[2025-10-18T07:46:28.180Z] [WARN]       src/__tests__/auth/register.test.tsx
+[2025-10-18T07:46:28.180Z] [WARN]       ... and 1 more
+[2025-10-18T07:46:28.180Z] [INFO] 
+   💡 Review these files manually before deletion
+[2025-10-18T07:46:28.180Z] [INFO] 
+[2025-10-18T07:46:28.181Z] [INFO] 📄 Checking package.json...
+[2025-10-18T07:46:28.181Z] [SUCCESS]    ✅ No duplicate dependencies
+[2025-10-18T07:46:28.181Z] [INFO] 
+[2025-10-18T07:46:28.181Z] [INFO] 📊 Analyzing project size...
+[2025-10-18T07:46:28.326Z] [INFO] 
+   Project size breakdown:
+[2025-10-18T07:46:28.326Z] [INFO]       src             2.52 MB      (0.5%)
+[2025-10-18T07:46:28.326Z] [INFO]       node_modules    554.03 MB    (99.5%)
+[2025-10-18T07:46:28.326Z] [INFO]       public          493.25 KB    (0.1%)
+[2025-10-18T07:46:28.326Z] [INFO]       TOTAL           557.03 MB
+[2025-10-18T07:46:28.326Z] [INFO] 
+[2025-10-18T07:46:28.327Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T07:46:28.327Z] [INFO] 
+📊 Cleanup Report:
+
+[2025-10-18T07:46:28.327Z] [INFO]    Build directories deleted: 1
+[2025-10-18T07:46:28.327Z] [INFO]    Temporary files deleted: 0
+[2025-10-18T07:46:28.327Z] [INFO]    Node modules cleaned: ⚠️
+[2025-10-18T07:46:28.327Z] [INFO]    Unused files found: 11
+[2025-10-18T07:46:28.327Z] [INFO]    Duplicate dependencies: 0
+[2025-10-18T07:46:28.327Z] [INFO] 
+   Total deletions: 1
+[2025-10-18T07:46:28.327Z] [SUCCESS]    💾 Space saved: 25.41 MB
+[2025-10-18T07:46:28.327Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T07:46:28.327Z] [INFO] 📁 Report saved: tmp/cleanup-project-report.json
+
+[2025-10-18T07:46:28.327Z] [SUCCESS] ✅ Project cleanup complete!
+
+[2025-10-18T08:10:31.330Z] [INFO] Creating backup...
+[2025-10-18T08:10:31.367Z] [SUCCESS] ✅ Backup created at tmp/backup-cleanup-1760775031330
+[2025-10-18T08:10:31.367Z] [INFO] 📊 Analyzing project size...
+[2025-10-18T08:10:31.599Z] [INFO] 
+   Project size breakdown:
+[2025-10-18T08:10:31.599Z] [INFO]       src             2.53 MB      (0.4%)
+[2025-10-18T08:10:31.599Z] [INFO]       node_modules    562.1 MB     (89.8%)
+[2025-10-18T08:10:31.599Z] [INFO]       .next           61.11 MB     (9.8%)
+[2025-10-18T08:10:31.599Z] [INFO]       public          493.25 KB    (0.1%)
+[2025-10-18T08:10:31.599Z] [INFO]       TOTAL           626.22 MB
+[2025-10-18T08:10:31.599Z] [INFO] 
+[2025-10-18T08:10:31.599Z] [INFO] 
+🗑️  Cleaning build files...
+[2025-10-18T08:10:31.635Z] [SUCCESS]    ✅ Deleted: .next/ (61.11 MB)
+[2025-10-18T08:10:31.635Z] [INFO] 
+   Deleted 1 build directories
+
+[2025-10-18T08:10:31.635Z] [INFO] 🗂️  Cleaning temporary files...
+[2025-10-18T08:10:31.636Z] [INFO] 
+   Deleted 0 temporary files
+
+[2025-10-18T08:10:31.636Z] [INFO] 📦 Cleaning node_modules...
+[2025-10-18T08:10:31.773Z] [INFO]    Current size: 562.1 MB
+[2025-10-18T08:10:31.773Z] [INFO]    Running npm prune...
+[2025-10-18T08:10:32.551Z] [SUCCESS]    ✅ Already clean
+[2025-10-18T08:10:32.551Z] [INFO] 
+[2025-10-18T08:10:32.551Z] [INFO] 🔍 Finding unused files...
+[2025-10-18T08:10:32.572Z] [WARN] 
+   ⚠️  Found 11 potential unused files:
+[2025-10-18T08:10:32.573Z] [WARN]       src/__tests__/ai-assistant.test.ts
+[2025-10-18T08:10:32.573Z] [WARN]       src/__tests__/api/appointments.test.ts
+[2025-10-18T08:10:32.573Z] [WARN]       src/__tests__/api/auth/login.test.ts
+[2025-10-18T08:10:32.573Z] [WARN]       src/__tests__/api/patients.test.ts
+[2025-10-18T08:10:32.573Z] [WARN]       src/__tests__/saudi-health-integration.test.ts
+[2025-10-18T08:10:32.573Z] [WARN]       src/__tests__/whatsapp-business-api.test.ts
+[2025-10-18T08:10:32.573Z] [WARN]       src/__tests__/whatsapp-integration.test.ts
+[2025-10-18T08:10:32.573Z] [WARN]       src/__tests__/auth/forgot-password.test.tsx
+[2025-10-18T08:10:32.573Z] [WARN]       src/__tests__/auth/login.test.tsx
+[2025-10-18T08:10:32.573Z] [WARN]       src/__tests__/auth/register.test.tsx
+[2025-10-18T08:10:32.573Z] [WARN]       ... and 1 more
+[2025-10-18T08:10:32.573Z] [INFO] 
+   💡 Review these files manually before deletion
+[2025-10-18T08:10:32.573Z] [INFO] 
+[2025-10-18T08:10:32.573Z] [INFO] 📄 Checking package.json...
+[2025-10-18T08:10:32.573Z] [SUCCESS]    ✅ No duplicate dependencies
+[2025-10-18T08:10:32.573Z] [INFO] 
+[2025-10-18T08:10:32.573Z] [INFO] 📊 Analyzing project size...
+[2025-10-18T08:10:32.715Z] [INFO] 
+   Project size breakdown:
+[2025-10-18T08:10:32.715Z] [INFO]       src             2.53 MB      (0.4%)
+[2025-10-18T08:10:32.715Z] [INFO]       node_modules    562.1 MB     (99.5%)
+[2025-10-18T08:10:32.715Z] [INFO]       public          493.25 KB    (0.1%)
+[2025-10-18T08:10:32.715Z] [INFO]       TOTAL           565.11 MB
+[2025-10-18T08:10:32.715Z] [INFO] 
+[2025-10-18T08:10:32.715Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-10-18T08:10:32.715Z] [INFO] 
+📊 Cleanup Report:
+
+[2025-10-18T08:10:32.715Z] [INFO]    Build directories deleted: 1
+[2025-10-18T08:10:32.715Z] [INFO]    Temporary files deleted: 0
+[2025-10-18T08:10:32.715Z] [INFO]    Node modules cleaned: ⚠️
+[2025-10-18T08:10:32.715Z] [INFO]    Unused files found: 11
+[2025-10-18T08:10:32.715Z] [INFO]    Duplicate dependencies: 0
+[2025-10-18T08:10:32.715Z] [INFO] 
+   Total deletions: 1
+[2025-10-18T08:10:32.715Z] [SUCCESS]    💾 Space saved: 61.11 MB
+[2025-10-18T08:10:32.715Z] [INFO] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[2025-10-18T08:10:32.715Z] [INFO] 📁 Report saved: tmp/cleanup-project-report.json
+
+[2025-10-18T08:10:32.715Z] [SUCCESS] ✅ Project cleanup complete!
+

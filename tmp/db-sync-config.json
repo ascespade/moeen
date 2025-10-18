@@ -1,0 +1,21 @@
+{
+  "run_id": "db-sync-20251017-auto",
+  "timestamp": "2025-10-17T20:00:00Z",
+  "force_apply": true,
+  "soft_delete_enabled": true,
+  "grace_period_days": 7,
+  "backup_before_ddl": true,
+  "destructive_ops_policy": "require_manual_review",
+  "features": {
+    "soft_delete": true,
+    "reminder_scheduler": true,
+    "booking_validation": true,
+    "search_functions": true,
+    "auto_migrations": true
+  },
+  "safety": {
+    "backup_enabled": true,
+    "transactional": true,
+    "rollback_on_error": true
+  }
+}

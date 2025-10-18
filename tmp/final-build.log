@@ -1,0 +1,128 @@
+
+> moeen@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.32
+  - Environments: .env.local
+  - Experiments (use with caution):
+    · optimizeCss
+
+   Creating an optimized production build ...
+Failed to compile.
+
+./src/components/providers/I18nProvider.tsx
+Error: 
+  [31mx[0m 'import', and 'export' cannot be used outside of module code
+    ,-[[36;1;4m/workspace/src/components/providers/I18nProvider.tsx[0m:40:1]
+ [2m40[0m |   );
+ [2m41[0m |   return <I18nCtx.Provider value={value}>{children}</I18nCtx.Provider>;
+ [2m42[0m | 
+ [2m43[0m |   export function useT() {
+    : [31;1m  ^^^^^^[0m
+ [2m44[0m |     const ctx = useContext(I18nCtx);
+ [2m45[0m |     if (!ctx) throw new Error("useT must be used within I18nProvider");
+ [2m46[0m |     return ctx;
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/providers/I18nProvider.tsx
+./src/app/(legal)/privacy/page.tsx
+
+./src/components/providers/UIProvider.tsx
+Error: 
+  [31mx[0m An implementation cannot be declared in ambient contexts
+    ,-[[36;1;4m/workspace/src/components/providers/UIProvider.tsx[0m:25:1]
+ [2m25[0m |     children,
+ [2m26[0m |   }: {
+ [2m27[0m |     children: React.ReactNode;
+ [2m28[0m |   }) {
+    : [31;1m     ^[0m
+ [2m29[0m |     const pathname = usePathname();
+ [2m30[0m |     useBrandColorFromLogo("/hemam-logo.jpg");
+    `----
+
+  [31mx[0m An implementation cannot be declared in ambient contexts
+    ,-[[36;1;4m/workspace/src/components/providers/UIProvider.tsx[0m:29:1]
+ [2m29[0m |     const pathname = usePathname();
+ [2m30[0m |     useBrandColorFromLogo("/hemam-logo.jpg");
+ [2m31[0m | 
+ [2m32[0m |     useEffect(() => {
+    : [31;1m                    ^[0m
+ [2m33[0m |       const html = document.documentElement;
+ [2m34[0m |       const isEnglish = pathname?.startsWith("/en");
+ [2m35[0m |       html.setAttribute("lang", isEnglish ? "en" : "ar");
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/providers/UIProvider.tsx
+./src/app/(admin)/profile/page.tsx
+
+./src/components/ui/index.ts
+Error: 
+  [31mx[0m Expression expected
+    ,-[[36;1;4m/workspace/src/components/ui/index.ts[0m:17:1]
+ [2m17[0m |   CardFooter,
+ [2m18[0m |   CardTitle,
+ [2m19[0m |   CardDescription,
+ [2m20[0m | } from "./Card";
+    : [31;1m^[0m
+ [2m21[0m |   CardProps,
+ [2m22[0m |   CardHeaderProps,
+ [2m23[0m |   CardContentProps,
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/ui/index.ts
+./src/app/(admin)/admin/logs/page.tsx
+
+./src/lib/monitoring/logger.ts
+Error: 
+  [31mx[0m Expected ';', got 'Logger'
+    ,-[[36;1;4m/workspace/src/lib/monitoring/logger.ts[0m:14:1]
+ [2m14[0m |   data?: any;
+ [2m15[0m |   stack?: string;
+ [2m16[0m | 
+ [2m17[0m | class Logger {
+    : [31;1m      ^^^^^^[0m
+ [2m18[0m |   private isDevelopment: boolean;
+ [2m19[0m |   private isServer: boolean;
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/lib/monitoring/logger.ts
+./src/app/(admin)/admin/payments/invoices/page.tsx
+
+./src/app/(admin)/admin/audit-logs/page.tsx
+Error: 
+  [31mx[0m Expression expected
+    ,-[[36;1;4m/workspace/src/app/(admin)/admin/audit-logs/page.tsx[0m:28:1]
+ [2m28[0m |     timestamp: "2024-01-15 10:30:25",
+ [2m29[0m |     status: "success",
+ [2m30[0m |   },
+ [2m31[0m |   },
+    : [31;1m  ^[0m
+ [2m32[0m |   {
+ [2m33[0m |     id: "2",
+ [2m34[0m |     user: "سارة أحمد",
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/(admin)/admin/audit-logs/page.tsx
+
+
+> Build failed because of webpack errors
