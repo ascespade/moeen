@@ -1,278 +1,187 @@
-# Mu3een Documentation
+# 📚 دليل المشروع الشامل - مُعين Healthcare Platform
+## Complete Project Documentation & Development Guide
 
-Welcome to the Mu3een project documentation. This document provides comprehensive information about the project structure, development setup, and usage guidelines.
+**تاريخ التحديث**: 2025-01-17  
+**النسخة**: 2.0  
+**الحالة**: Production-Ready Development
 
-## Table of Contents
+---
 
-- [Project Overview](#project-overview)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Development Guidelines](#development-guidelines)
-- [API Documentation](#api-documentation)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
+## 🎯 نظرة عامة على المشروع
 
-## Project Overview
+**مُعين** هو منصة رعاية صحية متكاملة مصممة خصيصاً للسوق السعودي، تهدف إلى ربط جميع أطراف النظام الصحي في مكان واحد مع التركيز على الأتمتة والذكاء الاصطناعي.
 
-Mu3een is a modern communication platform built with Next.js, React, and TypeScript. It provides real-time messaging, channel management, and user administration features.
+### المميزات الرئيسية:
+- 🏥 **إدارة شاملة للمواعيد** مع ذكاء اصطناعي
+- 💬 **تواصل متقدم** بين الأطباء والمرضى
+- 🏥 **تكامل مع 10 شركات تأمين سعودية**
+- 🤖 **شات بوت ذكي** لحجز المواعيد
+- 📊 **تحليلات متقدمة** ولوحات تحكم شاملة
+- 🔐 **نظام أمان متقدم** مع صلاحيات دقيقة
 
-### Key Features
+---
 
-- Real-time messaging
-- Channel management
-- User administration
-- AI-powered features
-- Responsive design
-- Dark/Light theme support
+## 📁 هيكل الوثائق
 
-### Tech Stack
-
-- **Frontend**: Next.js 15, React 19, TypeScript
-- **Styling**: Tailwind CSS
-- **State Management**: React Hooks
-- **Forms**: React Hook Form + Zod
-- **Icons**: Lucide React
-- **Testing**: Jest + Testing Library
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- npm 8+
-- Git
-
-### Installation
-
-1. Clone the repository:
-
-```bash
-git clone <repository-url>
-cd mu3een
+### 1. **نظرة عامة على المشروع** 📋
+```
+project-overview/
+├── 01-project-vision.md          ✅ رؤية المشروع والأهداف
+├── 02-business-requirements.md   🔄 متطلبات العمل
+├── 03-target-market.md          🔄 السوق المستهدف
+├── 04-competitive-analysis.md   🔄 التحليل التنافسي
+└── 05-success-metrics.md        🔄 مؤشرات النجاح
 ```
 
-2. Install dependencies:
-
-```bash
-npm install
+### 2. **خطة التطوير** 🚀
+```
+development-plan/
+├── 01-master-development-plan.md    ✅ الخطة الرئيسية
+├── 02-phase-1-core-systems.md       🔄 المرحلة 1: الأنظمة الأساسية
+├── 03-phase-2-integrations.md       🔄 المرحلة 2: التكاملات
+├── 04-phase-3-ai-features.md        🔄 المرحلة 3: الذكاء الاصطناعي
+├── 05-phase-4-optimization.md       🔄 المرحلة 4: التحسينات
+├── 06-timeline-milestones.md        🔄 الجدول الزمني
+└── 07-resource-allocation.md        🔄 تخصيص الموارد
 ```
 
-3. Set up environment variables:
-
-```bash
-cp .env.example .env.local
-# Edit .env.local with your configuration
+### 3. **المواصفات التقنية** ⚙️
+```
+technical-specs/
+├── 01-system-architecture.md        ✅ معمارية النظام
+├── 02-database-design.md            🔄 تصميم قاعدة البيانات
+├── 03-api-specifications.md         🔄 مواصفات APIs
+├── 04-security-requirements.md      🔄 متطلبات الأمان
+├── 05-performance-requirements.md   🔄 متطلبات الأداء
+├── 06-integration-standards.md      🔄 معايير التكامل
+└── 07-scalability-plan.md           🔄 خطة التوسع
 ```
 
-4. Run the development server:
-
-```bash
-npm run dev
+### 4. **وثائق APIs** 🔌
+```
+api-documentation/
+├── 01-authentication-apis.md        ✅ APIs التوثيق
+├── 02-appointments-apis.md          🔄 APIs المواعيد
+├── 03-medical-records-apis.md       🔄 APIs السجلات الطبية
+├── 04-insurance-apis.md             🔄 APIs التأمين
+├── 05-integration-apis.md           🔄 APIs التكاملات
+├── 06-notification-apis.md          🔄 APIs الإشعارات
+└── 07-admin-apis.md                 🔄 APIs الإدارة
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm run lint:check` - Check linting without fixing
-- `npm run type-check` - Run TypeScript type checking
-- `npm run format` - Format code with Prettier
-- `npm run test` - Run tests
-- `npm run test:watch` - Run tests in watch mode
-- `npm run test:coverage` - Run tests with coverage
-- `npm run clean` - Clean build artifacts
-
-## Project Structure
-
+### 5. **دليل النشر** 🚀
 ```
-mu3een/
-├── docs/                    # Documentation
-├── public/                  # Static assets
-├── src/                     # Source code
-│   ├── app/                 # Next.js app directory
-│   │   ├── (admin)/         # Admin routes
-│   │   ├── (auth)/          # Authentication routes
-│   │   ├── api/             # API routes
-│   │   └── globals.css      # Global styles
-│   ├── components/          # React components
-│   │   ├── common/          # Common components
-│   │   ├── dashboard/       # Dashboard components
-│   │   ├── providers/       # Context providers
-│   │   ├── settings/        # Settings components
-│   │   └── shell/           # Layout components
-│   ├── config/              # Configuration files
-│   │   └── env.ts           # Environment configuration
-│   ├── constants/           # Application constants
-│   │   ├── api.ts           # API endpoints
-│   │   ├── routes.ts        # Route definitions
-│   │   ├── ui.ts            # UI constants
-│   │   └── validation.ts    # Validation rules
-│   ├── hooks/               # Custom React hooks
-│   │   ├── useApi.ts        # API hooks
-│   │   ├── useAuth.ts       # Authentication hooks
-│   │   └── useForm.ts       # Form hooks
-│   ├── lib/                 # Library code
-│   │   ├── auth/            # Authentication utilities
-│   │   └── supabase/        # Supabase configuration
-│   ├── styles/              # Styling files
-│   │   ├── base.css         # Base styles
-│   │   ├── components.css   # Component styles
-│   │   ├── themes.css       # Theme styles
-│   │   └── utilities.css    # Utility classes
-│   ├── types/               # TypeScript type definitions
-│   │   ├── index.ts         # Main types
-│   │   └── api.ts           # API types
-│   └── utils/               # Utility functions
-│       ├── api.ts           # API utilities
-│       ├── format.ts        # Formatting utilities
-│       ├── storage.ts       # Storage utilities
-│       └── validation.ts    # Validation utilities
-├── .env.example             # Environment variables example
-├── .gitignore              # Git ignore rules
-├── .prettierrc             # Prettier configuration
-├── .prettierignore         # Prettier ignore rules
-├── eslint.config.mjs       # ESLint configuration
-├── jest.config.js          # Jest configuration
-├── jest.setup.js           # Jest setup
-├── next.config.ts          # Next.js configuration
-├── package.json            # Package configuration
-├── postcss.config.js       # PostCSS configuration
-├── tailwind.config.js      # Tailwind CSS configuration
-└── tsconfig.json           # TypeScript configuration
+deployment-guide/
+├── 01-environment-setup.md          ✅ إعداد البيئة
+├── 02-database-migration.md         🔄 ترحيل قاعدة البيانات
+├── 03-deployment-steps.md           🔄 خطوات النشر
+├── 04-monitoring-setup.md           🔄 إعداد المراقبة
+├── 05-backup-strategy.md            🔄 استراتيجية النسخ الاحتياطي
+└── 06-troubleshooting.md            🔄 استكشاف الأخطاء
 ```
 
-## Development Guidelines
-
-### Code Style
-
-- Use TypeScript for all new code
-- Follow ESLint and Prettier configurations
-- Use meaningful variable and function names
-- Write JSDoc comments for complex functions
-- Keep components small and focused
-
-### Component Guidelines
-
-- Use functional components with hooks
-- Extract reusable logic into custom hooks
-- Use TypeScript interfaces for props
-- Follow the single responsibility principle
-- Use proper error boundaries
-
-### File Naming
-
-- Use PascalCase for components: `UserProfile.tsx`
-- Use camelCase for utilities: `formatDate.ts`
-- Use kebab-case for pages: `user-settings.tsx`
-- Use UPPER_CASE for constants: `API_ENDPOINTS.ts`
-
-### Import Organization
-
-1. React and Next.js imports
-2. Third-party library imports
-3. Internal imports (components, utils, etc.)
-4. Type imports
-5. Relative imports
-
-### Git Workflow
-
-1. Create feature branches from `main`
-2. Use descriptive commit messages
-3. Run tests before committing
-4. Create pull requests for code review
-5. Merge to `main` after approval
-
-## API Documentation
-
-### Authentication
-
-- `POST /api/auth/login` - User login
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/logout` - User logout
-- `POST /api/auth/refresh` - Refresh token
-
-### Users
-
-- `GET /api/users` - Get users list
-- `POST /api/users` - Create user
-- `GET /api/users/:id` - Get user by ID
-- `PUT /api/users/:id` - Update user
-- `DELETE /api/users/:id` - Delete user
-
-### Channels
-
-- `GET /api/channels` - Get channels list
-- `POST /api/channels` - Create channel
-- `GET /api/channels/:id` - Get channel by ID
-- `PUT /api/channels/:id` - Update channel
-- `DELETE /api/channels/:id` - Delete channel
-
-## Deployment
-
-### Environment Variables
-
-Set the following environment variables in your production environment:
-
-```bash
-NEXT_PUBLIC_APP_NAME=Mu3een
-NEXT_PUBLIC_APP_URL=https://your-domain.com
-DATABASE_URL=your-database-url
-JWT_SECRET=your-jwt-secret
-# ... other variables from .env.example
+### 6. **دليل المستخدمين** 👥
+```
+user-guides/
+├── 01-admin-user-guide.md           ✅ دليل مدير النظام
+├── 02-doctor-user-guide.md          🔄 دليل الطبيب
+├── 03-patient-user-guide.md         🔄 دليل المريض
+├── 04-supervisor-guide.md           🔄 دليل المشرف
+├── 05-owner-dashboard-guide.md      🔄 دليل لوحة المالك
+└── 06-integration-setup-guide.md    🔄 دليل إعداد التكاملات
 ```
 
-### Build and Deploy
-
-1. Build the application:
-
-```bash
-npm run build
+### 7. **تقارير التدقيق** 🔍
+```
+audit-reports/
+├── 01-authorization-system-audit.md     ✅ تدقيق نظام الصلاحيات
+├── 02-complete-systems-breakdown.md     ✅ تفصيل جميع الأنظمة
+├── 03-insurance-system-report.md        ✅ تقرير نظام التأمين
+├── 04-integrations-wizard-report.md     ✅ تقرير نظام التكاملات
+├── 05-doctors-system-report.md          ✅ تقرير نظام الأطباء
+├── 06-supervisor-notifications-report.md 🔄 تقرير إشعارات المشرف
+├── 07-owner-dashboard-report.md         🔄 تقرير لوحة المالك
+└── 08-security-assessment.md            🔄 تقييم الأمان
 ```
 
-2. Start the production server:
-
-```bash
-npm run start
+### 8. **حالة التنفيذ** 📊
+```
+implementation-status/
+├── 01-current-status.md             ✅ الحالة الحالية
+├── 02-completed-features.md         🔄 المميزات المكتملة
+├── 03-in-progress.md                🔄 قيد التنفيذ
+├── 04-pending-tasks.md              🔄 المهام المعلقة
+├── 05-bug-reports.md                🔄 تقارير الأخطاء
+├── 06-performance-metrics.md        🔄 مقاييس الأداء
+└── 07-testing-status.md             🔄 حالة الاختبارات
 ```
 
-### Docker Deployment
+---
 
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-RUN npm run build
-EXPOSE 3000
-CMD ["npm", "start"]
-```
+## 🎯 كيفية استخدام هذا الدليل
 
-## Contributing
+### للمطورين:
+1. ابدأ بـ **technical-specs** لفهم البنية التقنية
+2. راجع **api-documentation** للتعرف على APIs
+3. اتبع **development-plan** لخطة التطوير
+4. استخدم **implementation-status** لتتبع التقدم
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new features
-5. Run the test suite
-6. Submit a pull request
+### للمديرين:
+1. ابدأ بـ **project-overview** لفهم المشروع
+2. راجع **development-plan** للتخطيط
+3. استخدم **audit-reports** لتقييم الوضع
+4. تابع **implementation-status** للمتابعة
 
-### Pull Request Guidelines
+### للمستخدمين:
+1. ابدأ بـ **user-guides** للتعلم
+2. راجع **deployment-guide** للنشر
+3. استخدم **troubleshooting** لحل المشاكل
 
-- Provide a clear description of changes
-- Include screenshots for UI changes
-- Ensure all tests pass
-- Update documentation if needed
-- Follow the coding standards
+---
 
-## License
+## 📈 حالة المشروع الحالية
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+| المكون | الحالة | النسبة |
+|--------|--------|--------|
+| **الأنظمة الأساسية** | ✅ مكتمل | 85% |
+| **التكاملات** | 🔄 قيد التطوير | 60% |
+| **الذكاء الاصطناعي** | 🔄 قيد التطوير | 75% |
+| **واجهات المستخدم** | 🔄 قيد التطوير | 70% |
+| **الأمان** | ⚠️ يحتاج تحسين | 60% |
+| **الاختبارات** | 🔄 قيد التطوير | 50% |
 
-## Support
+**الجاهزية الإجمالية: 68%**
 
-For support and questions, please contact the development team or create an issue in the repository.
+---
+
+## 🚀 الخطوات التالية
+
+### المرحلة الحالية (أسبوع 1-2):
+- [ ] إكمال تقارير التدقيق المتبقية
+- [ ] تطبيق إصلاحات الأمان الحرجة
+- [ ] تفعيل التكاملات الأساسية
+
+### المرحلة القادمة (أسبوع 3-4):
+- [ ] تطوير نظام الأطباء المتكامل
+- [ ] إكمال نظام إشعارات المشرف
+- [ ] بناء لوحة المالك
+
+### المرحلة النهائية (أسبوع 5-8):
+- [ ] اختبارات شاملة
+- [ ] تحسين الأداء
+- [ ] إعداد للإنتاج
+
+---
+
+## 📞 الدعم والمساعدة
+
+- **التقارير**: راجع `audit-reports/` للحصول على تحليلات مفصلة
+- **التطوير**: اتبع `development-plan/` للخطة المنظمة
+- **المشاكل**: استخدم `deployment-guide/troubleshooting.md`
+- **الأسئلة**: راجع `user-guides/` للدلائل التفصيلية
+
+---
+
+*تم إعداد هذا الدليل بتاريخ: 2025-01-17*  
+*آخر تحديث: 2025-01-17*  
+*النسخة: 2.0*

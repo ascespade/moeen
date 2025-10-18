@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
-    // 🔧 إعدادات TypeScript الأساسية
+    "composite": true,
+    // 🔧 إعدادات TypeScript للـ Node.js
     "target": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022"],
     "module": "ESNext",
     "moduleResolution": "node",
     "allowJs": true,
     "checkJs": false,
-    "jsx": "react-jsx",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "removeComments": false,
     "noEmit": false,
     "isolatedModules": true,
@@ -33,6 +33,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
     "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
     
     // 🔧 إعدادات الاستيراد
     "baseUrl": ".",
@@ -49,12 +50,8 @@
       "@types/*": ["./src/types/*"]
     },
     
-    // 🔧 إعدادات React
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    
     // 🔧 إعدادات Node.js
-    "types": ["node"],
+    "types": ["node", "vitest/globals"],
     "moduleDetection": "force",
     "allowImportingTsExtensions": false,
     "resolveJsonModule": true,
@@ -62,7 +59,7 @@
     
     // 🔧 إعدادات الأداء
     "incremental": true,
-    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "tsBuildInfoFile": "./dist/.tsbuildinfo.node",
     "assumeChangesOnlyAffectDirectDependencies": true,
     
     // 🔧 إعدادات التوافق
@@ -74,12 +71,18 @@
     // 🔧 إعدادات التحقق
     "noErrorTruncation": true,
     "preserveConstEnums": true,
+    "preserveValueImports": true,
     "verbatimModuleSyntax": false
   },
   
   // 🔧 إعدادات الملفات
   "include": [
-    "src/**/*"
+    "*.js",
+    "*.mjs",
+    "*.ts",
+    "config/**/*",
+    "scripts/**/*",
+    "autoloop.agent.mjs"
   ],
   
   // 🔧 إعدادات الاستبعاد
@@ -92,23 +95,12 @@
     ".output",
     "coverage",
     "test-results",
+    "src",
+    "tests",
     "**/*.min.js",
     "**/*.bundle.js",
     "**/*.chunk.js",
     "__deprecated__",
     "__backup__"
-  ],
-  
-  // 🔧 إعدادات المراجع
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ],
-  
-  // 🔧 إعدادات التطوير
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node"
-  }
+  ]
 }
