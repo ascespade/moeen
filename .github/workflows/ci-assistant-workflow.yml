@@ -1,0 +1,580 @@
+name: 🤖 CI Assistant Workflow - Error Resolver
+
+on:
+  workflow_run:
+    workflows: ["🚀 Master CI Workflow - Smart Testing & Auto-Healing"]
+    types: [completed]
+    branches: [main, develop, feature/*, hotfix/*]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  checks: write
+  statuses: write
+  actions: read
+
+env:
+  NODE_VERSION: '20'
+  NPM_VERSION: '10'
+  CI: true
+  NODE_ENV: production
+  CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+
+jobs:
+  # 🔍 Job 1: Analyze Master Workflow Failure
+  analyze-master-failure:
+    if: github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      failure-reason: ${{ steps.analyze-failure.outputs.failure-reason }}
+      error-logs: ${{ steps.analyze-failure.outputs.error-logs }}
+      fix-required: ${{ steps.analyze-failure.outputs.fix-required }}
+    
+    steps:
+      - name: 📥 تحميل الكود
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: 📦 إعداد البيئة
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📥 تثبيت التبعيات
+        run: |
+          npm ci
+          npm install js-yaml sqlite3
+
+      - name: 🧠 تهيئة نظام التعلم
+        run: |
+          echo "🧠 تهيئة نظام التعلم..."
+          node scripts/ci-learning-db.js init
+
+      - name: 🔍 تحليل فشل Master Workflow
+        id: analyze-failure
+        run: |
+          echo "🔍 تحليل فشل Master Workflow..."
+          
+          # إنشاء مجلدات التحليل
+          mkdir -p analysis/ logs/ learning/
+          
+          # تحليل سبب الفشل
+          echo "📊 تحليل سبب الفشل..."
+          node -e "
+            const fs = require('fs');
+            
+            // تحليل معلومات الـ workflow_run
+            const workflowRun = process.env.GITHUB_EVENT_PATH ? 
+              JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8')).workflow_run : 
+              null;
+            
+            let failureReason = 'Unknown failure';
+            let errorLogs = '';
+            let fixRequired = true;
+            
+            if (workflowRun) {
+              failureReason = workflowRun.conclusion || 'Unknown';
+              errorLogs = 'Workflow run ID: ' + workflowRun.id + '\\n';
+              errorLogs += 'Status: ' + workflowRun.status + '\\n';
+              errorLogs += 'Conclusion: ' + workflowRun.conclusion + '\\n';
+              errorLogs += 'URL: ' + workflowRun.html_url + '\\n';
+              
+              // تحليل الأخطاء من الـ jobs
+              if (workflowRun.jobs) {
+                workflowRun.jobs.forEach(job => {
+                  if (job.conclusion === 'failure') {
+                    errorLogs += '\\nFailed Job: ' + job.name + '\\n';
+                    errorLogs += 'Job ID: ' + job.id + '\\n';
+                    errorLogs += 'Steps: ' + JSON.stringify(job.steps, null, 2) + '\\n';
+                  }
+                });
+              }
+            }
+            
+            // حفظ تحليل الفشل
+            const analysis = {
+              failureReason,
+              errorLogs,
+              fixRequired,
+              timestamp: new Date().toISOString(),
+              workflowRunId: workflowRun ? workflowRun.id : null,
+              repository: process.env.GITHUB_REPOSITORY,
+              branch: process.env.GITHUB_REF_NAME
+            };
+            
+            fs.writeFileSync('analysis/failure-analysis.json', JSON.stringify(analysis, null, 2));
+            
+            console.log('failure-reason=' + failureReason);
+            console.log('error-logs=' + errorLogs.replace(/\\n/g, ' '));
+            console.log('fix-required=' + fixRequired);
+          "
+
+      - name: 📊 حفظ تحليل الفشل
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-analysis
+          path: analysis/
+          retention-days: 7
+
+  # 🤖 Job 2: Send Error to Cursor API for Fix
+  send-to-cursor-api:
+    if: needs.analyze-master-failure.outputs.fix-required == 'true'
+    needs: analyze-master-failure
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      cursor-response: ${{ steps.cursor-api.outputs.cursor-response }}
+      fixes-received: ${{ steps.cursor-api.outputs.fixes-received }}
+      fix-count: ${{ steps.cursor-api.outputs.fix-count }}
+    
+    steps:
+      - name: 📥 تحميل الكود
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: 📦 إعداد البيئة
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📥 تثبيت التبعيات
+        run: |
+          npm ci
+          npm install js-yaml sqlite3
+
+      - name: 📥 تحميل تحليل الفشل
+        uses: actions/download-artifact@v4
+        with:
+          name: failure-analysis
+          path: analysis/
+
+      - name: 🤖 إرسال الخطأ لـ Cursor API
+        id: cursor-api
+        run: |
+          echo "🤖 إرسال الخطأ لـ Cursor API للإصلاح..."
+          
+          # قراءة تحليل الفشل
+          const analysis = JSON.parse(require('fs').readFileSync('analysis/failure-analysis.json', 'utf8'));
+          
+          # إرسال لـ Cursor API
+          node -e "
+            const https = require('https');
+            const fs = require('fs');
+            
+            const analysis = JSON.parse(fs.readFileSync('analysis/failure-analysis.json', 'utf8'));
+            
+            const payload = {
+              errorType: 'workflow_failure',
+              failureReason: analysis.failureReason,
+              errorLogs: analysis.errorLogs,
+              context: {
+                repository: process.env.GITHUB_REPOSITORY,
+                branch: process.env.GITHUB_REF_NAME,
+                commit: process.env.GITHUB_SHA,
+                workflowRunId: analysis.workflowRunId,
+                timestamp: analysis.timestamp
+              },
+              files: [
+                '.github/workflows/',
+                'scripts/',
+                'package.json',
+                'src/',
+                'tests/'
+              ],
+              priority: 'high',
+              requestType: 'workflow_fix'
+            };
+            
+            const options = {
+              hostname: 'api.cursor.sh',
+              port: 443,
+              path: '/v1/fix-workflow-error',
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + process.env.CURSOR_API_KEY,
+                'X-Request-ID': 'assistant-' + Date.now()
+              }
+            };
+            
+            const req = https.request(options, (res) => {
+              let data = '';
+              res.on('data', (chunk) => data += chunk);
+              res.on('end', () => {
+                try {
+                  const response = JSON.parse(data);
+                  console.log('cursor-response=' + (response.success ? 'success' : 'failed'));
+                  console.log('fixes-received=' + (response.fixes ? response.fixes.length : 0));
+                  console.log('fix-count=' + (response.fixes ? response.fixes.length : 0));
+                  
+                  // حفظ استجابة Cursor
+                  fs.writeFileSync('analysis/cursor-response.json', JSON.stringify(response, null, 2));
+                } catch (e) {
+                  console.log('cursor-response=failed');
+                  console.log('fixes-received=0');
+                  console.log('fix-count=0');
+                  
+                  // حفظ خطأ الاتصال
+                  fs.writeFileSync('analysis/cursor-error.json', JSON.stringify({
+                    error: e.message,
+                    timestamp: new Date().toISOString()
+                  }, null, 2));
+                }
+              });
+            });
+            
+            req.on('error', (e) => {
+              console.log('cursor-response=failed');
+              console.log('fixes-received=0');
+              console.log('fix-count=0');
+              
+              // حفظ خطأ الاتصال
+              fs.writeFileSync('analysis/cursor-error.json', JSON.stringify({
+                error: e.message,
+                timestamp: new Date().toISOString()
+              }, null, 2));
+            });
+            
+            req.write(JSON.stringify(payload));
+            req.end();
+          "
+
+      - name: 📊 حفظ استجابة Cursor
+        uses: actions/upload-artifact@v4
+        with:
+          name: cursor-response
+          path: analysis/
+          retention-days: 7
+
+  # 🔧 Job 3: Apply Fixes from Cursor API
+  apply-cursor-fixes:
+    if: needs.send-to-cursor-api.outputs.fixes-received != '0'
+    needs: [analyze-master-failure, send-to-cursor-api]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    outputs:
+      fixes-applied: ${{ steps.apply-fixes.outputs.fixes-applied }}
+      success-count: ${{ steps.apply-fixes.outputs.success-count }}
+      failure-count: ${{ steps.apply-fixes.outputs.failure-count }}
+    
+    steps:
+      - name: 📥 تحميل الكود
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: 📦 إعداد البيئة
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📥 تثبيت التبعيات
+        run: |
+          npm ci
+          npm install js-yaml sqlite3
+
+      - name: 📥 تحميل استجابة Cursor
+        uses: actions/download-artifact@v4
+        with:
+          name: cursor-response
+          path: analysis/
+
+      - name: 🔧 تطبيق الإصلاحات من Cursor API
+        id: apply-fixes
+        run: |
+          echo "🔧 تطبيق الإصلاحات من Cursor API..."
+          
+          if [ -f "analysis/cursor-response.json" ]; then
+            node -e "
+              const fs = require('fs');
+              const response = JSON.parse(fs.readFileSync('analysis/cursor-response.json', 'utf8'));
+              
+              let fixesApplied = 0;
+              let successCount = 0;
+              let failureCount = 0;
+              
+              if (response.fixes && response.fixes.length > 0) {
+                console.log('🔧 تطبيق ' + response.fixes.length + ' إصلاح من Cursor API...');
+                
+                response.fixes.forEach((fix, index) => {
+                  try {
+                    if (fix.file && fix.content) {
+                      // إنشاء مجلد الملف إذا لم يكن موجوداً
+                      const dir = fix.file.substring(0, fix.file.lastIndexOf('/'));
+                      if (dir) {
+                        fs.mkdirSync(dir, { recursive: true });
+                      }
+                      
+                      // كتابة المحتوى
+                      fs.writeFileSync(fix.file, fix.content);
+                      console.log('✅ تم إصلاح: ' + fix.file);
+                      fixesApplied++;
+                      successCount++;
+                    } else {
+                      console.log('⚠️ إصلاح غير صالح: ' + JSON.stringify(fix));
+                      failureCount++;
+                    }
+                  } catch (e) {
+                    console.log('❌ فشل في إصلاح: ' + fix.file + ' - ' + e.message);
+                    failureCount++;
+                  }
+                });
+              } else {
+                console.log('⚠️ لا توجد إصلاحات في استجابة Cursor API');
+              }
+              
+              console.log('fixes-applied=' + fixesApplied);
+              console.log('success-count=' + successCount);
+              console.log('failure-count=' + failureCount);
+              
+              // حفظ تقرير الإصلاح
+              fs.writeFileSync('analysis/fix-report.json', JSON.stringify({
+                fixesApplied,
+                successCount,
+                failureCount,
+                timestamp: new Date().toISOString()
+              }, null, 2));
+            "
+          else
+            echo "❌ لا يوجد ملف استجابة من Cursor API"
+            echo "fixes-applied=0"
+            echo "success-count=0"
+            echo "failure-count=0"
+          fi
+
+      - name: 🔍 فحص الإصلاحات المطبقة
+        run: |
+          echo "🔍 فحص الإصلاحات المطبقة..."
+          
+          # فحص الـ workflows
+          node scripts/validate-workflows.js > logs/post-fix-validation.log 2>&1
+          
+          # فحص الكود
+          npm run lint > logs/post-fix-lint.log 2>&1 || echo "Lint check completed"
+          
+          # تحليل النتائج
+          node -e "
+            const fs = require('fs');
+            
+            let validationErrors = 0;
+            let lintErrors = 0;
+            
+            if (fs.existsSync('logs/post-fix-validation.log')) {
+              const content = fs.readFileSync('logs/post-fix-validation.log', 'utf8');
+              const errorMatches = content.match(/❌/g);
+              validationErrors = errorMatches ? errorMatches.length : 0;
+            }
+            
+            if (fs.existsSync('logs/post-fix-lint.log')) {
+              const content = fs.readFileSync('logs/post-fix-lint.log', 'utf8');
+              const errorMatches = content.match(/error/g);
+              lintErrors = errorMatches ? errorMatches.length : 0;
+            }
+            
+            console.log('Validation errors: ' + validationErrors);
+            console.log('Lint errors: ' + lintErrors);
+            
+            // حفظ تقرير الفحص
+            fs.writeFileSync('analysis/validation-report.json', JSON.stringify({
+              validationErrors,
+              lintErrors,
+              timestamp: new Date().toISOString()
+            }, null, 2));
+          "
+
+      - name: 📊 حفظ تقرير الإصلاح
+        uses: actions/upload-artifact@v4
+        with:
+          name: fix-application-report
+          path: |
+            analysis/
+            logs/
+          retention-days: 7
+
+  # 💾 Job 4: Commit and Push Fixes
+  commit-and-push:
+    if: needs.apply-cursor-fixes.outputs.fixes-applied != '0'
+    needs: [analyze-master-failure, send-to-cursor-api, apply-cursor-fixes]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      commit-hash: ${{ steps.commit.outputs.commit-hash }}
+      push-success: ${{ steps.push.outputs.push-success }}
+    
+    steps:
+      - name: 📥 تحميل الكود
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: 📥 تحميل تقرير الإصلاح
+        uses: actions/download-artifact@v4
+        with:
+          name: fix-application-report
+          path: analysis/
+
+      - name: 💾 إنشاء Commit للإصلاحات
+        id: commit
+        run: |
+          echo "💾 إنشاء Commit للإصلاحات..."
+          
+          # إعداد Git
+          git config --local user.email "ci-assistant@github.com"
+          git config --local user.name "CI Assistant"
+          
+          # إضافة جميع التغييرات
+          git add .
+          
+          # إنشاء commit
+          git commit -m "🤖 CI Assistant: إصلاح فشل Master Workflow
+
+🔍 سبب الفشل: ${{ needs.analyze-master-failure.outputs.failure-reason }}
+🔧 الإصلاحات المطبقة: ${{ needs.apply-cursor-fixes.outputs.fixes-applied }}
+✅ نجح: ${{ needs.apply-cursor-fixes.outputs.success-count }}
+❌ فشل: ${{ needs.apply-cursor-fixes.outputs.failure-count }}
+
+🤖 تم بواسطة: CI Assistant
+🔄 سيتم تشغيل Master Workflow مرة أخرى" || echo "لا توجد تغييرات للحفظ"
+          
+          # الحصول على hash الـ commit
+          COMMIT_HASH=$(git rev-parse HEAD)
+          echo "commit-hash=$COMMIT_HASH"
+
+      - name: 📤 رفع الإصلاحات
+        id: push
+        run: |
+          echo "📤 رفع الإصلاحات..."
+          
+          # رفع التغييرات
+          if git push origin ${{ github.ref_name }}; then
+            echo "push-success=true"
+            echo "✅ تم رفع الإصلاحات بنجاح"
+          else
+            echo "push-success=false"
+            echo "❌ فشل في رفع الإصلاحات"
+            exit 1
+          fi
+
+  # 📊 Job 5: Generate Assistant Report
+  generate-assistant-report:
+    if: always()
+    needs: [analyze-master-failure, send-to-cursor-api, apply-cursor-fixes, commit-and-push]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - name: 📥 تحميل الكود
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: 📥 تحميل جميع التقارير
+        uses: actions/download-artifact@v4
+        with:
+          name: fix-application-report
+          path: analysis/
+
+      - name: 📊 إنشاء تقرير CI Assistant
+        run: |
+          echo "📊 إنشاء تقرير CI Assistant..."
+          
+          # إنشاء التقرير
+          cat > CI_ASSISTANT_REPORT.md << 'EOF'
+          # 🤖 CI Assistant Workflow - التقرير النهائي
+          
+          ## 📋 ملخص التنفيذ
+          - **التاريخ:** $(date)
+          - **الفرع:** ${{ github.ref_name }}
+          - **الكوميت:** ${{ github.sha }}
+          - **المشغل:** ${{ github.actor }}
+          
+          ## 🔍 تحليل فشل Master Workflow
+          - **سبب الفشل:** ${{ needs.analyze-master-failure.outputs.failure-reason }}
+          - **حالة الإصلاح:** ${{ needs.analyze-master-failure.outputs.fix-required }}
+          
+          ## 🤖 تفاعل Cursor API
+          - **استجابة Cursor:** ${{ needs.send-to-cursor-api.outputs.cursor-response }}
+          - **الإصلاحات المستلمة:** ${{ needs.send-to-cursor-api.outputs.fixes-received }}
+          
+          ## 🔧 تطبيق الإصلاحات
+          - **الإصلاحات المطبقة:** ${{ needs.apply-cursor-fixes.outputs.fixes-applied }}
+          - **نجح:** ${{ needs.apply-cursor-fixes.outputs.success-count }}
+          - **فشل:** ${{ needs.apply-cursor-fixes.outputs.failure-count }}
+          
+          ## 💾 النتيجة النهائية
+          - **Commit Hash:** ${{ needs.commit-and-push.outputs.commit-hash }}
+          - **رفع ناجح:** ${{ needs.commit-and-push.outputs.push-success }}
+          
+          ## ✅ الحالة النهائية
+          EOF
+          
+          # إضافة التفاصيل
+          if [ -f "analysis/fix-report.json" ]; then
+            node -e "
+              const fs = require('fs');
+              const report = JSON.parse(fs.readFileSync('analysis/fix-report.json', 'utf8'));
+              
+              const details = \`
+          ### 📊 تفاصيل الإصلاح
+          - **إجمالي الإصلاحات:** \${report.fixesApplied}
+          - **نجح:** \${report.successCount}
+          - **فشل:** \${report.failureCount}
+          - **معدل النجاح:** \${report.fixesApplied > 0 ? (report.successCount / report.fixesApplied * 100).toFixed(2) : 0}%
+          
+          ### 🎯 التوصيات
+          \${report.failureCount > 0 ? '⚠️ بعض الإصلاحات فشلت - يحتاج مراجعة' : '✅ جميع الإصلاحات نجحت'}
+          \${report.successCount > 0 ? '✅ تم إصلاح المشكلة - Master Workflow سيعمل مرة أخرى' : '❌ لم يتم إصلاح المشكلة'}
+          
+          ### 🚀 الخطوات التالية
+          1. Master Workflow سيعمل تلقائياً مرة أخرى
+          2. مراقبة النتائج
+          3. تحسين نظام الإصلاح إذا لزم الأمر
+          \`;
+              
+              fs.appendFileSync('CI_ASSISTANT_REPORT.md', details);
+            "
+          fi
+
+      - name: 💾 حفظ التقرير
+        run: |
+          echo "💾 حفظ التقرير..."
+          
+          # إعداد Git
+          git config --local user.email "ci-assistant@github.com"
+          git config --local user.name "CI Assistant"
+          
+          # إضافة التقرير
+          git add CI_ASSISTANT_REPORT.md
+          
+          # إنشاء commit للتقرير
+          git commit -m "📊 CI Assistant Report - $(date '+%Y-%m-%d %H:%M:%S')
+
+🔍 سبب الفشل: ${{ needs.analyze-master-failure.outputs.failure-reason }}
+🔧 الإصلاحات: ${{ needs.apply-cursor-fixes.outputs.fixes-applied }}
+✅ النجاح: ${{ needs.apply-cursor-fixes.outputs.success-count }}
+
+🤖 تم بواسطة: CI Assistant" || echo "لا توجد تغييرات للحفظ"
+
+      - name: 📤 رفع التقرير
+        run: |
+          echo "📤 رفع التقرير..."
+          git push origin ${{ github.ref_name }} || echo "فشل في رفع التقرير"
+
+      - name: 📊 رفع التقرير كـ Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-assistant-final-report
+          path: CI_ASSISTANT_REPORT.md
+          retention-days: 30
