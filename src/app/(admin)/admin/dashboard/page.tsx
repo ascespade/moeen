@@ -27,7 +27,6 @@ interface DashboardStats {
   totalSessions: number;
   completedSessions: number;
   upcomingSessions: number;
-}
 
 interface RecentActivity {
   id: string;
@@ -36,7 +35,6 @@ interface RecentActivity {
   description: string;
   timestamp: string;
   status: "success" | "warning" | "error" | "info";
-}
 
 interface StaffWorkHours {
   id: string;
@@ -49,7 +47,6 @@ interface StaffWorkHours {
   isOnDuty: boolean;
   lastCheckIn?: string;
   lastCheckOut?: string;
-}
 
 // TODO: Replace mock with live API once endpoints ready
 
@@ -175,7 +172,6 @@ const mockStaffWorkHours: StaffWorkHours[] = [
     lastCheckIn: "07:00",
   },
 ];
-}
 
 const activityTypeConfig = {
   appointment: { icon: "📅", color: "blue", bg: "bg-surface" },
@@ -184,7 +180,6 @@ const activityTypeConfig = {
   staff: { icon: "👨‍⚕️", color: "purple", bg: "bg-surface" },
   payment: { icon: "💰", color: "green", bg: "bg-surface" },
 } as const;
-}
 
 const statusConfig = {
   success: { color: "text-brand-success", bg: "bg-surface" },
