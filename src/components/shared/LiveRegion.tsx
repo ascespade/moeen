@@ -1,11 +1,9 @@
 import React from "react";
 
-}
 interface LiveRegionProps {
   message: string;
   politeness?: "polite" | "assertive";
 
-}
 
 export function LiveRegion({
   message,

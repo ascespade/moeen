@@ -6,7 +6,6 @@ import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-}
 interface Activity {
   id: string;
   type: "call" | "meeting" | "email" | "task" | "note";
@@ -20,7 +19,6 @@ interface Activity {
   priority: "low" | "medium" | "high";
   createdAt: string;
   completedAt?: string;
-}
 
 const mockActivities: Activity[] = [
   {

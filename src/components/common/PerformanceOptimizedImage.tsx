@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 
-}
 interface PerformanceOptimizedImageProps {
   src: string;
   alt: string;
@@ -12,7 +11,6 @@ interface PerformanceOptimizedImageProps {
   placeholder?: string;
   priority?: boolean;
 
-}
 
 export function PerformanceOptimizedImage({
   src,

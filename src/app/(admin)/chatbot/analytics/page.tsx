@@ -6,7 +6,6 @@ import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-}
 interface AnalyticsData {
   totalMessages: number;
   totalUsers: number;
@@ -34,7 +33,6 @@ interface AnalyticsData {
     percentage: number;
   }>;
 
-}
 
 const mockAnalytics: AnalyticsData = {
   totalMessages: 15420,

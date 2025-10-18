@@ -96,17 +96,14 @@ export class HemamAssistant {
     for (const keyword of this.crisisKeywords.selfHarm) {
       if (lowerMessage.includes(keyword)) {
         return "crisis";
-      }
 
     for (const keyword of this.crisisKeywords.emergency) {
       if (lowerMessage.includes(keyword)) {
         return "urgent";
-      }
 
     for (const keyword of this.crisisKeywords.danger) {
       if (lowerMessage.includes(keyword)) {
         return "urgent";
-      }
 
     return "normal";
 
@@ -161,7 +158,6 @@ export class HemamAssistant {
         return this.handleFamilySupportFlow(userMessage);
       default:
         return this.handleDefaultFlow(userMessage);
-    }
 
   // New beneficiary onboarding flow
   private handleNewBeneficiaryFlow(_message: string): string {
@@ -244,7 +240,6 @@ export class HemamAssistant {
         return `تذكير: ${details} لـ ${patientName}`;
       default:
         return `تحديث: ${details} لـ ${patientName}`;
-    }
 
   // Generate accessibility-friendly response
   generateAccessibleResponse(options: string[]): string {

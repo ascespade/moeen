@@ -7,7 +7,6 @@ import Link from "next/link";
 
 import { ROUTES } from "@/constants/routes";
 
-}
 interface Deal {
   id: string;
   title: string;
@@ -29,7 +28,6 @@ interface Deal {
   lastActivity: string;
   notes?: string;
   tags: string[];
-}
 
 const mockDeals: Deal[] = [
   {

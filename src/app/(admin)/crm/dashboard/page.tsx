@@ -11,7 +11,6 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "lucide-react";
 
-}
 interface Appointment {
   id: string;
   patient_id: string;
@@ -37,7 +36,6 @@ interface Appointment {
     email?: string;
   };
 
-}
 interface DashboardStats {
   totalAppointments: number;
   todayAppointments: number;
@@ -46,7 +44,6 @@ interface DashboardStats {
   totalPatients: number;
   totalDoctors: number;
 
-}
 
 const CRMDashboard: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

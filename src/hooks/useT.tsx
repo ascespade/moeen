@@ -14,14 +14,12 @@ import translationService from "@/lib/i18n/translationService";
   createContext,
 } from "react";
 
-}
 interface TranslationContextType {
   language: string;
   setLanguage: (lang: string) => void;
   t: (key: string) => string;
   isLoading: boolean;
 
-}
 
 const TranslationContext = createContext<TranslationContextType | undefined>(
   undefined,

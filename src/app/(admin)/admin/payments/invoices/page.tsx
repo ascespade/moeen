@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
 
-}
 interface Invoice {
   id: string;
   patient_name: string;
@@ -14,7 +13,6 @@ interface Invoice {
   payment_method: string;
   status: string;
   created_at: string;
-}
 
 export default function InvoicesPage() {
   const [payments, setPayments] = useState<any[]>([]);

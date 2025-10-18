@@ -30,4 +30,3 @@ export default function DirectionToggle() {
       {dir === "rtl" ? "RTL" : "LTR"}
     </button>
   );
-}

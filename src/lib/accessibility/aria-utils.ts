@@ -4,7 +4,6 @@
  * Professional accessibility helpers
  */
 
-}
 interface AriaLabelProps {
   label: string;
   describedBy?: string;
@@ -196,7 +195,6 @@ export function handleKeyboardNav(
       event.preventDefault();
       onArrowDown?.();
       break;
-  }
 
 const ariautils = {
   getFormAriaProps,

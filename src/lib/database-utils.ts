@@ -57,7 +57,6 @@ export class DatabaseUtils {
     dataArray: Array<Omit<T, "id" | "public_id">>,
   ): T[] {
     return dataArray.map((data) => this.createInsertData(entityType, data));
-  }
 
 /**
  * Query builder helpers for common database operations
@@ -102,7 +101,6 @@ export class QueryBuilder {
     return {
       orderBy: { [field]: direction },
     };
-  }
 
 /**
  * Entity-specific database operations
@@ -187,7 +185,6 @@ export class DatabaseValidation {
         (typeof data[field] === "string" && data[field].trim() === "")
       ) {
         errors.push(`Field '${String(field)}' is required`);
-      }
 
     return {
       {
@@ -214,7 +211,6 @@ export class DatabaseValidation {
   static validatePhone(phone: string): boolean {
     const phoneRegex = /^(\+966|966|0)?[5-9][0-9]{8}$/;
     return phoneRegex.test(phone.replace(/\s/g, ""));
-  }
 
 /**
  * Database migration helpers
@@ -249,7 +245,6 @@ export class MigrationHelpers {
       timestamp: new Date().toISOString(),
       details,
     };
-  }
 
 export default DatabaseUtils;
 }}}}}}}}}}}}}}}}}}}}

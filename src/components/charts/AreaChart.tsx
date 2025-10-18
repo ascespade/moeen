@@ -12,7 +12,6 @@ import { useTheme } from "@/core/theme";
 AreaChart as RechartsAreaChart,
 } from "recharts";
 
-}
 interface AreaChartProps {
   data: any[];
   dataKey: string;

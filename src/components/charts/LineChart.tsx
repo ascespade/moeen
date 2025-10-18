@@ -12,7 +12,6 @@ import { useTheme } from "@/core/theme";
 LineChart as RechartsLineChart,
 } from "recharts";
 
-}
 interface LineChartProps {
   data: any[];
   dataKey: string;

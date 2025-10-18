@@ -6,7 +6,6 @@ import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-}
 interface Session {
   id: string;
   patientName: string;
@@ -16,7 +15,6 @@ interface Session {
   endTime: string;
   status: "upcoming" | "in-progress" | "completed" | "cancelled";
   notes?: string;
-}
 
 const mockSessions: Session[] = [
   {

@@ -104,7 +104,6 @@ export const generateRandomString = (length: number = 8): string => {
   for (let i = 0; i < length; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
     return result;
-  }
 
   export const generateRandomId = (prefix: string = ""): string => {
     const timestamp = Date.now().toString(36);
@@ -176,7 +175,6 @@ export const generateRandomString = (length: number = 8): string => {
         if (j === 3 && k !== 13) {
           return num + "rd";
           return num + "th";
-        }
 
         export const initials = (
           name: string,

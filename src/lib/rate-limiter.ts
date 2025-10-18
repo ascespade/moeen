@@ -1,6 +1,5 @@
 import { NextRequest } from "next/server";
 
-}
 interface RateLimitConfig {
   windowMs: number;
   maxRequests: number;
@@ -54,7 +53,6 @@ class RateLimiter {
   getResetTime(identifier: string): number {
     const current = this.requests.get(identifier);
     return current?.resetTime || Date.now() + this.config.windowMs;
-  }
 
 // Rate limiters for different endpoints
 export const authRateLimiter = new RateLimiter({

@@ -21,7 +21,6 @@ function getClientIP(request: NextRequest): string {
     );
   } catch {
     return "127.0.0.1";
-  }
 
 const registerSchema = z
   .object({
@@ -228,4 +227,3 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 },
     );
-  }

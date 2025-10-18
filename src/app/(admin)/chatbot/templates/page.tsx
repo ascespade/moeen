@@ -7,7 +7,6 @@ import Link from "next/link";
 
 import { ROUTES } from "@/constants/routes";
 
-}
 interface Template {
   id: string;
   name: string;
@@ -20,7 +19,6 @@ interface Template {
   variables: string[];
   preview: string;
   usageCount: number;
-}
 
 const mockTemplates: Template[] = [
   {

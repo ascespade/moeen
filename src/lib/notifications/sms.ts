@@ -1,18 +1,15 @@
 import logger from "@/lib/monitoring/logger";
 
-}
 interface SMSData {
   to: string;
   message: string;
   language?: "ar" | "en";
 
-}
 interface SMSResult {
   success: boolean;
   messageId?: string;
   error?: string;
 
-}
 
 export class SMSNotificationService {
   private apiKey: string;
@@ -75,7 +72,6 @@ export class SMSNotificationService {
         success: false,
         error: error instanceof Error ? error.message : "SMS sending failed",
       };
-    }
 
   async sendAppointmentConfirmation(data: {
     patientPhone: string;
@@ -140,7 +136,6 @@ export class SMSNotificationService {
       message,
       language: "ar",
     });
-  }
 
 export const smsService = new SMSNotificationService();
 }}}}}}}}}

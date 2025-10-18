@@ -7,7 +7,6 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "lucide-react";
 
-}
 interface ActivationStep {
   id: string;
   title: string;
@@ -16,12 +15,10 @@ interface ActivationStep {
   required: boolean;
   icon: React.ReactNode;
 
-}
 interface ActivationFlowProps {
   patientId: string;
   onActivationComplete?: () => void;
 
-}
 
 export default function ActivationFlow({
   patientId,

@@ -154,7 +154,6 @@ export const getAge = (birthDate: Date): number => {
     age--;
 
     return age;
-  }
 
   export const getTimeAgo = (date: Date): string => {
     const now = new Date();

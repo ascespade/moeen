@@ -11,7 +11,6 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { Select } from "lucide-react";
 
-}
 interface Claim {
   id: string;
   patientName: string;
@@ -22,12 +21,10 @@ interface Claim {
   referenceNumber?: string;
   appointmentId: string;
 
-}
 interface ClaimsManagerProps {
   patientId?: string;
   onClaimUpdate?: () => void;
 
-}
 
 export default function ClaimsManager({
   patientId,

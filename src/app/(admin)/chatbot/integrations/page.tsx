@@ -6,7 +6,6 @@ import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-}
 interface Integration {
   id: string;
   name: string;
@@ -19,7 +18,6 @@ interface Integration {
   icon: string;
   color: string;
 
-}
 
 const mockIntegrations: Integration[] = [
   {

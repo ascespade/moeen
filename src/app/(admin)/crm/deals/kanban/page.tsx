@@ -9,4 +9,3 @@ export default function DealsKanbanPage() {
       </div>
     </main>
   );
-}

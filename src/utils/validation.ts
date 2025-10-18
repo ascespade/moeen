@@ -103,7 +103,6 @@ export const validateForm = <T extends Record<string, any>>(
     if (!result.isValid) {
       errors[field as keyof T] = result.error || "Invalid value";
       isValid = false;
-    }
 
   return { isValid, errors };
 };

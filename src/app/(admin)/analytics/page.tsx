@@ -13,7 +13,6 @@ import { useAuth } from "@/hooks/useAuth";
 BarChart3,
 } from "lucide-react";
 
-}
 interface AnalyticsData {
   overview: {
     totalPatients: number;

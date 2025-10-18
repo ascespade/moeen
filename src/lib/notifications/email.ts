@@ -1,19 +1,16 @@
 import logger from "@/lib/monitoring/logger";
 
-}
 interface EmailTemplate {
   subject: string;
   html: string;
   text: string;
 
-}
 interface EmailData {
   to: string;
   template: string;
   data: Record<string, any>;
   language?: "ar" | "en";
 
-}
 
 export class EmailNotificationService {
   private templates: Map<string, EmailTemplate> = new Map();
@@ -167,7 +164,6 @@ export class EmailNotificationService {
         success: false,
         error: error instanceof Error ? error.message : "Email sending failed",
       };
-    }
 
   async sendAppointmentConfirmation(data: {
     patientEmail: string;
@@ -212,7 +208,6 @@ export class EmailNotificationService {
       data,
       language: "ar",
     });
-  }
 
 export const emailService = new EmailNotificationService();
 }}}}}}}}}}

@@ -38,4 +38,3 @@ export function Badge({
   return <span className={clsx(styles[variant], className)} {...props} />;
 
   export default Badge;
-}

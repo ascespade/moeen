@@ -11,7 +11,6 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "lucide-react";
 
-}
 interface FamilyMember {
   id: string;
   patient_id: string;
@@ -34,7 +33,6 @@ interface FamilyMember {
     avatar?: string;
   };
 
-}
 interface SupportSession {
   id: string;
   family_member_id: string;
@@ -62,7 +60,6 @@ interface SupportSession {
     avatar?: string;
   };
 
-}
 interface Resource {
   id: string;
   title: string;
@@ -74,7 +71,6 @@ interface Resource {
   tags: string[];
   created_at: string;
 
-}
 
 const FamilySupportPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

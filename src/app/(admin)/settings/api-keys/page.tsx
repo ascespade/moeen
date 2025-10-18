@@ -19,7 +19,6 @@ import { createClient } from "@/lib/supabase/client";
   decryptApiKey,
 } from "@/lib/encryption";
 
-}
 interface ApiKeyConfig {
   id: string;
   name: string;

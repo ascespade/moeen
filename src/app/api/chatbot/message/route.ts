@@ -80,7 +80,6 @@ export async function POST(request: NextRequest) {
       if (normalizedMessage.includes(keyword.toLowerCase())) {
         response = reply;
         break;
-      }
 
     // Log interaction
     logger.info("Chatbot interaction", {

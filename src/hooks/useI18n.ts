@@ -39,4 +39,3 @@ export function useI18n(locale: "ar" | "en" = "ar", ns: string = "common") {
   return { t, messages, loading };
 
   export default useI18n;
-}

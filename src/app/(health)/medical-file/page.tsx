@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 
-}
 interface MedicalRecord {
   id: string;
   patientName: string;
@@ -44,7 +43,6 @@ interface MedicalRecord {
     therapist: string;
   }[];
 
-}
 
 const mockRecords: MedicalRecord[] = [
   {

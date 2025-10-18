@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useAuth } from "lucide-react";
 
-}
 interface PerformanceMetric {
   id: string;
   name: string;
@@ -19,7 +18,6 @@ interface PerformanceMetric {
   trend: "up" | "down" | "stable";
   threshold: number;
 
-}
 interface SystemHealth {
   cpu_usage: number;
   memory_usage: number;
@@ -29,7 +27,6 @@ interface SystemHealth {
   response_time: number;
   uptime: string;
 
-}
 
 const PerformancePage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

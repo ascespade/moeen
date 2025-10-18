@@ -63,4 +63,3 @@ export default function GuidelinesPage() {
       </section>
     </main>
   );
-}

@@ -12,14 +12,12 @@ createContext,
   useCallback,
 } from "react";
 
-}
 interface TranslationContextType {
   t: (key: string, fallback?: string) => string;
   locale: string;
   setLocale: (locale: string) => void;
   isLoading: boolean;
 
-}
 
 const TranslationContext = createContext<TranslationContextType | undefined>(
   undefined,

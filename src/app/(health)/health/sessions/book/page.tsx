@@ -9,7 +9,6 @@ import SessionTypeSelector from "@/components/booking/SessionTypeSelector";
 import AvailableSlotsPicker from "@/components/booking/AvailableSlotsPicker";
 import logger from "@/lib/monitoring/logger";
 
-}
 interface SessionType {
   id: string;
   name_ar: string;
@@ -20,7 +19,6 @@ interface SessionType {
   color: string;
   icon: string;
 
-}
 interface Slot {
   therapistId: string;
   therapistName: string;
@@ -29,7 +27,6 @@ interface Slot {
   endTime: string;
   duration: number;
 
-}
 
 export default function BookSessionPage() {
   const router = useRouter();

@@ -7,7 +7,6 @@ import Link from "next/link";
 
 import { ROUTES } from "@/constants/routes";
 
-}
 interface Flow {
   id: string;
   name: string;
@@ -18,7 +17,6 @@ interface Flow {
   tags: string[];
   messageCount: number;
   lastUsed?: string;
-}
 
 const mockFlows: Flow[] = [
   {

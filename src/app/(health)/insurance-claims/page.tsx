@@ -6,7 +6,6 @@ import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-}
 interface InsuranceClaim {
   id: string;
   patientName: string;
@@ -22,7 +21,6 @@ interface InsuranceClaim {
   attachments: string[];
   reviewer?: string;
   notes?: string;
-}
 
 const mockClaims: InsuranceClaim[] = [
   {

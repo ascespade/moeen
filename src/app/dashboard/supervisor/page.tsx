@@ -13,7 +13,6 @@ import { LoadingSpinner } from "@/components/ui";
   BarChart3,
 } from "lucide-react";
 
-}
 interface SupervisorData {
   id: string;
   fullName: string;

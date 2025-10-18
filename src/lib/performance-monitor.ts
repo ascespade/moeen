@@ -140,7 +140,6 @@ export class PerformanceMonitor {
     // Log to database periodically
     if (this.metrics.length % 100 === 0) {
       this.logMetricsToDatabase();
-    }
 
   // Check performance thresholds
   private checkThresholds(metrics: PerformanceMetrics): void {
@@ -380,7 +379,6 @@ export class PerformanceMonitor {
   // Clear metrics
   clearMetrics(): void {
     this.metrics = [];
-  }
 
 // Performance alert interface
 }

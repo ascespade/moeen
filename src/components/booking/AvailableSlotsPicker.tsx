@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 import logger from "@/lib/monitoring/logger";
 
-}
 interface Slot {
   therapistId: string;
   therapistName: string;
@@ -13,7 +12,6 @@ interface Slot {
   endTime: string;
   duration: number;
 
-}
 interface Props {
   sessionTypeId: string;
   selectedDate: string;
@@ -21,7 +19,6 @@ interface Props {
   onSelect: (slot: Slot) => void;
   selectedSlot?: Slot;
 
-}
 
 export default function AvailableSlotsPicker({
   sessionTypeId,

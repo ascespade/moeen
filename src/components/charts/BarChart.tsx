@@ -12,7 +12,6 @@ import { useTheme } from "@/core/theme";
 BarChart as RechartsBarChart,
 } from "recharts";
 
-}
 interface BarChartProps {
   data: any[];
   dataKey: string;

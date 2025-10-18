@@ -1,6 +1,5 @@
 import React from "react";
 
-}
 type PlaceholderSquareProps = {
   title: string;
   description: string;
@@ -48,4 +47,3 @@ export default function PlaceholderSquare({
       </div>
     </div>
   );
-}

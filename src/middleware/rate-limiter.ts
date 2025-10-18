@@ -5,13 +5,11 @@ import { NextRequest, NextResponse } from "next/server";
  * Rate limiting for API endpoints
  */
 
-}
 interface RateLimitConfig {
   windowMs: number;
   maxRequests: number;
   message: string;
 
-}
 
 const rateLimitConfigs: Record<string, RateLimitConfig> = {
   "/api/auth/login": {

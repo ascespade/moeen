@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 
-}
 interface Approval {
   id: string;
   patientName: string;
@@ -38,7 +37,6 @@ interface Approval {
   outstandingAmount?: number;
   attachments: string[];
   notes?: string;
-}
 
 const mockApprovals: Approval[] = [
   {
@@ -237,7 +235,6 @@ export default function ApprovalsPage() {
           <span className="text-sm font-medium">نشط</span>
         </div>
       );
-    }
 
     const getOutstandingBalance = (approval: Approval) => {
       if (approval.hasOutstandingBalance) {
@@ -255,7 +252,6 @@ export default function ApprovalsPage() {
             <span className="text-sm font-medium">لا يوجد رصيد مستحق</span>
           </div>
         );
-      }
 
       const getCostBreakdown = (approval: Approval) => {
         if (!approval.estimatedCost) return null;

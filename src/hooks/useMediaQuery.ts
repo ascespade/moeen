@@ -73,4 +73,3 @@ export const useHover = (): boolean => {
 export const useTouch = (): boolean => {
   return useMediaQuery("(pointer: coarse)");
 };
-}

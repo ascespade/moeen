@@ -20,7 +20,6 @@ function getClientIP(request: NextRequest): string {
     );
   } catch {
     return "127.0.0.1";
-  }
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
@@ -54,7 +53,6 @@ export async function POST(request: NextRequest) {
       if (userProfile?.last_login) {
         sessionDuration =
           Date.now() - new Date(userProfile.last_login).getTime();
-      }
 
     // Create comprehensive audit log
     if (user) {
@@ -86,7 +84,6 @@ export async function POST(request: NextRequest) {
         });
       } catch (auditError) {
         console.error("Audit log error (non-critical):", auditError);
-      }
 
     // Clear auth cookie
     const response = NextResponse.json({

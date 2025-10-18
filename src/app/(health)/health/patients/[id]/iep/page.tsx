@@ -7,7 +7,6 @@ import { useParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
 
-}
 interface IEP {
   id: string;
   title: string;
@@ -15,7 +14,6 @@ interface IEP {
   end_date: string | null;
   status: string;
 
-}
 interface Goal {
   id: string;
   goal_text: string;
@@ -26,7 +24,6 @@ interface Goal {
   target_date: string | null;
   progress: number;
 
-}
 
 const DOMAIN_LABELS: Record<string, string> = {
   behavioral: "سلوكي",

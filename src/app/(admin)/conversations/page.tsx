@@ -5,7 +5,6 @@ import { useMemo, useState, useEffect } from "react";
 import EmptyState from "@/components/common/EmptyState";
 import { Skeleton } from "@/components/ui";
 
-}
 type Message = {
   id: string;
   from: "customer" | "agent" | "ai";
@@ -13,7 +12,6 @@ type Message = {
   ts: string;
 };
 
-}
 type Conversation = {
   id: string;
   title: string;
@@ -62,7 +60,6 @@ export default function ConversationsPage() {
 
   function send() {
     if (!input.trim() || !active) return;
-}
 
     const newMsg: Message = {
       id: Math.random().toString(36).slice(2),
@@ -99,7 +96,6 @@ export default function ConversationsPage() {
           c.id === active.id ? { ...c, messages: [...c.messages, aiMsg] } : c,
         ),
       );
-    }
 
   const filtered = useMemo(() => {
     return conversations.filter((c) => {

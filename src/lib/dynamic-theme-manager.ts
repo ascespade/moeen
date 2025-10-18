@@ -38,7 +38,6 @@ class DynamicThemeManager {
       const cached = this.cache.get(cacheKey);
       if (Date.now() - cached.timestamp < this.cacheExpiry) {
         return cached.data;
-      }
 
     try {
       if (userId) {
@@ -103,7 +102,6 @@ class DynamicThemeManager {
         fontSize: "md",
         direction: "rtl",
       };
-    }
 
   /**
    * Get theme configuration from database
@@ -116,7 +114,6 @@ class DynamicThemeManager {
       const cached = this.cache.get(cacheKey);
       if (Date.now() - cached.timestamp < this.cacheExpiry) {
         return cached.data;
-      }
 
     try {
       const { data, error } = await this.supabase
@@ -154,7 +151,6 @@ class DynamicThemeManager {
         borderRadius: "0.5rem",
         fontFamily: "var(--font-cairo)",
       };
-    }
 
   /**
    * Update user preferences in database
@@ -179,7 +175,6 @@ class DynamicThemeManager {
       this.cache.delete(`user_preferences_${userId}`);
     } catch (error) {
       throw error;
-    }
 
   /**
    * Update theme configuration in database
@@ -203,7 +198,6 @@ class DynamicThemeManager {
       this.cache.delete("theme_config");
     } catch (error) {
       throw error;
-    }
 
   /**
    * Apply theme to document
@@ -229,7 +223,6 @@ class DynamicThemeManager {
         styleElement.id = "dynamic-theme-css";
         document.head.appendChild(styleElement);
       styleElement.textContent = config.customCSS;
-    }
 
   /**
    * Apply language and direction to document
@@ -261,7 +254,6 @@ class DynamicThemeManager {
    */
   clearCache(): void {
     this.cache.clear();
-  }
 
 // Export singleton instance
 export const dynamicThemeManager = new DynamicThemeManager();

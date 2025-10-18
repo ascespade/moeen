@@ -200,7 +200,6 @@ export function sanitizeInput(input: string): string {
             sanitized[key as keyof T] = sanitizeObject(value) as T[keyof T];
           } else {
             sanitized[key as keyof T] = value;
-          }
 
           return sanitized;
 

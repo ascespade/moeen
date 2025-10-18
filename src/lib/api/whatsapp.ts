@@ -1,6 +1,5 @@
 import { getApiConfig, isWhatsAppConfigured } from "./config";
 
-}
 type SendTextPayload = {
   to: string;
   text: string;

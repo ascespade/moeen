@@ -7,14 +7,12 @@ import { useParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
 
-}
 interface Goal {
   id: string;
   goal_text: string;
   domain: string;
   current_progress: number;
 
-}
 
 export default function SessionNotesPage() {
   const params = useParams();
@@ -143,7 +141,6 @@ export default function SessionNotesPage() {
             notes: `تم العمل على الهدف في جلسة ${session?.appointment_date}`,
             recorded_by: user.id,
           });
-        }
 
       // Update session status to completed
       await supabase

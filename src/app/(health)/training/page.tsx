@@ -11,7 +11,6 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "lucide-react";
 
-}
 interface TrainingProgram {
   id: string;
   title: string;
@@ -37,7 +36,6 @@ interface TrainingProgram {
     avatar?: string;
   };
 
-}
 interface TrainingProgress {
   id: string;
   participant_id: string;
@@ -56,7 +54,6 @@ interface TrainingProgress {
     avatar?: string;
   };
 
-}
 
 const TrainingPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useAuth } from "lucide-react";
 
-}
 interface Integration {
   id: string;
   name: string;

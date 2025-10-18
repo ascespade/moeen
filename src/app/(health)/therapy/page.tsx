@@ -11,7 +11,6 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "lucide-react";
 
-}
 interface TherapySession {
   id: string;
   patient_id: string;
@@ -42,7 +41,6 @@ interface TherapySession {
     avatar?: string;
   };
 
-}
 interface TherapyGoal {
   id: string;
   patient_id: string;
@@ -53,7 +51,6 @@ interface TherapyGoal {
   status: "active" | "completed" | "paused";
   created_at: string;
 
-}
 
 const TherapyPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

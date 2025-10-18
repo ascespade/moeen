@@ -1,10 +1,8 @@
 
-}
 interface MoyasarConfig {
   apiKey: string;
   baseUrl: string;
 
-}
 interface MoyasarPaymentData {
   amount: number;
   currency: string;
@@ -13,14 +11,12 @@ interface MoyasarPaymentData {
   appointmentId: string;
   metadata?: Record<string, string>;
 
-}
 interface MoyasarPaymentResult {
   success: boolean;
   paymentId?: string;
   status?: string;
   error?: string;
 
-}
 
 export class MoyasarPaymentService {
   private config: MoyasarConfig;
@@ -70,7 +66,6 @@ export class MoyasarPaymentService {
         error:
           error instanceof Error ? error.message : "Payment creation failed",
       };
-    }
 
   async getPayment(paymentId: string): Promise<MoyasarPaymentResult> {
     try {
@@ -101,7 +96,6 @@ export class MoyasarPaymentService {
         error:
           error instanceof Error ? error.message : "Payment retrieval failed",
       };
-    }
 
   async refundPayment(
     paymentId: string,
@@ -139,7 +133,6 @@ export class MoyasarPaymentService {
         success: false,
         error: error instanceof Error ? error.message : "Refund failed",
       };
-    }
 
   async handleWebhook(payload: any): Promise<MoyasarPaymentResult> {
     try {

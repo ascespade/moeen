@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import { ScrollArea } from "lucide-react";
 
-}
 interface ChatMessage {
   id: string;
   type: "user" | "bot";
@@ -21,7 +20,6 @@ interface ChatMessage {
     appointmentTime?: string;
   };
 
-}
 interface AppointmentSuggestion {
   id: string;
   doctorName: string;
@@ -29,7 +27,6 @@ interface AppointmentSuggestion {
   availableSlots: string[];
   date: string;
 
-}
 
 const MoainChatbot: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);

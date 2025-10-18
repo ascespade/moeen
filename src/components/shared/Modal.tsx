@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 
-}
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -11,7 +10,6 @@ interface ModalProps {
   size?: "sm" | "md" | "lg" | "xl";
   showCloseButton?: boolean;
 
-}
 
 export default function Modal({
   isOpen,

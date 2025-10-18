@@ -11,7 +11,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
   Trash2,
 } from "@/components/ui/Select";
 
-}
 interface Patient {
   id: string;
   name: string;
@@ -39,7 +38,6 @@ interface Patient {
   lastVisit: string;
   status: "active" | "inactive" | "archived";
 
-}
 interface MedicalRecord {
   id: string;
   patientId: string;

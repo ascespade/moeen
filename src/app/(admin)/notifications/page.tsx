@@ -13,7 +13,6 @@ import { useAuth } from "@/hooks/useAuth";
   Trash2,
 } from "lucide-react";
 
-}
 interface Notification {
   id: string;
   title: string;
@@ -43,7 +42,6 @@ interface Notification {
     therapy_session_id?: string;
   };
 
-}
 interface NotificationTemplate {
   id: string;
   name: string;
@@ -55,7 +53,6 @@ interface NotificationTemplate {
   is_active: boolean;
   created_at: string;
 
-}
 
 const NotificationsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

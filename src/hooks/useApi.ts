@@ -5,14 +5,12 @@ import { ApiResponse } from "@/types";
 
 // API hooks
 
-}
 interface UseApiState<T> {
   data: T | null;
   loading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
 
-}
 
 export const useApi = <T = any>(
   endpoint: string,

@@ -7,7 +7,6 @@ import Link from "next/link";
 
 import { ROUTES } from "@/constants/routes";
 
-}
 interface Lead {
   id: string;
   name: string;
@@ -32,7 +31,6 @@ interface Lead {
   lastActivity: string;
   notes?: string;
   tags: string[];
-}
 
 const mockLeads: Lead[] = [
   {

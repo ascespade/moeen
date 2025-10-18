@@ -14,7 +14,6 @@ import { useAuth } from "@/hooks/useAuth";
   Trash2,
 } from "lucide-react";
 
-}
 interface Appointment {
   id: string;
   patient_id: string;

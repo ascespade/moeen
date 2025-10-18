@@ -74,7 +74,6 @@ class DynamicContentManager {
       const cached = this.cache.get(cacheKey);
       if (Date.now() - cached.timestamp < this.cacheExpiry) {
         return cached.data;
-      }
 
     try {
       // Load all homepage content from settings table
@@ -117,7 +116,6 @@ class DynamicContentManager {
         galleryImages: [],
         faqs: [],
       };
-    }
 
   /**
    * Get translations for a specific locale and namespace
@@ -133,7 +131,6 @@ class DynamicContentManager {
       const cached = this.cache.get(cacheKey);
       if (Date.now() - cached.timestamp < this.cacheExpiry) {
         return cached.data;
-      }
 
     try {
       const { data, error } = await this.supabase
@@ -159,7 +156,6 @@ class DynamicContentManager {
       return translations;
     } catch (error) {
       return {};
-    }
 
   /**
    * Get system settings
@@ -172,7 +168,6 @@ class DynamicContentManager {
       const cached = this.cache.get(cacheKey);
       if (Date.now() - cached.timestamp < this.cacheExpiry) {
         return cached.data;
-      }
 
     try {
       const { data, error } = await this.supabase
@@ -197,7 +192,6 @@ class DynamicContentManager {
       return settings;
     } catch (error) {
       return {};
-    }
 
   /**
    * Update homepage content in database
@@ -263,7 +257,6 @@ class DynamicContentManager {
       this.cache.clear();
     } catch (error) {
       throw error;
-    }
 
   /**
    * Update translations in database
@@ -289,7 +282,6 @@ class DynamicContentManager {
       });
     } catch (error) {
       throw error;
-    }
 
   /**
    * Clear all caches
@@ -303,7 +295,6 @@ class DynamicContentManager {
   private parseSetting(settings: any[], key: string, defaultValue: any): any {
     const setting = settings.find((s) => s.key === key);
     return setting ? setting.value : defaultValue;
-  }
 
 // Export singleton instance
 export const dynamicContentManager = new DynamicContentManager();

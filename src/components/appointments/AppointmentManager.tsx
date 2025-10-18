@@ -12,7 +12,6 @@ import { Textarea } from "@/components/ui/Textarea";
   Trash2,
 } from "@/components/ui/Select";
 
-}
 interface Appointment {
   id: string;
   patientName: string;
@@ -28,7 +27,6 @@ interface Appointment {
   createdAt: string;
   updatedAt: string;
 
-}
 interface Doctor {
   id: string;
   name: string;

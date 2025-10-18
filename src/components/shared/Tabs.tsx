@@ -2,20 +2,17 @@
 
 import { useState } from "react";
 
-}
 interface Tab {
   id: string;
   label: string;
   icon?: string;
   content: React.ReactNode;
 
-}
 interface TabsProps {
   tabs: Tab[];
   defaultTab?: string;
   className?: string;
 
-}
 
 export default function Tabs({ tabs, defaultTab, className = "" }: TabsProps) {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);

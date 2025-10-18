@@ -13,7 +13,6 @@ import { useAuth } from "@/hooks/useAuth";
   Trash2,
 } from "lucide-react";
 
-}
 interface FlowStep {
   id: string;
   type:
@@ -30,7 +29,6 @@ interface FlowStep {
   whatsappTemplate?: string;
   notificationType?: "appointment" | "reminder" | "emergency" | "general";
 
-}
 interface ConversationFlow {
   id: string;
   name: string;
@@ -41,7 +39,6 @@ interface ConversationFlow {
   createdAt: string;
   updatedAt: string;
 
-}
 
 const FlowsManagementPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

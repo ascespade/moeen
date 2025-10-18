@@ -35,7 +35,6 @@ export class PerformanceMonitor {
         // Send to analytics
         this.sendMetric("page_load_time", loadTime);
       });
-    }
 
   measureComponentRender(componentName: string): void {
     this.startTiming(`component_${componentName}_render`);
@@ -57,7 +56,6 @@ export class PerformanceMonitor {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, value, timestamp: Date.now() }),
       }).catch(logger.error);
-    }
 
   // Memory usage monitoring
   checkMemoryUsage(): void {

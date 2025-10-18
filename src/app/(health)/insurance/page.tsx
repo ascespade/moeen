@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { ROUTES } from "@/constants/routes";
 
-}
 interface InsuranceClaim {
   id: string;
   patientName: string;
@@ -25,7 +24,6 @@ interface InsuranceClaim {
   isBlocked: boolean;
   hasOutstandingBalance: boolean;
   outstandingAmount?: number;
-}
 
 const mockClaims: InsuranceClaim[] = [
   {
@@ -127,7 +125,6 @@ export default function InsurancePage() {
           <span className="text-sm font-medium">نشط</span>
         </div>
       );
-    }
 
     const getOutstandingBalance = (claim: InsuranceClaim) => {
       if (claim.hasOutstandingBalance) {
@@ -145,7 +142,6 @@ export default function InsurancePage() {
             <span className="text-sm font-medium">لا يوجد رصيد مستحق</span>
           </div>
         );
-      }
 
       return (
         <div className="min-h-screen bg-[var(--brand-surface)]">

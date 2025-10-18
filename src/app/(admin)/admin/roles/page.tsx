@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import Image from "next/image";
 
-}
 interface Role {
   id: string;
   name: string;
@@ -12,7 +11,6 @@ interface Role {
   permissions: string[];
   userCount: number;
   createdAt: string;
-}
 
 const mockRoles: Role[] = [
   {

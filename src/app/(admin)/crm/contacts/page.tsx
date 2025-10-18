@@ -14,7 +14,6 @@ import { useAuth } from "@/hooks/useAuth";
   Trash2,
 } from "lucide-react";
 
-}
 interface Contact {
   id: string;
   first_name: string;
@@ -43,7 +42,6 @@ interface Contact {
     facebook?: string;
   };
 
-}
 interface ContactActivity {
   id: string;
   contact_id: string;
@@ -54,7 +52,6 @@ interface ContactActivity {
   user_id: string;
   user_name: string;
 
-}
 
 const ContactsPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

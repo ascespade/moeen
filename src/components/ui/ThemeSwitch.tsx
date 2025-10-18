@@ -9,14 +9,12 @@ import { useTheme } from "@/core/theme";
 import { Button } from "./Button";
 import { Card } from "./Card";
 
-}
 interface ThemeSwitchProps {
   variant?: "button" | "dropdown" | "toggle";
   size?: "sm" | "md" | "lg";
   showLabel?: boolean;
   className?: string;
 
-}
 
 export function ThemeSwitch({
   variant = "dropdown",

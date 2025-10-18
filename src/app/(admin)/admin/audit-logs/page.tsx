@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import Image from "next/image";
 
-}
 interface AuditLog {
   id: string;
   user: string;
@@ -15,7 +14,6 @@ interface AuditLog {
   userAgent: string;
   timestamp: string;
   status: "success" | "failed" | "warning";
-}
 
 const mockAuditLogs: AuditLog[] = [
   {

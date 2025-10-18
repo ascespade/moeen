@@ -7,7 +7,6 @@ import { logger } from "../monitoring/logger";
  * Optimized database connection management
  */
 
-}
 interface ConnectionPoolConfig {
   maxConnections: number;
   minConnections: number;
@@ -65,7 +64,6 @@ class DatabaseConnectionPool {
     } catch (error) {
       logger.error("Failed to create database connection", error);
       throw error;
-    }
 
   async getConnection(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -108,7 +106,6 @@ class DatabaseConnectionPool {
     } else {
       // Return connection to pool
       this.connections.push(connection);
-    }
 
   async closeConnection(connection: any): Promise<void> {
     try {
@@ -122,7 +119,6 @@ class DatabaseConnectionPool {
       });
     } catch (error) {
       logger.error("Error closing database connection", error);
-    }
 
   async closeAllConnections(): Promise<void> {
     const closePromises = this.connections.map((conn) =>

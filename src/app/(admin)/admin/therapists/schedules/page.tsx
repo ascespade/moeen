@@ -5,21 +5,17 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
 
-}
 interface Therapist {
   id: string;
   full_name: string;
   email: string;
-}
 
-}
 interface Schedule {
   id: string;
   day_of_week: number;
   start_time: string;
   end_time: string;
   is_available: boolean;
-}
 
 const DAYS = [
   "الأحد",

@@ -4,14 +4,12 @@
  * DB-driven translation system with caching and missing key logging
  */
 
-}
 interface TranslationCache {
   [language: string]: {
     [key: string]: string | number;
     timestamp: number;
   };
 
-}
 interface MissingTranslation {
   language: string;
   key: string;
@@ -84,7 +82,6 @@ class TranslationService {
 
       // Return default translations
       return this.getDefaultTranslations(language);
-    }
 
   /**
    * Get translation by key with fallback
@@ -108,13 +105,11 @@ class TranslationService {
         const fallbackTranslation = this.cache["en"]?.[key];
         if (fallbackTranslation && typeof fallbackTranslation === "string") {
           return fallbackTranslation;
-        }
 
       // Return key as fallback
       return key;
     } catch (error) {
       return key;
-    }
 
   /**
    * Get multiple translations at once
@@ -171,7 +166,6 @@ class TranslationService {
     } catch (error) {
     } finally {
       this.isLoggingMissing = false;
-    }
 
   /**
    * Get default translations
@@ -277,7 +271,6 @@ class TranslationService {
    */
   getMissingKeys(): MissingTranslation[] {
     return [...this.missingKeys];
-  }
 
 // Export singleton instance
 export const translationService = new TranslationService();

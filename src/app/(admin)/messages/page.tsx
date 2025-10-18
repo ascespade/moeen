@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import Image from "next/image";
 
-}
 interface Message {
   id: string;
   sender: string;
@@ -15,7 +14,6 @@ interface Message {
   status: "sent" | "delivered" | "read" | "failed";
   createdAt: string;
   priority: "low" | "medium" | "high";
-}
 
 const mockMessages: Message[] = [
   {

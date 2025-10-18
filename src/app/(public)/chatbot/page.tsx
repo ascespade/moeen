@@ -12,7 +12,6 @@ import { Badge } from "@/components/ui/Badge";
 import { ScrollArea } from "@/components/ui/ScrollArea";
 import { useAuth } from "lucide-react";
 
-}
 interface ChatMessage {
   id: string;
   type: "user" | "bot";
@@ -25,14 +24,12 @@ interface ChatMessage {
     appointmentTime?: string;
   };
 
-}
 interface AppointmentSuggestion {
   id: string;
   doctorName: string;
   specialty: string;
   availableSlots: string[];
 
-}
 
 const HealthcareChatbot: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

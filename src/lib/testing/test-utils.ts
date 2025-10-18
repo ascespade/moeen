@@ -7,14 +7,12 @@ import { logger } from "../monitoring/logger";
  * Comprehensive testing utilities and helpers
  */
 
-}
 interface TestUser {
   id: string;
   email: string;
   role: string;
   profile: Record<string, any>;
 
-}
 interface TestData {
   users: TestUser[];
   patients: any[];
@@ -253,7 +251,6 @@ class TestUtils {
     } catch (error) {
       logger.error("Failed to cleanup test data", error);
       throw error;
-    }
 
   // Get test data
   getTestData(): TestData {
@@ -312,10 +309,8 @@ class TestUtils {
           throw lastError;
 
         await this.wait(delay * attempt);
-      }
 
     throw lastError!;
-  }
 
 // Export singleton instance
 export const testUtils = new TestUtils();

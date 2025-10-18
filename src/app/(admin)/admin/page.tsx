@@ -34,7 +34,6 @@ import {
 // Admin Module with Role-Based Access Control
 // Provides user management, system configuration, and security features
 
-}
 interface User {
   id: string;
   email: string;
@@ -44,9 +43,7 @@ interface User {
   lastLogin: string;
   createdAt: string;
   permissions: string[];
-}
 
-}
 interface SystemConfig {
   id: string;
   key: string;
@@ -55,9 +52,7 @@ interface SystemConfig {
   category: string;
   isSecret: boolean;
 
-}
 
-}
 interface SecurityEvent {
   id: string;
   userId: string;
@@ -67,7 +62,6 @@ interface SecurityEvent {
   userAgent: string;
   success: boolean;
 
-}
 
 export default function AdminPage() {
   const [users, setUsers] = useState<User[]>([]);

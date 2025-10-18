@@ -1,7 +1,6 @@
 
 type ErrorSeverity = "low" | "medium" | "high" | "critical";
 
-}
 interface ErrorContext {
   userId?: string | undefined;
   sessionId?: string | undefined;
@@ -10,14 +9,12 @@ interface ErrorContext {
   timestamp: string;
   severity: ErrorSeverity;
 
-}
 interface ErrorReport {
   message: string;
   stack?: string;
   context: ErrorContext;
   componentStack?: string;
 
-}
 
 export class ErrorHandler {
   private static instance: ErrorHandler;
@@ -94,7 +91,6 @@ export class ErrorHandler {
     } catch (error) {
     } finally {
       this.isProcessing = false;
-    }
 
   private async sendErrorReport(errorReport: ErrorReport): Promise<void> {
     try {

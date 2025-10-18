@@ -2,19 +2,16 @@ import { useState, useEffect, useCallback, useRef } from "react";
 
 // Async hooks
 
-}
 interface AsyncState<T> {
   data: T | null;
   loading: boolean;
   error: Error | null;
 
-}
 interface AsyncOptions {
   immediate?: boolean;
   onSuccess?: (data: any) => void;
   onError?: (error: Error) => void;
 
-}
 
 export const useAsync = <T>(
   asyncFunction: (...args: any[]) => Promise<T>,

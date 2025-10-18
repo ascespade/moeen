@@ -1,6 +1,5 @@
 "use client";
 
-}
 interface EmptyStateProps {
   icon?: string;
   title: string;
@@ -11,7 +10,6 @@ interface EmptyStateProps {
   };
   className?: string;
 
-}
 
 export default function EmptyState({
   icon = "📋",

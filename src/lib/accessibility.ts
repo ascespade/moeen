@@ -184,13 +184,11 @@ export class AccessibilityManager {
 
       // Add focus indicator
       target.classList.add("focused");
-    }
 
   private handleFocusOut(event: FocusEvent): void {
     const target = event.target as HTMLElement;
     if (target) {
       target.classList.remove("focused");
-    }
 
   // Announce text to screen reader
   private announceToScreenReader(text: string): void {
@@ -240,7 +238,6 @@ export class AccessibilityManager {
     const listeners = this.listeners.get(event);
     if (listeners) {
       listeners.forEach((callback) => callback(data));
-    }
 
   // Accessibility helpers
   static addAriaLabels(element: HTMLElement, label: string): void {
@@ -290,7 +287,6 @@ export class AccessibilityManager {
 
   static getTextDirection(language: string): "ltr" | "rtl" {
     return this.isRTL(language) ? "rtl" : "ltr";
-  }
 
 // Global accessibility manager instance
 export const accessibilityManager = new AccessibilityManager();

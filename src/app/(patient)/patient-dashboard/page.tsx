@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { LoadingSpinner } from "lucide-react";
 
-}
 interface PatientData {
   id: string;
   fullName: string;

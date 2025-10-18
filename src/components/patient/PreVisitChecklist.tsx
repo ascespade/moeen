@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Badge } from "lucide-react";
 
-}
 interface ChecklistItem {
   id: string;
   title: string;
@@ -18,13 +17,11 @@ interface ChecklistItem {
   category: "documents" | "payment" | "health" | "appointment";
   icon: React.ReactNode;
 
-}
 interface PreVisitChecklistProps {
   appointmentId: string;
   patientId: string;
   onChecklistComplete?: () => void;
 
-}
 
 export default function PreVisitChecklist({
   appointmentId,

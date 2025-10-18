@@ -141,7 +141,6 @@ export async function POST(request: NextRequest) {
       { error: "Internal server error" },
       { status: 500 },
     );
-  }
 
 export async function GET(request: NextRequest) {
   try {
@@ -181,7 +180,6 @@ export async function GET(request: NextRequest) {
 
       if (patient) {
         query = query.eq("patient_id", patient.id);
-      }
 
     if (doctorId) {
       query = query.eq("doctor_id", doctorId);
@@ -203,7 +201,6 @@ export async function GET(request: NextRequest) {
       { error: "Internal server error" },
       { status: 500 },
     );
-  }
 
 async function sendWhatsAppConfirmation(phone: string, appointment: any) {
   // هذا مثال لإرسال رسالة WhatsApp

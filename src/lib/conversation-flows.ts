@@ -27,7 +27,6 @@ export class IntentAnalyzer {
       return "help";
 
     return "general";
-  }
 
 // Action Executor
 export class ActionExecutor {
@@ -427,7 +426,6 @@ export class FlowManager {
       return true;
     } catch (error) {
       return false;
-    }
 
   // Execute Slack notification
   private async executeSlackNotification(
@@ -481,7 +479,6 @@ export class FlowManager {
         return parseFloat(userResponse) < parseFloat(condition.value);
       default:
         return false;
-    }
 
   // Get all available flows
   getAllFlows(): ConversationFlow[] {
@@ -498,4 +495,3 @@ export class FlowManager {
   // Delete flow
   deleteFlow(flowId: string): void {
     this.flows.delete(flowId);
-  }

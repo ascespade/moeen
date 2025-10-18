@@ -14,7 +14,6 @@ import { useAuth } from "@/hooks/useAuth";
   BarChart3,
 } from "lucide-react";
 
-}
 interface ProgressGoal {
   id: string;
   patient_id: string;
@@ -35,7 +34,6 @@ interface ProgressGoal {
     avatar?: string;
   };
 
-}
 interface Milestone {
   id: string;
   goal_id: string;
@@ -47,7 +45,6 @@ interface Milestone {
   progress_percentage: number;
   notes?: string;
 
-}
 interface Assessment {
   id: string;
   patient_id: string;
@@ -69,7 +66,6 @@ interface Assessment {
     avatar?: string;
   };
 
-}
 interface ProgressReport {
   id: string;
   patient_id: string;
@@ -85,7 +81,6 @@ interface ProgressReport {
   next_review_date: string;
   created_at: string;
 
-}
 
 const ProgressTrackingPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

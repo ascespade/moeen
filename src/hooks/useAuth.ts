@@ -10,14 +10,12 @@ import { User } from "@/types";
 } from "@/utils/storage";
 // Authentication hooks
 
-}
 interface AuthState {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
 
-}
 interface AuthActions {
   login: (user: User, token: string) => void;
   logout: () => void;
@@ -28,7 +26,6 @@ interface AuthActions {
     rememberMe?: boolean,
   ) => Promise<{ success: boolean }>;
 
-}
 
 export const useAuth = (): AuthState & AuthActions => {
   const [user, setUserState] = useState<User | null>(null);

@@ -129,7 +129,6 @@ export async function deleteTranslation(id: string): Promise<void> {
 
   if (error) {
     throw new Error(`Failed to delete translation: ${error.message}`);
-  }
 
 /**
  * Bulk insert translations with CUID
@@ -153,7 +152,6 @@ export async function bulkInsertTranslations(
 
   if (error) {
     throw new Error(`Failed to bulk insert translations: ${error.message}`);
-  }
 
 /**
  * Get all translations for a locale

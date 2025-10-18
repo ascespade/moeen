@@ -9,4 +9,3 @@ export default function robots(): MetadataRoute.Robots {
     },
     sitemap: "https://example.com/sitemap.xml",
   };
-}
