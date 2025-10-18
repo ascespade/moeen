@@ -1,6 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
-// Real Supabase Integration for Hemam Center
+
 import type { Database } from "@/types/supabase";
+
+// Real Supabase Integration for Hemam Center
 
 const supabaseUrl =
   process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";

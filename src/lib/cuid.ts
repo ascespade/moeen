@@ -1,10 +1,11 @@
+import { createId } from "@paralleldrive/cuid2";
+
 /**
  * CUID (Collision-resistant Unique Identifier) Generator
  * A centralized system for generating unique IDs across the application
  */
 
 // Production CUID using @paralleldrive/cuid2
-import { createId } from "@paralleldrive/cuid2";
 
 // CUID alphabet (base 36 with custom characters for URL safety)
 const ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyz";

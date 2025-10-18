@@ -1,2 +1,2 @@
-export * from './GlobalHeader';
-export * from './SmartHeader';
+export * from "./GlobalHeader";
+export * from "./SmartHeader";

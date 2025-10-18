@@ -1,5 +1,6 @@
-import { createClient } from "./supabase/client";
 import { I18N_KEYS } from "@/constants/i18n-keys";
+
+import { createClient } from "./supabase/client";
 
 export interface DynamicContent {
   id: string;

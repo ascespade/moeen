@@ -1,5 +1,6 @@
-"use client";
 import { useState } from "react";
+
+("use client");
 interface Tab {
   id: string;
   label: string;

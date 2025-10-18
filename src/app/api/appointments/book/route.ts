@@ -1,15 +1,17 @@
-/**
- * Appointment Booking API - حجز المواعيد
- * Comprehensive appointment booking with availability checking and conflict validation
- */
-
 import { NextRequest, NextResponse } from "next/server";
+
 import { z } from "zod";
+
 import { createClient } from "@/lib/supabase/server";
 import { ValidationHelper } from "@/core/validation";
 import { ErrorHandler } from "@/core/errors";
 import { requireAuth } from "@/lib/auth/authorize";
 import { getClientInfo } from "@/lib/utils/request-helpers";
+
+/**
+ * Appointment Booking API - حجز المواعيد
+ * Comprehensive appointment booking with availability checking and conflict validation
+ */
 
 const bookingSchema = z.object({
   patientId: z.string().uuid("Invalid patient ID"),

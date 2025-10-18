@@ -11,7 +11,6 @@ export type ResolvedTheme = "light" | "dark";
 
 // ========================================
 // COLOR SYSTEM - نظام الألوان
-// ========================================
 
 export interface ColorPalette {
   // Brand Colors - ألوان العلامة التجارية
@@ -82,7 +81,6 @@ export interface ColorPalette {
 
 // ========================================
 // TYPOGRAPHY SYSTEM - نظام الطباعة
-// ========================================
 
 export interface Typography {
   // Font Families - عائلات الخطوط
@@ -142,7 +140,6 @@ export interface Typography {
 
 // ========================================
 // SPACING SYSTEM - نظام المسافات
-// ========================================
 
 export interface Spacing {
   // Base spacing scale - مقياس المسافات الأساسي
@@ -197,7 +194,6 @@ export interface Spacing {
 
 // ========================================
 // BREAKPOINTS - نقاط التوقف
-// ========================================
 
 export interface Breakpoints {
   sm: string;
@@ -209,7 +205,6 @@ export interface Breakpoints {
 
 // ========================================
 // ANIMATION - الرسوم المتحركة
-// ========================================
 
 export interface Animation {
   duration: {
@@ -227,7 +222,6 @@ export interface Animation {
 
 // ========================================
 // THEME CONFIGURATIONS - إعدادات الثيم
-// ========================================
 
 export const lightTheme: ColorPalette = {
   // Brand Colors
@@ -480,7 +474,6 @@ export const animation: Animation = {
 
 // ========================================
 // THEME UTILITIES - أدوات الثيم
-// ========================================
 
 export function getThemeColors(theme: ResolvedTheme): ColorPalette {
   return theme === "dark" ? darkTheme : lightTheme;

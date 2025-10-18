@@ -1,10 +1,14 @@
-"use client";
 import { useEffect, useState } from "react";
-import { Sun, Moon, Languages } from "lucide-react";
+
 import Image from "next/image";
 import Link from "next/link";
+
+import { Sun, Moon, Languages } from "lucide-react";
+
 import { ROUTES } from "@/constants/routes";
 import { useI18n } from "@/hooks/useI18n";
+
+("use client");
 
 // Theme and Language Switches Component
 function ThemeLanguageSwitches() {

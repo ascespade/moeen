@@ -1,5 +1,7 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { useRouter } from "next/navigation";
+
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+
 import { useAuth } from "@/hooks/useAuth";
 import { useT } from "@/components/providers/I18nProvider";
 import LoginPage from "@/app/(auth)/login/page";

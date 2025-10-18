@@ -1,14 +1,16 @@
-/**
- * Patient Journey Workflow API - رحلة المريض
- * Complete patient journey workflow with activation, pre-visit checklist, and file management
- */
-
 import { NextRequest, NextResponse } from "next/server";
+
 import { z } from "zod";
+
 import { createClient } from "@/lib/supabase/server";
 import { ValidationHelper } from "@/core/validation";
 import { ErrorHandler } from "@/core/errors";
 import { requireAuth } from "@/lib/auth/authorize";
+
+/**
+ * Patient Journey Workflow API - رحلة المريض
+ * Complete patient journey workflow with activation, pre-visit checklist, and file management
+ */
 
 const activationSchema = z.object({
   patientId: z.string().uuid("Invalid patient ID"),

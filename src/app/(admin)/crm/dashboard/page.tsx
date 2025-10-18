@@ -1,11 +1,18 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
+
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+import {
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import {
+import { useAuth } from "@/hooks/useAuth";
+
+"use client";
+
   Calendar,
   Clock,
   Users,
@@ -22,9 +29,6 @@ import {
   TrendingUp,
   Activity,
 } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 interface Appointment {
   id: string;

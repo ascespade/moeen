@@ -1,6 +1,11 @@
-"use client";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+
 import {
+
+import { useT } from "@/components/providers/I18nProvider";
+
+"use client";
   LayoutDashboard,
   MessagesSquare,
   Workflow,
@@ -8,8 +13,6 @@ import {
   Settings,
   Users,
 } from "lucide-react";
-import { useT } from "@/components/providers/I18nProvider";
-import Link from "next/link";
 
 const adminItems = [
   {

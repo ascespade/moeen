@@ -1,14 +1,16 @@
-/**
- * System Configuration API - إعدادات النظام
- * Manage system-wide configuration and settings
- */
-
 import { NextRequest, NextResponse } from "next/server";
+
 import { z } from "zod";
+
 import { createClient } from "@/lib/supabase/server";
 import { ValidationHelper } from "@/core/validation";
 import { ErrorHandler } from "@/core/errors";
 import { requireAuth } from "@/lib/auth/authorize";
+
+/**
+ * System Configuration API - إعدادات النظام
+ * Manage system-wide configuration and settings
+ */
 
 const configSchema = z.object({
   key: z.string().min(1, "Configuration key required"),

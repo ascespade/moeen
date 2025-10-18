@@ -1,10 +1,10 @@
+import { z } from "zod";
+import DOMPurify from "isomorphic-dompurify";
+
 /**
  * Security Validation - التحقق الأمني
  * Security-focused validation and sanitization
  */
-
-import { z } from "zod";
-import DOMPurify from "isomorphic-dompurify";
 
 // XSS Protection
 export function sanitizeInput(input: string): string {

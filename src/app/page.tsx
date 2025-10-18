@@ -1,11 +1,14 @@
-"use client";
 import { useState, useEffect } from "react";
+
+import Image from "next/image";
+import Link from "next/link";
+
 import { ROUTES } from "@/constants/routes";
 import { ThemeSwitch as ThemeSwitcher } from "@/components/ui";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useT } from "@/components/providers/I18nProvider";
-import Image from "next/image";
-import Link from "next/link";
+
+"use client";
 
 // Hero Slider Data - مركز الهمم
 const heroSlides = (t: any) => [
@@ -119,7 +122,7 @@ const features = [
     id: 4,
     title: "مرافق متطورة",
     description: "بيئة آمنة، محفزة، ومجهزة بأحدث التقنيات العلاجية",
-    icon: "🏥",
+    icon: &quot;🏥&quot;,
   },
 ];
 
@@ -237,7 +240,7 @@ export default function HomePage() {
               className={`h-3 w-3 rounded-full transition-all ${
                 index === currentSlide
                   ? "bg-[var(--brand-primary)] w-8"
-                  : "bg-white/50 hover:bg-white/80"
+                  : &quot;bg-white/50 hover:bg-white/80&quot;
               }`}
               aria-label={`Slide ${index + 1}`}
             />

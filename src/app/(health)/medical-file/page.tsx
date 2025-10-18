@@ -1,10 +1,13 @@
-"use client";
 import { useState } from "react";
+
+import Image from "next/image";
+
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import Image from "next/image";
+
+("use client");
 
 interface MedicalRecord {
   id: string;

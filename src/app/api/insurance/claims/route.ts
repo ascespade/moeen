@@ -1,14 +1,16 @@
-/**
- * Insurance Claims Processing API - معالجة مطالبات التأمين
- * Handle insurance claims processing, provider integration, and status tracking
- */
-
 import { NextRequest, NextResponse } from "next/server";
+
 import { z } from "zod";
+
 import { createClient } from "@/lib/supabase/server";
 import { ValidationHelper } from "@/core/validation";
 import { ErrorHandler } from "@/core/errors";
 import { requireAuth } from "@/lib/auth/authorize";
+
+/**
+ * Insurance Claims Processing API - معالجة مطالبات التأمين
+ * Handle insurance claims processing, provider integration, and status tracking
+ */
 
 const claimSchema = z.object({
   appointmentId: z.string().uuid("Invalid appointment ID"),

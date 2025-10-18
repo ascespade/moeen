@@ -1,4 +1,5 @@
-import logger from '@/lib/monitoring/logger';
+import logger from "@/lib/monitoring/logger";
+
 interface EmailTemplate {
   subject: string;
   html: string;

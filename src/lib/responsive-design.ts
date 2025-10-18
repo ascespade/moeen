@@ -1,5 +1,6 @@
-// Comprehensive Responsive Design System for Hemam Center
 import React, { useEffect, useState } from "react";
+
+// Comprehensive Responsive Design System for Hemam Center
 
 // Breakpoint definitions
 export const breakpoints = {

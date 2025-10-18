@@ -1,14 +1,16 @@
-/**
- * Doctor Availability API - توفر الطبيب
- * Get doctor availability for specific date range
- */
-
 import { NextRequest, NextResponse } from "next/server";
+
 import { z } from "zod";
+
 import { createClient } from "@/lib/supabase/server";
 import { ValidationHelper } from "@/core/validation";
 import { ErrorHandler } from "@/core/errors";
 import { getClientInfo } from "@/lib/utils/request-helpers";
+
+/**
+ * Doctor Availability API - توفر الطبيب
+ * Get doctor availability for specific date range
+ */
 
 const availabilitySchema = z.object({
   doctorId: z.string().uuid("Invalid doctor ID"),

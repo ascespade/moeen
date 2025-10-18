@@ -10,7 +10,6 @@
 
 // ============================================
 // COLORS - الألوان
-// ============================================
 
 export const colors = {
   // Brand Colors
@@ -59,7 +58,6 @@ export const colors = {
 
 // ============================================
 // SPACING - المسافات
-// ============================================
 
 export const spacing = {
   0: "0",
@@ -82,7 +80,6 @@ export const spacing = {
 
 // ============================================
 // TYPOGRAPHY - الطباعة
-// ============================================
 
 export const fontSize = {
   xs: "0.75rem", // 12px
@@ -118,7 +115,6 @@ export const lineHeight = {
 
 // ============================================
 // BORDER RADIUS - نصف القطر
-// ============================================
 
 export const borderRadius = {
   none: "0",
@@ -134,7 +130,6 @@ export const borderRadius = {
 
 // ============================================
 // SHADOWS - الظلال
-// ============================================
 
 export const boxShadow = {
   sm: "var(--shadow-sm)",
@@ -149,7 +144,6 @@ export const boxShadow = {
 
 // ============================================
 // Z-INDEX - ترتيب الطبقات
-// ============================================
 
 export const zIndex = {
   hide: -1,
@@ -169,7 +163,6 @@ export const zIndex = {
 
 // ============================================
 // TRANSITIONS - الانتقالات
-// ============================================
 
 export const transition = {
   fast: "150ms ease-in-out",
@@ -183,7 +176,6 @@ export const transition = {
 
 // ============================================
 // BREAKPOINTS - نقاط التوقف
-// ============================================
 
 export const breakpoints = {
   sm: "640px",
@@ -195,7 +187,6 @@ export const breakpoints = {
 
 // ============================================
 // COMPONENT SIZES - أحجام المكونات
-// ============================================
 
 export const componentSizes = {
   button: {
@@ -219,7 +210,6 @@ export const componentSizes = {
 
 // ============================================
 // UTILITY FUNCTIONS - وظائف مساعدة
-// ============================================
 
 /**
  * Get color value by semantic name
@@ -265,7 +255,6 @@ export function buildClassName(tokens: {
 
 // ============================================
 // TYPE EXPORTS
-// ============================================
 
 export type ColorCategory = keyof typeof colors;
 export type SemanticColor = keyof typeof colors.semantic;

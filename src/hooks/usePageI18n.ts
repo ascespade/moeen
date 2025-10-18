@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+
 import { usePathname } from "next/navigation";
+
 import { useI18n } from "./useI18n";
 
 // Namespace mapping based on route

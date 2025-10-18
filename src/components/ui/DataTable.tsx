@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+
 export type Column<T> = { key: keyof T; header: string };
 
 export function DataTable<T extends Record<string, unknown>>({

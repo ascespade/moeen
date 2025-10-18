@@ -1,17 +1,21 @@
-"use client";
-
 import React, { useState } from "react";
+
+import {
+import {
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Switch } from "@/components/ui/Switch";
-import {
+import { useAccessibility } from "@/lib/accessibility";
+
+"use client";
+
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
-import {
   Settings,
   Eye,
   Volume2,
@@ -23,7 +27,6 @@ import {
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
-import { useAccessibility } from "@/lib/accessibility";
 
 const AccessibilitySettings: React.FC = () => {
   const { settings, updateSettings } = useAccessibility();

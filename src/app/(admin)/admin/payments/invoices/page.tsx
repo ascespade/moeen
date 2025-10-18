@@ -1,8 +1,9 @@
-"use client";
-
 import { useEffect, useState } from "react";
+
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
+
+("use client");
 
 interface Invoice {
   id: string;

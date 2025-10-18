@@ -1,9 +1,10 @@
+import { NextRequest, NextResponse } from "next/server";
+
+import { getServiceSupabase } from "@/lib/supabaseClient";
+
 // src/app/api/dashboard/logs/route.ts
 // Activity logs API endpoint for dashboard
 // Provides real-time logs and activity monitoring
-
-import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabaseClient";
 
 const supabase = getServiceSupabase();
 

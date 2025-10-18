@@ -1,5 +1,7 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { useRouter } from "next/navigation";
+
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+
 import RegisterPage from "@/app/(auth)/register/page";
 
 // Mock dependencies

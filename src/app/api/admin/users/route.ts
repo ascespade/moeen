@@ -1,14 +1,16 @@
-/**
- * Admin User Management API - إدارة المستخدمين
- * Manage users, roles, and system configuration
- */
-
 import { NextRequest, NextResponse } from "next/server";
+
 import { z } from "zod";
+
 import { createClient } from "@/lib/supabase/server";
 import { ValidationHelper } from "@/core/validation";
 import { ErrorHandler } from "@/core/errors";
 import { requireAuth } from "@/lib/auth/authorize";
+
+/**
+ * Admin User Management API - إدارة المستخدمين
+ * Manage users, roles, and system configuration
+ */
 
 const createUserSchema = z.object({
   email: z.string().email("Invalid email format"),

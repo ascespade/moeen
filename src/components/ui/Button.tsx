@@ -1,13 +1,15 @@
+import React, { forwardRef } from "react";
+
+import { Loader2 } from "lucide-react";
+
+import { cn } from "@/lib/cn";
+
 /**
  * Button Component - مكون الزر
  * Unified button component with multiple variants and states
  */
 
-"use client";
-
-import React, { forwardRef } from "react";
-import { cn } from "@/lib/cn";
-import { Loader2 } from "lucide-react";
+("use client");
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

@@ -1,10 +1,12 @@
-"use client";
-
 import { useEffect } from "react";
+
 import { useRouter } from "next/navigation";
+
 import { useAuth } from "@/hooks/useAuth";
 import { getDefaultRouteForUser } from "@/lib/router";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+
+("use client");
 
 export default function DashboardPage() {
   const router = useRouter();

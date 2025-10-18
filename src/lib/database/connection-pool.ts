@@ -1,10 +1,11 @@
+import { createClient } from "@/lib/supabase/server";
+
+import { logger } from "../monitoring/logger";
+
 /**
  * Database Connection Pool - تجمع اتصالات قاعدة البيانات
  * Optimized database connection management
  */
-
-import { createClient } from "@/lib/supabase/server";
-import { logger } from "../monitoring/logger";
 
 interface ConnectionPoolConfig {
   maxConnections: number;

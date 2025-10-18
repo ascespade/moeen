@@ -1,9 +1,9 @@
+import { SystemConfig } from "../types";
+
 /**
  * Core Configuration - التكوين الأساسي للنظام
  * Centralized configuration management
  */
-
-import { SystemConfig } from "../types";
 
 // Environment Configuration
 export const ENV = {

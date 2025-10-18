@@ -1,13 +1,15 @@
+import React, { forwardRef } from "react";
+
+import { AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
+
+import { cn } from "@/lib/cn";
+
 /**
  * Input Component - مكون حقل الإدخال
  * Unified input component with validation states
  */
 
-"use client";
-
-import React, { forwardRef } from "react";
-import { cn } from "@/lib/cn";
-import { AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
+("use client");
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

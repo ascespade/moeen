@@ -1,12 +1,12 @@
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 /**
  * Class Name Utility - أداة دمج الأصناف
  *
  * Industry-standard utility for merging Tailwind classes
  * Based on clsx + tailwind-merge pattern
  */
-
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 
 /**
  * Merge Tailwind CSS classes with proper precedence
@@ -32,4 +32,5 @@ export function cn(...inputs: ClassValue[]) {
  *   }
  * });
  */
+
 export { cva, type VariantProps } from "class-variance-authority";

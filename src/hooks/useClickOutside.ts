@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+
 // Click outside hook
 
 export const useClickOutside = <T extends HTMLElement = HTMLDivElement>(

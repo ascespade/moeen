@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
+
+import {
+
 import { createClient } from "@/lib/supabase/server";
 import { authorize } from "@/lib/auth/authorize";
-import {
+import { getClientInfo } from "@/lib/utils/request-helpers";
+
   validateData,
   appointmentUpdateSchema,
 } from "@/lib/validation/schemas";
-import { getClientInfo } from "@/lib/utils/request-helpers";
 
 export async function GET(
   request: NextRequest,

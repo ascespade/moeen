@@ -1,9 +1,9 @@
+import { Metadata } from "next";
+
 /**
  * SEO Metadata Generator
  * Professional metadata for all pages
  */
-
-import { Metadata } from "next";
 
 interface PageMetadata {
   title: string;

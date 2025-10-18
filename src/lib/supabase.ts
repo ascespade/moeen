@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+
 // Supabase Integration for Hemam Center
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;

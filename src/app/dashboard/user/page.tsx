@@ -1,11 +1,15 @@
-"use client";
-
 import { useState, useEffect } from "react";
+
 import { useRouter } from "next/navigation";
+
+import {
+
 import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import {
+
+"use client";
+
   Calendar,
   Users,
   FileText,

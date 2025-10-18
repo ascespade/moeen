@@ -1,9 +1,9 @@
+import { generatePublicId, cuidEntity } from "@/lib/cuid";
+
 /**
  * Database Utilities for CUID and Query Management
  * Provides helper functions for database operations with CUID support
  */
-
-import { generatePublicId, cuidEntity } from "@/lib/cuid";
 
 /**
  * Database helper functions for CUID generation and management

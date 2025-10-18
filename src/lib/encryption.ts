@@ -1,11 +1,12 @@
+import CryptoJS from "crypto-js";
+
+import logger from "@/lib/monitoring/logger";
+
 /**
  * Professional Encryption Utility
  * Using AES-256-GCM encryption via crypto-js
  * Replaces insecure Base64 encoding
  */
-
-import logger from "@/lib/monitoring/logger";
-import CryptoJS from "crypto-js";
 
 /**
  * Get encryption key from environment or generate a default one

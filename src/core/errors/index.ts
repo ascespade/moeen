@@ -1,9 +1,9 @@
+import { ERROR_MESSAGES } from "../constants";
+
 /**
  * Core Error Handling - معالجة الأخطاء الأساسية
  * Centralized error handling system
  */
-
-import { ERROR_MESSAGES } from "../constants";
 
 // Base Error Class
 export abstract class BaseError extends Error {

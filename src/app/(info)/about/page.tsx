@@ -1,8 +1,9 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
+
 import { Users, Target, Heart, Award, Globe, Shield } from "lucide-react";
+
+("use client");
 
 export default function AboutPage() {
   const features = [

@@ -1,14 +1,16 @@
-/**
- * Medical Records File Upload API - رفع ملفات السجلات الطبية
- * Handle file uploads for medical records with validation and storage
- */
-
 import { NextRequest, NextResponse } from "next/server";
+
 import { z } from "zod";
+
 import { createClient } from "@/lib/supabase/server";
 import { ValidationHelper } from "@/core/validation";
 import { ErrorHandler } from "@/core/errors";
 import { requireAuth } from "@/lib/auth/authorize";
+
+/**
+ * Medical Records File Upload API - رفع ملفات السجلات الطبية
+ * Handle file uploads for medical records with validation and storage
+ */
 
 const uploadSchema = z.object({
   patientId: z.string().uuid("Invalid patient ID"),

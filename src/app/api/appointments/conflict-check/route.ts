@@ -1,14 +1,16 @@
-/**
- * Appointment Conflict Check API - فحص تعارض المواعيد
- * Check for appointment conflicts and availability
- */
-
 import { NextRequest, NextResponse } from "next/server";
+
 import { z } from "zod";
+
 import { createClient } from "@/lib/supabase/server";
 import { ValidationHelper } from "@/core/validation";
 import { ErrorHandler } from "@/core/errors";
 import { getClientInfo } from "@/lib/utils/request-helpers";
+
+/**
+ * Appointment Conflict Check API - فحص تعارض المواعيد
+ * Check for appointment conflicts and availability
+ */
 
 const conflictCheckSchema = z.object({
   doctorId: z.string().uuid("Invalid doctor ID"),

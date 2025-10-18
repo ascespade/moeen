@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 // Media query hooks
 
 export const useMediaQuery = (query: string): boolean => {

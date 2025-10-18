@@ -1,7 +1,19 @@
+import React, { useState, useEffect, useRef } from "react";
+
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+import {
+
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Input } from "@/components/ui/Input";
+import { Badge } from "@/components/ui/Badge";
+import { ScrollArea } from "@/components/ui/ScrollArea";
+import { useAuth } from "@/hooks/useAuth";
+
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import {
   Send,
   Bot,
   User,
@@ -15,14 +27,6 @@ import {
   Brain,
   X,
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
-import { Badge } from "@/components/ui/Badge";
-import { ScrollArea } from "@/components/ui/ScrollArea";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 interface ChatMessage {
   id: string;

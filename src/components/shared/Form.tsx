@@ -1,5 +1,6 @@
-"use client";
 import { ReactNode } from "react";
+
+("use client");
 interface FormFieldProps {
   label: string;
   error?: string;

@@ -1,11 +1,17 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
+
+import { useRouter } from "next/navigation";
+
+import {
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
-import {
+import { useAuth } from "@/hooks/useAuth";
+
+"use client";
+
   Plus,
   Edit,
   Trash2,
@@ -19,8 +25,6 @@ import {
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
 
 interface FlowStep {
   id: string;

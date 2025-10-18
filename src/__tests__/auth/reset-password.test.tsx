@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+
 import ResetPasswordPage from "@/app/(auth)/reset-password/page";
 
 describe("ResetPasswordPage", () => {

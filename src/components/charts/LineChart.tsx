@@ -1,3 +1,9 @@
+import React from "react";
+
+import {
+
+import { useTheme } from "@/core/theme";
+
 /**
  * Line Chart Component - مكون الرسم البياني الخطي
  * RTL-compatible line chart with brand colors and theme support
@@ -5,8 +11,6 @@
 
 "use client";
 
-import React from "react";
-import {
   LineChart as RechartsLineChart,
   Line,
   XAxis,
@@ -16,7 +20,6 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { useTheme } from "@/core/theme";
 
 interface LineChartProps {
   data: any[];

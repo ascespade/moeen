@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import logger from "@/lib/monitoring/logger";
 
 // Simple chatbot responses - يمكن توسيعه لاحقاً

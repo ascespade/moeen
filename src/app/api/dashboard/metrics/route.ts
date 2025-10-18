@@ -1,9 +1,10 @@
+import { NextRequest, NextResponse } from "next/server";
+
+import { getServiceSupabase } from "@/lib/supabaseClient";
+
 // src/app/api/dashboard/metrics/route.ts
 // Real-time metrics API endpoint for dashboard
 // Provides system health, performance, and automation metrics
-
-import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabaseClient";
 
 const supabase = getServiceSupabase();
 

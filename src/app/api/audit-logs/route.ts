@@ -1,14 +1,16 @@
-/**
- * Audit Logs API - سجلات التدقيق
- * Retrieve and manage audit logs for system monitoring
- */
-
 import { NextRequest, NextResponse } from "next/server";
+
 import { z } from "zod";
+
 import { createClient } from "@/lib/supabase/server";
 import { ValidationHelper } from "@/core/validation";
 import { ErrorHandler } from "@/core/errors";
 import { requireAuth } from "@/lib/auth/authorize";
+
+/**
+ * Audit Logs API - سجلات التدقيق
+ * Retrieve and manage audit logs for system monitoring
+ */
 
 const auditQuerySchema = z.object({
   action: z.string().optional(),

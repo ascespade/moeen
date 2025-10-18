@@ -1,8 +1,9 @@
-"use client";
-
 import { useEffect, useState } from "react";
+
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
+
+"use client";
 
 interface Therapist {
   id: string;
@@ -30,7 +31,7 @@ const DAYS = [
 
 export default function TherapistSchedulesPage() {
   const [therapists, setTherapists] = useState<Therapist[]>([]);
-  const [selectedTherapist, setSelectedTherapist] = useState<string>("");
+  const [selectedTherapist, setSelectedTherapist] = useState<string>(&quot;&quot;);
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -147,7 +148,7 @@ export default function TherapistSchedulesPage() {
       alert("تم الحذف بنجاح");
     } catch (error) {
       logger.error("Error deleting schedule", error);
-      alert("فشل في الحذف");
+      alert(&quot;فشل في الحذف&quot;);
     }
   };
 
@@ -180,7 +181,7 @@ export default function TherapistSchedulesPage() {
         <select
           value={selectedTherapist}
           onChange={(e) => setSelectedTherapist(e.target.value)}
-          className="w-full md:w-96 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          className=&quot;w-full md:w-96 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white&quot;
         >
           {therapists.map((therapist) => (
             <option key={therapist.id} value={therapist.id}>
@@ -208,7 +209,7 @@ export default function TherapistSchedulesPage() {
                 <button
                   onClick={() => addSchedule(dayIndex)}
                   disabled={saving}
-                  className="btn btn-outline text-sm"
+                  className=&quot;btn btn-outline text-sm&quot;
                 >
                   + إضافة وقت
                 </button>
@@ -236,7 +237,7 @@ export default function TherapistSchedulesPage() {
                               e.target.value,
                             )
                           }
-                          className="px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                          className=&quot;px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white&quot;
                         />
                       </div>
 
@@ -254,7 +255,7 @@ export default function TherapistSchedulesPage() {
                               e.target.value,
                             )
                           }
-                          className="px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                          className=&quot;px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white&quot;
                         />
                       </div>
 
@@ -269,7 +270,7 @@ export default function TherapistSchedulesPage() {
                               e.target.checked,
                             )
                           }
-                          className="w-5 h-5 rounded border-gray-300 dark:border-gray-600"
+                          className=&quot;w-5 h-5 rounded border-gray-300 dark:border-gray-600&quot;
                         />
                         <span className="text-sm text-gray-700 dark:text-gray-300">
                           متاح
@@ -278,7 +279,7 @@ export default function TherapistSchedulesPage() {
 
                       <button
                         onClick={() => deleteSchedule(schedule.id)}
-                        className="mr-auto text-red-600 hover:text-red-700 text-sm"
+                        className=&quot;mr-auto text-red-600 hover:text-red-700 text-sm&quot;
                       >
                         حذف
                       </button>

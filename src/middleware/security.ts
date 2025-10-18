@@ -1,9 +1,9 @@
+import { NextRequest, NextResponse } from "next/server";
+
 /**
  * Security Middleware - أمان النظام
  * Comprehensive security middleware with CORS, CSP, and security headers
  */
-
-import { NextRequest, NextResponse } from "next/server";
 
 interface SecurityConfig {
   enableCORS: boolean;

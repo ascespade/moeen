@@ -1,8 +1,6 @@
 /**
  * Core utilities export
  */
-export { cn, cva } from "@/lib/cn";
-export type { VariantProps } from "@/lib/cn";
 
 // Storage utilities
 export const storageUtils = {
@@ -51,3 +49,6 @@ export const debounce = <T extends (...args: any[]) => any>(
     timeoutId = setTimeout(() => fn(...args), delay);
   };
 };
+
+export { cn, cva } from "@/lib/cn";
+export type { VariantProps } from "@/lib/cn";

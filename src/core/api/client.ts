@@ -1,12 +1,12 @@
-/**
- * API Client - عميل API الموحد
- * Centralized API client with error handling and interceptors
- */
-
 import { API_ENDPOINTS, ERROR_CODES } from "../constants";
 import { ErrorHandler, ExternalServiceError } from "../errors";
 import { storageUtils } from "../utils/index";
 import { ApiResponse } from "../types";
+
+/**
+ * API Client - عميل API الموحد
+ * Centralized API client with error handling and interceptors
+ */
 
 export interface ApiRequestConfig {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";

@@ -1,14 +1,14 @@
+import logger from "@/lib/monitoring/logger";
+
+import { createClient } from "@/lib/supabase/client";
+
 /**
  * Integration Test Helpers
  * Provides functions for testing various external integrations
  */
 
-import logger from '@/lib/monitoring/logger';
-import { createClient } from "@/lib/supabase/client";
-
 // ================================================================
 // INTERFACE DEFINITIONS
-// ================================================================
 
 export interface WhatsAppConfig {
   api_url: string;
@@ -58,7 +58,6 @@ export interface TatmanConfig {
 
 // ================================================================
 // LOGGING FUNCTION
-// ================================================================
 
 /**
  * Logs an integration test result to the database
@@ -94,7 +93,6 @@ export async function logIntegrationTest(
 
 // ================================================================
 // WHATSAPP TESTING
-// ================================================================
 
 /**
  * Test WhatsApp Business API connection
@@ -151,7 +149,6 @@ export async function testWhatsAppConnection(
 
 // ================================================================
 // SMS TESTING (Twilio)
-// ================================================================
 
 /**
  * Test SMS Gateway connection (Twilio)
@@ -209,7 +206,6 @@ export async function testSmsConnection(config: SMSConfig): Promise<any> {
 
 // ================================================================
 // EMAIL TESTING (SendGrid)
-// ================================================================
 
 /**
  * Test Email Service connection (SendGrid)
@@ -260,7 +256,6 @@ export async function testEmailConnection(config: EmailConfig): Promise<any> {
 
 // ================================================================
 // GOOGLE CALENDAR TESTING
-// ================================================================
 
 /**
  * Test Google Calendar API connection
@@ -346,7 +341,6 @@ export async function testGoogleCalendarConnection(
 
 // ================================================================
 // SLACK TESTING
-// ================================================================
 
 /**
  * Test Slack Webhook connection
@@ -397,7 +391,6 @@ export async function testSlackConnection(config: SlackConfig): Promise<any> {
 
 // ================================================================
 // SEHA PLATFORM TESTING
-// ================================================================
 
 /**
  * Test Seha Platform API connection
@@ -452,7 +445,6 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
 
 // ================================================================
 // TATMAN INSURANCE TESTING
-// ================================================================
 
 /**
  * Test Tatman Insurance API connection

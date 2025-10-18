@@ -1,3 +1,5 @@
+import React from "react";
+
 // Accessibility utilities for users with special needs
 export interface AccessibilitySettings {
   fontSize: "small" | "medium" | "large" | "extra-large";
@@ -367,4 +369,3 @@ export function useAccessibility() {
 }
 
 // Import React for the hook
-import React from "react";

@@ -1,5 +1,6 @@
-import clsx from "clsx";
 import { useState, createContext, useContext } from "react";
+
+import clsx from "clsx";
 
 interface TabsContextValue {
   value: string;

@@ -1,10 +1,11 @@
+import { NextRequest, NextResponse } from "next/server";
+
+import { clearRateLimitCache } from "@/middleware/rate-limiter";
+
 /**
  * Clear Rate Limit API - مسح حد معدل الطلبات
  * For testing purposes only
  */
-
-import { NextRequest, NextResponse } from "next/server";
-import { clearRateLimitCache } from "@/middleware/rate-limiter";
 
 export async function POST(request: NextRequest) {
   // Only allow in development/testing environment

@@ -1,13 +1,15 @@
+import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
+
+import logger from "@/lib/monitoring/logger";
+import Stripe from "stripe";
+
+import { createClient } from "@/lib/supabase/server";
+
 /**
  * Stripe Webhook Handler - معالج ويب هوك سترايب
  * Handle Stripe webhook events for payment status updates
  */
-
-import logger from '@/lib/monitoring/logger';
-import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import Stripe from "stripe";
-import { headers } from "next/headers";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2023-10-16",

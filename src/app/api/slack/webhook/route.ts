@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { SlackIntegration } from "@/lib/slack-integration";
 import { createClient } from "@/lib/supabase/server";
 

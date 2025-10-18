@@ -1,12 +1,13 @@
+import React, { forwardRef } from "react";
+
+import { cn } from "@/lib/cn";
+
 /**
  * Card Component - مكون البطاقة
  * Unified card component with multiple variants
  */
 
-"use client";
-
-import React, { forwardRef } from "react";
-import { cn } from "@/lib/cn";
+("use client");
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "elevated" | "outlined" | "filled";

@@ -1,7 +1,10 @@
-"use client";
 import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
+
 import Image from "next/image";
+
+import { ROUTES } from "@/constants/routes";
+
+("use client");
 
 interface InsuranceClaim {
   id: string;

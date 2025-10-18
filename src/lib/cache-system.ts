@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+
 // Comprehensive Caching System for Hemam Center
 
 // Cache entry interface

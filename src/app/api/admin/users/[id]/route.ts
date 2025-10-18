@@ -1,9 +1,10 @@
+import { NextRequest, NextResponse } from "next/server";
+
+import { getServiceSupabase } from "@/lib/supabaseClient";
+
 // src/app/api/admin/users/[id]/route.ts
 // Admin User Management API endpoint
 // Handles individual user operations
-
-import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabaseClient";
 
 const supabase = getServiceSupabase();
 

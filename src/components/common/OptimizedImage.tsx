@@ -1,7 +1,8 @@
-"use client";
+import { useState } from "react";
 
 import Image, { ImageProps } from "next/image";
-import { useState } from "react";
+
+("use client");
 
 interface OptimizedImageProps extends Omit<ImageProps, "src"> {
   src: string;

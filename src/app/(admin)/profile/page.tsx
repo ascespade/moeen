@@ -1,7 +1,8 @@
-"use client";
-
 import { useAtom } from "jotai";
+
 import { langAtom, themeAtom } from "@/components/providers/UIProvider";
+
+("use client");
 
 export default function ProfilePage() {
   const [theme, setTheme] = useAtom(themeAtom);

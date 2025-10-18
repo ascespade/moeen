@@ -1,4 +1,5 @@
-import logger from '@/lib/monitoring/logger';
+import logger from "@/lib/monitoring/logger";
+
 /**
  * Redis Cache Manager - مدير التخزين المؤقت
  * Redis-based caching system for improved performance

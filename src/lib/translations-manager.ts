@@ -1,5 +1,6 @@
 import { cuid } from "./cuid";
 import { getServerSupabase } from "./supabaseClient";
+
 /**
  * Translations Manager
  * Centralized system for managing translations with CUID

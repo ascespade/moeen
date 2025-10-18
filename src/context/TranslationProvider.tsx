@@ -1,14 +1,16 @@
-"use client";
-import logger from "@/lib/monitoring/logger";
-
 import React, {
+
+import logger from "@/lib/monitoring/logger";
+import { createClient } from "@/lib/supabase/client";
+
+"use client";
+
   createContext,
   useContext,
   useState,
   useEffect,
   useCallback,
 } from "react";
-import { createClient } from "@/lib/supabase/client";
 
 interface TranslationContextType {
   t: (key: string, fallback?: string) => string;

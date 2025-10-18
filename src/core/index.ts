@@ -35,6 +35,7 @@ export * from "./api/client";
 export * from "./api/base-handler";
 
 // Re-export commonly used items
+
 export { apiClient } from "./api/client";
 export { baseApiHandler, createApiHandler } from "./api/base-handler";
 export { ErrorHandler, ErrorFactory } from "./errors";

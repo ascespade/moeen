@@ -1,11 +1,12 @@
+import { writeFileSync } from "fs";
+import { join } from "path";
+
+import { logger } from "../monitoring/logger";
+
 /**
  * Docker Configuration - إعدادات Docker
  * Docker configuration and deployment utilities
  */
-
-import { writeFileSync } from "fs";
-import { join } from "path";
-import { logger } from "../monitoring/logger";
 
 class DockerConfigGenerator {
   static generateDockerfile(): string {
@@ -465,14 +466,12 @@ echo "✅ Backup completed: $BACKUP_DIR"`,
 
       logger.info("All Docker configuration files generated successfully");
     } catch (error) {
-      logger.error(
-        "Failed to generate Docker configuration",
-        error
-      );
+      logger.error("Failed to generate Docker configuration", error);
       throw error;
     }
   }
 }
 
 // Export for use
+
 export { DockerConfigGenerator };

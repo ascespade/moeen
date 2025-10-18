@@ -1,5 +1,6 @@
-import { dynamicContentManager } from "../lib/dynamic-content-manager";
 import { logger } from "@/lib/logger";
+
+import { dynamicContentManager } from "../lib/dynamic-content-manager";
 
 /**
  * Seed homepage content with dynamic data

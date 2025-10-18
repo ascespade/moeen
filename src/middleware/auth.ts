@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { authorize } from "@/lib/auth/authorize";
 
 // Role-based route protection

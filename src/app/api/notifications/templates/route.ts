@@ -1,14 +1,16 @@
-/**
- * Notification Templates API - قوالب الإشعارات
- * Manage notification templates and content
- */
-
 import { NextRequest, NextResponse } from "next/server";
+
 import { z } from "zod";
+
 import { createClient } from "@/lib/supabase/server";
 import { ValidationHelper } from "@/core/validation";
 import { ErrorHandler } from "@/core/errors";
 import { requireAuth } from "@/lib/auth/authorize";
+
+/**
+ * Notification Templates API - قوالب الإشعارات
+ * Manage notification templates and content
+ */
 
 const templateSchema = z.object({
   name: z.string().min(1, "Template name required"),
