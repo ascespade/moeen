@@ -3,6 +3,7 @@
 ## Required Secrets
 
 ### CURSOR_API_KEY
+
 - **Description**: API key for Cursor Background Agent integration
 - **Required**: Yes (for advanced AI-powered fixes)
 - **Format**: String
@@ -11,6 +12,7 @@
 ## Optional Secrets
 
 ### GITHUB_TOKEN
+
 - **Description**: GitHub token for repository access
 - **Required**: No (uses default GITHUB_TOKEN)
 - **Format**: String

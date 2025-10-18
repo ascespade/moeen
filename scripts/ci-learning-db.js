@@ -3,7 +3,7 @@
 /**
  * CI Learning Database Manager
  * SQLite-based self-learning memory for CI/CD workflows
- * 
+ *
  * Features:
  * - Error pattern recognition
  * - Solution tracking
@@ -25,7 +25,7 @@ class CILearningDB {
 
   async initialize() {
     return new Promise((resolve, reject) => {
-      this.db = new sqlite3.Database(this.dbPath, (err) => {
+      this.db = new sqlite3.Database(this.dbPath, err => {
         if (err) {
           console.error('❌ Error opening database:', err.message);
           reject(err);
@@ -128,7 +128,7 @@ class CILearningDB {
           learning_insights TEXT,
           session_data TEXT
         )
-      `
+      `,
     };
 
     for (const [tableName, sql] of Object.entries(tables)) {
@@ -142,7 +142,7 @@ class CILearningDB {
 
   async runQuery(sql, params = []) {
     return new Promise((resolve, reject) => {
-      this.db.run(sql, params, function(err) {
+      this.db.run(sql, params, function (err) {
         if (err) {
           reject(err);
         } else {
@@ -165,7 +165,8 @@ class CILearningDB {
   }
 
   generateErrorHash(errorMessage, context = '') {
-    return crypto.createHash('sha256')
+    return crypto
+      .createHash('sha256')
       .update(errorMessage + context)
       .digest('hex')
       .substring(0, 16);
@@ -179,11 +180,11 @@ class CILearningDB {
       context = '',
       stackTrace = '',
       fixAction = null,
-      fixedBy = null
+      fixedBy = null,
     } = errorData;
 
     const errorHash = this.generateErrorHash(errorMessage, context);
-    
+
     try {
       // Check if error already exists
       const existing = await this.getQuery(
@@ -207,7 +208,16 @@ class CILearningDB {
           `INSERT INTO error_logs 
            (workflow, error_message, error_hash, error_type, context, stack_trace, fix_action, fixed_by)
            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-          [workflow, errorMessage, errorHash, errorType, context, stackTrace, fixAction, fixedBy]
+          [
+            workflow,
+            errorMessage,
+            errorHash,
+            errorType,
+            context,
+            stackTrace,
+            fixAction,
+            fixedBy,
+          ]
         );
         console.log(`📝 Logged new error: ${errorHash}`);
       }
@@ -229,7 +239,7 @@ class CILearningDB {
       qualityScore = 0.0,
       workflowRunId,
       beforeState = '',
-      afterState = ''
+      afterState = '',
     } = improvementData;
 
     try {
@@ -237,7 +247,17 @@ class CILearningDB {
         `INSERT INTO improvements 
          (component, change_description, commit_hash, result, performance_gain, quality_score, workflow_run_id, before_state, after_state)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [component, changeDescription, commitHash, result, performanceGain, qualityScore, workflowRunId, beforeState, afterState]
+        [
+          component,
+          changeDescription,
+          commitHash,
+          result,
+          performanceGain,
+          qualityScore,
+          workflowRunId,
+          beforeState,
+          afterState,
+        ]
       );
       console.log(`📈 Recorded improvement for component: ${component}`);
     } catch (error) {
@@ -251,7 +271,7 @@ class CILearningDB {
       solutionType,
       solutionData: solution,
       success = true,
-      resolutionTime = 0
+      resolutionTime = 0,
     } = solutionData;
 
     try {
@@ -263,10 +283,10 @@ class CILearningDB {
 
       if (existing.length > 0) {
         // Update existing solution
-        const updateFields = success ? 
-          'success_count = success_count + 1' : 
-          'failure_count = failure_count + 1';
-        
+        const updateFields = success
+          ? 'success_count = success_count + 1'
+          : 'failure_count = failure_count + 1';
+
         await this.runQuery(
           `UPDATE solutions SET 
            ${updateFields},
@@ -282,7 +302,15 @@ class CILearningDB {
           `INSERT INTO solutions 
            (error_hash, solution_type, solution_data, success_count, failure_count, average_resolution_time, confidence)
            VALUES (?, ?, ?, ?, ?, ?, ?)`,
-          [errorHash, solutionType, solution, success ? 1 : 0, success ? 0 : 1, resolutionTime, success ? 1.0 : 0.0]
+          [
+            errorHash,
+            solutionType,
+            solution,
+            success ? 1 : 0,
+            success ? 0 : 1,
+            resolutionTime,
+            success ? 1.0 : 0.0,
+          ]
         );
       }
 
@@ -295,7 +323,7 @@ class CILearningDB {
 
   async getSimilarErrors(errorMessage, context = '', limit = 5) {
     const errorHash = this.generateErrorHash(errorMessage, context);
-    
+
     try {
       const similar = await this.getQuery(
         `SELECT el.*, s.solution_type, s.solution_data, s.confidence as solution_confidence
@@ -306,7 +334,7 @@ class CILearningDB {
          LIMIT ?`,
         [`%${errorMessage}%`, `%${context}%`, limit]
       );
-      
+
       return similar;
     } catch (error) {
       console.error('❌ Error getting similar errors:', error.message);
@@ -323,7 +351,7 @@ class CILearningDB {
          LIMIT 1`,
         [errorHash]
       );
-      
+
       return solutions[0] || null;
     } catch (error) {
       console.error('❌ Error getting best solution:', error.message);
@@ -333,7 +361,8 @@ class CILearningDB {
 
   async getLearningInsights(limit = 100) {
     try {
-      const insights = await this.getQuery(`
+      const insights = await this.getQuery(
+        `
         SELECT 
           el.error_type,
           COUNT(*) as frequency,
@@ -346,7 +375,9 @@ class CILearningDB {
         GROUP BY el.error_type
         ORDER BY frequency DESC
         LIMIT ?
-      `, [limit]);
+      `,
+        [limit]
+      );
 
       return insights;
     } catch (error) {
@@ -362,7 +393,7 @@ class CILearningDB {
       metricValue,
       unit,
       context = '',
-      improvementPercentage = 0.0
+      improvementPercentage = 0.0,
     } = metricData;
 
     try {
@@ -370,9 +401,18 @@ class CILearningDB {
         `INSERT INTO performance_metrics 
          (workflow, metric_name, metric_value, unit, context, improvement_percentage)
          VALUES (?, ?, ?, ?, ?, ?)`,
-        [workflow, metricName, metricValue, unit, context, improvementPercentage]
+        [
+          workflow,
+          metricName,
+          metricValue,
+          unit,
+          context,
+          improvementPercentage,
+        ]
       );
-      console.log(`📊 Recorded performance metric: ${metricName} = ${metricValue} ${unit}`);
+      console.log(
+        `📊 Recorded performance metric: ${metricName} = ${metricValue} ${unit}`
+      );
     } catch (error) {
       console.error('❌ Error recording performance metric:', error.message);
       throw error;
@@ -397,7 +437,7 @@ class CILearningDB {
       errorsAnalyzed = 0,
       fixesApplied = 0,
       successRate = 0.0,
-      learningInsights = ''
+      learningInsights = '',
     } = sessionData;
 
     try {
@@ -410,7 +450,14 @@ class CILearningDB {
          learning_insights = ?,
          session_data = ?
          WHERE session_id = ?`,
-        [errorsAnalyzed, fixesApplied, successRate, learningInsights, JSON.stringify(sessionData), sessionId]
+        [
+          errorsAnalyzed,
+          fixesApplied,
+          successRate,
+          learningInsights,
+          JSON.stringify(sessionData),
+          sessionId,
+        ]
       );
       console.log(`🧠 Ended learning session: ${sessionId}`);
     } catch (error) {
@@ -433,7 +480,7 @@ class CILearningDB {
         GROUP BY error_type
         ORDER BY frequency DESC
       `);
-      
+
       return patterns;
     } catch (error) {
       console.error('❌ Error getting error patterns:', error.message);
@@ -445,17 +492,16 @@ class CILearningDB {
     try {
       const cutoffDate = new Date();
       cutoffDate.setDate(cutoffDate.getDate() - daysToKeep);
-      
-      await this.runQuery(
-        'DELETE FROM error_logs WHERE timestamp < ?',
-        [cutoffDate.toISOString()]
-      );
-      
+
+      await this.runQuery('DELETE FROM error_logs WHERE timestamp < ?', [
+        cutoffDate.toISOString(),
+      ]);
+
       await this.runQuery(
         'DELETE FROM performance_metrics WHERE timestamp < ?',
         [cutoffDate.toISOString()]
       );
-      
+
       console.log(`🧹 Cleaned up data older than ${daysToKeep} days`);
     } catch (error) {
       console.error('❌ Error cleaning up old data:', error.message);
@@ -468,10 +514,18 @@ class CILearningDB {
       const report = {
         timestamp: new Date().toISOString(),
         summary: {
-          totalErrors: await this.getQuery('SELECT COUNT(*) as count FROM error_logs').then(r => r[0].count),
-          totalSolutions: await this.getQuery('SELECT COUNT(*) as count FROM solutions').then(r => r[0].count),
-          totalImprovements: await this.getQuery('SELECT COUNT(*) as count FROM improvements').then(r => r[0].count),
-          totalSessions: await this.getQuery('SELECT COUNT(*) as count FROM learning_sessions').then(r => r[0].count)
+          totalErrors: await this.getQuery(
+            'SELECT COUNT(*) as count FROM error_logs'
+          ).then(r => r[0].count),
+          totalSolutions: await this.getQuery(
+            'SELECT COUNT(*) as count FROM solutions'
+          ).then(r => r[0].count),
+          totalImprovements: await this.getQuery(
+            'SELECT COUNT(*) as count FROM improvements'
+          ).then(r => r[0].count),
+          totalSessions: await this.getQuery(
+            'SELECT COUNT(*) as count FROM learning_sessions'
+          ).then(r => r[0].count),
         },
         errorPatterns: await this.getErrorPatterns(),
         learningInsights: await this.getLearningInsights(),
@@ -480,9 +534,9 @@ class CILearningDB {
           WHERE timestamp > datetime('now', '-24 hours')
           ORDER BY timestamp DESC
           LIMIT 10
-        `)
+        `),
       };
-      
+
       return report;
     } catch (error) {
       console.error('❌ Error generating report:', error.message);
@@ -492,8 +546,8 @@ class CILearningDB {
 
   async close() {
     if (this.db) {
-      return new Promise((resolve) => {
-        this.db.close((err) => {
+      return new Promise(resolve => {
+        this.db.close(err => {
           if (err) {
             console.error('❌ Error closing database:', err.message);
           } else {
@@ -518,22 +572,22 @@ if (require.main === module) {
       case 'init':
         console.log('✅ Database initialized');
         break;
-        
+
       case 'report':
         const report = await db.generateReport();
         console.log(JSON.stringify(report, null, 2));
         break;
-        
+
       case 'cleanup':
         const days = parseInt(process.argv[3]) || 30;
         await db.cleanupOldData(days);
         break;
-        
+
       case 'insights':
         const insights = await db.getLearningInsights();
         console.log(JSON.stringify(insights, null, 2));
         break;
-        
+
       default:
         console.log(`
 Usage: node ci-learning-db.js <command> [options]

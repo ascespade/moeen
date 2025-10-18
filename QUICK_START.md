@@ -3,11 +3,13 @@
 ## 🚀 Quick Setup
 
 1. **Install dependencies**:
+
    ```bash
    npm install
    ```
 
 2. **Initialize the system**:
+
    ```bash
    ./scripts/setup-ci-self-healing.sh
    ```
@@ -46,6 +48,7 @@ npm run ci:heal
 ## 🔧 Manual Triggers
 
 You can manually trigger workflows:
+
 1. Go to Actions tab in GitHub
 2. Select "Ultimate CI Self-Healing Agent"
 3. Click "Run workflow"

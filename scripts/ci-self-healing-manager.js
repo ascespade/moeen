@@ -24,46 +24,51 @@ class CISelfHealingManager {
 
   async initialize() {
     console.log('🚀 Initializing CI Self-Healing Manager...');
-    
+
     await this.learningDB.initialize();
     await this.learningDB.startLearningSession(this.sessionId);
-    
+
     // Test Cursor Agent connection
     const isConnected = await this.cursorAgent.testConnection();
     if (!isConnected) {
-      console.warn('⚠️ Cursor Agent not available, continuing with local learning only');
+      console.warn(
+        '⚠️ Cursor Agent not available, continuing with local learning only'
+      );
     }
-    
+
     console.log('✅ CI Self-Healing Manager initialized');
   }
 
   async analyzeWorkflowError(workflowPath, errorLog) {
     console.log(`🔍 Analyzing workflow error: ${workflowPath}`);
-    
+
     const errorData = {
       workflow: path.basename(workflowPath),
       errorMessage: errorLog,
       errorType: this.detectErrorType(errorLog),
       context: `File: ${workflowPath}`,
-      stackTrace: errorLog
+      stackTrace: errorLog,
     };
 
     // Log error to learning database
     const errorHash = await this.learningDB.logError(errorData);
-    
+
     // Check for similar errors and solutions
-    const similarErrors = await this.learningDB.getSimilarErrors(errorLog, workflowPath);
+    const similarErrors = await this.learningDB.getSimilarErrors(
+      errorLog,
+      workflowPath
+    );
     const bestSolution = await this.learningDB.getBestSolution(errorHash);
-    
+
     console.log(`📝 Error logged with hash: ${errorHash}`);
     console.log(`🔍 Found ${similarErrors.length} similar errors`);
-    
+
     return {
       errorHash,
       errorData,
       similarErrors,
       bestSolution,
-      hasSolution: !!bestSolution
+      hasSolution: !!bestSolution,
     };
   }
 
@@ -73,11 +78,11 @@ class CISelfHealingManager {
       'Invalid workflow': 'workflow_syntax',
       'Permission denied': 'permissions',
       'Artifact not found': 'artifacts',
-      'Timeout': 'timeout',
+      Timeout: 'timeout',
       'npm install': 'dependency',
-      'Playwright': 'test_setup',
-      'TypeScript': 'type_check',
-      'ESLint': 'linting'
+      Playwright: 'test_setup',
+      TypeScript: 'type_check',
+      ESLint: 'linting',
     };
 
     for (const [pattern, type] of Object.entries(errorTypes)) {
@@ -91,12 +96,14 @@ class CISelfHealingManager {
 
   async generateFix(errorAnalysis) {
     const { errorHash, errorData, bestSolution, similarErrors } = errorAnalysis;
-    
+
     console.log(`🔧 Generating fix for error: ${errorHash}`);
-    
+
     // If we have a proven solution, use it
     if (bestSolution && bestSolution.confidence >= this.confidenceThreshold) {
-      console.log(`✅ Using proven solution (confidence: ${bestSolution.confidence})`);
+      console.log(
+        `✅ Using proven solution (confidence: ${bestSolution.confidence})`
+      );
       return this.applyProvenSolution(bestSolution, errorData);
     }
 
@@ -106,9 +113,11 @@ class CISelfHealingManager {
         errorData.errorType,
         errorData.context
       );
-      
+
       if (suggestions.length > 0) {
-        console.log(`🤖 Got ${suggestions.length} suggestions from Cursor Agent`);
+        console.log(
+          `🤖 Got ${suggestions.length} suggestions from Cursor Agent`
+        );
         return this.applyCursorAgentSuggestions(suggestions, errorData);
       }
     } catch (error) {
@@ -121,13 +130,13 @@ class CISelfHealingManager {
 
   applyProvenSolution(solution, errorData) {
     console.log(`🔧 Applying proven solution: ${solution.solution_type}`);
-    
+
     const fix = {
       type: 'proven_solution',
       solutionType: solution.solution_type,
       solutionData: solution.solution_data,
       confidence: solution.confidence,
-      source: 'learning_db'
+      source: 'learning_db',
     };
 
     return this.executeFix(fix, errorData);
@@ -135,8 +144,8 @@ class CISelfHealingManager {
 
   async applyCursorAgentSuggestions(suggestions, errorData) {
     console.log(`🤖 Applying Cursor Agent suggestions`);
-    
-    const bestSuggestion = suggestions.reduce((best, current) => 
+
+    const bestSuggestion = suggestions.reduce((best, current) =>
       current.confidence > best.confidence ? current : best
     );
 
@@ -145,7 +154,7 @@ class CISelfHealingManager {
       solutionType: bestSuggestion.type,
       solutionData: bestSuggestion.data,
       confidence: bestSuggestion.confidence,
-      source: 'cursor_agent'
+      source: 'cursor_agent',
     };
 
     return this.executeFix(fix, errorData);
@@ -153,7 +162,7 @@ class CISelfHealingManager {
 
   generateLocalFix(errorData, similarErrors) {
     console.log(`🔧 Generating local fix for: ${errorData.errorType}`);
-    
+
     const fixStrategies = {
       yaml_syntax: () => this.fixYamlSyntax(errorData),
       workflow_syntax: () => this.fixWorkflowSyntax(errorData),
@@ -163,25 +172,29 @@ class CISelfHealingManager {
       dependency: () => this.fixDependencies(errorData),
       test_setup: () => this.fixTestSetup(errorData),
       type_check: () => this.fixTypeScript(errorData),
-      linting: () => this.fixLinting(errorData)
+      linting: () => this.fixLinting(errorData),
     };
 
-    const strategy = fixStrategies[errorData.errorType] || fixStrategies.unknown;
+    const strategy =
+      fixStrategies[errorData.errorType] || fixStrategies.unknown;
     return strategy();
   }
 
   fixYamlSyntax(errorData) {
     const workflowPath = errorData.context.replace('File: ', '');
-    
+
     try {
       let content = fs.readFileSync(workflowPath, 'utf8');
-      
+
       // Common YAML fixes
       const fixes = [
         { pattern: /:\s*$/, replacement: ': ' },
-        { pattern: /^(\s*)([a-zA-Z_][a-zA-Z0-9_]*):\s*$/, replacement: '$1$2: ' },
+        {
+          pattern: /^(\s*)([a-zA-Z_][a-zA-Z0-9_]*):\s*$/,
+          replacement: '$1$2: ',
+        },
         { pattern: /\n\s*\n\s*\n/g, replacement: '\n\n' },
-        { pattern: /(\s+)- name:([^\n]+)/g, replacement: '$1- name: $2' }
+        { pattern: /(\s+)- name:([^\n]+)/g, replacement: '$1- name: $2' },
       ];
 
       let modified = false;
@@ -202,7 +215,7 @@ class CISelfHealingManager {
         type: 'yaml_syntax_fix',
         solutionData: 'Fixed common YAML syntax issues',
         confidence: 0.8,
-        source: 'local_fix'
+        source: 'local_fix',
       };
     } catch (error) {
       console.error('❌ Error fixing YAML syntax:', error.message);
@@ -212,10 +225,10 @@ class CISelfHealingManager {
 
   fixWorkflowSyntax(errorData) {
     const workflowPath = errorData.context.replace('File: ', '');
-    
+
     try {
       let content = fs.readFileSync(workflowPath, 'utf8');
-      
+
       // Add missing permissions if not present
       if (!content.includes('permissions:')) {
         const permissionsBlock = `permissions:
@@ -232,7 +245,7 @@ class CISelfHealingManager {
 
       // Fix common workflow issues
       content = content.replace(/timeout-minutes: \d+/g, 'timeout-minutes: 30');
-      
+
       fs.writeFileSync(workflowPath, content);
       console.log('✅ Fixed workflow syntax issues');
 
@@ -240,7 +253,7 @@ class CISelfHealingManager {
         type: 'workflow_syntax_fix',
         solutionData: 'Fixed workflow syntax and added missing permissions',
         confidence: 0.9,
-        source: 'local_fix'
+        source: 'local_fix',
       };
     } catch (error) {
       console.error('❌ Error fixing workflow syntax:', error.message);
@@ -253,7 +266,7 @@ class CISelfHealingManager {
       type: 'permissions_fix',
       solutionData: 'Added required permissions to workflow',
       confidence: 0.95,
-      source: 'local_fix'
+      source: 'local_fix',
     };
   }
 
@@ -262,7 +275,7 @@ class CISelfHealingManager {
       type: 'artifacts_fix',
       solutionData: 'Added artifact existence checks',
       confidence: 0.8,
-      source: 'local_fix'
+      source: 'local_fix',
     };
   }
 
@@ -271,7 +284,7 @@ class CISelfHealingManager {
       type: 'timeout_fix',
       solutionData: 'Increased timeout values',
       confidence: 0.7,
-      source: 'local_fix'
+      source: 'local_fix',
     };
   }
 
@@ -280,7 +293,7 @@ class CISelfHealingManager {
       type: 'dependency_fix',
       solutionData: 'Fixed npm install and dependency issues',
       confidence: 0.8,
-      source: 'local_fix'
+      source: 'local_fix',
     };
   }
 
@@ -289,7 +302,7 @@ class CISelfHealingManager {
       type: 'test_setup_fix',
       solutionData: 'Fixed Playwright and test setup issues',
       confidence: 0.8,
-      source: 'local_fix'
+      source: 'local_fix',
     };
   }
 
@@ -298,7 +311,7 @@ class CISelfHealingManager {
       type: 'typescript_fix',
       solutionData: 'Fixed TypeScript compilation issues',
       confidence: 0.7,
-      source: 'local_fix'
+      source: 'local_fix',
     };
   }
 
@@ -307,13 +320,13 @@ class CISelfHealingManager {
       type: 'linting_fix',
       solutionData: 'Fixed ESLint and code style issues',
       confidence: 0.8,
-      source: 'local_fix'
+      source: 'local_fix',
     };
   }
 
   async executeFix(fix, errorData) {
     console.log(`🔧 Executing fix: ${fix.type}`);
-    
+
     const startTime = Date.now();
     let success = false;
     let error = null;
@@ -341,19 +354,19 @@ class CISelfHealingManager {
         solutionType: fix.type,
         solutionData: fix.solutionData,
         success: success,
-        resolutionTime: resolutionTime
+        resolutionTime: resolutionTime,
       });
 
       if (success) {
         console.log(`✅ Fix applied successfully in ${resolutionTime}ms`);
-        
+
         // Record improvement
         await this.learningDB.recordImprovement({
           component: errorData.workflow,
           changeDescription: fix.solutionData,
           result: 'success',
           performanceGain: 0.0,
-          qualityScore: fix.confidence * 100
+          qualityScore: fix.confidence * 100,
         });
       } else {
         console.log(`❌ Fix failed: ${error?.message || 'Unknown error'}`);
@@ -363,7 +376,12 @@ class CISelfHealingManager {
     } catch (err) {
       error = err;
       console.error('❌ Error executing fix:', err.message);
-      return { success: false, fix, resolutionTime: Date.now() - startTime, error };
+      return {
+        success: false,
+        fix,
+        resolutionTime: Date.now() - startTime,
+        error,
+      };
     }
   }
 
@@ -389,7 +407,7 @@ class CISelfHealingManager {
 
   async validateFix(workflowPath) {
     console.log(`🧪 Validating fix for: ${workflowPath}`);
-    
+
     try {
       // Try to validate the workflow
       execSync(`npx js-yaml ${workflowPath}`, { stdio: 'pipe' });
@@ -403,12 +421,12 @@ class CISelfHealingManager {
 
   async commitFix(workflowPath, fix) {
     console.log(`💾 Committing fix for: ${workflowPath}`);
-    
+
     try {
       // Configure git
       execSync('git config --local user.email "action@github.com"');
       execSync('git config --local user.name "CI Self-Healing"');
-      
+
       // Add and commit changes
       execSync(`git add ${workflowPath}`);
       execSync(`git commit -m "🤖 Auto-Healed CI Workflow (AI Commit)
@@ -425,7 +443,7 @@ class CISelfHealingManager {
 - Future similar errors will be auto-fixed
 
 🤖 Generated by: CI Self-Healing System"`);
-      
+
       console.log('✅ Fix committed successfully');
       return true;
     } catch (error) {
@@ -436,7 +454,7 @@ class CISelfHealingManager {
 
   async pushFix() {
     console.log('📤 Pushing fix...');
-    
+
     try {
       execSync('git push origin HEAD');
       console.log('✅ Fix pushed successfully');
@@ -449,30 +467,30 @@ class CISelfHealingManager {
 
   async endSession() {
     console.log('🏁 Ending learning session...');
-    
+
     const sessionData = {
       errorsAnalyzed: 0, // This would be tracked during the session
-      fixesApplied: 0,   // This would be tracked during the session
-      successRate: 0.0,  // This would be calculated
-      learningInsights: 'Session completed successfully'
+      fixesApplied: 0, // This would be tracked during the session
+      successRate: 0.0, // This would be calculated
+      learningInsights: 'Session completed successfully',
     };
 
     await this.learningDB.endLearningSession(this.sessionId, sessionData);
     await this.learningDB.close();
-    
+
     console.log('✅ Learning session ended');
   }
 
   async generateReport() {
     console.log('📊 Generating learning report...');
-    
+
     const report = await this.learningDB.generateReport();
-    
+
     // Save report to file
     const reportPath = 'reports/ci-learning-report.json';
     fs.mkdirSync(path.dirname(reportPath), { recursive: true });
     fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
-    
+
     console.log(`📊 Report saved to: ${reportPath}`);
     return report;
   }
@@ -488,26 +506,34 @@ if (require.main === module) {
 
     switch (command) {
       case 'analyze':
-        const workflowPath = process.argv[3] || '.github/workflows/ci-assistant.yml';
+        const workflowPath =
+          process.argv[3] || '.github/workflows/ci-assistant.yml';
         const errorLog = process.argv[4] || 'YAML parsing error';
-        const analysis = await manager.analyzeWorkflowError(workflowPath, errorLog);
+        const analysis = await manager.analyzeWorkflowError(
+          workflowPath,
+          errorLog
+        );
         console.log(JSON.stringify(analysis, null, 2));
         break;
-        
+
       case 'fix':
-        const fixWorkflowPath = process.argv[3] || '.github/workflows/ci-assistant.yml';
+        const fixWorkflowPath =
+          process.argv[3] || '.github/workflows/ci-assistant.yml';
         const fixErrorLog = process.argv[4] || 'YAML parsing error';
-        const errorAnalysis = await manager.analyzeWorkflowError(fixWorkflowPath, fixErrorLog);
+        const errorAnalysis = await manager.analyzeWorkflowError(
+          fixWorkflowPath,
+          fixErrorLog
+        );
         const fix = await manager.generateFix(errorAnalysis);
         const result = await manager.executeFix(fix, errorAnalysis.errorData);
         console.log(JSON.stringify(result, null, 2));
         break;
-        
+
       case 'report':
         const report = await manager.generateReport();
         console.log(JSON.stringify(report, null, 2));
         break;
-        
+
       default:
         console.log(`
 Usage: node ci-self-healing-manager.js <command> [options]
