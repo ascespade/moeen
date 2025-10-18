@@ -15,7 +15,7 @@ interface Goal {
 export default function SessionNotesPage() {
   const params = useParams();
   const router = useRouter();
-  const sessionId = params.id as string;
+  const sessionId = params?.id as string;
 
   const [session, setSession] = useState<any>(null);
   const [goals, setGoals] = useState<Goal[]>([]);

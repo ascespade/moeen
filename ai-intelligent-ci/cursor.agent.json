@@ -1,0 +1,14 @@
+{
+  "name": "ai-self-healing-agent",
+  "description": "Orchestrates incremental tests generation, targeted execution, and self-healing patches.",
+  "triggers": ["on_push","manual"],
+  "commands": ["node scripts/ai_self_test_and_fix.mjs --agent-mode=cursor"],
+  "environment": {
+    "NEXT_PUBLIC_SUPABASE_URL": "${NEXT_PUBLIC_SUPABASE_URL}",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "${NEXT_PUBLIC_SUPABASE_ANON_KEY}",
+    "SUPABASE_SERVICE_ROLE_KEY": "${SUPABASE_SERVICE_ROLE_KEY}",
+    "GITHUB_TOKEN": "${GITHUB_TOKEN}",
+    "LLM_PROVIDER": "cursor"
+  },
+  "max_runtime_minutes": 120
+}

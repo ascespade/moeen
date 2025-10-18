@@ -58,7 +58,7 @@ function LoginForm() {
       );
       if (result.success) {
         // Get redirect URL from query params or default to dashboard
-        const redirectUrl = searchParams.get("redirect") || "/dashboard";
+        const redirectUrl = searchParams?.get("redirect") || "/dashboard";
         router.push(redirectUrl);
       }
     } catch (err: any) {

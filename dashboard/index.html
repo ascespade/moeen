@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🤖 AI Self-Healing Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🤖 لوحة مراقبة AI Self-Healing</h1>
+      <p class="subtitle">نظام التحسين الذاتي والإصلاح التلقائي</p>
+      <div class="last-updated" id="lastUpdated">آخر تحديث: جاري التحميل...</div>
+    </header>
+
+    <!-- Statistics Cards -->
+    <div class="stats-grid">
+      <div class="stat-card success">
+        <div class="stat-icon">✅</div>
+        <div class="stat-value" id="totalSuccess">0</div>
+        <div class="stat-label">عمليات ناجحة</div>
+      </div>
+      
+      <div class="stat-card failed">
+        <div class="stat-icon">❌</div>
+        <div class="stat-value" id="totalFailed">0</div>
+        <div class="stat-label">عمليات فاشلة</div>
+      </div>
+      
+      <div class="stat-card quality">
+        <div class="stat-icon">📊</div>
+        <div class="stat-value" id="avgQuality">0%</div>
+        <div class="stat-label">متوسط الجودة</div>
+      </div>
+      
+      <div class="stat-card lines">
+        <div class="stat-icon">📝</div>
+        <div class="stat-value" id="totalLines">0</div>
+        <div class="stat-label">إجمالي الأسطر المعدلة</div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>📈 تطور الجودة مع الزمن</h3>
+        <canvas id="qualityChart"></canvas>
+      </div>
+      
+      <div class="chart-card">
+        <h3>⏱️ مدة التنفيذ</h3>
+        <canvas id="durationChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Logs Table -->
+    <div class="table-container">
+      <h2>📋 سجل العمليات</h2>
+      <div class="table-controls">
+        <input type="text" id="searchInput" placeholder="بحث في السجلات..." />
+        <select id="filterStatus">
+          <option value="all">جميع الحالات</option>
+          <option value="success">ناجح</option>
+          <option value="failed">فاشل</option>
+        </select>
+        <button onclick="loadLogs()" class="refresh-btn">🔄 تحديث</button>
+      </div>
+      
+      <table id="logTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>التاريخ</th>
+            <th>الحالة</th>
+            <th>النوع</th>
+            <th>المدة (ث)</th>
+            <th>الأسطر المعدلة</th>
+            <th>الجودة</th>
+            <th>الفرع</th>
+            <th>ملاحظات</th>
+          </tr>
+        </thead>
+        <tbody id="logTableBody">
+          <tr>
+            <td colspan="9" class="loading">جاري تحميل البيانات...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

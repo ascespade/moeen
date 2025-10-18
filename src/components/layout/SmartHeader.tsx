@@ -141,7 +141,7 @@ export default function SmartHeader() {
   useEffect(() => {
     // This is a simplified check - in a real app you'd use proper auth state
     const isAuth =
-      pathname.startsWith("/dashboard") || pathname.startsWith("/admin");
+      pathname?.startsWith("/dashboard") || pathname?.startsWith("/admin") || false;
     setIsAuthenticated(isAuth);
   }, [pathname]);
 
