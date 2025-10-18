@@ -10,13 +10,15 @@
 ## 📋 نظرة عامة (Overview)
 
 ### الغرض (من طلب المستخدم):
+
 ```
-"ابغاك تضيف مديول كامل بخدماته خاص بالونر و بادارة امكان 
-و مراقبة العمل و يكون فيه مجموعه مميزه من الخدمات اللي تريح 
+"ابغاك تضيف مديول كامل بخدماته خاص بالونر و بادارة امكان
+و مراقبة العمل و يكون فيه مجموعه مميزه من الخدمات اللي تريح
 الاونر و تضمن له السيطره و الاطلاع عللى كل شي بشكل لحضي و سهل"
 ```
 
 ### الوظائف الرئيسية:
+
 ```
 👑 للمالك (Owner):
    - رؤية شاملة للعمليات (360° view)
@@ -32,6 +34,7 @@
 ## 🏗️ البنية المقترحة (Proposed Architecture)
 
 ### الصفحة الرئيسية:
+
 ```
 📁 src/app/(owner)/owner/
 ├── page.tsx                    - Dashboard الرئيسي
@@ -53,6 +56,7 @@
 ## ✅ ما تم تنفيذه (Implemented)
 
 ### 1. جداول البيانات موجودة ✅
+
 ```
 ✅ appointments (جلسات)
 ✅ payments (مدفوعات)
@@ -62,6 +66,7 @@
 ```
 
 ### 2. RLS Policies للـ Admin ✅
+
 ```
 ✅ Admin يمكنه الوصول لكل البيانات
 ✅ Row Level Security policies موجودة
@@ -74,6 +79,7 @@
 ### 1. لا توجد لوحة تحكم Owner 🔴
 
 **المشكلة**:
+
 ```
 ❌ لا توجد صفحة /owner/dashboard
 ❌ لا توجد KPIs رئيسية
@@ -86,28 +92,28 @@
 <OwnerDashboard>
   {/* KPIs الرئيسية */}
   <KPICards>
-    <KPICard 
+    <KPICard
       title="الإيرادات اليوم"
       value={`${stats.today_revenue} ريال`}
       change="+12.5%"
       trend="up"
       icon="💰"
     />
-    <KPICard 
+    <KPICard
       title="الجلسات اليوم"
       value={stats.today_sessions}
       change="+5"
       trend="up"
       icon="📅"
     />
-    <KPICard 
+    <KPICard
       title="معدل الحضور"
       value={`${stats.attendance_rate}%`}
       change="+3%"
       trend="up"
       icon="✅"
     />
-    <KPICard 
+    <KPICard
       title="رضا العملاء"
       value={`${stats.satisfaction_score}/5`}
       change="+0.2"
@@ -115,18 +121,18 @@
       icon="⭐"
     />
   </KPICards>
-  
+
   {/* Real-time Activity Feed */}
   <LiveActivity>
     <ActivityItem type="session_completed" time="منذ 5 دقائق" />
     <ActivityItem type="payment_received" time="منذ 12 دقيقة" />
     <ActivityItem type="new_booking" time="منذ 18 دقيقة" />
   </LiveActivity>
-  
+
   {/* Charts */}
   <RevenueChart data={stats.revenue_trend} />
   <SessionsChart data={stats.sessions_trend} />
-  
+
   {/* Quick Actions */}
   <QuickActions>
     <ActionButton label="إضافة موظف" />
@@ -144,6 +150,7 @@
 ### 2. لا توجد تقارير مالية 🔴
 
 **المشكلة**:
+
 ```
 ❌ لا يوجد نظام تقارير مالية
 ❌ لا يمكن رؤية الإيرادات/المصروفات
@@ -161,7 +168,7 @@
     month={finance.month}
     year={finance.year}
   />
-  
+
   {/* Breakdown by Service */}
   <RevenueByService>
     <ServiceRevenue service="تعديل السلوك" revenue={50000} percentage={30} />
@@ -169,21 +176,21 @@
     <ServiceRevenue service="تكامل حسي" revenue={28000} percentage={17} />
     {/* ... */}
   </RevenueByService>
-  
+
   {/* Payment Methods */}
   <PaymentMethods>
     <MethodBreakdown method="نقدي" amount={80000} percentage={48} />
     <MethodBreakdown method="بطاقة" amount={60000} percentage={36} />
     <MethodBreakdown method="تأمين" amount={27000} percentage={16} />
   </PaymentMethods>
-  
+
   {/* Expenses (مستقبلاً) */}
   <ExpensesSummary>
     <ExpenseItem category="رواتب" amount={100000} />
     <ExpenseItem category="إيجار" amount={30000} />
     <ExpenseItem category="مصاريف تشغيل" amount={20000} />
   </ExpensesSummary>
-  
+
   {/* Profit Margin */}
   <ProfitAnalysis
     revenue={finance.total_revenue}
@@ -202,6 +209,7 @@
 ### 3. لا توجد تحليلات أداء الموظفين 🟡
 
 **المشكلة**:
+
 ```
 ⚠️  لا يمكن معرفة أداء كل أخصائي
 ⚠️  لا توجد مقارنات
@@ -222,7 +230,7 @@
       <Column>الإجراء</Column>
     </TherapistRow>
   </PerformanceTable>
-  
+
   {/* Charts */}
   <TherapistComparison />
   <SessionsDistribution />
@@ -238,6 +246,7 @@
 ### 4. لا يوجد Export & Reporting 🟡
 
 **المشكلة**:
+
 ```
 ⚠️  لا يمكن تصدير البيانات
 ⚠️  لا توجد تقارير PDF
@@ -249,28 +258,28 @@
 ```typescript
 <ReportExport>
   <ExportOptions>
-    <ExportButton 
+    <ExportButton
       format="PDF"
       type="financial"
       period="monthly"
       onClick={generatePDF}
     />
-    <ExportButton 
+    <ExportButton
       format="Excel"
       type="sessions"
       period="custom"
       onClick={generateExcel}
     />
-    <ExportButton 
+    <ExportButton
       format="CSV"
       type="patients"
       onClick={generateCSV}
     />
   </ExportOptions>
-  
+
   {/* Scheduled Reports */}
   <ScheduledReports>
-    <Report 
+    <Report
       name="التقرير المالي الشهري"
       schedule="أول كل شهر"
       recipients={["owner@alhemam.sa"]}
@@ -288,6 +297,7 @@
 ### 5. لا توجد إعدادات مركزية 🟡
 
 **المشكلة**:
+
 ```
 ⚠️  الإعدادات متفرقة
 ⚠️  لا توجد صفحة إعدادات شاملة
@@ -303,15 +313,15 @@
     <Input label="رقم الترخيص" />
     <ImageUpload label="الشعار" />
   </SettingsSection>
-  
+
   <SettingsSection title="ساعات العمل">
     <WorkHoursEditor />
   </SettingsSection>
-  
+
   <SettingsSection title="الأسعار">
     <PricingTable services={services} />
   </SettingsSection>
-  
+
   <SettingsSection title="الإشعارات">
     <NotificationSettings />
   </SettingsSection>
@@ -325,13 +335,13 @@
 
 ## 📊 تقييم الجاهزية: **25/100** 🔴
 
-| المعيار | النقاط | الوزن | الإجمالي |
-|---------|--------|-------|----------|
-| **Dashboard** | 10/100 | 30% | 3 |
-| **Financial Reports** | 20/100 | 30% | 6 |
-| **Performance Analytics** | 30/100 | 20% | 6 |
-| **Export & Settings** | 40/100 | 20% | 8 |
-| **المجموع** | - | - | **23** |
+| المعيار                   | النقاط | الوزن | الإجمالي |
+| ------------------------- | ------ | ----- | -------- |
+| **Dashboard**             | 10/100 | 30%   | 3        |
+| **Financial Reports**     | 20/100 | 30%   | 6        |
+| **Performance Analytics** | 30/100 | 20%   | 6        |
+| **Export & Settings**     | 40/100 | 20%   | 8        |
+| **المجموع**               | -      | -     | **23**   |
 
 ---
 
@@ -340,6 +350,7 @@
 ### Phase 1: Core Dashboard (Week 1)
 
 #### Task 1: Owner Dashboard Page (16-20h)
+
 ```
 ✅ صفحة /owner/dashboard
 ✅ KPIs cards
@@ -349,6 +360,7 @@
 ```
 
 #### Task 2: Financial Reports (12-16h)
+
 ```
 ✅ Revenue summary
 ✅ Breakdown by service
@@ -364,6 +376,7 @@
 ### Phase 2: Analytics & Export (Week 2)
 
 #### Task 3: Performance Analytics (10-12h)
+
 ```
 ✅ Therapist performance table
 ✅ Comparisons
@@ -371,6 +384,7 @@
 ```
 
 #### Task 4: Export System (8-10h)
+
 ```
 ✅ PDF export
 ✅ Excel export
@@ -378,6 +392,7 @@
 ```
 
 #### Task 5: Settings (8-10h)
+
 ```
 ✅ Center settings page
 ✅ Work hours editor
@@ -392,18 +407,21 @@
 ## 🎓 التوصيات
 
 ### Must Have:
+
 ```
 1. 🔴 Owner dashboard
 2. 🔴 Financial reports
 ```
 
 ### Should Have:
+
 ```
 3. 🟡 Performance analytics
 4. 🟡 Export system
 ```
 
 ### Nice to Have:
+
 ```
 5. ⏳ Multi-branch support (مستقبلاً)
 6. ⏳ Advanced forecasting
@@ -417,6 +435,7 @@
 ### الحالة: **25% - يحتاج تطوير** 🔴
 
 **ما ينقص**:
+
 - 🔴 Owner dashboard
 - 🔴 Financial reports
 - 🟡 Analytics
@@ -426,6 +445,6 @@
 
 ---
 
-*Audit Date: 2025-10-17*  
-*System: Owner Dashboard*  
-*Status: ⚠️  Needs Development*
+_Audit Date: 2025-10-17_  
+_System: Owner Dashboard_  
+_Status: ⚠️ Needs Development_

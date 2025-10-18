@@ -35,26 +35,31 @@ ai-intelligent-ci/
 ## ✨ الميزات الرئيسية
 
 ### 1. 🔍 تحليل الفروقات الذكي
+
 - تحديد الملفات المتغيرة تلقائياً
 - استخراج الموديولات المتأثرة
 - تحليل التأثير المحتمل
 
 ### 2. 🧪 توليد الاختبارات الذكية
+
 - توليد اختبارات مستهدفة للموديولات المتأثرة فقط
 - استخدام التاريخ السابق لتحسين الاختبارات
 - دعم Playwright و Supawright
 
 ### 3. 🔧 الإصلاح الذاتي
+
 - محاولات متعددة لإصلاح الأخطاء
 - تطبيق ESLint و Prettier تلقائياً
 - إعادة تشغيل الاختبارات بعد الإصلاح
 
 ### 4. 🧠 التعلم المستمر
+
 - حفظ الأنماط المتعلمة
 - تتبع تاريخ الاختبارات
 - تحسين الاختبارات بناءً على الفشل السابق
 
 ### 5. 📊 التقارير الشاملة
+
 - تقارير JSON مفصلة
 - تقارير Markdown قابلة للقراءة
 - لوحة مراقبة تفاعلية
@@ -88,9 +93,9 @@ DIFF_TO=HEAD
   "agent_mode": "background",
   "autonomy_level": "maximum",
   "parallelism": { "enabled": true, "max_workers": 4 },
-  "automation": { 
-    "auto_commit_fixes": true, 
-    "auto_pr_creation": true 
+  "automation": {
+    "auto_commit_fixes": true,
+    "auto_pr_creation": true
   }
 }
 ```
@@ -116,7 +121,7 @@ name: 🤖 AI Intelligent CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
 
 jobs:
@@ -126,17 +131,17 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
-      
+
       - name: Install dependencies
         run: |
           cd ai-intelligent-ci
           npm install
           npx playwright install
-      
+
       - name: Run Intelligent CI
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -350,4 +355,4 @@ npx serve dashboard
 
 ---
 
-*تم إنشاء هذا النظام بواسطة AI Intelligent CI/CD v3.1* 🤖
+_تم إنشاء هذا النظام بواسطة AI Intelligent CI/CD v3.1_ 🤖

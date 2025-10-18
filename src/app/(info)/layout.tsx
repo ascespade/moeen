@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "معلومات - مُعين",
-  description: "معلومات عن منصة الرعاية الصحية",
+  title: 'معلومات - مُعين',
+  description: 'معلومات عن منصة الرعاية الصحية',
 };
 
 export default function InfoLayout({

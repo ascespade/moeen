@@ -10,7 +10,9 @@
 ## 📋 نظرة عامة (Overview)
 
 ### الغرض:
+
 نظام تواصل بين الأخصائيين والأسر لضمان:
+
 - تحديثات دورية عن تقدم الطفل
 - رسائل مباشرة سريعة
 - توصيات منزلية
@@ -18,6 +20,7 @@
 - بناء شراكة فعّالة بين المركز والأسرة
 
 ### السكوب لمركز الهمم:
+
 ```
 👥 القنوات:
    1. رسائل مباشرة (In-app messaging)
@@ -39,6 +42,7 @@
 ### الجداول الموجودة:
 
 #### `chat_conversations`:
+
 ```sql
 CREATE TABLE chat_conversations (
   id UUID PRIMARY KEY,
@@ -49,6 +53,7 @@ CREATE TABLE chat_conversations (
 ```
 
 #### `chat_messages`:
+
 ```sql
 CREATE TABLE chat_messages (
   id UUID PRIMARY KEY,
@@ -60,6 +65,7 @@ CREATE TABLE chat_messages (
 ```
 
 ### الملفات الموجودة:
+
 ```
 src/lib/whatsapp-business-api.ts (416 lines) ✅
 src/lib/whatsapp-integration.ts (336 lines) ✅
@@ -71,6 +77,7 @@ src/lib/notifications/sms.ts (151 lines) ✅
 ## ✅ ما تم تنفيذه
 
 ### 1. جداول Chat موجودة ✅
+
 ```
 ✅ chat_conversations
 ✅ chat_messages
@@ -78,6 +85,7 @@ src/lib/notifications/sms.ts (151 lines) ✅
 ```
 
 ### 2. WhatsApp Business API جاهز ✅
+
 ```
 ✅ إرسال رسائل
 ✅ استقبال رسائل
@@ -86,6 +94,7 @@ src/lib/notifications/sms.ts (151 lines) ✅
 ```
 
 ### 3. SMS Service جاهز ✅
+
 ```
 ✅ Twilio integration
 ✅ إرسال SMS
@@ -97,7 +106,9 @@ src/lib/notifications/sms.ts (151 lines) ✅
 ## 🔴 المشاكل والنقص
 
 ### 1. لا توجد واجهة Messaging UI 🔴
+
 **المشكلة**:
+
 ```
 ❌ لا توجد صفحة "المحادثات"
 ❌ لا يمكن للأخصائي مراسلة ولي الأمر
@@ -106,19 +117,20 @@ src/lib/notifications/sms.ts (151 lines) ✅
 ```
 
 **الحل**:
+
 ```typescript
 // صفحة المحادثات
 <MessagingPage>
   <ConversationsList>
     {conversations.map(conv => (
-      <ConversationCard 
+      <ConversationCard
         conversation={conv}
         unreadCount={conv.unread}
         onClick={() => openConversation(conv.id)}
       />
     ))}
   </ConversationsList>
-  
+
   <MessageThread conversation={selected}>
     <Messages messages={messages} />
     <MessageInput onSend={sendMessage} />
@@ -128,7 +140,7 @@ src/lib/notifications/sms.ts (151 lines) ✅
 // Supabase Realtime للرسائل الفورية
 const channel = supabase
   .channel('chat')
-  .on('postgres_changes', 
+  .on('postgres_changes',
     { event: 'INSERT', schema: 'public', table: 'chat_messages' },
     (payload) => addMessageToUI(payload.new)
   )
@@ -141,13 +153,16 @@ const channel = supabase
 ---
 
 ### 2. لا يوجد Session Update System 🔴
+
 **المشكلة**:
+
 ```
 ❌ الأخصائي لا يرسل تحديث بعد كل جلسة
 ❌ ولي الأمر لا يعرف ماذا حدث في الجلسة
 ```
 
 **الحل**:
+
 ```typescript
 // بعد انتهاء الجلسة، الأخصائي يملأ نموذج
 <SessionUpdateForm session={session}>
@@ -155,17 +170,17 @@ const channel = supabase
   <Textarea label="ما تم إنجازه" />
   <Textarea label="توصيات منزلية" />
   <Textarea label="ملاحظات" />
-  
+
   <Button onClick={async () => {
     await createSessionNote(data);
-    
+
     // إرسال إشعار فوري لولي الأمر
     await sendNotification(guardian_id, {
       title: 'تحديث من جلسة اليوم',
       body: summary,
       type: 'session_update',
     });
-    
+
     // إرسال WhatsApp (اختياري)
     if (preferences.whatsapp_enabled) {
       await sendWhatsAppMessage(guardian.phone, message);
@@ -182,7 +197,9 @@ const channel = supabase
 ---
 
 ### 3. لا يوجد Notification System موحد 🟡
+
 **المشكلة**:
+
 ```
 ⚠️  إشعارات متفرقة
 ⚠️  لا يوجد مركز إشعارات موحد
@@ -190,6 +207,7 @@ const channel = supabase
 ```
 
 **الحل**:
+
 ```sql
 CREATE TABLE notifications (
   id UUID PRIMARY KEY,
@@ -219,13 +237,16 @@ CREATE TABLE notification_preferences (
 ---
 
 ### 4. لا توجد Announcements/Broadcasts 🟡
+
 **المشكلة**:
+
 ```
 ⚠️  لا يمكن إرسال إعلان عام لجميع الأسر
 ⚠️  مثال: "المركز مغلق غداً بسبب العطلة"
 ```
 
 **الحل**:
+
 ```typescript
 <BroadcastForm>
   <Select label="المستلمون">
@@ -233,13 +254,13 @@ CREATE TABLE notification_preferences (
     <option>أسر أطفال التدخل المبكر فقط</option>
     <option>أسر أطفال تعديل السلوك فقط</option>
   </Select>
-  
+
   <Textarea label="الرسالة" />
-  
+
   <Checkbox label="إرسال عبر WhatsApp" />
   <Checkbox label="إرسال عبر Email" />
   <Checkbox label="إرسال عبر SMS" />
-  
+
   <Button onClick={sendBroadcast}>إرسال</Button>
 </BroadcastForm>
 ```
@@ -251,19 +272,20 @@ CREATE TABLE notification_preferences (
 
 ## 📊 تقييم الجاهزية: **50/100** 🟡
 
-| المعيار | النقاط | الوزن | الإجمالي |
-|---------|--------|-------|----------|
-| **Infrastructure** | 80/100 | 30% | 24 |
-| **UI/UX** | 20/100 | 40% | 8 |
-| **Session Updates** | 30/100 | 20% | 6 |
-| **Notifications** | 40/100 | 10% | 4 |
-| **المجموع** | - | - | **42** |
+| المعيار             | النقاط | الوزن | الإجمالي |
+| ------------------- | ------ | ----- | -------- |
+| **Infrastructure**  | 80/100 | 30%   | 24       |
+| **UI/UX**           | 20/100 | 40%   | 8        |
+| **Session Updates** | 30/100 | 20%   | 6        |
+| **Notifications**   | 40/100 | 10%   | 4        |
+| **المجموع**         | -      | -     | **42**   |
 
 ---
 
 ## 🎯 خطة العمل (Week 4)
 
 ### Day 1-2: Messaging UI (12-16h)
+
 ```typescript
 ✅ صفحة المحادثات
 ✅ قائمة المحادثات
@@ -273,6 +295,7 @@ CREATE TABLE notification_preferences (
 ```
 
 ### Day 3: Session Updates (6-8h)
+
 ```typescript
 ✅ نموذج تحديث الجلسة
 ✅ إرسال تلقائي لولي الأمر
@@ -280,6 +303,7 @@ CREATE TABLE notification_preferences (
 ```
 
 ### Day 4: Notifications Center (8-10h)
+
 ```typescript
 ✅ جدول notifications
 ✅ صفحة الإشعارات
@@ -288,6 +312,7 @@ CREATE TABLE notification_preferences (
 ```
 
 ### Day 5: Testing (6-8h)
+
 ```typescript
 ✅ اختبار شامل
 ✅ Performance testing
@@ -303,6 +328,7 @@ CREATE TABLE notification_preferences (
 ## 🎓 التوصيات
 
 ### Must Have:
+
 ```
 1. 🔴 Messaging UI
 2. 🔴 Session updates system
@@ -310,6 +336,7 @@ CREATE TABLE notification_preferences (
 ```
 
 ### Nice to Have:
+
 ```
 4. ⏳ Broadcasts/Announcements
 5. ⏳ Voice messages
@@ -324,11 +351,13 @@ CREATE TABLE notification_preferences (
 ### الحالة: **50% - يحتاج UI** 🟡
 
 **نقاط القوة**:
+
 - ✅ WhatsApp API جاهز
 - ✅ SMS service جاهز
 - ✅ الجداول موجودة
 
 **ما ينقص**:
+
 - 🔴 Messaging UI
 - 🔴 Session updates workflow
 - 🟡 Notifications center
@@ -338,6 +367,6 @@ CREATE TABLE notification_preferences (
 
 ---
 
-*Audit Date: 2025-10-17*  
-*System: Family Communication*  
-*Status: ⚠️  Infrastructure Ready, UI Needed*
+_Audit Date: 2025-10-17_  
+_System: Family Communication_  
+_Status: ⚠️ Infrastructure Ready, UI Needed_

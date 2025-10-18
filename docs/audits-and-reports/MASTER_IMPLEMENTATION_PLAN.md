@@ -9,6 +9,7 @@
 ## 📊 ملخص تنفيذي
 
 ### الأنظمة الـ12 + التحسينات الـ5:
+
 ```
 Overall Current Score: 71/100
 Target After Plan:     98/100
@@ -22,15 +23,18 @@ Improvement:          +27 points
 ### 🔴 المرحلة 1: الأنظمة الحرجة (3 أسابيع)
 
 #### Week 1: نظام التأمينات 🏥
+
 **الملف**: `enhancements/insurance-automation.md`
 
 **الأهداف**:
+
 - ✅ Generic Insurance Framework
 - ✅ 4 شركات رئيسية (Tawuniya, Bupa, Medgulf, AXA)
 - ✅ Automatic submission & status checking
 - ✅ UI للمطالبات
 
 **المخرجات**:
+
 - Insurance adapter framework
 - 4 provider adapters
 - Claims submission API
@@ -42,9 +46,11 @@ Improvement:          +27 points
 ---
 
 #### Week 2: نظام التكاملات (Wizard) 🧙‍♂️
+
 **الملف**: `enhancements/wizard-based-integrations.md`
 
 **الأهداف**:
+
 - ✅ Wizard framework
 - ✅ Step-by-step integration setup
 - ✅ Input validation per step
@@ -52,6 +58,7 @@ Improvement:          +27 points
 - ✅ Beautiful UX
 
 **المخرجات**:
+
 - Wizard component library
 - WhatsApp integration wizard
 - SMS integration wizard
@@ -63,15 +70,18 @@ Improvement:          +27 points
 ---
 
 #### Week 3: نظام الأطباء 👨‍⚕️
+
 **الملف**: `systems/09-doctors-system.md`
 
 **الأهداف**:
+
 - ✅ Integrated doctor-patient chat
 - ✅ Slack alternative (free)
 - ✅ Privacy controls
 - ✅ Medical notes integration
 
 **المخرجات**:
+
 - Built-in chat system
 - Video call integration (Jitsi/Daily.co)
 - Appointment notes
@@ -84,11 +94,14 @@ Improvement:          +27 points
 ### 🟡 المرحلة 2: التحسينات (2 أسابيع)
 
 #### Week 4: باقي شركات التأمين (6 شركات)
+
 - SABB Takaful, Al Rajhi, Malath, Gulf Union, Sanad, Walaa
 - **التقدير**: 30 ساعة
 
 #### Week 5: Owner Dashboard + Supervisor Notifications
-**الملفات**: 
+
+**الملفات**:
+
 - `enhancements/owner-dashboard-module.md`
 - `enhancements/supervisor-notifications.md`
 
@@ -99,12 +112,14 @@ Improvement:          +27 points
 ### 🟢 المرحلة 3: الاختبار والتوثيق (2 أسابيع)
 
 #### Week 6-7: Integration Testing
+
 - Testing كل التكاملات
 - User acceptance testing
 - Performance optimization
 - **التقدير**: 40 ساعة
 
 #### Week 8: Documentation & Training
+
 - User manuals
 - Video tutorials
 - Staff training
@@ -115,6 +130,7 @@ Improvement:          +27 points
 ## 📁 التقارير المفصلة
 
 ### الأنظمة الرئيسية:
+
 1. `systems/01-authorization-system.md` - ✅ مكتمل
 2. `systems/02-authentication-system.md` - ✅ مكتمل
 3. `systems/03-appointments-system.md` - 🟡 يحتاج automation
@@ -129,6 +145,7 @@ Improvement:          +27 points
 12. `systems/12-payments-system.md` - 🟢 جيد
 
 ### التحسينات المطلوبة:
+
 1. `enhancements/insurance-automation.md` - ✅ **جاهز للتنفيذ**
 2. `enhancements/wizard-based-integrations.md` - 🔄 قيد الإنشاء
 3. `enhancements/doctor-patient-communication.md` - 🔄 قيد الإنشاء
@@ -140,6 +157,7 @@ Improvement:          +27 points
 ## 📈 مؤشرات النجاح
 
 ### Technical Metrics:
+
 ```
 Code Coverage:           > 80%
 API Response Time:       < 200ms
@@ -149,6 +167,7 @@ Error Rate:             < 1%
 ```
 
 ### Business Metrics:
+
 ```
 Insurance Approval Rate:   > 70%
 User Satisfaction:        > 95%
@@ -162,6 +181,7 @@ Claim Processing Time:    < 2 min
 ## 💰 تقدير التكلفة
 
 ### Development Time:
+
 ```
 Week 1: 40 hours @ $50/hr = $2,000
 Week 2: 35 hours @ $50/hr = $1,750
@@ -175,6 +195,7 @@ Total: 240 hours = $12,000
 ```
 
 ### Infrastructure:
+
 ```
 WhatsApp API:    $0 (first 1000 free)
 SMS (Twilio):    $50/month
@@ -188,15 +209,18 @@ Total/month:     $75-175
 ## 🎯 الأولويات
 
 ### Must Have (Week 1-3):
+
 1. 🔴 Insurance automation (10 companies)
 2. 🔴 Wizard integrations
 3. 🔴 Doctor-patient communication
 
 ### Should Have (Week 4-5):
+
 4. 🟡 Owner dashboard
 5. 🟡 Supervisor notifications
 
 ### Nice to Have (Week 6-8):
+
 6. 🟢 Advanced analytics
 7. 🟢 Mobile app
 8. 🟢 AI enhancements
@@ -206,21 +230,25 @@ Total/month:     $75-175
 ## ✅ Milestones
 
 ### Milestone 1 (End of Week 1):
+
 - ✅ Insurance framework complete
 - ✅ 4 major providers integrated
 - ✅ Claims submission working
 
 ### Milestone 2 (End of Week 3):
+
 - ✅ All 10 providers integrated
 - ✅ Wizard integrations live
 - ✅ Doctor system complete
 
 ### Milestone 3 (End of Week 5):
+
 - ✅ Owner dashboard live
 - ✅ Notifications system complete
 - ✅ All features integrated
 
 ### Final Milestone (End of Week 8):
+
 - ✅ All testing complete
 - ✅ Documentation ready
 - ✅ Production deployment
@@ -245,5 +273,5 @@ Total/month:     $75-175
 
 ---
 
-*Created: 2025-10-17*  
-*Next Review: بداية كل أسبوع*
+_Created: 2025-10-17_  
+_Next Review: بداية كل أسبوع_

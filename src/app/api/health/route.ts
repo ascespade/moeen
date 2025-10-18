@@ -3,12 +3,12 @@
  * Comprehensive health monitoring and system status
  */
 
-import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { logger } from "@/lib/logger";
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+import { logger } from '@/lib/logger';
 
 interface HealthCheck {
-  status: "healthy" | "degraded" | "unhealthy";
+  status: 'healthy' | 'degraded' | 'unhealthy';
   timestamp: string;
   version: string;
   uptime: number;
@@ -30,7 +30,7 @@ interface HealthCheck {
 }
 
 interface ServiceStatus {
-  status: "healthy" | "degraded" | "unhealthy";
+  status: 'healthy' | 'degraded' | 'unhealthy';
   responseTime?: number;
   error?: string;
   lastChecked: string;
@@ -56,20 +56,20 @@ export async function GET(request: NextRequest) {
     // Add cache headers
     const response = NextResponse.json(healthCheck, { status: httpStatus });
     response.headers.set(
-      "Cache-Control",
-      "no-cache, no-store, must-revalidate",
+      'Cache-Control',
+      'no-cache, no-store, must-revalidate'
     );
-    response.headers.set("X-Health-Check", "true");
-    response.headers.set("X-Response-Time", `${responseTime}ms`);
+    response.headers.set('X-Health-Check', 'true');
+    response.headers.set('X-Response-Time', `${responseTime}ms`);
 
     return response;
   } catch (error) {
-    logger.error("Health check failed", { error: error.message });
+    logger.error('Health check failed', { error: error.message });
 
     const errorResponse = {
-      status: "unhealthy",
+      status: 'unhealthy',
       timestamp: new Date().toISOString(),
-      error: "Health check failed",
+      error: 'Health check failed',
       message: error.message,
     };
 
@@ -103,9 +103,9 @@ async function performHealthCheck(): Promise<HealthCheck> {
   const cpuUsage = process.cpuUsage();
 
   return {
-    status: "healthy", // Will be determined later
+    status: 'healthy', // Will be determined later
     timestamp,
-    version: process.env.npm_package_version || "1.0.0",
+    version: process.env.npm_package_version || '1.0.0',
     uptime: process.uptime(),
     services: {
       database: databaseStatus,
@@ -130,26 +130,26 @@ async function checkDatabase(): Promise<ServiceStatus> {
 
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase.from("users").select("id").limit(1);
+    const { data, error } = await supabase.from('users').select('id').limit(1);
 
     const responseTime = Date.now() - startTime;
 
     if (error) {
       return {
-        status: "unhealthy",
+        status: 'unhealthy',
         error: error.message,
         lastChecked: new Date().toISOString(),
       };
     }
 
     return {
-      status: responseTime > 1000 ? "degraded" : "healthy",
+      status: responseTime > 1000 ? 'degraded' : 'healthy',
       responseTime,
       lastChecked: new Date().toISOString(),
     };
   } catch (error) {
     return {
-      status: "unhealthy",
+      status: 'unhealthy',
       error: error.message,
       lastChecked: new Date().toISOString(),
     };
@@ -162,27 +162,27 @@ async function checkStorage(): Promise<ServiceStatus> {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase.storage
-      .from("medical-files")
-      .list("", { limit: 1 });
+      .from('medical-files')
+      .list('', { limit: 1 });
 
     const responseTime = Date.now() - startTime;
 
     if (error) {
       return {
-        status: "unhealthy",
+        status: 'unhealthy',
         error: error.message,
         lastChecked: new Date().toISOString(),
       };
     }
 
     return {
-      status: responseTime > 2000 ? "degraded" : "healthy",
+      status: responseTime > 2000 ? 'degraded' : 'healthy',
       responseTime,
       lastChecked: new Date().toISOString(),
     };
   } catch (error) {
     return {
-      status: "unhealthy",
+      status: 'unhealthy',
       error: error.message,
       lastChecked: new Date().toISOString(),
     };
@@ -200,20 +200,20 @@ async function checkAuth(): Promise<ServiceStatus> {
 
     if (error) {
       return {
-        status: "unhealthy",
+        status: 'unhealthy',
         error: error.message,
         lastChecked: new Date().toISOString(),
       };
     }
 
     return {
-      status: responseTime > 1000 ? "degraded" : "healthy",
+      status: responseTime > 1000 ? 'degraded' : 'healthy',
       responseTime,
       lastChecked: new Date().toISOString(),
     };
   } catch (error) {
     return {
-      status: "unhealthy",
+      status: 'unhealthy',
       error: error.message,
       lastChecked: new Date().toISOString(),
     };
@@ -226,26 +226,26 @@ async function checkAPI(): Promise<ServiceStatus> {
   try {
     // Test a simple API endpoint
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/health`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/health`
     );
     const responseTime = Date.now() - startTime;
 
     if (!response.ok) {
       return {
-        status: "unhealthy",
+        status: 'unhealthy',
         error: `HTTP ${response.status}`,
         lastChecked: new Date().toISOString(),
       };
     }
 
     return {
-      status: responseTime > 500 ? "degraded" : "healthy",
+      status: responseTime > 500 ? 'degraded' : 'healthy',
       responseTime,
       lastChecked: new Date().toISOString(),
     };
   } catch (error) {
     return {
-      status: "unhealthy",
+      status: 'unhealthy',
       error: error.message,
       lastChecked: new Date().toISOString(),
     };
@@ -258,14 +258,14 @@ async function checkMemory(): Promise<ServiceStatus> {
   const usedMemory = memoryUsage.heapUsed;
   const memoryUsagePercent = (usedMemory / totalMemory) * 100;
 
-  let status: "healthy" | "degraded" | "unhealthy";
+  let status: 'healthy' | 'degraded' | 'unhealthy';
 
   if (memoryUsagePercent > 90) {
-    status = "unhealthy";
+    status = 'unhealthy';
   } else if (memoryUsagePercent > 75) {
-    status = "degraded";
+    status = 'degraded';
   } else {
-    status = "healthy";
+    status = 'healthy';
   }
 
   return {
@@ -279,15 +279,15 @@ async function checkCPU(): Promise<ServiceStatus> {
   const totalUsage = cpuUsage.user + cpuUsage.system;
 
   // This is a simplified check - in production, you'd want more sophisticated CPU monitoring
-  let status: "healthy" | "degraded" | "unhealthy";
+  let status: 'healthy' | 'degraded' | 'unhealthy';
 
   if (totalUsage > 1000000) {
     // Arbitrary threshold
-    status = "unhealthy";
+    status = 'unhealthy';
   } else if (totalUsage > 500000) {
-    status = "degraded";
+    status = 'degraded';
   } else {
-    status = "healthy";
+    status = 'healthy';
   }
 
   return {
@@ -297,28 +297,28 @@ async function checkCPU(): Promise<ServiceStatus> {
 }
 
 function determineOverallStatus(
-  services: HealthCheck["services"],
-): "healthy" | "degraded" | "unhealthy" {
-  const statuses = Object.values(services).map((service) => service.status);
+  services: HealthCheck['services']
+): 'healthy' | 'degraded' | 'unhealthy' {
+  const statuses = Object.values(services).map(service => service.status);
 
-  if (statuses.includes("unhealthy")) {
-    return "unhealthy";
+  if (statuses.includes('unhealthy')) {
+    return 'unhealthy';
   }
 
-  if (statuses.includes("degraded")) {
-    return "degraded";
+  if (statuses.includes('degraded')) {
+    return 'degraded';
   }
 
-  return "healthy";
+  return 'healthy';
 }
 
-function getHttpStatus(status: "healthy" | "degraded" | "unhealthy"): number {
+function getHttpStatus(status: 'healthy' | 'degraded' | 'unhealthy'): number {
   switch (status) {
-    case "healthy":
+    case 'healthy':
       return 200;
-    case "degraded":
+    case 'degraded':
       return 200; // Still operational
-    case "unhealthy":
+    case 'unhealthy':
       return 503;
     default:
       return 500;
@@ -335,7 +335,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(healthCheck);
   }
 
-  return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
 }
 
 async function performDetailedHealthCheck() {

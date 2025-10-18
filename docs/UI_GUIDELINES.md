@@ -323,24 +323,28 @@ import { Button } from '@/components/ui';
 ## 🎯 Quick Reference
 
 ### Import Pattern
+
 ```typescript
 import { Button, Card, Input } from '@/components/ui';
 ```
 
 ### Color Pattern
+
 ```typescript
-bg-brand-primary | bg-brand-success | bg-brand-error
-text-text-primary | text-text-secondary
+(bg - brand - primary) | (bg - brand - success) | (bg - brand - error);
+(text - text - primary) | (text - text - secondary);
 ```
 
 ### Size Pattern
+
 ```typescript
-size="sm" | "md" | "lg" | "xl"
+size = 'sm' | 'md' | 'lg' | 'xl';
 ```
 
 ### Spacing Pattern
+
 ```typescript
-p-{size} | m-{size} | gap-{size}
+(p - { size }) | (m - { size }) | (gap - { size });
 // where size: 1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24, 32
 ```
 

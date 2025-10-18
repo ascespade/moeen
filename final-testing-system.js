@@ -18,7 +18,14 @@ class FinalTestingSystem {
 
   log(message, type = 'info') {
     const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    const prefix =
+      type === 'error'
+        ? '❌'
+        : type === 'success'
+          ? '✅'
+          : type === 'warning'
+            ? '⚠️'
+            : 'ℹ️';
     console.log(`[${timestamp}] ${prefix} ${message}`);
   }
 
@@ -45,7 +52,7 @@ class FinalTestingSystem {
 
   async startServer() {
     this.log('🚀 Starting development server...');
-    
+
     try {
       // Check if server is already running
       if (await this.checkServerHealth()) {
@@ -56,14 +63,14 @@ class FinalTestingSystem {
 
       // Kill any existing server
       await this.runCommand('pkill -f "next dev" || true');
-      
+
       // Start new server
       this.serverProcess = spawn('npm', ['run', 'dev'], {
         cwd: process.cwd(),
-        stdio: 'pipe'
+        stdio: 'pipe',
       });
 
-      this.serverProcess.stdout.on('data', (data) => {
+      this.serverProcess.stdout.on('data', data => {
         const output = data.toString();
         if (output.includes('Ready in')) {
           this.log('✅ Server started successfully');
@@ -71,7 +78,7 @@ class FinalTestingSystem {
         }
       });
 
-      this.serverProcess.stderr.on('data', (data) => {
+      this.serverProcess.stderr.on('data', data => {
         const error = data.toString();
         if (error.includes('Error') || error.includes('Failed')) {
           this.log(`Server error: ${error}`, 'error');
@@ -108,7 +115,7 @@ class FinalTestingSystem {
 
   async runTypeScriptCheck() {
     this.log('🔍 Running TypeScript compilation check...');
-    
+
     try {
       await this.runCommand('npx tsc --noEmit --skipLibCheck');
       this.log('✅ TypeScript compilation successful');
@@ -122,7 +129,7 @@ class FinalTestingSystem {
 
   async runLinting() {
     this.log('🔍 Running ESLint...');
-    
+
     try {
       await this.runCommand('npm run lint');
       this.log('✅ ESLint passed');
@@ -135,7 +142,7 @@ class FinalTestingSystem {
 
   async runBuildTest() {
     this.log('🔨 Testing production build...');
-    
+
     try {
       await this.runCommand('npm run build');
       this.log('✅ Production build successful');
@@ -148,7 +155,7 @@ class FinalTestingSystem {
 
   async runE2ETests() {
     this.log('🧪 Running end-to-end tests...');
-    
+
     try {
       const { stdout, stderr } = await this.runCommand(
         'npx playwright test --config=playwright-auto.config.ts --reporter=json',
@@ -163,14 +170,35 @@ class FinalTestingSystem {
         return { success: false, error: 'Parse error' };
       }
 
-      const totalTests = results.suites?.reduce((total, suite) => 
-        total + (suite.specs?.reduce((specTotal, spec) => 
-          specTotal + (spec.tests?.length || 0), 0) || 0), 0) || 0;
+      const totalTests =
+        results.suites?.reduce(
+          (total, suite) =>
+            total +
+            (suite.specs?.reduce(
+              (specTotal, spec) => specTotal + (spec.tests?.length || 0),
+              0
+            ) || 0),
+          0
+        ) || 0;
 
-      const passedTests = results.suites?.reduce((total, suite) => 
-        total + (suite.specs?.reduce((specTotal, spec) => 
-          specTotal + (spec.tests?.reduce((testTotal, test) => 
-            testTotal + (test.results?.filter(r => r.status === 'passed').length || 0), 0) || 0), 0) || 0), 0) || 0;
+      const passedTests =
+        results.suites?.reduce(
+          (total, suite) =>
+            total +
+            (suite.specs?.reduce(
+              (specTotal, spec) =>
+                specTotal +
+                (spec.tests?.reduce(
+                  (testTotal, test) =>
+                    testTotal +
+                    (test.results?.filter(r => r.status === 'passed').length ||
+                      0),
+                  0
+                ) || 0),
+              0
+            ) || 0),
+          0
+        ) || 0;
 
       const success = passedTests === totalTests && totalTests > 0;
 
@@ -180,14 +208,13 @@ class FinalTestingSystem {
         this.log(`❌ ${passedTests}/${totalTests} tests passed`, 'error');
       }
 
-      return { 
-        success, 
-        totalTests, 
-        passedTests, 
+      return {
+        success,
+        totalTests,
+        passedTests,
         failedTests: totalTests - passedTests,
-        results 
+        results,
       };
-
     } catch (error) {
       this.log(`❌ E2E tests failed: ${error.message}`, 'error');
       return { success: false, error: error.message };
@@ -196,22 +223,22 @@ class FinalTestingSystem {
 
   async runHealthChecks() {
     this.log('🏥 Running health checks...');
-    
+
     const healthChecks = [];
-    
+
     // Check if server responds
     try {
       const response = await fetch('http://localhost:3001');
       healthChecks.push({
         name: 'Server Response',
         status: response.ok ? 'healthy' : 'unhealthy',
-        details: `Status: ${response.status}`
+        details: `Status: ${response.status}`,
       });
     } catch (error) {
       healthChecks.push({
         name: 'Server Response',
         status: 'unhealthy',
-        details: error.message
+        details: error.message,
       });
     }
 
@@ -219,7 +246,7 @@ class FinalTestingSystem {
     const apiEndpoints = [
       '/api/auth/login',
       '/api/dashboard/health',
-      '/api/test/health'
+      '/api/test/health',
     ];
 
     for (const endpoint of apiEndpoints) {
@@ -227,23 +254,25 @@ class FinalTestingSystem {
         const response = await fetch(`http://localhost:3001${endpoint}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({})
+          body: JSON.stringify({}),
         });
         healthChecks.push({
           name: `API ${endpoint}`,
           status: response.ok ? 'healthy' : 'unhealthy',
-          details: `Status: ${response.status}`
+          details: `Status: ${response.status}`,
         });
       } catch (error) {
         healthChecks.push({
           name: `API ${endpoint}`,
           status: 'unhealthy',
-          details: error.message
+          details: error.message,
         });
       }
     }
 
-    const healthyCount = healthChecks.filter(check => check.status === 'healthy').length;
+    const healthyCount = healthChecks.filter(
+      check => check.status === 'healthy'
+    ).length;
     const totalCount = healthChecks.length;
 
     this.log(`🏥 Health checks: ${healthyCount}/${totalCount} healthy`);
@@ -251,13 +280,13 @@ class FinalTestingSystem {
     return {
       total: totalCount,
       healthy: healthyCount,
-      checks: healthChecks
+      checks: healthChecks,
     };
   }
 
   async runComprehensiveTest() {
     this.log('🚀 Starting comprehensive system test...');
-    
+
     const results = {
       timestamp: new Date().toISOString(),
       typescript: null,
@@ -265,7 +294,7 @@ class FinalTestingSystem {
       build: null,
       e2e: null,
       health: null,
-      overall: 'pending'
+      overall: 'pending',
     };
 
     try {
@@ -285,7 +314,7 @@ class FinalTestingSystem {
         results.linting.success,
         results.build.success,
         results.e2e.success,
-        results.health.healthy > 0
+        results.health.healthy > 0,
       ].every(Boolean);
 
       results.overall = allPassed ? 'success' : 'partial';
@@ -297,7 +326,6 @@ class FinalTestingSystem {
       }
 
       return results;
-
     } catch (error) {
       this.log(`❌ Comprehensive test failed: ${error.message}`, 'error');
       results.overall = 'failed';
@@ -317,11 +345,16 @@ class FinalTestingSystem {
         linting: results.linting?.success ? 'passed' : 'failed',
         build: results.build?.success ? 'passed' : 'failed',
         e2e: results.e2e?.success ? 'passed' : 'failed',
-        health: results.health ? `${results.health.healthy}/${results.health.total} healthy` : 'unknown'
-      }
+        health: results.health
+          ? `${results.health.healthy}/${results.health.total} healthy`
+          : 'unknown',
+      },
     };
-    
-    fs.writeFileSync('final-test-results.json', JSON.stringify(report, null, 2));
+
+    fs.writeFileSync(
+      'final-test-results.json',
+      JSON.stringify(report, null, 2)
+    );
     this.log('💾 Final test results saved to final-test-results.json');
   }
 
@@ -329,11 +362,10 @@ class FinalTestingSystem {
     try {
       const results = await this.runComprehensiveTest();
       this.saveResults(results);
-      
+
       this.log('✅ Final testing system completed!', 'success');
-      
+
       return results;
-      
     } catch (error) {
       this.log(`❌ Final testing failed: ${error.message}`, 'error');
       throw error;

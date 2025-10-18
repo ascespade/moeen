@@ -7,18 +7,21 @@
 ## 🛠️ المكونات
 
 ### 1. ملفات التكوين
+
 - `~/.ssh/config` - تكوين SSH محسن
 - `~/.ssh/id_rsa` - المفتاح الخاص
 - `~/.ssh/id_rsa.pub` - المفتاح العام
 - `~/.ssh/authorized_keys` - مفاتيح مصرح بها
 
 ### 2. السكريبتات الرئيسية
+
 - `connect.sh` - سكريبت الاتصال المحسن
 - `quick-connect.sh` - واجهة تفاعلية سهلة
 - `setup_ssh.sh` - إعداد SSH الأساسي
 - `tailscale-guardian-advanced.sh` - دمج SSH مع Tailscale
 
 ### 3. دعم Docker
+
 - `Dockerfile.production` - محدث لدعم SSH
 - `docker-compose.yml` - منافذ SSH مضافة
 - `scripts/setup-ssh.sh` - إعداد SSH للحاويات
@@ -26,11 +29,13 @@
 ## 🚀 الاستخدام السريع
 
 ### الطريقة الأسهل - الواجهة التفاعلية
+
 ```bash
 ./quick-connect.sh
 ```
 
 ### الطرق المتقدمة
+
 ```bash
 # عرض المساعدة
 ./connect.sh --help
@@ -57,16 +62,19 @@
 ## 🔧 الإعداد الأولي
 
 ### 1. إنشاء مفاتيح SSH
+
 ```bash
 ./connect.sh --keygen
 ```
 
 ### 2. نسخ المفتاح إلى الخوادم البعيدة
+
 ```bash
 ./connect.sh --copy-key ubuntu@192.168.1.100
 ```
 
 ### 3. اختبار الاتصال
+
 ```bash
 ./connect.sh --ssh ubuntu@192.168.1.100
 ```
@@ -74,11 +82,13 @@
 ## 🐳 Docker Integration
 
 ### تشغيل مع SSH
+
 ```bash
 docker-compose up -d
 ```
 
 ### الاتصال إلى الحاوية
+
 ```bash
 # عبر السكريبت
 ./connect.sh --docker app
@@ -90,11 +100,13 @@ ssh -p 2222 root@localhost
 ## 🌐 Tailscale Integration
 
 ### تشغيل Tailscale Guardian
+
 ```bash
 ./tailscale-guardian-advanced.sh
 ```
 
 ### الاتصال عبر Tailscale
+
 ```bash
 ./connect.sh --tailscale cursor-2
 ```
@@ -102,11 +114,13 @@ ssh -p 2222 root@localhost
 ## 📊 مراقبة النظام
 
 ### عرض حالة الاتصالات
+
 ```bash
 ./connect.sh --status
 ```
 
 ### عرض الخوادم المتاحة
+
 ```bash
 ./connect.sh --list
 ```
@@ -121,21 +135,25 @@ ssh -p 2222 root@localhost
 ## 🆘 استكشاف الأخطاء
 
 ### فحص مفاتيح SSH
+
 ```bash
 ls -la ~/.ssh/
 ```
 
 ### اختبار الاتصال مع تفاصيل
+
 ```bash
 ssh -v ubuntu@192.168.1.100
 ```
 
 ### فحص حالة Tailscale
+
 ```bash
 tailscale status
 ```
 
 ### فحص حاويات Docker
+
 ```bash
 docker ps
 ```
@@ -160,11 +178,13 @@ docker ps
 ## 📞 الدعم
 
 إذا واجهت أي مشاكل، استخدم:
+
 ```bash
 ./connect.sh --status
 ```
 
 أو راجع ملفات السجل:
+
 ```bash
 tail -f /var/log/tailscale-guardian.log
 ```

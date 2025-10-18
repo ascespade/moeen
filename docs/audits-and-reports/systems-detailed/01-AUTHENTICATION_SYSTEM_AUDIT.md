@@ -10,7 +10,9 @@
 ## 📋 نظرة عامة (Overview)
 
 ### الغرض:
+
 نظام المصادقة هو البوابة الأساسية للدخول إلى نظام معين. يتعامل مع:
+
 - تسجيل المستخدمين الجدد
 - تسجيل الدخول/الخروج
 - إدارة الجلسات (Sessions)
@@ -19,6 +21,7 @@
 - OAuth (Google, etc.)
 
 ### السكوب لمركز الهمم:
+
 ```
 👥 المستخدمون:
    - أولياء الأمور (Guardians)
@@ -39,6 +42,7 @@
 ## 🏗️ البنية الحالية (Current Architecture)
 
 ### 1. التكنولوجيا المستخدمة:
+
 ```typescript
 Platform: Supabase Auth
 Database: PostgreSQL (users table)
@@ -49,6 +53,7 @@ Library: @supabase/ssr
 ### 2. الجداول (Database Tables):
 
 #### `auth.users` (Supabase built-in):
+
 ```sql
 - id: uuid (primary key)
 - email: text
@@ -60,6 +65,7 @@ Library: @supabase/ssr
 ```
 
 #### `public.users` (Custom):
+
 ```sql
 CREATE TABLE users (
   id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -75,7 +81,7 @@ CREATE TABLE users (
 -- user_role ENUM
 CREATE TYPE user_role AS ENUM (
   'admin',
-  'supervisor', 
+  'supervisor',
   'staff',
   'doctor',
   'patient'
@@ -104,9 +110,11 @@ src/app/(auth)/
 ## ✅ ما تم تنفيذه (Implemented Features)
 
 ### 1. التسجيل (Registration) ✅
+
 **الملف**: `src/app/(auth)/register/page.tsx`
 
 **المميزات**:
+
 ```typescript
 ✅ نموذج تسجيل بـ:
    - البريد الإلكتروني
@@ -122,6 +130,7 @@ src/app/(auth)/
 ```
 
 **الكود الأساسي**:
+
 ```typescript
 const { data, error } = await supabase.auth.signUp({
   email,
@@ -137,9 +146,11 @@ const { data, error } = await supabase.auth.signUp({
 ```
 
 ### 2. تسجيل الدخول (Login) ✅
+
 **الملف**: `src/app/(auth)/login/page.tsx`
 
 **المميزات**:
+
 ```typescript
 ✅ تسجيل دخول بالبريد وكلمة المرور
 ✅ زر "تذكرني" (Remember Me)
@@ -150,6 +161,7 @@ const { data, error } = await supabase.auth.signUp({
 ```
 
 **الكود الأساسي**:
+
 ```typescript
 const { data, error } = await supabase.auth.signInWithPassword({
   email,
@@ -163,9 +175,11 @@ if (data.user) {
 ```
 
 ### 3. تسجيل الخروج (Logout) ✅
+
 **الموقع**: متاح في جميع صفحات Dashboard
 
 **المميزات**:
+
 ```typescript
 ✅ تسجيل خروج من Supabase
 ✅ مسح الجلسة (Session)
@@ -174,9 +188,11 @@ if (data.user) {
 ```
 
 ### 4. استعادة كلمة المرور (Password Reset) ✅
+
 **الملف**: `src/app/(auth)/reset-password/page.tsx`
 
 **المميزات**:
+
 ```typescript
 ✅ إرسال رابط استعادة للبريد
 ✅ صفحة تحديث كلمة المرور
@@ -185,9 +201,11 @@ if (data.user) {
 ```
 
 ### 5. Middleware للحماية ✅
+
 **الملف**: `src/middleware.ts`
 
 **المميزات**:
+
 ```typescript
 ✅ حماية صفحات Dashboard
 ✅ منع الوصول غير المصرح
@@ -200,6 +218,7 @@ if (data.user) {
 ## 🟡 نقاط القوة (Strengths)
 
 ### 1. الأمان 🔒
+
 ```
 ✅ Supabase Auth (مدقق ومختبر)
 ✅ تشفير كلمات المرور (bcrypt)
@@ -210,6 +229,7 @@ if (data.user) {
 ```
 
 ### 2. تجربة المستخدم 👍
+
 ```
 ✅ واجهات نظيفة وبسيطة
 ✅ رسائل خطأ واضحة
@@ -219,6 +239,7 @@ if (data.user) {
 ```
 
 ### 3. الأداء ⚡
+
 ```
 ✅ استخدام Supabase (سريع)
 ✅ Next.js App Router (optimized)
@@ -231,17 +252,21 @@ if (data.user) {
 ## 🔴 المشاكل والنقص (Issues & Gaps)
 
 ### 1. نقص OAuth Providers 🔴 Medium
+
 **المشكلة**:
+
 ```
 ❌ لا يوجد تسجيل دخول بـ Google
 ❌ لا يوجد تسجيل دخول بـ Apple
 ```
 
 **التأثير**:
+
 - تجربة مستخدم أقل سلاسة
 - بعض المستخدمين يفضلون OAuth
 
 **الحل المقترح**:
+
 ```typescript
 // في صفحة Login
 const signInWithGoogle = async () => {
@@ -265,24 +290,28 @@ const signInWithGoogle = async () => {
 ---
 
 ### 2. نقص Two-Factor Authentication (2FA) 🟡 Low
+
 **المشكلة**:
+
 ```
 ❌ لا يوجد 2FA
 ❌ لا توجد رموز OTP
 ```
 
 **التأثير**:
+
 - أمان أقل للحسابات الحساسة (Admins)
 - لا يتوافق مع بعض معايير الأمان
 
 **الحل المقترح**:
+
 ```typescript
 // Enable 2FA for admins/supervisors
 const enable2FA = async () => {
   const { data, error } = await supabase.auth.mfa.enroll({
     factorType: 'totp',
   });
-  
+
   // Show QR code to user
   showQRCode(data.totp.qr_code);
 };
@@ -295,17 +324,21 @@ const enable2FA = async () => {
 ---
 
 ### 3. نقص Email Verification Enforcement 🟡 Medium
+
 **المشكلة**:
+
 ```
 ⚠️  يمكن للمستخدم الدخول قبل تأكيد البريد
 ⚠️  لا توجد صفحة "يرجى تأكيد بريدك"
 ```
 
 **التأثير**:
+
 - حسابات وهمية محتملة
 - تجربة مستخدم غير واضحة
 
 **الحل المقترح**:
+
 ```typescript
 // في middleware أو Dashboard
 if (!user.email_confirmed_at) {
@@ -326,7 +359,9 @@ if (!user.email_confirmed_at) {
 ---
 
 ### 4. نقص Profile Management UI 🔴 Medium
+
 **المشكلة**:
+
 ```
 ❌ لا توجد صفحة "الملف الشخصي"
 ❌ لا يمكن تحديث الاسم/الصورة/الجوال بسهولة
@@ -334,13 +369,15 @@ if (!user.email_confirmed_at) {
 ```
 
 **التأثير**:
+
 - تجربة مستخدم غير مكتملة
 - المستخدمون لا يمكنهم تحديث بياناتهم
 
 **الحل المقترح**:
+
 ```typescript
 // إنشاء صفحة /dashboard/profile
-<ProfileForm 
+<ProfileForm
   user={user}
   onUpdate={handleUpdate}
 />
@@ -355,7 +392,7 @@ const handleUpdate = async (data) => {
       avatar_url: data.avatarUrl,
     })
     .eq('id', user.id);
-  
+
   // Update auth.users metadata
   await supabase.auth.updateUser({
     data: { full_name: data.fullName },
@@ -370,24 +407,28 @@ const handleUpdate = async (data) => {
 ---
 
 ### 5. نقص Session Management Dashboard 🟡 Low
+
 **المشكلة**:
+
 ```
 ❌ لا يمكن للمستخدم رؤية الأجهزة المسجل دخولها
 ❌ لا يمكن تسجيل خروج من جهاز معين
 ```
 
 **التأثير**:
+
 - أمان أقل إذا سُرق جهاز
 - لا يعرف المستخدم من أين تم الدخول
 
 **الحل المقترح**:
+
 ```typescript
 // عرض Sessions في صفحة الإعدادات
 const sessions = await supabase.auth.admin.listUserSessions(userId);
 
 <SessionsList>
   {sessions.map(session => (
-    <SessionCard 
+    <SessionCard
       device={session.device}
       location={session.ip}
       lastActive={session.updated_at}
@@ -407,17 +448,18 @@ const sessions = await supabase.auth.admin.listUserSessions(userId);
 
 ### النتيجة الإجمالية: **95/100** 🟢
 
-| المعيار | النقاط | الوزن | الإجمالي |
-|---------|--------|-------|----------|
-| **الأمان** | 95/100 | 40% | 38 |
-| **الوظائف** | 90/100 | 30% | 27 |
-| **تجربة المستخدم** | 85/100 | 20% | 17 |
-| **الأداء** | 98/100 | 10% | 9.8 |
-| **المجموع** | - | - | **91.8** |
+| المعيار            | النقاط | الوزن | الإجمالي |
+| ------------------ | ------ | ----- | -------- |
+| **الأمان**         | 95/100 | 40%   | 38       |
+| **الوظائف**        | 90/100 | 30%   | 27       |
+| **تجربة المستخدم** | 85/100 | 20%   | 17       |
+| **الأداء**         | 98/100 | 10%   | 9.8      |
+| **المجموع**        | -      | -     | **91.8** |
 
 ### التفصيل:
 
 #### الأمان (Security): 95/100
+
 ```
 ✅ تشفير قوي: 100
 ✅ JWT tokens: 100
@@ -430,6 +472,7 @@ Average: 95
 ```
 
 #### الوظائف (Functionality): 90/100
+
 ```
 ✅ Register: 100
 ✅ Login: 100
@@ -443,6 +486,7 @@ Average: 90
 ```
 
 #### تجربة المستخدم (UX): 85/100
+
 ```
 ✅ واجهة نظيفة: 95
 ✅ رسائل واضحة: 90
@@ -454,6 +498,7 @@ Average: 85
 ```
 
 #### الأداء (Performance): 98/100
+
 ```
 ✅ Fast load: 100
 ✅ SSR: 100
@@ -468,9 +513,11 @@ Average: 98
 ## 🎯 خطة العمل (Action Plan)
 
 ### المرحلة 1: الإكمال الفوري (Week 1) 🔴
+
 **الهدف**: الوصول لـ 98%
 
 #### Task 1: Profile Management Page (6-8h)
+
 ```
 📁 Create: src/app/dashboard/profile/page.tsx
 
@@ -490,6 +537,7 @@ API Endpoints:
 ```
 
 #### Task 2: Email Verification UI (2-3h)
+
 ```
 📁 Create: src/app/(auth)/verify-email/page.tsx
 
@@ -506,6 +554,7 @@ if (!user.email_confirmed_at && !isPublicRoute) {
 ```
 
 #### Task 3: OAuth Google Integration (2-4h)
+
 ```
 Setup:
 1. Enable Google OAuth in Supabase dashboard
@@ -528,6 +577,7 @@ Implementation:
 ### المرحلة 2: التحسينات (Future - Optional) 🟢
 
 #### Task 4: Two-Factor Authentication (4-8h)
+
 ```
 Features:
 ✅ TOTP setup
@@ -540,6 +590,7 @@ When: بعد 6 أشهر
 ```
 
 #### Task 5: Session Management (4-6h)
+
 ```
 Features:
 ✅ عرض الأجهزة
@@ -555,6 +606,7 @@ When: بعد 6 أشهر
 ## 🔒 الأمان والمطابقة (Security & Compliance)
 
 ### ✅ ما تم تطبيقه:
+
 ```
 ✅ Password hashing (bcrypt)
 ✅ JWT tokens
@@ -567,6 +619,7 @@ When: بعد 6 أشهر
 ```
 
 ### ⏳ ما يجب تطبيقه:
+
 ```
 ⏳ Rate limiting (login attempts)
 ⏳ Account lockout (after 5 failed attempts)
@@ -580,6 +633,7 @@ When: بعد 6 أشهر
 ## 📊 مقاييس الأداء (Performance Metrics)
 
 ### Current Performance:
+
 ```
 ⚡ Login time: ~500ms
 ⚡ Registration time: ~800ms
@@ -597,6 +651,7 @@ Target:
 ## 🎓 التوصيات (Recommendations)
 
 ### للإطلاق الفوري (Must Have):
+
 ```
 1. ✅ إنشاء صفحة Profile Management
 2. ✅ تطبيق Email Verification UI
@@ -604,6 +659,7 @@ Target:
 ```
 
 ### للمستقبل (Nice to Have):
+
 ```
 4. ⏳ تطبيق 2FA
 5. ⏳ Session Management Dashboard
@@ -616,6 +672,7 @@ Target:
 ## 📁 الملفات المتأثرة (Affected Files)
 
 ### يجب إنشاؤها:
+
 ```
 ✅ src/app/dashboard/profile/page.tsx
 ✅ src/app/(auth)/verify-email/page.tsx
@@ -625,6 +682,7 @@ Target:
 ```
 
 ### يجب تحديثها:
+
 ```
 ✅ src/app/(auth)/login/page.tsx (add Google button)
 ✅ src/middleware.ts (add email verification check)
@@ -638,17 +696,20 @@ Target:
 ### الحالة: **95% - شبه مكتمل** 🟢
 
 **نقاط القوة**:
+
 - ✅ نظام مصادقة آمن وموثوق
 - ✅ تجربة مستخدم جيدة
 - ✅ أداء ممتاز
 - ✅ يعمل بكفاءة
 
 **ما ينقص**:
-- ⚠️  صفحة Profile Management
-- ⚠️  Email Verification UI
-- ⚠️  OAuth Google
+
+- ⚠️ صفحة Profile Management
+- ⚠️ Email Verification UI
+- ⚠️ OAuth Google
 
 **الخطة**:
+
 - 🔴 Week 1: الإكمال → 98%
 - 🟢 Future: التحسينات → 100%
 
@@ -657,6 +718,6 @@ Target:
 
 ---
 
-*Audit Date: 2025-10-17*  
-*System: Authentication*  
-*Status: ✅ Production Ready (with minor enhancements)*
+_Audit Date: 2025-10-17_  
+_System: Authentication_  
+_Status: ✅ Production Ready (with minor enhancements)_

@@ -1,48 +1,48 @@
-require("@rushstack/eslint-patch/modern-module-resolution");
+require('@rushstack/eslint-patch/modern-module-resolution');
 
 module.exports = {
   root: true,
-  extends: ["next/core-web-vitals"],
+  extends: ['next/core-web-vitals'],
   ignorePatterns: [
-    "node_modules/**",
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-    "reports/**",
-    "public/**",
-    "temp_complex/**",
-    "src/__tests__/**",
-    "src/scripts/**",
-    "src/lib/security-enhanced.ts",
-    "src/lib/websocket-server.ts",
+    'node_modules/**',
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
+    'reports/**',
+    'public/**',
+    'temp_complex/**',
+    'src/__tests__/**',
+    'src/scripts/**',
+    'src/lib/security-enhanced.ts',
+    'src/lib/websocket-server.ts',
   ],
   overrides: [
     // Node scripts are not part of the Next.js runtime
     {
-      files: ["scripts/**/*.js"],
+      files: ['scripts/**/*.js'],
       env: { node: true },
       rules: {
-        "@next/next/no-assign-module-variable": "off",
+        '@next/next/no-assign-module-variable': 'off',
       },
     },
     // Allow <img> in this specialized component
     {
-      files: ["src/components/common/PerformanceOptimizedImage.tsx"],
+      files: ['src/components/common/PerformanceOptimizedImage.tsx'],
       rules: {
-        "@next/next/no-img-element": "off",
+        '@next/next/no-img-element': 'off',
       },
     },
     // Reduce noisy warnings in specific utility modules
     {
       files: [
-        "src/hooks/usePerformance.ts",
-        "src/lib/responsive-design.ts",
-        "src/lib/translations-manager.ts",
+        'src/hooks/usePerformance.ts',
+        'src/lib/responsive-design.ts',
+        'src/lib/translations-manager.ts',
       ],
       rules: {
-        "react-hooks/exhaustive-deps": "off",
-        "import/no-anonymous-default-export": "off",
+        'react-hooks/exhaustive-deps': 'off',
+        'import/no-anonymous-default-export': 'off',
       },
     },
   ],

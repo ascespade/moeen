@@ -5,15 +5,28 @@ import { execSync } from 'child_process';
 export function log(reportDir, msg) {
   const line = `[${new Date().toISOString()}] ${msg}`;
   console.log(line);
-  try { fs.appendFileSync(path.join(reportDir, 'execution.log'), line + '\n'); } catch(e){}
+  try {
+    fs.appendFileSync(path.join(reportDir, 'execution.log'), line + '\n');
+  } catch (e) {}
 }
 
 export function readJSON(filepath) {
-  try { return JSON.parse(fs.readFileSync(filepath,'utf8')); } catch(e){ return null; }
+  try {
+    return JSON.parse(fs.readFileSync(filepath, 'utf8'));
+  } catch (e) {
+    return null;
+  }
 }
 
-export function writeFile(p, content) { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, content); }
+export function writeFile(p, content) {
+  fs.mkdirSync(path.dirname(p), { recursive: true });
+  fs.writeFileSync(p, content);
+}
 
 export function gitName() {
-  try { return execSync('git config user.name').toString().trim() || 'ai-bot'; } catch { return 'ai-bot'; }
+  try {
+    return execSync('git config user.name').toString().trim() || 'ai-bot';
+  } catch {
+    return 'ai-bot';
+  }
 }

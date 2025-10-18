@@ -1,5 +1,5 @@
-"use client";
-import logger from "@/lib/monitoring/logger";
+'use client';
+import logger from '@/lib/monitoring/logger';
 
 import React, {
   createContext,
@@ -7,8 +7,8 @@ import React, {
   useState,
   useEffect,
   useCallback,
-} from "react";
-import { createClient } from "@/lib/supabase/client";
+} from 'react';
+import { createClient } from '@/lib/supabase/client';
 
 interface TranslationContextType {
   t: (key: string, fallback?: string) => string;
@@ -18,7 +18,7 @@ interface TranslationContextType {
 }
 
 const TranslationContext = createContext<TranslationContextType | undefined>(
-  undefined,
+  undefined
 );
 
 export function TranslationProvider({
@@ -27,7 +27,7 @@ export function TranslationProvider({
   children: React.ReactNode;
 }) {
   const [translations, setTranslations] = useState<Record<string, string>>({});
-  const [locale, setLocale] = useState<string>("ar");
+  const [locale, setLocale] = useState<string>('ar');
   const [isLoading, setIsLoading] = useState(true);
 
   const loadTranslations = useCallback(async () => {
@@ -35,12 +35,12 @@ export function TranslationProvider({
     try {
       const supabase = createClient();
       const { data, error } = await supabase
-        .from("translations")
-        .select("key, value, namespace")
-        .eq("locale", locale);
+        .from('translations')
+        .select('key, value, namespace')
+        .eq('locale', locale);
 
       if (error) {
-        console.error("Error loading translations:", error);
+        console.error('Error loading translations:', error);
         return;
       }
 
@@ -53,12 +53,12 @@ export function TranslationProvider({
             acc[fullKey] = item.value;
             return acc;
           },
-          {} as Record<string, string>,
+          {} as Record<string, string>
         );
         setTranslations(translationsMap);
       }
     } catch (error) {
-      console.error("Error loading translations:", error);
+      console.error('Error loading translations:', error);
     } finally {
       setIsLoading(false);
     }
@@ -82,7 +82,7 @@ export function TranslationProvider({
 export function useTranslation() {
   const context = useContext(TranslationContext);
   if (!context) {
-    throw new Error("useTranslation must be used within TranslationProvider");
+    throw new Error('useTranslation must be used within TranslationProvider');
   }
   return context;
 }

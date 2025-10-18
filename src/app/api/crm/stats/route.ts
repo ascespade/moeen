@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 
 export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient();
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toISOString().split('T')[0];
 
     // جلب إحصائيات المواعيد
     const [
@@ -16,34 +16,34 @@ export async function GET(request: NextRequest) {
       totalDoctorsResult,
     ] = await Promise.all([
       // إجمالي المواعيد
-      supabase.from("appointments").select("id", { count: "exact" }),
+      supabase.from('appointments').select('id', { count: 'exact' }),
 
       // مواعيد اليوم
       supabase
-        .from("appointments")
-        .select("id", { count: "exact" })
-        .eq("appointment_date", today),
+        .from('appointments')
+        .select('id', { count: 'exact' })
+        .eq('appointment_date', today),
 
       // المواعيد المعلقة
       supabase
-        .from("appointments")
-        .select("id", { count: "exact" })
-        .in("status", ["scheduled", "confirmed"]),
+        .from('appointments')
+        .select('id', { count: 'exact' })
+        .in('status', ['scheduled', 'confirmed']),
 
       // المواعيد المكتملة
       supabase
-        .from("appointments")
-        .select("id", { count: "exact" })
-        .eq("status", "completed"),
+        .from('appointments')
+        .select('id', { count: 'exact' })
+        .eq('status', 'completed'),
 
       // إجمالي المرضى
-      supabase.from("patients").select("id", { count: "exact" }),
+      supabase.from('patients').select('id', { count: 'exact' }),
 
       // إجمالي الأطباء
       supabase
-        .from("doctors")
-        .select("id", { count: "exact" })
-        .eq("is_active", true),
+        .from('doctors')
+        .select('id', { count: 'exact' })
+        .eq('is_active', true),
     ]);
 
     const stats = {
@@ -61,8 +61,8 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }

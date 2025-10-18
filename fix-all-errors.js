@@ -15,7 +15,14 @@ class AllErrorsFixer {
 
   log(message, type = 'info') {
     const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    const prefix =
+      type === 'error'
+        ? '❌'
+        : type === 'success'
+          ? '✅'
+          : type === 'warning'
+            ? '⚠️'
+            : 'ℹ️';
     console.log(`[${timestamp}] ${prefix} ${message}`);
   }
 
@@ -51,40 +58,44 @@ class AllErrorsFixer {
         fixes: [
           {
             pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
-            description: 'undefined object check'
-          }
-        ]
+            replacement:
+              "const ipAddress = getClientIP(request) || '127.0.0.1';",
+            description: 'undefined object check',
+          },
+        ],
       },
       {
         file: 'src/app/api/auth/login/route.ts',
         fixes: [
           {
             pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
-            description: 'undefined object check'
-          }
-        ]
+            replacement:
+              "const ipAddress = getClientIP(request) || '127.0.0.1';",
+            description: 'undefined object check',
+          },
+        ],
       },
       {
         file: 'src/app/api/auth/logout/route.ts',
         fixes: [
           {
             pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
-            description: 'undefined object check'
-          }
-        ]
+            replacement:
+              "const ipAddress = getClientIP(request) || '127.0.0.1';",
+            description: 'undefined object check',
+          },
+        ],
       },
       {
         file: 'src/app/api/auth/register/route.ts',
         fixes: [
           {
             pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
-            description: 'undefined object check'
-          }
-        ]
+            replacement:
+              "const ipAddress = getClientIP(request) || '127.0.0.1';",
+            description: 'undefined object check',
+          },
+        ],
       },
 
       // Fix validation errors
@@ -94,9 +105,9 @@ class AllErrorsFixer {
           {
             pattern: /\.errors/g,
             replacement: '.issues',
-            description: 'ZodError.errors to .issues'
-          }
-        ]
+            description: 'ZodError.errors to .issues',
+          },
+        ],
       },
       {
         file: 'src/lib/validation/schemas.ts',
@@ -104,9 +115,9 @@ class AllErrorsFixer {
           {
             pattern: /\.errors/g,
             replacement: '.issues',
-            description: 'ZodError.errors to .issues'
-          }
-        ]
+            description: 'ZodError.errors to .issues',
+          },
+        ],
       },
 
       // Fix ThemeManager
@@ -116,29 +127,29 @@ class AllErrorsFixer {
           {
             pattern: /this\.themes = \[.*\];/g,
             replacement: 'this.themes = "light,dark,system";',
-            description: 'themes array to string'
+            description: 'themes array to string',
           },
           {
             pattern: /this\.languages = \[.*\];/g,
             replacement: 'this.languages = "ar,en";',
-            description: 'languages array to string'
+            description: 'languages array to string',
           },
           {
             pattern: /this\.directions = \[.*\];/g,
             replacement: 'this.directions = "rtl,ltr";',
-            description: 'directions array to string'
+            description: 'directions array to string',
           },
           {
             pattern: /this\.currentTheme = ".*";/g,
             replacement: 'this.currentTheme = 0;',
-            description: 'currentTheme string to number'
+            description: 'currentTheme string to number',
           },
           {
             pattern: /this\.__isInitialized/g,
             replacement: 'this._isInitialized',
-            description: 'isInitialized property name'
-          }
-        ]
+            description: 'isInitialized property name',
+          },
+        ],
       },
 
       // Fix DesignSystemProvider
@@ -148,9 +159,9 @@ class AllErrorsFixer {
           {
             pattern: /colors: \{[\s\S]*?\},/g,
             replacement: '',
-            description: 'remove colors property'
-          }
-        ]
+            description: 'remove colors property',
+          },
+        ],
       },
 
       // Fix Header component
@@ -160,14 +171,14 @@ class AllErrorsFixer {
           {
             pattern: /variant=\{.*\}/g,
             replacement: '',
-            description: 'remove variant prop'
+            description: 'remove variant prop',
           },
           {
             pattern: /size=\{.*\}/g,
             replacement: '',
-            description: 'remove size prop'
-          }
-        ]
+            description: 'remove size prop',
+          },
+        ],
       },
 
       // Fix ThemeSwitch
@@ -177,9 +188,9 @@ class AllErrorsFixer {
           {
             pattern: /currentTheme\?/g,
             replacement: 'currentTheme || "light"',
-            description: 'undefined check for currentTheme'
-          }
-        ]
+            description: 'undefined check for currentTheme',
+          },
+        ],
       },
 
       // Fix PieChart
@@ -189,9 +200,9 @@ class AllErrorsFixer {
           {
             pattern: /percent: number/g,
             replacement: 'percent: any',
-            description: 'percent type fix'
-          }
-        ]
+            description: 'percent type fix',
+          },
+        ],
       },
 
       // Fix test health API
@@ -201,9 +212,9 @@ class AllErrorsFixer {
           {
             pattern: /error: error\.message/g,
             replacement: 'error: error.message',
-            description: 'add error property to type'
-          }
-        ]
+            description: 'add error property to type',
+          },
+        ],
       },
 
       // Fix validation function calls
@@ -213,9 +224,9 @@ class AllErrorsFixer {
           {
             pattern: /validateData\(([^,]+), ([^)]+)\)/g,
             replacement: 'validateData($1, $2)',
-            description: 'fix validation function calls'
-          }
-        ]
+            description: 'fix validation function calls',
+          },
+        ],
       },
 
       // Fix logger
@@ -225,14 +236,14 @@ class AllErrorsFixer {
           {
             pattern: /fullPath\?/g,
             replacement: 'fullPath || ""',
-            description: 'undefined check for fullPath'
+            description: 'undefined check for fullPath',
           },
           {
             pattern: /path\.basename\(fullPath\)/g,
             replacement: 'path.basename(fullPath || "")',
-            description: 'undefined check for path.basename'
-          }
-        ]
+            description: 'undefined check for path.basename',
+          },
+        ],
       },
 
       // Fix request helpers
@@ -242,9 +253,9 @@ class AllErrorsFixer {
           {
             pattern: /request\.headers\.get\(/g,
             replacement: 'request?.headers?.get(',
-            description: 'optional chaining for request'
-          }
-        ]
+            description: 'optional chaining for request',
+          },
+        ],
       },
 
       // Fix middleware
@@ -254,9 +265,9 @@ class AllErrorsFixer {
           {
             pattern: /request\.headers\.get\(/g,
             replacement: 'request?.headers?.get(',
-            description: 'optional chaining for request'
-          }
-        ]
+            description: 'optional chaining for request',
+          },
+        ],
       },
       {
         file: 'src/middleware/audit.ts',
@@ -264,9 +275,9 @@ class AllErrorsFixer {
           {
             pattern: /request\.headers\.get\(/g,
             replacement: 'request?.headers?.get(',
-            description: 'optional chaining for request'
-          }
-        ]
+            description: 'optional chaining for request',
+          },
+        ],
       },
       {
         file: 'src/middleware/rate-limiter.ts',
@@ -274,9 +285,9 @@ class AllErrorsFixer {
           {
             pattern: /config\?/g,
             replacement: 'config || {}',
-            description: 'undefined check for config'
-          }
-        ]
+            description: 'undefined check for config',
+          },
+        ],
       },
 
       // Fix test utils
@@ -286,10 +297,10 @@ class AllErrorsFixer {
           {
             pattern: /user\?/g,
             replacement: 'user || {}',
-            description: 'undefined check for user'
-          }
-        ]
-      }
+            description: 'undefined check for user',
+          },
+        ],
+      },
     ];
 
     for (const errorFix of errorFixes) {

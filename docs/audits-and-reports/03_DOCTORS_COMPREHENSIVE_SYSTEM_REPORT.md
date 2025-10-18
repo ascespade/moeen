@@ -1,4 +1,5 @@
 # 👨‍⚕️ نظام الأطباء الشامل - تقرير شامل
+
 ## Doctors Comprehensive System - Complete Report
 
 **تاريخ الإعداد**: 2025-01-17  
@@ -10,6 +11,7 @@
 ## 📊 الملخص التنفيذي
 
 ### الوضع الحالي:
+
 - ❌ **لا يوجد نظام متكامل** للأطباء
 - ❌ **اعتماد على أدوات خارجية** (Slack, WhatsApp)
 - ❌ **لا توجد صفحات مخصصة** للأطباء
@@ -17,6 +19,7 @@
 - ❌ **لا يوجد نظام إدارة** للمواعيد والمرضى
 
 ### الرؤية المستقبلية:
+
 - ✅ **نظام متكامل** يعتمد عليه الأطباء بالكامل
 - ✅ **بديل احترافي لـ Slack** للتواصل
 - ✅ **صفحات مخصصة** لكل احتياجات الأطباء
@@ -29,9 +32,11 @@
 ## 🏥 نظام الأطباء المتكامل
 
 ### الفلسفة:
+
 **"كل ما يحتاجه الطبيب في مكان واحد"**
 
 بدلاً من استخدام 5-6 تطبيقات مختلفة:
+
 - 📱 **تطبيق واحد** لكل شيء
 - 💬 **تواصل مدمج** مع المرضى
 - 📋 **إدارة شاملة** للمواعيد
@@ -52,7 +57,7 @@ export default function DoctorDashboard() {
   const [stats, setStats] = useState<DoctorStats | null>(null);
   const [recentActivities, setRecentActivities] = useState<Activity[]>([]);
   const [upcomingAppointments, setUpcomingAppointments] = useState<Appointment[]>([]);
-  
+
   return (
     <div className="doctor-dashboard">
       {/* Header */}
@@ -61,7 +66,7 @@ export default function DoctorDashboard() {
           <h1>مرحباً د. {doctor?.name} 👋</h1>
           <p>إليك ملخص يومك</p>
         </div>
-        
+
         <div className="quick-actions">
           <Button onClick={() => router.push('/doctor/appointments/new')}>
             <PlusIcon />
@@ -77,7 +82,7 @@ export default function DoctorDashboard() {
           </Button>
         </div>
       </div>
-      
+
       {/* Stats Cards */}
       <div className="stats-grid">
         <StatCard
@@ -109,7 +114,7 @@ export default function DoctorDashboard() {
           urgent={stats?.pendingTasks > 0}
         />
       </div>
-      
+
       {/* Main Content Grid */}
       <div className="dashboard-grid">
         {/* Upcoming Appointments */}
@@ -128,7 +133,7 @@ export default function DoctorDashboard() {
             />
           </CardContent>
         </Card>
-        
+
         {/* Recent Messages */}
         <Card className="messages-card">
           <CardHeader>
@@ -145,7 +150,7 @@ export default function DoctorDashboard() {
             />
           </CardContent>
         </Card>
-        
+
         {/* Quick Actions */}
         <Card className="quick-actions-card">
           <CardHeader>
@@ -176,7 +181,7 @@ export default function DoctorDashboard() {
             </div>
           </CardContent>
         </Card>
-        
+
         {/* Performance Metrics */}
         <Card className="performance-card">
           <CardHeader>
@@ -204,7 +209,7 @@ export default function PatientsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState<PatientFilters>({});
   const [selectedPatients, setSelectedPatients] = useState<string[]>([]);
-  
+
   return (
     <div className="patients-page">
       {/* Header */}
@@ -213,13 +218,13 @@ export default function PatientsPage() {
           <h1>إدارة المرضى</h1>
           <p>إدارة شاملة لجميع مرضاك</p>
         </div>
-        
+
         <div className="header-actions">
           <Button onClick={() => router.push('/doctor/patients/new')}>
             <UserPlusIcon />
             مريض جديد
           </Button>
-          <Button 
+          <Button
             variant="outline"
             onClick={() => setShowBulkActions(true)}
             disabled={selectedPatients.length === 0}
@@ -229,7 +234,7 @@ export default function PatientsPage() {
           </Button>
         </div>
       </div>
-      
+
       {/* Search and Filters */}
       <div className="search-filters">
         <div className="search-bar">
@@ -240,7 +245,7 @@ export default function PatientsPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        
+
         <div className="filters">
           <Select
             value={filters.status}
@@ -256,7 +261,7 @@ export default function PatientsPage() {
               <SelectItem value="new">جديد</SelectItem>
             </SelectContent>
           </Select>
-          
+
           <Select
             value={filters.ageGroup}
             onValueChange={(value) => setFilters(prev => ({ ...prev, ageGroup: value }))}
@@ -274,7 +279,7 @@ export default function PatientsPage() {
           </Select>
         </div>
       </div>
-      
+
       {/* Patients Grid */}
       <div className="patients-grid">
         {patients.map(patient => (
@@ -295,7 +300,7 @@ export default function PatientsPage() {
           />
         ))}
       </div>
-      
+
       {/* Pagination */}
       <Pagination
         currentPage={1}
@@ -325,7 +330,7 @@ interface PatientCardProps {
 
 export function PatientCard({ patient, selected, onSelect, onView, onEdit, onMessage }: PatientCardProps) {
   const [isOnline, setIsOnline] = useState(false);
-  
+
   return (
     <Card className={`patient-card ${selected ? 'selected' : ''}`}>
       <div className="card-header">
@@ -336,7 +341,7 @@ export function PatientCard({ patient, selected, onSelect, onView, onEdit, onMes
           </Avatar>
           <div className={`online-indicator ${isOnline ? 'online' : 'offline'}`} />
         </div>
-        
+
         <div className="patient-info">
           <h3 className="patient-name">{patient.name}</h3>
           <p className="patient-id">#{patient.id}</p>
@@ -345,7 +350,7 @@ export function PatientCard({ patient, selected, onSelect, onView, onEdit, onMes
             <span className="patient-gender">{patient.gender === 'male' ? 'ذكر' : 'أنثى'}</span>
           </div>
         </div>
-        
+
         <div className="card-actions">
           <Checkbox
             checked={selected}
@@ -353,7 +358,7 @@ export function PatientCard({ patient, selected, onSelect, onView, onEdit, onMes
           />
         </div>
       </div>
-      
+
       <div className="card-body">
         <div className="patient-details">
           <div className="detail-item">
@@ -369,7 +374,7 @@ export function PatientCard({ patient, selected, onSelect, onView, onEdit, onMes
             <span>آخر زيارة: {formatDate(patient.lastVisit)}</span>
           </div>
         </div>
-        
+
         <div className="patient-status">
           <StatusBadge status={patient.status} />
           <div className="appointment-count">
@@ -377,7 +382,7 @@ export function PatientCard({ patient, selected, onSelect, onView, onEdit, onMes
           </div>
         </div>
       </div>
-      
+
       <div className="card-footer">
         <div className="action-buttons">
           <Button variant="ghost" size="sm" onClick={onView}>
@@ -410,7 +415,7 @@ export default function MessagesPage() {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   return (
     <div className="messages-page">
       <div className="messages-layout">
@@ -423,7 +428,7 @@ export default function MessagesPage() {
               محادثة جديدة
             </Button>
           </div>
-          
+
           <div className="search-bar">
             <SearchIcon />
             <Input
@@ -432,7 +437,7 @@ export default function MessagesPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          
+
           <div className="conversations-list">
             {conversations.map(conversation => (
               <ConversationItem
@@ -444,7 +449,7 @@ export default function MessagesPage() {
             ))}
           </div>
         </div>
-        
+
         {/* Chat Area */}
         <div className="chat-area">
           {selectedConversation ? (
@@ -487,21 +492,21 @@ export function ChatWindow({ conversationId, onSendMessage, onSendFile, onSendVo
   const [newMessage, setNewMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
-  
+
   const handleSendMessage = () => {
     if (!newMessage.trim()) return;
-    
+
     onSendMessage(newMessage);
     setNewMessage('');
   };
-  
+
   const handleKeyPress = (e: KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
   };
-  
+
   return (
     <div className="chat-window">
       {/* Chat Header */}
@@ -516,7 +521,7 @@ export function ChatWindow({ conversationId, onSendMessage, onSendFile, onSendVo
             <p>{conversation.patient.phone}</p>
           </div>
         </div>
-        
+
         <div className="chat-actions">
           <Button variant="ghost" size="sm">
             <PhoneIcon />
@@ -532,7 +537,7 @@ export function ChatWindow({ conversationId, onSendMessage, onSendFile, onSendVo
           </Button>
         </div>
       </div>
-      
+
       {/* Messages Area */}
       <div className="messages-area">
         <div className="messages-list">
@@ -543,7 +548,7 @@ export function ChatWindow({ conversationId, onSendMessage, onSendFile, onSendVo
               isOwn={message.sender === 'doctor'}
             />
           ))}
-          
+
           {isTyping && (
             <div className="typing-indicator">
               <div className="typing-dots">
@@ -556,7 +561,7 @@ export function ChatWindow({ conversationId, onSendMessage, onSendFile, onSendVo
           )}
         </div>
       </div>
-      
+
       {/* Message Input */}
       <div className="message-input">
         <div className="input-actions">
@@ -575,7 +580,7 @@ export function ChatWindow({ conversationId, onSendMessage, onSendFile, onSendVo
             <SmileIcon />
           </Button>
         </div>
-        
+
         <div className="input-field">
           <Textarea
             value={newMessage}
@@ -586,7 +591,7 @@ export function ChatWindow({ conversationId, onSendMessage, onSendFile, onSendVo
             className="resize-none"
           />
         </div>
-        
+
         <div className="send-actions">
           {isRecording ? (
             <Button
@@ -605,7 +610,7 @@ export function ChatWindow({ conversationId, onSendMessage, onSendFile, onSendVo
               <MicIcon />
             </Button>
           )}
-          
+
           <Button
             onClick={handleSendMessage}
             disabled={!newMessage.trim()}
@@ -614,7 +619,7 @@ export function ChatWindow({ conversationId, onSendMessage, onSendFile, onSendVo
           </Button>
         </div>
       </div>
-      
+
       {/* Hidden file input */}
       <input
         ref={fileInputRef}
@@ -639,7 +644,7 @@ export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [viewMode, setViewMode] = useState<'calendar' | 'list'>('calendar');
   const [selectedDate, setSelectedDate] = useState(new Date());
-  
+
   return (
     <div className="appointments-page">
       {/* Header */}
@@ -648,7 +653,7 @@ export default function AppointmentsPage() {
           <h1>إدارة المواعيد</h1>
           <p>جدولة وإدارة مواعيد المرضى</p>
         </div>
-        
+
         <div className="header-actions">
           <div className="view-toggle">
             <Button
@@ -668,14 +673,14 @@ export default function AppointmentsPage() {
               قائمة
             </Button>
           </div>
-          
+
           <Button onClick={() => router.push('/doctor/appointments/new')}>
             <PlusIcon />
             موعد جديد
           </Button>
         </div>
       </div>
-      
+
       {/* Filters and Search */}
       <div className="filters-section">
         <div className="date-picker">
@@ -686,7 +691,7 @@ export default function AppointmentsPage() {
             className="rounded-md border"
           />
         </div>
-        
+
         <div className="status-filters">
           <Button
             variant={statusFilter === 'all' ? 'default' : 'outline'}
@@ -718,7 +723,7 @@ export default function AppointmentsPage() {
           </Button>
         </div>
       </div>
-      
+
       {/* Content */}
       <div className="appointments-content">
         {viewMode === 'calendar' ? (
@@ -753,7 +758,7 @@ export default function MedicalRecordsPage({ params }: { params: { id: string } 
   const [patient, setPatient] = useState<Patient | null>(null);
   const [records, setRecords] = useState<MedicalRecord[]>([]);
   const [newRecord, setNewRecord] = useState<Partial<MedicalRecord>>({});
-  
+
   return (
     <div className="medical-records-page">
       {/* Patient Header */}
@@ -768,7 +773,7 @@ export default function MedicalRecordsPage({ params }: { params: { id: string } 
             <p>السجلات الطبية</p>
           </div>
         </div>
-        
+
         <div className="header-actions">
           <Button onClick={() => setShowNewRecord(true)}>
             <PlusIcon />
@@ -780,7 +785,7 @@ export default function MedicalRecordsPage({ params }: { params: { id: string } 
           </Button>
         </div>
       </div>
-      
+
       {/* Records Timeline */}
       <div className="records-timeline">
         {records.map(record => (
@@ -792,7 +797,7 @@ export default function MedicalRecordsPage({ params }: { params: { id: string } 
           />
         ))}
       </div>
-      
+
       {/* New Record Modal */}
       {showNewRecord && (
         <NewRecordModal
@@ -817,7 +822,7 @@ export default function MedicalRecordsPage({ params }: { params: { id: string } 
 
 export function CommunicationHub() {
   const [activeTab, setActiveTab] = useState<'messages' | 'calls' | 'video' | 'files'>('messages');
-  
+
   return (
     <div className="communication-hub">
       <div className="hub-header">
@@ -852,7 +857,7 @@ export function CommunicationHub() {
           </Button>
         </div>
       </div>
-      
+
       <div className="hub-content">
         {activeTab === 'messages' && <MessagesTab />}
         {activeTab === 'calls' && <CallsTab />}
@@ -876,36 +881,36 @@ export function VoiceVideoCall({ patientId, type }: { patientId: string, type: '
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(type === 'video');
   const [callDuration, setCallDuration] = useState(0);
-  
+
   const startCall = async () => {
     try {
       // Initialize WebRTC connection
       const connection = await initializeWebRTC(patientId);
       setIsConnected(true);
-      
+
       // Start call timer
       startCallTimer();
-      
+
       // Log call start
       await logCallStart(patientId, type);
     } catch (error) {
       showError('فشل في بدء المكالمة');
     }
   };
-  
+
   const endCall = async () => {
     try {
       // End WebRTC connection
       await endWebRTCConnection();
       setIsConnected(false);
-      
+
       // Log call end
       await logCallEnd(patientId, callDuration);
     } catch (error) {
       showError('فشل في إنهاء المكالمة');
     }
   };
-  
+
   return (
     <div className="call-interface">
       <div className="call-header">
@@ -919,12 +924,12 @@ export function VoiceVideoCall({ patientId, type }: { patientId: string, type: '
             <p>{isConnected ? 'متصل' : 'غير متصل'}</p>
           </div>
         </div>
-        
+
         <div className="call-duration">
           {formatDuration(callDuration)}
         </div>
       </div>
-      
+
       <div className="call-content">
         {type === 'video' && (
           <div className="video-container">
@@ -936,7 +941,7 @@ export function VoiceVideoCall({ patientId, type }: { patientId: string, type: '
             </div>
           </div>
         )}
-        
+
         {type === 'voice' && (
           <div className="voice-container">
             <div className="voice-visualizer">
@@ -945,7 +950,7 @@ export function VoiceVideoCall({ patientId, type }: { patientId: string, type: '
           </div>
         )}
       </div>
-      
+
       <div className="call-controls">
         <Button
           variant="ghost"
@@ -955,7 +960,7 @@ export function VoiceVideoCall({ patientId, type }: { patientId: string, type: '
         >
           {isMuted ? <MicOffIcon /> : <MicIcon />}
         </Button>
-        
+
         {type === 'video' && (
           <Button
             variant="ghost"
@@ -966,7 +971,7 @@ export function VoiceVideoCall({ patientId, type }: { patientId: string, type: '
             {isVideoOn ? <VideoIcon /> : <VideoOffIcon />}
           </Button>
         )}
-        
+
         <Button
           variant="destructive"
           size="lg"
@@ -990,15 +995,15 @@ export function VoiceVideoCall({ patientId, type }: { patientId: string, type: '
 export function FileSharing({ patientId }: { patientId: string }) {
   const [files, setFiles] = useState<SharedFile[]>([]);
   const [uploading, setUploading] = useState(false);
-  
+
   const handleFileUpload = async (files: FileList) => {
     setUploading(true);
-    
+
     try {
       for (const file of Array.from(files)) {
         // Upload file to secure storage
         const fileUrl = await uploadFile(file, patientId);
-        
+
         // Create file record
         const sharedFile: SharedFile = {
           id: generateId(),
@@ -1009,9 +1014,9 @@ export function FileSharing({ patientId }: { patientId: string }) {
           uploadedAt: new Date(),
           uploadedBy: 'doctor',
         };
-        
+
         setFiles(prev => [...prev, sharedFile]);
-        
+
         // Notify patient
         await notifyPatient(patientId, {
           type: 'file_shared',
@@ -1024,7 +1029,7 @@ export function FileSharing({ patientId }: { patientId: string }) {
       setUploading(false);
     }
   };
-  
+
   return (
     <div className="file-sharing">
       <div className="upload-area">
@@ -1041,7 +1046,7 @@ export function FileSharing({ patientId }: { patientId: string }) {
           </div>
         )}
       </div>
-      
+
       <div className="files-list">
         {files.map(file => (
           <FileItem
@@ -1102,7 +1107,7 @@ export default function MobileDoctorApp() {
           onClick={() => router.push('/doctor/profile')}
         />
       </div>
-      
+
       {/* Main Content */}
       <div className="mobile-content">
         {children}
@@ -1121,17 +1126,17 @@ export default function MobileDoctorApp() {
 
 export class OfflineManager {
   private db: IDBDatabase | null = null;
-  
+
   async initialize() {
     this.db = await this.openDatabase();
     await this.setupStores();
   }
-  
+
   async syncWhenOnline() {
     if (!navigator.onLine) return;
-    
+
     const pendingActions = await this.getPendingActions();
-    
+
     for (const action of pendingActions) {
       try {
         await this.executeAction(action);
@@ -1141,13 +1146,13 @@ export class OfflineManager {
       }
     }
   }
-  
+
   async saveOfflineData(type: string, data: any) {
     if (!this.db) throw new Error('Database not initialized');
-    
+
     const transaction = this.db.transaction(['offline_data'], 'readwrite');
     const store = transaction.objectStore('offline_data');
-    
+
     await store.put({
       id: generateId(),
       type,
@@ -1171,28 +1176,28 @@ export function AIAssistant() {
   const [messages, setMessages] = useState<AIMessage[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  
+
   const handleSendMessage = async () => {
     if (!input.trim()) return;
-    
+
     const userMessage: AIMessage = {
       id: generateId(),
       type: 'user',
       content: input,
       timestamp: new Date(),
     };
-    
+
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsTyping(true);
-    
+
     try {
       const response = await sendToAI(input, {
         context: 'doctor',
         patientData: getCurrentPatientData(),
         medicalHistory: getMedicalHistory(),
       });
-      
+
       const aiMessage: AIMessage = {
         id: generateId(),
         type: 'ai',
@@ -1200,7 +1205,7 @@ export function AIAssistant() {
         suggestions: response.suggestions,
         timestamp: new Date(),
       };
-      
+
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
       showError('فشل في التواصل مع المساعد الذكي');
@@ -1208,14 +1213,14 @@ export function AIAssistant() {
       setIsTyping(false);
     }
   };
-  
+
   return (
     <div className="ai-assistant">
       <div className="assistant-header">
         <h3>المساعد الذكي</h3>
         <p>اسأل عن أي شيء متعلق بالطب أو المرضى</p>
       </div>
-      
+
       <div className="messages-container">
         {messages.map(message => (
           <AIMessageBubble
@@ -1224,7 +1229,7 @@ export function AIAssistant() {
             onSuggestionClick={handleSuggestionClick}
           />
         ))}
-        
+
         {isTyping && (
           <div className="typing-indicator">
             <div className="typing-dots">
@@ -1236,7 +1241,7 @@ export function AIAssistant() {
           </div>
         )}
       </div>
-      
+
       <div className="input-area">
         <Input
           value={input}
@@ -1261,33 +1266,37 @@ export function AIAssistant() {
 // src/lib/ai/smart-suggestions.ts
 
 export class SmartSuggestions {
-  async getDiagnosisSuggestions(symptoms: string[]): Promise<DiagnosisSuggestion[]> {
+  async getDiagnosisSuggestions(
+    symptoms: string[]
+  ): Promise<DiagnosisSuggestion[]> {
     const response = await fetch('/api/ai/diagnosis-suggestions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ symptoms }),
     });
-    
+
     return response.json();
   }
-  
-  async getTreatmentSuggestions(diagnosis: string): Promise<TreatmentSuggestion[]> {
+
+  async getTreatmentSuggestions(
+    diagnosis: string
+  ): Promise<TreatmentSuggestion[]> {
     const response = await fetch('/api/ai/treatment-suggestions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ diagnosis }),
     });
-    
+
     return response.json();
   }
-  
+
   async getDrugInteractions(medications: string[]): Promise<DrugInteraction[]> {
     const response = await fetch('/api/ai/drug-interactions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ medications }),
     });
-    
+
     return response.json();
   }
 }
@@ -1305,7 +1314,7 @@ export class SmartSuggestions {
 export function AnalyticsDashboard() {
   const [analytics, setAnalytics] = useState<DoctorAnalytics | null>(null);
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
-  
+
   return (
     <div className="analytics-dashboard">
       <div className="dashboard-header">
@@ -1322,7 +1331,7 @@ export function AnalyticsDashboard() {
           </SelectContent>
         </Select>
       </div>
-      
+
       <div className="analytics-grid">
         {/* Key Metrics */}
         <div className="metrics-row">
@@ -1351,7 +1360,7 @@ export function AnalyticsDashboard() {
             icon={<ClockIcon />}
           />
         </div>
-        
+
         {/* Charts */}
         <div className="charts-row">
           <ChartCard
@@ -1363,7 +1372,7 @@ export function AnalyticsDashboard() {
             chart={<PeakHoursChart data={analytics?.peakHoursData} />}
           />
         </div>
-        
+
         {/* Patient Insights */}
         <div className="insights-row">
           <InsightsCard
@@ -1386,24 +1395,28 @@ export function AnalyticsDashboard() {
 ## 🚀 خطة التنفيذ
 
 ### المرحلة 1: الأساسيات (أسبوع 1-2)
+
 - [ ] Doctor Dashboard الأساسي
 - [ ] نظام إدارة المرضى
 - [ ] نظام الرسائل المدمج
 - [ ] إدارة المواعيد
 
 ### المرحلة 2: التواصل المتقدم (أسبوع 3-4)
+
 - [ ] نظام المكالمات الصوتية والمرئية
 - [ ] مشاركة الملفات
 - [ ] بديل Slack المتقدم
 - [ ] تطبيق الموبايل
 
 ### المرحلة 3: الذكاء الاصطناعي (أسبوع 5-6)
+
 - [ ] المساعد الذكي
 - [ ] الاقتراحات الذكية
 - [ ] تحليل البيانات
 - [ ] التوصيات المتقدمة
 
 ### المرحلة 4: التحسينات (أسبوع 7-8)
+
 - [ ] دعم العمل بدون إنترنت
 - [ ] تحليلات متقدمة
 - [ ] تحسين الأداء
@@ -1415,19 +1428,20 @@ export function AnalyticsDashboard() {
 
 ## 💰 التكلفة المتوقعة
 
-| البند | التكلفة الشهرية |
-|------|-----------------|
-| WebRTC Infrastructure | $50-100 |
-| File Storage | $20-50 |
-| AI Services | $100-200 |
-| Push Notifications | $10-30 |
-| **المجموع** | **$180-380/شهر** |
+| البند                 | التكلفة الشهرية  |
+| --------------------- | ---------------- |
+| WebRTC Infrastructure | $50-100          |
+| File Storage          | $20-50           |
+| AI Services           | $100-200         |
+| Push Notifications    | $10-30           |
+| **المجموع**           | **$180-380/شهر** |
 
 ---
 
 ## 🎯 النتائج المتوقعة
 
 ### بعد التنفيذ الكامل:
+
 - ✅ **اعتماد كامل** على النظام (100%)
 - ✅ **تقليل الوقت 70%** في الإدارة
 - ✅ **تحسين التواصل** مع المرضى
@@ -1436,6 +1450,6 @@ export function AnalyticsDashboard() {
 
 ---
 
-*تم إعداد هذا التقرير بتاريخ: 2025-01-17*  
-*الحالة: جاهز للتنفيذ الفوري*  
-*الأولوية: 🔴 عالية جداً*
+_تم إعداد هذا التقرير بتاريخ: 2025-01-17_  
+_الحالة: جاهز للتنفيذ الفوري_  
+_الأولوية: 🔴 عالية جداً_

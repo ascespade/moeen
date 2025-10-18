@@ -29,7 +29,7 @@ async function checkMigrationStatus() {
       .from('users')
       .select('count')
       .limit(1);
-    
+
     if (error) {
       console.log('⚠️  Users table not found (expected for new database)');
       console.log('✅ Connection successful - ready for migrations');
@@ -50,7 +50,7 @@ async function checkMigrationStatus() {
   // Check for key tables
   const tablesToCheck = [
     'users',
-    'patients', 
+    'patients',
     'doctors',
     'appointments',
     'sessions',
@@ -60,12 +60,12 @@ async function checkMigrationStatus() {
     'chatbot_conversations',
     'crm_leads',
     'settings',
-    'translations'
+    'translations',
   ];
 
   console.log('');
   console.log('📊 Checking database tables:');
-  
+
   let existingTables = 0;
   let missingTables = 0;
 
@@ -93,7 +93,9 @@ async function checkMigrationStatus() {
   console.log('📈 Migration Status Summary:');
   console.log(`✅ Tables found: ${existingTables}`);
   console.log(`❌ Tables missing: ${missingTables}`);
-  console.log(`📊 Completion: ${Math.round((existingTables / tablesToCheck.length) * 100)}%`);
+  console.log(
+    `📊 Completion: ${Math.round((existingTables / tablesToCheck.length) * 100)}%`
+  );
 
   if (missingTables === 0) {
     console.log('');

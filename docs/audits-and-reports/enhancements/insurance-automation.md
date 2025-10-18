@@ -9,6 +9,7 @@
 ## 📊 ملخص تنفيذي - Executive Summary
 
 نظام التأمينات سيكون **الميزة التنافسية الرئيسية** للمشروع من خلال:
+
 1. ربط تلقائي مع **10 شركات تأمين سعودية رئيسية**
 2. **إطار عمل عام** للربط مع شركات جديدة بدون تعديل كود
 3. **أتمتة كاملة** لجميع مراحل المطالبات
@@ -20,18 +21,18 @@
 
 ### الترتيب حسب الحصة السوقية:
 
-| # | الشركة | الحصة السوقية | الأولوية | الحالة |
-|---|--------|---------------|----------|--------|
-| 1. **Tawuniya** (طويق) | 25% | 🔴 عالية جداً | ⚠️ بناء |
-| 2. **Bupa Arabia** | 20% | 🔴 عالية جداً | ⚠️ بناء |
-| 3. **Medgulf** | 12% | 🔴 عالية | ⚠️ بناء |
-| 4. **AXA Cooperative** | 10% | 🔴 عالية | ⚠️ بناء |
-| 5. **SABB Takaful** | 8% | 🟡 متوسطة | ⚠️ بناء |
-| 6. **Al Rajhi Takaful** | 7% | 🟡 متوسطة | ⚠️ بناء |
-| 7. **Malath** | 5% | 🟡 متوسطة | ⚠️ بناء |
-| 8. **Gulf Union** | 4% | 🟢 منخفضة | ⚠️ بناء |
-| 9. **Sanad** | 4% | 🟢 منخفضة | ⚠️ بناء |
-| 10. **Walaa** | 3% | 🟢 منخفضة | ⚠️ بناء |
+| #                       | الشركة | الحصة السوقية | الأولوية | الحالة |
+| ----------------------- | ------ | ------------- | -------- | ------ |
+| 1. **Tawuniya** (طويق)  | 25%    | 🔴 عالية جداً | ⚠️ بناء  |
+| 2. **Bupa Arabia**      | 20%    | 🔴 عالية جداً | ⚠️ بناء  |
+| 3. **Medgulf**          | 12%    | 🔴 عالية      | ⚠️ بناء  |
+| 4. **AXA Cooperative**  | 10%    | 🔴 عالية      | ⚠️ بناء  |
+| 5. **SABB Takaful**     | 8%     | 🟡 متوسطة     | ⚠️ بناء  |
+| 6. **Al Rajhi Takaful** | 7%     | 🟡 متوسطة     | ⚠️ بناء  |
+| 7. **Malath**           | 5%     | 🟡 متوسطة     | ⚠️ بناء  |
+| 8. **Gulf Union**       | 4%     | 🟢 منخفضة     | ⚠️ بناء  |
+| 9. **Sanad**            | 4%     | 🟢 منخفضة     | ⚠️ بناء  |
+| 10. **Walaa**           | 3%     | 🟢 منخفضة     | ⚠️ بناء  |
 
 **تغطية مستهدفة**: 98% من السوق السعودي!
 
@@ -81,22 +82,22 @@ export interface DataMappingRules {
 
 export abstract class InsuranceAdapter {
   constructor(protected config: ProviderConfig) {}
-  
+
   abstract async submitClaim(claim: Claim): Promise<ClaimResponse>;
   abstract async checkStatus(claimId: string): Promise<ClaimStatus>;
   abstract async getCoverage(policyNumber: string): Promise<Coverage>;
-  
+
   // Generic helpers
   protected async makeRequest(endpoint: string, data: any): Promise<any> {
     // Handle different auth types
     // Handle different response formats
     // Handle errors consistently
   }
-  
+
   protected mapClaimData(claim: Claim): any {
     // Use DataMappingRules to transform data
   }
-  
+
   protected parseResponse(response: any): ClaimResponse {
     // Parse different response formats
   }
@@ -132,12 +133,12 @@ export class TawuniyaAdapter extends InsuranceAdapter {
       },
       attachments: await this.uploadAttachments(claim.attachments),
     };
-    
+
     const response = await this.makeRequest(
       this.config.endpoints.submitClaim,
       mappedData
     );
-    
+
     return {
       success: response.status === 'approved',
       claimId: response.claimReferenceNumber,
@@ -146,13 +147,12 @@ export class TawuniyaAdapter extends InsuranceAdapter {
       message: response.messageAr,
     };
   }
-  
+
   async checkStatus(claimId: string): Promise<ClaimStatus> {
-    const response = await this.makeRequest(
-      this.config.endpoints.checkStatus,
-      { claimId }
-    );
-    
+    const response = await this.makeRequest(this.config.endpoints.checkStatus, {
+      claimId,
+    });
+
     return {
       status: this.mapStatus(response.status),
       updatedAt: new Date(response.lastUpdateDate),
@@ -160,30 +160,32 @@ export class TawuniyaAdapter extends InsuranceAdapter {
       rejectionReason: response.rejectionReasonAr,
     };
   }
-  
+
   private mapClaimType(type: string): string {
     const mapping = {
-      'outpatient': 'OP',
-      'inpatient': 'IP',
-      'emergency': 'ER',
-      'dental': 'DE',
-      'optical': 'OP',
+      outpatient: 'OP',
+      inpatient: 'IP',
+      emergency: 'ER',
+      dental: 'DE',
+      optical: 'OP',
     };
     return mapping[type] || 'OP';
   }
-  
+
   private mapStatus(providerStatus: string): ClaimStatus {
     const mapping = {
-      'approved': 'approved',
-      'rejected': 'rejected',
-      'pending': 'pending',
-      'under_review': 'under_review',
-      'requires_info': 'info_required',
+      approved: 'approved',
+      rejected: 'rejected',
+      pending: 'pending',
+      under_review: 'under_review',
+      requires_info: 'info_required',
     };
     return mapping[providerStatus] || 'pending';
   }
-  
-  private async uploadAttachments(attachments: Attachment[]): Promise<string[]> {
+
+  private async uploadAttachments(
+    attachments: Attachment[]
+  ): Promise<string[]> {
     // Upload to Tawuniya's file storage
     // Return array of file IDs
   }
@@ -216,22 +218,22 @@ export class BupaAdapter extends InsuranceAdapter {
         description: a.description,
       })),
     };
-    
+
     // Bupa uses OAuth
     const token = await this.getOAuthToken();
-    
+
     const response = await fetch(this.config.apiUrl + '/claims/submit', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
         'X-Provider-ID': 'HEMAM',
       },
       body: JSON.stringify(mappedData),
     });
-    
+
     const data = await response.json();
-    
+
     return {
       success: data.status === 'APPROVED',
       claimId: data.claimReference,
@@ -240,7 +242,7 @@ export class BupaAdapter extends InsuranceAdapter {
       message: data.statusMessage,
     };
   }
-  
+
   private async getOAuthToken(): Promise<string> {
     // Bupa OAuth flow
   }
@@ -256,19 +258,19 @@ export class BupaAdapter extends InsuranceAdapter {
 
 export class InsuranceAdapterFactory {
   private static adapters: Map<string, InsuranceAdapter> = new Map();
-  
+
   static async getAdapter(providerCode: string): Promise<InsuranceAdapter> {
     // Check cache
     if (this.adapters.has(providerCode)) {
       return this.adapters.get(providerCode)!;
     }
-    
+
     // Get provider config from database
     const provider = await getProviderConfig(providerCode);
-    
+
     // Create specific adapter
     let adapter: InsuranceAdapter;
-    
+
     switch (provider.code) {
       case 'tawuniya':
         adapter = new TawuniyaAdapter(provider.config);
@@ -284,10 +286,10 @@ export class InsuranceAdapterFactory {
         // Generic adapter for custom providers
         adapter = new GenericAdapter(provider.config);
     }
-    
+
     // Cache it
     this.adapters.set(providerCode, adapter);
-    
+
     return adapter;
   }
 }
@@ -305,21 +307,21 @@ export class InsuranceAdapterFactory {
 export async function POST(request: NextRequest) {
   const { user } = await authorize(request);
   const claim = await request.json();
-  
+
   try {
     // 1. Validate claim data
     const validatedClaim = await validateClaim(claim);
-    
+
     // 2. Get patient insurance info
     const patient = await getPatient(claim.patientId);
     const insuranceProvider = patient.insurance.provider;
-    
+
     // 3. Get appropriate adapter
     const adapter = await InsuranceAdapterFactory.getAdapter(insuranceProvider);
-    
+
     // 4. Submit to insurance company
     const response = await adapter.submitClaim(validatedClaim);
-    
+
     // 5. Save to database
     await saveClaimSubmission({
       ...validatedClaim,
@@ -329,7 +331,7 @@ export async function POST(request: NextRequest) {
       submittedAt: new Date(),
       submittedBy: user.id,
     });
-    
+
     // 6. Create notification
     await notifyStaff({
       type: 'claim_submitted',
@@ -337,32 +339,34 @@ export async function POST(request: NextRequest) {
       provider: insuranceProvider,
       status: response.status,
     });
-    
+
     // 7. If approved automatically, update appointment
     if (response.status === 'approved') {
       await updateAppointmentStatus(claim.appointmentId, 'insurance_approved');
     }
-    
+
     return NextResponse.json({
       success: true,
       data: response,
     });
-    
   } catch (error) {
     logger.error('Claim submission failed', error);
-    
+
     // Save failed attempt
     await saveFailedAttempt(claim, error);
-    
+
     // Retry logic
     if (isRetryable(error)) {
       await scheduleRetry(claim);
     }
-    
-    return NextResponse.json({
-      success: false,
-      error: error.message,
-    }, { status: 500 });
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: error.message,
+      },
+      { status: 500 }
+    );
   }
 }
 ```
@@ -378,39 +382,38 @@ export class ClaimStatusChecker {
   async checkPendingClaims() {
     // Get all pending claims
     const pendingClaims = await getPendingClaims();
-    
+
     for (const claim of pendingClaims) {
       try {
         const adapter = await InsuranceAdapterFactory.getAdapter(
           claim.insuranceProvider
         );
-        
+
         const status = await adapter.checkStatus(claim.externalClaimId);
-        
+
         // If status changed
         if (status.status !== claim.status) {
           await updateClaimStatus(claim.id, status);
-          
+
           // Notify staff
           await notifyStatusChange(claim, status);
-          
+
           // If approved, process automatically
           if (status.status === 'approved') {
             await processApprovedClaim(claim);
           }
-          
+
           // If rejected, notify and suggest action
           if (status.status === 'rejected') {
             await handleRejection(claim, status.rejectionReason);
           }
         }
-        
       } catch (error) {
         logger.error(`Failed to check status for claim ${claim.id}`, error);
       }
     }
   }
-  
+
   // Run every 5 minutes
   startAutomaticChecking() {
     setInterval(() => this.checkPendingClaims(), 5 * 60 * 1000);
@@ -427,7 +430,7 @@ export class ClaimStatusChecker {
 
 export async function requestPriorAuthorization(request: PriorAuthRequest) {
   const adapter = await InsuranceAdapterFactory.getAdapter(request.provider);
-  
+
   // Check if provider supports prior auth
   if (!adapter.supportsPriorAuthorization()) {
     return {
@@ -435,14 +438,14 @@ export async function requestPriorAuthorization(request: PriorAuthRequest) {
       message: 'Provider does not require prior authorization',
     };
   }
-  
+
   const response = await adapter.requestPriorAuthorization({
     patientId: request.patientId,
     serviceCode: request.serviceCode,
     diagnosis: request.diagnosis,
     estimatedCost: request.estimatedCost,
   });
-  
+
   return {
     required: true,
     approved: response.approved,
@@ -466,11 +469,11 @@ export async function requestPriorAuthorization(request: PriorAuthRequest) {
 export default function SubmitClaimPage() {
   const [step, setStep] = useState(1);
   const [claim, setClaim] = useState<Partial<Claim>>({});
-  
+
   return (
     <div className="container mx-auto py-8">
       <h1>تقديم مطالبة تأمينية</h1>
-      
+
       {/* Progress Steps */}
       <Steps current={step} total={5}>
         <Step title="معلومات المريض" />
@@ -479,7 +482,7 @@ export default function SubmitClaimPage() {
         <Step title="المرفقات" />
         <Step title="المراجعة والإرسال" />
       </Steps>
-      
+
       {/* Step 1: Patient Info */}
       {step === 1 && (
         <PatientInfoStep
@@ -488,7 +491,7 @@ export default function SubmitClaimPage() {
           onNext={() => setStep(2)}
         />
       )}
-      
+
       {/* Step 2: Insurance Info */}
       {step === 2 && (
         <InsuranceInfoStep
@@ -505,7 +508,7 @@ export default function SubmitClaimPage() {
           onBack={() => setStep(1)}
         />
       )}
-      
+
       {/* Step 3: Services */}
       {step === 3 && (
         <ServicesStep
@@ -516,7 +519,7 @@ export default function SubmitClaimPage() {
           onBack={() => setStep(2)}
         />
       )}
-      
+
       {/* Step 4: Attachments */}
       {step === 4 && (
         <AttachmentsStep
@@ -526,7 +529,7 @@ export default function SubmitClaimPage() {
           onBack={() => setStep(3)}
         />
       )}
-      
+
       {/* Step 5: Review & Submit */}
       {step === 5 && (
         <ReviewSubmitStep
@@ -557,11 +560,11 @@ export default function ClaimsDashboardPage() {
   const { data: claims } = useSWR('/api/insurance/claims', {
     refreshInterval: 30000, // Check every 30 seconds
   });
-  
+
   return (
     <div>
       <h1>لوحة متابعة المطالبات</h1>
-      
+
       {/* Statistics */}
       <div className="grid grid-cols-4 gap-4">
         <StatCard
@@ -589,7 +592,7 @@ export default function ClaimsDashboardPage() {
           color="blue"
         />
       </div>
-      
+
       {/* Claims Table */}
       <DataTable
         columns={[
@@ -625,7 +628,7 @@ export default function AddProviderPage() {
   return (
     <Form onSubmit={handleAddProvider}>
       <h1>إضافة شركة تأمين جديدة</h1>
-      
+
       {/* Basic Info */}
       <Section title="معلومات أساسية">
         <Input name="name" label="اسم الشركة" required />
@@ -635,7 +638,7 @@ export default function AddProviderPage() {
           <option value="custom">مخصص (يحتاج برمجة)</option>
         </Select>
       </Section>
-      
+
       {/* API Configuration */}
       <Section title="إعدادات API">
         <Input name="apiUrl" label="عنوان API" />
@@ -645,11 +648,11 @@ export default function AddProviderPage() {
           <option value="oauth">OAuth 2.0</option>
           <option value="certificate">Certificate</option>
         </Select>
-        
+
         {authType === 'api_key' && (
           <Input name="apiKey" label="API Key" type="password" />
         )}
-        
+
         {authType === 'oauth' && (
           <>
             <Input name="clientId" label="Client ID" />
@@ -658,14 +661,14 @@ export default function AddProviderPage() {
           </>
         )}
       </Section>
-      
+
       {/* Endpoints */}
       <Section title="Endpoints">
         <Input name="submitClaim" label="تقديم مطالبة" placeholder="/claims/submit" />
         <Input name="checkStatus" label="التحقق من الحالة" placeholder="/claims/status" />
         <Input name="getCoverage" label="الحصول على التغطية" placeholder="/coverage/check" />
       </Section>
-      
+
       {/* Data Mapping */}
       <Section title="Data Mapping (الحقول)">
         <p>ربط حقول نظامنا مع حقول API الشركة</p>
@@ -676,7 +679,7 @@ export default function AddProviderPage() {
           }}
         />
       </Section>
-      
+
       {/* Test Connection */}
       <Section title="اختبار الاتصال">
         <Button onClick={testConnection}>
@@ -684,7 +687,7 @@ export default function AddProviderPage() {
         </Button>
         {testResult && <TestResult result={testResult} />}
       </Section>
-      
+
       <Button type="submit">حفظ الشركة</Button>
     </Form>
   );
@@ -702,7 +705,7 @@ export function ProvidersPerformanceReport() {
   return (
     <div>
       <h2>أداء شركات التأمين</h2>
-      
+
       <Table>
         <thead>
           <tr>
@@ -727,7 +730,7 @@ export function ProvidersPerformanceReport() {
           ))}
         </tbody>
       </Table>
-      
+
       <Chart
         type="bar"
         data={providers.map(p => ({
@@ -776,18 +779,21 @@ export function ProvidersPerformanceReport() {
 ## 📋 خطة التنفيذ - Implementation Plan
 
 ### المرحلة 1 (أسبوع 1): البنية التحتية
+
 - [x] Database schema (موجود)
 - [ ] Generic adapter framework
 - [ ] Adapter factory
 - [ ] Base UI components
 
 ### المرحلة 2 (أسبوع 2): الشركات الأساسية (4 شركات)
+
 - [ ] Tawuniya adapter
 - [ ] Bupa adapter
 - [ ] Medgulf adapter
 - [ ] AXA adapter
 
 ### المرحلة 3 (أسبوع 3): باقي الشركات (6 شركات)
+
 - [ ] SABB Takaful adapter
 - [ ] Al Rajhi Takaful adapter
 - [ ] Malath adapter
@@ -796,6 +802,7 @@ export function ProvidersPerformanceReport() {
 - [ ] Walaa adapter
 
 ### المرحلة 4 (أسبوع 4): التحسينات
+
 - [ ] Automatic status checking
 - [ ] Prior authorization
 - [ ] Reports & analytics

@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "تسجيل الدخول - مُعين",
-  description: "منصة الرعاية الصحية المتخصصة",
+  title: 'تسجيل الدخول - مُعين',
+  description: 'منصة الرعاية الصحية المتخصصة',
 };
 
 export default function AuthLayout({
@@ -11,6 +11,6 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-surface dark:bg-gray-900">{children}</div>
+    <div className='min-h-screen bg-surface dark:bg-gray-900'>{children}</div>
   );
 }

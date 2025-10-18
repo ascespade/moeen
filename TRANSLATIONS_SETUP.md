@@ -5,6 +5,7 @@
 ### 1. تطبيق Migration في Supabase
 
 **افتح Supabase Studio:**
+
 ```
 https://supabase.com/dashboard/project/YOUR_PROJECT/sql
 ```
@@ -62,6 +63,7 @@ node scripts/seed-translations.js
 ## 📋 المفاتيح المتوفرة
 
 ### Common (عام)
+
 ```
 common.loading          → "جاري التحميل..." / "Loading..."
 common.save             → "حفظ" / "Save"
@@ -73,6 +75,7 @@ common.welcome          → "مرحباً" / "Welcome"
 ```
 
 ### Auth (المصادقة)
+
 ```
 auth.login              → "تسجيل الدخول" / "Login"
 auth.register           → "إنشاء حساب" / "Register"
@@ -83,6 +86,7 @@ auth.loginMessage       → "سجل دخولك..." / "Login to access..."
 ```
 
 ### Navigation (التنقل)
+
 ```
 nav.services            → "الخدمات" / "Services"
 nav.about               → "عن معين" / "About"
@@ -90,6 +94,7 @@ nav.dashboard           → "لوحة التحكم" / "Dashboard"
 ```
 
 ### Dashboard (لوحة التحكم)
+
 ```
 dashboard.title         → "لوحة التحكم" / "Dashboard"
 dashboard.welcome       → "مرحباً" / "Welcome"
@@ -97,6 +102,7 @@ dashboard.stats.appointments → "المواعيد القادمة" / "Upcoming A
 ```
 
 ### Roles (الأدوار)
+
 ```
 role.admin              → "مدير" / "Admin"
 role.supervisor         → "مشرف" / "Supervisor"
@@ -115,7 +121,7 @@ import { useT } from '@/components/providers/I18nProvider';
 
 export default function MyComponent() {
   const { t } = useT();
-  
+
   return (
     <div>
       <h1>{t('common.welcome')}</h1>

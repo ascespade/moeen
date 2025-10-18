@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
-import { NextResponse } from "next/server";
+import { createClient } from '@/lib/supabase/server';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
@@ -7,15 +7,18 @@ export async function GET() {
 
     // Get system metrics
     const { data: metrics, error } = await supabase
-      .from("system_metrics")
-      .select("*")
-      .order("created_at", { ascending: false })
+      .from('system_metrics')
+      .select('*')
+      .order('created_at', { ascending: false })
       .limit(30);
 
     if (error) throw error;
 
     return NextResponse.json({ metrics });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch analytics" }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to fetch analytics' },
+      { status: 500 }
+    );
   }
 }

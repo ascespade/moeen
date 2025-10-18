@@ -24,7 +24,9 @@ async function log(message, level = 'INFO') {
   try {
     await fs.appendFile(LOG_FILE, logMessage + '\n', 'utf8');
   } catch (err) {
-    console.error(`[${timestamp}] [ERROR] Failed to write to log file: ${err.message}`);
+    console.error(
+      `[${timestamp}] [ERROR] Failed to write to log file: ${err.message}`
+    );
   }
 }
 
@@ -46,9 +48,9 @@ async function executeCommand(command, options = {}) {
 // Function to call LLM (supports Cursor, OpenAI, Ollama)
 async function callLLM(prompt, opts = {}) {
   const provider = process.env.LLM_PROVIDER || 'cursor';
-  
+
   log(`🤖 استدعاء LLM (${provider})...`);
-  
+
   if (provider === 'openai') {
     try {
       const OpenAI = (await import('openai')).default;
@@ -56,11 +58,15 @@ async function callLLM(prompt, opts = {}) {
       const resp = await client.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
-          { role: 'system', content: 'You are a senior code fixer and software engineer. Provide precise, minimal code fixes that preserve business logic.' },
-          { role: 'user', content: prompt }
+          {
+            role: 'system',
+            content:
+              'You are a senior code fixer and software engineer. Provide precise, minimal code fixes that preserve business logic.',
+          },
+          { role: 'user', content: prompt },
         ],
         max_tokens: 2000,
-        temperature: 0.1
+        temperature: 0.1,
       });
       return resp.choices?.[0]?.message?.content || '';
     } catch (err) {
@@ -74,11 +80,11 @@ async function callLLM(prompt, opts = {}) {
       const res = await fetch('http://localhost:11434/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          model: 'llama3', 
+        body: JSON.stringify({
+          model: 'llama3',
           prompt: `You are a senior code fixer. ${prompt}`,
-          stream: false
-        })
+          stream: false,
+        }),
       });
       const j = await res.json();
       return j?.response || '';
@@ -92,12 +98,14 @@ async function callLLM(prompt, opts = {}) {
   // نطبع التعليمات التفصيلية على stdout والـAgent سيأخذها ويطبقها
   console.log('\n🤖 LLM_PROMPT_START');
   console.log('='.repeat(80));
-  console.log('SYSTEM: You are a senior code fixer and software engineer. Provide precise, minimal code fixes that preserve business logic.');
+  console.log(
+    'SYSTEM: You are a senior code fixer and software engineer. Provide precise, minimal code fixes that preserve business logic.'
+  );
   console.log('USER_PROMPT:');
   console.log(prompt);
   console.log('='.repeat(80));
   console.log('LLM_PROMPT_END\n');
-  
+
   // في وضع Cursor، الـAgent سيقرأ هذه المخرجات ويجيب بالتعديلات المطلوبة
   return '';
 }
@@ -106,14 +114,14 @@ async function callLLM(prompt, opts = {}) {
 async function backupFiles(files) {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const backupPath = path.join(BACKUP_DIR, `backup-${timestamp}`);
-  
+
   try {
     await fs.mkdir(backupPath, { recursive: true });
-    
+
     for (const file of files) {
       const sourcePath = path.join(projectRoot, file);
       const destPath = path.join(backupPath, file);
-      
+
       try {
         await fs.mkdir(path.dirname(destPath), { recursive: true });
         await fs.copyFile(sourcePath, destPath);
@@ -122,7 +130,7 @@ async function backupFiles(files) {
         log(`⚠️ فشل في نسخ: ${file} - ${err.message}`, 'WARN');
       }
     }
-    
+
     return backupPath;
   } catch (err) {
     log(`❌ فشل في إنشاء النسخة الاحتياطية: ${err.message}`, 'ERROR');
@@ -139,41 +147,59 @@ async function analyzeProject() {
   let buildOutput = '';
 
   try {
-    const { stdout } = await executeCommand('npm run lint:check', { ignoreError: true });
+    const { stdout } = await executeCommand('npm run lint:check', {
+      ignoreError: true,
+    });
     eslintOutput = stdout;
   } catch (e) {
     eslintOutput = e.stderr;
   }
 
   try {
-    const { stdout } = await executeCommand('npm run type:check', { ignoreError: true });
+    const { stdout } = await executeCommand('npm run type:check', {
+      ignoreError: true,
+    });
     tsOutput = stdout;
   } catch (e) {
     tsOutput = e.stderr;
   }
 
   try {
-    const { stdout } = await executeCommand('npm run test', { ignoreError: true });
+    const { stdout } = await executeCommand('npm run test', {
+      ignoreError: true,
+    });
     testOutput = stdout;
   } catch (e) {
     testOutput = e.stderr;
   }
 
   try {
-    const { stdout } = await executeCommand('npm run build', { ignoreError: true });
+    const { stdout } = await executeCommand('npm run build', {
+      ignoreError: true,
+    });
     buildOutput = stdout;
   } catch (e) {
     buildOutput = e.stderr;
   }
 
-  const eslintErrors = (eslintOutput.match(/(\d+) errors?/g) || []).map(m => parseInt(m)).reduce((a, b) => a + b, 0);
-  const eslintWarnings = (eslintOutput.match(/(\d+) warnings?/g) || []).map(m => parseInt(m)).reduce((a, b) => a + b, 0);
+  const eslintErrors = (eslintOutput.match(/(\d+) errors?/g) || [])
+    .map(m => parseInt(m))
+    .reduce((a, b) => a + b, 0);
+  const eslintWarnings = (eslintOutput.match(/(\d+) warnings?/g) || [])
+    .map(m => parseInt(m))
+    .reduce((a, b) => a + b, 0);
   const tsErrors = (tsOutput.match(/error TS\d+:/g) || []).length;
-  const testPassed = (testOutput.match(/(\d+) passed/g) || []).map(m => parseInt(m)).reduce((a, b) => a + b, 0);
-  const testFailed = (testOutput.match(/(\d+) failed/g) || []).map(m => parseInt(m)).reduce((a, b) => a + b, 0);
+  const testPassed = (testOutput.match(/(\d+) passed/g) || [])
+    .map(m => parseInt(m))
+    .reduce((a, b) => a + b, 0);
+  const testFailed = (testOutput.match(/(\d+) failed/g) || [])
+    .map(m => parseInt(m))
+    .reduce((a, b) => a + b, 0);
   const buildSuccess = !buildOutput.includes('error Command failed');
 
-  log(`📊 نتائج التحليل: ESLint(${eslintErrors}E/${eslintWarnings}W), TypeScript(${tsErrors}E), Tests(${testPassed}P/${testFailed}F), Build(${buildSuccess ? '✅' : '❌'})`);
+  log(
+    `📊 نتائج التحليل: ESLint(${eslintErrors}E/${eslintWarnings}W), TypeScript(${tsErrors}E), Tests(${testPassed}P/${testFailed}F), Build(${buildSuccess ? '✅' : '❌'})`
+  );
 
   return {
     eslintErrors,
@@ -204,19 +230,21 @@ async function fixEslint() {
 // Function to fix TypeScript issues using LLM
 async function fixTypeScript() {
   log('🔧 إصلاح مشاكل TypeScript...');
-  
+
   try {
-    const { stdout } = await executeCommand('npm run type:check', { ignoreError: true });
-    
+    const { stdout } = await executeCommand('npm run type:check', {
+      ignoreError: true,
+    });
+
     if (stdout.includes('error TS')) {
       // استخراج أخطاء TypeScript
       const errors = stdout.match(/error TS\d+:[^\n]+/g) || [];
-      
+
       if (errors.length > 0) {
         const prompt = `Fix these TypeScript errors in the project:\n\n${errors.join('\n')}\n\nProvide the corrected code with minimal changes that preserve business logic.`;
-        
+
         const llmResponse = await callLLM(prompt);
-        
+
         if (llmResponse) {
           log('🤖 تم الحصول على إصلاحات من LLM');
           // في وضع Cursor، الـAgent سيقرأ الاستجابة ويطبقها
@@ -226,7 +254,7 @@ async function fixTypeScript() {
         }
       }
     }
-    
+
     return true;
   } catch (e) {
     log('⚠️ فشل في إصلاح بعض مشاكل TypeScript', 'WARN');
@@ -237,15 +265,17 @@ async function fixTypeScript() {
 // Function to fix broken tests using LLM
 async function fixTests() {
   log('🧪 إصلاح مشاكل الاختبارات...');
-  
+
   try {
-    const { stdout } = await executeCommand('npm run test', { ignoreError: true });
-    
+    const { stdout } = await executeCommand('npm run test', {
+      ignoreError: true,
+    });
+
     if (stdout.includes('failed')) {
       const prompt = `Fix these failing tests in the project:\n\n${stdout}\n\nProvide the corrected test code and any necessary code changes to make tests pass.`;
-      
+
       const llmResponse = await callLLM(prompt);
-      
+
       if (llmResponse) {
         log('🤖 تم الحصول على إصلاحات الاختبارات من LLM');
         console.log('\n🧪 APPLY_TEST_FIXES_START');
@@ -253,7 +283,7 @@ async function fixTests() {
         console.log('🧪 APPLY_TEST_FIXES_END\n');
       }
     }
-    
+
     return true;
   } catch (e) {
     log('⚠️ فشل في إصلاح بعض مشاكل الاختبارات', 'WARN');
@@ -265,37 +295,37 @@ async function fixTests() {
 async function runTests() {
   log('🧪 تشغيل الاختبارات...');
   let allTestsPassed = true;
-  
+
   try {
     await executeCommand('npm run test:unit');
   } catch (e) {
     allTestsPassed = false;
   }
-  
+
   try {
     await executeCommand('npm run test:integration');
   } catch (e) {
     allTestsPassed = false;
   }
-  
+
   try {
     await executeCommand('npm run test:e2e');
   } catch (e) {
     allTestsPassed = false;
   }
-  
+
   try {
     await executeCommand('npx playwright test --reporter=html');
   } catch (e) {
     allTestsPassed = false;
   }
-  
+
   try {
     await executeCommand('npx supawright test');
   } catch (e) {
     allTestsPassed = false;
   }
-  
+
   return allTestsPassed;
 }
 
@@ -314,21 +344,21 @@ async function buildProject() {
 // Function to create backup branch and commit changes
 async function commitChanges(cycle) {
   log('💾 إنشاء commit للتغييرات...');
-  
+
   try {
     // إنشاء branch جديد للتغييرات
     await executeCommand('git checkout -b ai-auto-fixes');
-    
+
     // إضافة جميع التغييرات
     await executeCommand('git add .');
-    
+
     // إنشاء commit
     const commitMessage = `🤖 AI Auto-Fix Cycle ${cycle} - ${new Date().toISOString()}`;
     await executeCommand(`git commit -m "${commitMessage}"`);
-    
+
     // دفع التغييرات
     await executeCommand('git push origin ai-auto-fixes');
-    
+
     log('✅ تم إنشاء commit ودفع التغييرات');
     return true;
   } catch (e) {
@@ -340,7 +370,7 @@ async function commitChanges(cycle) {
 // Function to generate a comprehensive report
 async function generateReport(analysisResults, cycle) {
   log(`📊 تم إنشاء التقرير: ${REPORT_FILE}`);
-  
+
   let reportContent = `# 🤖 AI Self-Healing CI/CD Report - Cycle ${cycle}\n\n`;
   reportContent += `## 📅 التاريخ: ${new Date().toLocaleString()}\n\n`;
   reportContent += `## 📊 نتائج التحليل:\n`;
@@ -368,37 +398,45 @@ async function generateReport(analysisResults, cycle) {
 // Function to generate final summary
 async function generateFinalSummary(analysisResults, cycle, totalFixes) {
   log(`📊 تم إنشاء التقرير النهائي: ${FINAL_SUMMARY}`);
-  
+
   let summaryContent = `# 🤖 AI Self-Healing CI/CD - Final Summary\n\n`;
   summaryContent += `## 📅 التاريخ: ${new Date().toLocaleString()}\n`;
   summaryContent += `## 🔄 الدورة: ${cycle}\n`;
   summaryContent += `## 🔧 إجمالي الإصلاحات: ${totalFixes}\n\n`;
-  
+
   summaryContent += `## 📊 الحالة النهائية:\n`;
   summaryContent += `- ESLint: ${analysisResults.eslintErrors} أخطاء, ${analysisResults.eslintWarnings} تحذيرات\n`;
   summaryContent += `- TypeScript: ${analysisResults.tsErrors} أخطاء\n`;
   summaryContent += `- الاختبارات: ${analysisResults.testPassed} ناجحة, ${analysisResults.testFailed} فاشلة\n`;
   summaryContent += `- البناء: ${analysisResults.buildSuccess ? '✅ ناجح' : '❌ فاشل'}\n\n`;
-  
+
   summaryContent += `## 🎯 النتائج:\n`;
-  if (analysisResults.eslintErrors === 0 && analysisResults.tsErrors === 0 && analysisResults.testFailed === 0 && analysisResults.buildSuccess) {
+  if (
+    analysisResults.eslintErrors === 0 &&
+    analysisResults.tsErrors === 0 &&
+    analysisResults.testFailed === 0 &&
+    analysisResults.buildSuccess
+  ) {
     summaryContent += `✅ **تم إصلاح جميع المشاكل بنجاح!**\n`;
     summaryContent += `🎉 المشروع نظيف وجاهز للإنتاج.\n\n`;
   } else {
     summaryContent += `⚠️ **لا تزال هناك مشاكل تحتاج إلى إصلاح يدوي:**\n`;
-    if (analysisResults.eslintErrors > 0) summaryContent += `- ${analysisResults.eslintErrors} أخطاء ESLint\n`;
-    if (analysisResults.tsErrors > 0) summaryContent += `- ${analysisResults.tsErrors} أخطاء TypeScript\n`;
-    if (analysisResults.testFailed > 0) summaryContent += `- ${analysisResults.testFailed} اختبارات فاشلة\n`;
+    if (analysisResults.eslintErrors > 0)
+      summaryContent += `- ${analysisResults.eslintErrors} أخطاء ESLint\n`;
+    if (analysisResults.tsErrors > 0)
+      summaryContent += `- ${analysisResults.tsErrors} أخطاء TypeScript\n`;
+    if (analysisResults.testFailed > 0)
+      summaryContent += `- ${analysisResults.testFailed} اختبارات فاشلة\n`;
     if (!analysisResults.buildSuccess) summaryContent += `- فشل في البناء\n`;
     summaryContent += `\n`;
   }
-  
+
   summaryContent += `## 🔗 الخطوات التالية:\n`;
   summaryContent += `1. مراجعة التغييرات في branch \`ai-auto-fixes\`\n`;
   summaryContent += `2. إنشاء Pull Request إذا كانت النتائج مرضية\n`;
   summaryContent += `3. دمج التغييرات في الفرع الرئيسي\n`;
   summaryContent += `4. مراقبة النظام للدورات القادمة\n\n`;
-  
+
   summaryContent += `---\n`;
   summaryContent += `*تم إنشاء هذا التقرير بواسطة AI Self-Healing CI/CD v3.0*\n`;
 
@@ -409,43 +447,59 @@ async function generateFinalSummary(analysisResults, cycle, totalFixes) {
 async function main(options) {
   const startTime = Date.now();
   log('🤖 AI Self-Test and Fix Agent بدأ التشغيل');
-  
+
   // Ensure directories exist
-  await fs.mkdir(path.join(projectRoot, 'logs'), { recursive: true }).catch(() => {});
-  await fs.mkdir(path.join(projectRoot, 'reports'), { recursive: true }).catch(() => {});
+  await fs
+    .mkdir(path.join(projectRoot, 'logs'), { recursive: true })
+    .catch(() => {});
+  await fs
+    .mkdir(path.join(projectRoot, 'reports'), { recursive: true })
+    .catch(() => {});
   await fs.mkdir(BACKUP_DIR, { recursive: true }).catch(() => {});
 
   // Check if this is first run by looking for previous reports
-  const isFirstRun = !(await fs.access(path.join(projectRoot, 'reports', 'ai_validation_report.json')).then(() => true).catch(() => false));
-  
+  const isFirstRun = !(await fs
+    .access(path.join(projectRoot, 'reports', 'ai_validation_report.json'))
+    .then(() => true)
+    .catch(() => false));
+
   if (isFirstRun) {
     log('🚀 FIRST RUN DETECTED - Running comprehensive test suite...');
-    
+
     // Run all comprehensive tests first
     log('🧪 Running comprehensive frontend tests...');
     try {
-      execSync('npx playwright test tests/comprehensive/frontend.spec.js --reporter=list', { stdio: 'inherit' });
+      execSync(
+        'npx playwright test tests/comprehensive/frontend.spec.js --reporter=list',
+        { stdio: 'inherit' }
+      );
       log('✅ Frontend tests completed');
     } catch (e) {
       log(`⚠️ Frontend tests had issues: ${e.message}`);
     }
-    
+
     log('🌐 Running comprehensive API tests...');
     try {
-      execSync('npx playwright test tests/comprehensive/api.spec.js --reporter=list', { stdio: 'inherit' });
+      execSync(
+        'npx playwright test tests/comprehensive/api.spec.js --reporter=list',
+        { stdio: 'inherit' }
+      );
       log('✅ API tests completed');
     } catch (e) {
       log(`⚠️ API tests had issues: ${e.message}`);
     }
-    
+
     log('🗄️ Running comprehensive database tests...');
     try {
-      execSync('npx playwright test tests/comprehensive/database.spec.js --reporter=list', { stdio: 'inherit' });
+      execSync(
+        'npx playwright test tests/comprehensive/database.spec.js --reporter=list',
+        { stdio: 'inherit' }
+      );
       log('✅ Database tests completed');
     } catch (e) {
       log(`⚠️ Database tests had issues: ${e.message}`);
     }
-    
+
     // Run full test suite
     log('🧪 Running full test suite...');
     try {
@@ -454,32 +508,39 @@ async function main(options) {
     } catch (e) {
       log(`⚠️ Unit tests had issues: ${e.message}`);
     }
-    
+
     try {
       execSync('npm run test:integration', { stdio: 'inherit' });
       log('✅ Integration tests completed');
     } catch (e) {
       log(`⚠️ Integration tests had issues: ${e.message}`);
     }
-    
+
     try {
       execSync('npm run test:e2e', { stdio: 'inherit' });
       log('✅ E2E tests completed');
     } catch (e) {
       log(`⚠️ E2E tests had issues: ${e.message}`);
     }
-    
+
     log('🎉 First run comprehensive testing completed!');
     log('🔄 Now proceeding with normal AI self-healing process...');
   } else {
     log('🔄 SUBSEQUENT RUN - Testing only changed modules...');
-    
+
     // Check for changed files since last run
     try {
-      const changedFiles = execSync('git diff --name-only HEAD~1 HEAD', { encoding: 'utf8' }).trim().split('\n').filter(f => f);
+      const changedFiles = execSync('git diff --name-only HEAD~1 HEAD', {
+        encoding: 'utf8',
+      })
+        .trim()
+        .split('\n')
+        .filter(f => f);
       if (changedFiles.length > 0) {
-        log(`📝 Found ${changedFiles.length} changed files: ${changedFiles.join(', ')}`);
-        
+        log(
+          `📝 Found ${changedFiles.length} changed files: ${changedFiles.join(', ')}`
+        );
+
         // Test only changed modules
         const changedModules = new Set();
         changedFiles.forEach(file => {
@@ -490,9 +551,11 @@ async function main(options) {
             }
           }
         });
-        
+
         if (changedModules.size > 0) {
-          log(`🎯 Testing only changed modules: ${Array.from(changedModules).join(', ')}`);
+          log(
+            `🎯 Testing only changed modules: ${Array.from(changedModules).join(', ')}`
+          );
           // This will be handled in the main loop below
         }
       } else {
@@ -512,7 +575,12 @@ async function main(options) {
 
     const initialAnalysis = await analyzeProject();
 
-    if (initialAnalysis.eslintErrors === 0 && initialAnalysis.tsErrors === 0 && initialAnalysis.testFailed === 0 && initialAnalysis.buildSuccess) {
+    if (
+      initialAnalysis.eslintErrors === 0 &&
+      initialAnalysis.tsErrors === 0 &&
+      initialAnalysis.testFailed === 0 &&
+      initialAnalysis.buildSuccess
+    ) {
       log('🎉 المشروع نظيف! لا توجد أخطاء أو تحذيرات متبقية.', 'INFO');
       await generateReport(initialAnalysis, cycle);
       await generateFinalSummary(initialAnalysis, cycle, totalFixes);
@@ -532,12 +600,15 @@ async function main(options) {
         'tests/**/*.ts',
         'package.json',
         '.eslintrc.cjs',
-        'tsconfig.json'
+        'tsconfig.json',
       ];
       await backupFiles(filesToBackup);
     }
 
-    if (initialAnalysis.eslintErrors > 0 || initialAnalysis.eslintWarnings > 0) {
+    if (
+      initialAnalysis.eslintErrors > 0 ||
+      initialAnalysis.eslintWarnings > 0
+    ) {
       if (await fixEslint()) {
         madeChanges = true;
         totalFixes++;
@@ -580,7 +651,12 @@ async function main(options) {
       const postFixAnalysis = await analyzeProject();
       await generateReport(postFixAnalysis, cycle);
 
-      if (postFixAnalysis.eslintErrors === 0 && postFixAnalysis.tsErrors === 0 && postFixAnalysis.testFailed === 0 && postFixAnalysis.buildSuccess) {
+      if (
+        postFixAnalysis.eslintErrors === 0 &&
+        postFixAnalysis.tsErrors === 0 &&
+        postFixAnalysis.testFailed === 0 &&
+        postFixAnalysis.buildSuccess
+      ) {
         log('🎉 تم إصلاح جميع المشاكل بنجاح في هذه الدورة!', 'INFO');
         await generateFinalSummary(postFixAnalysis, cycle, totalFixes);
         break;
@@ -592,47 +668,70 @@ async function main(options) {
 
     if (cycle < MAX_CYCLES) {
       log(`⏳ انتظار ${CYCLE_DELAY_SECONDS} ثواني قبل الدورة التالية...`);
-      await new Promise(resolve => setTimeout(resolve, CYCLE_DELAY_SECONDS * 1000));
+      await new Promise(resolve =>
+        setTimeout(resolve, CYCLE_DELAY_SECONDS * 1000)
+      );
     }
   }
-  
+
   log('🎉 تم إكمال جميع الإصلاحات!');
   log('🏁 انتهى تشغيل AI Self-Test and Fix Agent');
-  
+
   // تسجيل النتائج في قاعدة البيانات
   const endTime = Date.now();
   const duration = Math.round((endTime - startTime) / 1000);
-  
+
   try {
     // الحصول على معلومات Git
     let branch = 'main';
     let commit = '';
     let author = 'AI Agent';
-    
+
     try {
-      branch = (await executeCommand('git branch --show-current')).stdout.trim();
-      commit = (await executeCommand('git rev-parse --short HEAD')).stdout.trim();
+      branch = (
+        await executeCommand('git branch --show-current')
+      ).stdout.trim();
+      commit = (
+        await executeCommand('git rev-parse --short HEAD')
+      ).stdout.trim();
       author = (await executeCommand('git config user.name')).stdout.trim();
     } catch (e) {
       log('⚠️ لا يمكن الحصول على معلومات Git');
     }
-    
+
     // حساب الجودة بناءً على النتائج
     const finalAnalysis = await analyzeProject();
-    const qualityScore = Math.max(0, 100 - (finalAnalysis.eslintErrors * 5) - (finalAnalysis.tsErrors * 3) - (finalAnalysis.testFailed * 10));
-    
+    const qualityScore = Math.max(
+      0,
+      100 -
+        finalAnalysis.eslintErrors * 5 -
+        finalAnalysis.tsErrors * 3 -
+        finalAnalysis.testFailed * 10
+    );
+
     await logAIResult({
-      status: (finalAnalysis.eslintErrors === 0 && finalAnalysis.tsErrors === 0 && finalAnalysis.testFailed === 0) ? 'success' : 'failed',
-      type: options.heal ? 'heal' : options.fixOnly ? 'fix' : options.testOnly ? 'test' : 'auto',
+      status:
+        finalAnalysis.eslintErrors === 0 &&
+        finalAnalysis.tsErrors === 0 &&
+        finalAnalysis.testFailed === 0
+          ? 'success'
+          : 'failed',
+      type: options.heal
+        ? 'heal'
+        : options.fixOnly
+          ? 'fix'
+          : options.testOnly
+            ? 'test'
+            : 'auto',
       duration: duration,
       linesChanged: totalLinesChanged,
       qualityScore: Math.round(qualityScore),
       notes: `إصلاحات: ${totalFixes}, أخطاء ESLint: ${finalAnalysis.eslintErrors}, أخطاء TypeScript: ${finalAnalysis.tsErrors}, اختبارات فاشلة: ${finalAnalysis.testFailed}`,
       branch: branch,
       commit: commit,
-      author: author
+      author: author,
     });
-    
+
     log('✅ تم تسجيل النتائج في قاعدة البيانات');
   } catch (error) {
     log(`❌ فشل في تسجيل النتائج: ${error.message}`, 'ERROR');
@@ -647,15 +746,21 @@ program
   .option('--test-only', 'Only run tests, do not attempt to fix or build')
   .option('--optimize-only', 'Only attempt to optimize code')
   .option('--refactor', 'Only attempt to refactor code')
-  .option('--background-mode', 'Run as a background process (continuous monitoring)')
-  .option('--monitor-mode', 'Only monitor project status without making changes')
+  .option(
+    '--background-mode',
+    'Run as a background process (continuous monitoring)'
+  )
+  .option(
+    '--monitor-mode',
+    'Only monitor project status without making changes'
+  )
   .option('--heal', 'Run full self-healing process')
-  .action((options) => {
+  .action(options => {
     // Set LLM provider based on agent mode
     if (options.agentMode) {
       process.env.LLM_PROVIDER = options.agentMode;
     }
-    
+
     main(options).catch(err => {
       log(`❌ حدث خطأ فادح: ${err.message}`, 'CRITICAL');
       process.exit(1);

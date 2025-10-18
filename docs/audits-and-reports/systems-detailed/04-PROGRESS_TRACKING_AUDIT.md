@@ -10,7 +10,9 @@
 ## 📋 نظرة عامة (Overview)
 
 ### الغرض:
+
 نظام متابعة تقدم الطفل وإدارة الخطط الفردية (IEP - Individualized Education Program). يتعامل مع:
+
 - خطط IEP لكل طفل
 - أهداف قصيرة وطويلة المدى
 - قياس التقدم
@@ -18,6 +20,7 @@
 - ملاحظات الأخصائيين
 
 ### ما هو IEP؟
+
 ```
 IEP = Individualized Education Program
 خطة تعليمية/تأهيلية فردية لكل طفل
@@ -31,6 +34,7 @@ IEP = Individualized Education Program
 ```
 
 ### السكوب لمركز الهمم:
+
 ```
 👶 لكل طفل:
    - خطة IEP واحدة نشطة
@@ -51,6 +55,7 @@ IEP = Individualized Education Program
 ### الجداول الموجودة:
 
 #### `medical_records`:
+
 ```sql
 CREATE TABLE medical_records (
   id UUID PRIMARY KEY,
@@ -72,6 +77,7 @@ CREATE TABLE medical_records (
 ## ✅ ما تم تنفيذه
 
 ### 1. جدول medical_records موجود ✅
+
 ```
 ✅ يمكن استخدامه لتخزين IEPs (record_type = 'iep')
 ✅ ربط مع المرضى
@@ -79,6 +85,7 @@ CREATE TABLE medical_records (
 ```
 
 ### 2. واجهة بسيطة موجودة ✅
+
 ```
 ✅ src/app/(health)/health/medical-records/page.tsx
 ✅ عرض السجلات
@@ -90,7 +97,9 @@ CREATE TABLE medical_records (
 ## 🔴 المشاكل والنقص (Critical Gaps)
 
 ### 1. لا توجد بنية IEP محددة 🔴
+
 **المشكلة**:
+
 ```
 ❌ medical_records عام جداً
 ❌ لا توجد أهداف (goals)
@@ -99,6 +108,7 @@ CREATE TABLE medical_records (
 ```
 
 **الحل**:
+
 ```sql
 -- جدول IEPs
 CREATE TABLE ieps (
@@ -144,7 +154,9 @@ CREATE TABLE goal_progress (
 ---
 
 ### 2. لا توجد تقارير للأسر 🔴
+
 **المشكلة**:
+
 ```
 ❌ لا يمكن إنشاء تقرير شهري
 ❌ لا يمكن عرض التقدم بصرياً
@@ -152,23 +164,24 @@ CREATE TABLE goal_progress (
 ```
 
 **الحل**:
+
 ```typescript
 // صفحة تقرير التقدم للأسرة
 <ProgressReport patient={patient}>
   <IEPOverview iep={currentIEP} />
-  
+
   <GoalsProgress>
     {goals.map(goal => (
-      <GoalCard 
+      <GoalCard
         goal={goal}
         progress={goal.progress_percent}
         chart={<ProgressChart data={goal.history} />}
       />
     ))}
   </GoalsProgress>
-  
+
   <TherapistNotes notes={recentNotes} />
-  
+
   <ExportButton onClick={() => exportToPDF(report)} />
 </ProgressReport>
 ```
@@ -179,13 +192,16 @@ CREATE TABLE goal_progress (
 ---
 
 ### 3. لا يوجد Session Notes System 🟡
+
 **المشكلة**:
+
 ```
 ⚠️  الأخصائي لا يمكنه كتابة ملاحظات بعد كل جلسة
 ⚠️  لا يوجد ربط بين الجلسة والتقدم في الأهداف
 ```
 
 **الحل**:
+
 ```sql
 CREATE TABLE session_notes (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -206,19 +222,20 @@ CREATE TABLE session_notes (
 
 ## 📊 تقييم الجاهزية: **60/100** 🟡
 
-| المعيار | النقاط | الوزن | الإجمالي |
-|---------|--------|-------|----------|
-| **IEP Structure** | 30/100 | 40% | 12 |
-| **Progress Tracking** | 50/100 | 30% | 15 |
-| **Reporting** | 40/100 | 20% | 8 |
-| **UI/UX** | 60/100 | 10% | 6 |
-| **المجموع** | - | - | **41** |
+| المعيار               | النقاط | الوزن | الإجمالي |
+| --------------------- | ------ | ----- | -------- |
+| **IEP Structure**     | 30/100 | 40%   | 12       |
+| **Progress Tracking** | 50/100 | 30%   | 15       |
+| **Reporting**         | 40/100 | 20%   | 8        |
+| **UI/UX**             | 60/100 | 10%   | 6        |
+| **المجموع**           | -      | -     | **41**   |
 
 ---
 
 ## 🎯 خطة العمل (Week 2 من الخطة العامة)
 
 ### Day 1-2: IEP Structure (6-8h)
+
 ```sql
 ✅ إنشاء جداول: ieps, iep_goals, goal_progress
 ✅ RLS policies
@@ -226,6 +243,7 @@ CREATE TABLE session_notes (
 ```
 
 ### Day 3: Progress Reports UI (8-10h)
+
 ```typescript
 ✅ صفحة IEP للطفل
 ✅ عرض الأهداف
@@ -234,6 +252,7 @@ CREATE TABLE session_notes (
 ```
 
 ### Day 4: Therapist Notes (6-8h)
+
 ```typescript
 ✅ جدول session_notes
 ✅ واجهة كتابة الملاحظات بعد الجلسة
@@ -241,6 +260,7 @@ CREATE TABLE session_notes (
 ```
 
 ### Day 5: Family Portal (6-8h)
+
 ```typescript
 ✅ صفحة للأسرة لعرض التقدم
 ✅ تحديثات دورية
@@ -255,6 +275,7 @@ CREATE TABLE session_notes (
 ## 🎓 التوصيات
 
 ### Must Have:
+
 ```
 1. 🔴 إنشاء IEP structure (tables)
 2. 🔴 Progress tracking system
@@ -263,6 +284,7 @@ CREATE TABLE session_notes (
 ```
 
 ### Nice to Have:
+
 ```
 5. ⏳ Charts وإحصائيات متقدمة
 6. ⏳ مقارنة التقدم بين الأطفال (anonymized)
@@ -276,10 +298,12 @@ CREATE TABLE session_notes (
 ### الحالة: **60% - يحتاج تطوير** 🟡
 
 **نقاط القوة**:
+
 - ✅ جدول medical_records موجود
 - ✅ واجهة أساسية
 
 **ما ينقص**:
+
 - 🔴 IEP structure محدد
 - 🔴 Progress tracking منظم
 - 🔴 تقارير للأسر
@@ -289,6 +313,6 @@ CREATE TABLE session_notes (
 
 ---
 
-*Audit Date: 2025-10-17*  
-*System: Progress Tracking*  
-*Status: ⚠️  Needs Development*
+_Audit Date: 2025-10-17_  
+_System: Progress Tracking_  
+_Status: ⚠️ Needs Development_

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from 'react';
 // Debounce hooks
 
 export const useDebounce = <T>(value: T, delay: number): T => {
@@ -19,10 +19,10 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 
 export const useDebouncedCallback = <T extends (...args: any[]) => any>(
   callback: T,
-  delay: number,
+  delay: number
 ): T => {
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(
-    null,
+    null
   );
 
   const debouncedCallback = useCallback(
@@ -37,7 +37,7 @@ export const useDebouncedCallback = <T extends (...args: any[]) => any>(
 
       setDebounceTimer(newTimer);
     },
-    [callback, delay, debounceTimer],
+    [callback, delay, debounceTimer]
   );
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export const useDebouncedCallback = <T extends (...args: any[]) => any>(
 
 export const useDebouncedValue = <T>(
   initialValue: T,
-  delay: number,
+  delay: number
 ): [T, (value: T) => void, T] => {
   const [value, setValue] = useState<T>(initialValue);
   const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);

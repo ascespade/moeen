@@ -41,9 +41,9 @@ import { useTheme, useLanguage, BRAND_COLORS } from '@/design-system';
 function MyComponent() {
   const { theme, toggleTheme } = useTheme();
   const { language, direction } = useLanguage();
-  
+
   return (
-    <div className="bg-brand-primary text-white p-4">
+    <div className='bg-brand-primary text-white p-4'>
       Current theme: {theme}
       Current language: {language}
     </div>
@@ -59,8 +59,8 @@ import { ThemeSwitcher, LanguageSwitcher } from '@/components';
 function Header() {
   return (
     <header>
-      <ThemeSwitcher variant="dropdown" />
-      <LanguageSwitcher variant="toggle" />
+      <ThemeSwitcher variant='dropdown' />
+      <LanguageSwitcher variant='toggle' />
     </header>
   );
 }
@@ -92,7 +92,7 @@ const error = BRAND_COLORS.status.error; // #ef4444
 import { SPACING } from '@/design-system';
 
 const padding = SPACING[4]; // 1rem (16px)
-const margin = SPACING[8];  // 2rem (32px)
+const margin = SPACING[8]; // 2rem (32px)
 ```
 
 ### Typography - الخطوط
@@ -112,15 +112,13 @@ const fontSize = TYPOGRAPHY.fontSize.lg; // ['1.125rem', { lineHeight: '1.75rem'
 import { BUTTON_VARIANTS, BUTTON_SIZES } from '@/design-system';
 
 // Use with Tailwind classes
-<button className="ds-button ds-button-primary ds-button-md">
-  Click me
-</button>
+<button className='ds-button ds-button-primary ds-button-md'>Click me</button>;
 ```
 
 ### Card - البطاقة
 
 ```tsx
-<div className="ds-card ds-card-elevated ds-card-md">
+<div className='ds-card ds-card-elevated ds-card-md'>
   <h3>Card Title</h3>
   <p>Card content</p>
 </div>
@@ -129,10 +127,7 @@ import { BUTTON_VARIANTS, BUTTON_SIZES } from '@/design-system';
 ### Input - حقل الإدخال
 
 ```tsx
-<input 
-  className="ds-input ds-input-md" 
-  placeholder="Enter text..."
-/>
+<input className='ds-input ds-input-md' placeholder='Enter text...' />
 ```
 
 ## 🎛️ Hooks - الخطافات
@@ -143,14 +138,8 @@ import { BUTTON_VARIANTS, BUTTON_SIZES } from '@/design-system';
 import { useTheme } from '@/design-system/hooks';
 
 function ThemeToggle() {
-  const { 
-    theme, 
-    toggleTheme, 
-    setLightTheme, 
-    setDarkTheme,
-    isLight,
-    isDark 
-  } = useTheme();
+  const { theme, toggleTheme, setLightTheme, setDarkTheme, isLight, isDark } =
+    useTheme();
 
   return (
     <button onClick={toggleTheme}>
@@ -166,14 +155,14 @@ function ThemeToggle() {
 import { useLanguage } from '@/design-system/hooks';
 
 function LanguageToggle() {
-  const { 
-    language, 
-    toggleLanguage, 
-    setArabic, 
+  const {
+    language,
+    toggleLanguage,
+    setArabic,
     setEnglish,
     isArabic,
     isEnglish,
-    direction 
+    direction,
   } = useLanguage();
 
   return (
@@ -216,7 +205,7 @@ function RTLComponent() {
 ### Dark Theme - الثيم الداكن
 
 ```css
-[data-theme="dark"] {
+[data-theme='dark'] {
   --background: #0d1117;
   --foreground: #e5eef7;
   --brand-primary: #f58220;
@@ -229,15 +218,15 @@ function RTLComponent() {
 The design system automatically handles RTL layout:
 
 ```css
-[dir="rtl"] {
+[dir='rtl'] {
   text-align: right;
 }
 
-[dir="rtl"] .text-left {
+[dir='rtl'] .text-left {
   text-align: right;
 }
 
-[dir="rtl"] .text-right {
+[dir='rtl'] .text-right {
   text-align: left;
 }
 ```
@@ -251,11 +240,13 @@ function ResponsiveComponent() {
   const { isMobile, isTablet, isDesktop } = useBreakpoint();
 
   return (
-    <div className={`
+    <div
+      className={`
       ${isMobile ? 'text-sm' : ''}
       ${isTablet ? 'text-base' : ''}
       ${isDesktop ? 'text-lg' : ''}
-    `}>
+    `}
+    >
       Responsive text
     </div>
   );

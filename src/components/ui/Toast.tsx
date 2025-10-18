@@ -1,6 +1,6 @@
-"use client";
-import { useEffect, useState } from "react";
-import clsx from "clsx";
+'use client';
+import { useEffect, useState } from 'react';
+import clsx from 'clsx';
 
 export function Toast({
   message,
@@ -22,13 +22,13 @@ export function Toast({
   return (
     <div
       className={clsx(
-        "fixed bottom-4 start-1/2 -translate-x-1/2 z-50 transition",
-        visible ? "opacity-100" : "opacity-0 pointer-events-none",
+        'fixed bottom-4 start-1/2 -translate-x-1/2 z-50 transition',
+        visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
       )}
-      role="status"
-      aria-live="polite"
+      role='status'
+      aria-live='polite'
     >
-      <div className="rounded-md bg-gray-900 text-white px-4 py-2 shadow-soft">
+      <div className='rounded-md bg-gray-900 text-white px-4 py-2 shadow-soft'>
         {message}
       </div>
     </div>

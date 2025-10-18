@@ -9,21 +9,25 @@
 ## 📚 التقنيات المستخدمة
 
 ### Frontend
+
 - **Next.js 14** - React framework
 - **TypeScript** - Type-safe JavaScript
 - **Tailwind CSS** - Utility-first CSS
 - **Zustand / Jotai** - State management
 
 ### Backend
+
 - **Next.js API Routes** - Server-side API
 - **Supabase** - PostgreSQL + Auth + Realtime
 - **Row Level Security (RLS)** - Database security
 
 ### Authentication
+
 - **Supabase Auth** - JWT-based authentication
 - **Role-based access control (RBAC)**
 
 ### Security
+
 - **AES-256 Encryption** (crypto-js)
 - **HTTPS** enforced
 - **Content Security Policy (CSP)**
@@ -117,6 +121,7 @@ CREATE POLICY "users_select_own" ON users
 ```
 
 كل جدول محمي بـ RLS policies:
+
 - Users can only see their own data
 - Admins have full access
 - Doctors can see their patients
@@ -262,7 +267,7 @@ async function sendMessage(to: string, message: string) {
     {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -327,13 +332,19 @@ test('user can login', async ({ page }) => {
 ```javascript
 // next.config.js
 module.exports = {
-  webpack: (config) => {
+  webpack: config => {
     config.optimization.splitChunks = {
       chunks: 'all',
       cacheGroups: {
-        react: { /* React bundle */ },
-        ui: { /* UI components bundle */ },
-        vendor: { /* Other vendors */ },
+        react: {
+          /* React bundle */
+        },
+        ui: {
+          /* UI components bundle */
+        },
+        vendor: {
+          /* Other vendors */
+        },
       },
     };
     return config;

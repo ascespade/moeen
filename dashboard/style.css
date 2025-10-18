@@ -62,7 +62,9 @@ h1 {
   text-align: center;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .stat-card:hover {
@@ -248,29 +250,30 @@ tbody tr:hover {
   h1 {
     font-size: 1.8em;
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .charts-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .table-controls {
     flex-direction: column;
   }
-  
+
   .table-controls input,
   .table-controls select {
     min-width: 100%;
   }
-  
+
   table {
     font-size: 0.9em;
   }
-  
-  th, td {
+
+  th,
+  td {
     padding: 10px;
   }
 }

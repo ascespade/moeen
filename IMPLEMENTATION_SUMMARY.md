@@ -106,8 +106,8 @@ These files legitimately contain hardcoded strings and are excluded from validat
 // Example usage
 const content = await dynamicContentManager.getHomepageContent();
 const translations = await dynamicContentManager.getTranslations(
-  "ar",
-  "common",
+  'ar',
+  'common'
 );
 ```
 
@@ -115,7 +115,7 @@ const translations = await dynamicContentManager.getTranslations(
 
 ```typescript
 // Theme switching with database persistence
-await dynamicThemeManager.updateUserPreferences(userId, { theme: "dark" });
+await dynamicThemeManager.updateUserPreferences(userId, { theme: 'dark' });
 ```
 
 ### 4. **Comprehensive Validation**

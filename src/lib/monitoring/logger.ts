@@ -3,7 +3,7 @@
  * Replaces console.log with structured logging
  */
 
-type LogLevel = "debug" | "info" | "warn" | "error";
+type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 interface LogEntry {
   timestamp: string;
@@ -19,8 +19,8 @@ class Logger {
   private isServer: boolean;
 
   constructor() {
-    this.isDevelopment = process.env.NODE_ENV === "development";
-    this.isServer = typeof window === "undefined";
+    this.isDevelopment = process.env.NODE_ENV === 'development';
+    this.isServer = typeof window === 'undefined';
   }
 
   /**
@@ -28,7 +28,7 @@ class Logger {
    */
   debug(message: string, data?: any, context?: string): void {
     if (this.isDevelopment) {
-      this.log("debug", message, data, context);
+      this.log('debug', message, data, context);
     }
   }
 
@@ -36,14 +36,14 @@ class Logger {
    * Log informational messages
    */
   info(message: string, data?: any, context?: string): void {
-    this.log("info", message, data, context);
+    this.log('info', message, data, context);
   }
 
   /**
    * Log warnings
    */
   warn(message: string, data?: any, context?: string): void {
-    this.log("warn", message, data, context);
+    this.log('warn', message, data, context);
   }
 
   /**
@@ -59,7 +59,7 @@ class Logger {
           }
         : error;
 
-    this.log("error", message, errorData, context, error?.stack);
+    this.log('error', message, errorData, context, error?.stack);
   }
 
   /**
@@ -70,7 +70,7 @@ class Logger {
     message: string,
     data?: any,
     context?: string,
-    stack?: string,
+    stack?: string
   ): void {
     const entry: LogEntry = {
       timestamp: new Date().toISOString(),
@@ -97,23 +97,23 @@ class Logger {
    */
   private logToConsole(entry: LogEntry): void {
     const prefix = `[${entry.timestamp}] [${entry.level.toUpperCase()}]`;
-    const contextStr = entry.context ? ` [${entry.context}]` : "";
+    const contextStr = entry.context ? ` [${entry.context}]` : '';
     const fullMessage = `${prefix}${contextStr} ${entry.message}`;
 
     switch (entry.level) {
-      case "debug":
+      case 'debug':
         // eslint-disable-next-line no-console
         console.debug(fullMessage, entry.data);
         break;
-      case "info":
+      case 'info':
         // eslint-disable-next-line no-console
         console.info(fullMessage, entry.data);
         break;
-      case "warn":
+      case 'warn':
         // eslint-disable-next-line no-console
         console.warn(fullMessage, entry.data);
         break;
-      case "error":
+      case 'error':
         // eslint-disable-next-line no-console
         console.error(fullMessage, entry.data, entry.stack);
         break;
@@ -125,7 +125,7 @@ class Logger {
    */
   private async sendToLoggingService(entry: LogEntry): Promise<void> {
     // Only send errors and warns to external service
-    if (entry.level === "debug" || entry.level === "info") {
+    if (entry.level === 'debug' || entry.level === 'info') {
       return;
     }
 
@@ -150,27 +150,27 @@ class Logger {
     if (!data) return data;
 
     const sensitiveKeys = [
-      "password",
-      "token",
-      "secret",
-      "api_key",
-      "apiKey",
-      "apikey",
-      "authorization",
-      "auth",
-      "credit_card",
-      "ssn",
-      "social_security",
+      'password',
+      'token',
+      'secret',
+      'api_key',
+      'apiKey',
+      'apikey',
+      'authorization',
+      'auth',
+      'credit_card',
+      'ssn',
+      'social_security',
     ];
 
-    if (typeof data === "object") {
+    if (typeof data === 'object') {
       const sanitized = { ...data };
 
       for (const key in sanitized) {
         const lowerKey = key.toLowerCase();
-        if (sensitiveKeys.some((sensitive) => lowerKey.includes(sensitive))) {
-          sanitized[key] = "***REDACTED***";
-        } else if (typeof sanitized[key] === "object") {
+        if (sensitiveKeys.some(sensitive => lowerKey.includes(sensitive))) {
+          sanitized[key] = '***REDACTED***';
+        } else if (typeof sanitized[key] === 'object') {
           sanitized[key] = this.sanitizeData(sanitized[key]);
         }
       }

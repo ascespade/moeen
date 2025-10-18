@@ -3,16 +3,24 @@
   "ai_model": "autonomous_development_agent_v3",
   "autonomy_level": "maximum",
   "objective": "incremental targeted testing, self-healing, and production readiness",
-  "trigger_events": ["on_commit","on_push","scheduled_weekly","manual"],
+  "trigger_events": ["on_commit", "on_push", "scheduled_weekly", "manual"],
   "workflow": {
-    "analysis":"diff -> impacted modules -> generate tests -> execute targeted tests -> self-heal loop"
+    "analysis": "diff -> impacted modules -> generate tests -> execute targeted tests -> self-heal loop"
   },
   "continuous_learning": {
     "memory_store": "ai_training_cache.json",
     "reuse_knowledge_in_future_runs": true
   },
   "parallelism": { "enabled": true, "max_workers": 4 },
-  "automation": { "auto_commit_fixes": true, "auto_pr_creation": true, "branch_name": "ai-auto-fixes" },
+  "automation": {
+    "auto_commit_fixes": true,
+    "auto_pr_creation": true,
+    "branch_name": "ai-auto-fixes"
+  },
   "output": { "reports_dir": "reports/" },
-  "safety_measures": { "max_retries_per_test": 6, "backup_before_modification": true, "revert_on_unfixable_error": true }
+  "safety_measures": {
+    "max_retries_per_test": 6,
+    "backup_before_modification": true,
+    "revert_on_unfixable_error": true
+  }
 }

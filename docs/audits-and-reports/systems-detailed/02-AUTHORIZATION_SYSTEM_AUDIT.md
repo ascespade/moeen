@@ -10,13 +10,16 @@
 ## 📋 نظرة عامة (Overview)
 
 ### الغرض:
+
 نظام الصلاحيات يتحكم في **من يمكنه الوصول لماذا**. يحدد:
+
 - الأدوار (Roles)
 - الصلاحيات (Permissions)
 - التسلسل الهرمي (Hierarchy)
 - الوصول للموارد (Resource Access)
 
 ### السكوب لمركز الهمم:
+
 ```
 👥 الأدوار (5 roles):
    1. Admin - المدير العام
@@ -38,6 +41,7 @@
 ## 🏗️ البنية الحالية (Current Architecture)
 
 ### 1. الملفات الرئيسية:
+
 ```
 src/lib/auth/
 ├── rbac.ts           - الأدوار والصلاحيات (374 lines) ✅
@@ -46,6 +50,7 @@ src/lib/auth/
 ```
 
 ### 2. الأدوار (Roles):
+
 ```typescript
 export const ROLES = {
   ADMIN: 'admin',
@@ -55,39 +60,41 @@ export const ROLES = {
   PATIENT: 'patient',
 } as const;
 
-export type Role = typeof ROLES[keyof typeof ROLES];
+export type Role = (typeof ROLES)[keyof typeof ROLES];
 ```
 
 ### 3. التسلسل الهرمي (Hierarchy):
+
 ```typescript
 export const ROLE_HIERARCHY: Record<Role, number> = {
-  admin: 5,       // أعلى صلاحية
+  admin: 5, // أعلى صلاحية
   supervisor: 4,
   staff: 3,
   doctor: 2,
-  patient: 1,     // أقل صلاحية
+  patient: 1, // أقل صلاحية
 };
 ```
 
 ### 4. الصلاحيات (35+ permissions):
+
 ```typescript
 // User Management
-USER_VIEW, USER_CREATE, USER_UPDATE, USER_DELETE
+(USER_VIEW, USER_CREATE, USER_UPDATE, USER_DELETE);
 
-// Session Management  
-SESSION_VIEW, SESSION_CREATE, SESSION_UPDATE, SESSION_DELETE
+// Session Management
+(SESSION_VIEW, SESSION_CREATE, SESSION_UPDATE, SESSION_DELETE);
 
 // Progress Tracking
-PROGRESS_VIEW, PROGRESS_CREATE, PROGRESS_UPDATE
+(PROGRESS_VIEW, PROGRESS_CREATE, PROGRESS_UPDATE);
 
 // Insurance
-INSURANCE_VIEW, INSURANCE_SUBMIT, INSURANCE_APPROVE
+(INSURANCE_VIEW, INSURANCE_SUBMIT, INSURANCE_APPROVE);
 
 // Reports
-REPORT_VIEW, REPORT_CREATE, REPORT_EXPORT
+(REPORT_VIEW, REPORT_CREATE, REPORT_EXPORT);
 
 // Settings
-SETTINGS_VIEW, SETTINGS_UPDATE
+(SETTINGS_VIEW, SETTINGS_UPDATE);
 
 // And 20+ more...
 ```
@@ -97,6 +104,7 @@ SETTINGS_VIEW, SETTINGS_UPDATE
 ## ✅ ما تم تنفيذه (Implemented)
 
 ### 1. نظام RBAC كامل ✅
+
 **الملف**: `src/lib/auth/rbac.ts` (374 lines)
 
 ```typescript
@@ -114,6 +122,7 @@ SETTINGS_VIEW, SETTINGS_UPDATE
 ```
 
 ### 2. Authorization Middleware ✅
+
 **الملف**: `src/lib/auth/authorize.ts`
 
 ```typescript
@@ -127,6 +136,7 @@ SETTINGS_VIEW, SETTINGS_UPDATE
 ```
 
 ### 3. Database RLS Policies ✅
+
 **الملف**: `supabase/migrations/060_rls_policies_complete.sql`
 
 ```sql
@@ -144,6 +154,7 @@ SETTINGS_VIEW, SETTINGS_UPDATE
 ```
 
 ### 4. UI Guards (Frontend) ✅
+
 ```typescript
 ✅ useAuth() hook
 ✅ useRole() hook
@@ -157,6 +168,7 @@ SETTINGS_VIEW, SETTINGS_UPDATE
 ## 🟡 نقاط القوة (Strengths)
 
 ### 1. شامل ومنظم 💪
+
 ```
 ✅ 5 أدوار واضحة
 ✅ 35+ صلاحية محددة
@@ -166,6 +178,7 @@ SETTINGS_VIEW, SETTINGS_UPDATE
 ```
 
 ### 2. آمن 🔒
+
 ```
 ✅ Database-level security (RLS)
 ✅ API-level checks (middleware)
@@ -174,6 +187,7 @@ SETTINGS_VIEW, SETTINGS_UPDATE
 ```
 
 ### 3. قابل للتوسع 📈
+
 ```
 ✅ إضافة أدوار جديدة سهلة
 ✅ إضافة صلاحيات جديدة سهلة
@@ -185,7 +199,9 @@ SETTINGS_VIEW, SETTINGS_UPDATE
 ## 🔴 المشاكل والنقص (Issues & Gaps)
 
 ### 1. لا توجد واجهة إدارة الصلاحيات 🔴 Critical
+
 **المشكلة**:
+
 ```
 ❌ لا توجد صفحة Admin لإدارة الأدوار
 ❌ لا يمكن تغيير دور مستخدم من الواجهة
@@ -194,11 +210,13 @@ SETTINGS_VIEW, SETTINGS_UPDATE
 ```
 
 **التأثير**:
+
 - Admin لا يمكنه إدارة الفريق
 - يحتاج تعديل كود لكل تغيير
 - غير عملي للإنتاج
 
 **الحل المقترح**:
+
 ```typescript
 // إنشاء صفحة /admin/users
 <UserManagement>
@@ -225,7 +243,9 @@ PATCH /api/admin/users/:id/permissions
 ---
 
 ### 2. لا توجد Custom Permissions لكل مستخدم 🟡 Medium
+
 **المشكلة**:
+
 ```
 ⚠️  الصلاحيات مرتبطة بالدور فقط
 ⚠️  لا يمكن منح صلاحية خاصة لمستخدم واحد
@@ -233,10 +253,12 @@ PATCH /api/admin/users/:id/permissions
 ```
 
 **التأثير**:
+
 - عدم مرونة في التحكم
 - مثال: أخصائي معين يحتاج صلاحية إضافية
 
 **الحل المقترح**:
+
 ```sql
 -- إنشاء جدول user_permissions
 CREATE TABLE user_permissions (
@@ -253,14 +275,14 @@ export function hasPermission(user, permission) {
   // Check role permissions
   const rolePerms = ROLE_PERMISSIONS[user.role];
   const hasRolePerm = rolePerms.includes(permission);
-  
+
   // Check custom permissions
   const customPerm = user.custom_permissions?.[permission];
-  
+
   if (customPerm !== undefined) {
     return customPerm; // true or false
   }
-  
+
   return hasRolePerm;
 }
 ```
@@ -272,7 +294,9 @@ export function hasPermission(user, permission) {
 ---
 
 ### 3. لا توجد Audit Logs للصلاحيات 🟡 Medium
+
 **المشكلة**:
+
 ```
 ❌ لا نعرف من غيّر دور مستخدم
 ❌ لا نعرف متى تم التغيير
@@ -280,11 +304,13 @@ export function hasPermission(user, permission) {
 ```
 
 **التأثير**:
+
 - لا يمكن تتبع التغييرات
 - صعوبة تدقيق الأمان
 - لا يمكن العودة للحالة السابقة
 
 **الحل المقترح**:
+
 ```sql
 CREATE TABLE authorization_logs (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -308,7 +334,9 @@ VALUES ($1, 'role_changed', 'doctor', 'supervisor', $2);
 ---
 
 ### 4. لا يوجد Resource-level Permissions 🟡 Low
+
 **المشكلة**:
+
 ```
 ⚠️  الصلاحيات على مستوى النوع (type-level) فقط
 ⚠️  مثال: SESSION_VIEW يعني رؤية كل الجلسات
@@ -316,10 +344,12 @@ VALUES ($1, 'role_changed', 'doctor', 'supervisor', $2);
 ```
 
 **التأثير**:
+
 - عدم دقة في التحكم
 - احتمالية تسرب البيانات
 
 **الحل المقترح**:
+
 ```typescript
 // تعديل canAccessResource()
 export function canAccessResource(
@@ -332,7 +362,7 @@ export function canAccessResource(
   if (!hasPermission(user, `${resourceType}_${action}`)) {
     return false;
   }
-  
+
   // Check resource-level access
   if (resourceType === 'session') {
     // Doctor can only view/edit their own sessions
@@ -341,7 +371,7 @@ export function canAccessResource(
       return session.therapist_id === user.id;
     }
   }
-  
+
   return true;
 }
 ```
@@ -356,17 +386,18 @@ export function canAccessResource(
 
 ### النتيجة الإجمالية: **85/100** 🟡
 
-| المعيار | النقاط | الوزن | الإجمالي |
-|---------|--------|-------|----------|
-| **Core System** | 95/100 | 40% | 38 |
-| **UI/Management** | 40/100 | 30% | 12 |
-| **Auditing** | 50/100 | 15% | 7.5 |
-| **Advanced Features** | 60/100 | 15% | 9 |
-| **المجموع** | - | - | **66.5** |
+| المعيار               | النقاط | الوزن | الإجمالي |
+| --------------------- | ------ | ----- | -------- |
+| **Core System**       | 95/100 | 40%   | 38       |
+| **UI/Management**     | 40/100 | 30%   | 12       |
+| **Auditing**          | 50/100 | 15%   | 7.5      |
+| **Advanced Features** | 60/100 | 15%   | 9        |
+| **المجموع**           | -      | -     | **66.5** |
 
 ### التفصيل:
 
 #### Core System: 95/100
+
 ```
 ✅ Roles defined: 100
 ✅ Permissions defined: 100
@@ -379,6 +410,7 @@ Average: 95
 ```
 
 #### UI/Management: 40/100
+
 ```
 ❌ Admin panel: 0
 ❌ Role management UI: 0
@@ -389,6 +421,7 @@ Average: 40
 ```
 
 #### Auditing: 50/100
+
 ```
 ❌ Authorization logs: 0
 ❌ Change history: 0
@@ -398,6 +431,7 @@ Average: 50
 ```
 
 #### Advanced Features: 60/100
+
 ```
 ⚠️  Resource-level permissions: 50
 ⚠️  Permission inheritance: 70
@@ -413,6 +447,7 @@ Average: 60
 ### المرحلة 1: UI الأساسية (Week 1) 🔴
 
 #### Task 1: Admin Users Management Page (12-16h)
+
 ```typescript
 📁 Create: src/app/(admin)/admin/users/page.tsx
 
@@ -427,7 +462,7 @@ Features:
 UI Components:
 <UsersTable>
   <UserRow user={user}>
-    <RoleSelector 
+    <RoleSelector
       currentRole={user.role}
       onChange={handleRoleChange}
     />
@@ -444,6 +479,7 @@ API Endpoints:
 ```
 
 #### Task 2: Role Permissions Viewer (4-6h)
+
 ```typescript
 📁 Create: src/app/(admin)/admin/roles/page.tsx
 
@@ -472,6 +508,7 @@ UI:
 ### المرحلة 2: Advanced Features (Future) 🟢
 
 #### Task 3: Custom User Permissions (8-10h)
+
 ```typescript
 Features:
 ✅ منح صلاحية خاصة لمستخدم
@@ -487,6 +524,7 @@ DELETE /api/admin/users/:id/permissions/:permission
 ```
 
 #### Task 4: Authorization Audit Logs (4-6h)
+
 ```typescript
 Features:
 ✅ تسجيل كل تغيير
@@ -498,7 +536,7 @@ CREATE TABLE authorization_logs ...
 
 UI:
 <AuditLogViewer>
-  <LogEntry 
+  <LogEntry
     action="Role changed from 'doctor' to 'supervisor'"
     user={user}
     changedBy={admin}
@@ -512,6 +550,7 @@ UI:
 ## 🔒 الأمان والمطابقة (Security & Compliance)
 
 ### ✅ ما تم تطبيقه:
+
 ```
 ✅ Role-based access control (RBAC)
 ✅ Permission-based authorization
@@ -522,6 +561,7 @@ UI:
 ```
 
 ### ⏳ ما يجب تطبيقه:
+
 ```
 ⏳ Admin audit logs
 ⏳ Role change notifications
@@ -534,6 +574,7 @@ UI:
 ## 📊 مقاييس الأداء (Performance Metrics)
 
 ### Current Performance:
+
 ```
 ⚡ Authorization check: ~10ms
 ⚡ Role validation: ~5ms
@@ -551,6 +592,7 @@ Target:
 ## 🎓 التوصيات (Recommendations)
 
 ### للإطلاق الفوري (Must Have):
+
 ```
 1. 🔴 إنشاء Admin Users Management Page
 2. 🔴 إنشاء Role Permissions Viewer
@@ -558,6 +600,7 @@ Target:
 ```
 
 ### للمستقبل (Nice to Have):
+
 ```
 4. ⏳ Custom User Permissions
 5. ⏳ Resource-level Permissions
@@ -570,6 +613,7 @@ Target:
 ## 📁 الملفات المتأثرة (Affected Files)
 
 ### يجب إنشاؤها:
+
 ```
 ✅ src/app/(admin)/admin/users/page.tsx
 ✅ src/app/(admin)/admin/roles/page.tsx
@@ -580,6 +624,7 @@ Target:
 ```
 
 ### يجب تحديثها:
+
 ```
 ✅ src/lib/auth/rbac.ts (add custom permissions support)
 ✅ supabase/migrations/... (add authorization_logs table)
@@ -592,17 +637,20 @@ Target:
 ### الحالة: **85% - شبه مكتمل** 🟡
 
 **نقاط القوة**:
+
 - ✅ نظام RBAC قوي ومنظم
 - ✅ 35+ صلاحية محددة
 - ✅ RLS policies كاملة
 - ✅ Triple-layer security
 
 **ما ينقص**:
+
 - 🔴 Admin UI لإدارة المستخدمين والأدوار
 - 🟡 Custom permissions
 - 🟡 Audit logs
 
 **الخطة**:
+
 - 🔴 Week 1: Admin UI → 90%
 - 🟢 Future: Advanced features → 100%
 
@@ -611,6 +659,6 @@ Target:
 
 ---
 
-*Audit Date: 2025-10-17*  
-*System: Authorization*  
-*Status: ✅ Core Complete, UI Needed*
+_Audit Date: 2025-10-17_  
+_System: Authorization_  
+_Status: ✅ Core Complete, UI Needed_

@@ -1,4 +1,5 @@
 <!-- 6f9d3571-6aa1-4ef8-8e9d-b6f9df651a8b 1e993a28-7e3c-4e58-9f33-18cddc50bb2d -->
+
 # Smart Project Restructure & Enhancement Plan
 
 ## Phase 1: Project Cleanup & Structure Reorganization
@@ -235,14 +236,10 @@ mkdir -p scripts/content-collector
 
 - Use `/logo.png` as fallback placeholder
 - Create image component with automatic fallback:
-```tsx
-<OptimizedImage 
-  src="/hero-1.jpg" 
-  fallback="/logo.png" 
-  alt="Hero Image"
-/>
-```
 
+```tsx
+<OptimizedImage src='/hero-1.jpg' fallback='/logo.png' alt='Hero Image' />
+```
 
 ## Phase 6: Automated Testing with Playwright MCP
 

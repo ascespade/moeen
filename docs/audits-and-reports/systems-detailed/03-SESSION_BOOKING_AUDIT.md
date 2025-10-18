@@ -10,7 +10,9 @@
 ## 📋 نظرة عامة (Overview)
 
 ### الغرض:
+
 نظام حجز الجلسات هو **القلب النابض** لمركز الهمم. يتعامل مع:
+
 - حجز جلسات علاجية مع الأخصائيين
 - جدولة المواعيد
 - تأكيد الحضور
@@ -18,6 +20,7 @@
 - تذكيرات تلقائية
 
 ### السكوب لمركز الهمم:
+
 ```
 🎯 أنواع الجلسات (9 أنواع):
    1. تعديل السلوك (ABA) - 90 دقيقة
@@ -48,6 +51,7 @@
 ### 1. الجداول (Database Tables):
 
 #### `sessions` (Current name: `appointments`):
+
 ```sql
 CREATE TABLE appointments (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -79,7 +83,9 @@ CREATE TYPE appointment_status AS ENUM (
 ## ✅ ما تم تنفيذه (Implemented Features)
 
 ### 1. جدول Appointments موجود ✅
+
 **المميزات**:
+
 ```sql
 ✅ جدول موجود بالأعمدة الأساسية
 ✅ ربط مع المرضى (patients)
@@ -90,9 +96,11 @@ CREATE TYPE appointment_status AS ENUM (
 ```
 
 ### 2. واجهة Appointments موجودة ✅
+
 **الملف**: `src/app/(health)/health/appointments/page.tsx`
 
 **المميزات**:
+
 ```typescript
 ✅ عرض المواعيد
 ✅ حجز موعد جديد
@@ -102,6 +110,7 @@ CREATE TYPE appointment_status AS ENUM (
 ```
 
 ### 3. RLS Policies موجودة ✅
+
 ```sql
 ✅ المرضى يرون مواعيدهم فقط
 ✅ الأطباء يرون مواعيدهم
@@ -113,7 +122,9 @@ CREATE TYPE appointment_status AS ENUM (
 ## 🔴 المشاكل والنقص (Issues & Gaps)
 
 ### 1. اسم الجدول عام (appointments بدل sessions) 🟡 Medium
+
 **المشكلة**:
+
 ```
 ⚠️  appointments = مواعيد (عام)
 ✅  sessions = جلسات علاجية (متخصص)
@@ -122,10 +133,12 @@ CREATE TYPE appointment_status AS ENUM (
 ```
 
 **التأثير**:
+
 - تسمية غير دقيقة
 - confusion للمطورين
 
 **الحل المقترح**:
+
 ```sql
 -- Option 1: Rename table
 ALTER TABLE appointments RENAME TO sessions;
@@ -141,7 +154,9 @@ ALTER TABLE appointments RENAME TO sessions;
 ---
 
 ### 2. لا توجد أنواع الجلسات (Session Types) 🔴 Critical
+
 **المشكلة**:
+
 ```
 ❌ لا يوجد جدول session_types
 ❌ لا يمكن تحديد نوع الجلسة (تعديل سلوك، علاج وظيفي، إلخ)
@@ -150,11 +165,13 @@ ALTER TABLE appointments RENAME TO sessions;
 ```
 
 **التأثير**:
+
 - لا يمكن التمييز بين أنواع الجلسات
 - لا يمكن تحديد الأسعار حسب النوع
 - تجربة مستخدم غير دقيقة
 
 **الحل المقترح**:
+
 ```sql
 -- إنشاء جدول session_types
 CREATE TABLE session_types (
@@ -193,7 +210,9 @@ ALTER TABLE appointments ADD COLUMN session_type_id UUID REFERENCES session_type
 ---
 
 ### 3. لا يوجد نظام تحديد المواعيد المتاحة 🔴 Critical
+
 **المشكلة**:
+
 ```
 ❌ لا يوجد جدول therapist_schedule (جدول الأخصائي)
 ❌ لا يمكن تحديد: "أخصائي متاح الأحد 9-12"
@@ -202,11 +221,13 @@ ALTER TABLE appointments ADD COLUMN session_type_id UUID REFERENCES session_type
 ```
 
 **التأثير**:
+
 - حجوزات متضاربة
 - تجربة مستخدم سيئة
 - مشاكل تنظيمية
 
 **الحل المقترح**:
+
 ```sql
 -- إنشاء جدول therapist_schedules
 CREATE TABLE therapist_schedules (
@@ -217,7 +238,7 @@ CREATE TABLE therapist_schedules (
   end_time TIME NOT NULL,
   is_available BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  
+
   -- Prevent overlapping schedules
   CONSTRAINT no_overlap EXCLUDE USING GIST (
     therapist_id WITH =,
@@ -238,6 +259,7 @@ INSERT INTO therapist_schedules (therapist_id, day_of_week, start_time, end_time
 ```
 
 **الوظيفة**: Get Available Slots
+
 ```typescript
 async function getAvailableSlots(
   therapistId: string,
@@ -246,17 +268,17 @@ async function getAvailableSlots(
 ) {
   // 1. Get therapist schedule for this day
   const schedule = await getTherapistSchedule(therapistId, date.getDay());
-  
+
   // 2. Get session type duration
   const sessionType = await getSessionType(sessionTypeId);
   const duration = sessionType.duration;
-  
+
   // 3. Get existing bookings
   const bookings = await getBookings(therapistId, date);
-  
+
   // 4. Generate available slots
   const slots = generateSlots(schedule, duration, bookings);
-  
+
   return slots;
 }
 
@@ -276,7 +298,9 @@ async function getAvailableSlots(
 ---
 
 ### 4. لا توجد تذكيرات تلقائية 🔴 Critical
+
 **المشكلة**:
+
 ```
 ❌ لا توجد تذكيرات WhatsApp قبل الجلسة
 ❌ لا توجد تذكيرات SMS
@@ -285,11 +309,13 @@ async function getAvailableSlots(
 ```
 
 **التأثير**:
+
 - المرضى ينسون المواعيد
 - هدر وقت الأخصائي
 - خسارة مالية
 
 **الحل المقترح**:
+
 ```typescript
 // إنشاء Supabase Edge Function (cron job)
 // Run every hour
@@ -297,24 +323,24 @@ const sendReminders = async () => {
   // Get sessions scheduled in 24 hours
   const tomorrow = new Date();
   tomorrow.setHours(tomorrow.getHours() + 24);
-  
+
   const sessions = await supabase
     .from('sessions')
     .select('*, patients(*), session_types(*)')
     .eq('status', 'scheduled')
     .gte('appointment_date', tomorrow)
     .lte('appointment_date', tomorrow);
-  
+
   for (const session of sessions) {
     // Send WhatsApp (FREE up to 1000 messages)
     await sendWhatsAppReminder(session);
-    
+
     // Send SMS (Twilio free trial)
     await sendSMSReminder(session);
-    
+
     // Send Email (SendGrid free tier)
     await sendEmailReminder(session);
-    
+
     // Mark as reminded
     await markAsReminded(session.id);
   }
@@ -340,7 +366,8 @@ const message = `
 `;
 ```
 
-**التكلفة**: 
+**التكلفة**:
+
 - WhatsApp Business API: $0 (free up to 1000/month)
 - Twilio SMS: $0 (free trial) / $0.05 per SMS
 - SendGrid Email: $0 (100 emails/day free)
@@ -351,7 +378,9 @@ const message = `
 ---
 
 ### 5. لا يوجد Attendance Tracking 🟡 Medium
+
 **المشكلة**:
+
 ```
 ❌ لا يوجد نظام تسجيل حضور/غياب
 ❌ لا يمكن معرفة من حضر ومن لم يحضر
@@ -359,16 +388,18 @@ const message = `
 ```
 
 **التأثير**:
+
 - صعوبة المتابعة
 - لا يمكن قياس الالتزام
 
 **الحل المقترح**:
+
 ```sql
 ALTER TABLE appointments ADD COLUMN checked_in_at TIMESTAMPTZ;
 ALTER TABLE appointments ADD COLUMN checked_out_at TIMESTAMPTZ;
 
 -- UI لتسجيل الحضور
-<SessionCheckIn 
+<SessionCheckIn
   session={session}
   onCheckIn={async () => {
     await updateSession(session.id, {
@@ -392,26 +423,30 @@ ALTER TABLE appointments ADD COLUMN checked_out_at TIMESTAMPTZ;
 ---
 
 ### 6. لا يوجد Recurring Sessions 🟡 Low
+
 **المشكلة**:
+
 ```
 ⚠️  لا يمكن حجز جلسات متكررة (كل أسبوع)
 ⚠️  يجب حجز كل جلسة يدوياً
 ```
 
 **التأثير**:
+
 - تجربة مستخدم غير مريحة
 - المرضى عادة يحجزون نفس الوقت أسبوعياً
 
 **الحل المقترح**:
+
 ```typescript
 <RecurringSessionForm>
   <Select label="نوع التكرار">
     <option value="weekly">أسبوعياً</option>
     <option value="biweekly">كل أسبوعين</option>
   </Select>
-  
+
   <Input label="عدد الجلسات" type="number" />
-  
+
   <Checkbox label="إنشاء سلسلة جلسات" />
 </RecurringSessionForm>
 
@@ -438,17 +473,18 @@ const createRecurringSessions = async (data) => {
 
 ### النتيجة الإجمالية: **70/100** 🟡
 
-| المعيار | النقاط | الوزن | الإجمالي |
-|---------|--------|-------|----------|
-| **الجدول والبنية** | 80/100 | 25% | 20 |
-| **أنواع الجلسات** | 20/100 | 25% | 5 |
-| **الجدولة والتوافر** | 40/100 | 25% | 10 |
-| **التذكيرات والحضور** | 30/100 | 25% | 7.5 |
-| **المجموع** | - | - | **42.5** |
+| المعيار               | النقاط | الوزن | الإجمالي |
+| --------------------- | ------ | ----- | -------- |
+| **الجدول والبنية**    | 80/100 | 25%   | 20       |
+| **أنواع الجلسات**     | 20/100 | 25%   | 5        |
+| **الجدولة والتوافر**  | 40/100 | 25%   | 10       |
+| **التذكيرات والحضور** | 30/100 | 25%   | 7.5      |
+| **المجموع**           | -      | -     | **42.5** |
 
 ### التفصيل:
 
 #### الجدول والبنية: 80/100
+
 ```
 ✅ جدول appointments موجود: 100
 ✅ RLS policies: 100
@@ -460,6 +496,7 @@ Average: 80
 ```
 
 #### أنواع الجلسات: 20/100
+
 ```
 ❌ session_types table: 0
 ❌ duration حسب النوع: 0
@@ -470,6 +507,7 @@ Average: 20
 ```
 
 #### الجدولة والتوافر: 40/100
+
 ```
 ❌ therapist_schedules table: 0
 ❌ Available slots API: 0
@@ -480,6 +518,7 @@ Average: 40
 ```
 
 #### التذكيرات والحضور: 30/100
+
 ```
 ❌ WhatsApp reminders: 0
 ❌ SMS reminders: 0
@@ -497,6 +536,7 @@ Average: 30
 ### Week 1: Session Types & Scheduling 🔴
 
 #### Day 1-2: Session Types (4-6h)
+
 ```sql
 ✅ إنشاء جدول session_types
 ✅ إدراج 9 أنواع جلسات
@@ -505,6 +545,7 @@ Average: 30
 ```
 
 #### Day 3-4: Therapist Schedules (12-16h)
+
 ```sql
 ✅ إنشاء جدول therapist_schedules
 ✅ واجهة لإدارة جداول الأخصائيين
@@ -514,6 +555,7 @@ Average: 30
 ```
 
 #### Day 5: Reminders (8-10h)
+
 ```typescript
 ✅ WhatsApp reminders setup
 ✅ SMS reminders (Twilio)
@@ -530,6 +572,7 @@ Average: 30
 ### Week 2: Attendance & Enhancements 🟢
 
 #### Day 1-2: Attendance Tracking (4-6h)
+
 ```typescript
 ✅ Check-in/Check-out UI
 ✅ Update session status
@@ -538,6 +581,7 @@ Average: 30
 ```
 
 #### Day 3-4: Recurring Sessions (6-8h)
+
 ```typescript
 ✅ Recurring booking form
 ✅ Series creation logic
@@ -546,6 +590,7 @@ Average: 30
 ```
 
 #### Day 5: Testing & Polish (6-8h)
+
 ```typescript
 ✅ اختبار شامل
 ✅ Fix bugs
@@ -561,6 +606,7 @@ Average: 30
 ## 🔒 الأمان والمطابقة (Security & Compliance)
 
 ### ✅ ما تم تطبيقه:
+
 ```
 ✅ RLS policies
 ✅ User-specific access
@@ -568,6 +614,7 @@ Average: 30
 ```
 
 ### ⏳ ما يجب تطبيقه:
+
 ```
 ⏳ Prevent double-booking (database constraint)
 ⏳ Validate therapist availability before booking
@@ -592,6 +639,7 @@ Average: 30
 ## 🎓 التوصيات (Recommendations)
 
 ### للإطلاق الفوري (Must Have):
+
 ```
 1. 🔴 إنشاء session_types table
 2. 🔴 إنشاء therapist_schedules system
@@ -600,6 +648,7 @@ Average: 30
 ```
 
 ### للمستقبل (Nice to Have):
+
 ```
 5. ⏳ Recurring sessions
 6. ⏳ Wait list
@@ -614,17 +663,20 @@ Average: 30
 ### الحالة: **70% - يحتاج عمل** 🟡
 
 **نقاط القوة**:
+
 - ✅ جدول appointments موجود
 - ✅ RLS policies
 - ✅ واجهة أساسية
 
 **ما ينقص (Critical)**:
+
 - 🔴 أنواع الجلسات (9 types)
 - 🔴 جداول الأخصائيين
 - 🔴 Available slots
 - 🔴 تذكيرات تلقائية
 
 **الخطة**:
+
 - 🔴 Week 1: Core features → 90%
 - 🟢 Week 2: Enhancements → 95%
 
@@ -633,6 +685,6 @@ Average: 30
 
 ---
 
-*Audit Date: 2025-10-17*  
-*System: Session Booking*  
-*Status: ⚠️  Needs Work - Critical for Al Hemam Center*
+_Audit Date: 2025-10-17_  
+_System: Session Booking_  
+_Status: ⚠️ Needs Work - Critical for Al Hemam Center_

@@ -20,7 +20,7 @@ export interface Database {
           gender: string | null;
           phone: string;
           email: string | null;
-          role: "admin" | "doctor" | "therapist" | "patient" | "family_member";
+          role: 'admin' | 'doctor' | 'therapist' | 'patient' | 'family_member';
           avatar_url: string | null;
           address: string | null;
           city: string | null;
@@ -48,7 +48,7 @@ export interface Database {
           gender?: string | null;
           phone: string;
           email?: string | null;
-          role?: "admin" | "doctor" | "therapist" | "patient" | "family_member";
+          role?: 'admin' | 'doctor' | 'therapist' | 'patient' | 'family_member';
           avatar_url?: string | null;
           address?: string | null;
           city?: string | null;
@@ -76,7 +76,7 @@ export interface Database {
           gender?: string | null;
           phone?: string;
           email?: string | null;
-          role?: "admin" | "doctor" | "therapist" | "patient" | "family_member";
+          role?: 'admin' | 'doctor' | 'therapist' | 'patient' | 'family_member';
           avatar_url?: string | null;
           address?: string | null;
           city?: string | null;
@@ -224,14 +224,14 @@ export interface Database {
           appointment_date: string;
           appointment_time: string;
           duration_minutes: number | null;
-          type: "assessment" | "treatment" | "follow_up" | "consultation";
+          type: 'assessment' | 'treatment' | 'follow_up' | 'consultation';
           status:
-            | "scheduled"
-            | "confirmed"
-            | "in_progress"
-            | "completed"
-            | "cancelled"
-            | "no_show"
+            | 'scheduled'
+            | 'confirmed'
+            | 'in_progress'
+            | 'completed'
+            | 'cancelled'
+            | 'no_show'
             | null;
           notes: string | null;
           insurance_covered: boolean | null;
@@ -247,14 +247,14 @@ export interface Database {
           appointment_date: string;
           appointment_time: string;
           duration_minutes?: number | null;
-          type: "assessment" | "treatment" | "follow_up" | "consultation";
+          type: 'assessment' | 'treatment' | 'follow_up' | 'consultation';
           status?:
-            | "scheduled"
-            | "confirmed"
-            | "in_progress"
-            | "completed"
-            | "cancelled"
-            | "no_show"
+            | 'scheduled'
+            | 'confirmed'
+            | 'in_progress'
+            | 'completed'
+            | 'cancelled'
+            | 'no_show'
             | null;
           notes?: string | null;
           insurance_covered?: boolean | null;
@@ -270,14 +270,14 @@ export interface Database {
           appointment_date?: string;
           appointment_time?: string;
           duration_minutes?: number | null;
-          type?: "assessment" | "treatment" | "follow_up" | "consultation";
+          type?: 'assessment' | 'treatment' | 'follow_up' | 'consultation';
           status?:
-            | "scheduled"
-            | "confirmed"
-            | "in_progress"
-            | "completed"
-            | "cancelled"
-            | "no_show"
+            | 'scheduled'
+            | 'confirmed'
+            | 'in_progress'
+            | 'completed'
+            | 'cancelled'
+            | 'no_show'
             | null;
           notes?: string | null;
           insurance_covered?: boolean | null;
@@ -296,7 +296,7 @@ export interface Database {
           session_date: string;
           session_time: string;
           duration_minutes: number | null;
-          type: "assessment" | "treatment" | "follow_up" | "consultation";
+          type: 'assessment' | 'treatment' | 'follow_up' | 'consultation';
           notes: string | null;
           exercises: Json | null;
           completed: boolean | null;
@@ -312,7 +312,7 @@ export interface Database {
           session_date: string;
           session_time: string;
           duration_minutes?: number | null;
-          type: "assessment" | "treatment" | "follow_up" | "consultation";
+          type: 'assessment' | 'treatment' | 'follow_up' | 'consultation';
           notes?: string | null;
           exercises?: Json | null;
           completed?: boolean | null;
@@ -328,7 +328,7 @@ export interface Database {
           session_date?: string;
           session_time?: string;
           duration_minutes?: number | null;
-          type?: "assessment" | "treatment" | "follow_up" | "consultation";
+          type?: 'assessment' | 'treatment' | 'follow_up' | 'consultation';
           notes?: string | null;
           exercises?: Json | null;
           completed?: boolean | null;
@@ -343,16 +343,16 @@ export interface Database {
           patient_id: string;
           session_id: string | null;
           message_type:
-            | "text"
-            | "template"
-            | "image"
-            | "document"
-            | "audio"
-            | "video";
+            | 'text'
+            | 'template'
+            | 'image'
+            | 'document'
+            | 'audio'
+            | 'video';
           content: string;
           response: string | null;
           sentiment: string | null;
-          crisis_level: "normal" | "urgent" | "crisis" | null;
+          crisis_level: 'normal' | 'urgent' | 'crisis' | null;
           metadata: Json | null;
           created_at: string | null;
         };
@@ -361,16 +361,16 @@ export interface Database {
           patient_id: string;
           session_id?: string | null;
           message_type:
-            | "text"
-            | "template"
-            | "image"
-            | "document"
-            | "audio"
-            | "video";
+            | 'text'
+            | 'template'
+            | 'image'
+            | 'document'
+            | 'audio'
+            | 'video';
           content: string;
           response?: string | null;
           sentiment?: string | null;
-          crisis_level?: "normal" | "urgent" | "crisis" | null;
+          crisis_level?: 'normal' | 'urgent' | 'crisis' | null;
           metadata?: Json | null;
           created_at?: string | null;
         };
@@ -379,16 +379,16 @@ export interface Database {
           patient_id?: string;
           session_id?: string | null;
           message_type?:
-            | "text"
-            | "template"
-            | "image"
-            | "document"
-            | "audio"
-            | "video";
+            | 'text'
+            | 'template'
+            | 'image'
+            | 'document'
+            | 'audio'
+            | 'video';
           content?: string;
           response?: string | null;
           sentiment?: string | null;
-          crisis_level?: "normal" | "urgent" | "crisis" | null;
+          crisis_level?: 'normal' | 'urgent' | 'crisis' | null;
           metadata?: Json | null;
           created_at?: string | null;
         };
@@ -436,7 +436,7 @@ export interface Database {
           id: string;
           user_id: string;
           type: string;
-          priority: "low" | "medium" | "high" | "critical" | null;
+          priority: 'low' | 'medium' | 'high' | 'critical' | null;
           title: string;
           message: string;
           data: Json | null;
@@ -448,7 +448,7 @@ export interface Database {
           id?: string;
           user_id: string;
           type: string;
-          priority?: "low" | "medium" | "high" | "critical" | null;
+          priority?: 'low' | 'medium' | 'high' | 'critical' | null;
           title: string;
           message: string;
           data?: Json | null;
@@ -460,7 +460,7 @@ export interface Database {
           id?: string;
           user_id?: string;
           type?: string;
-          priority?: "low" | "medium" | "high" | "critical" | null;
+          priority?: 'low' | 'medium' | 'high' | 'critical' | null;
           title?: string;
           message?: string;
           data?: Json | null;
@@ -594,24 +594,24 @@ export interface Database {
       [_ in never]: never;
     };
     Enums: {
-      user_role: "admin" | "doctor" | "therapist" | "patient" | "family_member";
+      user_role: 'admin' | 'doctor' | 'therapist' | 'patient' | 'family_member';
       appointment_status:
-        | "scheduled"
-        | "confirmed"
-        | "in_progress"
-        | "completed"
-        | "cancelled"
-        | "no_show";
-      session_type: "assessment" | "treatment" | "follow_up" | "consultation";
+        | 'scheduled'
+        | 'confirmed'
+        | 'in_progress'
+        | 'completed'
+        | 'cancelled'
+        | 'no_show';
+      session_type: 'assessment' | 'treatment' | 'follow_up' | 'consultation';
       message_type:
-        | "text"
-        | "template"
-        | "image"
-        | "document"
-        | "audio"
-        | "video";
-      crisis_level: "normal" | "urgent" | "crisis";
-      notification_priority: "low" | "medium" | "high" | "critical";
+        | 'text'
+        | 'template'
+        | 'image'
+        | 'document'
+        | 'audio'
+        | 'video';
+      crisis_level: 'normal' | 'urgent' | 'crisis';
+      notification_priority: 'low' | 'medium' | 'high' | 'critical';
     };
     CompositeTypes: {
       [_ in never]: never;

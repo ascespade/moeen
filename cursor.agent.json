@@ -6,7 +6,21 @@
     {
       "event": "on_push",
       "branches": ["main", "develop"],
-      "paths": ["src/**/*.js", "src/**/*.ts", "src/**/*.jsx", "src/**/*.tsx", "tests/**/*.js", "tests/**/*.ts", "scripts/**/*.js", "scripts/**/*.ts", "package.json", ".eslintrc.cjs", "tsconfig.json", "vitest.config.js", "next.config.js"]
+      "paths": [
+        "src/**/*.js",
+        "src/**/*.ts",
+        "src/**/*.jsx",
+        "src/**/*.tsx",
+        "tests/**/*.js",
+        "tests/**/*.ts",
+        "scripts/**/*.js",
+        "scripts/**/*.ts",
+        "package.json",
+        ".eslintrc.cjs",
+        "tsconfig.json",
+        "vitest.config.js",
+        "next.config.js"
+      ]
     },
     {
       "event": "on_schedule",

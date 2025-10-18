@@ -72,8 +72,8 @@ export function LoginButton({ onLogin }: { onLogin: () => void }) {
   return (
     <button
       onClick={onLogin}
-      aria-label="تسجيل الدخول"
-      className="btn btn-primary"
+      aria-label='تسجيل الدخول'
+      className='btn btn-primary'
     >
       تسجيل الدخول
     </button>
@@ -90,13 +90,9 @@ export function LoginButton({ onLogin }: { onLogin: () => void }) {
 ```tsx
 import { cn } from '@/lib/cn';
 
-<div className={cn(
-  'base-classes',
-  isActive && 'active-classes',
-  className
-)}>
+<div className={cn('base-classes', isActive && 'active-classes', className)}>
   {children}
-</div>
+</div>;
 ```
 
 ---
@@ -136,6 +132,7 @@ git commit -m "docs: تحديث دليل المساهمة"
 ```
 
 الأنواع المتاحة:
+
 - `feat`: ميزة جديدة
 - `fix`: إصلاح خطأ
 - `docs`: توثيق
@@ -166,6 +163,7 @@ npm run test
 ### Husky Pre-commit Hook
 
 عند عمل commit، سيتم تشغيل:
+
 - TypeScript check
 - ESLint check
 
@@ -179,7 +177,7 @@ npm run test
 
 ```typescript
 // ❌ خطأ - مفاتيح مكشوفة
-const apiKey = "sk_live_xxxxxxxxxxxxx";
+const apiKey = 'sk_live_xxxxxxxxxxxxx';
 
 // ✅ صحيح - استخدم env
 const apiKey = process.env.STRIPE_SECRET_KEY;

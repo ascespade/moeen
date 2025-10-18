@@ -10,7 +10,9 @@
 ## 📋 نظرة عامة (Overview)
 
 ### الغرض:
+
 نظام لإدارة الأخصائيين (المعالجين) في المركز:
+
 - ملفات الأخصائيين
 - تخصصاتهم
 - جداول عملهم
@@ -19,6 +21,7 @@
 - التقييمات
 
 ### السكوب لمركز الهمم:
+
 ```
 👨‍⚕️ الأخصائيون:
    - أخصائي تعديل سلوك (ABA Therapist)
@@ -42,6 +45,7 @@
 ### الجداول الموجودة:
 
 #### `users` (role = 'doctor'):
+
 ```sql
 -- الأخصائيون مخزنون في جدول users
 SELECT * FROM users WHERE role = 'doctor';
@@ -57,6 +61,7 @@ SELECT * FROM users WHERE role = 'doctor';
 ## ✅ ما تم تنفيذه
 
 ### 1. Therapists في جدول users ✅
+
 ```
 ✅ role = 'doctor' للأخصائيين
 ✅ معلومات أساسية (اسم، بريد، جوال)
@@ -64,6 +69,7 @@ SELECT * FROM users WHERE role = 'doctor';
 ```
 
 ### 2. ربط مع Appointments ✅
+
 ```
 ✅ appointments.doctor_id → users.id
 ✅ الأخصائي يرى جلساته
@@ -74,7 +80,9 @@ SELECT * FROM users WHERE role = 'doctor';
 ## 🔴 المشاكل والنقص
 
 ### 1. لا توجد معلومات متخصصة للأخصائيين 🟡
+
 **المشكلة**:
+
 ```
 ⚠️  لا يوجد جدول therapist_profiles
 ⚠️  لا توجد تخصصات (specializations)
@@ -83,6 +91,7 @@ SELECT * FROM users WHERE role = 'doctor';
 ```
 
 **الحل**:
+
 ```sql
 CREATE TABLE therapist_profiles (
   user_id UUID PRIMARY KEY REFERENCES users(id),
@@ -104,7 +113,9 @@ CREATE TABLE therapist_profiles (
 ---
 
 ### 2. لا يوجد جدول عمل الأخصائيين 🔴
+
 **المشكلة**:
+
 ```
 ❌ لا يوجد therapist_schedules (مهم!)
 ❌ لا يمكن تحديد: "أنا متاح الأحد 9-12"
@@ -112,6 +123,7 @@ CREATE TABLE therapist_profiles (
 ```
 
 **الحل**:
+
 ```sql
 -- نفس الجدول المذكور في Session Booking Audit
 CREATE TABLE therapist_schedules (
@@ -130,7 +142,9 @@ CREATE TABLE therapist_schedules (
 ---
 
 ### 3. لا توجد إحصائيات أداء 🟡
+
 **المشكلة**:
+
 ```
 ⚠️  الأخصائي لا يرى إحصائياته
 ⚠️  عدد الجلسات
@@ -139,26 +153,27 @@ CREATE TABLE therapist_schedules (
 ```
 
 **الحل**:
+
 ```typescript
 <TherapistDashboard therapist={therapist}>
   <StatsCards>
-    <StatCard 
+    <StatCard
       title="الجلسات هذا الشهر"
       value={statsثدرلا.sessions_count}
       icon="📅"
     />
-    <StatCard 
+    <StatCard
       title="معدل الحضور"
       value={stats.attendance_rate}
       icon="✅"
     />
-    <StatCard 
+    <StatCard
       title="تقييم الأسر"
       value={stats.avg_rating}
       icon="⭐"
     />
   </StatsCards>
-  
+
   <UpcomingSessions sessions={upcoming} />
   <RecentNotes notes={recent} />
 </TherapistDashboard>
@@ -170,13 +185,16 @@ CREATE TABLE therapist_schedules (
 ---
 
 ### 4. لا يوجد نظام تقييم الأخصائيين 🟡
+
 **المشكلة**:
+
 ```
 ⚠️  الأسر لا يمكنها تقييم الأخصائي
 ⚠️  لا توجد مراجعات (reviews)
 ```
 
 **الحل**:
+
 ```sql
 CREATE TABLE therapist_reviews (
   id UUID PRIMARY KEY,
@@ -196,13 +214,13 @@ CREATE TABLE therapist_reviews (
 
 ## 📊 تقييم الجاهزية: **65/100** 🟡
 
-| المعيار | النقاط | الوزن | الإجمالي |
-|---------|--------|-------|----------|
-| **Basic Info** | 80/100 | 30% | 24 |
-| **Schedules** | 0/100 | 40% | 0 |
-| **Stats & Reports** | 40/100 | 20% | 8 |
-| **Reviews** | 30/100 | 10% | 3 |
-| **المجموع** | - | - | **35** |
+| المعيار             | النقاط | الوزن | الإجمالي |
+| ------------------- | ------ | ----- | -------- |
+| **Basic Info**      | 80/100 | 30%   | 24       |
+| **Schedules**       | 0/100  | 40%   | 0        |
+| **Stats & Reports** | 40/100 | 20%   | 8        |
+| **Reviews**         | 30/100 | 10%   | 3        |
+| **المجموع**         | -      | -     | **35**   |
 
 ---
 
@@ -211,6 +229,7 @@ CREATE TABLE therapist_reviews (
 ### Week 1 (مع Session Booking):
 
 #### Task: Therapist Schedules (6-8h)
+
 ```
 ✅ جدول therapist_schedules
 ✅ واجهة إدارة الجدول
@@ -220,6 +239,7 @@ CREATE TABLE therapist_reviews (
 ### Week 3 (بعد Core Features):
 
 #### Task 1: Therapist Profiles (4-6h)
+
 ```
 ✅ جدول therapist_profiles
 ✅ صفحة Profile للأخصائي
@@ -227,6 +247,7 @@ CREATE TABLE therapist_reviews (
 ```
 
 #### Task 2: Therapist Dashboard (8-10h)
+
 ```
 ✅ لوحة تحكم الأخصائي
 ✅ إحصائيات
@@ -242,17 +263,20 @@ CREATE TABLE therapist_reviews (
 ## 🎓 التوصيات
 
 ### Must Have:
+
 ```
 1. 🔴 Therapist schedules (critical for booking)
 ```
 
 ### Should Have:
+
 ```
 2. 🟡 Therapist profiles
 3. 🟡 Dashboard & stats
 ```
 
 ### Nice to Have:
+
 ```
 4. ⏳ Review system
 5. ⏳ Performance reports
@@ -266,15 +290,18 @@ CREATE TABLE therapist_reviews (
 ### الحالة: **65% - جيد لكن يحتاج Schedules** 🟡
 
 **نقاط القوة**:
+
 - ✅ Therapists في النظام
 - ✅ ربط مع الجلسات
 
 **ما ينقص**:
+
 - 🔴 Schedules (critical!)
 - 🟡 Profiles & specializations
 - 🟡 Dashboard & stats
 
-**الخطة**: 
+**الخطة**:
+
 - Week 1: Schedules (critical) → 70%
 - Week 3: Profiles & Dashboard → 85%
 
@@ -283,6 +310,6 @@ CREATE TABLE therapist_reviews (
 
 ---
 
-*Audit Date: 2025-10-17*  
-*System: Therapist Management*  
-*Status: ✅ Acceptable, Schedules Needed*
+_Audit Date: 2025-10-17_  
+_System: Therapist Management_  
+_Status: ✅ Acceptable, Schedules Needed_

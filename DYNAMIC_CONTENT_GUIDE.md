@@ -79,7 +79,7 @@ settings (
 import {
   dynamicContentManager,
   type HomepageContent,
-} from "@/lib/dynamic-content-manager";
+} from '@/lib/dynamic-content-manager';
 
 export default function HomePage() {
   const [content, setContent] = useState<HomepageContent>({
@@ -100,7 +100,7 @@ export default function HomePage() {
 
   return (
     <div>
-      {content.heroSlides.map((slide) => (
+      {content.heroSlides.map(slide => (
         <div key={slide.id}>
           <h1>{slide.title}</h1>
           <p>{slide.description}</p>
@@ -114,16 +114,16 @@ export default function HomePage() {
 ### 2. Translations
 
 ```tsx
-import { useI18n } from "@/hooks/useI18n";
-import { I18N_KEYS } from "@/constants/i18n-keys";
+import { useI18n } from '@/hooks/useI18n';
+import { I18N_KEYS } from '@/constants/i18n-keys';
 
 export default function MyComponent() {
   const { t } = useI18n();
 
   return (
     <div>
-      <h1>{t(I18N_KEYS.HOMEPAGE.SERVICES.TITLE, "خدماتنا")}</h1>
-      <p>{t(I18N_KEYS.HOMEPAGE.SERVICES.SUBTITLE, "نقدم أفضل الخدمات")}</p>
+      <h1>{t(I18N_KEYS.HOMEPAGE.SERVICES.TITLE, 'خدماتنا')}</h1>
+      <p>{t(I18N_KEYS.HOMEPAGE.SERVICES.SUBTITLE, 'نقدم أفضل الخدمات')}</p>
     </div>
   );
 }
@@ -132,19 +132,19 @@ export default function MyComponent() {
 ### 3. Theme Management
 
 ```tsx
-import { dynamicThemeManager } from "@/lib/dynamic-theme-manager";
+import { dynamicThemeManager } from '@/lib/dynamic-theme-manager';
 
 // Get user preferences
 const preferences = await dynamicThemeManager.getUserPreferences();
 
 // Update theme
-await dynamicThemeManager.updateUserPreferences("user_id", {
-  theme: "dark",
+await dynamicThemeManager.updateUserPreferences('user_id', {
+  theme: 'dark',
 });
 
 // Apply theme
 const themeConfig = await dynamicThemeManager.getThemeConfig();
-dynamicThemeManager.applyTheme("dark", themeConfig);
+dynamicThemeManager.applyTheme('dark', themeConfig);
 ```
 
 ## 🔧 Configuration
@@ -202,8 +202,8 @@ await dynamicContentManager.updateHomepageContent({
 ```typescript
 // Add translations
 await dynamicContentManager.updateTranslations([
-  { locale: "ar", namespace: "common", key: "new.key", value: "قيمة جديدة" },
-  { locale: "en", namespace: "common", key: "new.key", value: "New Value" },
+  { locale: 'ar', namespace: 'common', key: 'new.key', value: 'قيمة جديدة' },
+  { locale: 'en', namespace: 'common', key: 'new.key', value: 'New Value' },
 ]);
 ```
 
@@ -249,8 +249,8 @@ npm run migrate
    ```tsx
    // ❌ Bad
    const services = [
-     { id: 1, title: "Service 1" },
-     { id: 2, title: "Service 2" },
+     { id: 1, title: 'Service 1' },
+     { id: 2, title: 'Service 2' },
    ];
 
    // ✅ Good
@@ -361,7 +361,7 @@ Enable debug logging:
 
 ```typescript
 // In development
-process.env.NODE_ENV = "development";
+process.env.NODE_ENV = 'development';
 // This will show detailed logs for debugging
 ```
 

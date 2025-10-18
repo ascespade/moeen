@@ -643,17 +643,17 @@ X-RateLimit-Reset: 1640995200
 ### JavaScript/TypeScript
 
 ```typescript
-import { Mu3eenAPI } from "@mu3een/sdk";
+import { Mu3eenAPI } from '@mu3een/sdk';
 
 const api = new Mu3eenAPI({
-  baseURL: "https://api.mu3een.com",
-  apiKey: "your-api-key",
+  baseURL: 'https://api.mu3een.com',
+  apiKey: 'your-api-key',
 });
 
 // Login
 const { data } = await api.auth.login({
-  email: "user@example.com",
-  password: "password123",
+  email: 'user@example.com',
+  password: 'password123',
 });
 
 // Get users
@@ -663,8 +663,8 @@ const users = await api.users.list({
 });
 
 // Send message
-const message = await api.messages.create("channel-123", {
-  content: "Hello, world!",
+const message = await api.messages.create('channel-123', {
+  content: 'Hello, world!',
 });
 ```
 

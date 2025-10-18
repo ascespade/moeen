@@ -1,22 +1,22 @@
-import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 // GET /api/crm/leads - جلب العملاء المحتملين
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const status = searchParams.get("status");
-    const owner_id = searchParams.get("owner_id");
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "10");
+    const status = searchParams.get('status');
+    const owner_id = searchParams.get('owner_id');
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '10');
 
     let query = supabase
-      .from("crm_leads")
+      .from('crm_leads')
       .select(
         `
         *,
@@ -24,16 +24,16 @@ export async function GET(request: NextRequest) {
           name,
           email
         )
-      `,
+      `
       )
-      .order("created_at", { ascending: false });
+      .order('created_at', { ascending: false });
 
     if (status) {
-      query = query.eq("status", status);
+      query = query.eq('status', status);
     }
 
     if (owner_id) {
-      query = query.eq("owner_id", owner_id);
+      query = query.eq('owner_id', owner_id);
     }
 
     // تطبيق الصفحات
@@ -58,8 +58,8 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
@@ -74,14 +74,14 @@ export async function POST(request: NextRequest) {
       phone,
       company,
       source,
-      status = "new",
+      status = 'new',
       score = 0,
       notes,
       owner_id,
     } = body;
 
     const { data: lead, error } = await supabase
-      .from("crm_leads")
+      .from('crm_leads')
       .insert({
         public_id: `LEAD-${Date.now()}`,
         name,
@@ -104,8 +104,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ lead }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }

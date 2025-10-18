@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 
 export async function POST(request: NextRequest) {
   try {
@@ -8,8 +8,8 @@ export async function POST(request: NextRequest) {
 
     if (!doctorId || !appointmentTime || !patientId) {
       return NextResponse.json(
-        { error: "Doctor ID, appointment time, and patient ID are required" },
-        { status: 400 },
+        { error: 'Doctor ID, appointment time, and patient ID are required' },
+        { status: 400 }
       );
     }
 
@@ -17,24 +17,24 @@ export async function POST(request: NextRequest) {
 
     // التحقق من وجود المريض
     const { data: patient, error: patientError } = await supabase
-      .from("patients")
-      .select("*")
-      .eq("user_id", patientId)
+      .from('patients')
+      .select('*')
+      .eq('user_id', patientId)
       .single();
 
     if (patientError || !patient) {
-      return NextResponse.json({ error: "Patient not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
     }
 
     // التحقق من وجود الطبيب
     const { data: doctor, error: doctorError } = await supabase
-      .from("doctors")
-      .select("*")
-      .eq("id", doctorId)
+      .from('doctors')
+      .select('*')
+      .eq('id', doctorId)
       .single();
 
     if (doctorError || !doctor) {
-      return NextResponse.json({ error: "Doctor not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Doctor not found' }, { status: 404 });
     }
 
     // تحديد تاريخ الموعد (اليوم أو غداً)
@@ -42,22 +42,22 @@ export async function POST(request: NextRequest) {
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    const appointmentDate = new Date().toISOString().split("T")[0];
+    const appointmentDate = new Date().toISOString().split('T')[0];
 
     // التحقق من توفر الموعد
     const { data: existingAppointment, error: checkError } = await supabase
-      .from("appointments")
-      .select("id")
-      .eq("doctor_id", doctorId)
-      .eq("appointment_date", appointmentDate)
-      .eq("appointment_time", appointmentTime)
-      .eq("status", "scheduled")
+      .from('appointments')
+      .select('id')
+      .eq('doctor_id', doctorId)
+      .eq('appointment_date', appointmentDate)
+      .eq('appointment_time', appointmentTime)
+      .eq('status', 'scheduled')
       .single();
 
     if (existingAppointment) {
       return NextResponse.json(
-        { error: "This time slot is already booked" },
-        { status: 409 },
+        { error: 'This time slot is already booked' },
+        { status: 409 }
       );
     }
 
@@ -66,16 +66,16 @@ export async function POST(request: NextRequest) {
 
     // إنشاء الموعد
     const { data: appointment, error: appointmentError } = await supabase
-      .from("appointments")
+      .from('appointments')
       .insert({
         patient_id: patient.id,
         doctor_id: doctorId,
         appointment_date: appointmentDate,
         appointment_time: appointmentTime,
         duration_minutes: 60,
-        type: "consultation",
-        status: "scheduled",
-        notes: notes || "تم الحجز عبر الشات بوت",
+        type: 'consultation',
+        status: 'scheduled',
+        notes: notes || 'تم الحجز عبر الشات بوت',
         created_by: patientId,
         confirmation_code: confirmationCode,
       })
@@ -93,14 +93,14 @@ export async function POST(request: NextRequest) {
           last_name,
           specialty
         )
-      `,
+      `
       )
       .single();
 
     if (appointmentError) {
       return NextResponse.json(
-        { error: "Failed to create appointment" },
-        { status: 500 },
+        { error: 'Failed to create appointment' },
+        { status: 500 }
       );
     }
 
@@ -114,17 +114,17 @@ export async function POST(request: NextRequest) {
     }
 
     // حفظ سجل في chatbot_appointments
-    await supabase.from("chatbot_appointments").insert({
+    await supabase.from('chatbot_appointments').insert({
       conversation_id: conversationId,
       patient_name: `${patient.first_name} ${patient.last_name}`,
       patient_phone: patient.phone,
       appointment_date: appointmentDate,
       appointment_time: appointmentTime,
-      service_type: "consultation",
+      service_type: 'consultation',
       doctor_id: doctorId,
-      status: "pending",
+      status: 'pending',
       confirmation_code: confirmationCode,
-      notes: notes || "تم الحجز عبر الشات بوت",
+      notes: notes || 'تم الحجز عبر الشات بوت',
     });
 
     return NextResponse.json({
@@ -139,12 +139,12 @@ export async function POST(request: NextRequest) {
         specialty: appointment.doctors.specialty,
         status: appointment.status,
       },
-      message: "تم حجز الموعد بنجاح!",
+      message: 'تم حجز الموعد بنجاح!',
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
@@ -152,13 +152,13 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const patientId = searchParams.get("patientId");
-    const doctorId = searchParams.get("doctorId");
+    const patientId = searchParams.get('patientId');
+    const doctorId = searchParams.get('doctorId');
 
     const supabase = await createClient();
 
     let query = supabase
-      .from("appointments")
+      .from('appointments')
       .select(
         `
         *,
@@ -173,33 +173,33 @@ export async function GET(request: NextRequest) {
           last_name,
           specialty
         )
-      `,
+      `
       )
-      .order("appointment_date", { ascending: true });
+      .order('appointment_date', { ascending: true });
 
     if (patientId) {
       // جلب مواعيد مريض محدد
       const { data: patient } = await supabase
-        .from("patients")
-        .select("id")
-        .eq("user_id", patientId)
+        .from('patients')
+        .select('id')
+        .eq('user_id', patientId)
         .single();
 
       if (patient) {
-        query = query.eq("patient_id", patient.id);
+        query = query.eq('patient_id', patient.id);
       }
     }
 
     if (doctorId) {
-      query = query.eq("doctor_id", doctorId);
+      query = query.eq('doctor_id', doctorId);
     }
 
     const { data: appointments, error } = await query;
 
     if (error) {
       return NextResponse.json(
-        { error: "Failed to fetch appointments" },
-        { status: 500 },
+        { error: 'Failed to fetch appointments' },
+        { status: 500 }
       );
     }
 
@@ -209,8 +209,8 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
@@ -224,7 +224,7 @@ async function sendWhatsAppConfirmation(phone: string, appointment: any) {
 التفاصيل:
 👨‍⚕️ الطبيب: ${appointment.doctors.first_name} ${appointment.doctors.last_name}
 🏥 التخصص: ${appointment.doctors.specialty}
-📅 التاريخ: ${new Date(appointment.appointment_date).toLocaleDateString("ar-SA")}
+📅 التاريخ: ${new Date(appointment.appointment_date).toLocaleDateString('ar-SA')}
 ⏰ الوقت: ${appointment.appointment_time}
 📋 رقم الموعد: ${appointment.confirmation_code}
 

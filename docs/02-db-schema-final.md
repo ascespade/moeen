@@ -476,7 +476,7 @@ CREATE POLICY "Users can update their notifications" ON notifications
 ### ملف `src/lib/cuid.ts`
 
 ```typescript
-import { createId } from "@paralleldrive/cuid2";
+import { createId } from '@paralleldrive/cuid2';
 
 export function generateCuid(): string {
   return createId();

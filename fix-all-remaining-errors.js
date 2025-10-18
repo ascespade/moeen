@@ -15,7 +15,14 @@ class ComprehensiveErrorFixer {
 
   log(message, type = 'info') {
     const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    const prefix =
+      type === 'error'
+        ? '❌'
+        : type === 'success'
+          ? '✅'
+          : type === 'warning'
+            ? '⚠️'
+            : 'ℹ️';
     console.log(`[${timestamp}] ${prefix} ${message}`);
   }
 
@@ -51,40 +58,44 @@ class ComprehensiveErrorFixer {
         fixes: [
           {
             pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
-            description: 'undefined object check'
-          }
-        ]
+            replacement:
+              "const ipAddress = getClientIP(request) || '127.0.0.1';",
+            description: 'undefined object check',
+          },
+        ],
       },
       {
         file: 'src/app/api/auth/login/route.ts',
         fixes: [
           {
             pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
-            description: 'undefined object check'
-          }
-        ]
+            replacement:
+              "const ipAddress = getClientIP(request) || '127.0.0.1';",
+            description: 'undefined object check',
+          },
+        ],
       },
       {
         file: 'src/app/api/auth/logout/route.ts',
         fixes: [
           {
             pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
-            description: 'undefined object check'
-          }
-        ]
+            replacement:
+              "const ipAddress = getClientIP(request) || '127.0.0.1';",
+            description: 'undefined object check',
+          },
+        ],
       },
       {
         file: 'src/app/api/auth/register/route.ts',
         fixes: [
           {
             pattern: /const ipAddress = getClientIP\(request\);/g,
-            replacement: 'const ipAddress = getClientIP(request) || \'127.0.0.1\';',
-            description: 'undefined object check'
-          }
-        ]
+            replacement:
+              "const ipAddress = getClientIP(request) || '127.0.0.1';",
+            description: 'undefined object check',
+          },
+        ],
       },
 
       // Fix chatbot actions
@@ -93,35 +104,39 @@ class ComprehensiveErrorFixer {
         fixes: [
           {
             pattern: /const intentAnalyzer = new IntentAnalyzer\(\);/g,
-            replacement: 'const intentAnalyzer = new (await import(\'@/lib/conversation-flows\')).IntentAnalyzer();',
-            description: 'IntentAnalyzer import fix'
+            replacement:
+              "const intentAnalyzer = new (await import('@/lib/conversation-flows')).IntentAnalyzer();",
+            description: 'IntentAnalyzer import fix',
           },
           {
             pattern: /const actionExecutor = new ActionExecutor\(\);/g,
-            replacement: 'const actionExecutor = new (await import(\'@/lib/conversation-flows\')).ActionExecutor();',
-            description: 'ActionExecutor import fix'
+            replacement:
+              "const actionExecutor = new (await import('@/lib/conversation-flows')).ActionExecutor();",
+            description: 'ActionExecutor import fix',
           },
           {
             pattern: /const flowManager = new FlowManager\(\);/g,
-            replacement: 'const flowManager = new (await import(\'@/lib/conversation-flows\')).FlowManager();',
-            description: 'FlowManager import fix'
+            replacement:
+              "const flowManager = new (await import('@/lib/conversation-flows')).FlowManager();",
+            description: 'FlowManager import fix',
           },
           {
             pattern: /interface ActionExecutor/g,
             replacement: 'interface IActionExecutor',
-            description: 'ActionExecutor interface rename'
+            description: 'ActionExecutor interface rename',
           },
           {
             pattern: /class EnhancedActionExecutor extends ActionExecutor/g,
-            replacement: 'class EnhancedActionExecutor implements IActionExecutor',
-            description: 'ActionExecutor extends to implements'
+            replacement:
+              'class EnhancedActionExecutor implements IActionExecutor',
+            description: 'ActionExecutor extends to implements',
           },
           {
             pattern: /this\.supabase/g,
             replacement: 'supabase',
-            description: 'supabase property fix'
-          }
-        ]
+            description: 'supabase property fix',
+          },
+        ],
       },
 
       // Fix validation errors
@@ -131,14 +146,14 @@ class ComprehensiveErrorFixer {
           {
             pattern: /\.errors/g,
             replacement: '.issues',
-            description: 'ZodError.errors to .issues'
+            description: 'ZodError.errors to .issues',
           },
           {
             pattern: /validateData\(([^,]+), ([^)]+)\)/g,
             replacement: 'validateData($1, $2)',
-            description: 'validation function calls'
-          }
-        ]
+            description: 'validation function calls',
+          },
+        ],
       },
       {
         file: 'src/lib/validation/schemas.ts',
@@ -146,14 +161,14 @@ class ComprehensiveErrorFixer {
           {
             pattern: /\.errors/g,
             replacement: '.issues',
-            description: 'ZodError.errors to .issues'
+            description: 'ZodError.errors to .issues',
           },
           {
             pattern: /validateData\(([^,]+), ([^)]+)\)/g,
             replacement: 'validateData($1, $2)',
-            description: 'validation function calls'
-          }
-        ]
+            description: 'validation function calls',
+          },
+        ],
       },
 
       // Fix ThemeManager
@@ -163,29 +178,29 @@ class ComprehensiveErrorFixer {
           {
             pattern: /this\.themes = \[.*\];/g,
             replacement: 'this.themes = "light,dark,system";',
-            description: 'themes array to string'
+            description: 'themes array to string',
           },
           {
             pattern: /this\.languages = \[.*\];/g,
             replacement: 'this.languages = "ar,en";',
-            description: 'languages array to string'
+            description: 'languages array to string',
           },
           {
             pattern: /this\.directions = \[.*\];/g,
             replacement: 'this.directions = "rtl,ltr";',
-            description: 'directions array to string'
+            description: 'directions array to string',
           },
           {
             pattern: /this\.currentTheme = ".*";/g,
             replacement: 'this.currentTheme = 0;',
-            description: 'currentTheme string to number'
+            description: 'currentTheme string to number',
           },
           {
             pattern: /this\.__isInitialized/g,
             replacement: 'this._isInitialized',
-            description: 'isInitialized property name'
-          }
-        ]
+            description: 'isInitialized property name',
+          },
+        ],
       },
 
       // Fix test health API
@@ -193,11 +208,13 @@ class ComprehensiveErrorFixer {
         file: 'src/app/api/test/health/route.ts',
         fixes: [
           {
-            pattern: /status: 'unhealthy',\s*responseTime: \d+,\s*error: error\.message/g,
-            replacement: 'status: \'unhealthy\', responseTime: dbTime, error: error.message',
-            description: 'health check error type fix'
-          }
-        ]
+            pattern:
+              /status: 'unhealthy',\s*responseTime: \d+,\s*error: error\.message/g,
+            replacement:
+              "status: 'unhealthy', responseTime: dbTime, error: error.message",
+            description: 'health check error type fix',
+          },
+        ],
       },
 
       // Fix test endpoints API
@@ -207,14 +224,14 @@ class ComprehensiveErrorFixer {
           {
             pattern: /status: \d+/g,
             replacement: 'status: Number(status)',
-            description: 'status type conversion'
+            description: 'status type conversion',
           },
           {
             pattern: /responseTime: \d+/g,
             replacement: 'responseTime: Number(responseTime)',
-            description: 'responseTime type conversion'
-          }
-        ]
+            description: 'responseTime type conversion',
+          },
+        ],
       },
 
       // Fix PieChart
@@ -224,9 +241,9 @@ class ComprehensiveErrorFixer {
           {
             pattern: /percent: number/g,
             replacement: 'percent: any',
-            description: 'percent type fix'
-          }
-        ]
+            description: 'percent type fix',
+          },
+        ],
       },
 
       // Fix Header component
@@ -236,14 +253,14 @@ class ComprehensiveErrorFixer {
           {
             pattern: /variant=\{.*\}/g,
             replacement: '',
-            description: 'remove variant prop'
+            description: 'remove variant prop',
           },
           {
             pattern: /size=\{.*\}/g,
             replacement: '',
-            description: 'remove size prop'
-          }
-        ]
+            description: 'remove size prop',
+          },
+        ],
       },
 
       // Fix ThemeSwitch
@@ -253,9 +270,9 @@ class ComprehensiveErrorFixer {
           {
             pattern: /currentTheme\?/g,
             replacement: 'currentTheme || "light"',
-            description: 'undefined check for currentTheme'
-          }
-        ]
+            description: 'undefined check for currentTheme',
+          },
+        ],
       },
 
       // Fix logger
@@ -265,19 +282,19 @@ class ComprehensiveErrorFixer {
           {
             pattern: /fullPath\?/g,
             replacement: 'fullPath || ""',
-            description: 'undefined check for fullPath'
+            description: 'undefined check for fullPath',
           },
           {
             pattern: /path\.basename\(fullPath\)/g,
             replacement: 'path.basename(fullPath || "")',
-            description: 'undefined check for path.basename'
+            description: 'undefined check for path.basename',
           },
           {
             pattern: /console\.log\(([^,]+), ([^,]+), ([^)]+)\)/g,
             replacement: 'console.log($1, $2)',
-            description: 'console.log argument fix'
-          }
-        ]
+            description: 'console.log argument fix',
+          },
+        ],
       },
 
       // Fix request helpers
@@ -287,9 +304,9 @@ class ComprehensiveErrorFixer {
           {
             pattern: /request\.headers\.get\(/g,
             replacement: 'request?.headers?.get(',
-            description: 'optional chaining for request'
-          }
-        ]
+            description: 'optional chaining for request',
+          },
+        ],
       },
 
       // Fix middleware
@@ -299,9 +316,9 @@ class ComprehensiveErrorFixer {
           {
             pattern: /request\.headers\.get\(/g,
             replacement: 'request?.headers?.get(',
-            description: 'optional chaining for request'
-          }
-        ]
+            description: 'optional chaining for request',
+          },
+        ],
       },
       {
         file: 'src/middleware/audit.ts',
@@ -309,9 +326,9 @@ class ComprehensiveErrorFixer {
           {
             pattern: /request\.headers\.get\(/g,
             replacement: 'request?.headers?.get(',
-            description: 'optional chaining for request'
-          }
-        ]
+            description: 'optional chaining for request',
+          },
+        ],
       },
       {
         file: 'src/middleware/rate-limiter.ts',
@@ -319,9 +336,9 @@ class ComprehensiveErrorFixer {
           {
             pattern: /config\?/g,
             replacement: 'config || {}',
-            description: 'undefined check for config'
-          }
-        ]
+            description: 'undefined check for config',
+          },
+        ],
       },
 
       // Fix test utils
@@ -331,9 +348,9 @@ class ComprehensiveErrorFixer {
           {
             pattern: /user\?/g,
             replacement: 'user || {}',
-            description: 'undefined check for user'
-          }
-        ]
+            description: 'undefined check for user',
+          },
+        ],
       },
 
       // Fix security encryption
@@ -343,19 +360,19 @@ class ComprehensiveErrorFixer {
           {
             pattern: /\.getAuthTag\(\)/g,
             replacement: '.getAuthTag?.()',
-            description: 'optional chaining for getAuthTag'
+            description: 'optional chaining for getAuthTag',
           },
           {
             pattern: /\.setAuthTag\(/g,
             replacement: '.setAuthTag?.(',
-            description: 'optional chaining for setAuthTag'
+            description: 'optional chaining for setAuthTag',
           },
           {
             pattern: /Buffer\.from\(([^,]+), ([^)]+)\)/g,
             replacement: 'Buffer.from($1 || "", $2)',
-            description: 'Buffer.from undefined check'
-          }
-        ]
+            description: 'Buffer.from undefined check',
+          },
+        ],
       },
 
       // Fix deployment docker
@@ -365,9 +382,9 @@ class ComprehensiveErrorFixer {
           {
             pattern: /export const DockerConfigGenerator/g,
             replacement: 'const DockerConfigGenerator',
-            description: 'remove duplicate export'
-          }
-        ]
+            description: 'remove duplicate export',
+          },
+        ],
       },
 
       // Fix reports generate
@@ -377,14 +394,14 @@ class ComprehensiveErrorFixer {
           {
             pattern: /validateData\(([^,]+), ([^)]+)\)/g,
             replacement: 'validateData($1, $2)',
-            description: 'validation function calls'
+            description: 'validation function calls',
           },
           {
             pattern: /new Date\(([^)]+)\)/g,
             replacement: 'new Date($1 || new Date())',
-            description: 'Date constructor undefined check'
-          }
-        ]
+            description: 'Date constructor undefined check',
+          },
+        ],
       },
 
       // Fix notifications schedule
@@ -394,14 +411,14 @@ class ComprehensiveErrorFixer {
           {
             pattern: /validateData\(([^,]+), ([^)]+)\)/g,
             replacement: 'validateData($1, $2)',
-            description: 'validation function calls'
+            description: 'validation function calls',
           },
           {
             pattern: /new Date\(([^)]+)\)/g,
             replacement: 'new Date($1 || new Date())',
-            description: 'Date constructor undefined check'
-          }
-        ]
+            description: 'Date constructor undefined check',
+          },
+        ],
       },
 
       // Fix payments process
@@ -411,10 +428,10 @@ class ComprehensiveErrorFixer {
           {
             pattern: /validateData\(([^,]+), ([^)]+)\)/g,
             replacement: 'validateData($1, $2)',
-            description: 'validation function calls'
-          }
-        ]
-      }
+            description: 'validation function calls',
+          },
+        ],
+      },
     ];
 
     for (const errorFix of errorFixes) {

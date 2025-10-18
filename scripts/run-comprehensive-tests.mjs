@@ -28,7 +28,7 @@ async function log(message, level = 'INFO') {
   const timestamp = new Date().toISOString();
   const logMessage = `[${timestamp}] [${level}] ${message}`;
   console.log(logMessage);
-  
+
   try {
     await fs.appendFile(LOG_FILE, logMessage + '\n', 'utf8');
   } catch (err) {
@@ -39,7 +39,7 @@ async function log(message, level = 'INFO') {
 // Function to run unit tests
 async function runUnitTests() {
   log('🧪 Running unit tests...');
-  
+
   try {
     const { stdout, stderr } = await executeCommand('npm run test:unit');
     log('✅ Unit tests completed successfully');
@@ -53,7 +53,7 @@ async function runUnitTests() {
 // Function to run integration tests
 async function runIntegrationTests() {
   log('🔗 Running integration tests...');
-  
+
   try {
     const { stdout, stderr } = await executeCommand('npm run test:integration');
     log('✅ Integration tests completed successfully');
@@ -67,7 +67,7 @@ async function runIntegrationTests() {
 // Function to run E2E tests
 async function runE2ETests() {
   log('🌐 Running E2E tests...');
-  
+
   try {
     const { stdout, stderr } = await executeCommand('npm run test:e2e');
     log('✅ E2E tests completed successfully');
@@ -81,9 +81,11 @@ async function runE2ETests() {
 // Function to run Playwright tests
 async function runPlaywrightTests() {
   log('🎭 Running Playwright tests...');
-  
+
   try {
-    const { stdout, stderr } = await executeCommand('npx playwright test --reporter=html');
+    const { stdout, stderr } = await executeCommand(
+      'npx playwright test --reporter=html'
+    );
     log('✅ Playwright tests completed successfully');
     return { success: true, output: stdout, error: stderr };
   } catch (e) {
@@ -95,7 +97,7 @@ async function runPlaywrightTests() {
 // Function to run Supawright tests
 async function runSupawrightTests() {
   log('🔍 Running Supawright tests...');
-  
+
   try {
     const { stdout, stderr } = await executeCommand('npx supawright test');
     log('✅ Supawright tests completed successfully');
@@ -109,9 +111,11 @@ async function runSupawrightTests() {
 // Function to run comprehensive tests
 async function runComprehensiveTests() {
   log('🧪 Running comprehensive tests...');
-  
+
   try {
-    const { stdout, stderr } = await executeCommand('npm run test:comprehensive');
+    const { stdout, stderr } = await executeCommand(
+      'npm run test:comprehensive'
+    );
     log('✅ Comprehensive tests completed successfully');
     return { success: true, output: stdout, error: stderr };
   } catch (e) {
@@ -123,7 +127,7 @@ async function runComprehensiveTests() {
 // Function to run linting
 async function runLinting() {
   log('🔍 Running linting...');
-  
+
   try {
     const { stdout, stderr } = await executeCommand('npm run lint:check');
     log('✅ Linting completed successfully');
@@ -137,7 +141,7 @@ async function runLinting() {
 // Function to run type checking
 async function runTypeChecking() {
   log('🔍 Running type checking...');
-  
+
   try {
     const { stdout, stderr } = await executeCommand('npm run type:check');
     log('✅ Type checking completed successfully');
@@ -151,7 +155,7 @@ async function runTypeChecking() {
 // Function to run build
 async function runBuild() {
   log('🏗️ Running build...');
-  
+
   try {
     const { stdout, stderr } = await executeCommand('npm run build');
     log('✅ Build completed successfully');
@@ -170,22 +174,25 @@ async function generateTestReport(results) {
     summary: {
       total: Object.keys(results).length,
       passed: Object.values(results).filter(r => r.success).length,
-      failed: Object.values(results).filter(r => !r.success).length
+      failed: Object.values(results).filter(r => !r.success).length,
     },
-    results
+    results,
   };
-  
+
   // Save JSON report
-  const jsonFile = path.join(TEST_RESULTS_DIR, `test-results-${Date.now()}.json`);
+  const jsonFile = path.join(
+    TEST_RESULTS_DIR,
+    `test-results-${Date.now()}.json`
+  );
   await fs.writeFile(jsonFile, JSON.stringify(report, null, 2), 'utf8');
-  
+
   // Generate HTML report
   const html = generateHTMLReport(report);
   const htmlFile = path.join(TEST_RESULTS_DIR, 'test-results.html');
   await fs.writeFile(htmlFile, html, 'utf8');
-  
+
   log(`📊 Test report generated: ${htmlFile}`);
-  
+
   return report;
 }
 
@@ -237,7 +244,9 @@ function generateHTMLReport(report) {
             </div>
         </div>
         
-        ${Object.entries(report.results).map(([name, result]) => `
+        ${Object.entries(report.results)
+          .map(
+            ([name, result]) => `
         <div class="test-section">
             <h3>${name.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</h3>
             <p>
@@ -248,7 +257,9 @@ function generateHTMLReport(report) {
             ${result.output ? `<div class="output">${result.output}</div>` : ''}
             ${result.error ? `<div class="output" style="background-color: #f8d7da;">${result.error}</div>` : ''}
         </div>
-        `).join('')}
+        `
+          )
+          .join('')}
     </div>
 </body>
 </html>`;
@@ -258,53 +269,53 @@ function generateHTMLReport(report) {
 async function main() {
   const args = process.argv.slice(2);
   const testType = args[0] || 'all';
-  
+
   // Ensure directories exist
   await fs.mkdir(TEST_RESULTS_DIR, { recursive: true }).catch(() => {});
   await fs.mkdir(path.dirname(LOG_FILE), { recursive: true }).catch(() => {});
-  
+
   log(`🚀 Starting comprehensive test suite: ${testType}`);
-  
+
   const results = {};
-  
+
   try {
     switch (testType) {
       case 'unit':
         results.unitTests = await runUnitTests();
         break;
-        
+
       case 'integration':
         results.integrationTests = await runIntegrationTests();
         break;
-        
+
       case 'e2e':
         results.e2eTests = await runE2ETests();
         break;
-        
+
       case 'playwright':
         results.playwrightTests = await runPlaywrightTests();
         break;
-        
+
       case 'supawright':
         results.supawrightTests = await runSupawrightTests();
         break;
-        
+
       case 'comprehensive':
         results.comprehensiveTests = await runComprehensiveTests();
         break;
-        
+
       case 'lint':
         results.linting = await runLinting();
         break;
-        
+
       case 'types':
         results.typeChecking = await runTypeChecking();
         break;
-        
+
       case 'build':
         results.build = await runBuild();
         break;
-        
+
       case 'all':
       default:
         results.unitTests = await runUnitTests();
@@ -318,13 +329,15 @@ async function main() {
         results.build = await runBuild();
         break;
     }
-    
+
     // Generate report
     const report = await generateTestReport(results);
-    
+
     // Log summary
-    log(`📊 Test Summary: ${report.summary.passed}/${report.summary.total} passed`);
-    
+    log(
+      `📊 Test Summary: ${report.summary.passed}/${report.summary.total} passed`
+    );
+
     if (report.summary.failed > 0) {
       log(`❌ ${report.summary.failed} tests failed`, 'ERROR');
       process.exit(1);
@@ -332,7 +345,6 @@ async function main() {
       log('✅ All tests passed!');
       process.exit(0);
     }
-    
   } catch (err) {
     log(`❌ Test suite failed: ${err.message}`, 'ERROR');
     process.exit(1);

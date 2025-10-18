@@ -2,8 +2,8 @@
  * Performance monitoring hooks
  */
 
-import logger from "@/lib/monitoring/logger";
-import { useEffect, useRef, useCallback, useState, useMemo } from "react";
+import logger from '@/lib/monitoring/logger';
+import { useEffect, useRef, useCallback, useState, useMemo } from 'react';
 
 export function usePerformanceMonitor(componentName: string) {
   const renderCount = useRef(0);
@@ -14,7 +14,7 @@ export function usePerformanceMonitor(componentName: string) {
     const endTime = performance.now();
     const renderTime = endTime - startTime.current;
 
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === 'development') {
       console.log(`${componentName} rendered in ${renderTime.toFixed(2)}ms`);
     }
 
@@ -42,7 +42,7 @@ export function useDebounce<T>(value: T, delay: number): T {
 
 export function useThrottle<T extends (...args: any[]) => any>(
   callback: T,
-  delay: number,
+  delay: number
 ): T {
   const lastRun = useRef(Date.now());
 
@@ -53,13 +53,13 @@ export function useThrottle<T extends (...args: any[]) => any>(
         lastRun.current = Date.now();
       }
     }) as T,
-    [callback, delay],
+    [callback, delay]
   );
 }
 
 export function useIntersectionObserver(
   callback: (entries: IntersectionObserverEntry[]) => void,
-  options?: IntersectionObserverInit,
+  options?: IntersectionObserverInit
 ) {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -80,13 +80,13 @@ export function useVirtualization(
   itemCount: number,
   itemHeight: number,
   containerHeight: number,
-  scrollTop: number,
+  scrollTop: number
 ) {
   const visibleRange = useMemo(() => {
     const start = Math.floor(scrollTop / itemHeight);
     const end = Math.min(
       start + Math.ceil(containerHeight / itemHeight) + 1,
-      itemCount,
+      itemCount
     );
 
     return {

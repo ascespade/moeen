@@ -3,19 +3,19 @@
  * Manage users, roles, and system configuration
  */
 
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-import { createClient } from "@/lib/supabase/server";
-import { ValidationHelper } from "@/core/validation";
-import { ErrorHandler } from "@/core/errors";
-import { requireAuth } from "@/lib/auth/authorize";
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
+import { createClient } from '@/lib/supabase/server';
+import { ValidationHelper } from '@/core/validation';
+import { ErrorHandler } from '@/core/errors';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const createUserSchema = z.object({
-  email: z.string().email("Invalid email format"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  role: z.enum(["patient", "doctor", "staff", "supervisor", "admin"]),
+  email: z.string().email('Invalid email format'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+  role: z.enum(['patient', 'doctor', 'staff', 'supervisor', 'admin']),
   profile: z.object({
-    fullName: z.string().min(1, "Full name required"),
+    fullName: z.string().min(1, 'Full name required'),
     phone: z.string().optional(),
     dateOfBirth: z.string().date().optional(),
     address: z.string().optional(),
@@ -27,7 +27,7 @@ const createUserSchema = z.object({
 const updateUserSchema = z.object({
   email: z.string().email().optional(),
   role: z
-    .enum(["patient", "doctor", "staff", "supervisor", "admin"])
+    .enum(['patient', 'doctor', 'staff', 'supervisor', 'admin'])
     .optional(),
   profile: z
     .object({
@@ -44,9 +44,9 @@ const updateUserSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     // Authorize admin only
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const supabase = await createClient();
@@ -55,12 +55,12 @@ export async function POST(request: NextRequest) {
     // Validate input
     const validation = await ValidationHelper.validateAsync(
       createUserSchema,
-      body,
+      body
     );
     if (!validation.success) {
       return NextResponse.json(
         { error: validation.error.message },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -69,15 +69,15 @@ export async function POST(request: NextRequest) {
 
     // Check if user already exists
     const { data: existingUser } = await supabase
-      .from("users")
-      .select("id")
-      .eq("email", email)
+      .from('users')
+      .select('id')
+      .eq('email', email)
       .single();
 
     if (existingUser) {
       return NextResponse.json(
-        { error: "User already exists" },
-        { status: 409 },
+        { error: 'User already exists' },
+        { status: 409 }
       );
     }
 
@@ -91,14 +91,14 @@ export async function POST(request: NextRequest) {
 
     if (userError) {
       return NextResponse.json(
-        { error: "Failed to create user account" },
-        { status: 500 },
+        { error: 'Failed to create user account' },
+        { status: 500 }
       );
     }
 
     // Create user profile
     const { data: userProfile, error: profileError } = await supabase
-      .from("users")
+      .from('users')
       .insert({
         id: user.user.id,
         email,
@@ -115,22 +115,22 @@ export async function POST(request: NextRequest) {
       // Clean up auth user if profile creation fails
       await supabase.auth.admin.deleteUser(user.user.id);
       return NextResponse.json(
-        { error: "Failed to create user profile" },
-        { status: 500 },
+        { error: 'Failed to create user profile' },
+        { status: 500 }
       );
     }
 
     // Create role-specific profile
-    if (role === "patient") {
+    if (role === 'patient') {
       await createPatientProfile(user.user.id, profile);
-    } else if (role === "doctor") {
+    } else if (role === 'doctor') {
       await createDoctorProfile(user.user.id, profile);
     }
 
     // Create audit log
-    await supabase.from("audit_logs").insert({
-      action: "user_created",
-      entityType: "user",
+    await supabase.from('audit_logs').insert({
+      action: 'user_created',
+      entityType: 'user',
       entityId: user.user.id,
       userId: authResult.user!.id,
       metadata: {
@@ -143,7 +143,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: userProfile,
-      message: "User created successfully",
+      message: 'User created successfully',
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
@@ -153,20 +153,20 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     // Authorize admin or supervisor
-    const authResult = await requireAuth(["admin", "supervisor"])(request);
+    const authResult = await requireAuth(['admin', 'supervisor'])(request);
     if (!authResult.authorized) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
-    const role = searchParams.get("role");
-    const isActive = searchParams.get("isActive");
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "20");
+    const role = searchParams.get('role');
+    const isActive = searchParams.get('isActive');
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
 
     let query = supabase
-      .from("users")
+      .from('users')
       .select(
         `
         id,
@@ -177,24 +177,24 @@ export async function GET(request: NextRequest) {
         permissions,
         createdAt,
         createdBy:users(id, email, profile)
-      `,
+      `
       )
-      .order("createdAt", { ascending: false })
+      .order('createdAt', { ascending: false })
       .range((page - 1) * limit, page * limit - 1);
 
     if (role) {
-      query = query.eq("role", role);
+      query = query.eq('role', role);
     }
     if (isActive !== null) {
-      query = query.eq("isActive", isActive === "true");
+      query = query.eq('isActive', isActive === 'true');
     }
 
     const { data: users, error, count } = await query;
 
     if (error) {
       return NextResponse.json(
-        { error: "Failed to fetch users" },
-        { status: 500 },
+        { error: 'Failed to fetch users' },
+        { status: 500 }
       );
     }
 
@@ -216,17 +216,17 @@ export async function GET(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     // Authorize admin only
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
-    const userId = searchParams.get("userId");
+    const userId = searchParams.get('userId');
 
     if (!userId) {
-      return NextResponse.json({ error: "User ID required" }, { status: 400 });
+      return NextResponse.json({ error: 'User ID required' }, { status: 400 });
     }
 
     const body = await request.json();
@@ -234,12 +234,12 @@ export async function PUT(request: NextRequest) {
     // Validate input
     const validation = await ValidationHelper.validateAsync(
       updateUserSchema,
-      body,
+      body
     );
     if (!validation.success) {
       return NextResponse.json(
         { error: validation.error.message },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -247,27 +247,27 @@ export async function PUT(request: NextRequest) {
 
     // Update user profile
     const { data: updatedUser, error: updateError } = await supabase
-      .from("users")
+      .from('users')
       .update({
         ...updateData,
         updatedBy: authResult.user!.id,
         updatedAt: new Date().toISOString(),
       })
-      .eq("id", userId)
+      .eq('id', userId)
       .select()
       .single();
 
     if (updateError) {
       return NextResponse.json(
-        { error: "Failed to update user" },
-        { status: 500 },
+        { error: 'Failed to update user' },
+        { status: 500 }
       );
     }
 
     // Create audit log
-    await supabase.from("audit_logs").insert({
-      action: "user_updated",
-      entityType: "user",
+    await supabase.from('audit_logs').insert({
+      action: 'user_updated',
+      entityType: 'user',
       entityId: userId,
       userId: authResult.user!.id,
       metadata: updateData,
@@ -276,7 +276,7 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: updatedUser,
-      message: "User updated successfully",
+      message: 'User updated successfully',
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
@@ -286,48 +286,48 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     // Authorize admin only
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
-    const userId = searchParams.get("userId");
+    const userId = searchParams.get('userId');
 
     if (!userId) {
-      return NextResponse.json({ error: "User ID required" }, { status: 400 });
+      return NextResponse.json({ error: 'User ID required' }, { status: 400 });
     }
 
     // Prevent self-deletion
     if (userId === authResult.user!.id) {
       return NextResponse.json(
-        { error: "Cannot delete your own account" },
-        { status: 400 },
+        { error: 'Cannot delete your own account' },
+        { status: 400 }
       );
     }
 
     // Soft delete user
     const { error: updateError } = await supabase
-      .from("users")
+      .from('users')
       .update({
         isActive: false,
         deletedAt: new Date().toISOString(),
         deletedBy: authResult.user!.id,
       })
-      .eq("id", userId);
+      .eq('id', userId);
 
     if (updateError) {
       return NextResponse.json(
-        { error: "Failed to delete user" },
-        { status: 500 },
+        { error: 'Failed to delete user' },
+        { status: 500 }
       );
     }
 
     // Create audit log
-    await supabase.from("audit_logs").insert({
-      action: "user_deleted",
-      entityType: "user",
+    await supabase.from('audit_logs').insert({
+      action: 'user_deleted',
+      entityType: 'user',
       entityId: userId,
       userId: authResult.user!.id,
       metadata: { softDelete: true },
@@ -335,7 +335,7 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: "User deleted successfully",
+      message: 'User deleted successfully',
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
@@ -345,7 +345,7 @@ export async function DELETE(request: NextRequest) {
 async function createPatientProfile(userId: string, profile: any) {
   const supabase = await createClient();
 
-  const { error } = await supabase.from("patients").insert({
+  const { error } = await supabase.from('patients').insert({
     userId,
     fullName: profile.fullName,
     phone: profile.phone,
@@ -361,20 +361,20 @@ async function createPatientProfile(userId: string, profile: any) {
 async function createDoctorProfile(userId: string, profile: any) {
   const supabase = await createClient();
 
-  const { error } = await supabase.from("doctors").insert({
+  const { error } = await supabase.from('doctors').insert({
     userId,
     fullName: profile.fullName,
     phone: profile.phone,
-    speciality: "General Practice", // Default speciality
+    speciality: 'General Practice', // Default speciality
     licenseNumber: `DR${Date.now()}${Math.random().toString(36).substr(2, 4).toUpperCase()}`,
     schedule: {
-      0: { isWorking: false, startTime: "09:00", endTime: "17:00" }, // Sunday
-      1: { isWorking: true, startTime: "09:00", endTime: "17:00" }, // Monday
-      2: { isWorking: true, startTime: "09:00", endTime: "17:00" }, // Tuesday
-      3: { isWorking: true, startTime: "09:00", endTime: "17:00" }, // Wednesday
-      4: { isWorking: true, startTime: "09:00", endTime: "17:00" }, // Thursday
-      5: { isWorking: true, startTime: "09:00", endTime: "17:00" }, // Friday
-      6: { isWorking: false, startTime: "09:00", endTime: "17:00" }, // Saturday
+      0: { isWorking: false, startTime: '09:00', endTime: '17:00' }, // Sunday
+      1: { isWorking: true, startTime: '09:00', endTime: '17:00' }, // Monday
+      2: { isWorking: true, startTime: '09:00', endTime: '17:00' }, // Tuesday
+      3: { isWorking: true, startTime: '09:00', endTime: '17:00' }, // Wednesday
+      4: { isWorking: true, startTime: '09:00', endTime: '17:00' }, // Thursday
+      5: { isWorking: true, startTime: '09:00', endTime: '17:00' }, // Friday
+      6: { isWorking: false, startTime: '09:00', endTime: '17:00' }, // Saturday
     },
   });
 

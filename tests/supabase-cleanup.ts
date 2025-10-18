@@ -24,12 +24,12 @@ export class SupabaseCleanup {
    */
   static async cleanTestData() {
     console.log('🧹 Cleaning test data from Supabase...');
-    
+
     try {
       // Delete in order to respect foreign key constraints
       const tablesToClean = [
         'chatbot_appointments',
-        'appointments', 
+        'appointments',
         'sessions',
         'patients',
         'doctors',
@@ -40,7 +40,7 @@ export class SupabaseCleanup {
         'crm_activities',
         'notifications',
         'audit_logs',
-        'users'
+        'users',
       ];
 
       for (const table of tablesToClean) {
@@ -49,7 +49,7 @@ export class SupabaseCleanup {
             .from(table)
             .delete()
             .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all except dummy record
-          
+
           if (error) {
             console.warn(`⚠️ Warning cleaning ${table}:`, error.message);
           } else {
@@ -72,7 +72,7 @@ export class SupabaseCleanup {
    */
   static async createTestFixtures() {
     console.log('🔧 Creating test fixtures...');
-    
+
     try {
       // Create test users
       const testUsers = [
@@ -83,25 +83,25 @@ export class SupabaseCleanup {
           role: 'patient' as const,
           phone: '+966501234567',
           is_active: true,
-          status: 'active' as const
+          status: 'active' as const,
         },
         {
-          id: 'test-patient-b-id', 
+          id: 'test-patient-b-id',
           email: 'patient-b@test.com',
           name: 'Patient B',
           role: 'patient' as const,
           phone: '+966501234568',
           is_active: true,
-          status: 'active' as const
+          status: 'active' as const,
         },
         {
           id: 'test-doctor-a-id',
-          email: 'doctor-a@test.com', 
+          email: 'doctor-a@test.com',
           name: 'Doctor A',
           role: 'doctor' as const,
           phone: '+966501234569',
           is_active: true,
-          status: 'active' as const
+          status: 'active' as const,
         },
         {
           id: 'test-admin-id',
@@ -110,8 +110,8 @@ export class SupabaseCleanup {
           role: 'admin' as const,
           phone: '+966501234570',
           is_active: true,
-          status: 'active' as const
-        }
+          status: 'active' as const,
+        },
       ];
 
       // Insert test users
@@ -119,9 +119,12 @@ export class SupabaseCleanup {
         const { error } = await supabase
           .from('users')
           .upsert(user, { onConflict: 'id' });
-        
+
         if (error) {
-          console.warn(`⚠️ Warning creating user ${user.email}:`, error.message);
+          console.warn(
+            `⚠️ Warning creating user ${user.email}:`,
+            error.message
+          );
         } else {
           console.log(`✅ Created user: ${user.email}`);
         }
@@ -139,11 +142,11 @@ export class SupabaseCleanup {
           date_of_birth: '1990-01-01',
           gender: 'male' as const,
           medical_record_number: 'MR001',
-          insurance_number: 'INS001'
+          insurance_number: 'INS001',
         },
         {
           id: 'test-patient-b-record-id',
-          user_id: 'test-patient-b-id', 
+          user_id: 'test-patient-b-id',
           first_name: 'فاطمة',
           last_name: 'علي',
           phone: '+966501234568',
@@ -151,19 +154,24 @@ export class SupabaseCleanup {
           date_of_birth: '1985-05-15',
           gender: 'female' as const,
           medical_record_number: 'MR002',
-          insurance_number: 'INS002'
-        }
+          insurance_number: 'INS002',
+        },
       ];
 
       for (const patient of testPatients) {
         const { error } = await supabase
           .from('patients')
           .upsert(patient, { onConflict: 'id' });
-        
+
         if (error) {
-          console.warn(`⚠️ Warning creating patient ${patient.first_name}:`, error.message);
+          console.warn(
+            `⚠️ Warning creating patient ${patient.first_name}:`,
+            error.message
+          );
         } else {
-          console.log(`✅ Created patient: ${patient.first_name} ${patient.last_name}`);
+          console.log(
+            `✅ Created patient: ${patient.first_name} ${patient.last_name}`
+          );
         }
       }
 
@@ -179,19 +187,24 @@ export class SupabaseCleanup {
           specialty: 'أمراض القلب',
           license_number: 'DOC001',
           experience_years: 10,
-          consultation_fee: 200
-        }
+          consultation_fee: 200,
+        },
       ];
 
       for (const doctor of testDoctors) {
         const { error } = await supabase
           .from('doctors')
           .upsert(doctor, { onConflict: 'id' });
-        
+
         if (error) {
-          console.warn(`⚠️ Warning creating doctor ${doctor.first_name}:`, error.message);
+          console.warn(
+            `⚠️ Warning creating doctor ${doctor.first_name}:`,
+            error.message
+          );
         } else {
-          console.log(`✅ Created doctor: ${doctor.first_name} ${doctor.last_name}`);
+          console.log(
+            `✅ Created doctor: ${doctor.first_name} ${doctor.last_name}`
+          );
         }
       }
 

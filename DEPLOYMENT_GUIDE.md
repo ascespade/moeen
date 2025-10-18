@@ -50,18 +50,18 @@ cat tmp/db-auto-migrations.sql
 
 ```sql
 -- Check new tables
-SELECT table_name FROM information_schema.tables 
-WHERE table_schema = 'public' 
+SELECT table_name FROM information_schema.tables
+WHERE table_schema = 'public'
 AND table_name IN ('reminder_outbox', 'reminder_preferences');
 
 -- Check new columns
 SELECT column_name FROM information_schema.columns
-WHERE table_name = 'patients' 
+WHERE table_name = 'patients'
 AND column_name IN ('deleted_at', 'deleted_by', 'search_vector');
 
 -- Check new functions
-SELECT proname FROM pg_proc 
-WHERE proname IN ('soft_delete', 'schedule_appointment_reminders', 
+SELECT proname FROM pg_proc
+WHERE proname IN ('soft_delete', 'schedule_appointment_reminders',
                   'check_booking_conflict', 'search_patients');
 ```
 
@@ -76,11 +76,13 @@ Expected: All queries return results ✅
 **Purpose**: Never lose data accidentally
 
 **What it does**:
+
 - Adds `deleted_at` + `deleted_by` to 20 tables
 - Creates `soft_delete()` function
 - Updates RLS policies
 
 **Test**:
+
 ```sql
 -- Soft delete a patient
 SELECT soft_delete('patients', '<patient-id>', '<admin-id>');
@@ -102,11 +104,13 @@ SELECT * FROM patients WHERE id = '<patient-id>';  -- Shows patient
 **Purpose**: Auto-send reminders 24h before appointments
 
 **What it does**:
+
 - Creates `reminder_outbox` table (queue)
 - Creates `reminder_preferences` table (user settings)
 - Trigger auto-schedules reminders on appointment creation
 
 **Test**:
+
 ```sql
 -- Create appointment (trigger fires automatically)
 INSERT INTO appointments (patient_id, doctor_id, session_type_id, appointment_date, appointment_time, duration, status)
@@ -127,11 +131,13 @@ SELECT * FROM reminder_outbox ORDER BY created_at DESC LIMIT 5;
 **Purpose**: Prevent double-booking (race-condition proof)
 
 **What it does**:
+
 - Creates `check_booking_conflict()` function
 - Creates `create_booking()` atomic function
 - UNIQUE index prevents conflicts at DB level
 
 **Test**:
+
 ```sql
 -- Create booking
 SELECT create_booking(
@@ -163,12 +169,14 @@ SELECT create_booking(
 **Purpose**: Fast search (50x faster)
 
 **What it does**:
+
 - Adds `search_vector` column (TSVECTOR)
 - GIN indexes
 - `search_patients()` + `search_users()` functions
 - Auto-update triggers
 
 **Test**:
+
 ```sql
 -- Search patients (Arabic)
 SELECT * FROM search_patients('محمد', 10);
@@ -201,7 +209,7 @@ npx supabase functions new process-reminders
 ```typescript
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-Deno.serve(async (req) => {
+Deno.serve(async req => {
   const supabase = createClient(
     Deno.env.get('SUPABASE_URL')!,
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
@@ -209,12 +217,14 @@ Deno.serve(async (req) => {
 
   try {
     // Get pending reminders
-    const { data: reminders, error } = await supabase.rpc('process_pending_reminders');
-    
+    const { data: reminders, error } = await supabase.rpc(
+      'process_pending_reminders'
+    );
+
     if (error) throw error;
-    
+
     console.log(`Processing ${reminders?.length || 0} reminders`);
-    
+
     for (const reminder of reminders || []) {
       try {
         // Send via appropriate channel
@@ -229,26 +239,27 @@ Deno.serve(async (req) => {
             }),
           });
         }
-        
+
         if (reminder.reminder_type === 'sms') {
           // SMS API call
         }
-        
+
         if (reminder.reminder_type === 'email') {
           // Email API call
         }
-        
+
         // Mark as sent
         await supabase
           .from('reminder_outbox')
-          .update({ 
-            status: 'sent', 
-            sent_at: new Date().toISOString() 
+          .update({
+            status: 'sent',
+            sent_at: new Date().toISOString(),
           })
           .eq('id', reminder.reminder_id);
-        
-        console.log(`✅ Sent ${reminder.reminder_type} reminder ${reminder.reminder_id}`);
-        
+
+        console.log(
+          `✅ Sent ${reminder.reminder_type} reminder ${reminder.reminder_id}`
+        );
       } catch (err) {
         // Mark as failed
         await supabase
@@ -259,19 +270,18 @@ Deno.serve(async (req) => {
             retry_count: reminder.retry_count + 1,
           })
           .eq('id', reminder.reminder_id);
-        
+
         console.error(`❌ Failed ${reminder.reminder_id}:`, err.message);
       }
     }
-    
+
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        processed: reminders?.length || 0 
+      JSON.stringify({
+        success: true,
+        processed: reminders?.length || 0,
       }),
       { headers: { 'Content-Type': 'application/json' } }
     );
-    
   } catch (error) {
     console.error('Error:', error);
     return new Response(
@@ -283,11 +293,13 @@ Deno.serve(async (req) => {
 ```
 
 **Deploy**:
+
 ```bash
 npx supabase functions deploy process-reminders
 ```
 
 **Schedule (Cron)**:
+
 ```
 Supabase Dashboard → Edge Functions → process-reminders → Settings → Cron
 
@@ -358,7 +370,7 @@ SELECT * FROM search_patients('0555', 10);
 
 ```sql
 -- Reminders stats
-SELECT 
+SELECT
   status,
   COUNT(*) as count,
   COUNT(*) * 100.0 / SUM(COUNT(*)) OVER() as percentage
@@ -371,7 +383,7 @@ GROUP BY status;
 -- failed: 5%
 
 -- Soft delete stats
-SELECT 
+SELECT
   table_name,
   (SELECT COUNT(*) FROM patients WHERE deleted_at IS NOT NULL) as deleted_count,
   (SELECT COUNT(*) FROM patients) as total_count
@@ -438,14 +450,14 @@ Your system now has:
 ✅ **Soft Delete** → Never lose data  
 ✅ **Auto Reminders** → Reduce no-shows by 50%  
 ✅ **Booking Validation** → Zero conflicts  
-✅ **Fast Search** → 50x performance boost  
+✅ **Fast Search** → 50x performance boost
 
 **Cost**: $0/month  
 **Safety**: 100% (reversible)  
-**Value**: Enterprise-grade features  
+**Value**: Enterprise-grade features
 
 **Next**: Start using new features in your app! 🚀
 
 ---
 
-*For questions, see: `tmp/FINAL_SUMMARY.md`*
+_For questions, see: `tmp/FINAL_SUMMARY.md`_

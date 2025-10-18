@@ -4,7 +4,7 @@ export interface MinistryHealthRecord {
   fullName: string;
   fullNameEn: string;
   dateOfBirth: string;
-  gender: "male" | "female";
+  gender: 'male' | 'female';
   nationality: string;
   phone: string;
   email?: string;
@@ -18,7 +18,7 @@ export interface MinistryHealthRecord {
     provider: string;
     policyNumber: string;
     expiryDate: string;
-    coverageType: "basic" | "premium" | "comprehensive";
+    coverageType: 'basic' | 'premium' | 'comprehensive';
   };
   medicalHistory: {
     chronicConditions: string[];
@@ -37,14 +37,14 @@ export interface SehaIntegration {
   patientId: string;
   sehaId: string;
   lastSync: string;
-  status: "active" | "inactive" | "pending";
+  status: 'active' | 'inactive' | 'pending';
 }
 
 export interface ShoonIntegration {
   patientId: string;
   shoonId: string;
   lastSync: string;
-  status: "active" | "inactive" | "pending";
+  status: 'active' | 'inactive' | 'pending';
 }
 
 export interface TatmanIntegration {
@@ -52,7 +52,7 @@ export interface TatmanIntegration {
   tatmanId: string;
   insuranceProvider: string;
   policyNumber: string;
-  coverageStatus: "active" | "inactive" | "expired";
+  coverageStatus: 'active' | 'inactive' | 'expired';
   lastSync: string;
 }
 
@@ -64,11 +64,11 @@ export class SaudiMinistryHealthIntegration {
 
   constructor() {
     this.sehaApiEndpoint =
-      process.env.SEHA_API_ENDPOINT || "https://api.seha.sa";
+      process.env.SEHA_API_ENDPOINT || 'https://api.seha.sa';
     this.shoonApiEndpoint =
-      process.env.SHOON_API_ENDPOINT || "https://api.shoon.sa";
+      process.env.SHOON_API_ENDPOINT || 'https://api.shoon.sa';
     this.tatmanApiEndpoint =
-      process.env.TATMAN_API_ENDPOINT || "https://api.tatman.sa";
+      process.env.TATMAN_API_ENDPOINT || 'https://api.tatman.sa';
   }
 
   // Expose read-only endpoints for debugging and future use (prevents unused warnings)
@@ -83,12 +83,12 @@ export class SaudiMinistryHealthIntegration {
   // SEHA Integration - النظام الوطني الموحد للمعلومات الصحية
   async syncWithSeha(
     patientId: string,
-    nationalId: string,
+    nationalId: string
   ): Promise<SehaIntegration> {
     try {
       const sehaResponse = await this.callSehaAPI(
-        "GET",
-        `/patients/${nationalId}`,
+        'GET',
+        `/patients/${nationalId}`
       );
 
       if (sehaResponse.success) {
@@ -96,28 +96,28 @@ export class SaudiMinistryHealthIntegration {
           patientId,
           sehaId: sehaResponse.data.sehaId,
           lastSync: new Date().toISOString(),
-          status: "active",
+          status: 'active',
         };
       } else {
-        throw new Error("Failed to sync with Seha platform");
+        throw new Error('Failed to sync with Seha platform');
       }
     } catch (error) {
       return {
         patientId,
-        sehaId: "",
+        sehaId: '',
         lastSync: new Date().toISOString(),
-        status: "inactive",
+        status: 'inactive',
       };
     }
   }
 
   async getSehaHealthRecord(
-    nationalId: string,
+    nationalId: string
   ): Promise<MinistryHealthRecord | null> {
     try {
       const response = await this.callSehaAPI(
-        "GET",
-        `/health-records/${nationalId}`,
+        'GET',
+        `/health-records/${nationalId}`
       );
 
       if (response.success) {
@@ -133,12 +133,12 @@ export class SaudiMinistryHealthIntegration {
   // SHOON Integration - نظام شؤون المرضى
   async syncWithShoon(
     patientId: string,
-    nationalId: string,
+    nationalId: string
   ): Promise<ShoonIntegration> {
     try {
       const shoonResponse = await this.callShoonAPI(
-        "GET",
-        `/patients/${nationalId}`,
+        'GET',
+        `/patients/${nationalId}`
       );
 
       if (shoonResponse.success) {
@@ -146,17 +146,17 @@ export class SaudiMinistryHealthIntegration {
           patientId,
           shoonId: shoonResponse.data.shoonId,
           lastSync: new Date().toISOString(),
-          status: "active",
+          status: 'active',
         };
       } else {
-        throw new Error("Failed to sync with Shoon platform");
+        throw new Error('Failed to sync with Shoon platform');
       }
     } catch (error) {
       return {
         patientId,
-        shoonId: "",
+        shoonId: '',
         lastSync: new Date().toISOString(),
-        status: "inactive",
+        status: 'inactive',
       };
     }
   }
@@ -164,8 +164,8 @@ export class SaudiMinistryHealthIntegration {
   async getShoonPatientData(nationalId: string): Promise<any> {
     try {
       const response = await this.callShoonAPI(
-        "GET",
-        `/patients/${nationalId}/data`,
+        'GET',
+        `/patients/${nationalId}/data`
       );
       return response.success ? response.data : null;
     } catch (error) {
@@ -177,12 +177,12 @@ export class SaudiMinistryHealthIntegration {
   async syncWithTatman(
     patientId: string,
     nationalId: string,
-    insuranceProvider: string,
+    insuranceProvider: string
   ): Promise<TatmanIntegration> {
     try {
       const tatmanResponse = await this.callTatmanAPI(
-        "GET",
-        `/insurance/${nationalId}/${insuranceProvider}`,
+        'GET',
+        `/insurance/${nationalId}/${insuranceProvider}`
       );
 
       if (tatmanResponse.success) {
@@ -195,15 +195,15 @@ export class SaudiMinistryHealthIntegration {
           lastSync: new Date().toISOString(),
         };
       } else {
-        throw new Error("Failed to sync with Tatman platform");
+        throw new Error('Failed to sync with Tatman platform');
       }
     } catch (error) {
       return {
         patientId,
-        tatmanId: "",
-        insuranceProvider: "",
-        policyNumber: "",
-        coverageStatus: "inactive",
+        tatmanId: '',
+        insuranceProvider: '',
+        policyNumber: '',
+        coverageStatus: 'inactive',
         lastSync: new Date().toISOString(),
       };
     }
@@ -211,7 +211,7 @@ export class SaudiMinistryHealthIntegration {
 
   async verifyTatmanCoverage(
     nationalId: string,
-    serviceCode: string,
+    serviceCode: string
   ): Promise<{
     covered: boolean;
     coverageAmount: number;
@@ -219,7 +219,7 @@ export class SaudiMinistryHealthIntegration {
     requiresApproval: boolean;
   }> {
     try {
-      const response = await this.callTatmanAPI("POST", "/verify-coverage", {
+      const response = await this.callTatmanAPI('POST', '/verify-coverage', {
         nationalId,
         serviceCode,
         serviceDate: new Date().toISOString(),
@@ -260,7 +260,7 @@ export class SaudiMinistryHealthIntegration {
       serviceDate: string;
       amount: number;
       notes?: string;
-    },
+    }
   ): Promise<{
     sehaSubmission: boolean;
     shoonSubmission: boolean;
@@ -281,9 +281,9 @@ export class SaudiMinistryHealthIntegration {
     try {
       // Submit to SEHA
       const sehaResponse = await this.callSehaAPI(
-        "POST",
-        "/services",
-        serviceData,
+        'POST',
+        '/services',
+        serviceData
       );
       if (sehaResponse.success) {
         results.sehaSubmission = true;
@@ -294,9 +294,9 @@ export class SaudiMinistryHealthIntegration {
     try {
       // Submit to SHOON
       const shoonResponse = await this.callShoonAPI(
-        "POST",
-        "/services",
-        serviceData,
+        'POST',
+        '/services',
+        serviceData
       );
       if (shoonResponse.success) {
         results.shoonSubmission = true;
@@ -307,9 +307,9 @@ export class SaudiMinistryHealthIntegration {
     try {
       // Submit to TATMAN
       const tatmanResponse = await this.callTatmanAPI(
-        "POST",
-        "/claims",
-        serviceData,
+        'POST',
+        '/claims',
+        serviceData
       );
       if (tatmanResponse.success) {
         results.tatmanSubmission = true;
@@ -322,7 +322,7 @@ export class SaudiMinistryHealthIntegration {
 
   // Ministry Health Regulations Compliance
   async validateMinistryCompliance(
-    patientData: Partial<MinistryHealthRecord>,
+    patientData: Partial<MinistryHealthRecord>
   ): Promise<{
     compliant: boolean;
     violations: string[];
@@ -336,17 +336,17 @@ export class SaudiMinistryHealthIntegration {
       patientData.nationalId &&
       !this.isValidSaudiNationalId(patientData.nationalId)
     ) {
-      violations.push("رقم الهوية الوطنية غير صحيح");
+      violations.push('رقم الهوية الوطنية غير صحيح');
     }
 
     // Phone number validation
     if (patientData.phone && !this.isValidSaudiPhoneNumber(patientData.phone)) {
-      violations.push("رقم الهاتف غير صحيح");
+      violations.push('رقم الهاتف غير صحيح');
     }
 
     // Address validation
     if (patientData.address && !this.isValidSaudiAddress(patientData.address)) {
-      violations.push("العنوان غير مكتمل أو غير صحيح");
+      violations.push('العنوان غير مكتمل أو غير صحيح');
     }
 
     // Insurance validation
@@ -354,7 +354,7 @@ export class SaudiMinistryHealthIntegration {
       patientData.insurance &&
       !this.isValidInsuranceData(patientData.insurance)
     ) {
-      violations.push("بيانات التأمين غير صحيحة أو منتهية الصلاحية");
+      violations.push('بيانات التأمين غير صحيحة أو منتهية الصلاحية');
     }
 
     // Medical history validation
@@ -362,15 +362,15 @@ export class SaudiMinistryHealthIntegration {
       patientData.medicalHistory &&
       !this.isValidMedicalHistory(patientData.medicalHistory)
     ) {
-      violations.push("السجل الطبي غير مكتمل");
+      violations.push('السجل الطبي غير مكتمل');
     }
 
     // Generate recommendations
     if (violations.length === 0) {
-      recommendations.push("البيانات متوافقة مع متطلبات وزارة الصحة");
+      recommendations.push('البيانات متوافقة مع متطلبات وزارة الصحة');
     } else {
-      recommendations.push("يرجى تصحيح الأخطاء المذكورة أعلاه");
-      recommendations.push("تأكد من تحديث البيانات بانتظام");
+      recommendations.push('يرجى تصحيح الأخطاء المذكورة أعلاه');
+      recommendations.push('تأكد من تحديث البيانات بانتظام');
     }
 
     return {
@@ -451,43 +451,43 @@ export class SaudiMinistryHealthIntegration {
   private async callSehaAPI(
     method: string,
     endpoint: string,
-    data?: any,
+    data?: any
   ): Promise<any> {
     // Mock response for development
     return {
       success: true,
       data: {
-        sehaId: "SEHA_" + Math.random().toString(36).substr(2, 9),
-        nationalId: data?.nationalId || "1234567890",
-        fullName: "أحمد محمد الأحمد",
-        fullNameEn: "Ahmed Mohammed Al-Ahmad",
-        dateOfBirth: "1990-01-01",
-        gender: "male",
-        nationality: "Saudi",
-        phone: "+966501234567",
-        email: "ahmed@example.com",
+        sehaId: 'SEHA_' + Math.random().toString(36).substr(2, 9),
+        nationalId: data?.nationalId || '1234567890',
+        fullName: 'أحمد محمد الأحمد',
+        fullNameEn: 'Ahmed Mohammed Al-Ahmad',
+        dateOfBirth: '1990-01-01',
+        gender: 'male',
+        nationality: 'Saudi',
+        phone: '+966501234567',
+        email: 'ahmed@example.com',
         address: {
-          city: "جدة",
-          district: "حي الصفا",
-          street: "شارع الأمير محمد بن عبدالعزيز",
-          postalCode: "12345",
+          city: 'جدة',
+          district: 'حي الصفا',
+          street: 'شارع الأمير محمد بن عبدالعزيز',
+          postalCode: '12345',
         },
         insurance: {
-          provider: "التعاونية",
-          policyNumber: "POL123456789",
-          expiryDate: "2025-12-31",
-          coverageType: "comprehensive",
+          provider: 'التعاونية',
+          policyNumber: 'POL123456789',
+          expiryDate: '2025-12-31',
+          coverageType: 'comprehensive',
         },
         medicalHistory: {
-          chronicConditions: ["السكري", "ارتفاع ضغط الدم"],
-          allergies: ["البنسلين"],
-          medications: ["ميتفورمين", "أملوديبين"],
-          previousSurgeries: ["استئصال الزائدة الدودية"],
+          chronicConditions: ['السكري', 'ارتفاع ضغط الدم'],
+          allergies: ['البنسلين'],
+          medications: ['ميتفورمين', 'أملوديبين'],
+          previousSurgeries: ['استئصال الزائدة الدودية'],
         },
         emergencyContact: {
-          name: "فاطمة الأحمد",
-          relationship: "زوجة",
-          phone: "+966501234568",
+          name: 'فاطمة الأحمد',
+          relationship: 'زوجة',
+          phone: '+966501234568',
         },
       },
     };
@@ -496,19 +496,19 @@ export class SaudiMinistryHealthIntegration {
   private async callShoonAPI(
     method: string,
     endpoint: string,
-    data?: any,
+    data?: any
   ): Promise<any> {
     // Mock response for development
     return {
       success: true,
       data: {
-        shoonId: "SHOON_" + Math.random().toString(36).substr(2, 9),
-        nationalId: data?.nationalId || "1234567890",
+        shoonId: 'SHOON_' + Math.random().toString(36).substr(2, 9),
+        nationalId: data?.nationalId || '1234567890',
         patientData: {
-          name: "أحمد محمد الأحمد",
+          name: 'أحمد محمد الأحمد',
           age: 34,
-          gender: "male",
-          phone: "+966501234567",
+          gender: 'male',
+          phone: '+966501234567',
         },
       },
     };
@@ -517,17 +517,17 @@ export class SaudiMinistryHealthIntegration {
   private async callTatmanAPI(
     method: string,
     endpoint: string,
-    data?: any,
+    data?: any
   ): Promise<any> {
     // Mock response for development
     return {
       success: true,
       data: {
-        tatmanId: "TATMAN_" + Math.random().toString(36).substr(2, 9),
-        nationalId: data?.nationalId || "1234567890",
-        provider: "التعاونية",
-        policyNumber: "POL123456789",
-        status: "active",
+        tatmanId: 'TATMAN_' + Math.random().toString(36).substr(2, 9),
+        nationalId: data?.nationalId || '1234567890',
+        provider: 'التعاونية',
+        policyNumber: 'POL123456789',
+        status: 'active',
         covered: true,
         coverageAmount: 50000,
         remainingAmount: 45000,

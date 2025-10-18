@@ -28,7 +28,7 @@ async function log(message, level = 'INFO') {
   const timestamp = new Date().toISOString();
   const logMessage = `[${timestamp}] [${level}] ${message}`;
   console.log(logMessage);
-  
+
   try {
     await fs.appendFile(LOG_FILE, logMessage + '\n', 'utf8');
   } catch (err) {
@@ -43,9 +43,9 @@ async function getSystemMetrics() {
     memory: {},
     disk: {},
     network: {},
-    processes: {}
+    processes: {},
   };
-  
+
   try {
     // Memory usage
     const { stdout: memInfo } = await executeCommand('free -m');
@@ -55,9 +55,9 @@ async function getSystemMetrics() {
       total: parseInt(memData[1]),
       used: parseInt(memData[2]),
       free: parseInt(memData[3]),
-      available: parseInt(memData[6])
+      available: parseInt(memData[6]),
     };
-    
+
     // Disk usage
     const { stdout: diskInfo } = await executeCommand('df -h /');
     const diskLines = diskInfo.split('\n');
@@ -66,31 +66,34 @@ async function getSystemMetrics() {
       total: diskData[1],
       used: diskData[2],
       available: diskData[3],
-      usage: diskData[4]
+      usage: diskData[4],
     };
-    
+
     // Network connections
     const { stdout: netInfo } = await executeCommand('ss -tuln | wc -l');
     metrics.network.connections = parseInt(netInfo.trim());
-    
+
     // Node.js processes
-    const { stdout: nodeProcesses } = await executeCommand('ps aux | grep node | grep -v grep | wc -l');
+    const { stdout: nodeProcesses } = await executeCommand(
+      'ps aux | grep node | grep -v grep | wc -l'
+    );
     metrics.processes.node = parseInt(nodeProcesses.trim());
-    
+
     // Git status
     try {
-      const { stdout: gitStatus } = await executeCommand('git status --porcelain');
+      const { stdout: gitStatus } = await executeCommand(
+        'git status --porcelain'
+      );
       metrics.git = {
-        modifiedFiles: gitStatus.split('\n').filter(line => line.trim()).length
+        modifiedFiles: gitStatus.split('\n').filter(line => line.trim()).length,
       };
     } catch (e) {
       metrics.git = { modifiedFiles: 0 };
     }
-    
   } catch (err) {
     log(`Error getting system metrics: ${err.message}`, 'ERROR');
   }
-  
+
   return metrics;
 }
 
@@ -102,30 +105,43 @@ async function getProjectHealth() {
     linting: {},
     build: {},
     dependencies: {},
-    security: {}
+    security: {},
   };
-  
+
   try {
     // Test results
     try {
-      const { stdout: testOutput } = await executeCommand('npm run test:unit', { ignoreError: true });
-      const passed = (testOutput.match(/(\d+) passed/g) || []).map(m => parseInt(m)).reduce((a, b) => a + b, 0);
-      const failed = (testOutput.match(/(\d+) failed/g) || []).map(m => parseInt(m)).reduce((a, b) => a + b, 0);
+      const { stdout: testOutput } = await executeCommand('npm run test:unit', {
+        ignoreError: true,
+      });
+      const passed = (testOutput.match(/(\d+) passed/g) || [])
+        .map(m => parseInt(m))
+        .reduce((a, b) => a + b, 0);
+      const failed = (testOutput.match(/(\d+) failed/g) || [])
+        .map(m => parseInt(m))
+        .reduce((a, b) => a + b, 0);
       health.tests = { passed, failed, total: passed + failed };
     } catch (e) {
       health.tests = { passed: 0, failed: 0, total: 0 };
     }
-    
+
     // Linting results
     try {
-      const { stdout: lintOutput } = await executeCommand('npm run lint:check', { ignoreError: true });
-      const errors = (lintOutput.match(/(\d+) errors?/g) || []).map(m => parseInt(m)).reduce((a, b) => a + b, 0);
-      const warnings = (lintOutput.match(/(\d+) warnings?/g) || []).map(m => parseInt(m)).reduce((a, b) => a + b, 0);
+      const { stdout: lintOutput } = await executeCommand(
+        'npm run lint:check',
+        { ignoreError: true }
+      );
+      const errors = (lintOutput.match(/(\d+) errors?/g) || [])
+        .map(m => parseInt(m))
+        .reduce((a, b) => a + b, 0);
+      const warnings = (lintOutput.match(/(\d+) warnings?/g) || [])
+        .map(m => parseInt(m))
+        .reduce((a, b) => a + b, 0);
       health.linting = { errors, warnings };
     } catch (e) {
       health.linting = { errors: 0, warnings: 0 };
     }
-    
+
     // Build status
     try {
       await executeCommand('npm run build');
@@ -133,37 +149,40 @@ async function getProjectHealth() {
     } catch (e) {
       health.build = { status: 'failed', error: e.message };
     }
-    
+
     // Dependencies status
     try {
-      const { stdout: outdated } = await executeCommand('npm outdated --json', { ignoreError: true });
+      const { stdout: outdated } = await executeCommand('npm outdated --json', {
+        ignoreError: true,
+      });
       const outdatedDeps = JSON.parse(outdated);
       health.dependencies = {
         outdated: Object.keys(outdatedDeps).length,
-        total: 0
+        total: 0,
       };
     } catch (e) {
       health.dependencies = { outdated: 0, total: 0 };
     }
-    
+
     // Security audit
     try {
-      const { stdout: auditOutput } = await executeCommand('npm audit --json', { ignoreError: true });
+      const { stdout: auditOutput } = await executeCommand('npm audit --json', {
+        ignoreError: true,
+      });
       const audit = JSON.parse(auditOutput);
       health.security = {
         vulnerabilities: audit.vulnerabilities || 0,
         high: audit.metadata?.vulnerabilities?.high || 0,
         moderate: audit.metadata?.vulnerabilities?.moderate || 0,
-        low: audit.metadata?.vulnerabilities?.low || 0
+        low: audit.metadata?.vulnerabilities?.low || 0,
       };
     } catch (e) {
       health.security = { vulnerabilities: 0, high: 0, moderate: 0, low: 0 };
     }
-    
   } catch (err) {
     log(`Error getting project health: ${err.message}`, 'ERROR');
   }
-  
+
   return health;
 }
 
@@ -173,49 +192,49 @@ async function generateMonitoringReport() {
     timestamp: new Date().toISOString(),
     system: await getSystemMetrics(),
     project: await getProjectHealth(),
-    alerts: []
+    alerts: [],
   };
-  
+
   // Check for alerts
   if (report.system.memory.used / report.system.memory.total > 0.9) {
     report.alerts.push({
       type: 'memory',
       severity: 'high',
-      message: 'Memory usage is above 90%'
+      message: 'Memory usage is above 90%',
     });
   }
-  
+
   if (report.project.linting.errors > 10) {
     report.alerts.push({
       type: 'linting',
       severity: 'medium',
-      message: `Too many linting errors: ${report.project.linting.errors}`
+      message: `Too many linting errors: ${report.project.linting.errors}`,
     });
   }
-  
+
   if (report.project.tests.failed > 0) {
     report.alerts.push({
       type: 'tests',
       severity: 'high',
-      message: `${report.project.tests.failed} tests are failing`
+      message: `${report.project.tests.failed} tests are failing`,
     });
   }
-  
+
   if (report.project.security.vulnerabilities > 0) {
     report.alerts.push({
       type: 'security',
       severity: 'high',
-      message: `${report.project.security.vulnerabilities} security vulnerabilities found`
+      message: `${report.project.security.vulnerabilities} security vulnerabilities found`,
     });
   }
-  
+
   // Save report
   const reportFile = path.join(MONITORING_DIR, `monitoring-${Date.now()}.json`);
   await fs.writeFile(reportFile, JSON.stringify(report, null, 2), 'utf8');
-  
+
   // Generate HTML report
   await generateHTMLReport(report);
-  
+
   return report;
 }
 
@@ -295,48 +314,60 @@ async function generateHTMLReport(report) {
             </div>
         </div>
         
-        ${report.alerts.length > 0 ? `
+        ${
+          report.alerts.length > 0
+            ? `
         <div class="section">
             <h2>⚠️ Alerts</h2>
-            ${report.alerts.map(alert => `
+            ${report.alerts
+              .map(
+                alert => `
                 <div class="alert ${alert.severity}">
                     <strong>${alert.type.toUpperCase()}:</strong> ${alert.message}
                 </div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
-        ` : ''}
+        `
+            : ''
+        }
     </div>
 </body>
 </html>`;
-  
+
   const htmlFile = path.join(MONITORING_DIR, 'monitoring-report.html');
   await fs.writeFile(htmlFile, html, 'utf8');
-  
+
   log(`📊 HTML report generated: ${htmlFile}`);
 }
 
 // Function to start continuous monitoring
 async function startMonitoring(intervalMinutes = 5) {
   log(`🔄 Starting continuous monitoring (every ${intervalMinutes} minutes)`);
-  
+
   while (true) {
     try {
       const report = await generateMonitoringReport();
       log(`📊 Monitoring report generated with ${report.alerts.length} alerts`);
-      
+
       // Send alerts if any
       if (report.alerts.length > 0) {
         for (const alert of report.alerts) {
-          log(`⚠️ ALERT [${alert.severity.toUpperCase()}]: ${alert.message}`, 'WARN');
+          log(
+            `⚠️ ALERT [${alert.severity.toUpperCase()}]: ${alert.message}`,
+            'WARN'
+          );
         }
       }
-      
     } catch (err) {
       log(`❌ Error in monitoring cycle: ${err.message}`, 'ERROR');
     }
-    
+
     // Wait for next cycle
-    await new Promise(resolve => setTimeout(resolve, intervalMinutes * 60 * 1000));
+    await new Promise(resolve =>
+      setTimeout(resolve, intervalMinutes * 60 * 1000)
+    );
   }
 }
 
@@ -344,33 +375,35 @@ async function startMonitoring(intervalMinutes = 5) {
 async function main() {
   const args = process.argv.slice(2);
   const command = args[0];
-  
+
   // Ensure directories exist
   await fs.mkdir(MONITORING_DIR, { recursive: true }).catch(() => {});
   await fs.mkdir(path.dirname(LOG_FILE), { recursive: true }).catch(() => {});
-  
+
   switch (command) {
     case 'report':
       await generateMonitoringReport();
       break;
-      
+
     case 'monitor':
       const interval = parseInt(args[1]) || 5;
       await startMonitoring(interval);
       break;
-      
+
     case 'metrics':
       const metrics = await getSystemMetrics();
       console.log(JSON.stringify(metrics, null, 2));
       break;
-      
+
     case 'health':
       const health = await getProjectHealth();
       console.log(JSON.stringify(health, null, 2));
       break;
-      
+
     default:
-      console.log('Usage: node monitoring-system.mjs [report|monitor|metrics|health]');
+      console.log(
+        'Usage: node monitoring-system.mjs [report|monitor|metrics|health]'
+      );
       console.log('  report - Generate monitoring report');
       console.log('  monitor [interval] - Start continuous monitoring');
       console.log('  metrics - Get system metrics');

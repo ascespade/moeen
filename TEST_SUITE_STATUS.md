@@ -5,22 +5,26 @@
 ## ✅ What's Been Completed
 
 ### 1. Scripts Created
+
 - ✅ `run-full-suite.sh` - Original version with DB operations
 - ✅ `run-full-suite-no-db.sh` - Modified version without direct DB access
 - ✅ `verify-full-suite-setup.sh` - Verification script
 
 ### 2. Documentation
+
 - ✅ `RUN_FULL_SUITE_README.md` - Comprehensive guide
 - ✅ `FULL_SUITE_SETUP_COMPLETE.md` - Setup summary
 - ✅ `SETUP_SUMMARY.txt` - Quick reference
 - ✅ `FILES_CREATED.md` - File list
 
 ### 3. Dependencies
+
 - ✅ System tools: jq, psql, pg_dump (v17.6)
 - ✅ Node modules: @supabase/ssr, critters
 - ✅ Helper scripts generated in `scripts/ci/`
 
 ### 4. Configuration
+
 - ✅ `package.json` updated with scripts:
   - `npm run test:full-suite` → uses no-db version
   - `npm run test:full-suite-with-db` → uses DB version
@@ -28,9 +32,11 @@
 ## 🔍 Current Status
 
 ### Test Files Found
+
 The following test files exist in the project:
 
 #### E2E Tests (`tests/e2e/`)
+
 - ✅ `auth.spec.ts` - Authentication tests
 - ✅ `admin.spec.ts` - Admin panel tests
 - ✅ `appointments.spec.ts` - Appointment tests
@@ -45,6 +51,7 @@ The following test files exist in the project:
 - ✅ `system-health.spec.ts` - System health checks
 
 #### Other Tests
+
 - `healthcare.spec.ts`
 - `navigation.spec.ts`
 - `crm.spec.ts`
@@ -56,19 +63,23 @@ The following test files exist in the project:
 ### Known Issues & Solutions
 
 #### Issue 1: Database Connection Timeout
+
 **Problem**: Direct PostgreSQL connection to Supabase times out on port 5432
 
 **Solution**: Use `run-full-suite-no-db.sh` which:
+
 - Skips direct DB operations
 - Uses Supabase REST API through the application
 - Doesn't require psql access
 
 #### Issue 2: Missing Dependencies
+
 **Problem**: `@supabase/ssr` and `critters` were missing
 
 **Status**: ✅ **FIXED** - Dependencies installed
 
 #### Issue 3: Test Output Redirection
+
 **Problem**: Playwright JSON reporter output was being redirected incorrectly
 
 **Status**: Script updated with better error handling
@@ -76,16 +87,19 @@ The following test files exist in the project:
 ## 🚀 How to Run Tests
 
 ### Option 1: Run All Tests (Recommended)
+
 ```bash
 npm run test:full-suite
 ```
 
 ### Option 2: Run Specific Test File
+
 ```bash
 npx playwright test tests/e2e/auth.spec.ts --config=playwright-auto.config.ts
 ```
 
 ### Option 3: Run Tests by Module
+
 ```bash
 # Auth module
 npx playwright test tests/e2e/auth.spec.ts --config=playwright-auto.config.ts --reporter=list
@@ -98,11 +112,13 @@ npx playwright test tests/e2e/admin.spec.ts --config=playwright-auto.config.ts -
 ```
 
 ### Option 4: Run Tests with UI
+
 ```bash
 npx playwright test --config=playwright-auto.config.ts --ui
 ```
 
 ### Option 5: Run Single Test in Debug Mode
+
 ```bash
 npx playwright test tests/e2e/auth.spec.ts --config=playwright-auto.config.ts --debug
 ```
@@ -110,6 +126,7 @@ npx playwright test tests/e2e/auth.spec.ts --config=playwright-auto.config.ts --
 ## 📊 Test Suite Configuration
 
 ### Current Settings (in run-full-suite-no-db.sh)
+
 ```bash
 MAX_ATTEMPTS_PER_MODULE=3       # Max retries per module
 MODULE_TARGET_PERCENT=80        # Success percentage target
@@ -119,6 +136,7 @@ PARALLEL_MAX=2                  # Max parallel modules
 ```
 
 ### Tested Modules
+
 1. ✅ auth - Authentication
 2. ✅ users - User management
 3. ✅ patients - Patient records
@@ -136,6 +154,7 @@ PARALLEL_MAX=2                  # Max parallel modules
 ## 🔧 Troubleshooting
 
 ### If tests fail to start:
+
 ```bash
 # 1. Verify setup
 ./verify-full-suite-setup.sh
@@ -148,6 +167,7 @@ npm ci
 ```
 
 ### If Next.js server fails:
+
 ```bash
 # Check for missing dependencies
 npm install
@@ -157,7 +177,9 @@ cat .env.local
 ```
 
 ### If database connection fails:
+
 Use the no-db version:
+
 ```bash
 npm run test:full-suite
 ```
@@ -208,11 +230,13 @@ workspace/
 ## ✅ Next Steps
 
 1. **Run a single test to verify everything works:**
+
    ```bash
    npx playwright test tests/e2e/auth.spec.ts --config=playwright-auto.config.ts --reporter=list
    ```
 
 2. **If successful, run the full suite:**
+
    ```bash
    npm run test:full-suite
    ```

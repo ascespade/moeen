@@ -3,6 +3,7 @@
 ## Overview
 
 `run-full-suite.sh` is a comprehensive automated testing system that combines:
+
 - **Supabase** database management
 - **Playwright** end-to-end testing
 - **Automatic database fixes** with schema inspection
@@ -12,18 +13,21 @@
 ## Features
 
 ### 🔄 Automatic Database Fixes
+
 - Inspects database schema for nullable columns
 - Automatically applies defaults and NOT NULL constraints
 - Backs up database before making changes
 - Handles different data types (integers, booleans, timestamps, strings)
 
 ### 🎭 Intelligent Playwright Testing
+
 - Tests 13 modules in parallel: auth, users, patients, appointments, billing, notifications, dashboard, admin, files, reports, settings, integration, payments
 - Automatically retries failed tests (up to 6 attempts per module)
 - Dynamically increases timeouts when timeout errors are detected
 - Generates detailed JSON reports for each test run
 
 ### 📊 Automated Analysis
+
 - Analyzes test results to calculate success percentages
 - Detects timeout issues and suggests fixes
 - Aggregates results from all modules into a final report
@@ -51,12 +55,14 @@ PARALLEL_MAX=0
 ## Prerequisites
 
 ### Required Tools
+
 - `node` and `npm` (for running tests)
 - `jq` (for JSON processing)
 - `psql` and `pg_dump` (for database operations)
 - `npx` (comes with npm)
 
 ### Optional Tools
+
 - `supawright` CLI (for advanced seed/teardown operations)
 
 ### Installation
@@ -85,6 +91,7 @@ chmod +x run-full-suite.sh
 ### Environment Variables
 
 The script uses these Supabase credentials (hardcoded):
+
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
@@ -119,6 +126,7 @@ workspace/
 ## How It Works
 
 ### 1. Initialization Phase
+
 ```bash
 check_requirements()      # Verify tools are available
 db_backup()              # Backup database before changes
@@ -127,7 +135,9 @@ generate_db_alter_suggestions() # Inspect and fix DB schema
 ```
 
 ### 2. Testing Phase
+
 For each module (in parallel):
+
 1. **Seed Data**: Prepare test data (if supawright is available)
 2. **Run Tests**: Execute Playwright tests with current timeout
 3. **Analyze Results**: Calculate success percentage
@@ -137,6 +147,7 @@ For each module (in parallel):
 7. **Retry**: If not successful, go to step 1 (max 6 attempts)
 
 ### 3. Reporting Phase
+
 - Aggregate all module results into a single JSON report
 - Store in `test-reports/final-report-*.json`
 
@@ -186,7 +197,9 @@ PARALLEL_MAX=$(( PARALLEL_MAX>${#MODULES[@]}?${#MODULES[@]}:PARALLEL_MAX ))
 ## Helper Scripts
 
 ### analyze-playwright-report.js
+
 Analyzes Playwright JSON reports to extract:
+
 - Total tests
 - Passed tests
 - Failed tests
@@ -194,7 +207,9 @@ Analyzes Playwright JSON reports to extract:
 - List of failures with error messages
 
 ### suggest-fixes-from-trace.js
+
 Detects common issues in test results:
+
 - Timeout errors
 - `waitForURL` failures
 - Suggests timeout increases
@@ -202,19 +217,23 @@ Detects common issues in test results:
 ## Troubleshooting
 
 ### Script fails immediately
+
 - Check that required tools are installed: `jq`, `psql`, `node`
 - Verify database connection: `psql $SUPABASE_DB_URL -c "SELECT 1"`
 
 ### Tests timeout
+
 - The script auto-adjusts timeouts
 - You can manually increase `PLAYWRIGHT_TIMEOUT_MS` in the script
 
 ### Database changes fail
+
 - Check database credentials
 - Verify service role key has sufficient permissions
 - Review `tmp/db-alter-suggestions.sql` for the attempted changes
 
 ### Module never reaches 90% success
+
 - Check test logs in `test-results/[module]-*/`
 - Review `analysis.json` for specific failures
 - Consider lowering `MODULE_TARGET_PERCENT` temporarily
@@ -267,19 +286,25 @@ Detects common issues in test results:
 ## Advanced Configuration
 
 ### Custom Module List
+
 Edit the `MODULES` array in the script:
+
 ```bash
 MODULES=(auth users patients)  # Test only these 3 modules
 ```
 
 ### Different Database
+
 Update the connection string:
+
 ```bash
 export SUPABASE_DB_URL="postgresql://user:pass@host:5432/db"
 ```
 
 ### Custom Timeout Strategy
+
 Modify the timeout increase logic:
+
 ```bash
 # Current: increases by 20s each retry
 PLAYWRIGHT_TIMEOUT_MS=$((PLAYWRIGHT_TIMEOUT_MS+20000))
@@ -310,6 +335,7 @@ Add to your CI pipeline:
 ## Support
 
 For issues or questions:
+
 1. Check the logs in `test-results/`
 2. Review `tmp/db-alter-suggestions.sql` for DB changes
 3. Examine individual module reports in JSON format

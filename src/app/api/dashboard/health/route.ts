@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 
 export async function GET() {
   try {
@@ -10,23 +10,23 @@ export async function GET() {
 
     // Get user count
     const { count: userCount } = await supabase
-      .from("users")
-      .select("*", { count: "exact", head: true });
+      .from('users')
+      .select('*', { count: 'exact', head: true });
 
     // Get appointment count
     const { count: appointmentCount } = await supabase
-      .from("appointments")
-      .select("*", { count: "exact", head: true });
+      .from('appointments')
+      .select('*', { count: 'exact', head: true });
 
     // Get patient count
     const { count: patientCount } = await supabase
-      .from("patients")
-      .select("*", { count: "exact", head: true });
+      .from('patients')
+      .select('*', { count: 'exact', head: true });
 
     const responseTime = Date.now() - startTime;
 
     return NextResponse.json({
-      status: "healthy",
+      status: 'healthy',
       timestamp: new Date().toISOString(),
       metrics: {
         users: userCount || 0,
@@ -39,12 +39,12 @@ export async function GET() {
   } catch (error: any) {
     return NextResponse.json(
       {
-        status: "unhealthy",
+        status: 'unhealthy',
         timestamp: new Date().toISOString(),
         error: error.message,
         responseTime: 0,
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

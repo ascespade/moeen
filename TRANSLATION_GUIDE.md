@@ -37,20 +37,16 @@ import { useT } from '@/hooks/useT';
 
 function MyComponent() {
   const { t, language, setLanguage, isLoading } = useT();
-  
+
   return (
     <div>
       <h1>{t('dashboard.title')}</h1>
       <p>{t('dashboard.welcome')}</p>
-      
+
       {isLoading && <p>Loading translations...</p>}
-      
-      <button onClick={() => setLanguage('en')}>
-        English
-      </button>
-      <button onClick={() => setLanguage('ar')}>
-        العربية
-      </button>
+
+      <button onClick={() => setLanguage('en')}>English</button>
+      <button onClick={() => setLanguage('ar')}>العربية</button>
     </div>
   );
 }
@@ -64,28 +60,25 @@ import translationService from '@/lib/i18n/translationService';
 
 function AdvancedComponent() {
   const { t, language } = useT();
-  
+
   // Get multiple translations at once
   const handleLoadTranslations = async () => {
-    const translations = await translationService.getMultiple([
-      'dashboard.title',
-      'dashboard.subtitle',
-      'dashboard.metrics'
-    ], language);
-    
+    const translations = await translationService.getMultiple(
+      ['dashboard.title', 'dashboard.subtitle', 'dashboard.metrics'],
+      language
+    );
+
     console.log(translations);
   };
-  
+
   // Check missing keys
   const missingCount = translationService.getMissingKeysCount();
-  
+
   return (
     <div>
       <h1>{t('dashboard.title')}</h1>
       <p>Missing translations: {missingCount}</p>
-      <button onClick={handleLoadTranslations}>
-        Load Translations
-      </button>
+      <button onClick={handleLoadTranslations}>Load Translations</button>
     </div>
   );
 }
@@ -137,6 +130,7 @@ insurance.title
 ### Tables - الجداول
 
 #### translations
+
 ```sql
 CREATE TABLE translations (
   id BIGSERIAL PRIMARY KEY,
@@ -151,6 +145,7 @@ CREATE TABLE translations (
 ```
 
 #### missing_translations
+
 ```sql
 CREATE TABLE missing_translations (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -162,6 +157,7 @@ CREATE TABLE missing_translations (
 ```
 
 #### languages
+
 ```sql
 CREATE TABLE languages (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -180,9 +176,11 @@ CREATE TABLE languages (
 Get translations for a specific language.
 
 **Parameters:**
+
 - `lang` (string): Language code (ar, en)
 
 **Response:**
+
 ```json
 {
   "common.welcome": "مرحباً",
@@ -192,6 +190,7 @@ Get translations for a specific language.
 ```
 
 **Headers:**
+
 - `Cache-Control: public, max-age=3600, stale-while-revalidate=86400`
 
 ### POST /api/translations/missing
@@ -199,6 +198,7 @@ Get translations for a specific language.
 Log missing translation keys.
 
 **Body:**
+
 ```json
 {
   "language": "ar",
@@ -208,6 +208,7 @@ Log missing translation keys.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -282,6 +283,7 @@ document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
 ### Adding New Translations - إضافة ترجمات جديدة
 
 1. **Add key to component**:
+
    ```tsx
    <h1>{t('new.feature.title')}</h1>
    ```
@@ -289,6 +291,7 @@ document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
 2. **Key will be logged** as missing automatically
 
 3. **Add translation to database**:
+
    ```sql
    INSERT INTO translations (locale, key, value) VALUES
    ('ar', 'new.feature.title', 'الميزة الجديدة'),
@@ -303,7 +306,7 @@ document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
 // Test component with different languages
 function TestTranslations() {
   const { t, setLanguage } = useT();
-  
+
   return (
     <div>
       <h1>{t('dashboard.title')}</h1>
@@ -348,7 +351,7 @@ if (process.env.NODE_ENV === 'development') {
   console.log('Translation service debug:', {
     language,
     cached: translationService.getCachedTranslations(language),
-    missing: translationService.getMissingKeys()
+    missing: translationService.getMissingKeys(),
   });
 }
 ```
@@ -358,15 +361,17 @@ if (process.env.NODE_ENV === 'development') {
 ### From Static Translations - من الترجمات الثابتة
 
 1. **Replace static strings**:
+
    ```tsx
    // Before
    <h1>Dashboard</h1>
-   
+
    // After
    <h1>{t('dashboard.title')}</h1>
    ```
 
 2. **Wrap components** with TranslationProvider:
+
    ```tsx
    <TranslationProvider>
      <App />

@@ -1,39 +1,39 @@
-import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 // GET /api/crm/contacts - جلب جهات الاتصال
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const search = searchParams.get("search");
-    const status = searchParams.get("status");
-    const source = searchParams.get("source");
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "10");
+    const search = searchParams.get('search');
+    const status = searchParams.get('status');
+    const source = searchParams.get('source');
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '10');
 
     let query = supabase
-      .from("customers")
-      .select("*")
-      .order("created_at", { ascending: false });
+      .from('customers')
+      .select('*')
+      .order('created_at', { ascending: false });
 
     // تطبيق الفلاتر
     if (search) {
       query = query.or(
-        `name.ilike.%${search}%,email.ilike.%${search}%,phone.ilike.%${search}%`,
+        `name.ilike.%${search}%,email.ilike.%${search}%,phone.ilike.%${search}%`
       );
     }
 
     if (status) {
-      query = query.eq("customer_type", status);
+      query = query.eq('customer_type', status);
     }
 
     if (source) {
-      query = query.eq("preferred_channel", source);
+      query = query.eq('preferred_channel', source);
     }
 
     // تطبيق الصفحات
@@ -58,8 +58,8 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
@@ -77,16 +77,16 @@ export async function POST(request: NextRequest) {
       gender,
       nationality,
       city,
-      preferred_language = "ar",
+      preferred_language = 'ar',
       preferred_channel,
-      customer_type = "individual",
+      customer_type = 'individual',
       organization_name,
       notes,
       tags = [],
     } = body;
 
     const { data: contact, error } = await supabase
-      .from("customers")
+      .from('customers')
       .insert({
         name,
         email,
@@ -117,8 +117,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ contact }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }

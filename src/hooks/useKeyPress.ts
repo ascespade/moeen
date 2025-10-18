@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback } from 'react';
 // Key press hooks
 
 export const useKeyPress = (
@@ -8,7 +8,7 @@ export const useKeyPress = (
     preventDefault?: boolean;
     stopPropagation?: boolean;
     enabled?: boolean;
-  } = {},
+  } = {}
 ) => {
   const {
     preventDefault = false,
@@ -33,60 +33,60 @@ export const useKeyPress = (
         handler(event);
       }
     },
-    [targetKey, handler, preventDefault, stopPropagation, enabled],
+    [targetKey, handler, preventDefault, stopPropagation, enabled]
   );
 
   useEffect(() => {
     if (!enabled) return;
 
-    document.addEventListener("keydown", handleKeyPress);
+    document.addEventListener('keydown', handleKeyPress);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyPress);
+      document.removeEventListener('keydown', handleKeyPress);
     };
   }, [handleKeyPress, enabled]);
 };
 
 export const useEscapeKey = (handler: () => void, enabled: boolean = true) => {
-  useKeyPress("Escape", handler, { enabled });
+  useKeyPress('Escape', handler, { enabled });
 };
 
 export const useEnterKey = (handler: () => void, enabled: boolean = true) => {
-  useKeyPress("Enter", handler, { enabled });
+  useKeyPress('Enter', handler, { enabled });
 };
 
 export const useArrowKeys = (
-  handler: (direction: "up" | "down" | "left" | "right") => void,
-  enabled: boolean = true,
+  handler: (direction: 'up' | 'down' | 'left' | 'right') => void,
+  enabled: boolean = true
 ) => {
   const handleArrowKey = useCallback(
     (event: KeyboardEvent) => {
       if (!enabled) return;
 
       switch (event.key) {
-        case "ArrowUp":
-          handler("up");
+        case 'ArrowUp':
+          handler('up');
           break;
-        case "ArrowDown":
-          handler("down");
+        case 'ArrowDown':
+          handler('down');
           break;
-        case "ArrowLeft":
-          handler("left");
+        case 'ArrowLeft':
+          handler('left');
           break;
-        case "ArrowRight":
-          handler("right");
+        case 'ArrowRight':
+          handler('right');
           break;
       }
     },
-    [handler, enabled],
+    [handler, enabled]
   );
 
   useKeyPress(
-    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"],
+    ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'],
     handleArrowKey,
     {
       enabled,
-    },
+    }
   );
 };
 
@@ -99,7 +99,7 @@ export const useHotkey = (
     shiftKey?: boolean;
     metaKey?: boolean;
     enabled?: boolean;
-  } = {},
+  } = {}
 ) => {
   const {
     ctrlKey = false,
@@ -125,16 +125,16 @@ export const useHotkey = (
         handler();
       }
     },
-    [key, handler, ctrlKey, altKey, shiftKey, metaKey, enabled],
+    [key, handler, ctrlKey, altKey, shiftKey, metaKey, enabled]
   );
 
   useEffect(() => {
     if (!enabled) return;
 
-    document.addEventListener("keydown", handleHotkey);
+    document.addEventListener('keydown', handleHotkey);
 
     return () => {
-      document.removeEventListener("keydown", handleHotkey);
+      document.removeEventListener('keydown', handleHotkey);
     };
   }, [handleHotkey, enabled]);
 };

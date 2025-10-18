@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { authorize } from "@/lib/auth/authorize";
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+import { authorize } from '@/lib/auth/authorize';
 
 interface TimeSlot {
   time: string;
@@ -13,18 +13,18 @@ export async function GET(request: NextRequest) {
     const { user, error: authError } = await authorize(request);
 
     if (authError || !user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const { searchParams } = new URL(request.url);
-    const doctorId = searchParams.get("doctorId");
-    const date = searchParams.get("date");
-    const speciality = searchParams.get("speciality");
+    const doctorId = searchParams.get('doctorId');
+    const date = searchParams.get('date');
+    const speciality = searchParams.get('speciality');
 
     if (!date) {
       return NextResponse.json(
-        { error: "Date parameter is required" },
-        { status: 400 },
+        { error: 'Date parameter is required' },
+        { status: 400 }
       );
     }
 
@@ -32,30 +32,30 @@ export async function GET(request: NextRequest) {
 
     // Get available doctors
     let query = supabase
-      .from("doctors")
+      .from('doctors')
       .select(
         `
         id,
         speciality,
         schedule,
         users!inner(email)
-      `,
+      `
       )
-      .eq("status", "active");
+      .eq('status', 'active');
 
     if (doctorId) {
-      query = query.eq("id", doctorId);
+      query = query.eq('id', doctorId);
     }
     if (speciality) {
-      query = query.eq("speciality", speciality);
+      query = query.eq('speciality', speciality);
     }
 
     const { data: doctors, error: doctorsError } = await query;
 
     if (doctorsError) {
       return NextResponse.json(
-        { error: "Failed to fetch doctors" },
-        { status: 500 },
+        { error: 'Failed to fetch doctors' },
+        { status: 500 }
       );
     }
 
@@ -66,26 +66,26 @@ export async function GET(request: NextRequest) {
     endOfDay.setHours(23, 59, 59, 999);
 
     const { data: appointments, error: appointmentsError } = await supabase
-      .from("appointments")
-      .select("doctor_id, scheduled_at, status")
-      .gte("scheduled_at", startOfDay.toISOString())
-      .lte("scheduled_at", endOfDay.toISOString())
-      .in("status", ["pending", "confirmed", "in_progress"]);
+      .from('appointments')
+      .select('doctor_id, scheduled_at, status')
+      .gte('scheduled_at', startOfDay.toISOString())
+      .lte('scheduled_at', endOfDay.toISOString())
+      .in('status', ['pending', 'confirmed', 'in_progress']);
 
     if (appointmentsError) {
       return NextResponse.json(
-        { error: "Failed to fetch appointments" },
-        { status: 500 },
+        { error: 'Failed to fetch appointments' },
+        { status: 500 }
       );
     }
 
     // Generate available time slots for each doctor
     const availableSlots =
-      doctors?.map((doctor) => {
+      doctors?.map(doctor => {
         const schedule = doctor.schedule || {};
         const workingHours = schedule.workingHours || {
-          start: "09:00",
-          end: "17:00",
+          start: '09:00',
+          end: '17:00',
         };
         const breaks = schedule.breaks || [];
         const slotDuration = 30; // 30 minutes per slot
@@ -93,12 +93,12 @@ export async function GET(request: NextRequest) {
         const slots: TimeSlot[] = [];
         const startTime = new Date(date);
         const [startHour, startMinute] = workingHours.start
-          .split(":")
+          .split(':')
           .map(Number);
         startTime.setHours(startHour, startMinute, 0, 0);
 
         const endTime = new Date(date);
-        const [endHour, endMinute] = workingHours.end.split(":").map(Number);
+        const [endHour, endMinute] = workingHours.end.split(':').map(Number);
         endTime.setHours(endHour, endMinute, 0, 0);
 
         // Generate time slots
@@ -114,13 +114,13 @@ export async function GET(request: NextRequest) {
           const isBreakTime = breaks.some((breakTime: any) => {
             const breakStart = new Date(date);
             const [breakStartHour, breakStartMinute] = breakTime.start
-              .split(":")
+              .split(':')
               .map(Number);
             breakStart.setHours(breakStartHour, breakStartMinute, 0, 0);
 
             const breakEnd = new Date(date);
             const [breakEndHour, breakEndMinute] = breakTime.end
-              .split(":")
+              .split(':')
               .map(Number);
             breakEnd.setHours(breakEndHour, breakEndMinute, 0, 0);
 
@@ -129,9 +129,9 @@ export async function GET(request: NextRequest) {
 
           // Check if slot is already booked
           const isBooked = appointments?.some(
-            (apt) =>
+            apt =>
               apt.doctor_id === doctor.id &&
-              new Date(apt.scheduled_at).getTime() === time.getTime(),
+              new Date(apt.scheduled_at).getTime() === time.getTime()
           );
 
           if (!isBreakTime && !isBooked) {
@@ -157,8 +157,8 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }

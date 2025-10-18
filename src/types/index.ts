@@ -3,7 +3,7 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  role: "admin" | "user" | "moderator";
+  role: 'admin' | 'user' | 'moderator';
   avatar?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -13,7 +13,7 @@ export interface Channel {
   id: string;
   name: string;
   description?: string;
-  type: "public" | "private" | "direct";
+  type: 'public' | 'private' | 'direct';
   members: string[];
   createdAt: Date;
   updatedAt: Date;
@@ -49,7 +49,7 @@ export interface PaginationParams {
   page: number;
   limit: number;
   sortBy?: string;
-  sortOrder?: "asc" | "desc";
+  sortOrder?: 'asc' | 'desc';
 }
 
 export interface PaginatedResponse<T> extends ApiResponse<T[]> {
@@ -68,15 +68,15 @@ export interface BaseComponentProps {
 }
 
 export interface ButtonProps extends BaseComponentProps {
-  variant?: "primary" | "secondary" | "danger" | "ghost";
-  size?: "sm" | "md" | "lg";
+  variant?: 'primary' | 'secondary' | 'danger' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
   loading?: boolean;
   onClick?: () => void;
 }
 
 export interface InputProps extends BaseComponentProps {
-  type?: "text" | "email" | "password" | "number";
+  type?: 'text' | 'email' | 'password' | 'number';
   placeholder?: string;
   value?: string;
   onChange?: (value: string) => void;
@@ -104,7 +104,7 @@ export interface ChartData {
 
 // Settings Types
 export interface AppSettings {
-  theme: "light" | "dark" | "system";
+  theme: 'light' | 'dark' | 'system';
   language: string;
   notifications: {
     email: boolean;

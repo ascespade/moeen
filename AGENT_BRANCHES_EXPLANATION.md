@@ -86,17 +86,17 @@ Agent 1 (أنا):      Agent 2 (الآخر):
 
 ## 📊 المقارنة
 
-| Feature | Agent 1 (أنا) | Agent 2 (الآخر) |
-|---------|--------------|-----------------|
-| TypeScript errors | 0 ✅ | Unknown |
-| ESLint warnings | 0 ✅ | Unknown |
-| UI refactor | ✅ Complete | ❌ Not done |
-| Mock data removal | ❌ Not done | ✅ Complete |
-| DB connection | ❌ Not changed | ✅ All APIs connected |
-| Dashboards | ❌ No dashboards | ✅ 4 dashboards |
-| Design tokens | ✅ Complete | ❌ Not done |
-| Component library | ✅ Complete | ❌ Not done |
-| Husky | ✅ Setup | ✅ Already had it |
+| Feature           | Agent 1 (أنا)    | Agent 2 (الآخر)       |
+| ----------------- | ---------------- | --------------------- |
+| TypeScript errors | 0 ✅             | Unknown               |
+| ESLint warnings   | 0 ✅             | Unknown               |
+| UI refactor       | ✅ Complete      | ❌ Not done           |
+| Mock data removal | ❌ Not done      | ✅ Complete           |
+| DB connection     | ❌ Not changed   | ✅ All APIs connected |
+| Dashboards        | ❌ No dashboards | ✅ 4 dashboards       |
+| Design tokens     | ✅ Complete      | ❌ Not done           |
+| Component library | ✅ Complete      | ❌ Not done           |
+| Husky             | ✅ Setup         | ✅ Already had it     |
 
 ---
 

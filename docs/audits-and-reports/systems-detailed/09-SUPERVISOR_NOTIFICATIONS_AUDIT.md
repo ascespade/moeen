@@ -10,7 +10,9 @@
 ## 📋 نظرة عامة (Overview)
 
 ### الغرض:
+
 نظام إشعارات متقدم للمشرفين لمراقبة وإدارة العمليات اليومية في مركز الهمم. يوفر:
+
 - إشعارات فورية للأحداث المهمة
 - تنبيهات للمشاكل
 - ملخصات يومية
@@ -18,6 +20,7 @@
 - إشعارات الطوارئ
 
 ### السياق (من طلب المستخدم):
+
 ```
 "طريقة اشعار المشرف لو المتحدث عالواتساب طلب مكالمه..
 هل في طريقه مجانيه نوصله رساله او اشعار او واتساب
@@ -25,6 +28,7 @@
 ```
 
 ### الحالات التي تحتاج إشعار المشرف:
+
 ```
 🔴 طوارئ (Emergency):
    - طلب مكالمة عاجلة من المريض
@@ -51,6 +55,7 @@
 ### الجداول الموجودة:
 
 #### `notifications` (في Family Communication):
+
 ```sql
 -- جدول موجود لكن عام
 CREATE TABLE notifications (
@@ -65,6 +70,7 @@ CREATE TABLE notifications (
 ```
 
 ### الملفات الموجودة:
+
 ```
 src/lib/whatsapp-business-api.ts (416 lines) ✅
 src/lib/notifications/sms.ts (151 lines) ✅
@@ -75,12 +81,14 @@ src/lib/notifications/sms.ts (151 lines) ✅
 ## ✅ ما تم تنفيذه (Implemented)
 
 ### 1. جدول Notifications عام ✅
+
 ```
 ✅ يمكن استخدامه للإشعارات
 ✅ ربط مع المستخدمين
 ```
 
 ### 2. WhatsApp & SMS Infrastructure ✅
+
 ```
 ✅ يمكن إرسال رسائل WhatsApp
 ✅ يمكن إرسال SMS
@@ -93,6 +101,7 @@ src/lib/notifications/sms.ts (151 lines) ✅
 ### 1. لا يوجد نظام إشعارات متقدم للمشرفين 🔴
 
 **المشكلة**:
+
 ```
 ❌ لا يوجد notification_rules (قواعد الإشعارات)
 ❌ لا يوجد priority levels
@@ -121,18 +130,18 @@ CREATE TABLE supervisor_notification_preferences (
   sms_enabled BOOLEAN DEFAULT true,
   email_enabled BOOLEAN DEFAULT true,
   push_enabled BOOLEAN DEFAULT true,
-  
+
   -- أنواع الإشعارات
   emergency_alerts BOOLEAN DEFAULT true,
   session_alerts BOOLEAN DEFAULT true,
   insurance_alerts BOOLEAN DEFAULT true,
   daily_summary BOOLEAN DEFAULT true,
   weekly_report BOOLEAN DEFAULT true,
-  
+
   -- أوقات الإشعارات
   quiet_hours_start TIME, -- مثلاً 22:00 (10 PM)
   quiet_hours_end TIME,   -- مثلاً 07:00 (7 AM)
-  
+
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -158,6 +167,7 @@ CREATE TABLE notification_logs (
 ### 2. لا يوجد Chatbot Call Request Handler 🔴
 
 **المشكلة** (من طلب المستخدم):
+
 ```
 ❌ لو المتحدث على الواتساب طلب مكالمة، لا يوجد نظام لإشعار المشرف
 ❌ لا يوجد زر "طلب مكالمة" في الشاتبوت
@@ -170,7 +180,7 @@ CREATE TABLE notification_logs (
 <ChatWindow>
   {/* زر طلب مكالمة */}
   <QuickActions>
-    <ActionButton 
+    <ActionButton
       icon="📞"
       label="طلب مكالمة عاجلة"
       onClick={async () => {
@@ -181,10 +191,10 @@ CREATE TABLE notification_logs (
           priority: 'high',
           created_at: new Date(),
         });
-        
+
         // 2. Find available supervisor
         const supervisor = await getOnDutySupervisor();
-        
+
         // 3. Send WhatsApp to supervisor (مجاني!)
         await sendWhatsAppToSupervisor(supervisor.phone, {
           title: '🔴 طلب مكالمة عاجلة',
@@ -193,12 +203,12 @@ CREATE TABLE notification_logs (
           phone: user.phone,
           link: `${baseUrl}/supervisor/calls/${request.id}`,
         });
-        
+
         // 4. Send SMS backup (if WhatsApp fails)
-        await sendSMS(supervisor.phone, 
+        await sendSMS(supervisor.phone,
           `طلب مكالمة عاجلة من ${user.name}. رقم الجوال: ${user.phone}`
         );
-        
+
         // 5. In-app notification
         await createNotification({
           user_id: supervisor.id,
@@ -207,7 +217,7 @@ CREATE TABLE notification_logs (
           title: 'طلب مكالمة عاجلة',
           body: `من: ${user.name}`,
         });
-        
+
         // 6. Show confirmation to user
         addMessage({
           role: 'assistant',
@@ -220,6 +230,7 @@ CREATE TABLE notification_logs (
 ```
 
 **WhatsApp Message Template** (مجاني!):
+
 ```
 🔴 طلب مكالمة عاجلة - مركز الهمم
 
@@ -247,6 +258,7 @@ CREATE TABLE notification_logs (
 ### 3. لا يوجد Real-time Dashboard للمشرف 🟡
 
 **المشكلة**:
+
 ```
 ⚠️  المشرف لا يرى الأحداث في الوقت الفعلي
 ⚠️  لا يوجد live feed للطلبات
@@ -260,29 +272,29 @@ CREATE TABLE notification_logs (
 <SupervisorDashboard>
   {/* Live Feed */}
   <LiveFeed>
-    <RealtimeEvents 
+    <RealtimeEvents
       events={liveEvents}
       onNewEvent={handleNewEvent}
     />
   </LiveFeed>
-  
+
   {/* Urgent Requests */}
   <UrgentRequests>
     <CallRequests requests={callRequests} />
     <CancelledSessions sessions={cancelled} />
     <InsuranceIssues issues={insuranceIssues} />
   </UrgentRequests>
-  
+
   {/* Today's Summary */}
   <TodaySummary>
     <StatCard title="الجلسات اليوم" value={stats.sessions} />
     <StatCard title="الحضور" value={stats.attendance} />
     <StatCard title="الإلغاءات" value={stats.cancellations} />
   </TodaySummary>
-  
+
   {/* Notifications Panel */}
   <NotificationsPanel>
-    <NotificationsList 
+    <NotificationsList
       notifications={notifications}
       onMarkAsRead={markAsRead}
       onRespond={handleRespond}
@@ -313,6 +325,7 @@ const channel = supabase
 ### 4. لا يوجد Escalation System 🟡
 
 **المشكلة**:
+
 ```
 ⚠️  إذا لم يرد المشرف خلال X دقائق، ماذا يحدث؟
 ⚠️  لا يوجد تصعيد تلقائي
@@ -322,17 +335,17 @@ const channel = supabase
 
 ```typescript
 // Escalation logic
-const handleCallRequest = async (request) => {
+const handleCallRequest = async request => {
   // 1. Send to primary supervisor
   const primary = await getPrimarySupervisor();
   await notifySupervisor(primary, request);
-  
+
   // 2. Wait 5 minutes
   await sleep(5 * 60 * 1000);
-  
+
   // 3. Check if acknowledged
   const acknowledged = await isRequestAcknowledged(request.id);
-  
+
   if (!acknowledged) {
     // 4. Escalate to backup supervisor
     const backup = await getBackupSupervisor();
@@ -340,12 +353,12 @@ const handleCallRequest = async (request) => {
       escalated: true,
       reason: 'Primary supervisor did not respond',
     });
-    
+
     // 5. Wait another 5 minutes
     await sleep(5 * 60 * 1000);
-    
+
     const stillNotAcknowledged = await isRequestAcknowledged(request.id);
-    
+
     if (stillNotAcknowledged) {
       // 6. Escalate to admin
       const admin = await getAdmin();
@@ -366,6 +379,7 @@ const handleCallRequest = async (request) => {
 ### 5. لا توجد Daily/Weekly Summaries 🟡
 
 **المشكلة**:
+
 ```
 ⚠️  المشرف لا يتلقى ملخص يومي/أسبوعي
 ⚠️  لا توجد تقارير تلقائية
@@ -377,16 +391,18 @@ const handleCallRequest = async (request) => {
 // Cron job - يومياً 8 صباحاً
 const sendDailySummary = async () => {
   const supervisors = await getSupervisors();
-  
+
   for (const supervisor of supervisors) {
     // Check preferences
     if (!supervisor.preferences.daily_summary) continue;
-    
+
     // Generate summary
     const summary = await generateDailySummary(new Date());
-    
+
     // Send via WhatsApp (مجاني!)
-    await sendWhatsApp(supervisor.phone, `
+    await sendWhatsApp(
+      supervisor.phone,
+      `
 📊 ملخص يوم ${formatDate(new Date())} - مركز الهمم
 
 ✅ الجلسات: ${summary.sessions_count}
@@ -402,7 +418,8 @@ ${summary.pending_issues.map(i => `- ${i}`).join('\n')}
 
 ---
 نظام معين
-    `);
+    `
+    );
   }
 };
 
@@ -421,17 +438,18 @@ const sendWeeklySummary = async () => {
 
 ### النتيجة الإجمالية: **30/100** 🔴
 
-| المعيار | النقاط | الوزن | الإجمالي |
-|---------|--------|-------|----------|
-| **Infrastructure** | 60/100 | 25% | 15 |
-| **Call Request System** | 0/100 | 35% | 0 |
-| **Dashboard** | 20/100 | 25% | 5 |
-| **Automation** | 30/100 | 15% | 4.5 |
-| **المجموع** | - | - | **24.5** |
+| المعيار                 | النقاط | الوزن | الإجمالي |
+| ----------------------- | ------ | ----- | -------- |
+| **Infrastructure**      | 60/100 | 25%   | 15       |
+| **Call Request System** | 0/100  | 35%   | 0        |
+| **Dashboard**           | 20/100 | 25%   | 5        |
+| **Automation**          | 30/100 | 15%   | 4.5      |
+| **المجموع**             | -      | -     | **24.5** |
 
 ### التفصيل:
 
 #### Infrastructure: 60/100
+
 ```
 ✅ WhatsApp API: 100
 ✅ SMS service: 100
@@ -442,6 +460,7 @@ Average: 60
 ```
 
 #### Call Request System: 0/100
+
 ```
 ❌ Call request handler: 0
 ❌ Supervisor notification: 0
@@ -451,6 +470,7 @@ Average: 0
 ```
 
 #### Dashboard: 20/100
+
 ```
 ❌ Real-time feed: 0
 ❌ Urgent requests panel: 0
@@ -460,6 +480,7 @@ Average: 20
 ```
 
 #### Automation: 30/100
+
 ```
 ❌ Daily summaries: 0
 ❌ Weekly reports: 0
@@ -475,6 +496,7 @@ Average: 30
 ### Phase 1: Call Request System (Critical) 🔴
 
 #### Task 1: Call Request Handler (6-8h)
+
 ```typescript
 ✅ زر "طلب مكالمة" في الشاتبوت
 ✅ جدول call_requests
@@ -484,6 +506,7 @@ Average: 30
 ```
 
 #### Task 2: Notification Rules (8-10h)
+
 ```sql
 ✅ جداول notification_rules
 ✅ supervisor_notification_preferences
@@ -492,6 +515,7 @@ Average: 30
 ```
 
 #### Task 3: Supervisor Response Flow (4-6h)
+
 ```typescript
 ✅ واجهة للمشرف للرد على الطلبات
 ✅ Acknowledge request
@@ -507,6 +531,7 @@ Average: 30
 ### Phase 2: Dashboard & Automation (Optional) 🟢
 
 #### Task 4: Real-time Dashboard (12-16h)
+
 ```typescript
 ✅ Supervisor dashboard page
 ✅ Live feed (Supabase Realtime)
@@ -515,6 +540,7 @@ Average: 30
 ```
 
 #### Task 5: Summaries & Reports (6-8h)
+
 ```typescript
 ✅ Daily summary cron job
 ✅ Weekly report
@@ -523,6 +549,7 @@ Average: 30
 ```
 
 #### Task 6: Escalation System (6-8h)
+
 ```typescript
 ✅ Escalation logic
 ✅ Timeout handling
@@ -538,6 +565,7 @@ Average: 30
 ## 💰 التكلفة (Cost Analysis)
 
 ### WhatsApp Business API:
+
 ```
 Free Tier: 1000 messages/month ✅
 
@@ -553,6 +581,7 @@ Status: ✅ FREE (within limits)
 ```
 
 ### SMS (Backup only):
+
 ```
 Twilio:
 - Free trial: $15 credit
@@ -571,6 +600,7 @@ Cost: ~$0.50-1.00/month
 ## 🔒 الأمان والخصوصية
 
 ### ✅ ما يجب تطبيقه:
+
 ```
 ✅ فقط supervisors/admins يتلقون الإشعارات
 ✅ تشفير أرقام الهواتف
@@ -595,6 +625,7 @@ Cost: ~$0.50-1.00/month
 ## 🎓 التوصيات (Recommendations)
 
 ### للإطلاق الفوري (Must Have):
+
 ```
 1. 🔴 Call Request System
 2. 🔴 WhatsApp notifications للمشرف
@@ -602,6 +633,7 @@ Cost: ~$0.50-1.00/month
 ```
 
 ### للمستقبل (Nice to Have):
+
 ```
 4. 🟢 Real-time dashboard
 5. 🟢 Daily/Weekly summaries
@@ -616,15 +648,18 @@ Cost: ~$0.50-1.00/month
 ### الحالة: **30% - يحتاج تطوير** 🔴
 
 **نقاط القوة**:
+
 - ✅ WhatsApp & SMS infrastructure جاهزة
 - ✅ التكلفة منخفضة جداً ($0-1/month)
 
 **ما ينقص (Critical)**:
+
 - 🔴 Call request system
 - 🔴 Supervisor notifications
 - 🔴 Notification rules & preferences
 
 **الخطة**:
+
 - 🔴 Phase 1: Call requests (18-24h) → 60%
 - 🟢 Phase 2: Dashboard & automation (24-32h) → 85%
 
@@ -653,7 +688,7 @@ Result: مشكلة محلولة 100% ✅
 
 ---
 
-*Audit Date: 2025-10-17*  
-*System: Supervisor Notifications*  
-*Status: ⚠️  Needs Development - High Value*  
-*Special Note: يحل مشكلة حقيقية ذكرها العميل*
+_Audit Date: 2025-10-17_  
+_System: Supervisor Notifications_  
+_Status: ⚠️ Needs Development - High Value_  
+_Special Note: يحل مشكلة حقيقية ذكرها العميل_

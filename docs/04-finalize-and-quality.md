@@ -434,27 +434,27 @@ export class PerformanceMonitor {
   }
 
   measurePageLoad(): void {
-    if (typeof window !== "undefined") {
-      window.addEventListener("load", () => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('load', () => {
         const navigation = performance.getEntriesByType(
-          "navigation",
+          'navigation'
         )[0] as PerformanceNavigationTiming;
         const loadTime = navigation.loadEventEnd - navigation.fetchStart;
 
         console.log(`Page load time: ${loadTime}ms`);
 
         // Send to analytics
-        this.sendMetric("page_load_time", loadTime);
+        this.sendMetric('page_load_time', loadTime);
       });
     }
   }
 
   private sendMetric(name: string, value: number): void {
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === 'production') {
       // Send to analytics service
-      fetch("/api/analytics/metrics", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      fetch('/api/analytics/metrics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, value, timestamp: Date.now() }),
       }).catch(console.error);
     }
@@ -467,7 +467,7 @@ export function usePerformance() {
 
   const measureAsync = async <T>(
     label: string,
-    fn: () => Promise<T>,
+    fn: () => Promise<T>
   ): Promise<T> => {
     monitor.startTiming(label);
     try {
@@ -504,26 +504,26 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: "/(.*)",
+        source: '/(.*)',
         headers: [
           {
-            key: "X-Frame-Options",
-            value: "DENY",
+            key: 'X-Frame-Options',
+            value: 'DENY',
           },
           {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
           },
           {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
           },
           {
-            key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=()",
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()',
           },
           {
-            key: "Content-Security-Policy",
+            key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
@@ -532,7 +532,7 @@ const nextConfig = {
               "font-src 'self'",
               "connect-src 'self' https://api.supabase.co",
               "frame-ancestors 'none'",
-            ].join("; "),
+            ].join('; '),
           },
         ],
       },
@@ -541,8 +541,8 @@ const nextConfig = {
 
   // Image optimization
   images: {
-    domains: ["localhost", "your-domain.com"],
-    formats: ["image/webp", "image/avif"],
+    domains: ['localhost', 'your-domain.com'],
+    formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: false,
   },
@@ -551,12 +551,12 @@ const nextConfig = {
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
-        chunks: "all",
+        chunks: 'all',
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
-            name: "vendors",
-            chunks: "all",
+            name: 'vendors',
+            chunks: 'all',
           },
         },
       };
@@ -572,7 +572,7 @@ module.exports = nextConfig;
 
 ```typescript
 // src/lib/rate-limiter.ts
-import { NextRequest } from "next/server";
+import { NextRequest } from 'next/server';
 
 interface RateLimitConfig {
   windowMs: number;
@@ -647,33 +647,33 @@ export const apiRateLimiter = new RateLimiter({
 
 // src/middleware.ts - Enhanced with rate limiting
 export async function middleware(request: NextRequest) {
-  const ip = request.ip || request.headers.get("x-forwarded-for") || "unknown";
+  const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
 
   // Rate limiting for auth endpoints
-  if (request.nextUrl.pathname.startsWith("/api/auth/")) {
+  if (request.nextUrl.pathname.startsWith('/api/auth/')) {
     if (!authRateLimiter.isAllowed(ip)) {
       return NextResponse.json(
-        { error: "Too many authentication attempts" },
-        { status: 429 },
+        { error: 'Too many authentication attempts' },
+        { status: 429 }
       );
     }
   }
 
   // Rate limiting for API endpoints
-  if (request.nextUrl.pathname.startsWith("/api/")) {
+  if (request.nextUrl.pathname.startsWith('/api/')) {
     if (!apiRateLimiter.isAllowed(ip)) {
       return NextResponse.json(
-        { error: "Rate limit exceeded" },
+        { error: 'Rate limit exceeded' },
         {
           status: 429,
           headers: {
-            "X-RateLimit-Limit": "100",
-            "X-RateLimit-Remaining": apiRateLimiter
+            'X-RateLimit-Limit': '100',
+            'X-RateLimit-Remaining': apiRateLimiter
               .getRemainingRequests(ip)
               .toString(),
-            "X-RateLimit-Reset": apiRateLimiter.getResetTime(ip).toString(),
+            'X-RateLimit-Reset': apiRateLimiter.getResetTime(ip).toString(),
           },
-        },
+        }
       );
     }
   }
@@ -686,20 +686,20 @@ export async function middleware(request: NextRequest) {
 
 ```typescript
 // src/lib/validation.ts - Enhanced validation
-import { z } from "zod";
-import DOMPurify from "isomorphic-dompurify";
+import { z } from 'zod';
+import DOMPurify from 'isomorphic-dompurify';
 
 // Sanitization helpers
 export function sanitizeHtml(html: string): string {
   return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: ["b", "i", "em", "strong", "p", "br"],
+    ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'p', 'br'],
     ALLOWED_ATTR: [],
   });
 }
 
 export function sanitizeText(text: string): string {
   return text
-    .replace(/[<>]/g, "") // Remove potential HTML tags
+    .replace(/[<>]/g, '') // Remove potential HTML tags
     .trim()
     .slice(0, 1000); // Limit length
 }
@@ -711,73 +711,73 @@ export const validationSchemas = {
   patient: z.object({
     full_name: z
       .string()
-      .min(2, "Name must be at least 2 characters")
-      .max(100, "Name must be less than 100 characters")
+      .min(2, 'Name must be at least 2 characters')
+      .max(100, 'Name must be less than 100 characters')
       .transform(sanitizeText),
     email: z
       .string()
-      .email("Invalid email format")
+      .email('Invalid email format')
       .optional()
-      .transform((email) => (email ? email.toLowerCase().trim() : undefined)),
+      .transform(email => (email ? email.toLowerCase().trim() : undefined)),
     phone: z
       .string()
-      .regex(/^[\+]?[1-9][\d]{0,15}$/, "Invalid phone number format")
-      .min(10, "Phone number must be at least 10 digits"),
+      .regex(/^[\+]?[1-9][\d]{0,15}$/, 'Invalid phone number format')
+      .min(10, 'Phone number must be at least 10 digits'),
     date_of_birth: z
       .string()
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format")
-      .refine((date) => {
+      .regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format')
+      .refine(date => {
         const birthDate = new Date(date);
         const today = new Date();
         const age = today.getFullYear() - birthDate.getFullYear();
         return age >= 0 && age <= 150;
-      }, "Invalid birth date"),
-    gender: z.enum(["male", "female", "other"]).optional(),
+      }, 'Invalid birth date'),
+    gender: z.enum(['male', 'female', 'other']).optional(),
     address: z
       .string()
-      .max(500, "Address must be less than 500 characters")
+      .max(500, 'Address must be less than 500 characters')
       .optional()
-      .transform((addr) => (addr ? sanitizeText(addr) : undefined)),
+      .transform(addr => (addr ? sanitizeText(addr) : undefined)),
     medical_history: z
       .string()
-      .max(2000, "Medical history must be less than 2000 characters")
+      .max(2000, 'Medical history must be less than 2000 characters')
       .optional()
-      .transform((history) => (history ? sanitizeHtml(history) : undefined)),
+      .transform(history => (history ? sanitizeHtml(history) : undefined)),
     allergies: z
       .string()
-      .max(1000, "Allergies must be less than 1000 characters")
+      .max(1000, 'Allergies must be less than 1000 characters')
       .optional()
-      .transform((allergies) =>
-        allergies ? sanitizeText(allergies) : undefined,
+      .transform(allergies =>
+        allergies ? sanitizeText(allergies) : undefined
       ),
   }),
 
   appointment: z.object({
-    patient_id: z.string().uuid("Invalid patient ID"),
-    doctor_id: z.string().uuid("Invalid doctor ID"),
+    patient_id: z.string().uuid('Invalid patient ID'),
+    doctor_id: z.string().uuid('Invalid doctor ID'),
     appointment_date: z
       .string()
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format")
-      .refine((date) => {
+      .regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format')
+      .refine(date => {
         const appointmentDate = new Date(date);
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         return appointmentDate >= today;
-      }, "Appointment date cannot be in the past"),
+      }, 'Appointment date cannot be in the past'),
     appointment_time: z
       .string()
-      .regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
+      .regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Invalid time format'),
     duration_minutes: z
       .number()
-      .int("Duration must be an integer")
-      .min(15, "Minimum appointment duration is 15 minutes")
-      .max(480, "Maximum appointment duration is 8 hours"),
-    type: z.enum(["consultation", "follow_up", "emergency"]).optional(),
+      .int('Duration must be an integer')
+      .min(15, 'Minimum appointment duration is 15 minutes')
+      .max(480, 'Maximum appointment duration is 8 hours'),
+    type: z.enum(['consultation', 'follow_up', 'emergency']).optional(),
     notes: z
       .string()
-      .max(1000, "Notes must be less than 1000 characters")
+      .max(1000, 'Notes must be less than 1000 characters')
       .optional()
-      .transform((notes) => (notes ? sanitizeText(notes) : undefined)),
+      .transform(notes => (notes ? sanitizeText(notes) : undefined)),
   }),
 
   // ... other enhanced schemas
@@ -792,7 +792,7 @@ export function validateRequest<T>(schema: z.ZodSchema<T>) {
     } catch (error) {
       if (error instanceof z.ZodError) {
         throw new Error(
-          `Validation error: ${error.errors.map((e) => e.message).join(", ")}`,
+          `Validation error: ${error.errors.map(e => e.message).join(', ')}`
         );
       }
       throw error;
@@ -964,7 +964,7 @@ export async function GET() {
 
     return NextResponse.json(
       {
-        status: isHealthy ? "healthy" : "unhealthy",
+        status: isHealthy ? 'healthy' : 'unhealthy',
         timestamp: new Date().toISOString(),
         checks: {
           database: dbHealth,
@@ -974,16 +974,16 @@ export async function GET() {
       },
       {
         status: isHealthy ? 200 : 503,
-      },
+      }
     );
   } catch (error) {
     return NextResponse.json(
       {
-        status: "unhealthy",
+        status: 'unhealthy',
         timestamp: new Date().toISOString(),
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
-      { status: 503 },
+      { status: 503 }
     );
   }
 }
@@ -991,8 +991,8 @@ export async function GET() {
 async function checkDatabaseHealth(): Promise<boolean> {
   try {
     const { data, error } = await supabase
-      .from("users")
-      .select("count")
+      .from('users')
+      .select('count')
       .limit(1);
 
     return !error;
@@ -1010,8 +1010,8 @@ async function checkExternalServices(): Promise<boolean> {
         headers: {
           apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
         },
-      },
-    ).then((res) => res.ok);
+      }
+    ).then(res => res.ok);
 
     return supabaseHealth;
   } catch {
@@ -1070,19 +1070,19 @@ module.exports = {
 
 ```typescript
 // tests/lighthouse/lighthouse.test.ts
-import { test, expect } from "@playwright/test";
-import { playAudit } from "playwright-lh";
+import { test, expect } from '@playwright/test';
+import { playAudit } from 'playwright-lh';
 
-test.describe("Lighthouse Performance Tests", () => {
-  test("Homepage should pass Lighthouse audit", async ({ page }) => {
-    await page.goto("/");
+test.describe('Lighthouse Performance Tests', () => {
+  test('Homepage should pass Lighthouse audit', async ({ page }) => {
+    await page.goto('/');
 
     const audit = await playAudit({
       page,
       thresholds: {
         performance: 90,
         accessibility: 90,
-        "best-practices": 90,
+        'best-practices': 90,
         seo: 90,
       },
       port: 9222,
@@ -1090,24 +1090,24 @@ test.describe("Lighthouse Performance Tests", () => {
 
     expect(audit.lhr.categories.performance.score).toBeGreaterThan(0.9);
     expect(audit.lhr.categories.accessibility.score).toBeGreaterThan(0.9);
-    expect(audit.lhr.categories["best-practices"].score).toBeGreaterThan(0.9);
+    expect(audit.lhr.categories['best-practices'].score).toBeGreaterThan(0.9);
     expect(audit.lhr.categories.seo.score).toBeGreaterThan(0.9);
   });
 
-  test("Dashboard should pass Lighthouse audit", async ({ page }) => {
+  test('Dashboard should pass Lighthouse audit', async ({ page }) => {
     // Login first
-    await page.goto("/login");
-    await page.fill('[data-testid="email"]', "admin@example.com");
-    await page.fill('[data-testid="password"]', "password");
+    await page.goto('/login');
+    await page.fill('[data-testid="email"]', 'admin@example.com');
+    await page.fill('[data-testid="password"]', 'password');
     await page.click('[data-testid="login-button"]');
-    await page.waitForURL("/dashboard");
+    await page.waitForURL('/dashboard');
 
     const audit = await playAudit({
       page,
       thresholds: {
         performance: 85,
         accessibility: 90,
-        "best-practices": 90,
+        'best-practices': 90,
         seo: 85,
       },
       port: 9222,
@@ -1123,45 +1123,45 @@ test.describe("Lighthouse Performance Tests", () => {
 
 ```typescript
 // tests/accessibility/accessibility.test.ts
-import { test, expect } from "@playwright/test";
-import AxeBuilder from "@axe-core/playwright";
+import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
 
-test.describe("Accessibility Tests", () => {
-  test("Homepage should not have accessibility violations", async ({
+test.describe('Accessibility Tests', () => {
+  test('Homepage should not have accessibility violations', async ({
     page,
   }) => {
-    await page.goto("/");
+    await page.goto('/');
 
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
   });
 
-  test("Dashboard should not have accessibility violations", async ({
+  test('Dashboard should not have accessibility violations', async ({
     page,
   }) => {
-    await page.goto("/login");
-    await page.fill('[data-testid="email"]', "admin@example.com");
-    await page.fill('[data-testid="password"]', "password");
+    await page.goto('/login');
+    await page.fill('[data-testid="email"]', 'admin@example.com');
+    await page.fill('[data-testid="password"]', 'password');
     await page.click('[data-testid="login-button"]');
-    await page.waitForURL("/dashboard");
+    await page.waitForURL('/dashboard');
 
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
   });
 
-  test("Forms should be keyboard navigable", async ({ page }) => {
-    await page.goto("/register");
+  test('Forms should be keyboard navigable', async ({ page }) => {
+    await page.goto('/register');
 
     // Test tab navigation
-    await page.keyboard.press("Tab");
+    await page.keyboard.press('Tab');
     await expect(page.locator('[data-testid="full-name"]')).toBeFocused();
 
-    await page.keyboard.press("Tab");
+    await page.keyboard.press('Tab');
     await expect(page.locator('[data-testid="email"]')).toBeFocused();
 
-    await page.keyboard.press("Tab");
+    await page.keyboard.press('Tab');
     await expect(page.locator('[data-testid="password"]')).toBeFocused();
   });
 });
@@ -1171,44 +1171,44 @@ test.describe("Accessibility Tests", () => {
 
 ```typescript
 // tests/performance/performance.test.ts
-import { test, expect } from "@playwright/test";
+import { test, expect } from '@playwright/test';
 
-test.describe("Performance Tests", () => {
-  test("Homepage should load within 2 seconds", async ({ page }) => {
+test.describe('Performance Tests', () => {
+  test('Homepage should load within 2 seconds', async ({ page }) => {
     const startTime = Date.now();
-    await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
     const loadTime = Date.now() - startTime;
 
     expect(loadTime).toBeLessThan(2000);
   });
 
-  test("Dashboard should load within 3 seconds", async ({ page }) => {
-    await page.goto("/login");
-    await page.fill('[data-testid="email"]', "admin@example.com");
-    await page.fill('[data-testid="password"]', "password");
+  test('Dashboard should load within 3 seconds', async ({ page }) => {
+    await page.goto('/login');
+    await page.fill('[data-testid="email"]', 'admin@example.com');
+    await page.fill('[data-testid="password"]', 'password');
 
     const startTime = Date.now();
     await page.click('[data-testid="login-button"]');
-    await page.waitForURL("/dashboard");
-    await page.waitForLoadState("networkidle");
+    await page.waitForURL('/dashboard');
+    await page.waitForLoadState('networkidle');
     const loadTime = Date.now() - startTime;
 
     expect(loadTime).toBeLessThan(3000);
   });
 
-  test("Images should be optimized", async ({ page }) => {
-    await page.goto("/");
+  test('Images should be optimized', async ({ page }) => {
+    await page.goto('/');
 
-    const images = await page.locator("img").all();
+    const images = await page.locator('img').all();
 
     for (const img of images) {
-      const src = await img.getAttribute("src");
-      if (src && !src.startsWith("data:")) {
+      const src = await img.getAttribute('src');
+      if (src && !src.startsWith('data:')) {
         // Check if image is using Next.js Image component
-        const parent = img.locator("..");
-        const hasNextImageClass = await parent.evaluate((el) =>
-          el.classList.contains("next-image"),
+        const parent = img.locator('..');
+        const hasNextImageClass = await parent.evaluate(el =>
+          el.classList.contains('next-image')
         );
 
         expect(hasNextImageClass).toBeTruthy();

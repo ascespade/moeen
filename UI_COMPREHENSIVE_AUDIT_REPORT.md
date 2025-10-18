@@ -17,9 +17,10 @@
 ```
 
 **نظرة عامة**:
+
 - **155 ملف component** (TSX/JSX)
-- **70 صفحة page** 
-- **6 ملفات CSS** 
+- **70 صفحة page**
+- **6 ملفات CSS**
 - **نظام ألوان متقدم** مع CSS variables
 - **Design system** مركزي موجود
 
@@ -61,19 +62,19 @@
    - src/components/ui/LoadingSpinner.tsx
    - src/components/common/LoadingSpinner.tsx
    - src/components/shared/LoadingSpinner.tsx
-   
+
 2. Skeleton (3 نسخ):
    - src/components/ui/Skeleton.tsx
    - src/components/common/Skeleton.tsx
    (+ استخدامات متعددة)
-   
+
 3. ThemeToggle/ThemeSwitcher (5 نسخ!):
    - src/components/ui/ThemeSwitch.tsx
    - src/components/common/ThemeToggle.tsx
    - src/components/common/ThemeSwitcher.tsx
    - src/components/ThemeSwitcher.tsx
    - src/components/theme/ThemeToggle.tsx
-   
+
 4. Button (2 نسخ):
    - src/components/ui/Button.tsx
    - src/components/shared/AccessibleButton.tsx
@@ -87,7 +88,8 @@
    - src/components/shared/OptimizedImage.tsx
 ```
 
-**التأثير**: 
+**التأثير**:
+
 - 🔴 Maintenance nightmare
 - 🔴 Bundle size inflation
 - 🔴 Inconsistency في UI
@@ -131,7 +133,7 @@
    - bg-blue-500, bg-blue-600
    - text-green-600, text-red-600
    - bg-orange-50, bg-purple-50
-   
+
 2. مثال من src/app/page.tsx:
    {
      color: "text-green-600",     // ❌ hardcoded
@@ -141,14 +143,15 @@
      color: "text-orange-600",    // ❌ hardcoded
      bgColor: "bg-purple-50",     // ❌ hardcoded
    }
-   
+
 3. Inconsistent usage:
    - بعض الملفات تستخدم var(--brand-primary)
    - بعضها يستخدم bg-blue-600
    - بعضها يستخدم #E46C0A مباشرة
 ```
 
-**التأثير**: 
+**التأثير**:
+
 - 🟡 Theme switching لا يعمل على كل العناصر
 - 🟡 Inconsistent brand colors
 - 🟡 Difficult maintenance
@@ -189,15 +192,15 @@
 
 1. بعض الصفحات تستخدم:
    - Card + CardHeader + CardContent
-   
+
 2. بعضها يستخدم:
    - <div className="bg-white rounded-lg shadow">
-   
+
 3. Loading states مختلفة:
    - Some: <LoadingSpinner />
    - Some: <Skeleton />
    - Some: "جاري التحميل..."
-   
+
 4. Button variants inconsistent:
    - Some: <Button variant="primary">
    - Some: <button className="bg-blue-500 text-white px-4 py-2">
@@ -218,7 +221,7 @@
    │   ├── (marketing)/     # Marketing pages
    │   ├── dashboard/       # Dashboards
    │   └── page.tsx         # Home
-   
+
 ✅ Components organized:
    ├── src/components/
    │   ├── ui/              # Base UI components
@@ -227,7 +230,7 @@
    │   ├── dashboard/       # Dashboard specific
    │   ├── auth/            # Auth specific
    │   └── ...
-   
+
 ✅ Styles centralized:
    ├── src/styles/
    │   ├── theme.css
@@ -241,7 +244,7 @@
 ```
 ❌ Component duplication across folders:
 
-ui/          common/       shared/       
+ui/          common/       shared/
 ────────────────────────────────────────
 Button       LoadingSpinner LoadingSpinner
 LoadingSpinner ThemeSwitcher ErrorBoundary
@@ -297,7 +300,7 @@ ThemeSwitch  Skeleton      AccessibleButton
    - SettingsTabs.tsx: 636 lines ⚠️
    - AppointmentManager.tsx: 547 lines ⚠️
    - MoainChatbot.tsx: 533 lines ⚠️
-   
+
    (يجب تقسيمهم لمكونات أصغر)
 
 ⚠️ Inline styles في بعض الأماكن:
@@ -334,7 +337,7 @@ ThemeSwitch  Skeleton      AccessibleButton
    - ds-fade-in
    - ds-slide-in-*
    - ds-scale-in
-   
+
 ✅ RTL support complete:
    - [dir="rtl"] rules
    - Full Arabic support
@@ -498,18 +501,18 @@ ThemeSwitch  Skeleton      AccessibleButton
 
 ### معايير التقييم:
 
-| المعيار | التقييم | النتيجة | الملاحظات |
-|---------|----------|---------|------------|
-| **Component Structure** | 🟡 6/10 | متوسط | تكرار شديد |
-| **Color System** | 🟢 8/10 | جيد | نظام قوي لكن استخدام غير متسق |
-| **Design System** | 🟡 6/10 | متوسط | موجود لكن غير مستخدم |
-| **File Organization** | 🟡 6/10 | متوسط | منظم لكن غير واضح |
-| **Code Quality** | 🟢 8/10 | جيد | نظيف لكن components كبيرة |
-| **Responsiveness** | 🟡 7/10 | جيد | يحتاج testing |
-| **Accessibility** | 🟢 7/10 | جيد | foundation جيدة |
-| **Performance** | 🟡 6/10 | متوسط | تكرار يؤثر على الأداء |
-| **Consistency** | 🔴 5/10 | ضعيف | inconsistent patterns |
-| **Documentation** | 🟡 5/10 | ضعيف | ناقصة |
+| المعيار                 | التقييم | النتيجة | الملاحظات                     |
+| ----------------------- | ------- | ------- | ----------------------------- |
+| **Component Structure** | 🟡 6/10 | متوسط   | تكرار شديد                    |
+| **Color System**        | 🟢 8/10 | جيد     | نظام قوي لكن استخدام غير متسق |
+| **Design System**       | 🟡 6/10 | متوسط   | موجود لكن غير مستخدم          |
+| **File Organization**   | 🟡 6/10 | متوسط   | منظم لكن غير واضح             |
+| **Code Quality**        | 🟢 8/10 | جيد     | نظيف لكن components كبيرة     |
+| **Responsiveness**      | 🟡 7/10 | جيد     | يحتاج testing                 |
+| **Accessibility**       | 🟢 7/10 | جيد     | foundation جيدة               |
+| **Performance**         | 🟡 6/10 | متوسط   | تكرار يؤثر على الأداء         |
+| **Consistency**         | 🔴 5/10 | ضعيف    | inconsistent patterns         |
+| **Documentation**       | 🟡 5/10 | ضعيف    | ناقصة                         |
 
 **المتوسط العام**: 🟡 **6.4/10** - **جيد مع حاجة لتحسينات كبيرة**
 
@@ -523,11 +526,11 @@ ThemeSwitch  Skeleton      AccessibleButton
 1. ❌ تكرار المكونات (5 components مكررة بشكل خطير)
    Impact: High
    Effort: Medium
-   
+
 2. ❌ Inconsistent color usage (30+ file)
    Impact: Medium
    Effort: High
-   
+
 3. ❌ Large components (4 components > 500 lines)
    Impact: Medium
    Effort: High
@@ -539,11 +542,11 @@ ThemeSwitch  Skeleton      AccessibleButton
 4. ⚠️ Design system غير مستخدم
    Impact: Medium
    Effort: Medium
-   
+
 5. ⚠️ Component folder structure غير واضح
    Impact: Low
    Effort: Low
-   
+
 6. ⚠️ Missing documentation
    Impact: Medium
    Effort: Medium
@@ -555,11 +558,11 @@ ThemeSwitch  Skeleton      AccessibleButton
 7. 💡 Accessibility improvements needed
    Impact: Medium
    Effort: Medium
-   
+
 8. 💡 Performance optimizations
    Impact: Low
    Effort: Low
-   
+
 9. 💡 Responsive testing needed
    Impact: Low
    Effort: Medium
@@ -579,7 +582,7 @@ ThemeSwitch  Skeleton      AccessibleButton
 // 1. Keep ONE version of each component in ui/:
 src/components/ui/
   ├── LoadingSpinner.tsx     // ✅ Keep this
-  ├── Skeleton.tsx           // ✅ Keep this  
+  ├── Skeleton.tsx           // ✅ Keep this
   ├── ThemeToggle.tsx        // ✅ Keep this
   ├── Button.tsx             // ✅ Keep this
   └── ...
@@ -604,7 +607,8 @@ import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 ```
 
-**Benefit**: 
+**Benefit**:
+
 - Bundle size: -50-100KB
 - Maintenance: Much easier
 - Consistency: Guaranteed
@@ -616,7 +620,7 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 ```typescript
 // ❌ BEFORE (inconsistent):
 <div className="bg-blue-500">       // hardcoded
-<div className="text-green-600">    // hardcoded  
+<div className="text-green-600">    // hardcoded
 <div className="bg-orange-50">      // hardcoded
 
 // ✅ AFTER (consistent):
@@ -631,6 +635,7 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 ```
 
 **Action Items**:
+
 ```bash
 # 1. Find and replace in all files:
 bg-blue-500     → bg-brand-primary
@@ -642,6 +647,7 @@ bg-*-50         → bg-surface or bg-panel
 ```
 
 **Create utility script**:
+
 ```typescript
 // scripts/fix-colors.ts
 const colorMap = {
@@ -683,6 +689,7 @@ src/components/patients/
 ```
 
 **Do the same for**:
+
 - SettingsTabs.tsx (636 lines)
 - AppointmentManager.tsx (547 lines)
 - MoainChatbot.tsx (533 lines)
@@ -778,22 +785,18 @@ const ALLOWED_CLASSES = [
 1. docs/ui/README.md
    - Overview of UI system
    - When to use what
-   
 2. docs/ui/components.md
    - All components documented
    - Props explained
    - Examples shown
-   
 3. docs/ui/colors.md
    - Color palette
    - Usage guidelines
    - Do's and don'ts
-   
 4. docs/ui/patterns.md
    - Common UI patterns
    - Best practices
    - Anti-patterns
-   
 5. Storybook (optional but highly recommended):
    - Live component playground
    - Visual testing
@@ -858,33 +861,33 @@ npm run build && npm run analyze
 
 ```css
 /* Current: */
---brand-primary: #E46C0A;      /* برتقالي */
---brand-secondary: #6B4E16;    /* بني غامق */
+--brand-primary: #e46c0a; /* برتقالي */
+--brand-secondary: #6b4e16; /* بني غامق */
 
 /* ✅ Suggested additions: */
 
 /* Primary shades for better flexibility: */
---primary-50: #FFF4E6;
---primary-100: #FFE4CC;
---primary-200: #FFD1B3;
---primary-300: #FFBE99;
---primary-400: #FFAA80;
---primary-500: #E46C0A;  /* main */
---primary-600: #CC5F08;
---primary-700: #B35207;
+--primary-50: #fff4e6;
+--primary-100: #ffe4cc;
+--primary-200: #ffd1b3;
+--primary-300: #ffbe99;
+--primary-400: #ffaa80;
+--primary-500: #e46c0a; /* main */
+--primary-600: #cc5f08;
+--primary-700: #b35207;
 --primary-800: #994506;
 --primary-900: #803805;
 
 /* Success shades: */
---success-50: #E6F7F5;
---success-500: #009688;  /* main */
---success-700: #00685D;
+--success-50: #e6f7f5;
+--success-500: #009688; /* main */
+--success-700: #00685d;
 
 /* Better semantic colors: */
---color-info: #0EA5E9;
---color-warning: #F59E0B;
---color-danger: #EF4444;
---color-success: #10B981;
+--color-info: #0ea5e9;
+--color-warning: #f59e0b;
+--color-danger: #ef4444;
+--color-success: #10b981;
 ```
 
 ---
@@ -895,15 +898,15 @@ npm run build && npm run analyze
 /* Current: Good but could be better */
 
 /* ✅ Add type scale: */
---font-size-xs: 0.75rem;    /* 12px */
---font-size-sm: 0.875rem;   /* 14px */
---font-size-base: 1rem;     /* 16px */
---font-size-lg: 1.125rem;   /* 18px */
---font-size-xl: 1.25rem;    /* 20px */
---font-size-2xl: 1.5rem;    /* 24px */
---font-size-3xl: 1.875rem;  /* 30px */
---font-size-4xl: 2.25rem;   /* 36px */
---font-size-5xl: 3rem;      /* 48px */
+--font-size-xs: 0.75rem; /* 12px */
+--font-size-sm: 0.875rem; /* 14px */
+--font-size-base: 1rem; /* 16px */
+--font-size-lg: 1.125rem; /* 18px */
+--font-size-xl: 1.25rem; /* 20px */
+--font-size-2xl: 1.5rem; /* 24px */
+--font-size-3xl: 1.875rem; /* 30px */
+--font-size-4xl: 2.25rem; /* 36px */
+--font-size-5xl: 3rem; /* 48px */
 
 /* Add line heights: */
 --leading-none: 1;
@@ -932,39 +935,39 @@ npm run build && npm run analyze
 /* ✅ Add more flexibility: */
 --space-0: 0;
 --space-px: 1px;
---space-0-5: 0.125rem;  /* 2px */
---space-1: 0.25rem;     /* 4px */
---space-1-5: 0.375rem;  /* 6px */
---space-2: 0.5rem;      /* 8px */
---space-2-5: 0.625rem;  /* 10px */
---space-3: 0.75rem;     /* 12px */
---space-3-5: 0.875rem;  /* 14px */
---space-4: 1rem;        /* 16px */
---space-5: 1.25rem;     /* 20px */
---space-6: 1.5rem;      /* 24px */
---space-7: 1.75rem;     /* 28px */
---space-8: 2rem;        /* 32px */
---space-9: 2.25rem;     /* 36px */
---space-10: 2.5rem;     /* 40px */
---space-11: 2.75rem;    /* 44px */
---space-12: 3rem;       /* 48px */
---space-14: 3.5rem;     /* 56px */
---space-16: 4rem;       /* 64px */
---space-20: 5rem;       /* 80px */
---space-24: 6rem;       /* 96px */
---space-28: 7rem;       /* 112px */
---space-32: 8rem;       /* 128px */
---space-36: 9rem;       /* 144px */
---space-40: 10rem;      /* 160px */
---space-44: 11rem;      /* 176px */
---space-48: 12rem;      /* 192px */
---space-52: 13rem;      /* 208px */
---space-56: 14rem;      /* 224px */
---space-60: 15rem;      /* 240px */
---space-64: 16rem;      /* 256px */
---space-72: 18rem;      /* 288px */
---space-80: 20rem;      /* 320px */
---space-96: 24rem;      /* 384px */
+--space-0-5: 0.125rem; /* 2px */
+--space-1: 0.25rem; /* 4px */
+--space-1-5: 0.375rem; /* 6px */
+--space-2: 0.5rem; /* 8px */
+--space-2-5: 0.625rem; /* 10px */
+--space-3: 0.75rem; /* 12px */
+--space-3-5: 0.875rem; /* 14px */
+--space-4: 1rem; /* 16px */
+--space-5: 1.25rem; /* 20px */
+--space-6: 1.5rem; /* 24px */
+--space-7: 1.75rem; /* 28px */
+--space-8: 2rem; /* 32px */
+--space-9: 2.25rem; /* 36px */
+--space-10: 2.5rem; /* 40px */
+--space-11: 2.75rem; /* 44px */
+--space-12: 3rem; /* 48px */
+--space-14: 3.5rem; /* 56px */
+--space-16: 4rem; /* 64px */
+--space-20: 5rem; /* 80px */
+--space-24: 6rem; /* 96px */
+--space-28: 7rem; /* 112px */
+--space-32: 8rem; /* 128px */
+--space-36: 9rem; /* 144px */
+--space-40: 10rem; /* 160px */
+--space-44: 11rem; /* 176px */
+--space-48: 12rem; /* 192px */
+--space-52: 13rem; /* 208px */
+--space-56: 14rem; /* 224px */
+--space-60: 15rem; /* 240px */
+--space-64: 16rem; /* 256px */
+--space-72: 18rem; /* 288px */
+--space-80: 20rem; /* 320px */
+--space-96: 24rem; /* 384px */
 ```
 
 ---
@@ -975,21 +978,21 @@ npm run build && npm run analyze
 // ✅ Standardize all component variants:
 
 // Button variants:
-type ButtonVariant = 
-  | 'primary'      // Main action
-  | 'secondary'    // Secondary action
-  | 'outline'      // Outlined
-  | 'ghost'        // No background
-  | 'link'         // Link style
+type ButtonVariant =
+  | 'primary' // Main action
+  | 'secondary' // Secondary action
+  | 'outline' // Outlined
+  | 'ghost' // No background
+  | 'link' // Link style
   | 'destructive'; // Dangerous action
 
 // Button sizes:
-type ButtonSize = 
-  | 'xs'   // Extra small (24px height)
-  | 'sm'   // Small (32px height)
-  | 'md'   // Medium (40px height) - default
-  | 'lg'   // Large (48px height)
-  | 'xl';  // Extra large (56px height)
+type ButtonSize =
+  | 'xs' // Extra small (24px height)
+  | 'sm' // Small (32px height)
+  | 'md' // Medium (40px height) - default
+  | 'lg' // Large (48px height)
+  | 'xl'; // Extra large (56px height)
 
 // Apply same pattern to:
 // - Card
@@ -1011,12 +1014,12 @@ type ButtonSize =
    - Delete duplicate files
    - Update all imports
    - Test that everything still works
-   
+
 ✅ Day 3-4: Standardize colors
    - Create color mapping
    - Run find & replace script
    - Test theme switching
-   
+
 ✅ Day 5: Document changes
    - Update README
    - Create migration guide
@@ -1030,7 +1033,7 @@ type ButtonSize =
    - Reorganize component folders
    - Update imports
    - Update documentation
-   
+
 ✅ Week 3: Component splitting
    - Split large components
    - Create smaller, reusable pieces
@@ -1044,12 +1047,12 @@ type ButtonSize =
    - Create linting rules
    - Add pre-commit hooks
    - Train team
-   
+
 ✅ Week 5: Documentation
    - Write comprehensive docs
    - Create examples
    - (Optional) Set up Storybook
-   
+
 ✅ Week 6: Testing
    - Add visual regression tests
    - Accessibility audit
@@ -1064,7 +1067,7 @@ type ButtonSize =
    - Code splitting
    - CSS optimization
    - Image optimization
-   
+
 ✅ Ongoing: Maintenance
    - Monitor bundle size
    - Regular accessibility checks
@@ -1080,19 +1083,19 @@ type ButtonSize =
 ```
 1. Component count:
    Target: Reduce from 155 to ~100 (remove duplicates)
-   
+
 2. Bundle size:
    Target: Reduce by 50-100KB
-   
+
 3. Color consistency:
    Target: 100% using design system colors
-   
+
 4. Component size:
    Target: No component > 300 lines
-   
+
 5. Accessibility score:
    Target: 100% WCAG AA compliance
-   
+
 6. Performance score:
    Target: Lighthouse score > 90
 ```
@@ -1104,12 +1107,14 @@ type ButtonSize =
 ### Current State: 🟡 **6.4/10**
 
 **Strengths**:
+
 - ✅ Modern tech stack
 - ✅ Good design system foundation
 - ✅ Comprehensive theme support
 - ✅ Accessibility-aware
 
 **Weaknesses**:
+
 - ❌ Too much component duplication
 - ❌ Inconsistent color usage
 - ❌ Large component files
@@ -1118,6 +1123,7 @@ type ButtonSize =
 ### Target State: 🟢 **9/10**
 
 **After improvements**:
+
 - ✅ Zero component duplication
 - ✅ 100% consistent colors
 - ✅ All components < 300 lines

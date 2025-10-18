@@ -3,16 +3,16 @@
  * Get doctor availability for specific date range
  */
 
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-import { createClient } from "@/lib/supabase/server";
-import { ValidationHelper } from "@/core/validation";
-import { ErrorHandler } from "@/core/errors";
-import { getClientInfo } from "@/lib/utils/request-helpers";
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
+import { createClient } from '@/lib/supabase/server';
+import { ValidationHelper } from '@/core/validation';
+import { ErrorHandler } from '@/core/errors';
+import { getClientInfo } from '@/lib/utils/request-helpers';
 
 const availabilitySchema = z.object({
-  doctorId: z.string().uuid("Invalid doctor ID"),
-  date: z.string().date("Invalid date format"),
+  doctorId: z.string().uuid('Invalid doctor ID'),
+  date: z.string().date('Invalid date format'),
   duration: z.number().min(15).max(240).default(30),
 });
 
@@ -25,15 +25,15 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
 
     const validation = ValidationHelper.validate(availabilitySchema, {
-      doctorId: searchParams.get("doctorId"),
-      date: searchParams.get("date"),
-      duration: parseInt(searchParams.get("duration") || "30"),
+      doctorId: searchParams.get('doctorId'),
+      date: searchParams.get('date'),
+      duration: parseInt(searchParams.get('duration') || '30'),
     });
 
     if (!validation.success) {
       return NextResponse.json(
         { error: validation.error.message },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -41,13 +41,13 @@ export async function GET(request: NextRequest) {
 
     // Get doctor's schedule
     const { data: doctor, error: doctorError } = await supabase
-      .from("doctors")
-      .select("schedule, speciality")
-      .eq("id", doctorId)
+      .from('doctors')
+      .select('schedule, speciality')
+      .eq('id', doctorId)
       .single();
 
     if (doctorError || !doctor) {
-      return NextResponse.json({ error: "Doctor not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Doctor not found' }, { status: 404 });
     }
 
     const requestedDate = new Date(date);
@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({
         available: false,
         slots: [],
-        message: "Doctor not working on this day",
+        message: 'Doctor not working on this day',
       });
     }
 
@@ -66,23 +66,23 @@ export async function GET(request: NextRequest) {
     const slots = generateTimeSlots(
       schedule.startTime,
       schedule.endTime,
-      duration!,
+      duration!
     );
 
     // Check existing appointments
     const { data: existingAppointments } = await supabase
-      .from("appointments")
-      .select("scheduledAt, duration")
-      .eq("doctorId", doctorId)
-      .eq("scheduledAt", date)
-      .in("status", ["pending", "confirmed", "in_progress"]);
+      .from('appointments')
+      .select('scheduledAt, duration')
+      .eq('doctorId', doctorId)
+      .eq('scheduledAt', date)
+      .in('status', ['pending', 'confirmed', 'in_progress']);
 
     // Filter out occupied slots
-    const availableSlots = slots.filter((slot) => {
+    const availableSlots = slots.filter(slot => {
       const slotStart = new Date(`${date}T${slot.time}`);
       const slotEnd = new Date(slotStart.getTime() + duration! * 60000);
 
-      return !existingAppointments?.some((apt) => {
+      return !existingAppointments?.some(apt => {
         const aptStart = new Date(apt.scheduledAt);
         const aptEnd = new Date(aptStart.getTime() + apt.duration * 60000);
 
@@ -91,13 +91,13 @@ export async function GET(request: NextRequest) {
     });
 
     // Log availability check
-    await supabase.from("audit_logs").insert({
-      action: "appointment_availability_checked",
-      resourceType: "appointment",
+    await supabase.from('audit_logs').insert({
+      action: 'appointment_availability_checked',
+      resourceType: 'appointment',
       ipAddress,
       userAgent,
-      status: "success",
-      severity: "info",
+      status: 'success',
+      severity: 'info',
       metadata: {
         doctorId,
         date,
@@ -125,7 +125,7 @@ export async function GET(request: NextRequest) {
 function generateTimeSlots(
   startTime: string,
   endTime: string,
-  duration: number,
+  duration: number
 ): Array<{ time: string; available: boolean }> {
   const slots: Array<{ time: string; available: boolean }> = [];
   const start = timeToMinutes(startTime);
@@ -142,12 +142,12 @@ function generateTimeSlots(
 }
 
 function timeToMinutes(time: string): number {
-  const [hours, minutes] = time.split(":").map(Number);
+  const [hours, minutes] = time.split(':').map(Number);
   return (hours || 0) * 60 + (minutes || 0);
 }
 
 function minutesToTime(minutes: number): string {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
-  return `${hours.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}`;
+  return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
 }

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, {
   createContext,
@@ -6,22 +6,22 @@ import React, {
   useState,
   useEffect,
   ReactNode,
-} from "react";
+} from 'react';
 
 // Design System Types
-export type Theme = "light" | "dark" | "system";
-export type Language = "ar" | "en";
-export type Direction = "rtl" | "ltr";
-export type Spacing = "compact" | "normal" | "comfortable";
+export type Theme = 'light' | 'dark' | 'system';
+export type Language = 'ar' | 'en';
+export type Direction = 'rtl' | 'ltr';
+export type Spacing = 'compact' | 'normal' | 'comfortable';
 
 export interface DesignSystemConfig {
   theme: Theme;
   language: Language;
   direction: Direction;
   spacing: Spacing;
-  fontSize: "small" | "medium" | "large";
-  borderRadius: "none" | "small" | "medium" | "large";
-  shadows: "none" | "small" | "medium" | "large";
+  fontSize: 'small' | 'medium' | 'large';
+  borderRadius: 'none' | 'small' | 'medium' | 'large';
+  shadows: 'none' | 'small' | 'medium' | 'large';
   animations: boolean;
   reducedMotion: boolean;
   highContrast: boolean;
@@ -34,9 +34,9 @@ export interface DesignSystemContextValue {
   language: Language;
   direction: Direction;
   spacing: Spacing;
-  fontSize: "small" | "medium" | "large";
-  borderRadius: "none" | "small" | "medium" | "large";
-  shadows: "none" | "small" | "medium" | "large";
+  fontSize: 'small' | 'medium' | 'large';
+  borderRadius: 'none' | 'small' | 'medium' | 'large';
+  shadows: 'none' | 'small' | 'medium' | 'large';
   animations: boolean;
   reducedMotion: boolean;
   highContrast: boolean;
@@ -54,11 +54,11 @@ export interface DesignSystemContextValue {
   updateLanguage: (language: Language) => void;
   updateDirection: (direction: Direction) => void;
   updateSpacing: (spacing: Spacing) => void;
-  updateFontSize: (fontSize: "small" | "medium" | "large") => void;
+  updateFontSize: (fontSize: 'small' | 'medium' | 'large') => void;
   updateBorderRadius: (
-    borderRadius: "none" | "small" | "medium" | "large",
+    borderRadius: 'none' | 'small' | 'medium' | 'large'
   ) => void;
-  updateShadows: (shadows: "none" | "small" | "medium" | "large") => void;
+  updateShadows: (shadows: 'none' | 'small' | 'medium' | 'large') => void;
   toggleAnimations: () => void;
   toggleReducedMotion: () => void;
   toggleHighContrast: () => void;
@@ -70,18 +70,18 @@ export interface DesignSystemContextValue {
 
 // Create context
 const DesignSystemContext = createContext<DesignSystemContextValue | undefined>(
-  undefined,
+  undefined
 );
 
 // Default configuration
 const defaultConfig: DesignSystemConfig = {
-  theme: "system",
-  language: "ar",
-  direction: "rtl",
-  spacing: "normal",
-  fontSize: "medium",
-  borderRadius: "medium",
-  shadows: "medium",
+  theme: 'system',
+  language: 'ar',
+  direction: 'rtl',
+  spacing: 'normal',
+  fontSize: 'medium',
+  borderRadius: 'medium',
+  shadows: 'medium',
   animations: true,
   reducedMotion: false,
   highContrast: false,
@@ -116,26 +116,26 @@ export function DesignSystemProvider({
 
       // Apply language and direction
       const root = document.documentElement;
-      root.setAttribute("lang", config.language);
-      root.setAttribute("dir", config.direction);
+      root.setAttribute('lang', config.language);
+      root.setAttribute('dir', config.direction);
 
       // Apply spacing
-      root.setAttribute("data-spacing", config.spacing);
+      root.setAttribute('data-spacing', config.spacing);
 
       // Apply font size
-      root.setAttribute("data-font-size", config.fontSize);
+      root.setAttribute('data-font-size', config.fontSize);
 
       // Apply border radius
-      root.setAttribute("data-border-radius", config.borderRadius);
+      root.setAttribute('data-border-radius', config.borderRadius);
 
       // Apply shadows
-      root.setAttribute("data-shadows", config.shadows);
+      root.setAttribute('data-shadows', config.shadows);
 
       // Apply accessibility settings
-      root.setAttribute("data-animations", config.animations.toString());
-      root.setAttribute("data-reduced-motion", config.reducedMotion.toString());
-      root.setAttribute("data-high-contrast", config.highContrast.toString());
-      root.setAttribute("data-focus-visible", config.focusVisible.toString());
+      root.setAttribute('data-animations', config.animations.toString());
+      root.setAttribute('data-reduced-motion', config.reducedMotion.toString());
+      root.setAttribute('data-high-contrast', config.highContrast.toString());
+      root.setAttribute('data-focus-visible', config.focusVisible.toString());
 
       setIsInitialized(true);
     }
@@ -144,107 +144,107 @@ export function DesignSystemProvider({
   // Update theme function
   const updateTheme = (newTheme: Theme) => {
     // applyTheme(newTheme);
-    setConfig((prev) => ({ ...prev, theme: newTheme }));
+    setConfig(prev => ({ ...prev, theme: newTheme }));
   };
 
   // Update language function
   const updateLanguage = (newLanguage: Language) => {
     const root = document.documentElement;
-    root.setAttribute("lang", newLanguage);
-    setConfig((prev) => ({ ...prev, language: newLanguage }));
+    root.setAttribute('lang', newLanguage);
+    setConfig(prev => ({ ...prev, language: newLanguage }));
   };
 
   // Update direction function
   const updateDirection = (newDirection: Direction) => {
     const root = document.documentElement;
-    root.setAttribute("dir", newDirection);
-    setConfig((prev) => ({ ...prev, direction: newDirection }));
+    root.setAttribute('dir', newDirection);
+    setConfig(prev => ({ ...prev, direction: newDirection }));
   };
 
   // Update spacing function
   const updateSpacing = (newSpacing: Spacing) => {
     const root = document.documentElement;
-    root.setAttribute("data-spacing", newSpacing);
-    setConfig((prev) => ({ ...prev, spacing: newSpacing }));
+    root.setAttribute('data-spacing', newSpacing);
+    setConfig(prev => ({ ...prev, spacing: newSpacing }));
   };
 
   // Update font size function
-  const updateFontSize = (newFontSize: "small" | "medium" | "large") => {
+  const updateFontSize = (newFontSize: 'small' | 'medium' | 'large') => {
     const root = document.documentElement;
-    root.setAttribute("data-font-size", newFontSize);
-    setConfig((prev) => ({ ...prev, fontSize: newFontSize }));
+    root.setAttribute('data-font-size', newFontSize);
+    setConfig(prev => ({ ...prev, fontSize: newFontSize }));
   };
 
   // Update border radius function
   const updateBorderRadius = (
-    newBorderRadius: "none" | "small" | "medium" | "large",
+    newBorderRadius: 'none' | 'small' | 'medium' | 'large'
   ) => {
     const root = document.documentElement;
-    root.setAttribute("data-border-radius", newBorderRadius);
-    setConfig((prev) => ({ ...prev, borderRadius: newBorderRadius }));
+    root.setAttribute('data-border-radius', newBorderRadius);
+    setConfig(prev => ({ ...prev, borderRadius: newBorderRadius }));
   };
 
   // Update shadows function
-  const updateShadows = (newShadows: "none" | "small" | "medium" | "large") => {
+  const updateShadows = (newShadows: 'none' | 'small' | 'medium' | 'large') => {
     const root = document.documentElement;
-    root.setAttribute("data-shadows", newShadows);
-    setConfig((prev) => ({ ...prev, shadows: newShadows }));
+    root.setAttribute('data-shadows', newShadows);
+    setConfig(prev => ({ ...prev, shadows: newShadows }));
   };
 
   // Toggle animations
   const toggleAnimations = () => {
     const root = document.documentElement;
     const newValue = !config.animations;
-    root.setAttribute("data-animations", newValue.toString());
-    setConfig((prev) => ({ ...prev, animations: newValue }));
+    root.setAttribute('data-animations', newValue.toString());
+    setConfig(prev => ({ ...prev, animations: newValue }));
   };
 
   // Toggle reduced motion
   const toggleReducedMotion = () => {
     const root = document.documentElement;
     const newValue = !config.reducedMotion;
-    root.setAttribute("data-reduced-motion", newValue.toString());
-    setConfig((prev) => ({ ...prev, reducedMotion: newValue }));
+    root.setAttribute('data-reduced-motion', newValue.toString());
+    setConfig(prev => ({ ...prev, reducedMotion: newValue }));
   };
 
   // Toggle high contrast
   const toggleHighContrast = () => {
     const root = document.documentElement;
     const newValue = !config.highContrast;
-    root.setAttribute("data-high-contrast", newValue.toString());
-    setConfig((prev) => ({ ...prev, highContrast: newValue }));
+    root.setAttribute('data-high-contrast', newValue.toString());
+    setConfig(prev => ({ ...prev, highContrast: newValue }));
   };
 
   // Toggle focus visible
   const toggleFocusVisible = () => {
     const root = document.documentElement;
     const newValue = !config.focusVisible;
-    root.setAttribute("data-focus-visible", newValue.toString());
-    setConfig((prev) => ({ ...prev, focusVisible: newValue }));
+    root.setAttribute('data-focus-visible', newValue.toString());
+    setConfig(prev => ({ ...prev, focusVisible: newValue }));
   };
 
   // Reset to defaults
   const resetToDefaults = () => {
     setConfig(defaultConfig);
     const root = document.documentElement;
-    root.setAttribute("lang", defaultConfig.language);
-    root.setAttribute("dir", defaultConfig.direction);
-    root.setAttribute("data-spacing", defaultConfig.spacing);
-    root.setAttribute("data-font-size", defaultConfig.fontSize);
-    root.setAttribute("data-border-radius", defaultConfig.borderRadius);
-    root.setAttribute("data-shadows", defaultConfig.shadows);
-    root.setAttribute("data-animations", defaultConfig.animations.toString());
+    root.setAttribute('lang', defaultConfig.language);
+    root.setAttribute('dir', defaultConfig.direction);
+    root.setAttribute('data-spacing', defaultConfig.spacing);
+    root.setAttribute('data-font-size', defaultConfig.fontSize);
+    root.setAttribute('data-border-radius', defaultConfig.borderRadius);
+    root.setAttribute('data-shadows', defaultConfig.shadows);
+    root.setAttribute('data-animations', defaultConfig.animations.toString());
     root.setAttribute(
-      "data-reduced-motion",
-      defaultConfig.reducedMotion.toString(),
+      'data-reduced-motion',
+      defaultConfig.reducedMotion.toString()
     );
     root.setAttribute(
-      "data-high-contrast",
-      defaultConfig.highContrast.toString(),
+      'data-high-contrast',
+      defaultConfig.highContrast.toString()
     );
     root.setAttribute(
-      "data-focus-visible",
-      defaultConfig.focusVisible.toString(),
+      'data-focus-visible',
+      defaultConfig.focusVisible.toString()
     );
   };
 
@@ -299,7 +299,7 @@ export function useDesignSystem(): DesignSystemContextValue {
   const context = useContext(DesignSystemContext);
   if (!context) {
     throw new Error(
-      "useDesignSystem must be used within a DesignSystemProvider",
+      'useDesignSystem must be used within a DesignSystemProvider'
     );
   }
   return context;

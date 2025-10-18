@@ -4,7 +4,11 @@
  */
 
 import { test, expect } from '@playwright/test';
-import { testHelper, TestUser, TestPatient } from '../helpers/supabase-test-helper';
+import {
+  testHelper,
+  TestUser,
+  TestPatient,
+} from '../helpers/supabase-test-helper';
 
 test.describe('Supabase Integration Tests', () => {
   let testUser: TestUser;
@@ -23,7 +27,9 @@ test.describe('Supabase Integration Tests', () => {
   });
 
   test.describe('User Registration and Database Integration', () => {
-    test('should create user in database through registration form', async ({ page }) => {
+    test('should create user in database through registration form', async ({
+      page,
+    }) => {
       // Navigate to registration page
       await page.goto('/register');
 
@@ -54,7 +60,7 @@ test.describe('Supabase Integration Tests', () => {
     test('should prevent duplicate user registration', async ({ page }) => {
       // Try to register with same email
       await page.goto('/register');
-      
+
       await page.getByLabel('الاسم الكامل').fill('Another User');
       await page.getByLabel('البريد الإلكتروني').fill(testEmail);
       await page.getByLabel('كلمة المرور').first().fill('AnotherPassword123!');
@@ -64,12 +70,16 @@ test.describe('Supabase Integration Tests', () => {
       await page.getByRole('button', { name: /إنشاء الحساب/ }).click();
 
       // Should show error message
-      await expect(page.getByText(/البريد الإلكتروني مستخدم بالفعل|User already exists/)).toBeVisible();
+      await expect(
+        page.getByText(/البريد الإلكتروني مستخدم بالفعل|User already exists/)
+      ).toBeVisible();
     });
   });
 
   test.describe('User Login and Authentication', () => {
-    test('should login with valid credentials and update database', async ({ page }) => {
+    test('should login with valid credentials and update database', async ({
+      page,
+    }) => {
       // Navigate to login page
       await page.goto('/login');
 
@@ -98,7 +108,7 @@ test.describe('Supabase Integration Tests', () => {
         resource_type: 'user',
         resource_id: user!.id,
         ip_address: '127.0.0.1',
-        user_agent: 'Playwright Test'
+        user_agent: 'Playwright Test',
       });
     });
 
@@ -111,7 +121,9 @@ test.describe('Supabase Integration Tests', () => {
       await page.getByRole('button', { name: /تسجيل الدخول/ }).click();
 
       // Should show error message
-      await expect(page.getByText(/بيانات الدخول غير صحيحة|Invalid credentials/)).toBeVisible();
+      await expect(
+        page.getByText(/بيانات الدخول غير صحيحة|Invalid credentials/)
+      ).toBeVisible();
     });
   });
 
@@ -121,29 +133,39 @@ test.describe('Supabase Integration Tests', () => {
 
       // Fill forgot password form
       await page.getByLabel('البريد الإلكتروني').fill(testEmail);
-      await page.getByRole('button', { name: /إرسال رابط إعادة التعيين/ }).click();
+      await page
+        .getByRole('button', { name: /إرسال رابط إعادة التعيين/ })
+        .click();
 
       // Should show success message
-      await expect(page.getByText(/تم إرسال رابط إعادة التعيين|Reset link sent/)).toBeVisible();
+      await expect(
+        page.getByText(/تم إرسال رابط إعادة التعيين|Reset link sent/)
+      ).toBeVisible();
 
       // Verify audit log was created
       const user = await testHelper.getUserByEmail(testEmail);
       const auditLogs = await testHelper.getAuditLogs(user!.id, 5);
-      
-      const forgotPasswordLog = auditLogs.find(log => 
-        log.action === 'forgot_password_requested'
+
+      const forgotPasswordLog = auditLogs.find(
+        log => log.action === 'forgot_password_requested'
       );
       expect(forgotPasswordLog).toBeDefined();
     });
 
-    test('should validate email format in forgot password', async ({ page }) => {
+    test('should validate email format in forgot password', async ({
+      page,
+    }) => {
       await page.goto('/forgot-password');
 
       await page.getByLabel('البريد الإلكتروني').fill('invalid-email');
-      await page.getByRole('button', { name: /إرسال رابط إعادة التعيين/ }).click();
+      await page
+        .getByRole('button', { name: /إرسال رابط إعادة التعيين/ })
+        .click();
 
       // Should show validation error
-      await expect(page.getByText(/البريد الإلكتروني غير صحيح|Invalid email/)).toBeVisible();
+      await expect(
+        page.getByText(/البريد الإلكتروني غير صحيح|Invalid email/)
+      ).toBeVisible();
     });
   });
 
@@ -161,7 +183,9 @@ test.describe('Supabase Integration Tests', () => {
 
       // Create new patient
       const patientEmail = `patient-${Date.now()}@example.com`;
-      await page.getByRole('button', { name: /إضافة مريض|Add Patient/ }).click();
+      await page
+        .getByRole('button', { name: /إضافة مريض|Add Patient/ })
+        .click();
 
       // Fill patient form
       await page.getByLabel('الاسم الأول').fill('John');
@@ -189,7 +213,7 @@ test.describe('Supabase Integration Tests', () => {
         email: `admin-${Date.now()}@example.com`,
         name: 'Admin User',
         role: 'admin',
-        status: 'active'
+        status: 'active',
       });
 
       // Login as admin
@@ -202,7 +226,9 @@ test.describe('Supabase Integration Tests', () => {
       await page.goto('/admin');
 
       // Wait for admin data to load
-      await page.waitForSelector('[data-testid="admin-summary-card"]', { timeout: 10000 });
+      await page.waitForSelector('[data-testid="admin-summary-card"]', {
+        timeout: 10000,
+      });
 
       // Verify admin panel shows real data
       const stats = await testHelper.getDatabaseStats();
@@ -219,7 +245,7 @@ test.describe('Supabase Integration Tests', () => {
         email: `admin2-${Date.now()}@example.com`,
         name: 'Admin User 2',
         role: 'admin',
-        status: 'active'
+        status: 'active',
       });
 
       await page.goto('/login');
@@ -244,16 +270,20 @@ test.describe('Supabase Integration Tests', () => {
 
       // Verify audit log was created
       const auditLogs = await testHelper.getAuditLogs(adminUser.id, 5);
-      const statusUpdateLog = auditLogs.find(log => 
-        log.action === 'user_status_updated' && 
-        log.resource_id === testUser.id
+      const statusUpdateLog = auditLogs.find(
+        log =>
+          log.action === 'user_status_updated' &&
+          log.resource_id === testUser.id
       );
       expect(statusUpdateLog).toBeDefined();
     });
   });
 
   test.describe('Database Performance and Reliability', () => {
-    test('should handle concurrent user creation', async ({ page, browser }) => {
+    test('should handle concurrent user creation', async ({
+      page,
+      browser,
+    }) => {
       const promises = [];
       const userCount = 5;
 
@@ -261,14 +291,23 @@ test.describe('Supabase Integration Tests', () => {
       for (let i = 0; i < userCount; i++) {
         const context = await browser.newContext();
         const newPage = await context.newPage();
-        
+
         promises.push(
           (async () => {
             await newPage.goto('/register');
-            await newPage.getByLabel('الاسم الكامل').fill(`Concurrent User ${i}`);
-            await newPage.getByLabel('البريد الإلكتروني').fill(`concurrent-${i}-${Date.now()}@example.com`);
-            await newPage.getByLabel('كلمة المرور').first().fill('ConcurrentPassword123!');
-            await newPage.getByLabel('تأكيد كلمة المرور').fill('ConcurrentPassword123!');
+            await newPage
+              .getByLabel('الاسم الكامل')
+              .fill(`Concurrent User ${i}`);
+            await newPage
+              .getByLabel('البريد الإلكتروني')
+              .fill(`concurrent-${i}-${Date.now()}@example.com`);
+            await newPage
+              .getByLabel('كلمة المرور')
+              .first()
+              .fill('ConcurrentPassword123!');
+            await newPage
+              .getByLabel('تأكيد كلمة المرور')
+              .fill('ConcurrentPassword123!');
             await newPage.getByLabel('أوافق على').check();
             await newPage.getByRole('button', { name: /إنشاء الحساب/ }).click();
             await newPage.waitForTimeout(1000);
@@ -284,13 +323,15 @@ test.describe('Supabase Integration Tests', () => {
       expect(stats.totalUsers).toBeGreaterThanOrEqual(userCount);
     });
 
-    test('should maintain data integrity during operations', async ({ page }) => {
+    test('should maintain data integrity during operations', async ({
+      page,
+    }) => {
       // Create a user
       const integrityUser = await testHelper.createTestUser({
         email: `integrity-${Date.now()}@example.com`,
         name: 'Integrity Test User',
         role: 'agent',
-        status: 'active'
+        status: 'active',
       });
 
       // Login and perform operations
@@ -313,23 +354,33 @@ test.describe('Supabase Integration Tests', () => {
   });
 
   test.describe('Error Handling and Edge Cases', () => {
-    test('should handle database connection errors gracefully', async ({ page }) => {
+    test('should handle database connection errors gracefully', async ({
+      page,
+    }) => {
       // This test would require mocking database connection
       // For now, we'll test with invalid data
       await page.goto('/register');
-      
+
       // Try to register with invalid data
       await page.getByLabel('الاسم الكامل').fill('');
       await page.getByLabel('البريد الإلكتروني').fill('invalid-email');
       await page.getByLabel('كلمة المرور').first().fill('123');
       await page.getByLabel('تأكيد كلمة المرور').fill('456');
-      
+
       await page.getByRole('button', { name: /إنشاء الحساب/ }).click();
 
       // Should show validation errors
-      await expect(page.getByText(/الاسم الكامل مطلوب|Full name required/)).toBeVisible();
-      await expect(page.getByText(/البريد الإلكتروني غير صحيح|Invalid email/)).toBeVisible();
-      await expect(page.getByText(/كلمة المرور يجب أن تكون 6 أحرف على الأقل|Password must be at least 6 characters/)).toBeVisible();
+      await expect(
+        page.getByText(/الاسم الكامل مطلوب|Full name required/)
+      ).toBeVisible();
+      await expect(
+        page.getByText(/البريد الإلكتروني غير صحيح|Invalid email/)
+      ).toBeVisible();
+      await expect(
+        page.getByText(
+          /كلمة المرور يجب أن تكون 6 أحرف على الأقل|Password must be at least 6 characters/
+        )
+      ).toBeVisible();
     });
 
     test('should handle large data sets efficiently', async ({ page }) => {
@@ -341,7 +392,7 @@ test.describe('Supabase Integration Tests', () => {
             first_name: `Patient${i}`,
             last_name: 'Test',
             email: `patient-${i}-${Date.now()}@example.com`,
-            phone: `+96650123456${i}`
+            phone: `+96650123456${i}`,
           })
         );
       }

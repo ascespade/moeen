@@ -3,13 +3,13 @@
  * Centralized API client with error handling and interceptors
  */
 
-import { API_ENDPOINTS, ERROR_CODES } from "../constants";
-import { ErrorHandler, ExternalServiceError } from "../errors";
-import { storageUtils } from "../utils/index";
-import { ApiResponse } from "../types";
+import { API_ENDPOINTS, ERROR_CODES } from '../constants';
+import { ErrorHandler, ExternalServiceError } from '../errors';
+import { storageUtils } from '../utils/index';
+import { ApiResponse } from '../types';
 
 export interface ApiRequestConfig {
-  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   headers?: Record<string, string>;
   body?: any;
   params?: Record<string, any>;
@@ -22,7 +22,7 @@ class ApiClient {
   private defaultTimeout: number;
   private errorHandler: ErrorHandler;
 
-  constructor(baseURL: string = "/api", timeout: number = 30000) {
+  constructor(baseURL: string = '/api', timeout: number = 30000) {
     this.baseURL = baseURL;
     this.defaultTimeout = timeout;
     this.errorHandler = ErrorHandler.getInstance();
@@ -30,10 +30,10 @@ class ApiClient {
 
   private async request<T>(
     endpoint: string,
-    config: ApiRequestConfig = {},
+    config: ApiRequestConfig = {}
   ): Promise<ApiResponse<T>> {
     const {
-      method = "GET",
+      method = 'GET',
       headers = {},
       body,
       params,
@@ -64,8 +64,8 @@ class ApiClient {
       if (!response.ok) {
         throw new ExternalServiceError(
           `HTTP ${response.status}: ${response.statusText}`,
-          "API",
-          { status: response.status, url },
+          'API',
+          { status: response.status, url }
         );
       }
 
@@ -100,51 +100,51 @@ class ApiClient {
   }
 
   private buildHeaders(
-    customHeaders: Record<string, string>,
+    customHeaders: Record<string, string>
   ): Record<string, string> {
-    const token = storageUtils.get("auth_token");
+    const token = storageUtils.get('auth_token');
 
     return {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...customHeaders,
     };
   }
 
   private shouldRetry(error: any): boolean {
-    if (error.name === "AbortError") return false;
+    if (error.name === 'AbortError') return false;
     if (error.status >= 500) return true;
     if (error.status === 429) return true;
     return false;
   }
 
   private delay(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   // HTTP Methods
   async get<T>(
     endpoint: string,
-    params?: Record<string, any>,
+    params?: Record<string, any>
   ): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: "GET", params });
+    return this.request<T>(endpoint, { method: 'GET', params });
   }
 
   async post<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: "POST", body });
+    return this.request<T>(endpoint, { method: 'POST', body });
   }
 
   async put<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: "PUT", body });
+    return this.request<T>(endpoint, { method: 'PUT', body });
   }
 
   async patch<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: "PATCH", body });
+    return this.request<T>(endpoint, { method: 'PATCH', body });
   }
 
   async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: "DELETE" });
+    return this.request<T>(endpoint, { method: 'DELETE' });
   }
 
   // Authentication Methods
@@ -211,7 +211,7 @@ class ApiClient {
 
   async activatePatient(
     id: string,
-    activationData?: any,
+    activationData?: any
   ): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.PATIENTS.ACTIVATE(id), activationData);
   }
@@ -266,7 +266,7 @@ class ApiClient {
 
   async updateAppointment(
     id: string,
-    appointmentData: any,
+    appointmentData: any
   ): Promise<ApiResponse<any>> {
     return this.patch(API_ENDPOINTS.APPOINTMENTS.UPDATE(id), appointmentData);
   }
@@ -308,7 +308,7 @@ class ApiClient {
 
   async submitInsuranceClaim(
     id: string,
-    submitData: any,
+    submitData: any
   ): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.INSURANCE.SUBMIT(id), submitData);
   }
@@ -344,17 +344,17 @@ class ApiClient {
   async uploadFile(
     file: File,
     type: string,
-    metadata?: any,
+    metadata?: any
   ): Promise<ApiResponse<any>> {
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("type", type);
+    formData.append('file', file);
+    formData.append('type', type);
     if (metadata) {
-      formData.append("metadata", JSON.stringify(metadata));
+      formData.append('metadata', JSON.stringify(metadata));
     }
 
     return this.request(API_ENDPOINTS.UPLOAD.FILE, {
-      method: "POST",
+      method: 'POST',
       body: formData,
       headers: {}, // Let browser set Content-Type for FormData
     });

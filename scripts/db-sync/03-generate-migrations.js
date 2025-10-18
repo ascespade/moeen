@@ -10,8 +10,12 @@
 
 const fs = require('fs');
 
-const CONFIG = JSON.parse(fs.readFileSync('/workspace/tmp/db-sync-config.json'));
-const DB_SCHEMA = JSON.parse(fs.readFileSync('/workspace/tmp/db-schema-scan.json'));
+const CONFIG = JSON.parse(
+  fs.readFileSync('/workspace/tmp/db-sync-config.json')
+);
+const DB_SCHEMA = JSON.parse(
+  fs.readFileSync('/workspace/tmp/db-schema-scan.json')
+);
 
 let migrationSQL = [];
 let migrationNumber = 74; // Next migration after 073
@@ -26,7 +30,7 @@ function header(title) {
 
 function generateSoftDeleteMigration() {
   console.log('\n📝 Generating Soft Delete Migration...\n');
-  
+
   let sql = header('Migration 074: Soft Delete System');
   sql += `
 -- Purpose: Add soft delete columns to all tables
@@ -39,10 +43,10 @@ BEGIN;
 -- Add soft delete columns to all tables
 `;
 
-  const tables = DB_SCHEMA.tables.filter(t => 
-    !['migrations', 'schema_migrations'].includes(t)
+  const tables = DB_SCHEMA.tables.filter(
+    t => !['migrations', 'schema_migrations'].includes(t)
   );
-  
+
   for (const table of tables) {
     sql += `
 -- Table: ${table}
@@ -55,7 +59,7 @@ COMMENT ON COLUMN ${table}.deleted_at IS 'Soft delete timestamp - NULL means act
 COMMENT ON COLUMN ${table}.deleted_by IS 'User who deleted this record';
 `;
   }
-  
+
   // Create soft delete helper functions
   sql += `
 ${header('Soft Delete Helper Functions')}
@@ -156,9 +160,9 @@ END $$;
 
 COMMIT;
 `;
-  
+
   console.log(`✅ Generated soft delete for ${tables.length} tables\n`);
-  
+
   return {
     number: migrationNumber++,
     name: '074_soft_delete_system',
@@ -170,7 +174,7 @@ COMMIT;
 
 function generateReminderSystemMigration() {
   console.log('📝 Generating Reminder System Migration...\n');
-  
+
   let sql = header('Migration 075: Reminder System');
   sql += `
 -- Purpose: Automated reminder system for appointments
@@ -318,9 +322,9 @@ CREATE TRIGGER trg_appointment_reminder
 
 COMMIT;
 `;
-  
+
   console.log('✅ Generated reminder system\n');
-  
+
   return {
     number: migrationNumber++,
     name: '075_reminder_system',
@@ -332,7 +336,7 @@ COMMIT;
 
 function generateBookingValidationMigration() {
   console.log('📝 Generating Booking Validation Migration...\n');
-  
+
   let sql = header('Migration 076: Booking Validation');
   sql += `
 -- Purpose: Prevent double-booking and validate appointments
@@ -452,9 +456,9 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_appointment_no_overlap ON appointments (
 
 COMMIT;
 `;
-  
+
   console.log('✅ Generated booking validation\n');
-  
+
   return {
     number: migrationNumber++,
     name: '076_booking_validation',
@@ -466,7 +470,7 @@ COMMIT;
 
 function generateSearchFunctionsMigration() {
   console.log('📝 Generating Search Functions Migration...\n');
-  
+
   let sql = header('Migration 077: Full Text Search');
   sql += `
 -- Purpose: Fast search across patients, users, appointments
@@ -602,9 +606,9 @@ CREATE TRIGGER trg_user_search_update
 
 COMMIT;
 `;
-  
+
   console.log('✅ Generated search functions\n');
-  
+
   return {
     number: migrationNumber++,
     name: '077_search_functions',
@@ -616,37 +620,39 @@ COMMIT;
 
 function generateAll() {
   console.log('\n🚀 Starting Migration Generation...\n');
-  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
-  
+  console.log(
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
+  );
+
   const migrations = [];
-  
+
   if (CONFIG.features.soft_delete) {
     migrations.push(generateSoftDeleteMigration());
   }
-  
+
   if (CONFIG.features.reminder_scheduler) {
     migrations.push(generateReminderSystemMigration());
   }
-  
+
   if (CONFIG.features.booking_validation) {
     migrations.push(generateBookingValidationMigration());
   }
-  
+
   if (CONFIG.features.search_functions) {
     migrations.push(generateSearchFunctionsMigration());
   }
-  
+
   // Save individual migration files
   for (const migration of migrations) {
     const filename = `supabase/migrations/${migration.name}.sql`;
     fs.writeFileSync(`/workspace/${filename}`, migration.sql);
     console.log(`✅ Created: ${filename}\n`);
   }
-  
+
   // Save combined SQL
   const combinedSQL = migrations.map(m => m.sql).join('\n\n');
   fs.writeFileSync('/workspace/tmp/db-auto-migrations.sql', combinedSQL);
-  
+
   // Save metadata
   const metadata = {
     generated_at: new Date().toISOString(),
@@ -660,23 +666,28 @@ function generateAll() {
     total_migrations: migrations.length,
     safety_summary: {
       safe: migrations.filter(m => m.safety === 'safe').length,
-      requires_review: migrations.filter(m => m.safety === 'requires_review').length,
+      requires_review: migrations.filter(m => m.safety === 'requires_review')
+        .length,
     },
   };
-  
+
   fs.writeFileSync(
     '/workspace/tmp/migrations-metadata.json',
     JSON.stringify(metadata, null, 2)
   );
-  
-  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
+  console.log(
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+  );
   console.log(`\n✅ Generated ${migrations.length} migrations successfully!\n`);
   console.log('📁 Files created:');
-  migrations.forEach(m => console.log(`   - supabase/migrations/${m.name}.sql`));
+  migrations.forEach(m =>
+    console.log(`   - supabase/migrations/${m.name}.sql`)
+  );
   console.log(`   - tmp/db-auto-migrations.sql (combined)`);
   console.log(`   - tmp/migrations-metadata.json`);
   console.log('');
-  
+
   return metadata;
 }
 

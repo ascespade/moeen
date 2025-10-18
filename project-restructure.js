@@ -13,33 +13,40 @@ class ProjectRestructure {
     this.srcPath = 'src';
     this.newStructure = {
       // Core application structure
-      'app': 'src/app',                    // Next.js 13+ App Router
-      'components': 'src/components',      // Reusable UI components
-      'lib': 'src/lib',                    // Utility functions and configurations
-      'hooks': 'src/hooks',                // Custom React hooks
-      'types': 'src/types',                // TypeScript type definitions
-      'styles': 'src/styles',              // Global styles and themes
-      'constants': 'src/constants',        // Application constants
-      'utils': 'src/utils',                // Pure utility functions
-      'services': 'src/services',          // API services and external integrations
-      'store': 'src/store',                // State management (Redux, Zustand, etc.)
-      'context': 'src/context',            // React contexts
-      'config': 'src/config',              // Configuration files
-      'assets': 'src/assets',              // Static assets
-      'locales': 'src/locales',            // Internationalization files
-      'tests': 'src/tests',                // Test utilities and helpers
+      app: 'src/app', // Next.js 13+ App Router
+      components: 'src/components', // Reusable UI components
+      lib: 'src/lib', // Utility functions and configurations
+      hooks: 'src/hooks', // Custom React hooks
+      types: 'src/types', // TypeScript type definitions
+      styles: 'src/styles', // Global styles and themes
+      constants: 'src/constants', // Application constants
+      utils: 'src/utils', // Pure utility functions
+      services: 'src/services', // API services and external integrations
+      store: 'src/store', // State management (Redux, Zustand, etc.)
+      context: 'src/context', // React contexts
+      config: 'src/config', // Configuration files
+      assets: 'src/assets', // Static assets
+      locales: 'src/locales', // Internationalization files
+      tests: 'src/tests', // Test utilities and helpers
     };
   }
 
   log(message, type = 'info') {
     const timestamp = new Date().toISOString();
-    const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+    const prefix =
+      type === 'error'
+        ? '❌'
+        : type === 'success'
+          ? '✅'
+          : type === 'warning'
+            ? '⚠️'
+            : 'ℹ️';
     console.log(`[${timestamp}] ${prefix} ${message}`);
   }
 
   async createDirectoryStructure() {
     this.log('🏗️ Creating standardized directory structure...');
-    
+
     for (const [name, path] of Object.entries(this.newStructure)) {
       if (!fs.existsSync(path)) {
         fs.mkdirSync(path, { recursive: true });
@@ -52,18 +59,18 @@ class ProjectRestructure {
 
   async organizeComponents() {
     this.log('🧩 Organizing components...');
-    
+
     const componentStructure = {
-      'ui': 'src/components/ui',           // Basic UI components (Button, Input, etc.)
-      'layout': 'src/components/layout',   // Layout components (Header, Sidebar, etc.)
-      'forms': 'src/components/forms',     // Form components
-      'charts': 'src/components/charts',   // Chart components
-      'modals': 'src/components/modals',   // Modal components
-      'tables': 'src/components/tables',   // Table components
-      'navigation': 'src/components/navigation', // Navigation components
-      'feedback': 'src/components/feedback', // Loading, Error, Success components
+      ui: 'src/components/ui', // Basic UI components (Button, Input, etc.)
+      layout: 'src/components/layout', // Layout components (Header, Sidebar, etc.)
+      forms: 'src/components/forms', // Form components
+      charts: 'src/components/charts', // Chart components
+      modals: 'src/components/modals', // Modal components
+      tables: 'src/components/tables', // Table components
+      navigation: 'src/components/navigation', // Navigation components
+      feedback: 'src/components/feedback', // Loading, Error, Success components
       'data-display': 'src/components/data-display', // Cards, Lists, etc.
-      'surfaces': 'src/components/surfaces', // Surfaces and containers
+      surfaces: 'src/components/surfaces', // Surfaces and containers
     };
 
     for (const [name, path] of Object.entries(componentStructure)) {
@@ -76,19 +83,19 @@ class ProjectRestructure {
 
   async organizeAppRouter() {
     this.log('📱 Organizing App Router structure...');
-    
+
     const appStructure = {
       // Public routes
       '(auth)': 'src/app/(auth)',
       '(marketing)': 'src/app/(marketing)',
-      
+
       // Protected routes
       '(dashboard)': 'src/app/(dashboard)',
       '(admin)': 'src/app/(admin)',
-      
+
       // API routes
-      'api': 'src/app/api',
-      
+      api: 'src/app/api',
+
       // Special pages
       'globals.css': 'src/app/globals.css',
       'layout.tsx': 'src/app/layout.tsx',
@@ -103,7 +110,7 @@ class ProjectRestructure {
         // This is a file, not a directory
         continue;
       }
-      
+
       if (!fs.existsSync(path)) {
         fs.mkdirSync(path, { recursive: true });
         this.log(`✅ Created app directory: ${path}`);
@@ -113,16 +120,16 @@ class ProjectRestructure {
 
   async organizeServices() {
     this.log('🔧 Organizing services...');
-    
+
     const serviceStructure = {
-      'api': 'src/services/api',           // API client and endpoints
-      'auth': 'src/services/auth',         // Authentication services
-      'database': 'src/services/database', // Database services
-      'storage': 'src/services/storage',   // File storage services
-      'email': 'src/services/email',       // Email services
-      'notifications': 'src/services/notifications', // Notification services
-      'analytics': 'src/services/analytics', // Analytics services
-      'external': 'src/services/external', // External API integrations
+      api: 'src/services/api', // API client and endpoints
+      auth: 'src/services/auth', // Authentication services
+      database: 'src/services/database', // Database services
+      storage: 'src/services/storage', // File storage services
+      email: 'src/services/email', // Email services
+      notifications: 'src/services/notifications', // Notification services
+      analytics: 'src/services/analytics', // Analytics services
+      external: 'src/services/external', // External API integrations
     };
 
     for (const [name, path] of Object.entries(serviceStructure)) {
@@ -135,19 +142,19 @@ class ProjectRestructure {
 
   async organizeUtils() {
     this.log('🛠️ Organizing utilities...');
-    
+
     const utilStructure = {
-      'validation': 'src/utils/validation', // Validation utilities
-      'formatting': 'src/utils/formatting', // Date, number, text formatting
-      'helpers': 'src/utils/helpers',       // General helper functions
-      'constants': 'src/utils/constants',   // Utility constants
-      'hooks': 'src/utils/hooks',           // Custom hooks utilities
-      'api': 'src/utils/api',               // API utilities
-      'storage': 'src/utils/storage',       // Storage utilities
-      'date': 'src/utils/date',             // Date utilities
-      'string': 'src/utils/string',         // String utilities
-      'array': 'src/utils/array',           // Array utilities
-      'object': 'src/utils/object',         // Object utilities
+      validation: 'src/utils/validation', // Validation utilities
+      formatting: 'src/utils/formatting', // Date, number, text formatting
+      helpers: 'src/utils/helpers', // General helper functions
+      constants: 'src/utils/constants', // Utility constants
+      hooks: 'src/utils/hooks', // Custom hooks utilities
+      api: 'src/utils/api', // API utilities
+      storage: 'src/utils/storage', // Storage utilities
+      date: 'src/utils/date', // Date utilities
+      string: 'src/utils/string', // String utilities
+      array: 'src/utils/array', // Array utilities
+      object: 'src/utils/object', // Object utilities
     };
 
     for (const [name, path] of Object.entries(utilStructure)) {
@@ -160,7 +167,7 @@ class ProjectRestructure {
 
   async createIndexFiles() {
     this.log('📄 Creating index files...');
-    
+
     const indexFiles = [
       'src/components/index.ts',
       'src/lib/index.ts',
@@ -181,7 +188,7 @@ class ProjectRestructure {
 
   async createConfigFiles() {
     this.log('⚙️ Creating configuration files...');
-    
+
     const configFiles = {
       'src/config/app.ts': `// Application configuration
 export const appConfig = {
@@ -242,7 +249,7 @@ export default apiConfig;
 
   async createTypeDefinitions() {
     this.log('📝 Creating type definitions...');
-    
+
     const typeFiles = {
       'src/types/common.ts': `// Common types
 export interface BaseEntity {
@@ -338,7 +345,7 @@ export interface InputProps extends ComponentProps {
 
   async createConstants() {
     this.log('📋 Creating constants...');
-    
+
     const constantFiles = {
       'src/constants/routes.ts': `// Application routes
 export const ROUTES = {
@@ -453,7 +460,7 @@ export const HTTP_STATUS = {
 
   async run() {
     this.log('🚀 Starting project restructure...');
-    
+
     try {
       await this.createDirectoryStructure();
       await this.organizeComponents();
@@ -464,9 +471,8 @@ export const HTTP_STATUS = {
       await this.createConfigFiles();
       await this.createTypeDefinitions();
       await this.createConstants();
-      
+
       this.log('✅ Project restructure completed successfully!', 'success');
-      
     } catch (error) {
       this.log(`❌ Project restructure failed: ${error.message}`, 'error');
       throw error;

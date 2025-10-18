@@ -2,8 +2,8 @@
 // Real-time metrics API endpoint for dashboard
 // Provides system health, performance, and automation metrics
 
-import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabaseClient";
+import { NextRequest, NextResponse } from 'next/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
 
 const supabase = getServiceSupabase();
 
@@ -13,14 +13,14 @@ export async function GET(request: NextRequest) {
     const errorMessage = `[${timestamp}] Dashboard metrics error in ${context}: ${error.message || error}`;
     // Log to file if possible
     try {
-      const fs = require("fs");
-      const path = require("path");
+      const fs = require('fs');
+      const path = require('path');
       const logFile = path.join(
         process.cwd(),
-        "logs",
-        "dashboard_refactor.log",
+        'logs',
+        'dashboard_refactor.log'
       );
-      fs.appendFileSync(logFile, errorMessage + "\n");
+      fs.appendFileSync(logFile, errorMessage + '\n');
     } catch (logError) {
       // Ignore logging errors
     }
@@ -29,12 +29,12 @@ export async function GET(request: NextRequest) {
   try {
     // Check if database is accessible first
     const { data: healthCheck, error: healthError } = await supabase
-      .from("system_health")
-      .select("id")
+      .from('system_health')
+      .select('id')
       .limit(1);
 
     if (healthError) {
-      logError(healthError, "database_connection");
+      logError(healthError, 'database_connection');
       // Return fallback data when DB is down
       return NextResponse.json({
         timestamp: new Date().toISOString(),
@@ -90,13 +90,13 @@ export async function GET(request: NextRequest) {
           activities: { total: 0, calls: 0, meetings: 0, tasks: 0 },
         },
         summary: {
-          overallHealth: "unknown",
+          overallHealth: 'unknown',
           activeServices: 0,
           totalAutomation: 0,
           errorRate: 0,
         },
         fallback: true,
-        message: "Database connection failed, returning fallback data",
+        message: 'Database connection failed, returning fallback data',
       });
     }
 
@@ -121,11 +121,11 @@ export async function GET(request: NextRequest) {
 
     // Extract successful results or use fallback data
     const systemHealthData =
-      systemHealth.status === "fulfilled" ? systemHealth.value : [];
+      systemHealth.status === 'fulfilled' ? systemHealth.value : [];
     const systemMetricsData =
-      systemMetrics.status === "fulfilled" ? systemMetrics.value : [];
+      systemMetrics.status === 'fulfilled' ? systemMetrics.value : [];
     const socialMediaMetricsData =
-      socialMediaMetrics.status === "fulfilled"
+      socialMediaMetrics.status === 'fulfilled'
         ? socialMediaMetrics.value
         : {
             totalPosts: 0,
@@ -138,7 +138,7 @@ export async function GET(request: NextRequest) {
             },
           };
     const workflowMetricsData =
-      workflowMetrics.status === "fulfilled"
+      workflowMetrics.status === 'fulfilled'
         ? workflowMetrics.value
         : {
             totalWorkflows: 0,
@@ -147,7 +147,7 @@ export async function GET(request: NextRequest) {
             commonIssues: {},
           };
     const chatbotMetricsData =
-      chatbotMetrics.status === "fulfilled"
+      chatbotMetrics.status === 'fulfilled'
         ? chatbotMetrics.value
         : {
             activeFlows: 0,
@@ -157,7 +157,7 @@ export async function GET(request: NextRequest) {
             categories: [],
           };
     const healthcareMetricsData =
-      healthcareMetrics.status === "fulfilled"
+      healthcareMetrics.status === 'fulfilled'
         ? healthcareMetrics.value
         : {
             patients: { total: 0, active: 0, newThisMonth: 0, growthRate: 0 },
@@ -177,7 +177,7 @@ export async function GET(request: NextRequest) {
             },
           };
     const crmMetricsData =
-      crmMetrics.status === "fulfilled"
+      crmMetrics.status === 'fulfilled'
         ? crmMetrics.value
         : {
             leads: { total: 0, new: 0, qualified: 0, converted: 0 },
@@ -195,17 +195,17 @@ export async function GET(request: NextRequest) {
       healthcareMetrics,
       crmMetrics,
     ].forEach((result, index) => {
-      if (result.status === "rejected") {
+      if (result.status === 'rejected') {
         const contexts = [
-          "systemHealth",
-          "systemMetrics",
-          "socialMediaMetrics",
-          "workflowMetrics",
-          "chatbotMetrics",
-          "healthcareMetrics",
-          "crmMetrics",
+          'systemHealth',
+          'systemMetrics',
+          'socialMediaMetrics',
+          'workflowMetrics',
+          'chatbotMetrics',
+          'healthcareMetrics',
+          'crmMetrics',
         ];
-        logError(result.reason, contexts[index] || "unknown");
+        logError(result.reason, contexts[index] || 'unknown');
       }
     });
 
@@ -234,15 +234,15 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(metrics);
   } catch (error) {
-    logError(error, "main_handler");
+    logError(error, 'main_handler');
     return NextResponse.json(
       {
-        error: "Failed to fetch metrics",
+        error: 'Failed to fetch metrics',
         timestamp: new Date().toISOString(),
         fallback: true,
-        message: "System error occurred, returning fallback data",
+        message: 'System error occurred, returning fallback data',
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
@@ -251,11 +251,11 @@ async function getSystemHealth() {
   try {
     // Check if table exists first
     const { data, error } = await supabase
-      .from("system_health")
-      .select("id")
+      .from('system_health')
+      .select('id')
       .limit(1);
 
-    if (error && error.code === "PGRST116") {
+    if (error && error.code === 'PGRST116') {
       // Table doesn't exist, return empty array
       return [];
     }
@@ -263,16 +263,16 @@ async function getSystemHealth() {
     if (error) throw error;
 
     const { data: healthData, error: healthError } = await supabase
-      .from("system_health")
-      .select("*")
-      .order("last_check", { ascending: false })
+      .from('system_health')
+      .select('*')
+      .order('last_check', { ascending: false })
       .limit(10);
 
     if (healthError) throw healthError;
 
-    return healthData.map((service) => ({
+    return healthData.map(service => ({
       service: service.service_name,
-      status: service.is_healthy ? "healthy" : "unhealthy",
+      status: service.is_healthy ? 'healthy' : 'unhealthy',
       lastCheck: service.last_check,
       details: service.health_status,
     }));
@@ -285,11 +285,11 @@ async function getSystemMetrics() {
   try {
     // Check if table exists first
     const { data, error } = await supabase
-      .from("system_metrics")
-      .select("id")
+      .from('system_metrics')
+      .select('id')
       .limit(1);
 
-    if (error && error.code === "PGRST116") {
+    if (error && error.code === 'PGRST116') {
       // Table doesn't exist, return empty array
       return [];
     }
@@ -297,9 +297,9 @@ async function getSystemMetrics() {
     if (error) throw error;
 
     const { data: metricsData, error: metricsError } = await supabase
-      .from("system_metrics")
-      .select("*")
-      .order("timestamp", { ascending: false })
+      .from('system_metrics')
+      .select('*')
+      .order('timestamp', { ascending: false })
       .limit(50);
 
     if (metricsError) throw metricsError;
@@ -326,9 +326,9 @@ async function getSystemMetrics() {
 async function getSocialMediaMetrics() {
   try {
     const { data, error } = await supabase
-      .from("social_media_metrics")
-      .select("*")
-      .order("timestamp", { ascending: false })
+      .from('social_media_metrics')
+      .select('*')
+      .order('timestamp', { ascending: false })
       .limit(100);
 
     if (error) throw error;
@@ -344,7 +344,7 @@ async function getSocialMediaMetrics() {
       },
     };
 
-    data.forEach((metric) => {
+    data.forEach(metric => {
       const platform = metric.platform;
       if (!summary.platforms[platform]) {
         summary.platforms[platform] = {
@@ -386,23 +386,23 @@ async function getSocialMediaMetrics() {
 async function getWorkflowMetrics() {
   try {
     const { data, error } = await supabase
-      .from("workflow_validation")
-      .select("*")
-      .order("timestamp", { ascending: false })
+      .from('workflow_validation')
+      .select('*')
+      .order('timestamp', { ascending: false })
       .limit(50);
 
     if (error) throw error;
 
     const summary = {
       totalWorkflows: data.length,
-      validWorkflows: data.filter((w) => w.is_valid).length,
-      invalidWorkflows: data.filter((w) => !w.is_valid).length,
+      validWorkflows: data.filter(w => w.is_valid).length,
+      invalidWorkflows: data.filter(w => !w.is_valid).length,
       commonIssues: {},
     };
 
     // Count common issues
-    data.forEach((workflow) => {
-      workflow.issues.forEach((issue) => {
+    data.forEach(workflow => {
+      workflow.issues.forEach(issue => {
         summary.commonIssues[issue] = (summary.commonIssues[issue] || 0) + 1;
       });
     });
@@ -421,9 +421,9 @@ async function getWorkflowMetrics() {
 async function getChatbotMetrics() {
   try {
     const { data, error } = await supabase
-      .from("chatbot_flows")
-      .select("*")
-      .eq("status", "published");
+      .from('chatbot_flows')
+      .select('*')
+      .eq('status', 'published');
 
     if (error) throw error;
 
@@ -431,11 +431,11 @@ async function getChatbotMetrics() {
       activeFlows: data.length,
       totalNodes: data.reduce(
         (acc, flow) => acc + (flow.nodes?.length || 0),
-        0,
+        0
       ),
       totalTemplates: 0, // Would need separate query
-      languages: [...new Set(data.map((flow) => flow.language))],
-      categories: [...new Set(data.map((flow) => flow.category))],
+      languages: [...new Set(data.map(flow => flow.language))],
+      categories: [...new Set(data.map(flow => flow.category))],
     };
 
     return summary;
@@ -451,23 +451,23 @@ async function getChatbotMetrics() {
 }
 
 function calculateOverallHealth(systemHealth: any[]) {
-  if (systemHealth.length === 0) return "unknown";
+  if (systemHealth.length === 0) return 'unknown';
 
   const healthyServices = systemHealth.filter(
-    (service) => service.status === "healthy",
+    service => service.status === 'healthy'
   ).length;
   const totalServices = systemHealth.length;
 
   const healthPercentage = (healthyServices / totalServices) * 100;
 
-  if (healthPercentage >= 90) return "excellent";
-  if (healthPercentage >= 75) return "good";
-  if (healthPercentage >= 50) return "fair";
-  return "poor";
+  if (healthPercentage >= 90) return 'excellent';
+  if (healthPercentage >= 75) return 'good';
+  if (healthPercentage >= 50) return 'fair';
+  return 'poor';
 }
 
 function countActiveServices(systemHealth: any[]) {
-  return systemHealth.filter((service) => service.status === "healthy").length;
+  return systemHealth.filter(service => service.status === 'healthy').length;
 }
 
 function calculateErrorRate(systemMetrics: any[]) {
@@ -488,22 +488,22 @@ async function getHealthcareMetrics() {
   try {
     // Get patients data
     const { data: patients, error: patientsError } = await supabase
-      .from("patients")
-      .select("id, created_at, status");
+      .from('patients')
+      .select('id, created_at, status');
 
     if (patientsError) throw patientsError;
 
     // Get appointments data
     const { data: appointments, error: appointmentsError } = await supabase
-      .from("appointments")
-      .select("id, appointment_date, status, created_at");
+      .from('appointments')
+      .select('id, appointment_date, status, created_at');
 
     if (appointmentsError) throw appointmentsError;
 
     // Get doctors data
     const { data: doctors, error: doctorsError } = await supabase
-      .from("doctors")
-      .select("id, specialty, status");
+      .from('doctors')
+      .select('id, specialty, status');
 
     if (doctorsError) throw doctorsError;
 
@@ -514,29 +514,28 @@ async function getHealthcareMetrics() {
     const thisWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
 
     const patientsThisMonth = patients.filter(
-      (p) => new Date(p.created_at) >= thisMonth,
+      p => new Date(p.created_at) >= thisMonth
     ).length;
 
     const appointmentsToday = appointments.filter(
-      (a) =>
-        new Date(a.appointment_date).toDateString() === today.toDateString(),
+      a => new Date(a.appointment_date).toDateString() === today.toDateString()
     ).length;
 
     const appointmentsThisWeek = appointments.filter(
-      (a) => new Date(a.appointment_date) >= thisWeek,
+      a => new Date(a.appointment_date) >= thisWeek
     ).length;
 
     const completedAppointments = appointments.filter(
-      (a) => a.status === "completed",
+      a => a.status === 'completed'
     ).length;
 
     const cancelledAppointments = appointments.filter(
-      (a) => a.status === "cancelled",
+      a => a.status === 'cancelled'
     ).length;
 
     // Group doctors by specialty
     const specialties = doctors.reduce((acc, doctor) => {
-      const specialty = doctor.specialty || "غير محدد";
+      const specialty = doctor.specialty || 'غير محدد';
       acc[specialty] = (acc[specialty] || 0) + 1;
       return acc;
     }, {});
@@ -545,13 +544,13 @@ async function getHealthcareMetrics() {
       ([name, count]) => ({
         name,
         count: count as number,
-      }),
+      })
     );
 
     return {
       patients: {
         total: patients.length,
-        active: patients.filter((p) => p.status === "active").length,
+        active: patients.filter(p => p.status === 'active').length,
         newThisMonth: patientsThisMonth,
         growthRate:
           patients.length > 0
@@ -567,7 +566,7 @@ async function getHealthcareMetrics() {
       },
       doctors: {
         total: doctors.length,
-        active: doctors.filter((d) => d.status === "active").length,
+        active: doctors.filter(d => d.status === 'active').length,
         specialties: specialtiesArray,
       },
       revenue: {
@@ -602,22 +601,22 @@ async function getCrmMetrics() {
   try {
     // Get leads data
     const { data: leads, error: leadsError } = await supabase
-      .from("leads")
-      .select("id, status, created_at");
+      .from('leads')
+      .select('id, status, created_at');
 
     if (leadsError) throw leadsError;
 
     // Get deals data
     const { data: deals, error: dealsError } = await supabase
-      .from("deals")
-      .select("id, status, created_at");
+      .from('deals')
+      .select('id, status, created_at');
 
     if (dealsError) throw dealsError;
 
     // Get activities data
     const { data: activities, error: activitiesError } = await supabase
-      .from("activities")
-      .select("id, type, created_at");
+      .from('activities')
+      .select('id, type, created_at');
 
     if (activitiesError) throw activitiesError;
 
@@ -625,28 +624,28 @@ async function getCrmMetrics() {
     const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
     const newLeads = leads.filter(
-      (l) => new Date(l.created_at) >= thisMonth,
+      l => new Date(l.created_at) >= thisMonth
     ).length;
 
-    const qualifiedLeads = leads.filter((l) => l.status === "qualified").length;
+    const qualifiedLeads = leads.filter(l => l.status === 'qualified').length;
 
-    const convertedLeads = leads.filter((l) => l.status === "converted").length;
+    const convertedLeads = leads.filter(l => l.status === 'converted').length;
 
-    const wonDeals = deals.filter((d) => d.status === "won").length;
+    const wonDeals = deals.filter(d => d.status === 'won').length;
 
-    const lostDeals = deals.filter((d) => d.status === "lost").length;
+    const lostDeals = deals.filter(d => d.status === 'lost').length;
 
-    const pipelineDeals = deals.filter((d) =>
-      ["prospecting", "qualification", "proposal", "negotiation"].includes(
-        d.status,
-      ),
+    const pipelineDeals = deals.filter(d =>
+      ['prospecting', 'qualification', 'proposal', 'negotiation'].includes(
+        d.status
+      )
     ).length;
 
-    const calls = activities.filter((a) => a.type === "call").length;
+    const calls = activities.filter(a => a.type === 'call').length;
 
-    const meetings = activities.filter((a) => a.type === "meeting").length;
+    const meetings = activities.filter(a => a.type === 'meeting').length;
 
-    const tasks = activities.filter((a) => a.type === "task").length;
+    const tasks = activities.filter(a => a.type === 'task').length;
 
     return {
       leads: {

@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
-import { NextResponse } from "next/server";
+import { createClient } from '@/lib/supabase/server';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
@@ -7,23 +7,24 @@ export async function GET() {
 
     // Get overall stats
     const { count: totalPatients } = await supabase
-      .from("patients")
-      .select("*", { count: "exact", head: true });
+      .from('patients')
+      .select('*', { count: 'exact', head: true });
 
     const { count: totalAppointments } = await supabase
-      .from("appointments")
-      .select("*", { count: "exact", head: true });
+      .from('appointments')
+      .select('*', { count: 'exact', head: true });
 
     const { count: totalDoctors } = await supabase
-      .from("doctors")
-      .select("*", { count: "exact", head: true });
+      .from('doctors')
+      .select('*', { count: 'exact', head: true });
 
     const { data: revenue } = await supabase
-      .from("payments")
-      .select("amount")
-      .eq("status", "completed");
+      .from('payments')
+      .select('amount')
+      .eq('status', 'completed');
 
-    const totalRevenue = revenue?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0;
+    const totalRevenue =
+      revenue?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0;
 
     return NextResponse.json({
       stats: {
@@ -34,6 +35,9 @@ export async function GET() {
       },
     });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch stats" }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to fetch stats' },
+      { status: 500 }
+    );
   }
 }

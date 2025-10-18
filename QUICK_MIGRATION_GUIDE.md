@@ -26,6 +26,7 @@
 ## 🎯 الوحدات المحسّنة
 
 ### **Priority 1 (الوحدات الحرجة)**
+
 ```
 1. ✅ Appointments (المواعيد)
    • 20+ عمود جديد
@@ -50,6 +51,7 @@
 ```
 
 ### **Priority 2 (الوحدات الأساسية)**
+
 ```
 4. ✅ Chatbot & AI - تحليل المشاعر + الثقة
 5. ✅ CRM - Lead Scoring (0-100) + مراحل الحياة
@@ -60,6 +62,7 @@
 ```
 
 ### **Priority 3 (الوحدات الداعمة)**
+
 ```
 10. ✅ Settings & Localization
 11. ✅ Admin Module
@@ -72,6 +75,7 @@
 ## 📦 الملفات المُنشأة
 
 ### **52+ ملف جديد:**
+
 ```
 ✅ 13 Migrations (SQL)
 ✅ 4 Test Files (63+ tests)
@@ -81,6 +85,7 @@
 ```
 
 ### **الإحصائيات:**
+
 ```
 ✅ 100+ عمود تتبع جديد
 ✅ 70+ فهرس للأداء
@@ -91,6 +96,7 @@
 ```
 
 ### **الميزات المضافة:**
+
 ```
 ✅ 100% IP Address Tracking
 ✅ 100% User Agent Tracking
@@ -109,6 +115,7 @@
 ### ⏰ **خطوة 1: تطبيق الـ Migrations (15 دقيقة)**
 
 #### **افتح Supabase Studio:**
+
 ```
 https://supabase.com/dashboard/project/YOUR_PROJECT_ID/sql
 ```
@@ -118,6 +125,7 @@ https://supabase.com/dashboard/project/YOUR_PROJECT_ID/sql
 #### **طبّق الـ 13 migrations بالترتيب:**
 
 من GitHub repository، افتح مجلد:
+
 ```
 supabase/migrations/
 ```
@@ -149,6 +157,7 @@ Priority 2 & 3 Modules:
 ```
 
 #### **ملاحظات مهمة:**
+
 - ✅ انتظر كل migration يخلص قبل الثاني
 - ✅ لو طلع "already exists" عادي، كمّل
 - ❌ لو طلع خطأ أحمر، وقّف وراجع
@@ -161,13 +170,13 @@ Priority 2 & 3 Modules:
 
 ```sql
 -- 1️⃣ تحقق من الأعمدة الجديدة
-SELECT 
-  table_name, 
+SELECT
+  table_name,
   COUNT(*) as column_count
 FROM information_schema.columns
 WHERE table_name IN (
-  'appointments', 
-  'patients', 
+  'appointments',
+  'patients',
   'doctors',
   'payments',
   'chatbot_conversations',
@@ -187,7 +196,7 @@ ORDER BY column_count DESC;
 
 ```sql
 -- 2️⃣ تحقق من الدوال
-SELECT 
+SELECT
   routine_name,
   routine_type
 FROM information_schema.routines
@@ -200,7 +209,7 @@ ORDER BY routine_name;
 
 ```sql
 -- 3️⃣ تحقق من الفهارس
-SELECT 
+SELECT
   tablename,
   COUNT(*) as index_count
 FROM pg_indexes
@@ -230,6 +239,7 @@ npm run test:e2e tests/e2e/remaining-modules.spec.ts
 ```
 
 **النتيجة المتوقعة:**
+
 ```
 ✅ 63+ tests passing (100%)
 ```
@@ -269,17 +279,20 @@ npm run test:e2e tests/e2e/remaining-modules.spec.ts
 ## 🚨 استكشاف الأخطاء
 
 ### **خطأ: "column already exists"**
+
 ```
 ✅ هذا طبيعي! تجاهله وكمّل
 ```
 
 ### **خطأ: "function does not exist"**
+
 ```
 ❌ مشكلة!
 الحل: تأكد إن migration الخاص بالدوال (041, 043, etc) تم تطبيقه
 ```
 
 ### **الاختبارات تفشل**
+
 ```
 السبب: migrations غير مطبقة كلها
 الحل:
@@ -290,6 +303,7 @@ npm run test:e2e tests/e2e/remaining-modules.spec.ts
 ```
 
 ### **خطأ: "syntax error"**
+
 ```
 السبب: الملف ما انلصق صح
 الحل: انسخ الملف كامل من GitHub مرة ثانية
@@ -321,10 +335,12 @@ npm run test:e2e tests/e2e/remaining-modules.spec.ts
 ## 📚 أدلة إضافية
 
 ### **للتفاصيل الكاملة:**
+
 - `DEPLOYMENT_GUIDE.md` - دليل شامل مفصّل
 - `FINAL_COMPLETE_REPORT.md` - التقرير النهائي الكامل
 
 ### **تقارير الوحدات:**
+
 - `APPOINTMENTS_MODULE_REPORT.md`
 - `MEDICAL_RECORDS_MODULE_REPORT.md`
 - `PAYMENTS_MODULE_REPORT.md`
@@ -335,6 +351,7 @@ npm run test:e2e tests/e2e/remaining-modules.spec.ts
 ## 📞 ملخص في نقطتين
 
 ### **ما تم إنجازه:**
+
 ```
 ✅ 13 وحدة محسّنة بالكامل
 ✅ 100+ عمود تتبع
@@ -346,6 +363,7 @@ npm run test:e2e tests/e2e/remaining-modules.spec.ts
 ```
 
 ### **المطلوب منك:**
+
 ```
 ⏰ 15-20 دقيقة:
 1. طبّق 13 migrations عبر Supabase Studio
@@ -358,11 +376,13 @@ npm run test:e2e tests/e2e/remaining-modules.spec.ts
 ## 🚀 ابدأ الآن!
 
 **الخطوة الأولى:**
+
 1. افتح: https://supabase.com/dashboard
 2. اذهب إلى: SQL Editor
 3. ابدأ بـ Migration 040
 
 **GitHub Repository:**
+
 ```
 https://github.com/ascespade/moeen/tree/main/supabase/migrations
 ```

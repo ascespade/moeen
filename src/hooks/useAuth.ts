@@ -1,12 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
-import { User } from "@/types";
+import { useState, useEffect, useCallback } from 'react';
+import { User } from '@/types';
 import {
   getUser,
   setUser,
   getToken,
   setToken,
   clearAuth,
-} from "@/utils/storage";
+} from '@/utils/storage';
 // Authentication hooks
 
 interface AuthState {
@@ -23,7 +23,7 @@ interface AuthActions {
   loginWithCredentials: (
     email: string,
     password: string,
-    rememberMe?: boolean,
+    rememberMe?: boolean
   ) => Promise<{ success: boolean }>;
 }
 
@@ -63,10 +63,10 @@ export const useAuth = (): AuthState & AuthActions => {
   const loginWithCredentials = useCallback(
     async (email: string, password: string, rememberMe: boolean = false) => {
       try {
-        const response = await fetch("/api/auth/login", {
-          method: "POST",
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ email, password, rememberMe }),
         });
@@ -74,27 +74,27 @@ export const useAuth = (): AuthState & AuthActions => {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.error || "Login failed");
+          throw new Error(data.error || 'Login failed');
         }
 
         if (data.success) {
           login(data.data.user, data.data.token);
           return { success: true };
         } else {
-          throw new Error(data.error || "Login failed");
+          throw new Error(data.error || 'Login failed');
         }
       } catch (error) {
         throw error;
       }
     },
-    [login],
+    [login]
   );
 
   const logout = useCallback(async () => {
     try {
       // Call logout API to clear server-side session
-      await fetch("/api/auth/logout", {
-        method: "POST",
+      await fetch('/api/auth/logout', {
+        method: 'POST',
       });
     } catch (error) {
     } finally {
@@ -113,7 +113,7 @@ export const useAuth = (): AuthState & AuthActions => {
         setUserState(updatedUser);
       }
     },
-    [user],
+    [user]
   );
 
   return {
@@ -128,7 +128,7 @@ export const useAuth = (): AuthState & AuthActions => {
   };
 };
 
-export const useRequireAuth = (redirectTo: string = "/login") => {
+export const useRequireAuth = (redirectTo: string = '/login') => {
   const { isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
@@ -148,14 +148,14 @@ export const useRole = (requiredRole: string | string[]) => {
     (role: string) => {
       return user?.role === role;
     },
-    [user?.role],
+    [user?.role]
   );
 
   const hasAnyRole = useCallback(
     (roles: string[]) => {
       return user ? roles.includes(user.role) : false;
     },
-    [user],
+    [user]
   );
 
   const canAccess = useCallback(() => {

@@ -1,4 +1,5 @@
 # 🔌 نظام التكاملات مع Wizard UI - تقرير شامل
+
 ## Integrations Wizard System - Comprehensive Report
 
 **تاريخ الإعداد**: 2025-01-17  
@@ -10,6 +11,7 @@
 ## 📊 الملخص التنفيذي
 
 ### الوضع الحالي:
+
 - ❌ **UI محذوف** (IntegrationsTab.tsx)
 - ❌ **معظم التكاملات معطّلة** (WhatsApp, SMS, Email)
 - ❌ **التشفير Base64 فقط** (غير آمن)
@@ -17,6 +19,7 @@
 - ❌ **تجربة مستخدم سيئة**
 
 ### الرؤية المستقبلية:
+
 - ✅ **Wizard UI متقدم** مع خطوات واضحة
 - ✅ **تعليمات تفاعلية** لكل مرحلة
 - ✅ **اختبار فوري** للمدخلات
@@ -29,9 +32,11 @@
 ## 🧙‍♂️ نظام Wizard UI المتقدم
 
 ### الفلسفة:
+
 **"كل تكامل = رحلة سلسة وممتعة"**
 
 بدلاً من نماذج معقدة، كل تكامل يصبح:
+
 - 🎯 **رحلة واضحة** مع خطوات محددة
 - 📚 **تعليمات تفاعلية** في كل خطوة
 - ✅ **اختبار فوري** للمدخلات
@@ -42,6 +47,7 @@
 ## 🏗️ البنية المعمارية
 
 ### 1. **Wizard Engine** - محرك الويزرد
+
 ```typescript
 // src/lib/integrations/wizard-engine.ts
 
@@ -69,19 +75,19 @@ export interface WizardConfig {
 
 export class WizardEngine {
   private configs: Map<string, WizardConfig> = new Map();
-  
+
   registerWizard(config: WizardConfig): void {
     this.configs.set(config.id, config);
   }
-  
+
   getWizard(id: string): WizardConfig | undefined {
     return this.configs.get(id);
   }
-  
+
   getAllWizards(): WizardConfig[] {
     return Array.from(this.configs.values());
   }
-  
+
   getWizardsByCategory(category: string): WizardConfig[] {
     return this.getAllWizards().filter(w => w.category === category);
   }
@@ -93,6 +99,7 @@ export class WizardEngine {
 ### 2. **Wizard Components** - مكونات الويزرد
 
 #### A. **Wizard Container** - الحاوي الرئيسي
+
 ```typescript
 // src/components/integrations/wizard/WizardContainer.tsx
 
@@ -106,30 +113,30 @@ export function WizardContainer({ wizardId, onComplete, onCancel }: WizardContai
   const [currentStep, setCurrentStep] = useState(0);
   const [stepData, setStepData] = useState<Record<string, any>>({});
   const [isValidating, setIsValidating] = useState(false);
-  
+
   const wizard = wizardEngine.getWizard(wizardId);
   const currentStepConfig = wizard?.steps[currentStep];
-  
+
   const handleNext = async () => {
     if (!currentStepConfig) return;
-    
+
     setIsValidating(true);
-    
+
     try {
       // Validate current step
       const validation = await validateStep(currentStepConfig, stepData);
-      
+
       if (!validation.isValid) {
         showError(validation.errors);
         return;
       }
-      
+
       // Save step data
       setStepData(prev => ({
         ...prev,
         [currentStepConfig.id]: stepData[currentStepConfig.id]
       }));
-      
+
       // Move to next step
       if (currentStep < wizard.steps.length - 1) {
         setCurrentStep(currentStep + 1);
@@ -143,20 +150,20 @@ export function WizardContainer({ wizardId, onComplete, onCancel }: WizardContai
       setIsValidating(false);
     }
   };
-  
+
   const handlePrevious = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
   };
-  
+
   const handleStepDataChange = (stepId: string, data: any) => {
     setStepData(prev => ({
       ...prev,
       [stepId]: data
     }));
   };
-  
+
   return (
     <div className="wizard-container">
       {/* Progress Bar */}
@@ -164,7 +171,7 @@ export function WizardContainer({ wizardId, onComplete, onCancel }: WizardContai
         steps={wizard.steps}
         currentStep={currentStep}
       />
-      
+
       {/* Step Content */}
       <div className="wizard-content">
         <WizardStepHeader
@@ -172,14 +179,14 @@ export function WizardContainer({ wizardId, onComplete, onCancel }: WizardContai
           stepNumber={currentStep + 1}
           totalSteps={wizard.steps.length}
         />
-        
+
         <WizardStepContent
           step={currentStepConfig}
           data={stepData[currentStepConfig.id]}
           onChange={(data) => handleStepDataChange(currentStepConfig.id, data)}
         />
       </div>
-      
+
       {/* Navigation */}
       <WizardNavigation
         currentStep={currentStep}
@@ -198,6 +205,7 @@ export function WizardContainer({ wizardId, onComplete, onCancel }: WizardContai
 ---
 
 #### B. **Wizard Progress** - شريط التقدم
+
 ```typescript
 // src/components/integrations/wizard/WizardProgress.tsx
 
@@ -210,18 +218,18 @@ export function WizardProgress({ steps, currentStep }: WizardProgressProps) {
   return (
     <div className="wizard-progress">
       <div className="progress-bar">
-        <div 
+        <div
           className="progress-fill"
           style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
         />
       </div>
-      
+
       <div className="steps-indicators">
         {steps.map((step, index) => (
           <div
             key={step.id}
             className={`step-indicator ${
-              index <= currentStep ? 'completed' : 
+              index <= currentStep ? 'completed' :
               index === currentStep ? 'current' : 'pending'
             }`}
           >
@@ -249,6 +257,7 @@ export function WizardProgress({ steps, currentStep }: WizardProgressProps) {
 ---
 
 #### C. **Wizard Step Content** - محتوى الخطوة
+
 ```typescript
 // src/components/integrations/wizard/WizardStepContent.tsx
 
@@ -260,7 +269,7 @@ interface WizardStepContentProps {
 
 export function WizardStepContent({ step, data, onChange }: WizardStepContentProps) {
   const StepComponent = step.component;
-  
+
   return (
     <div className="wizard-step-content">
       <div className="step-header">
@@ -272,7 +281,7 @@ export function WizardStepContent({ step, data, onChange }: WizardStepContentPro
           <p className="step-description">{step.description}</p>
         </div>
       </div>
-      
+
       <div className="step-body">
         <StepComponent
           data={data}
@@ -280,7 +289,7 @@ export function WizardStepContent({ step, data, onChange }: WizardStepContentPro
           validation={step.validation}
         />
       </div>
-      
+
       {/* Help Section */}
       <WizardHelp
         stepId={step.id}
@@ -315,8 +324,17 @@ export const whatsappWizardConfig: WizardConfig = {
       icon: '🏢',
       component: WhatsAppAccountStep,
       validation: [
-        { field: 'businessName', required: true, message: 'اسم النشاط التجاري مطلوب' },
-        { field: 'phoneNumber', required: true, pattern: /^\+966[0-9]{9}$/, message: 'رقم الهاتف غير صحيح' },
+        {
+          field: 'businessName',
+          required: true,
+          message: 'اسم النشاط التجاري مطلوب',
+        },
+        {
+          field: 'phoneNumber',
+          required: true,
+          pattern: /^\+966[0-9]{9}$/,
+          message: 'رقم الهاتف غير صحيح',
+        },
       ],
     },
     {
@@ -326,9 +344,23 @@ export const whatsappWizardConfig: WizardConfig = {
       icon: '🔑',
       component: WhatsAppCredentialsStep,
       validation: [
-        { field: 'accessToken', required: true, minLength: 50, message: 'Access Token مطلوب' },
-        { field: 'phoneNumberId', required: true, message: 'Phone Number ID مطلوب' },
-        { field: 'webhookVerifyToken', required: true, minLength: 10, message: 'Webhook Verify Token مطلوب' },
+        {
+          field: 'accessToken',
+          required: true,
+          minLength: 50,
+          message: 'Access Token مطلوب',
+        },
+        {
+          field: 'phoneNumberId',
+          required: true,
+          message: 'Phone Number ID مطلوب',
+        },
+        {
+          field: 'webhookVerifyToken',
+          required: true,
+          minLength: 10,
+          message: 'Webhook Verify Token مطلوب',
+        },
       ],
     },
     {
@@ -338,7 +370,12 @@ export const whatsappWizardConfig: WizardConfig = {
       icon: '🔗',
       component: WhatsAppWebhookStep,
       validation: [
-        { field: 'webhookUrl', required: true, url: true, message: 'Webhook URL مطلوب' },
+        {
+          field: 'webhookUrl',
+          required: true,
+          url: true,
+          message: 'Webhook URL مطلوب',
+        },
       ],
     },
     {
@@ -356,6 +393,7 @@ export const whatsappWizardConfig: WizardConfig = {
 ---
 
 #### **WhatsApp Account Step** - خطوة الحساب
+
 ```typescript
 // src/components/integrations/wizard/steps/WhatsAppAccountStep.tsx
 
@@ -367,22 +405,22 @@ interface WhatsAppAccountStepProps {
 
 export function WhatsAppAccountStep({ data, onChange, validation }: WhatsAppAccountStepProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  
+
   const handleChange = (field: string, value: any) => {
     const newData = { ...data, [field]: value };
     onChange(newData);
-    
+
     // Real-time validation
     validateField(field, value, validation);
   };
-  
+
   return (
     <div className="whatsapp-account-step">
       <div className="step-intro">
         <h3>مرحباً! 👋</h3>
         <p>سنساعدك في ربط حساب WhatsApp Business مع النظام</p>
       </div>
-      
+
       <div className="form-section">
         <div className="form-group">
           <label htmlFor="businessName">
@@ -399,7 +437,7 @@ export function WhatsAppAccountStep({ data, onChange, validation }: WhatsAppAcco
             error={errors.businessName}
           />
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="phoneNumber">
             رقم الهاتف *
@@ -416,7 +454,7 @@ export function WhatsAppAccountStep({ data, onChange, validation }: WhatsAppAcco
             error={errors.phoneNumber}
           />
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="businessCategory">
             فئة النشاط التجاري
@@ -436,7 +474,7 @@ export function WhatsAppAccountStep({ data, onChange, validation }: WhatsAppAcco
           </Select>
         </div>
       </div>
-      
+
       <div className="help-section">
         <h4>💡 نصائح مهمة:</h4>
         <ul>
@@ -453,20 +491,21 @@ export function WhatsAppAccountStep({ data, onChange, validation }: WhatsAppAcco
 ---
 
 #### **WhatsApp Credentials Step** - خطوة بيانات API
+
 ```typescript
 // src/components/integrations/wizard/steps/WhatsAppCredentialsStep.tsx
 
 export function WhatsAppCredentialsStep({ data, onChange, validation }: WhatsAppCredentialsStepProps) {
   const [showSecrets, setShowSecrets] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
-  
+
   return (
     <div className="whatsapp-credentials-step">
       <div className="step-intro">
         <h3>معلومات API من Meta Business 🔑</h3>
         <p>ستحتاج للحصول على هذه البيانات من Meta Business Manager</p>
       </div>
-      
+
       <div className="credentials-guide">
         <div className="guide-card">
           <h4>📋 خطوات الحصول على البيانات:</h4>
@@ -478,7 +517,7 @@ export function WhatsAppCredentialsStep({ data, onChange, validation }: WhatsApp
           </ol>
         </div>
       </div>
-      
+
       <div className="form-section">
         <div className="form-group">
           <label htmlFor="accessToken">
@@ -505,7 +544,7 @@ export function WhatsAppCredentialsStep({ data, onChange, validation }: WhatsApp
             </Button>
           </div>
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="phoneNumberId">
             Phone Number ID *
@@ -521,7 +560,7 @@ export function WhatsAppCredentialsStep({ data, onChange, validation }: WhatsApp
             error={errors.phoneNumberId}
           />
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="webhookVerifyToken">
             Webhook Verify Token *
@@ -538,7 +577,7 @@ export function WhatsAppCredentialsStep({ data, onChange, validation }: WhatsApp
           />
         </div>
       </div>
-      
+
       <div className="security-warning">
         <Alert type="warning">
           <ShieldIcon />
@@ -556,6 +595,7 @@ export function WhatsAppCredentialsStep({ data, onChange, validation }: WhatsApp
 ---
 
 #### **WhatsApp Test Step** - خطوة الاختبار
+
 ```typescript
 // src/components/integrations/wizard/steps/WhatsAppTestStep.tsx
 
@@ -563,11 +603,11 @@ export function WhatsAppTestStep({ data, onChange, validation }: WhatsAppTestSte
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [isTesting, setIsTesting] = useState(false);
   const [testPhone, setTestPhone] = useState('');
-  
+
   const runTests = async () => {
     setIsTesting(true);
     setTestResults([]);
-    
+
     const tests = [
       {
         name: 'فحص الاتصال',
@@ -582,7 +622,7 @@ export function WhatsAppTestStep({ data, onChange, validation }: WhatsAppTestSte
         test: () => testWebhook(data),
       },
     ];
-    
+
     for (const test of tests) {
       try {
         const result = await test.test();
@@ -599,36 +639,36 @@ export function WhatsAppTestStep({ data, onChange, validation }: WhatsAppTestSte
         }]);
       }
     }
-    
+
     setIsTesting(false);
   };
-  
+
   const sendTestMessage = async () => {
     if (!testPhone) {
       showError('أدخل رقم الهاتف للاختبار');
       return;
     }
-    
+
     try {
       await sendWhatsAppMessage({
         to: testPhone,
         message: 'مرحباً! هذه رسالة اختبار من مركز الهمم 🏥',
         credentials: data,
       });
-      
+
       showSuccess('تم إرسال الرسالة بنجاح!');
     } catch (error) {
       showError('فشل في إرسال الرسالة: ' + error.message);
     }
   };
-  
+
   return (
     <div className="whatsapp-test-step">
       <div className="step-intro">
         <h3>اختبار الاتصال 🧪</h3>
         <p>تأكد من أن كل شيء يعمل بشكل صحيح</p>
       </div>
-      
+
       <div className="test-section">
         <Button
           onClick={runTests}
@@ -647,7 +687,7 @@ export function WhatsAppTestStep({ data, onChange, validation }: WhatsAppTestSte
             </>
           )}
         </Button>
-        
+
         {testResults.length > 0 && (
           <div className="test-results">
             {testResults.map((result, index) => (
@@ -668,11 +708,11 @@ export function WhatsAppTestStep({ data, onChange, validation }: WhatsAppTestSte
           </div>
         )}
       </div>
-      
+
       <div className="test-message-section">
         <h4>إرسال رسالة اختبار</h4>
         <p>أرسل رسالة تجريبية للتأكد من عمل النظام</p>
-        
+
         <div className="test-message-form">
           <Input
             label="رقم الهاتف للاختبار"
@@ -688,7 +728,7 @@ export function WhatsAppTestStep({ data, onChange, validation }: WhatsAppTestSte
           </Button>
         </div>
       </div>
-      
+
       <div className="success-message">
         <div className="success-icon">🎉</div>
         <h4>ممتاز! كل شيء جاهز</h4>
@@ -802,7 +842,12 @@ export const emailWizardConfig: WizardConfig = {
       icon: '⚙️',
       component: EmailSettingsStep,
       validation: [
-        { field: 'fromEmail', required: true, email: true, message: 'البريد المرسل مطلوب' },
+        {
+          field: 'fromEmail',
+          required: true,
+          email: true,
+          message: 'البريد المرسل مطلوب',
+        },
         { field: 'fromName', required: true, message: 'اسم المرسل مطلوب' },
       ],
     },
@@ -830,14 +875,14 @@ export const emailWizardConfig: WizardConfig = {
 export default function IntegrationsPage() {
   const [integrations, setIntegrations] = useState<Integration[]>([]);
   const [wizards, setWizards] = useState<WizardConfig[]>([]);
-  
+
   return (
     <div className="integrations-page">
       <div className="page-header">
         <h1>إدارة التكاملات</h1>
         <p>ربط النظام مع الخدمات الخارجية</p>
       </div>
-      
+
       {/* Quick Stats */}
       <div className="stats-grid">
         <StatCard
@@ -865,11 +910,11 @@ export default function IntegrationsPage() {
           color="orange"
         />
       </div>
-      
+
       {/* Integration Categories */}
       <div className="integration-categories">
         <h2>فئات التكاملات</h2>
-        
+
         <div className="categories-grid">
           <CategoryCard
             title="التواصل"
@@ -901,11 +946,11 @@ export default function IntegrationsPage() {
           />
         </div>
       </div>
-      
+
       {/* Active Integrations */}
       <div className="active-integrations">
         <h2>التكاملات النشطة</h2>
-        
+
         <div className="integrations-list">
           {integrations.map(integration => (
             <IntegrationCard
@@ -918,7 +963,7 @@ export default function IntegrationsPage() {
           ))}
         </div>
       </div>
-      
+
       {/* Add New Integration */}
       <div className="add-integration">
         <Button
@@ -929,7 +974,7 @@ export default function IntegrationsPage() {
           إضافة تكامل جديد
         </Button>
       </div>
-      
+
       {/* Wizard Selector Modal */}
       {showWizardSelector && (
         <WizardSelectorModal
@@ -959,7 +1004,7 @@ interface IntegrationCardProps {
 
 export function IntegrationCard({ integration, onEdit, onToggle, onDelete }: IntegrationCardProps) {
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const handleToggle = async () => {
     setIsLoading(true);
     try {
@@ -971,7 +1016,7 @@ export function IntegrationCard({ integration, onEdit, onToggle, onDelete }: Int
       setIsLoading(false);
     }
   };
-  
+
   const handleTest = async () => {
     setIsLoading(true);
     try {
@@ -983,7 +1028,7 @@ export function IntegrationCard({ integration, onEdit, onToggle, onDelete }: Int
       setIsLoading(false);
     }
   };
-  
+
   return (
     <Card className="integration-card">
       <div className="card-header">
@@ -1002,7 +1047,7 @@ export function IntegrationCard({ integration, onEdit, onToggle, onDelete }: Int
             </div>
           </div>
         </div>
-        
+
         <div className="integration-actions">
           <Switch
             checked={integration.isActive}
@@ -1011,7 +1056,7 @@ export function IntegrationCard({ integration, onEdit, onToggle, onDelete }: Int
           />
         </div>
       </div>
-      
+
       <div className="card-body">
         <div className="integration-stats">
           <div className="stat">
@@ -1029,7 +1074,7 @@ export function IntegrationCard({ integration, onEdit, onToggle, onDelete }: Int
             </span>
           </div>
         </div>
-        
+
         <div className="integration-health">
           <div className="health-indicator">
             <div className={`health-dot ${integration.healthStatus}`} />
@@ -1037,7 +1082,7 @@ export function IntegrationCard({ integration, onEdit, onToggle, onDelete }: Int
           </div>
         </div>
       </div>
-      
+
       <div className="card-footer">
         <div className="action-buttons">
           <Button
@@ -1084,50 +1129,48 @@ export function IntegrationCard({ integration, onEdit, onToggle, onDelete }: Int
 
 export class ConfigurationManager {
   private configs: Map<string, IntegrationConfig> = new Map();
-  
+
   async loadConfigurations(): Promise<void> {
     const { data } = await supabase
       .from('integration_configs')
       .select('*')
       .eq('is_active', true);
-    
+
     data?.forEach(config => {
       this.configs.set(config.id, config);
     });
   }
-  
+
   getConfig(integrationId: string): IntegrationConfig | undefined {
     return this.configs.get(integrationId);
   }
-  
+
   async saveConfig(config: IntegrationConfig): Promise<void> {
     // Encrypt sensitive data
     const encryptedConfig = await this.encryptConfig(config);
-    
-    const { error } = await supabase
-      .from('integration_configs')
-      .upsert({
-        ...config,
-        config: encryptedConfig,
-        updated_at: new Date().toISOString(),
-      });
-    
+
+    const { error } = await supabase.from('integration_configs').upsert({
+      ...config,
+      config: encryptedConfig,
+      updated_at: new Date().toISOString(),
+    });
+
     if (error) throw error;
-    
+
     this.configs.set(config.id, config);
   }
-  
+
   async testConfig(config: IntegrationConfig): Promise<TestResult> {
     const adapter = this.getAdapter(config.type);
     return await adapter.testConnection(config);
   }
-  
+
   private async encryptConfig(config: IntegrationConfig): Promise<any> {
     // Use proper encryption (not Base64!)
     const encryptionKey = await this.getEncryptionKey();
     return await encrypt(JSON.stringify(config.config), encryptionKey);
   }
-  
+
   private async decryptConfig(encryptedConfig: any): Promise<any> {
     const encryptionKey = await this.getEncryptionKey();
     return JSON.parse(await decrypt(encryptedConfig, encryptionKey));
@@ -1143,21 +1186,25 @@ export class ConfigurationManager {
 // src/lib/integrations/adapter-factory.ts
 
 export class AdapterFactory {
-  private adapters: Map<string, new (config: any) => IntegrationAdapter> = new Map();
-  
-  registerAdapter(type: string, adapterClass: new (config: any) => IntegrationAdapter): void {
+  private adapters: Map<string, new (config: any) => IntegrationAdapter> =
+    new Map();
+
+  registerAdapter(
+    type: string,
+    adapterClass: new (config: any) => IntegrationAdapter
+  ): void {
     this.adapters.set(type, adapterClass);
   }
-  
+
   createAdapter(type: string, config: any): IntegrationAdapter {
     const AdapterClass = this.adapters.get(type);
     if (!AdapterClass) {
       throw new Error(`Adapter not found for type: ${type}`);
     }
-    
+
     return new AdapterClass(config);
   }
-  
+
   getSupportedTypes(): string[] {
     return Array.from(this.adapters.keys());
   }
@@ -1187,13 +1234,16 @@ adapterFactory.registerAdapter('analytics_mixpanel', MixpanelAdapter);
 // src/lib/integrations/analytics.ts
 
 export class IntegrationAnalytics {
-  async getIntegrationStats(integrationId: string, period: string): Promise<IntegrationStats> {
+  async getIntegrationStats(
+    integrationId: string,
+    period: string
+  ): Promise<IntegrationStats> {
     const { data } = await supabase
       .from('integration_logs')
       .select('*')
       .eq('integration_id', integrationId)
       .gte('created_at', this.getPeriodStart(period));
-    
+
     return {
       totalRequests: data.length,
       successfulRequests: data.filter(log => log.status === 'success').length,
@@ -1204,10 +1254,10 @@ export class IntegrationAnalytics {
       hourlyDistribution: this.getHourlyDistribution(data),
     };
   }
-  
+
   async getProviderComparison(): Promise<ProviderComparison[]> {
     const providers = await this.getAllProviders();
-    
+
     return providers.map(provider => ({
       name: provider.name,
       type: provider.type,
@@ -1217,7 +1267,7 @@ export class IntegrationAnalytics {
       cost: provider.estimatedCost,
     }));
   }
-  
+
   async getUsageTrends(period: string): Promise<UsageTrend[]> {
     // Implementation for usage trends
   }
@@ -1234,21 +1284,21 @@ export class IntegrationAnalytics {
 export function IntegrationMonitor() {
   const [integrations, setIntegrations] = useState<Integration[]>([]);
   const [alerts, setAlerts] = useState<Alert[]>([]);
-  
+
   useEffect(() => {
     // Real-time updates
     const interval = setInterval(async () => {
       await updateIntegrationStatus();
       await checkForAlerts();
     }, 30000); // Every 30 seconds
-    
+
     return () => clearInterval(interval);
   }, []);
-  
+
   return (
     <div className="integration-monitor">
       <h2>مراقبة التكاملات</h2>
-      
+
       {/* Health Status */}
       <div className="health-grid">
         {integrations.map(integration => (
@@ -1259,7 +1309,7 @@ export function IntegrationMonitor() {
           />
         ))}
       </div>
-      
+
       {/* Alerts */}
       {alerts.length > 0 && (
         <div className="alerts-section">
@@ -1283,24 +1333,28 @@ export function IntegrationMonitor() {
 ## 🚀 خطة التنفيذ
 
 ### المرحلة 1: البنية التحتية (أسبوع 1-2)
+
 - [ ] إنشاء Wizard Engine
 - [ ] بناء مكونات الويزرد الأساسية
 - [ ] نظام إدارة التكوينات
 - [ ] Adapter Factory
 
 ### المرحلة 2: التكاملات الأساسية (أسبوع 3-4)
+
 - [ ] WhatsApp Wizard
 - [ ] SMS Wizard (Twilio)
 - [ ] Email Wizard (SendGrid)
 - [ ] واجهة إدارة التكاملات
 
 ### المرحلة 3: التكاملات المتقدمة (أسبوع 5-6)
+
 - [ ] Google Calendar Wizard
 - [ ] Analytics Wizards
 - [ ] Payment Wizards
 - [ ] مراقبة الأداء
 
 ### المرحلة 4: التحسينات (أسبوع 7-8)
+
 - [ ] AI-powered suggestions
 - [ ] Advanced testing
 - [ ] Performance optimization
@@ -1312,20 +1366,21 @@ export function IntegrationMonitor() {
 
 ## 💰 التكلفة المتوقعة
 
-| البند | التكلفة الشهرية |
-|------|-----------------|
-| WhatsApp Business API | $0-50 |
-| Twilio SMS | $20-100 |
-| SendGrid Email | $15-50 |
-| Google Calendar API | $0 |
-| Analytics APIs | $0-30 |
-| **المجموع** | **$35-230/شهر** |
+| البند                 | التكلفة الشهرية |
+| --------------------- | --------------- |
+| WhatsApp Business API | $0-50           |
+| Twilio SMS            | $20-100         |
+| SendGrid Email        | $15-50          |
+| Google Calendar API   | $0              |
+| Analytics APIs        | $0-30           |
+| **المجموع**           | **$35-230/شهر** |
 
 ---
 
 ## 🎯 النتائج المتوقعة
 
 ### بعد التنفيذ الكامل:
+
 - ✅ **سهولة الإعداد**: من 30 دقيقة إلى 5 دقائق
 - ✅ **تقليل الأخطاء**: من 25% إلى أقل من 5%
 - ✅ **رضا المستخدمين**: 95%+
@@ -1334,7 +1389,6 @@ export function IntegrationMonitor() {
 
 ---
 
-*تم إعداد هذا التقرير بتاريخ: 2025-01-17*  
-*الحالة: جاهز للتنفيذ الفوري*  
-*الأولوية: 🔴 عالية*
-
+_تم إعداد هذا التقرير بتاريخ: 2025-01-17_  
+_الحالة: جاهز للتنفيذ الفوري_  
+_الأولوية: 🔴 عالية_
