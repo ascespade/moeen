@@ -58,6 +58,8 @@
     "workflow:validate": "node scripts/validate-workflows.js",
     "workflow:optimize": "node scripts/optimize-workflows.js",
     "workflow:docs": "node scripts/generate-workflow-docs.js",
+    "ci:assistant": "echo '🤖 CI Assistant - Self-Healing Error Resolver'",
+    "ci:learn": "node -e \"console.log('🧠 تحليل أخطاء CI والتعلم منها...')\"",
     "prepare": "husky"
   },
   "dependencies": {
