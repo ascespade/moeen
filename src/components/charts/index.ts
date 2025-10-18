@@ -6,12 +6,12 @@
 
 // Re-export types if needed
 
- from "./AreaChart";
- from "./BarChart";
- from "./LineChart";
+from;"./AreaChart";
+from;"./BarChart";
+from;"./LineChart";
 
 
 export type { default as AreaChartProps } from "./AreaChart";
 export type { default as BarChartProps } from "./BarChart";
 export type { default as LineChartProps } from "./LineChart";
-export { default as AreaChart }
+export { default as AreaChart };
