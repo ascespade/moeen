@@ -23,25 +23,40 @@ env:
   CI: true
   NODE_ENV: production
   CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
-  WORKFLOW_MODE: ${{ github.event_name == 'push' && 'first-run' || 'assistant-triggered' }}
+  WORKFLOW_MODE: ${{ github.event_name == 'push' && 'incremental' || 'assistant-triggered' }}
+  PARALLEL_JOBS: ${{ vars.PARALLEL_JOBS || '4' }}
+  MAX_PARALLEL_TESTS: ${{ vars.MAX_PARALLEL_TESTS || '8' }}
+  INCREMENTAL_THRESHOLD: ${{ vars.INCREMENTAL_THRESHOLD || '0.3' }}
+  ENABLE_PLAYWRIGHT: ${{ vars.ENABLE_PLAYWRIGHT || 'true' }}
+  ENABLE_DATABASE_TESTS: ${{ vars.ENABLE_DATABASE_TESTS || 'true' }}
+  ENABLE_SECURITY_TESTS: ${{ vars.ENABLE_SECURITY_TESTS || 'true' }}
+  TEST_TIMEOUT: ${{ vars.TEST_TIMEOUT || '300' }}
+  CACHE_STRATEGY: ${{ vars.CACHE_STRATEGY || 'aggressive' }}
 
 jobs:
-  # 🔍 Job 1: Initial Analysis & Error Detection
-  initial-analysis:
+  # 🔍 Job 1: Smart Change Analysis & Incremental Detection
+  smart-change-analysis:
     if: github.event_name == 'push' && !contains(github.event.head_commit.message, '🤖 CI Assistant') && !contains(github.event.head_commit.message, 'CI Assistant')
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     outputs:
-      has-errors: ${{ steps.error-detection.outputs.has-errors }}
-      error-count: ${{ steps.error-detection.outputs.error-count }}
-      error-summary: ${{ steps.error-detection.outputs.error-summary }}
+      is-first-run: ${{ steps.change-analysis.outputs.is-first-run }}
+      has-errors: ${{ steps.change-analysis.outputs.has-errors }}
+      error-count: ${{ steps.change-analysis.outputs.error-count }}
+      error-summary: ${{ steps.change-analysis.outputs.error-summary }}
+      changed-files: ${{ steps.change-analysis.outputs.changed-files }}
+      test-scope: ${{ steps.change-analysis.outputs.test-scope }}
+      enable-playwright: ${{ steps.change-analysis.outputs.enable-playwright }}
+      enable-database: ${{ steps.change-analysis.outputs.enable-database }}
+      enable-security: ${{ steps.change-analysis.outputs.enable-security }}
+      parallel-strategy: ${{ steps.change-analysis.outputs.parallel-strategy }}
     
     steps:
-      - name: 📥 تحميل الكود
+      - name: 📥 تحميل الكود مع التاريخ
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
+          fetch-depth: 2
 
       - name: 📦 إعداد البيئة
         uses: actions/setup-node@v4
@@ -49,107 +64,216 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
-      - name: 📥 تثبيت التبعيات
+      - name: 📥 تثبيت التبعيات الأساسية
         run: |
           npm ci
-          npm install js-yaml sqlite3 playwright @playwright/test superwright
-          npx playwright install --with-deps chromium
+          npm install js-yaml sqlite3
 
       - name: 🧠 تهيئة نظام التعلم
         run: |
           echo "🧠 تهيئة نظام التعلم..."
           node scripts/ci-learning-db.js init
 
-      - name: 🔍 فحص شامل للمشروع
-        id: error-detection
+      - name: 🔍 تحليل التغييرات الذكي
+        id: change-analysis
         run: |
-          echo "🔍 بدء الفحص الشامل للمشروع..."
+          echo "🔍 تحليل التغييرات الذكي..."
           
           # إنشاء مجلدات التحليل
           mkdir -p analysis/ logs/ reports/ learning/
           
-          # فحص الـ workflows
-          echo "🔍 فحص GitHub Actions workflows..."
-          node scripts/validate-workflows.js > logs/workflow-validation.log 2>&1
-          
-          # فحص الكود
-          echo "🔍 فحص الكود..."
-          npm run lint > logs/lint-check.log 2>&1 || echo "Lint errors found"
-          
-          # فحص التبعيات
-          echo "🔍 فحص التبعيات..."
-          npm audit > logs/security-audit.log 2>&1 || echo "Security issues found"
-          
-          # فحص قاعدة البيانات
-          echo "🔍 فحص قاعدة البيانات..."
-          node scripts/ci-learning-db.js report > logs/db-status.log 2>&1
-          
-          # تحليل الأخطاء
-          echo "📊 تحليل الأخطاء..."
+          # تحليل التغييرات
+          echo "📊 تحليل التغييرات في الكوميت..."
           node -e "
             const fs = require('fs');
-            const errors = [];
+            const { execSync } = require('child_process');
             
-            // فحص workflow validation
-            if (fs.existsSync('logs/workflow-validation.log')) {
-              const content = fs.readFileSync('logs/workflow-validation.log', 'utf8');
-              if (content.includes('❌') || content.includes('Error')) {
-                errors.push('Workflow validation errors found');
+            try {
+              // الحصول على الملفات المتغيرة
+              const changedFiles = execSync('git diff --name-only HEAD~1 HEAD', { encoding: 'utf8' })
+                .trim().split('\\n').filter(f => f.length > 0);
+              
+              // تحليل نوع التغييرات
+              const analysis = {
+                isFirstRun: false,
+                hasErrors: false,
+                errorCount: 0,
+                errorSummary: '',
+                changedFiles: changedFiles,
+                testScope: 'full',
+                enablePlaywright: true,
+                enableDatabase: true,
+                enableSecurity: true,
+                parallelStrategy: 'balanced'
+              };
+              
+              // فحص إذا كان أول تشغيل
+              const hasLearningData = fs.existsSync('ci_memory.sqlite');
+              if (!hasLearningData || changedFiles.length === 0) {
+                analysis.isFirstRun = true;
+                analysis.testScope = 'full';
+                console.log('🆕 أول تشغيل - فحص شامل');
+              } else {
+                analysis.isFirstRun = false;
+                console.log('🔄 تشغيل تدريجي - فحص الملفات المتغيرة فقط');
               }
+              
+              // تحليل نوع التغييرات
+              const workflowChanges = changedFiles.filter(f => f.includes('.github/workflows/'));
+              const codeChanges = changedFiles.filter(f => f.match(/\\.(js|ts|jsx|tsx|py|java|cpp|c|h)$/));
+              const testChanges = changedFiles.filter(f => f.includes('test') || f.includes('spec'));
+              const configChanges = changedFiles.filter(f => f.match(/\\.(json|yaml|yml|toml|ini)$/));
+              const dbChanges = changedFiles.filter(f => f.includes('database') || f.includes('migration') || f.includes('schema'));
+              
+              // تحديد نطاق الاختبار
+              if (workflowChanges.length > 0 && codeChanges.length === 0) {
+                analysis.testScope = 'workflow-only';
+                analysis.enablePlaywright = false;
+                analysis.enableDatabase = false;
+                console.log('🔧 تغييرات في الـ workflows فقط - تخطي Playwright');
+              } else if (codeChanges.length > 0) {
+                analysis.testScope = 'code-focused';
+                analysis.enablePlaywright = true;
+                analysis.enableDatabase = true;
+                console.log('💻 تغييرات في الكود - تفعيل Playwright');
+              } else if (dbChanges.length > 0) {
+                analysis.testScope = 'database-focused';
+                analysis.enableDatabase = true;
+                analysis.enablePlaywright = false;
+                console.log('🗄️ تغييرات في قاعدة البيانات - تفعيل اختبارات DB');
+              }
+              
+              // تحديد استراتيجية التوازي
+              const totalChanges = changedFiles.length;
+              if (totalChanges > 20) {
+                analysis.parallelStrategy = 'aggressive';
+              } else if (totalChanges > 10) {
+                analysis.parallelStrategy = 'balanced';
+              } else {
+                analysis.parallelStrategy = 'conservative';
+              }
+              
+              // فحص الأخطاء الأساسية
+              try {
+                execSync('node scripts/validate-workflows.js', { stdio: 'pipe' });
+                console.log('✅ الـ workflows صحيحة');
+              } catch (e) {
+                analysis.hasErrors = true;
+                analysis.errorCount++;
+                analysis.errorSummary += 'Workflow validation errors; ';
+                console.log('❌ أخطاء في الـ workflows');
+              }
+              
+              try {
+                execSync('npm run lint', { stdio: 'pipe' });
+                console.log('✅ الكود نظيف');
+              } catch (e) {
+                analysis.hasErrors = true;
+                analysis.errorCount++;
+                analysis.errorSummary += 'Lint errors; ';
+                console.log('❌ أخطاء في الكود');
+              }
+              
+              // حفظ التحليل
+              fs.writeFileSync('analysis/change-analysis.json', JSON.stringify(analysis, null, 2));
+              
+              // إخراج النتائج
+              console.log('is-first-run=' + analysis.isFirstRun);
+              console.log('has-errors=' + analysis.hasErrors);
+              console.log('error-count=' + analysis.errorCount);
+              console.log('error-summary=' + analysis.errorSummary);
+              console.log('changed-files=' + JSON.stringify(changedFiles));
+              console.log('test-scope=' + analysis.testScope);
+              console.log('enable-playwright=' + analysis.enablePlaywright);
+              console.log('enable-database=' + analysis.enableDatabase);
+              console.log('enable-security=' + analysis.enableSecurity);
+              console.log('parallel-strategy=' + analysis.parallelStrategy);
+              
+            } catch (error) {
+              console.error('❌ خطأ في تحليل التغييرات:', error.message);
+              console.log('is-first-run=true');
+              console.log('has-errors=true');
+              console.log('error-count=1');
+              console.log('error-summary=Change analysis failed');
+              console.log('changed-files=[]');
+              console.log('test-scope=full');
+              console.log('enable-playwright=true');
+              console.log('enable-database=true');
+              console.log('enable-security=true');
+              console.log('parallel-strategy=balanced');
+            }
+          "
+
+      - name: 📊 إنشاء مصفوفة الاختبارات الذكية
+        run: |
+          echo "📊 إنشاء مصفوفة الاختبارات الذكية..."
+          
+          node -e "
+            const fs = require('fs');
+            const analysis = JSON.parse(fs.readFileSync('analysis/change-analysis.json', 'utf8'));
+            
+            const testMatrix = [];
+            
+            // إضافة اختبارات أساسية دائماً
+            testMatrix.push('basic-validation');
+            
+            // إضافة اختبارات حسب نطاق التغييرات
+            if (analysis.testScope === 'full' || analysis.testScope === 'code-focused') {
+              if (analysis.enablePlaywright) {
+                testMatrix.push('playwright-ui');
+                testMatrix.push('playwright-integration');
+              }
+              if (analysis.enableDatabase) {
+                testMatrix.push('database-crud');
+                testMatrix.push('database-connection');
+              }
+              if (analysis.enableSecurity) {
+                testMatrix.push('security-scan');
+                testMatrix.push('vulnerability-check');
+              }
+            } else if (analysis.testScope === 'workflow-only') {
+              testMatrix.push('workflow-validation');
+              testMatrix.push('workflow-syntax');
+            } else if (analysis.testScope === 'database-focused') {
+              testMatrix.push('database-migration');
+              testMatrix.push('database-schema');
+              testMatrix.push('database-performance');
             }
             
-            // فحص lint
-            if (fs.existsSync('logs/lint-check.log')) {
-              const content = fs.readFileSync('logs/lint-check.log', 'utf8');
-              if (content.includes('error') || content.includes('Error')) {
-                errors.push('Lint errors found');
-              }
+            // إضافة اختبارات متقدمة للتوازي
+            if (analysis.parallelStrategy === 'aggressive') {
+              testMatrix.push('performance-test');
+              testMatrix.push('load-test');
+              testMatrix.push('stress-test');
             }
             
-            // فحص security
-            if (fs.existsSync('logs/security-audit.log')) {
-              const content = fs.readFileSync('logs/security-audit.log', 'utf8');
-              if (content.includes('vulnerabilities') || content.includes('high') || content.includes('critical')) {
-                errors.push('Security vulnerabilities found');
-              }
-            }
-            
-            const hasErrors = errors.length > 0;
-            const errorCount = errors.length;
-            const errorSummary = errors.join('; ');
-            
-            console.log('has-errors=' + hasErrors);
-            console.log('error-count=' + errorCount);
-            console.log('error-summary=' + errorSummary);
-            
-            // حفظ النتائج
-            fs.writeFileSync('analysis/error-analysis.json', JSON.stringify({
-              hasErrors,
-              errorCount,
-              errors,
-              timestamp: new Date().toISOString()
-            }, null, 2));
+            // حفظ مصفوفة الاختبارات
+            fs.writeFileSync('analysis/test-matrix.json', JSON.stringify(testMatrix, null, 2));
+            console.log('test-matrix=' + JSON.stringify(testMatrix));
           "
 
       - name: 📊 حفظ نتائج التحليل
         uses: actions/upload-artifact@v4
         with:
-          name: initial-analysis
+          name: smart-change-analysis
           path: |
             analysis/
             logs/
           retention-days: 7
 
-  # 🔧 Job 2: Smart Error Fixing with Cursor API
+  # 🔧 Job 2: Parallel Smart Error Fixing with Cursor API
   smart-error-fixing:
-    if: needs.initial-analysis.outputs.has-errors == 'true'
-    needs: initial-analysis
+    if: needs.smart-change-analysis.outputs.has-errors == 'true'
+    needs: smart-change-analysis
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      max-parallel: ${{ env.PARALLEL_JOBS }}
     outputs:
       fixes-applied: ${{ steps.fix-summary.outputs.fixes-applied }}
       fix-count: ${{ steps.fix-summary.outputs.fix-count }}
       remaining-errors: ${{ steps.fix-summary.outputs.remaining-errors }}
+      parallel-jobs: ${{ steps.fix-summary.outputs.parallel-jobs }}
     
     steps:
       - name: 📥 تحميل الكود
@@ -422,16 +546,22 @@ jobs:
             }
           "
 
-  # 🧪 Job 4: Comprehensive Testing with Playwright + Superwright
+  # 🧪 Job 4: Parallel Incremental Testing with Smart Scope
   comprehensive-testing:
     if: needs.smart-error-fixing.outputs.remaining-errors == '0' || needs.iterative-fixing.result == 'success'
-    needs: [initial-analysis, smart-error-fixing]
+    needs: [smart-change-analysis, smart-error-fixing]
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: ${{ env.TEST_TIMEOUT }}
+    strategy:
+      max-parallel: ${{ env.MAX_PARALLEL_TESTS }}
+      matrix:
+        test-type: ${{ fromJson(needs.smart-change-analysis.outputs.test-matrix) }}
     outputs:
       test-results: ${{ steps.test-summary.outputs.test-results }}
       test-coverage: ${{ steps.test-summary.outputs.test-coverage }}
       critical-issues: ${{ steps.test-summary.outputs.critical-issues }}
+      parallel-tests: ${{ steps.test-summary.outputs.parallel-tests }}
+      incremental-success: ${{ steps.test-summary.outputs.incremental-success }}
     
     steps:
       - name: 📥 تحميل الكود
