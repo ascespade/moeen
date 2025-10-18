@@ -446,8 +446,16 @@ permissions:
           echo "💾 حفظ التغييرات..."
           
           # فحص إضافي لمنع الحلقة المفرغة
-          if [[ "${{ github.event.workflow_run.head_commit.message }}" == *"🤖 CI Assistant"* ]] || [[ "${{ github.event.workflow_run.head_commit.message }}" == *"CI Assistant"* ]]; then
+          COMMIT_MSG="${{ github.event.workflow_run.head_commit.message }}"
+          if [[ "$COMMIT_MSG" == *"🤖 CI Assistant"* ]] || [[ "$COMMIT_MSG" == *"CI Assistant"* ]] || [[ "$COMMIT_MSG" == *"Self-Healing"* ]]; then
             echo "⚠️ تم منع الإصلاح لتجنب الحلقة المفرغة"
+            echo "📝 رسالة الـ commit: $COMMIT_MSG"
+            exit 0
+          fi
+          
+          # فحص إذا كان هناك تغييرات فعلاً
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "ℹ️ لا توجد تغييرات للحفظ"
             exit 0
           fi
           
