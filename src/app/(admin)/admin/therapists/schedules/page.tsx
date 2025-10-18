@@ -29,7 +29,6 @@ const DAYS = [
   "السبت",
 ];
 
-}
 
 export default function TherapistSchedulesPage() {
   const [therapists, setTherapists] = useState<Therapist[]>([]);

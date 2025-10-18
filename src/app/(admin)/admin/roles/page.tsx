@@ -47,7 +47,6 @@ const mockRoles: Role[] = [
     createdAt: "2024-01-01",
   },
 ];
-}
 
 const allPermissions = [
   { id: "users", name: "إدارة المستخدمين" },
