@@ -66,7 +66,7 @@ jobs:
 
       - name: 📥 تثبيت التبعيات الأساسية
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm install js-yaml sqlite3
 
       - name: 🧠 تهيئة نظام التعلم
@@ -290,7 +290,7 @@ jobs:
 
       - name: 📥 تثبيت التبعيات
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm install js-yaml sqlite3 playwright @playwright/test superwright
           npx playwright install --with-deps chromium
 
@@ -472,7 +472,7 @@ jobs:
 
       - name: 📥 تثبيت التبعيات
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm install js-yaml sqlite3 playwright @playwright/test superwright
           npx playwright install --with-deps chromium
 
@@ -578,7 +578,7 @@ jobs:
 
       - name: 📥 تثبيت التبعيات
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm install js-yaml sqlite3 playwright @playwright/test superwright
           npx playwright install --with-deps chromium
 
