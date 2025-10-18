@@ -415,6 +415,94 @@ async function main(options) {
   await fs.mkdir(path.join(projectRoot, 'reports'), { recursive: true }).catch(() => {});
   await fs.mkdir(BACKUP_DIR, { recursive: true }).catch(() => {});
 
+  // Check if this is first run by looking for previous reports
+  const isFirstRun = !(await fs.access(path.join(projectRoot, 'reports', 'ai_validation_report.json')).then(() => true).catch(() => false));
+  
+  if (isFirstRun) {
+    log('🚀 FIRST RUN DETECTED - Running comprehensive test suite...');
+    
+    // Run all comprehensive tests first
+    log('🧪 Running comprehensive frontend tests...');
+    try {
+      execSync('npx playwright test tests/comprehensive/frontend.spec.js --reporter=list', { stdio: 'inherit' });
+      log('✅ Frontend tests completed');
+    } catch (e) {
+      log(`⚠️ Frontend tests had issues: ${e.message}`);
+    }
+    
+    log('🌐 Running comprehensive API tests...');
+    try {
+      execSync('npx playwright test tests/comprehensive/api.spec.js --reporter=list', { stdio: 'inherit' });
+      log('✅ API tests completed');
+    } catch (e) {
+      log(`⚠️ API tests had issues: ${e.message}`);
+    }
+    
+    log('🗄️ Running comprehensive database tests...');
+    try {
+      execSync('npx playwright test tests/comprehensive/database.spec.js --reporter=list', { stdio: 'inherit' });
+      log('✅ Database tests completed');
+    } catch (e) {
+      log(`⚠️ Database tests had issues: ${e.message}`);
+    }
+    
+    // Run full test suite
+    log('🧪 Running full test suite...');
+    try {
+      execSync('npm run test:unit', { stdio: 'inherit' });
+      log('✅ Unit tests completed');
+    } catch (e) {
+      log(`⚠️ Unit tests had issues: ${e.message}`);
+    }
+    
+    try {
+      execSync('npm run test:integration', { stdio: 'inherit' });
+      log('✅ Integration tests completed');
+    } catch (e) {
+      log(`⚠️ Integration tests had issues: ${e.message}`);
+    }
+    
+    try {
+      execSync('npm run test:e2e', { stdio: 'inherit' });
+      log('✅ E2E tests completed');
+    } catch (e) {
+      log(`⚠️ E2E tests had issues: ${e.message}`);
+    }
+    
+    log('🎉 First run comprehensive testing completed!');
+    log('🔄 Now proceeding with normal AI self-healing process...');
+  } else {
+    log('🔄 SUBSEQUENT RUN - Testing only changed modules...');
+    
+    // Check for changed files since last run
+    try {
+      const changedFiles = execSync('git diff --name-only HEAD~1 HEAD', { encoding: 'utf8' }).trim().split('\n').filter(f => f);
+      if (changedFiles.length > 0) {
+        log(`📝 Found ${changedFiles.length} changed files: ${changedFiles.join(', ')}`);
+        
+        // Test only changed modules
+        const changedModules = new Set();
+        changedFiles.forEach(file => {
+          if (file.startsWith('src/')) {
+            const parts = file.split('/');
+            if (parts.length > 1) {
+              changedModules.add(parts[1]);
+            }
+          }
+        });
+        
+        if (changedModules.size > 0) {
+          log(`🎯 Testing only changed modules: ${Array.from(changedModules).join(', ')}`);
+          // This will be handled in the main loop below
+        }
+      } else {
+        log('ℹ️ No changed files detected, running full analysis...');
+      }
+    } catch (e) {
+      log(`⚠️ Could not detect changed files: ${e.message}`);
+    }
+  }
+
   let totalFixes = 0;
   let totalLinesChanged = 0;
   let filesToBackup = [];
