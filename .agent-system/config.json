@@ -1,7 +1,7 @@
 {
   "name": "Auto-Fix Agent System",
-  "version": "2.0.0",
-  "description": "Intelligent auto-fix system for errors and warnings",
+  "version": "3.0.0",
+  "description": "Intelligent auto-fix, organization, and cleanup system",
   "features": {
     "lint_fix": true,
     "type_fix": true,
@@ -9,14 +9,20 @@
     "unused_vars_removal": true,
     "formatting": true,
     "build_check": true,
-    "test_fix": true
+    "test_fix": true,
+    "folder_organization": true,
+    "code_organization": true,
+    "project_cleanup": true
   },
   "checks": [
     "typescript",
     "eslint",
     "prettier",
     "imports",
-    "build"
+    "build",
+    "structure",
+    "duplicates",
+    "unused_files"
   ],
   "fix_strategies": {
     "missing_imports": "auto_add",
@@ -25,8 +31,26 @@
     "lint_warnings": "auto_fix",
     "formatting": "prettier"
   },
-  "max_iterations": 5,
-  "abort_on_critical": false,
-  "create_backup": true,
+  "organization": {
+    "organize_imports": true,
+    "organize_exports": true,
+    "create_index_files": true,
+    "categorize_components": true,
+    "clean_comments": true
+  },
+  "cleanup": {
+    "remove_build_files": true,
+    "remove_temp_files": true,
+    "clean_node_modules": true,
+    "find_unused_files": true,
+    "analyze_size": true
+  },
+  "safety": {
+    "max_iterations": 5,
+    "abort_on_critical": false,
+    "create_backup": true,
+    "backup_retention_days": 7,
+    "dry_run": false
+  },
   "log_level": "verbose"
 }
