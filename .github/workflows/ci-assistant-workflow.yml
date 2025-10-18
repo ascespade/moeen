@@ -437,15 +437,7 @@ jobs:
           git add .
           
           # إنشاء commit
-          git commit -m "🤖 CI Assistant: إصلاح فشل Master Workflow
-
-🔍 سبب الفشل: ${{ needs.analyze-master-failure.outputs.failure-reason }}
-🔧 الإصلاحات المطبقة: ${{ needs.apply-cursor-fixes.outputs.fixes-applied }}
-✅ نجح: ${{ needs.apply-cursor-fixes.outputs.success-count }}
-❌ فشل: ${{ needs.apply-cursor-fixes.outputs.failure-count }}
-
-🤖 تم بواسطة: CI Assistant
-🔄 سيتم تشغيل Master Workflow مرة أخرى" || echo "لا توجد تغييرات للحفظ"
+          git commit -m "🤖 CI Assistant: إصلاح فشل Master Workflow" || echo "لا توجد تغييرات للحفظ"
           
           # الحصول على hash الـ commit
           COMMIT_HASH=$(git rev-parse HEAD)
@@ -559,13 +551,7 @@ jobs:
           git add CI_ASSISTANT_REPORT.md
           
           # إنشاء commit للتقرير
-          git commit -m "📊 CI Assistant Report - $(date '+%Y-%m-%d %H:%M:%S')
-
-🔍 سبب الفشل: ${{ needs.analyze-master-failure.outputs.failure-reason }}
-🔧 الإصلاحات: ${{ needs.apply-cursor-fixes.outputs.fixes-applied }}
-✅ النجاح: ${{ needs.apply-cursor-fixes.outputs.success-count }}
-
-🤖 تم بواسطة: CI Assistant" || echo "لا توجد تغييرات للحفظ"
+          git commit -m "📊 CI Assistant Report - $(date '+%Y-%m-%d %H:%M:%S')" || echo "لا توجد تغييرات للحفظ"
 
       - name: 📤 رفع التقرير
         run: |
