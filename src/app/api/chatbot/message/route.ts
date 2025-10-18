@@ -1,349 +1,96 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { FlowManager } from '@/lib/conversation-flows';
+import { NextRequest, NextResponse } from "next/server";
+import logger from "@/lib/monitoring/logger";
+
+// Simple chatbot responses - يمكن توسيعه لاحقاً
+const responses: Record<string, string> = {
+  // Greetings
+  "مرحبا": "أهلاً وسهلاً! كيف يمكنني مساعدتك اليوم؟",
+  "السلام عليكم": "وعليكم السلام ورحمة الله وبركاته! كيف أقدر أخدمك؟",
+  "hi": "Hello! How can I help you today?",
+  
+  // Appointments
+  "احجز موعد": "رائع! لحجز موعد، يمكنك:\n\n1️⃣ الاتصال على: +966126173693\n2️⃣ واتساب: +966555381558\n3️⃣ أو عبر نظامنا الإلكتروني\n\nما هو التخصص المطلوب؟",
+  "موعد": "لحجز موعد، تواصل معنا على:\n📞 +966126173693\n📱 +966555381558",
+  
+  // Services
+  "الخدمات": "خدماتنا المتخصصة:\n\n🔍 التشخيص والتقييم الشامل\n🗣️ علاج النطق والتخاطب\n🎯 العلاج الوظيفي والتكامل الحسي\n🧩 تعديل السلوك (ABA)\n💚 الدعم النفسي والإرشاد الأسري\n🏫 برامج الرعاية النهارية والدمج\n\nأي خدمة تهمك؟",
+  "ما هي الخدمات": "خدماتنا تشمل:\n• التشخيص والتقييم\n• علاج النطق\n• العلاج الوظيفي\n• تعديل السلوك\n• الدعم الأسري\n• برامج الدمج",
+  
+  // Speech Therapy
+  "علاج نطق": "علاج النطق والتخاطب:\n\n✅ علاج التلعثم واللدغات\n✅ تأخر النطق\n✅ اضطرابات الصوت\n✅ التواصل البديل (AAC)\n\nنستخدم منهجيات PECS وتحليل السلوك التطبيقي (ABA)",
+  "تخاطب": "خدمة التخاطب متوفرة مع أخصائيين معتمدين. تواصل معنا لحجز جلسة تقييم مجانية!",
+  
+  // Occupational Therapy
+  "علاج وظيفي": "العلاج الوظيفي والتكامل الحسي:\n\n✅ تحسين المهارات الحركية\n✅ الاعتماد على الذات\n✅ معالجة الحساسيات الحسية\n✅ غرف تكامل حسي متخصصة",
+  
+  // ABA
+  "تعديل سلوك": "تعديل السلوك (ABA):\n\n✅ خطط سلوكية فردية (IEPs)\n✅ تعزيز المهارات الاجتماعية\n✅ التعامل مع التحديات السلوكية\n✅ منهجيات مبنية على الأدلة",
+  "aba": "برنامج تحليل السلوك التطبيقي (ABA) متوفر مع أخصائيين معتمدين دولياً",
+  
+  // Pricing
+  "الأسعار": "للاستفسار عن الأسعار والباقات:\n\n📞 اتصل على: +966126173693\n📱 واتساب: +966555381558\n\nلدينا باقات مخصصة حسب الحالة والاحتياجات",
+  "كم السعر": "الأسعار تختلف حسب نوع الخدمة. تواصل معنا للحصول على عرض سعر مخصص",
+  
+  // Location
+  "الموقع": "📍 موقعنا:\n\nجدة، حي الصفا\nشارع الأمير محمد بن عبد العزيز (التحلية)\nفندق دبليو إيه (WA Hotel) - الدور الثامن\n\n📞 +966126173693",
+  "العنوان": "جدة - حي الصفا - فندق WA - الدور الثامن",
+  
+  // Working Hours
+  "ساعات العمل": "🕐 ساعات العمل:\n\nالأحد - الخميس: 7 صباحاً - 7 مساءً\nالجمعة والسبت: مغلق",
+  "متى تفتحون": "نعمل الأحد - الخميس من 7 صباحاً حتى 7 مساءً",
+  
+  // Contact
+  "تواصل": "📞 طرق التواصل:\n\nهاتف: +966126173693\nواتساب: +966555381558\nبريد: info@alhemam.sa\nموقع: http://alhemam.sa",
+  "اتصال": "للتواصل:\n📱 واتساب: +966555381558\n📞 هاتف: +966126173693",
+  
+  // Emergency
+  "طوارئ": "🚨 أرقام الطوارئ:\n\n997 - الطوارئ العامة\n911 - الإسعاف\n+966555381558 - مركز الهمم (واتساب)",
+};
 
 export async function POST(request: NextRequest) {
   try {
-    const { message, userId, conversationId, currentFlow, currentStep } = await request.json();
+    const { message } = await request.json();
 
-    if (!message) {
+    if (!message || typeof message !== "string") {
       return NextResponse.json(
-        { error: 'Message is required' },
+        { error: "Invalid message" },
         { status: 400 }
       );
     }
 
-    const supabase = await createClient();
-    const flowManager = new FlowManager();
+    // Normalize message
+    const normalizedMessage = message.toLowerCase().trim();
 
-    // تحديد الـ Flow المناسب
-    let activeFlow = currentFlow;
-    let activeStep = currentStep;
+    // Find best match
+    let response = "عذراً، لم أفهم سؤالك بشكل كامل.\n\nيمكنك:\n• اتصال: +966126173693\n• واتساب: +966555381558\n• بريد: info@alhemam.sa\n\nأو جرب أن تسأل عن:\n- الخدمات\n- حجز موعد\n- الأسعار\n- الموقع";
 
-    if (!activeFlow) {
-      // تحليل النية لتحديد الـ Flow المناسب
-      const intent = await analyzeIntent(message);
-      activeFlow = getFlowByIntent(intent.type);
-      activeStep = 'start';
+    // Check for exact matches
+    for (const [keyword, reply] of Object.entries(responses)) {
+      if (normalizedMessage.includes(keyword.toLowerCase())) {
+        response = reply;
+        break;
+      }
     }
 
-    // تنفيذ الـ Flow
-    const flow = flowManager.getFlow(activeFlow);
-    if (!flow) {
-      // Fallback إلى النظام القديم
-      return await handleLegacyResponse(message, userId, conversationId, supabase);
-    }
-
-    // الحصول على الخطوة التالية
-    const nextStep = flowManager.getNextStep(activeFlow, activeStep, message);
-    
-    if (!nextStep) {
-      return NextResponse.json({
-        message: 'عذراً، حدث خطأ في معالجة طلبك. يرجى المحاولة مرة أخرى.',
-        metadata: { flow: activeFlow, step: activeStep },
-        appointmentSuggestions: []
-      });
-    }
-
-    // تنفيذ إجراءات الخطوة (Slack notifications, WhatsApp, etc.)
-    await flowManager.executeStepAction(nextStep, {
-      userId,
-      conversationId,
-      message,
-      appointmentId: null // سيتم تحديده من السياق
+    // Log interaction
+    logger.info("Chatbot interaction", {
+      message: message.substring(0, 100),
+      responseType: response === responses["مرحبا"] ? "greeting" : "info",
     });
-
-    // حفظ المحادثة
-    await saveConversation(conversationId, userId, message, nextStep.content, supabase);
 
     return NextResponse.json({
-      message: nextStep.content,
-      metadata: { 
-        flow: activeFlow, 
-        step: nextStep.id,
-        nextStep: nextStep.nextStep,
-        options: nextStep.options
-      },
-      appointmentSuggestions: nextStep.type === 'information' && nextStep.content.includes('المواعيد المتاحة') 
-        ? await getAvailableAppointments(supabase) 
-        : []
+      success: true,
+      response,
     });
-
   } catch (error) {
+    logger.error("Chatbot API error", error);
+    
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { 
+        success: false,
+        response: "عذراً، حدث خطأ. يرجى التواصل معنا عبر:\n📱 واتساب: +966555381558\n📞 هاتف: +966126173693"
+      },
       { status: 500 }
     );
   }
-}
-
-// تحديد الـ Flow بناءً على النية
-function getFlowByIntent(intentType: string): string {
-  const flowMap: { [key: string]: string } = {
-    'appointment_booking': 'appointment_slack',
-    'appointment_inquiry': 'appointment_management',
-    'appointment_cancellation': 'appointment_management',
-    'general_inquiry': 'continuous_support',
-    'greeting': 'new_beneficiary',
-    'emergency': 'emergency_slack',
-    'doctor_communication': 'doctor_communication'
-  };
-  
-  return flowMap[intentType] || 'continuous_support';
-}
-
-// النظام القديم كـ fallback
-async function handleLegacyResponse(message: string, userId: string, conversationId: string, supabase: any) {
-  const intent = await analyzeIntent(message);
-  
-  let response = '';
-  let metadata = {};
-  let appointmentSuggestions = [];
-
-  switch (intent.type) {
-    case 'appointment_booking':
-      response = await handleAppointmentBooking(message, userId, supabase);
-      appointmentSuggestions = await getAvailableAppointments(supabase);
-      break;
-    
-    case 'appointment_inquiry':
-      response = await handleAppointmentInquiry(userId, supabase);
-      break;
-    
-    case 'appointment_cancellation':
-      response = await handleAppointmentCancellation(message, userId, supabase);
-      break;
-    
-    case 'general_inquiry':
-      response = await handleGeneralInquiry(message);
-      break;
-    
-    case 'greeting':
-      response = 'مرحباً! أنا معين، مساعدك الذكي في مركز الهمم. كيف يمكنني مساعدتك اليوم؟';
-      break;
-    
-    default:
-      response = 'عذراً، لم أفهم طلبك. يمكنني مساعدتك في حجز المواعيد، الاستعلام عن مواعيدك، أو الإجابة على استفساراتك العامة.';
-  }
-
-  // حفظ المحادثة
-  await saveConversation(conversationId, userId, message, response, supabase);
-
-  return NextResponse.json({
-    message: response,
-    metadata,
-    appointmentSuggestions,
-    intent: intent.type
-  });
-}
-
-async function analyzeIntent(message: string) {
-  const lowerMessage = message.toLowerCase();
-  
-  // كلمات مفتاحية لحجز المواعيد
-  const appointmentKeywords = ['حجز', 'موعد', 'جدولة', 'تحديد موعد', 'أريد موعد'];
-  const inquiryKeywords = ['استعلام', 'مواعيدي', 'موعدي', 'متى موعدي'];
-  const cancellationKeywords = ['إلغاء', 'إلغاء موعد', 'إلغاء الموعد'];
-  const greetingKeywords = ['مرحبا', 'السلام', 'أهلا', 'صباح الخير', 'مساء الخير'];
-  
-  if (appointmentKeywords.some(keyword => lowerMessage.includes(keyword))) {
-    return { type: 'appointment_booking', confidence: 0.9 };
-  }
-  
-  if (inquiryKeywords.some(keyword => lowerMessage.includes(keyword))) {
-    return { type: 'appointment_inquiry', confidence: 0.9 };
-  }
-  
-  if (cancellationKeywords.some(keyword => lowerMessage.includes(keyword))) {
-    return { type: 'appointment_cancellation', confidence: 0.9 };
-  }
-  
-  if (greetingKeywords.some(keyword => lowerMessage.includes(keyword))) {
-    return { type: 'greeting', confidence: 0.8 };
-  }
-  
-  // استفسارات عامة
-  const generalKeywords = ['ساعات', 'العمل', 'العنوان', 'الهاتف', 'الموقع', 'معلومات'];
-  if (generalKeywords.some(keyword => lowerMessage.includes(keyword))) {
-    return { type: 'general_inquiry', confidence: 0.7 };
-  }
-  
-  return { type: 'unknown', confidence: 0.3 };
-}
-
-async function handleAppointmentBooking(message: string, userId: string | null, supabase: any) {
-  if (!userId) {
-    return 'عذراً، يجب عليك تسجيل الدخول أولاً لحجز موعد. يرجى تسجيل الدخول أو إنشاء حساب جديد.';
-  }
-
-  // استخراج معلومات الموعد من الرسالة
-  const appointmentInfo = extractAppointmentInfo(message);
-  
-  if (!appointmentInfo.doctorName && !appointmentInfo.specialty) {
-    return 'أفهم أنك تريد حجز موعد. من فضلك أخبرني: ما هو نوع التخصص الذي تريده؟ (مثل: قلب، عظام، أطفال، إلخ)';
-  }
-
-  return 'ممتاز! دعني أتحقق من المواعيد المتاحة لك. سأعرض عليك الأطباء المتاحين والأوقات المناسبة.';
-}
-
-async function handleAppointmentInquiry(userId: string | null, supabase: any) {
-  if (!userId) {
-    return 'عذراً، يجب عليك تسجيل الدخول أولاً للاستعلام عن مواعيدك.';
-  }
-
-  try {
-    // جلب مواعيد المريض
-    const { data: appointments, error } = await supabase
-      .from('appointments')
-      .select(`
-        *,
-        doctors!appointments_doctor_id_fkey(
-          first_name,
-          last_name,
-          specialty
-        )
-      `)
-      .eq('patient_id', userId)
-      .gte('appointment_date', new Date().toISOString().split('T')[0])
-      .order('appointment_date', { ascending: true });
-
-    if (error) {
-      return 'عذراً، حدث خطأ في جلب مواعيدك. يرجى المحاولة مرة أخرى.';
-    }
-
-    if (!appointments || appointments.length === 0) {
-      return 'لا توجد مواعيد قادمة لك حالياً. هل تريد حجز موعد جديد؟';
-    }
-
-    let response = 'إليك مواعيدك القادمة:\n\n';
-    appointments.forEach((appointment: any, index: number) => {
-      const doctorName = `${appointment.doctors.first_name} ${appointment.doctors.last_name}`;
-      const date = new Date(appointment.appointment_date).toLocaleDateString('ar-SA');
-      response += `${index + 1}. د. ${doctorName} - ${appointment.doctors.specialty}\n`;
-      response += `   التاريخ: ${date}\n`;
-      response += `   الوقت: ${appointment.appointment_time}\n`;
-      response += `   الحالة: ${getStatusText(appointment.status)}\n\n`;
-    });
-
-    return response;
-  } catch (error) {
-    return 'عذراً، حدث خطأ في جلب مواعيدك. يرجى المحاولة مرة أخرى.';
-  }
-}
-
-async function handleAppointmentCancellation(message: string, userId: string | null, supabase: any) {
-  if (!userId) {
-    return 'عذراً، يجب عليك تسجيل الدخول أولاً لإلغاء موعدك.';
-  }
-
-  return 'أفهم أنك تريد إلغاء موعدك. من فضلك أخبرني برقم الموعد أو التاريخ والوقت للموعد الذي تريد إلغاءه.';
-}
-
-async function handleGeneralInquiry(message: string) {
-  const lowerMessage = message.toLowerCase();
-  
-  if (lowerMessage.includes('ساعات') || lowerMessage.includes('العمل')) {
-    return 'ساعات عمل مركز الهمم:\n\nالأحد - الخميس: 8:00 ص - 10:00 م\nالجمعة: 2:00 م - 10:00 م\nالسبت: 8:00 ص - 6:00 م\n\nنحن متاحون لخدمتك في هذه الأوقات!';
-  }
-  
-  if (lowerMessage.includes('العنوان') || lowerMessage.includes('الموقع')) {
-    return 'عنوان مركز الهمم:\n\nالرياض، حي النرجس\nشارع الملك فهد\n\nيمكنك الوصول إلينا بسهولة عبر وسائل النقل المختلفة.';
-  }
-  
-  if (lowerMessage.includes('الهاتف') || lowerMessage.includes('اتصال')) {
-    return 'رقم هاتف مركز الهمم:\n\n📞 011-123-4567\n📱 050-123-4567\n\nنحن متاحون للرد على استفساراتك في أي وقت!';
-  }
-  
-  return 'شكراً لسؤالك! يمكنني مساعدتك في:\n\n• حجز المواعيد\n• الاستعلام عن مواعيدك\n• إلغاء المواعيد\n• معلومات المركز\n\nهل تريد معرفة المزيد عن أي من هذه الخدمات؟';
-}
-
-async function getAvailableAppointments(supabase: any) {
-  try {
-    // جلب الأطباء المتاحين
-    const { data: doctors, error } = await supabase
-      .from('doctors')
-      .select('id, first_name, last_name, specialty')
-      .eq('is_active', true)
-      .limit(3);
-
-    if (error) {
-      return [];
-    }
-
-    // إنشاء اقتراحات المواعيد
-    const suggestions = doctors.map((doctor: any) => ({
-      id: doctor.id,
-      doctorName: `د. ${doctor.first_name} ${doctor.last_name}`,
-      specialty: doctor.specialty,
-      availableSlots: [
-        '9:00 ص',
-        '10:00 ص', 
-        '11:00 ص',
-        '2:00 م',
-        '3:00 م',
-        '4:00 م'
-      ]
-    }));
-
-    return suggestions;
-  } catch (error) {
-    return [];
-  }
-}
-
-function extractAppointmentInfo(message: string) {
-  const lowerMessage = message.toLowerCase();
-  
-  // استخراج التخصص
-  const specialties = ['قلب', 'عظام', 'أطفال', 'نساء', 'أعصاب', 'جلدية', 'عيون', 'أنف وأذن'];
-  const specialty = specialties.find(s => lowerMessage.includes(s));
-  
-  // استخراج اسم الطبيب
-  const doctorPattern = /د\.?\s*([أ-ي\s]+)/;
-  const doctorMatch = message.match(doctorPattern);
-  const doctorName = doctorMatch?.[1]?.trim() || null;
-  
-  return {
-    specialty,
-    doctorName,
-    urgency: lowerMessage.includes('عاجل') || lowerMessage.includes('طارئ')
-  };
-}
-
-function getStatusText(status: string) {
-  const statusMap: { [key: string]: string } = {
-    'scheduled': 'مجدول',
-    'confirmed': 'مؤكد',
-    'completed': 'مكتمل',
-    'cancelled': 'ملغي',
-    'no_show': 'لم يحضر'
-  };
-  
-  return statusMap[status] || status;
-}
-
-async function saveConversation(conversationId: string, userId: string | null, userMessage: string, botResponse: string, supabase: any) {
-  try {
-    // حفظ رسالة المستخدم
-    await supabase
-      .from('chatbot_messages')
-      .insert({
-        conversation_id: conversationId,
-        sender_type: 'user',
-        message_text: userMessage,
-        message_type: 'text',
-        user_id: userId
-      });
-
-    // حفظ رد البوت
-    await supabase
-      .from('chatbot_messages')
-      .insert({
-        conversation_id: conversationId,
-        sender_type: 'bot',
-        message_text: botResponse,
-        message_type: 'text'
-      });
-  } catch (error) {
-    }
 }
