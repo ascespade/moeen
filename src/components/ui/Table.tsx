@@ -40,7 +40,7 @@ export function Table({
           <tr
             className={clsx(
               "hover:bg-surface dark:hover:bg-gray-800",
-              className,
+              className
             )}
             {...props}
           />
@@ -54,7 +54,7 @@ export function Table({
             <th
               className={clsx(
                 "px-4 py-3 text-start font-semibold text-gray-700 dark:text-gray-200 border-b border-brand-border",
-                className,
+                className
               )}
               {...props}
             />

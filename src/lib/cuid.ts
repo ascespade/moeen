@@ -116,10 +116,10 @@ function randomString(length: number): string {
                    */
                   export function generateMultipleCuid(
                     count: number,
-                    prefix?: string,
+                    prefix?: string
                   ): string[] {
                     return Array.from({ length: count }, () =>
-                      prefix ? generateDbCuid(prefix) : generateCuid(),
+                      prefix ? generateDbCuid(prefix) : generateCuid()
                     );
 
                     // ===== PRODUCTION CUID IMPLEMENTATION =====
@@ -137,7 +137,7 @@ function randomString(length: number): string {
                        * @returns Formatted public ID
                        */
                       export function generatePublicId(
-                        prefix: string = "pub",
+                        prefix: string = "pub"
                       ): string {
                         return `${prefix}_${createId()}`;
 

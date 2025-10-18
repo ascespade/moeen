@@ -25,7 +25,7 @@ export function Toast({
     <div
       className={clsx(
         "fixed bottom-4 start-1/2 -translate-x-1/2 z-50 transition",
-        visible ? "opacity-100" : "opacity-0 pointer-events-none",
+        visible ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
       role="status"
       aria-live="polite"

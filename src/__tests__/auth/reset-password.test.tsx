@@ -15,7 +15,7 @@ describe("ResetPasswordPage", () => {
     expect(screen.getByLabelText("كلمة المرور الجديدة")).toBeInTheDocument();
     expect(screen.getByLabelText("تأكيد كلمة المرور")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /تغيير كلمة المرور/ }),
+      screen.getByRole("button", { name: /تغيير كلمة المرور/ })
     ).toBeInTheDocument();
   });
 
@@ -60,7 +60,7 @@ describe("ResetPasswordPage", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("كلمة المرور يجب أن تكون 6 أحرف على الأقل"),
+        screen.getByText("كلمة المرور يجب أن تكون 6 أحرف على الأقل")
       ).toBeInTheDocument();
     });
   });
@@ -104,8 +104,8 @@ describe("ResetPasswordPage", () => {
       expect(screen.getByText("تم تغيير كلمة المرور!")).toBeInTheDocument();
       expect(
         screen.getByText(
-          "تم تغيير كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة.",
-        ),
+          "تم تغيير كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة."
+        )
       ).toBeInTheDocument();
     });
   });
@@ -141,13 +141,13 @@ describe("ResetPasswordPage", () => {
 
     expect(screen.getByText("متطلبات كلمة المرور:")).toBeInTheDocument();
     expect(
-      screen.getByText("• يجب أن تكون 6 أحرف على الأقل"),
+      screen.getByText("• يجب أن تكون 6 أحرف على الأقل")
     ).toBeInTheDocument();
     expect(
-      screen.getByText("• يُفضل أن تحتوي على أرقام ورموز"),
+      screen.getByText("• يُفضل أن تحتوي على أرقام ورموز")
     ).toBeInTheDocument();
     expect(
-      screen.getByText("• تجنب استخدام كلمات مرور سهلة التخمين"),
+      screen.getByText("• تجنب استخدام كلمات مرور سهلة التخمين")
     ).toBeInTheDocument();
   });
 

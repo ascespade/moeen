@@ -50,9 +50,9 @@ export default function LogsAdminPage() {
       rows.filter(
         (r) =>
           (filter === "all" || r.type === filter) &&
-          r.message.toLowerCase().includes(q.toLowerCase()),
+          r.message.toLowerCase().includes(q.toLowerCase())
       ),
-    [rows, filter, q],
+    [rows, filter, q]
   );
 
   return (

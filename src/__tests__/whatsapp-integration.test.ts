@@ -55,7 +55,7 @@ describe("WhatsAppIntegration", () => {
       const response = await whatsapp.processIncomingMessage(
         "+966501234567",
         "مرحبا",
-        "text",
+        "text"
       );
       expect(response).toContain("شكراً لك");
     });
@@ -64,7 +64,7 @@ describe("WhatsAppIntegration", () => {
       const response = await whatsapp.processIncomingMessage(
         "+966501234567",
         "",
-        "audio",
+        "audio"
       );
       expect(response).toContain("رسالة صوتية");
     });
@@ -73,7 +73,7 @@ describe("WhatsAppIntegration", () => {
       const response = await whatsapp.processIncomingMessage(
         "+966501234567",
         "",
-        "image",
+        "image"
       );
       expect(response).toContain("الصورة");
     });
@@ -84,7 +84,7 @@ describe("WhatsAppIntegration", () => {
       const result = await whatsapp.sendTemplateMessage(
         "appointment_confirmation",
         "+966501234567",
-        { name: "أحمد", date: "2024-01-20", time: "10:00" },
+        { name: "أحمد", date: "2024-01-20", time: "10:00" }
       );
       expect(result).toBeDefined();
     });
@@ -92,7 +92,7 @@ describe("WhatsAppIntegration", () => {
     test("should send motivational message", async () => {
       const result = await whatsapp.sendMotivationalMessage(
         "+966501234567",
-        "أحمد",
+        "أحمد"
       );
       expect(result).toBeDefined();
     });
@@ -101,7 +101,7 @@ describe("WhatsAppIntegration", () => {
       const result = await whatsapp.sendMilestoneCelebration(
         "+966501234567",
         "أحمد",
-        "إكمال 10 جلسات",
+        "إكمال 10 جلسات"
       );
       expect(result).toBeDefined();
     });
@@ -110,7 +110,7 @@ describe("WhatsAppIntegration", () => {
       const result = await whatsapp.sendExerciseReminder(
         "+966501234567",
         "أحمد",
-        "تمارين التنفس",
+        "تمارين التنفس"
       );
       expect(result).toBeDefined();
     });
@@ -127,7 +127,7 @@ describe("WhatsAppIntegration", () => {
         "+966501234568",
         "أحمد",
         "appointment",
-        "10:00 صباحاً",
+        "10:00 صباحاً"
       );
       expect(result).toBeDefined();
     });
@@ -159,7 +159,7 @@ describe("WhatsAppIntegration", () => {
       const response = whatsapp.generateMultilingualResponse(
         arabicText,
         englishText,
-        "ar",
+        "ar"
       );
       expect(response).toBe(arabicText);
     });

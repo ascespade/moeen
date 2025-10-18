@@ -8,7 +8,7 @@ export const useCounter = (
     min?: number;
     max?: number;
     step?: number;
-  } = {},
+  } = {}
 ) => {
   const { min = -Infinity, max = Infinity, step = 1 } = options;
 
@@ -30,7 +30,7 @@ export const useCounter = (
     (value: number) => {
       setCount(Math.min(Math.max(value, min), max));
     },
-    [min, max],
+    [min, max]
   );
 
   const isAtMin = count <= min;

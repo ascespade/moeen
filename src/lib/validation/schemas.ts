@@ -170,7 +170,7 @@ export const notificationSchema = z.object({
 // Validation helper functions
 export function validateData<T>(
   schema: z.ZodSchema<T>,
-  data: unknown,
+  data: unknown
 ): { success: true; data: T } | { success: false; errors: string[] } {
   try {
     const validatedData = schema.parse(data);
@@ -180,7 +180,7 @@ export function validateData<T>(
       return {
         success: false,
         errors: error.issues.map(
-          (err) => `${err.path.join(".")}: ${err.message}`,
+          (err) => `${err.path.join(".")}: ${err.message}`
         ),
       };
       return {
@@ -191,7 +191,7 @@ export function validateData<T>(
 
     export function validateQueryParams<T>(
       schema: z.ZodSchema<T>,
-      searchParams: URLSearchParams,
+      searchParams: URLSearchParams
     ): { success: true; data: T } | { success: false; errors: string[] } {
       const params: Record<string, any> = {};
 

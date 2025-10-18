@@ -35,7 +35,7 @@ export default function InvoicesPage() {
           `
           *,
           patient:patients(first_name, last_name)
-        `,
+        `
         )
         .order("created_at", { ascending: false })
         .limit(50);
@@ -176,7 +176,7 @@ export default function InvoicesPage() {
                     <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
                       {payment.payment_date
                         ? new Date(payment.payment_date).toLocaleDateString(
-                            "ar-SA",
+                            "ar-SA"
                           )
                         : "-"}
                     </td>

@@ -15,7 +15,7 @@ export default function ReviewCenterPage() {
   const [q, setQ] = useState("");
 
   const filtered = rows.filter(
-    (r) => r.user.includes(q) || r.suggestion.includes(q),
+    (r) => r.user.includes(q) || r.suggestion.includes(q)
   );
 
   return (

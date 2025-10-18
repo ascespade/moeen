@@ -41,12 +41,12 @@ export default function ForgotPasswordPage() {
             setIsSuccess(true);
           } else {
             setError(
-              data.error || "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور.",
+              data.error || "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور."
             );
           }
         } catch (error) {
           setError(
-            "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. حاول مرة أخرى.",
+            "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. حاول مرة أخرى."
           );
         } finally {
           setIsLoading(false);

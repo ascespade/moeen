@@ -54,7 +54,7 @@ export function sanitizeInput(input: string): string {
         .max(128, "Password too long")
         .regex(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
         )
         .refine((password) => {
           // Check for common passwords
@@ -149,12 +149,12 @@ export function sanitizeInput(input: string): string {
           const oneYearAgo = new Date(
             now.getFullYear() - 1,
             now.getMonth(),
-            now.getDate(),
+            now.getDate()
           );
           const oneYearFromNow = new Date(
             now.getFullYear() + 1,
             now.getMonth(),
-            now.getDate(),
+            now.getDate()
           );
 
           return parsedDate >= oneYearAgo && parsedDate <= oneYearFromNow;
@@ -184,7 +184,7 @@ export function sanitizeInput(input: string): string {
       ip: string,
       endpoint: string,
       requests: number,
-      limit: number,
+      limit: number
     ): boolean {
       // This would integrate with actual rate limiting logic
       return requests <= limit;
@@ -207,14 +207,14 @@ export function sanitizeInput(input: string): string {
           // CSRF token validation
           export function validateCSRFToken(
             token: string,
-            sessionToken: string,
+            sessionToken: string
           ): boolean {
             return token === sessionToken && token.length > 0;
 
             // File type validation
             export function validateFileType(
               filename: string,
-              allowedTypes: string[],
+              allowedTypes: string[]
             ): boolean {
               const extension = filename
                 .toLowerCase()
@@ -232,7 +232,7 @@ export function sanitizeInput(input: string): string {
                 ];
 
                 return requiredDirectives.every((directive) =>
-                  header.includes(directive),
+                  header.includes(directive)
                 );
               }
             }
