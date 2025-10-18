@@ -1,0 +1,120 @@
+name: 🔍 Smart PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: 📦 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: 📚 Install
+        run: npm ci
+      
+      - name: 🔍 Analyze Changes
+        id: analyze
+        run: |
+          # Get changed files
+          git diff --name-only origin/${{ github.base_ref }}...HEAD > changed-files.txt
+          
+          FILES_COUNT=$(wc -l < changed-files.txt)
+          echo "files_count=$FILES_COUNT" >> $GITHUB_OUTPUT
+          
+          # Count TypeScript/React files
+          TS_FILES=$(grep -E '\.(ts|tsx)$' changed-files.txt | wc -l || echo 0)
+          echo "ts_files=$TS_FILES" >> $GITHUB_OUTPUT
+          
+          # Run lint on changed files only
+          npm run lint > lint-result.txt 2>&1 || true
+          ERRORS=$(grep -c "Error:" lint-result.txt || echo 0)
+          WARNINGS=$(grep -c "Warning:" lint-result.txt || echo 0)
+          
+          echo "errors=$ERRORS" >> $GITHUB_OUTPUT
+          echo "warnings=$WARNINGS" >> $GITHUB_OUTPUT
+      
+      - name: 🏗️ Test Build
+        id: build
+        run: |
+          if npm run build; then
+            echo "status=✅ SUCCESS" >> $GITHUB_OUTPUT
+          else
+            echo "status=⚠️ FAILED" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: 📝 Post Review Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const filesCount = '${{ steps.analyze.outputs.files_count }}';
+            const tsFiles = '${{ steps.analyze.outputs.ts_files }}';
+            const errors = '${{ steps.analyze.outputs.errors }}';
+            const warnings = '${{ steps.analyze.outputs.warnings }}';
+            const buildStatus = '${{ steps.build.outputs.status }}';
+            
+            const complexityLevel = tsFiles > 10 ? '🔴 High' : tsFiles > 5 ? '🟡 Medium' : '🟢 Low';
+            
+            const suggestions = [];
+            
+            if (errors > 0) {
+              suggestions.push('⚠️ Run `npm run agent:final-fix` to auto-fix errors');
+            }
+            
+            if (tsFiles > 20) {
+              suggestions.push('💡 Consider breaking this PR into smaller changes');
+            }
+            
+            if (warnings > 10) {
+              suggestions.push('🧹 Run `npm run agent:organize` to clean up code');
+            }
+            
+            const body = `## 🤖 Smart PR Analysis
+            
+            ### 📊 Changes Summary
+            - **Files Changed:** ${filesCount}
+            - **TypeScript/React:** ${tsFiles}
+            - **Complexity:** ${complexityLevel}
+            
+            ### 🏗️ Build Status
+            ${buildStatus}
+            
+            ### 📋 Code Quality
+            - **Errors:** ${errors}
+            - **Warnings:** ${warnings}
+            
+            ${suggestions.length > 0 ? `### 💡 Suggestions\n${suggestions.map(s => '- ' + s).join('\n')}` : '### ✅ Looks good!'}
+            
+            ---
+            *Automated review by GitHub Actions - 100% Free!*
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+      
+      - name: ✅ Auto-approve if clean
+        if: steps.analyze.outputs.errors == '0' && steps.build.outputs.status == '✅ SUCCESS'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              event: 'APPROVE',
+              body: '🎉 Auto-approved! Code quality checks passed!'
+            });

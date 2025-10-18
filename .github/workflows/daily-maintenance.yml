@@ -1,0 +1,73 @@
+name: 🔄 Daily Maintenance
+
+on:
+  schedule:
+    # Run every day at 2 AM UTC (5 AM Saudi Arabia)
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  daily-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: 📚 Install
+        run: npm ci
+      
+      - name: 🧹 Run Cleanup
+        run: |
+          npm run agent:cleanup || true
+          npm run agent:organize || true
+      
+      - name: 🔧 Run Fixes
+        run: |
+          npm run agent:final-fix || true
+      
+      - name: 📊 Generate Report
+        run: |
+          echo "# Daily Maintenance Report" > daily-report.md
+          echo "" >> daily-report.md
+          echo "**Date:** $(date)" >> daily-report.md
+          echo "" >> daily-report.md
+          
+          echo "## Lint Status" >> daily-report.md
+          npm run lint > lint.txt 2>&1 || true
+          ERRORS=$(grep -c "Error:" lint.txt || echo 0)
+          echo "- Errors: $ERRORS" >> daily-report.md
+          
+          echo "" >> daily-report.md
+          echo "## Build Status" >> daily-report.md
+          if npm run build; then
+            echo "✅ Build: SUCCESS" >> daily-report.md
+          else
+            echo "⚠️ Build: FAILED" >> daily-report.md
+          fi
+      
+      - name: 💾 Commit Changes
+        run: |
+          git config user.name "Maintenance Bot 🔧"
+          git config user.email "bot@github-actions"
+          git add -A
+          
+          if ! git diff --staged --quiet; then
+            git commit -m "🔧 chore: Daily maintenance and cleanup
+            
+            Automated by GitHub Actions"
+            git push
+          fi
+      
+      - name: 📤 Upload Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-report
+          path: daily-report.md
+          retention-days: 30
