@@ -116,7 +116,6 @@ const mockRecentActivities: RecentActivity[] = [
     status: "success",
   },
 ];
-}
 
 const mockStaffWorkHours: StaffWorkHours[] = [
   {
