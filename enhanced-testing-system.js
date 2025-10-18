@@ -327,11 +327,11 @@ class EnhancedTestingSystem {
     
     const results = [];
     
-    for (const module of this.modules) {
-      this.log('system', `\n📦 Processing module: ${module.name}`);
+    for (const moduleItem of this.modules) {
+      this.log('system', `\n📦 Processing module: ${moduleItem.name}`);
       
       // Health check
-      const isHealthy = await this.checkModuleHealth(module);
+      const isHealthy = await this.checkModuleHealth(moduleItem);
       
       // Fix if needed
       if (!isHealthy && this.results[module.name].status !== 'missing') {
