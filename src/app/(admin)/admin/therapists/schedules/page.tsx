@@ -10,12 +10,15 @@ interface Therapist {
   full_name: string;
   email: string;
 
+}
+
 interface Schedule {
   id: string;
   day_of_week: number;
   start_time: string;
   end_time: string;
   is_available: boolean;
+}
 
 const DAYS = [
   "الأحد",

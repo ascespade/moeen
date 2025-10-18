@@ -11,8 +11,10 @@ interface Role {
   permissions: string[];
   userCount: number;
   createdAt: string;
+}
 
 const mockRoles: Role[] = [
+  {
   {
     id: "1",
     name: "مدير النظام",
@@ -43,6 +45,7 @@ const mockRoles: Role[] = [
     createdAt: "2024-01-01",
   },
 ];
+}
 
 const allPermissions = [
   { id: "users", name: "إدارة المستخدمين" },

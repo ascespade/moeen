@@ -36,6 +36,8 @@ interface SystemConfig {
   category: string;
   isSecret: boolean;
 
+}
+
 interface SecurityEvent {
   id: string;
   userId: string;

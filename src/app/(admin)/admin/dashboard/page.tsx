@@ -72,8 +72,10 @@ const mockStats: DashboardStats = {
   completedSessions: 14234,
   upcomingSessions: 1444,
 };
+}
 
 const mockRecentActivities: RecentActivity[] = [
+  {
   {
     id: "1",
     type: "appointment",
@@ -111,8 +113,10 @@ const mockRecentActivities: RecentActivity[] = [
     status: "success",
   },
 ];
+}
 
 const mockStaffWorkHours: StaffWorkHours[] = [
+  {
   {
     id: "1",
     name: "د. سارة أحمد",
@@ -166,6 +170,7 @@ const mockStaffWorkHours: StaffWorkHours[] = [
     lastCheckIn: "07:00",
   },
 ];
+}
 
 const activityTypeConfig = {
   appointment: { icon: "📅", color: "blue", bg: "bg-surface" },
@@ -174,6 +179,7 @@ const activityTypeConfig = {
   staff: { icon: "👨‍⚕️", color: "purple", bg: "bg-surface" },
   payment: { icon: "💰", color: "green", bg: "bg-surface" },
 } as const;
+}
 
 const statusConfig = {
   success: { color: "text-brand-success", bg: "bg-surface" },
