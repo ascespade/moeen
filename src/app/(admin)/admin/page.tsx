@@ -105,22 +105,24 @@ export default function AdminPage() {
       if (!usersRes.ok || !configsRes.ok || !eventsRes.ok) {
         throw new Error("Failed to load admin data");
 
-      const [usersData, configsData, eventsData] = await Promise.all([
-        usersRes.json(),
-        configsRes.json(),
-        eventsRes.json(),
-      ]);
+      try {
+        const [usersData, configsData, eventsData] = await Promise.all([
+          usersRes.json(),
+          configsRes.json(),
+          eventsRes.json(),
+        ]);
 
-      setUsers(usersData.data || []);
-      setConfigs(configsData.data || []);
-      setSecurityEvents(eventsData.data || []);
-      setCurrentUser(usersData.currentUser || null);
-      setError(null);
-    } catch (err) {
-      console.error("Error loading admin data:", err);
-      // Set mock data if APIs fail
-      setUsers([
-          id: "1",
+        setUsers(usersData.data || []);
+        setConfigs(configsData.data || []);
+        setSecurityEvents(eventsData.data || []);
+        setCurrentUser(usersData.currentUser || null);
+        setError(null);
+      } catch (err) {
+        console.error("Error loading admin data:", err);
+        // Set mock data if APIs fail
+        setUsers([
+          {
+            id: "1",
           email: "admin@example.com",
           name: "Admin User",
           role: "admin",

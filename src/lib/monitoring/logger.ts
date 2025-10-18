@@ -13,6 +13,7 @@ interface LogEntry {
   context?: string;
   data?: any;
   stack?: string;
+}
 
 class Logger {
   private isDevelopment: boolean;
