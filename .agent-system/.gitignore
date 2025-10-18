@@ -1,0 +1,41 @@
+# Agent System Files - ملفات النظام التلقائي
+# هذه الملفات لا تحتاج إلى تتبع في Git
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Cache files
+*.cache
+
+# Build artifacts
+dist/
+build/
+
+# Node modules (if any)
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Test results
+test-results/
+coverage/
+
+# Backup files
+*.backup
+*.bak
+*.old

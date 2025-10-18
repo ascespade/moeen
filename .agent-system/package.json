@@ -1,0 +1,16 @@
+{
+  "name": "agent-system",
+  "version": "1.0.0",
+  "description": "Agent System Files - ملفات النظام التلقائي",
+  "main": "autoloop.agent.mjs",
+  "scripts": {
+    "start": "node autoloop.agent.mjs",
+    "fix": "node autoloop.agent.mjs fix",
+    "test": "node autoloop.agent.mjs test",
+    "report": "node autoloop.agent.mjs report"
+  },
+  "keywords": ["agent", "automation", "typescript", "fix", "testing"],
+  "author": "Agent System",
+  "license": "MIT",
+  "type": "module"
+}

@@ -1,0 +1,117 @@
+{
+  "project": {
+    "name": "Smart Bootloader System",
+    "version": "1.0.0",
+    "description": "نظام Bootloader ذكي للتطوير المستمر والتحسين التلقائي",
+    "language": "javascript",
+    "framework": "node",
+    "packageManager": "npm"
+  },
+  "techStack": {
+    "frontend": {
+      "framework": "react",
+      "styling": "tailwindcss",
+      "stateManagement": "zustand"
+    },
+    "backend": {
+      "runtime": "node",
+      "framework": "express",
+      "database": "supabase"
+    },
+    "testing": {
+      "unit": "vitest",
+      "e2e": "playwright",
+      "coverage": "c8"
+    },
+    "quality": {
+      "linting": "eslint",
+      "formatting": "prettier",
+      "security": "sonarqube"
+    }
+  },
+  "paths": {
+    "source": "./src",
+    "tests": "./tests",
+    "docs": "./docs",
+    "scripts": "./scripts",
+    "config": "./config",
+    "deprecated": "./__deprecated__",
+    "backup": "./__backup__"
+  },
+  "git": {
+    "mainBranch": "main",
+    "devBranch": "develop",
+    "featurePrefix": "feature/",
+    "hotfixPrefix": "hotfix/",
+    "releasePrefix": "release/"
+  },
+    "agent": {
+      "enabled": true,
+      "checkInterval": 600000,
+      "maxRetries": 3,
+      "autoCommit": true,
+      "autoPush": false,
+      "commitMessage": "AutoFix: AI Agent - {timestamp}",
+      "refactorSchedule": "weekly",
+      "testOnChange": true,
+      "optimizeOnCommit": true,
+      "commitOnFix": true,
+      "commitOnOptimize": true,
+      "commitOnComplete": true,
+      "qualityCheckBeforeCommit": true,
+      "minQualityScore": 80,
+      "businessLogicTesting": {
+        "enabled": true,
+        "autoGenerateTests": true,
+        "autoFixIssues": true,
+        "testUserFlows": true,
+        "testDataValidation": true,
+        "testAPIEndpoints": true,
+        "testDatabaseOperations": true,
+        "testSecurityRules": true,
+        "maxTestRetries": 3,
+        "testTimeout": 30000
+      },
+      "refactor": {
+        "enabled": true,
+        "autoOrganize": true,
+        "mergeSmallFiles": true,
+        "splitLargeFiles": true,
+        "reorganizeImports": true,
+        "reorganizeExports": true,
+        "optimizeFolders": true,
+        "addIndexFiles": true,
+        "cleanupUnused": true,
+        "updateReferences": true,
+        "maxFileSize": 500,
+        "minFileSize": 20,
+        "protectedFiles": ["index.ts", "main.ts", "app.ts"]
+      }
+    },
+  "quality": {
+    "minTestCoverage": 80,
+    "maxComplexity": 10,
+    "maxFileSize": 500,
+    "maxFunctionLength": 50,
+    "allowedDuplications": 3
+  },
+  "monitoring": {
+    "performance": true,
+    "security": true,
+    "dependencies": true,
+    "codeQuality": true,
+    "testResults": true
+  },
+  "notifications": {
+    "email": false,
+    "slack": false,
+    "discord": false,
+    "console": true
+  },
+  "backup": {
+    "enabled": true,
+    "maxBackups": 10,
+    "compressBackups": true,
+    "includeNodeModules": false
+  }
+}
