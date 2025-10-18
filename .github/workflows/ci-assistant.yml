@@ -42,6 +42,7 @@ jobs:
       - name: 📥 تثبيت التبعيات
         run: |
           npm ci
+          npm install js-yaml
           npx playwright install --with-deps chromium
 
       - name: 🔍 تحليل خطأ الـ Self-Healing
@@ -115,7 +116,7 @@ jobs:
                 
                 // تحديد نوع الخطأ
                 const errorType = this.detectErrorType();
-                const error = commonErrors.find(e => errorType.includes(e.pattern)) || {
+                const error = workflowErrors.find(e => errorType.includes(e.pattern)) || {
                   pattern: 'Unknown',
                   solution: 'تحليل يدوي مطلوب',
                   fix: 'manual-analysis'
@@ -207,6 +208,9 @@ jobs:
           
           echo "📄 تم إرسال تقرير الخطأ"
           echo "🤖 يرجى انتظار الإصلاح من Cursor Background Agent"
+          
+          # الحصول على نوع الإصلاح من الخطوة السابقة
+          FIX_TYPE="${{ steps.analyze-error.outputs.fix-type }}"
           
           case "$FIX_TYPE" in
             "check-artifact-download")
@@ -329,6 +333,7 @@ permissions:
                 } catch (error) {
                   console.log('❌ خطأ في YAML:', error.message);
                   // إصلاح بسيط للأخطاء الشائعة
+                  const content = fs.readFileSync('.github/workflows/ultimate-ci-self-healing.yml', 'utf8');
                   let fixed = content
                     .replace(/:\s*$/, ': ') // إضافة مسافة بعد النقطتين
                     .replace(/^(\s*)([a-zA-Z_][a-zA-Z0-9_]*):\s*$/, '$1$2: ') // إضافة مسافة للقيم الفارغة
