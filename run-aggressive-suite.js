@@ -305,8 +305,8 @@ async function main() {
   const results = [];
 
   // Test each module sequentially (for better log tracking)
-  for (const module of CONFIG.MODULES) {
-    const result = await testModule(module);
+  for (const moduleName of CONFIG.MODULES) {
+    const result = await testModule(moduleName);
     results.push(result);
   }
 

@@ -6,79 +6,79 @@ const MODULES = [
   {
     id: 1,
     name: 'Authentication',
-    files: ['tests/e2e/module-01-authentication.spec.ts'],
+    files: ['tests/e2e/moduleName-01-authentication.spec.ts'],
     tests: 27,
   },
   {
     id: 2,
     name: 'Users',
-    files: ['tests/e2e/module-02-users.spec.ts'],
+    files: ['tests/e2e/moduleName-02-users.spec.ts'],
     tests: 16,
   },
   {
     id: 3,
     name: 'Patients',
-    files: ['tests/e2e/module-03-patients.spec.ts'],
+    files: ['tests/e2e/moduleName-03-patients.spec.ts'],
     tests: 16,
   },
   {
     id: 4,
     name: 'Appointments',
-    files: ['tests/e2e/module-04-appointments.spec.ts'],
+    files: ['tests/e2e/moduleName-04-appointments.spec.ts'],
     tests: 16,
   },
   {
     id: 5,
     name: 'Medical Records',
-    files: ['tests/e2e/module-05-medical-records.spec.ts'],
+    files: ['tests/e2e/moduleName-05-medical-records.spec.ts'],
     tests: 17,
   },
   {
     id: 6,
     name: 'Billing',
-    files: ['tests/e2e/module-06-billing.spec.ts'],
+    files: ['tests/e2e/moduleName-06-billing.spec.ts'],
     tests: 18,
   },
   {
     id: 7,
     name: 'Notifications',
-    files: ['tests/e2e/module-07-notifications.spec.ts'],
+    files: ['tests/e2e/moduleName-07-notifications.spec.ts'],
     tests: 15,
   },
   {
     id: 8,
     name: 'Reports',
-    files: ['tests/e2e/module-08-reports.spec.ts'],
+    files: ['tests/e2e/moduleName-08-reports.spec.ts'],
     tests: 16,
   },
   {
     id: 9,
     name: 'Settings',
-    files: ['tests/e2e/module-09-settings.spec.ts'],
+    files: ['tests/e2e/moduleName-09-settings.spec.ts'],
     tests: 14,
   },
   {
     id: 10,
     name: 'Files',
-    files: ['tests/e2e/module-10-files.spec.ts'],
+    files: ['tests/e2e/moduleName-10-files.spec.ts'],
     tests: 16,
   },
   {
     id: 11,
     name: 'Dashboard',
-    files: ['tests/e2e/module-11-dashboard.spec.ts'],
+    files: ['tests/e2e/moduleName-11-dashboard.spec.ts'],
     tests: 16,
   },
   {
     id: 12,
     name: 'Admin',
-    files: ['tests/e2e/module-12-admin.spec.ts'],
+    files: ['tests/e2e/moduleName-12-admin.spec.ts'],
     tests: 17,
   },
   {
     id: 13,
     name: 'Integration',
-    files: ['tests/e2e/module-13-integration.spec.ts'],
+    files: ['tests/e2e/moduleName-13-integration.spec.ts'],
     tests: 17,
   },
 ];
@@ -98,16 +98,16 @@ let totalPassed = 0;
 let totalFailed = 0;
 let totalTime = 0;
 
-for (const module of MODULES) {
-  writeLog(`## Module ${module.id}: ${module.name}`);
-  writeLog(`**الاختبارات المتوقعة**: ${module.tests}`);
+for (const moduleNameName of MODULES) {
+  writeLog(`## Module ${moduleNameName.id}: ${moduleNameName.name}`);
+  writeLog(`**الاختبارات المتوقعة**: ${moduleNameName.tests}`);
   writeLog(`**الحالة**: 🔄 جاري التشغيل...\n`);
 
   const startTime = Date.now();
 
   try {
     const result = execSync(
-      `npx playwright test ${module.files[0]} --config=playwright-auto.config.ts --reporter=json --timeout=30000 --workers=2`,
+      `npx playwright test ${moduleNameName.files[0]} --config=playwright-auto.config.ts --reporter=json --timeout=30000 --workers=2`,
       {
         encoding: 'utf8',
         env: {

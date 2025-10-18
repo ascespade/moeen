@@ -19,7 +19,7 @@ jest.mock('next/image', () => ({
   __esModule: true,
   default: (props: any) => {
     // eslint-disable-next-line @next/next/no-img-element
-    return <img {...props} />;
+    return React.createElement('img', props);
   },
 }));
 
@@ -27,11 +27,7 @@ jest.mock('next/image', () => ({
 jest.mock('next/link', () => ({
   __esModule: true,
   default: ({ children, href, ...props }: any) => {
-    return (
-      <a href={href} {...props}>
-        {children}
-      </a>
-    );
+    return React.createElement('a', { href, ...props }, children);
   },
 }));
 
@@ -112,11 +108,11 @@ Object.defineProperty(window, 'performance', {
 beforeEach(() => {
   // Clear all mocks before each test
   jest.clearAllMocks();
-  
+
   // Reset localStorage and sessionStorage
   localStorageMock.clear();
   sessionStorageMock.clear();
-  
+
   // Reset fetch mock
   (global.fetch as jest.Mock).mockClear();
 });

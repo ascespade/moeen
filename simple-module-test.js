@@ -209,19 +209,19 @@ class SimpleModuleTest {
 
     const results = [];
 
-    for (const module of this.modules) {
-      const isHealthy = await this.checkModule(module);
+    for (const moduleName of this.modules) {
+      const isHealthy = await this.checkModule(moduleName);
 
-      if (!isHealthy && this.results[module.name].status !== 'missing') {
-        await this.fixModule(module);
+      if (!isHealthy && this.results[moduleName.name].status !== 'missing') {
+        await this.fixModule(moduleName);
         // Re-check after fixing
-        await this.checkModule(module);
+        await this.checkModule(moduleName);
       }
 
       results.push({
-        module: module.name,
-        healthy: this.results[module.name].status === 'ok',
-        status: this.results[module.name].status,
+        module: moduleName.name,
+        healthy: this.results[moduleName.name].status === 'ok',
+        status: this.results[moduleName.name].status,
       });
     }
 

@@ -149,25 +149,25 @@ async function generateIntelligentTests(diffMap) {
 
   const generatedTests = [];
 
-  for (const module of modules) {
-    console.log(`  📝 توليد اختبارات لـ ${module}...`);
+  for (const moduleName of modules) {
+    console.log(`  📝 توليد اختبارات لـ ${moduleName}...`);
 
     // التحقق من التاريخ
-    const history = cache.test_history.filter(h => h.module === module);
+    const history = cache.test_history.filter(h => h.module === moduleName);
     const hasFailedBefore = history.some(h => h.status === 'failed');
 
     // توليد اختبارات بناءً على التاريخ
-    let testContent = `// AUTO-GENERATED: Tests for ${module}
+    let testContent = `// AUTO-GENERATED: Tests for ${moduleName}
 import { test, expect } from '@playwright/test';
 
-test.describe('${module} - Comprehensive Tests', () => {
-  test('should load ${module} correctly', async ({ page }) => {
-    await page.goto('/${module}');
+test.describe('${moduleName} - Comprehensive Tests', () => {
+  test('should load ${moduleName} correctly', async ({ page }) => {
+    await page.goto('/${moduleName}');
     await expect(page).toHaveTitle(/.*/);
   });
   
   test('should handle basic interactions', async ({ page }) => {
-    await page.goto('/${module}');
+    await page.goto('/${moduleName}');
     // Add specific interactions based on module
   });
   
@@ -176,7 +176,7 @@ test.describe('${module} - Comprehensive Tests', () => {
       ? `
   test('regression: previously failed scenario', async ({ page }) => {
     // This test was generated because ${module} failed before
-    await page.goto('/${module}');
+    await page.goto('/${moduleName}');
     // Add specific regression checks
   });
   `
@@ -184,7 +184,7 @@ test.describe('${module} - Comprehensive Tests', () => {
   }
   
   test('should handle error states', async ({ page }) => {
-    await page.goto('/${module}');
+    await page.goto('/${moduleName}');
     // Test error handling
   });
 });
@@ -273,16 +273,18 @@ async function learnFromResults(diffMap, testResults, healingResults) {
   console.log('🧠 التعلم من النتائج...');
 
   // حفظ الأنماط المتعلمة
-  for (const module of diffMap.modules) {
-    const moduleTests = testResults.tests.filter(t => t.file.includes(module));
+  for (const moduleName of diffMap.modules) {
+    const moduleTests = testResults.tests.filter(t =>
+      t.file.includes(moduleName)
+    );
     const failedTests = moduleTests.filter(t => t.status === 'failed');
 
     if (failedTests.length > 0) {
       cache.learned_patterns.push({
-        module,
+        module: moduleName,
         timestamp: new Date().toISOString(),
         pattern: 'frequent_failure',
-        details: `Module ${module} has ${failedTests.length} failed tests`,
+        details: `Module ${moduleName} has ${failedTests.length} failed tests`,
       });
     }
 
