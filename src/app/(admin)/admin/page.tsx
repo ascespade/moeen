@@ -44,6 +44,7 @@ interface User {
   lastLogin: string;
   createdAt: string;
   permissions: string[];
+}
 
 interface SystemConfig {
   id: string;
