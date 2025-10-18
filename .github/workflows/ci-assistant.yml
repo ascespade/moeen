@@ -180,18 +180,74 @@ jobs:
             console.log(\`fix-type=\${error.fix}\` >> $GITHUB_OUTPUT);
           "
 
-      - name: 🔧 إصلاح workflow فقط
+      - name: 🤖 إرسال الخطأ إلى Cursor Background Agent
+        id: send-to-cursor
         run: |
-          echo "🔧 إصلاح workflow فقط - لا يصلح أي شيء آخر..."
+          echo "🤖 إرسال الخطأ إلى Cursor Background Agent..."
           
-          # استخدام سكريبت الإصلاح المتخصص
-          node scripts/ci-assistant-fixer.js
+          # إنشاء تقرير الخطأ المفصل
+          cat > error-report.json << 'EOF'
+          {
+            "error_type": "workflow_failure",
+            "workflow_name": "${{ github.event.workflow_run.name }}",
+            "workflow_conclusion": "${{ github.event.workflow_run.conclusion }}",
+            "workflow_url": "${{ github.event.workflow_run.html_url }}",
+            "commit_sha": "${{ github.event.workflow_run.head_sha }}",
+            "commit_message": "${{ github.event.workflow_run.head_commit.message }}",
+            "repository": "${{ github.repository }}",
+            "branch": "${{ github.event.workflow_run.head_branch }}",
+            "context": "GitHub Actions workflow failure",
+            "priority": "high",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "request_type": "fix_workflow_error",
+            "files_to_fix": [".github/workflows/ultimate-ci-self-healing.yml"],
+            "fix_scope": "workflow_only"
+          }
+          EOF
           
-          # إصلاح workflow فقط - لا يصلح أي شيء آخر
-          echo "🔧 إصلاح workflow فقط..."
+          # إرسال إلى Cursor Background Agent
+          echo "📤 إرسال الخطأ إلى Cursor Background Agent..."
           
-          # استخدام سكريبت الإصلاح المتخصص للـ workflows
-          node scripts/ci-assistant-fixer.js
+          RESPONSE=$(curl -s -X POST "https://api.cursor.sh/v1/background-agent" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ vars.CURSOR_API_KEY }}" \
+            -d @error-report.json)
+          
+          if [ $? -eq 0 ]; then
+            echo "✅ تم إرسال الخطأ بنجاح"
+            echo "response=$RESPONSE" >> $GITHUB_OUTPUT
+            echo "status=success" >> $GITHUB_OUTPUT
+          else
+            echo "❌ فشل في إرسال الخطأ"
+            echo "status=failed" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "📄 تم إرسال تقرير الخطأ"
+          echo "🤖 يرجى انتظار الإصلاح من Cursor Background Agent"
+
+      - name: ⏳ انتظار إصلاح Cursor Background Agent
+        run: |
+          echo "⏳ انتظار إصلاح Cursor Background Agent..."
+          echo "🤖 Cursor Background Agent يعمل على إصلاح الخطأ..."
+          
+          # انتظار لمدة 5 دقائق لـ Cursor Background Agent
+          echo "⏰ انتظار 5 دقائق لإصلاح الخطأ..."
+          sleep 300
+          
+          echo "✅ انتهى وقت الانتظار - المتابعة..."
+
+      - name: 🔍 فحص الإصلاحات من Cursor
+        run: |
+          echo "🔍 فحص الإصلاحات من Cursor Background Agent..."
+          
+          # فحص إذا كان Cursor قام بإصلاح الملفات
+          if git diff --quiet; then
+            echo "ℹ️ لا توجد تغييرات من Cursor - المتابعة بدون إصلاح"
+          else
+            echo "✅ تم العثور على إصلاحات من Cursor Background Agent"
+            echo "📝 التغييرات:"
+            git diff --name-only
+          fi
 
       - name: 🧠 التعلم من الخطأ
         run: |
@@ -267,19 +323,22 @@ jobs:
           git add .github/workflows/
           
           # إنشاء commit مع علامة خاصة
-          git commit -m "🤖 CI Assistant: إصلاح workflow فقط
+          git commit -m "🤖 CI Assistant: إصلاح workflow بواسطة Cursor Background Agent
 
 🔧 الإصلاحات (workflow files فقط):
 - نوع الخطأ: ${{ steps.analyze-error.outputs.error-type }}
 - الحل المطبق: ${{ steps.analyze-error.outputs.solution }}
 - نوع الإصلاح: ${{ steps.analyze-error.outputs.fix-type }}
 
+🤖 تم الإصلاح بواسطة: Cursor Background Agent
+📤 تم الإرسال عبر: CI Assistant API
+⏳ وقت الانتظار: 5 دقائق
+
 📚 التعلم:
 - تم حفظ معلومات الخطأ للتعلم
 - تم تحديث أنماط الأخطاء
 - تم تحسين النظام لتجنب تكرار الخطأ
 
-🤖 تم بواسطة: CI Assistant
 🚫 إصلاح workflow فقط - لا يصلح أي شيء آخر" || echo "لا توجد تغييرات للحفظ"
 
       - name: 📤 رفع التغييرات
