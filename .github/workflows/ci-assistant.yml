@@ -199,9 +199,9 @@ jobs:
           # إرسال إلى Cursor Background Agent
           echo "📤 إرسال الخطأ إلى Cursor Background Agent..."
           
-          curl -X POST "${{ secrets.CURSOR_BACKGROUND_API_URL }}" \
+          curl -X POST "https://api.cursor.sh/v1/background-agent" \
             -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.CURSOR_BACKGROUND_API_KEY }}" \
+            -H "Authorization: Bearer ${{ vars.CURSOR_API_KEY }}" \
             -d @error-report.json \
             || echo "⚠️ فشل في إرسال الخطأ إلى Cursor Background Agent"
           
