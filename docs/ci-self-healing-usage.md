@@ -15,11 +15,13 @@ The CI Self-Healing System automatically detects, analyzes, and fixes common CI/
 ## Workflows
 
 ### 1. Ultimate CI Self-Healing Agent
+
 - **File**: `.github/workflows/ultimate-ci-self-healing.yml`
 - **Triggers**: Push, PR, Schedule (every 2 hours), Manual dispatch
 - **Purpose**: Main self-healing workflow that runs tests and fixes issues
 
 ### 2. CI Assistant Error Resolver
+
 - **File**: `.github/workflows/ci-assistant.yml`
 - **Triggers**: When Ultimate CI Self-Healing Agent fails
 - **Purpose**: Specialized error resolver for workflow-specific issues
@@ -27,6 +29,7 @@ The CI Self-Healing System automatically detects, analyzes, and fixes common CI/
 ## Commands
 
 ### NPM Scripts
+
 ```bash
 # Generate learning report
 npm run ci:learn
@@ -42,6 +45,7 @@ npm run ci:test
 ```
 
 ### Direct Script Usage
+
 ```bash
 # Initialize learning database
 node scripts/ci-learning-db.js init
@@ -65,6 +69,7 @@ node scripts/test-workflows.js comprehensive
 ## Learning Database
 
 The system uses SQLite to store:
+
 - Error patterns and solutions
 - Performance metrics
 - Learning insights
@@ -75,12 +80,14 @@ Database file: `ci_memory.sqlite`
 ## Configuration
 
 ### Environment Variables
+
 - `CURSOR_API_KEY`: API key for Cursor Background Agent
 - `CI_LEARNING_DB_PATH`: Path to learning database
 - `CI_MAX_RETRIES`: Maximum retry attempts
 - `CI_CONFIDENCE_THRESHOLD`: Minimum confidence for auto-fixes
 
 ### Workflow Parameters
+
 - `mode`: auto, first-run, incremental, emergency, maintenance, cleanup, full-test, rapid-commits
 - `scope`: full, frontend, backend, database, tests, security, performance
 - `force-full-test`: true/false
@@ -88,11 +95,13 @@ Database file: `ci_memory.sqlite`
 ## Monitoring
 
 ### Reports
+
 - Workflow validation reports: `reports/workflow-validation-report.json`
 - Test reports: `reports/workflow-test-report.json`
 - Learning reports: `reports/ci-learning-report.json`
 
 ### Dashboard
+
 - Real-time status: `dashboard/logs.json`
 - Performance metrics: `dashboard/metrics.json`
 
@@ -119,6 +128,7 @@ Database file: `ci_memory.sqlite`
 ### Debug Mode
 
 Enable debug logging by setting:
+
 ```bash
 export CI_DEBUG=true
 ```
@@ -134,6 +144,7 @@ export CI_DEBUG=true
 ## Support
 
 For issues or questions:
+
 1. Check the reports in `reports/` directory
 2. Review the learning database insights
 3. Check GitHub Actions logs

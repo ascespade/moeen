@@ -19,14 +19,15 @@ class WorkflowValidator {
 
   async validateAll() {
     console.log('🔍 Starting workflow validation...');
-    
+
     const workflowsDir = '.github/workflows';
     if (!fs.existsSync(workflowsDir)) {
       console.error('❌ .github/workflows directory not found');
       return false;
     }
 
-    const workflowFiles = fs.readdirSync(workflowsDir)
+    const workflowFiles = fs
+      .readdirSync(workflowsDir)
       .filter(file => file.endsWith('.yml') || file.endsWith('.yaml'));
 
     console.log(`📁 Found ${workflowFiles.length} workflow files`);
@@ -34,14 +35,14 @@ class WorkflowValidator {
     for (const file of workflowFiles) {
       const filePath = path.join(workflowsDir, file);
       console.log(`\n🔍 Validating ${file}...`);
-      
+
       const isValid = await this.validateWorkflow(filePath);
       this.workflows.push({
         file,
         path: filePath,
         valid: isValid,
         errors: [...this.errors],
-        warnings: [...this.warnings]
+        warnings: [...this.warnings],
       });
 
       // Clear errors/warnings for next file
@@ -80,7 +81,6 @@ class WorkflowValidator {
 
       // Performance validation
       this.validatePerformance(workflow, filePath);
-
     } catch (error) {
       this.addError(`YAML parsing error: ${error.message}`);
       isValid = false;
@@ -91,7 +91,7 @@ class WorkflowValidator {
 
   validateRequiredFields(workflow, filePath) {
     const required = ['name', 'on'];
-    
+
     for (const field of required) {
       if (!workflow[field]) {
         this.addError(`Missing required field: ${field}`);
@@ -118,7 +118,7 @@ class WorkflowValidator {
         this.validateJob(jobName, job, filePath);
       }
     } else {
-      this.addWarning("No jobs defined in workflow");
+      this.addWarning('No jobs defined in workflow');
     }
   }
 
@@ -143,38 +143,60 @@ class WorkflowValidator {
 
   validateStep(jobName, step, stepIndex, filePath) {
     if (!step.name) {
-      this.addError(`Job '${jobName}' step ${stepIndex + 1} missing 'name' field`);
+      this.addError(
+        `Job '${jobName}' step ${stepIndex + 1} missing 'name' field`
+      );
     }
 
     if (!step.run && !step.uses && !step.if) {
-      this.addError(`Job '${jobName}' step ${stepIndex + 1} must have 'run', 'uses', or 'if' field`);
+      this.addError(
+        `Job '${jobName}' step ${stepIndex + 1} must have 'run', 'uses', or 'if' field`
+      );
     }
 
     // Validate timeout
-    if (step.timeout_minutes && (step.timeout_minutes < 1 || step.timeout_minutes > 360)) {
-      this.addWarning(`Job '${jobName}' step ${stepIndex + 1} has unusual timeout: ${step.timeout_minutes} minutes`);
+    if (
+      step.timeout_minutes &&
+      (step.timeout_minutes < 1 || step.timeout_minutes > 360)
+    ) {
+      this.addWarning(
+        `Job '${jobName}' step ${stepIndex + 1} has unusual timeout: ${step.timeout_minutes} minutes`
+      );
     }
   }
 
   validateBestPractices(workflow, filePath) {
     // Check for permissions
     if (!workflow.permissions) {
-      this.addWarning("Workflow missing 'permissions' field - consider adding explicit permissions");
+      this.addWarning(
+        "Workflow missing 'permissions' field - consider adding explicit permissions"
+      );
     }
 
     // Check for environment variables
     if (workflow.env) {
       for (const [key, value] of Object.entries(workflow.env)) {
-        if (typeof value === 'string' && value.includes('${{') && !value.includes('secrets.')) {
-          this.addWarning(`Environment variable '${key}' uses GitHub context without secrets - ensure this is intentional`);
+        if (
+          typeof value === 'string' &&
+          value.includes('${{') &&
+          !value.includes('secrets.')
+        ) {
+          this.addWarning(
+            `Environment variable '${key}' uses GitHub context without secrets - ensure this is intentional`
+          );
         }
       }
     }
 
     // Check for proper artifact handling
     const content = fs.readFileSync(filePath, 'utf8');
-    if (content.includes('actions/upload-artifact') && !content.includes('actions/download-artifact')) {
-      this.addWarning("Workflow uploads artifacts but doesn't download them - ensure this is intentional");
+    if (
+      content.includes('actions/upload-artifact') &&
+      !content.includes('actions/download-artifact')
+    ) {
+      this.addWarning(
+        "Workflow uploads artifacts but doesn't download them - ensure this is intentional"
+      );
     }
   }
 
@@ -185,24 +207,25 @@ class WorkflowValidator {
     const secretPatterns = [
       /password\s*:\s*['"][^'"]+['"]/i,
       /token\s*:\s*['"][^'"]+['"]/i,
-      /key\s*:\s*['"][^'"]+['"]/i
+      /key\s*:\s*['"][^'"]+['"]/i,
     ];
 
     for (const pattern of secretPatterns) {
       if (pattern.test(content)) {
-        this.addWarning("Potential hardcoded secret detected - use GitHub secrets instead");
+        this.addWarning(
+          'Potential hardcoded secret detected - use GitHub secrets instead'
+        );
       }
     }
 
     // Check for dangerous actions
-    const dangerousActions = [
-      'actions/checkout@v1',
-      'actions/checkout@v2'
-    ];
+    const dangerousActions = ['actions/checkout@v1', 'actions/checkout@v2'];
 
     for (const action of dangerousActions) {
       if (content.includes(action)) {
-        this.addWarning(`Using potentially vulnerable action: ${action} - consider updating to latest version`);
+        this.addWarning(
+          `Using potentially vulnerable action: ${action} - consider updating to latest version`
+        );
       }
     }
   }
@@ -212,7 +235,9 @@ class WorkflowValidator {
     if (workflow.jobs) {
       const jobCount = Object.keys(workflow.jobs).length;
       if (jobCount > 20) {
-        this.addWarning(`Workflow has ${jobCount} jobs - consider splitting into multiple workflows`);
+        this.addWarning(
+          `Workflow has ${jobCount} jobs - consider splitting into multiple workflows`
+        );
       }
     }
 
@@ -223,7 +248,9 @@ class WorkflowValidator {
       for (const match of timeoutMatches) {
         const minutes = parseInt(match.split(':')[1].trim());
         if (minutes > 120) {
-          this.addWarning(`Job timeout is ${minutes} minutes - consider optimizing for faster execution`);
+          this.addWarning(
+            `Job timeout is ${minutes} minutes - consider optimizing for faster execution`
+          );
         }
       }
     }
@@ -248,16 +275,18 @@ class WorkflowValidator {
     for (const workflow of this.workflows) {
       console.log(`\n📄 ${workflow.file}`);
       console.log(`   Status: ${workflow.valid ? '✅ Valid' : '❌ Invalid'}`);
-      
+
       if (workflow.errors.length > 0) {
         console.log('   Errors:');
         workflow.errors.forEach(error => console.log(`     ❌ ${error}`));
         totalErrors += workflow.errors.length;
       }
-      
+
       if (workflow.warnings.length > 0) {
         console.log('   Warnings:');
-        workflow.warnings.forEach(warning => console.log(`     ⚠️  ${warning}`));
+        workflow.warnings.forEach(warning =>
+          console.log(`     ⚠️  ${warning}`)
+        );
         totalWarnings += workflow.warnings.length;
       }
 
@@ -279,14 +308,19 @@ class WorkflowValidator {
         totalWorkflows: this.workflows.length,
         validWorkflows,
         totalErrors,
-        totalWarnings
+        totalWarnings,
       },
-      workflows: this.workflows
+      workflows: this.workflows,
     };
 
     fs.mkdirSync('reports', { recursive: true });
-    fs.writeFileSync('reports/workflow-validation-report.json', JSON.stringify(report, null, 2));
-    console.log('\n💾 Detailed report saved to: reports/workflow-validation-report.json');
+    fs.writeFileSync(
+      'reports/workflow-validation-report.json',
+      JSON.stringify(report, null, 2)
+    );
+    console.log(
+      '\n💾 Detailed report saved to: reports/workflow-validation-report.json'
+    );
 
     return totalErrors === 0;
   }
