@@ -1,8 +1,8 @@
-"use client";
-
 import { useEffect, useState } from "react";
 
 import logger from "@/lib/monitoring/logger";
+
+"use client";
 
 interface Slot {
   therapistId: string;

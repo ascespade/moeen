@@ -1,5 +1,3 @@
-"use client";
-
 import React, { Component, ErrorInfo, ReactNode } from "react";
 
 import { AlertTriangle, RefreshCw, Home } from "lucide-react";
@@ -8,6 +6,8 @@ import { useT } from "@/hooks/useT";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { logger } from "@/lib/logger";
+
+"use client";
 
 interface Props {
   children: ReactNode;

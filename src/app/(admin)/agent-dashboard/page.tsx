@@ -1,7 +1,7 @@
-"use client";
-
 import React from "react";
 import { useState, useEffect } from "react";
+
+"use client";
 
 interface TaskStatus {
   total_tasks: number;

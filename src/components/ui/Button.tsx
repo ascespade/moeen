@@ -1,10 +1,10 @@
-"use client";
-
 import React, { forwardRef } from "react";
 
 import { Loader2 } from "lucide-react";
 
 import { cn } from "@/lib/cn";
+
+"use client";
 
 /**
  * Button Component - مكون الزر

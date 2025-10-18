@@ -1,7 +1,7 @@
 // Formatting utilities
 export const formatDate = (
   date: Date | string,
-  format: "short" | "long" | "time" = "short"
+  format: "short" | "long" | "time" = "short",
 ): string => {
   const d = new Date(date);
 
@@ -49,7 +49,7 @@ export const formatDate = (
 
           export const formatNumber = (
             num: number,
-            decimals: number = 0
+            decimals: number = 0,
           ): string => {
             return new Intl.NumberFormat("en-US", {
               minimumFractionDigits: decimals,
@@ -59,7 +59,7 @@ export const formatDate = (
 
           export const formatCurrency = (
             amount: number,
-            currency: string = "USD"
+            currency: string = "USD",
           ): string => {
             return new Intl.NumberFormat("en-US", {
               style: "currency",
@@ -91,7 +91,7 @@ export const formatDate = (
 
             export const truncateText = (
               text: string,
-              maxLength: number
+              maxLength: number,
             ): string => {
               if (text.length <= maxLength) return text;
               return text.slice(0, maxLength) + "...";

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 
 import { useT } from "@/hooks/useT";
@@ -9,6 +7,8 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { LoadingSpinner } from "@/components/ui";
+
+"use client";
 
 Users,
   TrendingUp,

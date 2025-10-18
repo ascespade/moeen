@@ -1,10 +1,10 @@
-"use client";
-
 import React, { forwardRef } from "react";
 
 import { AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
 
 import { cn } from "@/lib/cn";
+
+"use client";
 
 /**
  * Input Component - مكون حقل الإدخال

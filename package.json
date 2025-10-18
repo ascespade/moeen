@@ -31,7 +31,8 @@
     "agent:test": "npm run lint && npm run build",
     "agent:test-business": "npm run agent:test",
     "agent:evaluate": "node .agent-system/auto-fix.js && npm run agent:test",
-    "agent:lib-fix": "node .agent-system/library-based-fix.js"
+    "agent:lib-fix": "node .agent-system/library-based-fix.js",
+    "agent:syntax-fix": "node .agent-system/syntax-fixer.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 
 import Image from "next/image";
@@ -9,6 +7,8 @@ import { ROUTES } from "@/constants/routes";
 import { ThemeSwitch as ThemeSwitcher } from "@/components/ui";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useT } from "@/components/providers/I18nProvider";
+
+"use client";
 
 // Hero Slider Data - مركز الهمم
 const heroSlides = (t: any) => [
@@ -102,7 +102,7 @@ const features = [
       "الاعتماد على ممارسات مبنية على الأدلة (Evidence-Based Practices)",
   },
     id: 3,
-    icon: "📋",
+    icon: &quot;📋&quot;,
     title: &quot;خطط علاج فردية (IEPs)&quot;,
     description: &quot;كل طفل يحصل على خطة مخصصة تلبي احتياجاته الدقيقة&quot;,
   },

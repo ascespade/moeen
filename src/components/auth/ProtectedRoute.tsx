@@ -1,11 +1,11 @@
-"use client";
-
 import { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 
 import { useT } from "@/hooks/useT";
 import { LoadingSpinner } from "@/components/ui";
+
+"use client";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;

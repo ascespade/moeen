@@ -40,7 +40,7 @@ describe("HemamAssistant", () => {
 
       const response = assistant.generateEmpatheticResponse(
         context,
-        "أحتاج مساعدة"
+        "أحتاج مساعدة",
       );
       expect(response).toContain("نحن هنا لمساعدتك");
     });
@@ -57,7 +57,7 @@ describe("HemamAssistant", () => {
 
       const response = assistant.generateEmpatheticResponse(
         context,
-        "أريد أن أموت"
+        "أريد أن أموت",
       );
       expect(response).toContain("997");
       expect(response).toContain("مساعدة عاجلة");
@@ -74,7 +74,7 @@ describe("HemamAssistant", () => {
     test("should generate milestone celebration", () => {
       const message = assistant.generateMotivationalMessage(
         "فاطمة",
-        "إكمال 10 جلسات"
+        "إكمال 10 جلسات",
       );
       expect(message).toContain("فاطمة");
       expect(message).toContain("إكمال 10 جلسات");
@@ -86,7 +86,7 @@ describe("HemamAssistant", () => {
     test("should generate proactive care message", () => {
       const message = assistant.generateProactiveCareMessage(
         "سارة",
-        "تمارين التنفس"
+        "تمارين التنفس",
       );
       expect(message).toContain("سارة");
       expect(message).toContain("تمارين التنفس");
@@ -99,7 +99,7 @@ describe("HemamAssistant", () => {
       const message = assistant.generateFamilyNotification(
         "أحمد",
         "appointment",
-        "10:00 صباحاً"
+        "10:00 صباحاً",
       );
       expect(message).toContain("أحمد");
       expect(message).toContain("موعد");

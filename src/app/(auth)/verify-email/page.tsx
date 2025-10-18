@@ -1,11 +1,11 @@
-"use client";
-
 import { useState } from "react";
 
 import Link from "next/link";
 import Image from "next/image";
 
 import { Mail, CheckCircle, RefreshCw } from "lucide-react";
+
+("use client");
 
 export default function VerifyEmailPage() {
   const [isResending, setIsResending] = useState(false);

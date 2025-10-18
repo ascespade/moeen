@@ -31,6 +31,6 @@ export function cn(...inputs: ClassValue[]) {
    *   }
    * });
    */
-
-  export { cva, type VariantProps } from "class-variance-authority";
 }
+
+export { cva, type VariantProps } from "class-variance-authority";

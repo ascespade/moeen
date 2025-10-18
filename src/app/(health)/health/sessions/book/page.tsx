@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
@@ -8,6 +6,8 @@ import { createClient } from "@/lib/supabase/client";
 import SessionTypeSelector from "@/components/booking/SessionTypeSelector";
 import AvailableSlotsPicker from "@/components/booking/AvailableSlotsPicker";
 import logger from "@/lib/monitoring/logger";
+
+"use client";
 
 interface SessionType {
   id: string;

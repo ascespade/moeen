@@ -1,9 +1,9 @@
-"use client";
-
 import { useEffect, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
+
+"use client";
 
 interface Therapist {
   id: string;
@@ -132,7 +132,7 @@ export default function TherapistSchedulesPage() {
   };
 
   const deleteSchedule = async (scheduleId: string) => {
-    if (!confirm("هل أنت متأكد من الحذف؟")) return;
+    if (!confirm(&quot;هل أنت متأكد من الحذف؟&quot;)) return;
 
     try {
       const supabase = createClient();

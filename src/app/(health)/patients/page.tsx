@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 
 import Image from "next/image";
@@ -11,6 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
+
+"use client";
 
 Users,
   Phone,

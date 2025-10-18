@@ -1,9 +1,9 @@
-"use client";
-
 import { useMemo, useState, useEffect } from "react";
 
 import EmptyState from "@/components/common/EmptyState";
 import { Skeleton } from "@/components/ui";
+
+"use client";
 
 type Message = {
   id: string;

@@ -1,6 +1,6 @@
-"use client";
-
 import { useT } from "@/components/providers/I18nProvider";
+
+("use client");
 
 export default function TermsPage() {
   const { t } = useT();
@@ -12,7 +12,7 @@ export default function TermsPage() {
       <p className="text-gray-600 dark:text-gray-400">
         {t(
           "terms.desc",
-          "باستخدامك للمنصة فأنت توافق على الشروط القياسية للاستخدام."
+          "باستخدامك للمنصة فأنت توافق على الشروط القياسية للاستخدام.",
         )}
       </p>
     </div>

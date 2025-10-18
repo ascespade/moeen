@@ -1,8 +1,8 @@
-"use client";
-
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import useI18n from "@/hooks/useI18n";
+
+("use client");
 
 type Ctx = {
   t: (k: string, f?: string) => string;
@@ -21,7 +21,7 @@ export function I18nProvider({
   children: React.ReactNode;
 }) {
   const [resolvedLocale, setResolvedLocale] = useState<"ar" | "en">(
-    localeProp || "ar"
+    localeProp || "ar",
   );
   useEffect(() => {
     // try to derive from <html lang>
@@ -36,7 +36,7 @@ export function I18nProvider({
   const { t, loading } = useI18n(resolvedLocale, ns);
   const value = useMemo(
     () => ({ t, locale: resolvedLocale, loading }),
-    [t, resolvedLocale, loading]
+    [t, resolvedLocale, loading],
   );
   return <I18nCtx.Provider value={value}>{children}</I18nCtx.Provider>;
 

@@ -1,8 +1,8 @@
-"use client";
-
 import React from "react";
 
 import { useTheme } from "@/core/theme";
+
+"use client";
 
 /**
  * Area Chart Component - مكون الرسم البياني المساحي

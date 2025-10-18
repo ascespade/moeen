@@ -27,7 +27,7 @@ export function sanitizeHtml(html: string): string {
           .email("Invalid email format")
           .optional()
           .transform((email) =>
-            email ? email.toLowerCase().trim() : undefined
+            email ? email.toLowerCase().trim() : undefined,
           ),
         phone: z
           .string()
@@ -53,14 +53,14 @@ export function sanitizeHtml(html: string): string {
           .max(2000, "Medical history must be less than 2000 characters")
           .optional()
           .transform((history) =>
-            history ? sanitizeHtml(history) : undefined
+            history ? sanitizeHtml(history) : undefined,
           ),
         allergies: z
           .string()
           .max(1000, "Allergies must be less than 1000 characters")
           .optional()
           .transform((allergies) =>
-            allergies ? sanitizeText(allergies) : undefined
+            allergies ? sanitizeText(allergies) : undefined,
           ),
       }),
 
@@ -103,7 +103,7 @@ export function sanitizeHtml(html: string): string {
           .max(128, "Password must be less than 128 characters")
           .regex(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-            "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+            "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
           ),
         full_name: z
           .string()
@@ -134,7 +134,7 @@ export function sanitizeHtml(html: string): string {
         } catch (error) {
           if (error instanceof z.ZodError) {
             throw new Error(
-              `Validation error: ${error.issues.map((e) => e.message).join(", ")}`
+              `Validation error: ${error.issues.map((e) => e.message).join(", ")}`,
             );
             throw error;
           }
@@ -149,7 +149,7 @@ export function sanitizeHtml(html: string): string {
 
           export function validateCSRFToken(
             token: string,
-            sessionToken: string
+            sessionToken: string,
           ): boolean {
             return token === sessionToken && token.length > 0;
 

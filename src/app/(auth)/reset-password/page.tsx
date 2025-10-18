@@ -1,11 +1,11 @@
-"use client";
-
 import { useState } from "react";
 
 import Link from "next/link";
 import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
+
+("use client");
 
 export default function ResetPasswordPage() {
   const [formData, setFormData] = useState({

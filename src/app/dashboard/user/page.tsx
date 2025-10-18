@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -7,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+
+"use client";
 
 Calendar,
   Users,

@@ -1,9 +1,9 @@
-"use client";
-
 import { useState, useEffect, useCallback } from "react";
 
 import logger from "@/lib/monitoring/logger";
 import { createClient } from "@/lib/supabase/client";
+
+"use client";
 
 export function useTranslation(namespace: string = "common") {
   const [translations, setTranslations] = useState<Record<string, string>>({});

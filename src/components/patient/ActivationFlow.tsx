@@ -1,11 +1,11 @@
-"use client";
-
 import { useState } from "react";
 
 import { useT } from "@/hooks/useT";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+
+"use client";
 
 CheckCircle,
   Clock,
