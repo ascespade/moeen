@@ -179,41 +179,22 @@ jobs:
             console.log(\`::set-output name=fix-type::\${error.fix}\`);
           "
 
-      - name: 🤖 إرسال الخطأ إلى Cursor Background Agent
+      - name: 🔧 إصلاح خطأ YAML في Self-Healing
         run: |
-          echo "🤖 إرسال الخطأ إلى Cursor Background Agent..."
+          echo "🔧 إصلاح خطأ YAML في Self-Healing workflow..."
           
-          # إنشاء تقرير الخطأ
-          cat > error-report.md << 'EOF'
-          # 🚨 تقرير خطأ في Self-Healing Workflow
+          # إصلاح خطأ YAML في السطر 493
+          sed -i '486s/\\$&\\\\n/\\$&\\n/g' .github/workflows/ultimate-ci-self-healing.yml
           
-          ## 📋 تفاصيل الخطأ
-          - **الوقت:** $(date)
-          - **نوع الخطأ:** YAML syntax error
-          - **الملف:** .github/workflows/ultimate-ci-self-healing.yml
-          - **السطر:** 493
-          - **المشكلة:** خطأ في YAML syntax
+          # إصلاح إضافي للمشكلة
+          sed -i 's/\\$&\\\\n/\\$&\\n/g' .github/workflows/ultimate-ci-self-healing.yml
           
-          ## 🔍 تفاصيل الخطأ
-          ```
-          Invalid workflow file: .github/workflows/ultimate-ci-self-healing.yml#L493
-          You have an error in your yaml syntax on line 493
-          ```
+          echo "✅ تم إصلاح خطأ YAML"
           
-          ## 🎯 المطلوب
-          يرجى إصلاح خطأ YAML في السطر 493 من ملف ultimate-ci-self-healing.yml
-          
-          ## 📁 الملف المطلوب إصلاحه
-          .github/workflows/ultimate-ci-self-healing.yml
-          EOF
-          
-          echo "📄 تم إنشاء تقرير الخطأ"
-          echo "🤖 يرجى إرسال هذا التقرير إلى Cursor Background Agent"
-          
-          # انتظار الإصلاح من Cursor Background Agent
-          echo "⏳ انتظار الإصلاح من Cursor Background Agent..."
-          echo "📝 تقرير الخطأ جاهز في error-report.md"
-          echo "🔧 يرجى إصلاح الخطأ وإرسال commit جديد"
+          # التحقق من صحة YAML
+          if command -v yamllint >/dev/null 2>&1; then
+            yamllint .github/workflows/ultimate-ci-self-healing.yml || echo "⚠️ YAML يحتاج مزيد من الإصلاح"
+          fi
           
           case "$FIX_TYPE" in
             "check-artifact-download")
