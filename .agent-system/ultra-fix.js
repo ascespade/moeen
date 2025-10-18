@@ -62,17 +62,35 @@ for (const file of errorFiles) {
     // Strategy 4: إصلاح , missing في objects
     content = content.replace(/:\s*([^,}\n]+)\s*\n\s*([a-zA-Z_])/g, ': $1,\n  $2');
     
-    // Strategy 5: حذف سطور مكسورة تماماً
-    const lines = content.split('\n');
-    const cleaned = lines.filter(line => {
-      const t = line.trim();
-      // حذف سطور فقط بها رموز غريبة
-      if (t === '{' || t === '}' || t === ';' || t === ',' || t === '') return line;
-      if (t.length < 2) return false;
-      return true;
-    });
+    // Strategy 5: إصلاح } expected - balance braces
+    const openBraces = (content.match(/{/g) || []).length;
+    const closeBraces = (content.match(/}/g) || []).length;
+    if (openBraces > closeBraces) {
+      const diff = openBraces - closeBraces;
+      content = content.trimEnd() + '\n' + '}'.repeat(diff) + '\n';
+      fixed = true;
+    }
     
-    content = cleaned.join('\n');
+    // Strategy 6: إصلاح ';' expected في useState/const
+    const lines = content.split('\n');
+    const newLines = [];
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i];
+      const trimmed = line.trim();
+      
+      // إضافة ; إذا كان useState/const بدونها
+      if ((trimmed.startsWith('const ') || trimmed.startsWith('let ')) && 
+          trimmed.includes('=') && 
+          !trimmed.endsWith(';') && 
+          !trimmed.endsWith(',') &&
+          !trimmed.endsWith('{')) {
+        line = line.trimEnd() + ';';
+        fixed = true;
+      }
+      
+      newLines.push(line);
+    }
+    content = newLines.join('\n');
     
     if (content !== original) {
       fs.writeFileSync(filepath, content);
