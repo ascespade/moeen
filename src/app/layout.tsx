@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { generateMetadata as genMeta, pageMetadata, generateStructuredData } from '@/lib/seo/metadata';
+import MoeenChatbot from '@/components/chatbot/MoeenChatbot';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,7 +34,10 @@ export default function RootLayout({
         {/* Theme Color */}
         <meta name="theme-color" content="#4F46E5" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <MoeenChatbot position="bottom-right" />
+      </body>
     </html>
   );
 }
