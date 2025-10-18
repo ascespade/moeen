@@ -179,24 +179,41 @@ jobs:
             console.log(\`::set-output name=fix-type::\${error.fix}\`);
           "
 
-      - name: 🔧 تطبيق الإصلاح
-        id: apply-fix
+      - name: 🤖 إرسال الخطأ إلى Cursor Background Agent
         run: |
-          echo "🔧 تطبيق الإصلاح..."
+          echo "🤖 إرسال الخطأ إلى Cursor Background Agent..."
           
-          ERROR_TYPE="${{ steps.analyze-error.outputs.error-type }}"
-          FIX_TYPE="${{ steps.analyze-error.outputs.fix-type }}"
+          # إنشاء تقرير الخطأ
+          cat > error-report.md << 'EOF'
+          # 🚨 تقرير خطأ في Self-Healing Workflow
           
-          echo "🎯 نوع الخطأ: $ERROR_TYPE"
-          echo "🔧 نوع الإصلاح: $FIX_TYPE"
+          ## 📋 تفاصيل الخطأ
+          - **الوقت:** $(date)
+          - **نوع الخطأ:** YAML syntax error
+          - **الملف:** .github/workflows/ultimate-ci-self-healing.yml
+          - **السطر:** 493
+          - **المشكلة:** خطأ في YAML syntax
           
-          # إصلاح خطأ YAML في الـ Self-Healing workflow
-          echo "🔧 إصلاح خطأ YAML في الـ Self-Healing workflow..."
+          ## 🔍 تفاصيل الخطأ
+          ```
+          Invalid workflow file: .github/workflows/ultimate-ci-self-healing.yml#L493
+          You have an error in your yaml syntax on line 493
+          ```
           
-          # إصلاح المشكلة في السطر 493
-          sed -i '493s/\\`;/`;/' .github/workflows/ultimate-ci-self-healing.yml
+          ## 🎯 المطلوب
+          يرجى إصلاح خطأ YAML في السطر 493 من ملف ultimate-ci-self-healing.yml
           
-          echo "✅ تم إصلاح خطأ YAML"
+          ## 📁 الملف المطلوب إصلاحه
+          .github/workflows/ultimate-ci-self-healing.yml
+          EOF
+          
+          echo "📄 تم إنشاء تقرير الخطأ"
+          echo "🤖 يرجى إرسال هذا التقرير إلى Cursor Background Agent"
+          
+          # انتظار الإصلاح من Cursor Background Agent
+          echo "⏳ انتظار الإصلاح من Cursor Background Agent..."
+          echo "📝 تقرير الخطأ جاهز في error-report.md"
+          echo "🔧 يرجى إصلاح الخطأ وإرسال commit جديد"
           
           case "$FIX_TYPE" in
             "check-artifact-download")
