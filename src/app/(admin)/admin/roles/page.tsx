@@ -15,7 +15,6 @@ interface Role {
 
 const mockRoles: Role[] = [
   {
-  {
     id: "1",
     name: "مدير النظام",
     description: "صلاحيات كاملة لإدارة النظام",

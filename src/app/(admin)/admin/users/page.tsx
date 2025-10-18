@@ -109,6 +109,7 @@ export default function UsersAdminPage() {
                           value={r.role}
                           onChange={(e) =>
                             updateRole(r.id, e.target.value as UserRow["role"])
+                          }
                         >
                           <option value="admin">Admin</option>
                           <option value="staff">Staff</option>
