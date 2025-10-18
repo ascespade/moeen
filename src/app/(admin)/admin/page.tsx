@@ -7,18 +7,14 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-
-Card,
+import {
+  Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/Card";
-
-// src/app/admin/page.tsx
-// Admin Module with Role-Based Access Control
-// Provides user management, system configuration, and security features
-
+import {
   Users,
   Settings,
   Shield,
@@ -33,6 +29,10 @@ Card,
   Clock,
   RefreshCw,
 } from "lucide-react";
+
+// src/app/admin/page.tsx
+// Admin Module with Role-Based Access Control
+// Provides user management, system configuration, and security features
 
 interface User {
   id: string;
