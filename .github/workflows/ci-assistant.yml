@@ -22,7 +22,7 @@ env:
 
 jobs:
   analyze-and-fix:
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    if: ${{ github.event.workflow_run.conclusion == 'failure' && !contains(github.event.workflow_run.head_commit.message, '🤖 CI Assistant') && !contains(github.event.workflow_run.head_commit.message, 'CI Assistant') }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     
@@ -175,9 +175,9 @@ jobs:
             analyzer.saveAnalysis();
             
             // حفظ النتائج للخطوات التالية
-            console.log(\`::set-output name=error-type::\${error.pattern}\`);
-            console.log(\`::set-output name=solution::\${error.solution}\`);
-            console.log(\`::set-output name=fix-type::\${error.fix}\`);
+            console.log(\`error-type=\${error.pattern}\` >> $GITHUB_OUTPUT);
+            console.log(\`solution=\${error.solution}\` >> $GITHUB_OUTPUT);
+            console.log(\`fix-type=\${error.fix}\` >> $GITHUB_OUTPUT);
           "
 
       - name: 🤖 إرسال الخطأ إلى Cursor Background Agent
