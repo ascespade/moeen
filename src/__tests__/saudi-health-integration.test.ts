@@ -107,7 +107,7 @@ describe("SaudiHealthSystemIntegration", () => {
     test("should verify insurance coverage", async () => {
       const coverage = await saudiHealthSystem.verifyInsuranceCoverage(
         "1234567890",
-        "tawuniya",
+        "tawuniya"
       );
       expect(coverage).toHaveProperty("covered");
       expect(coverage).toHaveProperty("coverageType");
@@ -137,7 +137,7 @@ describe("SaudiHealthSystemIntegration", () => {
     test("should check claim status", async () => {
       const status = await saudiHealthSystem.checkClaimStatus(
         "CL123456",
-        "tawuniya",
+        "tawuniya"
       );
       expect(status).toHaveProperty("status");
     });
@@ -147,7 +147,7 @@ describe("SaudiHealthSystemIntegration", () => {
     test("should sync with Seha", async () => {
       const integration = await saudiHealthSystem.syncWithSeha(
         "patient-1",
-        "1234567890",
+        "1234567890"
       );
       expect(integration).toHaveProperty("patientId");
       expect(integration).toHaveProperty("sehaId");

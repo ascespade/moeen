@@ -141,6 +141,7 @@ export class PasswordValidator {
       errors.push("Password must contain at least one special character");
 
     return {
+      {
       isValid: errors.length === 0,
       errors,
     };
@@ -183,8 +184,10 @@ export class SessionSecurity {
       });
 
   static validateSessionId(
+    {
     sessionId: string,
     hashedSessionId: string,
   ): boolean {
     return this.hashSessionId(sessionId) === hashedSessionId;
   }
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

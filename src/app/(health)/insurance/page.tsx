@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
@@ -7,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { ROUTES } from "@/constants/routes";
 
-("use client");
+();
 
 interface InsuranceClaim {
   id: string;
@@ -26,6 +28,7 @@ interface InsuranceClaim {
   outstandingAmount?: number;
 
 const mockClaims: InsuranceClaim[] = [
+  {
     id: "1",
     patientName: "أحمد محمد العتيبي",
     patientId: "P001",
@@ -481,3 +484,4 @@ export default function InsurancePage() {
       )}
     </div>
   );
+}

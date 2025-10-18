@@ -226,6 +226,7 @@ export class SlackIntegration {
 
   // Send patient message to doctor
   async sendPatientMessage(
+    {
     patientId: string,
     doctorId: string,
     message: string,
@@ -237,6 +238,8 @@ export class SlackIntegration {
         return;
 
       const blocks = [
+    },
+          {
           type: "section",
           text: {
             type: "mrkdwn",
@@ -245,6 +248,8 @@ export class SlackIntegration {
         },
           type: "context",
           elements: [
+        },
+              {
               type: "mrkdwn",
               text: `المريض: ${patientId} | القناة: ${channel}`,
             },
@@ -499,3 +504,4 @@ export class SlackIntegration {
     const message = "📊 ملخص يومي للمواعيد والرسائل";
     await this.sendMessage(channel, message);
   }
+}}}}}}}}}}}}}}}}}}}

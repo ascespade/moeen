@@ -1,9 +1,11 @@
+"use client";
+
 import { useMemo, useState, useEffect } from "react";
 
 import EmptyState from "@/components/common/EmptyState";
 import { Skeleton } from "@/components/ui";
 
-("use client");
+();
 
 type Message = {
   id: string;
@@ -20,10 +22,13 @@ type Conversation = {
 };
 
 const seed: Conversation[] = [
+  {
     id: "c1",
     title: "سؤال عن المنتج",
     status: "open",
     messages: [
+  },
+        {
         id: "m1",
         from: "customer",
         text: "مرحبا، لدي استفسار.",
@@ -219,3 +224,4 @@ export default function ConversationsPage() {
       </div>
     </main>
   );
+}

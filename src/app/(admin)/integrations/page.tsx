@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -7,9 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-  Plug,
+Plug,
   Settings,
   CheckCircle,
   XCircle,
@@ -61,7 +61,8 @@ const IntegrationsPage: React.FC = () => {
 
       // Build integrations based on configured API keys
       const integrations: Integration[] = [
-          id: "supabase",
+  {
+    id: "supabase",
           name: "Supabase Database",
           description: "قاعدة البيانات الرئيسية - PostgreSQL + Realtime",
           type: "database",

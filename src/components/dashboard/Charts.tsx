@@ -1,4 +1,3 @@
-
 "use client";
 
 // Lightweight chart implementations using SVG and CSS only to minimize bundle size
@@ -64,63 +63,66 @@ export function ChartsA() {
     </div>
   );
 
-export function ChartsB() {
-  const maxY =
-    Math.max(...data.map((d) => Math.max(d.messages, d.conversations))) * 1.1;
-  return (
-    <div className="h-64 grid grid-cols-7 items-end gap-2 p-4 border border-gray-200 dark:border-gray-700 rounded-md">
-      {data.map((d, i) => (
-        <div key={i} className="flex h-full items-end gap-1">
-          <div
-            className="w-3 bg-[var(--brand-primary)]/80 rounded-sm"
-            style={{ height: `${(d.messages / maxY) * 100}%` }}
-            title={`Messages: ${d.messages}`}
-          />
-          <div
-            className="w-3 bg-brand-success/80 rounded-sm"
-            style={{ height: `${(d.conversations / maxY) * 100}%` }}
-            title={`Conversations: ${d.conversations}`}
-          />
-        </div>
-      ))}
-    </div>
-  );
-
-export function ChartsC() {
-  const total = pie.reduce((a, b) => a + b.value, 0);
-  const gradientStops = pie
-    .reduce<{ start: number; end: number; color: string }[]>((acc, seg) => {
-      const last = acc.length > 0 ? acc[acc.length - 1] : undefined;
-      const start = last ? last.end : 0;
-      const end = start + (seg.value / total) * 360;
-      acc.push({ start, end, color: seg.color });
-      return acc;
-    }, [])
-    .map((s) => `${s.color} ${s.start}deg ${s.end}deg`)
-    .join(", ");
-
-  return (
-    <div className="h-64 flex items-center justify-center">
-      <div
-        className="relative w-40 h-40 rounded-full"
-        style={{ background: `conic-gradient(${gradientStops})` }}
-        aria-label="Channel distribution"
-      >
-        <div className="absolute inset-3 rounded-full bg-white dark:bg-gray-900" />
-      </div>
-      <div className="ml-6 space-y-2">
-        {pie.map((s, i) => (
-          <div key={i} className="flex items-center gap-2 text-sm">
-            <span
-              className="inline-block w-3 h-3 rounded-sm"
-              style={{ backgroundColor: s.color }}
+  export function ChartsB() {
+    const maxY =
+      Math.max(...data.map((d) => Math.max(d.messages, d.conversations))) * 1.1;
+    return (
+      <div className="h-64 grid grid-cols-7 items-end gap-2 p-4 border border-gray-200 dark:border-gray-700 rounded-md">
+        {data.map((d, i) => (
+          <div key={i} className="flex h-full items-end gap-1">
+            <div
+              className="w-3 bg-[var(--brand-primary)]/80 rounded-sm"
+              style={{ height: `${(d.messages / maxY) * 100}%` }}
+              title={`Messages: ${d.messages}`}
             />
-            <span className="text-gray-700 dark:text-gray-300">
-              {s.name}: {s.value}%
-            </span>
+            <div
+              className="w-3 bg-brand-success/80 rounded-sm"
+              style={{ height: `${(d.conversations / maxY) * 100}%` }}
+              title={`Conversations: ${d.conversations}`}
+            />
           </div>
         ))}
       </div>
-    </div>
-  );
-export default ChartsA;
+    );
+
+    export function ChartsC() {
+      const total = pie.reduce((a, b) => a + b.value, 0);
+      const gradientStops = pie
+        .reduce<{ start: number; end: number; color: string }[]>((acc, seg) => {
+          const last = acc.length > 0 ? acc[acc.length - 1] : undefined;
+          const start = last ? last.end : 0;
+          const end = start + (seg.value / total) * 360;
+          acc.push({ start, end, color: seg.color });
+          return acc;
+        }, [])
+        .map((s) => `${s.color} ${s.start}deg ${s.end}deg`)
+        .join(", ");
+
+      return (
+        <div className="h-64 flex items-center justify-center">
+          <div
+            className="relative w-40 h-40 rounded-full"
+            style={{ background: `conic-gradient(${gradientStops})` }}
+            aria-label="Channel distribution"
+          >
+            <div className="absolute inset-3 rounded-full bg-white dark:bg-gray-900" />
+          </div>
+          <div className="ml-6 space-y-2">
+            {pie.map((s, i) => (
+              <div key={i} className="flex items-center gap-2 text-sm">
+                <span
+                  className="inline-block w-3 h-3 rounded-sm"
+                  style={{ backgroundColor: s.color }}
+                />
+                <span className="text-gray-700 dark:text-gray-300">
+                  {s.name}: {s.value}%
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+      export default ChartsA;
+    }
+  }
+}

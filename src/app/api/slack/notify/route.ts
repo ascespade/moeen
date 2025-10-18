@@ -299,3 +299,4 @@ async function handleEmergencyAlert(
   try {
     await slack.sendEmergencyAlert(message, channel);
   } catch (error) {}
+}}}}}}}}}}

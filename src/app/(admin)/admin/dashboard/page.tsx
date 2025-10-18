@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
@@ -6,7 +8,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 
-("use client");
+();
 
 interface DashboardStats {
   totalPatients: number;
@@ -113,6 +115,7 @@ const mockRecentActivities: RecentActivity[] = [
 ];
 
 const mockStaffWorkHours: StaffWorkHours[] = [
+  {
     id: "1",
     name: "د. سارة أحمد",
     position: "طبيبة علاج طبيعي",

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import { useTheme } from "@/core/theme";
@@ -7,9 +9,7 @@ import { useTheme } from "@/core/theme";
  * RTL-compatible bar chart with brand colors and theme support
  */
 
-"use client";
-
-  BarChart as RechartsBarChart,
+BarChart as RechartsBarChart,
   Bar,
   XAxis,
   YAxis,

@@ -1,4 +1,3 @@
-
 /**
  * Design System Types - أنواع نظام التصميم
  * Basic types for design system compatibility
@@ -16,3 +15,4 @@ export interface DesignSystemConfig {
   breakpoint: "sm" | "md" | "lg" | "xl" | "2xl";
   fontSize: "sm" | "base" | "lg" | "xl";
   spacing: "compact" | "normal" | "relaxed";
+}

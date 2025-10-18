@@ -166,3 +166,4 @@ function getDefaultTranslations(lang: string) {
     defaultTranslations[lang as keyof typeof defaultTranslations] ||
     defaultTranslations.en
   );
+}}}}

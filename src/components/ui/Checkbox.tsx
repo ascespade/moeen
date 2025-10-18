@@ -1,8 +1,10 @@
+"use client";
+
 import React from "react";
 
 import { cn } from "@/lib/utils";
 
-("use client");
+();
 
 export interface CheckboxProps
   extends Omit<
@@ -50,3 +52,4 @@ Checkbox.displayName = "Checkbox";
 
 
 export { Checkbox };
+}

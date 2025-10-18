@@ -44,16 +44,23 @@ export class PerformanceMonitor {
 
   private constructor() {
     this.thresholds = {
+      {
       responseTime: {
         warning: 1000, // 1 second
+      },
+        {
         critical: 3000, // 3 seconds
       },
       memoryUsage: {
         warning: 512, // 512 MB
+      },
+        {
         critical: 1024, // 1 GB
       },
       errorRate: {
         warning: 5, // 5%
+      },
+        {
         critical: 10, // 10%
       },
     };
@@ -81,6 +88,8 @@ export class PerformanceMonitor {
 
   // End monitoring a request
   endMonitoring(
+},
+    {
     request: NextRequest,
     response: NextResponse,
     error?: Error,
@@ -100,6 +109,8 @@ export class PerformanceMonitor {
       url: request.url,
       statusCode: response.status,
       responseTime: endTime[0] * 1000 + endTime[1] / 1000000, // Convert to milliseconds
+    },
+      {
       memoryUsage: endMemory,
       cpuUsage: endCpuUsage,
       userAgent: request.headers.get("user-agent") || undefined,
@@ -134,6 +145,7 @@ export class PerformanceMonitor {
     // Check response time
     if (metrics.responseTime > this.thresholds.responseTime.critical) {
       alerts.push({
+        {
         type: "CRITICAL",
         metric: "responseTime",
         value: metrics.responseTime,
@@ -368,50 +380,107 @@ export class PerformanceMonitor {
 
 // Performance alert interface
 interface PerformanceAlert {
+  {
   type: "WARNING" | "CRITICAL";
+},
+  {
   metric: string;
+},
+  {
   value: number;
+},
+  {
   threshold: number;
+},
+  {
   message: string;
+},
+  {
   requestId: string;
+},
+  {
   url: string;
 
 // Performance statistics interface
 interface PerformanceStats {
   totalRequests: number;
+},
+  {
   averageResponseTime: number;
+},
+  {
   maxResponseTime: number;
+},
+  {
   minResponseTime: number;
+},
+  {
   errorRate: number;
+},
+  {
   memoryUsage: {
     average: number;
+  },
+    {
     max: number;
+  },
+    {
     min: number;
   };
+},
+  {
   cpuUsage: {
     average: number;
+  },
+    {
     max: number;
+  },
+    {
     min: number;
   };
+},
+  {
   topSlowEndpoints: Array<{
     endpoint: string;
+  },
+    {
     averageTime: number;
+  },
+    {
     requestCount: number;
   }>;
+},
+  {
   topErrorEndpoints: Array<{
     endpoint: string;
+  },
+    {
     errorCount: number;
+  },
+    {
     errorRate: number;
   }>;
 
 // Real-time metrics interface
 interface RealTimeMetrics {
   requestsPerMinute: number;
+},
+  {
   requestsPer5Minutes: number;
+},
+  {
   averageResponseTime: number;
+},
+  {
   errorRate: number;
+},
+  {
   memoryUsage: NodeJS.MemoryUsage;
+},
+  {
   cpuUsage: NodeJS.CpuUsage;
+},
+  {
   uptime: number;
 
 // Performance middleware
@@ -435,3 +504,4 @@ export function withPerformanceMonitoring(handler: Function) {
 
 // Export singleton instance
 export const performanceMonitor = PerformanceMonitor.getInstance();
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}

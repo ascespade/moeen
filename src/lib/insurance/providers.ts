@@ -33,7 +33,8 @@ export class InsuranceProviderService {
 
   private initializeProviders() {
     const providers: InsuranceProvider[] = [
-        id: "seha",
+  {
+    id: "seha",
         name: "SEHA",
         code: "SEHA",
         apiEndpoint: process.env.SEHA_API_ENDPOINT || "https://api.seha.sa/v1",
@@ -242,3 +243,4 @@ export class InsuranceProviderService {
   }
 
 export const insuranceService = new InsuranceProviderService();
+}}}}}}}}}}}}}}}

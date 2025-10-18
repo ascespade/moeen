@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 export const useClickOutside = <T extends HTMLElement = HTMLDivElement>(
   handler: () => void,
-  enabled: boolean = true,
+  enabled: boolean = true
 ) => {
   const ref = useRef<T>(null);
 

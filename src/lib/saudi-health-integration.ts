@@ -362,6 +362,7 @@ export class SaudiHealthSystemIntegration {
       }
 
     return {
+      {
       valid: errors.length === 0,
       errors,
     };
@@ -397,6 +398,8 @@ export class SaudiHealthSystemIntegration {
 
   // API Call Methods
   private async callSehaAPI(
+},
+    {
     method: string,
     endpoint: string,
     data?: any,
@@ -442,6 +445,8 @@ export class SaudiHealthSystemIntegration {
     };
 
   private async callInsuranceAPI(
+},
+    {
     provider: InsuranceProvider,
     method: string,
     endpoint: string,
@@ -473,3 +478,4 @@ export class SaudiHealthSystemIntegration {
   }
 
 export const saudiHealthSystem = new SaudiHealthSystemIntegration();
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

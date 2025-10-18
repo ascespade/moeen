@@ -139,3 +139,4 @@ export interface LogEntry {
 
 export interface LogListResponse extends PaginatedResponse<LogEntry> {
   data: LogEntry[];
+}}}}}}}}}}}}}}}}}}}}}}

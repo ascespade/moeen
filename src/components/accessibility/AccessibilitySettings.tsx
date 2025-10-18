@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+"use client";
 
-import {
+import React, { useState } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Switch } from "@/components/ui/Switch";
 import { useAccessibility } from "@/lib/accessibility";
 
-"use client";
-
-  Select,
+Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
@@ -373,3 +371,4 @@ const AccessibilitySettings: React.FC = () => {
 };
 
 export default AccessibilitySettings;
+}}}}}}}}

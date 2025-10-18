@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,9 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-  Heart,
+Heart,
   Calendar,
   Clock,
   User,
@@ -121,7 +121,8 @@ const FamilySupportPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockFamilyMembers: FamilyMember[] = [
-          id: "1",
+  {
+    id: "1",
           patient_id: "pat-1",
           first_name: "فاطمة",
           last_name: "محمد",
@@ -164,7 +165,8 @@ const FamilySupportPage: React.FC = () => {
       ];
 
       const mockSupportSessions: SupportSession[] = [
-          id: "1",
+  {
+    id: "1",
           family_member_id: "1",
           counselor_id: "coun-1",
           session_date: "2024-01-15",
@@ -193,7 +195,8 @@ const FamilySupportPage: React.FC = () => {
       ];
 
       const mockResources: Resource[] = [
-          id: "1",
+  {
+    id: "1",
           title: "دليل دعم الأسر",
           description: "دليل شامل لدعم أسر ذوي الاحتياجات الخاصة",
           category: "التعليم",
@@ -784,3 +787,4 @@ const FamilySupportPage: React.FC = () => {
 };
 
 export default FamilySupportPage;
+}}}}

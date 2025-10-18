@@ -354,6 +354,7 @@ export class SaudiMinistryHealthIntegration {
       recommendations.push("تأكد من تحديث البيانات بانتظام");
 
     return {
+      {
       compliant: violations.length === 0,
       violations,
       recommendations,
@@ -422,6 +423,8 @@ export class SaudiMinistryHealthIntegration {
 
   // API Call Methods
   private async callSehaAPI(
+},
+    {
     method: string,
     endpoint: string,
     data?: any,
@@ -466,6 +469,8 @@ export class SaudiMinistryHealthIntegration {
     };
 
   private async callShoonAPI(
+},
+    {
     method: string,
     endpoint: string,
     data?: any,
@@ -486,6 +491,8 @@ export class SaudiMinistryHealthIntegration {
     };
 
   private async callTatmanAPI(
+},
+    {
     method: string,
     endpoint: string,
     data?: any,
@@ -508,3 +515,4 @@ export class SaudiMinistryHealthIntegration {
   }
 
 export const ministryHealthIntegration = new SaudiMinistryHealthIntegration();
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

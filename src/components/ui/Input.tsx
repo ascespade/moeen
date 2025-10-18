@@ -1,3 +1,5 @@
+"use client";
+
 import React, { forwardRef } from "react";
 
 import { AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
@@ -9,7 +11,7 @@ import { cn } from "@/lib/cn";
  * Unified input component with validation states
  */
 
-("use client");
+();
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

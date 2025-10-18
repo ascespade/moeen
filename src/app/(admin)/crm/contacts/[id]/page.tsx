@@ -13,3 +13,4 @@ export default function ContactDetailsPage({ params }: Props) {
       </div>
     </main>
   );
+}}

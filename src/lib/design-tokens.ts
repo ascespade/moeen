@@ -1,4 +1,3 @@
-
 /**
  * Design Tokens - رموز التصميم المركزية
  *
@@ -219,45 +218,49 @@ export const componentSizes = {
 export function getColor(category: keyof typeof colors, key: string): string {
   return (colors[category] as any)[key] || colors.text.primary;
 
-/**
- * Get spacing value
- * استخدام: getSpacing(4) → 'var(--space-4, 1rem)'
- */
-export function getSpacing(size: keyof typeof spacing): string {
-  return spacing[size];
+  /**
+   * Get spacing value
+   * استخدام: getSpacing(4) → 'var(--space-4, 1rem)'
+   */
+  export function getSpacing(size: keyof typeof spacing): string {
+    return spacing[size];
 
-/**
- * Build className from design tokens
- * استخدام: buildClassName({ bg: 'brand.primary', text: 'white' })
- */
-export function buildClassName(tokens: {
-  bg?: string;
-  text?: string;
-  border?: string;
-  rounded?: keyof typeof borderRadius;
-  shadow?: keyof typeof boxShadow;
-  p?: keyof typeof spacing;
-  m?: keyof typeof spacing;
-}): string {
-  const classes: string[] = [];
+    /**
+     * Build className from design tokens
+     * استخدام: buildClassName({ bg: 'brand.primary', text: 'white' })
+     */
+    export function buildClassName(tokens: {
+      bg?: string;
+      text?: string;
+      border?: string;
+      rounded?: keyof typeof borderRadius;
+      shadow?: keyof typeof boxShadow;
+      p?: keyof typeof spacing;
+      m?: keyof typeof spacing;
+    }): string {
+      const classes: string[] = [];
 
-  if (tokens.bg) classes.push(`bg-${tokens.bg.replace(".", "-")}`);
-  if (tokens.text) classes.push(`text-${tokens.text.replace(".", "-")}`);
-  if (tokens.border) classes.push(`border-${tokens.border.replace(".", "-")}`);
-  if (tokens.rounded) classes.push(`rounded-${tokens.rounded}`);
-  if (tokens.shadow) classes.push(`shadow-${tokens.shadow}`);
-  if (tokens.p) classes.push(`p-${tokens.p}`);
-  if (tokens.m) classes.push(`m-${tokens.m}`);
+      if (tokens.bg) classes.push(`bg-${tokens.bg.replace(".", "-")}`);
+      if (tokens.text) classes.push(`text-${tokens.text.replace(".", "-")}`);
+      if (tokens.border)
+        classes.push(`border-${tokens.border.replace(".", "-")}`);
+      if (tokens.rounded) classes.push(`rounded-${tokens.rounded}`);
+      if (tokens.shadow) classes.push(`shadow-${tokens.shadow}`);
+      if (tokens.p) classes.push(`p-${tokens.p}`);
+      if (tokens.m) classes.push(`m-${tokens.m}`);
 
-  return classes.join(" ");
+      return classes.join(" ");
 
-// ============================================
-// TYPE EXPORTS
+      // ============================================
+      // TYPE EXPORTS
 
-export type ColorCategory = keyof typeof colors;
-export type SemanticColor = keyof typeof colors.semantic;
-export type SpacingSize = keyof typeof spacing;
-export type FontSize = keyof typeof fontSize;
-export type BorderRadius = keyof typeof borderRadius;
-export type BoxShadow = keyof typeof boxShadow;
-export type ZIndex = keyof typeof zIndex;
+      export type ColorCategory = keyof typeof colors;
+      export type SemanticColor = keyof typeof colors.semantic;
+      export type SpacingSize = keyof typeof spacing;
+      export type FontSize = keyof typeof fontSize;
+      export type BorderRadius = keyof typeof borderRadius;
+      export type BoxShadow = keyof typeof boxShadow;
+      export type ZIndex = keyof typeof zIndex;
+    }
+  }
+}

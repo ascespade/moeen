@@ -1,10 +1,12 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-("use client");
+();
 
 interface Session {
   id: string;
@@ -17,6 +19,7 @@ interface Session {
   notes?: string;
 
 const mockSessions: Session[] = [
+  {
     id: "1",
     patientName: "أحمد العتيبي",
     doctorName: "د. سارة أحمد",

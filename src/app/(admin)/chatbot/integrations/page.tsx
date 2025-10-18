@@ -1,10 +1,12 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-("use client");
+();
 
 interface Integration {
   id: string;
@@ -19,6 +21,7 @@ interface Integration {
   color: string;
 
 const mockIntegrations: Integration[] = [
+  {
     id: "1",
     name: "واتساب بزنس",
     type: "whatsapp",

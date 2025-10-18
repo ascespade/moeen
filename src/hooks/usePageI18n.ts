@@ -99,3 +99,4 @@ export function useNamespaceI18n(
  */
 export function useCommonI18n(locale: "ar" | "en" = "ar") {
   return useNamespaceI18n("common", locale);
+}}}}}

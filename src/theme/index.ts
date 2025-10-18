@@ -612,3 +612,4 @@ export function generateCSSVariables(
     "--panel": colors.panel,
     "--focus-ring": colors.interactive.focus,
   };
+}}}}}}}

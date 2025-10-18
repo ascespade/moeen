@@ -1,4 +1,3 @@
-
 export default function GuidelinesPage() {
   return (
     <main className="p-6 grid gap-6">
@@ -64,3 +63,4 @@ export default function GuidelinesPage() {
       </section>
     </main>
   );
+}

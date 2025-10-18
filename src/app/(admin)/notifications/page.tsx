@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -8,9 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-  Bell,
+Bell,
   BellRing,
   CheckCircle,
   AlertCircle,
@@ -101,7 +101,8 @@ const NotificationsPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockNotifications: Notification[] = [
-          id: "1",
+  {
+    id: "1",
           title: "موعد جديد مجدول",
           message: "تم جدولة موعد جديد للمريض أحمد محمد في 15 يناير 2024",
           type: "appointment",
@@ -176,7 +177,8 @@ const NotificationsPage: React.FC = () => {
       ];
 
       const mockTemplates: NotificationTemplate[] = [
-          id: "1",
+  {
+    id: "1",
           name: "تذكير الموعد",
           title: "تذكير بموعدك",
           message:

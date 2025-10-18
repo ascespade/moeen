@@ -177,6 +177,7 @@ export const APP_CONFIG = {
 
 // Default System Configuration
 export const DEFAULT_SYSTEM_CONFIG: SystemConfig[] = [ {
+    {
     id: "app-name",
     key: "app_name",
     value: APP_CONFIG.NAME,

@@ -11,3 +11,4 @@ export default function LegalLayout({
   children: React.ReactNode;
 }) {
   return children;
+}

@@ -1,8 +1,10 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
 
-("use client");
+();
 
 interface Role {
   id: string;
@@ -13,6 +15,7 @@ interface Role {
   createdAt: string;
 
 const mockRoles: Role[] = [
+  {
     id: "1",
     name: "مدير النظام",
     description: "صلاحيات كاملة لإدارة النظام",

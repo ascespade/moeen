@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
@@ -5,7 +7,7 @@ import Link from "next/link";
 
 import { ROUTES } from "@/constants/routes";
 
-("use client");
+();
 
 interface Lead {
   id: string;
@@ -33,6 +35,7 @@ interface Lead {
   tags: string[];
 
 const mockLeads: Lead[] = [
+  {
     id: "1",
     name: "أحمد العتيبي",
     email: "ahmed@company.com",
@@ -552,3 +555,4 @@ export default function CRMLeadsPage() {
       )}
     </div>
   );
+}

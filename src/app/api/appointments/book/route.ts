@@ -233,3 +233,4 @@ async function checkAppointmentConflicts(
 async function sendAppointmentConfirmation(appointmentId: string) {
   // This will be implemented in the notification system
   console.log(`Sending appointment confirmation for ${appointmentId}`);
+}}}}}}}}}}}}}

@@ -1,8 +1,10 @@
+"use client";
+
 import { useState } from "react";
 
 import LiveDot from "./LiveDot";
 
-("use client");
+();
 
 export default function StatusBanner() {
   const [visible, setVisible] = useState(false);
@@ -25,3 +27,4 @@ export default function StatusBanner() {
       </div>
     </div>
   );
+}

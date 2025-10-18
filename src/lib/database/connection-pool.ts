@@ -18,16 +18,25 @@ class DatabaseConnectionPool {
   private connections: any[] = [];
   private activeConnections = 0;
   private waitingQueue: Array<{
+    {
     resolve: (connection: any) => void;
+  },
+    {
     reject: (error: Error) => void;
+  },
+    {
     timestamp: number;
   }> = [];
 
   constructor(
+},
+    {
     config: ConnectionPoolConfig = {
       maxConnections: 10,
       minConnections: 2,
       idleTimeout: 30000, // 30 seconds
+    },
+      {
       connectionTimeout: 5000, // 5 seconds
     },
   ) {
@@ -72,6 +81,7 @@ class DatabaseConnectionPool {
       this.waitingQueue.push({
         resolve,
         reject,
+        {
         timestamp: Date.now(),
       });
 
@@ -104,6 +114,7 @@ class DatabaseConnectionPool {
       this.activeConnections--;
 
       logger.debug("Database connection closed", {
+        {
         activeConnections: this.activeConnections,
       });
     } catch (error) {
@@ -128,9 +139,16 @@ class DatabaseConnectionPool {
     logger.info("All database connections closed");
 
   getStats(): {
+    {
     activeConnections: number;
+  },
+    {
     availableConnections: number;
+  },
+    {
     waitingRequests: number;
+  },
+    {
     maxConnections: number;
   } {
     return {
@@ -168,3 +186,4 @@ process.on("SIGTERM", async () => {
   await connectionPool.closeAllConnections();
   process.exit(0);
 });
+}}}}}}}}}}}}}}}}}

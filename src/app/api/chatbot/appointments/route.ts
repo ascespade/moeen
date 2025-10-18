@@ -222,3 +222,4 @@ async function sendWhatsAppConfirmation(phone: string, appointment: any) {
 
   // هنا يمكنك إضافة كود إرسال WhatsApp الفعلي
   // await whatsappAPI.sendMessage(phone, message);
+}}}}}}}}}}}}

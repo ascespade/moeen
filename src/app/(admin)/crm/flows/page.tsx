@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -8,9 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-  Plus,
+Plus,
   Edit,
   Trash2,
   Play,
@@ -73,7 +73,8 @@ const FlowsManagementPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب الـ flows من API
       const mockFlows: ConversationFlow[] = [
-          id: "new_beneficiary",
+  {
+    id: "new_beneficiary",
           name: "المستفيد الجديد",
           description: "تسهيل عملية الانضمام وجمع المعلومات الأولية",
           entryPoints: ["new_user", "first_time", "تقييم أولي"],
@@ -81,6 +82,8 @@ const FlowsManagementPage: React.FC = () => {
           createdAt: "2024-01-15",
           updatedAt: "2024-01-15",
           steps: [
+        },
+              {
               id: "welcome",
               type: "information",
               content: "أهلاً بك في مركز الهمم، أنا مُعين، مساعدك الرقمي.",
@@ -109,6 +112,8 @@ const FlowsManagementPage: React.FC = () => {
           createdAt: "2024-01-15",
           updatedAt: "2024-01-15",
           steps: [
+        },
+              {
               id: "appointment_type",
               type: "question",
               content: "هل هذا موعد جديد أم متابعة؟",
@@ -132,6 +137,8 @@ const FlowsManagementPage: React.FC = () => {
           createdAt: "2024-01-15",
           updatedAt: "2024-01-15",
           steps: [
+        },
+              {
               id: "emergency_detection",
               type: "action",
               content:

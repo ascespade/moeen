@@ -26,6 +26,7 @@ export const isValidPassword = (
     errors.push("Password must contain at least one special character");
 
   return {
+    {
     isValid: errors.length === 0,
     errors,
   };
@@ -90,6 +91,7 @@ export const matchesPattern = (value: string, pattern: RegExp): boolean => {
 };
 
 export const validateForm = <T extends Record<string, any>>(
+  {
   data: T,
   rules: Record<keyof T, (value: any) => { isValid: boolean; error?: string }>,
 ): { isValid: boolean; errors: Record<keyof T, string> } => {
@@ -105,3 +107,4 @@ export const validateForm = <T extends Record<string, any>>(
 
   return { isValid, errors };
 };
+}}}}}}}}}}}

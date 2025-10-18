@@ -22,3 +22,4 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error: "Failed to read logs" }, { status: 500 });
   }
+}}

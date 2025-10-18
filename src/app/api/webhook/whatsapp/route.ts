@@ -219,3 +219,4 @@ async function sendWhatsAppMessage(phoneNumber: string, message: string) {
       logger.error("Failed to send WhatsApp message:", await response.text());
     }
   } catch (error) {}
+}}}}}}}}}}}}}}}

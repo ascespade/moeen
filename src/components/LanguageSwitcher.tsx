@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 import { Globe } from "lucide-react";
@@ -7,7 +9,7 @@ import { Globe } from "lucide-react";
  * مبدل اللغة مع دعم RTL
  */
 
-("use client");
+();
 
 export default function LanguageSwitcher() {
   const [language, setLanguage] = useState<"ar" | "en">("ar");
@@ -56,3 +58,4 @@ export default function LanguageSwitcher() {
       </span>
     </button>
   );
+}}

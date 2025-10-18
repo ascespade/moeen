@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+"use client";
 
-import {
+import React, { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
@@ -8,9 +8,7 @@ import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
-"use client";
-
-  User,
+User,
   Phone,
   Mail,
   Calendar,
@@ -124,7 +122,8 @@ const PatientRecords: React.FC = () => {
   const loadPatients = async () => {
     // محاكاة تحميل المرضى من قاعدة البيانات
     const mockPatients: Patient[] = [
-        id: "1",
+  {
+    id: "1",
         name: "أحمد محمد الأحمد",
         phone: "+966501234567",
         email: "ahmed@example.com",
@@ -183,7 +182,8 @@ const PatientRecords: React.FC = () => {
   const loadMedicalRecords = async () => {
     // محاكاة تحميل السجلات الطبية
     const mockRecords: MedicalRecord[] = [
-        id: "1",
+  {
+    id: "1",
         patientId: "1",
         date: "2024-01-10",
         doctorName: "د. سارة أحمد",
@@ -791,3 +791,4 @@ const PatientRecords: React.FC = () => {
 };
 
 export default PatientRecords;
+}}}}}}}

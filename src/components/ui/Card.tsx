@@ -1,3 +1,5 @@
+"use client";
+
 import React, { forwardRef } from "react";
 
 import { cn } from "@/lib/cn";
@@ -7,7 +9,7 @@ import { cn } from "@/lib/cn";
  * Unified card component with multiple variants
  */
 
-("use client");
+();
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "elevated" | "outlined" | "filled";
@@ -129,3 +131,4 @@ export const CardDescription = CardContent;
 
 
 export { Card, CardHeader, CardContent, CardFooter };
+}

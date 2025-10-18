@@ -65,3 +65,4 @@ export function requireAuth(allowedRoles?: User["role"][]) {
 
     return { authorized: true, user, error: null };
   };
+}}}}}}}}}

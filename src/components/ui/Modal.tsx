@@ -1,8 +1,10 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 
 import clsx from "clsx";
 
-("use client");
+();
 
 export interface ModalProps {
   open: boolean;
@@ -69,3 +71,4 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
   );
 
 export default Modal;
+}}

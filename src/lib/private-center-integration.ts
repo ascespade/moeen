@@ -316,6 +316,7 @@ export class PrivateCenterIntegration {
         recommendations.push("تواصل مع الجهات المختصة لحل أي مشاكل");
 
       return {
+        {
         compliant: violations.length === 0,
         violations,
         recommendations,
@@ -332,17 +333,32 @@ export class PrivateCenterIntegration {
 
   // Private Center Analytics
   async getCenterAnalytics(
+    {
     _period: "monthly" | "quarterly" | "annual",
   ): Promise<{
     totalPatients: number;
+  },
+    {
     newPatients: number;
+  },
+    {
     completedSessions: number;
+  },
+    {
     revenue: number;
+  },
+    {
     qualityMetrics: {
       patientSatisfaction: number;
+    },
+      {
       treatmentOutcomes: number;
+    },
+      {
       safetyIncidents: number;
     };
+  },
+    {
     complianceScore: number;
   }> {
     try {
@@ -380,6 +396,7 @@ export class PrivateCenterIntegration {
   // Utility Functions
   private getDefaultCenterData(): PrivateCenterLicense {
     return {
+      {
       centerId: this.centerId,
       centerName: this.centerName,
       licenseNumber: this.licenseNumber,
@@ -419,6 +436,8 @@ export class PrivateCenterIntegration {
     return {
       centerId: this.centerId,
       insuranceProviders: [
+    },
+          {
           provider: "التعاونية",
           contractNumber: "CONTRACT-001",
           contractDate: "2024-01-01",
@@ -436,6 +455,8 @@ export class PrivateCenterIntegration {
 
   // API Call Methods
   private async callMOHAPI(
+},
+    {
     method: string,
     endpoint: string,
     data?: any,
@@ -447,6 +468,8 @@ export class PrivateCenterIntegration {
     };
 
   private async callSFDAPI(
+},
+    {
     method: string,
     endpoint: string,
     data?: any,
@@ -458,6 +481,8 @@ export class PrivateCenterIntegration {
     };
 
   private async callCCHIAPI(
+},
+    {
     method: string,
     endpoint: string,
     data?: any,
@@ -474,3 +499,4 @@ export class PrivateCenterIntegration {
   }
 
 export const privateCenterIntegration = new PrivateCenterIntegration();
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

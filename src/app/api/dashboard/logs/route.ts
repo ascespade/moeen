@@ -113,3 +113,4 @@ function generateLogSummary(logs: any[]) {
     summary.total > 0 ? ((summary.byLevel.warn || 0) / summary.total) * 100 : 0;
 
   return summary;
+}}}}}

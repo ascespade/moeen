@@ -7,3 +7,4 @@ export function ScreenReaderOnly({ children }: ScreenReaderOnlyProps) {
   return <span className="sr-only">{children}</span>;
 
 export default ScreenReaderOnly;
+}}

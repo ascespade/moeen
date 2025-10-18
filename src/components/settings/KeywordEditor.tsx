@@ -1,6 +1,8 @@
+"use client";
+
 import { useState } from "react";
 
-("use client");
+();
 export default function KeywordEditor({
   keywords,
   onChange,
@@ -48,3 +50,4 @@ export default function KeywordEditor({
       </div>
     </div>
   );
+}}}

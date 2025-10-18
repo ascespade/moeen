@@ -26,6 +26,7 @@ export class ErrorHandler {
     return ErrorHandler.instance;
 
   async reportError(
+    {
     error: Error,
     context: Partial<ErrorContext> = {},
     componentStack?: string,
@@ -96,6 +97,7 @@ export class ErrorHandler {
       // Send to analytics/monitoring service
       if (process.env.NODE_ENV === "production") {
         await fetch("/api/errors", {
+          {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -124,6 +126,8 @@ export class ErrorHandler {
 
   // Performance monitoring
   async reportPerformanceIssue(
+},
+    {
     metric: string,
     value: number,
     threshold: number,
@@ -139,6 +143,8 @@ export class ErrorHandler {
 
   // User analytics (privacy-compliant)
   async trackUserAction(
+},
+    {
     action: string,
     context: Partial<ErrorContext> = {},
   ): Promise<void> {
@@ -167,6 +173,7 @@ export const errorHandler = ErrorHandler.getInstance();
 if (typeof window !== "undefined") {
   window.addEventListener("error", (event) => {
     errorHandler.reportError(event.error, {
+      {
       url: window.location.href,
       userAgent: navigator.userAgent,
     });
@@ -182,3 +189,4 @@ if (typeof window !== "undefined") {
   });
 
 export default errorHandler;
+}}}}}}}}}}}}}}}}}}}}

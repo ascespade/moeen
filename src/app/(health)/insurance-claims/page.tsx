@@ -1,10 +1,12 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-("use client");
+();
 
 interface InsuranceClaim {
   id: string;
@@ -23,6 +25,7 @@ interface InsuranceClaim {
   notes?: string;
 
 const mockClaims: InsuranceClaim[] = [
+  {
     id: "1",
     patientName: "أحمد العتيبي",
     patientId: "1",

@@ -1,10 +1,12 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-("use client");
+();
 
 interface AnalyticsData {
   totalMessages: number;
@@ -371,3 +373,4 @@ export default function ChatbotAnalyticsPage() {
       </main>
     </div>
   );
+}}

@@ -1,4 +1,3 @@
-
 // Environment configuration
 export const env = {
   // App
@@ -73,7 +72,7 @@ export const validateEnv = () => {
 
   if (missingVars.length > 0) {
     throw new Error(
-      `Missing required environment variables: ${missingVars.join(", ")}`,
+      `Missing required environment variables: ${missingVars.join(", ")}`
     );
   }
 };
@@ -113,12 +112,14 @@ export const getConfig = () => {
       logging: "debug",
     };
 
-  if (env.IS_PRODUCTION) {
-    return {
-      ...baseConfig,
-      debug: false,
-      logging: "error",
-    };
+    if (env.IS_PRODUCTION) {
+      return {
+        ...baseConfig,
+        debug: false,
+        logging: "error",
+      };
 
-  return baseConfig;
+      return baseConfig;
+    }
+  }
 };

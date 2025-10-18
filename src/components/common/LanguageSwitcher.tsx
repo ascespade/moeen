@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState, useCallback } from "react";
 
 import { Languages } from "lucide-react";
@@ -5,7 +7,7 @@ import { Languages } from "lucide-react";
 import { useI18n } from "@/hooks/useI18n";
 import { dynamicThemeManager } from "@/lib/dynamic-theme-manager";
 
-("use client");
+();
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -127,3 +129,4 @@ export default function LanguageSwitcher({
       )}
     </button>
   );
+}}}

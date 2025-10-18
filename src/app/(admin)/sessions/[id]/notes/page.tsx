@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 import { useParams, useRouter } from "next/navigation";
@@ -5,7 +7,7 @@ import { useParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
 
-("use client");
+();
 
 interface Goal {
   id: string;
@@ -434,3 +436,4 @@ export default function SessionNotesPage() {
       </div>
     </div>
   );
+}}}}}}}}

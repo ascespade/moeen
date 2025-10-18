@@ -1,8 +1,10 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
 
-("use client");
+();
 
 interface Message {
   id: string;
@@ -16,6 +18,7 @@ interface Message {
   priority: "low" | "medium" | "high";
 
 const mockMessages: Message[] = [
+  {
     id: "1",
     sender: "نظام المواعيد",
     recipient: "أحمد محمد",

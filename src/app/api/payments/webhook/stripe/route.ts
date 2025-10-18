@@ -206,3 +206,4 @@ async function handlePaymentCanceled(
   });
 
   console.log(`Payment canceled for appointment ${appointmentId}`);
+}}}}}}}}}}}}}}

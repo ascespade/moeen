@@ -1,6 +1,8 @@
+"use client";
+
 import { useState } from "react";
 
-("use client");
+();
 interface Tab {
   id: string;
   label: string;
@@ -42,3 +44,4 @@ export default function Tabs({ tabs, defaultTab, className = "" }: TabsProps) {
       <div className="mt-6">{activeTabContent}</div>
     </div>
   );
+}}}

@@ -1,6 +1,8 @@
+"use client";
+
 import { useEffect } from "react";
 
-("use client");
+();
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -87,3 +89,4 @@ export default function Modal({
       </div>
     </div>
   );
+}}}}

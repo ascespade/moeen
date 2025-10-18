@@ -1,5 +1,5 @@
-
 "use client";
+
 
 interface EmptyStateProps {
   icon?: string;
@@ -39,3 +39,4 @@ export default function EmptyState({
       )}
     </div>
   );
+}}

@@ -1,6 +1,7 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
-import {
 import {
 
 import { Badge } from "@/components/ui/Badge";
@@ -9,9 +10,7 @@ import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
-"use client";
-
-  Card,
+Card,
   CardContent,
   CardDescription,
   CardHeader,
@@ -623,3 +622,4 @@ export default function AdminPage() {
       </div>
     </div>
   );
+}}}}}}}}}

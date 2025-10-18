@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
@@ -5,7 +7,7 @@ import Link from "next/link";
 
 import { ROUTES } from "@/constants/routes";
 
-("use client");
+();
 
 interface Deal {
   id: string;
@@ -30,6 +32,7 @@ interface Deal {
   tags: string[];
 
 const mockDeals: Deal[] = [
+  {
     id: "1",
     title: "عقد إدارة المواعيد - مستشفى الملك فهد",
     value: 150000,
@@ -508,3 +511,4 @@ export default function CRMDealsPage() {
       )}
     </div>
   );
+}

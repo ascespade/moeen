@@ -660,3 +660,4 @@ async function getCrmMetrics() {
       activities: { total: 0, calls: 0, meetings: 0, tasks: 0 },
     };
   }
+}}}}}}}}}}}}}}}

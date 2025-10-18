@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import Link from "next/link";
@@ -5,7 +7,7 @@ import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-("use client");
+();
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -192,3 +194,4 @@ export default function ForgotPasswordPage() {
       </div>
     </div>
   );
+}}}}

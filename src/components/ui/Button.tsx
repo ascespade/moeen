@@ -1,3 +1,5 @@
+"use client";
+
 import React, { forwardRef } from "react";
 
 import { Loader2 } from "lucide-react";
@@ -9,7 +11,7 @@ import { cn } from "@/lib/cn";
  * Unified button component with multiple variants and states
  */
 
-("use client");
+();
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

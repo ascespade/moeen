@@ -266,3 +266,4 @@ class DynamicThemeManager {
 // Export singleton instance
 export const dynamicThemeManager = new DynamicThemeManager();
 export default dynamicThemeManager;
+}}}}}}}}}}}}}}}}}}

@@ -130,6 +130,7 @@ export async function GET(request: NextRequest) {
 
           if (!isBreakTime && !isBooked) {
             slots.push({
+              {
               time: slotTime,
               timeString,
               available: true,
@@ -137,6 +138,7 @@ export async function GET(request: NextRequest) {
           }
 
         return {
+          {
           doctorId: doctor.id,
           speciality: doctor.speciality,
           email: doctor.users.email,
@@ -150,7 +152,9 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
+  },
       { error: "Internal server error" },
       { status: 500 },
     );
   }
+}}}}}}}}}}

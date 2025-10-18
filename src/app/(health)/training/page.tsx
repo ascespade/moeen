@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,9 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-  GraduationCap,
+GraduationCap,
   Calendar,
   Clock,
   User,
@@ -99,7 +99,8 @@ const TrainingPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockPrograms: TrainingProgram[] = [
-          id: "1",
+  {
+    id: "1",
           title: "برنامج المهارات الحياتية الأساسية",
           description: "تطوير المهارات الأساسية للحياة اليومية والاستقلالية",
           category: "المهارات الحياتية",
@@ -160,7 +161,8 @@ const TrainingPage: React.FC = () => {
       ];
 
       const mockProgress: TrainingProgress[] = [
-          id: "1",
+  {
+    id: "1",
           participant_id: "part-1",
           program_id: "1",
           progress_percentage: 75,
@@ -533,3 +535,4 @@ const TrainingPage: React.FC = () => {
 };
 
 export default TrainingPage;
+}}

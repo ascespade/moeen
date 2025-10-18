@@ -1,8 +1,8 @@
-import React, {
-
 "use client";
 
-  createContext,
+import React, {
+
+createContext,
   useContext,
   useState,
   useEffect,
@@ -299,3 +299,4 @@ export function useDesignSystem(): DesignSystemContextValue {
       "useDesignSystem must be used within a DesignSystemProvider",
     );
   return context;
+}}}}}}

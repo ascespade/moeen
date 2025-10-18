@@ -120,6 +120,7 @@ export async function GET(request: NextRequest) {
 
         if (!isBooked) {
           slots.push({
+            {
             therapistId: therapist.id,
             therapistName: therapist.full_name,
             date,
@@ -142,6 +143,7 @@ export async function GET(request: NextRequest) {
     logger.info("Available slots generated", {
       sessionTypeId,
       date,
+      {
       slotsCount: slots.length,
     });
 
@@ -159,6 +161,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     logger.error("Error in available-slots API", error);
     return NextResponse.json(
+  },
       { error: "Internal server error" },
       { status: 500 },
     );
@@ -167,6 +170,7 @@ export async function GET(request: NextRequest) {
 // Helper functions
 
 function generateTimeSlots(
+  {
   startTime: string,
   endTime: string,
   duration: number,
@@ -190,9 +194,12 @@ function addMinutes(time: string, minutes: number): string {
   return `${String(newHours).padStart(2, "0")}:${String(newMins).padStart(2, "0")}`;
 
 function timesOverlap(
+},
+  {
   start1: string,
   end1: string,
   start2: string,
   end2: string,
 ): boolean {
   return start1 < end2 && end1 > start2;
+}}}}}}}}}}}}}}}

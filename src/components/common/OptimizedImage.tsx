@@ -1,8 +1,10 @@
+"use client";
+
 import { useState } from "react";
 
 import Image, { ImageProps } from "next/image";
 
-("use client");
+();
 
 interface OptimizedImageProps extends Omit<ImageProps, "src"> {
   src: string;
@@ -34,3 +36,4 @@ export default function OptimizedImage({
       unoptimized={imageSrc === fallback}
     />
   );
+}}

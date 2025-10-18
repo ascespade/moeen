@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import { useTheme } from "@/core/theme";
@@ -7,9 +9,7 @@ import { useTheme } from "@/core/theme";
  * RTL-compatible line chart with brand colors and theme support
  */
 
-"use client";
-
-  LineChart as RechartsLineChart,
+LineChart as RechartsLineChart,
   Line,
   XAxis,
   YAxis,

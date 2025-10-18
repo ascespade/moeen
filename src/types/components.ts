@@ -19,3 +19,4 @@ export interface InputProps extends ComponentProps {
   error?: string;
   disabled?: boolean;
   required?: boolean;
+}}}

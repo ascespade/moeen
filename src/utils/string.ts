@@ -1,4 +1,3 @@
-
 // String utilities
 export const slugify = (text: string): string => {
   return text
@@ -52,7 +51,7 @@ export const sentenceCase = (text: string): string => {
 export const truncate = (
   text: string,
   length: number,
-  suffix: string = "...",
+  suffix: string = "..."
 ): string => {
   if (text.length <= length) return text;
   return text.slice(0, length - suffix.length) + suffix;
@@ -61,7 +60,7 @@ export const truncate = (
 export const truncateWords = (
   text: string,
   wordCount: number,
-  suffix: string = "...",
+  suffix: string = "..."
 ): string => {
   const words = text.split(" ");
   if (words.length <= wordCount) return text;
@@ -104,96 +103,103 @@ export const generateRandomString = (length: number = 8): string => {
   let result = "";
   for (let i = 0; i < length; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
-  return result;
-};
+    return result;
+  }
 
-export const generateRandomId = (prefix: string = ""): string => {
-  const timestamp = Date.now().toString(36);
-  const random = Math.random().toString(36).substr(2, 5);
-  return `${prefix}${timestamp}${random}`;
-};
+  export const generateRandomId = (prefix: string = ""): string => {
+    const timestamp = Date.now().toString(36);
+    const random = Math.random().toString(36).substr(2, 5);
+    return `${prefix}${timestamp}${random}`;
+  };
 
-export const maskEmail = (email: string): string => {
-  const [localPart, domain] = email.split("@");
-  if (!localPart || localPart.length <= 2) return email;
+  export const maskEmail = (email: string): string => {
+    const [localPart, domain] = email.split("@");
+    if (!localPart || localPart.length <= 2) return email;
 
-  const maskedLocal =
-    localPart[0] +
-    "*".repeat(localPart.length - 2) +
-    localPart[localPart.length - 1];
-  return `${maskedLocal}@${domain}`;
-};
+    const maskedLocal =
+      localPart[0] +
+      "*".repeat(localPart.length - 2) +
+      localPart[localPart.length - 1];
+    return `${maskedLocal}@${domain}`;
+  };
 
-export const maskPhone = (phone: string): string => {
-  const cleaned = phone.replace(/\D/g, "");
-  if (cleaned.length < 4) return phone;
+  export const maskPhone = (phone: string): string => {
+    const cleaned = phone.replace(/\D/g, "");
+    if (cleaned.length < 4) return phone;
 
-  const visible = cleaned.slice(-4);
-  const masked = "*".repeat(cleaned.length - 4);
-  return masked + visible;
-};
+    const visible = cleaned.slice(-4);
+    const masked = "*".repeat(cleaned.length - 4);
+    return masked + visible;
+  };
 
-export const maskCreditCard = (cardNumber: string): string => {
-  const cleaned = cardNumber.replace(/\D/g, "");
-  if (cleaned.length < 8) return cardNumber;
+  export const maskCreditCard = (cardNumber: string): string => {
+    const cleaned = cardNumber.replace(/\D/g, "");
+    if (cleaned.length < 8) return cardNumber;
 
-  const visible = cleaned.slice(-4);
-  const masked = "*".repeat(cleaned.length - 4);
-  return masked.replace(/(.{4})/g, "$1 ").trim() + visible;
-};
+    const visible = cleaned.slice(-4);
+    const masked = "*".repeat(cleaned.length - 4);
+    return masked.replace(/(.{4})/g, "$1 ").trim() + visible;
+  };
 
-export const highlightText = (
-  text: string,
-  searchTerm: string,
-  className: string = "highlight",
-): string => {
-  if (!searchTerm) return text;
+  export const highlightText = (
+    text: string,
+    searchTerm: string,
+    className: string = "highlight"
+  ): string => {
+    if (!searchTerm) return text;
 
-  const regex = new RegExp(`(${escapeRegex(searchTerm)})`, "gi");
-  return text.replace(regex, `<span class="${className}">$1</span>`);
-};
+    const regex = new RegExp(`(${escapeRegex(searchTerm)})`, "gi");
+    return text.replace(regex, `<span class="${className}">$1</span>`);
+  };
 
-export const escapeRegex = (text: string): string => {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-};
+  export const escapeRegex = (text: string): string => {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  };
 
-export const pluralize = (
-  count: number,
-  singular: string,
-  plural?: string,
-): string => {
-  if (count === 1) return singular;
-  return plural || singular + "s";
-};
+  export const pluralize = (
+    count: number,
+    singular: string,
+    plural?: string
+  ): string => {
+    if (count === 1) return singular;
+    return plural || singular + "s";
+  };
 
-export const ordinal = (num: number): string => {
-  const j = num % 10;
-  const k = num % 100;
+  export const ordinal = (num: number): string => {
+    const j = num % 10;
+    const k = num % 100;
 
-  if (j === 1 && k !== 11) {
-    return num + "st";
-  if (j === 2 && k !== 12) {
-    return num + "nd";
-  if (j === 3 && k !== 13) {
-    return num + "rd";
-  return num + "th";
-};
+    if (j === 1 && k !== 11) {
+      return num + "st";
+      if (j === 2 && k !== 12) {
+        return num + "nd";
+        if (j === 3 && k !== 13) {
+          return num + "rd";
+          return num + "th";
+        }
 
-export const initials = (name: string, maxLength: number = 2): string => {
-  return name
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase())
-    .join("")
-    .slice(0, maxLength);
-};
+        export const initials = (
+          name: string,
+          maxLength: number = 2
+        ): string => {
+          return name
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase())
+            .join("")
+            .slice(0, maxLength);
+        };
 
-export const capitalize = (text: string): string => {
-  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-};
+        export const capitalize = (text: string): string => {
+          return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+        };
 
-export const capitalizeWords = (text: string): string => {
-  return text
-    .split(" ")
-    .map((word) => capitalize(word))
-    .join(" ");
+        export const capitalizeWords = (text: string): string => {
+          return text
+            .split(" ")
+            .map((word) => capitalize(word))
+            .join(" ");
+        };
+      }
+    }
+  };
 };

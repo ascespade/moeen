@@ -13,12 +13,12 @@ describe("ForgotPasswordPage", () => {
     expect(screen.getByText("نسيان كلمة المرور")).toBeInTheDocument();
     expect(
       screen.getByText(
-        "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة تعيين كلمة المرور",
-      ),
+        "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة تعيين كلمة المرور"
+      )
     ).toBeInTheDocument();
     expect(screen.getByLabelText("البريد الإلكتروني")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /إرسال رابط إعادة التعيين/ }),
+      screen.getByRole("button", { name: /إرسال رابط إعادة التعيين/ })
     ).toBeInTheDocument();
   });
 
@@ -57,7 +57,7 @@ describe("ForgotPasswordPage", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("البريد الإلكتروني غير صحيح"),
+        screen.getByText("البريد الإلكتروني غير صحيح")
       ).toBeInTheDocument();
     });
   });
@@ -77,8 +77,8 @@ describe("ForgotPasswordPage", () => {
       expect(screen.getByText("تم إرسال الرابط!")).toBeInTheDocument();
       expect(
         screen.getByText(
-          "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني. تحقق من صندوق الوارد أو مجلد الرسائل المزعجة.",
-        ),
+          "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني. تحقق من صندوق الوارد أو مجلد الرسائل المزعجة."
+        )
       ).toBeInTheDocument();
     });
   });
@@ -142,7 +142,7 @@ describe("ForgotPasswordPage", () => {
     fireEvent.change(emailInput, { target: { value: "t" } });
 
     expect(
-      screen.queryByText("البريد الإلكتروني مطلوب"),
+      screen.queryByText("البريد الإلكتروني مطلوب")
     ).not.toBeInTheDocument();
   });
 });

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,9 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-  TrendingUp,
+TrendingUp,
   Calendar,
   Clock,
   User,
@@ -131,7 +131,8 @@ const ProgressTrackingPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockGoals: ProgressGoal[] = [
-          id: "1",
+  {
+    id: "1",
           patient_id: "pat-1",
           goal_title: "تحسين المشي",
           description: "القدرة على المشي لمسافة 10 أمتار بدون مساعدة",
@@ -140,6 +141,8 @@ const ProgressTrackingPage: React.FC = () => {
           progress_percentage: 65,
           status: "active",
           milestones: [
+        },
+              {
               id: "1",
               goal_id: "1",
               title: "الوقوف بدون مساعدة",
@@ -173,7 +176,8 @@ const ProgressTrackingPage: React.FC = () => {
       ];
 
       const mockAssessments: Assessment[] = [
-          id: "1",
+  {
+    id: "1",
           patient_id: "pat-1",
           assessor_id: "ass-1",
           assessment_date: "2024-01-15",
@@ -196,7 +200,8 @@ const ProgressTrackingPage: React.FC = () => {
       ];
 
       const mockReports: ProgressReport[] = [
-          id: "1",
+  {
+    id: "1",
           patient_id: "pat-1",
           report_date: "2024-01-31",
           period_start: "2024-01-01",
@@ -806,3 +811,4 @@ const ProgressTrackingPage: React.FC = () => {
 };
 
 export default ProgressTrackingPage;
+}}}}

@@ -20,3 +20,4 @@ export function LiveRegion({
   );
 
 export default LiveRegion;
+}}

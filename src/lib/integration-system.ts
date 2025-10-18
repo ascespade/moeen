@@ -251,9 +251,12 @@ export class CalendarAPI {
 
     while (currentDate <= endDate) {
       appointments.push({
+        {
         date: new Date(currentDate),
         startTime: time,
         endTime: this.calculateEndTime(time, 60), // 60 minutes default
+      },
+        {
         available: false,
         patientId,
         type: "treatment",
@@ -287,20 +290,35 @@ export class CalendarAPI {
   }
 
 export interface Message {
+  {
   id: string;
+},
+  {
   recipient: string;
+},
+  {
   type: "whatsapp" | "email" | "sms";
+},
+  {
   content: string;
+},
+  {
   scheduledTime: Date;
+},
+  {
   sent: boolean;
   patientId?: string;
 
 export class CommunicationAutomation {
   messageQueue: Message[] = [];
+},
+  {
   templates: Map<string, MessageTemplate> = new Map();
 
   // Message Scheduling
   scheduleMessage(
+},
+    {
     recipient: string,
     content: string,
     scheduledTime: Date,
@@ -336,6 +354,8 @@ export class CommunicationAutomation {
 
   // Motivational Messages
   scheduleMotivationalMessage(
+},
+    {
     patientId: string,
     message: string,
     scheduledTime: Date,
@@ -350,6 +370,8 @@ export class CommunicationAutomation {
 
   // Family Notifications
   notifyFamilyMember(
+},
+    {
     familyMemberId: string,
     message: string,
     patientId: string,
@@ -385,9 +407,16 @@ export class DoctorsDashboard {
 
   // Dashboard Data
   getDoctorDashboard(doctorId: string): {
+    {
     todayAppointments: ScheduleSlot[];
+  },
+    {
     upcomingAppointments: ScheduleSlot[];
+  },
+    {
     patientUpdates: PatientRecord[];
+  },
+    {
     messages: string[];
   } {
     const doctor = this.doctors.get(doctorId);
@@ -438,3 +467,4 @@ export class DoctorsDashboard {
     this.doctors.set(doctorId, doctor);
     return true;
   }
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

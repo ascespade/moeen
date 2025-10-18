@@ -172,3 +172,4 @@ export class MoyasarPaymentService {
   }
 
 export const moyasarService = new MoyasarPaymentService();
+}}}}}}}}}

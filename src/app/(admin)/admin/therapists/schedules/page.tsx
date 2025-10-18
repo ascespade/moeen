@@ -1,9 +1,9 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
-
-"use client";
 
 interface Therapist {
   id: string;
@@ -304,3 +304,4 @@ export default function TherapistSchedulesPage() {
       </div>
     </div>
   );
+}}}}}}}

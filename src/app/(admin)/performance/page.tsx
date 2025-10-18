@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -7,9 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-  Activity,
+Activity,
   TrendingUp,
   TrendingDown,
   Clock,
@@ -60,7 +60,8 @@ const PerformancePage: React.FC = () => {
     try {
       setLoading(true);
       const mockMetrics: PerformanceMetric[] = [
-          id: "1",
+  {
+    id: "1",
           name: "استخدام المعالج",
           value: 45,
           unit: "%",

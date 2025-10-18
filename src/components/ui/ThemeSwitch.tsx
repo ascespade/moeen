@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 
 import { Sun, Moon, Monitor, Check } from "lucide-react";
@@ -7,7 +9,7 @@ import { useTheme } from "@/core/theme";
 import { Button } from "./Button";
 import { Card } from "./Card";
 
-("use client");
+();
 
 interface ThemeSwitchProps {
   variant?: "button" | "dropdown" | "toggle";
@@ -168,3 +170,4 @@ export function ThemeSwitch({
     </div>
   );
 export default ThemeSwitch;
+}

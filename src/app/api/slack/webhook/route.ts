@@ -35,3 +35,4 @@ async function handleSlackEvent(event: any) {
 
 export async function GET(request: NextRequest) {
   return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
+}}}}}

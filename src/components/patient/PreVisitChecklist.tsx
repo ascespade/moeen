@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 import { useT } from "@/hooks/useT";
@@ -6,9 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Badge } from "@/components/ui/Badge";
 
-"use client";
-
-  CheckCircle,
+CheckCircle,
   AlertCircle,
   Clock,
   FileText,
@@ -282,3 +282,4 @@ export default function PreVisitChecklist({
       </div>
     </Card>
   );
+}}}

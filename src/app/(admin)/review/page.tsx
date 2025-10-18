@@ -1,6 +1,8 @@
+"use client";
+
 import { useState } from "react";
 
-("use client");
+();
 
 type Item = { id: string; user: string; suggestion: string; createdAt: string };
 const seed: Item[] = Array.from({ length: 6 }).map((_, i) => ({
@@ -87,3 +89,4 @@ export default function ReviewCenterPage() {
       </div>
     </main>
   );
+}

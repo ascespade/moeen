@@ -1,10 +1,11 @@
+"use client";
+
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { useT } from "@/components/providers/I18nProvider";
 
-"use client";
-  LayoutDashboard,
+LayoutDashboard,
   MessagesSquare,
   Workflow,
   ShieldCheck,

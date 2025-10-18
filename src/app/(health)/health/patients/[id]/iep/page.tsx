@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 import { useParams } from "next/navigation";
@@ -5,7 +7,7 @@ import { useParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
 
-("use client");
+();
 
 interface IEP {
   id: string;
@@ -332,3 +334,4 @@ export default function PatientIEPPage() {
       )}
     </div>
   );
+}}}}}

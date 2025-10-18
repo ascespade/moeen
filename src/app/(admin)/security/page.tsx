@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -8,9 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-  Shield,
+Shield,
   Lock,
   Eye,
   EyeOff,
@@ -130,7 +130,8 @@ const SecurityPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockEvents: SecurityEvent[] = [
-          id: "1",
+  {
+    id: "1",
           type: "login",
           user_id: "user-1",
           user_name: "د. فاطمة العلي",
@@ -180,7 +181,8 @@ const SecurityPage: React.FC = () => {
       ];
 
       const mockPolicies: SecurityPolicy[] = [
-          id: "1",
+  {
+    id: "1",
           name: "سياسة كلمات المرور",
           description: "متطلبات كلمات المرور القوية",
           category: "authentication",
@@ -211,7 +213,8 @@ const SecurityPage: React.FC = () => {
       ];
 
       const mockSessions: UserSession[] = [
-          id: "1",
+  {
+    id: "1",
           user_id: "user-1",
           user_name: "د. فاطمة العلي",
           ip_address: "192.168.1.100",
@@ -236,7 +239,8 @@ const SecurityPage: React.FC = () => {
       ];
 
       const mockAlerts: SecurityAlert[] = [
-          id: "1",
+  {
+    id: "1",
           title: "محاولات تسجيل دخول مشبوهة",
           description: "تم رصد 5 محاولات تسجيل دخول فاشلة من نفس العنوان IP",
           severity: "high",
@@ -852,3 +856,4 @@ const SecurityPage: React.FC = () => {
 };
 
 export default SecurityPage;
+}

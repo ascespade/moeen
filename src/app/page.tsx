@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 import Image from "next/image";
@@ -7,8 +9,6 @@ import { ROUTES } from "@/constants/routes";
 import { ThemeSwitch as ThemeSwitcher } from "@/components/ui";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useT } from "@/components/providers/I18nProvider";
-
-"use client";
 
 // Hero Slider Data - مركز الهمم
 const heroSlides = (t: any) => [

@@ -1,10 +1,12 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 import Image from "next/image";
 
 import { Sun, Moon, Languages } from "lucide-react";
 
-("use client");
+();
 
 export default function HeaderSimple() {
   const [theme, setTheme] = useState<string>("light");
@@ -140,3 +142,4 @@ export default function HeaderSimple() {
       </div>
     </header>
   );
+}

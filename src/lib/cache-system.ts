@@ -356,3 +356,4 @@ export function withCache(
 
 // Export singleton instance
 export const cache = CacheManager.getInstance();
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

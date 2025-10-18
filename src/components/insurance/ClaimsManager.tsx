@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useCallback } from "react";
 
 import logger from '@/lib/monitoring/logger';
@@ -9,9 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 
-"use client";
-
-  FileText,
+FileText,
   Upload,
   CheckCircle,
   AlertCircle,
@@ -391,3 +391,4 @@ export default function ClaimsManager({
       </div>
     </Card>
   );
+}}}}}}}}}

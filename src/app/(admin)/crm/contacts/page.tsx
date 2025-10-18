@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,9 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-  Users,
+Users,
   Phone,
   Mail,
   MapPin,
@@ -93,7 +93,8 @@ const ContactsPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockContacts: Contact[] = [
-          id: "1",
+  {
+    id: "1",
           first_name: "أحمد",
           last_name: "المحمد",
           email: "ahmed@example.com",
@@ -139,7 +140,8 @@ const ContactsPage: React.FC = () => {
       ];
 
       const mockActivities: ContactActivity[] = [
-          id: "1",
+  {
+    id: "1",
           contact_id: "1",
           type: "call",
           subject: "مكالمة متابعة",
@@ -628,3 +630,4 @@ const ContactsPage: React.FC = () => {
 };
 
 export default ContactsPage;
+}

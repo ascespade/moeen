@@ -6,4 +6,5 @@ export function Label({
 }: React.LabelHTMLAttributes<HTMLLabelElement>) {
   return <label className={clsx("form-label", className)} {...props} />;
 
-export default Label;
+  export default Label;
+}

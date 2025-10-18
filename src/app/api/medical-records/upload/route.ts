@@ -214,3 +214,4 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
+}}}}}}}}}}}

@@ -18,19 +18,19 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 
-/**
- * Variant utility for component variants
- *
- * @example
- * const buttonVariants = cva('base-button-class', {
- *   variants: {
- *     variant: {
- *       primary: 'bg-primary text-white',
- *       secondary: 'bg-secondary text-black'
- *     }
- *   }
- * });
- */
+  /**
+   * Variant utility for component variants
+   *
+   * @example
+   * const buttonVariants = cva('base-button-class', {
+   *   variants: {
+   *     variant: {
+   *       primary: 'bg-primary text-white',
+   *       secondary: 'bg-secondary text-black'
+   *     }
+   *   }
+   * });
+   */
 
-
-export { cva, type VariantProps } from "class-variance-authority";
+  export { cva, type VariantProps } from "class-variance-authority";
+}

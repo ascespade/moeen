@@ -170,7 +170,7 @@ export const notificationSchema = z.object({
 // Validation helper functions
 export function validateData<T>(
   schema: z.ZodSchema<T>,
-  data: unknown,
+  data: unknown
 ): { success: true; data: T } | { success: false; errors: string[] } {
   try {
     const validatedData = schema.parse(data);
@@ -180,29 +180,33 @@ export function validateData<T>(
       return {
         success: false,
         errors: error.issues.map(
-          (err) => `${err.path.join(".")}: ${err.message}`,
+          (err) => `${err.path.join(".")}: ${err.message}`
         ),
       };
-    return {
-      success: false,
-      errors: ["Validation failed"],
-    };
-  }
-
-export function validateQueryParams<T>(
-  schema: z.ZodSchema<T>,
-  searchParams: URLSearchParams,
-): { success: true; data: T } | { success: false; errors: string[] } {
-  const params: Record<string, any> = {};
-
-  for (const [key, value] of searchParams.entries()) {
-    // Try to parse as number
-    if (!isNaN(Number(value))) {
-      params[key] = Number(value);
-    } else if (value === "true" || value === "false") {
-      params[key] = value === "true";
-    } else {
-      params[key] = value;
+      return {
+        success: false,
+        errors: ["Validation failed"],
+      };
     }
 
-  return validateData(schema, params);
+    export function validateQueryParams<T>(
+      schema: z.ZodSchema<T>,
+      searchParams: URLSearchParams
+    ): { success: true; data: T } | { success: false; errors: string[] } {
+      const params: Record<string, any> = {};
+
+      for (const [key, value] of searchParams.entries()) {
+        // Try to parse as number
+        if (!isNaN(Number(value))) {
+          params[key] = Number(value);
+        } else if (value === "true" || value === "false") {
+          params[key] = value === "true";
+        } else {
+          params[key] = value;
+        }
+
+        return validateData(schema, params);
+      }
+    }
+  }
+}

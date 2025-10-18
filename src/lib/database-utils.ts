@@ -190,6 +190,7 @@ export class DatabaseValidation {
       }
 
     return {
+      {
       isValid: errors.length === 0,
       errors,
     };
@@ -223,6 +224,7 @@ export class MigrationHelpers {
    * Generate backfill data for existing records
    */
   static generateBackfillData(
+    {
     entityType: keyof typeof cuidEntity,
     existingRecords: Array<{ id: string }>,
   ): Array<{ id: string; public_id: string }> {
@@ -235,6 +237,8 @@ export class MigrationHelpers {
    * Create migration log entry
    */
   static createMigrationLog(
+},
+    {
     migrationName: string,
     status: "started" | "completed" | "failed",
     details?: any,
@@ -248,3 +252,4 @@ export class MigrationHelpers {
   }
 
 export default DatabaseUtils;
+}}}}}}}}}}}}}}}}}}}}

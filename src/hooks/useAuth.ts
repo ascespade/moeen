@@ -1,7 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 
-import {
-
 import { User } from "@/types";
 
   getUser,
@@ -174,3 +172,4 @@ export const useRole = (requiredRole: string | string[]) => {
     userRole: user?.role,
   };
 };
+}}}

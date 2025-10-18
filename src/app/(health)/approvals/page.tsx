@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
@@ -7,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 
-("use client");
+();
 
 interface Approval {
   id: string;
@@ -39,6 +41,7 @@ interface Approval {
   notes?: string;
 
 const mockApprovals: Approval[] = [
+  {
     id: "1",
     patientName: "أحمد محمد العتيبي",
     patientId: "P001",

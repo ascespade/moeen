@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
@@ -5,7 +7,7 @@ import Link from "next/link";
 
 import { ROUTES } from "@/constants/routes";
 
-("use client");
+();
 
 interface Node {
   id: string;

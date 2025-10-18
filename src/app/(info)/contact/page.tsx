@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
@@ -5,7 +7,7 @@ import Link from "next/link";
 
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
 
-("use client");
+();
 
 export default function ContactPage() {
   const [isSending, setIsSending] = useState(false);

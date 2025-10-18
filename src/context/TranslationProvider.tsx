@@ -1,11 +1,11 @@
+"use client";
+
 import React, {
 
 import logger from "@/lib/monitoring/logger";
 import { createClient } from "@/lib/supabase/client";
 
-"use client";
-
-  createContext,
+createContext,
   useContext,
   useState,
   useEffect,
@@ -83,3 +83,4 @@ export function useTranslation() {
   if (!context) {
     throw new Error("useTranslation must be used within TranslationProvider");
   return context;
+}}}}}

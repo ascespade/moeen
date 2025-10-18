@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 import Image from "next/image";
@@ -8,7 +10,7 @@ import { Sun, Moon, Languages } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { useI18n } from "@/hooks/useI18n";
 
-("use client");
+();
 
 // Theme and Language Switches Component
 function ThemeLanguageSwitches() {
@@ -178,3 +180,4 @@ export default function GlobalHeader() {
       </div>
     </nav>
   );
+}}

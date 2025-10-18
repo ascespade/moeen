@@ -364,3 +364,4 @@ async function sendActivationNotification(patient: any, supabase: any) {
     channels: ["email", "in_app"],
     priority: "normal",
   });
+}}}}}}}}}}}}}}}}}}}}

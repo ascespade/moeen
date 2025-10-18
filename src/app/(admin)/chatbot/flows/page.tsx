@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
@@ -5,7 +7,7 @@ import Link from "next/link";
 
 import { ROUTES } from "@/constants/routes";
 
-("use client");
+();
 
 interface Flow {
   id: string;
@@ -19,6 +21,7 @@ interface Flow {
   lastUsed?: string;
 
 const mockFlows: Flow[] = [
+  {
     id: "1",
     name: "استقبال المرضى",
     description: "تدفق ترحيب واستقبال المرضى الجدد",

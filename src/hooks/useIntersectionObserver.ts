@@ -79,3 +79,4 @@ export const useLazyLoad = (options: UseIntersectionObserverOptions = {}) => {
 
   return [ref, hasLoaded] as const;
 };
+}}}

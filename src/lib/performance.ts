@@ -76,3 +76,4 @@ export class PerformanceMonitor {
   }
 
 export default PerformanceMonitor;
+}}}}}}}}}}}}

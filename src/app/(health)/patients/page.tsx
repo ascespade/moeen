@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 import Image from "next/image";
@@ -10,9 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 
-"use client";
-
-  Users,
+Users,
   Phone,
   Mail,
   MapPin,
@@ -423,3 +423,4 @@ export default function PatientsPage() {
       </div>
     </main>
   );
+}}}}

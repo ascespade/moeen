@@ -1,10 +1,12 @@
+"use client";
+
 import { useState } from "react";
 
 import Image from "next/image";
 
 import { ROUTES } from "@/constants/routes";
 
-("use client");
+();
 
 interface Activity {
   id: string;
@@ -21,6 +23,7 @@ interface Activity {
   completedAt?: string;
 
 const mockActivities: Activity[] = [
+  {
     id: "1",
     type: "call",
     title: "مكالمة مع أحمد العتيبي",

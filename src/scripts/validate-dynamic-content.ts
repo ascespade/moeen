@@ -228,3 +228,4 @@ if (require.main === module) {
   main().catch(logger.error);
 
 export default DynamicContentValidator;
+}}}}}}}}}}}}}}}}

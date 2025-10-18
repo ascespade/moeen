@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+"use client";
 
-import {
+import React, { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
@@ -9,9 +9,7 @@ import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
 
-"use client";
-
-  Calendar,
+Calendar,
   Clock,
   User,
   Phone,
@@ -89,7 +87,8 @@ const AppointmentManager: React.FC = () => {
   const loadAppointments = async () => {
     // محاكاة تحميل المواعيد من قاعدة البيانات
     const mockAppointments: Appointment[] = [
-        id: "1",
+  {
+    id: "1",
         patientName: "أحمد محمد",
         patientPhone: "+966501234567",
         patientEmail: "ahmed@example.com",
@@ -123,7 +122,8 @@ const AppointmentManager: React.FC = () => {
 
   const loadDoctors = async () => {
     const mockDoctors: Doctor[] = [
-        id: "1",
+  {
+    id: "1",
         name: "د. سارة أحمد",
         specialty: "طب الأطفال",
         availableSlots: ["09:00", "10:00", "11:00", "14:00", "15:00"],
@@ -532,3 +532,4 @@ const AppointmentManager: React.FC = () => {
 };
 
 export default AppointmentManager;
+}}}}}}

@@ -43,6 +43,7 @@ export class WhatsAppIntegration {
   private initializeTemplates() {
     // Appointment Templates
     this.templates.set("appointment_confirmation", {
+      {
       id: "appointment_confirmation",
       name: "تأكيد الموعد",
       category: "appointment",
@@ -122,6 +123,8 @@ export class WhatsAppIntegration {
 
   // Message Sending
   async sendMessage(
+},
+    {
     to: string,
     content: string,
     type: "text" | "image" | "audio" | "document" = "text",
@@ -144,6 +147,8 @@ export class WhatsAppIntegration {
 
   // Template Message Sending
   async sendTemplateMessage(
+},
+    {
     templateId: string,
     to: string,
     variables: Record<string, string>,
@@ -163,6 +168,8 @@ export class WhatsAppIntegration {
 
   // Automated Messages
   async sendAppointmentReminder(
+},
+    {
     patientPhone: string,
     appointmentTime: string,
   ): Promise<string> {
@@ -171,6 +178,8 @@ export class WhatsAppIntegration {
     });
 
   async sendMotivationalMessage(
+},
+    {
     patientPhone: string,
     patientName: string,
   ): Promise<string> {
@@ -179,6 +188,8 @@ export class WhatsAppIntegration {
     });
 
   async sendMilestoneCelebration(
+},
+    {
     patientPhone: string,
     patientName: string,
     milestone: string,
@@ -189,6 +200,8 @@ export class WhatsAppIntegration {
     });
 
   async sendExerciseReminder(
+},
+    {
     patientPhone: string,
     patientName: string,
     exerciseName: string,
@@ -203,6 +216,8 @@ export class WhatsAppIntegration {
 
   // Family Notifications
   async notifyFamilyMember(
+},
+    {
     familyPhone: string,
     patientName: string,
     notificationType: string,
@@ -220,6 +235,8 @@ export class WhatsAppIntegration {
       case "reminder":
         content = `تذكير: ${details} لـ ${patientName}`;
         break;
+      },
+      {
       default:
         content = `تحديث: ${details} لـ ${patientName}`;
 
@@ -227,6 +244,8 @@ export class WhatsAppIntegration {
 
   // Message Processing
   async processIncomingMessage(
+},
+    {
     from: string,
     content: string,
     messageType: string,
@@ -248,6 +267,8 @@ export class WhatsAppIntegration {
     return "شكراً لك على رسالتك. سنقوم بالرد عليك قريباً.";
 
   private async processTextMessage(
+},
+    {
     from: string,
     content: string,
   ): Promise<string> {
@@ -377,3 +398,4 @@ export class WhatsAppIntegration {
       return englishText;
     }
   }
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

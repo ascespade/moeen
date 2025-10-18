@@ -127,3 +127,4 @@ export function logError(error: unknown, context?: any) {
 export function handleAPIError(error: unknown, context?: any) {
   logError(error, context);
   return formatErrorResponse(error);
+}}}}}}}}}}}}}}}}}}

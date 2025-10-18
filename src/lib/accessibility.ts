@@ -326,3 +326,4 @@ export function useAccessibility() {
   return { settings, updateSettings };
 
 // Import React for the hook
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}

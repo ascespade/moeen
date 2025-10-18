@@ -1,8 +1,8 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
-
-import {
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -11,9 +11,7 @@ import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 import { createClient } from "@/lib/supabase/client";
 
-"use client";
-
-  Key,
+Key,
   Eye,
   EyeOff,
   Save,
@@ -63,6 +61,7 @@ const APIKeysSettingsPage: React.FC = () => {
 
   // Predefined API key configurations
   const defaultApiKeys: Omit<ApiKeyConfig, "key_value" | "status">[] = [
+      {
       id: "supabase_url",
       name: "Supabase URL",
       service: "supabase",

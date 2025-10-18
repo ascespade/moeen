@@ -381,3 +381,4 @@ export class SupabaseDatabaseManager {
   }
 
 export const db = new SupabaseDatabaseManager();
+}}}}}}}}}}}}}}}}}}}}}}}

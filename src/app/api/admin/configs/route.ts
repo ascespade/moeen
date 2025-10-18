@@ -284,3 +284,4 @@ export async function DELETE(request: NextRequest) {
   } catch (error) {
     return ErrorHandler.getInstance().handle(error);
   }
+}}}}}}}}}}

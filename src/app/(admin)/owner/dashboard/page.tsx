@@ -1,9 +1,11 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
 import logger from "@/lib/monitoring/logger";
 
-("use client");
+();
 
 export default function OwnerDashboardPage() {
   const [stats, setStats] = useState({
@@ -372,3 +374,4 @@ export default function OwnerDashboardPage() {
       </div>
     </div>
   );
+}

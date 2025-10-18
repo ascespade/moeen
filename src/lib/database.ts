@@ -344,3 +344,4 @@ export class DatabaseManager {
   async close() {
     await this.pool.end();
   }
+}}}}}}}}}}}}}}}}}}}

@@ -25,6 +25,7 @@ class TranslationService {
    * Fetch translations from API and cache them
    */
   async fetchTranslations(
+    {
     language: string,
   ): Promise<{ [key: string]: string }> {
     try {
@@ -40,6 +41,7 @@ class TranslationService {
 
       // Fetch from API
       const response = await fetch(`/api/translations/${language}`, {
+        {
         headers: {
           "Cache-Control": "no-cache",
         },
@@ -114,6 +116,7 @@ class TranslationService {
    * Get multiple translations at once
    */
   async getMultiple(
+    {
     keys: string[],
     language: string = "ar",
   ): Promise<{ [key: string]: string }> {
@@ -171,6 +174,7 @@ class TranslationService {
    */
   private getDefaultTranslations(language: string): { [key: string]: string } {
     const defaultTranslations = {
+      {
       ar: {
         "common.welcome": "مرحباً",
         "common.hello": "أهلاً وسهلاً",
@@ -274,3 +278,4 @@ class TranslationService {
 // Export singleton instance
 export const translationService = new TranslationService();
 export default translationService;
+}}}}}}}}}}}}}}}}}}}}}}}}}

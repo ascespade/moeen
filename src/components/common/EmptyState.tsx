@@ -1,4 +1,3 @@
-
 export default function EmptyState({
   title,
   description,
@@ -18,3 +17,4 @@ export default function EmptyState({
       {cta && <div className="mt-4">{cta}</div>}
     </div>
   );
+}

@@ -161,6 +161,7 @@ export class WhatsAppBusinessAPI {
     to: string,
     templateName: string,
     languageCode: string = "ar",
+    {
     parameters: string[] = [],
   ): Promise<{ success: boolean; messageId?: string; error?: string }> {
     try {
@@ -179,6 +180,8 @@ export class WhatsAppBusinessAPI {
       // Add parameters if provided
       if (parameters.length > 0) {
         messageData.template.components = [
+      },
+            {
             type: "body",
             parameters: parameters.map((param) => ({
               type: "text",
@@ -419,6 +422,7 @@ export class WhatsAppBusinessAPI {
         if (change.value.messages) {
           change.value.messages.forEach((message) => {
             messages.push({
+              {
               from: message.from,
               messageId: message.id,
               timestamp: message.timestamp,
@@ -453,6 +457,7 @@ export class WhatsAppBusinessAPI {
 
   // Get Business Profile
   async getBusinessProfile(): Promise<{
+    {
     success: boolean;
     profile?: any;
     error?: string;
@@ -480,6 +485,7 @@ export class WhatsAppBusinessAPI {
       }
     } catch (error) {
       return {
+        {
         success: false,
         error: (error as Error).message,
       };
@@ -487,6 +493,7 @@ export class WhatsAppBusinessAPI {
 
   // Update Business Profile
   async updateBusinessProfile(profileData: {
+    {
     messaging_product: string;
     about?: string;
     address?: string;
@@ -516,6 +523,7 @@ export class WhatsAppBusinessAPI {
       }
     } catch (error) {
       return {
+        {
         success: false,
         error: (error as Error).message,
       };
@@ -523,3 +531,4 @@ export class WhatsAppBusinessAPI {
   }
 
 export const whatsappAPI = new WhatsAppBusinessAPI();
+}}}}}}}}}}}}}}}}}}

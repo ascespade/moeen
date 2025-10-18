@@ -1,9 +1,11 @@
+"use client";
+
 import { useCallback } from "react";
 
 import logger from "@/lib/monitoring/logger";
 import { useT } from "@/hooks/useT";
 
-("use client");
+();
 
 // import { toast } from '@/components/ui/Toast';
 // import { logger } from '@/lib/logger';
@@ -79,3 +81,4 @@ export function useErrorHandler() {
     handleError,
     handleAsyncError,
   };
+}}}}}

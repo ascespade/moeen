@@ -308,3 +308,4 @@ class DynamicContentManager {
 // Export singleton instance
 export const dynamicContentManager = new DynamicContentManager();
 export default dynamicContentManager;
+}}}}}}}}}}}}}}}}}}}}}}}}}}

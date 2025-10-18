@@ -8,3 +8,4 @@ export function Textarea({ className, ...props }: TextareaProps) {
   return <textarea className={clsx("form-input", className)} {...props} />;
 
 export default Textarea;
+}}

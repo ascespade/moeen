@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from "react";
 
 import { useRouter } from "next/navigation";
@@ -10,9 +12,7 @@ import { Badge } from "@/components/ui/Badge";
 import { ScrollArea } from "@/components/ui/ScrollArea";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-  Send,
+Send,
   Bot,
   User,
   Calendar,
@@ -73,7 +73,8 @@ const HealthcareChatbot: React.FC = () => {
 
   const loadChatHistory = async () => {
     const mockMessages: ChatMessage[] = [
-        id: "1",
+  {
+    id: "1",
         type: "bot",
         content:
           "مرحباً! أنا معين، مساعدك الذكي في مركز الهمم للرعاية الصحية. كيف يمكنني مساعدتك اليوم؟",
@@ -370,3 +371,4 @@ const HealthcareChatbot: React.FC = () => {
 };
 
 export default HealthcareChatbot;
+}}

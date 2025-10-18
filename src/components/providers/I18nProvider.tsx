@@ -1,8 +1,10 @@
+"use client";
+
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import useI18n from "@/hooks/useI18n";
 
-("use client");
+();
 
 type Ctx = {
   t: (k: string, f?: string) => string;
@@ -46,3 +48,4 @@ export function useT() {
   return ctx;
 
 export default I18nProvider;
+}}

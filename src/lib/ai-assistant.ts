@@ -255,3 +255,4 @@ export class HemamAssistant {
     response += "\n\nيمكنك الكتابة أو إرسال رسالة صوتية بطلبك.";
     return response;
   }
+}}}}}}}}}}}}}}}}}}}}}}}}}}

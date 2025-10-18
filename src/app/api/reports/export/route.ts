@@ -127,3 +127,4 @@ async function generateExcel(data: any, customFields?: string[]) {
   // Excel generation would use a library like xlsx
   // For now, return CSV format
   return await generateCSV(data, customFields);
+}}}}}}}}

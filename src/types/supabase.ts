@@ -1,4 +1,3 @@
-
 // Generated Supabase types for Hemam Center
 export type Json =
   | string
@@ -618,3 +617,4 @@ export interface Database {
       [_ in never]: never;
     };
   };
+}

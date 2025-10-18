@@ -363,3 +363,4 @@ async function submitToInsuranceProvider(claim: any, provider: string) {
       response: `Provider integration error: ${error}`,
     };
   }
+}}}}}}}}}}}}}}}}}}}}

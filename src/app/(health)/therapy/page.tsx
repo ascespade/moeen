@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
@@ -9,9 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/hooks/useAuth";
 
-"use client";
-
-  Activity,
+Activity,
   Calendar,
   Clock,
   User,
@@ -95,7 +95,8 @@ const TherapyPage: React.FC = () => {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
       const mockSessions: TherapySession[] = [
-          id: "1",
+  {
+    id: "1",
           patient_id: "pat-1",
           therapist_id: "ther-1",
           session_date: "2024-01-15",
@@ -127,7 +128,8 @@ const TherapyPage: React.FC = () => {
       ];
 
       const mockGoals: TherapyGoal[] = [
-          id: "1",
+  {
+    id: "1",
           patient_id: "pat-1",
           goal_title: "تحسين المشي",
           description: "القدرة على المشي لمسافة 10 أمتار بدون مساعدة",
@@ -479,3 +481,4 @@ const TherapyPage: React.FC = () => {
 };
 
 export default TherapyPage;
+}}}
