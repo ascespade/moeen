@@ -54,9 +54,7 @@ export default function RootLayout({
         />
       </head>
       <body className='antialiased font-inter bg-slate-50 text-slate-900'>
-        <I18nProvider>
-          {children}
-        </I18nProvider>
+        <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
   );

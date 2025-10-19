@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { createContext, useContext, ReactNode } from 'react';
 
 interface I18nContextType {
@@ -25,11 +25,7 @@ export function I18nProvider({ children }: I18nProviderProps) {
     direction: 'rtl' as const,
   };
 
-  return (
-    <I18nContext.Provider value={value}>
-      {children}
-    </I18nContext.Provider>
-  );
+  return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
 
 export function useT() {

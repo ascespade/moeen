@@ -10,26 +10,26 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
 }
 
-export function Button({ 
-  children, 
-  variant = 'brand', 
-  size = 'md', 
-  className = '', 
+export function Button({
+  children,
+  variant = 'brand',
+  size = 'md',
+  className = '',
   disabled = false,
   onClick,
-  type = 'button'
+  type = 'button',
 }: ButtonProps) {
   const baseClasses = 'btn';
   const variantClasses = {
     brand: 'btn-brand',
     secondary: 'btn-secondary',
     outline: 'btn-outline',
-    ghost: 'btn-ghost'
+    ghost: 'btn-ghost',
   };
   const sizeClasses = {
     sm: 'btn-sm',
     md: 'btn-md',
-    lg: 'btn-lg'
+    lg: 'btn-lg',
   };
 
   return (

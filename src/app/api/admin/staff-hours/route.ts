@@ -32,9 +32,8 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data: staffWorkHours
+      data: staffWorkHours,
     });
-
   } catch (error) {
     console.error('Staff hours API error:', error);
     return NextResponse.json(
@@ -46,24 +45,24 @@ export async function GET(request: NextRequest) {
 
 function getPositionTitle(role: string): string {
   const titles: Record<string, string> = {
-    'doctor': 'طبيب',
-    'therapist': 'معالج',
-    'staff': 'موظف',
-    'admin': 'مدير',
-    'nurse': 'ممرض',
-    'receptionist': 'موظف استقبال'
+    doctor: 'طبيب',
+    therapist: 'معالج',
+    staff: 'موظف',
+    admin: 'مدير',
+    nurse: 'ممرض',
+    receptionist: 'موظف استقبال',
   };
-  
+
   return titles[role] || 'موظف';
 }
 
 function formatTime(timeString: string): string {
   try {
     const date = new Date(timeString);
-    return date.toLocaleTimeString('ar-SA', { 
-      hour: '2-digit', 
+    return date.toLocaleTimeString('ar-SA', {
+      hour: '2-digit',
       minute: '2-digit',
-      hour12: false 
+      hour12: false,
     });
   } catch {
     return timeString;

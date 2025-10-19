@@ -14,11 +14,11 @@ export async function GET(request: NextRequest) {
     const includeUsers = searchParams.get('include_users') === 'true';
 
     let query;
-    
+
     if (includeUsers) {
       // استخدام الدالة الذكية التي تجلب الأطباء مع معلومات المستخدمين
       const { data, error } = await supabase.rpc('get_doctors_with_users');
-      
+
       if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
       }
@@ -26,8 +26,10 @@ export async function GET(request: NextRequest) {
       // فلترة حسب التخصص إذا طُلب ذلك
       let filteredData = data;
       if (specialization) {
-        filteredData = data?.filter((doctor: any) => 
-          doctor.specialization?.toLowerCase().includes(specialization.toLowerCase())
+        filteredData = data?.filter((doctor: any) =>
+          doctor.specialization
+            ?.toLowerCase()
+            .includes(specialization.toLowerCase())
         );
       }
 
@@ -35,7 +37,7 @@ export async function GET(request: NextRequest) {
     } else {
       // استخدام الدالة البسيطة
       const { data, error } = await supabase.rpc('get_doctors_info');
-      
+
       if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
       }
@@ -43,15 +45,20 @@ export async function GET(request: NextRequest) {
       // فلترة حسب التخصص إذا طُلب ذلك
       let filteredData = data;
       if (specialization) {
-        filteredData = data?.filter((doctor: any) => 
-          doctor.specialization?.toLowerCase().includes(specialization.toLowerCase())
+        filteredData = data?.filter((doctor: any) =>
+          doctor.specialization
+            ?.toLowerCase()
+            .includes(specialization.toLowerCase())
         );
       }
 
       return NextResponse.json({ doctors: filteredData });
     }
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -72,13 +79,16 @@ export async function POST(request: NextRequest) {
       qualifications,
       bio,
       working_hours,
-      languages
+      languages,
     } = body;
 
     if (!first_name || !last_name) {
-      return NextResponse.json({ 
-        error: 'First name and last name are required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: 'First name and last name are required',
+        },
+        { status: 400 }
+      );
     }
 
     const { data, error } = await supabase
@@ -97,7 +107,7 @@ export async function POST(request: NextRequest) {
         bio,
         working_hours: working_hours || {},
         languages: languages || [],
-        is_active: true
+        is_active: true,
       })
       .select()
       .single();
@@ -108,7 +118,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -126,7 +139,7 @@ export async function PUT(request: NextRequest) {
       .from('doctors')
       .update({
         ...updateData,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', id)
       .select()
@@ -138,7 +151,10 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -155,9 +171,9 @@ export async function DELETE(request: NextRequest) {
     // بدلاً من الحذف، نعطل الطبيب
     const { data, error } = await supabase
       .from('doctors')
-      .update({ 
+      .update({
         is_active: false,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', id)
       .select()
@@ -169,7 +185,9 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
-

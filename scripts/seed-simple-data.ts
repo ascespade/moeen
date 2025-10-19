@@ -23,7 +23,7 @@ const samplePatients = [
     address: 'جدة، حي الصفا',
     medical_history: 'التوحد، تأخر النطق',
     allergies: 'لا توجد حساسية معروفة',
-    medications: ['فيتامين د', 'أوميغا 3']
+    medications: ['فيتامين د', 'أوميغا 3'],
   },
   {
     first_name: 'محمد',
@@ -40,7 +40,7 @@ const samplePatients = [
     address: 'جدة، حي الروضة',
     medical_history: 'متلازمة داون، تأخر في المهارات الحركية',
     allergies: 'حساسية من المكسرات',
-    medications: ['فيتامين ب12', 'كالسيوم']
+    medications: ['فيتامين ب12', 'كالسيوم'],
   },
   {
     first_name: 'نورا',
@@ -57,8 +57,8 @@ const samplePatients = [
     address: 'جدة، حي النهضة',
     medical_history: 'صعوبات التعلم، اضطراب فرط الحركة',
     allergies: 'لا توجد حساسية معروفة',
-    medications: ['ريتالين', 'فيتامين د']
-  }
+    medications: ['ريتالين', 'فيتامين د'],
+  },
 ];
 
 // بيانات الأطباء الأساسية
@@ -78,7 +78,7 @@ const sampleDoctors = [
     bio: 'أخصائية علاج طبيعي متخصصة في تقويم السلوك للأطفال ذوي الاحتياجات الخاصة',
     rating: 4.8,
     total_reviews: 45,
-    public_id: 'DOC_001'
+    public_id: 'DOC_001',
   },
   {
     first_name: 'هند',
@@ -95,7 +95,7 @@ const sampleDoctors = [
     bio: 'طبيبة نفسية متخصصة في علاج الأطفال ذوي الاحتياجات الخاصة',
     rating: 4.9,
     total_reviews: 52,
-    public_id: 'DOC_002'
+    public_id: 'DOC_002',
   },
   {
     first_name: 'يوسف',
@@ -112,8 +112,8 @@ const sampleDoctors = [
     bio: 'أخصائي نطق متخصص في تأهيل النطق للأطفال',
     rating: 4.7,
     total_reviews: 38,
-    public_id: 'DOC_003'
-  }
+    public_id: 'DOC_003',
+  },
 ];
 
 // بيانات المواعيد الأساسية
@@ -128,7 +128,7 @@ const sampleAppointments = [
     status: 'scheduled',
     notes: 'جلسة تقييم أولية',
     confirmation_code: 'APT001',
-    public_id: 'APT_001'
+    public_id: 'APT_001',
   },
   {
     patient_id: null,
@@ -140,7 +140,7 @@ const sampleAppointments = [
     status: 'scheduled',
     notes: 'جلسة علاج نفسي',
     confirmation_code: 'APT002',
-    public_id: 'APT_002'
+    public_id: 'APT_002',
   },
   {
     patient_id: null,
@@ -152,8 +152,8 @@ const sampleAppointments = [
     status: 'completed',
     notes: 'جلسة علاج نطق',
     confirmation_code: 'APT003',
-    public_id: 'APT_003'
-  }
+    public_id: 'APT_003',
+  },
 ];
 
 // بيانات الجلسات الأساسية
@@ -170,7 +170,7 @@ const sampleSessions = [
     notes: 'جلسة علاج طبيعي ناجحة',
     goals_achieved: ['تحسين التوازن', 'تقوية العضلات'],
     next_session_goals: ['زيادة مدة التمرين', 'تحسين التنسيق'],
-    public_id: 'SES_001'
+    public_id: 'SES_001',
   },
   {
     patient_id: null,
@@ -184,8 +184,8 @@ const sampleSessions = [
     notes: 'جلسة علاج نفسي إيجابية',
     goals_achieved: ['تحسين التواصل', 'تقليل القلق'],
     next_session_goals: ['تعزيز الثقة بالنفس', 'تحسين التفاعل الاجتماعي'],
-    public_id: 'SES_002'
-  }
+    public_id: 'SES_002',
+  },
 ];
 
 // بيانات المطالبات التأمينية الأساسية
@@ -201,7 +201,7 @@ const sampleClaims = [
     submitted_date: '2024-01-25',
     processed_date: '2024-01-28',
     notes: 'مطالبة جلسة علاج طبيعي',
-    public_id: 'CLM_001'
+    public_id: 'CLM_001',
   },
   {
     patient_id: null,
@@ -215,8 +215,8 @@ const sampleClaims = [
     processed_date: '2024-01-29',
     notes: 'مطالبة جلسة علاج نفسي',
     rejection_reason: 'عدم تغطية الخدمة',
-    public_id: 'CLM_002'
-  }
+    public_id: 'CLM_002',
+  },
 ];
 
 // بيانات المدفوعات الأساسية
@@ -229,7 +229,7 @@ const samplePayments = [
     payment_method: 'cash',
     transaction_id: 'TRN001',
     notes: 'دفعة لجلسة علاج طبيعي',
-    public_id: 'PAY_001'
+    public_id: 'PAY_001',
   },
   {
     patient_id: null,
@@ -239,8 +239,8 @@ const samplePayments = [
     payment_method: 'card',
     transaction_id: 'TRN002',
     notes: 'دفعة لجلسة علاج نطق',
-    public_id: 'PAY_002'
-  }
+    public_id: 'PAY_002',
+  },
 ];
 
 async function seedDatabase() {
@@ -253,7 +253,7 @@ async function seedDatabase() {
       .from('patients')
       .insert(samplePatients)
       .select('id, public_id');
-    
+
     if (patientsError) throw patientsError;
     console.log(`✅ تم إدراج ${patients.length} مرضى.`);
 
@@ -263,7 +263,7 @@ async function seedDatabase() {
       .from('doctors')
       .insert(sampleDoctors)
       .select('id, public_id');
-    
+
     if (doctorsError) throw doctorsError;
     console.log(`✅ تم إدراج ${doctors.length} أطباء.`);
 
@@ -272,14 +272,14 @@ async function seedDatabase() {
     const appointmentsWithIds = sampleAppointments.map((apt, index) => ({
       ...apt,
       patient_id: patients[index % patients.length].id,
-      doctor_id: doctors[index % doctors.length].id
+      doctor_id: doctors[index % doctors.length].id,
     }));
 
     const { data: appointments, error: appointmentsError } = await supabase
       .from('appointments')
       .insert(appointmentsWithIds)
       .select('id, public_id');
-    
+
     if (appointmentsError) throw appointmentsError;
     console.log(`✅ تم إدراج ${appointments.length} مواعيد.`);
 
@@ -289,14 +289,14 @@ async function seedDatabase() {
       ...ses,
       patient_id: patients[index % patients.length].id,
       doctor_id: doctors[index % doctors.length].id,
-      appointment_id: appointments[index % appointments.length].id
+      appointment_id: appointments[index % appointments.length].id,
     }));
 
     const { data: sessions, error: sessionsError } = await supabase
       .from('sessions')
       .insert(sessionsWithIds)
       .select('id, public_id');
-    
+
     if (sessionsError) throw sessionsError;
     console.log(`✅ تم إدراج ${sessions.length} جلسات.`);
 
@@ -305,14 +305,14 @@ async function seedDatabase() {
     const claimsWithIds = sampleClaims.map((claim, index) => ({
       ...claim,
       patient_id: patients[index % patients.length].id,
-      appointment_id: appointments[index % appointments.length].id
+      appointment_id: appointments[index % appointments.length].id,
     }));
 
     const { data: claims, error: claimsError } = await supabase
       .from('insurance_claims')
       .insert(claimsWithIds)
       .select('id, public_id');
-    
+
     if (claimsError) throw claimsError;
     console.log(`✅ تم إدراج ${claims.length} مطالبات.`);
 
@@ -321,14 +321,14 @@ async function seedDatabase() {
     const paymentsWithIds = samplePayments.map((payment, index) => ({
       ...payment,
       patient_id: patients[index % patients.length].id,
-      appointment_id: appointments[index % appointments.length].id
+      appointment_id: appointments[index % appointments.length].id,
     }));
 
     const { data: payments, error: paymentsError } = await supabase
       .from('payments')
       .insert(paymentsWithIds)
       .select('id, public_id');
-    
+
     if (paymentsError) throw paymentsError;
     console.log(`✅ تم إدراج ${payments.length} مدفوعات.`);
 
@@ -340,7 +340,6 @@ async function seedDatabase() {
     console.log(`   📝 الجلسات: ${sessions.length}`);
     console.log(`   📄 المطالبات: ${claims.length}`);
     console.log(`   💰 المدفوعات: ${payments.length}`);
-
   } catch (error) {
     console.error('❌ خطأ في ملء قاعدة البيانات:', error);
     throw error;

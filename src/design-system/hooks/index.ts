@@ -20,7 +20,7 @@ export function useTheme() {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
-    
+
     // Apply theme to document
     if (typeof document !== 'undefined') {
       document.documentElement.classList.toggle('dark', newTheme === 'dark');
@@ -30,7 +30,7 @@ export function useTheme() {
   return {
     theme,
     toggleTheme,
-    isLoading
+    isLoading,
   };
 }
 
@@ -42,7 +42,10 @@ export function useLanguage() {
 
   useEffect(() => {
     // Get language from localStorage or default to Arabic
-    const savedLanguage = localStorage.getItem('language') as 'ar' | 'en' | null;
+    const savedLanguage = localStorage.getItem('language') as
+      | 'ar'
+      | 'en'
+      | null;
     if (savedLanguage) {
       setLanguage(savedLanguage);
       setDirection(savedLanguage === 'ar' ? 'rtl' : 'ltr');
@@ -53,11 +56,11 @@ export function useLanguage() {
   const toggleLanguage = () => {
     const newLanguage = language === 'ar' ? 'en' : 'ar';
     const newDirection = newLanguage === 'ar' ? 'rtl' : 'ltr';
-    
+
     setLanguage(newLanguage);
     setDirection(newDirection);
     localStorage.setItem('language', newLanguage);
-    
+
     // Apply language to document
     if (typeof document !== 'undefined') {
       document.documentElement.setAttribute('lang', newLanguage);
@@ -69,7 +72,7 @@ export function useLanguage() {
     language,
     direction,
     toggleLanguage,
-    isLoading
+    isLoading,
   };
 }
 
@@ -99,4 +102,3 @@ export function useBreakpoint() {
 
   return breakpoint;
 }
-

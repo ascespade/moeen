@@ -15,11 +15,11 @@ export async function GET(request: NextRequest) {
     const ageRange = searchParams.get('age_range'); // e.g., "0-18", "18-65", "65+"
 
     let query;
-    
+
     if (includeUsers) {
       // استخدام الدالة الذكية التي تجلب المرضى مع معلومات المستخدمين
       const { data, error } = await supabase.rpc('get_patients_with_users');
-      
+
       if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
       }
@@ -27,8 +27,9 @@ export async function GET(request: NextRequest) {
       // فلترة حسب الجنس إذا طُلب ذلك
       let filteredData = data;
       if (gender) {
-        filteredData = data?.filter((patient: any) => 
-          patient.gender?.toLowerCase() === gender.toLowerCase()
+        filteredData = data?.filter(
+          (patient: any) =>
+            patient.gender?.toLowerCase() === gender.toLowerCase()
         );
       }
 
@@ -37,10 +38,10 @@ export async function GET(request: NextRequest) {
         const now = new Date();
         filteredData = filteredData.filter((patient: any) => {
           if (!patient.date_of_birth) return false;
-          
+
           const birthDate = new Date(patient.date_of_birth);
           const age = now.getFullYear() - birthDate.getFullYear();
-          
+
           switch (ageRange) {
             case '0-18':
               return age >= 0 && age <= 18;
@@ -58,7 +59,7 @@ export async function GET(request: NextRequest) {
     } else {
       // استخدام الدالة البسيطة
       const { data, error } = await supabase.rpc('get_patients_info');
-      
+
       if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
       }
@@ -66,8 +67,9 @@ export async function GET(request: NextRequest) {
       // فلترة حسب الجنس إذا طُلب ذلك
       let filteredData = data;
       if (gender) {
-        filteredData = data?.filter((patient: any) => 
-          patient.gender?.toLowerCase() === gender.toLowerCase()
+        filteredData = data?.filter(
+          (patient: any) =>
+            patient.gender?.toLowerCase() === gender.toLowerCase()
         );
       }
 
@@ -76,10 +78,10 @@ export async function GET(request: NextRequest) {
         const now = new Date();
         filteredData = filteredData.filter((patient: any) => {
           if (!patient.date_of_birth) return false;
-          
+
           const birthDate = new Date(patient.date_of_birth);
           const age = now.getFullYear() - birthDate.getFullYear();
-          
+
           switch (ageRange) {
             case '0-18':
               return age >= 0 && age <= 18;
@@ -96,7 +98,10 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ patients: filteredData });
     }
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -123,13 +128,16 @@ export async function POST(request: NextRequest) {
       medications,
       blood_type,
       preferred_language,
-      communication_preferences
+      communication_preferences,
     } = body;
 
     if (!first_name || !last_name) {
-      return NextResponse.json({ 
-        error: 'First name and last name are required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: 'First name and last name are required',
+        },
+        { status: 400 }
+      );
     }
 
     const { data, error } = await supabase
@@ -153,7 +161,7 @@ export async function POST(request: NextRequest) {
         medications: medications || [],
         blood_type,
         preferred_language: preferred_language || 'ar',
-        communication_preferences: communication_preferences || {}
+        communication_preferences: communication_preferences || {},
       })
       .select()
       .single();
@@ -164,7 +172,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -182,7 +193,7 @@ export async function PUT(request: NextRequest) {
       .from('patients')
       .update({
         ...updateData,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', id)
       .select()
@@ -194,7 +205,10 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -211,8 +225,8 @@ export async function DELETE(request: NextRequest) {
     // بدلاً من الحذف، نعطل المريض
     const { data, error } = await supabase
       .from('patients')
-      .update({ 
-        updated_at: new Date().toISOString()
+      .update({
+        updated_at: new Date().toISOString(),
       })
       .eq('id', id)
       .select()
@@ -224,7 +238,9 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
-

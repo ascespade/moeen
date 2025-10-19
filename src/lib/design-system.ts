@@ -1,6 +1,6 @@
 /**
  * Dynamic Design System - نظام التصميم الديناميكي الشامل
- * 
+ *
  * Centralized design system that covers ALL aspects of design:
  * - Colors (Brand, Semantic, Interactive, Theme-aware)
  * - Spacing (Responsive, Dynamic)
@@ -13,7 +13,7 @@
  * - Responsive (Breakpoints, adaptive values)
  * - Accessibility (Focus, contrast, motion)
  * - RTL Support (Direction-aware)
- * 
+ *
  * All values are dynamic and can be customized at runtime
  */
 
@@ -33,11 +33,11 @@ export const designTokens = {
       primaryActive: 'var(--color-brand-primary-active)',
       primaryLight: 'var(--color-brand-primary-light)',
       primaryDark: 'var(--color-brand-primary-dark)',
-      
+
       secondary: 'var(--color-brand-secondary)',
       secondaryHover: 'var(--color-brand-secondary-hover)',
       secondaryActive: 'var(--color-brand-secondary-active)',
-      
+
       accent: 'var(--color-brand-accent)',
       accentHover: 'var(--color-brand-accent-hover)',
       accentActive: 'var(--color-brand-accent-active)',
@@ -49,17 +49,17 @@ export const designTokens = {
       successHover: 'var(--color-semantic-success-hover)',
       successLight: 'var(--color-semantic-success-light)',
       successDark: 'var(--color-semantic-success-dark)',
-      
+
       warning: 'var(--color-semantic-warning)',
       warningHover: 'var(--color-semantic-warning-hover)',
       warningLight: 'var(--color-semantic-warning-light)',
       warningDark: 'var(--color-semantic-warning-dark)',
-      
+
       error: 'var(--color-semantic-error)',
       errorHover: 'var(--color-semantic-error-hover)',
       errorLight: 'var(--color-semantic-error-light)',
       errorDark: 'var(--color-semantic-error-dark)',
-      
+
       info: 'var(--color-semantic-info)',
       infoHover: 'var(--color-semantic-info-hover)',
       infoLight: 'var(--color-semantic-info-light)',
@@ -298,7 +298,8 @@ export const designTokens = {
     // Transitions
     transition: {
       all: 'all var(--duration-normal) var(--easing-smooth)',
-      colors: 'color var(--duration-fast) var(--easing-smooth), background-color var(--duration-fast) var(--easing-smooth), border-color var(--duration-fast) var(--easing-smooth)',
+      colors:
+        'color var(--duration-fast) var(--easing-smooth), background-color var(--duration-fast) var(--easing-smooth), border-color var(--duration-fast) var(--easing-smooth)',
       transform: 'transform var(--duration-normal) var(--easing-smooth)',
       opacity: 'opacity var(--duration-fast) var(--easing-smooth)',
       shadow: 'box-shadow var(--duration-normal) var(--easing-smooth)',
@@ -459,7 +460,7 @@ export const designTokens = {
 export function getToken(path: string): string {
   const keys = path.split('.');
   let value: any = designTokens;
-  
+
   for (const key of keys) {
     value = value?.[key];
     if (value === undefined) {
@@ -467,7 +468,7 @@ export function getToken(path: string): string {
       return '';
     }
   }
-  
+
   return value;
 }
 
@@ -491,7 +492,11 @@ export function responsive(category: string, value: string | number): string {
  * Build component class name
  * استخدام: buildComponentClass('button', 'primary', 'md') → 'ds-button ds-button-primary ds-button-md'
  */
-export function buildComponentClass(component: string, variant?: string, size?: string): string {
+export function buildComponentClass(
+  component: string,
+  variant?: string,
+  size?: string
+): string {
   const classes = [`ds-${component}`];
   if (variant) classes.push(`ds-${component}-${variant}`);
   if (size) classes.push(`ds-${component}-${size}`);
@@ -518,7 +523,10 @@ export function spacing(size: keyof typeof designTokens.spacing): string {
  * Create typography value
  * استخدام: typography('fontSize', 'lg') → 'var(--font-size-lg)'
  */
-export function typography(property: keyof typeof designTokens.typography, value: string): string {
+export function typography(
+  property: keyof typeof designTokens.typography,
+  value: string
+): string {
   return `var(--${property}-${value})`;
 }
 
@@ -557,7 +565,7 @@ export interface ThemeConfig {
  */
 export function applyTheme(config: ThemeConfig): void {
   const root = document.documentElement;
-  
+
   // Apply color tokens
   if (config.colors) {
     Object.entries(config.colors).forEach(([category, values]) => {
@@ -568,7 +576,10 @@ export function applyTheme(config: ThemeConfig): void {
           } else if (typeof value === 'object') {
             Object.entries(value).forEach(([subName, subValue]) => {
               if (typeof subValue === 'string') {
-                root.style.setProperty(`--color-${category}-${name}-${subName}`, subValue);
+                root.style.setProperty(
+                  `--color-${category}-${name}-${subName}`,
+                  subValue
+                );
               }
             });
           }
@@ -576,7 +587,7 @@ export function applyTheme(config: ThemeConfig): void {
       }
     });
   }
-  
+
   // Apply other tokens similarly...
   // (Implementation would continue for all token categories)
 }

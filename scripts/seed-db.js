@@ -22,8 +22,8 @@ const sampleUsers = [
     preferences: {
       position: 'مدير المركز',
       department: 'الإدارة',
-      hire_date: '2020-01-15'
-    }
+      hire_date: '2020-01-15',
+    },
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440002',
@@ -37,8 +37,8 @@ const sampleUsers = [
       department: 'العلاج الطبيعي',
       specialization: 'تقويم سلوكي',
       license_number: 'LIC-001',
-      hire_date: '2021-03-10'
-    }
+      hire_date: '2021-03-10',
+    },
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440003',
@@ -52,8 +52,8 @@ const sampleUsers = [
       department: 'الطب النفسي',
       specialization: 'طب نفس الأطفال',
       license_number: 'LIC-002',
-      hire_date: '2021-06-20'
-    }
+      hire_date: '2021-06-20',
+    },
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440004',
@@ -67,8 +67,8 @@ const sampleUsers = [
       department: 'علاج النطق',
       specialization: 'تأهيل النطق',
       license_number: 'LIC-003',
-      hire_date: '2021-09-15'
-    }
+      hire_date: '2021-09-15',
+    },
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440005',
@@ -80,9 +80,9 @@ const sampleUsers = [
     preferences: {
       position: 'موظفة استقبال',
       department: 'الاستقبال',
-      hire_date: '2022-01-10'
-    }
-  }
+      hire_date: '2022-01-10',
+    },
+  },
 ];
 
 const samplePatients = [
@@ -101,7 +101,7 @@ const samplePatients = [
     emergency_contact_phone: '+966501234573',
     address: 'جدة، حي الصفا',
     medical_history: 'التوحد، تأخر النطق',
-    allergies: 'لا توجد حساسية معروفة'
+    allergies: 'لا توجد حساسية معروفة',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440102',
@@ -118,7 +118,7 @@ const samplePatients = [
     emergency_contact_phone: '+966501234575',
     address: 'جدة، حي الروضة',
     medical_history: 'متلازمة داون، تأخر في المهارات الحركية',
-    allergies: 'حساسية من المكسرات'
+    allergies: 'حساسية من المكسرات',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440103',
@@ -135,8 +135,8 @@ const samplePatients = [
     emergency_contact_phone: '+966501234577',
     address: 'جدة، حي النهضة',
     medical_history: 'صعوبات التعلم، اضطراب فرط الحركة',
-    allergies: 'لا توجد حساسية معروفة'
-  }
+    allergies: 'لا توجد حساسية معروفة',
+  },
 ];
 
 const sampleDoctors = [
@@ -156,7 +156,7 @@ const sampleDoctors = [
     qualifications: ['دكتوراه في العلاج الطبيعي', 'ماجستير في تقويم السلوك'],
     bio: 'أخصائية علاج طبيعي متخصصة في تقويم السلوك للأطفال ذوي الاحتياجات الخاصة',
     rating: 4.8,
-    total_reviews: 45
+    total_reviews: 45,
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440202',
@@ -174,7 +174,7 @@ const sampleDoctors = [
     qualifications: ['دكتوراه في الطب النفسي', 'ماجستير في طب نفس الأطفال'],
     bio: 'طبيبة نفسية متخصصة في علاج الأطفال ذوي الاحتياجات الخاصة',
     rating: 4.9,
-    total_reviews: 52
+    total_reviews: 52,
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440203',
@@ -192,8 +192,8 @@ const sampleDoctors = [
     qualifications: ['ماجستير في علاج النطق', 'دبلوم في تأهيل النطق'],
     bio: 'أخصائي نطق متخصص في تأهيل النطق للأطفال',
     rating: 4.7,
-    total_reviews: 38
-  }
+    total_reviews: 38,
+  },
 ];
 
 const sampleAppointments = [
@@ -207,7 +207,7 @@ const sampleAppointments = [
     type: 'consultation',
     status: 'scheduled',
     notes: 'جلسة تقييم أولية',
-    confirmation_code: 'APT001'
+    confirmation_code: 'APT001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440302',
@@ -219,7 +219,7 @@ const sampleAppointments = [
     type: 'therapy',
     status: 'scheduled',
     notes: 'جلسة علاج نفسي',
-    confirmation_code: 'APT002'
+    confirmation_code: 'APT002',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440303',
@@ -231,8 +231,8 @@ const sampleAppointments = [
     type: 'speech_therapy',
     status: 'completed',
     notes: 'جلسة علاج نطق',
-    confirmation_code: 'APT003'
-  }
+    confirmation_code: 'APT003',
+  },
 ];
 
 const sampleSessions = [
@@ -247,7 +247,7 @@ const sampleSessions = [
     status: 'completed',
     notes: 'جلسة علاج طبيعي ناجحة',
     goals_achieved: ['تحسين التوازن', 'تقوية العضلات'],
-    next_session_goals: ['زيادة مدة التمرين', 'تحسين التنسيق']
+    next_session_goals: ['زيادة مدة التمرين', 'تحسين التنسيق'],
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440402',
@@ -260,8 +260,8 @@ const sampleSessions = [
     status: 'completed',
     notes: 'جلسة علاج نفسي إيجابية',
     goals_achieved: ['تحسين التواصل', 'تقليل القلق'],
-    next_session_goals: ['تعزيز الثقة بالنفس', 'تحسين التفاعل الاجتماعي']
-  }
+    next_session_goals: ['تعزيز الثقة بالنفس', 'تحسين التفاعل الاجتماعي'],
+  },
 ];
 
 const sampleClaims = [
@@ -274,7 +274,7 @@ const sampleClaims = [
     status: 'approved',
     submitted_date: '2024-01-15',
     processed_date: '2024-01-18',
-    notes: 'مطالبة تأمين معتمدة'
+    notes: 'مطالبة تأمين معتمدة',
   },
   {
     id: 'claim_2',
@@ -284,8 +284,8 @@ const sampleClaims = [
     claim_amount: 750,
     status: 'pending',
     submitted_date: '2024-01-16',
-    notes: 'مطالبة تأمين قيد المراجعة'
-  }
+    notes: 'مطالبة تأمين قيد المراجعة',
+  },
 ];
 
 const samplePayments = [
@@ -298,7 +298,7 @@ const samplePayments = [
     status: 'completed',
     payment_date: '2024-01-15',
     transaction_id: 'TXN001',
-    notes: 'دفع نقدي'
+    notes: 'دفع نقدي',
   },
   {
     id: 'payment_2',
@@ -309,8 +309,8 @@ const samplePayments = [
     status: 'completed',
     payment_date: '2024-01-16',
     transaction_id: 'TXN002',
-    notes: 'تحويل بنكي'
-  }
+    notes: 'تحويل بنكي',
+  },
 ];
 
 const sampleAuditLogs = [
@@ -322,7 +322,7 @@ const sampleAuditLogs = [
     resource_id: 'appointment_1',
     description: 'تم إنشاء موعد جديد للمريض سارة أحمد العتيبي',
     ip_address: '192.168.1.100',
-    user_agent: 'Mozilla/5.0...'
+    user_agent: 'Mozilla/5.0...',
   },
   {
     id: 'audit_2',
@@ -332,7 +332,7 @@ const sampleAuditLogs = [
     resource_id: 'patient_1',
     description: 'تم تحديث بيانات المريض سارة أحمد العتيبي',
     ip_address: '192.168.1.101',
-    user_agent: 'Mozilla/5.0...'
+    user_agent: 'Mozilla/5.0...',
   },
   {
     id: 'audit_3',
@@ -342,8 +342,8 @@ const sampleAuditLogs = [
     resource_id: 'session_1',
     description: 'تم إنشاء جلسة علاج جديدة',
     ip_address: '192.168.1.102',
-    user_agent: 'Mozilla/5.0...'
-  }
+    user_agent: 'Mozilla/5.0...',
+  },
 ];
 
 async function seedDatabase() {
@@ -355,7 +355,7 @@ async function seedDatabase() {
     const { error: usersError } = await supabase
       .from('users')
       .upsert(sampleUsers, { onConflict: 'id' });
-    
+
     if (usersError) throw usersError;
 
     // Insert patients
@@ -363,7 +363,7 @@ async function seedDatabase() {
     const { error: patientsError } = await supabase
       .from('patients')
       .upsert(samplePatients, { onConflict: 'id' });
-    
+
     if (patientsError) throw patientsError;
 
     // Insert doctors
@@ -371,7 +371,7 @@ async function seedDatabase() {
     const { error: doctorsError } = await supabase
       .from('doctors')
       .upsert(sampleDoctors, { onConflict: 'id' });
-    
+
     if (doctorsError) throw doctorsError;
 
     // Insert appointments
@@ -379,7 +379,7 @@ async function seedDatabase() {
     const { error: appointmentsError } = await supabase
       .from('appointments')
       .upsert(sampleAppointments, { onConflict: 'id' });
-    
+
     if (appointmentsError) throw appointmentsError;
 
     // Insert sessions
@@ -387,7 +387,7 @@ async function seedDatabase() {
     const { error: sessionsError } = await supabase
       .from('sessions')
       .upsert(sampleSessions, { onConflict: 'id' });
-    
+
     if (sessionsError) throw sessionsError;
 
     // Insert claims
@@ -395,7 +395,7 @@ async function seedDatabase() {
     const { error: claimsError } = await supabase
       .from('insurance_claims')
       .upsert(sampleClaims, { onConflict: 'id' });
-    
+
     if (claimsError) throw claimsError;
 
     // Insert payments
@@ -403,7 +403,7 @@ async function seedDatabase() {
     const { error: paymentsError } = await supabase
       .from('payments')
       .upsert(samplePayments, { onConflict: 'id' });
-    
+
     if (paymentsError) throw paymentsError;
 
     // Insert audit logs
@@ -411,7 +411,7 @@ async function seedDatabase() {
     const { error: auditError } = await supabase
       .from('audit_logs')
       .upsert(sampleAuditLogs, { onConflict: 'id' });
-    
+
     if (auditError) throw auditError;
 
     console.log('✅ تم ملء قاعدة البيانات بنجاح!');
@@ -423,7 +423,6 @@ async function seedDatabase() {
     console.log(`💰 ${sampleClaims.length} مطالبة تأمين`);
     console.log(`💳 ${samplePayments.length} دفعة`);
     console.log(`📝 ${sampleAuditLogs.length} سجل تدقيق`);
-
   } catch (error) {
     console.error('❌ خطأ في ملء قاعدة البيانات:', error);
     throw error;
@@ -436,7 +435,7 @@ seedDatabase()
     console.log('🎉 تم الانتهاء من ملء قاعدة البيانات!');
     process.exit(0);
   })
-  .catch((error) => {
+  .catch(error => {
     console.error('💥 فشل في ملء قاعدة البيانات:', error);
     process.exit(1);
   });

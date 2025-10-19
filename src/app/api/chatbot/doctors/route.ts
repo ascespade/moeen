@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 
     // Get available time slots for each doctor
     const doctorsWithSlots = await Promise.all(
-      doctors.map(async (doctor) => {
+      doctors.map(async doctor => {
         const availableSlots = await getAvailableTimeSlots(doctor.id, date);
         return {
           ...doctor,
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
 
 async function getAvailableTimeSlots(doctorId: string, date?: string) {
   const appointmentDate = date || new Date().toISOString().split('T')[0];
-  
+
   // Get existing appointments for this doctor on this date
   const { data: existingAppointments } = await supabase
     .from('appointments')
@@ -65,7 +65,8 @@ async function getAvailableTimeSlots(doctorId: string, date?: string) {
     .eq('appointment_date', appointmentDate)
     .eq('status', 'scheduled');
 
-  const bookedTimes = existingAppointments?.map(apt => apt.appointment_time) || [];
+  const bookedTimes =
+    existingAppointments?.map(apt => apt.appointment_time) || [];
 
   // Generate available time slots (9 AM to 5 PM, every hour)
   const availableSlots = [];

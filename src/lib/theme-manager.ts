@@ -1,6 +1,6 @@
 /**
  * Dynamic Theme Manager - مدير الثيمات الديناميكي
- * 
+ *
  * This file provides a comprehensive theme management system that allows:
  * - Runtime theme switching (light/dark/custom)
  * - Dynamic color customization
@@ -233,18 +233,30 @@ export class ThemeManager {
     } else {
       // Fallback for SSR
       this.mediaQueries = {
-        dark: { matches: false, addListener: () => {}, removeListener: () => {} } as MediaQueryList,
-        reducedMotion: { matches: false, addListener: () => {}, removeListener: () => {} } as MediaQueryList,
-        highContrast: { matches: false, addListener: () => {}, removeListener: () => {} } as MediaQueryList,
+        dark: {
+          matches: false,
+          addListener: () => {},
+          removeListener: () => {},
+        } as MediaQueryList,
+        reducedMotion: {
+          matches: false,
+          addListener: () => {},
+          removeListener: () => {},
+        } as MediaQueryList,
+        highContrast: {
+          matches: false,
+          addListener: () => {},
+          removeListener: () => {},
+        } as MediaQueryList,
       };
     }
 
     // Load saved settings
     this.loadSettings();
-    
+
     // Apply initial theme
     this.applyTheme();
-    
+
     // Listen for system changes
     this.setupSystemListeners();
   }
@@ -377,32 +389,32 @@ export class ThemeManager {
 
   private applyTheme(): void {
     const root = document.documentElement;
-    
+
     // Apply theme mode
     this.applyThemeMode(root);
-    
+
     // Apply color scheme
     this.applyColorScheme(root);
-    
+
     // Apply animation preferences
     this.applyAnimationPreferences(root);
-    
+
     // Apply typography scale
     this.applyTypographyScale(root);
-    
+
     // Apply RTL support
     this.applyRTLSupport(root);
-    
+
     // Apply custom colors
     this.applyCustomColors(root);
-    
+
     // Apply accessibility preferences
     this.applyAccessibilityPreferences(root);
   }
 
   private applyThemeMode(root: HTMLElement): void {
     const { mode } = this.settings;
-    
+
     if (mode === 'auto') {
       const prefersDark = this.mediaQueries.dark.matches;
       root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
@@ -414,7 +426,7 @@ export class ThemeManager {
   private applyColorScheme(root: HTMLElement): void {
     const { colorScheme } = this.settings;
     root.setAttribute('data-color-scheme', colorScheme);
-    
+
     if (colorScheme === 'custom' && this.settings.customColors) {
       Object.entries(this.settings.customColors).forEach(([key, value]) => {
         root.style.setProperty(`--color-${key}`, value);
@@ -425,7 +437,7 @@ export class ThemeManager {
   private applyAnimationPreferences(root: HTMLElement): void {
     const { animationPreference } = this.settings;
     root.setAttribute('data-animation', animationPreference);
-    
+
     if (animationPreference === 'reduced' || animationPreference === 'none') {
       root.style.setProperty('--duration-fast', '0.01ms');
       root.style.setProperty('--duration-normal', '0.01ms');
@@ -437,16 +449,16 @@ export class ThemeManager {
   private applyTypographyScale(root: HTMLElement): void {
     const { typographyScale } = this.settings;
     root.setAttribute('data-typography-scale', typographyScale);
-    
+
     const scaleFactors = {
       small: 0.875,
       medium: 1,
       large: 1.125,
       xlarge: 1.25,
     };
-    
+
     const factor = scaleFactors[typographyScale];
-    
+
     // Apply scale to font sizes
     Object.entries(designTokens.typography.fontSize).forEach(([key, value]) => {
       const numericValue = parseFloat(value);
@@ -471,11 +483,11 @@ export class ThemeManager {
 
   private applyAccessibilityPreferences(root: HTMLElement): void {
     const { system } = this.getState();
-    
+
     if (system.prefersHighContrast) {
       root.setAttribute('data-high-contrast', 'true');
     }
-    
+
     if (system.prefersReducedMotion) {
       root.setAttribute('data-reduced-motion', 'true');
     }
@@ -521,17 +533,23 @@ export class ThemeManager {
 /**
  * Create a theme manager instance
  */
-export function createThemeManager(initialSettings?: Partial<ThemeSettings>): ThemeManager {
+export function createThemeManager(
+  initialSettings?: Partial<ThemeSettings>
+): ThemeManager {
   return new ThemeManager(initialSettings);
 }
 
 /**
  * Get system theme preferences
  */
-export function getSystemPreferences(): Pick<ThemeState['system'], 'prefersDark' | 'prefersReducedMotion' | 'prefersHighContrast'> {
+export function getSystemPreferences(): Pick<
+  ThemeState['system'],
+  'prefersDark' | 'prefersReducedMotion' | 'prefersHighContrast'
+> {
   return {
     prefersDark: window.matchMedia('(prefers-color-scheme: dark)').matches,
-    prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)')
+      .matches,
     prefersHighContrast: window.matchMedia('(prefers-contrast: high)').matches,
   };
 }
@@ -541,7 +559,7 @@ export function getSystemPreferences(): Pick<ThemeState['system'], 'prefersDark'
  */
 export function generateThemeCSS(theme: ThemeConfig): string {
   let css = ':root {\n';
-  
+
   // Generate color variables
   if (theme.colors) {
     Object.entries(theme.colors).forEach(([category, colors]) => {
@@ -560,7 +578,7 @@ export function generateThemeCSS(theme: ThemeConfig): string {
       }
     });
   }
-  
+
   css += '}\n';
   return css;
 }
@@ -570,7 +588,7 @@ export function generateThemeCSS(theme: ThemeConfig): string {
  */
 export function applyThemeToDocument(theme: ThemeConfig): void {
   const root = document.documentElement;
-  
+
   // Apply color variables
   if (theme.colors) {
     Object.entries(theme.colors).forEach(([category, colors]) => {
@@ -581,7 +599,10 @@ export function applyThemeToDocument(theme: ThemeConfig): void {
           } else if (typeof value === 'object') {
             Object.entries(value).forEach(([subName, subValue]) => {
               if (typeof subValue === 'string') {
-                root.style.setProperty(`--color-${category}-${name}-${subName}`, subValue);
+                root.style.setProperty(
+                  `--color-${category}-${name}-${subName}`,
+                  subValue
+                );
               }
             });
           }
@@ -601,18 +622,19 @@ export function applyThemeToDocument(theme: ThemeConfig): void {
 export function useTheme() {
   const [themeManager] = React.useState(() => createThemeManager());
   const [settings, setSettings] = React.useState(themeManager.getSettings());
-  
+
   React.useEffect(() => {
     const unsubscribe = themeManager.subscribe(setSettings);
     return unsubscribe;
   }, [themeManager]);
-  
+
   return {
     settings,
     updateSettings: themeManager.updateSettings.bind(themeManager),
     setMode: themeManager.setMode.bind(themeManager),
     setColorScheme: themeManager.setColorScheme.bind(themeManager),
-    setAnimationPreference: themeManager.setAnimationPreference.bind(themeManager),
+    setAnimationPreference:
+      themeManager.setAnimationPreference.bind(themeManager),
     setTypographyScale: themeManager.setTypographyScale.bind(themeManager),
     toggleRTL: themeManager.toggleRTL.bind(themeManager),
     setCustomColors: themeManager.setCustomColors.bind(themeManager),

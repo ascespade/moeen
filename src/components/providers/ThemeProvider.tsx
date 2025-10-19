@@ -1,7 +1,11 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { ThemeManager, type ThemeSettings, type ThemeMode } from '@/lib/theme-manager';
+import {
+  ThemeManager,
+  type ThemeSettings,
+  type ThemeMode,
+} from '@/lib/theme-manager';
 
 interface ThemeContextType {
   settings: ThemeSettings;
@@ -18,19 +22,24 @@ interface ThemeProviderProps {
   initialSettings?: Partial<ThemeSettings>;
 }
 
-export function ThemeProvider({ children, initialSettings }: ThemeProviderProps) {
+export function ThemeProvider({
+  children,
+  initialSettings,
+}: ThemeProviderProps) {
   const [themeManager] = useState(() => {
     if (typeof window !== 'undefined') {
       return new ThemeManager(initialSettings);
     }
     return null;
   });
-  const [settings, setSettings] = useState(themeManager?.getSettings() || {
-    mode: 'light',
-    customColors: {},
-    typographyScale: 'medium',
-    rtl: false,
-  });
+  const [settings, setSettings] = useState(
+    themeManager?.getSettings() || {
+      mode: 'light',
+      customColors: {},
+      typographyScale: 'medium',
+      rtl: false,
+    }
+  );
 
   useEffect(() => {
     if (themeManager) {
@@ -41,7 +50,8 @@ export function ThemeProvider({ children, initialSettings }: ThemeProviderProps)
 
   const contextValue: ThemeContextType = {
     settings,
-    updateSettings: themeManager?.updateSettings.bind(themeManager) || (() => {}),
+    updateSettings:
+      themeManager?.updateSettings.bind(themeManager) || (() => {}),
     setMode: themeManager?.setMode.bind(themeManager) || (() => {}),
     toggleRTL: themeManager?.toggleRTL.bind(themeManager) || (() => {}),
     reset: themeManager?.reset.bind(themeManager) || (() => {}),

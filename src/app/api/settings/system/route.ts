@@ -15,15 +15,15 @@ export async function GET(request: NextRequest) {
     const publicOnly = searchParams.get('public') === 'true';
 
     let query = supabase.from('system_settings').select('*');
-    
+
     if (category) {
       query = query.eq('category', category);
     }
-    
+
     if (key) {
       query = query.eq('key', key);
     }
-    
+
     if (publicOnly) {
       query = query.eq('is_public', true);
     }
@@ -35,33 +35,40 @@ export async function GET(request: NextRequest) {
     }
 
     // تحويل البيانات إلى شكل مناسب
-    const settings = data?.reduce((acc, setting) => {
-      let value = setting.value;
-      
-      // تحويل الأنواع المختلفة
-      switch (setting.type) {
-        case 'number':
-          value = parseFloat(setting.value);
-          break;
-        case 'boolean':
-          value = setting.value === 'true';
-          break;
-        case 'json':
-          try {
-            value = JSON.parse(setting.value);
-          } catch {
-            value = setting.value;
+    const settings =
+      data?.reduce(
+        (acc, setting) => {
+          let value = setting.value;
+
+          // تحويل الأنواع المختلفة
+          switch (setting.type) {
+            case 'number':
+              value = parseFloat(setting.value);
+              break;
+            case 'boolean':
+              value = setting.value === 'true';
+              break;
+            case 'json':
+              try {
+                value = JSON.parse(setting.value);
+              } catch {
+                value = setting.value;
+              }
+              break;
           }
-          break;
-      }
-      
-      acc[setting.key] = value;
-      return acc;
-    }, {} as Record<string, any>) || {};
+
+          acc[setting.key] = value;
+          return acc;
+        },
+        {} as Record<string, any>
+      ) || {};
 
     return NextResponse.json({ settings });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -69,10 +76,14 @@ export async function GET(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const { key, value, type, category, description, is_public, is_encrypted } = body;
+    const { key, value, type, category, description, is_public, is_encrypted } =
+      body;
 
     if (!key || value === undefined) {
-      return NextResponse.json({ error: 'Key and value are required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Key and value are required' },
+        { status: 400 }
+      );
     }
 
     const { data, error } = await supabase
@@ -85,7 +96,7 @@ export async function PUT(request: NextRequest) {
         description,
         is_public: is_public || false,
         is_encrypted: is_encrypted || false,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .select();
 
@@ -95,7 +106,10 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({ success: true, data: data[0] });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -120,7 +134,9 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
-

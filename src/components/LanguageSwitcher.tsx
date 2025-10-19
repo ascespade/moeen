@@ -1,6 +1,6 @@
-"use client";
-import { useState } from "react";
-import { Languages } from "lucide-react";
+'use client';
+import { useState } from 'react';
+import { Languages } from 'lucide-react';
 
 interface LanguageSwitcherProps {
   variant?: 'button' | 'dropdown';
@@ -9,11 +9,11 @@ interface LanguageSwitcherProps {
   className?: string;
 }
 
-export default function LanguageSwitcher({ 
-  variant = 'button', 
-  showLabel = false, 
+export default function LanguageSwitcher({
+  variant = 'button',
+  showLabel = false,
   size = 'md',
-  className = '' 
+  className = '',
 }: LanguageSwitcherProps) {
   const [language, setLanguage] = useState<'ar' | 'en'>('ar');
 
@@ -21,14 +21,20 @@ export default function LanguageSwitcher({
     const newLanguage = language === 'ar' ? 'en' : 'ar';
     setLanguage(newLanguage);
     document.documentElement.setAttribute('lang', newLanguage);
-    document.documentElement.setAttribute('dir', newLanguage === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute(
+      'dir',
+      newLanguage === 'ar' ? 'rtl' : 'ltr'
+    );
   };
 
   const getSizeClasses = () => {
     switch (size) {
-      case 'sm': return 'h-8 w-8';
-      case 'lg': return 'h-12 w-12';
-      default: return 'h-9 w-9';
+      case 'sm':
+        return 'h-8 w-8';
+      case 'lg':
+        return 'h-12 w-12';
+      default:
+        return 'h-9 w-9';
     }
   };
 
@@ -41,7 +47,7 @@ export default function LanguageSwitcher({
           className={`${sizeClasses} rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors`}
           onClick={toggleLanguage}
         >
-          <Languages className="h-4 w-4" />
+          <Languages className='h-4 w-4' />
         </button>
       </div>
     );
@@ -52,9 +58,9 @@ export default function LanguageSwitcher({
       className={`${sizeClasses} rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${className}`}
       onClick={toggleLanguage}
     >
-      <Languages className="h-4 w-4" />
+      <Languages className='h-4 w-4' />
       {showLabel && (
-        <span className="ml-2 text-sm">
+        <span className='ml-2 text-sm'>
           {language === 'ar' ? 'العربية' : 'English'}
         </span>
       )}

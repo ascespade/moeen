@@ -1,6 +1,6 @@
 /**
  * Modern Interactions - التفاعلات العصرية
- * 
+ *
  * This file contains modern interaction utilities and animations
  * that enhance user experience and make the interface more engaging.
  */
@@ -18,10 +18,10 @@ export class ScrollReveal {
   private init() {
     const options = {
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      rootMargin: '0px 0px -50px 0px',
     };
 
-    this.observer = new IntersectionObserver((entries) => {
+    this.observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
@@ -40,15 +40,20 @@ export class ScrollReveal {
 }
 
 // Smooth scroll to element
-export function smoothScrollTo(element: string | HTMLElement, offset: number = 0) {
-  const target = typeof element === 'string' ? document.querySelector(element) : element;
-  
+export function smoothScrollTo(
+  element: string | HTMLElement,
+  offset: number = 0
+) {
+  const target =
+    typeof element === 'string' ? document.querySelector(element) : element;
+
   if (target) {
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-    
+    const targetPosition =
+      target.getBoundingClientRect().top + window.pageYOffset - offset;
+
     window.scrollTo({
       top: targetPosition,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 }
@@ -89,7 +94,11 @@ export class ParallaxScroll {
 }
 
 // Typing animation
-export function typeWriter(element: HTMLElement, text: string, speed: number = 100) {
+export function typeWriter(
+  element: HTMLElement,
+  text: string,
+  speed: number = 100
+) {
   let i = 0;
   element.innerHTML = '';
 
@@ -105,7 +114,11 @@ export function typeWriter(element: HTMLElement, text: string, speed: number = 1
 }
 
 // Counter animation
-export function animateCounter(element: HTMLElement, target: number, duration: number = 2000) {
+export function animateCounter(
+  element: HTMLElement,
+  target: number,
+  duration: number = 2000
+) {
   const start = 0;
   const increment = target / (duration / 16);
   let current = start;
@@ -113,7 +126,7 @@ export function animateCounter(element: HTMLElement, target: number, duration: n
   const timer = setInterval(() => {
     current += increment;
     element.textContent = Math.floor(current).toString();
-    
+
     if (current >= target) {
       element.textContent = target.toString();
       clearInterval(timer);
@@ -154,7 +167,7 @@ export class Modal {
       this.overlay.addEventListener('click', () => this.close());
     }
 
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         this.close();
       }
@@ -182,7 +195,11 @@ export class Tooltip {
   private target: HTMLElement;
   private position: 'top' | 'bottom' | 'left' | 'right' = 'top';
 
-  constructor(target: HTMLElement, text: string, position: 'top' | 'bottom' | 'left' | 'right' = 'top') {
+  constructor(
+    target: HTMLElement,
+    text: string,
+    position: 'top' | 'bottom' | 'left' | 'right' = 'top'
+  ) {
     this.target = target;
     this.position = position;
     this.tooltip = this.createTooltip(text);
@@ -210,10 +227,10 @@ export class Tooltip {
 
   private init() {
     document.body.appendChild(this.tooltip);
-    
+
     this.target.addEventListener('mouseenter', () => this.show());
     this.target.addEventListener('mouseleave', () => this.hide());
-    this.target.addEventListener('mousemove', (e) => this.updatePosition(e));
+    this.target.addEventListener('mousemove', e => this.updatePosition(e));
   }
 
   private show() {
@@ -227,7 +244,7 @@ export class Tooltip {
   private updatePosition(e: MouseEvent) {
     const rect = this.target.getBoundingClientRect();
     const tooltipRect = this.tooltip.getBoundingClientRect();
-    
+
     let x = 0;
     let y = 0;
 
@@ -272,10 +289,10 @@ export class LazyLoader {
   private init() {
     const options = {
       threshold: 0.1,
-      rootMargin: '50px 0px'
+      rootMargin: '50px 0px',
     };
 
-    this.observer = new IntersectionObserver((entries) => {
+    this.observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target as HTMLImageElement;
@@ -310,14 +327,16 @@ export class FormValidator {
 
   constructor(formSelector: string) {
     this.form = document.querySelector(formSelector) as HTMLFormElement;
-    this.inputs = this.form?.querySelectorAll('input, textarea, select') as NodeListOf<HTMLInputElement>;
+    this.inputs = this.form?.querySelectorAll(
+      'input, textarea, select'
+    ) as NodeListOf<HTMLInputElement>;
     this.init();
   }
 
   private init() {
     if (this.form) {
-      this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-      
+      this.form.addEventListener('submit', e => this.handleSubmit(e));
+
       this.inputs.forEach(input => {
         input.addEventListener('blur', () => this.validateField(input));
         input.addEventListener('input', () => this.clearError(input));
@@ -329,7 +348,7 @@ export class FormValidator {
     const value = input.value.trim();
     const type = input.type;
     const required = input.hasAttribute('required');
-    
+
     let isValid = true;
     let message = '';
 
@@ -359,19 +378,23 @@ export class FormValidator {
     return isValid;
   }
 
-  private showFieldValidation(input: HTMLInputElement, isValid: boolean, message: string) {
+  private showFieldValidation(
+    input: HTMLInputElement,
+    isValid: boolean,
+    message: string
+  ) {
     const field = input.closest('.form-field');
     if (field) {
       field.classList.toggle('error', !isValid);
       field.classList.toggle('success', isValid && input.value);
-      
+
       let feedback = field.querySelector('.field-feedback');
       if (!feedback) {
         feedback = document.createElement('div');
         feedback.className = 'field-feedback';
         field.appendChild(feedback);
       }
-      
+
       feedback.textContent = message;
       feedback.className = `field-feedback ${isValid ? 'success' : 'error'}`;
     }
@@ -390,7 +413,7 @@ export class FormValidator {
 
   private handleSubmit(e: Event) {
     e.preventDefault();
-    
+
     let isFormValid = true;
     this.inputs.forEach(input => {
       if (!this.validateField(input)) {
@@ -408,19 +431,19 @@ export class FormValidator {
 export function initModernInteractions() {
   // Initialize scroll reveal
   new ScrollReveal();
-  
+
   // Initialize parallax scrolling
   new ParallaxScroll();
-  
+
   // Initialize lazy loading
   new LazyLoader();
-  
+
   // Initialize form validation
   new FormValidator('form');
-  
+
   // Add smooth scrolling to all anchor links
   document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', (e) => {
+    link.addEventListener('click', e => {
       e.preventDefault();
       const target = link.getAttribute('href');
       if (target) {
@@ -442,6 +465,5 @@ export {
   Modal,
   Tooltip,
   LazyLoader,
-  FormValidator
+  FormValidator,
 };
-

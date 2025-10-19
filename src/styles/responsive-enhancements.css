@@ -15,41 +15,41 @@
   .container-app {
     padding: 0 var(--space-3);
   }
-  
+
   .hero-slider h2 {
     font-size: 2rem;
     line-height: 1.2;
   }
-  
+
   .hero-slider h3 {
     font-size: 1.25rem;
   }
-  
+
   .hero-slider p {
     font-size: 1rem;
   }
-  
+
   .btn-lg {
     padding: var(--space-3) var(--space-4);
     font-size: var(--text-base);
   }
-  
+
   .card {
     padding: var(--space-4);
   }
-  
+
   .ds-grid-cols-1 {
     grid-template-columns: 1fr;
   }
-  
+
   .text-5xl {
     font-size: 2.5rem;
   }
-  
+
   .text-4xl {
     font-size: 2rem;
   }
-  
+
   .text-3xl {
     font-size: 1.75rem;
   }
@@ -60,15 +60,15 @@
   .container-app {
     padding: 0 var(--space-4);
   }
-  
+
   .hero-slider h2 {
     font-size: 2.5rem;
   }
-  
+
   .hero-slider h3 {
     font-size: 1.5rem;
   }
-  
+
   .ds-grid-cols-2 {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -79,15 +79,15 @@
   .container-app {
     padding: 0 var(--space-6);
   }
-  
+
   .hero-slider h2 {
     font-size: 3rem;
   }
-  
+
   .hero-slider h3 {
     font-size: 1.75rem;
   }
-  
+
   .ds-grid-cols-3 {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -98,11 +98,11 @@
   .container-app {
     padding: 0 var(--space-8);
   }
-  
+
   .hero-slider h2 {
     font-size: 3.5rem;
   }
-  
+
   .hero-slider h3 {
     font-size: 2rem;
   }
@@ -114,11 +114,11 @@
     max-width: 1400px;
     padding: 0 var(--space-10);
   }
-  
+
   .hero-slider h2 {
     font-size: 4rem;
   }
-  
+
   .hero-slider h3 {
     font-size: 2.25rem;
   }
@@ -140,11 +140,11 @@
     transform: translateX(-100%);
     transition: transform 0.3s ease;
   }
-  
+
   .mobile-nav.active {
     transform: translateX(0);
   }
-  
+
   .mobile-nav-overlay {
     position: fixed;
     top: 0;
@@ -157,20 +157,20 @@
     visibility: hidden;
     transition: all 0.3s ease;
   }
-  
+
   .mobile-nav-overlay.active {
     opacity: 1;
     visibility: visible;
   }
-  
+
   .nav-toggle {
     display: block;
   }
-  
+
   .nav-menu {
     display: none;
   }
-  
+
   .nav-menu.mobile-active {
     display: block;
     position: absolute;
@@ -187,7 +187,7 @@
   .nav-toggle {
     display: none;
   }
-  
+
   .nav-menu {
     display: flex;
   }
@@ -198,37 +198,85 @@
    ======================================== */
 
 @media (max-width: 480px) {
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.75rem; }
-  h3 { font-size: 1.5rem; }
-  h4 { font-size: 1.25rem; }
-  h5 { font-size: 1.125rem; }
-  h6 { font-size: 1rem; }
-  
-  .text-xs { font-size: 0.75rem; }
-  .text-sm { font-size: 0.875rem; }
-  .text-base { font-size: 1rem; }
-  .text-lg { font-size: 1.125rem; }
-  .text-xl { font-size: 1.25rem; }
-  .text-2xl { font-size: 1.5rem; }
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  h4 {
+    font-size: 1.25rem;
+  }
+  h5 {
+    font-size: 1.125rem;
+  }
+  h6 {
+    font-size: 1rem;
+  }
+
+  .text-xs {
+    font-size: 0.75rem;
+  }
+  .text-sm {
+    font-size: 0.875rem;
+  }
+  .text-base {
+    font-size: 1rem;
+  }
+  .text-lg {
+    font-size: 1.125rem;
+  }
+  .text-xl {
+    font-size: 1.25rem;
+  }
+  .text-2xl {
+    font-size: 1.5rem;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
-  h1 { font-size: 2.5rem; }
-  h2 { font-size: 2rem; }
-  h3 { font-size: 1.75rem; }
-  h4 { font-size: 1.5rem; }
-  h5 { font-size: 1.25rem; }
-  h6 { font-size: 1.125rem; }
+  h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  h3 {
+    font-size: 1.75rem;
+  }
+  h4 {
+    font-size: 1.5rem;
+  }
+  h5 {
+    font-size: 1.25rem;
+  }
+  h6 {
+    font-size: 1.125rem;
+  }
 }
 
 @media (min-width: 769px) {
-  h1 { font-size: 3rem; }
-  h2 { font-size: 2.5rem; }
-  h3 { font-size: 2rem; }
-  h4 { font-size: 1.75rem; }
-  h5 { font-size: 1.5rem; }
-  h6 { font-size: 1.25rem; }
+  h1 {
+    font-size: 3rem;
+  }
+  h2 {
+    font-size: 2.5rem;
+  }
+  h3 {
+    font-size: 2rem;
+  }
+  h4 {
+    font-size: 1.75rem;
+  }
+  h5 {
+    font-size: 1.5rem;
+  }
+  h6 {
+    font-size: 1.25rem;
+  }
 }
 
 /* ========================================
@@ -236,27 +284,70 @@
    ======================================== */
 
 @media (max-width: 480px) {
-  .py-20 { padding-top: var(--space-12); padding-bottom: var(--space-12); }
-  .py-16 { padding-top: var(--space-10); padding-bottom: var(--space-10); }
-  .py-12 { padding-top: var(--space-8); padding-bottom: var(--space-8); }
-  .py-8 { padding-top: var(--space-6); padding-bottom: var(--space-6); }
-  
-  .px-8 { padding-left: var(--space-4); padding-right: var(--space-4); }
-  .px-6 { padding-left: var(--space-3); padding-right: var(--space-3); }
-  .px-4 { padding-left: var(--space-2); padding-right: var(--space-2); }
-  
-  .mb-16 { margin-bottom: var(--space-10); }
-  .mb-12 { margin-bottom: var(--space-8); }
-  .mb-8 { margin-bottom: var(--space-6); }
-  .mb-6 { margin-bottom: var(--space-4); }
-  .mb-4 { margin-bottom: var(--space-3); }
+  .py-20 {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+  }
+  .py-16 {
+    padding-top: var(--space-10);
+    padding-bottom: var(--space-10);
+  }
+  .py-12 {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+  }
+  .py-8 {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+
+  .px-8 {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+  .px-6 {
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+  }
+  .px-4 {
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+  }
+
+  .mb-16 {
+    margin-bottom: var(--space-10);
+  }
+  .mb-12 {
+    margin-bottom: var(--space-8);
+  }
+  .mb-8 {
+    margin-bottom: var(--space-6);
+  }
+  .mb-6 {
+    margin-bottom: var(--space-4);
+  }
+  .mb-4 {
+    margin-bottom: var(--space-3);
+  }
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
-  .py-20 { padding-top: var(--space-16); padding-bottom: var(--space-16); }
-  .py-16 { padding-top: var(--space-12); padding-bottom: var(--space-12); }
-  .py-12 { padding-top: var(--space-10); padding-bottom: var(--space-10); }
-  .py-8 { padding-top: var(--space-8); padding-bottom: var(--space-8); }
+  .py-20 {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+  }
+  .py-16 {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+  }
+  .py-12 {
+    padding-top: var(--space-10);
+    padding-bottom: var(--space-10);
+  }
+  .py-8 {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+  }
 }
 
 /* ========================================
@@ -267,38 +358,58 @@
   .ds-grid {
     gap: var(--space-4);
   }
-  
-  .ds-grid-cols-1 { grid-template-columns: 1fr; }
-  .ds-grid-cols-2 { grid-template-columns: 1fr; }
-  .ds-grid-cols-3 { grid-template-columns: 1fr; }
-  .ds-grid-cols-4 { grid-template-columns: 1fr; }
+
+  .ds-grid-cols-1 {
+    grid-template-columns: 1fr;
+  }
+  .ds-grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+  .ds-grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+  .ds-grid-cols-4 {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
   .ds-grid {
     gap: var(--space-6);
   }
-  
-  .ds-grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
-  .ds-grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
-  .ds-grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+
+  .ds-grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ds-grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ds-grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .ds-grid {
     gap: var(--space-8);
   }
-  
-  .ds-grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
-  .ds-grid-cols-4 { grid-template-columns: repeat(3, 1fr); }
+
+  .ds-grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .ds-grid-cols-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (min-width: 1025px) {
   .ds-grid {
     gap: var(--space-8);
   }
-  
-  .ds-grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+  .ds-grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 /* ========================================
@@ -310,11 +421,11 @@
     padding: var(--space-4);
     margin-bottom: var(--space-4);
   }
-  
+
   .card-elevated {
     box-shadow: var(--shadow-md);
   }
-  
+
   .card-interactive:hover {
     transform: none;
   }
@@ -341,12 +452,12 @@
     padding: var(--space-2) var(--space-3);
     font-size: var(--text-sm);
   }
-  
+
   .btn-lg {
     padding: var(--space-3) var(--space-4);
     font-size: var(--text-base);
   }
-  
+
   .btn-sm {
     padding: var(--space-1) var(--space-2);
     font-size: var(--text-xs);
@@ -358,7 +469,7 @@
     padding: var(--space-3) var(--space-4);
     font-size: var(--text-base);
   }
-  
+
   .btn-lg {
     padding: var(--space-4) var(--space-5);
     font-size: var(--text-lg);
@@ -374,26 +485,26 @@
     height: 60vh;
     min-height: 400px;
   }
-  
+
   .hero-slider .container-app {
     padding: 0 var(--space-4);
   }
-  
+
   .hero-slider h2 {
     font-size: 2rem;
     margin-bottom: var(--space-3);
   }
-  
+
   .hero-slider h3 {
     font-size: 1.25rem;
     margin-bottom: var(--space-3);
   }
-  
+
   .hero-slider p {
     font-size: 1rem;
     margin-bottom: var(--space-6);
   }
-  
+
   .hero-slider .btn {
     padding: var(--space-3) var(--space-4);
     font-size: var(--text-base);
@@ -405,11 +516,11 @@
     height: 70vh;
     min-height: 500px;
   }
-  
+
   .hero-slider h2 {
     font-size: 2.5rem;
   }
-  
+
   .hero-slider h3 {
     font-size: 1.5rem;
   }
@@ -430,14 +541,14 @@
   .form-field {
     margin-bottom: var(--space-4);
   }
-  
+
   .form-field input,
   .form-field textarea,
   .form-field select {
     padding: var(--space-3);
     font-size: var(--text-base);
   }
-  
+
   .form-field .field-feedback {
     font-size: var(--text-sm);
     margin-top: var(--space-1);
@@ -448,7 +559,7 @@
   .form-field {
     margin-bottom: var(--space-5);
   }
-  
+
   .form-field input,
   .form-field textarea,
   .form-field select {
@@ -464,27 +575,27 @@
   .modal {
     padding: var(--space-4);
   }
-  
+
   .modal-content {
     width: 95%;
     max-width: none;
     margin: var(--space-4);
   }
-  
+
   .modal-header h2 {
     font-size: 1.5rem;
   }
-  
+
   .modal-body {
     padding: var(--space-4);
   }
-  
+
   .modal-footer {
     padding: var(--space-4);
     flex-direction: column;
     gap: var(--space-2);
   }
-  
+
   .modal-footer .btn {
     width: 100%;
   }
@@ -513,11 +624,11 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   .table-responsive table {
     min-width: 600px;
   }
-  
+
   .table-responsive th,
   .table-responsive td {
     padding: var(--space-2);
@@ -535,7 +646,7 @@
     height: auto;
     max-width: 100%;
   }
-  
+
   .hero-image {
     height: 200px;
     object-fit: cover;
@@ -562,15 +673,15 @@
   .hidden-mobile {
     display: none !important;
   }
-  
+
   .visible-mobile {
     display: block !important;
   }
-  
+
   .text-center-mobile {
     text-align: center !important;
   }
-  
+
   .full-width-mobile {
     width: 100% !important;
   }
@@ -580,7 +691,7 @@
   .hidden-mobile {
     display: block !important;
   }
-  
+
   .visible-mobile {
     display: none !important;
   }
@@ -590,7 +701,7 @@
   .hidden-tablet {
     display: none !important;
   }
-  
+
   .visible-tablet {
     display: block !important;
   }
@@ -600,7 +711,7 @@
   .hidden-tablet {
     display: block !important;
   }
-  
+
   .visible-tablet {
     display: none !important;
   }
@@ -615,24 +726,24 @@
     height: 100vh;
     min-height: 300px;
   }
-  
+
   .hero-slider h2 {
     font-size: 2rem;
   }
-  
+
   .hero-slider h3 {
     font-size: 1.25rem;
   }
-  
+
   .hero-slider p {
     font-size: 1rem;
   }
-  
+
   .py-20 {
     padding-top: var(--space-8);
     padding-bottom: var(--space-8);
   }
-  
+
   .py-16 {
     padding-top: var(--space-6);
     padding-bottom: var(--space-6);
@@ -659,34 +770,33 @@
   .no-print {
     display: none !important;
   }
-  
+
   .print-only {
     display: block !important;
   }
-  
+
   .hero-slider {
     height: auto;
     min-height: auto;
   }
-  
+
   .card {
     break-inside: avoid;
     box-shadow: none;
     border: 1px solid #ccc;
   }
-  
+
   .btn {
     border: 1px solid #ccc;
     background: transparent !important;
     color: #000 !important;
   }
-  
+
   a {
     text-decoration: underline;
   }
-  
+
   a[href]:after {
-    content: " (" attr(href) ")";
+    content: ' (' attr(href) ')';
   }
 }
-

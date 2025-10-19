@@ -6,10 +6,10 @@ interface BadgeProps {
   className?: string;
 }
 
-export function Badge({ 
-  children, 
-  variant = 'primary', 
-  className = '' 
+export function Badge({
+  children,
+  variant = 'primary',
+  className = '',
 }: BadgeProps) {
   const baseClasses = 'badge';
   const variantClasses = {
@@ -17,7 +17,7 @@ export function Badge({
     secondary: 'badge-secondary',
     success: 'badge-success',
     warning: 'badge-warning',
-    error: 'badge-error'
+    error: 'badge-error',
   };
 
   return (

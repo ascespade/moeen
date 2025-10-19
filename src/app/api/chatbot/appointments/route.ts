@@ -3,8 +3,15 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { doctorId, appointmentTime, patientId, conversationId, notes, patientName, patientPhone } =
-      await request.json();
+    const {
+      doctorId,
+      appointmentTime,
+      patientId,
+      conversationId,
+      notes,
+      patientName,
+      patientPhone,
+    } = await request.json();
 
     if (!doctorId || !appointmentTime) {
       return NextResponse.json(
@@ -23,9 +30,12 @@ export async function POST(request: NextRequest) {
         .select('*')
         .eq('id', patientId)
         .single();
-      
+
       if (patientError || !existingPatient) {
-        return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
+        return NextResponse.json(
+          { error: 'Patient not found' },
+          { status: 404 }
+        );
       }
       patient = existingPatient;
     } else {
@@ -40,18 +50,24 @@ export async function POST(request: NextRequest) {
           public_id: `TEMP_${Date.now()}`,
           user_id: '550e8400-e29b-41d4-a716-446655440001', // Default admin user
           created_by: '550e8400-e29b-41d4-a716-446655440001',
-          updated_by: '550e8400-e29b-41d4-a716-446655440001'
+          updated_by: '550e8400-e29b-41d4-a716-446655440001',
         })
         .select()
         .single();
-      
+
       if (createError) {
         console.error('Patient creation error:', createError);
-        return NextResponse.json({ error: 'Failed to create patient: ' + createError.message }, { status: 500 });
+        return NextResponse.json(
+          { error: 'Failed to create patient: ' + createError.message },
+          { status: 500 }
+        );
       }
-      
+
       if (!newPatient) {
-        return NextResponse.json({ error: 'Failed to create patient: No data returned' }, { status: 500 });
+        return NextResponse.json(
+          { error: 'Failed to create patient: No data returned' },
+          { status: 500 }
+        );
       }
       patient = newPatient;
     }

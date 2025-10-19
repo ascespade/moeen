@@ -656,7 +656,7 @@
   .ds-nav-links {
     display: none;
   }
-  
+
   .ds-nav-mobile {
     display: block;
   }
@@ -981,7 +981,7 @@
   .ds-hidden-sm {
     display: none !important;
   }
-  
+
   .ds-visible-sm {
     display: block !important;
   }
@@ -991,7 +991,7 @@
   .ds-hidden-md {
     display: none !important;
   }
-  
+
   .ds-visible-md {
     display: block !important;
   }
@@ -1001,7 +1001,7 @@
   .ds-hidden-lg {
     display: none !important;
   }
-  
+
   .ds-visible-lg {
     display: block !important;
   }

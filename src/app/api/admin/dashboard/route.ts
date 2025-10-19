@@ -35,7 +35,8 @@ export async function GET(request: NextRequest) {
       .select('amount')
       .eq('status', 'paid');
 
-    const totalRevenue = paymentsData?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0;
+    const totalRevenue =
+      paymentsData?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0;
 
     const stats = {
       totalPatients: totalPatients || 0,
@@ -63,10 +64,9 @@ export async function GET(request: NextRequest) {
       data: {
         stats,
         recentActivities: [],
-        lastUpdated: new Date().toISOString()
-      }
+        lastUpdated: new Date().toISOString(),
+      },
     });
-
   } catch (error) {
     console.error('Dashboard API error:', error);
     return NextResponse.json(
@@ -78,55 +78,57 @@ export async function GET(request: NextRequest) {
 
 function getActivityTitle(action: string, entityType: string): string {
   const titles: Record<string, Record<string, string>> = {
-    'create': {
-      'appointment': 'موعد جديد',
-      'patient': 'مريض جديد',
-      'claim': 'مطالبة تأمين',
-      'payment': 'دفعة جديدة',
-      'user': 'موظف جديد'
+    create: {
+      appointment: 'موعد جديد',
+      patient: 'مريض جديد',
+      claim: 'مطالبة تأمين',
+      payment: 'دفعة جديدة',
+      user: 'موظف جديد',
     },
-    'update': {
-      'appointment': 'تحديث موعد',
-      'patient': 'تحديث بيانات مريض',
-      'claim': 'تحديث مطالبة',
-      'payment': 'تحديث دفعة',
-      'user': 'تحديث بيانات موظف'
+    update: {
+      appointment: 'تحديث موعد',
+      patient: 'تحديث بيانات مريض',
+      claim: 'تحديث مطالبة',
+      payment: 'تحديث دفعة',
+      user: 'تحديث بيانات موظف',
     },
-    'delete': {
-      'appointment': 'حذف موعد',
-      'patient': 'حذف مريض',
-      'claim': 'حذف مطالبة',
-      'payment': 'حذف دفعة',
-      'user': 'حذف موظف'
-    }
+    delete: {
+      appointment: 'حذف موعد',
+      patient: 'حذف مريض',
+      claim: 'حذف مطالبة',
+      payment: 'حذف دفعة',
+      user: 'حذف موظف',
+    },
   };
-  
+
   return titles[action]?.[entityType] || 'نشاط جديد';
 }
 
 function getActivityStatus(action: string): string {
   const statusMap: Record<string, string> = {
-    'create': 'success',
-    'update': 'info',
-    'delete': 'error',
-    'approve': 'success',
-    'reject': 'error'
+    create: 'success',
+    update: 'info',
+    delete: 'error',
+    approve: 'success',
+    reject: 'error',
   };
-  
+
   return statusMap[action] || 'info';
 }
 
 function formatTimestamp(timestamp: string): string {
   const now = new Date();
   const activityTime = new Date(timestamp);
-  const diffInMinutes = Math.floor((now.getTime() - activityTime.getTime()) / (1000 * 60));
-  
+  const diffInMinutes = Math.floor(
+    (now.getTime() - activityTime.getTime()) / (1000 * 60)
+  );
+
   if (diffInMinutes < 1) return 'الآن';
   if (diffInMinutes < 60) return `منذ ${diffInMinutes} دقيقة`;
-  
+
   const diffInHours = Math.floor(diffInMinutes / 60);
   if (diffInHours < 24) return `منذ ${diffInHours} ساعة`;
-  
+
   const diffInDays = Math.floor(diffInHours / 24);
   return `منذ ${diffInDays} يوم`;
 }

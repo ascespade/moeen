@@ -36,7 +36,10 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ emergencyContacts: data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -51,13 +54,16 @@ export async function POST(request: NextRequest) {
       priority,
       is_available_24_7,
       working_hours,
-      notes
+      notes,
     } = body;
 
     if (!name || !phone || !type) {
-      return NextResponse.json({ 
-        error: 'Name, phone, and type are required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: 'Name, phone, and type are required',
+        },
+        { status: 400 }
+      );
     }
 
     const { data, error } = await supabase
@@ -69,7 +75,7 @@ export async function POST(request: NextRequest) {
         priority: priority || 1,
         is_available_24_7: is_available_24_7 || false,
         working_hours,
-        notes
+        notes,
       })
       .select()
       .single();
@@ -80,7 +86,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -98,7 +107,7 @@ export async function PUT(request: NextRequest) {
       .from('emergency_contacts')
       .update({
         ...updateData,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', id)
       .select()
@@ -110,7 +119,10 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -135,7 +147,9 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
-

@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 
     // استخدام الدالة الذكية التي تجلب الموظفين من جدول users
     const { data, error } = await supabase.rpc('get_staff_info');
-    
+
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
@@ -23,21 +23,24 @@ export async function GET(request: NextRequest) {
     // فلترة حسب الدور إذا طُلب ذلك
     let filteredData = data;
     if (role) {
-      filteredData = data?.filter((staff: any) => 
-        staff.role?.toLowerCase() === role.toLowerCase()
+      filteredData = data?.filter(
+        (staff: any) => staff.role?.toLowerCase() === role.toLowerCase()
       );
     }
 
     // فلترة حسب الحالة إذا طُلب ذلك
     if (status) {
-      filteredData = filteredData?.filter((staff: any) => 
-        staff.status?.toLowerCase() === status.toLowerCase()
+      filteredData = filteredData?.filter(
+        (staff: any) => staff.status?.toLowerCase() === status.toLowerCase()
       );
     }
 
     return NextResponse.json({ staff: filteredData });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -54,21 +57,28 @@ export async function POST(request: NextRequest) {
       timezone,
       language,
       preferences,
-      metadata
+      metadata,
     } = body;
 
     if (!email || !name || !role) {
-      return NextResponse.json({ 
-        error: 'Email, name, and role are required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: 'Email, name, and role are required',
+        },
+        { status: 400 }
+      );
     }
 
     // التحقق من صحة الدور
     const validRoles = ['admin', 'manager', 'agent', 'supervisor'];
     if (!validRoles.includes(role)) {
-      return NextResponse.json({ 
-        error: 'Invalid role. Must be one of: admin, manager, agent, supervisor' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          error:
+            'Invalid role. Must be one of: admin, manager, agent, supervisor',
+        },
+        { status: 400 }
+      );
     }
 
     const { data, error } = await supabase
@@ -84,7 +94,7 @@ export async function POST(request: NextRequest) {
         preferences: preferences || {},
         metadata: metadata || {},
         is_active: true,
-        status: 'active'
+        status: 'active',
       })
       .select()
       .single();
@@ -95,7 +105,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -113,9 +126,13 @@ export async function PUT(request: NextRequest) {
     if (updateData.role) {
       const validRoles = ['admin', 'manager', 'agent', 'supervisor'];
       if (!validRoles.includes(updateData.role)) {
-        return NextResponse.json({ 
-          error: 'Invalid role. Must be one of: admin, manager, agent, supervisor' 
-        }, { status: 400 });
+        return NextResponse.json(
+          {
+            error:
+              'Invalid role. Must be one of: admin, manager, agent, supervisor',
+          },
+          { status: 400 }
+        );
       }
     }
 
@@ -123,7 +140,7 @@ export async function PUT(request: NextRequest) {
       .from('users')
       .update({
         ...updateData,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', id)
       .select()
@@ -135,7 +152,10 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -152,10 +172,10 @@ export async function DELETE(request: NextRequest) {
     // بدلاً من الحذف، نعطل الموظف
     const { data, error } = await supabase
       .from('users')
-      .update({ 
+      .update({
         is_active: false,
         status: 'inactive',
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', id)
       .select()
@@ -167,7 +187,9 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
-

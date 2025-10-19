@@ -1,6 +1,6 @@
-"use client";
-import { useState } from "react";
-import { Sun, Moon } from "lucide-react";
+'use client';
+import { useState } from 'react';
+import { Sun, Moon } from 'lucide-react';
 
 interface ThemeSwitcherProps {
   variant?: 'button' | 'dropdown';
@@ -9,11 +9,11 @@ interface ThemeSwitcherProps {
   className?: string;
 }
 
-export default function ThemeSwitcher({ 
-  variant = 'button', 
-  showLabel = false, 
+export default function ThemeSwitcher({
+  variant = 'button',
+  showLabel = false,
   size = 'md',
-  className = '' 
+  className = '',
 }: ThemeSwitcherProps) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
@@ -25,9 +25,12 @@ export default function ThemeSwitcher({
 
   const getSizeClasses = () => {
     switch (size) {
-      case 'sm': return 'h-8 w-8';
-      case 'lg': return 'h-12 w-12';
-      default: return 'h-9 w-9';
+      case 'sm':
+        return 'h-8 w-8';
+      case 'lg':
+        return 'h-12 w-12';
+      default:
+        return 'h-9 w-9';
     }
   };
 
@@ -40,7 +43,11 @@ export default function ThemeSwitcher({
           className={`${sizeClasses} rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors`}
           onClick={toggleTheme}
         >
-          {theme === 'light' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          {theme === 'light' ? (
+            <Sun className='h-4 w-4' />
+          ) : (
+            <Moon className='h-4 w-4' />
+          )}
         </button>
       </div>
     );
@@ -51,9 +58,13 @@ export default function ThemeSwitcher({
       className={`${sizeClasses} rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${className}`}
       onClick={toggleTheme}
     >
-      {theme === 'light' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      {theme === 'light' ? (
+        <Sun className='h-4 w-4' />
+      ) : (
+        <Moon className='h-4 w-4' />
+      )}
       {showLabel && (
-        <span className="ml-2 text-sm">
+        <span className='ml-2 text-sm'>
           {theme === 'light' ? 'فاتح' : 'داكن'}
         </span>
       )}

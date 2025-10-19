@@ -11,7 +11,8 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const includeStaff = searchParams.get('include_staff') === 'true';
-    const includeEmergencyContacts = searchParams.get('include_emergency') === 'true';
+    const includeEmergencyContacts =
+      searchParams.get('include_emergency') === 'true';
 
     // جلب معلومات المركز الأساسية
     const { data: centerInfo, error: centerError } = await supabase
@@ -30,7 +31,8 @@ export async function GET(request: NextRequest) {
     if (includeStaff) {
       const { data: staff, error: staffError } = await supabase
         .from('staff_members')
-        .select(`
+        .select(
+          `
           id,
           public_id,
           first_name,
@@ -47,7 +49,8 @@ export async function GET(request: NextRequest) {
           working_schedule,
           is_emergency_contact,
           status
-        `)
+        `
+        )
         .eq('status', 'active')
         .order('first_name');
 
@@ -71,7 +74,10 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(response);
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -97,7 +103,7 @@ export async function PUT(request: NextRequest) {
       working_hours,
       social_media,
       services,
-      specialties
+      specialties,
     } = body;
 
     const { data, error } = await supabase
@@ -121,7 +127,7 @@ export async function PUT(request: NextRequest) {
         social_media,
         services,
         specialties,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .select()
       .single();
@@ -132,7 +138,9 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
-

@@ -14,9 +14,7 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status') || 'active';
     const isEmergencyContact = searchParams.get('emergency_contact') === 'true';
 
-    let query = supabase
-      .from('staff_members')
-      .select(`
+    let query = supabase.from('staff_members').select(`
         id,
         public_id,
         first_name,
@@ -61,7 +59,10 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ staff: data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -88,13 +89,16 @@ export async function POST(request: NextRequest) {
       qualifications,
       certifications,
       working_schedule,
-      is_emergency_contact
+      is_emergency_contact,
     } = body;
 
     if (!first_name || !last_name) {
-      return NextResponse.json({ 
-        error: 'First name and last name are required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: 'First name and last name are required',
+        },
+        { status: 400 }
+      );
     }
 
     const { data, error } = await supabase
@@ -119,7 +123,7 @@ export async function POST(request: NextRequest) {
         certifications: certifications || [],
         working_schedule: working_schedule || {},
         is_emergency_contact: is_emergency_contact || false,
-        status: 'active'
+        status: 'active',
       })
       .select()
       .single();
@@ -130,7 +134,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -148,7 +155,7 @@ export async function PUT(request: NextRequest) {
       .from('staff_members')
       .update({
         ...updateData,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', id)
       .select()
@@ -160,7 +167,10 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -185,7 +195,9 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
-

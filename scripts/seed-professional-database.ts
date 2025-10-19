@@ -18,8 +18,8 @@ const sampleUsers = [
     preferences: {
       position: 'مدير المركز',
       department: 'الإدارة',
-      hire_date: '2020-01-15'
-    }
+      hire_date: '2020-01-15',
+    },
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440002',
@@ -33,8 +33,8 @@ const sampleUsers = [
       department: 'العلاج الطبيعي',
       specialization: 'تقويم سلوكي',
       license_number: 'LIC-001',
-      hire_date: '2021-03-10'
-    }
+      hire_date: '2021-03-10',
+    },
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440003',
@@ -48,8 +48,8 @@ const sampleUsers = [
       department: 'الطب النفسي',
       specialization: 'طب نفس الأطفال',
       license_number: 'LIC-002',
-      hire_date: '2021-06-20'
-    }
+      hire_date: '2021-06-20',
+    },
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440004',
@@ -63,8 +63,8 @@ const sampleUsers = [
       department: 'علاج النطق',
       specialization: 'تأهيل النطق',
       license_number: 'LIC-003',
-      hire_date: '2021-09-15'
-    }
+      hire_date: '2021-09-15',
+    },
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440005',
@@ -76,9 +76,9 @@ const sampleUsers = [
     preferences: {
       position: 'موظفة استقبال',
       department: 'الاستقبال',
-      hire_date: '2022-01-10'
-    }
-  }
+      hire_date: '2022-01-10',
+    },
+  },
 ];
 
 // بيانات المرضى
@@ -103,7 +103,7 @@ const samplePatients = [
     // chronic_conditions: ['التوحد', 'تأخر النطق'], // غير موجود في الجدول
     user_id: '550e8400-e29b-41d4-a716-446655440001',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440102',
@@ -125,7 +125,7 @@ const samplePatients = [
     // chronic_conditions: ['متلازمة داون', 'تأخر المهارات الحركية'], // غير موجود في الجدول
     user_id: '550e8400-e29b-41d4-a716-446655440001',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440103',
@@ -147,8 +147,8 @@ const samplePatients = [
     // chronic_conditions: ['صعوبات التعلم', 'اضطراب فرط الحركة'], // غير موجود في الجدول
     user_id: '550e8400-e29b-41d4-a716-446655440001',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
-  }
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
+  },
 ];
 
 // بيانات الأطباء
@@ -172,7 +172,7 @@ const sampleDoctors = [
     total_reviews: 45,
     public_id: 'DOC_20240120_0001',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440202',
@@ -193,7 +193,7 @@ const sampleDoctors = [
     total_reviews: 52,
     public_id: 'DOC_20240120_0002',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440203',
@@ -214,8 +214,8 @@ const sampleDoctors = [
     total_reviews: 38,
     public_id: 'DOC_20240120_0003',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
-  }
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
+  },
 ];
 
 // بيانات المواعيد
@@ -233,7 +233,7 @@ const sampleAppointments = [
     confirmation_code: 'APT001',
     public_id: 'APT_20240120_0001',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440302',
@@ -248,7 +248,7 @@ const sampleAppointments = [
     confirmation_code: 'APT002',
     public_id: 'APT_20240120_0002',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440303',
@@ -263,8 +263,8 @@ const sampleAppointments = [
     confirmation_code: 'APT003',
     public_id: 'APT_20240120_0003',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
-  }
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
+  },
 ];
 
 // بيانات الجلسات
@@ -284,7 +284,7 @@ const sampleSessions = [
     next_session_goals: ['زيادة مدة التمرين', 'تحسين التنسيق'],
     public_id: 'SES_20240120_0001',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440402',
@@ -301,8 +301,8 @@ const sampleSessions = [
     next_session_goals: ['تعزيز الثقة بالنفس', 'تحسين التفاعل الاجتماعي'],
     public_id: 'SES_20240120_0002',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
-  }
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
+  },
 ];
 
 // بيانات المطالبات التأمينية
@@ -322,7 +322,7 @@ const sampleClaims = [
     rejection_reason: null,
     public_id: 'CLM_20240120_0001',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440502',
@@ -339,8 +339,8 @@ const sampleClaims = [
     rejection_reason: 'عدم تغطية الخدمة',
     public_id: 'CLM_20240120_0002',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
-  }
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
+  },
 ];
 
 // بيانات المدفوعات
@@ -356,7 +356,7 @@ const samplePayments = [
     notes: 'دفعة لجلسة علاج طبيعي',
     public_id: 'PAY_20240120_0001',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440602',
@@ -369,8 +369,8 @@ const samplePayments = [
     notes: 'دفعة لجلسة علاج نطق',
     public_id: 'PAY_20240120_0002',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
-  }
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
+  },
 ];
 
 // بيانات الموظفين
@@ -388,7 +388,7 @@ const sampleStaff = [
     work_hours_per_week: 40,
     public_id: 'STF_20240120_0001',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440702',
@@ -403,8 +403,8 @@ const sampleStaff = [
     work_hours_per_week: 40,
     public_id: 'STF_20240120_0002',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
-  }
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
+  },
 ];
 
 // بيانات سجلات التدقيق
@@ -420,7 +420,7 @@ const sampleAuditLogs = [
     user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
     severity: 'info',
     status: 'success',
-    metadata: { notes: 'تم إنشاء مريض جديد' }
+    metadata: { notes: 'تم إنشاء مريض جديد' },
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440802',
@@ -433,8 +433,8 @@ const sampleAuditLogs = [
     user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
     severity: 'info',
     status: 'success',
-    metadata: { notes: 'تم تأكيد الموعد' }
-  }
+    metadata: { notes: 'تم تأكيد الموعد' },
+  },
 ];
 
 // بيانات إعدادات النظام
@@ -448,7 +448,7 @@ const sampleSystemSettings = [
     description: 'اسم المركز',
     public_id: 'SET_20240120_0001',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440902',
@@ -459,7 +459,7 @@ const sampleSystemSettings = [
     description: 'رقم هاتف المركز',
     public_id: 'SET_20240120_0002',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440903',
@@ -470,7 +470,7 @@ const sampleSystemSettings = [
     description: 'بريد المركز الإلكتروني',
     public_id: 'SET_20240120_0003',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440904',
@@ -481,8 +481,8 @@ const sampleSystemSettings = [
     description: 'ساعات العمل',
     public_id: 'SET_20240120_0004',
     created_by: '550e8400-e29b-41d4-a716-446655440001',
-    updated_by: '550e8400-e29b-41d4-a716-446655440001'
-  }
+    updated_by: '550e8400-e29b-41d4-a716-446655440001',
+  },
 ];
 
 async function seedDatabase() {
@@ -491,61 +491,81 @@ async function seedDatabase() {
   try {
     // إدراج المستخدمين
     console.log('👥 إدراج المستخدمين...');
-    const { error: usersError } = await supabase.from('users').upsert(sampleUsers, { onConflict: 'id' });
+    const { error: usersError } = await supabase
+      .from('users')
+      .upsert(sampleUsers, { onConflict: 'id' });
     if (usersError) throw usersError;
     console.log(`✅ تم إدراج ${sampleUsers.length} مستخدمين.`);
 
     // إدراج المرضى
     console.log('👨‍👩‍👧‍👦 إدراج المرضى...');
-    const { error: patientsError } = await supabase.from('patients').upsert(samplePatients, { onConflict: 'id' });
+    const { error: patientsError } = await supabase
+      .from('patients')
+      .upsert(samplePatients, { onConflict: 'id' });
     if (patientsError) throw patientsError;
     console.log(`✅ تم إدراج ${samplePatients.length} مرضى.`);
 
     // إدراج الأطباء
     console.log('👩‍⚕️ إدراج الأطباء...');
-    const { error: doctorsError } = await supabase.from('doctors').upsert(sampleDoctors, { onConflict: 'id' });
+    const { error: doctorsError } = await supabase
+      .from('doctors')
+      .upsert(sampleDoctors, { onConflict: 'id' });
     if (doctorsError) throw doctorsError;
     console.log(`✅ تم إدراج ${sampleDoctors.length} أطباء.`);
 
     // إدراج المواعيد
     console.log('📅 إدراج المواعيد...');
-    const { error: appointmentsError } = await supabase.from('appointments').upsert(sampleAppointments, { onConflict: 'id' });
+    const { error: appointmentsError } = await supabase
+      .from('appointments')
+      .upsert(sampleAppointments, { onConflict: 'id' });
     if (appointmentsError) throw appointmentsError;
     console.log(`✅ تم إدراج ${sampleAppointments.length} مواعيد.`);
 
     // إدراج الجلسات
     console.log('📝 إدراج الجلسات...');
-    const { error: sessionsError } = await supabase.from('sessions').upsert(sampleSessions, { onConflict: 'id' });
+    const { error: sessionsError } = await supabase
+      .from('sessions')
+      .upsert(sampleSessions, { onConflict: 'id' });
     if (sessionsError) throw sessionsError;
     console.log(`✅ تم إدراج ${sampleSessions.length} جلسات.`);
 
     // إدراج المطالبات التأمينية
     console.log('📄 إدراج المطالبات التأمينية...');
-    const { error: claimsError } = await supabase.from('insurance_claims').upsert(sampleClaims, { onConflict: 'id' });
+    const { error: claimsError } = await supabase
+      .from('insurance_claims')
+      .upsert(sampleClaims, { onConflict: 'id' });
     if (claimsError) throw claimsError;
     console.log(`✅ تم إدراج ${sampleClaims.length} مطالبات.`);
 
     // إدراج المدفوعات
     console.log('💰 إدراج المدفوعات...');
-    const { error: paymentsError } = await supabase.from('payments').upsert(samplePayments, { onConflict: 'id' });
+    const { error: paymentsError } = await supabase
+      .from('payments')
+      .upsert(samplePayments, { onConflict: 'id' });
     if (paymentsError) throw paymentsError;
     console.log(`✅ تم إدراج ${samplePayments.length} مدفوعات.`);
 
     // إدراج الموظفين
     console.log('👨‍💼 إدراج الموظفين...');
-    const { error: staffError } = await supabase.from('staff').upsert(sampleStaff, { onConflict: 'id' });
+    const { error: staffError } = await supabase
+      .from('staff')
+      .upsert(sampleStaff, { onConflict: 'id' });
     if (staffError) throw staffError;
     console.log(`✅ تم إدراج ${sampleStaff.length} موظفين.`);
 
     // إدراج سجلات التدقيق
     console.log('📊 إدراج سجلات التدقيق...');
-    const { error: auditLogsError } = await supabase.from('audit_logs').upsert(sampleAuditLogs, { onConflict: 'id' });
+    const { error: auditLogsError } = await supabase
+      .from('audit_logs')
+      .upsert(sampleAuditLogs, { onConflict: 'id' });
     if (auditLogsError) throw auditLogsError;
     console.log(`✅ تم إدراج ${sampleAuditLogs.length} سجل تدقيق.`);
 
     // إدراج إعدادات النظام
     console.log('⚙️ إدراج إعدادات النظام...');
-    const { error: settingsError } = await supabase.from('system_settings').upsert(sampleSystemSettings, { onConflict: 'id' });
+    const { error: settingsError } = await supabase
+      .from('system_settings')
+      .upsert(sampleSystemSettings, { onConflict: 'id' });
     if (settingsError) throw settingsError;
     console.log(`✅ تم إدراج ${sampleSystemSettings.length} إعداد.`);
 
@@ -561,7 +581,6 @@ async function seedDatabase() {
     console.log(`   👨‍💼 الموظفين: ${sampleStaff.length}`);
     console.log(`   📊 سجلات التدقيق: ${sampleAuditLogs.length}`);
     console.log(`   ⚙️ الإعدادات: ${sampleSystemSettings.length}`);
-
   } catch (error) {
     console.error('❌ خطأ في ملء قاعدة البيانات:', error);
     throw error;

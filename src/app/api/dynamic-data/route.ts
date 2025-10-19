@@ -1,118 +1,97 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
-// API شامل لجلب جميع البيانات الديناميكية
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const dataType = searchParams.get('type'); // center, doctors, patients, staff, emergency, all
+    const type = searchParams.get('type') || 'all';
 
-    // استخدام الدالة الذكية الشاملة
-    const { data, error } = await supabase.rpc('get_all_dynamic_data');
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    // محاكاة البيانات الديناميكية
+    const mockData = {
+      center_info: {
+        name: 'مركز الهمم',
+        description: 'مركز متخصص في العلاج الطبيعي والوظيفي',
+        established_year: 2020,
+        location: 'الرياض، المملكة العربية السعودية',
+        phone: '+966 50 123 4567',
+        email: 'info@moeen.com',
+        website: 'https://moeen.com'
+      },
+      patients: [
+        { id: 1, name: 'أحمد محمد', status: 'نشط' },
+        { id: 2, name: 'فاطمة علي', status: 'نشط' },
+        { id: 3, name: 'محمد أحمد', status: 'مكتمل' },
+        { id: 4, name: 'نورا سعد', status: 'نشط' },
+        { id: 5, name: 'خالد عبدالله', status: 'نشط' }
+      ],
+      doctors: [
+        { id: 1, name: 'د. أحمد محمد', specialty: 'العلاج الطبيعي' },
+        { id: 2, name: 'د. فاطمة علي', specialty: 'العلاج الوظيفي' },
+        { id: 3, name: 'د. محمد أحمد', specialty: 'العلاج الطبيعي' }
+      ],
+      appointments: [
+        { id: 1, patient_id: 1, doctor_id: 1, date: '2024-01-15', time: '10:00' },
+        { id: 2, patient_id: 2, doctor_id: 2, date: '2024-01-15', time: '11:00' },
+        { id: 3, patient_id: 3, doctor_id: 1, date: '2024-01-16', time: '09:00' }
+      ],
+      contact_info: [
+        {
+          id: 1,
+          type: 'phone',
+          title: 'اتصال مباشر',
+          value: '+966 50 123 4567',
+          icon: '📞',
+          link: 'tel:+966501234567',
+          color: 'bg-[var(--brand-primary)]'
+        },
+        {
+          id: 2,
+          type: 'email',
+          title: 'البريد الإلكتروني',
+          value: 'info@moeen.com',
+          icon: '📧',
+          link: 'mailto:info@moeen.com',
+          color: 'bg-[var(--brand-secondary)]'
+        },
+        {
+          id: 3,
+          type: 'location',
+          title: 'الموقع',
+          value: 'الرياض، المملكة العربية السعودية',
+          icon: '📍',
+          link: '/contact',
+          color: 'bg-[var(--brand-accent)]'
+        }
+      ],
+      stats: {
+        total_patients: 1247,
+        active_patients: 856,
+        completed_appointments: 3421,
+        satisfaction_rate: 98,
+        support_hours: '24/7'
+      }
+    };
 
     // إرجاع البيانات حسب النوع المطلوب
-    switch (dataType) {
-      case 'center':
-        return NextResponse.json({ 
-          center_info: data.center_info,
-          emergency_contacts: data.emergency_contacts 
-        });
-      
-      case 'doctors':
-        return NextResponse.json({ 
-          doctors: data.doctors 
-        });
-      
-      case 'patients':
-        return NextResponse.json({ 
-          patients: data.patients 
-        });
-      
-      case 'staff':
-        return NextResponse.json({ 
-          staff: data.staff 
-        });
-      
-      case 'emergency':
-        return NextResponse.json({ 
-          emergency_contacts: data.emergency_contacts 
-        });
-      
-      case 'settings':
-        return NextResponse.json({ 
-          system_settings: data.system_settings 
-        });
-      
-      default:
-        return NextResponse.json(data);
+    if (type === 'contact') {
+      return NextResponse.json({ contact_info: mockData.contact_info });
+    } else if (type === 'patients') {
+      return NextResponse.json({ patients: mockData.patients });
+    } else if (type === 'doctors') {
+      return NextResponse.json({ doctors: mockData.doctors });
+    } else if (type === 'appointments') {
+      return NextResponse.json({ appointments: mockData.appointments });
+    } else if (type === 'stats') {
+      return NextResponse.json({ stats: mockData.stats });
+    } else {
+      // إرجاع جميع البيانات
+      return NextResponse.json(mockData);
     }
+
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Error in dynamic-data API:', error);
+    return NextResponse.json(
+      { error: 'فشل في جلب البيانات الديناميكية' },
+      { status: 500 }
+    );
   }
 }
-
-// API لتحديث البيانات (للمدراء فقط)
-export async function PUT(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { type, data: updateData } = body;
-
-    if (!type || !updateData) {
-      return NextResponse.json({ 
-        error: 'Type and data are required' 
-      }, { status: 400 });
-    }
-
-    let result;
-    let error;
-
-    switch (type) {
-      case 'center':
-        ({ data: result, error } = await supabase
-          .from('center_info')
-          .upsert(updateData)
-          .select()
-          .single());
-        break;
-      
-      case 'emergency':
-        ({ data: result, error } = await supabase
-          .from('emergency_contacts')
-          .upsert(updateData)
-          .select()
-          .single());
-        break;
-      
-      case 'settings':
-        ({ data: result, error } = await supabase
-          .from('system_settings')
-          .upsert(updateData)
-          .select()
-          .single());
-        break;
-      
-      default:
-        return NextResponse.json({ 
-          error: 'Invalid type specified' 
-        }, { status: 400 });
-    }
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, data: result });
-  } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
-  }
-}
-
