@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقرير الاختبارات - Test Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            direction: rtl;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .summary-card h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .summary-card .number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .passed { color: #28a745; }
+        .failed { color: #dc3545; }
+        .skipped { color: #ffc107; }
+        .coverage {
+            padding: 30px;
+        }
+        .coverage h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .coverage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .coverage-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .coverage-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .coverage-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+        }
+        .test-results {
+            padding: 30px;
+        }
+        .test-results h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .test-item {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .test-header {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .test-name {
+            font-weight: bold;
+            color: #333;
+        }
+        .test-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .test-details {
+            padding: 20px;
+        }
+        .database-ops {
+            margin-top: 15px;
+        }
+        .db-op {
+            background: #f8f9fa;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .recommendations {
+            padding: 30px;
+            background: #fff3cd;
+            border-top: 1px solid #ffeaa7;
+        }
+        .recommendations h2 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        .recommendations ul {
+            margin: 0;
+            padding-right: 20px;
+        }
+        .recommendations li {
+            margin-bottom: 8px;
+            color: #856404;
+        }
+        .footer {
+            padding: 20px;
+            text-align: center;
+            background: #f8f9fa;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>تقرير الاختبارات الشامل</h1>
+            <p>Comprehensive Test Report - ١٩‏/١٠‏/٢٠٢٥</p>
+        </div>
+
+        <div class="summary">
+            <div class="summary-card">
+                <h3>إجمالي الاختبارات</h3>
+                <div class="number">0</div>
+            </div>
+            <div class="summary-card">
+                <h3>نجحت</h3>
+                <div class="number passed">0</div>
+            </div>
+            <div class="summary-card">
+                <h3>فشلت</h3>
+                <div class="number failed">0</div>
+            </div>
+            <div class="summary-card">
+                <h3>تم تخطيها</h3>
+                <div class="number skipped">0</div>
+            </div>
+            <div class="summary-card">
+                <h3>المدة الزمنية</h3>
+                <div class="number">0s</div>
+            </div>
+        </div>
+
+        <div class="coverage">
+            <h2>تغطية الاختبارات</h2>
+            <div class="coverage-grid">
+                <div class="coverage-item">
+                    <h4>المصادقة والتسجيل</h4>
+                    <div class="coverage-bar">
+                        <div class="coverage-fill" style="width: 0%"></div>
+                    </div>
+                    <p>0%</p>
+                </div>
+                <div class="coverage-item">
+                    <h4>إدارة المستخدمين</h4>
+                    <div class="coverage-bar">
+                        <div class="coverage-fill" style="width: 0%"></div>
+                    </div>
+                    <p>0%</p>
+                </div>
+                <div class="coverage-item">
+                    <h4>إدارة المرضى</h4>
+                    <div class="coverage-bar">
+                        <div class="coverage-fill" style="width: 0%"></div>
+                    </div>
+                    <p>0%</p>
+                </div>
+                <div class="coverage-item">
+                    <h4>لوحة الإدارة</h4>
+                    <div class="coverage-bar">
+                        <div class="coverage-fill" style="width: 0%"></div>
+                    </div>
+                    <p>0%</p>
+                </div>
+                <div class="coverage-item">
+                    <h4>تكامل قاعدة البيانات</h4>
+                    <div class="coverage-bar">
+                        <div class="coverage-fill" style="width: 0%"></div>
+                    </div>
+                    <p>0%</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-results">
+            <h2>نتائج الاختبارات التفصيلية</h2>
+            
+        </div>
+
+        <div class="recommendations">
+            <h2>التوصيات</h2>
+            <ul>
+                <li>Increase database integration test coverage</li><li>Add more authentication flow tests</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>تم إنشاء التقرير في ١٩‏/١٠‏/٢٠٢٥، ١:٢٥:٣١ ص</p>
+            <p>إحصائيات قاعدة البيانات: 280 مستخدم، 8 مريض، 747 سجل تدقيق</p>
+        </div>
+    </div>
+</body>
+</html>
+    
