@@ -8,5 +8,8 @@
       "name": "moeen",
       "connectString": "postgresql://postgres.socwpqzcalgvpzjwavgh:67r95y8yVL496xue@aws-1-eu-central-1.pooler.supabase.com:6543/postgres"
     }
+  ],
+  "github-actions.workflows.pinned.workflows": [
+    ".github/workflows/test-simple.yml"
   ]
 }
