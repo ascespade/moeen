@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -13,18 +13,84 @@ interface DashboardStats {
   monthlyRevenue: number;
 }
 
-// Mock data
-const mockStats: DashboardStats = {
-  totalPatients: 1247,
-  activePatients: 1156,
-  totalAppointments: 3421,
-  completedAppointments: 2987,
-  totalRevenue: 2450000,
-  monthlyRevenue: 187500,
-};
+interface RecentActivity {
+  id: string;
+  type: "appointment" | "claim" | "patient" | "staff" | "payment";
+  title: string;
+  description: string;
+  timestamp: string;
+  status: "success" | "warning" | "error" | "info";
+}
+
+interface DashboardData {
+  statistics: DashboardStats;
+  recentActivities: RecentActivity[];
+}
 
 export default function DashboardPage() {
-  const [stats] = useState<DashboardStats>(mockStats);
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/dashboard/statistics');
+      if (!response.ok) throw new Error('Failed to fetch dashboard data');
+      
+      const data = await response.json();
+      setDashboardData(data);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDashboardData();
+    // Refresh every 5 minutes
+    const interval = setInterval(fetchDashboardData, 300000);
+    return () => clearInterval(interval);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className='min-h-screen bg-background text-foreground flex items-center justify-center'>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--brand-primary)] mx-auto mb-4"></div>
+          <p className="text-gray-600">جاري تحميل البيانات...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className='min-h-screen bg-background text-foreground flex items-center justify-center'>
+        <div className="text-center">
+          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <p className="text-red-600 mb-4">خطأ في تحميل البيانات: {error}</p>
+          <Button onClick={fetchDashboardData} className="btn-brand">
+            إعادة المحاولة
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!dashboardData) {
+    return (
+      <div className='min-h-screen bg-background text-foreground flex items-center justify-center'>
+        <div className="text-center">
+          <p className="text-gray-600">لا توجد بيانات لعرضها</p>
+        </div>
+      </div>
+    );
+  }
+
+  const stats = dashboardData.statistics;
 
   return (
     <div className='min-h-screen bg-background text-foreground'>
@@ -132,57 +198,59 @@ export default function DashboardPage() {
 
         {/* Recent Activity */}
         <Card className='p-6'>
-          <h2 className='text-xl font-bold text-gray-900 dark:text-white mb-6'>
-            النشاط الأخير
-          </h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className='text-xl font-bold text-gray-900 dark:text-white'>
+              النشاط الأخير
+            </h2>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={fetchDashboardData}
+              className="text-xs"
+            >
+              تحديث
+            </Button>
+          </div>
           <div className='space-y-4'>
-            <div className='flex items-start gap-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-700'>
-              <div className='h-10 w-10 rounded-full bg-brand text-white flex items-center justify-center'>
-                📅
+            {dashboardData.recentActivities.length > 0 ? (
+              dashboardData.recentActivities.map((activity) => (
+                <div key={activity.id} className='flex items-start gap-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-700'>
+                  <div className='h-10 w-10 rounded-full bg-brand text-white flex items-center justify-center'>
+                    {activity.type === 'appointment' && '📅'}
+                    {activity.type === 'claim' && '📋'}
+                    {activity.type === 'patient' && '👤'}
+                    {activity.type === 'staff' && '👨‍⚕️'}
+                    {activity.type === 'payment' && '💰'}
+                  </div>
+                  <div className='flex-1'>
+                    <h3 className='font-medium text-gray-900 dark:text-white'>
+                      {activity.title}
+                    </h3>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>
+                      {activity.description}
+                    </p>
+                    <p className='text-xs text-gray-500'>{activity.timestamp}</p>
+                  </div>
+                  <Badge 
+                    className={
+                      activity.status === 'success' ? 'badge-success' :
+                      activity.status === 'warning' ? 'badge-warning' :
+                      activity.status === 'error' ? 'badge-error' :
+                      'badge-info'
+                    }
+                  >
+                    {activity.status === 'success' && 'نجح'}
+                    {activity.status === 'warning' && 'تحذير'}
+                    {activity.status === 'error' && 'خطأ'}
+                    {activity.status === 'info' && 'معلومات'}
+                  </Badge>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                <p>لا توجد نشاطات حديثة</p>
               </div>
-              <div className='flex-1'>
-                <h3 className='font-medium text-gray-900 dark:text-white'>
-                  موعد جديد
-                </h3>
-                <p className='text-sm text-gray-600 dark:text-gray-400'>
-                  تم حجز موعد جديد للمريض أحمد العتيبي مع د. سارة أحمد
-                </p>
-                <p className='text-xs text-gray-500'>منذ 5 دقائق</p>
-              </div>
-              <Badge className='badge-success'>نجح</Badge>
-            </div>
-
-            <div className='flex items-start gap-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-700'>
-              <div className='h-10 w-10 rounded-full bg-green-500 text-white flex items-center justify-center'>
-                ✓
-              </div>
-              <div className='flex-1'>
-                <h3 className='font-medium text-gray-900 dark:text-white'>
-                  موعد مكتمل
-                </h3>
-                <p className='text-sm text-gray-600 dark:text-gray-400'>
-                  تم إكمال جلسة العلاج الطبيعي للمريض فاطمة علي
-                </p>
-                <p className='text-xs text-gray-500'>منذ 15 دقيقة</p>
-              </div>
-              <Badge className='badge-success'>مكتمل</Badge>
-            </div>
-
-            <div className='flex items-start gap-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-700'>
-              <div className='h-10 w-10 rounded-full bg-blue-500 text-white flex items-center justify-center'>
-                💰
-              </div>
-              <div className='flex-1'>
-                <h3 className='font-medium text-gray-900 dark:text-white'>
-                  دفعة جديدة
-                </h3>
-                <p className='text-sm text-gray-600 dark:text-gray-400'>
-                  تم استلام دفعة بقيمة 2,500 ريال من شركة التأمين
-                </p>
-                <p className='text-xs text-gray-500'>منذ ساعتين</p>
-              </div>
-              <Badge className='badge-success'>مدفوع</Badge>
-            </div>
+            )}
           </div>
         </Card>
       </div>

@@ -62,6 +62,56 @@ export async function GET(request: NextRequest) {
           color: 'bg-[var(--brand-accent)]'
         }
       ],
+      services: [
+        {
+          id: 1,
+          title: "إدارة المواعيد",
+          description: "نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية",
+          icon: "📅",
+          color: "text-[var(--brand-accent)]",
+          bgColor: "bg-[var(--brand-accent)]/10",
+        },
+        {
+          id: 2,
+          title: "إدارة المرضى",
+          description: "ملفات مرضى شاملة مع سجل طبي مفصل",
+          icon: "👤",
+          color: "text-[var(--brand-success)]",
+          bgColor: "bg-[var(--brand-success)]/10",
+        },
+        {
+          id: 3,
+          title: "المطالبات التأمينية",
+          description: "إدارة وتتبع المطالبات التأمينية بسهولة",
+          icon: "📋",
+          color: "text-purple-600",
+          bgColor: "bg-purple-50",
+        },
+        {
+          id: 4,
+          title: "الشات بوت الذكي",
+          description: "مساعد ذكي للرد على استفسارات المرضى",
+          icon: "🤖",
+          color: "text-[var(--brand-primary)]",
+          bgColor: "bg-[var(--brand-primary)]/10",
+        },
+        {
+          id: 5,
+          title: "إدارة الموظفين",
+          description: "تتبع ساعات العمل والأداء للموظفين",
+          icon: "👨‍⚕️",
+          color: "text-[var(--brand-error)]",
+          bgColor: "bg-[var(--brand-error)]/10",
+        },
+        {
+          id: 6,
+          title: "التقارير والتحليلات",
+          description: "تقارير شاملة وإحصائيات مفصلة",
+          icon: "📊",
+          color: "text-indigo-600",
+          bgColor: "bg-indigo-50",
+        },
+      ],
       stats: {
         total_patients: 1247,
         active_patients: 856,
@@ -80,8 +130,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ doctors: mockData.doctors });
     } else if (type === 'appointments') {
       return NextResponse.json({ appointments: mockData.appointments });
-    } else if (type === 'stats') {
-      return NextResponse.json({ stats: mockData.stats });
+    } else if (type === 'services') {
+      return NextResponse.json({ services: mockData.services });
     } else {
       // إرجاع جميع البيانات
       return NextResponse.json(mockData);

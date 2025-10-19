@@ -1,156 +1,11 @@
-'use client';
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+"use client";
+import React from "react";
+import Link from "next/link";
 import DynamicContactInfo from '@/components/dynamic-contact-info';
-
-// Hero Slider Data
-const heroSlides = [
-  {
-    id: 1,
-    title: 'مرحباً بك في مُعين',
-    subtitle: 'منصة الرعاية الصحية المتخصصة',
-    description:
-      'نقدم خدمات متكاملة للرعاية الصحية مع أحدث التقنيات والذكاء الاصطناعي',
-    cta: 'اكتشف خدماتنا',
-    ctaLink: '#services',
-  },
-  {
-    id: 2,
-    title: 'إدارة المواعيد الذكية',
-    subtitle: 'نظام تقويم متطور',
-    description:
-      'احجز مواعيدك بسهولة مع نظام التقويم الذكي وإدارة الجلسات العلاجية',
-    cta: 'احجز موعدك',
-    ctaLink: '/appointments',
-  },
-  {
-    id: 3,
-    title: 'شات بوت ذكي',
-    subtitle: 'مساعدك الصحي الشخصي',
-    description:
-      'احصل على إجابات فورية لاستفساراتك الصحية مع الذكاء الاصطناعي المتقدم',
-    cta: 'جرب الشات بوت',
-    ctaLink: '/chatbot',
-  },
-];
-
-// Services Data
-const services = [
-  {
-    id: 1,
-    title: 'إدارة المواعيد',
-    description: 'نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية',
-    icon: '📅',
-    color: 'text-[var(--brand-accent)]',
-    bgColor: 'bg-[var(--brand-accent)]/10',
-  },
-  {
-    id: 2,
-    title: 'إدارة المرضى',
-    description: 'ملفات مرضى شاملة مع سجل طبي مفصل',
-    icon: '👤',
-    color: 'text-[var(--brand-success)]',
-    bgColor: 'bg-[var(--brand-success)]/10',
-  },
-  {
-    id: 3,
-    title: 'المطالبات التأمينية',
-    description: 'إدارة وتتبع المطالبات التأمينية بسهولة',
-    icon: '📋',
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-50',
-  },
-  {
-    id: 4,
-    title: 'الشات بوت الذكي',
-    description: 'مساعد ذكي للرد على استفسارات المرضى',
-    icon: '🤖',
-    color: 'text-[var(--brand-primary)]',
-    bgColor: 'bg-[var(--brand-primary)]/10',
-  },
-  {
-    id: 5,
-    title: 'إدارة الموظفين',
-    description: 'تتبع ساعات العمل والأداء للموظفين',
-    icon: '👨‍⚕️',
-    color: 'text-[var(--brand-error)]',
-    bgColor: 'bg-[var(--brand-error)]/10',
-  },
-  {
-    id: 6,
-    title: 'التقارير والتحليلات',
-    description: 'تقارير شاملة وإحصائيات مفصلة',
-    icon: '📊',
-    color: 'text-indigo-600',
-    bgColor: 'bg-indigo-50',
-  },
-];
-
-// Stats Data
-const stats = [
-  { id: 1, value: '1,247', label: 'مريض نشط', icon: '👥' },
-  { id: 2, value: '3,421', label: 'موعد مكتمل', icon: '📅' },
-  { id: 3, value: '98%', label: 'معدل الرضا', icon: '⭐' },
-  { id: 4, value: '24/7', label: 'دعم فني', icon: '🛠️' },
-];
+import DynamicStats from '@/components/dynamic-stats';
+import DynamicServices from '@/components/dynamic-services';
 
 export default function HomePage() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [centerInfo, setCenterInfo] = useState<any>(null);
-  const [stats, setStats] = useState<any[]>([]);
-
-  // Auto-rotate hero slides
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide(prev => (prev + 1) % heroSlides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  // جلب البيانات الديناميكية
-  useEffect(() => {
-    fetchDynamicData();
-  }, []);
-
-  const fetchDynamicData = async () => {
-    try {
-      // جلب معلومات المركز والإحصائيات
-      const response = await fetch('/api/dynamic-data?type=all');
-      const data = await response.json();
-
-      if (data.center_info) {
-        setCenterInfo(data.center_info);
-      }
-
-      // إنشاء إحصائيات ديناميكية
-      const dynamicStats = [
-        {
-          id: 1,
-          value: data.patients?.length || '0',
-          label: 'مريض نشط',
-          icon: '👥',
-        },
-        {
-          id: 2,
-          value: data.doctors?.length || '0',
-          label: 'طبيب متخصص',
-          icon: '👨‍⚕️',
-        },
-        { id: 3, value: '98%', label: 'معدل الرضا', icon: '⭐' },
-        { id: 4, value: '24/7', label: 'دعم فني', icon: '🛠️' },
-      ];
-      setStats(dynamicStats);
-    } catch (error) {
-      console.error('Error fetching dynamic data:', error);
-      // استخدام الإحصائيات الافتراضية في حالة الخطأ
-      setStats([
-        { id: 1, value: '1,247', label: 'مريض نشط', icon: '👥' },
-        { id: 2, value: '3,421', label: 'موعد مكتمل', icon: '📅' },
-        { id: 3, value: '98%', label: 'معدل الرضا', icon: '⭐' },
-        { id: 4, value: '24/7', label: 'دعم فني', icon: '🛠️' },
-      ]);
-    }
-  };
 
   return (
     <div className='min-h-screen bg-background text-foreground'>
@@ -214,49 +69,14 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-            {services.map(service => (
-              <div
-                key={service.id}
-                className='card card-interactive p-8 text-center group'
-              >
-                <div
-                  className={`h-16 w-16 ${service.bgColor} mx-auto mb-6 flex items-center justify-center rounded-full text-3xl transition-transform group-hover:scale-110 ${service.color}`}
-                >
-                  {service.icon}
-                </div>
-                <h3 className='text-xl font-bold text-foreground mb-4'>
-                  {service.title}
-                </h3>
-                <p className='text-muted-foreground'>{service.description}</p>
-              </div>
-            ))}
-          </div>
+          <DynamicServices />
         </div>
       </section>
 
       {/* Stats Section */}
       <section className='py-20'>
         <div className='container-app'>
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
-            {(stats.length > 0
-              ? stats
-              : [
-                  { id: 1, value: '1,247', label: 'مريض نشط', icon: '👥' },
-                  { id: 2, value: '3,421', label: 'موعد مكتمل', icon: '📅' },
-                  { id: 3, value: '98%', label: 'معدل الرضا', icon: '⭐' },
-                  { id: 4, value: '24/7', label: 'دعم فني', icon: '🛠️' },
-                ]
-            ).map(stat => (
-              <div key={stat.id} className='text-center'>
-                <div className='text-4xl mb-2'>{stat.icon}</div>
-                <div className='text-3xl font-bold text-[var(--brand-primary)] mb-2'>
-                  {stat.value}
-                </div>
-                <div className='text-muted-foreground'>{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          <DynamicStats />
         </div>
       </section>
 
