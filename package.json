@@ -21,9 +21,9 @@
     "type-check": "npx tsc --noEmit"
   },
   "devDependencies": {
+    "openai": "^4.0.0",
     "playwright": "^1.36.0",
-    "supawright": "^0.1.0",
-    "sqlite3": "^5.1.6",
-    "openai": "^4.0.0"
+    "sqlite3": "^5.1.7",
+    "supawright": "^0.1.0"
   }
 }
