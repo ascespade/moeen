@@ -25,7 +25,7 @@ const fixes = {
   codeFixes: [],
   databaseFixes: [],
   testFixes: [],
-  configFixes: []
+  configFixes: [],
 };
 
 /**
@@ -33,12 +33,14 @@ const fixes = {
  */
 async function initialize() {
   console.log('🔧 Initializing AI Automated Fixer...');
-  
+
   try {
     // Initialize Supabase
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    
+    const supabaseKey =
+      process.env.SUPABASE_SERVICE_ROLE_KEY ||
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
     if (supabaseUrl && supabaseKey) {
       supabase = createClient(supabaseUrl, supabaseKey);
       console.log('✅ Supabase client initialized');
@@ -64,20 +66,20 @@ async function initialize() {
  */
 async function applyAllFixes() {
   console.log('🔧 Applying automated fixes...');
-  
+
   try {
     // Apply code quality fixes
     await applyCodeQualityFixes();
-    
+
     // Apply database fixes
     await applyDatabaseFixes();
-    
+
     // Apply test fixes
     await applyTestFixes();
-    
+
     // Apply configuration fixes
     await applyConfigurationFixes();
-    
+
     console.log('✅ All fixes applied');
     return true;
   } catch (error) {
@@ -91,20 +93,20 @@ async function applyAllFixes() {
  */
 async function applyCodeQualityFixes() {
   console.log('📝 Applying code quality fixes...');
-  
+
   try {
     // ESLint fixes
     await runESLintFixes();
-    
+
     // Prettier fixes
     await runPrettierFixes();
-    
+
     // TypeScript fixes
     await runTypeScriptFixes();
-    
+
     // Import/export fixes
     await fixImportsAndExports();
-    
+
     console.log('✅ Code quality fixes applied');
   } catch (error) {
     console.error('❌ Code quality fixes failed:', error);
@@ -117,26 +119,29 @@ async function applyCodeQualityFixes() {
 async function runESLintFixes() {
   try {
     console.log('🔍 Running ESLint fixes...');
-    
+
     // Check if ESLint is available
     try {
       execSync('npx eslint --version', { cwd: WORKSPACE_ROOT });
     } catch (e) {
       console.log('⚠️ ESLint not available, installing...');
-      execSync('npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin', { cwd: WORKSPACE_ROOT });
+      execSync(
+        'npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin',
+        { cwd: WORKSPACE_ROOT }
+      );
     }
-    
+
     // Run ESLint with --fix
-    const result = execSync('npx eslint src --fix --ext .ts,.tsx,.js,.jsx', { 
+    const result = execSync('npx eslint src --fix --ext .ts,.tsx,.js,.jsx', {
       cwd: WORKSPACE_ROOT,
-      encoding: 'utf8'
+      encoding: 'utf8',
     });
-    
+
     console.log('✅ ESLint fixes applied');
     fixes.codeFixes.push({
       type: 'eslint',
       description: 'Applied ESLint automatic fixes',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   } catch (error) {
     console.log('⚠️ ESLint fixes failed:', error.message);
@@ -149,7 +154,7 @@ async function runESLintFixes() {
 async function runPrettierFixes() {
   try {
     console.log('💅 Running Prettier fixes...');
-    
+
     // Check if Prettier is available
     try {
       execSync('npx prettier --version', { cwd: WORKSPACE_ROOT });
@@ -157,15 +162,15 @@ async function runPrettierFixes() {
       console.log('⚠️ Prettier not available, installing...');
       execSync('npm install --save-dev prettier', { cwd: WORKSPACE_ROOT });
     }
-    
+
     // Run Prettier
     execSync('npx prettier --write src', { cwd: WORKSPACE_ROOT });
-    
+
     console.log('✅ Prettier fixes applied');
     fixes.codeFixes.push({
       type: 'prettier',
       description: 'Applied Prettier formatting',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   } catch (error) {
     console.log('⚠️ Prettier fixes failed:', error.message);
@@ -178,15 +183,17 @@ async function runPrettierFixes() {
 async function runTypeScriptFixes() {
   try {
     console.log('🔧 Running TypeScript fixes...');
-    
+
     // Check if TypeScript is available
     try {
       execSync('npx tsc --version', { cwd: WORKSPACE_ROOT });
     } catch (e) {
       console.log('⚠️ TypeScript not available, installing...');
-      execSync('npm install --save-dev typescript @types/node', { cwd: WORKSPACE_ROOT });
+      execSync('npm install --save-dev typescript @types/node', {
+        cwd: WORKSPACE_ROOT,
+      });
     }
-    
+
     // Run TypeScript compiler with --noEmit to check for errors
     try {
       execSync('npx tsc --noEmit', { cwd: WORKSPACE_ROOT });
@@ -195,11 +202,11 @@ async function runTypeScriptFixes() {
       console.log('⚠️ TypeScript errors found, attempting fixes...');
       await fixTypeScriptErrors();
     }
-    
+
     fixes.codeFixes.push({
       type: 'typescript',
       description: 'Applied TypeScript fixes',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   } catch (error) {
     console.log('⚠️ TypeScript fixes failed:', error.message);
@@ -212,14 +219,14 @@ async function runTypeScriptFixes() {
 async function fixTypeScriptErrors() {
   try {
     // Get TypeScript errors
-    const result = execSync('npx tsc --noEmit --pretty false', { 
+    const result = execSync('npx tsc --noEmit --pretty false', {
       cwd: WORKSPACE_ROOT,
-      encoding: 'utf8'
+      encoding: 'utf8',
     });
   } catch (e) {
     const errors = e.stdout || e.stderr;
     console.log('TypeScript errors:', errors);
-    
+
     // Apply common fixes
     await applyCommonTypeScriptFixes();
   }
@@ -233,34 +240,34 @@ async function applyCommonTypeScriptFixes() {
     // Add missing imports
     {
       pattern: /Cannot find module 'react'/g,
-      fix: "import React from 'react';"
+      fix: "import React from 'react';",
     },
     // Fix any types
     {
       pattern: /: any/g,
-      fix: ': unknown'
+      fix: ': unknown',
     },
     // Add missing return types
     {
       pattern: /function (\w+)\(/g,
-      fix: 'function $1(): void {'
-    }
+      fix: 'function $1(): void {',
+    },
   ];
-  
+
   // Apply fixes to TypeScript files
   const tsFiles = await findTypeScriptFiles();
-  
+
   for (const file of tsFiles) {
     let content = await fs.readFile(file, 'utf8');
     let modified = false;
-    
+
     for (const fix of commonFixes) {
       if (fix.pattern.test(content)) {
         content = content.replace(fix.pattern, fix.fix);
         modified = true;
       }
     }
-    
+
     if (modified) {
       await fs.writeFile(file, content);
       console.log(`✅ Applied TypeScript fixes to ${file}`);
@@ -274,19 +281,25 @@ async function applyCommonTypeScriptFixes() {
 async function findTypeScriptFiles() {
   const files = [];
   const srcPath = path.join(WORKSPACE_ROOT, 'src');
-  
+
   try {
-    const entries = await fs.readdir(srcPath, { withFileTypes: true, recursive: true });
-    
+    const entries = await fs.readdir(srcPath, {
+      withFileTypes: true,
+      recursive: true,
+    });
+
     for (const entry of entries) {
-      if (entry.isFile() && (entry.name.endsWith('.ts') || entry.name.endsWith('.tsx'))) {
+      if (
+        entry.isFile() &&
+        (entry.name.endsWith('.ts') || entry.name.endsWith('.tsx'))
+      ) {
         files.push(path.join(srcPath, entry.name));
       }
     }
   } catch (error) {
     console.error('Failed to find TypeScript files:', error);
   }
-  
+
   return files;
 }
 
@@ -295,15 +308,15 @@ async function findTypeScriptFiles() {
  */
 async function fixImportsAndExports() {
   console.log('📦 Fixing imports and exports...');
-  
+
   try {
     // Find all TypeScript/JavaScript files
     const files = await findTypeScriptFiles();
-    
+
     for (const file of files) {
       let content = await fs.readFile(file, 'utf8');
       let modified = false;
-      
+
       // Fix relative imports
       if (content.includes('../')) {
         // Convert relative imports to absolute imports where possible
@@ -311,23 +324,27 @@ async function fixImportsAndExports() {
         content = content.replace(/from '\.\.\/src\//g, "from '@/");
         modified = true;
       }
-      
+
       // Add missing React import for JSX
-      if (content.includes('<') && content.includes('>') && !content.includes("import React")) {
+      if (
+        content.includes('<') &&
+        content.includes('>') &&
+        !content.includes('import React')
+      ) {
         content = "import React from 'react';\n" + content;
         modified = true;
       }
-      
+
       if (modified) {
         await fs.writeFile(file, content);
         console.log(`✅ Fixed imports in ${file}`);
       }
     }
-    
+
     fixes.codeFixes.push({
       type: 'imports',
       description: 'Fixed imports and exports',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   } catch (error) {
     console.log('⚠️ Import/export fixes failed:', error.message);
@@ -339,25 +356,25 @@ async function fixImportsAndExports() {
  */
 async function applyDatabaseFixes() {
   console.log('🗄️ Applying database fixes...');
-  
+
   if (!supabase) {
     console.log('⚠️ Supabase not available, skipping database fixes');
     return;
   }
-  
+
   try {
     // Check database connection
     await checkDatabaseConnection();
-    
+
     // Apply schema fixes
     await applySchemaFixes();
-    
+
     // Apply data fixes
     await applyDataFixes();
-    
+
     // Apply index fixes
     await applyIndexFixes();
-    
+
     console.log('✅ Database fixes applied');
   } catch (error) {
     console.log('⚠️ Database fixes failed:', error.message);
@@ -373,11 +390,11 @@ async function checkDatabaseConnection() {
       .from('information_schema.tables')
       .select('table_name')
       .limit(1);
-    
+
     if (error) {
       throw new Error(`Database connection failed: ${error.message}`);
     }
-    
+
     console.log('✅ Database connection successful');
   } catch (error) {
     console.log('⚠️ Database connection failed:', error.message);
@@ -392,25 +409,25 @@ async function applySchemaFixes() {
     // Enable required extensions
     'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";',
     'CREATE EXTENSION IF NOT EXISTS "pgcrypto";',
-    
+
     // Add missing columns to common tables
     `ALTER TABLE IF EXISTS users ADD COLUMN IF NOT EXISTS created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW();`,
     `ALTER TABLE IF EXISTS users ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW();`,
-    
+
     // Add missing indexes
     `CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);`,
-    `CREATE INDEX IF NOT EXISTS idx_users_created_at ON users(created_at);`
+    `CREATE INDEX IF NOT EXISTS idx_users_created_at ON users(created_at);`,
   ];
-  
+
   for (const fix of schemaFixes) {
     try {
       await supabase.rpc('exec_sql', { sql: fix });
       console.log(`✅ Applied schema fix: ${fix.substring(0, 50)}...`);
-      
+
       fixes.databaseFixes.push({
         type: 'schema',
         description: fix,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     } catch (error) {
       console.log(`⚠️ Schema fix failed: ${error.message}`);
@@ -428,20 +445,20 @@ async function applyDataFixes() {
       // Update NULL timestamps
       `UPDATE users SET created_at = NOW() WHERE created_at IS NULL;`,
       `UPDATE users SET updated_at = NOW() WHERE updated_at IS NULL;`,
-      
+
       // Fix invalid email formats
-      `UPDATE users SET email = LOWER(TRIM(email)) WHERE email IS NOT NULL;`
+      `UPDATE users SET email = LOWER(TRIM(email)) WHERE email IS NOT NULL;`,
     ];
-    
+
     for (const fix of dataFixes) {
       try {
         await supabase.rpc('exec_sql', { sql: fix });
         console.log(`✅ Applied data fix: ${fix.substring(0, 50)}...`);
-        
+
         fixes.databaseFixes.push({
           type: 'data',
           description: fix,
-          timestamp: Date.now()
+          timestamp: Date.now(),
         });
       } catch (error) {
         console.log(`⚠️ Data fix failed: ${error.message}`);
@@ -461,18 +478,18 @@ async function applyIndexFixes() {
     const indexFixes = [
       `CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);`,
       `CREATE INDEX IF NOT EXISTS idx_users_created_at ON users(created_at);`,
-      `CREATE INDEX IF NOT EXISTS idx_users_updated_at ON users(updated_at);`
+      `CREATE INDEX IF NOT EXISTS idx_users_updated_at ON users(updated_at);`,
     ];
-    
+
     for (const fix of indexFixes) {
       try {
         await supabase.rpc('exec_sql', { sql: fix });
         console.log(`✅ Applied index fix: ${fix.substring(0, 50)}...`);
-        
+
         fixes.databaseFixes.push({
           type: 'index',
           description: fix,
-          timestamp: Date.now()
+          timestamp: Date.now(),
         });
       } catch (error) {
         console.log(`⚠️ Index fix failed: ${error.message}`);
@@ -488,17 +505,17 @@ async function applyIndexFixes() {
  */
 async function applyTestFixes() {
   console.log('🧪 Applying test fixes...');
-  
+
   try {
     // Fix test configuration
     await fixTestConfiguration();
-    
+
     // Fix test files
     await fixTestFiles();
-    
+
     // Fix test dependencies
     await fixTestDependencies();
-    
+
     console.log('✅ Test fixes applied');
   } catch (error) {
     console.log('⚠️ Test fixes failed:', error.message);
@@ -536,13 +553,16 @@ export default defineConfig({
   ]
 });`;
 
-    await fs.writeFile(path.join(WORKSPACE_ROOT, 'playwright.config.js'), playwrightConfig);
+    await fs.writeFile(
+      path.join(WORKSPACE_ROOT, 'playwright.config.js'),
+      playwrightConfig
+    );
     console.log('✅ Playwright configuration fixed');
-    
+
     fixes.testFixes.push({
       type: 'config',
       description: 'Fixed Playwright configuration',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   } catch (error) {
     console.log('⚠️ Test configuration fix failed:', error.message);
@@ -556,32 +576,40 @@ async function fixTestFiles() {
   try {
     const testDir = path.join(WORKSPACE_ROOT, 'tests');
     const testFiles = await findTestFiles(testDir);
-    
+
     for (const file of testFiles) {
       let content = await fs.readFile(file, 'utf8');
       let modified = false;
-      
+
       // Fix common test issues
-      if (content.includes('test(') && !content.includes("import { test, expect }")) {
-        content = "import { test, expect } from '@playwright/test';\n\n" + content;
+      if (
+        content.includes('test(') &&
+        !content.includes('import { test, expect }')
+      ) {
+        content =
+          "import { test, expect } from '@playwright/test';\n\n" + content;
         modified = true;
       }
-      
-      if (content.includes('describe(') && !content.includes("import { test, expect }")) {
-        content = "import { test, expect } from '@playwright/test';\n\n" + content;
+
+      if (
+        content.includes('describe(') &&
+        !content.includes('import { test, expect }')
+      ) {
+        content =
+          "import { test, expect } from '@playwright/test';\n\n" + content;
         modified = true;
       }
-      
+
       if (modified) {
         await fs.writeFile(file, content);
         console.log(`✅ Fixed test file: ${file}`);
       }
     }
-    
+
     fixes.testFixes.push({
       type: 'files',
       description: 'Fixed test files',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   } catch (error) {
     console.log('⚠️ Test files fix failed:', error.message);
@@ -593,22 +621,25 @@ async function fixTestFiles() {
  */
 async function findTestFiles(dir) {
   const files = [];
-  
+
   try {
     const entries = await fs.readdir(dir, { withFileTypes: true });
-    
+
     for (const entry of entries) {
       if (entry.isDirectory()) {
         const subFiles = await findTestFiles(path.join(dir, entry.name));
         files.push(...subFiles);
-      } else if (entry.name.endsWith('.test.js') || entry.name.endsWith('.spec.js')) {
+      } else if (
+        entry.name.endsWith('.test.js') ||
+        entry.name.endsWith('.spec.js')
+      ) {
         files.push(path.join(dir, entry.name));
       }
     }
   } catch (error) {
     console.error('Failed to find test files:', error);
   }
-  
+
   return files;
 }
 
@@ -622,9 +653,9 @@ async function fixTestDependencies() {
       '@playwright/test',
       'jest',
       '@testing-library/react',
-      '@testing-library/jest-dom'
+      '@testing-library/jest-dom',
     ];
-    
+
     for (const dep of testDeps) {
       try {
         execSync(`npm list ${dep}`, { cwd: WORKSPACE_ROOT });
@@ -633,13 +664,13 @@ async function fixTestDependencies() {
         execSync(`npm install --save-dev ${dep}`, { cwd: WORKSPACE_ROOT });
       }
     }
-    
+
     console.log('✅ Test dependencies fixed');
-    
+
     fixes.testFixes.push({
       type: 'dependencies',
       description: 'Fixed test dependencies',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   } catch (error) {
     console.log('⚠️ Test dependencies fix failed:', error.message);
@@ -651,17 +682,17 @@ async function fixTestDependencies() {
  */
 async function applyConfigurationFixes() {
   console.log('⚙️ Applying configuration fixes...');
-  
+
   try {
     // Fix package.json
     await fixPackageJson();
-    
+
     // Fix TypeScript config
     await fixTypeScriptConfig();
-    
+
     // Fix Next.js config
     await fixNextJsConfig();
-    
+
     console.log('✅ Configuration fixes applied');
   } catch (error) {
     console.log('⚠️ Configuration fixes failed:', error.message);
@@ -675,35 +706,35 @@ async function fixPackageJson() {
   try {
     const packagePath = path.join(WORKSPACE_ROOT, 'package.json');
     const packageJson = JSON.parse(await fs.readFile(packagePath, 'utf8'));
-    
+
     // Add missing scripts
     if (!packageJson.scripts) {
       packageJson.scripts = {};
     }
-    
+
     const requiredScripts = {
-      'test': 'playwright test',
+      test: 'playwright test',
       'test:ui': 'playwright test --ui',
       'test:debug': 'playwright test --debug',
-      'lint': 'eslint src --ext .ts,.tsx,.js,.jsx',
+      lint: 'eslint src --ext .ts,.tsx,.js,.jsx',
       'lint:fix': 'eslint src --fix --ext .ts,.tsx,.js,.jsx',
-      'format': 'prettier --write src',
-      'type-check': 'tsc --noEmit'
+      format: 'prettier --write src',
+      'type-check': 'tsc --noEmit',
     };
-    
+
     for (const [script, command] of Object.entries(requiredScripts)) {
       if (!packageJson.scripts[script]) {
         packageJson.scripts[script] = command;
       }
     }
-    
+
     await fs.writeFile(packagePath, JSON.stringify(packageJson, null, 2));
     console.log('✅ Package.json fixed');
-    
+
     fixes.configFixes.push({
       type: 'package.json',
       description: 'Fixed package.json scripts',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   } catch (error) {
     console.log('⚠️ Package.json fix failed:', error.message);
@@ -717,7 +748,7 @@ async function fixTypeScriptConfig() {
   try {
     const tsconfigPath = path.join(WORKSPACE_ROOT, 'tsconfig.json');
     let tsconfig = {};
-    
+
     try {
       tsconfig = JSON.parse(await fs.readFile(tsconfigPath, 'utf8'));
     } catch (e) {
@@ -740,45 +771,50 @@ async function fixTypeScriptConfig() {
           incremental: true,
           plugins: [
             {
-              name: 'next'
-            }
+              name: 'next',
+            },
           ],
           baseUrl: '.',
           paths: {
-            '@/*': ['./src/*']
-          }
+            '@/*': ['./src/*'],
+          },
         },
-        include: ['next-env.d.ts', '**/*.ts', '**/*.tsx', '.next/types/**/*.ts'],
-        exclude: ['node_modules']
+        include: [
+          'next-env.d.ts',
+          '**/*.ts',
+          '**/*.tsx',
+          '.next/types/**/*.ts',
+        ],
+        exclude: ['node_modules'],
       };
     }
-    
+
     // Ensure required options
     if (!tsconfig.compilerOptions) {
       tsconfig.compilerOptions = {};
     }
-    
+
     const requiredOptions = {
       strict: true,
       noEmit: true,
       esModuleInterop: true,
       skipLibCheck: true,
-      forceConsistentCasingInFileNames: true
+      forceConsistentCasingInFileNames: true,
     };
-    
+
     for (const [option, value] of Object.entries(requiredOptions)) {
       if (tsconfig.compilerOptions[option] === undefined) {
         tsconfig.compilerOptions[option] = value;
       }
     }
-    
+
     await fs.writeFile(tsconfigPath, JSON.stringify(tsconfig, null, 2));
     console.log('✅ TypeScript config fixed');
-    
+
     fixes.configFixes.push({
       type: 'tsconfig.json',
       description: 'Fixed TypeScript configuration',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   } catch (error) {
     console.log('⚠️ TypeScript config fix failed:', error.message);
@@ -792,7 +828,7 @@ async function fixNextJsConfig() {
   try {
     const nextConfigPath = path.join(WORKSPACE_ROOT, 'next.config.js');
     let nextConfig = '';
-    
+
     try {
       nextConfig = await fs.readFile(nextConfigPath, 'utf8');
     } catch (e) {
@@ -812,14 +848,14 @@ const nextConfig = {
 
 module.exports = nextConfig`;
     }
-    
+
     await fs.writeFile(nextConfigPath, nextConfig);
     console.log('✅ Next.js config fixed');
-    
+
     fixes.configFixes.push({
       type: 'next.config.js',
       description: 'Fixed Next.js configuration',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   } catch (error) {
     console.log('⚠️ Next.js config fix failed:', error.message);
@@ -831,12 +867,16 @@ module.exports = nextConfig`;
  */
 function getFixSummary() {
   return {
-    totalFixes: fixes.codeFixes.length + fixes.databaseFixes.length + fixes.testFixes.length + fixes.configFixes.length,
+    totalFixes:
+      fixes.codeFixes.length +
+      fixes.databaseFixes.length +
+      fixes.testFixes.length +
+      fixes.configFixes.length,
     codeFixes: fixes.codeFixes.length,
     databaseFixes: fixes.databaseFixes.length,
     testFixes: fixes.testFixes.length,
     configFixes: fixes.configFixes.length,
-    fixes: fixes
+    fixes: fixes,
   };
 }
 

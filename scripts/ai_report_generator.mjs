@@ -22,16 +22,18 @@ let supabase = null;
  */
 async function initialize() {
   console.log('📊 Initializing AI Report Generator...');
-  
+
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    
+    const supabaseKey =
+      process.env.SUPABASE_SERVICE_ROLE_KEY ||
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
     if (supabaseUrl && supabaseKey) {
       supabase = createClient(supabaseUrl, supabaseKey);
       console.log('✅ Supabase client initialized');
     }
-    
+
     console.log('✅ Report generator initialized');
     return true;
   } catch (error) {
@@ -43,41 +45,89 @@ async function initialize() {
 /**
  * Generate comprehensive report
  */
-async function generateComprehensiveReport(runId, testResults, fixes, errors, warnings) {
+async function generateComprehensiveReport(
+  runId,
+  testResults,
+  fixes,
+  errors,
+  warnings
+) {
   console.log('📊 Generating comprehensive report...');
-  
+
   try {
     const startTime = Date.now();
-    
+
     // Generate JSON report
-    const jsonReport = await generateJSONReport(runId, testResults, fixes, errors, warnings);
-    
+    const jsonReport = await generateJSONReport(
+      runId,
+      testResults,
+      fixes,
+      errors,
+      warnings
+    );
+
     // Generate Markdown summary
-    const markdownSummary = await generateMarkdownSummary(runId, testResults, fixes, errors, warnings);
-    
+    const markdownSummary = await generateMarkdownSummary(
+      runId,
+      testResults,
+      fixes,
+      errors,
+      warnings
+    );
+
     // Generate execution log
-    const executionLog = await generateExecutionLog(runId, testResults, fixes, errors, warnings);
-    
+    const executionLog = await generateExecutionLog(
+      runId,
+      testResults,
+      fixes,
+      errors,
+      warnings
+    );
+
     // Generate dashboard logs
-    const dashboardLogs = await generateDashboardLogs(runId, testResults, fixes, errors, warnings);
-    
+    const dashboardLogs = await generateDashboardLogs(
+      runId,
+      testResults,
+      fixes,
+      errors,
+      warnings
+    );
+
     // Generate HTML report
-    const htmlReport = await generateHTMLReport(runId, testResults, fixes, errors, warnings);
-    
+    const htmlReport = await generateHTMLReport(
+      runId,
+      testResults,
+      fixes,
+      errors,
+      warnings
+    );
+
     // Generate CSV export
-    const csvExport = await generateCSVExport(runId, testResults, fixes, errors, warnings);
-    
+    const csvExport = await generateCSVExport(
+      runId,
+      testResults,
+      fixes,
+      errors,
+      warnings
+    );
+
     // Generate JUnit XML
-    const junitXML = await generateJUnitXML(runId, testResults, fixes, errors, warnings);
-    
+    const junitXML = await generateJUnitXML(
+      runId,
+      testResults,
+      fixes,
+      errors,
+      warnings
+    );
+
     // Update memory database
     await updateMemoryDatabase(runId, testResults, fixes, errors, warnings);
-    
+
     const endTime = Date.now();
     const duration = endTime - startTime;
-    
+
     console.log(`✅ Report generation complete (${duration}ms)`);
-    
+
     return {
       jsonReport,
       markdownSummary,
@@ -85,7 +135,7 @@ async function generateComprehensiveReport(runId, testResults, fixes, errors, wa
       dashboardLogs,
       htmlReport,
       csvExport,
-      junitXML
+      junitXML,
     };
   } catch (error) {
     console.error('❌ Report generation failed:', error);
@@ -108,7 +158,8 @@ async function generateJSONReport(runId, testResults, fixes, errors, warnings) {
       totalErrors: errors.length,
       totalWarnings: warnings.length,
       totalFixes: fixes.length,
-      overallStatus: errors.length === 0 && warnings.length === 0 ? 'OK' : 'ISSUES'
+      overallStatus:
+        errors.length === 0 && warnings.length === 0 ? 'OK' : 'ISSUES',
     },
     testResults: testResults.map(result => ({
       name: result.title || result.name,
@@ -116,42 +167,51 @@ async function generateJSONReport(runId, testResults, fixes, errors, warnings) {
       duration: result.duration || 0,
       file: result.file || result.spec,
       error: result.error || null,
-      retryCount: result.retryCount || 0
+      retryCount: result.retryCount || 0,
     })),
     errors: errors.map(error => ({
       message: error.message || error,
       type: error.type || 'error',
       file: error.file || null,
       line: error.line || null,
-      timestamp: error.timestamp || Date.now()
+      timestamp: error.timestamp || Date.now(),
     })),
     warnings: warnings.map(warning => ({
       message: warning.message || warning,
       type: warning.type || 'warning',
       file: warning.file || null,
       line: warning.line || null,
-      timestamp: warning.timestamp || Date.now()
+      timestamp: warning.timestamp || Date.now(),
     })),
     fixes: fixes.map(fix => ({
       type: fix.type || 'unknown',
       description: fix.description || 'No description',
       success: fix.success !== undefined ? fix.success : true,
       timestamp: fix.timestamp || Date.now(),
-      file: fix.file || null
+      file: fix.file || null,
     })),
-    recommendations: generateRecommendations(testResults, fixes, errors, warnings),
+    recommendations: generateRecommendations(
+      testResults,
+      fixes,
+      errors,
+      warnings
+    ),
     metadata: {
       nodeVersion: process.version,
       platform: process.platform,
       architecture: process.arch,
       memoryUsage: process.memoryUsage(),
-      uptime: process.uptime()
-    }
+      uptime: process.uptime(),
+    },
   };
-  
-  const reportPath = path.join(WORKSPACE_ROOT, 'reports', 'ai_validation_report.json');
+
+  const reportPath = path.join(
+    WORKSPACE_ROOT,
+    'reports',
+    'ai_validation_report.json'
+  );
   await fs.writeFile(reportPath, JSON.stringify(report, null, 2));
-  
+
   console.log('✅ JSON report generated');
   return report;
 }
@@ -159,12 +219,19 @@ async function generateJSONReport(runId, testResults, fixes, errors, warnings) {
 /**
  * Generate Markdown summary
  */
-async function generateMarkdownSummary(runId, testResults, fixes, errors, warnings) {
+async function generateMarkdownSummary(
+  runId,
+  testResults,
+  fixes,
+  errors,
+  warnings
+) {
   const passedTests = testResults.filter(t => t.status === 'passed').length;
   const failedTests = testResults.filter(t => t.status === 'failed').length;
   const skippedTests = testResults.filter(t => t.status === 'skipped').length;
-  const overallStatus = errors.length === 0 && warnings.length === 0 ? 'OK' : 'ISSUES';
-  
+  const overallStatus =
+    errors.length === 0 && warnings.length === 0 ? 'OK' : 'ISSUES';
+
   const summary = `# E2E Self-Healing Test Report
 
 ## Run Information
@@ -194,7 +261,9 @@ ${warnings.length > 0 ? warnings.map(warning => `- ${warning.message || warning}
 ${fixes.length > 0 ? fixes.map(fix => `- **${fix.type}**: ${fix.description}`).join('\n') : 'No fixes applied'}
 
 ## Recommendations
-${generateRecommendations(testResults, fixes, errors, warnings).map(rec => `- ${rec}`).join('\n')}
+${generateRecommendations(testResults, fixes, errors, warnings)
+  .map(rec => `- ${rec}`)
+  .join('\n')}
 
 ## System Information
 - **Node Version**: ${process.version}
@@ -209,7 +278,7 @@ ${generateRecommendations(testResults, fixes, errors, warnings).map(rec => `- ${
 
   const summaryPath = path.join(WORKSPACE_ROOT, 'reports', 'final_summary.md');
   await fs.writeFile(summaryPath, summary);
-  
+
   console.log('✅ Markdown summary generated');
   return summary;
 }
@@ -217,7 +286,13 @@ ${generateRecommendations(testResults, fixes, errors, warnings).map(rec => `- ${
 /**
  * Generate execution log
  */
-async function generateExecutionLog(runId, testResults, fixes, errors, warnings) {
+async function generateExecutionLog(
+  runId,
+  testResults,
+  fixes,
+  errors,
+  warnings
+) {
   const log = `E2E Self-Healing Test Execution Log
 ========================================
 
@@ -252,7 +327,7 @@ System Information:
 
   const logPath = path.join(WORKSPACE_ROOT, 'reports', 'execution.log');
   await fs.writeFile(logPath, log);
-  
+
   console.log('✅ Execution log generated');
   return log;
 }
@@ -260,7 +335,13 @@ System Information:
 /**
  * Generate dashboard logs
  */
-async function generateDashboardLogs(runId, testResults, fixes, errors, warnings) {
+async function generateDashboardLogs(
+  runId,
+  testResults,
+  fixes,
+  errors,
+  warnings
+) {
   const dashboardData = {
     runId,
     timestamp: new Date().toISOString(),
@@ -272,36 +353,42 @@ async function generateDashboardLogs(runId, testResults, fixes, errors, warnings
       totalErrors: errors.length,
       totalWarnings: warnings.length,
       totalFixes: fixes.length,
-      overallStatus: errors.length === 0 && warnings.length === 0 ? 'OK' : 'ISSUES'
+      overallStatus:
+        errors.length === 0 && warnings.length === 0 ? 'OK' : 'ISSUES',
     },
     testResults: testResults.map(result => ({
       name: result.title || result.name,
       status: result.status,
       duration: result.duration || 0,
       file: result.file || result.spec,
-      error: result.error || null
+      error: result.error || null,
     })),
     errors: errors.map(error => ({
       message: error.message || error,
       type: error.type || 'error',
-      timestamp: error.timestamp || Date.now()
+      timestamp: error.timestamp || Date.now(),
     })),
     warnings: warnings.map(warning => ({
       message: warning.message || warning,
       type: warning.type || 'warning',
-      timestamp: warning.timestamp || Date.now()
+      timestamp: warning.timestamp || Date.now(),
     })),
     fixes: fixes.map(fix => ({
       type: fix.type || 'unknown',
       description: fix.description || 'No description',
       success: fix.success !== undefined ? fix.success : true,
-      timestamp: fix.timestamp || Date.now()
-    }))
+      timestamp: fix.timestamp || Date.now(),
+    })),
   };
-  
-  const dashboardPath = path.join(WORKSPACE_ROOT, 'dashboard', 'logs', 'logs.json');
+
+  const dashboardPath = path.join(
+    WORKSPACE_ROOT,
+    'dashboard',
+    'logs',
+    'logs.json'
+  );
   await fs.writeFile(dashboardPath, JSON.stringify(dashboardData, null, 2));
-  
+
   console.log('✅ Dashboard logs generated');
   return dashboardData;
 }
@@ -313,8 +400,9 @@ async function generateHTMLReport(runId, testResults, fixes, errors, warnings) {
   const passedTests = testResults.filter(t => t.status === 'passed').length;
   const failedTests = testResults.filter(t => t.status === 'failed').length;
   const skippedTests = testResults.filter(t => t.status === 'skipped').length;
-  const overallStatus = errors.length === 0 && warnings.length === 0 ? 'OK' : 'ISSUES';
-  
+  const overallStatus =
+    errors.length === 0 && warnings.length === 0 ? 'OK' : 'ISSUES';
+
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -386,53 +474,85 @@ async function generateHTMLReport(runId, testResults, fixes, errors, warnings) {
         
         <div class="section">
             <h2>Test Results</h2>
-            ${testResults.map(result => `
+            ${testResults
+              .map(
+                result => `
                 <div class="test-result ${result.status}">
                     <strong>${result.title || result.name}</strong>
                     <span style="float: right;">${result.status.toUpperCase()}</span>
                     ${result.error ? `<br><small>Error: ${result.error}</small>` : ''}
                 </div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
         
-        ${errors.length > 0 ? `
+        ${
+          errors.length > 0
+            ? `
         <div class="section">
             <h2>Errors</h2>
-            ${errors.map(error => `
+            ${errors
+              .map(
+                error => `
                 <div class="error">
                     <strong>${error.type || 'Error'}:</strong> ${error.message || error}
                 </div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
-        ` : ''}
+        `
+            : ''
+        }
         
-        ${warnings.length > 0 ? `
+        ${
+          warnings.length > 0
+            ? `
         <div class="section">
             <h2>Warnings</h2>
-            ${warnings.map(warning => `
+            ${warnings
+              .map(
+                warning => `
                 <div class="warning">
                     <strong>${warning.type || 'Warning'}:</strong> ${warning.message || warning}
                 </div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
-        ` : ''}
+        `
+            : ''
+        }
         
-        ${fixes.length > 0 ? `
+        ${
+          fixes.length > 0
+            ? `
         <div class="section">
             <h2>Fixes Applied</h2>
-            ${fixes.map(fix => `
+            ${fixes
+              .map(
+                fix => `
                 <div class="fix">
                     <strong>${fix.type}:</strong> ${fix.description}
                 </div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
-        ` : ''}
+        `
+            : ''
+        }
         
         <div class="section">
             <h2>Recommendations</h2>
-            ${generateRecommendations(testResults, fixes, errors, warnings).map(rec => `
+            ${generateRecommendations(testResults, fixes, errors, warnings)
+              .map(
+                rec => `
                 <div class="recommendation">${rec}</div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
     </div>
 </body>
@@ -440,7 +560,7 @@ async function generateHTMLReport(runId, testResults, fixes, errors, warnings) {
 
   const htmlPath = path.join(WORKSPACE_ROOT, 'reports', 'test-report.html');
   await fs.writeFile(htmlPath, html);
-  
+
   console.log('✅ HTML report generated');
   return html;
 }
@@ -450,31 +570,43 @@ async function generateHTMLReport(runId, testResults, fixes, errors, warnings) {
  */
 async function generateCSVExport(runId, testResults, fixes, errors, warnings) {
   const csv = `Run ID,Test Name,Status,Duration,File,Error
-${testResults.map(result => 
-  `${runId},"${result.title || result.name}",${result.status},${result.duration || 0},"${result.file || result.spec}","${result.error || ''}"`
-).join('\n')}
+${testResults
+  .map(
+    result =>
+      `${runId},"${result.title || result.name}",${result.status},${result.duration || 0},"${result.file || result.spec}","${result.error || ''}"`
+  )
+  .join('\n')}
 
 Errors:
 Type,Message,File,Line,Timestamp
-${errors.map(error => 
-  `${error.type || 'error'},"${error.message || error}","${error.file || ''}",${error.line || ''},${error.timestamp || Date.now()}`
-).join('\n')}
+${errors
+  .map(
+    error =>
+      `${error.type || 'error'},"${error.message || error}","${error.file || ''}",${error.line || ''},${error.timestamp || Date.now()}`
+  )
+  .join('\n')}
 
 Warnings:
 Type,Message,File,Line,Timestamp
-${warnings.map(warning => 
-  `${warning.type || 'warning'},"${warning.message || warning}","${warning.file || ''}",${warning.line || ''},${warning.timestamp || Date.now()}`
-).join('\n')}
+${warnings
+  .map(
+    warning =>
+      `${warning.type || 'warning'},"${warning.message || warning}","${warning.file || ''}",${warning.line || ''},${warning.timestamp || Date.now()}`
+  )
+  .join('\n')}
 
 Fixes:
 Type,Description,Success,File,Timestamp
-${fixes.map(fix => 
-  `${fix.type || 'unknown'},"${fix.description || 'No description'}",${fix.success !== undefined ? fix.success : true},"${fix.file || ''}",${fix.timestamp || Date.now()}`
-).join('\n')}`;
+${fixes
+  .map(
+    fix =>
+      `${fix.type || 'unknown'},"${fix.description || 'No description'}",${fix.success !== undefined ? fix.success : true},"${fix.file || ''}",${fix.timestamp || Date.now()}`
+  )
+  .join('\n')}`;
 
   const csvPath = path.join(WORKSPACE_ROOT, 'reports', 'test-results.csv');
   await fs.writeFile(csvPath, csv);
-  
+
   console.log('✅ CSV export generated');
   return csv;
 }
@@ -487,22 +619,26 @@ async function generateJUnitXML(runId, testResults, fixes, errors, warnings) {
   const failedTests = testResults.filter(t => t.status === 'failed').length;
   const skippedTests = testResults.filter(t => t.status === 'skipped').length;
   const totalTests = testResults.length;
-  
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <testsuites name="E2E Self-Healing Tests" tests="${totalTests}" failures="${failedTests}" skipped="${skippedTests}" time="0">
   <testsuite name="E2E Tests" tests="${totalTests}" failures="${failedTests}" skipped="${skippedTests}" time="0" timestamp="${new Date().toISOString()}">
-    ${testResults.map(result => `
+    ${testResults
+      .map(
+        result => `
       <testcase name="${result.title || result.name}" classname="${result.file || result.spec}" time="${result.duration || 0}">
         ${result.status === 'skipped' ? '<skipped/>' : ''}
         ${result.status === 'failed' ? `<failure message="${result.error || 'Test failed'}">${result.error || 'Test failed'}</failure>` : ''}
       </testcase>
-    `).join('')}
+    `
+      )
+      .join('')}
   </testsuite>
 </testsuites>`;
 
   const xmlPath = path.join(WORKSPACE_ROOT, 'reports', 'test-results.xml');
   await fs.writeFile(xmlPath, xml);
-  
+
   console.log('✅ JUnit XML generated');
   return xml;
 }
@@ -510,12 +646,18 @@ async function generateJUnitXML(runId, testResults, fixes, errors, warnings) {
 /**
  * Update memory database
  */
-async function updateMemoryDatabase(runId, testResults, fixes, errors, warnings) {
+async function updateMemoryDatabase(
+  runId,
+  testResults,
+  fixes,
+  errors,
+  warnings
+) {
   if (!supabase) {
     console.log('⚠️ Supabase not available, skipping database update');
     return;
   }
-  
+
   try {
     // Insert test run record
     const { data: runData, error: runError } = await supabase
@@ -530,16 +672,16 @@ async function updateMemoryDatabase(runId, testResults, fixes, errors, warnings)
         failed_tests: testResults.filter(t => t.status === 'failed').length,
         fixed_tests: fixes.length,
         errors_count: errors.length,
-        warnings_count: warnings.length
+        warnings_count: warnings.length,
       })
       .select();
-    
+
     if (runError) {
       console.log('⚠️ Failed to insert test run record:', runError.message);
     } else {
       console.log('✅ Test run record inserted');
     }
-    
+
     // Insert test results
     for (const result of testResults) {
       const { error: resultError } = await supabase
@@ -550,32 +692,30 @@ async function updateMemoryDatabase(runId, testResults, fixes, errors, warnings)
           status: result.status,
           error_message: result.error || null,
           retry_count: result.retryCount || 0,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         });
-      
+
       if (resultError) {
         console.log('⚠️ Failed to insert test result:', resultError.message);
       }
     }
-    
+
     // Insert fixes
     for (const fix of fixes) {
-      const { error: fixError } = await supabase
-        .from('fixes_applied')
-        .insert({
-          run_id: runId,
-          test_name: fix.testName || null,
-          fix_type: fix.type || 'unknown',
-          fix_description: fix.description || 'No description',
-          success: fix.success !== undefined ? fix.success : true,
-          timestamp: new Date().toISOString()
-        });
-      
+      const { error: fixError } = await supabase.from('fixes_applied').insert({
+        run_id: runId,
+        test_name: fix.testName || null,
+        fix_type: fix.type || 'unknown',
+        fix_description: fix.description || 'No description',
+        success: fix.success !== undefined ? fix.success : true,
+        timestamp: new Date().toISOString(),
+      });
+
       if (fixError) {
         console.log('⚠️ Failed to insert fix record:', fixError.message);
       }
     }
-    
+
     console.log('✅ Memory database updated');
   } catch (error) {
     console.log('⚠️ Database update failed:', error.message);
@@ -587,31 +727,38 @@ async function updateMemoryDatabase(runId, testResults, fixes, errors, warnings)
  */
 function generateRecommendations(testResults, fixes, errors, warnings) {
   const recommendations = [];
-  
+
   if (errors.length > 0) {
     recommendations.push('Address critical errors before deployment');
   }
-  
+
   if (warnings.length > 0) {
     recommendations.push('Review and resolve warnings for better code quality');
   }
-  
+
   if (testResults.filter(t => t.status === 'failed').length > 0) {
     recommendations.push('Investigate and fix failing tests');
   }
-  
+
   if (fixes.length > 0) {
-    recommendations.push('Review automated fixes and ensure they meet requirements');
+    recommendations.push(
+      'Review automated fixes and ensure they meet requirements'
+    );
   }
-  
+
   if (testResults.length === 0) {
     recommendations.push('No tests were executed - check test configuration');
   }
-  
-  if (testResults.filter(t => t.status === 'skipped').length > testResults.length * 0.5) {
-    recommendations.push('High number of skipped tests - investigate test environment setup');
+
+  if (
+    testResults.filter(t => t.status === 'skipped').length >
+    testResults.length * 0.5
+  ) {
+    recommendations.push(
+      'High number of skipped tests - investigate test environment setup'
+    );
   }
-  
+
   return recommendations;
 }
 
@@ -626,10 +773,21 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       const fixes = [];
       const errors = [];
       const warnings = [];
-      
-      await generateComprehensiveReport(runId, testResults, fixes, errors, warnings);
+
+      await generateComprehensiveReport(
+        runId,
+        testResults,
+        fixes,
+        errors,
+        warnings
+      );
     }
   })().catch(console.error);
 }
 
-export { generateComprehensiveReport, generateJSONReport, generateMarkdownSummary, generateHTMLReport };
+export {
+  generateComprehensiveReport,
+  generateJSONReport,
+  generateMarkdownSummary,
+  generateHTMLReport,
+};

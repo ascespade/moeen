@@ -18,10 +18,10 @@ const WORKSPACE_ROOT = path.resolve(__dirname, '..');
 const CONFIG = {
   commitAuthor: {
     name: 'ai-bot',
-    email: 'ai-bot@users.noreply.github.com'
+    email: 'ai-bot@users.noreply.github.com',
   },
   branchPrefix: 'ai-auto-fixes',
-  prTitlePrefix: '🤖 Auto-Healed'
+  prTitlePrefix: '🤖 Auto-Healed',
 };
 
 /**
@@ -29,7 +29,7 @@ const CONFIG = {
  */
 async function initialize() {
   console.log('🔧 Initializing AI PR Manager...');
-  
+
   try {
     // Check if git is available
     try {
@@ -37,14 +37,14 @@ async function initialize() {
     } catch (e) {
       throw new Error('Git is not available');
     }
-    
+
     // Check if we're in a git repository
     try {
       execSync('git rev-parse --git-dir', { cwd: WORKSPACE_ROOT });
     } catch (e) {
       throw new Error('Not in a git repository');
     }
-    
+
     console.log('✅ PR Manager initialized');
     return true;
   } catch (error) {
@@ -58,22 +58,22 @@ async function initialize() {
  */
 async function createBranchAndCommit(runId, changes, fixes, testResults) {
   console.log(`🌿 Creating branch and committing changes for run ${runId}...`);
-  
+
   try {
     const branchName = `${CONFIG.branchPrefix}/${runId}`;
-    
+
     // Create and checkout branch
     await createBranch(branchName);
-    
+
     // Stage changes
     await stageChanges();
-    
+
     // Create commit
     await createCommit(runId, changes, fixes, testResults);
-    
+
     // Push branch
     await pushBranch(branchName);
-    
+
     console.log(`✅ Branch ${branchName} created and pushed`);
     return branchName;
   } catch (error) {
@@ -89,7 +89,9 @@ async function createBranch(branchName) {
   try {
     // Check if branch already exists
     try {
-      execSync(`git show-ref --verify --quiet refs/heads/${branchName}`, { cwd: WORKSPACE_ROOT });
+      execSync(`git show-ref --verify --quiet refs/heads/${branchName}`, {
+        cwd: WORKSPACE_ROOT,
+      });
       console.log(`⚠️ Branch ${branchName} already exists, switching to it`);
       execSync(`git checkout ${branchName}`, { cwd: WORKSPACE_ROOT });
     } catch (e) {
@@ -109,18 +111,18 @@ async function stageChanges() {
   try {
     // Add all changes
     execSync('git add .', { cwd: WORKSPACE_ROOT });
-    
+
     // Check if there are changes to commit
-    const status = execSync('git status --porcelain', { 
+    const status = execSync('git status --porcelain', {
       cwd: WORKSPACE_ROOT,
-      encoding: 'utf8'
+      encoding: 'utf8',
     });
-    
+
     if (!status.trim()) {
       console.log('⚠️ No changes to commit');
       return false;
     }
-    
+
     console.log('✅ Changes staged');
     return true;
   } catch (error) {
@@ -133,19 +135,24 @@ async function stageChanges() {
  */
 async function createCommit(runId, changes, fixes, testResults) {
   try {
-    const commitMessage = generateCommitMessage(runId, changes, fixes, testResults);
-    
-    execSync(`git commit -m "${commitMessage}"`, { 
+    const commitMessage = generateCommitMessage(
+      runId,
+      changes,
+      fixes,
+      testResults
+    );
+
+    execSync(`git commit -m "${commitMessage}"`, {
       cwd: WORKSPACE_ROOT,
       env: {
         ...process.env,
         GIT_AUTHOR_NAME: CONFIG.commitAuthor.name,
         GIT_AUTHOR_EMAIL: CONFIG.commitAuthor.email,
         GIT_COMMITTER_NAME: CONFIG.commitAuthor.name,
-        GIT_COMMITTER_EMAIL: CONFIG.commitAuthor.email
-      }
+        GIT_COMMITTER_EMAIL: CONFIG.commitAuthor.email,
+      },
     });
-    
+
     console.log('✅ Commit created');
     return true;
   } catch (error) {
@@ -160,7 +167,7 @@ function generateCommitMessage(runId, changes, fixes, testResults) {
   const passedTests = testResults.filter(t => t.status === 'passed').length;
   const failedTests = testResults.filter(t => t.status === 'failed').length;
   const fixedTests = fixes.filter(f => f.success !== false).length;
-  
+
   return `${CONFIG.prTitlePrefix}: ${runId}
 
 ## Summary
@@ -201,20 +208,26 @@ async function pushBranch(branchName) {
 /**
  * Create pull request
  */
-async function createPullRequest(runId, branchName, changes, fixes, testResults) {
+async function createPullRequest(
+  runId,
+  branchName,
+  changes,
+  fixes,
+  testResults
+) {
   console.log(`📝 Creating pull request for ${branchName}...`);
-  
+
   try {
     const prTitle = `${CONFIG.prTitlePrefix}: ${runId}`;
     const prBody = generatePRBody(runId, changes, fixes, testResults);
-    
+
     // Check if GitHub CLI is available
     try {
       execSync('gh --version', { cwd: WORKSPACE_ROOT });
-      
+
       // Create PR using GitHub CLI
       const prUrl = await createPRWithGitHubCLI(prTitle, prBody, branchName);
-      
+
       if (prUrl) {
         console.log(`✅ Pull request created: ${prUrl}`);
         return prUrl;
@@ -222,11 +235,16 @@ async function createPullRequest(runId, branchName, changes, fixes, testResults)
     } catch (e) {
       console.log('⚠️ GitHub CLI not available, creating PR manually');
     }
-    
+
     // Fallback: provide instructions for manual PR creation
-    const prInstructions = generatePRInstructions(runId, branchName, prTitle, prBody);
+    const prInstructions = generatePRInstructions(
+      runId,
+      branchName,
+      prTitle,
+      prBody
+    );
     await savePRInstructions(prInstructions);
-    
+
     console.log('✅ PR instructions saved');
     return prInstructions;
   } catch (error) {
@@ -240,11 +258,14 @@ async function createPullRequest(runId, branchName, changes, fixes, testResults)
  */
 async function createPRWithGitHubCLI(title, body, branchName) {
   try {
-    const result = execSync(`gh pr create --title "${title}" --body "${body}" --head ${branchName}`, {
-      cwd: WORKSPACE_ROOT,
-      encoding: 'utf8'
-    });
-    
+    const result = execSync(
+      `gh pr create --title "${title}" --body "${body}" --head ${branchName}`,
+      {
+        cwd: WORKSPACE_ROOT,
+        encoding: 'utf8',
+      }
+    );
+
     // Extract PR URL from output
     const urlMatch = result.match(/https:\/\/github\.com\/[^\s]+/);
     return urlMatch ? urlMatch[0] : result.trim();
@@ -261,7 +282,7 @@ function generatePRBody(runId, changes, fixes, testResults) {
   const passedTests = testResults.filter(t => t.status === 'passed').length;
   const failedTests = testResults.filter(t => t.status === 'failed').length;
   const fixedTests = fixes.filter(f => f.success !== false).length;
-  
+
   return `## 🤖 Automated E2E Self-Healing Report
 
 ### Run Information
@@ -344,7 +365,11 @@ Timestamp: ${new Date().toISOString()}`;
  * Save PR instructions
  */
 async function savePRInstructions(instructions) {
-  const instructionsPath = path.join(WORKSPACE_ROOT, 'reports', 'pr_instructions.md');
+  const instructionsPath = path.join(
+    WORKSPACE_ROOT,
+    'reports',
+    'pr_instructions.md'
+  );
   await fs.writeFile(instructionsPath, instructions);
   console.log(`✅ PR instructions saved to ${instructionsPath}`);
 }
@@ -354,11 +379,14 @@ async function savePRInstructions(instructions) {
  */
 async function checkExistingPR(branchName) {
   try {
-    const result = execSync(`gh pr list --head ${branchName} --json number,title,url`, {
-      cwd: WORKSPACE_ROOT,
-      encoding: 'utf8'
-    });
-    
+    const result = execSync(
+      `gh pr list --head ${branchName} --json number,title,url`,
+      {
+        cwd: WORKSPACE_ROOT,
+        encoding: 'utf8',
+      }
+    );
+
     const prs = JSON.parse(result);
     return prs.length > 0 ? prs[0] : null;
   } catch (error) {
@@ -372,14 +400,14 @@ async function checkExistingPR(branchName) {
  */
 async function updateExistingPR(prNumber, runId, changes, fixes, testResults) {
   console.log(`📝 Updating existing PR #${prNumber}...`);
-  
+
   try {
     const prBody = generatePRBody(runId, changes, fixes, testResults);
-    
+
     execSync(`gh pr edit ${prNumber} --body "${prBody}"`, {
-      cwd: WORKSPACE_ROOT
+      cwd: WORKSPACE_ROOT,
     });
-    
+
     console.log(`✅ PR #${prNumber} updated`);
     return true;
   } catch (error) {
@@ -393,27 +421,27 @@ async function updateExistingPR(prNumber, runId, changes, fixes, testResults) {
  */
 async function mergePRIfReady(prNumber) {
   console.log(`🔄 Checking if PR #${prNumber} is ready to merge...`);
-  
+
   try {
     // Check PR status
     const result = execSync(`gh pr view ${prNumber} --json statusCheckRollup`, {
       cwd: WORKSPACE_ROOT,
-      encoding: 'utf8'
+      encoding: 'utf8',
     });
-    
+
     const pr = JSON.parse(result);
     const checks = pr.statusCheckRollup || [];
-    
+
     // Check if all checks are passing
     const allPassing = checks.every(check => check.state === 'SUCCESS');
-    
+
     if (allPassing) {
       console.log('✅ All checks passing, merging PR...');
-      
+
       execSync(`gh pr merge ${prNumber} --merge --delete-branch`, {
-        cwd: WORKSPACE_ROOT
+        cwd: WORKSPACE_ROOT,
       });
-      
+
       console.log(`✅ PR #${prNumber} merged successfully`);
       return true;
     } else {
@@ -431,31 +459,39 @@ async function mergePRIfReady(prNumber) {
  */
 async function cleanupOldBranches() {
   console.log('🧹 Cleaning up old branches...');
-  
+
   try {
     // Get all branches with the prefix
-    const result = execSync(`git branch -r --list origin/${CONFIG.branchPrefix}/*`, {
-      cwd: WORKSPACE_ROOT,
-      encoding: 'utf8'
-    });
-    
-    const branches = result.trim().split('\n').filter(b => b.trim());
-    
+    const result = execSync(
+      `git branch -r --list origin/${CONFIG.branchPrefix}/*`,
+      {
+        cwd: WORKSPACE_ROOT,
+        encoding: 'utf8',
+      }
+    );
+
+    const branches = result
+      .trim()
+      .split('\n')
+      .filter(b => b.trim());
+
     // Keep only the last 10 branches
     if (branches.length > 10) {
       const branchesToDelete = branches.slice(0, branches.length - 10);
-      
+
       for (const branch of branchesToDelete) {
         const branchName = branch.replace('origin/', '');
         try {
-          execSync(`git push origin --delete ${branchName}`, { cwd: WORKSPACE_ROOT });
+          execSync(`git push origin --delete ${branchName}`, {
+            cwd: WORKSPACE_ROOT,
+          });
           console.log(`✅ Deleted old branch: ${branchName}`);
         } catch (e) {
           console.log(`⚠️ Failed to delete branch ${branchName}:`, e.message);
         }
       }
     }
-    
+
     console.log('✅ Branch cleanup complete');
   } catch (error) {
     console.log('⚠️ Branch cleanup failed:', error.message);
@@ -469,17 +505,20 @@ async function getBranchStatus(branchName) {
   try {
     const result = execSync(`git status --porcelain`, {
       cwd: WORKSPACE_ROOT,
-      encoding: 'utf8'
+      encoding: 'utf8',
     });
-    
-    const changes = result.trim().split('\n').filter(line => line.trim());
-    
+
+    const changes = result
+      .trim()
+      .split('\n')
+      .filter(line => line.trim());
+
     return {
       hasChanges: changes.length > 0,
       changes: changes.map(line => ({
         status: line.substring(0, 2),
-        file: line.substring(3)
-      }))
+        file: line.substring(3),
+      })),
     };
   } catch (error) {
     console.log('⚠️ Failed to get branch status:', error.message);
@@ -492,42 +531,59 @@ async function getBranchStatus(branchName) {
  */
 async function handlePRWorkflow(runId, changes, fixes, testResults) {
   console.log(`🚀 Starting PR workflow for run ${runId}...`);
-  
+
   try {
     const initialized = await initialize();
     if (!initialized) {
       throw new Error('PR Manager initialization failed');
     }
-    
+
     const branchName = `${CONFIG.branchPrefix}/${runId}`;
-    
+
     // Check if PR already exists
     const existingPR = await checkExistingPR(branchName);
-    
+
     if (existingPR) {
       console.log(`📝 PR already exists: ${existingPR.url}`);
-      
+
       // Update existing PR
-      await updateExistingPR(existingPR.number, runId, changes, fixes, testResults);
-      
+      await updateExistingPR(
+        existingPR.number,
+        runId,
+        changes,
+        fixes,
+        testResults
+      );
+
       // Check if ready to merge
       await mergePRIfReady(existingPR.number);
-      
+
       return existingPR.url;
     } else {
       // Create new branch and PR
-      const createdBranch = await createBranchAndCommit(runId, changes, fixes, testResults);
-      
+      const createdBranch = await createBranchAndCommit(
+        runId,
+        changes,
+        fixes,
+        testResults
+      );
+
       if (createdBranch) {
-        const prUrl = await createPullRequest(runId, createdBranch, changes, fixes, testResults);
-        
+        const prUrl = await createPullRequest(
+          runId,
+          createdBranch,
+          changes,
+          fixes,
+          testResults
+        );
+
         // Clean up old branches
         await cleanupOldBranches();
-        
+
         return prUrl;
       }
     }
-    
+
     return null;
   } catch (error) {
     console.error('❌ PR workflow failed:', error);
@@ -546,25 +602,25 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         summary: 'Example changes',
         errors: 0,
         warnings: 0,
-        files: ['src/example.ts']
+        files: ['src/example.ts'],
       };
       const fixes = [
-        { type: 'eslint', description: 'Fixed linting issues', success: true }
+        { type: 'eslint', description: 'Fixed linting issues', success: true },
       ];
       const testResults = [
-        { title: 'Example test', status: 'passed', duration: 1000 }
+        { title: 'Example test', status: 'passed', duration: 1000 },
       ];
-      
+
       await handlePRWorkflow(runId, changes, fixes, testResults);
     }
   })().catch(console.error);
 }
 
-export { 
-  handlePRWorkflow, 
-  createBranchAndCommit, 
-  createPullRequest, 
-  updateExistingPR, 
+export {
+  handlePRWorkflow,
+  createBranchAndCommit,
+  createPullRequest,
+  updateExistingPR,
   mergePRIfReady,
-  cleanupOldBranches 
+  cleanupOldBranches,
 };

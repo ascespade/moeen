@@ -26,7 +26,7 @@ const CONFIG = {
   maxRetries: 3,
   retryDelay: 5000, // 5 seconds
   timeout: 300000, // 5 minutes
-  logLevel: 'info'
+  logLevel: 'info',
 };
 
 // State tracking
@@ -38,7 +38,7 @@ const state = {
   errors: [],
   warnings: [],
   modules: [],
-  overallStatus: 'PENDING'
+  overallStatus: 'PENDING',
 };
 
 /**
@@ -47,17 +47,17 @@ const state = {
 async function initialize() {
   console.log('🚀 Initializing Ultimate E2E Self-Healing Runner');
   console.log(`📋 Run ID: ${CONFIG.runId}`);
-  
+
   try {
     // Check environment
     await checkEnvironment();
-    
+
     // Create necessary directories
     await createDirectories();
-    
+
     // Initialize logging
     await initializeLogging();
-    
+
     console.log('✅ Initialization complete');
     return true;
   } catch (error) {
@@ -71,19 +71,23 @@ async function initialize() {
  */
 async function checkEnvironment() {
   console.log('🔍 Checking environment requirements...');
-  
+
   const requirements = [
     { name: 'Node.js', command: 'node --version', required: true },
     { name: 'npm', command: 'npm --version', required: true },
     { name: 'Git', command: 'git --version', required: true },
-    { name: 'Playwright', command: 'npx playwright --version', required: false }
+    {
+      name: 'Playwright',
+      command: 'npx playwright --version',
+      required: false,
+    },
   ];
-  
+
   for (const req of requirements) {
     try {
-      const result = execSync(req.command, { 
+      const result = execSync(req.command, {
         cwd: WORKSPACE_ROOT,
-        encoding: 'utf8'
+        encoding: 'utf8',
       });
       console.log(`✅ ${req.name}: ${result.trim()}`);
     } catch (error) {
@@ -109,13 +113,13 @@ async function createDirectories() {
     'tests/generated/supawright',
     'tests/generated/integration',
     'tests/generated/edge-cases',
-    'dashboard/logs'
+    'dashboard/logs',
   ];
-  
+
   for (const dir of directories) {
     await fs.mkdir(path.join(WORKSPACE_ROOT, dir), { recursive: true });
   }
-  
+
   console.log('✅ Directories created');
 }
 
@@ -127,9 +131,9 @@ async function initializeLogging() {
     timestamp: new Date().toISOString(),
     level: 'info',
     message: 'Ultimate E2E Self-Healing Runner started',
-    runId: CONFIG.runId
+    runId: CONFIG.runId,
   };
-  
+
   await fs.appendFile(
     path.join(WORKSPACE_ROOT, 'reports', 'execution.log'),
     JSON.stringify(logEntry) + '\n'
@@ -147,7 +151,7 @@ async function main() {
     if (!initialized) {
       process.exit(1);
     }
-    
+
     // Step 1: Generate test scenarios
     state.currentStep = 'test_generation';
     console.log('\n🧪 Step 1: Generating test scenarios...');
@@ -155,7 +159,7 @@ async function main() {
     if (!testsGenerated) {
       throw new Error('Test generation failed');
     }
-    
+
     // Step 2: Apply automated fixes
     state.currentStep = 'automated_fixes';
     console.log('\n🔧 Step 2: Applying automated fixes...');
@@ -163,13 +167,13 @@ async function main() {
     if (!fixesApplied) {
       console.log('⚠️ Some fixes failed, continuing...');
     }
-    
+
     // Step 3: Run tests
     state.currentStep = 'test_execution';
     console.log('\n🧪 Step 3: Running tests...');
     const testResults = await runTests();
     state.testResults = testResults;
-    
+
     // Step 4: Generate reports
     state.currentStep = 'report_generation';
     console.log('\n📊 Step 4: Generating reports...');
@@ -180,22 +184,22 @@ async function main() {
       state.errors,
       state.warnings
     );
-    
+
     // Step 5: Create PR if needed
     state.currentStep = 'pr_creation';
     console.log('\n📝 Step 5: Creating PR...');
     const prUrl = await createPRIfNeeded();
-    
+
     // Step 6: Final summary
     state.currentStep = 'completion';
     console.log('\n🎯 Final Summary:');
     await printFinalSummary(prUrl);
-    
+
     // Determine exit status
     const hasErrors = state.errors.length > 0;
     const hasWarnings = state.warnings.length > 0;
     const hasFailedTests = state.testResults.some(t => t.status === 'failed');
-    
+
     if (hasErrors || hasFailedTests) {
       console.log('❌ Run completed with errors');
       process.exit(1);
@@ -206,7 +210,6 @@ async function main() {
       console.log('✅ Run completed successfully');
       process.exit(0);
     }
-    
   } catch (error) {
     console.error('❌ Fatal error:', error);
     state.errors.push(error.message);
@@ -221,16 +224,16 @@ async function main() {
 async function runTests() {
   try {
     console.log('🧪 Running Playwright tests...');
-    
+
     // Run Playwright tests
     const playwrightResult = await runPlaywrightTests();
-    
+
     // Run Supawright tests
     const supawrightResult = await runSupawrightTests();
-    
+
     // Combine results
     const allResults = [...playwrightResult, ...supawrightResult];
-    
+
     console.log(`✅ Tests completed: ${allResults.length} total`);
     return allResults;
   } catch (error) {
@@ -245,8 +248,13 @@ async function runTests() {
  */
 async function runPlaywrightTests() {
   try {
-    const playwrightTestsDir = path.join(WORKSPACE_ROOT, 'tests', 'generated', 'playwright');
-    
+    const playwrightTestsDir = path.join(
+      WORKSPACE_ROOT,
+      'tests',
+      'generated',
+      'playwright'
+    );
+
     // Check if tests exist
     try {
       await fs.access(playwrightTestsDir);
@@ -254,13 +262,16 @@ async function runPlaywrightTests() {
       console.log('⚠️ No Playwright tests found');
       return [];
     }
-    
-    const result = execSync(`npx playwright test ${playwrightTestsDir} --reporter=json`, {
-      cwd: WORKSPACE_ROOT,
-      encoding: 'utf8',
-      timeout: CONFIG.timeout
-    });
-    
+
+    const result = execSync(
+      `npx playwright test ${playwrightTestsDir} --reporter=json`,
+      {
+        cwd: WORKSPACE_ROOT,
+        encoding: 'utf8',
+        timeout: CONFIG.timeout,
+      }
+    );
+
     const results = JSON.parse(result);
     console.log(`✅ Playwright tests: ${results.length} tests`);
     return results;
@@ -275,8 +286,13 @@ async function runPlaywrightTests() {
  */
 async function runSupawrightTests() {
   try {
-    const supawrightTestsDir = path.join(WORKSPACE_ROOT, 'tests', 'generated', 'supawright');
-    
+    const supawrightTestsDir = path.join(
+      WORKSPACE_ROOT,
+      'tests',
+      'generated',
+      'supawright'
+    );
+
     // Check if tests exist
     try {
       await fs.access(supawrightTestsDir);
@@ -284,13 +300,16 @@ async function runSupawrightTests() {
       console.log('⚠️ No Supawright tests found');
       return [];
     }
-    
-    const result = execSync(`npx playwright test ${supawrightTestsDir} --reporter=json`, {
-      cwd: WORKSPACE_ROOT,
-      encoding: 'utf8',
-      timeout: CONFIG.timeout
-    });
-    
+
+    const result = execSync(
+      `npx playwright test ${supawrightTestsDir} --reporter=json`,
+      {
+        cwd: WORKSPACE_ROOT,
+        encoding: 'utf8',
+        timeout: CONFIG.timeout,
+      }
+    );
+
     const results = JSON.parse(result);
     console.log(`✅ Supawright tests: ${results.length} tests`);
     return results;
@@ -306,32 +325,32 @@ async function runSupawrightTests() {
 async function createPRIfNeeded() {
   try {
     const hasChanges = await checkForChanges();
-    
+
     if (!hasChanges) {
       console.log('ℹ️ No changes detected, skipping PR creation');
       return null;
     }
-    
+
     const changes = {
       summary: 'Automated fixes and test improvements',
       errors: state.errors.length,
       warnings: state.warnings.length,
-      files: await getChangedFiles()
+      files: await getChangedFiles(),
     };
-    
+
     const prUrl = await handlePRWorkflow(
       CONFIG.runId,
       changes,
       state.fixes,
       state.testResults
     );
-    
+
     if (prUrl) {
       console.log(`✅ PR created: ${prUrl}`);
     } else {
       console.log('⚠️ PR creation failed');
     }
-    
+
     return prUrl;
   } catch (error) {
     console.log('⚠️ PR creation failed:', error.message);
@@ -346,9 +365,9 @@ async function checkForChanges() {
   try {
     const result = execSync('git status --porcelain', {
       cwd: WORKSPACE_ROOT,
-      encoding: 'utf8'
+      encoding: 'utf8',
     });
-    
+
     return result.trim().length > 0;
   } catch (error) {
     console.log('⚠️ Could not check for changes:', error.message);
@@ -363,10 +382,13 @@ async function getChangedFiles() {
   try {
     const result = execSync('git diff --name-only', {
       cwd: WORKSPACE_ROOT,
-      encoding: 'utf8'
+      encoding: 'utf8',
     });
-    
-    return result.trim().split('\n').filter(f => f.trim());
+
+    return result
+      .trim()
+      .split('\n')
+      .filter(f => f.trim());
   } catch (error) {
     console.log('⚠️ Could not get changed files:', error.message);
     return [];
@@ -379,23 +401,31 @@ async function getChangedFiles() {
 async function printFinalSummary(prUrl) {
   const endTime = Date.now();
   const duration = endTime - state.startTime;
-  
-  const passedTests = state.testResults.filter(t => t.status === 'passed').length;
-  const failedTests = state.testResults.filter(t => t.status === 'failed').length;
-  const skippedTests = state.testResults.filter(t => t.status === 'skipped').length;
-  
+
+  const passedTests = state.testResults.filter(
+    t => t.status === 'passed'
+  ).length;
+  const failedTests = state.testResults.filter(
+    t => t.status === 'failed'
+  ).length;
+  const skippedTests = state.testResults.filter(
+    t => t.status === 'skipped'
+  ).length;
+
   console.log('📊 Final Summary:');
   console.log(`   Run ID: ${CONFIG.runId}`);
   console.log(`   Duration: ${Math.round(duration / 1000)}s`);
-  console.log(`   Tests: ${state.testResults.length} total, ${passedTests} passed, ${failedTests} failed, ${skippedTests} skipped`);
+  console.log(
+    `   Tests: ${state.testResults.length} total, ${passedTests} passed, ${failedTests} failed, ${skippedTests} skipped`
+  );
   console.log(`   Errors: ${state.errors.length}`);
   console.log(`   Warnings: ${state.warnings.length}`);
   console.log(`   Fixes: ${state.fixes.length}`);
-  
+
   if (prUrl) {
     console.log(`   PR: ${prUrl}`);
   }
-  
+
   // Save final summary
   const summary = {
     runId: CONFIG.runId,
@@ -404,17 +434,17 @@ async function printFinalSummary(prUrl) {
       total: state.testResults.length,
       passed: passedTests,
       failed: failedTests,
-      skipped: skippedTests
+      skipped: skippedTests,
     },
     issues: {
       errors: state.errors.length,
-      warnings: state.warnings.length
+      warnings: state.warnings.length,
     },
     fixes: state.fixes.length,
     prUrl: prUrl,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
-  
+
   await fs.writeFile(
     path.join(WORKSPACE_ROOT, 'reports', 'final_summary.json'),
     JSON.stringify(summary, null, 2)
@@ -431,9 +461,9 @@ async function logError(error) {
     message: error.message,
     stack: error.stack,
     runId: CONFIG.runId,
-    step: state.currentStep
+    step: state.currentStep,
   };
-  
+
   await fs.appendFile(
     path.join(WORKSPACE_ROOT, 'reports', 'execution.log'),
     JSON.stringify(logEntry) + '\n'
@@ -445,39 +475,39 @@ async function logError(error) {
  */
 process.on('SIGINT', async () => {
   console.log('\n⚠️ Received SIGINT, shutting down gracefully...');
-  
+
   const logEntry = {
     timestamp: new Date().toISOString(),
     level: 'warn',
     message: 'Process interrupted by user',
     runId: CONFIG.runId,
-    step: state.currentStep
+    step: state.currentStep,
   };
-  
+
   await fs.appendFile(
     path.join(WORKSPACE_ROOT, 'reports', 'execution.log'),
     JSON.stringify(logEntry) + '\n'
   );
-  
+
   process.exit(1);
 });
 
 process.on('SIGTERM', async () => {
   console.log('\n⚠️ Received SIGTERM, shutting down gracefully...');
-  
+
   const logEntry = {
     timestamp: new Date().toISOString(),
     level: 'warn',
     message: 'Process terminated by system',
     runId: CONFIG.runId,
-    step: state.currentStep
+    step: state.currentStep,
   };
-  
+
   await fs.appendFile(
     path.join(WORKSPACE_ROOT, 'reports', 'execution.log'),
     JSON.stringify(logEntry) + '\n'
   );
-  
+
   process.exit(1);
 });
 

@@ -15,8 +15,8 @@ const __dirname = path.dirname(__filename);
 const WORKSPACE_ROOT = path.resolve(__dirname, '..');
 
 // Initialize OpenAI
-const openai = new OpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY || process.env.CURSOR_API_KEY 
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY || process.env.CURSOR_API_KEY,
 });
 
 /**
@@ -24,24 +24,24 @@ const openai = new OpenAI({
  */
 async function generateAllTests() {
   console.log('🧪 Generating comprehensive test scenarios...');
-  
+
   try {
     // Detect all modules
     const modules = await detectModules();
     console.log(`📁 Detected ${modules.length} modules: ${modules.join(', ')}`);
-    
+
     // Generate Playwright tests
     await generatePlaywrightTests(modules);
-    
+
     // Generate Supawright tests
     await generateSupawrightTests(modules);
-    
+
     // Generate integration tests
     await generateIntegrationTests(modules);
-    
+
     // Generate edge case tests
     await generateEdgeCaseTests(modules);
-    
+
     console.log('✅ Test generation complete');
     return true;
   } catch (error) {
@@ -56,10 +56,10 @@ async function generateAllTests() {
 async function detectModules() {
   const modules = [];
   const srcPath = path.join(WORKSPACE_ROOT, 'src');
-  
+
   try {
     const entries = await fs.readdir(srcPath, { withFileTypes: true });
-    
+
     for (const entry of entries) {
       if (entry.isDirectory() && !entry.name.startsWith('_')) {
         modules.push(entry.name);
@@ -68,7 +68,7 @@ async function detectModules() {
   } catch (error) {
     console.error('Failed to read src directory:', error);
   }
-  
+
   return modules;
 }
 
@@ -76,17 +76,22 @@ async function detectModules() {
  * Generate Playwright tests for all modules
  */
 async function generatePlaywrightTests(modules) {
-  const playwrightTestsDir = path.join(WORKSPACE_ROOT, 'tests', 'generated', 'playwright');
+  const playwrightTestsDir = path.join(
+    WORKSPACE_ROOT,
+    'tests',
+    'generated',
+    'playwright'
+  );
   await fs.mkdir(playwrightTestsDir, { recursive: true });
-  
+
   for (const module of modules) {
     console.log(`📝 Generating Playwright tests for ${module}...`);
-    
+
     const testContent = await generateModulePlaywrightTest(module);
     const testFile = path.join(playwrightTestsDir, `${module}.spec.js`);
     await fs.writeFile(testFile, testContent);
   }
-  
+
   // Generate global test configuration
   const configContent = generatePlaywrightConfig();
   const configFile = path.join(playwrightTestsDir, 'playwright.config.js');
@@ -97,12 +102,17 @@ async function generatePlaywrightTests(modules) {
  * Generate Supawright tests for all modules
  */
 async function generateSupawrightTests(modules) {
-  const supawrightTestsDir = path.join(WORKSPACE_ROOT, 'tests', 'generated', 'supawright');
+  const supawrightTestsDir = path.join(
+    WORKSPACE_ROOT,
+    'tests',
+    'generated',
+    'supawright'
+  );
   await fs.mkdir(supawrightTestsDir, { recursive: true });
-  
+
   for (const module of modules) {
     console.log(`📝 Generating Supawright tests for ${module}...`);
-    
+
     const testContent = await generateModuleSupawrightTest(module);
     const testFile = path.join(supawrightTestsDir, `${module}.test.js`);
     await fs.writeFile(testFile, testContent);
@@ -113,11 +123,16 @@ async function generateSupawrightTests(modules) {
  * Generate integration tests
  */
 async function generateIntegrationTests(modules) {
-  const integrationTestsDir = path.join(WORKSPACE_ROOT, 'tests', 'generated', 'integration');
+  const integrationTestsDir = path.join(
+    WORKSPACE_ROOT,
+    'tests',
+    'generated',
+    'integration'
+  );
   await fs.mkdir(integrationTestsDir, { recursive: true });
-  
+
   console.log('📝 Generating integration tests...');
-  
+
   const testContent = generateIntegrationTestContent(modules);
   const testFile = path.join(integrationTestsDir, 'integration.spec.js');
   await fs.writeFile(testFile, testContent);
@@ -127,11 +142,16 @@ async function generateIntegrationTests(modules) {
  * Generate edge case tests
  */
 async function generateEdgeCaseTests(modules) {
-  const edgeCaseTestsDir = path.join(WORKSPACE_ROOT, 'tests', 'generated', 'edge-cases');
+  const edgeCaseTestsDir = path.join(
+    WORKSPACE_ROOT,
+    'tests',
+    'generated',
+    'edge-cases'
+  );
   await fs.mkdir(edgeCaseTestsDir, { recursive: true });
-  
+
   console.log('📝 Generating edge case tests...');
-  
+
   const testContent = generateEdgeCaseTestContent(modules);
   const testFile = path.join(edgeCaseTestsDir, 'edge-cases.spec.js');
   await fs.writeFile(testFile, testContent);
@@ -143,7 +163,7 @@ async function generateEdgeCaseTests(modules) {
 async function generateModulePlaywrightTest(module) {
   const modulePath = path.join(WORKSPACE_ROOT, 'src', module);
   const moduleFiles = await getModuleFiles(modulePath);
-  
+
   return `import { test, expect } from '@playwright/test';
 
 test.describe('${module} Module E2E Tests', () => {
@@ -681,22 +701,29 @@ export default defineConfig({
  */
 async function getModuleFiles(modulePath) {
   const files = [];
-  
+
   try {
     const entries = await fs.readdir(modulePath, { withFileTypes: true });
-    
+
     for (const entry of entries) {
       if (entry.isDirectory()) {
-        const subFiles = await getModuleFiles(path.join(modulePath, entry.name));
+        const subFiles = await getModuleFiles(
+          path.join(modulePath, entry.name)
+        );
         files.push(...subFiles);
-      } else if (entry.name.endsWith('.tsx') || entry.name.endsWith('.ts') || entry.name.endsWith('.jsx') || entry.name.endsWith('.js')) {
+      } else if (
+        entry.name.endsWith('.tsx') ||
+        entry.name.endsWith('.ts') ||
+        entry.name.endsWith('.jsx') ||
+        entry.name.endsWith('.js')
+      ) {
         files.push(path.join(modulePath, entry.name));
       }
     }
   } catch (error) {
     console.error('Failed to read module directory:', error);
   }
-  
+
   return files;
 }
 

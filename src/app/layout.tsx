@@ -1,49 +1,20 @@
+// src/app/layout.tsx
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
-import {
-  generateMetadata as genMeta,
-  pageMetadata,
-  generateStructuredData,
-} from '@/lib/seo/metadata';
-import MoeenChatbot from '@/components/chatbot/MoeenChatbot';
-import { I18nProvider } from '@/components/providers/I18nProvider';
 
-const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = genMeta(pageMetadata.home);
+export const metadata: Metadata = {
+  title: 'Ultimate E2E Self-Healing Runner',
+  description: 'Comprehensive testing system with Playwright and Supawright',
+};
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const structuredData = generateStructuredData('website');
-
   return (
-    <html lang='ar' dir='rtl'>
-      <head>
-        {/* Structured Data */}
-        <script
-          type='application/ld+json'
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-
-        {/* Favicon */}
-        <link rel='icon' href='/favicon.ico' />
-        <link rel='apple-touch-icon' href='/apple-touch-icon.png' />
-
-        {/* Manifest */}
-        <link rel='manifest' href='/manifest.json' />
-
-        {/* Theme Color */}
-        <meta name='theme-color' content='#4F46E5' />
-      </head>
-      <body className={inter.className}>
-        <I18nProvider>
-          {children}
-          <MoeenChatbot position='bottom-right' />
-        </I18nProvider>
+    <html lang="en">
+      <body className="antialiased">
+        {children}
       </body>
     </html>
   );
