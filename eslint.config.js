@@ -26,6 +26,11 @@ export default [
       'react-hooks': reactHooks,
       '@next/next': next,
     },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
     rules: {
       ...typescript.configs.recommended.rules,
       ...react.configs.recommended.rules,
@@ -37,6 +42,8 @@ export default [
       'no-var': 'error',
       'object-shorthand': 'error',
       'prefer-template': 'error',
+      'react/react-in-jsx-scope': 'off', // Not needed in Next.js 13+
+      'react/jsx-uses-react': 'off', // Not needed in Next.js 13+
     },
   },
   {
