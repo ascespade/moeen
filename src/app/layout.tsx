@@ -1,49 +1,46 @@
+// src/app/layout.tsx
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
-import {
-  generateMetadata as genMeta,
-  pageMetadata,
-  generateStructuredData,
-} from '@/lib/seo/metadata';
-import MoeenChatbot from '@/components/chatbot/MoeenChatbot';
-import { I18nProvider } from '@/components/providers/I18nProvider';
+// import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = genMeta(pageMetadata.home);
+export const metadata: Metadata = {
+  title: 'Ultimate E2E Self-Healing Runner',
+  description: 'Comprehensive testing system with Playwright and Supawright. AI-powered auto-healing and intelligent test management.',
+  keywords: 'E2E testing, Playwright, Supawright, auto-healing, testing automation, AI testing',
+  authors: [{ name: 'Ultimate E2E Team' }],
+  viewport: 'width=device-width, initial-scale=1',
+  themeColor: '#f8fafc',
+  openGraph: {
+    title: 'Ultimate E2E Self-Healing Runner',
+    description: 'Comprehensive testing system with Playwright and Supawright',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ultimate E2E Self-Healing Runner',
+    description: 'Comprehensive testing system with Playwright and Supawright',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const structuredData = generateStructuredData('website');
-
   return (
-    <html lang='ar' dir='rtl'>
+    <html lang="en" className="scroll-smooth">
       <head>
-        {/* Structured Data */}
-        <script
-          type='application/ld+json'
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-
-        {/* Favicon */}
-        <link rel='icon' href='/favicon.ico' />
-        <link rel='apple-touch-icon' href='/apple-touch-icon.png' />
-
-        {/* Manifest */}
-        <link rel='manifest' href='/manifest.json' />
-
-        {/* Theme Color */}
-        <meta name='theme-color' content='#4F46E5' />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
       </head>
-      <body className={inter.className}>
-        <I18nProvider>
-          {children}
-          <MoeenChatbot position='bottom-right' />
-        </I18nProvider>
+      <body className="antialiased font-inter bg-slate-50 text-slate-900">
+        {children}
       </body>
     </html>
   );

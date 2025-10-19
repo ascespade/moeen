@@ -1,0 +1,18 @@
+{
+  "runId": "run-1760828126050",
+  "timestamp": "2025-10-18T22:55:26.054Z",
+  "summary": {
+    "totalTests": 0,
+    "passedTests": 0,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "totalErrors": 0,
+    "totalWarnings": 0,
+    "totalFixes": 0,
+    "overallStatus": "OK"
+  },
+  "testResults": [],
+  "errors": [],
+  "warnings": [],
+  "fixes": []
+}

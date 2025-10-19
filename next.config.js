@@ -1,4 +1,4 @@
-// Bundle analyzer is optional
+// next.config.js
 const withBundleAnalyzer =
   process.env.ANALYZE === 'true'
     ? require('@next/bundle-analyzer')({ enabled: true })
@@ -51,7 +51,7 @@ const nextConfig = {
       {
         protocol: 'http',
         hostname: 'localhost',
-        port: '3000',
+        port: '3001',
         pathname: '/**',
       },
       {
