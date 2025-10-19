@@ -24,16 +24,26 @@
     "type-check": "npx tsc --noEmit"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-decorators": "^7.28.0",
+    "@babel/plugin-transform-runtime": "^7.28.3",
+    "@babel/preset-env": "^7.28.3",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "autoprefixer": "^10.4.21",
     "openai": "^4.0.0",
     "playwright": "^1.36.0",
+    "postcss": "^8.5.6",
     "sqlite3": "^5.1.6",
     "supawright": "^0.1.0",
+    "tailwindcss": "^4.1.14",
     "typescript": "5.9.3"
   },
   "dependencies": {
     "@types/node": "^24.8.1",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
+    "critters": "^0.0.23",
+    "lucide-react": "^0.546.0",
     "next": "^15.5.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

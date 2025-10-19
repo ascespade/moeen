@@ -1,6 +1,6 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next';
-import './globals.css';
+// import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Ultimate E2E Self-Healing Runner',
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   keywords: 'E2E testing, Playwright, Supawright, auto-healing, testing automation, AI testing',
   authors: [{ name: 'Ultimate E2E Team' }],
   viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#3b82f6',
+  themeColor: '#f8fafc',
   openGraph: {
     title: 'Ultimate E2E Self-Healing Runner',
     description: 'Comprehensive testing system with Playwright and Supawright',
@@ -32,16 +32,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="scroll-smooth">
       <head>
         <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
       </head>
-      <body className="antialiased bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen">
-        <div className="relative">
-          {children}
-        </div>
+      <body className="antialiased font-inter bg-slate-50 text-slate-900">
+        {children}
       </body>
     </html>
   );
