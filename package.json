@@ -63,6 +63,9 @@
     "ci:heal": "node scripts/ci-self-healing-manager.js fix",
     "ci:validate": "node scripts/validate-workflows.js",
     "ci:test": "node scripts/test-workflows.js comprehensive",
+    "dashboard:live": "node scripts/start-live-dashboard.js",
+    "dashboard:update": "node scripts/live-dashboard.js",
+    "report:generate": "node scripts/generate-workflow-report.js",
     "prepare": "husky"
   },
   "dependencies": {
