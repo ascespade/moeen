@@ -21,6 +21,7 @@
 ## ✨ **Features**
 
 ### 🎯 **Core Capabilities**
+
 - **🧪 Comprehensive Testing**: 560+ tests across 16 modules
 - **🤖 AI-Powered Auto-Healing**: Automatically detect and fix issues
 - **⚡ Parallel Execution**: Run 2 modules simultaneously for efficiency
@@ -29,12 +30,14 @@
 - **🛡️ Security First**: Built-in security scanning and vulnerability detection
 
 ### 🎭 **Test Types**
+
 - **Playwright UI Tests**: User interface and interaction testing
 - **Supawright DB Tests**: Database and API testing with Supabase
 - **Integration Tests**: End-to-end workflow testing
 - **Edge Case Tests**: Boundary and error condition testing
 
 ### 🎨 **Modern UI**
+
 - **Glass Morphism Design**: Beautiful, modern interface
 - **Real-time Dashboard**: Live monitoring and statistics
 - **Responsive Layout**: Works on all devices
@@ -46,7 +49,8 @@
 ## 🚀 **Quick Start**
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 - Playwright browsers
 - Supabase account (optional)
@@ -69,29 +73,32 @@ npm run dev
 ```
 
 ### Access the Dashboard
+
 Open your browser and navigate to:
+
 - **Main Dashboard**: http://localhost:3001
-- **Analytics**: http://localhost:3001/analytics  
+- **Analytics**: http://localhost:3001/analytics
 - **Settings**: http://localhost:3001/settings
 
 ---
 
 ## 📊 **System Statistics**
 
-| Metric | Value | Status |
-|--------|-------|--------|
-| **Total Tests** | 560 | ✅ |
-| **Passed Tests** | 448 (80%) | 🟢 |
-| **Failed Tests** | 112 (20%) | 🟡 |
-| **Modules Tested** | 16 | ✅ |
-| **Test Types** | 4 | ✅ |
-| **Auto-Fixes Applied** | 156 | ✅ |
+| Metric                 | Value     | Status |
+| ---------------------- | --------- | ------ |
+| **Total Tests**        | 560       | ✅     |
+| **Passed Tests**       | 448 (80%) | 🟢     |
+| **Failed Tests**       | 112 (20%) | 🟡     |
+| **Modules Tested**     | 16        | ✅     |
+| **Test Types**         | 4         | ✅     |
+| **Auto-Fixes Applied** | 156       | ✅     |
 
 ---
 
 ## 🏗️ **Architecture**
 
 ### **System Components**
+
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Dashboard     │    │   Analytics     │    │   Settings      │
@@ -112,6 +119,7 @@ Open your browser and navigate to:
 ```
 
 ### **Test Flow**
+
 1. **Test Generation**: Create comprehensive tests for all modules
 2. **Parallel Execution**: Run 2 modules simultaneously
 3. **Auto-Healing**: Detect and fix issues automatically
@@ -123,24 +131,28 @@ Open your browser and navigate to:
 ## 🎯 **Key Features**
 
 ### 🤖 **AI-Powered Auto-Healing**
+
 - **Smart Detection**: Automatically identify test failures
 - **Intelligent Fixes**: Apply appropriate fixes based on error types
 - **Learning System**: Improves over time with more data
 - **Pattern Recognition**: Recognize recurring issues
 
 ### ⚡ **Parallel Testing**
+
 - **2 Workers**: Run 2 modules simultaneously
 - **Resource Management**: Intelligent load balancing
 - **Timeout Handling**: Graceful handling of long-running tests
 - **Retry Logic**: Automatic retry for failed tests
 
 ### 📊 **Advanced Analytics**
+
 - **Real-time Metrics**: Live performance monitoring
 - **Historical Data**: Track performance over time
 - **Module Analysis**: Individual module performance
 - **Trend Analysis**: Identify patterns and improvements
 
 ### 🛡️ **Security & Reliability**
+
 - **Vulnerability Scanning**: Detect security issues
 - **Dependency Checking**: Monitor package vulnerabilities
 - **Code Quality**: ESLint and Prettier integration
@@ -151,18 +163,21 @@ Open your browser and navigate to:
 ## 🎨 **UI Components**
 
 ### **Dashboard**
+
 - **System Overview**: Key metrics and status
 - **Module Grid**: Individual module performance
 - **Quick Actions**: One-click test execution
 - **Real-time Updates**: Live status monitoring
 
 ### **Analytics**
+
 - **Performance Charts**: Visual test performance
 - **Trend Analysis**: Historical data visualization
 - **Module Comparison**: Side-by-side module analysis
 - **Export Options**: Download reports and data
 
 ### **Settings**
+
 - **Test Configuration**: Customize test parameters
 - **Auto-Fix Options**: Configure healing behavior
 - **Notification Settings**: Alert preferences
@@ -173,6 +188,7 @@ Open your browser and navigate to:
 ## 🔧 **Configuration**
 
 ### **Environment Variables**
+
 ```bash
 # Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
@@ -191,6 +207,7 @@ NODE_ENV=development
 ```
 
 ### **Test Configuration**
+
 ```javascript
 // playwright.config.ts
 export default defineConfig({
@@ -208,6 +225,7 @@ export default defineConfig({
 ## 📈 **Performance Metrics**
 
 ### **Current Performance**
+
 - **Test Execution Time**: ~12 seconds average
 - **Memory Usage**: 62% of available
 - **CPU Usage**: 45% average
@@ -215,6 +233,7 @@ export default defineConfig({
 - **Auto-Fix Success**: 50% (target: 80%+)
 
 ### **Optimization Goals**
+
 - **Increase Success Rate**: Target 90%+ test success
 - **Reduce Execution Time**: Target <10 seconds
 - **Improve Auto-Fix**: Target 80%+ fix success
@@ -225,18 +244,21 @@ export default defineConfig({
 ## 🚀 **Roadmap**
 
 ### **Phase 1: Foundation** ✅
+
 - [x] Basic test generation
 - [x] Parallel execution
 - [x] Auto-fix system
 - [x] Dashboard UI
 
 ### **Phase 2: Enhancement** 🔄
+
 - [ ] AI-powered test generation
 - [ ] Advanced analytics
 - [ ] Machine learning integration
 - [ ] Performance optimization
 
 ### **Phase 3: Advanced** 📋
+
 - [ ] Multi-environment support
 - [ ] Cloud integration
 - [ ] Team collaboration features
@@ -249,6 +271,7 @@ export default defineConfig({
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
 ### **Development Setup**
+
 ```bash
 # Fork the repository
 git clone <your-fork-url>

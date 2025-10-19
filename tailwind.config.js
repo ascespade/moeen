@@ -8,12 +8,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'inter': ['Inter', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite',
-        'shimmer': 'shimmer 2s infinite',
+        float: 'float 6s ease-in-out infinite',
+        glow: 'glow 2s ease-in-out infinite',
+        shimmer: 'shimmer 2s infinite',
       },
       keyframes: {
         float: {
@@ -30,9 +30,9 @@ module.exports = {
         },
       },
       backdropBlur: {
-        'xs': '2px',
+        xs: '2px',
       },
     },
   },
   plugins: [],
-}
+};

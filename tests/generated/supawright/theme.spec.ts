@@ -22,7 +22,10 @@ test.describe('theme Module - Supawright Tests', () => {
   });
 
   test('theme - Database connection', async () => {
-    const { data, error } = await supabase.from('_supabase_migrations').select('*').limit(1);
+    const { data, error } = await supabase
+      .from('_supabase_migrations')
+      .select('*')
+      .limit(1);
     expect(error).toBeNull();
   });
 
@@ -32,7 +35,7 @@ test.describe('theme Module - Supawright Tests', () => {
       .from('_supabase_migrations')
       .select('*')
       .limit(1);
-    
+
     expect(anonError).toBeNull();
   });
 
@@ -41,7 +44,7 @@ test.describe('theme Module - Supawright Tests', () => {
     const testData = {
       id: Math.random().toString(36).substr(2, 9),
       created_at: new Date().toISOString(),
-      module: 'theme'
+      module: 'theme',
     };
 
     // Try to insert test data
@@ -64,20 +67,20 @@ test.describe('theme Module - Supawright Tests', () => {
       .from('_supabase_migrations')
       .select('*')
       .limit(1);
-    
+
     expect(error).toBeNull();
   });
 
   test('theme - Database performance', async () => {
     const startTime = Date.now();
-    
+
     const { data, error } = await supabase
       .from('_supabase_migrations')
       .select('*')
       .limit(10);
-    
+
     const queryTime = Date.now() - startTime;
-    
+
     expect(error).toBeNull();
     expect(queryTime).toBeLessThan(1000); // Should complete within 1 second
   });
@@ -85,15 +88,13 @@ test.describe('theme Module - Supawright Tests', () => {
   test('theme - Concurrent operations', async () => {
     // Test concurrent database operations
     const promises = [];
-    
+
     for (let i = 0; i < 5; i++) {
-      promises.push(
-        supabase.from('_supabase_migrations').select('*').limit(1)
-      );
+      promises.push(supabase.from('_supabase_migrations').select('*').limit(1));
     }
-    
+
     const results = await Promise.all(promises);
-    
+
     results.forEach(result => {
       expect(result.error).toBeNull();
     });
@@ -104,7 +105,7 @@ test.describe('theme Module - Supawright Tests', () => {
     const { data, error } = await supabase
       .from('non_existent_table')
       .select('*');
-    
+
     expect(error).toBeTruthy();
     expect(data).toBeNull();
   });
@@ -115,7 +116,7 @@ test.describe('theme Module - Supawright Tests', () => {
       .from('_supabase_migrations')
       .select('*')
       .limit(1);
-    
+
     expect(error).toBeNull();
     if (data && data.length > 0) {
       expect(data[0]).toHaveProperty('id');
@@ -125,15 +126,15 @@ test.describe('theme Module - Supawright Tests', () => {
   test('theme - Real-time subscriptions', async () => {
     // Test real-time functionality
     const channel = supabase.channel('test-channel');
-    
+
     const subscription = channel
-      .on('postgres_changes', { event: '*', schema: 'public' }, (payload) => {
+      .on('postgres_changes', { event: '*', schema: 'public' }, payload => {
         // Handle real-time updates
       })
       .subscribe();
-    
+
     expect(subscription).toBeTruthy();
-    
+
     // Clean up
     await supabase.removeChannel(channel);
   });
@@ -145,7 +146,7 @@ test.describe('theme Module - Supawright Tests', () => {
       .select('*')
       .order('version', { ascending: false })
       .limit(1);
-    
+
     expect(error).toBeNull();
     if (data && data.length > 0) {
       expect(data[0]).toHaveProperty('version');

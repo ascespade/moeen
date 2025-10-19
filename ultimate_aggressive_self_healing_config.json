@@ -12,7 +12,12 @@
   ],
   "safety_rules": {
     "backup_before_modify": true,
-    "avoid_changes_outside": ["src", "migrations", "scripts", ".github/workflows"],
+    "avoid_changes_outside": [
+      "src",
+      "migrations",
+      "scripts",
+      ".github/workflows"
+    ],
     "max_retries_per_test": 10,
     "commit_author_name": "ai-bot",
     "commit_author_email": "ai-bot@users.noreply.github.com"

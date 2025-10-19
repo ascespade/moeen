@@ -16,7 +16,7 @@ function log(msg) {
 // تحليل نتائج الاختبارات
 function analyzeTestResults() {
   log('📊 Analyzing test results...');
-  
+
   const results = {
     totalTests: 0,
     passedTests: 0,
@@ -27,10 +27,10 @@ function analyzeTestResults() {
       playwright: { total: 0, passed: 0, failed: 0 },
       supawright: { total: 0, passed: 0, failed: 0 },
       integration: { total: 0, passed: 0, failed: 0 },
-      edgeCases: { total: 0, passed: 0, failed: 0 }
+      edgeCases: { total: 0, passed: 0, failed: 0 },
     },
     errors: [],
-    warnings: []
+    warnings: [],
   };
 
   // قراءة ملفات التقارير
@@ -38,20 +38,20 @@ function analyzeTestResults() {
   if (fs.existsSync(testResultsDir)) {
     const files = fs.readdirSync(testResultsDir);
     const jsonFiles = files.filter(f => f.endsWith('.json'));
-    
+
     for (const file of jsonFiles) {
       try {
         const filePath = path.join(testResultsDir, file);
         const content = fs.readFileSync(filePath, 'utf8');
         const data = JSON.parse(content);
-        
+
         if (data.stats) {
           results.totalTests += data.stats.total || 0;
           results.passedTests += data.stats.passed || 0;
           results.failedTests += data.stats.failed || 0;
           results.skippedTests += data.stats.skipped || 0;
         }
-        
+
         if (data.suites) {
           for (const suite of data.suites) {
             const moduleName = extractModuleName(suite.title);
@@ -61,14 +61,17 @@ function analyzeTestResults() {
                   total: 0,
                   passed: 0,
                   failed: 0,
-                  skipped: 0
+                  skipped: 0,
                 };
               }
-              
+
               results.modules[moduleName].total += suite.tests?.length || 0;
-              results.modules[moduleName].passed += suite.tests?.filter(t => t.status === 'passed').length || 0;
-              results.modules[moduleName].failed += suite.tests?.filter(t => t.status === 'failed').length || 0;
-              results.modules[moduleName].skipped += suite.tests?.filter(t => t.status === 'skipped').length || 0;
+              results.modules[moduleName].passed +=
+                suite.tests?.filter(t => t.status === 'passed').length || 0;
+              results.modules[moduleName].failed +=
+                suite.tests?.filter(t => t.status === 'failed').length || 0;
+              results.modules[moduleName].skipped +=
+                suite.tests?.filter(t => t.status === 'skipped').length || 0;
             }
           }
         }
@@ -94,9 +97,18 @@ function analyzeTestResults() {
   }
 
   // حساب النسب المئوية
-  results.passRate = results.totalTests > 0 ? Math.round((results.passedTests / results.totalTests) * 100) : 0;
-  results.failRate = results.totalTests > 0 ? Math.round((results.failedTests / results.totalTests) * 100) : 0;
-  results.skipRate = results.totalTests > 0 ? Math.round((results.skippedTests / results.totalTests) * 100) : 0;
+  results.passRate =
+    results.totalTests > 0
+      ? Math.round((results.passedTests / results.totalTests) * 100)
+      : 0;
+  results.failRate =
+    results.totalTests > 0
+      ? Math.round((results.failedTests / results.totalTests) * 100)
+      : 0;
+  results.skipRate =
+    results.totalTests > 0
+      ? Math.round((results.skippedTests / results.totalTests) * 100)
+      : 0;
 
   return results;
 }
@@ -104,24 +116,24 @@ function analyzeTestResults() {
 // تشغيل اختبارات محددة والحصول على الإحصائيات
 async function runTestWithStats(testPath, testName) {
   log(`🧪 Running ${testName} tests...`);
-  
+
   const startTime = Date.now();
-  
+
   try {
-    const output = execSync(`npx playwright test ${testPath} --reporter=json`, { 
+    const output = execSync(`npx playwright test ${testPath} --reporter=json`, {
       cwd: ROOT,
       stdio: 'pipe',
-      encoding: 'utf8'
+      encoding: 'utf8',
     });
-    
+
     const endTime = Date.now();
     const duration = endTime - startTime;
-    
+
     // تحليل المخرجات
     const lines = output.split('\n');
     let jsonOutput = '';
     let inJson = false;
-    
+
     for (const line of lines) {
       if (line.trim().startsWith('{')) {
         inJson = true;
@@ -130,15 +142,15 @@ async function runTestWithStats(testPath, testName) {
         jsonOutput += line + '\n';
       }
     }
-    
+
     let stats = {
       total: 0,
       passed: 0,
       failed: 0,
       skipped: 0,
-      duration: duration
+      duration: duration,
     };
-    
+
     try {
       const data = JSON.parse(jsonOutput);
       if (data.stats) {
@@ -148,7 +160,7 @@ async function runTestWithStats(testPath, testName) {
       // إذا فشل تحليل JSON، نحاول تحليل المخرجات النصية
       const passedMatches = output.match(/✓\s+(\d+)/g);
       const failedMatches = output.match(/✘\s+(\d+)/g);
-      
+
       if (passedMatches) {
         stats.passed = passedMatches.length;
       }
@@ -157,24 +169,26 @@ async function runTestWithStats(testPath, testName) {
       }
       stats.total = stats.passed + stats.failed;
     }
-    
-    const passRate = stats.total > 0 ? Math.round((stats.passed / stats.total) * 100) : 0;
-    
-    log(`✅ ${testName} completed: ${stats.passed}/${stats.total} passed (${passRate}%) in ${Math.round(duration/1000)}s`);
-    
+
+    const passRate =
+      stats.total > 0 ? Math.round((stats.passed / stats.total) * 100) : 0;
+
+    log(
+      `✅ ${testName} completed: ${stats.passed}/${stats.total} passed (${passRate}%) in ${Math.round(duration / 1000)}s`
+    );
+
     return {
       name: testName,
       ...stats,
       passRate,
-      success: stats.failed === 0
+      success: stats.failed === 0,
     };
-    
   } catch (error) {
     const endTime = Date.now();
     const duration = endTime - startTime;
-    
+
     log(`❌ ${testName} failed: ${error.message}`);
-    
+
     return {
       name: testName,
       total: 0,
@@ -184,7 +198,7 @@ async function runTestWithStats(testPath, testName) {
       duration: duration,
       passRate: 0,
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 }
@@ -192,14 +206,14 @@ async function runTestWithStats(testPath, testName) {
 // تشغيل جميع الاختبارات مع الإحصائيات
 async function runAllTestsWithStats() {
   log('🚀 Starting comprehensive test execution with statistics...');
-  
+
   const testSuites = [
     { path: 'tests/generated/playwright/', name: 'Playwright UI Tests' },
     { path: 'tests/generated/supawright/', name: 'Supawright DB Tests' },
     { path: 'tests/generated/integration/', name: 'Integration Tests' },
-    { path: 'tests/generated/edge-cases/', name: 'Edge Case Tests' }
+    { path: 'tests/generated/edge-cases/', name: 'Edge Case Tests' },
   ];
-  
+
   const results = {
     timestamp: new Date().toISOString(),
     suites: [],
@@ -209,15 +223,15 @@ async function runAllTestsWithStats() {
       failed: 0,
       skipped: 0,
       duration: 0,
-      passRate: 0
-    }
+      passRate: 0,
+    },
   };
-  
+
   // تشغيل كل مجموعة اختبارات
   for (const suite of testSuites) {
     const suiteResult = await runTestWithStats(suite.path, suite.name);
     results.suites.push(suiteResult);
-    
+
     // تحديث الإحصائيات العامة
     results.overall.total += suiteResult.total;
     results.overall.passed += suiteResult.passed;
@@ -225,23 +239,25 @@ async function runAllTestsWithStats() {
     results.overall.skipped += suiteResult.skipped;
     results.overall.duration += suiteResult.duration;
   }
-  
+
   // حساب النسبة المئوية العامة
-  results.overall.passRate = results.overall.total > 0 ? 
-    Math.round((results.overall.passed / results.overall.total) * 100) : 0;
-  
+  results.overall.passRate =
+    results.overall.total > 0
+      ? Math.round((results.overall.passed / results.overall.total) * 100)
+      : 0;
+
   // حفظ التقرير
   const reportPath = path.join(REPORTS, 'test_progress_report.json');
   fs.writeFileSync(reportPath, JSON.stringify(results, null, 2));
-  
+
   // إنشاء تقرير Markdown
   const markdownReport = generateMarkdownReport(results);
   const markdownPath = path.join(REPORTS, 'test_progress_report.md');
   fs.writeFileSync(markdownPath, markdownReport);
-  
+
   // عرض الإحصائيات
   displayProgressStats(results);
-  
+
   return results;
 }
 
@@ -258,18 +274,28 @@ function generateMarkdownReport(results) {
 
 ## 📈 Test Suite Breakdown
 
-${results.suites.map(suite => `
+${results.suites
+  .map(
+    suite => `
 ### ${suite.name}
 - **Status**: ${suite.success ? '✅ PASSED' : '❌ FAILED'}
 - **Tests**: ${suite.passed}/${suite.total} (${suite.passRate}%)
 - **Duration**: ${Math.round(suite.duration / 1000)}s
 ${suite.error ? `- **Error**: ${suite.error}` : ''}
-`).join('')}
+`
+  )
+  .join('')}
 
 ## 🎯 Progress Summary
-${results.overall.passRate >= 90 ? '🟢 Excellent' : 
-  results.overall.passRate >= 70 ? '🟡 Good' : 
-  results.overall.passRate >= 50 ? '🟠 Needs Improvement' : '🔴 Critical'}
+${
+  results.overall.passRate >= 90
+    ? '🟢 Excellent'
+    : results.overall.passRate >= 70
+      ? '🟡 Good'
+      : results.overall.passRate >= 50
+        ? '🟠 Needs Improvement'
+        : '🔴 Critical'
+}
 
 Generated at: ${results.timestamp}
 `;
@@ -280,20 +306,28 @@ function displayProgressStats(results) {
   console.log('\n🎯 TEST PROGRESS STATISTICS');
   console.log('=====================================');
   console.log(`📊 Total Tests: ${results.overall.total}`);
-  console.log(`✅ Passed: ${results.overall.passed} (${results.overall.passRate}%)`);
-  console.log(`❌ Failed: ${results.overall.failed} (${100 - results.overall.passRate}%)`);
+  console.log(
+    `✅ Passed: ${results.overall.passed} (${results.overall.passRate}%)`
+  );
+  console.log(
+    `❌ Failed: ${results.overall.failed} (${100 - results.overall.passRate}%)`
+  );
   console.log(`⏭️ Skipped: ${results.overall.skipped}`);
-  console.log(`⏱️ Total Duration: ${Math.round(results.overall.duration / 1000)}s`);
-  
+  console.log(
+    `⏱️ Total Duration: ${Math.round(results.overall.duration / 1000)}s`
+  );
+
   console.log('\n📈 Test Suite Breakdown:');
   console.log('------------------------');
-  
+
   results.suites.forEach(suite => {
     const status = suite.success ? '✅' : '❌';
     const duration = Math.round(suite.duration / 1000);
-    console.log(`${status} ${suite.name}: ${suite.passed}/${suite.total} (${suite.passRate}%) - ${duration}s`);
+    console.log(
+      `${status} ${suite.name}: ${suite.passed}/${suite.total} (${suite.passRate}%) - ${duration}s`
+    );
   });
-  
+
   console.log('\n🎯 Overall Status:');
   if (results.overall.passRate >= 90) {
     console.log('🟢 EXCELLENT - All tests passing!');
@@ -304,7 +338,7 @@ function displayProgressStats(results) {
   } else {
     console.log('🔴 CRITICAL - Many tests failing');
   }
-  
+
   console.log('=====================================\n');
 }
 
@@ -312,7 +346,7 @@ function displayProgressStats(results) {
 async function main() {
   try {
     const results = await runAllTestsWithStats();
-    
+
     // إنهاء البرنامج بناءً على النتائج
     if (results.overall.failed === 0) {
       log('🎉 All tests passed successfully!');
@@ -321,7 +355,6 @@ async function main() {
       log(`⚠️ ${results.overall.failed} tests failed`);
       process.exit(1);
     }
-    
   } catch (error) {
     log(`❌ Fatal error: ${error.message}`);
     process.exit(1);

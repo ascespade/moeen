@@ -15,16 +15,18 @@ test.describe('constants Module - Edge Cases', () => {
   test('constants - Empty data handling', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    
+
     // Test with empty forms
     const forms = page.locator('form');
     const formCount = await forms.count();
-    
+
     if (formCount > 0) {
       const form = forms.first();
-      const submitButton = form.locator('button[type="submit"], input[type="submit"]');
-      
-      if (await submitButton.count() > 0) {
+      const submitButton = form.locator(
+        'button[type="submit"], input[type="submit"]'
+      );
+
+      if ((await submitButton.count()) > 0) {
         await submitButton.click();
         await page.waitForLoadState('networkidle');
       }
@@ -34,11 +36,11 @@ test.describe('constants Module - Edge Cases', () => {
   test('constants - Large data handling', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    
+
     // Test with large input data
     const inputs = page.locator('input, textarea');
     const inputCount = await inputs.count();
-    
+
     if (inputCount > 0) {
       const input = inputs.first();
       const largeData = 'x'.repeat(10000);
@@ -50,11 +52,11 @@ test.describe('constants Module - Edge Cases', () => {
   test('constants - Special characters', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    
+
     // Test with special characters
     const inputs = page.locator('input, textarea');
     const inputCount = await inputs.count();
-    
+
     if (inputCount > 0) {
       const input = inputs.first();
       const specialChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
@@ -66,11 +68,11 @@ test.describe('constants Module - Edge Cases', () => {
   test('constants - Unicode characters', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    
+
     // Test with Unicode characters
     const inputs = page.locator('input, textarea');
     const inputCount = await inputs.count();
-    
+
     if (inputCount > 0) {
       const input = inputs.first();
       const unicodeChars = '🚀🌟💫⭐️🎉🎊🎈🎁🎂🎃';
@@ -82,14 +84,14 @@ test.describe('constants Module - Edge Cases', () => {
   test('constants - Rapid interactions', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    
+
     // Test rapid clicking
     const buttons = page.locator('button, a[href]');
     const buttonCount = await buttons.count();
-    
+
     if (buttonCount > 0) {
       const button = buttons.first();
-      
+
       // Rapid clicking
       for (let i = 0; i < 10; i++) {
         await button.click();
@@ -105,10 +107,10 @@ test.describe('constants Module - Edge Cases', () => {
         route.continue();
       }, 2000);
     });
-    
+
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    
+
     await expect(page.locator('body')).toBeVisible();
   });
 
@@ -117,16 +119,16 @@ test.describe('constants Module - Edge Cases', () => {
     for (let i = 0; i < 5; i++) {
       await page.goto('/');
       await page.waitForLoadState('networkidle');
-      
+
       const inputs = page.locator('input, textarea');
       const inputCount = await inputs.count();
-      
+
       if (inputCount > 0) {
         const input = inputs.first();
         await input.fill('test data ' + i);
       }
     }
-    
+
     await expect(page.locator('body')).toBeVisible();
   });
 
@@ -136,28 +138,28 @@ test.describe('constants Module - Edge Cases', () => {
       .from('_supabase_migrations')
       .select('*')
       .limit(1);
-    
+
     expect(error).toBeNull();
-    
+
     // Test with null values
     const { data: nullData, error: nullError } = await supabase
       .from('_supabase_migrations')
       .select('*')
       .is('id', null);
-    
+
     expect(nullError).toBeNull();
   });
 
   test('constants - Concurrent users', async ({ page }) => {
     // Simulate concurrent user interactions
     const promises = [];
-    
+
     for (let i = 0; i < 3; i++) {
       promises.push(
         page.goto('/').then(() => page.waitForLoadState('networkidle'))
       );
     }
-    
+
     await Promise.all(promises);
     await expect(page.locator('body')).toBeVisible();
   });
@@ -166,19 +168,19 @@ test.describe('constants Module - Edge Cases', () => {
     // Test browser compatibility features
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    
+
     // Test localStorage
     await page.evaluate(() => {
       localStorage.setItem('test', 'value');
       return localStorage.getItem('test');
     });
-    
+
     // Test sessionStorage
     await page.evaluate(() => {
       sessionStorage.setItem('test', 'value');
       return sessionStorage.getItem('test');
     });
-    
+
     await expect(page.locator('body')).toBeVisible();
   });
 });

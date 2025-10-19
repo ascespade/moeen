@@ -16,7 +16,7 @@ test.describe('theme Module - Playwright Tests', () => {
     // Test navigation to theme related pages
     const navLinks = page.locator('nav a, [role="navigation"] a');
     const count = await navLinks.count();
-    
+
     if (count > 0) {
       for (let i = 0; i < Math.min(count, 5); i++) {
         const link = navLinks.nth(i);
@@ -32,11 +32,11 @@ test.describe('theme Module - Playwright Tests', () => {
     // Test mobile viewport
     await page.setViewportSize({ width: 375, height: 667 });
     await expect(page.locator('body')).toBeVisible();
-    
+
     // Test tablet viewport
     await page.setViewportSize({ width: 768, height: 1024 });
     await expect(page.locator('body')).toBeVisible();
-    
+
     // Test desktop viewport
     await page.setViewportSize({ width: 1920, height: 1080 });
     await expect(page.locator('body')).toBeVisible();
@@ -46,15 +46,15 @@ test.describe('theme Module - Playwright Tests', () => {
     // Check for basic accessibility
     const headings = page.locator('h1, h2, h3, h4, h5, h6');
     const headingCount = await headings.count();
-    
+
     if (headingCount > 0) {
       await expect(headings.first()).toBeVisible();
     }
-    
+
     // Check for alt text on images
     const images = page.locator('img');
     const imageCount = await images.count();
-    
+
     if (imageCount > 0) {
       for (let i = 0; i < Math.min(imageCount, 3); i++) {
         const img = images.nth(i);
@@ -69,7 +69,7 @@ test.describe('theme Module - Playwright Tests', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     const loadTime = Date.now() - startTime;
-    
+
     // Page should load within 5 seconds
     expect(loadTime).toBeLessThan(5000);
   });
@@ -83,12 +83,12 @@ test.describe('theme Module - Playwright Tests', () => {
   test('theme - Form interactions', async ({ page }) => {
     const forms = page.locator('form');
     const formCount = await forms.count();
-    
+
     if (formCount > 0) {
       const form = forms.first();
       const inputs = form.locator('input, textarea, select');
       const inputCount = await inputs.count();
-      
+
       if (inputCount > 0) {
         for (let i = 0; i < Math.min(inputCount, 3); i++) {
           const input = inputs.nth(i);
@@ -108,10 +108,10 @@ test.describe('theme Module - Playwright Tests', () => {
         requests.push(request.url());
       }
     });
-    
+
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    
+
     // Check if API calls are made successfully
     const apiRequests = requests.filter(url => url.includes('/api/'));
     if (apiRequests.length > 0) {
@@ -123,11 +123,11 @@ test.describe('theme Module - Playwright Tests', () => {
     // Test if the page maintains state
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    
+
     // Check for any state indicators
     const stateElements = page.locator('[data-state], [data-testid*="state"]');
     const stateCount = await stateElements.count();
-    
+
     if (stateCount > 0) {
       await expect(stateElements.first()).toBeVisible();
     }
@@ -135,9 +135,11 @@ test.describe('theme Module - Playwright Tests', () => {
 
   test('theme - Internationalization', async ({ page }) => {
     // Test language switching if available
-    const langSelectors = page.locator('[data-lang], [data-testid*="lang"], select[name*="lang"]');
+    const langSelectors = page.locator(
+      '[data-lang], [data-testid*="lang"], select[name*="lang"]'
+    );
     const langCount = await langSelectors.count();
-    
+
     if (langCount > 0) {
       await expect(langSelectors.first()).toBeVisible();
     }

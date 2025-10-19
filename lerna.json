@@ -13,10 +13,7 @@
       "npmClientArgs": ["--no-package-lock"]
     }
   },
-  "packages": [
-    "packages/*",
-    "apps/*"
-  ],
+  "packages": ["packages/*", "apps/*"],
   "useWorkspaces": true,
   "stream": true,
   "concurrency": 4

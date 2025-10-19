@@ -13,13 +13,7 @@ export default defineConfig({
       'src/**/*.{test,spec}.{js,jsx,ts,tsx}',
       'tests/**/*.{test,spec}.{js,jsx,ts,tsx}',
     ],
-    exclude: [
-      'node_modules',
-      'dist',
-      '.next',
-      'tests/generated',
-      'reports',
-    ],
+    exclude: ['node_modules', 'dist', '.next', 'tests/generated', 'reports'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
