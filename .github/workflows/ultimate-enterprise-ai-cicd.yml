@@ -17,30 +17,30 @@ on:
         default: 'full'
         type: choice
         options:
-          - full # Complete AI-powered pipeline
-          - analysis # AI analysis only
-          - build_test # Build and test only
-          - healing # Self-healing only
-          - monitoring # Monitoring and reporting only
+          - full
+          - analysis
+          - build_test
+          - healing
+          - monitoring
       ai_models:
         description: 'AI Models to Use'
         required: false
         default: 'all'
         type: choice
         options:
-          - all # All AI models
-          - openai # OpenAI only
-          - cursor # Cursor only
-          - custom # Custom models only
+          - all
+          - openai
+          - cursor
+          - custom
       healing_level:
         description: 'Self-Healing Level'
         required: false
         default: 'aggressive'
         type: choice
         options:
-          - conservative # Minimal changes
-          - balanced # Moderate changes
-          - aggressive # Maximum healing
+          - conservative
+          - balanced
+          - aggressive
       enable_learning:
         description: 'Enable AI Learning'
         required: false
@@ -72,8 +72,6 @@ env:
   BUILD_OPTIMIZATION: true
   PARALLEL_EXECUTION: true
   CACHE_STRATEGY: intelligent
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
 
   # Monitoring Settings
   REAL_TIME_MONITORING: true
@@ -126,26 +124,23 @@ jobs:
 
       - name: 🧠 Initialize AI System
         id: init
-        env:
-          OPENAI_API_KEY: ${{ env.OPENAI_API_KEY }}
-          CURSOR_API_KEY: ${{ env.CURSOR_API_KEY }}
         run: |
           echo "🧠 Initializing Ultimate Enterprise AI System..."
 
           # Check AI model availability
-          if [ -n "$OPENAI_API_KEY" ]; then
+          if [ -n "${{ secrets.OPENAI_API_KEY }}" ]; then
             echo "✅ OpenAI API available"
             echo "openai-available=true" >> $GITHUB_OUTPUT
           else
-            echo "❌ OpenAI API not available"
+            echo "⚠️ OpenAI API not available"
             echo "openai-available=false" >> $GITHUB_OUTPUT
           fi
 
-          if [ -n "$CURSOR_API_KEY" ]; then
+          if [ -n "${{ secrets.CURSOR_API_KEY }}" ]; then
             echo "✅ Cursor API available"
             echo "cursor-available=true" >> $GITHUB_OUTPUT
           else
-            echo "❌ Cursor API not available"
+            echo "⚠️ Cursor API not available"
             echo "cursor-available=false" >> $GITHUB_OUTPUT
           fi
 
