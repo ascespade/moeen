@@ -19,7 +19,8 @@ async function globalSetup(config: FullConfig) {
     const page = await browser.newPage();
 
     // Wait for application to be ready
-    await page.goto(config.projects[0].use.baseURL || 'http://localhost:3000');
+    const baseURL = config.projects?.[0]?.use?.baseURL || 'http://localhost:3000';
+    await page.goto(baseURL);
     await page.waitForLoadState('networkidle');
 
     // Setup test data

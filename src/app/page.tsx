@@ -1,3 +1,5 @@
+'use client';
+
 export default function HomePage() {
   return (
     <div
@@ -123,12 +125,14 @@ export default function HomePage() {
                 transform: 'scale(1)',
               }}
               onMouseOver={e => {
-                e.target.style.transform = 'scale(1.05) translateY(-2px)';
-                e.target.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
+                const target = e.target as HTMLButtonElement;
+                target.style.transform = 'scale(1.05) translateY(-2px)';
+                target.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
               }}
               onMouseOut={e => {
-                e.target.style.transform = 'scale(1)';
-                e.target.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
+                const target = e.target as HTMLButtonElement;
+                target.style.transform = 'scale(1)';
+                target.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
               }}
             >
               Start Testing
@@ -148,12 +152,14 @@ export default function HomePage() {
                 backdropFilter: 'blur(10px)',
               }}
               onMouseOver={e => {
-                e.target.style.transform = 'scale(1.05) translateY(-2px)';
-                e.target.style.background = 'rgba(255, 255, 255, 0.9)';
+                const target = e.target as HTMLButtonElement;
+                target.style.transform = 'scale(1.05) translateY(-2px)';
+                target.style.background = 'rgba(255, 255, 255, 0.9)';
               }}
               onMouseOut={e => {
-                e.target.style.transform = 'scale(1)';
-                e.target.style.background = 'rgba(255, 255, 255, 0.8)';
+                const target = e.target as HTMLButtonElement;
+                target.style.transform = 'scale(1)';
+                target.style.background = 'rgba(255, 255, 255, 0.8)';
               }}
             >
               View Analytics
@@ -183,12 +189,14 @@ export default function HomePage() {
               cursor: 'pointer',
             }}
             onMouseOver={e => {
-              e.target.style.transform = 'scale(1.02) translateY(-4px)';
-              e.target.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
+              const target = e.target as HTMLDivElement;
+              target.style.transform = 'scale(1.02) translateY(-4px)';
+              target.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
             }}
             onMouseOut={e => {
-              e.target.style.transform = 'scale(1)';
-              e.target.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
+              const target = e.target as HTMLDivElement;
+              target.style.transform = 'scale(1)';
+              target.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
             }}
           >
             <div
@@ -247,12 +255,14 @@ export default function HomePage() {
               cursor: 'pointer',
             }}
             onMouseOver={e => {
-              e.target.style.transform = 'scale(1.02) translateY(-4px)';
-              e.target.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
+              const target = e.target as HTMLDivElement;
+              target.style.transform = 'scale(1.02) translateY(-4px)';
+              target.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
             }}
             onMouseOut={e => {
-              e.target.style.transform = 'scale(1)';
-              e.target.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
+              const target = e.target as HTMLDivElement;
+              target.style.transform = 'scale(1)';
+              target.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
             }}
           >
             <div
@@ -311,12 +321,14 @@ export default function HomePage() {
               cursor: 'pointer',
             }}
             onMouseOver={e => {
-              e.target.style.transform = 'scale(1.02) translateY(-4px)';
-              e.target.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
+              const target = e.target as HTMLDivElement;
+              target.style.transform = 'scale(1.02) translateY(-4px)';
+              target.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
             }}
             onMouseOut={e => {
-              e.target.style.transform = 'scale(1)';
-              e.target.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
+              const target = e.target as HTMLDivElement;
+              target.style.transform = 'scale(1)';
+              target.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
             }}
           >
             <div

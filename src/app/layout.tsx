@@ -1,5 +1,6 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next';
+import { I18nProvider } from '@/components/providers/I18nProvider';
 // import './globals.css';
 
 export const metadata: Metadata = {
@@ -9,8 +10,6 @@ export const metadata: Metadata = {
   keywords:
     'E2E testing, Playwright, Supawright, auto-healing, testing automation, AI testing',
   authors: [{ name: 'Ultimate E2E Team' }],
-  viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#f8fafc',
   openGraph: {
     title: 'Ultimate E2E Self-Healing Runner',
     description: 'Comprehensive testing system with Playwright and Supawright',
@@ -26,6 +25,12 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#f8fafc',
 };
 
 export default function RootLayout({
@@ -49,7 +54,9 @@ export default function RootLayout({
         />
       </head>
       <body className='antialiased font-inter bg-slate-50 text-slate-900'>
-        {children}
+        <I18nProvider>
+          {children}
+        </I18nProvider>
       </body>
     </html>
   );
