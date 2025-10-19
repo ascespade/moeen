@@ -3,27 +3,57 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { doctorId, appointmentTime, patientId, conversationId, notes } =
+    const { doctorId, appointmentTime, patientId, conversationId, notes, patientName, patientPhone } =
       await request.json();
 
-    if (!doctorId || !appointmentTime || !patientId) {
+    if (!doctorId || !appointmentTime) {
       return NextResponse.json(
-        { error: 'Doctor ID, appointment time, and patient ID are required' },
+        { error: 'Doctor ID and appointment time are required' },
         { status: 400 }
       );
     }
 
     const supabase = await createClient();
 
-    // التحقق من وجود المريض
-    const { data: patient, error: patientError } = await supabase
-      .from('patients')
-      .select('*')
-      .eq('user_id', patientId)
-      .single();
-
-    if (patientError || !patient) {
-      return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
+    // البحث عن المريض بالهاتف أو إنشاء مريض جديد
+    let patient;
+    if (patientId) {
+      const { data: existingPatient, error: patientError } = await supabase
+        .from('patients')
+        .select('*')
+        .eq('id', patientId)
+        .single();
+      
+      if (patientError || !existingPatient) {
+        return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
+      }
+      patient = existingPatient;
+    } else {
+      // إنشاء مريض جديد
+      const { data: newPatient, error: createError } = await supabase
+        .from('patients')
+        .insert({
+          first_name: patientName.split(' ')[0] || 'غير محدد',
+          last_name: patientName.split(' ').slice(1).join(' ') || 'غير محدد',
+          phone: patientPhone,
+          email: `${patientPhone}_${Date.now()}@temp.com`,
+          public_id: `TEMP_${Date.now()}`,
+          user_id: '550e8400-e29b-41d4-a716-446655440001', // Default admin user
+          created_by: '550e8400-e29b-41d4-a716-446655440001',
+          updated_by: '550e8400-e29b-41d4-a716-446655440001'
+        })
+        .select()
+        .single();
+      
+      if (createError) {
+        console.error('Patient creation error:', createError);
+        return NextResponse.json({ error: 'Failed to create patient: ' + createError.message }, { status: 500 });
+      }
+      
+      if (!newPatient) {
+        return NextResponse.json({ error: 'Failed to create patient: No data returned' }, { status: 500 });
+      }
+      patient = newPatient;
     }
 
     // التحقق من وجود الطبيب
@@ -91,15 +121,16 @@ export async function POST(request: NextRequest) {
         doctors!appointments_doctor_id_fkey(
           first_name,
           last_name,
-          specialty
+          specialization
         )
       `
       )
       .single();
 
     if (appointmentError) {
+      console.error('Appointment creation error:', appointmentError);
       return NextResponse.json(
-        { error: 'Failed to create appointment' },
+        { error: 'Failed to create appointment: ' + appointmentError.message },
         { status: 500 }
       );
     }
@@ -171,7 +202,7 @@ export async function GET(request: NextRequest) {
         doctors!appointments_doctor_id_fkey(
           first_name,
           last_name,
-          specialty
+          specialization
         )
       `
       )

@@ -1,48 +1,41 @@
-'use client';
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import useI18n from '@/hooks/useI18n';
+"use client";
+import { createContext, useContext, ReactNode } from 'react';
 
-type Ctx = {
-  t: (k: string, f?: string) => string;
-  locale: 'ar' | 'en';
-  loading: boolean;
-};
-const I18nCtx = createContext<Ctx | null>(null);
+interface I18nContextType {
+  t: (key: string, fallback?: string) => string;
+  language: string;
+  direction: 'ltr' | 'rtl';
+}
 
-export function I18nProvider({
-  locale: localeProp,
-  ns = 'common',
-  children,
-}: {
-  locale?: 'ar' | 'en';
-  ns?: string;
-  children: React.ReactNode;
-}) {
-  const [resolvedLocale, setResolvedLocale] = useState<'ar' | 'en'>(
-    localeProp || 'ar'
+const I18nContext = createContext<I18nContextType | undefined>(undefined);
+
+interface I18nProviderProps {
+  children: ReactNode;
+}
+
+export function I18nProvider({ children }: I18nProviderProps) {
+  const t = (key: string, fallback?: string) => {
+    // Simple translation function - in real app, this would use a proper i18n library
+    return fallback || key;
+  };
+
+  const value = {
+    t,
+    language: 'ar',
+    direction: 'rtl' as const,
+  };
+
+  return (
+    <I18nContext.Provider value={value}>
+      {children}
+    </I18nContext.Provider>
   );
-  useEffect(() => {
-    // try to derive from <html lang>
-    const lang =
-      typeof document !== 'undefined'
-        ? document.documentElement.getAttribute('lang')
-        : null;
-    if (lang === 'en') setResolvedLocale('en');
-    else setResolvedLocale(localeProp || 'ar');
-  }, [localeProp]);
-
-  const { t, loading } = useI18n(resolvedLocale, ns);
-  const value = useMemo(
-    () => ({ t, locale: resolvedLocale, loading }),
-    [t, resolvedLocale, loading]
-  );
-  return <I18nCtx.Provider value={value}>{children}</I18nCtx.Provider>;
 }
 
 export function useT() {
-  const ctx = useContext(I18nCtx);
-  if (!ctx) throw new Error('useT must be used within I18nProvider');
-  return ctx;
+  const context = useContext(I18nContext);
+  if (context === undefined) {
+    throw new Error('useT must be used within an I18nProvider');
+  }
+  return context;
 }
-
-export default I18nProvider;

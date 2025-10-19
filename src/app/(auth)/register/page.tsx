@@ -176,7 +176,7 @@ export default function RegisterPage() {
         {/* Form */}
         <div className='card p-8'>
           {errors.general && (
-            <div className='mb-6 rounded-lg border border-red-200 bg-surface p-4 text-red-700'>
+            <div className='mb-6 rounded-lg border border-[var(--brand-error)]/20 bg-surface p-4 text-[var(--brand-error)]'>
               {errors.general}
             </div>
           )}

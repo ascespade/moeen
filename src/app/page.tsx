@@ -1,531 +1,330 @@
-'use client';
+"use client";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import DynamicContactInfo from "@/components/dynamic-contact-info";
+
+// Hero Slider Data
+const heroSlides = [
+  {
+    id: 1,
+    title: "مرحباً بك في مُعين",
+    subtitle: "منصة الرعاية الصحية المتخصصة",
+    description:
+      "نقدم خدمات متكاملة للرعاية الصحية مع أحدث التقنيات والذكاء الاصطناعي",
+    cta: "اكتشف خدماتنا",
+    ctaLink: "#services",
+  },
+  {
+    id: 2,
+    title: "إدارة المواعيد الذكية",
+    subtitle: "نظام تقويم متطور",
+    description:
+      "احجز مواعيدك بسهولة مع نظام التقويم الذكي وإدارة الجلسات العلاجية",
+    cta: "احجز موعدك",
+    ctaLink: "/appointments",
+  },
+  {
+    id: 3,
+    title: "شات بوت ذكي",
+    subtitle: "مساعدك الصحي الشخصي",
+    description:
+      "احصل على إجابات فورية لاستفساراتك الصحية مع الذكاء الاصطناعي المتقدم",
+    cta: "جرب الشات بوت",
+    ctaLink: "/chatbot",
+  },
+];
+
+// Services Data
+const services = [
+  {
+    id: 1,
+    title: "إدارة المواعيد",
+    description: "نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية",
+    icon: "📅",
+    color: "text-[var(--brand-accent)]",
+    bgColor: "bg-[var(--brand-accent)]/10",
+  },
+  {
+    id: 2,
+    title: "إدارة المرضى",
+    description: "ملفات مرضى شاملة مع سجل طبي مفصل",
+    icon: "👤",
+    color: "text-[var(--brand-success)]",
+    bgColor: "bg-[var(--brand-success)]/10",
+  },
+  {
+    id: 3,
+    title: "المطالبات التأمينية",
+    description: "إدارة وتتبع المطالبات التأمينية بسهولة",
+    icon: "📋",
+    color: "text-purple-600",
+    bgColor: "bg-purple-50",
+  },
+  {
+    id: 4,
+    title: "الشات بوت الذكي",
+    description: "مساعد ذكي للرد على استفسارات المرضى",
+    icon: "🤖",
+    color: "text-[var(--brand-primary)]",
+    bgColor: "bg-[var(--brand-primary)]/10",
+  },
+  {
+    id: 5,
+    title: "إدارة الموظفين",
+    description: "تتبع ساعات العمل والأداء للموظفين",
+    icon: "👨‍⚕️",
+    color: "text-[var(--brand-error)]",
+    bgColor: "bg-[var(--brand-error)]/10",
+  },
+  {
+    id: 6,
+    title: "التقارير والتحليلات",
+    description: "تقارير شاملة وإحصائيات مفصلة",
+    icon: "📊",
+    color: "text-indigo-600",
+    bgColor: "bg-indigo-50",
+  },
+];
+
+// Stats Data
+const stats = [
+  { id: 1, value: "1,247", label: "مريض نشط", icon: "👥" },
+  { id: 2, value: "3,421", label: "موعد مكتمل", icon: "📅" },
+  { id: 3, value: "98%", label: "معدل الرضا", icon: "⭐" },
+  { id: 4, value: "24/7", label: "دعم فني", icon: "🛠️" },
+];
 
 export default function HomePage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [centerInfo, setCenterInfo] = useState<any>(null);
+  const [stats, setStats] = useState<any[]>([]);
+
+  // Auto-rotate hero slides
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // جلب البيانات الديناميكية
+  useEffect(() => {
+    fetchDynamicData();
+  }, []);
+
+  const fetchDynamicData = async () => {
+    try {
+      // جلب معلومات المركز والإحصائيات
+      const response = await fetch('/api/dynamic-data?type=all');
+      const data = await response.json();
+
+      if (data.center_info) {
+        setCenterInfo(data.center_info);
+      }
+
+      // إنشاء إحصائيات ديناميكية
+      const dynamicStats = [
+        { id: 1, value: data.patients?.length || "0", label: "مريض نشط", icon: "👥" },
+        { id: 2, value: data.doctors?.length || "0", label: "طبيب متخصص", icon: "👨‍⚕️" },
+        { id: 3, value: "98%", label: "معدل الرضا", icon: "⭐" },
+        { id: 4, value: "24/7", label: "دعم فني", icon: "🛠️" },
+      ];
+      setStats(dynamicStats);
+    } catch (error) {
+      console.error('Error fetching dynamic data:', error);
+      // استخدام الإحصائيات الافتراضية في حالة الخطأ
+      setStats([
+        { id: 1, value: "1,247", label: "مريض نشط", icon: "👥" },
+        { id: 2, value: "3,421", label: "موعد مكتمل", icon: "📅" },
+        { id: 3, value: "98%", label: "معدل الرضا", icon: "⭐" },
+        { id: 4, value: "24/7", label: "دعم فني", icon: "🛠️" },
+      ]);
+    }
+  };
+
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background:
-          'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #fef3c7 100%)',
-        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
-        padding: '2rem',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-    >
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Elements */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '-10rem',
-          right: '-10rem',
-          width: '20rem',
-          height: '20rem',
-          background:
-            'linear-gradient(135deg, rgba(251, 191, 36, 0.3) 0%, rgba(251, 146, 60, 0.2) 100%)',
-          borderRadius: '50%',
-          filter: 'blur(3rem)',
-          animation: 'pulse 4s ease-in-out infinite',
-        }}
-      ></div>
-
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '-10rem',
-          left: '-10rem',
-          width: '24rem',
-          height: '24rem',
-          background:
-            'linear-gradient(45deg, rgba(16, 185, 129, 0.2) 0%, rgba(20, 184, 166, 0.2) 100%)',
-          borderRadius: '50%',
-          filter: 'blur(3rem)',
-          animation: 'pulse 4s ease-in-out infinite 1s',
-        }}
-      ></div>
-
-      {/* Main Content */}
-      <div
-        style={{
-          position: 'relative',
-          zIndex: 10,
-          maxWidth: '1200px',
-          margin: '0 auto',
-        }}
-      >
-        {/* Hero Section */}
-        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <h1
-            style={{
-              fontSize: '4rem',
-              fontWeight: '900',
-              background:
-                'linear-gradient(135deg, #1e293b 0%, #475569 50%, #64748b 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              marginBottom: '1rem',
-              lineHeight: '1.1',
-            }}
-          >
-            Ultimate E2E
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-[var(--brand-primary)]/5"></div>
+        <div className="absolute top-20 left-20 w-72 h-72 bg-[var(--brand-primary)]/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-[var(--brand-secondary)]/10 rounded-full blur-3xl"></div>
+        
+        <div className="container-app relative z-10">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6">
+              {heroSlides[currentSlide].title}
           </h1>
-          <h2
-            style={{
-              fontSize: '3rem',
-              fontWeight: '700',
-              background:
-                'linear-gradient(135deg, #d97706 0%, #ea580c 50%, #dc2626 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              marginBottom: '2rem',
-            }}
-          >
-            Self-Healing Runner
+            <h2 className="text-2xl md:text-3xl text-[var(--brand-primary)] mb-6">
+              {heroSlides[currentSlide].subtitle}
           </h2>
-          <p
-            style={{
-              fontSize: '1.5rem',
-              color: '#475569',
-              marginBottom: '3rem',
-              maxWidth: '800px',
-              margin: '0 auto 3rem',
-              lineHeight: '1.6',
-            }}
-          >
-            Comprehensive testing system with Playwright and Supawright.
-            <strong style={{ color: '#1e293b' }}>
-              {' '}
-              Automatically detect, fix, and prevent issues
-            </strong>{' '}
-            with AI-powered healing.
-          </p>
-
-          {/* CTA Buttons */}
-          <div
-            style={{
-              display: 'flex',
-              gap: '1.5rem',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              marginBottom: '4rem',
-            }}
-          >
-            <button
-              style={{
-                padding: '1rem 2rem',
-                background: 'linear-gradient(135deg, #1e293b 0%, #475569 100%)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '1rem',
-                fontSize: '1.125rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-                transition: 'all 0.3s ease',
-                transform: 'scale(1)',
-              }}
-              onMouseOver={e => {
-                const target = e.target as HTMLButtonElement;
-                target.style.transform = 'scale(1.05) translateY(-2px)';
-                target.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
-              }}
-              onMouseOut={e => {
-                const target = e.target as HTMLButtonElement;
-                target.style.transform = 'scale(1)';
-                target.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
-              }}
-            >
-              Start Testing
-            </button>
-            <button
-              style={{
-                padding: '1rem 2rem',
-                background: 'rgba(255, 255, 255, 0.8)',
-                color: '#1e293b',
-                border: '1px solid rgba(148, 163, 184, 0.3)',
-                borderRadius: '1rem',
-                fontSize: '1.125rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-                transition: 'all 0.3s ease',
-                backdropFilter: 'blur(10px)',
-              }}
-              onMouseOver={e => {
-                const target = e.target as HTMLButtonElement;
-                target.style.transform = 'scale(1.05) translateY(-2px)';
-                target.style.background = 'rgba(255, 255, 255, 0.9)';
-              }}
-              onMouseOut={e => {
-                const target = e.target as HTMLButtonElement;
-                target.style.transform = 'scale(1)';
-                target.style.background = 'rgba(255, 255, 255, 0.8)';
-              }}
-            >
-              View Analytics
-            </button>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              {heroSlides[currentSlide].description}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href={heroSlides[currentSlide].ctaLink}
+                className="btn btn-brand btn-lg"
+              >
+                {heroSlides[currentSlide].cta}
+              </Link>
+              <Link
+                href="/features"
+                className="btn btn-outline btn-lg"
+              >
+                تعرف على المزيد
+              </Link>
+            </div>
           </div>
         </div>
 
-        {/* Features Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '2rem',
-            marginBottom: '4rem',
-          }}
-        >
-          {/* Feature 1 */}
-          <div
-            style={{
-              background: 'rgba(255, 255, 255, 0.6)',
-              backdropFilter: 'blur(20px)',
-              borderRadius: '1.5rem',
-              padding: '2rem',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-              transition: 'all 0.3s ease',
-              cursor: 'pointer',
-            }}
-            onMouseOver={e => {
-              const target = e.target as HTMLDivElement;
-              target.style.transform = 'scale(1.02) translateY(-4px)';
-              target.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
-            }}
-            onMouseOut={e => {
-              const target = e.target as HTMLDivElement;
-              target.style.transform = 'scale(1)';
-              target.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
-            }}
-          >
-            <div
-              style={{
-                width: '4rem',
-                height: '4rem',
-                background: 'linear-gradient(135deg, #10b981 0%, #14b8a6 100%)',
-                borderRadius: '1rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: '1.5rem',
-              }}
-            >
-              <svg
-                width='32'
-                height='32'
-                fill='none'
-                stroke='white'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
-                />
-              </svg>
+        {/* Slide Indicators */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all ${
+                index === currentSlide
+                  ? 'bg-[var(--brand-primary)]'
+                  : 'bg-gray-300 hover:bg-gray-400'
+              }`}
+            />
+          ))}
             </div>
-            <h3
-              style={{
-                fontSize: '1.5rem',
-                fontWeight: '700',
-                color: '#1e293b',
-                marginBottom: '1rem',
-              }}
-            >
-              Auto-Healing
-            </h3>
-            <p style={{ color: '#475569', lineHeight: '1.6' }}>
-              Automatically detect and fix issues using AI-powered analysis and
-              smart suggestions.
-            </p>
-          </div>
+      </section>
 
-          {/* Feature 2 */}
-          <div
-            style={{
-              background: 'rgba(255, 255, 255, 0.6)',
-              backdropFilter: 'blur(20px)',
-              borderRadius: '1.5rem',
-              padding: '2rem',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-              transition: 'all 0.3s ease',
-              cursor: 'pointer',
-            }}
-            onMouseOver={e => {
-              const target = e.target as HTMLDivElement;
-              target.style.transform = 'scale(1.02) translateY(-4px)';
-              target.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
-            }}
-            onMouseOut={e => {
-              const target = e.target as HTMLDivElement;
-              target.style.transform = 'scale(1)';
-              target.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
-            }}
-          >
-            <div
-              style={{
-                width: '4rem',
-                height: '4rem',
-                background: 'linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%)',
-                borderRadius: '1rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: '1.5rem',
-              }}
-            >
-              <svg
-                width='32'
-                height='32'
-                fill='none'
-                stroke='white'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M13 10V3L4 14h7v7l9-11h-7z'
-                />
-              </svg>
-            </div>
-            <h3
-              style={{
-                fontSize: '1.5rem',
-                fontWeight: '700',
-                color: '#1e293b',
-                marginBottom: '1rem',
-              }}
-            >
-              Parallel Testing
-            </h3>
-            <p style={{ color: '#475569', lineHeight: '1.6' }}>
-              Run multiple test suites in parallel with intelligent resource
-              management.
-            </p>
-          </div>
-
-          {/* Feature 3 */}
-          <div
-            style={{
-              background: 'rgba(255, 255, 255, 0.6)',
-              backdropFilter: 'blur(20px)',
-              borderRadius: '1.5rem',
-              padding: '2rem',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-              transition: 'all 0.3s ease',
-              cursor: 'pointer',
-            }}
-            onMouseOver={e => {
-              const target = e.target as HTMLDivElement;
-              target.style.transform = 'scale(1.02) translateY(-4px)';
-              target.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
-            }}
-            onMouseOut={e => {
-              const target = e.target as HTMLDivElement;
-              target.style.transform = 'scale(1)';
-              target.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
-            }}
-          >
-            <div
-              style={{
-                width: '4rem',
-                height: '4rem',
-                background: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
-                borderRadius: '1rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: '1.5rem',
-              }}
-            >
-              <svg
-                width='32'
-                height='32'
-                fill='none'
-                stroke='white'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
-                />
-              </svg>
-            </div>
-            <h3
-              style={{
-                fontSize: '1.5rem',
-                fontWeight: '700',
-                color: '#1e293b',
-                marginBottom: '1rem',
-              }}
-            >
-              Advanced Analytics
-            </h3>
-            <p style={{ color: '#475569', lineHeight: '1.6' }}>
-              Get deep insights into test performance and system health.
-            </p>
-          </div>
-        </div>
-
-        {/* Stats Section */}
-        <div
-          style={{
-            background: 'rgba(255, 255, 255, 0.4)',
-            backdropFilter: 'blur(20px)',
-            borderRadius: '1.5rem',
-            padding: '3rem',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-            marginBottom: '4rem',
-          }}
-        >
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2
-              style={{
-                fontSize: '2.5rem',
-                fontWeight: '700',
-                color: '#1e293b',
-                marginBottom: '1rem',
-              }}
-            >
-              System Statistics
+      {/* Services Section */}
+      <section id="services" className="py-20 bg-[var(--brand-surface)]">
+        <div className="container-app">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-4">
+              خدماتنا المتكاملة
             </h2>
-            <p style={{ fontSize: '1.25rem', color: '#475569' }}>
-              Real-time performance metrics and insights
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              نقدم حلولاً شاملة لإدارة المراكز الصحية مع أحدث التقنيات
             </p>
           </div>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '2rem',
-            }}
-          >
-            <div style={{ textAlign: 'center' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service) => (
               <div
-                style={{
-                  fontSize: '3rem',
-                  fontWeight: '900',
-                  background:
-                    'linear-gradient(135deg, #10b981 0%, #14b8a6 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  marginBottom: '0.5rem',
-                }}
+                key={service.id}
+                className="card card-interactive p-8 text-center group"
               >
-                560
-              </div>
-              <div style={{ color: '#475569', fontWeight: '500' }}>
-                Total Tests
-              </div>
+                <div className={`h-16 w-16 ${service.bgColor} mx-auto mb-6 flex items-center justify-center rounded-full text-3xl transition-transform group-hover:scale-110 ${service.color}`}>
+                  {service.icon}
             </div>
-            <div style={{ textAlign: 'center' }}>
-              <div
-                style={{
-                  fontSize: '3rem',
-                  fontWeight: '900',
-                  background:
-                    'linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  marginBottom: '0.5rem',
-                }}
+                <h3 className="text-xl font-bold text-foreground mb-4">
+                  {service.title}
+            </h3>
+                <p className="text-muted-foreground">
+                  {service.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20">
+        <div className="container-app">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {(stats.length > 0 ? stats : [
+              { id: 1, value: "1,247", label: "مريض نشط", icon: "👥" },
+              { id: 2, value: "3,421", label: "موعد مكتمل", icon: "📅" },
+              { id: 3, value: "98%", label: "معدل الرضا", icon: "⭐" },
+              { id: 4, value: "24/7", label: "دعم فني", icon: "🛠️" },
+            ]).map((stat) => (
+              <div key={stat.id} className="text-center">
+                <div className="text-4xl mb-2">{stat.icon}</div>
+                <div className="text-3xl font-bold text-[var(--brand-primary)] mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-muted-foreground">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">
+        <div className="container-app text-center">
+          <h2 className="text-4xl font-bold text-white mb-4">
+            ابدأ رحلتك معنا اليوم
+          </h2>
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            انضم إلى آلاف الأطباء والمراكز الصحية الذين يثقون في منصة مُعين
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/register"
+              className="btn btn-lg bg-white text-[var(--brand-primary)] hover:bg-gray-100"
+            >
+              إنشاء حساب مجاني
+            </Link>
+            <Link
+              href="/contact"
+              className="btn btn-outline btn-lg border-white text-white hover:bg-white hover:text-[var(--brand-primary)]"
+            >
+              تواصل معنا
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* About Moeen Section */}
+      <section className="py-20">
+        <div className="container-app">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-4xl font-bold text-foreground mb-6">
+                عن مُعين
+              </h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                مُعين هو مساعدك الذكي في الرعاية الصحية، مصمم خصيصاً لمراكز العلاج الطبيعي 
+                والوظيفي في المملكة العربية السعودية. نحن نقدم حلولاً متكاملة لإدارة المرضى 
+                والمواعيد والمطالبات التأمينية.
+              </p>
+              <p className="text-lg text-muted-foreground mb-8">
+                مع أكثر من 1000 مريض نشط و 98% معدل رضا، نحن نثق في قدرتنا على 
+                تحسين جودة الرعاية الصحية التي تقدمها.
+              </p>
+              <Link
+                href="/about"
+                className="btn btn-brand btn-lg"
               >
-                448
-              </div>
-              <div style={{ color: '#475569', fontWeight: '500' }}>
-                Passed Tests
-              </div>
+                ابدأ الآن
+              </Link>
             </div>
-            <div style={{ textAlign: 'center' }}>
-              <div
-                style={{
-                  fontSize: '3rem',
-                  fontWeight: '900',
-                  background:
-                    'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  marginBottom: '0.5rem',
-                }}
-              >
-                80%
-              </div>
-              <div style={{ color: '#475569', fontWeight: '500' }}>
-                Success Rate
-              </div>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <div
-                style={{
-                  fontSize: '3rem',
-                  fontWeight: '900',
-                  background:
-                    'linear-gradient(135deg, #ec4899 0%, #f472b6 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  marginBottom: '0.5rem',
-                }}
-              >
-                16
-              </div>
-              <div style={{ color: '#475569', fontWeight: '500' }}>
-                Modules Tested
+            <div className="relative">
+              <div className="aspect-square bg-gradient-to-br from-[var(--brand-primary)]/20 to-[var(--brand-secondary)]/20 rounded-2xl flex items-center justify-center">
+                <div className="text-8xl">🤖</div>
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Status Indicator */}
-        <div style={{ textAlign: 'center' }}>
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.75rem',
-              background: 'rgba(255, 255, 255, 0.6)',
-              backdropFilter: 'blur(20px)',
-              borderRadius: '9999px',
-              padding: '0.75rem 1.5rem',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-            }}
-          >
-            <div
-              style={{
-                width: '0.75rem',
-                height: '0.75rem',
-                background: '#10b981',
-                borderRadius: '50%',
-                animation: 'pulse 2s ease-in-out infinite',
-              }}
-            ></div>
-            <span style={{ color: '#374151', fontWeight: '500' }}>
-              System Online & Ready
-            </span>
+      {/* Contact Section - Dynamic */}
+      <section className="py-20 bg-[var(--brand-surface)]">
+        <div className="container-app">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-4">
+              تواصل معنا
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              نحن هنا لمساعدتك في أي وقت
+            </p>
           </div>
-        </div>
-      </div>
 
-      <style jsx>{`
-        @keyframes pulse {
-          0%,
-          100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.5;
-          }
-        }
-      `}</style>
+          {/* استخدام المكون الديناميكي */}
+          <DynamicContactInfo />
+        </div>
+      </section>
     </div>
   );
 }

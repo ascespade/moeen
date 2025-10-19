@@ -1,7 +1,9 @@
 // next.config.js
+import bundleAnalyzer from '@next/bundle-analyzer';
+
 const withBundleAnalyzer =
   process.env.ANALYZE === 'true'
-    ? require('@next/bundle-analyzer')({ enabled: true })
+    ? bundleAnalyzer({ enabled: true })
     : config => config;
 
 /** @type {import('next').NextConfig} */
@@ -124,4 +126,4 @@ const nextConfig = {
   output: 'standalone',
 };
 
-module.exports = withBundleAnalyzer(nextConfig);
+export default withBundleAnalyzer(nextConfig);

@@ -1,59 +1,63 @@
-/**
- * Language Switcher Component
- * مبدل اللغة مع دعم RTL
- */
+"use client";
+import { useState } from "react";
+import { Languages } from "lucide-react";
 
-'use client';
+interface LanguageSwitcherProps {
+  variant?: 'button' | 'dropdown';
+  showLabel?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+}
 
-import { useState, useEffect } from 'react';
-import { Globe } from 'lucide-react';
-
-export default function LanguageSwitcher() {
+export default function LanguageSwitcher({ 
+  variant = 'button', 
+  showLabel = false, 
+  size = 'md',
+  className = '' 
+}: LanguageSwitcherProps) {
   const [language, setLanguage] = useState<'ar' | 'en'>('ar');
-  const [mounted, setMounted] = useState(false);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    setMounted(true);
-    // Get language from localStorage or HTML lang attribute
-    const savedLang =
-      localStorage.getItem('language') || document.documentElement.lang || 'ar';
-    setLanguage(savedLang as 'ar' | 'en');
-  }, []);
 
   const toggleLanguage = () => {
-    const newLang = language === 'ar' ? 'en' : 'ar';
-    setLanguage(newLang);
-
-    // Update HTML attributes
-    document.documentElement.lang = newLang;
-    document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
-
-    // Save to localStorage
-    localStorage.setItem('language', newLang);
-
-    // Reload page to apply changes
-    window.location.reload();
+    const newLanguage = language === 'ar' ? 'en' : 'ar';
+    setLanguage(newLanguage);
+    document.documentElement.setAttribute('lang', newLanguage);
+    document.documentElement.setAttribute('dir', newLanguage === 'ar' ? 'rtl' : 'ltr');
   };
 
-  if (!mounted) {
+  const getSizeClasses = () => {
+    switch (size) {
+      case 'sm': return 'h-8 w-8';
+      case 'lg': return 'h-12 w-12';
+      default: return 'h-9 w-9';
+    }
+  };
+
+  const sizeClasses = getSizeClasses();
+
+  if (variant === 'dropdown') {
     return (
-      <button className='h-9 w-9 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center'>
-        <Globe className='h-4 w-4' />
-      </button>
+      <div className={`hs-dropdown relative ${className}`}>
+        <button
+          className={`${sizeClasses} rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors`}
+          onClick={toggleLanguage}
+        >
+          <Languages className="h-4 w-4" />
+        </button>
+      </div>
     );
   }
 
   return (
     <button
+      className={`${sizeClasses} rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${className}`}
       onClick={toggleLanguage}
-      className='h-9 px-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-surface dark:hover:bg-gray-800 transition-colors flex items-center gap-2'
-      title={language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
     >
-      <Globe className='h-4 w-4' />
-      <span className='text-sm font-medium'>
-        {language === 'ar' ? 'EN' : 'عربي'}
-      </span>
+      <Languages className="h-4 w-4" />
+      {showLabel && (
+        <span className="ml-2 text-sm">
+          {language === 'ar' ? 'العربية' : 'English'}
+        </span>
+      )}
     </button>
   );
 }
