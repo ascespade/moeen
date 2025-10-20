@@ -1,6 +1,8 @@
 {
-  "timestamp": "2025-10-17T14:09:05.987Z",
-  "status": "stopped",
-  "isMonitoring": false,
-  "lastCheck": "2025-10-17T14:09:05.987Z"
+  "timestamp": "2025-10-20T21:52:01.292Z",
+  "sessionId": "bc-94584685-4a5e-4fc1-a779-72899dcd2169",
+  "status": "active",
+  "isMonitoring": true,
+  "lastCheck": "2025-10-20T21:52:01.301Z",
+  "restoredAt": "2025-10-20T21:52:01.301Z"
 }

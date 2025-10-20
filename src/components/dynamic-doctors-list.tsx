@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+'use client';
+
+/* eslint-disable no-undef */
+declare const fetch: typeof globalThis.fetch;
+declare const console: typeof globalThis.console;
+
+import React, { useState, useEffect, useCallback } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@/components/ui/Select';
 import {
   Stethoscope,
   Star,
   Clock,
   Phone,
   Mail,
-  MapPin,
   User,
   RefreshCw,
   AlertTriangle,
@@ -43,7 +48,7 @@ interface Doctor {
   total_reviews: number;
   qualifications: string[];
   bio: string;
-  working_hours: any;
+  working_hours: Record<string, unknown>;
   languages: string[];
   experience_years: number;
   user_info?: {
@@ -102,7 +107,7 @@ export default function DynamicDoctorsList({
     }
   };
 
-  const filterDoctors = () => {
+  const filterDoctors = useCallback(() => {
     let filtered = doctors.filter(doctor => {
       const matchesSearch =
         doctor.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -131,7 +136,7 @@ export default function DynamicDoctorsList({
     }
 
     setFilteredDoctors(filtered);
-  };
+  }, [doctors, searchTerm, selectedSpecialization, selectedLanguage]);
 
   // الحصول على التخصصات الفريدة
   const specializations = Array.from(
@@ -143,7 +148,7 @@ export default function DynamicDoctorsList({
     new Set(doctors.flatMap(doctor => doctor.languages || []))
   );
 
-  const formatWorkingHours = (workingHours: any) => {
+  const formatWorkingHours = (workingHours: Record<string, unknown>) => {
     if (!workingHours || typeof workingHours !== 'object') return 'غير محدد';
 
     const entries = Object.entries(workingHours);

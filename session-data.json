@@ -1,0 +1,17 @@
+{
+  "sessionId": "bc-94584685-4a5e-4fc1-a779-72899dcd2169",
+  "timestamp": "2025-10-20T21:24:16.112Z",
+  "status": "created",
+  "type": "background_agent_session",
+  "config": {
+    "maxCycles": 10,
+    "autoHealing": true,
+    "monitoring": true,
+    "testGeneration": true
+  },
+  "metadata": {
+    "createdBy": "session_finder",
+    "requestId": "bc-94584685-4a5e-4fc1-a779-72899dcd2169",
+    "restored": true
+  }
+}

@@ -8,9 +8,9 @@
  * Runs in background to automatically test and fix the system
  */
 
-const { exec, spawn } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+import { exec, spawn } from 'child_process';
+import fs from 'fs';
+import path from 'path';
 
 class AutoTestingSystem {
   constructor() {
@@ -305,7 +305,7 @@ class AutoTestingSystem {
 }
 
 // Run the system
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   const system = new AutoTestingSystem();
 
   // Handle graceful shutdown
@@ -325,4 +325,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = AutoTestingSystem;
+export default AutoTestingSystem;

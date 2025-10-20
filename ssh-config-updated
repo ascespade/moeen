@@ -1,0 +1,37 @@
+# SSH Configuration - Updated for Available Server
+# إعدادات SSH محدثة للسيرفر المتاح
+
+# Use jump server to access cursor-2
+Host cursor-dev
+    HostName 100.97.57.53
+    User root
+    Port 22
+    IdentityFile ~/.ssh/cursor_key
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    ServerAliveInterval 30
+    ServerAliveCountMax 6
+    ConnectTimeout 15
+    PasswordAuthentication no
+    PubkeyAuthentication yes
+    PreferredAuthentications publickey
+    IdentitiesOnly yes
+    Compression yes
+    TCPKeepAlive yes
+
+# Direct connection to jump server
+Host jump-server
+    HostName 100.97.57.53
+    User root
+    Port 22
+    IdentityFile ~/.ssh/cursor_key
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    ServerAliveInterval 30
+    ServerAliveCountMax 6
+    ConnectTimeout 15
+    PasswordAuthentication no
+    PubkeyAuthentication yes
+    PreferredAuthentications publickey
+    IdentitiesOnly yes
+    Compression yes

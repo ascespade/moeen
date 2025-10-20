@@ -1,0 +1,2007 @@
+{
+  "type": "nextjs",
+  "frameworks": ["Next.js"],
+  "tools": [
+    "npm",
+    "TypeScript",
+    "Tailwind CSS",
+    "Supabase",
+    "Stripe",
+    "Playwright",
+    "TypeScript",
+    "ESLint",
+    "Prettier",
+    "Tailwind CSS",
+    "Next.js Config",
+    "Docker",
+    "GitHub Actions"
+  ],
+  "config": {
+    "packageJson": {
+      "name": "moeen",
+      "version": "0.1.0",
+      "private": true,
+      "type": "module",
+      "scripts": {
+        "dev": "next dev -p 3001",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "lint:check": "eslint . --ext .js,.jsx,.ts,.tsx,.mjs --max-warnings 0",
+        "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.mjs --fix",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "type:check": "tsc --noEmit",
+        "type:watch": "tsc --noEmit --watch",
+        "test": "playwright test",
+        "test:unit": "vitest run --reporter=verbose",
+        "test:integration": "vitest run --config vitest.integration.config.js",
+        "test:e2e": "playwright test --config=playwright-auto.config.ts",
+        "test:e2e:headed": "playwright test --config=playwright-auto.config.ts --headed",
+        "test:e2e:debug": "playwright test --config=playwright-auto.config.ts --debug",
+        "test:full-suite": "./run-full-suite-no-db.sh",
+        "test:full-suite-with-db": "./run-full-suite.sh",
+        "test:coverage": "vitest run --coverage",
+        "test:watch": "vitest --watch",
+        "test:ui": "vitest --ui",
+        "test:auto": "node auto-testing-system.js",
+        "test:modules": "node module-testing-system.js",
+        "test:background": "node background-monitor.js",
+        "test:start": "./start-module-testing.sh",
+        "test:stop": "./stop-module-testing.sh",
+        "agent:auto": "node scripts/ai_self_test_and_fix.mjs --auto-mode",
+        "agent:fix": "node scripts/ai_self_test_and_fix.mjs --fix-only",
+        "agent:test": "node scripts/ai_self_test_and_fix.mjs --test-only",
+        "agent:optimize": "node scripts/ai_self_test_and_fix.mjs --optimize-only",
+        "agent:refactor": "node scripts/ai_self_test_and_fix.mjs --refactor",
+        "agent:background": "node scripts/ai_self_test_and_fix.mjs --background-mode",
+        "agent:monitor": "node scripts/ai_self_test_and_fix.mjs --monitor-mode",
+        "agent:heal": "node scripts/ai_self_test_and_fix.mjs --heal",
+        "agent:cursor": "node scripts/ai_self_test_and_fix.mjs --agent-mode=cursor",
+        "agent:openai": "node scripts/ai_self_test_and_fix.mjs --agent-mode=openai",
+        "agent:ollama": "node scripts/ai_self_test_and_fix.mjs --agent-mode=ollama",
+        "setup:env": "./scripts/setup-environment.sh",
+        "backup:create": "node scripts/backup-system.mjs backup",
+        "backup:restore": "node scripts/backup-system.mjs restore",
+        "backup:list": "node scripts/backup-system.mjs list",
+        "backup:clean": "node scripts/backup-system.mjs clean",
+        "monitor:report": "node scripts/monitoring-system.mjs report",
+        "monitor:start": "node scripts/monitoring-system.mjs monitor",
+        "monitor:metrics": "node scripts/monitoring-system.mjs metrics",
+        "monitor:health": "node scripts/monitoring-system.mjs health",
+        "test:comprehensive": "npx playwright test tests/comprehensive/ --reporter=html",
+        "security:audit": "npm audit",
+        "security:fix": "npm audit fix",
+        "deploy:prod": "npm run build && npm run start",
+        "workflow:ultimate": "node scripts/ultimate-workflow-manager.js",
+        "workflow:smart": "node scripts/smart-workflow-manager.js",
+        "workflow:validate": "node scripts/validate-workflows.js",
+        "workflow:optimize": "node scripts/optimize-workflows.js",
+        "workflow:docs": "node scripts/generate-workflow-docs.js",
+        "ci:assistant": "echo '🤖 CI Assistant - Self-Healing Error Resolver'",
+        "ci:learn": "node scripts/ci-learning-db.js report",
+        "ci:heal": "node scripts/ci-self-healing-manager.js fix",
+        "ci:validate": "node scripts/validate-workflows.js",
+        "ci:test": "node scripts/test-workflows.js comprehensive",
+        "dashboard:live": "node scripts/start-live-dashboard.js",
+        "dashboard:update": "node scripts/live-dashboard.js",
+        "report:generate": "node scripts/generate-workflow-report.js",
+        "prepare": "husky"
+      },
+      "dependencies": {
+        "@heroicons/react": "^2.2.0",
+        "@next/bundle-analyzer": "^15.5.6",
+        "@paralleldrive/cuid2": "^2.2.2",
+        "@radix-ui/react-select": "^2.2.6",
+        "@radix-ui/react-switch": "^1.2.6",
+        "@supabase/ssr": "^0.7.0",
+        "@supabase/supabase-js": "^2.39.3",
+        "@types/crypto-js": "^4.2.2",
+        "@types/node": "^20",
+        "@types/react-dom": "^18",
+        "@types/uuid": "^10.0.0",
+        "autoprefixer": "^10.0.1",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "critters": "^0.0.23",
+        "crypto-js": "^4.2.0",
+        "eslint": "^8",
+        "eslint-config-next": "14.0.4",
+        "isomorphic-dompurify": "^2.29.0",
+        "jotai": "^2.15.0",
+        "lucide-react": "^0.546.0",
+        "next": "^14.2.32",
+        "postcss": "^8",
+        "react": "^18",
+        "react-dom": "^18",
+        "recharts": "^3.3.0",
+        "sqlite": "^5.1.1",
+        "sqlite3": "^5.1.7",
+        "stripe": "^14.12.0",
+        "tailwind-merge": "^3.3.1",
+        "tailwindcss": "^3.3.0",
+        "typescript": "^5",
+        "uuid": "^13.0.0",
+        "zod": "^4.1.12",
+        "zustand": "^5.0.8"
+      },
+      "devDependencies": {
+        "@playwright/test": "^1.40.1",
+        "@types/react": "19.2.2",
+        "@typescript-eslint/eslint-plugin": "^8.46.1",
+        "@typescript-eslint/parser": "^8.46.1",
+        "chalk": "^5.6.2",
+        "commander": "^14.0.1",
+        "dotenv": "^16.3.1",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-prettier": "^5.5.4",
+        "fast-glob": "^3.3.3",
+        "fs-extra": "^11.3.2",
+        "glob": "^11.0.3",
+        "husky": "^9.1.7",
+        "inquirer": "^12.10.0",
+        "js-yaml": "^4.1.0",
+        "lint-staged": "^16.2.4",
+        "micromatch": "^4.0.8",
+        "ora": "^9.0.0",
+        "prettier": "^3.6.2",
+        "semver": "^7.7.3",
+        "ts-morph": "^27.0.2"
+      },
+      "lint-staged": {
+        "src/**/*.{ts,tsx,js,jsx}": ["eslint --fix", "prettier --write"],
+        "*.{json,md,yml,yaml}": ["prettier --write"]
+      }
+    },
+    "tsconfig": {
+      "compilerOptions": {
+        "target": "ES2022",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": false,
+        "strictNullChecks": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "incremental": true,
+        "forceConsistentCasingInFileNames": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "exactOptionalPropertyTypes": false,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedIndexedAccess": true,
+        "plugins": [
+          {
+            "name": "next"
+          }
+        ],
+        "baseUrl": ".",
+        "paths": {
+          "@/*": ["./src/*"]
+        },
+        "types": ["node", "playwright"]
+      },
+      "include": [
+        "next-env.d.ts",
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/types/shims.d.ts",
+        ".next/types/**/*.ts",
+        "tests/**/*.ts",
+        "tests/**/*.tsx",
+        "scripts/**/*.ts",
+        "scripts/**/*.mjs"
+      ],
+      "exclude": [
+        "node_modules",
+        ".next",
+        "temp_complex",
+        "src/__tests__",
+        "src/scripts",
+        "src/lib/security-enhanced.ts",
+        "src/lib/websocket-server.ts",
+        "src/lib/database.ts",
+        "src/lib/real-time-notifications.ts",
+        "src/lib/supabase-real.ts",
+        "src/lib/supabase.ts",
+        "src/lib/supabase/client.ts",
+        "src/lib/supabaseClient.ts",
+        "src/lib/translations-manager.ts",
+        "src/middleware.prod.ts"
+      ]
+    },
+    "hasSrcDir": true,
+    "srcStructure": {
+      "files": ["middleware.disabled.ts", "middleware.prod.ts"],
+      "directories": {
+        "app": {
+          "files": [
+            "error.tsx",
+            "globals.css",
+            "layout.minimal.tsx",
+            "layout.tsx",
+            "not-found.tsx",
+            "page.tsx",
+            "robots.ts",
+            "sitemap.ts"
+          ],
+          "directories": {
+            "(admin)": {
+              "files": ["layout.tsx"],
+              "directories": {
+                "admin": {
+                  "type": "max_depth_reached"
+                },
+                "agent-dashboard": {
+                  "type": "max_depth_reached"
+                },
+                "analytics": {
+                  "type": "max_depth_reached"
+                },
+                "chatbot": {
+                  "type": "max_depth_reached"
+                },
+                "contact-info": {
+                  "type": "max_depth_reached"
+                },
+                "conversations": {
+                  "type": "max_depth_reached"
+                },
+                "crm": {
+                  "type": "max_depth_reached"
+                },
+                "doctors": {
+                  "type": "max_depth_reached"
+                },
+                "dynamic-data": {
+                  "type": "max_depth_reached"
+                },
+                "flow": {
+                  "type": "max_depth_reached"
+                },
+                "integrations": {
+                  "type": "max_depth_reached"
+                },
+                "messages": {
+                  "type": "max_depth_reached"
+                },
+                "notifications": {
+                  "type": "max_depth_reached"
+                },
+                "payments": {
+                  "type": "max_depth_reached"
+                },
+                "performance": {
+                  "type": "max_depth_reached"
+                },
+                "profile": {
+                  "type": "max_depth_reached"
+                },
+                "reports": {
+                  "type": "max_depth_reached"
+                },
+                "review": {
+                  "type": "max_depth_reached"
+                },
+                "security": {
+                  "type": "max_depth_reached"
+                },
+                "sessions": {
+                  "type": "max_depth_reached"
+                },
+                "settings": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "(auth)": {
+              "files": ["layout.tsx"],
+              "directories": {
+                "forgot-password": {
+                  "type": "max_depth_reached"
+                },
+                "login": {
+                  "type": "max_depth_reached"
+                },
+                "register": {
+                  "type": "max_depth_reached"
+                },
+                "reset-password": {
+                  "type": "max_depth_reached"
+                },
+                "verify-email": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "(doctor)": {
+              "files": [],
+              "directories": {
+                "doctor-dashboard": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "(health)": {
+              "files": [],
+              "directories": {
+                "appointments": {
+                  "type": "max_depth_reached"
+                },
+                "approvals": {
+                  "type": "max_depth_reached"
+                },
+                "family": {
+                  "type": "max_depth_reached"
+                },
+                "family-support": {
+                  "type": "max_depth_reached"
+                },
+                "health": {
+                  "type": "max_depth_reached"
+                },
+                "insurance": {
+                  "type": "max_depth_reached"
+                },
+                "insurance-claims": {
+                  "type": "max_depth_reached"
+                },
+                "medical-file": {
+                  "type": "max_depth_reached"
+                },
+                "patients": {
+                  "type": "max_depth_reached"
+                },
+                "progress": {
+                  "type": "max_depth_reached"
+                },
+                "progress-tracking": {
+                  "type": "max_depth_reached"
+                },
+                "sessions": {
+                  "type": "max_depth_reached"
+                },
+                "therapy": {
+                  "type": "max_depth_reached"
+                },
+                "training": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "(info)": {
+              "files": ["layout.tsx"],
+              "directories": {
+                "about": {
+                  "type": "max_depth_reached"
+                },
+                "contact": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "(legal)": {
+              "files": ["layout.tsx"],
+              "directories": {
+                "privacy": {
+                  "type": "max_depth_reached"
+                },
+                "terms": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "(marketing)": {
+              "files": [],
+              "directories": {
+                "faq": {
+                  "type": "max_depth_reached"
+                },
+                "features": {
+                  "type": "max_depth_reached"
+                },
+                "pricing": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "(patient)": {
+              "files": [],
+              "directories": {
+                "patient-dashboard": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "(public)": {
+              "files": [],
+              "directories": {
+                "chatbot": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "(staff)": {
+              "files": [],
+              "directories": {
+                "staff-dashboard": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "(supervisor)": {
+              "files": [],
+              "directories": {
+                "supervisor-dashboard": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "admin": {
+              "files": [],
+              "directories": {
+                "admin-dashboard": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "api": {
+              "files": [],
+              "directories": {
+                "admin": {
+                  "type": "max_depth_reached"
+                },
+                "agent": {
+                  "type": "max_depth_reached"
+                },
+                "analytics": {
+                  "type": "max_depth_reached"
+                },
+                "appointments": {
+                  "type": "max_depth_reached"
+                },
+                "audit-logs": {
+                  "type": "max_depth_reached"
+                },
+                "auth": {
+                  "type": "max_depth_reached"
+                },
+                "chatbot": {
+                  "type": "max_depth_reached"
+                },
+                "crm": {
+                  "type": "max_depth_reached"
+                },
+                "dashboard": {
+                  "type": "max_depth_reached"
+                },
+                "doctors": {
+                  "type": "max_depth_reached"
+                },
+                "dynamic-data": {
+                  "type": "max_depth_reached"
+                },
+                "errors": {
+                  "type": "max_depth_reached"
+                },
+                "family": {
+                  "type": "max_depth_reached"
+                },
+                "health": {
+                  "type": "max_depth_reached"
+                },
+                "healthcare": {
+                  "type": "max_depth_reached"
+                },
+                "i18n": {
+                  "type": "max_depth_reached"
+                },
+                "insurance": {
+                  "type": "max_depth_reached"
+                },
+                "medical-records": {
+                  "type": "max_depth_reached"
+                },
+                "notifications": {
+                  "type": "max_depth_reached"
+                },
+                "owner": {
+                  "type": "max_depth_reached"
+                },
+                "patients": {
+                  "type": "max_depth_reached"
+                },
+                "payments": {
+                  "type": "max_depth_reached"
+                },
+                "progress": {
+                  "type": "max_depth_reached"
+                },
+                "reports": {
+                  "type": "max_depth_reached"
+                },
+                "sessions": {
+                  "type": "max_depth_reached"
+                },
+                "settings": {
+                  "type": "max_depth_reached"
+                },
+                "slack": {
+                  "type": "max_depth_reached"
+                },
+                "supervisor": {
+                  "type": "max_depth_reached"
+                },
+                "test": {
+                  "type": "max_depth_reached"
+                },
+                "therapists": {
+                  "type": "max_depth_reached"
+                },
+                "translations": {
+                  "type": "max_depth_reached"
+                },
+                "upload": {
+                  "type": "max_depth_reached"
+                },
+                "user": {
+                  "type": "max_depth_reached"
+                },
+                "webhook": {
+                  "type": "max_depth_reached"
+                },
+                "webhooks": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "color-palette": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "dashboard": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "design-system": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "simple": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "test": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "uikit": {
+              "files": ["page.tsx"],
+              "directories": {
+                "guidelines": {
+                  "type": "max_depth_reached"
+                }
+              }
+            }
+          }
+        },
+        "components": {
+          "files": [
+            "dynamic-contact-info.tsx",
+            "dynamic-data-dashboard.tsx",
+            "dynamic-doctors-list.tsx",
+            "dynamic-services.tsx",
+            "dynamic-stats.tsx",
+            "index.ts",
+            "LanguageSwitcher.tsx",
+            "Navigation.tsx",
+            "ThemeSwitcher.tsx"
+          ],
+          "directories": {
+            "accessibility": {
+              "files": ["AccessibilitySettings.tsx"],
+              "directories": {}
+            },
+            "appointments": {
+              "files": ["AppointmentManager.tsx"],
+              "directories": {}
+            },
+            "auth": {
+              "files": ["ProtectedRoute.tsx"],
+              "directories": {}
+            },
+            "booking": {
+              "files": ["AvailableSlotsPicker.tsx", "SessionTypeSelector.tsx"],
+              "directories": {}
+            },
+            "charts": {
+              "files": [
+                "AreaChart.tsx",
+                "BarChart.tsx",
+                "index.ts",
+                "LineChart.tsx"
+              ],
+              "directories": {}
+            },
+            "chatbot": {
+              "files": ["MoainChatbot.tsx", "MoeenChatbot.tsx"],
+              "directories": {}
+            },
+            "common": {
+              "files": [
+                "DirectionToggle.tsx",
+                "EmptyState.tsx",
+                "ErrorBoundary.tsx",
+                "index.ts",
+                "LanguageSwitcher.tsx",
+                "LiveDot.tsx",
+                "OptimizedImage.tsx",
+                "PerformanceOptimizedImage.tsx",
+                "PlaceholderSquare.tsx",
+                "StatusBanner.tsx"
+              ],
+              "directories": {}
+            },
+            "dashboard": {
+              "files": ["Charts.tsx", "DynamicCharts.tsx", "KpiCard.tsx"],
+              "directories": {}
+            },
+            "insurance": {
+              "files": ["ClaimsManager.tsx"],
+              "directories": {}
+            },
+            "layout": {
+              "files": [
+                "Footer.tsx",
+                "GlobalHeader.tsx",
+                "Header.tsx",
+                "SmartHeader.tsx"
+              ],
+              "directories": {}
+            },
+            "patient": {
+              "files": ["ActivationFlow.tsx", "PreVisitChecklist.tsx"],
+              "directories": {}
+            },
+            "patients": {
+              "files": ["PatientRecords.tsx"],
+              "directories": {}
+            },
+            "providers": {
+              "files": [
+                "DesignSystemProvider.tsx",
+                "I18nProvider.tsx",
+                "ModernInteractionsProvider.tsx",
+                "ThemeProvider.tsx",
+                "UIProvider.tsx"
+              ],
+              "directories": {}
+            },
+            "settings": {
+              "files": ["KeywordEditor.tsx", "SettingsTabs.tsx"],
+              "directories": {}
+            },
+            "shared": {
+              "files": [
+                "DataTable.tsx",
+                "EmptyState.tsx",
+                "Form.tsx",
+                "index.ts",
+                "LiveRegion.tsx",
+                "Modal.tsx",
+                "ScreenReaderOnly.tsx",
+                "Tabs.tsx"
+              ],
+              "directories": {}
+            },
+            "shell": {
+              "files": ["Header.tsx", "HeaderSimple.tsx", "Sidebar.tsx"],
+              "directories": {}
+            },
+            "ui": {
+              "files": [
+                "Badge.tsx",
+                "Button.tsx",
+                "Card.tsx",
+                "Checkbox.tsx",
+                "CTAButton.tsx",
+                "DataTable.tsx",
+                "DesignSystemDemo.tsx",
+                "FeatureCard.tsx",
+                "index.ts",
+                "Input.tsx",
+                "Label.tsx",
+                "LoadingSpinner.tsx",
+                "Modal.tsx",
+                "RTLToggle.tsx",
+                "ScrollArea.tsx",
+                "Select.tsx",
+                "Skeleton.tsx",
+                "StatCard.tsx",
+                "Switch.tsx",
+                "Table.tsx",
+                "Tabs.tsx",
+                "Textarea.tsx",
+                "ThemeSwitch.tsx",
+                "ThemeToggle.tsx",
+                "Toast.tsx",
+                "Tooltip.tsx"
+              ],
+              "directories": {}
+            }
+          }
+        },
+        "config": {
+          "files": ["api.ts", "app.ts", "auth.ts", "database.ts", "env.ts"],
+          "directories": {}
+        },
+        "constants": {
+          "files": [
+            "api.ts",
+            "i18n-keys.ts",
+            "index.ts",
+            "roles.ts",
+            "routes.ts",
+            "storage.ts",
+            "theme.ts",
+            "ui.ts",
+            "validation.ts"
+          ],
+          "directories": {}
+        },
+        "context": {
+          "files": ["TranslationProvider.tsx"],
+          "directories": {}
+        },
+        "core": {
+          "files": ["index.ts", "utils.ts"],
+          "directories": {
+            "api": {
+              "files": ["base-handler.ts", "client.ts"],
+              "directories": {}
+            },
+            "config": {
+              "files": ["index.ts"],
+              "directories": {}
+            },
+            "constants": {
+              "files": ["index.ts"],
+              "directories": {}
+            },
+            "design-system": {
+              "files": ["index.ts"],
+              "directories": {}
+            },
+            "errors": {
+              "files": ["index.ts"],
+              "directories": {}
+            },
+            "hooks": {
+              "files": ["index.ts"],
+              "directories": {}
+            },
+            "store": {
+              "files": ["index.ts"],
+              "directories": {}
+            },
+            "theme": {
+              "files": ["index.ts"],
+              "directories": {}
+            },
+            "types": {
+              "files": ["index.ts"],
+              "directories": {}
+            },
+            "utils": {
+              "files": ["index.ts"],
+              "directories": {}
+            },
+            "validation": {
+              "files": ["index.ts"],
+              "directories": {}
+            }
+          }
+        },
+        "design-system": {
+          "files": ["index.ts", "README.md", "types.ts"],
+          "directories": {
+            "hooks": {
+              "files": ["index.ts"],
+              "directories": {}
+            }
+          }
+        },
+        "hooks": {
+          "files": [
+            "index.ts",
+            "useApi.ts",
+            "useAsync.ts",
+            "useAuth.ts",
+            "useBrandColorFromLogo.ts",
+            "useClickOutside.ts",
+            "useCounter.ts",
+            "useDebounce.ts",
+            "useErrorHandler.tsx",
+            "useForm.ts",
+            "useI18n.ts",
+            "useIntersectionObserver.ts",
+            "useKeyboardNavigation.ts",
+            "useKeyPress.ts",
+            "useLocalStorage.ts",
+            "useMediaQuery.ts",
+            "useMemoryLeakPrevention.ts",
+            "usePageI18n.ts",
+            "usePerformance.ts",
+            "usePrevious.ts",
+            "useT.tsx",
+            "useThrottle.ts",
+            "useToggle.ts",
+            "useTranslation.ts"
+          ],
+          "directories": {}
+        },
+        "lib": {
+          "files": [
+            "accessibility.ts",
+            "ai-assistant.ts",
+            "analytics-stubs.ts",
+            "cache-system.ts",
+            "cn.ts",
+            "conversation-flows.ts",
+            "cuid.ts",
+            "database-utils.ts",
+            "database.ts",
+            "design-system.ts",
+            "design-tokens.ts",
+            "dynamic-content-manager.ts",
+            "dynamic-theme-manager.ts",
+            "encryption.ts",
+            "error-handler.ts",
+            "file-upload.ts",
+            "i18n.sql",
+            "index.ts",
+            "integration-system.ts",
+            "logger.ts",
+            "modern-interactions.ts",
+            "performance-monitor.ts",
+            "performance-optimizations.ts",
+            "performance.ts",
+            "private-center-integration.ts",
+            "rate-limiter.ts",
+            "responsive-design.ts",
+            "router.ts",
+            "saudi-health-integration.ts",
+            "saudi-ministry-health-integration.ts",
+            "security.ts",
+            "seed-homepage-translations.sql",
+            "slack-integration.ts",
+            "supabase-real.ts",
+            "supabase.ts",
+            "supabaseClient.ts",
+            "theme-manager.ts",
+            "theme.ts",
+            "translations-manager.ts",
+            "translations.sql",
+            "update-translations-schema.sql",
+            "utils.ts",
+            "validation.ts",
+            "whatsapp-business-api.ts",
+            "whatsapp-integration.ts"
+          ],
+          "directories": {
+            "accessibility": {
+              "files": ["aria-utils.ts"],
+              "directories": {}
+            },
+            "api": {
+              "files": ["config.ts", "whatsapp.ts"],
+              "directories": {}
+            },
+            "auth": {
+              "files": ["authorize.ts", "index.ts", "roles.ts"],
+              "directories": {}
+            },
+            "cache": {
+              "files": ["redis.ts"],
+              "directories": {}
+            },
+            "database": {
+              "files": ["connection-pool.ts"],
+              "directories": {}
+            },
+            "deployment": {
+              "files": ["docker.ts"],
+              "directories": {}
+            },
+            "errors": {
+              "files": ["api-errors.ts"],
+              "directories": {}
+            },
+            "i18n": {
+              "files": ["translationService.ts"],
+              "directories": {}
+            },
+            "insurance": {
+              "files": ["providers.ts"],
+              "directories": {}
+            },
+            "integrations": {
+              "files": ["test-helpers.ts"],
+              "directories": {}
+            },
+            "migrations": {
+              "files": ["004_user_preferences.sql"],
+              "directories": {}
+            },
+            "monitoring": {
+              "files": ["logger.ts"],
+              "directories": {}
+            },
+            "notifications": {
+              "files": ["email.ts", "sms.ts"],
+              "directories": {}
+            },
+            "optimization": {
+              "files": ["performance.ts"],
+              "directories": {}
+            },
+            "payments": {
+              "files": ["moyasar.ts", "stripe.ts"],
+              "directories": {}
+            },
+            "seo": {
+              "files": ["metadata.ts"],
+              "directories": {}
+            },
+            "supabase": {
+              "files": ["client.ts", "server.ts"],
+              "directories": {}
+            },
+            "testing": {
+              "files": ["test-utils.ts"],
+              "directories": {}
+            },
+            "utils": {
+              "files": ["request-helpers.ts"],
+              "directories": {}
+            },
+            "validation": {
+              "files": ["schemas.ts", "security.ts"],
+              "directories": {}
+            }
+          }
+        },
+        "middleware": {
+          "files": ["auth.ts", "rate-limiter.ts", "security.ts"],
+          "directories": {}
+        },
+        "scripts": {
+          "files": [
+            "cleanup-console-logs.js",
+            "complete-translations.ts",
+            "seed-complete-translations.js",
+            "seed-database.ts",
+            "seed-homepage-content.ts",
+            "seed-translations.ts",
+            "system-validation.js",
+            "test-apis.js",
+            "validate-business-logic.js",
+            "validate-dynamic-content.ts",
+            "validate-system.js"
+          ],
+          "directories": {}
+        },
+        "services": {
+          "files": ["index.ts"],
+          "directories": {}
+        },
+        "styles": {
+          "files": [
+            "accessibility.css",
+            "centralized.css",
+            "design-system.css",
+            "dynamic-components.css",
+            "dynamic-design-system.css",
+            "hemam-brand-colors.css",
+            "index.css",
+            "modern-enhancements.css",
+            "original-design.css",
+            "responsive-enhancements.css",
+            "theme.css",
+            "unified.css"
+          ],
+          "directories": {}
+        },
+        "theme": {
+          "files": ["index.ts"],
+          "directories": {}
+        },
+        "types": {
+          "files": [
+            "api.ts",
+            "auth.ts",
+            "common.ts",
+            "components.ts",
+            "database.ts",
+            "index.ts",
+            "shims.d.ts",
+            "supabase.ts"
+          ],
+          "directories": {}
+        },
+        "utils": {
+          "files": [
+            "api-client.ts",
+            "api.ts",
+            "date.ts",
+            "format.ts",
+            "index.ts",
+            "storage.ts",
+            "string.ts",
+            "validation.ts"
+          ],
+          "directories": {}
+        },
+        "__tests__": {
+          "files": [
+            "ai-assistant.test.ts",
+            "saudi-health-integration.test.ts",
+            "setup.ts",
+            "whatsapp-business-api.test.ts",
+            "whatsapp-integration.test.ts"
+          ],
+          "directories": {
+            "api": {
+              "files": ["appointments.test.ts", "patients.test.ts"],
+              "directories": {
+                "auth": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "auth": {
+              "files": [
+                "forgot-password.test.tsx",
+                "login.test.tsx",
+                "register.test.tsx",
+                "reset-password.test.tsx"
+              ],
+              "directories": {}
+            }
+          }
+        }
+      }
+    },
+    "hasAppDir": true,
+    "appStructure": {
+      "files": [
+        "error.tsx",
+        "globals.css",
+        "layout.minimal.tsx",
+        "layout.tsx",
+        "not-found.tsx",
+        "page.tsx",
+        "robots.ts",
+        "sitemap.ts"
+      ],
+      "directories": {
+        "(admin)": {
+          "files": ["layout.tsx"],
+          "directories": {
+            "admin": {
+              "files": ["page.tsx"],
+              "directories": {
+                "audit-logs": {
+                  "type": "max_depth_reached"
+                },
+                "channels": {
+                  "type": "max_depth_reached"
+                },
+                "logs": {
+                  "type": "max_depth_reached"
+                },
+                "payments": {
+                  "type": "max_depth_reached"
+                },
+                "roles": {
+                  "type": "max_depth_reached"
+                },
+                "therapists": {
+                  "type": "max_depth_reached"
+                },
+                "users": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "agent-dashboard": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "analytics": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "chatbot": {
+              "files": [],
+              "directories": {
+                "analytics": {
+                  "type": "max_depth_reached"
+                },
+                "flows": {
+                  "type": "max_depth_reached"
+                },
+                "integrations": {
+                  "type": "max_depth_reached"
+                },
+                "templates": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "contact-info": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "conversations": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "crm": {
+              "files": [],
+              "directories": {
+                "activities": {
+                  "type": "max_depth_reached"
+                },
+                "contacts": {
+                  "type": "max_depth_reached"
+                },
+                "deals": {
+                  "type": "max_depth_reached"
+                },
+                "flows": {
+                  "type": "max_depth_reached"
+                },
+                "leads": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "doctors": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "dynamic-data": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "flow": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "integrations": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "messages": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "notifications": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "payments": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "performance": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "profile": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "reports": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "review": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "security": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "sessions": {
+              "files": [],
+              "directories": {
+                "[id]": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "settings": {
+              "files": ["page.tsx"],
+              "directories": {
+                "api-keys": {
+                  "type": "max_depth_reached"
+                }
+              }
+            }
+          }
+        },
+        "(auth)": {
+          "files": ["layout.tsx"],
+          "directories": {
+            "forgot-password": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "login": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "register": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "reset-password": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "verify-email": {
+              "files": ["page.tsx"],
+              "directories": {}
+            }
+          }
+        },
+        "(doctor)": {
+          "files": [],
+          "directories": {
+            "doctor-dashboard": {
+              "files": ["page.tsx"],
+              "directories": {}
+            }
+          }
+        },
+        "(health)": {
+          "files": [],
+          "directories": {
+            "appointments": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "approvals": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "family": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "family-support": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "health": {
+              "files": [],
+              "directories": {
+                "patients": {
+                  "type": "max_depth_reached"
+                },
+                "sessions": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "insurance": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "insurance-claims": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "medical-file": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "patients": {
+              "files": ["page.tsx"],
+              "directories": {
+                "[id]": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "progress": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "progress-tracking": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "sessions": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "therapy": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "training": {
+              "files": ["page.tsx"],
+              "directories": {}
+            }
+          }
+        },
+        "(info)": {
+          "files": ["layout.tsx"],
+          "directories": {
+            "about": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "contact": {
+              "files": ["page.tsx"],
+              "directories": {}
+            }
+          }
+        },
+        "(legal)": {
+          "files": ["layout.tsx"],
+          "directories": {
+            "privacy": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "terms": {
+              "files": ["page.tsx"],
+              "directories": {}
+            }
+          }
+        },
+        "(marketing)": {
+          "files": [],
+          "directories": {
+            "faq": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "features": {
+              "files": ["page.tsx"],
+              "directories": {}
+            },
+            "pricing": {
+              "files": ["page.tsx"],
+              "directories": {}
+            }
+          }
+        },
+        "(patient)": {
+          "files": [],
+          "directories": {
+            "patient-dashboard": {
+              "files": ["page.tsx"],
+              "directories": {}
+            }
+          }
+        },
+        "(public)": {
+          "files": [],
+          "directories": {
+            "chatbot": {
+              "files": ["page.tsx"],
+              "directories": {}
+            }
+          }
+        },
+        "(staff)": {
+          "files": [],
+          "directories": {
+            "staff-dashboard": {
+              "files": ["page.tsx"],
+              "directories": {}
+            }
+          }
+        },
+        "(supervisor)": {
+          "files": [],
+          "directories": {
+            "supervisor-dashboard": {
+              "files": ["page.tsx"],
+              "directories": {}
+            }
+          }
+        },
+        "admin": {
+          "files": [],
+          "directories": {
+            "admin-dashboard": {
+              "files": ["page.tsx"],
+              "directories": {}
+            }
+          }
+        },
+        "api": {
+          "files": [],
+          "directories": {
+            "admin": {
+              "files": [],
+              "directories": {
+                "configs": {
+                  "type": "max_depth_reached"
+                },
+                "dashboard": {
+                  "type": "max_depth_reached"
+                },
+                "security-events": {
+                  "type": "max_depth_reached"
+                },
+                "staff-hours": {
+                  "type": "max_depth_reached"
+                },
+                "stats": {
+                  "type": "max_depth_reached"
+                },
+                "system-config": {
+                  "type": "max_depth_reached"
+                },
+                "users": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "agent": {
+              "files": [],
+              "directories": {
+                "completion": {
+                  "type": "max_depth_reached"
+                },
+                "logs": {
+                  "type": "max_depth_reached"
+                },
+                "status": {
+                  "type": "max_depth_reached"
+                },
+                "tasks": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "analytics": {
+              "files": [],
+              "directories": {
+                "action": {
+                  "type": "max_depth_reached"
+                },
+                "metrics": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "appointments": {
+              "files": ["route.ts"],
+              "directories": {
+                "availability": {
+                  "type": "max_depth_reached"
+                },
+                "book": {
+                  "type": "max_depth_reached"
+                },
+                "conflict-check": {
+                  "type": "max_depth_reached"
+                },
+                "[id]": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "audit-logs": {
+              "files": ["route.ts"],
+              "directories": {}
+            },
+            "auth": {
+              "files": [],
+              "directories": {
+                "forgot-password": {
+                  "type": "max_depth_reached"
+                },
+                "login": {
+                  "type": "max_depth_reached"
+                },
+                "logout": {
+                  "type": "max_depth_reached"
+                },
+                "me": {
+                  "type": "max_depth_reached"
+                },
+                "register": {
+                  "type": "max_depth_reached"
+                },
+                "reset-password": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "chatbot": {
+              "files": [],
+              "directories": {
+                "appointments": {
+                  "type": "max_depth_reached"
+                },
+                "config": {
+                  "type": "max_depth_reached"
+                },
+                "conversations": {
+                  "type": "max_depth_reached"
+                },
+                "doctors": {
+                  "type": "max_depth_reached"
+                },
+                "flows": {
+                  "type": "max_depth_reached"
+                },
+                "intents": {
+                  "type": "max_depth_reached"
+                },
+                "message": {
+                  "type": "max_depth_reached"
+                },
+                "messages": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "crm": {
+              "files": [],
+              "directories": {
+                "contacts": {
+                  "type": "max_depth_reached"
+                },
+                "leads": {
+                  "type": "max_depth_reached"
+                },
+                "stats": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "dashboard": {
+              "files": [],
+              "directories": {
+                "health": {
+                  "type": "max_depth_reached"
+                },
+                "logs": {
+                  "type": "max_depth_reached"
+                },
+                "metrics": {
+                  "type": "max_depth_reached"
+                },
+                "statistics": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "doctors": {
+              "files": [],
+              "directories": {
+                "availability": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "dynamic-data": {
+              "files": ["route.ts"],
+              "directories": {
+                "doctors": {
+                  "type": "max_depth_reached"
+                },
+                "patients": {
+                  "type": "max_depth_reached"
+                },
+                "staff": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "errors": {
+              "files": ["route.ts"],
+              "directories": {}
+            },
+            "family": {
+              "files": ["route.ts"],
+              "directories": {
+                "support": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "health": {
+              "files": ["route.ts"],
+              "directories": {}
+            },
+            "healthcare": {
+              "files": [],
+              "directories": {
+                "appointments": {
+                  "type": "max_depth_reached"
+                },
+                "patients": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "i18n": {
+              "files": ["route.ts"],
+              "directories": {}
+            },
+            "insurance": {
+              "files": [],
+              "directories": {
+                "claims": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "medical-records": {
+              "files": ["route.ts"],
+              "directories": {
+                "upload": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "notifications": {
+              "files": [],
+              "directories": {
+                "send": {
+                  "type": "max_depth_reached"
+                },
+                "templates": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "owner": {
+              "files": [],
+              "directories": {
+                "analytics": {
+                  "type": "max_depth_reached"
+                },
+                "stats": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "patients": {
+              "files": [],
+              "directories": {
+                "journey": {
+                  "type": "max_depth_reached"
+                },
+                "[id]": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "payments": {
+              "files": [],
+              "directories": {
+                "webhook": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "progress": {
+              "files": ["route.ts"],
+              "directories": {
+                "assessments": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "reports": {
+              "files": [],
+              "directories": {
+                "dashboard-metrics": {
+                  "type": "max_depth_reached"
+                },
+                "export": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "sessions": {
+              "files": [],
+              "directories": {
+                "available-slots": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "settings": {
+              "files": [],
+              "directories": {
+                "center": {
+                  "type": "max_depth_reached"
+                },
+                "emergency-contacts": {
+                  "type": "max_depth_reached"
+                },
+                "staff": {
+                  "type": "max_depth_reached"
+                },
+                "system": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "slack": {
+              "files": [],
+              "directories": {
+                "notify": {
+                  "type": "max_depth_reached"
+                },
+                "webhook": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "supervisor": {
+              "files": [],
+              "directories": {
+                "call-request": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "test": {
+              "files": [],
+              "directories": {
+                "clear-rate-limit": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "therapists": {
+              "files": [],
+              "directories": {
+                "availability": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "translations": {
+              "files": [],
+              "directories": {
+                "missing": {
+                  "type": "max_depth_reached"
+                },
+                "[lang]": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "upload": {
+              "files": ["route.ts"],
+              "directories": {}
+            },
+            "user": {
+              "files": [],
+              "directories": {
+                "preferences": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "webhook": {
+              "files": [],
+              "directories": {
+                "whatsapp": {
+                  "type": "max_depth_reached"
+                }
+              }
+            },
+            "webhooks": {
+              "files": [],
+              "directories": {
+                "payments": {
+                  "type": "max_depth_reached"
+                }
+              }
+            }
+          }
+        },
+        "color-palette": {
+          "files": ["page.tsx"],
+          "directories": {}
+        },
+        "dashboard": {
+          "files": ["page.tsx"],
+          "directories": {}
+        },
+        "design-system": {
+          "files": ["page.tsx"],
+          "directories": {}
+        },
+        "simple": {
+          "files": ["page.tsx"],
+          "directories": {}
+        },
+        "test": {
+          "files": ["page.tsx"],
+          "directories": {}
+        },
+        "uikit": {
+          "files": ["page.tsx"],
+          "directories": {
+            "guidelines": {
+              "files": ["page.tsx"],
+              "directories": {}
+            }
+          }
+        }
+      }
+    },
+    "hasComponentsDir": true,
+    "componentsStructure": {
+      "files": [
+        "dynamic-contact-info.tsx",
+        "dynamic-data-dashboard.tsx",
+        "dynamic-doctors-list.tsx",
+        "dynamic-services.tsx",
+        "dynamic-stats.tsx",
+        "index.ts",
+        "LanguageSwitcher.tsx",
+        "Navigation.tsx",
+        "ThemeSwitcher.tsx"
+      ],
+      "directories": {
+        "accessibility": {
+          "files": ["AccessibilitySettings.tsx"],
+          "directories": {}
+        },
+        "appointments": {
+          "files": ["AppointmentManager.tsx"],
+          "directories": {}
+        },
+        "auth": {
+          "files": ["ProtectedRoute.tsx"],
+          "directories": {}
+        },
+        "booking": {
+          "files": ["AvailableSlotsPicker.tsx", "SessionTypeSelector.tsx"],
+          "directories": {}
+        },
+        "charts": {
+          "files": [
+            "AreaChart.tsx",
+            "BarChart.tsx",
+            "index.ts",
+            "LineChart.tsx"
+          ],
+          "directories": {}
+        },
+        "chatbot": {
+          "files": ["MoainChatbot.tsx", "MoeenChatbot.tsx"],
+          "directories": {}
+        },
+        "common": {
+          "files": [
+            "DirectionToggle.tsx",
+            "EmptyState.tsx",
+            "ErrorBoundary.tsx",
+            "index.ts",
+            "LanguageSwitcher.tsx",
+            "LiveDot.tsx",
+            "OptimizedImage.tsx",
+            "PerformanceOptimizedImage.tsx",
+            "PlaceholderSquare.tsx",
+            "StatusBanner.tsx"
+          ],
+          "directories": {}
+        },
+        "dashboard": {
+          "files": ["Charts.tsx", "DynamicCharts.tsx", "KpiCard.tsx"],
+          "directories": {}
+        },
+        "insurance": {
+          "files": ["ClaimsManager.tsx"],
+          "directories": {}
+        },
+        "layout": {
+          "files": [
+            "Footer.tsx",
+            "GlobalHeader.tsx",
+            "Header.tsx",
+            "SmartHeader.tsx"
+          ],
+          "directories": {}
+        },
+        "patient": {
+          "files": ["ActivationFlow.tsx", "PreVisitChecklist.tsx"],
+          "directories": {}
+        },
+        "patients": {
+          "files": ["PatientRecords.tsx"],
+          "directories": {}
+        },
+        "providers": {
+          "files": [
+            "DesignSystemProvider.tsx",
+            "I18nProvider.tsx",
+            "ModernInteractionsProvider.tsx",
+            "ThemeProvider.tsx",
+            "UIProvider.tsx"
+          ],
+          "directories": {}
+        },
+        "settings": {
+          "files": ["KeywordEditor.tsx", "SettingsTabs.tsx"],
+          "directories": {}
+        },
+        "shared": {
+          "files": [
+            "DataTable.tsx",
+            "EmptyState.tsx",
+            "Form.tsx",
+            "index.ts",
+            "LiveRegion.tsx",
+            "Modal.tsx",
+            "ScreenReaderOnly.tsx",
+            "Tabs.tsx"
+          ],
+          "directories": {}
+        },
+        "shell": {
+          "files": ["Header.tsx", "HeaderSimple.tsx", "Sidebar.tsx"],
+          "directories": {}
+        },
+        "ui": {
+          "files": [
+            "Badge.tsx",
+            "Button.tsx",
+            "Card.tsx",
+            "Checkbox.tsx",
+            "CTAButton.tsx",
+            "DataTable.tsx",
+            "DesignSystemDemo.tsx",
+            "FeatureCard.tsx",
+            "index.ts",
+            "Input.tsx",
+            "Label.tsx",
+            "LoadingSpinner.tsx",
+            "Modal.tsx",
+            "RTLToggle.tsx",
+            "ScrollArea.tsx",
+            "Select.tsx",
+            "Skeleton.tsx",
+            "StatCard.tsx",
+            "Switch.tsx",
+            "Table.tsx",
+            "Tabs.tsx",
+            "Textarea.tsx",
+            "ThemeSwitch.tsx",
+            "ThemeToggle.tsx",
+            "Toast.tsx",
+            "Tooltip.tsx"
+          ],
+          "directories": {}
+        }
+      }
+    }
+  },
+  "root": "D:\\Github\\moeen"
+}

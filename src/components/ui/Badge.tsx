@@ -2,7 +2,13 @@ import React from 'react';
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'outline';
   className?: string;
 }
 
@@ -18,6 +24,7 @@ export function Badge({
     success: 'badge-success',
     warning: 'badge-warning',
     error: 'badge-error',
+    outline: 'badge-outline',
   };
 
   return (

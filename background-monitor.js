@@ -7,9 +7,9 @@
  * Monitors system and fixes issues automatically
  */
 
-const AutoTestingSystem = require('./auto-testing-system');
-const fs = require('fs');
-const path = require('path');
+import AutoTestingSystem from './auto-testing-system.js';
+import fs from 'fs';
+import path from 'path';
 
 class BackgroundMonitor {
   constructor() {
@@ -272,7 +272,7 @@ class BackgroundMonitor {
 }
 
 // Run the monitor
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   const monitor = new BackgroundMonitor();
 
   // Handle graceful shutdown
@@ -292,4 +292,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = BackgroundMonitor;
+export default BackgroundMonitor;

@@ -1,16 +1,22 @@
+'use client';
+
+/* eslint-disable no-undef */
+declare const fetch: typeof globalThis.fetch;
+declare const console: typeof globalThis.console;
+
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+} from '@/components/ui/Select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import {
   RefreshCw,
   Users,
@@ -39,7 +45,7 @@ interface Doctor {
   total_reviews: number;
   qualifications: string[];
   bio: string;
-  working_hours: any;
+  working_hours: Record<string, unknown>;
   languages: string[];
   experience_years: number;
   user_info?: {
@@ -105,7 +111,7 @@ interface EmergencyContact {
   type: string;
   priority: number;
   is_available_24_7: boolean;
-  working_hours: any;
+  working_hours: Record<string, unknown>;
   notes: string;
   is_active: boolean;
 }
@@ -122,8 +128,8 @@ interface CenterInfo {
   city: string;
   services: string[];
   specialties: string[];
-  working_hours: any;
-  social_media: any;
+  working_hours: Record<string, unknown>;
+  social_media: Record<string, unknown>;
 }
 
 export default function DynamicDataDashboard({ className }: DynamicDataProps) {

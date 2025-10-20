@@ -1,0 +1,10 @@
+{
+  "nameShort": "Moeen",
+  "nameLong": "Moeen Healthcare Platform",
+  "applicationName": "moeen",
+  "tunnelApplicationName": "moeen-tunnel",
+  "tunnelApplicationConfig": {
+    "protocol": "https",
+    "port": 3001
+  }
+}

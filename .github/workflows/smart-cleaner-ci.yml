@@ -1,0 +1,190 @@
+name: Smart Cleaner CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run weekly on Sundays at 2 AM UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run in dry-run mode'
+        required: false
+        default: 'true'
+        type: boolean
+
+jobs:
+  smart-cleaner:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm install -g jq
+
+      - name: Install Smart Cleaner dependencies
+        run: |
+          bash tools/smart-cleaner/package-install.txt
+
+      - name: Run project analysis
+        run: |
+          node tools/smart-cleaner/detect_project.js
+
+      - name: Build dependency graph
+        run: |
+          node tools/smart-cleaner/build_dependency_graph.js
+
+      - name: Identify dead files
+        run: |
+          node tools/smart-cleaner/identify_dead_files.js
+
+      - name: Run Smart Cleaner (dry-run)
+        if: github.event.inputs.dry_run == 'true' || github.event_name == 'schedule'
+        run: |
+          tools/smart-cleaner/smart_clean.sh --dry-run
+
+      - name: Run Smart Cleaner (apply)
+        if: github.event.inputs.dry_run == 'false' && github.event_name != 'schedule'
+        run: |
+          tools/smart-cleaner/smart_clean.sh --apply
+
+      - name: Fix import paths
+        if: github.event.inputs.dry_run == 'false' && github.event_name != 'schedule'
+        run: |
+          tools/smart-cleaner/fix_imports.sh --apply
+
+      - name: Run project checks
+        run: |
+          node tools/smart-cleaner/run_checks.js
+
+      - name: Generate report
+        run: |
+          node tools/smart-cleaner/generate_report.js
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: smart-cleaner-reports
+          path: |
+            cleanup-report.json
+            cleanup-report.md
+            .smart-cleaner-candidates.json
+            dependency_graph.json
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            let reportContent = '## 🧠 Smart Cleaner Analysis\n\n';
+
+            try {
+              const report = JSON.parse(fs.readFileSync('cleanup-report.json', 'utf8'));
+              const stats = report.statistics;
+              
+              reportContent += `### 📊 Summary\n`;
+              reportContent += `- **Files analyzed:** ${stats.files.total}\n`;
+              reportContent += `- **Dead files found:** ${stats.files.removed}\n`;
+              reportContent += `- **Unused dependencies:** ${stats.dependencies.removed}\n`;
+              reportContent += `- **Space that could be saved:** ${stats.space.savedFormatted}\n\n`;
+              
+              if (report.recommendations && report.recommendations.length > 0) {
+                reportContent += `### 💡 Recommendations\n\n`;
+                for (const rec of report.recommendations.slice(0, 5)) {
+                  const priorityIcon = rec.priority === 'high' ? '🔴' : 
+                                     rec.priority === 'medium' ? '🟡' : '🟢';
+                  reportContent += `- ${priorityIcon} **${rec.title}**: ${rec.description}\n`;
+                }
+              }
+              
+              if (report.issues && report.issues.length > 0) {
+                reportContent += `\n### ⚠️ Issues Found\n\n`;
+                for (const issue of report.issues.slice(0, 3)) {
+                  const severityIcon = issue.severity === 'high' ? '🔴' : 
+                                     issue.severity === 'medium' ? '🟡' : '🟢';
+                  reportContent += `- ${severityIcon} **${issue.title}**: ${issue.description}\n`;
+                }
+              }
+              
+              reportContent += `\n### 📋 Full Report\n`;
+              reportContent += `Download the full report from the [workflow artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}).\n`;
+              
+            } catch (error) {
+              reportContent += `❌ Error generating report: ${error.message}\n`;
+            }
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: reportContent
+            });
+
+      - name: Create issue for high priority issues
+        if: github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            try {
+              const report = JSON.parse(fs.readFileSync('cleanup-report.json', 'utf8'));
+              
+              if (report.issues && report.issues.length > 0) {
+                const highPriorityIssues = report.issues.filter(issue => issue.severity === 'high');
+                
+                if (highPriorityIssues.length > 0) {
+                  let issueBody = '## 🚨 High Priority Issues Found\n\n';
+                  issueBody += 'The Smart Cleaner has identified high priority issues that need attention:\n\n';
+                  
+                  for (const issue of highPriorityIssues) {
+                    issueBody += `### ${issue.title}\n`;
+                    issueBody += `**Severity:** ${issue.severity.toUpperCase()}\n`;
+                    issueBody += `**Description:** ${issue.description}\n`;
+                    issueBody += `**Solution:** ${issue.solution}\n\n`;
+                  }
+                  
+                  issueBody += '## 📋 Next Steps\n';
+                  issueBody += '1. Review the issues above\n';
+                  issueBody += '2. Run the Smart Cleaner manually: `tools/smart-cleaner/smart_clean.sh --apply`\n';
+                  issueBody += '3. Test your application after cleanup\n';
+                  issueBody += '4. Close this issue when resolved\n\n';
+                  issueBody += '---\n';
+                  issueBody += '*This issue was automatically created by the Smart Cleaner CI.*';
+                  
+                  github.rest.issues.create({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    title: `🧠 Smart Cleaner: ${highPriorityIssues.length} High Priority Issues Found`,
+                    body: issueBody,
+                    labels: ['smart-cleaner', 'automated', 'high-priority']
+                  });
+                }
+              }
+            } catch (error) {
+              console.error('Error creating issue:', error);
+            }
+
+      - name: Notify on Slack (if configured)
+        if: github.event_name == 'schedule' && env.SLACK_WEBHOOK_URL
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"🧠 Smart Cleaner completed weekly analysis for ${{ github.repository }}. Check the [workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.\"}" \
+            $SLACK_WEBHOOK_URL

@@ -1,0 +1,56 @@
+# Package installation script for Smart Cleaner dependencies
+# Run this after npm install to ensure all required tools are available
+
+echo "🔧 Installing Smart Cleaner dependencies..."
+
+# Install jq for JSON processing (if not available)
+if ! command -v jq &> /dev/null; then
+    echo "Installing jq..."
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        brew install jq
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        sudo apt-get update && sudo apt-get install -y jq
+    elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+        echo "Please install jq manually on Windows: https://stedolan.github.io/jq/download/"
+    fi
+fi
+
+# Install tree for directory visualization (if not available)
+if ! command -v tree &> /dev/null; then
+    echo "Installing tree..."
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        brew install tree
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        sudo apt-get install -y tree
+    elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+        echo "Please install tree manually on Windows: https://gnuwin32.sourceforge.net/packages/tree.htm"
+    fi
+fi
+
+# Install additional npm packages for analysis
+echo "Installing analysis packages..."
+npm install --save-dev \
+    @typescript-eslint/parser \
+    @typescript-eslint/eslint-plugin \
+    eslint-plugin-unused-imports \
+    eslint-plugin-import \
+    eslint-plugin-react \
+    eslint-plugin-react-hooks \
+    eslint-plugin-jsx-a11y \
+    eslint-config-prettier \
+    eslint-plugin-prettier \
+    prettier \
+    typescript \
+    ts-morph \
+    glob \
+    fast-glob \
+    micromatch \
+    chalk \
+    ora \
+    inquirer \
+    commander \
+    fs-extra \
+    path \
+    semver
+
+echo "✅ Smart Cleaner dependencies installed!"
