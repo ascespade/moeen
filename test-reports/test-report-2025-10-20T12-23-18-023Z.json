@@ -1,0 +1,28 @@
+{
+  "summary": {
+    "totalTests": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "duration": 2,
+    "timestamp": "2025-10-20T12:23:18.022Z"
+  },
+  "databaseStats": {
+    "totalUsers": 285,
+    "totalPatients": 14,
+    "totalAuditLogs": 752,
+    "recentUsers": 285
+  },
+  "testResults": [],
+  "recommendations": [
+    "Increase database integration test coverage",
+    "Add more authentication flow tests"
+  ],
+  "coverage": {
+    "authentication": 0,
+    "userManagement": 0,
+    "patientManagement": 0,
+    "adminPanel": 0,
+    "databaseIntegration": 0
+  }
+}
