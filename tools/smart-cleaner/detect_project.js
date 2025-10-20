@@ -23,24 +23,29 @@ class ProjectDetector {
 
   detect() {
     console.log('🔍 Detecting project type...');
-    
+
     this.detectPackageManager();
     this.detectFrameworks();
     this.detectTools();
     this.detectConfig();
-    
+
     return {
       type: this.projectType,
       frameworks: this.frameworks,
       tools: this.tools,
       config: this.config,
-      root: this.projectRoot
+      root: this.projectRoot,
     };
   }
 
   detectPackageManager() {
-    const packageFiles = ['package.json', 'yarn.lock', 'pnpm-lock.yaml', 'package-lock.json'];
-    
+    const packageFiles = [
+      'package.json',
+      'yarn.lock',
+      'pnpm-lock.yaml',
+      'package-lock.json',
+    ];
+
     for (const file of packageFiles) {
       if (fs.existsSync(path.join(this.projectRoot, file))) {
         if (file === 'yarn.lock') {
@@ -56,14 +61,17 @@ class ProjectDetector {
 
   detectFrameworks() {
     const packageJsonPath = path.join(this.projectRoot, 'package.json');
-    
+
     if (!fs.existsSync(packageJsonPath)) {
       return;
     }
 
     try {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-      const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
+      const dependencies = {
+        ...packageJson.dependencies,
+        ...packageJson.devDependencies,
+      };
 
       // Detect frameworks
       if (dependencies.next) {
@@ -131,9 +139,9 @@ class ProjectDetector {
       '.eslintrc.json',
       '.eslintrc.yaml',
       '.eslintrc.yml',
-      'eslint.config.js'
+      'eslint.config.js',
     ];
-    
+
     for (const config of eslintConfigs) {
       if (fs.existsSync(path.join(this.projectRoot, config))) {
         this.tools.push('ESLint');
@@ -148,9 +156,9 @@ class ProjectDetector {
       '.prettierrc.json',
       '.prettierrc.yaml',
       '.prettierrc.yml',
-      'prettier.config.js'
+      'prettier.config.js',
     ];
-    
+
     for (const config of prettierConfigs) {
       if (fs.existsSync(path.join(this.projectRoot, config))) {
         this.tools.push('Prettier');
@@ -159,21 +167,27 @@ class ProjectDetector {
     }
 
     // Detect Tailwind
-    if (fs.existsSync(path.join(this.projectRoot, 'tailwind.config.js')) ||
-        fs.existsSync(path.join(this.projectRoot, 'tailwind.config.ts')) ||
-        fs.existsSync(path.join(this.projectRoot, 'tailwind.config.cjs'))) {
+    if (
+      fs.existsSync(path.join(this.projectRoot, 'tailwind.config.js')) ||
+      fs.existsSync(path.join(this.projectRoot, 'tailwind.config.ts')) ||
+      fs.existsSync(path.join(this.projectRoot, 'tailwind.config.cjs'))
+    ) {
       this.tools.push('Tailwind CSS');
     }
 
     // Detect Next.js config
-    if (fs.existsSync(path.join(this.projectRoot, 'next.config.js')) ||
-        fs.existsSync(path.join(this.projectRoot, 'next.config.ts'))) {
+    if (
+      fs.existsSync(path.join(this.projectRoot, 'next.config.js')) ||
+      fs.existsSync(path.join(this.projectRoot, 'next.config.ts'))
+    ) {
       this.tools.push('Next.js Config');
     }
 
     // Detect Docker
-    if (fs.existsSync(path.join(this.projectRoot, 'Dockerfile')) ||
-        fs.existsSync(path.join(this.projectRoot, 'docker-compose.yml'))) {
+    if (
+      fs.existsSync(path.join(this.projectRoot, 'Dockerfile')) ||
+      fs.existsSync(path.join(this.projectRoot, 'docker-compose.yml'))
+    ) {
       this.tools.push('Docker');
     }
 
@@ -209,7 +223,8 @@ class ProjectDetector {
     const componentsPath = path.join(this.projectRoot, 'src/components');
     if (fs.existsSync(componentsPath)) {
       this.config.hasComponentsDir = true;
-      this.config.componentsStructure = this.analyzeDirectoryStructure(componentsPath);
+      this.config.componentsStructure =
+        this.analyzeDirectoryStructure(componentsPath);
     }
   }
 
@@ -222,7 +237,7 @@ class ProjectDetector {
       const items = fs.readdirSync(dirPath);
       const structure = {
         files: [],
-        directories: {}
+        directories: {},
       };
 
       for (const item of items) {
@@ -270,11 +285,14 @@ class ProjectDetector {
 }
 
 // Main execution
-if (import.meta.url === `file://${process.argv[1]}` || process.argv[1] === fileURLToPath(import.meta.url)) {
+if (
+  import.meta.url === `file://${process.argv[1]}` ||
+  process.argv[1] === fileURLToPath(import.meta.url)
+) {
   const projectRoot = process.argv[2] || process.cwd();
   const detector = new ProjectDetector(projectRoot);
   const result = detector.detect();
-  
+
   console.log('\n📊 Project Analysis Results:');
   console.log('============================');
   console.log(`Project Type: ${result.type}`);
@@ -283,14 +301,16 @@ if (import.meta.url === `file://${process.argv[1]}` || process.argv[1] === fileU
   console.log(`Has src/ directory: ${result.config.hasSrcDir || false}`);
   console.log(`Has app/ directory: ${result.config.hasAppDir || false}`);
   console.log(`Has pages/ directory: ${result.config.hasPagesDir || false}`);
-  console.log(`Has components/ directory: ${result.config.hasComponentsDir || false}`);
-  
+  console.log(
+    `Has components/ directory: ${result.config.hasComponentsDir || false}`
+  );
+
   const recommendations = detector.getRecommendations();
   if (recommendations.length > 0) {
     console.log('\n💡 Recommendations:');
     recommendations.forEach(rec => console.log(`  • ${rec}`));
   }
-  
+
   // Write result to file for other scripts
   fs.writeFileSync(
     path.join(__dirname, '.project_analysis.json'),
