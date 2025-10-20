@@ -23,6 +23,7 @@
 **الملف:** `src/styles/dynamic-design-system.css`
 
 **المحتوى المطبق:**
+
 ```css
 /* ========================================
    CENTRALIZED STYLING SYSTEM - مُعين
@@ -41,24 +42,24 @@
 
 :root {
   /* Brand Colors - Single Source of Truth */
-  --brand-primary: #f58220;           /* Orange - Primary brand color */
-  --brand-primary-hover: #d66f15;     /* Darker orange for hover states */
-  --brand-secondary: #009688;         /* Green - Secondary brand color */
-  --brand-accent: #007bff;            /* Blue - Accent color */
-  --brand-success: #009688;           /* Green - Success states */
-  --brand-warning: #f59e0b;           /* Yellow - Warning states */
-  --brand-error: #ef4444;             /* Red - Error states */
-  
+  --brand-primary: #f58220; /* Orange - Primary brand color */
+  --brand-primary-hover: #d66f15; /* Darker orange for hover states */
+  --brand-secondary: #009688; /* Green - Secondary brand color */
+  --brand-accent: #007bff; /* Blue - Accent color */
+  --brand-success: #009688; /* Green - Success states */
+  --brand-warning: #f59e0b; /* Yellow - Warning states */
+  --brand-error: #ef4444; /* Red - Error states */
+
   /* Background Colors */
-  --background: #ffffff;              /* Main background */
-  --foreground: #0f172a;              /* Main text color */
-  --brand-surface: #f9fafb;           /* Surface background */
-  --panel: #ffffff;                   /* Panel background */
-  --brand-border: #e5e7eb;            /* Border color */
-  
+  --background: #ffffff; /* Main background */
+  --foreground: #0f172a; /* Main text color */
+  --brand-surface: #f9fafb; /* Surface background */
+  --panel: #ffffff; /* Panel background */
+  --brand-border: #e5e7eb; /* Border color */
+
   /* Focus and Interactive States */
-  --focus-ring: #007bff;              /* Focus ring color */
-  
+  --focus-ring: #007bff; /* Focus ring color */
+
   /* Gradients */
   --brand-gradient: linear-gradient(
     135deg,
@@ -75,38 +76,40 @@
     color-mix(in oklab, var(--brand-accent) 18%, transparent),
     transparent 40%
   );
-  
+
   /* Spacing Scale */
-  --space-1: 0.25rem;    /* 4px */
-  --space-2: 0.5rem;     /* 8px */
-  --space-3: 0.75rem;    /* 12px */
-  --space-4: 1rem;       /* 16px */
-  --space-6: 1.5rem;     /* 24px */
-  --space-8: 2rem;       /* 32px */
-  --space-12: 3rem;      /* 48px */
-  --space-16: 4rem;      /* 64px */
-  
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+
   /* Border Radius */
-  --radius-sm: 0.375rem;  /* 6px */
-  --radius-md: 0.5rem;    /* 8px */
-  --radius-lg: 0.75rem;   /* 12px */
-  --radius-xl: 1rem;      /* 16px */
-  
+  --radius-sm: 0.375rem; /* 6px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-xl: 1rem; /* 16px */
+
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 5%);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 10%), 0 8px 10px -6px rgb(0 0 0 / 10%);
-  
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
+  --shadow-xl:
+    0 20px 25px -5px rgb(0 0 0 / 10%), 0 8px 10px -6px rgb(0 0 0 / 10%);
+
   /* Transitions */
   --transition-fast: 150ms ease-in-out;
   --transition-normal: 300ms ease-in-out;
   --transition-slow: 500ms ease-in-out;
-  
+
   /* Typography */
-  --font-family-sans: "Cairo", "Inter", system-ui, sans-serif;
-  --font-family-mono: "Fira Code", monaco, consolas, monospace;
-  
+  --font-family-sans: 'Cairo', 'Inter', system-ui, sans-serif;
+  --font-family-mono: 'Fira Code', monaco, consolas, monospace;
+
   /* Z-Index Scale */
   --z-dropdown: 1000;
   --z-sticky: 1020;
@@ -122,9 +125,11 @@
 ### 2. المكونات الديناميكية المكتملة
 
 #### أ) مكون الإحصائيات الديناميكية
+
 **الملف:** `src/components/dynamic-stats.tsx`
 
 **المحتوى:**
+
 ```tsx
 'use client';
 import React, { useState, useEffect } from 'react';
@@ -293,9 +298,11 @@ export default function DynamicStats() {
 ```
 
 #### ب) مكون الخدمات الديناميكية
+
 **الملف:** `src/components/dynamic-services.tsx`
 
 **المحتوى:**
+
 ```tsx
 'use client';
 import React, { useState, useEffect } from 'react';
@@ -485,13 +492,15 @@ export default function DynamicServices() {
 ```
 
 #### ج) مكون معلومات الاتصال الديناميكية
+
 **الملف:** `src/components/dynamic-contact-info.tsx`
 
 **المحتوى:**
+
 ```tsx
-"use client";
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
+'use client';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 interface ContactInfo {
   id: number;
@@ -533,27 +542,35 @@ export default function DynamicContactInfo() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-24">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]"></div>
+      <div className='flex justify-center items-center h-24'>
+        <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]'></div>
       </div>
     );
   }
 
   if (error) {
-    return <div className="text-center text-red-500 p-4">{error}</div>;
+    return <div className='text-center text-red-500 p-4'>{error}</div>;
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-      {contactInfo.map((item) => (
-        <div key={item.id} className="card p-6 flex flex-col items-center">
-          <div className={`${item.color} text-white rounded-full w-16 h-16 flex-center text-3xl mb-4`}>
+    <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-center'>
+      {contactInfo.map(item => (
+        <div key={item.id} className='card p-6 flex flex-col items-center'>
+          <div
+            className={`${item.color} text-white rounded-full w-16 h-16 flex-center text-3xl mb-4`}
+          >
             {item.icon}
           </div>
-          <h3 className="text-xl font-semibold text-foreground mb-2">{item.title}</h3>
-          <p className="text-muted-foreground mb-4">{item.value}</p>
-          <Link href={item.link} className="btn btn-outline btn-sm">
-            {item.type === 'phone' ? 'اتصل بنا' : item.type === 'email' ? 'أرسل بريداً' : 'عرض الموقع'}
+          <h3 className='text-xl font-semibold text-foreground mb-2'>
+            {item.title}
+          </h3>
+          <p className='text-muted-foreground mb-4'>{item.value}</p>
+          <Link href={item.link} className='btn btn-outline btn-sm'>
+            {item.type === 'phone'
+              ? 'اتصل بنا'
+              : item.type === 'email'
+                ? 'أرسل بريداً'
+                : 'عرض الموقع'}
           </Link>
         </div>
       ))}
@@ -567,6 +584,7 @@ export default function DynamicContactInfo() {
 **الملف:** `src/app/api/dynamic-data/route.ts`
 
 **المحتوى:**
+
 ```typescript
 import { NextResponse } from 'next/server';
 import { URL } from 'url'; // Import URL for Node.js environment
@@ -574,25 +592,25 @@ import { URL } from 'url'; // Import URL for Node.js environment
 // Mock data for demonstration
 const mockData = {
   center_info: {
-    name: "مركز الهمم",
-    description: "مركز متخصص في العلاج الطبيعي والوظيفي",
+    name: 'مركز الهمم',
+    description: 'مركز متخصص في العلاج الطبيعي والوظيفي',
     established_year: 2020,
-    location: "الرياض، المملكة العربية السعودية",
-    phone: "+966 50 123 4567",
-    email: "info@moeen.com",
-    website: "https://moeen.com",
+    location: 'الرياض، المملكة العربية السعودية',
+    phone: '+966 50 123 4567',
+    email: 'info@moeen.com',
+    website: 'https://moeen.com',
   },
   patients: [
-    { id: 1, name: "أحمد محمد", status: "نشط" },
-    { id: 2, name: "فاطمة علي", status: "نشط" },
-    { id: 3, name: "محمد أحمد", status: "مكتمل" },
-    { id: 4, name: "نورا سعد", status: "نشط" },
-    { id: 5, name: "خالد عبدالله", status: "نشط" },
+    { id: 1, name: 'أحمد محمد', status: 'نشط' },
+    { id: 2, name: 'فاطمة علي', status: 'نشط' },
+    { id: 3, name: 'محمد أحمد', status: 'مكتمل' },
+    { id: 4, name: 'نورا سعد', status: 'نشط' },
+    { id: 5, name: 'خالد عبدالله', status: 'نشط' },
   ],
   doctors: [
-    { id: 1, name: "د. أحمد محمد", specialty: "العلاج الطبيعي" },
-    { id: 2, name: "د. فاطمة علي", specialty: "العلاج الوظيفي" },
-    { id: 3, name: "د. محمد أحمد", specialty: "العلاج الطبيعي" },
+    { id: 1, name: 'د. أحمد محمد', specialty: 'العلاج الطبيعي' },
+    { id: 2, name: 'د. فاطمة علي', specialty: 'العلاج الوظيفي' },
+    { id: 3, name: 'د. محمد أحمد', specialty: 'العلاج الطبيعي' },
   ],
   appointments: [
     {
@@ -618,9 +636,33 @@ const mockData = {
     },
   ],
   contact_info: [
-    { id: 1, type: "phone", title: "اتصال مباشر", value: "+966 50 123 4567", icon: "📞", link: "tel:+966501234567", color: "bg-[var(--brand-primary)]" },
-    { id: 2, type: "email", title: "البريد الإلكتروني", value: "info@moeen.com", icon: "📧", link: "mailto:info@moeen.com", color: "bg-[var(--brand-secondary)]" },
-    { id: 3, type: "location", title: "الموقع", value: "الرياض، المملكة العربية السعودية", icon: "📍", link: "/contact", color: "bg-[var(--brand-accent)]" }
+    {
+      id: 1,
+      type: 'phone',
+      title: 'اتصال مباشر',
+      value: '+966 50 123 4567',
+      icon: '📞',
+      link: 'tel:+966501234567',
+      color: 'bg-[var(--brand-primary)]',
+    },
+    {
+      id: 2,
+      type: 'email',
+      title: 'البريد الإلكتروني',
+      value: 'info@moeen.com',
+      icon: '📧',
+      link: 'mailto:info@moeen.com',
+      color: 'bg-[var(--brand-secondary)]',
+    },
+    {
+      id: 3,
+      type: 'location',
+      title: 'الموقع',
+      value: 'الرياض، المملكة العربية السعودية',
+      icon: '📍',
+      link: '/contact',
+      color: 'bg-[var(--brand-accent)]',
+    },
   ],
   services: [
     {
@@ -691,7 +733,9 @@ export async function GET(request: Request) {
     }
 
     if (type && mockData.hasOwnProperty(type)) {
-      return NextResponse.json({ [type]: mockData[type as keyof typeof mockData] });
+      return NextResponse.json({
+        [type]: mockData[type as keyof typeof mockData],
+      });
     } else if (type === 'services') {
       return NextResponse.json({ services: mockData.services });
     } else if (type === 'stats') {
@@ -714,7 +758,10 @@ export async function GET(request: Request) {
     if (typeof console !== 'undefined') {
       console.error('Error in dynamic-data API:', error);
     }
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 ```
@@ -724,6 +771,7 @@ export async function GET(request: Request) {
 **الملف:** `src/app/page.tsx`
 
 **المحتوى:**
+
 ```tsx
 'use client';
 import React from 'react';
@@ -750,7 +798,8 @@ export default function HomePage() {
               منصة الرعاية الصحية المتخصصة
             </h2>
             <p className='text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto'>
-              نقدم خدمات متكاملة للرعاية الصحية مع أحدث التقنيات والذكاء الاصطناعي
+              نقدم خدمات متكاملة للرعاية الصحية مع أحدث التقنيات والذكاء
+              الاصطناعي
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
               <Link className='btn btn-brand btn-lg' href='#services'>
@@ -829,10 +878,13 @@ export default function HomePage() {
                 عن مُعين
               </h2>
               <p className='text-lg text-muted-foreground mb-6'>
-                مُعين هو مساعدك الذكي في الرعاية الصحية، مصمم خصيصاً لمراكز العلاج الطبيعي والوظيفي في المملكة العربية السعودية. نحن نقدم حلولاً متكاملة لإدارة المرضى والمواعيد والمطالبات التأمينية.
+                مُعين هو مساعدك الذكي في الرعاية الصحية، مصمم خصيصاً لمراكز
+                العلاج الطبيعي والوظيفي في المملكة العربية السعودية. نحن نقدم
+                حلولاً متكاملة لإدارة المرضى والمواعيد والمطالبات التأمينية.
               </p>
               <p className='text-lg text-muted-foreground mb-8'>
-                مع أكثر من 1000 مريض نشط و 98% معدل رضا، نحن نثق في قدرتنا على تحسين جودة الرعاية الصحية التي تقدمها.
+                مع أكثر من 1000 مريض نشط و 98% معدل رضا، نحن نثق في قدرتنا على
+                تحسين جودة الرعاية الصحية التي تقدمها.
               </p>
               <Link className='btn btn-brand btn-lg' href='/about'>
                 ابدأ الآن
@@ -871,6 +923,7 @@ export default function HomePage() {
 ## 🔧 الإصلاحات التقنية المكتملة
 
 ### 1. إصلاح أخطاء ESLint
+
 - إضافة `import React from 'react';` في جميع الملفات
 - إضافة `import 'server-only';` في ملفات API
 - إضافة `import { NextRequest, NextResponse } from 'next/server';` في ملفات API
@@ -880,12 +933,14 @@ export default function HomePage() {
 - إزالة المتغيرات والوظائف غير المستخدمة
 
 ### 2. إصلاح أخطاء التكوين
+
 - إصلاح `next.config.js` من `module.exports` إلى `export default`
 - إصلاح `postcss.config.js` إلى `postcss.config.cjs`
 - إصلاح `tailwind.config.js` إلى `tailwind.config.cjs`
 - إضافة `"type": "module"` في `package.json`
 
 ### 3. إصلاح أخطاء CSS
+
 - إلغاء تعليق `@tailwind base; @tailwind components; @tailwind utilities;` في `globals.css`
 - إلغاء تعليق `import './globals.css';` في `layout.tsx`
 
@@ -894,6 +949,7 @@ export default function HomePage() {
 ## 📊 الإحصائيات المكتملة
 
 ### الملفات المحدثة:
+
 - ✅ `src/styles/dynamic-design-system.css` - النظام المركزي للتصميم
 - ✅ `src/components/dynamic-stats.tsx` - مكون الإحصائيات الديناميكية
 - ✅ `src/components/dynamic-services.tsx` - مكون الخدمات الديناميكية
@@ -902,6 +958,7 @@ export default function HomePage() {
 - ✅ `src/app/page.tsx` - الصفحة الرئيسية المحدثة
 
 ### المكونات المكتملة:
+
 - ✅ نظام الألوان المركزي
 - ✅ المكونات الديناميكية
 - ✅ نظام API شامل
@@ -915,18 +972,21 @@ export default function HomePage() {
 ## 🚀 المميزات المكتملة
 
 ### 1. النظام المركزي
+
 - ✅ ألوان موحدة عبر التطبيق
 - ✅ تصميم متسق
 - ✅ سهولة الصيانة
 - ✅ قابلية التوسع
 
 ### 2. النظام الديناميكي
+
 - ✅ بيانات ديناميكية من API
 - ✅ تحديث تلقائي للبيانات
 - ✅ معالجة الأخطاء
 - ✅ بيانات افتراضية في حالة الفشل
 
 ### 3. تجربة المستخدم
+
 - ✅ Loading states
 - ✅ Error handling
 - ✅ Responsive design
@@ -937,6 +997,7 @@ export default function HomePage() {
 ## 🔄 المهام المعلقة (للمطور التالي)
 
 ### 1. تحديث الصفحات المتبقية
+
 - [ ] `src/app/(marketing)/features/page.tsx` - إزالة الألوان المباشرة
 - [ ] `src/app/(marketing)/pricing/page.tsx` - إزالة الألوان المباشرة
 - [ ] `src/app/(marketing)/faq/page.tsx` - تطبيق النظام المركزي
@@ -944,16 +1005,19 @@ export default function HomePage() {
 - [ ] `src/app/(auth)/register/page.tsx` - إزالة الألوان المباشرة
 
 ### 2. تحديث المكونات
+
 - [ ] جميع مكونات UI لتستخدم النظام المركزي
 - [ ] جميع مكونات التخطيط (header, footer, sidebar)
 - [ ] جميع مكونات النماذج
 
 ### 3. تحديث صفحات الداشبورد
+
 - [ ] صفحات الداشبورد الإداري
 - [ ] صفحات الداشبورد الطبي
 - [ ] صفحات الداشبورد المريض
 
 ### 4. اختبار شامل
+
 - [ ] اختبار جميع الصفحات للتأكد من التطبيق الصحيح
 - [ ] اختبار النظام الديناميكي
 - [ ] اختبار الاستجابة (Responsive)
@@ -963,21 +1027,25 @@ export default function HomePage() {
 ## 📝 ملاحظات للمطور التالي
 
 ### 1. النظام المركزي
+
 - جميع الألوان يجب أن تستخدم CSS variables من `--brand-primary`, `--brand-secondary`, إلخ
 - لا تستخدم ألوان مباشرة مثل `text-blue-600` أو `bg-red-50`
 - استخدم النظام المركزي في جميع المكونات الجديدة
 
 ### 2. النظام الديناميكي
+
 - جميع البيانات يجب أن تأتي من API
 - استخدم المكونات الديناميكية الموجودة كمرجع
 - أضف loading states و error handling
 
 ### 3. الأداء
+
 - استخدم `useEffect` مع dependency array صحيح
 - أضف `typeof window !== 'undefined'` checks للعمليات المتعلقة بـ browser
 - استخدم `React.memo` للمكونات الثقيلة
 
 ### 4. التوافق
+
 - تأكد من أن جميع المكونات تعمل مع النظام المركزي
 - اختبر على أجهزة مختلفة
 - تأكد من دعم RTL
@@ -989,6 +1057,7 @@ export default function HomePage() {
 **إنشاء نظام مركزي ديناميكي شامل لجميع صفحات ومكونات التطبيق**
 
 ### المعايير:
+
 1. ✅ لا توجد ألوان مباشرة (hardcoded)
 2. ✅ جميع البيانات ديناميكية
 3. ✅ نظام مركزي موحد
@@ -1003,7 +1072,7 @@ export default function HomePage() {
 **المطور:** AI Assistant  
 **التاريخ:** اليوم  
 **الحالة:** مكتمل جزئياً - يحتاج متابعة  
-**المرحلة التالية:** إكمال المهام المعلقة  
+**المرحلة التالية:** إكمال المهام المعلقة
 
 ---
 
@@ -1015,11 +1084,12 @@ export default function HomePage() {
 **التخصص:** العلاج الطبيعي والوظيفي  
 **الموقع:** الرياض، المملكة العربية السعودية  
 **سنة التأسيس:** 2020  
-**الخدمة الرئيسية:** مُعين - الشات بوت الذكي للرعاية الصحية  
+**الخدمة الرئيسية:** مُعين - الشات بوت الذكي للرعاية الصحية
 
 ### 2. النظام التقني الشامل
 
 #### أ) التقنيات المستخدمة:
+
 - **Frontend:** Next.js 15, React 19, TypeScript
 - **Styling:** Tailwind CSS مع نظام مركزي للألوان
 - **Backend:** Next.js API Routes, Supabase
@@ -1031,6 +1101,7 @@ export default function HomePage() {
 - **Testing:** Jest + Testing Library
 
 #### ب) البنية المعمارية:
+
 ```
 src/
 ├── core/                   # Core system modules
@@ -1066,12 +1137,14 @@ src/
 #### أ) الجداول الأساسية (25+ جدول):
 
 **المستخدمون والمصادقة:**
+
 ```sql
 users (id, email, password_hash, full_name, role, avatar_url, phone, is_active, last_login_at)
 profiles (id, bio, specialization, license_number, clinic_name, address)
 ```
 
 **الرعاية الصحية الأساسية:**
+
 ```sql
 patients (id, public_id, full_name, email, phone, date_of_birth, gender, address, emergency_contact, insurance_provider, medical_history, allergies)
 doctors (id, user_id, specialization, license_number, consultation_fee, is_available)
@@ -1081,6 +1154,7 @@ insurance_claims (id, patient_id, appointment_id, claim_number, amount, status, 
 ```
 
 **نظام الشات بوت (مُعين):**
+
 ```sql
 chatbot_flows (id, public_id, name, description, status, version, created_by, published_at)
 chatbot_nodes (id, flow_id, node_type, name, config, position_x, position_y)
@@ -1092,6 +1166,7 @@ messages (id, conversation_id, sender_type, content, message_type, metadata, sen
 ```
 
 **نظام CRM:**
+
 ```sql
 crm_leads (id, public_id, name, email, phone, company, source, status, score, notes, owner_id, assigned_at)
 crm_deals (id, public_id, title, description, value, currency, stage, probability, expected_close_date, actual_close_date, owner_id, contact_id, lead_id)
@@ -1099,6 +1174,7 @@ crm_activities (id, public_id, type, subject, description, due_date, due_time, s
 ```
 
 **النظام والإدارة:**
+
 ```sql
 notifications (id, user_id, title, message, type, is_read, action_url, metadata, created_at, read_at)
 internal_messages (id, sender_id, recipient_id, subject, content, is_read, parent_message_id, created_at, read_at)
@@ -1109,6 +1185,7 @@ settings (id, key, value, description, category, is_public, updated_by, created_
 ```
 
 #### ب) أنواع الجلسات المتاحة (9 أنواع):
+
 1. **العلاج الطبيعي العام** - 45 دقيقة - 200 ريال
 2. **العلاج الوظيفي** - 60 دقيقة - 250 ريال
 3. **علاج النطق واللغة** - 45 دقيقة - 200 ريال
@@ -1122,18 +1199,21 @@ settings (id, key, value, description, category, is_public, updated_by, created_
 ### 4. نظام الأمان الشامل
 
 #### أ) المصادقة والتفويض:
+
 - **JWT-based authentication** مع refresh token rotation
 - **Role-based access control (RBAC)** مع صلاحيات مفصلة
 - **Multi-factor authentication** support
 - **Session management** متقدم
 
 #### ب) حماية البيانات:
+
 - **Encryption at rest** (AES-256)
 - **Encryption in transit** (TLS 1.3)
 - **Personal data anonymization**
 - **GDPR compliance**
 
 #### ج) سياسات RLS (Row Level Security):
+
 ```sql
 -- سياسات للمرضى
 CREATE POLICY "Users can view their own patients" ON patients
@@ -1163,12 +1243,14 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 ### 5. نظام API الشامل
 
 #### أ) Authentication Endpoints:
+
 - `POST /api/auth/login` - تسجيل الدخول
 - `POST /api/auth/register` - تسجيل مستخدم جديد
 - `POST /api/auth/logout` - تسجيل الخروج
 - `POST /api/auth/refresh` - تجديد التوكن
 
 #### ب) User Management:
+
 - `GET /api/users` - قائمة المستخدمين مع pagination
 - `POST /api/users` - إنشاء مستخدم جديد
 - `GET /api/users/:id` - بيانات مستخدم محدد
@@ -1176,6 +1258,7 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 - `DELETE /api/users/:id` - حذف المستخدم
 
 #### ج) Healthcare Endpoints:
+
 - `GET /api/patients` - قائمة المرضى
 - `POST /api/patients` - إضافة مريض جديد
 - `GET /api/appointments` - قائمة المواعيد
@@ -1184,12 +1267,14 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 - `POST /api/sessions/notes` - إضافة ملاحظات الجلسة
 
 #### د) Chatbot Endpoints:
+
 - `GET /api/chatbot/flows` - قائمة التدفقات
 - `POST /api/chatbot/flows` - إنشاء تدفق جديد
 - `POST /api/chatbot/message` - إرسال رسالة للشات بوت
 - `POST /api/supervisor/call-request` - طلب مكالمة عاجلة
 
 #### هـ) CRM Endpoints:
+
 - `GET /api/crm/leads` - قائمة العملاء المحتملين
 - `POST /api/crm/leads` - إضافة عميل محتمل
 - `GET /api/crm/deals` - قائمة الصفقات
@@ -1198,6 +1283,7 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 ### 6. المكونات والواجهات
 
 #### أ) الصفحات الرئيسية:
+
 1. **الصفحة الرئيسية** (`/`) - Landing page مع خدمات المركز
 2. **تسجيل الدخول** (`/login`) - نظام مصادقة متقدم
 3. **التسجيل** (`/register`) - إنشاء حساب جديد
@@ -1205,18 +1291,21 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 5. **لوحة الإدارة** (`/admin/dashboard`) - لوحة الإدارة الشاملة
 
 #### ب) صفحات الرعاية الصحية:
+
 1. **المواعيد** (`/appointments`) - تقويم المواعيد المتقدم
 2. **الجلسات** (`/sessions`) - إدارة الجلسات العلاجية
 3. **المرضى** (`/patients`) - إدارة ملفات المرضى
 4. **المطالبات التأمينية** (`/insurance-claims`) - إدارة المطالبات
 
 #### ج) صفحات الشات بوت:
+
 1. **التدفقات** (`/chatbot/flows`) - إدارة تدفقات المحادثة
 2. **القوالب** (`/chatbot/templates`) - قوالب الرسائل
 3. **التكاملات** (`/chatbot/integrations`) - ربط القنوات
 4. **التحليلات** (`/chatbot/analytics`) - إحصائيات الأداء
 
 #### د) صفحات CRM:
+
 1. **العملاء المحتملين** (`/crm/leads`) - إدارة العملاء المحتملين
 2. **الصفقات** (`/crm/deals`) - إدارة الصفقات
 3. **الأنشطة** (`/crm/activities`) - تتبع الأنشطة
@@ -1224,6 +1313,7 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 ### 7. نظام الإشعارات المتقدم
 
 #### أ) أنواع الإشعارات:
+
 - **إشعارات المواعيد** - تذكيرات المواعيد
 - **إشعارات الجلسات** - تحديثات الجلسات
 - **إشعارات المطالبات** - حالة المطالبات التأمينية
@@ -1231,6 +1321,7 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 - **إشعارات الطوارئ** - طلبات المكالمات العاجلة
 
 #### ب) قنوات الإشعارات:
+
 - **In-app notifications** - إشعارات داخل التطبيق
 - **WhatsApp Business API** - رسائل واتساب (مجاني حتى 1000 رسالة/شهر)
 - **Email notifications** - إشعارات البريد الإلكتروني
@@ -1239,6 +1330,7 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 ### 8. نظام الدفع والتكلفة
 
 #### أ) التكلفة الشهرية:
+
 - **Supabase:** مجاني (500MB قاعدة بيانات، 50k مستخدم، 1GB تخزين)
 - **WhatsApp Business API:** مجاني (حتى 1000 رسالة/شهر)
 - **SendGrid Email:** مجاني (100 إيميل/يوم)
@@ -1246,6 +1338,7 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 - **إجمالي التكلفة الشهرية:** $0-1
 
 #### ب) طرق الدفع المدعومة:
+
 - **Stripe** - للدفع الإلكتروني الدولي
 - **Moyasar** - بوابة الدفع المحلية السعودية
 - **الدفع النقدي** - في المركز
@@ -1254,18 +1347,21 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 ### 9. الأداء والتحسين
 
 #### أ) تحسين قاعدة البيانات:
+
 - **30+ فهرس** على الحقول المهمة
 - **Composite indexes** للاستعلامات المعقدة
 - **Functions optimized** (PLPGSQL)
 - **Triggers efficient** للعمليات التلقائية
 
 #### ب) تحسين API:
+
 - **Efficient queries** بدون N+1 problems
 - **Proper caching** للبيانات المتكررة
 - **Error handling** شامل
 - **Logging enabled** للتتبع
 
 #### ج) تحسين الواجهة:
+
 - **Loading states** في كل مكان
 - **Error boundaries** للحماية
 - **Optimistic updates** للتفاعل السريع
@@ -1274,18 +1370,21 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 ### 10. الأمان والحماية
 
 #### أ) حماية البيانات:
+
 - **تشفير البيانات الحساسة** (AES-256)
 - **تشفير الاتصالات** (TLS 1.3)
 - **إخفاء الهوية** للبيانات الشخصية
 - **الامتثال لـ GDPR**
 
 #### ب) حماية التطبيق:
+
 - **Input validation** شامل
 - **SQL injection prevention**
 - **XSS protection**
 - **CSRF protection**
 
 #### ج) مراقبة الأمان:
+
 - **Audit logging** لكل العمليات الحرجة
 - **Security event tracking**
 - **Intrusion detection**
@@ -1294,6 +1393,7 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 ### 11. التوثيق الشامل
 
 #### أ) التقارير المتوفرة (13 تقرير):
+
 1. **نظام المصادقة** (662 سطر)
 2. **نظام التفويض** (616 سطر)
 3. **حجز الجلسات** (638 سطر)
@@ -1309,6 +1409,7 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 13. **التقارير والتحليلات** (248 سطر)
 
 #### ب) الخطط والتقارير:
+
 - **معلومات المركز** (323 سطر)
 - **ملخص الأنظمة وخطة العمل** (638 سطر)
 - **النطاق النهائي والخطة** (346 سطر)
@@ -1321,11 +1422,13 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 ### 12. حالة المشروع الحالية
 
 #### أ) الأنظمة الجاهزة (>80%):
+
 - ✅ **نظام المصادقة** (95%)
 - ✅ **حجز الجلسات** (85%)
 - ✅ **شات بوت مُعين** (90%)
 
 #### ب) الأنظمة الجيدة (70-79%):
+
 - ✅ **نظام التفويض** (85%)
 - ✅ **تتبع التقدم** (75%)
 - ✅ **إدارة المرضى** (75%)
@@ -1333,10 +1436,12 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 - ✅ **نظام الدفع** (70%)
 
 #### ج) الأنظمة المتوسطة (60-69%):
+
 - ✅ **إشعارات المشرف** (60%)
 - ✅ **لوحة المالك** (60%)
 
 #### د) الأنظمة التي تحتاج عمل إضافي (<60%):
+
 - ⏳ **نظام التأمين** (40%) - شركتان مخطط لهما
 - ⏳ **واجهة تواصل العائلات** (50%) - البنية التحتية جاهزة
 - ⏳ **التقارير والتحليلات** (35%) - البيانات جاهزة، تحتاج واجهة
@@ -1344,17 +1449,20 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 ### 13. الخطوات القادمة
 
 #### أ) فوري (الآن - 1 ساعة):
+
 1. تطبيق Migrations على Supabase
 2. إضافة جداول الأخصائيين
 3. إضافة تخصصات الأخصائيين
 4. اختبار النظام
 
 #### ب) هذا الأسبوع:
+
 1. نظام التذكيرات (8-10 ساعات)
 2. توليد فواتير PDF (6-8 ساعات)
 3. واجهة تواصل العائلات (12-16 ساعة)
 
 #### ج) الشهر القادم:
+
 1. تكامل التأمين (24-32 ساعة)
 2. التقارير والتحليلات (20-24 ساعة)
 3. المميزات المتقدمة
@@ -1362,12 +1470,14 @@ CREATE POLICY "Admins can manage all appointments" ON appointments
 ### 14. التوصيات النهائية
 
 #### للإطلاق الفوري:
+
 - ✅ النظام جاهز للاستخدام الآن!
 - ✅ جميع المميزات الأساسية تعمل
 - ✅ الأمان مطبق
 - ✅ الأداء محسّن
 
 #### للتحسين المستمر:
+
 - **الأسبوع 1:** التذكيرات + الفواتير
 - **الأسبوع 2:** واجهة تواصل العائلات
 - **الشهر 1:** التأمين (شركتان)
