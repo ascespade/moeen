@@ -29,15 +29,15 @@ export async function GET(request: NextRequest) {
       // Get all claims (would need to implement this in realDB)
       claims = [];
     }
-    
+
     // Filter by status if provided
     if (status) {
       claims = claims.filter((claim: any) => claim.status === status);
     }
-    
+
     // Apply pagination
     const paginatedClaims = claims.slice(offset, offset + limit);
-    
+
     return NextResponse.json({
       success: true,
       data: paginatedClaims,
@@ -45,8 +45,8 @@ export async function GET(request: NextRequest) {
         total: claims.length,
         limit,
         offset,
-        hasMore: offset + limit < claims.length
-      }
+        hasMore: offset + limit < claims.length,
+      },
     });
   } catch (error) {
     console.error('Error fetching insurance claims:', error);
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: claim,
-      message: 'Insurance claim created successfully'
+      message: 'Insurance claim created successfully',
     });
   } catch (error) {
     console.error('Error creating insurance claim:', error);

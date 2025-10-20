@@ -56,26 +56,36 @@ export default function InsurancePage() {
         setLoading(true);
         // Get all insurance claims
         const claimsData = await realDB.getInsuranceClaims(''); // Get all claims for now
-        
+
         // Transform data to match our interface
-        const transformedClaims: InsuranceClaim[] = claimsData.map((claim: any) => ({
-          id: claim.id,
-          patientName: claim.patients?.users?.name || 'غير محدد',
-          patientId: claim.patient_id,
-          claimNumber: claim.claim_number || 'غير محدد',
-          insuranceCompany: claim.insurance_provider || 'غير محدد',
-          serviceType: claim.service_code || 'خدمة طبية',
-          amount: claim.amount || 0,
-          status: claim.status === 'approved' ? 'approved' :
-                  claim.status === 'rejected' ? 'rejected' :
-                  claim.status === 'pending' ? 'pending' : 'under_review',
-          submissionDate: claim.submitted_at || claim.created_at || new Date().toISOString().split('T')[0],
-          approvalDate: claim.approved_at,
-          rejectionReason: claim.rejection_reason,
-          isBlocked: claim.status === 'rejected',
-          hasOutstandingBalance: claim.status === 'rejected',
-          outstandingAmount: claim.status === 'rejected' ? claim.amount : 0,
-        }));
+        const transformedClaims: InsuranceClaim[] = claimsData.map(
+          (claim: any) => ({
+            id: claim.id,
+            patientName: claim.patients?.users?.name || 'غير محدد',
+            patientId: claim.patient_id,
+            claimNumber: claim.claim_number || 'غير محدد',
+            insuranceCompany: claim.insurance_provider || 'غير محدد',
+            serviceType: claim.service_code || 'خدمة طبية',
+            amount: claim.amount || 0,
+            status:
+              claim.status === 'approved'
+                ? 'approved'
+                : claim.status === 'rejected'
+                  ? 'rejected'
+                  : claim.status === 'pending'
+                    ? 'pending'
+                    : 'under_review',
+            submissionDate:
+              claim.submitted_at ||
+              claim.created_at ||
+              new Date().toISOString().split('T')[0],
+            approvalDate: claim.approved_at,
+            rejectionReason: claim.rejection_reason,
+            isBlocked: claim.status === 'rejected',
+            hasOutstandingBalance: claim.status === 'rejected',
+            outstandingAmount: claim.status === 'rejected' ? claim.amount : 0,
+          })
+        );
 
         setClaims(transformedClaims);
       } catch (err) {
@@ -155,8 +165,8 @@ export default function InsurancePage() {
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className='px-4 py-2 bg-[var(--brand-primary)] text-white rounded-lg hover:bg-[var(--brand-primary-dark)]'
           >
             إعادة المحاولة

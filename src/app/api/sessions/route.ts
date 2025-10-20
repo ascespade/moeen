@@ -32,10 +32,10 @@ export async function GET(request: NextRequest) {
     } else {
       sessions = await realDB.getSessions('', limit);
     }
-    
+
     // Apply pagination
     const paginatedSessions = sessions.slice(offset, offset + limit);
-    
+
     return NextResponse.json({
       success: true,
       data: paginatedSessions,
@@ -43,8 +43,8 @@ export async function GET(request: NextRequest) {
         total: sessions.length,
         limit,
         offset,
-        hasMore: offset + limit < sessions.length
-      }
+        hasMore: offset + limit < sessions.length,
+      },
     });
   } catch (error) {
     console.error('Error fetching sessions:', error);
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: session,
-      message: 'Session created successfully'
+      message: 'Session created successfully',
     });
   } catch (error) {
     console.error('Error creating session:', error);

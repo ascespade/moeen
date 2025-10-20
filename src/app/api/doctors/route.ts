@@ -29,10 +29,10 @@ export async function GET(request: NextRequest) {
     } else {
       doctors = await realDB.searchUsers(searchTerm, 'doctor');
     }
-    
+
     // Apply pagination
     const paginatedDoctors = doctors.slice(offset, offset + limit);
-    
+
     return NextResponse.json({
       success: true,
       data: paginatedDoctors,
@@ -40,8 +40,8 @@ export async function GET(request: NextRequest) {
         total: doctors.length,
         limit,
         offset,
-        hasMore: offset + limit < doctors.length
-      }
+        hasMore: offset + limit < doctors.length,
+      },
     });
   } catch (error) {
     console.error('Error fetching doctors:', error);
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
     };
 
     const doctor = await realDB.createUser(doctorData);
-    
+
     // Create doctor record
     const doctorRecord = await realDB.createDoctor({
       id: doctor.id,
@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: { ...doctor, doctorRecord },
-      message: 'Doctor created successfully'
+      message: 'Doctor created successfully',
     });
   } catch (error) {
     console.error('Error creating doctor:', error);

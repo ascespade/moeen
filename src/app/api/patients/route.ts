@@ -27,10 +27,10 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
 
     const patients = await realDB.searchUsers(searchTerm, role);
-    
+
     // Apply pagination
     const paginatedPatients = patients.slice(offset, offset + limit);
-    
+
     return NextResponse.json({
       success: true,
       data: paginatedPatients,
@@ -38,8 +38,8 @@ export async function GET(request: NextRequest) {
         total: patients.length,
         limit,
         offset,
-        hasMore: offset + limit < patients.length
-      }
+        hasMore: offset + limit < patients.length,
+      },
     });
   } catch (error) {
     console.error('Error fetching patients:', error);
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     };
 
     const patient = await realDB.createUser(patientData);
-    
+
     // Create patient record
     const patientRecord = await realDB.createPatient({
       id: patient.id,
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: { ...patient, patientRecord },
-      message: 'Patient created successfully'
+      message: 'Patient created successfully',
     });
   } catch (error) {
     console.error('Error creating patient:', error);

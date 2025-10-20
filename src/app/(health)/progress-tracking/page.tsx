@@ -188,10 +188,6 @@ const ProgressTrackingPage: React.FC = () => {
       setGoals(transformedGoals);
       setAssessments(transformedAssessments);
       setReports(transformedReports);
-      
-      // Fallback to empty arrays if no data
-      if (goalsData.length === 0) {
-        const mockGoals: ProgressGoal[] = [
         {
           id: '1',
           patient_id: 'pat-1',
@@ -281,6 +277,7 @@ const ProgressTrackingPage: React.FC = () => {
       // Data already set above from real database
     } catch (error) {
       setError('فشل في تحميل بيانات تتبع التقدم');
+      console.error('Error loading progress data:', error);
     } finally {
       setLoading(false);
     }

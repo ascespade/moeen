@@ -232,6 +232,7 @@ const TrainingPage: React.FC = () => {
       // Data already set above from real database
     } catch (error) {
       setError('فشل في تحميل بيانات التدريب');
+      console.error('Error loading training data:', error);
     } finally {
       setLoading(false);
     }

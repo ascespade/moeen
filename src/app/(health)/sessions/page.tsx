@@ -32,22 +32,34 @@ export default function SessionsPage() {
         setLoading(true);
         // Get all sessions with patient and doctor information
         const sessionsData = await realDB.getSessions('', 50); // Get recent 50 sessions
-        
+
         // Transform data to match our interface
-        const transformedSessions: Session[] = sessionsData.map((session: any) => ({
-          id: session.id,
-          patientName: session.patients?.users?.name || 'غير محدد',
-          doctorName: session.doctors?.users?.name || 'غير محدد',
-          type: session.type || 'علاج',
-          startTime: session.session_time || '00:00',
-          endTime: session.session_time ? 
-            new Date(new Date(`2000-01-01T${session.session_time}`).getTime() + (session.duration_minutes || 60) * 60000).toTimeString().slice(0, 5) : 
-            '00:00',
-          status: session.status === 'completed' ? 'completed' : 
-                  session.status === 'in_progress' ? 'in-progress' :
-                  session.status === 'cancelled' ? 'cancelled' : 'upcoming',
-          notes: session.notes || '',
-        }));
+        const transformedSessions: Session[] = sessionsData.map(
+          (session: any) => ({
+            id: session.id,
+            patientName: session.patients?.users?.name || 'غير محدد',
+            doctorName: session.doctors?.users?.name || 'غير محدد',
+            type: session.type || 'علاج',
+            startTime: session.session_time || '00:00',
+            endTime: session.session_time
+              ? new Date(
+                  new Date(`2000-01-01T${session.session_time}`).getTime() +
+                    (session.duration_minutes || 60) * 60000
+                )
+                  .toTimeString()
+                  .slice(0, 5)
+              : '00:00',
+            status:
+              session.status === 'completed'
+                ? 'completed'
+                : session.status === 'in_progress'
+                  ? 'in-progress'
+                  : session.status === 'cancelled'
+                    ? 'cancelled'
+                    : 'upcoming',
+            notes: session.notes || '',
+          })
+        );
 
         setSessions(transformedSessions);
       } catch (err) {
@@ -113,8 +125,8 @@ export default function SessionsPage() {
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className='px-4 py-2 bg-[var(--brand-primary)] text-white rounded-lg hover:bg-[var(--brand-primary-dark)]'
           >
             إعادة المحاولة

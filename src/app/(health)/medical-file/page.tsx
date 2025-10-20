@@ -77,33 +77,35 @@ export default function MedicalFilePage() {
         setLoading(true);
         // Get all patients with their medical information
         const patientsData = await realDB.searchUsers('', 'patient');
-        
+
         // Transform data to match our interface
-        const transformedRecords: MedicalRecord[] = patientsData.map((patient: any) => ({
-          id: patient.id,
-          patientName: patient.name || 'غير محدد',
-          patientId: patient.national_id || patient.id,
-          dateOfBirth: patient.date_of_birth || 'غير محدد',
-          gender: patient.gender || 'male',
-          phone: patient.phone || 'غير محدد',
-          email: patient.email || 'غير محدد',
-          address: patient.address || 'غير محدد',
-          emergencyContact: patient.emergency_contact || 'غير محدد',
-          emergencyPhone: patient.emergency_contact_phone || 'غير محدد',
-          medicalHistory: patient.medical_history || [],
-          allergies: patient.allergies || [],
-          currentMedications: patient.medications || [],
-          lastVisit: patient.last_visit || 'غير محدد',
-          nextAppointment: patient.next_appointment,
-          isBlocked: patient.is_blocked || false,
-          blockReason: patient.block_reason,
-          hasOutstandingBalance: patient.has_outstanding_balance || false,
-          outstandingAmount: patient.outstanding_amount || 0,
-          insuranceStatus: patient.insurance_status || 'pending',
-          insuranceCompany: patient.insurance_provider,
-          insuranceNumber: patient.insurance_number,
-          treatmentPlan: patient.treatment_plans || [],
-        }));
+        const transformedRecords: MedicalRecord[] = patientsData.map(
+          (patient: any) => ({
+            id: patient.id,
+            patientName: patient.name || 'غير محدد',
+            patientId: patient.national_id || patient.id,
+            dateOfBirth: patient.date_of_birth || 'غير محدد',
+            gender: patient.gender || 'male',
+            phone: patient.phone || 'غير محدد',
+            email: patient.email || 'غير محدد',
+            address: patient.address || 'غير محدد',
+            emergencyContact: patient.emergency_contact || 'غير محدد',
+            emergencyPhone: patient.emergency_contact_phone || 'غير محدد',
+            medicalHistory: patient.medical_history || [],
+            allergies: patient.allergies || [],
+            currentMedications: patient.medications || [],
+            lastVisit: patient.last_visit || 'غير محدد',
+            nextAppointment: patient.next_appointment,
+            isBlocked: patient.is_blocked || false,
+            blockReason: patient.block_reason,
+            hasOutstandingBalance: patient.has_outstanding_balance || false,
+            outstandingAmount: patient.outstanding_amount || 0,
+            insuranceStatus: patient.insurance_status || 'pending',
+            insuranceCompany: patient.insurance_provider,
+            insuranceNumber: patient.insurance_number,
+            treatmentPlan: patient.treatment_plans || [],
+          })
+        );
 
         setRecords(transformedRecords);
       } catch (err) {
@@ -228,8 +230,8 @@ export default function MedicalFilePage() {
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className='px-4 py-2 bg-[var(--brand-primary)] text-white rounded-lg hover:bg-[var(--brand-primary-dark)]'
           >
             إعادة المحاولة
@@ -288,9 +290,8 @@ export default function MedicalFilePage() {
           <Card className='p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-brand-success'>
               {
-                records.filter(
-                  r => !r.isBlocked && !r.hasOutstandingBalance
-                ).length
+                records.filter(r => !r.isBlocked && !r.hasOutstandingBalance)
+                  .length
               }
             </div>
             <div className='text-gray-600 dark:text-gray-300'>ملفات نشطة</div>

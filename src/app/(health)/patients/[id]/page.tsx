@@ -64,28 +64,33 @@ export default function PatientDetailsPage({
     const loadPatientData = async () => {
       try {
         setLoading(true);
-        
+
         // Load patient data
         const patientData = await realDB.getPatient(params.id);
         setPatient(patientData);
-        
+
         // Load sessions data
         const sessionsData = await realDB.getSessions(params.id);
-        const transformedSessions: Session[] = sessionsData.map((session: any) => ({
-          id: session.id,
-          date: session.session_date,
-          doctor: session.doctors?.users?.name || 'غير محدد',
-          type: session.type || 'علاج',
-          duration: session.duration_minutes || 60,
-          status: session.status === 'completed' ? 'completed' : 
-                  session.status === 'cancelled' ? 'cancelled' : 'upcoming',
-          notes: session.notes || '',
-        }));
+        const transformedSessions: Session[] = sessionsData.map(
+          (session: any) => ({
+            id: session.id,
+            date: session.session_date,
+            doctor: session.doctors?.users?.name || 'غير محدد',
+            type: session.type || 'علاج',
+            duration: session.duration_minutes || 60,
+            status:
+              session.status === 'completed'
+                ? 'completed'
+                : session.status === 'cancelled'
+                  ? 'cancelled'
+                  : 'upcoming',
+            notes: session.notes || '',
+          })
+        );
         setSessions(transformedSessions);
-        
+
         // Load documents data (placeholder - would need document management API)
         setDocuments([]);
-        
       } catch (err) {
         setError('فشل في تحميل بيانات المريض');
         console.error('Error loading patient data:', err);
@@ -166,9 +171,11 @@ export default function PatientDetailsPage({
       <div className='min-h-screen bg-[var(--brand-surface)] flex items-center justify-center'>
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
-          <p className='text-red-600 text-lg mb-4'>{error || 'لم يتم العثور على المريض'}</p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <p className='text-red-600 text-lg mb-4'>
+            {error || 'لم يتم العثور على المريض'}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
             className='px-4 py-2 bg-[var(--brand-primary)] text-white rounded-lg hover:bg-[var(--brand-primary-dark)]'
           >
             إعادة المحاولة
