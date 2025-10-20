@@ -132,8 +132,66 @@ const ProgressTrackingPage: React.FC = () => {
   const loadProgressData = async () => {
     try {
       setLoading(true);
-      // في التطبيق الحقيقي، سيتم جلب البيانات من API
-      const mockGoals: ProgressGoal[] = [
+      // Load real data from database
+      const goalsData = await realDB.getProgressGoals?.() || [];
+      const assessmentsData = await realDB.getAssessments?.() || [];
+      const reportsData = await realDB.getProgressReports?.() || [];
+      
+      // Transform real data to match interface
+      const transformedGoals: ProgressGoal[] = goalsData.map((goal: any) => ({
+        id: goal.id,
+        patient_id: goal.patient_id,
+        goal_title: goal.title || goal.goal_title,
+        description: goal.description,
+        category: goal.category || 'عام',
+        target_date: goal.target_date,
+        progress_percentage: goal.progress_percentage || 0,
+        status: goal.status || 'active',
+        milestones: goal.milestones || [],
+        created_at: goal.created_at,
+        updated_at: goal.updated_at,
+        patients: goal.patients || { first_name: 'غير محدد', last_name: '', age: 0, condition: 'غير محدد' }
+      }));
+      
+      const transformedAssessments: Assessment[] = assessmentsData.map((assessment: any) => ({
+        id: assessment.id,
+        patient_id: assessment.patient_id,
+        assessment_type: assessment.type || assessment.assessment_type,
+        assessment_date: assessment.date || assessment.assessment_date,
+        score: assessment.score || 0,
+        max_score: assessment.max_score || 100,
+        notes: assessment.notes || '',
+        assessor: assessment.assessor || 'غير محدد',
+        status: assessment.status || 'completed',
+        created_at: assessment.created_at,
+        updated_at: assessment.updated_at,
+        patients: assessment.patients || { first_name: 'غير محدد', last_name: '', age: 0, condition: 'غير محدد' }
+      }));
+      
+      const transformedReports: ProgressReport[] = reportsData.map((report: any) => ({
+        id: report.id,
+        patient_id: report.patient_id,
+        report_date: report.date || report.report_date,
+        period_start: report.period_start,
+        period_end: report.period_end,
+        goals_achieved: report.goals_achieved || 0,
+        goals_total: report.goals_total || 0,
+        progress_summary: report.summary || report.progress_summary,
+        challenges: report.challenges || [],
+        recommendations: report.recommendations || [],
+        next_goals: report.next_goals || [],
+        created_at: report.created_at,
+        updated_at: report.updated_at,
+        patients: report.patients || { first_name: 'غير محدد', last_name: '', age: 0, condition: 'غير محدد' }
+      }));
+      
+      setGoals(transformedGoals);
+      setAssessments(transformedAssessments);
+      setReports(transformedReports);
+      
+      // Fallback to empty arrays if no data
+      if (goalsData.length === 0) {
+        const mockGoals: ProgressGoal[] = [
         {
           id: '1',
           patient_id: 'pat-1',
@@ -220,9 +278,7 @@ const ProgressTrackingPage: React.FC = () => {
         },
       ];
 
-      setGoals(mockGoals);
-      setAssessments(mockAssessments);
-      setReports(mockReports);
+      // Data already set above from real database
     } catch (error) {
       setError('فشل في تحميل بيانات تتبع التقدم');
     } finally {

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 
 import { createClient } from '@/lib/supabase/client';
+import { realDB } from '@/lib/supabase-real';
 
 import Image from 'next/image';
 

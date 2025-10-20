@@ -1,6 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
+import { realDB } from '@/lib/supabase-real';
 
 import Image from 'next/image';
 
@@ -15,49 +16,50 @@ interface Session {
   notes?: string;
 }
 
-const mockSessions: Session[] = [
-  {
-    id: '1',
-    patientName: 'أحمد العتيبي',
-    doctorName: 'د. سارة أحمد',
-    type: 'علاج طبيعي',
-    startTime: '09:00',
-    endTime: '10:00',
-    status: 'in-progress',
-    notes: 'جلسة علاج طبيعي للظهر',
-  },
-  {
-    id: '2',
-    patientName: 'فاطمة السعيد',
-    doctorName: 'د. محمد حسن',
-    type: 'علاج نفسي',
-    startTime: '10:30',
-    endTime: '11:15',
-    status: 'upcoming',
-  },
-  {
-    id: '3',
-    patientName: 'خالد القحطاني',
-    doctorName: 'د. نورا محمد',
-    type: 'علاج وظيفي',
-    startTime: '14:00',
-    endTime: '14:30',
-    status: 'completed',
-  },
-  {
-    id: '4',
-    patientName: 'نورا السعد',
-    doctorName: 'د. خالد العتيبي',
-    type: 'علاج طبيعي',
-    startTime: '15:30',
-    endTime: '16:30',
-    status: 'upcoming',
-  },
-];
+// Mock data removed - using real database calls
 
 export default function SessionsPage() {
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('cards');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
+
+  // Load sessions from database
+  useEffect(() => {
+    const loadSessions = async () => {
+      try {
+        setLoading(true);
+        // Get all sessions with patient and doctor information
+        const sessionsData = await realDB.getSessions('', 50); // Get recent 50 sessions
+        
+        // Transform data to match our interface
+        const transformedSessions: Session[] = sessionsData.map((session: any) => ({
+          id: session.id,
+          patientName: session.patients?.users?.name || 'غير محدد',
+          doctorName: session.doctors?.users?.name || 'غير محدد',
+          type: session.type || 'علاج',
+          startTime: session.session_time || '00:00',
+          endTime: session.session_time ? 
+            new Date(new Date(`2000-01-01T${session.session_time}`).getTime() + (session.duration_minutes || 60) * 60000).toTimeString().slice(0, 5) : 
+            '00:00',
+          status: session.status === 'completed' ? 'completed' : 
+                  session.status === 'in_progress' ? 'in-progress' :
+                  session.status === 'cancelled' ? 'cancelled' : 'upcoming',
+          notes: session.notes || '',
+        }));
+
+        setSessions(transformedSessions);
+      } catch (err) {
+        setError('فشل في تحميل بيانات الجلسات');
+        console.error('Error loading sessions:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSessions();
+  }, []);
 
   const getStatusColor = (status: Session['status']) => {
     switch (status) {
@@ -91,8 +93,36 @@ export default function SessionsPage() {
 
   const filteredSessions =
     selectedStatus === 'all'
-      ? mockSessions
-      : mockSessions.filter(session => session.status === selectedStatus);
+      ? sessions
+      : sessions.filter(session => session.status === selectedStatus);
+
+  if (loading) {
+    return (
+      <div className='min-h-screen bg-[var(--brand-surface)] flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--brand-primary)] mx-auto mb-4'></div>
+          <p className='text-gray-600'>جاري تحميل الجلسات...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className='min-h-screen bg-[var(--brand-surface)] flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='text-red-500 text-6xl mb-4'>⚠️</div>
+          <p className='text-red-600 text-lg mb-4'>{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className='px-4 py-2 bg-[var(--brand-primary)] text-white rounded-lg hover:bg-[var(--brand-primary-dark)]'
+          >
+            إعادة المحاولة
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='min-h-screen bg-[var(--brand-surface)]'>
@@ -137,25 +167,25 @@ export default function SessionsPage() {
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-brand-primary'>
-              {mockSessions.filter(s => s.status === 'upcoming').length}
+              {sessions.filter(s => s.status === 'upcoming').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>جلسات قادمة</div>
           </div>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-yellow-600'>
-              {mockSessions.filter(s => s.status === 'in-progress').length}
+              {sessions.filter(s => s.status === 'in-progress').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>جلسات جارية</div>
           </div>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-brand-success'>
-              {mockSessions.filter(s => s.status === 'completed').length}
+              {sessions.filter(s => s.status === 'completed').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>جلسات مكتملة</div>
           </div>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-gray-600'>
-              {mockSessions.length}
+              {sessions.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
               إجمالي الجلسات

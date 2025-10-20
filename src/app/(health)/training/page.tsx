@@ -98,8 +98,54 @@ const TrainingPage: React.FC = () => {
   const loadTrainingData = async () => {
     try {
       setLoading(true);
-      // في التطبيق الحقيقي، سيتم جلب البيانات من API
-      const mockPrograms: TrainingProgram[] = [
+      // Load real data from database
+      const programsData = await realDB.getTrainingPrograms?.() || [];
+      const progressData = await realDB.getTrainingProgress?.() || [];
+      
+      // Transform real data to match interface
+      const transformedPrograms: TrainingProgram[] = programsData.map((program: any) => ({
+        id: program.id,
+        title: program.title || program.name,
+        description: program.description,
+        category: program.category || 'عام',
+        duration_weeks: program.duration_weeks || program.duration,
+        difficulty_level: program.difficulty_level || program.difficulty,
+        instructor: program.instructor || program.trainer,
+        status: program.status || 'active',
+        start_date: program.start_date,
+        end_date: program.end_date,
+        max_participants: program.max_participants || 0,
+        current_participants: program.current_participants || 0,
+        prerequisites: program.prerequisites || [],
+        learning_objectives: program.learning_objectives || [],
+        modules: program.modules || [],
+        created_at: program.created_at,
+        updated_at: program.updated_at
+      }));
+      
+      const transformedProgress: TrainingProgress[] = progressData.map((progress: any) => ({
+        id: progress.id,
+        program_id: progress.program_id,
+        user_id: progress.user_id,
+        enrollment_date: progress.enrollment_date,
+        completion_percentage: progress.completion_percentage || 0,
+        current_module: progress.current_module || 0,
+        total_modules: progress.total_modules || 0,
+        last_activity: progress.last_activity,
+        status: progress.status || 'enrolled',
+        completed_modules: progress.completed_modules || [],
+        certificates: progress.certificates || [],
+        notes: progress.notes || '',
+        created_at: progress.created_at,
+        updated_at: progress.updated_at
+      }));
+      
+      setPrograms(transformedPrograms);
+      setProgress(transformedProgress);
+      
+      // Fallback to empty arrays if no data
+      if (programsData.length === 0) {
+        const mockPrograms: TrainingProgram[] = [
         {
           id: '1',
           title: 'برنامج المهارات الحياتية الأساسية',
@@ -183,8 +229,7 @@ const TrainingPage: React.FC = () => {
         },
       ];
 
-      setPrograms(mockPrograms);
-      setProgress(mockProgress);
+      // Data already set above from real database
     } catch (error) {
       setError('فشل في تحميل بيانات التدريب');
     } finally {
