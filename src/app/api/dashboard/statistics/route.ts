@@ -10,7 +10,9 @@ const supabase = getServiceSupabase();
 export async function GET(request: NextRequest) {
   try {
     // Get comprehensive dashboard data using the SQL function
-    const { data, error } = await supabase.rpc('get_comprehensive_dashboard_data');
+    const { data, error } = await supabase.rpc(
+      'get_comprehensive_dashboard_data'
+    );
 
     if (error) {
       console.error('Dashboard statistics error:', error);
@@ -38,7 +40,9 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     // Force refresh by calling the function again
-    const { data, error } = await supabase.rpc('get_comprehensive_dashboard_data');
+    const { data, error } = await supabase.rpc(
+      'get_comprehensive_dashboard_data'
+    );
 
     if (error) {
       console.error('Dashboard statistics refresh error:', error);

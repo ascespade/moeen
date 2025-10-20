@@ -1,12 +1,11 @@
-"use client";
-import React from "react";
-import Link from "next/link";
+'use client';
+import React from 'react';
+import Link from 'next/link';
 import DynamicContactInfo from '@/components/dynamic-contact-info';
 import DynamicStats from '@/components/dynamic-stats';
 import DynamicServices from '@/components/dynamic-services';
 
 export default function HomePage() {
-
   return (
     <div className='min-h-screen bg-background text-foreground'>
       {/* Hero Section */}

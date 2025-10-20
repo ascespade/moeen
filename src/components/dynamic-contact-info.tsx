@@ -1,6 +1,6 @@
-"use client";
-import { useState, useEffect } from "react";
-import Link from "next/link";
+'use client';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 interface ContactInfo {
   id: number;
@@ -37,7 +37,7 @@ export default function DynamicContactInfo() {
             value: '+966 50 123 4567',
             icon: '📞',
             link: 'tel:+966501234567',
-            color: 'bg-[var(--brand-primary)]'
+            color: 'bg-[var(--brand-primary)]',
           },
           {
             id: 2,
@@ -46,7 +46,7 @@ export default function DynamicContactInfo() {
             value: 'info@moeen.com',
             icon: '📧',
             link: 'mailto:info@moeen.com',
-            color: 'bg-[var(--brand-secondary)]'
+            color: 'bg-[var(--brand-secondary)]',
           },
           {
             id: 3,
@@ -55,8 +55,8 @@ export default function DynamicContactInfo() {
             value: 'الرياض، المملكة العربية السعودية',
             icon: '📍',
             link: '/contact',
-            color: 'bg-[var(--brand-accent)]'
-          }
+            color: 'bg-[var(--brand-accent)]',
+          },
         ]);
       }
     } catch (error) {
@@ -70,7 +70,7 @@ export default function DynamicContactInfo() {
           value: '+966 50 123 4567',
           icon: '📞',
           link: 'tel:+966501234567',
-          color: 'bg-[var(--brand-primary)]'
+          color: 'bg-[var(--brand-primary)]',
         },
         {
           id: 2,
@@ -79,7 +79,7 @@ export default function DynamicContactInfo() {
           value: 'info@moeen.com',
           icon: '📧',
           link: 'mailto:info@moeen.com',
-          color: 'bg-[var(--brand-secondary)]'
+          color: 'bg-[var(--brand-secondary)]',
         },
         {
           id: 3,
@@ -88,8 +88,8 @@ export default function DynamicContactInfo() {
           value: 'الرياض، المملكة العربية السعودية',
           icon: '📍',
           link: '/contact',
-          color: 'bg-[var(--brand-accent)]'
-        }
+          color: 'bg-[var(--brand-accent)]',
+        },
       ]);
     } finally {
       setLoading(false);
@@ -98,35 +98,41 @@ export default function DynamicContactInfo() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="card p-8 text-center animate-pulse">
-            <div className="h-16 w-16 bg-gray-200 rounded-full mx-auto mb-4"></div>
-            <div className="h-6 bg-gray-200 rounded mb-2"></div>
-            <div className="h-4 bg-gray-200 rounded mb-4"></div>
-            <div className="h-10 bg-gray-200 rounded"></div>
-      </div>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+        {[1, 2, 3].map(i => (
+          <div key={i} className='card p-8 text-center animate-pulse'>
+            <div className='h-16 w-16 bg-gray-200 rounded-full mx-auto mb-4'></div>
+            <div className='h-6 bg-gray-200 rounded mb-2'></div>
+            <div className='h-4 bg-gray-200 rounded mb-4'></div>
+            <div className='h-10 bg-gray-200 rounded'></div>
+          </div>
         ))}
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {contactInfo.map((contact) => (
-        <div key={contact.id} className="card p-8 text-center">
-          <div className={`h-16 w-16 ${contact.color} text-white rounded-full flex items-center justify-center mx-auto mb-4`}>
+    <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+      {contactInfo.map(contact => (
+        <div key={contact.id} className='card p-8 text-center'>
+          <div
+            className={`h-16 w-16 ${contact.color} text-white rounded-full flex items-center justify-center mx-auto mb-4`}
+          >
             {contact.icon}
-                  </div>
-          <h3 className="text-xl font-bold text-foreground mb-2">{contact.title}</h3>
-          <p className="text-muted-foreground mb-4">{contact.value}</p>
-          <Link href={contact.link} className="btn btn-outline">
-            {contact.type === 'phone' ? 'اتصل الآن' : 
-             contact.type === 'email' ? 'أرسل رسالة' : 
-             'اعرف المزيد'}
+          </div>
+          <h3 className='text-xl font-bold text-foreground mb-2'>
+            {contact.title}
+          </h3>
+          <p className='text-muted-foreground mb-4'>{contact.value}</p>
+          <Link href={contact.link} className='btn btn-outline'>
+            {contact.type === 'phone'
+              ? 'اتصل الآن'
+              : contact.type === 'email'
+                ? 'أرسل رسالة'
+                : 'اعرف المزيد'}
           </Link>
-                  </div>
-                ))}
+        </div>
+      ))}
     </div>
   );
 }
