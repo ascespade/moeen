@@ -142,10 +142,6 @@ const TrainingPage: React.FC = () => {
       
       setPrograms(transformedPrograms);
       setProgress(transformedProgress);
-      
-      // Fallback to empty arrays if no data
-      if (programsData.length === 0) {
-        const mockPrograms: TrainingProgram[] = [
         {
           id: '1',
           title: 'برنامج المهارات الحياتية الأساسية',

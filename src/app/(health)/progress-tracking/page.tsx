@@ -133,10 +133,10 @@ const ProgressTrackingPage: React.FC = () => {
     try {
       setLoading(true);
       // Load real data from database
-      const goalsData = await realDB.getProgressGoals?.() || [];
-      const assessmentsData = await realDB.getAssessments?.() || [];
-      const reportsData = await realDB.getProgressReports?.() || [];
-      
+      const goalsData = (await realDB.getProgressGoals?.()) || [];
+      const assessmentsData = (await realDB.getAssessments?.()) || [];
+      const reportsData = (await realDB.getProgressReports?.()) || [];
+
       // Transform real data to match interface
       const transformedGoals: ProgressGoal[] = goalsData.map((goal: any) => ({
         id: goal.id,
@@ -150,131 +150,63 @@ const ProgressTrackingPage: React.FC = () => {
         milestones: goal.milestones || [],
         created_at: goal.created_at,
         updated_at: goal.updated_at,
-        patients: goal.patients || { first_name: 'غير محدد', last_name: '', age: 0, condition: 'غير محدد' }
+        patients: goal.patients || {
+          first_name: 'غير محدد',
+          last_name: '',
+          age: 0,
+          condition: 'غير محدد',
+        },
       }));
-      
-      const transformedAssessments: Assessment[] = assessmentsData.map((assessment: any) => ({
-        id: assessment.id,
-        patient_id: assessment.patient_id,
-        assessment_type: assessment.type || assessment.assessment_type,
-        assessment_date: assessment.date || assessment.assessment_date,
-        score: assessment.score || 0,
-        max_score: assessment.max_score || 100,
-        notes: assessment.notes || '',
-        assessor: assessment.assessor || 'غير محدد',
-        status: assessment.status || 'completed',
-        created_at: assessment.created_at,
-        updated_at: assessment.updated_at,
-        patients: assessment.patients || { first_name: 'غير محدد', last_name: '', age: 0, condition: 'غير محدد' }
-      }));
-      
-      const transformedReports: ProgressReport[] = reportsData.map((report: any) => ({
-        id: report.id,
-        patient_id: report.patient_id,
-        report_date: report.date || report.report_date,
-        period_start: report.period_start,
-        period_end: report.period_end,
-        goals_achieved: report.goals_achieved || 0,
-        goals_total: report.goals_total || 0,
-        progress_summary: report.summary || report.progress_summary,
-        challenges: report.challenges || [],
-        recommendations: report.recommendations || [],
-        next_goals: report.next_goals || [],
-        created_at: report.created_at,
-        updated_at: report.updated_at,
-        patients: report.patients || { first_name: 'غير محدد', last_name: '', age: 0, condition: 'غير محدد' }
-      }));
-      
+
+      const transformedAssessments: Assessment[] = assessmentsData.map(
+        (assessment: any) => ({
+          id: assessment.id,
+          patient_id: assessment.patient_id,
+          assessment_type: assessment.type || assessment.assessment_type,
+          assessment_date: assessment.date || assessment.assessment_date,
+          score: assessment.score || 0,
+          max_score: assessment.max_score || 100,
+          notes: assessment.notes || '',
+          assessor: assessment.assessor || 'غير محدد',
+          status: assessment.status || 'completed',
+          created_at: assessment.created_at,
+          updated_at: assessment.updated_at,
+          patients: assessment.patients || {
+            first_name: 'غير محدد',
+            last_name: '',
+            age: 0,
+            condition: 'غير محدد',
+          },
+        })
+      );
+
+      const transformedReports: ProgressReport[] = reportsData.map(
+        (report: any) => ({
+          id: report.id,
+          patient_id: report.patient_id,
+          report_date: report.date || report.report_date,
+          period_start: report.period_start,
+          period_end: report.period_end,
+          goals_achieved: report.goals_achieved || 0,
+          goals_total: report.goals_total || 0,
+          progress_summary: report.summary || report.progress_summary,
+          challenges: report.challenges || [],
+          recommendations: report.recommendations || [],
+          next_goals: report.next_goals || [],
+          created_at: report.created_at,
+          updated_at: report.updated_at,
+          patients: report.patients || {
+            first_name: 'غير محدد',
+            last_name: '',
+            age: 0,
+            condition: 'غير محدد',
+          },
+        })
+      );
+
       setGoals(transformedGoals);
       setAssessments(transformedAssessments);
       setReports(transformedReports);
-        {
-          id: '1',
-          patient_id: 'pat-1',
-          goal_title: 'تحسين المشي',
-          description: 'القدرة على المشي لمسافة 10 أمتار بدون مساعدة',
-          category: 'الحركة',
-          target_date: '2024-03-15',
-          progress_percentage: 65,
-          status: 'active',
-          milestones: [
-            {
-              id: '1',
-              goal_id: '1',
-              title: 'الوقوف بدون مساعدة',
-              description: 'القدرة على الوقوف لمدة 30 ثانية',
-              target_date: '2024-02-01',
-              completed_date: '2024-01-25',
-              status: 'completed',
-              progress_percentage: 100,
-              notes: 'تم إنجاز الهدف بنجاح',
-            },
-            {
-              id: '2',
-              goal_id: '1',
-              title: 'المشي بمساعدة',
-              description: 'المشي لمسافة 5 أمتار بمساعدة شخص',
-              target_date: '2024-02-15',
-              status: 'in_progress',
-              progress_percentage: 80,
-              notes: 'تحسن ملحوظ في التوازن',
-            },
-          ],
-          created_at: '2024-01-01T00:00:00Z',
-          updated_at: '2024-01-20T00:00:00Z',
-          patients: {
-            first_name: 'أحمد',
-            last_name: 'محمد',
-            age: 8,
-            condition: 'شلل دماغي',
-            avatar: '/logo.png',
-          },
-        },
-      ];
-
-      const mockAssessments: Assessment[] = [
-        {
-          id: '1',
-          patient_id: 'pat-1',
-          assessor_id: 'ass-1',
-          assessment_date: '2024-01-15',
-          assessment_type: 'تقييم شامل',
-          category: 'الحركة',
-          score: 75,
-          max_score: 100,
-          percentage: 75,
-          notes: 'تحسن ملحوظ في نطاق الحركة والقوة',
-          recommendations: ['زيادة مدة التمارين', 'إضافة تمارين التوازن'],
-          next_assessment_date: '2024-02-15',
-          created_at: '2024-01-15T00:00:00Z',
-          assessors: {
-            first_name: 'د. فاطمة',
-            last_name: 'العلي',
-            specialty: 'العلاج الطبيعي',
-            avatar: '/logo.png',
-          },
-        },
-      ];
-
-      const mockReports: ProgressReport[] = [
-        {
-          id: '1',
-          patient_id: 'pat-1',
-          report_date: '2024-01-31',
-          period_start: '2024-01-01',
-          period_end: '2024-01-31',
-          overall_progress: 70,
-          goals_achieved: 2,
-          total_goals: 5,
-          sessions_completed: 12,
-          total_sessions: 16,
-          recommendations: ['متابعة التمارين اليومية', 'زيادة مدة الجلسات'],
-          next_review_date: '2024-02-28',
-          created_at: '2024-01-31T00:00:00Z',
-        },
-      ];
-
-      // Data already set above from real database
     } catch (error) {
       setError('فشل في تحميل بيانات تتبع التقدم');
       console.error('Error loading progress data:', error);
