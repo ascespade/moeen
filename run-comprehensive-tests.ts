@@ -634,7 +634,7 @@ async function main() {
     const report = await generateComprehensiveReport(results);
 
     const totalDuration = Date.now() - startTime;
-    console.log('\n' + '='.repeat(80));
+    console.log(`\n${  '='.repeat(80)}`);
     console.log('📊 COMPREHENSIVE TEST SUMMARY');
     console.log('='.repeat(80));
     console.log(`✅ Total Test Suites: ${report.summary.totalTestSuites}`);

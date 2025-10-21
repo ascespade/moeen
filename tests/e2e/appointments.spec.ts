@@ -100,7 +100,7 @@ test.describe('Appointments Module Tests', () => {
       // Create appointment
       const appointmentResponse = await request.post('/api/appointments', {
         data: {
-          patientId: patientId,
+          patientId,
           doctorId: testDoctor.id,
           scheduledAt: testAppointment.scheduledAt,
           type: testAppointment.type,

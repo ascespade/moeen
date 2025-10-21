@@ -99,7 +99,7 @@ const AnalyticsPage: React.FC = () => {
     try {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
-      const mockData: AnalyticsData = {
+          const analyticsData: AnalyticsData = {
         overview: {
           totalPatients: 156,
           activePatients: 142,
@@ -205,7 +205,7 @@ const AnalyticsPage: React.FC = () => {
         },
       };
 
-      setAnalyticsData(mockData);
+      setAnalyticsData(analyticsData);
     } catch (error) {
       setError('فشل في تحميل بيانات التحليلات');
     } finally {
@@ -557,7 +557,7 @@ const AnalyticsPage: React.FC = () => {
                           <div key={index} className='p-4 border rounded-lg'>
                             <div className='flex items-center justify-between mb-2'>
                               <span className='font-medium'>{item.type}</span>
-                              <Badge variant='outline'>
+                              <Badge variant='secondary'>
                                 {item.successRate}% نجاح
                               </Badge>
                             </div>

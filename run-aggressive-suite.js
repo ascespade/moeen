@@ -35,13 +35,13 @@ const timestamp = () => new Date().toISOString();
 const log = msg => {
   const logMsg = `[${timestamp()}] ${msg}`;
   console.log(logMsg);
-  fs.appendFileSync('tmp/progress.log', logMsg + '\n');
+  fs.appendFileSync('tmp/progress.log', `${logMsg  }\n`);
 };
 
 const logJSON = obj => {
   const jsonMsg = JSON.stringify({ time: timestamp(), ...obj });
   console.log(jsonMsg);
-  fs.appendFileSync('tmp/progress.log', jsonMsg + '\n');
+  fs.appendFileSync('tmp/progress.log', `${jsonMsg  }\n`);
 };
 
 // Test file mapping

@@ -248,7 +248,7 @@ export class WhatsAppBusinessAPI {
             type: 'image',
             image: {
               link: imageUrl,
-              caption: caption,
+              caption,
             },
           }),
         }
@@ -297,8 +297,8 @@ export class WhatsAppBusinessAPI {
             type: 'document',
             document: {
               link: documentUrl,
-              filename: filename,
-              caption: caption,
+              filename,
+              caption,
             },
           }),
         }

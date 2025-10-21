@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get system configuration
-    let systemConfig = {
+    const systemConfig = {
       maintenanceMode: false,
       registrationEnabled: true,
       maxUsers: 1000,

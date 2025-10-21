@@ -201,7 +201,7 @@ export default function PatientsPage() {
       },
       blocked: {
         label: 'محظور',
-        variant: 'destructive' as const,
+        variant: 'error' as const,
         color: 'text-brand-error',
       },
     };
@@ -228,7 +228,7 @@ export default function PatientsPage() {
       },
       severe: {
         label: 'شديد',
-        variant: 'destructive' as const,
+        variant: 'error' as const,
         color: 'text-brand-error',
       },
     };
@@ -289,7 +289,7 @@ export default function PatientsPage() {
               </p>
             </div>
             <Link
-              href={ROUTES.HEALTH.PATIENTS + '/new'}
+              href={`${ROUTES.HEALTH.PATIENTS  }/new`}
               className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors'
             >
               إضافة مريض جديد

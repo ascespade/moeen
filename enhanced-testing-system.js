@@ -441,7 +441,7 @@ class EnhancedTestingSystem {
       results.push({
         module: module.name,
         healthy: this.results[module.name].status === 'ok',
-        testsPassed: testsPassed,
+        testsPassed,
         status: this.results[module.name].status,
         testStatus: this.results[module.name].testStatus || 'skipped',
       });

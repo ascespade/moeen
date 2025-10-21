@@ -1,6 +1,6 @@
 async function loadLogs() {
   try {
-    const res = await fetch('./logs.json?' + Date.now());
+    const res = await fetch(`./logs.json?${  Date.now()}`);
     const data = await res.json();
     const tbody = document.querySelector('#logTable tbody');
     tbody.innerHTML = '';

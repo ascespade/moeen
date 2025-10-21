@@ -102,7 +102,7 @@ async function fixIPAddressIssue() {
     }
   }
 
-  console.log('\n' + '='.repeat(70));
+  console.log(`\n${  '='.repeat(70)}`);
   console.log('📊 DIAGNOSIS COMPLETE');
   console.log('='.repeat(70));
   console.log('\nThe ip_address issue is caused by a database trigger.');

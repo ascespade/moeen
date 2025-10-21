@@ -6,99 +6,128 @@ const modules = [
   {
     name: 'authentication',
     description: 'User authentication and authorization',
-    pages: ['login', 'register', 'forgot-password', 'reset-password', 'verify-email'],
-    apis: ['auth/login', 'auth/register', 'auth/forgot-password', 'auth/reset-password', 'auth/me', 'auth/logout']
+    pages: [
+      'login',
+      'register',
+      'forgot-password',
+      'reset-password',
+      'verify-email',
+    ],
+    apis: [
+      'auth/login',
+      'auth/register',
+      'auth/forgot-password',
+      'auth/reset-password',
+      'auth/me',
+      'auth/logout',
+    ],
   },
   {
     name: 'patients',
     description: 'Patient management system',
     pages: ['patients', 'patients/[id]'],
-    apis: ['patients', 'patients/[id]', 'patients/journey']
+    apis: ['patients', 'patients/[id]', 'patients/journey'],
   },
   {
     name: 'doctors',
     description: 'Doctor management and profiles',
     pages: ['doctors'],
-    apis: ['doctors']
+    apis: ['doctors'],
   },
   {
     name: 'appointments',
     description: 'Appointment scheduling and management',
     pages: ['appointments'],
-    apis: ['appointments', 'appointments/[id]', 'appointments/availability', 'appointments/book', 'appointments/conflict-check']
+    apis: [
+      'appointments',
+      'appointments/[id]',
+      'appointments/availability',
+      'appointments/book',
+      'appointments/conflict-check',
+    ],
   },
   {
     name: 'sessions',
     description: 'Therapy and treatment sessions',
     pages: ['sessions'],
-    apis: ['sessions']
+    apis: ['sessions'],
   },
   {
     name: 'medical-records',
     description: 'Medical records and file management',
     pages: ['medical-file'],
-    apis: ['medical-records']
+    apis: ['medical-records'],
   },
   {
     name: 'insurance',
     description: 'Insurance claims and management',
     pages: ['insurance', 'insurance-claims'],
-    apis: ['insurance', 'insurance-claims']
+    apis: ['insurance', 'insurance-claims'],
   },
   {
     name: 'progress-tracking',
     description: 'Patient progress monitoring',
     pages: ['progress-tracking'],
-    apis: ['progress']
+    apis: ['progress'],
   },
   {
     name: 'training',
     description: 'Training programs and modules',
     pages: ['training'],
-    apis: ['training']
+    apis: ['training'],
   },
   {
     name: 'notifications',
     description: 'Notification system',
     pages: ['notifications'],
-    apis: ['notifications']
+    apis: ['notifications'],
   },
   {
     name: 'dashboard',
     description: 'Main dashboard and analytics',
     pages: ['dashboard'],
-    apis: ['dashboard']
+    apis: ['dashboard'],
   },
   {
     name: 'admin',
     description: 'Administrative functions',
     pages: ['admin', 'admin/users', 'admin/security', 'admin/analytics'],
-    apis: ['admin/users', 'admin/dashboard', 'admin/security-events', 'admin/stats']
+    apis: [
+      'admin/users',
+      'admin/dashboard',
+      'admin/security-events',
+      'admin/stats',
+    ],
   },
   {
     name: 'chatbot',
     description: 'AI chatbot functionality',
     pages: ['chatbot'],
-    apis: ['chatbot/config', 'chatbot/conversations', 'chatbot/messages', 'chatbot/flows']
+    apis: [
+      'chatbot/config',
+      'chatbot/conversations',
+      'chatbot/messages',
+      'chatbot/flows',
+    ],
   },
   {
     name: 'crm',
     description: 'Customer relationship management',
     pages: ['crm/contacts', 'crm/leads'],
-    apis: ['crm/contacts', 'crm/leads', 'crm/stats']
+    apis: ['crm/contacts', 'crm/leads', 'crm/stats'],
   },
   {
     name: 'reports',
     description: 'Reporting and analytics',
     pages: ['reports'],
-    apis: ['reports']
+    apis: ['reports'],
   },
   {
     name: 'settings',
     description: 'System settings and configuration',
     pages: ['settings'],
-    apis: ['settings']
-  }
+    apis: ['settings'],
+  },
 ];
 
 // Test template generator
@@ -145,7 +174,9 @@ test.describe('${module.name.toUpperCase()} Module - ${module.description}', () 
 
   // API Tests (50+ tests)
   test.describe('API Endpoints', () => {
-    ${module.apis.map(api => `
+    ${module.apis
+      .map(
+        api => `
     test('${api} - GET request should return valid response', async ({ request }) => {
       const response = await request.get(\`/api/${api}\`);
       expect(response.status()).toBe(200);
@@ -240,7 +271,9 @@ test.describe('${module.name.toUpperCase()} Module - ${module.description}', () 
       const response = await request.get(\`/api/${api}/invalid-id\`);
       
       expect([400, 404, 500]).toContain(response.status());
-    });`).join('\n')}
+    });`
+      )
+      .join('\n')}
   });
 
   // Database Tests (30+ tests)
@@ -381,7 +414,9 @@ test.describe('${module.name.toUpperCase()} Module - ${module.description}', () 
 
   // UI Tests (20+ tests)
   test.describe('User Interface', () => {
-    ${module.pages.map(page => `
+    ${module.pages
+      .map(
+        page => `
     test('${page} page should load correctly', async ({ page }) => {
       await page.goto(\`/${page}\`);
       await expect(page).toHaveTitle(/مركز الهمم/);
@@ -447,7 +482,9 @@ test.describe('${module.name.toUpperCase()} Module - ${module.description}', () 
         // Should show error message
         await expect(page.locator('[data-testid="error"], .error')).toBeVisible();
       }
-    });`).join('\n')}
+    });`
+      )
+      .join('\n')}
   });
 
   // Integration Tests (20+ tests)
@@ -740,12 +777,14 @@ modules.forEach(module => {
   if (!fs.existsSync(testDir)) {
     fs.mkdirSync(testDir, { recursive: true });
   }
-  
+
   const testFile = path.join(testDir, `${module.name}.spec.ts`);
   const testContent = generateTestFile(module);
-  
+
   fs.writeFileSync(testFile, testContent);
   console.log(`Generated test file: ${testFile}`);
 });
 
-console.log(`Generated ${modules.length} comprehensive test files with 100+ tests each!`);
+console.log(
+  `Generated ${modules.length} comprehensive test files with 100+ tests each!`
+);

@@ -155,7 +155,7 @@ const TherapyPage: React.FC = () => {
       scheduled: { label: 'مجدولة', variant: 'primary' as const },
       in_progress: { label: 'جارية', variant: 'secondary' as const },
       completed: { label: 'مكتملة', variant: 'primary' as const },
-      cancelled: { label: 'ملغية', variant: 'destructive' as const },
+      cancelled: { label: 'ملغية', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
@@ -417,7 +417,7 @@ const TherapyPage: React.FC = () => {
                   <h4 className='text-sm font-semibold mb-2'>أهداف الجلسة:</h4>
                   <div className='flex flex-wrap gap-2'>
                     {session.goals.map((goal, index) => (
-                      <Badge key={index} variant='outline' className='text-xs'>
+                      <Badge key={index} variant='secondary' className='text-xs'>
                         {goal}
                       </Badge>
                     ))}

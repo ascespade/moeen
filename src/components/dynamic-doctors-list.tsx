@@ -1,15 +1,16 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@/components/ui/Select';
 import {
   Stethoscope,
   Star,
@@ -242,8 +243,8 @@ export default function DynamicDoctorsList({
                 {/* المعلومات الأساسية */}
                 <div className='space-y-2'>
                   <div className='flex items-center gap-2'>
-                    <Badge variant='outline'>{doctor.specialization}</Badge>
-                    <Badge variant={doctor.is_active ? 'default' : 'secondary'}>
+                    <Badge variant='secondary'>{doctor.specialization}</Badge>
+                    <Badge variant={doctor.is_active ? 'primary' : 'secondary'}>
                       {doctor.is_active ? 'نشط' : 'غير نشط'}
                     </Badge>
                   </div>
@@ -321,7 +322,7 @@ export default function DynamicDoctorsList({
                         </Badge>
                       ))}
                       {doctor.qualifications.length > 3 && (
-                        <Badge variant='outline' className='text-xs'>
+                        <Badge variant='secondary' className='text-xs'>
                           +{doctor.qualifications.length - 3} أخرى
                         </Badge>
                       )}
@@ -337,7 +338,7 @@ export default function DynamicDoctorsList({
                       {doctor.languages.map((lang, index) => (
                         <Badge
                           key={index}
-                          variant='outline'
+                          variant='secondary'
                           className='text-xs'
                         >
                           {lang}

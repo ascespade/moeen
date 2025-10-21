@@ -55,7 +55,7 @@ export const BarChart: React.FC<BarChartProps> = ({
       ? bars
       : [
           {
-            dataKey: dataKey,
+            dataKey,
             color: 'var(--brand-primary)',
             name: 'Value',
           },

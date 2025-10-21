@@ -1,6 +1,6 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next';
-import { I18nProvider } from '@/components/providers/I18nProvider';
+import I18nProvider from '@/components/providers/I18nProvider';
 import './globals.css';
 
 export const metadata: Metadata = {

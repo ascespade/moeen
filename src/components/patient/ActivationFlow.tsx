@@ -183,7 +183,7 @@ export default function ActivationFlow({
                 </h3>
                 <div className='flex items-center space-x-2'>
                   {step.required && (
-                    <Badge variant='outline' className='text-xs'>
+                    <Badge variant='secondary' className='text-xs'>
                       {t('common.required')}
                     </Badge>
                   )}

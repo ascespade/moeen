@@ -56,7 +56,7 @@ export const LineChart: React.FC<LineChartProps> = ({
       ? lines
       : [
           {
-            dataKey: dataKey,
+            dataKey,
             color: 'var(--brand-primary)',
             name: 'Value',
             strokeWidth: 2,

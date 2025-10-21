@@ -202,7 +202,7 @@ export default function DoctorDashboard() {
                                 ? 'primary'
                                 : appointment.status === 'in_progress'
                                   ? 'secondary'
-                                  : 'outline'
+                                  : 'secondary'
                             }
                           >
                             {t(`appointment.status.${appointment.status}`)}

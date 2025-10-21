@@ -235,7 +235,7 @@ const FamilySupportPage: React.FC = () => {
     const statusMap = {
       scheduled: { label: 'مجدولة', variant: 'primary' as const },
       completed: { label: 'مكتملة', variant: 'primary' as const },
-      cancelled: { label: 'ملغية', variant: 'destructive' as const },
+      cancelled: { label: 'ملغية', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
@@ -492,7 +492,7 @@ const FamilySupportPage: React.FC = () => {
                             <Badge variant='primary'>مقدم رعاية أساسي</Badge>
                           )}
                           {member.emergency_contact && (
-                            <Badge variant='destructive'>جهة اتصال طارئة</Badge>
+                            <Badge variant='error'>جهة اتصال طارئة</Badge>
                           )}
                           <Button variant='outline' size='sm'>
                             <MoreVertical className='w-4 h-4' />
@@ -651,7 +651,7 @@ const FamilySupportPage: React.FC = () => {
                           {session.recommendations.map((rec, index) => (
                             <Badge
                               key={index}
-                              variant='outline'
+                              variant='secondary'
                               className='text-xs'
                             >
                               {rec}
@@ -740,7 +740,7 @@ const FamilySupportPage: React.FC = () => {
                           </div>
                         </div>
                         <div className='flex items-center gap-2'>
-                          <Badge variant='outline'>{resource.category}</Badge>
+                          <Badge variant='secondary'>{resource.category}</Badge>
                           <Button variant='outline' size='sm'>
                             <MoreVertical className='w-4 h-4' />
                           </Button>

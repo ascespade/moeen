@@ -42,8 +42,7 @@ interface MedicalRecord {
   }[];
 }
 
-// Mock data removed - using real database calls
-
+// Mock data removed - using real database
 const insuranceStatusConfig = {
   active: { label: 'نشط', color: 'success' as const },
   expired: { label: 'منتهي الصلاحية', color: 'error' as const },
@@ -53,7 +52,7 @@ const insuranceStatusConfig = {
 
 const treatmentStatusConfig = {
   active: { label: 'نشط', color: 'success' as const },
-  completed: { label: 'مكتمل', color: 'info' as const },
+  completed: { label: 'مكتمل', color: 'secondary' as const },
   paused: { label: 'متوقف', color: 'warning' as const },
   cancelled: { label: 'ملغي', color: 'error' as const },
 };
@@ -268,7 +267,7 @@ export default function MedicalFilePage() {
               <Button variant='outline' size='sm'>
                 تصدير التقرير
               </Button>
-              <Button variant='primary' size='sm'>
+              <Button variant='brand' size='sm'>
                 إضافة ملف جديد
               </Button>
             </div>
@@ -323,28 +322,28 @@ export default function MedicalFilePage() {
           </div>
           <div className='flex gap-3'>
             <Button
-              variant={filter === 'all' ? 'primary' : 'outline'}
+              variant={filter === 'all' ? 'brand' : 'outline'}
               size='sm'
               onClick={() => setFilter('all')}
             >
               جميع الملفات
             </Button>
             <Button
-              variant={filter === 'active' ? 'primary' : 'outline'}
+              variant={filter === 'active' ? 'brand' : 'outline'}
               size='sm'
               onClick={() => setFilter('active')}
             >
               نشطة
             </Button>
             <Button
-              variant={filter === 'blocked' ? 'primary' : 'outline'}
+              variant={filter === 'blocked' ? 'brand' : 'outline'}
               size='sm'
               onClick={() => setFilter('blocked')}
             >
               محظورة
             </Button>
             <Button
-              variant={filter === 'outstanding' ? 'primary' : 'outline'}
+              variant={filter === 'outstanding' ? 'brand' : 'outline'}
               size='sm'
               onClick={() => setFilter('outstanding')}
             >
@@ -444,7 +443,7 @@ export default function MedicalFilePage() {
                 <Button variant='outline' size='sm' className='flex-1'>
                   عرض الملف
                 </Button>
-                <Button variant='primary' size='sm' className='flex-1'>
+                <Button variant='brand' size='sm' className='flex-1'>
                   تحديث
                 </Button>
               </div>
@@ -476,7 +475,7 @@ export default function MedicalFilePage() {
             <p className='mb-4 text-gray-600 dark:text-gray-300'>
               لا توجد ملفات طبية تطابق البحث أو الفلتر المحدد
             </p>
-            <Button variant='primary'>إضافة ملف جديد</Button>
+            <Button variant='brand'>إضافة ملف جديد</Button>
           </Card>
         )}
       </main>
@@ -652,7 +651,7 @@ export default function MedicalFilePage() {
                             (condition, index) => (
                               <Badge
                                 key={index}
-                                variant='outline'
+                                variant='secondary'
                                 className='text-xs'
                               >
                                 {condition}
@@ -670,7 +669,7 @@ export default function MedicalFilePage() {
                             selectedRecord.allergies.map((allergy, index) => (
                               <Badge
                                 key={index}
-                                variant='destructive'
+                                variant='error'
                                 className='text-xs'
                               >
                                 {allergy}
@@ -692,7 +691,7 @@ export default function MedicalFilePage() {
                             (medication, index) => (
                               <Badge
                                 key={index}
-                                variant='info'
+                                variant='secondary'
                                 className='text-xs'
                               >
                                 {medication}
@@ -758,7 +757,7 @@ export default function MedicalFilePage() {
                 <Button variant='outline' className='flex-1'>
                   طباعة الملف
                 </Button>
-                <Button variant='primary' className='flex-1'>
+                <Button variant='brand' className='flex-1'>
                   تحديث الملف
                 </Button>
               </div>

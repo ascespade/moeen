@@ -79,7 +79,7 @@ export async function logIntegrationTest(
     integration_config_id: integrationConfigId,
     integration_type: integrationType,
     test_type: testType,
-    status: status,
+    status,
     request_data: requestData,
     response_data: responseData,
     error_message: errorMessage,
@@ -136,7 +136,7 @@ export async function testWhatsAppConnection(
     return {
       success: true,
       message: 'WhatsApp connection successful',
-      data: data,
+      data,
       duration_ms: durationMs,
     };
   } catch (error: any) {
@@ -194,7 +194,7 @@ export async function testSmsConnection(config: SMSConfig): Promise<any> {
     return {
       success: true,
       message: 'SMS connection successful',
-      data: data,
+      data,
       duration_ms: durationMs,
     };
   } catch (error: any) {
@@ -245,7 +245,7 @@ export async function testEmailConnection(config: EmailConfig): Promise<any> {
     return {
       success: true,
       message: 'Email service connection successful',
-      data: data,
+      data,
       duration_ms: durationMs,
     };
   } catch (error: any) {
@@ -331,7 +331,7 @@ export async function testGoogleCalendarConnection(
     return {
       success: true,
       message: 'Google Calendar connection successful',
-      data: data,
+      data,
       duration_ms: durationMs,
     };
   } catch (error: any) {
@@ -437,7 +437,7 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
     return {
       success: true,
       message: 'Seha Platform connection successful',
-      data: data,
+      data,
       duration_ms: durationMs,
     };
   } catch (error: any) {
@@ -492,7 +492,7 @@ export async function testTatmanConnection(config: TatmanConfig): Promise<any> {
     return {
       success: true,
       message: 'Tatman Insurance connection successful',
-      data: data,
+      data,
       duration_ms: durationMs,
     };
   } catch (error: any) {

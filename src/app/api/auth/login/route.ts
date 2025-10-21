@@ -137,7 +137,7 @@ export async function POST(request: NextRequest) {
         severity: 'warning',
         error_message: signInError?.message || 'Invalid credentials',
         metadata: {
-          email: email,
+          email,
           reason: signInError?.message || 'Invalid credentials',
         },
         duration_ms: Date.now() - startTime,
@@ -173,7 +173,7 @@ export async function POST(request: NextRequest) {
         status: 'failed',
         severity: 'warning',
         metadata: {
-          email: email,
+          email,
           reason: 'Account is inactive',
         },
       });

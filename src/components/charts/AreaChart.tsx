@@ -53,7 +53,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       ? areas
       : [
           {
-            dataKey: dataKey,
+            dataKey,
             color: 'var(--brand-primary)',
             name: 'Value',
           },

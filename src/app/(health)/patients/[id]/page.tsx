@@ -1,8 +1,9 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 import Image from 'next/image';
 import Link from 'next/link';
+import { realDB } from '@/lib/supabase-real';
 
 interface Patient {
   id: string;
@@ -38,13 +39,7 @@ interface Document {
   size: string;
 }
 
-// Mock data removed - using real database calls
-
-// Mock data removed - using real database calls
-
-// Mock data removed - using real database calls
-// Mock data removed - using real database calls
-
+// Mock data removed - using real database
 export default function PatientDetailsPage({
   params,
 }: {

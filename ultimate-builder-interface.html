@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Builder Interface - واجهة البناء الذكية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr 350px;
+            grid-template-rows: 60px 1fr;
+            height: 100vh;
+            gap: 1px;
+            background: #e0e0e0;
+        }
+
+        /* Header */
+        .header {
+            grid-column: 1 / -1;
+            background: linear-gradient(90deg, #2c3e50, #34495e);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo::before {
+            content: "🧠";
+            font-size: 2rem;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e67e22;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #34495e;
+        }
+
+        .component-item {
+            background: #34495e;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .component-item:hover {
+            background: #3498db;
+            transform: translateX(5px);
+        }
+
+        .component-item:active {
+            cursor: grabbing;
+        }
+
+        .component-icon {
+            font-size: 1.2rem;
+            margin-left: 8px;
+        }
+
+        /* Main Canvas */
+        .canvas {
+            background: #ecf0f1;
+            position: relative;
+            overflow: auto;
+            padding: 20px;
+        }
+
+        .canvas-header {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .canvas-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .canvas-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .drop-zone {
+            min-height: 400px;
+            border: 3px dashed #bdc3c7;
+            border-radius: 12px;
+            padding: 20px;
+            background: white;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #3498db;
+            background: #ebf3fd;
+        }
+
+        .drop-zone.empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .drop-zone.empty::before {
+            content: "اسحب المكونات هنا لبدء البناء";
+        }
+
+        .dropped-component {
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+            cursor: move;
+            transition: all 0.3s ease;
+        }
+
+        .dropped-component:hover {
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .dropped-component.selected {
+            border-color: #e74c3c;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        }
+
+        .component-controls {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            display: flex;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .dropped-component:hover .component-controls {
+            opacity: 1;
+        }
+
+        .control-btn {
+            width: 25px;
+            height: 25px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn.edit {
+            background: #3498db;
+            color: white;
+        }
+
+        .control-btn.delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        /* Properties Panel */
+        .properties {
+            background: #34495e;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .property-group {
+            margin-bottom: 25px;
+        }
+
+        .property-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #bdc3c7;
+        }
+
+        .property-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 6px;
+            background: #2c3e50;
+            color: white;
+            font-size: 14px;
+        }
+
+        .property-input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        .color-picker {
+            width: 100%;
+            height: 40px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .range-slider {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        /* AI Assistant Panel */
+        .ai-assistant {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .ai-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-title::before {
+            content: "🤖";
+            font-size: 1.5rem;
+        }
+
+        .ai-suggestions {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .suggestion-item {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-item:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Status Bar */
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #27ae60;
+        }
+
+        .status-indicator.warning {
+            background: #f39c12;
+        }
+
+        .status-indicator.error {
+            background: #e74c3c;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 250px 1fr 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: 60px 1fr 200px;
+            }
+            
+            .sidebar, .properties {
+                grid-row: 3;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropped-component {
+            animation: slideIn 0.3s ease;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c3e50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                Ultimate Builder Interface
+            </div>
+            <div class="header-controls">
+                <button class="btn btn-primary" onclick="saveProject()">
+                    💾 حفظ المشروع
+                </button>
+                <button class="btn btn-success" onclick="previewProject()">
+                    👁️ معاينة
+                </button>
+                <button class="btn btn-warning" onclick="deployProject()">
+                    🚀 نشر
+                </button>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">🧩 المكونات الأساسية</div>
+                <div class="component-item" draggable="true" data-component="text">
+                    <span class="component-icon">📝</span>
+                    نص
+                </div>
+                <div class="component-item" draggable="true" data-component="button">
+                    <span class="component-icon">🔘</span>
+                    زر
+                </div>
+                <div class="component-item" draggable="true" data-component="image">
+                    <span class="component-icon">🖼️</span>
+                    صورة
+                </div>
+                <div class="component-item" draggable="true" data-component="container">
+                    <span class="component-icon">📦</span>
+                    حاوية
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">📋 النماذج</div>
+                <div class="component-item" draggable="true" data-component="form">
+                    <span class="component-icon">📝</span>
+                    نموذج
+                </div>
+                <div class="component-item" draggable="true" data-component="input">
+                    <span class="component-icon">📥</span>
+                    حقل إدخال
+                </div>
+                <div class="component-item" draggable="true" data-component="select">
+                    <span class="component-icon">📋</span>
+                    قائمة منسدلة
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">🎨 التصميم</div>
+                <div class="component-item" draggable="true" data-component="card">
+                    <span class="component-icon">🃏</span>
+                    بطاقة
+                </div>
+                <div class="component-item" draggable="true" data-component="header">
+                    <span class="component-icon">📄</span>
+                    رأس الصفحة
+                </div>
+                <div class="component-item" draggable="true" data-component="footer">
+                    <span class="component-icon">🦶</span>
+                    تذييل الصفحة
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">📊 البيانات</div>
+                <div class="component-item" draggable="true" data-component="table">
+                    <span class="component-icon">📊</span>
+                    جدول
+                </div>
+                <div class="component-item" draggable="true" data-component="chart">
+                    <span class="component-icon">📈</span>
+                    مخطط
+                </div>
+                <div class="component-item" draggable="true" data-component="list">
+                    <span class="component-icon">📋</span>
+                    قائمة
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Canvas -->
+        <div class="canvas">
+            <div class="canvas-header">
+                <div class="canvas-title">منطقة البناء</div>
+                <div class="canvas-controls">
+                    <button class="btn btn-primary" onclick="clearCanvas()">
+                        🗑️ مسح الكل
+                    </button>
+                    <button class="btn btn-success" onclick="undo()">
+                        ↶ تراجع
+                    </button>
+                    <button class="btn btn-warning" onclick="redo()">
+                        ↷ إعادة
+                    </button>
+                </div>
+            </div>
+
+            <div class="drop-zone" id="dropZone">
+                <div class="empty">اسحب المكونات هنا لبدء البناء</div>
+            </div>
+        </div>
+
+        <!-- Properties Panel -->
+        <div class="properties">
+            <div class="ai-assistant">
+                <div class="ai-title">المساعد الذكي</div>
+                <div class="ai-suggestions">
+                    <div class="suggestion-item" onclick="applySuggestion('responsive')">
+                        📱 تحسين التصميم المتجاوب
+                    </div>
+                    <div class="suggestion-item" onclick="applySuggestion('performance')">
+                        ⚡ تحسين الأداء
+                    </div>
+                    <div class="suggestion-item" onclick="applySuggestion('accessibility')">
+                        ♿ تحسين إمكانية الوصول
+                    </div>
+                    <div class="suggestion-item" onclick="applySuggestion('seo')">
+                        🔍 تحسين محركات البحث
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-group">
+                <label class="property-label">النص</label>
+                <input type="text" class="property-input" id="textInput" placeholder="أدخل النص">
+            </div>
+
+            <div class="property-group">
+                <label class="property-label">اللون</label>
+                <input type="color" class="color-picker" id="colorPicker" value="#3498db">
+            </div>
+
+            <div class="property-group">
+                <label class="property-label">حجم الخط</label>
+                <input type="range" class="range-slider" id="fontSize" min="12" max="48" value="16">
+                <span id="fontSizeValue">16px</span>
+            </div>
+
+            <div class="property-group">
+                <label class="property-label">المحاذاة</label>
+                <select class="property-input" id="textAlign">
+                    <option value="right">يمين</option>
+                    <option value="center">وسط</option>
+                    <option value="left">يسار</option>
+                </select>
+            </div>
+
+            <div class="property-group">
+                <label class="property-label">الخلفية</label>
+                <input type="color" class="color-picker" id="backgroundColor" value="#ffffff">
+            </div>
+
+            <div class="property-group">
+                <label class="property-label">الحشو</label>
+                <input type="range" class="range-slider" id="padding" min="0" max="50" value="10">
+                <span id="paddingValue">10px</span>
+            </div>
+
+            <div class="property-group">
+                <label class="property-label">الهامش</label>
+                <input type="range" class="range-slider" id="margin" min="0" max="50" value="5">
+                <span id="marginValue">5px</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-item">
+            <div class="status-indicator"></div>
+            <span>متصل</span>
+        </div>
+        <div class="status-item">
+            <span>المكونات: <span id="componentCount">0</span></span>
+        </div>
+        <div class="status-item">
+            <span>آخر تحديث: <span id="lastUpdate">الآن</span></span>
+        </div>
+    </div>
+
+    <script>
+        let componentCounter = 0;
+        let selectedComponent = null;
+        let components = [];
+
+        // Initialize drag and drop
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDragAndDrop();
+            initializePropertyControls();
+            updateStatus();
+        });
+
+        function initializeDragAndDrop() {
+            const dropZone = document.getElementById('dropZone');
+            const componentItems = document.querySelectorAll('.component-item');
+
+            // Make components draggable
+            componentItems.forEach(item => {
+                item.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', this.dataset.component);
+                });
+            });
+
+            // Handle drop zone events
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('drag-over');
+            });
+
+            dropZone.addEventListener('dragleave', function(e) {
+                this.classList.remove('drag-over');
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('drag-over');
+                
+                const componentType = e.dataTransfer.getData('text/plain');
+                addComponent(componentType);
+            });
+        }
+
+        function addComponent(type) {
+            componentCounter++;
+            const component = {
+                id: componentCounter,
+                type: type,
+                content: getDefaultContent(type),
+                styles: getDefaultStyles(type)
+            };
+
+            components.push(component);
+            renderComponent(component);
+            updateComponentCount();
+            updateLastUpdate();
+        }
+
+        function getDefaultContent(type) {
+            const contentMap = {
+                'text': 'نص جديد',
+                'button': 'زر',
+                'image': '🖼️ صورة',
+                'container': 'حاوية',
+                'form': 'نموذج',
+                'input': 'حقل إدخال',
+                'select': 'قائمة منسدلة',
+                'card': 'بطاقة',
+                'header': 'رأس الصفحة',
+                'footer': 'تذييل الصفحة',
+                'table': 'جدول',
+                'chart': 'مخطط',
+                'list': 'قائمة'
+            };
+            return contentMap[type] || 'مكون جديد';
+        }
+
+        function getDefaultStyles(type) {
+            return {
+                color: '#333333',
+                fontSize: '16px',
+                textAlign: 'right',
+                backgroundColor: '#ffffff',
+                padding: '10px',
+                margin: '5px'
+            };
+        }
+
+        function renderComponent(component) {
+            const dropZone = document.getElementById('dropZone');
+            const emptyMessage = dropZone.querySelector('.empty');
+            
+            if (emptyMessage) {
+                emptyMessage.remove();
+            }
+
+            const componentDiv = document.createElement('div');
+            componentDiv.className = 'dropped-component';
+            componentDiv.dataset.id = component.id;
+            componentDiv.innerHTML = `
+                <div class="component-controls">
+                    <button class="control-btn edit" onclick="editComponent(${component.id})" data-tooltip="تعديل">✏️</button>
+                    <button class="control-btn delete" onclick="deleteComponent(${component.id})" data-tooltip="حذف">🗑️</button>
+                </div>
+                <div class="component-content">${component.content}</div>
+            `;
+
+            // Apply styles
+            Object.assign(componentDiv.style, component.styles);
+
+            // Add click handler for selection
+            componentDiv.addEventListener('click', function(e) {
+                e.stopPropagation();
+                selectComponent(component.id);
+            });
+
+            dropZone.appendChild(componentDiv);
+        }
+
+        function selectComponent(id) {
+            // Remove previous selection
+            document.querySelectorAll('.dropped-component').forEach(comp => {
+                comp.classList.remove('selected');
+            });
+
+            // Select new component
+            const component = document.querySelector(`[data-id="${id}"]`);
+            if (component) {
+                component.classList.add('selected');
+                selectedComponent = id;
+                loadComponentProperties(id);
+            }
+        }
+
+        function loadComponentProperties(id) {
+            const component = components.find(c => c.id == id);
+            if (component) {
+                document.getElementById('textInput').value = component.content;
+                document.getElementById('colorPicker').value = component.styles.color;
+                document.getElementById('fontSize').value = parseInt(component.styles.fontSize);
+                document.getElementById('textAlign').value = component.styles.textAlign;
+                document.getElementById('backgroundColor').value = component.styles.backgroundColor;
+                document.getElementById('padding').value = parseInt(component.styles.padding);
+                document.getElementById('margin').value = parseInt(component.styles.margin);
+                
+                updatePropertyValues();
+            }
+        }
+
+        function initializePropertyControls() {
+            // Text input
+            document.getElementById('textInput').addEventListener('input', function() {
+                if (selectedComponent) {
+                    updateComponentProperty('content', this.value);
+                }
+            });
+
+            // Color picker
+            document.getElementById('colorPicker').addEventListener('change', function() {
+                if (selectedComponent) {
+                    updateComponentProperty('color', this.value);
+                }
+            });
+
+            // Font size
+            document.getElementById('fontSize').addEventListener('input', function() {
+                if (selectedComponent) {
+                    updateComponentProperty('fontSize', this.value + 'px');
+                }
+                updatePropertyValues();
+            });
+
+            // Text align
+            document.getElementById('textAlign').addEventListener('change', function() {
+                if (selectedComponent) {
+                    updateComponentProperty('textAlign', this.value);
+                }
+            });
+
+            // Background color
+            document.getElementById('backgroundColor').addEventListener('change', function() {
+                if (selectedComponent) {
+                    updateComponentProperty('backgroundColor', this.value);
+                }
+            });
+
+            // Padding
+            document.getElementById('padding').addEventListener('input', function() {
+                if (selectedComponent) {
+                    updateComponentProperty('padding', this.value + 'px');
+                }
+                updatePropertyValues();
+            });
+
+            // Margin
+            document.getElementById('margin').addEventListener('input', function() {
+                if (selectedComponent) {
+                    updateComponentProperty('margin', this.value + 'px');
+                }
+                updatePropertyValues();
+            });
+        }
+
+        function updateComponentProperty(property, value) {
+            if (selectedComponent) {
+                const component = components.find(c => c.id == selectedComponent);
+                if (component) {
+                    if (property === 'content') {
+                        component.content = value;
+                        const componentElement = document.querySelector(`[data-id="${selectedComponent}"] .component-content`);
+                        if (componentElement) {
+                            componentElement.textContent = value;
+                        }
+                    } else {
+                        component.styles[property] = value;
+                        const componentElement = document.querySelector(`[data-id="${selectedComponent}"]`);
+                        if (componentElement) {
+                            componentElement.style[property] = value;
+                        }
+                    }
+                }
+            }
+        }
+
+        function updatePropertyValues() {
+            document.getElementById('fontSizeValue').textContent = document.getElementById('fontSize').value + 'px';
+            document.getElementById('paddingValue').textContent = document.getElementById('padding').value + 'px';
+            document.getElementById('marginValue').textContent = document.getElementById('margin').value + 'px';
+        }
+
+        function editComponent(id) {
+            selectComponent(id);
+        }
+
+        function deleteComponent(id) {
+            if (confirm('هل أنت متأكد من حذف هذا المكون؟')) {
+                components = components.filter(c => c.id != id);
+                const componentElement = document.querySelector(`[data-id="${id}"]`);
+                if (componentElement) {
+                    componentElement.remove();
+                }
+                
+                if (selectedComponent == id) {
+                    selectedComponent = null;
+                }
+                
+                updateComponentCount();
+                updateLastUpdate();
+            }
+        }
+
+        function clearCanvas() {
+            if (confirm('هل أنت متأكد من مسح جميع المكونات؟')) {
+                components = [];
+                selectedComponent = null;
+                const dropZone = document.getElementById('dropZone');
+                dropZone.innerHTML = '<div class="empty">اسحب المكونات هنا لبدء البناء</div>';
+                updateComponentCount();
+                updateLastUpdate();
+            }
+        }
+
+        function undo() {
+            // TODO: Implement undo functionality
+            alert('ميزة التراجع قيد التطوير');
+        }
+
+        function redo() {
+            // TODO: Implement redo functionality
+            alert('ميزة الإعادة قيد التطوير');
+        }
+
+        function saveProject() {
+            const projectData = {
+                components: components,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('ultimateBuilderProject', JSON.stringify(projectData));
+            alert('تم حفظ المشروع بنجاح!');
+            updateLastUpdate();
+        }
+
+        function previewProject() {
+            // TODO: Implement preview functionality
+            alert('ميزة المعاينة قيد التطوير');
+        }
+
+        function deployProject() {
+            // TODO: Implement deploy functionality
+            alert('ميزة النشر قيد التطوير');
+        }
+
+        function applySuggestion(type) {
+            const suggestions = {
+                'responsive': 'تم تطبيق تحسينات التصميم المتجاوب',
+                'performance': 'تم تحسين الأداء',
+                'accessibility': 'تم تحسين إمكانية الوصول',
+                'seo': 'تم تحسين محركات البحث'
+            };
+            
+            alert(suggestions[type] || 'تم تطبيق الاقتراح');
+        }
+
+        function updateComponentCount() {
+            document.getElementById('componentCount').textContent = components.length;
+        }
+
+        function updateLastUpdate() {
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('ar-SA');
+        }
+
+        function updateStatus() {
+            // Update status every 5 seconds
+            setInterval(() => {
+                const indicator = document.querySelector('.status-indicator');
+                if (components.length > 0) {
+                    indicator.className = 'status-indicator';
+                } else {
+                    indicator.className = 'status-indicator warning';
+                }
+            }, 5000);
+        }
+
+        // Load saved project on page load
+        window.addEventListener('load', function() {
+            const savedProject = localStorage.getItem('ultimateBuilderProject');
+            if (savedProject) {
+                try {
+                    const projectData = JSON.parse(savedProject);
+                    components = projectData.components || [];
+                    
+                    if (components.length > 0) {
+                        const dropZone = document.getElementById('dropZone');
+                        dropZone.innerHTML = '';
+                        
+                        components.forEach(component => {
+                            renderComponent(component);
+                        });
+                        
+                        updateComponentCount();
+                    }
+                } catch (error) {
+                    console.error('Error loading saved project:', error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

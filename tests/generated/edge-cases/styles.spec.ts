@@ -125,7 +125,7 @@ test.describe('styles Module - Edge Cases', () => {
 
       if (inputCount > 0) {
         const input = inputs.first();
-        await input.fill('test data ' + i);
+        await input.fill(`test data ${  i}`);
       }
     }
 

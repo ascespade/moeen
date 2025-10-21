@@ -7,9 +7,9 @@
  * Monitors system and fixes issues automatically
  */
 
-const AutoTestingSystem = require('./auto-testing-system');
-const fs = require('fs');
-const path = require('path');
+import AutoTestingSystem from './auto-testing-system.js';
+import fs from 'fs';
+import path from 'path';
 
 class BackgroundMonitor {
   constructor() {
@@ -36,7 +36,7 @@ class BackgroundMonitor {
   saveStatus(status) {
     const statusData = {
       timestamp: new Date().toISOString(),
-      status: status,
+      status,
       isMonitoring: this.isMonitoring,
       lastCheck: new Date().toISOString(),
     };
@@ -49,7 +49,7 @@ class BackgroundMonitor {
 
     try {
       // Check if server is running
-      const { exec } = require('child_process');
+      const { exec } = await import('child_process');
       const isServerRunning = await new Promise(resolve => {
         exec('curl -s http://localhost:3001 > /dev/null', error => {
           resolve(!error);
@@ -103,7 +103,7 @@ class BackgroundMonitor {
 
   async hasCSSErrors() {
     try {
-      const { exec } = require('child_process');
+      const { exec } = await import('child_process');
       const result = await new Promise(resolve => {
         exec(
           'npm run build 2>&1 | grep -i "css\\|syntax\\|error"',
@@ -120,7 +120,7 @@ class BackgroundMonitor {
 
   async hasBuildErrors() {
     try {
-      const { exec } = require('child_process');
+      const { exec } = await import('child_process');
       const result = await new Promise(resolve => {
         exec(
           'npm run build 2>&1 | grep -i "error\\|failed"',

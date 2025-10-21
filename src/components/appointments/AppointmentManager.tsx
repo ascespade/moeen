@@ -88,7 +88,7 @@ const AppointmentManager: React.FC = () => {
 
   const loadAppointments = async () => {
     // محاكاة تحميل المواعيد من قاعدة البيانات
-    const mockAppointments: Appointment[] = [
+    const appointments: Appointment[] = [
       {
         id: '1',
         patientName: 'أحمد محمد',
@@ -120,11 +120,11 @@ const AppointmentManager: React.FC = () => {
         updatedAt: '2024-01-11T10:30:00Z',
       },
     ];
-    setAppointments(mockAppointments);
+    setAppointments(appointments);
   };
 
   const loadDoctors = async () => {
-    const mockDoctors: Doctor[] = [
+    const doctors: Doctor[] = [
       {
         id: '1',
         name: 'د. سارة أحمد',
@@ -147,7 +147,7 @@ const AppointmentManager: React.FC = () => {
         maxPatientsPerDay: 12,
       },
     ];
-    setDoctors(mockDoctors);
+    setDoctors(doctors);
   };
 
   const handleAddAppointment = async () => {
@@ -329,7 +329,7 @@ const AppointmentManager: React.FC = () => {
                         {appointment.specialNeeds.map((need, index) => (
                           <Badge
                             key={index}
-                            variant='outline'
+                            variant='secondary'
                             className='text-xs'
                           >
                             {need}

@@ -43,7 +43,7 @@ async function applyMigration(migrationFile) {
     .filter(stmt => stmt.length > 0 && !stmt.startsWith('--'));
 
   let successCount = 0;
-  let totalStatements = statements.length;
+  const totalStatements = statements.length;
 
   for (const statement of statements) {
     if (statement.trim()) {

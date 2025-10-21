@@ -87,7 +87,7 @@ export default function Sidebar() {
         <nav className='p-3 grid gap-1'>
           {items.map(item => {
             const active =
-              pathname === item.href || pathname.startsWith(item.href + '/');
+              pathname === item.href || pathname.startsWith(`${item.href  }/`);
             return (
               <Link
                 key={item.href}
@@ -125,7 +125,7 @@ export default function Sidebar() {
         <nav className='grid gap-1'>
           {items.map(item => {
             const active =
-              pathname === item.href || pathname.startsWith(item.href + '/');
+              pathname === item.href || pathname.startsWith(`${item.href  }/`);
             return (
               <Link
                 key={item.href}

@@ -1,12 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { realDB } from '@/lib/supabase-real';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type') || 'all';
 
-    // محاكاة البيانات الديناميكية
-    const mockData = {
+    // Load real data from database
+    const [patients, doctors, appointments, sessions] = await Promise.all([
+      realDB.searchUsers('', 'patient'),
+      realDB.searchUsers('', 'doctor'),
+      realDB.getAppointments(),
+      realDB.getSessions('')
+    ]);
+
+    const dynamicData = {
       center_info: {
         name: 'مركز الهمم',
         description: 'مركز متخصص في العلاج الطبيعي والوظيفي',
@@ -16,41 +24,24 @@ export async function GET(request: NextRequest) {
         email: 'info@moeen.com',
         website: 'https://moeen.com',
       },
-      patients: [
-        { id: 1, name: 'أحمد محمد', status: 'نشط' },
-        { id: 2, name: 'فاطمة علي', status: 'نشط' },
-        { id: 3, name: 'محمد أحمد', status: 'مكتمل' },
-        { id: 4, name: 'نورا سعد', status: 'نشط' },
-        { id: 5, name: 'خالد عبدالله', status: 'نشط' },
-      ],
-      doctors: [
-        { id: 1, name: 'د. أحمد محمد', specialty: 'العلاج الطبيعي' },
-        { id: 2, name: 'د. فاطمة علي', specialty: 'العلاج الوظيفي' },
-        { id: 3, name: 'د. محمد أحمد', specialty: 'العلاج الطبيعي' },
-      ],
-      appointments: [
-        {
-          id: 1,
-          patient_id: 1,
-          doctor_id: 1,
-          date: '2024-01-15',
-          time: '10:00',
-        },
-        {
-          id: 2,
-          patient_id: 2,
-          doctor_id: 2,
-          date: '2024-01-15',
-          time: '11:00',
-        },
-        {
-          id: 3,
-          patient_id: 3,
-          doctor_id: 1,
-          date: '2024-01-16',
-          time: '09:00',
-        },
-      ],
+      patients: patients.map((patient: any) => ({
+        id: patient.id,
+        name: patient.name || patient.full_name,
+        status: patient.is_active ? 'نشط' : 'غير نشط'
+      })),
+      doctors: doctors.map((doctor: any) => ({
+        id: doctor.id,
+        name: `د. ${doctor.name || doctor.full_name}`,
+        specialty: doctor.specialization || doctor.specialty || 'عام'
+      })),
+      appointments: appointments.map((appointment: any) => ({
+        id: appointment.id,
+        patient_id: appointment.patient_id,
+        doctor_id: appointment.doctor_id,
+        date: appointment.scheduled_at ? appointment.scheduled_at.split('T')[0] : '',
+        time: appointment.scheduled_at ? appointment.scheduled_at.split('T')[1]?.substring(0, 5) : '',
+        status: appointment.status
+      })),
       contact_info: [
         {
           id: 1,
@@ -141,18 +132,18 @@ export async function GET(request: NextRequest) {
 
     // إرجاع البيانات حسب النوع المطلوب
     if (type === 'contact') {
-      return NextResponse.json({ contact_info: mockData.contact_info });
+      return NextResponse.json({ contact_info: dynamicData.contact_info });
     } else if (type === 'patients') {
-      return NextResponse.json({ patients: mockData.patients });
+      return NextResponse.json({ patients: dynamicData.patients });
     } else if (type === 'doctors') {
-      return NextResponse.json({ doctors: mockData.doctors });
+      return NextResponse.json({ doctors: dynamicData.doctors });
     } else if (type === 'appointments') {
-      return NextResponse.json({ appointments: mockData.appointments });
+      return NextResponse.json({ appointments: dynamicData.appointments });
     } else if (type === 'services') {
-      return NextResponse.json({ services: mockData.services });
+      return NextResponse.json({ services: dynamicData.services });
     } else {
       // إرجاع جميع البيانات
-      return NextResponse.json(mockData);
+      return NextResponse.json(dynamicData);
     }
   } catch (error) {
     console.error('Error in dynamic-data API:', error);

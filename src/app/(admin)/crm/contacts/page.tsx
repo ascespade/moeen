@@ -178,7 +178,7 @@ const ContactsPage: React.FC = () => {
       lead: { label: 'عميل محتمل', variant: 'secondary' as const },
       prospect: { label: 'عميل واعد', variant: 'primary' as const },
       customer: { label: 'عميل', variant: 'primary' as const },
-      inactive: { label: 'غير نشط', variant: 'destructive' as const },
+      inactive: { label: 'غير نشط', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
@@ -438,7 +438,7 @@ const ContactsPage: React.FC = () => {
                           {contact.tags.map((tag, index) => (
                             <Badge
                               key={index}
-                              variant='outline'
+                              variant='secondary'
                               className='text-xs'
                             >
                               {tag}

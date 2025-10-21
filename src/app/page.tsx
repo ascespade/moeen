@@ -18,20 +18,20 @@ export default function HomePage() {
         <div className='container-app relative z-10'>
           <div className='text-center max-w-4xl mx-auto'>
             <h1 className='text-5xl md:text-7xl font-bold text-foreground mb-6'>
-              {heroSlides[currentSlide].title}
+              مركز الهمم للرعاية الصحية
             </h1>
             <h2 className='text-2xl md:text-3xl text-[var(--brand-primary)] mb-6'>
-              {heroSlides[currentSlide].subtitle}
+              رعاية شاملة لذوي الاحتياجات الخاصة
             </h2>
             <p className='text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto'>
-              {heroSlides[currentSlide].description}
+              نقدم خدمات طبية متخصصة وبرامج تأهيلية شاملة لضمان حياة أفضل لذوي الاحتياجات الخاصة
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
               <Link
-                href={heroSlides[currentSlide].ctaLink}
+                href='/appointments'
                 className='btn btn-brand btn-lg'
               >
-                {heroSlides[currentSlide].cta}
+                احجز موعدك الآن
               </Link>
               <Link href='/features' className='btn btn-outline btn-lg'>
                 تعرف على المزيد
@@ -42,17 +42,9 @@ export default function HomePage() {
 
         {/* Slide Indicators */}
         <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2'>
-          {heroSlides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === currentSlide
-                  ? 'bg-[var(--brand-primary)]'
-                  : 'bg-gray-300 hover:bg-gray-400'
-              }`}
-            />
-          ))}
+          <button
+            className='w-3 h-3 rounded-full bg-[var(--brand-primary)]'
+          />
         </div>
       </section>
 

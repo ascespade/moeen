@@ -240,7 +240,7 @@ const NotificationsPage: React.FC = () => {
       low: { label: 'منخفض', variant: 'secondary' as const },
       medium: { label: 'متوسط', variant: 'primary' as const },
       high: { label: 'عالي', variant: 'primary' as const },
-      urgent: { label: 'عاجل', variant: 'destructive' as const },
+      urgent: { label: 'عاجل', variant: 'error' as const },
     };
 
     const priorityInfo = priorityMap[priority as keyof typeof priorityMap] || {
@@ -254,7 +254,7 @@ const NotificationsPage: React.FC = () => {
     const statusMap = {
       unread: { label: 'غير مقروء', variant: 'primary' as const },
       read: { label: 'مقروء', variant: 'secondary' as const },
-      archived: { label: 'مؤرشف', variant: 'outline' as const },
+      archived: { label: 'مؤرشف', variant: 'secondary' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
@@ -515,8 +515,7 @@ const NotificationsPage: React.FC = () => {
                       <Button
                         variant='outline'
                         size='sm'
-                        onClick={e => {
-                          e.stopPropagation();
+                        onClick={() => {
                           markAsArchived(notification.id);
                         }}
                       >
@@ -530,8 +529,7 @@ const NotificationsPage: React.FC = () => {
                       <Button
                         variant='outline'
                         size='sm'
-                        onClick={e => {
-                          e.stopPropagation();
+                        onClick={() => {
                           router.push(notification.action_url!);
                         }}
                       >
@@ -569,8 +567,8 @@ const NotificationsPage: React.FC = () => {
                     {template.message}
                   </p>
                   <div className='flex items-center gap-2'>
-                    <Badge variant='outline'>{template.type}</Badge>
-                    <Badge variant='outline'>{template.category}</Badge>
+                    <Badge variant='secondary'>{template.type}</Badge>
+                    <Badge variant='secondary'>{template.category}</Badge>
                     <span className='text-xs text-gray-500'>
                       متغيرات: {template.variables.join(', ')}
                     </span>

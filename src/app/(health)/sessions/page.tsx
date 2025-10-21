@@ -16,8 +16,7 @@ interface Session {
   notes?: string;
 }
 
-// Mock data removed - using real database calls
-
+// Mock data removed - using real database
 export default function SessionsPage() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);

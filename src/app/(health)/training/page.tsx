@@ -30,6 +30,7 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { realDB } from '@/lib/supabase-real';
 
 interface TrainingProgram {
   id: string;
@@ -99,8 +100,8 @@ const TrainingPage: React.FC = () => {
     try {
       setLoading(true);
       // Load real data from database
-      const programsData = await realDB.getTrainingPrograms?.() || [];
-      const progressData = await realDB.getTrainingProgress?.() || [];
+      const programsData = await realDB.getTrainingPrograms();
+      const progressData = await realDB.getTrainingProgress();
       
       // Transform real data to match interface
       const transformedPrograms: TrainingProgram[] = programsData.map((program: any) => ({
@@ -108,124 +109,48 @@ const TrainingPage: React.FC = () => {
         title: program.title || program.name,
         description: program.description,
         category: program.category || 'عام',
-        duration_weeks: program.duration_weeks || program.duration,
-        difficulty_level: program.difficulty_level || program.difficulty,
-        instructor: program.instructor || program.trainer,
-        status: program.status || 'active',
-        start_date: program.start_date,
-        end_date: program.end_date,
+        level: program.level || 'مبتدئ',
+        duration_weeks: program.duration_weeks || program.duration || 0,
         max_participants: program.max_participants || 0,
         current_participants: program.current_participants || 0,
+        instructor_id: program.instructor_id || '',
+        start_date: program.start_date || '',
+        end_date: program.end_date || '',
+        status: program.status || 'active',
+        skills_covered: program.skills_covered || [],
         prerequisites: program.prerequisites || [],
-        learning_objectives: program.learning_objectives || [],
-        modules: program.modules || [],
-        created_at: program.created_at,
-        updated_at: program.updated_at
+        created_at: program.created_at || '',
+        updated_at: program.updated_at || '',
+        public_id: program.public_id || '',
+        instructor: program.instructor || {
+          first_name: '',
+          last_name: '',
+          specialty: '',
+          avatar: '/logo.png'
+        }
       }));
       
       const transformedProgress: TrainingProgress[] = progressData.map((progress: any) => ({
         id: progress.id,
-        program_id: progress.program_id,
-        user_id: progress.user_id,
-        enrollment_date: progress.enrollment_date,
-        completion_percentage: progress.completion_percentage || 0,
-        current_module: progress.current_module || 0,
+        participant_id: progress.participant_id || progress.user_id || '',
+        program_id: progress.program_id || '',
+        progress_percentage: progress.progress_percentage || progress.completion_percentage || 0,
+        completed_modules: progress.completed_modules || 0,
         total_modules: progress.total_modules || 0,
-        last_activity: progress.last_activity,
-        status: progress.status || 'enrolled',
-        completed_modules: progress.completed_modules || [],
-        certificates: progress.certificates || [],
-        notes: progress.notes || '',
-        created_at: progress.created_at,
-        updated_at: progress.updated_at
+        last_activity: progress.last_activity || '',
+        status: progress.status || 'active',
+        created_at: progress.created_at || '',
+        participants: progress.participants || {
+          first_name: '',
+          last_name: '',
+          age: 0,
+          condition: '',
+          avatar: '/logo.png'
+        }
       }));
       
       setPrograms(transformedPrograms);
       setProgress(transformedProgress);
-        {
-          id: '1',
-          title: 'برنامج المهارات الحياتية الأساسية',
-          description: 'تطوير المهارات الأساسية للحياة اليومية والاستقلالية',
-          category: 'المهارات الحياتية',
-          level: 'مبتدئ',
-          duration_weeks: 12,
-          max_participants: 15,
-          current_participants: 12,
-          instructor_id: 'inst-1',
-          start_date: '2024-01-15',
-          end_date: '2024-04-15',
-          status: 'active',
-          skills_covered: [
-            'العناية الشخصية',
-            'إدارة المال',
-            'الطبخ البسيط',
-            'استخدام المواصلات',
-          ],
-          prerequisites: ['القدرة على التواصل الأساسي'],
-          created_at: '2024-01-01T00:00:00Z',
-          updated_at: '2024-01-15T00:00:00Z',
-          public_id: 'TP-001',
-          instructor: {
-            first_name: 'أ. سارة',
-            last_name: 'الزهراني',
-            specialty: 'التأهيل المهني',
-            avatar: '/logo.png',
-          },
-        },
-        {
-          id: '2',
-          title: 'برنامج الحرف اليدوية والتقنية',
-          description: 'تعلم الحرف اليدوية والتقنيات الحديثة للعمل',
-          category: 'التأهيل المهني',
-          level: 'متوسط',
-          duration_weeks: 16,
-          max_participants: 10,
-          current_participants: 8,
-          instructor_id: 'inst-2',
-          start_date: '2024-02-01',
-          end_date: '2024-05-30',
-          status: 'active',
-          skills_covered: [
-            'النجارة',
-            'الخياطة',
-            'الطباعة ثلاثية الأبعاد',
-            'البرمجة البسيطة',
-          ],
-          prerequisites: ['إكمال برنامج المهارات الأساسية'],
-          created_at: '2024-01-15T00:00:00Z',
-          updated_at: '2024-02-01T00:00:00Z',
-          public_id: 'TP-002',
-          instructor: {
-            first_name: 'أ. محمد',
-            last_name: 'العتيبي',
-            specialty: 'التدريب المهني',
-            avatar: '/logo.png',
-          },
-        },
-      ];
-
-      const mockProgress: TrainingProgress[] = [
-        {
-          id: '1',
-          participant_id: 'part-1',
-          program_id: '1',
-          progress_percentage: 75,
-          completed_modules: 9,
-          total_modules: 12,
-          last_activity: '2024-01-20T10:00:00Z',
-          status: 'active',
-          created_at: '2024-01-15T00:00:00Z',
-          participants: {
-            first_name: 'أحمد',
-            last_name: 'محمد',
-            age: 18,
-            condition: 'متلازمة داون',
-            avatar: '/logo.png',
-          },
-        },
-      ];
-
-      // Data already set above from real database
     } catch (error) {
       setError('فشل في تحميل بيانات التدريب');
       console.error('Error loading training data:', error);
@@ -239,7 +164,7 @@ const TrainingPage: React.FC = () => {
       active: { label: 'نشط', variant: 'primary' as const },
       completed: { label: 'مكتمل', variant: 'primary' as const },
       paused: { label: 'متوقف', variant: 'secondary' as const },
-      cancelled: { label: 'ملغي', variant: 'destructive' as const },
+      cancelled: { label: 'ملغي', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
@@ -471,7 +396,7 @@ const TrainingPage: React.FC = () => {
 
                 <div className='grid grid-cols-1 md:grid-cols-4 gap-4 mb-4'>
                   <div className='flex items-center gap-2'>
-                    <Badge variant='outline'>{program.category}</Badge>
+                    <Badge variant='secondary'>{program.category}</Badge>
                     {getLevelBadge(program.level)}
                   </div>
                   <div className='flex items-center gap-2'>
@@ -515,7 +440,7 @@ const TrainingPage: React.FC = () => {
                   <h4 className='text-sm font-semibold mb-2'>المتطلبات:</h4>
                   <div className='flex flex-wrap gap-2'>
                     {program.prerequisites.map((prereq, index) => (
-                      <Badge key={index} variant='outline' className='text-xs'>
+                      <Badge key={index} variant='secondary' className='text-xs'>
                         {prereq}
                       </Badge>
                     ))}

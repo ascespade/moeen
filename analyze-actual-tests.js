@@ -54,6 +54,6 @@ testFiles.forEach(file => {
   }
 });
 
-console.log('\n' + '='.repeat(70));
+console.log(`\n${  '='.repeat(70)}`);
 console.log(`إجمالي الاختبارات الفعلية: ${totalTests}`);
 console.log('='.repeat(70));

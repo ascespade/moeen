@@ -1,0 +1,99 @@
+{
+  "mode": "ultimate_finalizer",
+  "executor": "cursor-ai",
+  "backgroundExecution": true,
+  "autoApprove": true,
+  "neverPause": true,
+  "goal": "Deliver 100% functional, tested, production-ready system with 0 errors and 0 warnings.",
+  "engine": {
+    "maxConcurrency": "auto",
+    "continuousHealing": true,
+    "environmentSync": "cursor-agent"
+  },
+  "phases": [
+    {
+      "name": "🧹 Clean Project",
+      "actions": [
+        "Delete all mock/, __mocks__/, fakeData/, simulation/ folders",
+        "Remove all mock imports, placeholder JSONs, and temporary variables",
+        "Ensure all pages and APIs read from real database only"
+      ]
+    },
+    {
+      "name": "🔗 Database & API Linking",
+      "actions": [
+        "Scan /api directory and identify missing endpoints",
+        "Create missing API routes and connect them to Supabase via environment variables",
+        "Ensure full CRUD endpoints exist for every table (patients, doctors, insurance, sessions, medical-files, etc.)",
+        "Add error handling, success messages, and correct status codes"
+      ]
+    },
+    {
+      "name": "🧩 Complete Missing Features",
+      "actions": [
+        "Detect incomplete or placeholder modules/pages/components",
+        "Auto-build missing logic using existing patterns and central config",
+        "Ensure translations, layouts, and styles match global project standards"
+      ]
+    },
+    {
+      "name": "🧪 Create Comprehensive Tests",
+      "actions": [
+        "Generate minimum 100 Playwright + Superwright tests per module across UI, DB, and API layers",
+        "Store generated tests in tests/generated/ organized by module name",
+        "Run all tests in sequence, fixing failing cases automatically",
+        "Repeat test-fix cycle until all tests pass successfully"
+      ]
+    },
+    {
+      "name": "🔧 Fix Codebase",
+      "actions": [
+        "Run ESLint, TypeScript, and Prettier auto-fix",
+        "Remove unused imports and dead code",
+        "Rebuild the entire project (npm run build)",
+        "Validate successful build with 0 errors / 0 warnings"
+      ]
+    },
+    {
+      "name": "⚙️ Optimize Performance & Security",
+      "actions": [
+        "Apply Next.js optimization (lazy loading, tree-shaking, bundle analyzer)",
+        "Sanitize all user inputs (prevent SQL Injection, XSS, CSRF)",
+        "Enable strict headers, secure cookies, and CSP policies",
+        "Compress static assets and remove unused ones"
+      ]
+    },
+    {
+      "name": "🚀 Finalizer",
+      "actions": [
+        "Run npm run build --dry-run and confirm no errors",
+        "Validate SEO: meta tags, titles, descriptions, sitemap.xml, robots.txt, manifest.json",
+        "Ensure localization (RTL/LTR) works properly",
+        "Generate README.md and CHANGELOG.md automatically",
+        "Create deployment config (render.yaml / vercel.json)",
+        "Export full report to reports/final_summary_production.md"
+      ]
+    }
+  ],
+  "selfHealing": {
+    "enabled": true,
+    "retryOnFailure": true,
+    "maxRetriesPerPhase": 10,
+    "autoResumeInterval": 5
+  },
+  "reporting": {
+    "verbose": true,
+    "progressBar": true,
+    "autoCommit": true,
+    "commitMessage": "🚀 Full Heal + Finalizer: System auto-repaired, tested, and production-ready",
+    "output": [
+      "console",
+      "logs/full_auto_heal.log",
+      "reports/full_audit.json",
+      "reports/final_summary_production.md"
+    ],
+    "onComplete": {
+      "status": "✅ 0 Errors, 0 Warnings, 100% Tests Passed, Production Ready"
+    }
+  }
+}

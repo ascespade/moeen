@@ -227,7 +227,7 @@ export default function SupervisorDashboard() {
                                 ? 'primary'
                                 : staff.efficiency >= 60
                                   ? 'secondary'
-                                  : 'destructive'
+                                  : 'error'
                             }
                           >
                             {staff.efficiency >= 80
@@ -341,7 +341,7 @@ export default function SupervisorDashboard() {
                             <span className='text-gray-600 dark:text-gray-400'>
                               {report.name}
                             </span>
-                            <Badge variant='outline'>
+                            <Badge variant='secondary'>
                               {t(`report.status.${report.status}`)}
                             </Badge>
                           </div>

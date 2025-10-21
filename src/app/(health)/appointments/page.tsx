@@ -127,7 +127,7 @@ const AppointmentsPage: React.FC = () => {
       if (data.success) {
         loadAppointments(); // إعادة تحميل المواعيد
       } else {
-        alert('فشل في إلغاء الموعد: ' + data.error);
+        alert(`فشل في إلغاء الموعد: ${  data.error}`);
       }
     } catch (error) {
       alert('حدث خطأ في إلغاء الموعد');
@@ -138,14 +138,14 @@ const AppointmentsPage: React.FC = () => {
     const statusConfig = {
       scheduled: { label: 'مجدول', variant: 'primary' as const },
       confirmed: { label: 'مؤكد', variant: 'secondary' as const },
-      completed: { label: 'مكتمل', variant: 'outline' as const },
-      cancelled: { label: 'ملغي', variant: 'destructive' as const },
-      no_show: { label: 'لم يحضر', variant: 'destructive' as const },
+      completed: { label: 'مكتمل', variant: 'secondary' as const },
+      cancelled: { label: 'ملغي', variant: 'error' as const },
+      no_show: { label: 'لم يحضر', variant: 'error' as const },
     };
 
     const config = statusConfig[status as keyof typeof statusConfig] || {
       label: status,
-      variant: 'outline' as const,
+      variant: 'secondary' as const,
     };
 
     return <Badge variant={config.variant}>{config.label}</Badge>;
@@ -284,7 +284,7 @@ const AppointmentsPage: React.FC = () => {
               </select>
 
               <Button
-                variant={showUpcoming ? 'primary' : 'outline'}
+                variant={showUpcoming ? 'brand' : 'outline'}
                 onClick={() => setShowUpcoming(!showUpcoming)}
                 className='flex items-center gap-2'
               >

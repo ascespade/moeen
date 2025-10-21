@@ -315,7 +315,7 @@ const SecurityPage: React.FC = () => {
       },
       critical: {
         label: 'حرج',
-        variant: 'destructive' as const,
+        variant: 'error' as const,
         color: 'text-brand-error',
       },
     };
@@ -333,7 +333,7 @@ const SecurityPage: React.FC = () => {
       low: { label: 'منخفض', variant: 'primary' as const },
       medium: { label: 'متوسط', variant: 'secondary' as const },
       high: { label: 'عالي', variant: 'primary' as const },
-      critical: { label: 'حرج', variant: 'destructive' as const },
+      critical: { label: 'حرج', variant: 'error' as const },
     };
 
     const severityInfo = severityMap[severity as keyof typeof severityMap] || {
@@ -346,8 +346,8 @@ const SecurityPage: React.FC = () => {
   const getStatusBadge = (status: string) => {
     const statusMap = {
       success: { label: 'نجح', variant: 'primary' as const },
-      failed: { label: 'فشل', variant: 'destructive' as const },
-      blocked: { label: 'محظور', variant: 'destructive' as const },
+      failed: { label: 'فشل', variant: 'error' as const },
+      blocked: { label: 'محظور', variant: 'error' as const },
       new: { label: 'جديد', variant: 'primary' as const },
       investigating: { label: 'قيد التحقيق', variant: 'secondary' as const },
       resolved: { label: 'محلول', variant: 'primary' as const },
@@ -826,7 +826,7 @@ const SecurityPage: React.FC = () => {
                             >
                               {policy.is_active ? 'نشط' : 'غير نشط'}
                             </Badge>
-                            <Badge variant='outline'>{policy.category}</Badge>
+                            <Badge variant='secondary'>{policy.category}</Badge>
                           </div>
                           <p className='text-gray-700 mb-4'>
                             {policy.description}

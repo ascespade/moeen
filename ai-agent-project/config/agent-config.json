@@ -1,0 +1,63 @@
+{
+  "agent": {
+    "id": "ai-agent-project",
+    "name": "AI Agent Project",
+    "version": "1.0.0",
+    "mode": "background",
+    "autoSync": true,
+    "checkInterval": 30000,
+    "maxCycles": "infinity",
+    "parallelism": {
+      "enabled": true,
+      "maxWorkers": 4
+    }
+  },
+  "monitoring": {
+    "enabled": true,
+    "interval": 60000,
+    "metrics": ["cpu", "memory", "disk", "network"],
+    "alerts": {
+      "cpu": 80,
+      "memory": 85,
+      "disk": 90
+    }
+  },
+  "backup": {
+    "enabled": true,
+    "interval": 300000,
+    "retention": 7,
+    "compression": true,
+    "encryption": false
+  },
+  "logging": {
+    "level": "info",
+    "file": true,
+    "console": true,
+    "maxSize": "10MB",
+    "maxFiles": 5
+  },
+  "analysis": {
+    "enabled": true,
+    "fileTypes": [".js", ".ts", ".jsx", ".tsx", ".json", ".md"],
+    "checks": ["todo", "console", "empty", "unused", "security"],
+    "autoFix": true
+  },
+  "git": {
+    "enabled": false,
+    "autoCommit": false,
+    "autoPush": false,
+    "commitMessage": "AI Agent: {timestamp} - {fixes} fixes applied"
+  },
+  "notifications": {
+    "enabled": false,
+    "email": {
+      "smtp": "",
+      "from": "",
+      "to": []
+    },
+    "slack": {
+      "webhook": "",
+      "channel": ""
+    }
+  }
+}

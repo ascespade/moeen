@@ -270,7 +270,7 @@ export class CalendarAPI {
     if (!schedule) return false;
 
     const appointments: ScheduleSlot[] = [];
-    let currentDate = new Date(startDate);
+    const currentDate = new Date(startDate);
 
     while (currentDate <= endDate) {
       appointments.push({

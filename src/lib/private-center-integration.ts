@@ -494,7 +494,7 @@ export class PrivateCenterIntegration {
     return {
       success: true,
       data: {
-        claimId: 'CLAIM_' + Math.random().toString(36).substr(2, 9),
+        claimId: `CLAIM_${  Math.random().toString(36).substr(2, 9)}`,
         status: 'pending',
         approvalRequired: false,
       },

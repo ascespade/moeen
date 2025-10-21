@@ -5,3 +5,23 @@ dashboard/logs.json
 .next/
 playwright-report/
 test-results/
+
+# Large files and build artifacts
+tsconfig.tsbuildinfo
+.next/cache/
+.isolated_trash/
+backups/
+ngrok*
+cloudflared*
+*.tgz
+*.tar.gz
+*.zip
+
+# Logs and temporary files
+logs/
+*.log
+temp_*
+original_*
+
+# Test reports
+test-reports/

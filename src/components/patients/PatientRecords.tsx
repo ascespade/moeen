@@ -123,7 +123,7 @@ const PatientRecords: React.FC = () => {
 
   const loadPatients = async () => {
     // محاكاة تحميل المرضى من قاعدة البيانات
-    const mockPatients: Patient[] = [
+    const patients: Patient[] = [
       {
         id: '1',
         name: 'أحمد محمد الأحمد',
@@ -179,7 +179,7 @@ const PatientRecords: React.FC = () => {
         status: 'active',
       },
     ];
-    setPatients(mockPatients);
+    setPatients(patients);
   };
 
   const loadMedicalRecords = async () => {
@@ -505,7 +505,7 @@ const PatientRecords: React.FC = () => {
                         </label>
                         <div className='flex flex-wrap gap-2 mt-1'>
                           {selectedPatient.specialNeeds.map((need, index) => (
-                            <Badge key={index} variant='outline'>
+                            <Badge key={index} variant='secondary'>
                               {need}
                             </Badge>
                           ))}
@@ -520,7 +520,7 @@ const PatientRecords: React.FC = () => {
                         </label>
                         <div className='flex flex-wrap gap-2 mt-1'>
                           {selectedPatient.allergies.map((allergy, index) => (
-                            <Badge key={index} variant='destructive'>
+                            <Badge key={index} variant='error'>
                               {allergy}
                             </Badge>
                           ))}
@@ -536,7 +536,7 @@ const PatientRecords: React.FC = () => {
                         <div className='flex flex-wrap gap-2 mt-1'>
                           {selectedPatient.medications.map(
                             (medication, index) => (
-                              <Badge key={index} variant='info'>
+                              <Badge key={index} variant='secondary'>
                                 {medication}
                               </Badge>
                             )
@@ -566,7 +566,7 @@ const PatientRecords: React.FC = () => {
                                 {record.date}
                               </p>
                             </div>
-                            <Badge variant='outline'>{record.diagnosis}</Badge>
+                            <Badge variant='secondary'>{record.diagnosis}</Badge>
                           </div>
                           <div className='space-y-2'>
                             <div>
@@ -627,7 +627,7 @@ const PatientRecords: React.FC = () => {
                         <div className='flex flex-wrap gap-2 mt-1'>
                           {selectedPatient.medicalHistory.map(
                             (condition, index) => (
-                              <Badge key={index} variant='outline'>
+                              <Badge key={index} variant='secondary'>
                                 {condition}
                               </Badge>
                             )

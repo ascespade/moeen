@@ -83,7 +83,7 @@ export class ParallaxScroll {
     this.elements.forEach(element => {
       const speed = parseFloat(element.getAttribute('data-speed') || '0.5');
       const yPos = -(window.pageYOffset * speed);
-      element.style.transform = `translateY(${yPos}px)`;
+      (element as HTMLElement).style.transform = `translateY(${yPos}px)`;
     });
     this.ticking = false;
   }
@@ -321,7 +321,7 @@ export class LazyLoader {
 }
 
 // Form validation with modern feedback
-export class FormValidator {
+class FormValidator {
   private form: HTMLFormElement;
   private inputs: NodeListOf<HTMLInputElement>;
 
@@ -386,7 +386,7 @@ export class FormValidator {
     const field = input.closest('.form-field');
     if (field) {
       field.classList.toggle('error', !isValid);
-      field.classList.toggle('success', isValid && input.value);
+      field.classList.toggle('success', Boolean(isValid && input.value));
 
       let feedback = field.querySelector('.field-feedback');
       if (!feedback) {
@@ -455,15 +455,5 @@ export function initModernInteractions() {
 
 // Export all utilities
 export {
-  ScrollReveal,
-  smoothScrollTo,
-  ParallaxScroll,
-  typeWriter,
-  animateCounter,
-  showLoading,
-  hideLoading,
-  Modal,
-  Tooltip,
-  LazyLoader,
   FormValidator,
 };
