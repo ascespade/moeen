@@ -68,58 +68,32 @@
   "dependencyGraph": {
     "graph": {},
     "fileDependencies": {
-      "src\\types\\auth.ts": [
-        "src\\types\\common"
-      ],
-      "src\\types\\api.ts": [
-        "src\\types\\index"
-      ],
+      "src\\types\\auth.ts": ["src\\types\\common"],
+      "src\\types\\api.ts": ["src\\types\\index"],
       "src\\lib\\translations-manager.ts": [
         "src\\lib\\cuid",
         "src\\lib\\supabaseClient"
       ],
-      "src\\lib\\theme-manager.ts": [
-        "src\\lib\\design-system"
-      ],
-      "src\\lib\\performance-monitor.ts": [
-        "src\\lib\\supabase-real"
-      ],
-      "src\\lib\\file-upload.ts": [
-        "src\\lib\\supabase-real"
-      ],
-      "src\\lib\\dynamic-theme-manager.ts": [
-        "src\\lib\\supabase\\client"
-      ],
-      "src\\lib\\dynamic-content-manager.ts": [
-        "src\\lib\\supabase\\client"
-      ],
-      "src\\scripts\\seed-translations.ts": [
-        "src\\lib\\translations-manager"
-      ],
+      "src\\lib\\theme-manager.ts": ["src\\lib\\design-system"],
+      "src\\lib\\performance-monitor.ts": ["src\\lib\\supabase-real"],
+      "src\\lib\\file-upload.ts": ["src\\lib\\supabase-real"],
+      "src\\lib\\dynamic-theme-manager.ts": ["src\\lib\\supabase\\client"],
+      "src\\lib\\dynamic-content-manager.ts": ["src\\lib\\supabase\\client"],
+      "src\\scripts\\seed-translations.ts": ["src\\lib\\translations-manager"],
       "src\\scripts\\seed-homepage-content.ts": [
         "src\\lib\\dynamic-content-manager"
       ],
-      "src\\hooks\\usePageI18n.ts": [
-        "src\\hooks\\useI18n"
-      ],
-      "src\\app\\layout.tsx": [
-        "src\\app\\globals.css"
-      ],
-      "src\\lib\\testing\\test-utils.ts": [
-        "src\\lib\\monitoring\\logger"
-      ],
+      "src\\hooks\\usePageI18n.ts": ["src\\hooks\\useI18n"],
+      "src\\app\\layout.tsx": ["src\\app\\globals.css"],
+      "src\\lib\\testing\\test-utils.ts": ["src\\lib\\monitoring\\logger"],
       "src\\lib\\optimization\\performance.ts": [
         "src\\lib\\monitoring\\logger"
       ],
       "src\\lib\\database\\connection-pool.ts": [
         "src\\lib\\monitoring\\logger"
       ],
-      "src\\lib\\deployment\\docker.ts": [
-        "src\\lib\\monitoring\\logger"
-      ],
-      "src\\lib\\api\\whatsapp.ts": [
-        "src\\lib\\api\\config"
-      ],
+      "src\\lib\\deployment\\docker.ts": ["src\\lib\\monitoring\\logger"],
+      "src\\lib\\api\\whatsapp.ts": ["src\\lib\\api\\config"],
       "src\\core\\validation\\index.ts": [
         "src\\core\\constants",
         "src\\core\\errors"
@@ -130,12 +104,8 @@
         "src\\core\\utils\\index",
         "src\\core\\types"
       ],
-      "src\\core\\errors\\index.ts": [
-        "src\\core\\constants"
-      ],
-      "src\\core\\config\\index.ts": [
-        "src\\core\\types"
-      ],
+      "src\\core\\errors\\index.ts": ["src\\core\\constants"],
+      "src\\core\\config\\index.ts": ["src\\core\\types"],
       "src\\core\\api\\client.ts": [
         "src\\core\\constants",
         "src\\core\\errors",
@@ -163,17 +133,11 @@
     },
     "moduleUsage": {
       "src\\middleware.prod.ts": {
-        "exports": [
-          "middleware",
-          "config"
-        ],
+        "exports": ["middleware", "config"],
         "used": false
       },
       "src\\middleware.disabled.ts": {
-        "exports": [
-          "middleware",
-          "config"
-        ],
+        "exports": ["middleware", "config"],
         "used": false
       },
       "src\\__tests__\\setup.ts": {
@@ -318,17 +282,11 @@
         "used": false
       },
       "src\\utils\\api-client.ts": {
-        "exports": [
-          "ApiClient",
-          "apiClient"
-        ],
+        "exports": ["ApiClient", "apiClient"],
         "used": false
       },
       "src\\types\\supabase.ts": {
-        "exports": [
-          "Json",
-          "Database"
-        ],
+        "exports": ["Json", "Database"],
         "used": false
       },
       "src\\types\\index.ts": {
@@ -382,11 +340,7 @@
         "used": false
       },
       "src\\types\\components.ts": {
-        "exports": [
-          "ComponentProps",
-          "ButtonProps",
-          "InputProps"
-        ],
+        "exports": ["ComponentProps", "ButtonProps", "InputProps"],
         "used": false
       },
       "src\\types\\common.ts": {
@@ -456,27 +410,19 @@
         "used": false
       },
       "src\\scripts\\validate-dynamic-content.ts": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\scripts\\seed-homepage-content.ts": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\scripts\\seed-database.ts": {
-        "exports": [
-          "seedDatabase"
-        ],
+        "exports": ["seedDatabase"],
         "used": false
       },
       "src\\scripts\\complete-translations.ts": {
-        "exports": [
-          "seedTranslations"
-        ],
+        "exports": ["seedTranslations"],
         "used": false
       },
       "src\\middleware\\security.ts": {
@@ -490,10 +436,7 @@
         "used": false
       },
       "src\\middleware\\rate-limiter.ts": {
-        "exports": [
-          "clearRateLimitCache",
-          "rateLimiter"
-        ],
+        "exports": ["clearRateLimitCache", "rateLimiter"],
         "used": false
       },
       "src\\lib\\whatsapp-integration.ts": {
@@ -528,17 +471,11 @@
         "used": false
       },
       "src\\lib\\utils.ts": {
-        "exports": [
-          "cn"
-        ],
+        "exports": ["cn"],
         "used": false
       },
       "src\\lib\\translations-manager.ts": {
-        "exports": [
-          "Translation",
-          "TranslationInput",
-          "default"
-        ],
+        "exports": ["Translation", "TranslationInput", "default"],
         "used": false
       },
       "src\\lib\\theme.ts": {
@@ -575,10 +512,7 @@
         "used": false
       },
       "src\\lib\\supabaseClient.ts": {
-        "exports": [
-          "getBrowserSupabase",
-          "getServiceSupabase"
-        ],
+        "exports": ["getBrowserSupabase", "getServiceSupabase"],
         "used": false
       },
       "src\\lib\\supabase.ts": {
@@ -699,10 +633,7 @@
         "used": false
       },
       "src\\lib\\performance.ts": {
-        "exports": [
-          "PerformanceMonitor",
-          "default"
-        ],
+        "exports": ["PerformanceMonitor", "default"],
         "used": false
       },
       "src\\lib\\performance-optimizations.ts": {
@@ -753,9 +684,7 @@
         "used": false
       },
       "src\\lib\\logger.ts": {
-        "exports": [
-          "logger"
-        ],
+        "exports": ["logger"],
         "used": false
       },
       "src\\lib\\integration-system.ts": {
@@ -788,11 +717,7 @@
         "used": false
       },
       "src\\lib\\error-handler.ts": {
-        "exports": [
-          "ErrorHandler",
-          "errorHandler",
-          "default"
-        ],
+        "exports": ["ErrorHandler", "errorHandler", "default"],
         "used": false
       },
       "src\\lib\\encryption.ts": {
@@ -887,10 +812,7 @@
         "used": false
       },
       "src\\lib\\database.ts": {
-        "exports": [
-          "DatabaseConfig",
-          "DatabaseManager"
-        ],
+        "exports": ["DatabaseConfig", "DatabaseManager"],
         "used": false
       },
       "src\\lib\\database-utils.ts": {
@@ -932,11 +854,7 @@
         "used": false
       },
       "src\\lib\\cn.ts": {
-        "exports": [
-          "cn",
-          "cva",
-          "type VariantProps"
-        ],
+        "exports": ["cn", "cva", "type VariantProps"],
         "used": false
       },
       "src\\lib\\cache-system.ts": {
@@ -950,10 +868,7 @@
         "used": false
       },
       "src\\lib\\analytics-stubs.ts": {
-        "exports": [
-          "trackEvent",
-          "trackPage"
-        ],
+        "exports": ["trackEvent", "trackPage"],
         "used": false
       },
       "src\\lib\\ai-assistant.ts": {
@@ -976,12 +891,7 @@
         "used": false
       },
       "src\\design-system\\types.ts": {
-        "exports": [
-          "Theme",
-          "Language",
-          "Direction",
-          "DesignSystemConfig"
-        ],
+        "exports": ["Theme", "Language", "Direction", "DesignSystemConfig"],
         "used": false
       },
       "src\\design-system\\index.ts": {
@@ -995,38 +905,23 @@
         "used": false
       },
       "src\\hooks\\useTranslation.ts": {
-        "exports": [
-          "useTranslation"
-        ],
+        "exports": ["useTranslation"],
         "used": false
       },
       "src\\hooks\\useToggle.ts": {
-        "exports": [
-          "useToggle",
-          "useBoolean"
-        ],
+        "exports": ["useToggle", "useBoolean"],
         "used": false
       },
       "src\\hooks\\useThrottle.ts": {
-        "exports": [
-          "useThrottle",
-          "useThrottledCallback",
-          "useThrottledValue"
-        ],
+        "exports": ["useThrottle", "useThrottledCallback", "useThrottledValue"],
         "used": false
       },
       "src\\hooks\\useT.tsx": {
-        "exports": [
-          "TranslationProvider",
-          "useT",
-          "default"
-        ],
+        "exports": ["TranslationProvider", "useT", "default"],
         "used": false
       },
       "src\\hooks\\usePrevious.ts": {
-        "exports": [
-          "usePrevious"
-        ],
+        "exports": ["usePrevious"],
         "used": false
       },
       "src\\hooks\\usePerformance.ts": {
@@ -1040,11 +935,7 @@
         "used": false
       },
       "src\\hooks\\usePageI18n.ts": {
-        "exports": [
-          "usePageI18n",
-          "useNamespaceI18n",
-          "useCommonI18n"
-        ],
+        "exports": ["usePageI18n", "useNamespaceI18n", "useCommonI18n"],
         "used": false
       },
       "src\\hooks\\useMemoryLeakPrevention.ts": {
@@ -1072,10 +963,7 @@
         "used": false
       },
       "src\\hooks\\useLocalStorage.ts": {
-        "exports": [
-          "useLocalStorage",
-          "useSessionStorage"
-        ],
+        "exports": ["useLocalStorage", "useSessionStorage"],
         "used": false
       },
       "src\\hooks\\useKeyPress.ts": {
@@ -1089,96 +977,55 @@
         "used": false
       },
       "src\\hooks\\useKeyboardNavigation.ts": {
-        "exports": [
-          "useKeyboardNavigation",
-          "default"
-        ],
+        "exports": ["useKeyboardNavigation", "default"],
         "used": false
       },
       "src\\hooks\\useIntersectionObserver.ts": {
-        "exports": [
-          "useIntersectionObserver",
-          "useInView",
-          "useLazyLoad"
-        ],
+        "exports": ["useIntersectionObserver", "useInView", "useLazyLoad"],
         "used": false
       },
       "src\\hooks\\useI18n.ts": {
-        "exports": [
-          "Messages",
-          "useI18n",
-          "default"
-        ],
+        "exports": ["Messages", "useI18n", "default"],
         "used": false
       },
       "src\\hooks\\useForm.ts": {
-        "exports": [
-          "useForm"
-        ],
+        "exports": ["useForm"],
         "used": false
       },
       "src\\hooks\\useErrorHandler.tsx": {
-        "exports": [
-          "useErrorHandler"
-        ],
+        "exports": ["useErrorHandler"],
         "used": false
       },
       "src\\hooks\\useDebounce.ts": {
-        "exports": [
-          "useDebounce",
-          "useDebouncedCallback",
-          "useDebouncedValue"
-        ],
+        "exports": ["useDebounce", "useDebouncedCallback", "useDebouncedValue"],
         "used": false
       },
       "src\\hooks\\useCounter.ts": {
-        "exports": [
-          "useCounter"
-        ],
+        "exports": ["useCounter"],
         "used": false
       },
       "src\\hooks\\useClickOutside.ts": {
-        "exports": [
-          "useClickOutside"
-        ],
+        "exports": ["useClickOutside"],
         "used": false
       },
       "src\\hooks\\useBrandColorFromLogo.ts": {
-        "exports": [
-          "useBrandColorFromLogo",
-          "default"
-        ],
+        "exports": ["useBrandColorFromLogo", "default"],
         "used": false
       },
       "src\\hooks\\useAuth.ts": {
-        "exports": [
-          "useAuth",
-          "useRequireAuth",
-          "useRole"
-        ],
+        "exports": ["useAuth", "useRequireAuth", "useRole"],
         "used": false
       },
       "src\\hooks\\useAsync.ts": {
-        "exports": [
-          "useAsync",
-          "useAsyncEffect"
-        ],
+        "exports": ["useAsync", "useAsyncEffect"],
         "used": false
       },
       "src\\hooks\\useApi.ts": {
-        "exports": [
-          "useApi",
-          "useApiPost",
-          "useApiPut",
-          "useApiDelete"
-        ],
+        "exports": ["useApi", "useApiPost", "useApiPut", "useApiDelete"],
         "used": false
       },
       "src\\core\\utils.ts": {
-        "exports": [
-          "cn",
-          "cva"
-        ],
+        "exports": ["cn", "cva"],
         "used": false
       },
       "src\\core\\index.ts": {
@@ -1200,46 +1047,27 @@
         "used": false
       },
       "src\\context\\TranslationProvider.tsx": {
-        "exports": [
-          "TranslationProvider",
-          "useTranslation"
-        ],
+        "exports": ["TranslationProvider", "useTranslation"],
         "used": false
       },
       "src\\config\\env.ts": {
-        "exports": [
-          "env",
-          "validateEnv",
-          "getConfig"
-        ],
+        "exports": ["env", "validateEnv", "getConfig"],
         "used": false
       },
       "src\\config\\database.ts": {
-        "exports": [
-          "databaseConfig",
-          "default"
-        ],
+        "exports": ["databaseConfig", "default"],
         "used": false
       },
       "src\\config\\auth.ts": {
-        "exports": [
-          "authConfig",
-          "default"
-        ],
+        "exports": ["authConfig", "default"],
         "used": false
       },
       "src\\config\\app.ts": {
-        "exports": [
-          "appConfig",
-          "default"
-        ],
+        "exports": ["appConfig", "default"],
         "used": false
       },
       "src\\config\\api.ts": {
-        "exports": [
-          "apiConfig",
-          "default"
-        ],
+        "exports": ["apiConfig", "default"],
         "used": false
       },
       "src\\constants\\validation.ts": {
@@ -1296,18 +1124,11 @@
         "used": false
       },
       "src\\constants\\roles.ts": {
-        "exports": [
-          "USER_ROLES",
-          "ROLE_PERMISSIONS",
-          "UserRole"
-        ],
+        "exports": ["USER_ROLES", "ROLE_PERMISSIONS", "UserRole"],
         "used": false
       },
       "src\\constants\\i18n-keys.ts": {
-        "exports": [
-          "I18N_KEYS",
-          "TranslationKey"
-        ],
+        "exports": ["I18N_KEYS", "TranslationKey"],
         "used": false
       },
       "src\\constants\\api.ts": {
@@ -1320,24 +1141,15 @@
         "used": false
       },
       "src\\components\\ThemeSwitcher.tsx": {
-        "exports": [
-          "ThemeSwitcher",
-          "default"
-        ],
+        "exports": ["ThemeSwitcher", "default"],
         "used": false
       },
       "src\\components\\Navigation.tsx": {
-        "exports": [
-          "Navigation",
-          "default"
-        ],
+        "exports": ["Navigation", "default"],
         "used": false
       },
       "src\\components\\LanguageSwitcher.tsx": {
-        "exports": [
-          "LanguageSwitcher",
-          "default"
-        ],
+        "exports": ["LanguageSwitcher", "default"],
         "used": false
       },
       "src\\components\\index.ts": {
@@ -1373,89 +1185,51 @@
         "used": false
       },
       "src\\components\\dynamic-stats.tsx": {
-        "exports": [
-          "DynamicStats",
-          "default"
-        ],
+        "exports": ["DynamicStats", "default"],
         "used": false
       },
       "src\\components\\dynamic-services.tsx": {
-        "exports": [
-          "DynamicServices",
-          "default"
-        ],
+        "exports": ["DynamicServices", "default"],
         "used": false
       },
       "src\\components\\dynamic-doctors-list.tsx": {
-        "exports": [
-          "DynamicDoctorsList",
-          "default"
-        ],
+        "exports": ["DynamicDoctorsList", "default"],
         "used": false
       },
       "src\\components\\dynamic-data-dashboard.tsx": {
-        "exports": [
-          "DynamicDataDashboard",
-          "default"
-        ],
+        "exports": ["DynamicDataDashboard", "default"],
         "used": false
       },
       "src\\components\\dynamic-contact-info.tsx": {
-        "exports": [
-          "DynamicContactInfo",
-          "default"
-        ],
+        "exports": ["DynamicContactInfo", "default"],
         "used": false
       },
       "src\\app\\sitemap.ts": {
-        "exports": [
-          "sitemap",
-          "default"
-        ],
+        "exports": ["sitemap", "default"],
         "used": false
       },
       "src\\app\\robots.ts": {
-        "exports": [
-          "robots",
-          "default"
-        ],
+        "exports": ["robots", "default"],
         "used": false
       },
       "src\\app\\page.tsx": {
-        "exports": [
-          "HomePage",
-          "default"
-        ],
+        "exports": ["HomePage", "default"],
         "used": false
       },
       "src\\app\\not-found.tsx": {
-        "exports": [
-          "NotFound",
-          "default"
-        ],
+        "exports": ["NotFound", "default"],
         "used": false
       },
       "src\\app\\layout.tsx": {
-        "exports": [
-          "metadata",
-          "viewport",
-          "RootLayout",
-          "default"
-        ],
+        "exports": ["metadata", "viewport", "RootLayout", "default"],
         "used": false
       },
       "src\\app\\layout.minimal.tsx": {
-        "exports": [
-          "RootLayout",
-          "default"
-        ],
+        "exports": ["RootLayout", "default"],
         "used": false
       },
       "src\\app\\error.tsx": {
-        "exports": [
-          "GlobalError",
-          "default"
-        ],
+        "exports": ["GlobalError", "default"],
         "used": false
       },
       "src\\lib\\validation\\security.ts": {
@@ -1497,17 +1271,11 @@
         "used": false
       },
       "src\\lib\\testing\\test-utils.ts": {
-        "exports": [
-          "testUtils",
-          "createTestData"
-        ],
+        "exports": ["testUtils", "createTestData"],
         "used": false
       },
       "src\\lib\\supabase\\client.ts": {
-        "exports": [
-          "createClient",
-          "createServerClient"
-        ],
+        "exports": ["createClient", "createServerClient"],
         "used": false
       },
       "src\\lib\\seo\\metadata.ts": {
@@ -1529,10 +1297,7 @@
         "used": false
       },
       "src\\lib\\payments\\moyasar.ts": {
-        "exports": [
-          "MoyasarPaymentService",
-          "moyasarService"
-        ],
+        "exports": ["MoyasarPaymentService", "moyasarService"],
         "used": false
       },
       "src\\lib\\optimization\\performance.ts": {
@@ -1548,39 +1313,23 @@
         "used": false
       },
       "src\\lib\\notifications\\sms.ts": {
-        "exports": [
-          "SMSNotificationService",
-          "smsService"
-        ],
+        "exports": ["SMSNotificationService", "smsService"],
         "used": false
       },
       "src\\lib\\notifications\\email.ts": {
-        "exports": [
-          "EmailNotificationService",
-          "emailService"
-        ],
+        "exports": ["EmailNotificationService", "emailService"],
         "used": false
       },
       "src\\lib\\monitoring\\logger.ts": {
-        "exports": [
-          "logger",
-          "default"
-        ],
+        "exports": ["logger", "default"],
         "used": false
       },
       "src\\lib\\utils\\request-helpers.ts": {
-        "exports": [
-          "getClientIP",
-          "getUserAgent",
-          "getClientInfo"
-        ],
+        "exports": ["getClientIP", "getUserAgent", "getClientInfo"],
         "used": false
       },
       "src\\lib\\insurance\\providers.ts": {
-        "exports": [
-          "InsuranceProviderService",
-          "insuranceService"
-        ],
+        "exports": ["InsuranceProviderService", "insuranceService"],
         "used": false
       },
       "src\\lib\\integrations\\test-helpers.ts": {
@@ -1596,10 +1345,7 @@
         "used": false
       },
       "src\\lib\\i18n\\translationService.ts": {
-        "exports": [
-          "translationService",
-          "default"
-        ],
+        "exports": ["translationService", "default"],
         "used": false
       },
       "src\\lib\\errors\\api-errors.ts": {
@@ -1622,23 +1368,15 @@
         "used": false
       },
       "src\\lib\\deployment\\docker.ts": {
-        "exports": [
-          "DockerConfigGenerator"
-        ],
+        "exports": ["DockerConfigGenerator"],
         "used": false
       },
       "src\\lib\\database\\connection-pool.ts": {
-        "exports": [
-          "connectionPool"
-        ],
+        "exports": ["connectionPool"],
         "used": false
       },
       "src\\lib\\cache\\redis.ts": {
-        "exports": [
-          "cached",
-          "cache",
-          "CACHE_KEYS"
-        ],
+        "exports": ["cached", "cache", "CACHE_KEYS"],
         "used": false
       },
       "src\\lib\\auth\\roles.ts": {
@@ -1666,19 +1404,11 @@
         "used": false
       },
       "src\\lib\\auth\\authorize.ts": {
-        "exports": [
-          "User",
-          "AuthResult",
-          "requireRole",
-          "requireAuth"
-        ],
+        "exports": ["User", "AuthResult", "requireRole", "requireAuth"],
         "used": false
       },
       "src\\lib\\api\\whatsapp.ts": {
-        "exports": [
-          "sendWhatsAppMessage",
-          "handleWhatsAppWebhook"
-        ],
+        "exports": ["sendWhatsAppMessage", "handleWhatsAppWebhook"],
         "used": false
       },
       "src\\lib\\api\\config.ts": {
@@ -1710,12 +1440,7 @@
         "used": false
       },
       "src\\design-system\\hooks\\index.ts": {
-        "exports": [
-          "useTheme",
-          "useLanguage",
-          "useRTL",
-          "useBreakpoint"
-        ],
+        "exports": ["useTheme", "useLanguage", "useRTL", "useBreakpoint"],
         "used": false
       },
       "src\\core\\validation\\index.ts": {
@@ -1785,20 +1510,11 @@
         "used": false
       },
       "src\\core\\utils\\index.ts": {
-        "exports": [
-          "storageUtils",
-          "debounce",
-          "cn",
-          "cva"
-        ],
+        "exports": ["storageUtils", "debounce", "cn", "cva"],
         "used": false
       },
       "src\\core\\store\\index.ts": {
-        "exports": [
-          "useAuthStore",
-          "useUIStore",
-          "useDataStore"
-        ],
+        "exports": ["useAuthStore", "useUIStore", "useDataStore"],
         "used": false
       },
       "src\\core\\theme\\index.ts": {
@@ -1912,10 +1628,7 @@
         "used": false
       },
       "src\\core\\api\\client.ts": {
-        "exports": [
-          "ApiRequestConfig",
-          "apiClient"
-        ],
+        "exports": ["ApiRequestConfig", "apiClient"],
         "used": false
       },
       "src\\core\\api\\base-handler.ts": {
@@ -1928,39 +1641,23 @@
         "used": false
       },
       "src\\components\\ui\\Tooltip.tsx": {
-        "exports": [
-          "Tooltip",
-          "default"
-        ],
+        "exports": ["Tooltip", "default"],
         "used": false
       },
       "src\\components\\ui\\Toast.tsx": {
-        "exports": [
-          "Toast",
-          "default"
-        ],
+        "exports": ["Toast", "default"],
         "used": false
       },
       "src\\components\\ui\\ThemeToggle.tsx": {
-        "exports": [
-          "ThemeToggle",
-          "default"
-        ],
+        "exports": ["ThemeToggle", "default"],
         "used": false
       },
       "src\\components\\ui\\ThemeSwitch.tsx": {
-        "exports": [
-          "ThemeSwitch",
-          "default"
-        ],
+        "exports": ["ThemeSwitch", "default"],
         "used": false
       },
       "src\\components\\ui\\Textarea.tsx": {
-        "exports": [
-          "TextareaProps",
-          "Textarea",
-          "default"
-        ],
+        "exports": ["TextareaProps", "Textarea", "default"],
         "used": false
       },
       "src\\components\\ui\\Tabs.tsx": {
@@ -1974,35 +1671,19 @@
         "used": false
       },
       "src\\components\\ui\\Table.tsx": {
-        "exports": [
-          "Table",
-          "THead",
-          "TBody",
-          "TR",
-          "TH",
-          "TD",
-          "default"
-        ],
+        "exports": ["Table", "THead", "TBody", "TR", "TH", "TD", "default"],
         "used": false
       },
       "src\\components\\ui\\Switch.tsx": {
-        "exports": [
-          "Switch",
-          "default"
-        ],
+        "exports": ["Switch", "default"],
         "used": false
       },
       "src\\components\\ui\\StatCard.tsx": {
-        "exports": [
-          "StatCard",
-          "default"
-        ],
+        "exports": ["StatCard", "default"],
         "used": false
       },
       "src\\components\\ui\\Skeleton.tsx": {
-        "exports": [
-          "Skeleton"
-        ],
+        "exports": ["Skeleton"],
         "used": false
       },
       "src\\components\\ui\\Select.tsx": {
@@ -2022,47 +1703,27 @@
         "used": false
       },
       "src\\components\\ui\\ScrollArea.tsx": {
-        "exports": [
-          "ScrollAreaProps",
-          "ScrollArea",
-          "default"
-        ],
+        "exports": ["ScrollAreaProps", "ScrollArea", "default"],
         "used": false
       },
       "src\\components\\ui\\RTLToggle.tsx": {
-        "exports": [
-          "RTLToggle",
-          "default"
-        ],
+        "exports": ["RTLToggle", "default"],
         "used": false
       },
       "src\\components\\ui\\Modal.tsx": {
-        "exports": [
-          "ModalProps",
-          "Modal",
-          "default"
-        ],
+        "exports": ["ModalProps", "Modal", "default"],
         "used": false
       },
       "src\\components\\ui\\LoadingSpinner.tsx": {
-        "exports": [
-          "LoadingSpinner",
-          "LoadingScreen"
-        ],
+        "exports": ["LoadingSpinner", "LoadingScreen"],
         "used": false
       },
       "src\\components\\ui\\Label.tsx": {
-        "exports": [
-          "Label",
-          "default"
-        ],
+        "exports": ["Label", "default"],
         "used": false
       },
       "src\\components\\ui\\Input.tsx": {
-        "exports": [
-          "InputProps",
-          "Input"
-        ],
+        "exports": ["InputProps", "Input"],
         "used": false
       },
       "src\\components\\ui\\index.ts": {
@@ -2100,38 +1761,23 @@
         "used": false
       },
       "src\\components\\ui\\FeatureCard.tsx": {
-        "exports": [
-          "FeatureCard",
-          "default"
-        ],
+        "exports": ["FeatureCard", "default"],
         "used": false
       },
       "src\\components\\ui\\DesignSystemDemo.tsx": {
-        "exports": [
-          "DesignSystemDemo",
-          "default"
-        ],
+        "exports": ["DesignSystemDemo", "default"],
         "used": false
       },
       "src\\components\\ui\\DataTable.tsx": {
-        "exports": [
-          "Column",
-          "DataTable"
-        ],
+        "exports": ["Column", "DataTable"],
         "used": false
       },
       "src\\components\\ui\\CTAButton.tsx": {
-        "exports": [
-          "CTAButton",
-          "default"
-        ],
+        "exports": ["CTAButton", "default"],
         "used": false
       },
       "src\\components\\ui\\Checkbox.tsx": {
-        "exports": [
-          "CheckboxProps",
-          "Checkbox"
-        ],
+        "exports": ["CheckboxProps", "Checkbox"],
         "used": false
       },
       "src\\components\\ui\\Card.tsx": {
@@ -2147,64 +1793,39 @@
         "used": false
       },
       "src\\components\\ui\\Button.tsx": {
-        "exports": [
-          "Button"
-        ],
+        "exports": ["Button"],
         "used": false
       },
       "src\\components\\ui\\Badge.tsx": {
-        "exports": [
-          "Badge"
-        ],
+        "exports": ["Badge"],
         "used": false
       },
       "src\\components\\shell\\Sidebar.tsx": {
-        "exports": [
-          "Sidebar",
-          "default"
-        ],
+        "exports": ["Sidebar", "default"],
         "used": false
       },
       "src\\components\\shell\\HeaderSimple.tsx": {
-        "exports": [
-          "HeaderSimple",
-          "default"
-        ],
+        "exports": ["HeaderSimple", "default"],
         "used": false
       },
       "src\\components\\shell\\Header.tsx": {
-        "exports": [
-          "Header",
-          "default"
-        ],
+        "exports": ["Header", "default"],
         "used": false
       },
       "src\\components\\shared\\Tabs.tsx": {
-        "exports": [
-          "Tabs",
-          "default"
-        ],
+        "exports": ["Tabs", "default"],
         "used": false
       },
       "src\\components\\shared\\ScreenReaderOnly.tsx": {
-        "exports": [
-          "ScreenReaderOnly",
-          "default"
-        ],
+        "exports": ["ScreenReaderOnly", "default"],
         "used": false
       },
       "src\\components\\shared\\Modal.tsx": {
-        "exports": [
-          "Modal",
-          "default"
-        ],
+        "exports": ["Modal", "default"],
         "used": false
       },
       "src\\components\\shared\\LiveRegion.tsx": {
-        "exports": [
-          "LiveRegion",
-          "default"
-        ],
+        "exports": ["LiveRegion", "default"],
         "used": false
       },
       "src\\components\\shared\\index.ts": {
@@ -2221,40 +1842,23 @@
         "used": false
       },
       "src\\components\\shared\\Form.tsx": {
-        "exports": [
-          "FormField",
-          "FormGroup",
-          "FormRow",
-          "FormActions"
-        ],
+        "exports": ["FormField", "FormGroup", "FormRow", "FormActions"],
         "used": false
       },
       "src\\components\\shared\\EmptyState.tsx": {
-        "exports": [
-          "EmptyState",
-          "default"
-        ],
+        "exports": ["EmptyState", "default"],
         "used": false
       },
       "src\\components\\shared\\DataTable.tsx": {
-        "exports": [
-          "DataTable",
-          "default"
-        ],
+        "exports": ["DataTable", "default"],
         "used": false
       },
       "src\\components\\settings\\SettingsTabs.tsx": {
-        "exports": [
-          "SettingsTabs",
-          "default"
-        ],
+        "exports": ["SettingsTabs", "default"],
         "used": false
       },
       "src\\components\\settings\\KeywordEditor.tsx": {
-        "exports": [
-          "KeywordEditor",
-          "default"
-        ],
+        "exports": ["KeywordEditor", "default"],
         "used": false
       },
       "src\\components\\providers\\UIProvider.tsx": {
@@ -2270,25 +1874,15 @@
         "used": false
       },
       "src\\components\\providers\\ThemeProvider.tsx": {
-        "exports": [
-          "ThemeProvider",
-          "useTheme",
-          "default"
-        ],
+        "exports": ["ThemeProvider", "useTheme", "default"],
         "used": false
       },
       "src\\components\\providers\\ModernInteractionsProvider.tsx": {
-        "exports": [
-          "ModernInteractionsProvider",
-          "default"
-        ],
+        "exports": ["ModernInteractionsProvider", "default"],
         "used": false
       },
       "src\\components\\providers\\I18nProvider.tsx": {
-        "exports": [
-          "I18nProvider",
-          "useT"
-        ],
+        "exports": ["I18nProvider", "useT"],
         "used": false
       },
       "src\\components\\providers\\DesignSystemProvider.tsx": {
@@ -2305,65 +1899,39 @@
         "used": false
       },
       "src\\components\\patients\\PatientRecords.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\components\\patient\\PreVisitChecklist.tsx": {
-        "exports": [
-          "PreVisitChecklist",
-          "default"
-        ],
+        "exports": ["PreVisitChecklist", "default"],
         "used": false
       },
       "src\\components\\patient\\ActivationFlow.tsx": {
-        "exports": [
-          "ActivationFlow",
-          "default"
-        ],
+        "exports": ["ActivationFlow", "default"],
         "used": false
       },
       "src\\components\\layout\\SmartHeader.tsx": {
-        "exports": [
-          "SmartHeader",
-          "default"
-        ],
+        "exports": ["SmartHeader", "default"],
         "used": false
       },
       "src\\components\\layout\\Header.tsx": {
-        "exports": [
-          "Header",
-          "default"
-        ],
+        "exports": ["Header", "default"],
         "used": false
       },
       "src\\components\\layout\\GlobalHeader.tsx": {
-        "exports": [
-          "GlobalHeader",
-          "default"
-        ],
+        "exports": ["GlobalHeader", "default"],
         "used": false
       },
       "src\\components\\layout\\Footer.tsx": {
-        "exports": [
-          "Footer",
-          "default"
-        ],
+        "exports": ["Footer", "default"],
         "used": false
       },
       "src\\components\\insurance\\ClaimsManager.tsx": {
-        "exports": [
-          "ClaimsManager",
-          "default"
-        ],
+        "exports": ["ClaimsManager", "default"],
         "used": false
       },
       "src\\components\\dashboard\\KpiCard.tsx": {
-        "exports": [
-          "KpiCard",
-          "default"
-        ],
+        "exports": ["KpiCard", "default"],
         "used": false
       },
       "src\\components\\dashboard\\DynamicCharts.tsx": {
@@ -2379,54 +1947,31 @@
         "used": false
       },
       "src\\components\\dashboard\\Charts.tsx": {
-        "exports": [
-          "ChartsA",
-          "ChartsB",
-          "ChartsC",
-          "default"
-        ],
+        "exports": ["ChartsA", "ChartsB", "ChartsC", "default"],
         "used": false
       },
       "src\\components\\common\\StatusBanner.tsx": {
-        "exports": [
-          "StatusBanner",
-          "default"
-        ],
+        "exports": ["StatusBanner", "default"],
         "used": false
       },
       "src\\components\\common\\PlaceholderSquare.tsx": {
-        "exports": [
-          "PlaceholderSquare",
-          "default"
-        ],
+        "exports": ["PlaceholderSquare", "default"],
         "used": false
       },
       "src\\components\\common\\PerformanceOptimizedImage.tsx": {
-        "exports": [
-          "PerformanceOptimizedImage",
-          "default"
-        ],
+        "exports": ["PerformanceOptimizedImage", "default"],
         "used": false
       },
       "src\\components\\common\\OptimizedImage.tsx": {
-        "exports": [
-          "OptimizedImage",
-          "default"
-        ],
+        "exports": ["OptimizedImage", "default"],
         "used": false
       },
       "src\\components\\common\\LiveDot.tsx": {
-        "exports": [
-          "LiveDot",
-          "default"
-        ],
+        "exports": ["LiveDot", "default"],
         "used": false
       },
       "src\\components\\common\\LanguageSwitcher.tsx": {
-        "exports": [
-          "LanguageSwitcher",
-          "default"
-        ],
+        "exports": ["LanguageSwitcher", "default"],
         "used": false
       },
       "src\\components\\common\\index.ts": {
@@ -2444,32 +1989,19 @@
         "used": false
       },
       "src\\components\\common\\ErrorBoundary.tsx": {
-        "exports": [
-          "ErrorBoundary",
-          "useErrorHandler",
-          "default"
-        ],
+        "exports": ["ErrorBoundary", "useErrorHandler", "default"],
         "used": false
       },
       "src\\components\\common\\EmptyState.tsx": {
-        "exports": [
-          "EmptyState",
-          "default"
-        ],
+        "exports": ["EmptyState", "default"],
         "used": false
       },
       "src\\components\\common\\DirectionToggle.tsx": {
-        "exports": [
-          "DirectionToggle",
-          "default"
-        ],
+        "exports": ["DirectionToggle", "default"],
         "used": false
       },
       "src\\components\\charts\\LineChart.tsx": {
-        "exports": [
-          "LineChart",
-          "default"
-        ],
+        "exports": ["LineChart", "default"],
         "used": false
       },
       "src\\components\\charts\\index.ts": {
@@ -2481,662 +2013,387 @@
         "used": false
       },
       "src\\components\\charts\\BarChart.tsx": {
-        "exports": [
-          "BarChart",
-          "default"
-        ],
+        "exports": ["BarChart", "default"],
         "used": false
       },
       "src\\components\\charts\\AreaChart.tsx": {
-        "exports": [
-          "AreaChart",
-          "default"
-        ],
+        "exports": ["AreaChart", "default"],
         "used": false
       },
       "src\\components\\chatbot\\MoeenChatbot.tsx": {
-        "exports": [
-          "MoeenChatbot",
-          "default"
-        ],
+        "exports": ["MoeenChatbot", "default"],
         "used": false
       },
       "src\\components\\chatbot\\MoainChatbot.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\components\\booking\\SessionTypeSelector.tsx": {
-        "exports": [
-          "SessionTypeSelector",
-          "default"
-        ],
+        "exports": ["SessionTypeSelector", "default"],
         "used": false
       },
       "src\\components\\booking\\AvailableSlotsPicker.tsx": {
-        "exports": [
-          "AvailableSlotsPicker",
-          "default"
-        ],
+        "exports": ["AvailableSlotsPicker", "default"],
         "used": false
       },
       "src\\components\\appointments\\AppointmentManager.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\components\\auth\\ProtectedRoute.tsx": {
-        "exports": [
-          "ProtectedRoute",
-          "default"
-        ],
+        "exports": ["ProtectedRoute", "default"],
         "used": false
       },
       "src\\components\\accessibility\\AccessibilitySettings.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\uikit\\page.tsx": {
-        "exports": [
-          "UIKitPage",
-          "default"
-        ],
+        "exports": ["UIKitPage", "default"],
         "used": false
       },
       "src\\app\\test\\page.tsx": {
-        "exports": [
-          "TestPage",
-          "default"
-        ],
+        "exports": ["TestPage", "default"],
         "used": false
       },
       "src\\app\\simple\\page.tsx": {
-        "exports": [
-          "SimplePage",
-          "default"
-        ],
+        "exports": ["SimplePage", "default"],
         "used": false
       },
       "src\\app\\design-system\\page.tsx": {
-        "exports": [
-          "DesignSystemPage",
-          "default"
-        ],
+        "exports": ["DesignSystemPage", "default"],
         "used": false
       },
       "src\\app\\dashboard\\page.tsx": {
-        "exports": [
-          "DashboardPage",
-          "default"
-        ],
+        "exports": ["DashboardPage", "default"],
         "used": false
       },
       "src\\app\\color-palette\\page.tsx": {
-        "exports": [
-          "ColorPalettePage",
-          "default"
-        ],
+        "exports": ["ColorPalettePage", "default"],
         "used": false
       },
       "src\\app\\(legal)\\layout.tsx": {
-        "exports": [
-          "metadata",
-          "LegalLayout",
-          "default"
-        ],
+        "exports": ["metadata", "LegalLayout", "default"],
         "used": false
       },
       "src\\app\\(info)\\layout.tsx": {
-        "exports": [
-          "metadata",
-          "InfoLayout",
-          "default"
-        ],
+        "exports": ["metadata", "InfoLayout", "default"],
         "used": false
       },
       "src\\app\\(auth)\\layout.tsx": {
-        "exports": [
-          "metadata",
-          "AuthLayout",
-          "default"
-        ],
+        "exports": ["metadata", "AuthLayout", "default"],
         "used": false
       },
       "src\\app\\(admin)\\layout.tsx": {
-        "exports": [
-          "AdminLayout",
-          "default"
-        ],
+        "exports": ["AdminLayout", "default"],
         "used": false
       },
       "src\\app\\uikit\\guidelines\\page.tsx": {
-        "exports": [
-          "GuidelinesPage",
-          "default"
-        ],
+        "exports": ["GuidelinesPage", "default"],
         "used": false
       },
       "src\\app\\admin\\admin-dashboard\\page.tsx": {
-        "exports": [
-          "AdminDashboard",
-          "default"
-        ],
+        "exports": ["AdminDashboard", "default"],
         "used": false
       },
       "src\\app\\(supervisor)\\supervisor-dashboard\\page.tsx": {
-        "exports": [
-          "SupervisorDashboard",
-          "default"
-        ],
+        "exports": ["SupervisorDashboard", "default"],
         "used": false
       },
       "src\\app\\(staff)\\staff-dashboard\\page.tsx": {
-        "exports": [
-          "StaffDashboard",
-          "default"
-        ],
+        "exports": ["StaffDashboard", "default"],
         "used": false
       },
       "src\\app\\(public)\\chatbot\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(patient)\\patient-dashboard\\page.tsx": {
-        "exports": [
-          "PatientDashboard",
-          "default"
-        ],
+        "exports": ["PatientDashboard", "default"],
         "used": false
       },
       "src\\app\\(marketing)\\pricing\\page.tsx": {
-        "exports": [
-          "PricingPage",
-          "default"
-        ],
+        "exports": ["PricingPage", "default"],
         "used": false
       },
       "src\\app\\(marketing)\\features\\page.tsx": {
-        "exports": [
-          "FeaturesPage",
-          "default"
-        ],
+        "exports": ["FeaturesPage", "default"],
         "used": false
       },
       "src\\app\\(marketing)\\faq\\page.tsx": {
-        "exports": [
-          "FAQPage",
-          "default"
-        ],
+        "exports": ["FAQPage", "default"],
         "used": false
       },
       "src\\app\\(legal)\\terms\\page.tsx": {
-        "exports": [
-          "TermsPage",
-          "default"
-        ],
+        "exports": ["TermsPage", "default"],
         "used": false
       },
       "src\\app\\(legal)\\privacy\\page.tsx": {
-        "exports": [
-          "PrivacyPage",
-          "default"
-        ],
+        "exports": ["PrivacyPage", "default"],
         "used": false
       },
       "src\\app\\(info)\\contact\\page.tsx": {
-        "exports": [
-          "ContactPage",
-          "default"
-        ],
+        "exports": ["ContactPage", "default"],
         "used": false
       },
       "src\\app\\(info)\\about\\page.tsx": {
-        "exports": [
-          "AboutPage",
-          "default"
-        ],
+        "exports": ["AboutPage", "default"],
         "used": false
       },
       "src\\app\\(health)\\training\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(health)\\therapy\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(health)\\sessions\\page.tsx": {
-        "exports": [
-          "SessionsPage",
-          "default"
-        ],
+        "exports": ["SessionsPage", "default"],
         "used": false
       },
       "src\\app\\(health)\\progress-tracking\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(health)\\progress\\page.tsx": {
-        "exports": [
-          "ProgressPage",
-          "default"
-        ],
+        "exports": ["ProgressPage", "default"],
         "used": false
       },
       "src\\app\\(health)\\patients\\page.tsx": {
-        "exports": [
-          "PatientsPage",
-          "default"
-        ],
+        "exports": ["PatientsPage", "default"],
         "used": false
       },
       "src\\app\\(health)\\medical-file\\page.tsx": {
-        "exports": [
-          "MedicalFilePage",
-          "default"
-        ],
+        "exports": ["MedicalFilePage", "default"],
         "used": false
       },
       "src\\app\\(health)\\insurance-claims\\page.tsx": {
-        "exports": [
-          "InsuranceClaimsPage",
-          "default"
-        ],
+        "exports": ["InsuranceClaimsPage", "default"],
         "used": false
       },
       "src\\app\\(health)\\insurance\\page.tsx": {
-        "exports": [
-          "InsurancePage",
-          "default"
-        ],
+        "exports": ["InsurancePage", "default"],
         "used": false
       },
       "src\\app\\(health)\\family-support\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(health)\\family\\page.tsx": {
-        "exports": [
-          "FamilyPage",
-          "default"
-        ],
+        "exports": ["FamilyPage", "default"],
         "used": false
       },
       "src\\app\\(health)\\approvals\\page.tsx": {
-        "exports": [
-          "ApprovalsPage",
-          "default"
-        ],
+        "exports": ["ApprovalsPage", "default"],
         "used": false
       },
       "src\\app\\(health)\\appointments\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(doctor)\\doctor-dashboard\\page.tsx": {
-        "exports": [
-          "DoctorDashboard",
-          "default"
-        ],
+        "exports": ["DoctorDashboard", "default"],
         "used": false
       },
       "src\\app\\(auth)\\reset-password\\page.tsx": {
-        "exports": [
-          "ResetPasswordPage",
-          "default"
-        ],
+        "exports": ["ResetPasswordPage", "default"],
         "used": false
       },
       "src\\app\\(auth)\\verify-email\\page.tsx": {
-        "exports": [
-          "VerifyEmailPage",
-          "default"
-        ],
+        "exports": ["VerifyEmailPage", "default"],
         "used": false
       },
       "src\\app\\(auth)\\register\\page.tsx": {
-        "exports": [
-          "RegisterPage",
-          "default"
-        ],
+        "exports": ["RegisterPage", "default"],
         "used": false
       },
       "src\\app\\(auth)\\login\\page.tsx": {
-        "exports": [
-          "LoginPage",
-          "default"
-        ],
+        "exports": ["LoginPage", "default"],
         "used": false
       },
       "src\\app\\(auth)\\forgot-password\\page.tsx": {
-        "exports": [
-          "ForgotPasswordPage",
-          "default"
-        ],
+        "exports": ["ForgotPasswordPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\settings\\page.tsx": {
-        "exports": [
-          "SettingsPage",
-          "default"
-        ],
+        "exports": ["SettingsPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\security\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(admin)\\review\\page.tsx": {
-        "exports": [
-          "ReviewCenterPage",
-          "default"
-        ],
+        "exports": ["ReviewCenterPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\reports\\page.tsx": {
-        "exports": [
-          "ReportsPage",
-          "default"
-        ],
+        "exports": ["ReportsPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\profile\\page.tsx": {
-        "exports": [
-          "ProfilePage",
-          "default"
-        ],
+        "exports": ["ProfilePage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\performance\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(admin)\\payments\\page.tsx": {
-        "exports": [
-          "PaymentsPage",
-          "default"
-        ],
+        "exports": ["PaymentsPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\notifications\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(admin)\\messages\\page.tsx": {
-        "exports": [
-          "MessagesPage",
-          "default"
-        ],
+        "exports": ["MessagesPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\integrations\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(admin)\\flow\\page.tsx": {
-        "exports": [
-          "FlowBuilderPage",
-          "default"
-        ],
+        "exports": ["FlowBuilderPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\dynamic-data\\page.tsx": {
-        "exports": [
-          "metadata",
-          "DynamicDataPage",
-          "default"
-        ],
+        "exports": ["metadata", "DynamicDataPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\doctors\\page.tsx": {
-        "exports": [
-          "metadata",
-          "DoctorsPage",
-          "default"
-        ],
+        "exports": ["metadata", "DoctorsPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\conversations\\page.tsx": {
-        "exports": [
-          "ConversationsPage",
-          "default"
-        ],
+        "exports": ["ConversationsPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\contact-info\\page.tsx": {
-        "exports": [
-          "metadata",
-          "AdminContactPage",
-          "default"
-        ],
+        "exports": ["metadata", "AdminContactPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\analytics\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(admin)\\agent-dashboard\\page.tsx": {
-        "exports": [
-          "AgentDashboard",
-          "default"
-        ],
+        "exports": ["AgentDashboard", "default"],
         "used": false
       },
       "src\\app\\(admin)\\admin\\page.tsx": {
-        "exports": [
-          "AdminPage",
-          "default"
-        ],
+        "exports": ["AdminPage", "default"],
         "used": false
       },
       "src\\app\\(health)\\patients\\[id]\\page.tsx": {
-        "exports": [
-          "PatientDetailsPage",
-          "default"
-        ],
+        "exports": ["PatientDetailsPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\settings\\api-keys\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(admin)\\crm\\leads\\page.tsx": {
-        "exports": [
-          "CRMLeadsPage",
-          "default"
-        ],
+        "exports": ["CRMLeadsPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\crm\\flows\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(admin)\\crm\\deals\\page.tsx": {
-        "exports": [
-          "CRMDealsPage",
-          "default"
-        ],
+        "exports": ["CRMDealsPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\crm\\contacts\\page.tsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "src\\app\\(admin)\\crm\\activities\\page.tsx": {
-        "exports": [
-          "CRMActivitiesPage",
-          "default"
-        ],
+        "exports": ["CRMActivitiesPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\chatbot\\templates\\page.tsx": {
-        "exports": [
-          "ChatbotTemplatesPage",
-          "default"
-        ],
+        "exports": ["ChatbotTemplatesPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\chatbot\\integrations\\page.tsx": {
-        "exports": [
-          "ChatbotIntegrationsPage",
-          "default"
-        ],
+        "exports": ["ChatbotIntegrationsPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\chatbot\\flows\\page.tsx": {
-        "exports": [
-          "ChatbotFlowsPage",
-          "default"
-        ],
+        "exports": ["ChatbotFlowsPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\chatbot\\analytics\\page.tsx": {
-        "exports": [
-          "ChatbotAnalyticsPage",
-          "default"
-        ],
+        "exports": ["ChatbotAnalyticsPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\admin\\users\\page.tsx": {
-        "exports": [
-          "UsersAdminPage",
-          "default"
-        ],
+        "exports": ["UsersAdminPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\admin\\roles\\page.tsx": {
-        "exports": [
-          "RolesPage",
-          "default"
-        ],
+        "exports": ["RolesPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\admin\\logs\\page.tsx": {
-        "exports": [
-          "LogsAdminPage",
-          "default"
-        ],
+        "exports": ["LogsAdminPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\admin\\channels\\page.tsx": {
-        "exports": [
-          "ChannelsAdminPage",
-          "default"
-        ],
+        "exports": ["ChannelsAdminPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\admin\\audit-logs\\page.tsx": {
-        "exports": [
-          "AuditLogsPage",
-          "default"
-        ],
+        "exports": ["AuditLogsPage", "default"],
         "used": false
       },
       "src\\app\\(health)\\health\\sessions\\book\\page.tsx": {
-        "exports": [
-          "BookSessionPage",
-          "default"
-        ],
+        "exports": ["BookSessionPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\sessions\\[id]\\notes\\page.tsx": {
-        "exports": [
-          "SessionNotesPage",
-          "default"
-        ],
+        "exports": ["SessionNotesPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\crm\\deals\\kanban\\page.tsx": {
-        "exports": [
-          "DealsKanbanPage",
-          "default"
-        ],
+        "exports": ["DealsKanbanPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\crm\\contacts\\[id]\\page.tsx": {
-        "exports": [
-          "ContactDetailsPage",
-          "default"
-        ],
+        "exports": ["ContactDetailsPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\chatbot\\templates\\[id]\\page.tsx": {
-        "exports": [
-          "TemplateEditorPage",
-          "default"
-        ],
+        "exports": ["TemplateEditorPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\chatbot\\flows\\[flowId]\\page.tsx": {
-        "exports": [
-          "FlowBuilderPage",
-          "default"
-        ],
+        "exports": ["FlowBuilderPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\admin\\therapists\\schedules\\page.tsx": {
-        "exports": [
-          "TherapistSchedulesPage",
-          "default"
-        ],
+        "exports": ["TherapistSchedulesPage", "default"],
         "used": false
       },
       "src\\app\\(admin)\\admin\\payments\\invoices\\page.tsx": {
-        "exports": [
-          "InvoicesPage",
-          "default"
-        ],
+        "exports": ["InvoicesPage", "default"],
         "used": false
       },
       "src\\app\\(health)\\health\\patients\\[id]\\iep\\page.tsx": {
-        "exports": [
-          "PatientIEPPage",
-          "default"
-        ],
+        "exports": ["PatientIEPPage", "default"],
         "used": false
       },
       "components\\Header.jsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       },
       "components\\Footer.jsx": {
-        "exports": [
-          "default"
-        ],
+        "exports": ["default"],
         "used": false
       }
     },
@@ -7149,9 +6406,7 @@
   },
   "projectAnalysis": {
     "type": "nextjs",
-    "frameworks": [
-      "Next.js"
-    ],
+    "frameworks": ["Next.js"],
     "tools": [
       "npm",
       "TypeScript",
@@ -7300,23 +6555,14 @@
           "ts-morph": "^27.0.2"
         },
         "lint-staged": {
-          "src/**/*.{ts,tsx,js,jsx}": [
-            "eslint --fix",
-            "prettier --write"
-          ],
-          "*.{json,md,yml,yaml}": [
-            "prettier --write"
-          ]
+          "src/**/*.{ts,tsx,js,jsx}": ["eslint --fix", "prettier --write"],
+          "*.{json,md,yml,yaml}": ["prettier --write"]
         }
       },
       "tsconfig": {
         "compilerOptions": {
           "target": "ES2022",
-          "lib": [
-            "dom",
-            "dom.iterable",
-            "esnext"
-          ],
+          "lib": ["dom", "dom.iterable", "esnext"],
           "allowJs": true,
           "skipLibCheck": true,
           "strict": false,
@@ -7343,14 +6589,9 @@
           ],
           "baseUrl": ".",
           "paths": {
-            "@/*": [
-              "./src/*"
-            ]
+            "@/*": ["./src/*"]
           },
-          "types": [
-            "node",
-            "playwright"
-          ]
+          "types": ["node", "playwright"]
         },
         "include": [
           "next-env.d.ts",
@@ -7383,10 +6624,7 @@
       },
       "hasSrcDir": true,
       "srcStructure": {
-        "files": [
-          "middleware.disabled.ts",
-          "middleware.prod.ts"
-        ],
+        "files": ["middleware.disabled.ts", "middleware.prod.ts"],
         "directories": {
           "app": {
             "files": [
@@ -7401,9 +6639,7 @@
             ],
             "directories": {
               "(admin)": {
-                "files": [
-                  "layout.tsx"
-                ],
+                "files": ["layout.tsx"],
                 "directories": {
                   "admin": {
                     "type": "max_depth_reached"
@@ -7471,9 +6707,7 @@
                 }
               },
               "(auth)": {
-                "files": [
-                  "layout.tsx"
-                ],
+                "files": ["layout.tsx"],
                 "directories": {
                   "forgot-password": {
                     "type": "max_depth_reached"
@@ -7548,9 +6782,7 @@
                 }
               },
               "(info)": {
-                "files": [
-                  "layout.tsx"
-                ],
+                "files": ["layout.tsx"],
                 "directories": {
                   "about": {
                     "type": "max_depth_reached"
@@ -7561,9 +6793,7 @@
                 }
               },
               "(legal)": {
-                "files": [
-                  "layout.tsx"
-                ],
+                "files": ["layout.tsx"],
                 "directories": {
                   "privacy": {
                     "type": "max_depth_reached"
@@ -7738,39 +6968,27 @@
                 }
               },
               "color-palette": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "dashboard": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "design-system": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "simple": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "test": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "uikit": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {
                   "guidelines": {
                     "type": "max_depth_reached"
@@ -7793,21 +7011,15 @@
             ],
             "directories": {
               "accessibility": {
-                "files": [
-                  "AccessibilitySettings.tsx"
-                ],
+                "files": ["AccessibilitySettings.tsx"],
                 "directories": {}
               },
               "appointments": {
-                "files": [
-                  "AppointmentManager.tsx"
-                ],
+                "files": ["AppointmentManager.tsx"],
                 "directories": {}
               },
               "auth": {
-                "files": [
-                  "ProtectedRoute.tsx"
-                ],
+                "files": ["ProtectedRoute.tsx"],
                 "directories": {}
               },
               "booking": {
@@ -7827,10 +7039,7 @@
                 "directories": {}
               },
               "chatbot": {
-                "files": [
-                  "MoainChatbot.tsx",
-                  "MoeenChatbot.tsx"
-                ],
+                "files": ["MoainChatbot.tsx", "MoeenChatbot.tsx"],
                 "directories": {}
               },
               "common": {
@@ -7849,17 +7058,11 @@
                 "directories": {}
               },
               "dashboard": {
-                "files": [
-                  "Charts.tsx",
-                  "DynamicCharts.tsx",
-                  "KpiCard.tsx"
-                ],
+                "files": ["Charts.tsx", "DynamicCharts.tsx", "KpiCard.tsx"],
                 "directories": {}
               },
               "insurance": {
-                "files": [
-                  "ClaimsManager.tsx"
-                ],
+                "files": ["ClaimsManager.tsx"],
                 "directories": {}
               },
               "layout": {
@@ -7872,16 +7075,11 @@
                 "directories": {}
               },
               "patient": {
-                "files": [
-                  "ActivationFlow.tsx",
-                  "PreVisitChecklist.tsx"
-                ],
+                "files": ["ActivationFlow.tsx", "PreVisitChecklist.tsx"],
                 "directories": {}
               },
               "patients": {
-                "files": [
-                  "PatientRecords.tsx"
-                ],
+                "files": ["PatientRecords.tsx"],
                 "directories": {}
               },
               "providers": {
@@ -7895,10 +7093,7 @@
                 "directories": {}
               },
               "settings": {
-                "files": [
-                  "KeywordEditor.tsx",
-                  "SettingsTabs.tsx"
-                ],
+                "files": ["KeywordEditor.tsx", "SettingsTabs.tsx"],
                 "directories": {}
               },
               "shared": {
@@ -7915,11 +7110,7 @@
                 "directories": {}
               },
               "shell": {
-                "files": [
-                  "Header.tsx",
-                  "HeaderSimple.tsx",
-                  "Sidebar.tsx"
-                ],
+                "files": ["Header.tsx", "HeaderSimple.tsx", "Sidebar.tsx"],
                 "directories": {}
               },
               "ui": {
@@ -7956,13 +7147,7 @@
             }
           },
           "config": {
-            "files": [
-              "api.ts",
-              "app.ts",
-              "auth.ts",
-              "database.ts",
-              "env.ts"
-            ],
+            "files": ["api.ts", "app.ts", "auth.ts", "database.ts", "env.ts"],
             "directories": {}
           },
           "constants": {
@@ -7980,97 +7165,63 @@
             "directories": {}
           },
           "context": {
-            "files": [
-              "TranslationProvider.tsx"
-            ],
+            "files": ["TranslationProvider.tsx"],
             "directories": {}
           },
           "core": {
-            "files": [
-              "index.ts",
-              "utils.ts"
-            ],
+            "files": ["index.ts", "utils.ts"],
             "directories": {
               "api": {
-                "files": [
-                  "base-handler.ts",
-                  "client.ts"
-                ],
+                "files": ["base-handler.ts", "client.ts"],
                 "directories": {}
               },
               "config": {
-                "files": [
-                  "index.ts"
-                ],
+                "files": ["index.ts"],
                 "directories": {}
               },
               "constants": {
-                "files": [
-                  "index.ts"
-                ],
+                "files": ["index.ts"],
                 "directories": {}
               },
               "design-system": {
-                "files": [
-                  "index.ts"
-                ],
+                "files": ["index.ts"],
                 "directories": {}
               },
               "errors": {
-                "files": [
-                  "index.ts"
-                ],
+                "files": ["index.ts"],
                 "directories": {}
               },
               "hooks": {
-                "files": [
-                  "index.ts"
-                ],
+                "files": ["index.ts"],
                 "directories": {}
               },
               "store": {
-                "files": [
-                  "index.ts"
-                ],
+                "files": ["index.ts"],
                 "directories": {}
               },
               "theme": {
-                "files": [
-                  "index.ts"
-                ],
+                "files": ["index.ts"],
                 "directories": {}
               },
               "types": {
-                "files": [
-                  "index.ts"
-                ],
+                "files": ["index.ts"],
                 "directories": {}
               },
               "utils": {
-                "files": [
-                  "index.ts"
-                ],
+                "files": ["index.ts"],
                 "directories": {}
               },
               "validation": {
-                "files": [
-                  "index.ts"
-                ],
+                "files": ["index.ts"],
                 "directories": {}
               }
             }
           },
           "design-system": {
-            "files": [
-              "index.ts",
-              "README.md",
-              "types.ts"
-            ],
+            "files": ["index.ts", "README.md", "types.ts"],
             "directories": {
               "hooks": {
-                "files": [
-                  "index.ts"
-                ],
+                "files": ["index.ts"],
                 "directories": {}
               }
             }
@@ -8154,140 +7305,89 @@
             ],
             "directories": {
               "accessibility": {
-                "files": [
-                  "aria-utils.ts"
-                ],
+                "files": ["aria-utils.ts"],
                 "directories": {}
               },
               "api": {
-                "files": [
-                  "config.ts",
-                  "whatsapp.ts"
-                ],
+                "files": ["config.ts", "whatsapp.ts"],
                 "directories": {}
               },
               "auth": {
-                "files": [
-                  "authorize.ts",
-                  "index.ts",
-                  "roles.ts"
-                ],
+                "files": ["authorize.ts", "index.ts", "roles.ts"],
                 "directories": {}
               },
               "cache": {
-                "files": [
-                  "redis.ts"
-                ],
+                "files": ["redis.ts"],
                 "directories": {}
               },
               "database": {
-                "files": [
-                  "connection-pool.ts"
-                ],
+                "files": ["connection-pool.ts"],
                 "directories": {}
               },
               "deployment": {
-                "files": [
-                  "docker.ts"
-                ],
+                "files": ["docker.ts"],
                 "directories": {}
               },
               "errors": {
-                "files": [
-                  "api-errors.ts"
-                ],
+                "files": ["api-errors.ts"],
                 "directories": {}
               },
               "i18n": {
-                "files": [
-                  "translationService.ts"
-                ],
+                "files": ["translationService.ts"],
                 "directories": {}
               },
               "insurance": {
-                "files": [
-                  "providers.ts"
-                ],
+                "files": ["providers.ts"],
                 "directories": {}
               },
               "integrations": {
-                "files": [
-                  "test-helpers.ts"
-                ],
+                "files": ["test-helpers.ts"],
                 "directories": {}
               },
               "migrations": {
-                "files": [
-                  "004_user_preferences.sql"
-                ],
+                "files": ["004_user_preferences.sql"],
                 "directories": {}
               },
               "monitoring": {
-                "files": [
-                  "logger.ts"
-                ],
+                "files": ["logger.ts"],
                 "directories": {}
               },
               "notifications": {
-                "files": [
-                  "email.ts",
-                  "sms.ts"
-                ],
+                "files": ["email.ts", "sms.ts"],
                 "directories": {}
               },
               "optimization": {
-                "files": [
-                  "performance.ts"
-                ],
+                "files": ["performance.ts"],
                 "directories": {}
               },
               "payments": {
-                "files": [
-                  "moyasar.ts",
-                  "stripe.ts"
-                ],
+                "files": ["moyasar.ts", "stripe.ts"],
                 "directories": {}
               },
               "seo": {
-                "files": [
-                  "metadata.ts"
-                ],
+                "files": ["metadata.ts"],
                 "directories": {}
               },
               "supabase": {
-                "files": [
-                  "client.ts",
-                  "server.ts"
-                ],
+                "files": ["client.ts", "server.ts"],
                 "directories": {}
               },
               "testing": {
-                "files": [
-                  "test-utils.ts"
-                ],
+                "files": ["test-utils.ts"],
                 "directories": {}
               },
               "utils": {
-                "files": [
-                  "request-helpers.ts"
-                ],
+                "files": ["request-helpers.ts"],
                 "directories": {}
               },
               "validation": {
-                "files": [
-                  "schemas.ts",
-                  "security.ts"
-                ],
+                "files": ["schemas.ts", "security.ts"],
                 "directories": {}
               }
             }
           },
           "middleware": {
-            "files": [
-              "auth.ts",
-              "rate-limiter.ts",
-              "security.ts"
-            ],
+            "files": ["auth.ts", "rate-limiter.ts", "security.ts"],
             "directories": {}
           },
           "scripts": {
@@ -8307,9 +7407,7 @@
             "directories": {}
           },
           "services": {
-            "files": [
-              "index.ts"
-            ],
+            "files": ["index.ts"],
             "directories": {}
           },
           "styles": {
@@ -8330,9 +7428,7 @@
             "directories": {}
           },
           "theme": {
-            "files": [
-              "index.ts"
-            ],
+            "files": ["index.ts"],
             "directories": {}
           },
           "types": {
@@ -8371,10 +7467,7 @@
             ],
             "directories": {
               "api": {
-                "files": [
-                  "appointments.test.ts",
-                  "patients.test.ts"
-                ],
+                "files": ["appointments.test.ts", "patients.test.ts"],
                 "directories": {
                   "auth": {
                     "type": "max_depth_reached"
@@ -8408,14 +7501,10 @@
         ],
         "directories": {
           "(admin)": {
-            "files": [
-              "layout.tsx"
-            ],
+            "files": ["layout.tsx"],
             "directories": {
               "admin": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {
                   "audit-logs": {
                     "type": "max_depth_reached"
@@ -8441,15 +7530,11 @@
                 }
               },
               "agent-dashboard": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "analytics": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "chatbot": {
@@ -8470,15 +7555,11 @@
                 }
               },
               "contact-info": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "conversations": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "crm": {
@@ -8502,75 +7583,51 @@
                 }
               },
               "doctors": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "dynamic-data": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "flow": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "integrations": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "messages": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "notifications": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "payments": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "performance": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "profile": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "reports": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "review": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "security": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "sessions": {
@@ -8582,9 +7639,7 @@
                 }
               },
               "settings": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {
                   "api-keys": {
                     "type": "max_depth_reached"
@@ -8594,38 +7649,26 @@
             }
           },
           "(auth)": {
-            "files": [
-              "layout.tsx"
-            ],
+            "files": ["layout.tsx"],
             "directories": {
               "forgot-password": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "login": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "register": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "reset-password": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "verify-email": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               }
             }
@@ -8634,9 +7677,7 @@
             "files": [],
             "directories": {
               "doctor-dashboard": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               }
             }
@@ -8645,27 +7686,19 @@
             "files": [],
             "directories": {
               "appointments": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "approvals": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "family": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "family-support": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "health": {
@@ -8680,27 +7713,19 @@
                 }
               },
               "insurance": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "insurance-claims": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "medical-file": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "patients": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {
                   "[id]": {
                     "type": "max_depth_reached"
@@ -8708,71 +7733,49 @@
                 }
               },
               "progress": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "progress-tracking": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "sessions": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "therapy": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "training": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               }
             }
           },
           "(info)": {
-            "files": [
-              "layout.tsx"
-            ],
+            "files": ["layout.tsx"],
             "directories": {
               "about": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "contact": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               }
             }
           },
           "(legal)": {
-            "files": [
-              "layout.tsx"
-            ],
+            "files": ["layout.tsx"],
             "directories": {
               "privacy": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "terms": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               }
             }
@@ -8781,21 +7784,15 @@
             "files": [],
             "directories": {
               "faq": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "features": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               },
               "pricing": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               }
             }
@@ -8804,9 +7801,7 @@
             "files": [],
             "directories": {
               "patient-dashboard": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               }
             }
@@ -8815,9 +7810,7 @@
             "files": [],
             "directories": {
               "chatbot": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               }
             }
@@ -8826,9 +7819,7 @@
             "files": [],
             "directories": {
               "staff-dashboard": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               }
             }
@@ -8837,9 +7828,7 @@
             "files": [],
             "directories": {
               "supervisor-dashboard": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               }
             }
@@ -8848,9 +7837,7 @@
             "files": [],
             "directories": {
               "admin-dashboard": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               }
             }
@@ -8913,9 +7900,7 @@
                 }
               },
               "appointments": {
-                "files": [
-                  "route.ts"
-                ],
+                "files": ["route.ts"],
                 "directories": {
                   "availability": {
                     "type": "max_depth_reached"
@@ -8932,9 +7917,7 @@
                 }
               },
               "audit-logs": {
-                "files": [
-                  "route.ts"
-                ],
+                "files": ["route.ts"],
                 "directories": {}
               },
               "auth": {
@@ -9029,9 +8012,7 @@
                 }
               },
               "dynamic-data": {
-                "files": [
-                  "route.ts"
-                ],
+                "files": ["route.ts"],
                 "directories": {
                   "doctors": {
                     "type": "max_depth_reached"
@@ -9045,15 +8026,11 @@
                 }
               },
               "errors": {
-                "files": [
-                  "route.ts"
-                ],
+                "files": ["route.ts"],
                 "directories": {}
               },
               "family": {
-                "files": [
-                  "route.ts"
-                ],
+                "files": ["route.ts"],
                 "directories": {
                   "support": {
                     "type": "max_depth_reached"
@@ -9061,9 +8038,7 @@
                 }
               },
               "health": {
-                "files": [
-                  "route.ts"
-                ],
+                "files": ["route.ts"],
                 "directories": {}
               },
               "healthcare": {
@@ -9078,9 +8053,7 @@
                 }
               },
               "i18n": {
-                "files": [
-                  "route.ts"
-                ],
+                "files": ["route.ts"],
                 "directories": {}
               },
               "insurance": {
@@ -9092,9 +8065,7 @@
                 }
               },
               "medical-records": {
-                "files": [
-                  "route.ts"
-                ],
+                "files": ["route.ts"],
                 "directories": {
                   "upload": {
                     "type": "max_depth_reached"
@@ -9143,9 +8114,7 @@
                 }
               },
               "progress": {
-                "files": [
-                  "route.ts"
-                ],
+                "files": ["route.ts"],
                 "directories": {
                   "assessments": {
                     "type": "max_depth_reached"
@@ -9235,9 +8204,7 @@
                 }
               },
               "upload": {
-                "files": [
-                  "route.ts"
-                ],
+                "files": ["route.ts"],
                 "directories": {}
               },
               "user": {
@@ -9267,44 +8234,30 @@
             }
           },
           "color-palette": {
-            "files": [
-              "page.tsx"
-            ],
+            "files": ["page.tsx"],
             "directories": {}
           },
           "dashboard": {
-            "files": [
-              "page.tsx"
-            ],
+            "files": ["page.tsx"],
             "directories": {}
           },
           "design-system": {
-            "files": [
-              "page.tsx"
-            ],
+            "files": ["page.tsx"],
             "directories": {}
           },
           "simple": {
-            "files": [
-              "page.tsx"
-            ],
+            "files": ["page.tsx"],
             "directories": {}
           },
           "test": {
-            "files": [
-              "page.tsx"
-            ],
+            "files": ["page.tsx"],
             "directories": {}
           },
           "uikit": {
-            "files": [
-              "page.tsx"
-            ],
+            "files": ["page.tsx"],
             "directories": {
               "guidelines": {
-                "files": [
-                  "page.tsx"
-                ],
+                "files": ["page.tsx"],
                 "directories": {}
               }
             }
@@ -9326,28 +8279,19 @@
         ],
         "directories": {
           "accessibility": {
-            "files": [
-              "AccessibilitySettings.tsx"
-            ],
+            "files": ["AccessibilitySettings.tsx"],
             "directories": {}
           },
           "appointments": {
-            "files": [
-              "AppointmentManager.tsx"
-            ],
+            "files": ["AppointmentManager.tsx"],
             "directories": {}
           },
           "auth": {
-            "files": [
-              "ProtectedRoute.tsx"
-            ],
+            "files": ["ProtectedRoute.tsx"],
             "directories": {}
           },
           "booking": {
-            "files": [
-              "AvailableSlotsPicker.tsx",
-              "SessionTypeSelector.tsx"
-            ],
+            "files": ["AvailableSlotsPicker.tsx", "SessionTypeSelector.tsx"],
             "directories": {}
           },
           "charts": {
@@ -9360,10 +8304,7 @@
             "directories": {}
           },
           "chatbot": {
-            "files": [
-              "MoainChatbot.tsx",
-              "MoeenChatbot.tsx"
-            ],
+            "files": ["MoainChatbot.tsx", "MoeenChatbot.tsx"],
             "directories": {}
           },
           "common": {
@@ -9382,17 +8323,11 @@
             "directories": {}
           },
           "dashboard": {
-            "files": [
-              "Charts.tsx",
-              "DynamicCharts.tsx",
-              "KpiCard.tsx"
-            ],
+            "files": ["Charts.tsx", "DynamicCharts.tsx", "KpiCard.tsx"],
             "directories": {}
           },
           "insurance": {
-            "files": [
-              "ClaimsManager.tsx"
-            ],
+            "files": ["ClaimsManager.tsx"],
             "directories": {}
           },
           "layout": {
@@ -9405,16 +8340,11 @@
             "directories": {}
           },
           "patient": {
-            "files": [
-              "ActivationFlow.tsx",
-              "PreVisitChecklist.tsx"
-            ],
+            "files": ["ActivationFlow.tsx", "PreVisitChecklist.tsx"],
             "directories": {}
           },
           "patients": {
-            "files": [
-              "PatientRecords.tsx"
-            ],
+            "files": ["PatientRecords.tsx"],
             "directories": {}
           },
           "providers": {
@@ -9428,10 +8358,7 @@
             "directories": {}
           },
           "settings": {
-            "files": [
-              "KeywordEditor.tsx",
-              "SettingsTabs.tsx"
-            ],
+            "files": ["KeywordEditor.tsx", "SettingsTabs.tsx"],
             "directories": {}
           },
           "shared": {
@@ -9448,11 +8375,7 @@
             "directories": {}
           },
           "shell": {
-            "files": [
-              "Header.tsx",
-              "HeaderSimple.tsx",
-              "Sidebar.tsx"
-            ],
+            "files": ["Header.tsx", "HeaderSimple.tsx", "Sidebar.tsx"],
             "directories": {}
           },
           "ui": {

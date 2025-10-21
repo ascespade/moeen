@@ -1,4 +1,8 @@
-import { checkBeforeMove, createBackup, moveToQuarantine } from './safe-cleanup-checker.js';
+import {
+  checkBeforeMove,
+  createBackup,
+  moveToQuarantine,
+} from './safe-cleanup-checker.js';
 import fs from 'fs';
 import path from 'path';
 import { glob } from 'glob';
@@ -180,54 +184,63 @@ async function safeMoveToQuarantine(patterns, category) {
     skipped: [],
     errors: [],
   };
-  
+
   console.log(`\n🔍 Processing ${category} files...`);
-  
+
   // البحث عن الملفات المطابقة للأنماط
   const allFiles = [];
   for (const pattern of patterns) {
     try {
-      const files = await glob(pattern, { 
-        ignore: ['node_modules/**', '.git/**', '.next/**', 'scripts/**', '_extracted/**', '_quarantine/**', 'src/**']
+      const files = await glob(pattern, {
+        ignore: [
+          'node_modules/**',
+          '.git/**',
+          '.next/**',
+          'scripts/**',
+          '_extracted/**',
+          '_quarantine/**',
+          'src/**',
+        ],
       });
       allFiles.push(...files);
     } catch (error) {
-      console.log(`⚠️  Pattern ${pattern} not found or error: ${error.message}`);
+      console.log(
+        `⚠️  Pattern ${pattern} not found or error: ${error.message}`
+      );
     }
   }
-  
+
   // إزالة المكررات
   const uniqueFiles = [...new Set(allFiles)];
-  
+
   console.log(`📁 Found ${uniqueFiles.length} files matching patterns`);
-  
+
   for (const file of uniqueFiles) {
     try {
       // Double-Check
       const check = checkBeforeMove(file);
-      
+
       if (!check.safe) {
         results.skipped.push({ file, reason: check.reason });
         console.log(`⚠️  SKIPPED: ${file} - ${check.reason}`);
         continue;
       }
-      
+
       // إنشاء نسخة احتياطية
       const backupPath = createBackup(file);
       console.log(`💾 Backup created: ${backupPath}`);
-      
+
       // نقل إلى quarantine
       const quarantinePath = moveToQuarantine(file, category);
-      
+
       results.moved.push({ file, to: quarantinePath });
       console.log(`✅ Moved: ${file} → ${quarantinePath}`);
-      
     } catch (error) {
       results.errors.push({ file, error: error.message });
       console.error(`❌ Error: ${file} - ${error.message}`);
     }
   }
-  
+
   // إنشاء تقرير
   const report = {
     timestamp: new Date().toISOString(),
@@ -235,54 +248,78 @@ async function safeMoveToQuarantine(patterns, category) {
     totalFiles: uniqueFiles.length,
     ...results,
   };
-  
+
   // إنشاء مجلد التقارير
   fs.mkdirSync('_quarantine/reports', { recursive: true });
-  
+
   fs.writeFileSync(
     `_quarantine/reports/${category}-${Date.now()}.json`,
     JSON.stringify(report, null, 2)
   );
-  
+
   return results;
 }
 
 async function parallelCleanup() {
   console.log('🚀 Starting parallel cleanup...\n');
-  
+
   try {
     // المجموعة A و B يمكن تنفيذهما بالتوازي
     const [docsResult, scriptsResult] = await Promise.all([
       // المجموعة A: ملفات التوثيق
       safeMoveToQuarantine(DOCS_TO_QUARANTINE, 'docs'),
-      
+
       // المجموعة B: ملفات Scripts
       safeMoveToQuarantine(SCRIPTS_TO_QUARANTINE, 'scripts'),
     ]);
-    
+
     console.log('\n✅ Parallel tasks completed!');
-    console.log(`📄 Docs: ${docsResult.moved.length} moved, ${docsResult.skipped.length} skipped, ${docsResult.errors.length} errors`);
-    console.log(`📜 Scripts: ${scriptsResult.moved.length} moved, ${scriptsResult.skipped.length} skipped, ${scriptsResult.errors.length} errors`);
-    
+    console.log(
+      `📄 Docs: ${docsResult.moved.length} moved, ${docsResult.skipped.length} skipped, ${docsResult.errors.length} errors`
+    );
+    console.log(
+      `📜 Scripts: ${scriptsResult.moved.length} moved, ${scriptsResult.skipped.length} skipped, ${scriptsResult.errors.length} errors`
+    );
+
     // المجموعة C و D بالتسلسل (بعد التحديثات)
     console.log('\n⏳ Starting sequential tasks...');
-    
-    const configsResult = await safeMoveToQuarantine(CONFIGS_TO_QUARANTINE, 'configs');
+
+    const configsResult = await safeMoveToQuarantine(
+      CONFIGS_TO_QUARANTINE,
+      'configs'
+    );
     const tempResult = await safeMoveToQuarantine(TEMP_TO_QUARANTINE, 'temp');
-    
-    console.log(`⚙️  Configs: ${configsResult.moved.length} moved, ${configsResult.skipped.length} skipped, ${configsResult.errors.length} errors`);
-    console.log(`🗂️  Temp: ${tempResult.moved.length} moved, ${tempResult.skipped.length} skipped, ${tempResult.errors.length} errors`);
-    
+
+    console.log(
+      `⚙️  Configs: ${configsResult.moved.length} moved, ${configsResult.skipped.length} skipped, ${configsResult.errors.length} errors`
+    );
+    console.log(
+      `🗂️  Temp: ${tempResult.moved.length} moved, ${tempResult.skipped.length} skipped, ${tempResult.errors.length} errors`
+    );
+
     // تقرير نهائي
-    const totalMoved = docsResult.moved.length + scriptsResult.moved.length + configsResult.moved.length + tempResult.moved.length;
-    const totalSkipped = docsResult.skipped.length + scriptsResult.skipped.length + configsResult.skipped.length + tempResult.skipped.length;
-    const totalErrors = docsResult.errors.length + scriptsResult.errors.length + configsResult.errors.length + tempResult.errors.length;
-    
+    const totalMoved =
+      docsResult.moved.length +
+      scriptsResult.moved.length +
+      configsResult.moved.length +
+      tempResult.moved.length;
+    const totalSkipped =
+      docsResult.skipped.length +
+      scriptsResult.skipped.length +
+      configsResult.skipped.length +
+      tempResult.skipped.length;
+    const totalErrors =
+      docsResult.errors.length +
+      scriptsResult.errors.length +
+      configsResult.errors.length +
+      tempResult.errors.length;
+
     console.log('\n🎉 Cleanup completed!');
-    console.log(`📊 Total: ${totalMoved} moved, ${totalSkipped} skipped, ${totalErrors} errors`);
+    console.log(
+      `📊 Total: ${totalMoved} moved, ${totalSkipped} skipped, ${totalErrors} errors`
+    );
     console.log(`📁 Check _quarantine/ folder for moved files`);
     console.log(`📋 Check _quarantine/reports/ for detailed reports`);
-    
   } catch (error) {
     console.error('❌ Cleanup failed:', error);
     process.exit(1);
@@ -290,7 +327,10 @@ async function parallelCleanup() {
 }
 
 // تشغيل التنظيف إذا تم استدعاء السكريبت مباشرة
-if (import.meta.url === `file://${process.argv[1]}` || process.argv[1].endsWith('parallel-cleanup.js')) {
+if (
+  import.meta.url === `file://${process.argv[1]}` ||
+  process.argv[1].endsWith('parallel-cleanup.js')
+) {
   parallelCleanup();
 }
 

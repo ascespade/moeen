@@ -292,13 +292,15 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg-secondary)]">
-      <div className="container-app py-6">
+    <div className='min-h-screen bg-[var(--color-bg-secondary)]'>
+      <div className='container-app py-6'>
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className='flex justify-between items-center mb-8'>
           <div>
-            <h1 className="text-3xl font-bold text-[var(--color-primary-500)]">لوحة الإدارة</h1>
-            <p className="text-[var(--color-text-secondary)]">
+            <h1 className='text-3xl font-bold text-[var(--color-primary-500)]'>
+              لوحة الإدارة
+            </h1>
+            <p className='text-[var(--color-text-secondary)]'>
               إدارة النظام والمستخدمين
             </p>
           </div>

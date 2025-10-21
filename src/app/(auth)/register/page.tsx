@@ -151,17 +151,17 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[var(--color-bg-secondary)] via-white to-[var(--color-bg-secondary)] p-4">
-      <div className="w-full max-w-md">
+    <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-[var(--color-bg-secondary)] via-white to-[var(--color-bg-secondary)] p-4'>
+      <div className='w-full max-w-md'>
         {/* Logo and Header */}
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-secondary-500)] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <span className="text-white font-bold text-2xl">م</span>
+        <div className='text-center mb-8'>
+          <div className='w-16 h-16 bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-secondary-500)] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg'>
+            <span className='text-white font-bold text-2xl'>م</span>
           </div>
-          <h1 className="text-3xl font-bold text-[var(--color-text-primary)] mb-2">
+          <h1 className='text-3xl font-bold text-[var(--color-text-primary)] mb-2'>
             إنشاء حساب جديد
           </h1>
-          <p className="text-[var(--color-text-secondary)]">
+          <p className='text-[var(--color-text-secondary)]'>
             انضم إلى منصة الرعاية الصحية المتخصصة
           </p>
         </div>

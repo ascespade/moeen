@@ -317,7 +317,9 @@ const NotificationsPage: React.FC = () => {
               القوالب
             </Button>
             <Button
-              onClick={() => {/* TODO: Implement compose functionality */}}
+              onClick={() => {
+                /* TODO: Implement compose functionality */
+              }}
               className='bg-[var(--brand-primary)] hover:brightness-95'
             >
               <Plus className='w-4 h-4 mr-2' />

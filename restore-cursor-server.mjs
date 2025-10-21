@@ -18,7 +18,7 @@ const endpoints = [
   'https://api.cursor.sh/v1/sessions/restore',
   'https://cursor.sh/api/sessions/restore',
   'https://api.cursor.com/v1/sessions/restore',
-  'https://cursor.com/api/sessions/restore'
+  'https://cursor.com/api/sessions/restore',
 ];
 
 async function tryRestoreServer(endpoint) {
@@ -26,7 +26,7 @@ async function tryRestoreServer(endpoint) {
     const data = JSON.stringify({
       sessionId: SESSION_ID,
       action: 'restore',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
 
     const options = {
@@ -34,17 +34,17 @@ async function tryRestoreServer(endpoint) {
       headers: {
         'Content-Type': 'application/json',
         'User-Agent': 'Cursor-Agent/1.0',
-        'Authorization': `Bearer ${process.env.CURSOR_API_KEY || 'cursor-agent'}`
-      }
+        Authorization: `Bearer ${process.env.CURSOR_API_KEY || 'cursor-agent'}`,
+      },
     };
 
-    const req = https.request(endpoint, options, (res) => {
+    const req = https.request(endpoint, options, res => {
       let responseData = '';
-      
-      res.on('data', (chunk) => {
+
+      res.on('data', chunk => {
         responseData += chunk;
       });
-      
+
       res.on('end', () => {
         console.log(`📡 Response from ${endpoint}:`, res.statusCode);
         if (res.statusCode === 200) {
@@ -57,7 +57,7 @@ async function tryRestoreServer(endpoint) {
       });
     });
 
-    req.on('error', (error) => {
+    req.on('error', error => {
       console.log(`❌ Error connecting to ${endpoint}:`, error.message);
       reject(error);
     });
@@ -69,7 +69,7 @@ async function tryRestoreServer(endpoint) {
 
 async function restoreServer() {
   console.log('🔍 Trying to restore Cursor Background Agent server...');
-  
+
   for (const endpoint of endpoints) {
     try {
       console.log(`🌐 Trying ${endpoint}...`);
@@ -79,10 +79,12 @@ async function restoreServer() {
       console.log(`⚠️ Failed: ${error.message}`);
     }
   }
-  
+
   console.log('❌ All restore attempts failed');
-  console.log('💡 Alternative: The local session is working with the same Session ID');
-  
+  console.log(
+    '💡 Alternative: The local session is working with the same Session ID'
+  );
+
   // Update local status
   const localStatus = {
     timestamp: new Date().toISOString(),
@@ -90,9 +92,9 @@ async function restoreServer() {
     status: 'active_local',
     serverStatus: 'offline',
     localAgent: 'running',
-    message: 'Using local background agent as server is offline'
+    message: 'Using local background agent as server is offline',
   };
-  
+
   fs.writeFileSync('system-status.json', JSON.stringify(localStatus, null, 2));
   console.log('✅ Local session updated');
 }

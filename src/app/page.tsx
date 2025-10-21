@@ -11,62 +11,67 @@ const heroSlides = [
   {
     title: 'مرحباً بك في مُعين',
     subtitle: 'مساعدك الذكي في الرعاية الصحية',
-    description: 'نقدم حلولاً متكاملة لإدارة المراكز الصحية مع أحدث التقنيات والذكاء الاصطناعي',
+    description:
+      'نقدم حلولاً متكاملة لإدارة المراكز الصحية مع أحدث التقنيات والذكاء الاصطناعي',
     cta: 'ابدأ الآن',
-    ctaLink: '/register'
+    ctaLink: '/register',
   },
   {
     title: 'إدارة المرضى الذكية',
     subtitle: 'نظام متطور لإدارة الملفات الطبية',
-    description: 'إدارة شاملة لملفات المرضى والمواعيد والمطالبات التأمينية بسهولة وأمان',
+    description:
+      'إدارة شاملة لملفات المرضى والمواعيد والمطالبات التأمينية بسهولة وأمان',
     cta: 'اكتشف المزيد',
-    ctaLink: '/features'
+    ctaLink: '/features',
   },
   {
     title: 'تقارير ذكية',
     subtitle: 'تحليلات متقدمة لأداء المركز',
-    description: 'احصل على تقارير مفصلة وإحصائيات دقيقة لتحسين جودة الخدمات المقدمة',
+    description:
+      'احصل على تقارير مفصلة وإحصائيات دقيقة لتحسين جودة الخدمات المقدمة',
     cta: 'عرض التقارير',
-    ctaLink: '/reports'
-  }
+    ctaLink: '/reports',
+  },
 ];
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg-secondary)]">
+    <div className='min-h-screen bg-[var(--color-bg-secondary)]'>
       {/* Header */}
       <Header />
-      
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-bg-secondary)] via-white to-[var(--color-primary-500)]/5"></div>
-        <div className="absolute top-20 left-20 w-72 h-72 bg-[var(--color-primary-500)]/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-[var(--color-secondary-500)]/10 rounded-full blur-3xl"></div>
 
-        <div className="container-app relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold text-[var(--color-text-primary)] mb-6">
+      {/* Hero Section */}
+      <section className='relative min-h-screen flex items-center justify-center overflow-hidden'>
+        {/* Background Elements */}
+        <div className='absolute inset-0 bg-gradient-to-br from-[var(--color-bg-secondary)] via-white to-[var(--color-primary-500)]/5'></div>
+        <div className='absolute top-20 left-20 w-72 h-72 bg-[var(--color-primary-500)]/10 rounded-full blur-3xl'></div>
+        <div className='absolute bottom-20 right-20 w-96 h-96 bg-[var(--color-secondary-500)]/10 rounded-full blur-3xl'></div>
+
+        <div className='container-app relative z-10'>
+          <div className='text-center max-w-4xl mx-auto'>
+            <h1 className='text-5xl md:text-7xl font-bold text-[var(--color-text-primary)] mb-6'>
               {heroSlides[currentSlide]?.title || 'مرحباً بك في مُعين'}
             </h1>
-            <h2 className="text-2xl md:text-3xl text-[var(--color-primary-500)] mb-6">
-              {heroSlides[currentSlide]?.subtitle || 'مساعدك الذكي في الرعاية الصحية'}
+            <h2 className='text-2xl md:text-3xl text-[var(--color-primary-500)] mb-6'>
+              {heroSlides[currentSlide]?.subtitle ||
+                'مساعدك الذكي في الرعاية الصحية'}
             </h2>
-            <p className="text-lg md:text-xl text-[var(--color-text-secondary)] mb-8 max-w-2xl mx-auto">
-              {heroSlides[currentSlide]?.description || 'نقدم حلولاً متكاملة لإدارة المراكز الصحية مع أحدث التقنيات والذكاء الاصطناعي'}
+            <p className='text-lg md:text-xl text-[var(--color-text-secondary)] mb-8 max-w-2xl mx-auto'>
+              {heroSlides[currentSlide]?.description ||
+                'نقدم حلولاً متكاملة لإدارة المراكز الصحية مع أحدث التقنيات والذكاء الاصطناعي'}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className='flex flex-col sm:flex-row gap-4 justify-center'>
               <Link
                 href={heroSlides[currentSlide]?.ctaLink || '/register'}
-                className="inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-white bg-[var(--color-primary-500)] hover:bg-[var(--color-primary-600)] rounded-lg transition-colors duration-200"
+                className='inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-white bg-[var(--color-primary-500)] hover:bg-[var(--color-primary-600)] rounded-lg transition-colors duration-200'
               >
                 {heroSlides[currentSlide]?.cta || 'ابدأ الآن'}
               </Link>
-              <Link 
-                href="/features" 
-                className="inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-[var(--color-primary-500)] border-2 border-[var(--color-primary-500)] hover:bg-[var(--color-primary-500)] hover:text-white rounded-lg transition-colors duration-200"
+              <Link
+                href='/features'
+                className='inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-[var(--color-primary-500)] border-2 border-[var(--color-primary-500)] hover:bg-[var(--color-primary-500)] hover:text-white rounded-lg transition-colors duration-200'
               >
                 تعرف على المزيد
               </Link>

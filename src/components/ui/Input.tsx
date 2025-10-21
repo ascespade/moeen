@@ -55,9 +55,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       'flex h-10 w-full rounded-lg border border-[var(--color-border-primary)] bg-white px-3 py-2 text-sm text-[var(--color-text-primary)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-200';
 
     const variants = {
-      default: 'border-[var(--color-border-primary)] focus-visible:ring-[var(--color-primary-500)]',
-      filled: 'border-[var(--color-border-primary)] bg-[var(--color-bg-secondary)] focus-visible:ring-[var(--color-primary-500)]',
-      outlined: 'border-2 border-[var(--color-border-primary)] focus-visible:ring-[var(--color-primary-500)]',
+      default:
+        'border-[var(--color-border-primary)] focus-visible:ring-[var(--color-primary-500)]',
+      filled:
+        'border-[var(--color-border-primary)] bg-[var(--color-bg-secondary)] focus-visible:ring-[var(--color-primary-500)]',
+      outlined:
+        'border-2 border-[var(--color-border-primary)] focus-visible:ring-[var(--color-primary-500)]',
     };
 
     const stateClasses = error
@@ -71,7 +74,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label className='block text-sm font-medium text-[var(--color-text-primary)] mb-1'>
             {label}
-            {props.required && <span className='text-[var(--color-error-500)] ml-1'>*</span>}
+            {props.required && (
+              <span className='text-[var(--color-error-500)] ml-1'>*</span>
+            )}
           </label>
         )}
 
@@ -133,7 +138,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {(error || success || helperText) && (
           <div className='mt-1 text-sm'>
             {error && <p className='text-[var(--color-error-500)]'>{error}</p>}
-            {success && <p className='text-[var(--color-success-500)]'>{success}</p>}
+            {success && (
+              <p className='text-[var(--color-success-500)]'>{success}</p>
+            )}
             {helperText && !error && !success && (
               <p className='text-[var(--color-text-tertiary)]'>{helperText}</p>
             )}
