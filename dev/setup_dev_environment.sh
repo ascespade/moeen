@@ -140,3 +140,6 @@ chmod +x /workspace/dev/scripts/dev_status.sh
 echo "✅ Development environment setup complete!"
 echo "Run 'source ~/.bashrc' to reload your shell configuration"
 echo "Run '/workspace/dev/scripts/dev_status.sh' to check server status"
+
+
+
