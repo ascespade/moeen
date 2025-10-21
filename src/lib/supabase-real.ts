@@ -765,6 +765,33 @@ export class RealSupabaseManager {
     return data || [];
   }
 
+  // User management
+  async getUserByEmail(email: string) {
+    const { data, error } = await admin
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .single();
+
+    if (error) {
+      return null;
+    }
+    return data;
+  }
+
+  async getUserById(id: string) {
+    const { data, error } = await admin
+      .from('users')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      return null;
+    }
+    return data;
+  }
+
   // Translations
   async getTranslations() {
     const { data, error } = await admin
