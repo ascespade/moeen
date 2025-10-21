@@ -99,106 +99,132 @@ export default function DashboardPage() {
   // const stats = dashboardData.statistics;
 
   return (
-    <main className="min-h-screen bg-[var(--color-bg-secondary)]">
+    <main className='min-h-screen bg-[var(--color-bg-secondary)]'>
       {/* Top Bar */}
-      <div className="bg-white dark:bg-gray-900 border-b border-[var(--color-primary-500)]">
-        <div className="container-app py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-[var(--color-primary-500)]">لوحة التحكم</h1>
-          <div className="text-sm text-[var(--color-text-secondary)]">اليوم: {new Date().toLocaleDateString("ar-SA")}</div>
+      <div className='bg-white dark:bg-gray-900 border-b border-[var(--color-primary-500)]'>
+        <div className='container-app py-4 flex items-center justify-between'>
+          <h1 className='text-2xl font-bold text-[var(--color-primary-500)]'>
+            لوحة التحكم
+          </h1>
+          <div className='text-sm text-[var(--color-text-secondary)]'>
+            اليوم: {new Date().toLocaleDateString('ar-SA')}
+          </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="container-app py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className='container-app py-6 grid grid-cols-1 lg:grid-cols-12 gap-6'>
         {/* Sidebar */}
-        <aside className="lg:col-span-3 space-y-4">
-          <div className="card">
-            <div className="card-header">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-[var(--color-primary-500)] rounded-md flex items-center justify-center">
-                  <span className="text-white text-xs">📊</span>
+        <aside className='lg:col-span-3 space-y-4'>
+          <div className='card'>
+            <div className='card-header'>
+              <div className='flex items-center gap-2'>
+                <div className='w-6 h-6 bg-[var(--color-primary-500)] rounded-md flex items-center justify-center'>
+                  <span className='text-white text-xs'>📊</span>
                 </div>
-                <h3 className="card-title">التنقل</h3>
+                <h3 className='card-title'>التنقل</h3>
               </div>
             </div>
-            <ul className="space-y-3">
-              <li><a className="nav-link" href="#stats">
-                <span className="w-2 h-2 bg-[var(--color-primary-500)] rounded-full"></span>
-                الإحصائيات
-              </a></li>
-              <li><a className="nav-link" href="#charts">
-                <span className="w-2 h-2 bg-[var(--color-secondary-500)] rounded-full"></span>
-                الرسوم البيانية
-              </a></li>
-              <li><a className="nav-link" href="#activity">
-                <span className="w-2 h-2 bg-[var(--color-accent-500)] rounded-full"></span>
-                آخر الأنشطة
-              </a></li>
+            <ul className='space-y-3'>
+              <li>
+                <a className='nav-link' href='#stats'>
+                  <span className='w-2 h-2 bg-[var(--color-primary-500)] rounded-full'></span>
+                  الإحصائيات
+                </a>
+              </li>
+              <li>
+                <a className='nav-link' href='#charts'>
+                  <span className='w-2 h-2 bg-[var(--color-secondary-500)] rounded-full'></span>
+                  الرسوم البيانية
+                </a>
+              </li>
+              <li>
+                <a className='nav-link' href='#activity'>
+                  <span className='w-2 h-2 bg-[var(--color-accent-500)] rounded-full'></span>
+                  آخر الأنشطة
+                </a>
+              </li>
             </ul>
           </div>
         </aside>
 
         {/* Main */}
-        <section className="lg:col-span-9 space-y-6">
+        <section className='lg:col-span-9 space-y-6'>
           {/* KPIs */}
-          <div id="stats" className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">المستخدمون</h3>
+          <div id='stats' className='grid grid-cols-2 md:grid-cols-4 gap-4'>
+            <div className='card'>
+              <div className='card-header'>
+                <h3 className='card-title'>المستخدمون</h3>
               </div>
-              <div className="card-body">
-                <div className="text-3xl font-bold text-[var(--color-primary-500)]">1,248</div>
-                <div className="text-sm text-[var(--color-text-secondary)]">+4% هذا الأسبوع</div>
+              <div className='card-body'>
+                <div className='text-3xl font-bold text-[var(--color-primary-500)]'>
+                  1,248
+                </div>
+                <div className='text-sm text-[var(--color-text-secondary)]'>
+                  +4% هذا الأسبوع
+                </div>
               </div>
             </div>
 
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">الخدمات</h3>
+            <div className='card'>
+              <div className='card-header'>
+                <h3 className='card-title'>الخدمات</h3>
               </div>
-              <div className="card-body">
-                <div className="text-3xl font-bold text-[var(--color-secondary-500)]">12</div>
-                <div className="text-sm text-[var(--color-text-secondary)]">-1% هذا الأسبوع</div>
-              </div>
-            </div>
-            
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">المشاريع</h3>
-              </div>
-              <div className="card-body">
-                <div className="text-3xl font-bold text-[var(--color-accent-500)]">3,420</div>
-                <div className="text-sm text-[var(--color-text-secondary)]">+12%</div>
+              <div className='card-body'>
+                <div className='text-3xl font-bold text-[var(--color-secondary-500)]'>
+                  12
+                </div>
+                <div className='text-sm text-[var(--color-text-secondary)]'>
+                  -1% هذا الأسبوع
+                </div>
               </div>
             </div>
-            
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">الرسائل</h3>
+
+            <div className='card'>
+              <div className='card-header'>
+                <h3 className='card-title'>المشاريع</h3>
               </div>
-              <div className="card-body">
-                <div className="text-3xl font-bold text-[var(--color-success-500)]">18,305</div>
-                <div className="text-sm text-[var(--color-text-secondary)]">+7%</div>
+              <div className='card-body'>
+                <div className='text-3xl font-bold text-[var(--color-accent-500)]'>
+                  3,420
+                </div>
+                <div className='text-sm text-[var(--color-text-secondary)]'>
+                  +12%
+                </div>
+              </div>
+            </div>
+
+            <div className='card'>
+              <div className='card-header'>
+                <h3 className='card-title'>الرسائل</h3>
+              </div>
+              <div className='card-body'>
+                <div className='text-3xl font-bold text-[var(--color-success-500)]'>
+                  18,305
+                </div>
+                <div className='text-sm text-[var(--color-text-secondary)]'>
+                  +7%
+                </div>
               </div>
             </div>
           </div>
 
           {/* Activity */}
-          <div id="activity" className="card">
-            <div className="card-header">
-              <h3 className="card-title">آخر الأنشطة</h3>
+          <div id='activity' className='card'>
+            <div className='card-header'>
+              <h3 className='card-title'>آخر الأنشطة</h3>
             </div>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-[var(--color-primary-500)] rounded-full"></span>
+            <ul className='space-y-2 text-sm'>
+              <li className='flex items-center gap-2'>
+                <span className='w-2 h-2 bg-[var(--color-primary-500)] rounded-full'></span>
                 تم إنشاء مشروع جديد: التطوير الفني
               </li>
-              <li className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-[var(--color-secondary-500)] rounded-full"></span>
+              <li className='flex items-center gap-2'>
+                <span className='w-2 h-2 bg-[var(--color-secondary-500)] rounded-full'></span>
                 تم تسجيل مستخدم: Ahmed@example.com
               </li>
-              <li className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-[var(--color-accent-500)] rounded-full"></span>
+              <li className='flex items-center gap-2'>
+                <span className='w-2 h-2 bg-[var(--color-accent-500)] rounded-full'></span>
                 تم إرسال 230 رسالة خلال الساعة الماضية
               </li>
             </ul>
