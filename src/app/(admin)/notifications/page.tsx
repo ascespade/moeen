@@ -196,7 +196,7 @@ const NotificationsPage: React.FC = () => {
       setNotifications(mockNotifications);
       setTemplates(mockTemplates);
     } catch {
-      setError('فشل في تحميل الإشعارات');
+      // setError('فشل في تحميل الإشعارات');
     } finally {
       setLoading(false);
     }

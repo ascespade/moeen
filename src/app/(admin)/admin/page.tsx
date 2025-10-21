@@ -90,6 +90,7 @@ export default function AdminPage() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
+    // eslint-disable-next-line no-undef
     if (typeof window !== 'undefined' && window.document) {
       // eslint-disable-next-line no-undef
       window.document.title = 'Admin Panel - مُعين';

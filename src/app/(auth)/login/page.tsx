@@ -44,7 +44,7 @@ export default function LoginPage() {
     }));
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const handleQuickTestLogin = async () => {
     setError(null);
     setSubmitting(true);
