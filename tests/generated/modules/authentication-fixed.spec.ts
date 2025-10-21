@@ -24,29 +24,29 @@ class AuthenticationTestHelper {
         phone: '+966501234567',
         role: 'admin',
         name: 'Admin User',
-        password: 'TestPass123!'
+        password: 'TestPass123!',
       },
       {
         email: 'doctor@test.com',
         phone: '+966501234568',
         role: 'doctor',
         name: 'Doctor User',
-        password: 'TestPass123!'
+        password: 'TestPass123!',
       },
       {
         email: 'patient@test.com',
         phone: '+966501234569',
         role: 'patient',
         name: 'Patient User',
-        password: 'TestPass123!'
+        password: 'TestPass123!',
       },
       {
         email: 'therapist@test.com',
         phone: '+966501234570',
         role: 'therapist',
         name: 'Therapist User',
-        password: 'TestPass123!'
-      }
+        password: 'TestPass123!',
+      },
     ];
 
     for (const userData of users) {
@@ -56,7 +56,7 @@ class AuthenticationTestHelper {
           phone: userData.phone,
           role: userData.role,
           name: userData.name,
-          password: userData.password
+          password: userData.password,
         });
 
         this.testUsers.set(userData.role, {
@@ -64,7 +64,7 @@ class AuthenticationTestHelper {
           email: user.email,
           phone: user.phone,
           role: user.role,
-          name: user.name
+          name: user.name,
         });
 
         console.log(`✅ Created test user: ${userData.role}`);
@@ -79,7 +79,7 @@ class AuthenticationTestHelper {
               email: existingUser.email,
               phone: existingUser.phone,
               role: existingUser.role,
-              name: existingUser.name
+              name: existingUser.name,
             });
           }
         } catch (e) {
@@ -134,12 +134,12 @@ test.describe('Authentication Module - Fixed Comprehensive Tests', () => {
     test('should login with valid email and password', async () => {
       const adminUser = authHelper.getTestUser('admin');
       expect(adminUser).toBeDefined();
-      
+
       if (adminUser) {
         await page.fill('[data-testid="email-input"]', adminUser.email);
         await page.fill('[data-testid="password-input"]', 'TestPass123!');
         await page.click('[data-testid="login-button"]');
-        
+
         // Wait for redirect to dashboard
         await page.waitForURL('/dashboard', { timeout: 10000 });
         await expect(page).toHaveURL('/dashboard');
@@ -149,12 +149,12 @@ test.describe('Authentication Module - Fixed Comprehensive Tests', () => {
     test('should login with valid phone and password', async () => {
       const doctorUser = authHelper.getTestUser('doctor');
       expect(doctorUser).toBeDefined();
-      
+
       if (doctorUser) {
         await page.fill('[data-testid="phone-input"]', doctorUser.phone);
         await page.fill('[data-testid="password-input"]', 'TestPass123!');
         await page.click('[data-testid="login-button"]');
-        
+
         // Wait for redirect to dashboard
         await page.waitForURL('/dashboard', { timeout: 10000 });
         await expect(page).toHaveURL('/dashboard');
@@ -165,27 +165,29 @@ test.describe('Authentication Module - Fixed Comprehensive Tests', () => {
       await page.fill('[data-testid="email-input"]', 'invalid@test.com');
       await page.fill('[data-testid="password-input"]', 'wrongpassword');
       await page.click('[data-testid="login-button"]');
-      
+
       // Wait for error message
       await expect(page.locator('[data-testid="error-message"]')).toBeVisible();
     });
 
     test('should validate required fields', async () => {
       await page.click('[data-testid="login-button"]');
-      
+
       // Check for validation messages
       await expect(page.locator('[data-testid="email-error"]')).toBeVisible();
-      await expect(page.locator('[data-testid="password-error"]')).toBeVisible();
+      await expect(
+        page.locator('[data-testid="password-error"]')
+      ).toBeVisible();
     });
   });
 
   test.describe('Registration Functionality', () => {
     test('should register new user successfully', async () => {
       await page.goto('/register');
-      
+
       const testEmail = `test-${Date.now()}@example.com`;
       const testPhone = `+966501234${Math.floor(Math.random() * 1000)}`;
-      
+
       await page.fill('[data-testid="name-input"]', 'Test User');
       await page.fill('[data-testid="email-input"]', testEmail);
       await page.fill('[data-testid="phone-input"]', testPhone);
@@ -193,24 +195,31 @@ test.describe('Authentication Module - Fixed Comprehensive Tests', () => {
       await page.fill('[data-testid="confirm-password-input"]', 'TestPass123!');
       await page.selectOption('[data-testid="role-select"]', 'patient');
       await page.click('[data-testid="register-button"]');
-      
+
       // Wait for success message or redirect
       await page.waitForTimeout(2000);
-      await expect(page.locator('[data-testid="success-message"]')).toBeVisible();
+      await expect(
+        page.locator('[data-testid="success-message"]')
+      ).toBeVisible();
     });
 
     test('should validate password confirmation', async () => {
       await page.goto('/register');
-      
+
       await page.fill('[data-testid="name-input"]', 'Test User');
       await page.fill('[data-testid="email-input"]', 'test@example.com');
       await page.fill('[data-testid="phone-input"]', '+966501234567');
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
-      await page.fill('[data-testid="confirm-password-input"]', 'DifferentPass123!');
+      await page.fill(
+        '[data-testid="confirm-password-input"]',
+        'DifferentPass123!'
+      );
       await page.selectOption('[data-testid="role-select"]', 'patient');
       await page.click('[data-testid="register-button"]');
-      
-      await expect(page.locator('[data-testid="password-mismatch-error"]')).toBeVisible();
+
+      await expect(
+        page.locator('[data-testid="password-mismatch-error"]')
+      ).toBeVisible();
     });
   });
 
@@ -223,7 +232,7 @@ test.describe('Authentication Module - Fixed Comprehensive Tests', () => {
         await page.fill('[data-testid="password-input"]', 'TestPass123!');
         await page.click('[data-testid="login-button"]');
         await page.waitForURL('/dashboard');
-        
+
         // Then logout
         await page.click('[data-testid="logout-button"]');
         await page.waitForURL('/login');
@@ -236,13 +245,15 @@ test.describe('Authentication Module - Fixed Comprehensive Tests', () => {
     test('should request password reset', async () => {
       await page.click('[data-testid="forgot-password-link"]');
       await page.waitForURL('/forgot-password');
-      
+
       const adminUser = authHelper.getTestUser('admin');
       if (adminUser) {
         await page.fill('[data-testid="email-input"]', adminUser.email);
         await page.click('[data-testid="reset-button"]');
-        
-        await expect(page.locator('[data-testid="reset-success-message"]')).toBeVisible();
+
+        await expect(
+          page.locator('[data-testid="reset-success-message"]')
+        ).toBeVisible();
       }
     });
   });
@@ -255,7 +266,7 @@ test.describe('Authentication Module - Fixed Comprehensive Tests', () => {
         await page.fill('[data-testid="password-input"]', 'TestPass123!');
         await page.click('[data-testid="login-button"]');
         await page.waitForURL('/dashboard');
-        
+
         // Refresh page
         await page.reload();
         await expect(page).toHaveURL('/dashboard');
@@ -306,19 +317,25 @@ test.describe('Authentication Module - Fixed Comprehensive Tests', () => {
 
   test.describe('Security Tests', () => {
     test('should prevent SQL injection in login', async () => {
-      await page.fill('[data-testid="email-input"]', "admin@test.com'; DROP TABLE users; --");
+      await page.fill(
+        '[data-testid="email-input"]',
+        "admin@test.com'; DROP TABLE users; --"
+      );
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
+
       // Should show error, not crash
       await expect(page.locator('[data-testid="error-message"]')).toBeVisible();
     });
 
     test('should prevent XSS in login form', async () => {
-      await page.fill('[data-testid="email-input"]', '<script>alert("xss")</script>');
+      await page.fill(
+        '[data-testid="email-input"]',
+        '<script>alert("xss")</script>'
+      );
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
+
       // Should not execute script
       await expect(page.locator('script')).toHaveCount(0);
     });
@@ -331,33 +348,43 @@ test.describe('Authentication Module - Fixed Comprehensive Tests', () => {
         await page.click('[data-testid="login-button"]');
         await page.waitForTimeout(100);
       }
-      
+
       // Should show rate limit message
-      await expect(page.locator('[data-testid="rate-limit-message"]')).toBeVisible();
+      await expect(
+        page.locator('[data-testid="rate-limit-message"]')
+      ).toBeVisible();
     });
   });
 
   test.describe('Accessibility Tests', () => {
     test('should have proper ARIA labels', async () => {
-      await expect(page.locator('[data-testid="email-input"]')).toHaveAttribute('aria-label');
-      await expect(page.locator('[data-testid="password-input"]')).toHaveAttribute('aria-label');
-      await expect(page.locator('[data-testid="login-button"]')).toHaveAttribute('aria-label');
+      await expect(page.locator('[data-testid="email-input"]')).toHaveAttribute(
+        'aria-label'
+      );
+      await expect(
+        page.locator('[data-testid="password-input"]')
+      ).toHaveAttribute('aria-label');
+      await expect(
+        page.locator('[data-testid="login-button"]')
+      ).toHaveAttribute('aria-label');
     });
 
     test('should support keyboard navigation', async () => {
       await page.keyboard.press('Tab');
       await expect(page.locator('[data-testid="email-input"]')).toBeFocused();
-      
+
       await page.keyboard.press('Tab');
-      await expect(page.locator('[data-testid="password-input"]')).toBeFocused();
-      
+      await expect(
+        page.locator('[data-testid="password-input"]')
+      ).toBeFocused();
+
       await page.keyboard.press('Tab');
       await expect(page.locator('[data-testid="login-button"]')).toBeFocused();
     });
 
     test('should announce errors to screen readers', async () => {
       await page.click('[data-testid="login-button"]');
-      
+
       const errorElement = page.locator('[data-testid="error-message"]');
       await expect(errorElement).toBeVisible();
       await expect(errorElement).toHaveAttribute('role', 'alert');
@@ -369,7 +396,7 @@ test.describe('Authentication Module - Fixed Comprehensive Tests', () => {
       const startTime = Date.now();
       await page.goto('/login');
       const loadTime = Date.now() - startTime;
-      
+
       expect(loadTime).toBeLessThan(3000); // Should load within 3 seconds
     });
 
@@ -382,7 +409,7 @@ test.describe('Authentication Module - Fixed Comprehensive Tests', () => {
         await page.click('[data-testid="login-button"]');
         await page.waitForURL('/dashboard');
         const loginTime = Date.now() - startTime;
-        
+
         expect(loginTime).toBeLessThan(5000); // Should login within 5 seconds
       }
     });
