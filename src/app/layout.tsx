@@ -1,25 +1,25 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next';
-import { I18nProvider } from '@/components/providers/I18nProvider';
+import I18nProvider from '@/components/providers/I18nProvider';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Ultimate E2E Self-Healing Runner',
+  title: 'مُعين - مساعدك الذكي في الرعاية الصحية',
   description:
-    'Comprehensive testing system with Playwright and Supawright. AI-powered auto-healing and intelligent test management.',
+    'نظام متكامل لإدارة المراكز الصحية مع أحدث التقنيات والذكاء الاصطناعي',
   keywords:
-    'E2E testing, Playwright, Supawright, auto-healing, testing automation, AI testing',
-  authors: [{ name: 'Ultimate E2E Team' }],
+    'إدارة المراكز الصحية, الذكاء الاصطناعي, إدارة المرضى, المواعيد الطبية, السعودية',
+  authors: [{ name: 'فريق مُعين' }],
   openGraph: {
-    title: 'Ultimate E2E Self-Healing Runner',
-    description: 'Comprehensive testing system with Playwright and Supawright',
+    title: 'مُعين - مساعدك الذكي في الرعاية الصحية',
+    description: 'نظام متكامل لإدارة المراكز الصحية مع أحدث التقنيات',
     type: 'website',
-    locale: 'en_US',
+    locale: 'ar_SA',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ultimate E2E Self-Healing Runner',
-    description: 'Comprehensive testing system with Playwright and Supawright',
+    title: 'مُعين - مساعدك الذكي في الرعاية الصحية',
+    description: 'نظام متكامل لإدارة المراكز الصحية مع أحدث التقنيات',
   },
   robots: {
     index: true,
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#f8fafc',
+  themeColor: '#ff6b35',
 };
 
 export default function RootLayout({
@@ -39,21 +39,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' className='scroll-smooth'>
+    <html lang='ar' dir='rtl' className='scroll-smooth'>
       <head>
         <link rel='icon' href='/favicon.ico' />
-        <link rel='preconnect' href='https://fonts.googleapis.com' />
-        <link
-          rel='preconnect'
-          href='https://fonts.gstatic.com'
-          crossOrigin='anonymous'
-        />
-        <link
-          href='https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap'
-          rel='stylesheet'
-        />
       </head>
-      <body className='antialiased font-inter bg-slate-50 text-slate-900'>
+      <body className='antialiased bg-slate-50 text-slate-900'>
         <I18nProvider>{children}</I18nProvider>
       </body>
     </html>

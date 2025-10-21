@@ -6,24 +6,11 @@ import { glob } from 'glob';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { glob } from 'glob';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-#!/usr/bin/env node
-
 /**
  * Import Paths Updater Codemod
  * Updates import paths after file reorganization
  */
 
-const fs = require('fs');
-const path = require('path');
-const { glob } = require('glob');
 
 class ImportPathsUpdater {
   constructor(projectRoot) {

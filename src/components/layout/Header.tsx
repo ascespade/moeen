@@ -1,174 +1,241 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+interface HeaderProps {
+  className?: string;
+}
+
+export default function Header({ className = '' }: HeaderProps) {
+  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState('ar');
+  const [currentTheme, setCurrentTheme] = useState('light');
+  const router = useRouter();
+
+  const languages = [
+    { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+  ];
+
+  const themes = [
+    { code: 'light', name: 'فاتح', icon: '☀️' },
+    { code: 'dark', name: 'داكن', icon: '🌙' },
+    { code: 'auto', name: 'تلقائي', icon: '🔄' },
+  ];
+
+  const handleLanguageChange = (langCode: string) => {
+    setCurrentLanguage(langCode);
+    setIsLanguageMenuOpen(false);
+    // يمكن إضافة منطق تغيير اللغة هنا
+    if (langCode === 'en') {
+      document.documentElement.setAttribute('lang', 'en');
+      document.documentElement.setAttribute('dir', 'ltr');
+    } else {
+      document.documentElement.setAttribute('lang', 'ar');
+      document.documentElement.setAttribute('dir', 'rtl');
+    }
+  };
+
+  const handleThemeChange = (themeCode: string) => {
+    setCurrentTheme(themeCode);
+    setIsThemeMenuOpen(false);
+    
+    // تطبيق الثيم
+    if (themeCode === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else if (themeCode === 'light') {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    } else {
+      // تلقائي - يتبع إعدادات النظام
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      } else {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+      }
+    }
+  };
 
   return (
-    <header className='bg-white/95 backdrop-blur-md border-b border-blue-200/30 sticky top-0 z-50'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='flex justify-between items-center py-4'>
+    <header className={`bg-white dark:bg-gray-900 border-b border-[var(--color-border-primary)] shadow-sm ${className}`}>
+      <div className="container-app">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className='flex items-center space-x-3'>
-            <div className='w-12 h-12 relative'>
-              <Image
-                src='/logo.png'
-                alt='Ultimate E2E Logo'
-                width={48}
-                height={48}
-                className='rounded-xl'
-                priority
-              />
+          <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+            <div className="w-10 h-10 bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-secondary-500)] rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-xl">م</span>
             </div>
-            <div>
-              <h1 className='text-xl font-bold text-gray-900'>Ultimate E2E</h1>
-              <p className='text-xs text-blue-600 font-medium'>
-                Self-Healing Runner
-              </p>
+            <div className="hidden sm:block">
+              <h1 className="text-xl font-bold text-[var(--color-text-primary)]">مُعين</h1>
+              <p className="text-xs text-[var(--color-text-secondary)]">مساعدك الذكي</p>
             </div>
-          </div>
+          </Link>
 
-          {/* Desktop Navigation */}
-          <nav className='hidden md:flex items-center space-x-8'>
-            <Link
-              href='/'
-              className='text-gray-700 hover:text-blue-600 font-medium transition-colors'
+          {/* Navigation Links */}
+          <nav className="hidden md:flex items-center space-x-8 rtl:space-x-reverse">
+            <Link 
+              href="/features" 
+              className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary-500)] transition-colors font-medium"
             >
-              Home
+              المميزات
             </Link>
-            <Link
-              href='/dashboard'
-              className='text-gray-700 hover:text-blue-600 font-medium transition-colors'
+            <Link 
+              href="/about" 
+              className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary-500)] transition-colors font-medium"
             >
-              Dashboard
+              عنا
             </Link>
-            <Link
-              href='/features'
-              className='text-gray-700 hover:text-blue-600 font-medium transition-colors'
+            <Link 
+              href="/contact" 
+              className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary-500)] transition-colors font-medium"
             >
-              Features
-            </Link>
-            <Link
-              href='/docs'
-              className='text-gray-700 hover:text-blue-600 font-medium transition-colors'
-            >
-              Documentation
-            </Link>
-            <Link
-              href='/contact'
-              className='text-gray-700 hover:text-blue-600 font-medium transition-colors'
-            >
-              Contact
+              اتصل بنا
             </Link>
           </nav>
 
-          {/* CTA Buttons */}
-          <div className='hidden md:flex items-center space-x-4'>
-            <Link
-              href='/login'
-              className='text-gray-700 hover:text-blue-600 font-medium transition-colors'
-            >
-              Sign In
-            </Link>
-            <Link
-              href='/register'
-              className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl'
-            >
-              Get Started
-            </Link>
-          </div>
+          {/* Controls */}
+          <div className="flex items-center space-x-4 rtl:space-x-reverse">
+            {/* Language Switcher */}
+            <div className="relative">
+              <button
+                onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
+                className="flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 rounded-lg bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-tertiary)] transition-colors"
+              >
+                <span className="text-lg">
+                  {languages.find(lang => lang.code === currentLanguage)?.flag}
+                </span>
+                <span className="text-sm font-medium text-[var(--color-text-primary)]">
+                  {languages.find(lang => lang.code === currentLanguage)?.name}
+                </span>
+                <svg 
+                  className={`w-4 h-4 text-[var(--color-text-secondary)] transition-transform ${isLanguageMenuOpen ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
 
-          {/* Mobile menu button */}
-          <button
-            className='md:hidden p-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors'
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <svg
-              className='w-6 h-6'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
-            >
-              {isMenuOpen ? (
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M6 18L18 6M6 6l12 12'
-                />
-              ) : (
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M4 6h16M4 12h16M4 18h16'
-                />
+              {isLanguageMenuOpen && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-[var(--color-border-primary)] z-50">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => handleLanguageChange(lang.code)}
+                      className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 text-right hover:bg-[var(--color-bg-secondary)] transition-colors first:rounded-t-lg last:rounded-b-lg ${
+                        currentLanguage === lang.code ? 'bg-[var(--color-primary-50)] text-[var(--color-primary-500)]' : 'text-[var(--color-text-primary)]'
+                      }`}
+                    >
+                      <span className="text-lg">{lang.flag}</span>
+                      <span className="font-medium">{lang.name}</span>
+                      {currentLanguage === lang.code && (
+                        <svg className="w-4 h-4 text-[var(--color-primary-500)]" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </button>
+                  ))}
+                </div>
               )}
-            </svg>
-          </button>
-        </div>
+            </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className='md:hidden py-4 border-t border-blue-200/30'>
-            <nav className='flex flex-col space-y-4'>
-              <Link
-                href='/'
-                className='text-gray-700 hover:text-blue-600 font-medium transition-colors py-2'
-                onClick={() => setIsMenuOpen(false)}
+            {/* Theme Switcher */}
+            <div className="relative">
+              <button
+                onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
+                className="flex items-center space-x-2 rtl:space-x-reverse px-3 py-2 rounded-lg bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-tertiary)] transition-colors"
               >
-                Home
-              </Link>
-              <Link
-                href='/dashboard'
-                className='text-gray-700 hover:text-blue-600 font-medium transition-colors py-2'
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Dashboard
-              </Link>
-              <Link
-                href='/features'
-                className='text-gray-700 hover:text-blue-600 font-medium transition-colors py-2'
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Features
-              </Link>
-              <Link
-                href='/docs'
-                className='text-gray-700 hover:text-blue-600 font-medium transition-colors py-2'
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Documentation
-              </Link>
-              <Link
-                href='/contact'
-                className='text-gray-700 hover:text-blue-600 font-medium transition-colors py-2'
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact
-              </Link>
-              <div className='pt-4 border-t border-blue-200/30 flex flex-col space-y-3'>
-                <Link
-                  href='/login'
-                  className='text-gray-700 hover:text-blue-600 font-medium transition-colors py-2'
-                  onClick={() => setIsMenuOpen(false)}
+                <span className="text-lg">
+                  {themes.find(theme => theme.code === currentTheme)?.icon}
+                </span>
+                <span className="text-sm font-medium text-[var(--color-text-primary)]">
+                  {themes.find(theme => theme.code === currentTheme)?.name}
+                </span>
+                <svg 
+                  className={`w-4 h-4 text-[var(--color-text-secondary)] transition-transform ${isThemeMenuOpen ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
                 >
-                  Sign In
-                </Link>
-                <Link
-                  href='/register'
-                  className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 text-center'
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Get Started
-                </Link>
-              </div>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {isThemeMenuOpen && (
+                <div className="absolute top-full left-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-[var(--color-border-primary)] z-50">
+                  {themes.map((theme) => (
+                    <button
+                      key={theme.code}
+                      onClick={() => handleThemeChange(theme.code)}
+                      className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 text-right hover:bg-[var(--color-bg-secondary)] transition-colors first:rounded-t-lg last:rounded-b-lg ${
+                        currentTheme === theme.code ? 'bg-[var(--color-primary-50)] text-[var(--color-primary-500)]' : 'text-[var(--color-text-primary)]'
+                      }`}
+                    >
+                      <span className="text-lg">{theme.icon}</span>
+                      <span className="font-medium">{theme.name}</span>
+                      {currentTheme === theme.code && (
+                        <svg className="w-4 h-4 text-[var(--color-primary-500)]" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Auth Buttons */}
+            <div className="flex items-center space-x-3 rtl:space-x-reverse">
+              <Link
+                href="/login"
+                className="px-4 py-2 text-[var(--color-primary-500)] hover:text-[var(--color-primary-600)] font-medium transition-colors"
+              >
+                تسجيل الدخول
+              </Link>
+              <Link
+                href="/register"
+                className="px-4 py-2 bg-[var(--color-primary-500)] hover:bg-[var(--color-primary-600)] text-white rounded-lg font-medium transition-colors"
+              >
+                إنشاء حساب
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu Button */}
+      <div className="md:hidden border-t border-[var(--color-border-primary)]">
+        <div className="container-app py-3">
+          <div className="flex items-center justify-between">
+            <nav className="flex space-x-6 rtl:space-x-reverse">
+              <Link 
+                href="/features" 
+                className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary-500)] transition-colors text-sm font-medium"
+              >
+                المميزات
+              </Link>
+              <Link 
+                href="/about" 
+                className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary-500)] transition-colors text-sm font-medium"
+              >
+                عنا
+              </Link>
+              <Link 
+                href="/contact" 
+                className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary-500)] transition-colors text-sm font-medium"
+              >
+                اتصل بنا
+              </Link>
             </nav>
           </div>
-        )}
+        </div>
       </div>
     </header>
   );

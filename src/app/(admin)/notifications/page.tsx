@@ -240,7 +240,7 @@ const NotificationsPage: React.FC = () => {
       low: { label: 'منخفض', variant: 'secondary' as const },
       medium: { label: 'متوسط', variant: 'primary' as const },
       high: { label: 'عالي', variant: 'primary' as const },
-      urgent: { label: 'عاجل', variant: 'destructive' as const },
+      urgent: { label: 'عاجل', variant: 'error' as const },
     };
 
     const priorityInfo = priorityMap[priority as keyof typeof priorityMap] || {

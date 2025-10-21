@@ -21,10 +21,6 @@ export {
   CardDescription,
 } from './Card';
 export type {
-  CardProps,
-  CardHeaderProps,
-  CardContentProps,
-  CardFooterProps,
 } from './Card';
 
 export { Input } from './Input';

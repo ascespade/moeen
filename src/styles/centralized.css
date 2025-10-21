@@ -5,9 +5,8 @@
    All components and pages should use classes defined here.
 */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* استيراد نظام التصميم الموحد */
+@import './design-system/index.css';
 
 /* ========================================
    CSS CUSTOM PROPERTIES (DESIGN TOKENS)
@@ -16,9 +15,9 @@
 :root {
   /* Import design system tokens */
   /* Brand Colors - Single Source of Truth (Solid brand colors) */
-  --brand-primary: #e46c0a; /* Solid Orange - Primary brand color */
-  --brand-primary-hover: #d45f08; /* Darker orange for hover states */
-  --brand-secondary: #ffa500; /* Solid Orange - Secondary brand color */
+  --brand-primary: var(--color-primary-500); /* Vibrant Orange - Primary brand color */
+  --brand-primary-hover: var(--color-primary-600); /* Darker orange for hover states */
+  --brand-secondary: var(--color-secondary-500); /* Complementary Orange - Secondary brand color */
   --brand-neutral-beige: #f2e7dc; /* Neutral Beige */
   --brand-accent: #007bff; /* Blue - Accent color */
   --brand-accent-deep: #c93c00; /* Deep Red-Orange - Accent color */
@@ -83,7 +82,7 @@
   --transition-slow: 500ms ease-in-out;
 
   /* Typography */
-  --font-family-sans: 'Cairo', 'Inter', system-ui, sans-serif;
+  --font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --font-family-mono: 'Fira Code', monaco, consolas, monospace;
 
   /* Z-Index Scale */
@@ -102,9 +101,9 @@
   :root {
     --background: #0d1117; /* Dark navy */
     --foreground: #e5eef7; /* Light text */
-    --brand-primary: #e46c0a; /* Keep solid brand consistent */
-    --brand-primary-hover: #d45f08; /* Darker orange for dark mode */
-    --brand-secondary: #6b4e16; /* Keep solid secondary consistent */
+    --brand-primary: #ff6b35; /* Keep vibrant orange consistent */
+    --brand-primary-hover: #e55a2b; /* Darker orange for dark mode */
+    --brand-secondary: #ff8c42; /* Keep complementary orange consistent */
     --brand-neutral-beige: #2a2520; /* Darker beige for dark mode */
     --brand-accent: #007bff; /* Keep accent consistent */
     --brand-accent-deep: #c93c00; /* Keep accent deep consistent */

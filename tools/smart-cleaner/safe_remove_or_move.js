@@ -2,29 +2,16 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { glob } from 'glob';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { glob } from 'glob';
 import { execSync } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-#!/usr/bin/env node
 
 /**
  * Safe Remove or Move Manager
  * Safely removes or moves files with proper validation and rollback support
  */
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
 
 class SafeRemoveOrMoveManager {
   constructor(projectRoot) {

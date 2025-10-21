@@ -1,6 +1,8 @@
 {
   "type": "nextjs",
-  "frameworks": ["Next.js"],
+  "frameworks": [
+    "Next.js"
+  ],
   "tools": [
     "npm",
     "TypeScript",
@@ -149,14 +151,23 @@
         "ts-morph": "^27.0.2"
       },
       "lint-staged": {
-        "src/**/*.{ts,tsx,js,jsx}": ["eslint --fix", "prettier --write"],
-        "*.{json,md,yml,yaml}": ["prettier --write"]
+        "src/**/*.{ts,tsx,js,jsx}": [
+          "eslint --fix",
+          "prettier --write"
+        ],
+        "*.{json,md,yml,yaml}": [
+          "prettier --write"
+        ]
       }
     },
     "tsconfig": {
       "compilerOptions": {
         "target": "ES2022",
-        "lib": ["dom", "dom.iterable", "esnext"],
+        "lib": [
+          "dom",
+          "dom.iterable",
+          "esnext"
+        ],
         "allowJs": true,
         "skipLibCheck": true,
         "strict": false,
@@ -183,9 +194,14 @@
         ],
         "baseUrl": ".",
         "paths": {
-          "@/*": ["./src/*"]
+          "@/*": [
+            "./src/*"
+          ]
         },
-        "types": ["node", "playwright"]
+        "types": [
+          "node",
+          "playwright"
+        ]
       },
       "include": [
         "next-env.d.ts",
@@ -218,7 +234,10 @@
     },
     "hasSrcDir": true,
     "srcStructure": {
-      "files": ["middleware.disabled.ts", "middleware.prod.ts"],
+      "files": [
+        "middleware.disabled.ts",
+        "middleware.prod.ts"
+      ],
       "directories": {
         "app": {
           "files": [
@@ -233,7 +252,9 @@
           ],
           "directories": {
             "(admin)": {
-              "files": ["layout.tsx"],
+              "files": [
+                "layout.tsx"
+              ],
               "directories": {
                 "admin": {
                   "type": "max_depth_reached"
@@ -301,7 +322,9 @@
               }
             },
             "(auth)": {
-              "files": ["layout.tsx"],
+              "files": [
+                "layout.tsx"
+              ],
               "directories": {
                 "forgot-password": {
                   "type": "max_depth_reached"
@@ -376,7 +399,9 @@
               }
             },
             "(info)": {
-              "files": ["layout.tsx"],
+              "files": [
+                "layout.tsx"
+              ],
               "directories": {
                 "about": {
                   "type": "max_depth_reached"
@@ -387,7 +412,9 @@
               }
             },
             "(legal)": {
-              "files": ["layout.tsx"],
+              "files": [
+                "layout.tsx"
+              ],
               "directories": {
                 "privacy": {
                   "type": "max_depth_reached"
@@ -562,27 +589,39 @@
               }
             },
             "color-palette": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "dashboard": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "design-system": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "simple": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "test": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "uikit": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {
                 "guidelines": {
                   "type": "max_depth_reached"
@@ -605,19 +644,28 @@
           ],
           "directories": {
             "accessibility": {
-              "files": ["AccessibilitySettings.tsx"],
+              "files": [
+                "AccessibilitySettings.tsx"
+              ],
               "directories": {}
             },
             "appointments": {
-              "files": ["AppointmentManager.tsx"],
+              "files": [
+                "AppointmentManager.tsx"
+              ],
               "directories": {}
             },
             "auth": {
-              "files": ["ProtectedRoute.tsx"],
+              "files": [
+                "ProtectedRoute.tsx"
+              ],
               "directories": {}
             },
             "booking": {
-              "files": ["AvailableSlotsPicker.tsx", "SessionTypeSelector.tsx"],
+              "files": [
+                "AvailableSlotsPicker.tsx",
+                "SessionTypeSelector.tsx"
+              ],
               "directories": {}
             },
             "charts": {
@@ -630,7 +678,10 @@
               "directories": {}
             },
             "chatbot": {
-              "files": ["MoainChatbot.tsx", "MoeenChatbot.tsx"],
+              "files": [
+                "MoainChatbot.tsx",
+                "MoeenChatbot.tsx"
+              ],
               "directories": {}
             },
             "common": {
@@ -649,11 +700,17 @@
               "directories": {}
             },
             "dashboard": {
-              "files": ["Charts.tsx", "DynamicCharts.tsx", "KpiCard.tsx"],
+              "files": [
+                "Charts.tsx",
+                "DynamicCharts.tsx",
+                "KpiCard.tsx"
+              ],
               "directories": {}
             },
             "insurance": {
-              "files": ["ClaimsManager.tsx"],
+              "files": [
+                "ClaimsManager.tsx"
+              ],
               "directories": {}
             },
             "layout": {
@@ -666,11 +723,16 @@
               "directories": {}
             },
             "patient": {
-              "files": ["ActivationFlow.tsx", "PreVisitChecklist.tsx"],
+              "files": [
+                "ActivationFlow.tsx",
+                "PreVisitChecklist.tsx"
+              ],
               "directories": {}
             },
             "patients": {
-              "files": ["PatientRecords.tsx"],
+              "files": [
+                "PatientRecords.tsx"
+              ],
               "directories": {}
             },
             "providers": {
@@ -684,7 +746,10 @@
               "directories": {}
             },
             "settings": {
-              "files": ["KeywordEditor.tsx", "SettingsTabs.tsx"],
+              "files": [
+                "KeywordEditor.tsx",
+                "SettingsTabs.tsx"
+              ],
               "directories": {}
             },
             "shared": {
@@ -701,7 +766,11 @@
               "directories": {}
             },
             "shell": {
-              "files": ["Header.tsx", "HeaderSimple.tsx", "Sidebar.tsx"],
+              "files": [
+                "Header.tsx",
+                "HeaderSimple.tsx",
+                "Sidebar.tsx"
+              ],
               "directories": {}
             },
             "ui": {
@@ -738,7 +807,13 @@
           }
         },
         "config": {
-          "files": ["api.ts", "app.ts", "auth.ts", "database.ts", "env.ts"],
+          "files": [
+            "api.ts",
+            "app.ts",
+            "auth.ts",
+            "database.ts",
+            "env.ts"
+          ],
           "directories": {}
         },
         "constants": {
@@ -756,63 +831,97 @@
           "directories": {}
         },
         "context": {
-          "files": ["TranslationProvider.tsx"],
+          "files": [
+            "TranslationProvider.tsx"
+          ],
           "directories": {}
         },
         "core": {
-          "files": ["index.ts", "utils.ts"],
+          "files": [
+            "index.ts",
+            "utils.ts"
+          ],
           "directories": {
             "api": {
-              "files": ["base-handler.ts", "client.ts"],
+              "files": [
+                "base-handler.ts",
+                "client.ts"
+              ],
               "directories": {}
             },
             "config": {
-              "files": ["index.ts"],
+              "files": [
+                "index.ts"
+              ],
               "directories": {}
             },
             "constants": {
-              "files": ["index.ts"],
+              "files": [
+                "index.ts"
+              ],
               "directories": {}
             },
             "design-system": {
-              "files": ["index.ts"],
+              "files": [
+                "index.ts"
+              ],
               "directories": {}
             },
             "errors": {
-              "files": ["index.ts"],
+              "files": [
+                "index.ts"
+              ],
               "directories": {}
             },
             "hooks": {
-              "files": ["index.ts"],
+              "files": [
+                "index.ts"
+              ],
               "directories": {}
             },
             "store": {
-              "files": ["index.ts"],
+              "files": [
+                "index.ts"
+              ],
               "directories": {}
             },
             "theme": {
-              "files": ["index.ts"],
+              "files": [
+                "index.ts"
+              ],
               "directories": {}
             },
             "types": {
-              "files": ["index.ts"],
+              "files": [
+                "index.ts"
+              ],
               "directories": {}
             },
             "utils": {
-              "files": ["index.ts"],
+              "files": [
+                "index.ts"
+              ],
               "directories": {}
             },
             "validation": {
-              "files": ["index.ts"],
+              "files": [
+                "index.ts"
+              ],
               "directories": {}
             }
           }
         },
         "design-system": {
-          "files": ["index.ts", "README.md", "types.ts"],
+          "files": [
+            "index.ts",
+            "README.md",
+            "types.ts"
+          ],
           "directories": {
             "hooks": {
-              "files": ["index.ts"],
+              "files": [
+                "index.ts"
+              ],
               "directories": {}
             }
           }
@@ -896,89 +1005,140 @@
           ],
           "directories": {
             "accessibility": {
-              "files": ["aria-utils.ts"],
+              "files": [
+                "aria-utils.ts"
+              ],
               "directories": {}
             },
             "api": {
-              "files": ["config.ts", "whatsapp.ts"],
+              "files": [
+                "config.ts",
+                "whatsapp.ts"
+              ],
               "directories": {}
             },
             "auth": {
-              "files": ["authorize.ts", "index.ts", "roles.ts"],
+              "files": [
+                "authorize.ts",
+                "index.ts",
+                "roles.ts"
+              ],
               "directories": {}
             },
             "cache": {
-              "files": ["redis.ts"],
+              "files": [
+                "redis.ts"
+              ],
               "directories": {}
             },
             "database": {
-              "files": ["connection-pool.ts"],
+              "files": [
+                "connection-pool.ts"
+              ],
               "directories": {}
             },
             "deployment": {
-              "files": ["docker.ts"],
+              "files": [
+                "docker.ts"
+              ],
               "directories": {}
             },
             "errors": {
-              "files": ["api-errors.ts"],
+              "files": [
+                "api-errors.ts"
+              ],
               "directories": {}
             },
             "i18n": {
-              "files": ["translationService.ts"],
+              "files": [
+                "translationService.ts"
+              ],
               "directories": {}
             },
             "insurance": {
-              "files": ["providers.ts"],
+              "files": [
+                "providers.ts"
+              ],
               "directories": {}
             },
             "integrations": {
-              "files": ["test-helpers.ts"],
+              "files": [
+                "test-helpers.ts"
+              ],
               "directories": {}
             },
             "migrations": {
-              "files": ["004_user_preferences.sql"],
+              "files": [
+                "004_user_preferences.sql"
+              ],
               "directories": {}
             },
             "monitoring": {
-              "files": ["logger.ts"],
+              "files": [
+                "logger.ts"
+              ],
               "directories": {}
             },
             "notifications": {
-              "files": ["email.ts", "sms.ts"],
+              "files": [
+                "email.ts",
+                "sms.ts"
+              ],
               "directories": {}
             },
             "optimization": {
-              "files": ["performance.ts"],
+              "files": [
+                "performance.ts"
+              ],
               "directories": {}
             },
             "payments": {
-              "files": ["moyasar.ts", "stripe.ts"],
+              "files": [
+                "moyasar.ts",
+                "stripe.ts"
+              ],
               "directories": {}
             },
             "seo": {
-              "files": ["metadata.ts"],
+              "files": [
+                "metadata.ts"
+              ],
               "directories": {}
             },
             "supabase": {
-              "files": ["client.ts", "server.ts"],
+              "files": [
+                "client.ts",
+                "server.ts"
+              ],
               "directories": {}
             },
             "testing": {
-              "files": ["test-utils.ts"],
+              "files": [
+                "test-utils.ts"
+              ],
               "directories": {}
             },
             "utils": {
-              "files": ["request-helpers.ts"],
+              "files": [
+                "request-helpers.ts"
+              ],
               "directories": {}
             },
             "validation": {
-              "files": ["schemas.ts", "security.ts"],
+              "files": [
+                "schemas.ts",
+                "security.ts"
+              ],
               "directories": {}
             }
           }
         },
         "middleware": {
-          "files": ["auth.ts", "rate-limiter.ts", "security.ts"],
+          "files": [
+            "auth.ts",
+            "rate-limiter.ts",
+            "security.ts"
+          ],
           "directories": {}
         },
         "scripts": {
@@ -998,7 +1158,9 @@
           "directories": {}
         },
         "services": {
-          "files": ["index.ts"],
+          "files": [
+            "index.ts"
+          ],
           "directories": {}
         },
         "styles": {
@@ -1019,7 +1181,9 @@
           "directories": {}
         },
         "theme": {
-          "files": ["index.ts"],
+          "files": [
+            "index.ts"
+          ],
           "directories": {}
         },
         "types": {
@@ -1058,7 +1222,10 @@
           ],
           "directories": {
             "api": {
-              "files": ["appointments.test.ts", "patients.test.ts"],
+              "files": [
+                "appointments.test.ts",
+                "patients.test.ts"
+              ],
               "directories": {
                 "auth": {
                   "type": "max_depth_reached"
@@ -1092,10 +1259,14 @@
       ],
       "directories": {
         "(admin)": {
-          "files": ["layout.tsx"],
+          "files": [
+            "layout.tsx"
+          ],
           "directories": {
             "admin": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {
                 "audit-logs": {
                   "type": "max_depth_reached"
@@ -1121,11 +1292,15 @@
               }
             },
             "agent-dashboard": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "analytics": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "chatbot": {
@@ -1146,11 +1321,15 @@
               }
             },
             "contact-info": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "conversations": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "crm": {
@@ -1174,51 +1353,75 @@
               }
             },
             "doctors": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "dynamic-data": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "flow": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "integrations": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "messages": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "notifications": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "payments": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "performance": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "profile": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "reports": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "review": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "security": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "sessions": {
@@ -1230,7 +1433,9 @@
               }
             },
             "settings": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {
                 "api-keys": {
                   "type": "max_depth_reached"
@@ -1240,26 +1445,38 @@
           }
         },
         "(auth)": {
-          "files": ["layout.tsx"],
+          "files": [
+            "layout.tsx"
+          ],
           "directories": {
             "forgot-password": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "login": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "register": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "reset-password": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "verify-email": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             }
           }
@@ -1268,7 +1485,9 @@
           "files": [],
           "directories": {
             "doctor-dashboard": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             }
           }
@@ -1277,19 +1496,27 @@
           "files": [],
           "directories": {
             "appointments": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "approvals": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "family": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "family-support": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "health": {
@@ -1304,19 +1531,27 @@
               }
             },
             "insurance": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "insurance-claims": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "medical-file": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "patients": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {
                 "[id]": {
                   "type": "max_depth_reached"
@@ -1324,49 +1559,71 @@
               }
             },
             "progress": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "progress-tracking": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "sessions": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "therapy": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "training": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             }
           }
         },
         "(info)": {
-          "files": ["layout.tsx"],
+          "files": [
+            "layout.tsx"
+          ],
           "directories": {
             "about": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "contact": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             }
           }
         },
         "(legal)": {
-          "files": ["layout.tsx"],
+          "files": [
+            "layout.tsx"
+          ],
           "directories": {
             "privacy": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "terms": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             }
           }
@@ -1375,15 +1632,21 @@
           "files": [],
           "directories": {
             "faq": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "features": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             },
             "pricing": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             }
           }
@@ -1392,7 +1655,9 @@
           "files": [],
           "directories": {
             "patient-dashboard": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             }
           }
@@ -1401,7 +1666,9 @@
           "files": [],
           "directories": {
             "chatbot": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             }
           }
@@ -1410,7 +1677,9 @@
           "files": [],
           "directories": {
             "staff-dashboard": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             }
           }
@@ -1419,7 +1688,9 @@
           "files": [],
           "directories": {
             "supervisor-dashboard": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             }
           }
@@ -1428,7 +1699,9 @@
           "files": [],
           "directories": {
             "admin-dashboard": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             }
           }
@@ -1491,7 +1764,9 @@
               }
             },
             "appointments": {
-              "files": ["route.ts"],
+              "files": [
+                "route.ts"
+              ],
               "directories": {
                 "availability": {
                   "type": "max_depth_reached"
@@ -1508,7 +1783,9 @@
               }
             },
             "audit-logs": {
-              "files": ["route.ts"],
+              "files": [
+                "route.ts"
+              ],
               "directories": {}
             },
             "auth": {
@@ -1603,7 +1880,9 @@
               }
             },
             "dynamic-data": {
-              "files": ["route.ts"],
+              "files": [
+                "route.ts"
+              ],
               "directories": {
                 "doctors": {
                   "type": "max_depth_reached"
@@ -1617,11 +1896,15 @@
               }
             },
             "errors": {
-              "files": ["route.ts"],
+              "files": [
+                "route.ts"
+              ],
               "directories": {}
             },
             "family": {
-              "files": ["route.ts"],
+              "files": [
+                "route.ts"
+              ],
               "directories": {
                 "support": {
                   "type": "max_depth_reached"
@@ -1629,7 +1912,9 @@
               }
             },
             "health": {
-              "files": ["route.ts"],
+              "files": [
+                "route.ts"
+              ],
               "directories": {}
             },
             "healthcare": {
@@ -1644,7 +1929,9 @@
               }
             },
             "i18n": {
-              "files": ["route.ts"],
+              "files": [
+                "route.ts"
+              ],
               "directories": {}
             },
             "insurance": {
@@ -1656,7 +1943,9 @@
               }
             },
             "medical-records": {
-              "files": ["route.ts"],
+              "files": [
+                "route.ts"
+              ],
               "directories": {
                 "upload": {
                   "type": "max_depth_reached"
@@ -1705,7 +1994,9 @@
               }
             },
             "progress": {
-              "files": ["route.ts"],
+              "files": [
+                "route.ts"
+              ],
               "directories": {
                 "assessments": {
                   "type": "max_depth_reached"
@@ -1795,7 +2086,9 @@
               }
             },
             "upload": {
-              "files": ["route.ts"],
+              "files": [
+                "route.ts"
+              ],
               "directories": {}
             },
             "user": {
@@ -1825,30 +2118,44 @@
           }
         },
         "color-palette": {
-          "files": ["page.tsx"],
+          "files": [
+            "page.tsx"
+          ],
           "directories": {}
         },
         "dashboard": {
-          "files": ["page.tsx"],
+          "files": [
+            "page.tsx"
+          ],
           "directories": {}
         },
         "design-system": {
-          "files": ["page.tsx"],
+          "files": [
+            "page.tsx"
+          ],
           "directories": {}
         },
         "simple": {
-          "files": ["page.tsx"],
+          "files": [
+            "page.tsx"
+          ],
           "directories": {}
         },
         "test": {
-          "files": ["page.tsx"],
+          "files": [
+            "page.tsx"
+          ],
           "directories": {}
         },
         "uikit": {
-          "files": ["page.tsx"],
+          "files": [
+            "page.tsx"
+          ],
           "directories": {
             "guidelines": {
-              "files": ["page.tsx"],
+              "files": [
+                "page.tsx"
+              ],
               "directories": {}
             }
           }
@@ -1870,19 +2177,28 @@
       ],
       "directories": {
         "accessibility": {
-          "files": ["AccessibilitySettings.tsx"],
+          "files": [
+            "AccessibilitySettings.tsx"
+          ],
           "directories": {}
         },
         "appointments": {
-          "files": ["AppointmentManager.tsx"],
+          "files": [
+            "AppointmentManager.tsx"
+          ],
           "directories": {}
         },
         "auth": {
-          "files": ["ProtectedRoute.tsx"],
+          "files": [
+            "ProtectedRoute.tsx"
+          ],
           "directories": {}
         },
         "booking": {
-          "files": ["AvailableSlotsPicker.tsx", "SessionTypeSelector.tsx"],
+          "files": [
+            "AvailableSlotsPicker.tsx",
+            "SessionTypeSelector.tsx"
+          ],
           "directories": {}
         },
         "charts": {
@@ -1895,7 +2211,10 @@
           "directories": {}
         },
         "chatbot": {
-          "files": ["MoainChatbot.tsx", "MoeenChatbot.tsx"],
+          "files": [
+            "MoainChatbot.tsx",
+            "MoeenChatbot.tsx"
+          ],
           "directories": {}
         },
         "common": {
@@ -1914,11 +2233,17 @@
           "directories": {}
         },
         "dashboard": {
-          "files": ["Charts.tsx", "DynamicCharts.tsx", "KpiCard.tsx"],
+          "files": [
+            "Charts.tsx",
+            "DynamicCharts.tsx",
+            "KpiCard.tsx"
+          ],
           "directories": {}
         },
         "insurance": {
-          "files": ["ClaimsManager.tsx"],
+          "files": [
+            "ClaimsManager.tsx"
+          ],
           "directories": {}
         },
         "layout": {
@@ -1931,11 +2256,16 @@
           "directories": {}
         },
         "patient": {
-          "files": ["ActivationFlow.tsx", "PreVisitChecklist.tsx"],
+          "files": [
+            "ActivationFlow.tsx",
+            "PreVisitChecklist.tsx"
+          ],
           "directories": {}
         },
         "patients": {
-          "files": ["PatientRecords.tsx"],
+          "files": [
+            "PatientRecords.tsx"
+          ],
           "directories": {}
         },
         "providers": {
@@ -1949,7 +2279,10 @@
           "directories": {}
         },
         "settings": {
-          "files": ["KeywordEditor.tsx", "SettingsTabs.tsx"],
+          "files": [
+            "KeywordEditor.tsx",
+            "SettingsTabs.tsx"
+          ],
           "directories": {}
         },
         "shared": {
@@ -1966,7 +2299,11 @@
           "directories": {}
         },
         "shell": {
-          "files": ["Header.tsx", "HeaderSimple.tsx", "Sidebar.tsx"],
+          "files": [
+            "Header.tsx",
+            "HeaderSimple.tsx",
+            "Sidebar.tsx"
+          ],
           "directories": {}
         },
         "ui": {

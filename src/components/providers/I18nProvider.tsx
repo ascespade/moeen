@@ -13,7 +13,7 @@ interface I18nProviderProps {
   children: ReactNode;
 }
 
-export function I18nProvider({ children }: I18nProviderProps) {
+export default function I18nProvider({ children }: I18nProviderProps) {
   const t = (key: string, fallback?: string) => {
     // Simple translation function - in real app, this would use a proper i18n library
     return fallback || key;

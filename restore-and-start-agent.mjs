@@ -18,17 +18,16 @@ class BackgroundAgentRestorer {
 
   async restoreAndStart() {
     console.log('🔄 بدء استعادة الجلسة وتشغيل الـ Background Agent...');
-    
+
     try {
       // 1. استعادة الجلسة
       await this.restoreSession();
-      
+
       // 2. تشغيل الـ background agent
       await this.startBackgroundAgent();
-      
+
       // 3. مراقبة الحالة
       await this.monitorAgent();
-      
     } catch (error) {
       console.error('❌ خطأ في استعادة الجلسة:', error.message);
     }
@@ -36,12 +35,12 @@ class BackgroundAgentRestorer {
 
   async restoreSession() {
     console.log('📁 فحص ملفات الجلسة...');
-    
+
     // فحص الملفات المهمة
     const sessionFiles = [
       'system-status.json',
       'ultimate_aggressive_self_healing_config.json',
-      'full_heal_finalizer.json'
+      'full_heal_finalizer.json',
     ];
 
     for (const file of sessionFiles) {
@@ -59,7 +58,7 @@ class BackgroundAgentRestorer {
       status: 'restored',
       isMonitoring: true,
       lastCheck: new Date().toISOString(),
-      restoredFrom: 'session_files'
+      restoredFrom: 'session_files',
     };
 
     await fs.writeFile(
@@ -82,14 +81,14 @@ class BackgroundAgentRestorer {
     this.agentProcess = spawn('node', ['autoloop.agent.mjs'], {
       cwd: this.projectRoot,
       stdio: 'inherit',
-      detached: true
+      detached: true,
     });
 
-    this.agentProcess.on('error', (error) => {
+    this.agentProcess.on('error', error => {
       console.error('❌ خطأ في تشغيل الـ agent:', error.message);
     });
 
-    this.agentProcess.on('exit', (code) => {
+    this.agentProcess.on('exit', code => {
       console.log(`🔄 الـ agent انتهى بالكود: ${code}`);
     });
 
@@ -98,7 +97,7 @@ class BackgroundAgentRestorer {
 
   async monitorAgent() {
     console.log('👀 بدء مراقبة الـ agent...');
-    
+
     // مراقبة كل 30 ثانية
     const monitorInterval = setInterval(async () => {
       try {
@@ -106,11 +105,17 @@ class BackgroundAgentRestorer {
         const statusFile = path.join(this.projectRoot, 'system-status.json');
         const statusData = await fs.readFile(statusFile, 'utf8');
         const status = JSON.parse(statusData);
-        
-        console.log(`📊 حالة النظام: ${status.status} - ${new Date().toLocaleString('ar-SA')}`);
-        
+
+        console.log(
+          `📊 حالة النظام: ${status.status} - ${new Date().toLocaleString('ar-SA')}`
+        );
+
         // فحص آخر تقرير
-        const reportFile = path.join(this.projectRoot, 'reports', 'agent-report.md');
+        const reportFile = path.join(
+          this.projectRoot,
+          'reports',
+          'agent-report.md'
+        );
         try {
           const reportData = await fs.readFile(reportFile, 'utf8');
           const lines = reportData.split('\n');
@@ -119,7 +124,6 @@ class BackgroundAgentRestorer {
         } catch (error) {
           // التقرير غير موجود
         }
-        
       } catch (error) {
         console.error('❌ خطأ في المراقبة:', error.message);
       }
@@ -129,12 +133,12 @@ class BackgroundAgentRestorer {
     process.on('SIGINT', () => {
       console.log('\n🛑 إيقاف المراقبة...');
       clearInterval(monitorInterval);
-      
+
       if (this.agentProcess) {
         console.log('🔄 إيقاف الـ agent...');
         this.agentProcess.kill();
       }
-      
+
       process.exit(0);
     });
 

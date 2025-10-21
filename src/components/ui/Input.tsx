@@ -50,32 +50,32 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         : type;
 
     const baseClasses =
-      'flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50';
+      'flex h-10 w-full rounded-lg border border-[var(--color-border-primary)] bg-white px-3 py-2 text-sm text-[var(--color-text-primary)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-200';
 
     const variants = {
-      default: 'border-gray-300 focus-visible:ring-gray-500',
-      filled: 'border-gray-300 bg-surface focus-visible:ring-gray-500',
-      outlined: 'border-2 border-gray-300 focus-visible:ring-gray-500',
+      default: 'border-[var(--color-border-primary)] focus-visible:ring-[var(--color-primary-500)]',
+      filled: 'border-[var(--color-border-primary)] bg-[var(--color-bg-secondary)] focus-visible:ring-[var(--color-primary-500)]',
+      outlined: 'border-2 border-[var(--color-border-primary)] focus-visible:ring-[var(--color-primary-500)]',
     };
 
     const stateClasses = error
-      ? 'border-red-500 focus-visible:ring-red-500'
+      ? 'border-[var(--color-error-500)] focus-visible:ring-[var(--color-error-500)]'
       : success
-        ? 'border-green-500 focus-visible:ring-green-500'
+        ? 'border-[var(--color-success-500)] focus-visible:ring-[var(--color-success-500)]'
         : '';
 
     return (
       <div className='w-full'>
         {label && (
-          <label className='block text-sm font-medium text-gray-700 mb-1'>
+          <label className='block text-sm font-medium text-[var(--color-text-primary)] mb-1'>
             {label}
-            {props.required && <span className='text-brand-error ml-1'>*</span>}
+            {props.required && <span className='text-[var(--color-error-500)] ml-1'>*</span>}
           </label>
         )}
 
         <div className='relative'>
           {leftIcon && (
-            <div className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400'>
+            <div className='absolute left-3 top-1/2 transform -translate-y-1/2 text-[var(--color-text-tertiary)]'>
               {leftIcon}
             </div>
           )}
@@ -103,7 +103,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                 <button
                   type='button'
                   onClick={() => setShowPassword(!showPassword)}
-                  className='text-gray-400 hover:text-gray-600'
+                  className='text-[var(--color-text-tertiary)] hover:text-[var(--color-text-secondary)]'
                 >
                   {showPassword ? (
                     <EyeOff className='h-4 w-4' />
@@ -120,9 +120,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {(error || success) && (
             <div className='absolute right-3 top-1/2 transform -translate-y-1/2'>
               {error ? (
-                <AlertCircle className='h-4 w-4 text-brand-error' />
+                <AlertCircle className='h-4 w-4 text-[var(--color-error-500)]' />
               ) : (
-                <CheckCircle className='h-4 w-4 text-brand-success' />
+                <CheckCircle className='h-4 w-4 text-[var(--color-success-500)]' />
               )}
             </div>
           )}
@@ -130,10 +130,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
         {(error || success || helperText) && (
           <div className='mt-1 text-sm'>
-            {error && <p className='text-brand-error'>{error}</p>}
-            {success && <p className='text-brand-success'>{success}</p>}
+            {error && <p className='text-[var(--color-error-500)]'>{error}</p>}
+            {success && <p className='text-[var(--color-success-500)]'>{success}</p>}
             {helperText && !error && !success && (
-              <p className='text-gray-500'>{helperText}</p>
+              <p className='text-[var(--color-text-tertiary)]'>{helperText}</p>
             )}
           </div>
         )}

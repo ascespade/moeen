@@ -151,24 +151,17 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-[var(--brand-surface)] p-4'>
-      <div className='w-full max-w-md'>
-        {/* Logo */}
-        <div className='mb-8 text-center'>
-          <div className='mb-4 flex items-center justify-center gap-3'>
-            <Image
-              src='/logo.png'
-              alt='مُعين'
-              width={50}
-              height={50}
-              className='rounded-lg'
-            />
-            <h1 className='text-brand text-3xl font-bold'>مُعين</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[var(--color-bg-secondary)] via-white to-[var(--color-bg-secondary)] p-4">
+      <div className="w-full max-w-md">
+        {/* Logo and Header */}
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-secondary-500)] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+            <span className="text-white font-bold text-2xl">م</span>
           </div>
-          <h2 className='mb-2 text-2xl font-semibold text-gray-900 dark:text-white'>
+          <h1 className="text-3xl font-bold text-[var(--color-text-primary)] mb-2">
             إنشاء حساب جديد
-          </h2>
-          <p className='text-gray-600 dark:text-gray-300'>
+          </h1>
+          <p className="text-[var(--color-text-secondary)]">
             انضم إلى منصة الرعاية الصحية المتخصصة
           </p>
         </div>

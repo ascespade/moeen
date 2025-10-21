@@ -21,38 +21,37 @@ class SessionRestorer {
       'ultimate_aggressive_self_healing_config.json',
       'full_heal_finalizer.json',
       'logs/last-maintenance.json',
-      'logs/pre-db-health.json'
+      'logs/pre-db-health.json',
     ];
   }
 
   async restoreSession() {
     console.log('🔄 بدء استعادة الجلسة القديمة...');
-    
+
     try {
       // فحص الملفات الموجودة
       const availableFiles = await this.checkAvailableFiles();
       console.log(`📁 تم العثور على ${availableFiles.length} ملف جلسة`);
-      
+
       // استعادة حالة النظام
       const systemStatus = await this.restoreSystemStatus();
-      
+
       // استعادة إعدادات الـ agent
       const agentConfig = await this.restoreAgentConfig();
-      
+
       // استعادة حالة الاختبارات
       const testStatus = await this.restoreTestStatus();
-      
+
       // إنشاء تقرير الاستعادة
       await this.createRestoreReport({
         systemStatus,
         agentConfig,
         testStatus,
-        restoredFiles: availableFiles
+        restoredFiles: availableFiles,
       });
-      
+
       console.log('✅ تم استعادة الجلسة بنجاح!');
       console.log('🚀 يمكنك الآن تشغيل الـ background agent');
-      
     } catch (error) {
       console.error('❌ خطأ في استعادة الجلسة:', error.message);
     }
@@ -76,10 +75,10 @@ class SessionRestorer {
       const statusFile = path.join(this.projectRoot, 'system-status.json');
       const statusData = await fs.readFile(statusFile, 'utf8');
       const status = JSON.parse(statusData);
-      
+
       console.log(`📊 حالة النظام: ${status.status}`);
       console.log(`⏰ آخر فحص: ${status.lastCheck}`);
-      
+
       return status;
     } catch (error) {
       console.log('⚠️ لم يتم العثور على ملف حالة النظام');
@@ -89,13 +88,16 @@ class SessionRestorer {
 
   async restoreAgentConfig() {
     try {
-      const configFile = path.join(this.projectRoot, 'ultimate_aggressive_self_healing_config.json');
+      const configFile = path.join(
+        this.projectRoot,
+        'ultimate_aggressive_self_healing_config.json'
+      );
       const configData = await fs.readFile(configFile, 'utf8');
       const config = JSON.parse(configData);
-      
+
       console.log(`🤖 إعدادات الـ Agent: ${config.name}`);
       console.log(`🎯 الهدف: ${config.primary_objective}`);
-      
+
       return config;
     } catch (error) {
       console.log('⚠️ لم يتم العثور على إعدادات الـ agent');
@@ -111,15 +113,15 @@ class SessionRestorer {
         .filter(f => f.endsWith('.json'))
         .sort()
         .pop();
-      
+
       if (latestReport) {
         const reportPath = path.join(testReportsDir, latestReport);
         const reportData = await fs.readFile(reportPath, 'utf8');
         const report = JSON.parse(reportData);
-        
+
         console.log(`🧪 آخر تقرير اختبار: ${latestReport}`);
         console.log(`📈 النتائج: ${report.summary || 'غير متوفر'}`);
-        
+
         return report;
       }
     } catch (error) {
@@ -137,14 +139,20 @@ class SessionRestorer {
         'تشغيل الـ background agent',
         'فحص حالة النظام',
         'تشغيل الاختبارات',
-        'مراقبة الأداء'
-      ]
+        'مراقبة الأداء',
+      ],
     };
 
-    const reportPath = path.join(this.projectRoot, 'reports', 'session-restore-report.json');
+    const reportPath = path.join(
+      this.projectRoot,
+      'reports',
+      'session-restore-report.json'
+    );
     await fs.writeFile(reportPath, JSON.stringify(report, null, 2));
-    
-    console.log(`📄 تم إنشاء تقرير الاستعادة: reports/session-restore-report.json`);
+
+    console.log(
+      `📄 تم إنشاء تقرير الاستعادة: reports/session-restore-report.json`
+    );
   }
 }
 

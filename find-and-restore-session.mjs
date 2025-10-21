@@ -23,23 +23,22 @@ class SessionFinder {
 
   async findAndRestoreSession() {
     console.log(`🔍 البحث عن الجلسة: ${this.targetSessionId}`);
-    
+
     try {
       // 1. البحث في جميع الملفات
       await this.searchInAllFiles();
-      
+
       // 2. إذا لم توجد، إنشاء جلسة جديدة بنفس الـ ID
       if (!this.sessionFound) {
         console.log('⚠️ لم يتم العثور على الجلسة، إنشاء جلسة جديدة...');
         await this.createNewSessionWithId();
       }
-      
+
       // 3. استعادة الجلسة
       await this.restoreSession();
-      
+
       // 4. تشغيل الـ background agent
       await this.startBackgroundAgent();
-      
     } catch (error) {
       console.error('❌ خطأ في البحث والاستعادة:', error.message);
     }
@@ -47,13 +46,13 @@ class SessionFinder {
 
   async searchInAllFiles() {
     console.log('📁 البحث في جميع الملفات...');
-    
+
     const searchPaths = [
       'logs',
-      'reports', 
+      'reports',
       'test-reports',
       '.',
-      'ai-intelligent-ci'
+      'ai-intelligent-ci',
     ];
 
     for (const searchPath of searchPaths) {
@@ -69,11 +68,15 @@ class SessionFinder {
     try {
       const fullPath = path.join(this.projectRoot, dirPath);
       const files = await fs.readdir(fullPath, { withFileTypes: true });
-      
+
       for (const file of files) {
         if (file.isDirectory()) {
           await this.searchInDirectory(path.join(dirPath, file.name));
-        } else if (file.name.endsWith('.json') || file.name.endsWith('.md') || file.name.endsWith('.log')) {
+        } else if (
+          file.name.endsWith('.json') ||
+          file.name.endsWith('.md') ||
+          file.name.endsWith('.log')
+        ) {
           await this.searchInFile(path.join(dirPath, file.name));
         }
       }
@@ -86,13 +89,13 @@ class SessionFinder {
     try {
       const fullPath = path.join(this.projectRoot, filePath);
       const content = await fs.readFile(fullPath, 'utf8');
-      
+
       if (content.includes(this.targetSessionId)) {
         console.log(`✅ تم العثور على الجلسة في: ${filePath}`);
         this.sessionFound = true;
         this.sessionData = {
           filePath,
-          content: content.substring(0, 1000) // أول 1000 حرف
+          content: content.substring(0, 1000), // أول 1000 حرف
         };
       }
     } catch (error) {
@@ -102,7 +105,7 @@ class SessionFinder {
 
   async createNewSessionWithId() {
     console.log('🆕 إنشاء جلسة جديدة بالـ ID المحدد...');
-    
+
     const sessionData = {
       sessionId: this.targetSessionId,
       timestamp: new Date().toISOString(),
@@ -112,19 +115,19 @@ class SessionFinder {
         maxCycles: 10,
         autoHealing: true,
         monitoring: true,
-        testGeneration: true
+        testGeneration: true,
       },
       metadata: {
         createdBy: 'session_finder',
         requestId: this.targetSessionId,
-        restored: true
-      }
+        restored: true,
+      },
     };
 
     // حفظ بيانات الجلسة
     const sessionFile = path.join(this.projectRoot, 'session-data.json');
     await fs.writeFile(sessionFile, JSON.stringify(sessionData, null, 2));
-    
+
     // تحديث حالة النظام
     const systemStatus = {
       timestamp: new Date().toISOString(),
@@ -132,7 +135,7 @@ class SessionFinder {
       sessionId: this.targetSessionId,
       isMonitoring: true,
       lastCheck: new Date().toISOString(),
-      restoredFrom: 'session_finder'
+      restoredFrom: 'session_finder',
     };
 
     await fs.writeFile(
@@ -146,7 +149,7 @@ class SessionFinder {
 
   async restoreSession() {
     console.log('🔄 استعادة الجلسة...');
-    
+
     // إنشاء تقرير الاستعادة
     const restoreReport = {
       timestamp: new Date().toISOString(),
@@ -158,33 +161,37 @@ class SessionFinder {
         'تشغيل الـ background agent',
         'تفعيل المراقبة التلقائية',
         'تشغيل الاختبارات',
-        'تطبيق الإصلاحات التلقائية'
-      ]
+        'تطبيق الإصلاحات التلقائية',
+      ],
     };
 
-    const reportPath = path.join(this.projectRoot, 'reports', `session-restore-${this.targetSessionId}.json`);
+    const reportPath = path.join(
+      this.projectRoot,
+      'reports',
+      `session-restore-${this.targetSessionId}.json`
+    );
     await fs.writeFile(reportPath, JSON.stringify(restoreReport, null, 2));
-    
+
     console.log(`📄 تم إنشاء تقرير الاستعادة: ${reportPath}`);
   }
 
   async startBackgroundAgent() {
     console.log('🚀 تشغيل الـ Background Agent...');
-    
+
     const { spawn } = await import('child_process');
-    
+
     // تشغيل الـ autoloop agent
     const agentProcess = spawn('node', ['autoloop.agent.mjs'], {
       cwd: this.projectRoot,
       stdio: 'inherit',
-      detached: true
+      detached: true,
     });
 
-    agentProcess.on('error', (error) => {
+    agentProcess.on('error', error => {
       console.error('❌ خطأ في تشغيل الـ agent:', error.message);
     });
 
-    agentProcess.on('exit', (code) => {
+    agentProcess.on('exit', code => {
       console.log(`🔄 الـ agent انتهى بالكود: ${code}`);
     });
 

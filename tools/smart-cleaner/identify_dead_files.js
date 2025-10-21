@@ -6,24 +6,11 @@ import { glob } from 'glob';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { glob } from 'glob';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-#!/usr/bin/env node
-
 /**
  * Dead Files Identifier
  * Identifies unused files, dead code, and orphaned dependencies
  */
 
-const fs = require('fs');
-const path = require('path');
-const { glob } = require('glob');
 
 class DeadFilesIdentifier {
   constructor(projectRoot) {

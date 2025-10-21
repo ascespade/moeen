@@ -20,7 +20,7 @@ const systemStatus = {
   status: 'active',
   isMonitoring: true,
   lastCheck: new Date().toISOString(),
-  restoredAt: new Date().toISOString()
+  restoredAt: new Date().toISOString(),
 };
 
 fs.writeFileSync('system-status.json', JSON.stringify(systemStatus, null, 2));
@@ -30,16 +30,15 @@ console.log('✅ تم تحديث حالة النظام');
 console.log('🚀 تشغيل Background Monitor...');
 const monitor = spawn('node', ['background-monitor.js'], {
   stdio: 'inherit',
-  detached: false
+  detached: false,
 });
 
-monitor.on('error', (error) => {
+monitor.on('error', error => {
   console.error('❌ خطأ:', error.message);
 });
 
-monitor.on('exit', (code) => {
+monitor.on('exit', code => {
   console.log(`Background Monitor exited with code ${code}`);
 });
 
 console.log('✅ تم تشغيل Background Monitor');
-

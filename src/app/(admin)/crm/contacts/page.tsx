@@ -178,7 +178,7 @@ const ContactsPage: React.FC = () => {
       lead: { label: 'عميل محتمل', variant: 'secondary' as const },
       prospect: { label: 'عميل واعد', variant: 'primary' as const },
       customer: { label: 'عميل', variant: 'primary' as const },
-      inactive: { label: 'غير نشط', variant: 'destructive' as const },
+      inactive: { label: 'غير نشط', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {

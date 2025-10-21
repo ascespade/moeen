@@ -1,0 +1,3422 @@
+{
+  "deadFiles": [
+    {
+      "file": "src\\middleware.prod.ts",
+      "reason": "Unused file",
+      "size": 4508,
+      "lastModified": "2025-10-20T22:35:40.356Z"
+    },
+    {
+      "file": "src\\middleware.disabled.ts",
+      "reason": "Unused file",
+      "size": 307,
+      "lastModified": "2025-10-20T22:35:38.987Z"
+    },
+    {
+      "file": "src\\__tests__\\whatsapp-integration.test.ts",
+      "reason": "Test file",
+      "size": 4953,
+      "lastModified": "2025-10-20T22:33:40.377Z"
+    },
+    {
+      "file": "src\\__tests__\\whatsapp-business-api.test.ts",
+      "reason": "Test file",
+      "size": 9986,
+      "lastModified": "2025-10-20T22:33:40.208Z"
+    },
+    {
+      "file": "src\\__tests__\\setup.ts",
+      "reason": "Test file",
+      "size": 3087,
+      "lastModified": "2025-10-20T22:33:39.856Z"
+    },
+    {
+      "file": "src\\__tests__\\saudi-health-integration.test.ts",
+      "reason": "Test file",
+      "size": 5882,
+      "lastModified": "2025-10-20T22:33:39.626Z"
+    },
+    {
+      "file": "src\\__tests__\\ai-assistant.test.ts",
+      "reason": "Test file",
+      "size": 3953,
+      "lastModified": "2025-10-20T22:33:35.905Z"
+    },
+    {
+      "file": "src\\utils\\validation.ts",
+      "reason": "Utility file",
+      "size": 3059,
+      "lastModified": "2025-10-20T22:36:18.070Z"
+    },
+    {
+      "file": "src\\utils\\string.ts",
+      "reason": "Utility file",
+      "size": 5153,
+      "lastModified": "2025-10-20T22:36:17.435Z"
+    },
+    {
+      "file": "src\\utils\\storage.ts",
+      "reason": "Utility file",
+      "size": 3310,
+      "lastModified": "2025-10-20T22:36:16.664Z"
+    },
+    {
+      "file": "src\\utils\\format.ts",
+      "reason": "Utility file",
+      "size": 2639,
+      "lastModified": "2025-10-20T22:36:15.420Z"
+    },
+    {
+      "file": "src\\utils\\date.ts",
+      "reason": "Utility file",
+      "size": 5309,
+      "lastModified": "2025-10-20T22:36:15.303Z"
+    },
+    {
+      "file": "src\\utils\\api.ts",
+      "reason": "Utility file",
+      "size": 4707,
+      "lastModified": "2025-10-20T22:36:15.221Z"
+    },
+    {
+      "file": "src\\utils\\api-client.ts",
+      "reason": "Utility file",
+      "size": 2088,
+      "lastModified": "2025-10-20T22:36:15.168Z"
+    },
+    {
+      "file": "src\\types\\supabase.ts",
+      "reason": "Unused file",
+      "size": 19406,
+      "lastModified": "2025-10-20T22:36:15.103Z"
+    },
+    {
+      "file": "src\\types\\shims.d.ts",
+      "reason": "Unused file",
+      "size": 150,
+      "lastModified": "2025-10-20T22:36:14.899Z"
+    },
+    {
+      "file": "src\\types\\database.ts",
+      "reason": "Unused file",
+      "size": 5740,
+      "lastModified": "2025-10-20T22:36:14.770Z"
+    },
+    {
+      "file": "src\\types\\components.ts",
+      "reason": "Component file",
+      "size": 595,
+      "lastModified": "2025-10-20T22:36:14.673Z"
+    },
+    {
+      "file": "src\\types\\auth.ts",
+      "reason": "Unused file",
+      "size": 653,
+      "lastModified": "2025-10-20T22:36:14.620Z"
+    },
+    {
+      "file": "src\\types\\api.ts",
+      "reason": "Unused file",
+      "size": 3268,
+      "lastModified": "2025-10-20T22:36:14.388Z"
+    },
+    {
+      "file": "src\\scripts\\validate-system.js",
+      "reason": "Unused file",
+      "size": 9653,
+      "lastModified": "2025-10-20T22:35:54.961Z"
+    },
+    {
+      "file": "src\\scripts\\validate-dynamic-content.ts",
+      "reason": "Unused file",
+      "size": 6568,
+      "lastModified": "2025-10-20T22:35:54.233Z"
+    },
+    {
+      "file": "src\\scripts\\validate-business-logic.js",
+      "reason": "Unused file",
+      "size": 14009,
+      "lastModified": "2025-10-20T22:35:53.860Z"
+    },
+    {
+      "file": "src\\scripts\\test-apis.js",
+      "reason": "Unused file",
+      "size": 9955,
+      "lastModified": "2025-10-20T22:35:53.093Z"
+    },
+    {
+      "file": "src\\scripts\\system-validation.js",
+      "reason": "Unused file",
+      "size": 7521,
+      "lastModified": "2025-10-20T22:35:52.510Z"
+    },
+    {
+      "file": "src\\scripts\\seed-translations.ts",
+      "reason": "Unused file",
+      "size": 26172,
+      "lastModified": "2025-10-20T22:35:51.767Z"
+    },
+    {
+      "file": "src\\scripts\\seed-homepage-content.ts",
+      "reason": "Unused file",
+      "size": 10196,
+      "lastModified": "2025-10-20T22:35:50.832Z"
+    },
+    {
+      "file": "src\\scripts\\seed-database.ts",
+      "reason": "Unused file",
+      "size": 13285,
+      "lastModified": "2025-10-20T22:35:50.032Z"
+    },
+    {
+      "file": "src\\scripts\\seed-complete-translations.js",
+      "reason": "Unused file",
+      "size": 12096,
+      "lastModified": "2025-10-20T22:35:49.129Z"
+    },
+    {
+      "file": "src\\scripts\\complete-translations.ts",
+      "reason": "Unused file",
+      "size": 12265,
+      "lastModified": "2025-10-20T22:35:48.384Z"
+    },
+    {
+      "file": "src\\scripts\\cleanup-console-logs.js",
+      "reason": "Unused file",
+      "size": 2679,
+      "lastModified": "2025-10-20T22:35:45.661Z"
+    },
+    {
+      "file": "src\\middleware\\security.ts",
+      "reason": "Unused file",
+      "size": 9743,
+      "lastModified": "2025-10-20T22:35:42.901Z"
+    },
+    {
+      "file": "src\\middleware\\rate-limiter.ts",
+      "reason": "Unused file",
+      "size": 3527,
+      "lastModified": "2025-10-20T22:35:41.882Z"
+    },
+    {
+      "file": "src\\middleware\\auth.ts",
+      "reason": "Unused file",
+      "size": 1576,
+      "lastModified": "2025-10-20T22:35:40.986Z"
+    },
+    {
+      "file": "src\\lib\\whatsapp-integration.ts",
+      "reason": "Utility file",
+      "size": 12623,
+      "lastModified": "2025-10-20T22:35:37.382Z"
+    },
+    {
+      "file": "src\\lib\\whatsapp-business-api.ts",
+      "reason": "Utility file",
+      "size": 13080,
+      "lastModified": "2025-10-20T22:35:35.737Z"
+    },
+    {
+      "file": "src\\lib\\validation.ts",
+      "reason": "Utility file",
+      "size": 4741,
+      "lastModified": "2025-10-20T22:35:32.337Z"
+    },
+    {
+      "file": "src\\lib\\utils.ts",
+      "reason": "Utility file",
+      "size": 118,
+      "lastModified": "2025-10-20T22:35:30.085Z"
+    },
+    {
+      "file": "src\\lib\\translations-manager.ts",
+      "reason": "Utility file",
+      "size": 5047,
+      "lastModified": "2025-10-20T22:35:29.685Z"
+    },
+    {
+      "file": "src\\lib\\theme.ts",
+      "reason": "Utility file",
+      "size": 1502,
+      "lastModified": "2025-10-20T22:35:29.237Z"
+    },
+    {
+      "file": "src\\lib\\theme-manager.ts",
+      "reason": "Utility file",
+      "size": 17764,
+      "lastModified": "2025-10-20T22:35:28.916Z"
+    },
+    {
+      "file": "src\\lib\\supabase.ts",
+      "reason": "Utility file",
+      "size": 10733,
+      "lastModified": "2025-10-20T22:35:26.678Z"
+    },
+    {
+      "file": "src\\lib\\slack-integration.ts",
+      "reason": "Utility file",
+      "size": 14040,
+      "lastModified": "2025-10-20T22:35:25.793Z"
+    },
+    {
+      "file": "src\\lib\\security.ts",
+      "reason": "Utility file",
+      "size": 6394,
+      "lastModified": "2025-10-20T22:35:24.429Z"
+    },
+    {
+      "file": "src\\lib\\saudi-ministry-health-integration.ts",
+      "reason": "Utility file",
+      "size": 14524,
+      "lastModified": "2025-10-20T22:35:24.226Z"
+    },
+    {
+      "file": "src\\lib\\saudi-health-integration.ts",
+      "reason": "Utility file",
+      "size": 13643,
+      "lastModified": "2025-10-20T22:35:23.958Z"
+    },
+    {
+      "file": "src\\lib\\router.ts",
+      "reason": "Utility file",
+      "size": 2477,
+      "lastModified": "2025-10-20T22:35:23.405Z"
+    },
+    {
+      "file": "src\\lib\\responsive-design.ts",
+      "reason": "Utility file",
+      "size": 7789,
+      "lastModified": "2025-10-20T22:35:23.145Z"
+    },
+    {
+      "file": "src\\lib\\rate-limiter.ts",
+      "reason": "Utility file",
+      "size": 1999,
+      "lastModified": "2025-10-20T22:35:22.707Z"
+    },
+    {
+      "file": "src\\lib\\private-center-integration.ts",
+      "reason": "Utility file",
+      "size": 13147,
+      "lastModified": "2025-10-20T22:35:22.413Z"
+    },
+    {
+      "file": "src\\lib\\performance.ts",
+      "reason": "Utility file",
+      "size": 2544,
+      "lastModified": "2025-10-20T22:35:21.339Z"
+    },
+    {
+      "file": "src\\lib\\performance-optimizations.ts",
+      "reason": "Utility file",
+      "size": 1452,
+      "lastModified": "2025-10-20T22:35:20.719Z"
+    },
+    {
+      "file": "src\\lib\\performance-monitor.ts",
+      "reason": "Utility file",
+      "size": 12983,
+      "lastModified": "2025-10-20T22:35:20.029Z"
+    },
+    {
+      "file": "src\\lib\\modern-interactions.ts",
+      "reason": "Utility file",
+      "size": 11260,
+      "lastModified": "2025-10-20T22:35:17.812Z"
+    },
+    {
+      "file": "src\\lib\\logger.ts",
+      "reason": "Utility file",
+      "size": 2415,
+      "lastModified": "2025-10-20T22:35:17.364Z"
+    },
+    {
+      "file": "src\\lib\\integration-system.ts",
+      "reason": "Utility file",
+      "size": 11929,
+      "lastModified": "2025-10-20T22:35:16.598Z"
+    },
+    {
+      "file": "src\\lib\\file-upload.ts",
+      "reason": "Utility file",
+      "size": 14807,
+      "lastModified": "2025-10-20T22:35:14.625Z"
+    },
+    {
+      "file": "src\\lib\\error-handler.ts",
+      "reason": "Utility file",
+      "size": 5224,
+      "lastModified": "2025-10-20T22:35:13.867Z"
+    },
+    {
+      "file": "src\\lib\\encryption.ts",
+      "reason": "Utility file",
+      "size": 4625,
+      "lastModified": "2025-10-20T22:35:13.627Z"
+    },
+    {
+      "file": "src\\lib\\dynamic-theme-manager.ts",
+      "reason": "Utility file",
+      "size": 7446,
+      "lastModified": "2025-10-20T22:35:13.516Z"
+    },
+    {
+      "file": "src\\lib\\dynamic-content-manager.ts",
+      "reason": "Utility file",
+      "size": 7767,
+      "lastModified": "2025-10-20T22:35:13.335Z"
+    },
+    {
+      "file": "src\\lib\\design-tokens.ts",
+      "reason": "Utility file",
+      "size": 7207,
+      "lastModified": "2025-10-20T22:35:12.882Z"
+    },
+    {
+      "file": "src\\lib\\database.ts",
+      "reason": "Utility file",
+      "size": 10304,
+      "lastModified": "2025-10-20T22:35:11.445Z"
+    },
+    {
+      "file": "src\\lib\\database-utils.ts",
+      "reason": "Utility file",
+      "size": 6725,
+      "lastModified": "2025-10-20T22:35:11.162Z"
+    },
+    {
+      "file": "src\\lib\\conversation-flows.ts",
+      "reason": "Utility file",
+      "size": 17136,
+      "lastModified": "2025-10-20T22:35:10.548Z"
+    },
+    {
+      "file": "src\\lib\\cn.ts",
+      "reason": "Utility file",
+      "size": 876,
+      "lastModified": "2025-10-20T22:35:10.150Z"
+    },
+    {
+      "file": "src\\lib\\cache-system.ts",
+      "reason": "Utility file",
+      "size": 10316,
+      "lastModified": "2025-10-20T22:35:09.992Z"
+    },
+    {
+      "file": "src\\lib\\analytics-stubs.ts",
+      "reason": "Utility file",
+      "size": 254,
+      "lastModified": "2025-10-20T22:35:09.082Z"
+    },
+    {
+      "file": "src\\lib\\ai-assistant.ts",
+      "reason": "Utility file",
+      "size": 9778,
+      "lastModified": "2025-10-20T22:35:08.695Z"
+    },
+    {
+      "file": "src\\lib\\accessibility.ts",
+      "reason": "Utility file",
+      "size": 10213,
+      "lastModified": "2025-10-20T22:35:07.665Z"
+    },
+    {
+      "file": "src\\hooks\\useTranslation.ts",
+      "reason": "Unused file",
+      "size": 1522,
+      "lastModified": "2025-10-20T22:35:06.898Z"
+    },
+    {
+      "file": "src\\hooks\\useToggle.ts",
+      "reason": "Unused file",
+      "size": 934,
+      "lastModified": "2025-10-20T22:35:06.478Z"
+    },
+    {
+      "file": "src\\hooks\\useThrottle.ts",
+      "reason": "Unused file",
+      "size": 2902,
+      "lastModified": "2025-10-20T22:35:06.383Z"
+    },
+    {
+      "file": "src\\hooks\\useT.tsx",
+      "reason": "Unused file",
+      "size": 2931,
+      "lastModified": "2025-10-20T22:35:06.082Z"
+    },
+    {
+      "file": "src\\hooks\\usePrevious.ts",
+      "reason": "Unused file",
+      "size": 254,
+      "lastModified": "2025-10-20T22:35:05.929Z"
+    },
+    {
+      "file": "src\\hooks\\usePerformance.ts",
+      "reason": "Unused file",
+      "size": 2409,
+      "lastModified": "2025-10-20T22:35:05.755Z"
+    },
+    {
+      "file": "src\\hooks\\usePageI18n.ts",
+      "reason": "Unused file",
+      "size": 2720,
+      "lastModified": "2025-10-20T22:35:05.522Z"
+    },
+    {
+      "file": "src\\hooks\\useMemoryLeakPrevention.ts",
+      "reason": "Unused file",
+      "size": 4445,
+      "lastModified": "2025-10-20T22:35:05.131Z"
+    },
+    {
+      "file": "src\\hooks\\useMediaQuery.ts",
+      "reason": "Unused file",
+      "size": 1891,
+      "lastModified": "2025-10-20T22:35:04.833Z"
+    },
+    {
+      "file": "src\\hooks\\useLocalStorage.ts",
+      "reason": "Unused file",
+      "size": 2420,
+      "lastModified": "2025-10-20T22:35:04.740Z"
+    },
+    {
+      "file": "src\\hooks\\useKeyPress.ts",
+      "reason": "Unused file",
+      "size": 3207,
+      "lastModified": "2025-10-20T22:35:04.652Z"
+    },
+    {
+      "file": "src\\hooks\\useKeyboardNavigation.ts",
+      "reason": "Unused file",
+      "size": 2527,
+      "lastModified": "2025-10-20T22:35:04.468Z"
+    },
+    {
+      "file": "src\\hooks\\useIntersectionObserver.ts",
+      "reason": "Unused file",
+      "size": 2121,
+      "lastModified": "2025-10-20T22:35:04.385Z"
+    },
+    {
+      "file": "src\\hooks\\useForm.ts",
+      "reason": "Unused file",
+      "size": 5879,
+      "lastModified": "2025-10-20T22:35:04.181Z"
+    },
+    {
+      "file": "src\\hooks\\useErrorHandler.tsx",
+      "reason": "Unused file",
+      "size": 2190,
+      "lastModified": "2025-10-20T22:35:03.915Z"
+    },
+    {
+      "file": "src\\hooks\\useDebounce.ts",
+      "reason": "Unused file",
+      "size": 1595,
+      "lastModified": "2025-10-20T22:35:03.799Z"
+    },
+    {
+      "file": "src\\hooks\\useCounter.ts",
+      "reason": "Unused file",
+      "size": 953,
+      "lastModified": "2025-10-20T22:35:03.584Z"
+    },
+    {
+      "file": "src\\hooks\\useClickOutside.ts",
+      "reason": "Unused file",
+      "size": 771,
+      "lastModified": "2025-10-20T22:35:03.448Z"
+    },
+    {
+      "file": "src\\hooks\\useBrandColorFromLogo.ts",
+      "reason": "Unused file",
+      "size": 2294,
+      "lastModified": "2025-10-20T22:35:03.265Z"
+    },
+    {
+      "file": "src\\hooks\\useAuth.ts",
+      "reason": "Unused file",
+      "size": 4105,
+      "lastModified": "2025-10-20T22:35:03.185Z"
+    },
+    {
+      "file": "src\\hooks\\useAsync.ts",
+      "reason": "Unused file",
+      "size": 2876,
+      "lastModified": "2025-10-20T22:35:03.067Z"
+    },
+    {
+      "file": "src\\hooks\\useApi.ts",
+      "reason": "Unused file",
+      "size": 4309,
+      "lastModified": "2025-10-20T22:35:02.814Z"
+    },
+    {
+      "file": "src\\design-system\\types.ts",
+      "reason": "Unused file",
+      "size": 542,
+      "lastModified": "2025-10-20T22:35:02.519Z"
+    },
+    {
+      "file": "src\\core\\utils.ts",
+      "reason": "Utility file",
+      "size": 187,
+      "lastModified": "2025-10-20T22:35:00.484Z"
+    },
+    {
+      "file": "src\\context\\TranslationProvider.tsx",
+      "reason": "Unused file",
+      "size": 2195,
+      "lastModified": "2025-10-20T22:34:56.590Z"
+    },
+    {
+      "file": "src\\constants\\validation.ts",
+      "reason": "Unused file",
+      "size": 4246,
+      "lastModified": "2025-10-20T22:34:56.440Z"
+    },
+    {
+      "file": "src\\constants\\ui.ts",
+      "reason": "Unused file",
+      "size": 2692,
+      "lastModified": "2025-10-20T22:34:56.375Z"
+    },
+    {
+      "file": "src\\constants\\theme.ts",
+      "reason": "Unused file",
+      "size": 2341,
+      "lastModified": "2025-10-20T22:34:56.303Z"
+    },
+    {
+      "file": "src\\constants\\storage.ts",
+      "reason": "Unused file",
+      "size": 1404,
+      "lastModified": "2025-10-20T22:34:56.234Z"
+    },
+    {
+      "file": "src\\constants\\routes.ts",
+      "reason": "Unused file",
+      "size": 5208,
+      "lastModified": "2025-10-20T22:34:56.162Z"
+    },
+    {
+      "file": "src\\constants\\roles.ts",
+      "reason": "Unused file",
+      "size": 936,
+      "lastModified": "2025-10-20T22:34:56.121Z"
+    },
+    {
+      "file": "src\\constants\\i18n-keys.ts",
+      "reason": "Unused file",
+      "size": 9800,
+      "lastModified": "2025-10-20T22:34:56.023Z"
+    },
+    {
+      "file": "src\\constants\\api.ts",
+      "reason": "Unused file",
+      "size": 2982,
+      "lastModified": "2025-10-20T22:34:55.907Z"
+    },
+    {
+      "file": "src\\config\\env.ts",
+      "reason": "Unused file",
+      "size": 3381,
+      "lastModified": "2025-10-20T22:34:55.776Z"
+    },
+    {
+      "file": "src\\config\\database.ts",
+      "reason": "Unused file",
+      "size": 194,
+      "lastModified": "2025-10-20T22:34:55.688Z"
+    },
+    {
+      "file": "src\\config\\auth.ts",
+      "reason": "Unused file",
+      "size": 229,
+      "lastModified": "2025-10-20T22:34:55.667Z"
+    },
+    {
+      "file": "src\\config\\app.ts",
+      "reason": "Unused file",
+      "size": 356,
+      "lastModified": "2025-10-20T22:34:55.657Z"
+    },
+    {
+      "file": "src\\config\\api.ts",
+      "reason": "Unused file",
+      "size": 288,
+      "lastModified": "2025-10-20T22:34:55.643Z"
+    },
+    {
+      "file": "src\\components\\ThemeSwitcher.tsx",
+      "reason": "Component file",
+      "size": 2006,
+      "lastModified": "2025-10-20T22:34:48.542Z"
+    },
+    {
+      "file": "src\\components\\Navigation.tsx",
+      "reason": "Component file",
+      "size": 5123,
+      "lastModified": "2025-10-20T22:34:43.080Z"
+    },
+    {
+      "file": "src\\components\\LanguageSwitcher.tsx",
+      "reason": "Component file",
+      "size": 1952,
+      "lastModified": "2025-10-20T22:34:42.016Z"
+    },
+    {
+      "file": "src\\components\\dynamic-stats.tsx",
+      "reason": "Component file",
+      "size": 4203,
+      "lastModified": "2025-10-20T22:34:39.925Z"
+    },
+    {
+      "file": "src\\components\\dynamic-services.tsx",
+      "reason": "Component file",
+      "size": 5951,
+      "lastModified": "2025-10-20T22:34:39.490Z"
+    },
+    {
+      "file": "src\\components\\dynamic-doctors-list.tsx",
+      "reason": "Component file",
+      "size": 15678,
+      "lastModified": "2025-10-20T22:31:21.320Z"
+    },
+    {
+      "file": "src\\components\\dynamic-data-dashboard.tsx",
+      "reason": "Component file",
+      "size": 21333,
+      "lastModified": "2025-10-20T22:31:21.113Z"
+    },
+    {
+      "file": "src\\components\\dynamic-contact-info.tsx",
+      "reason": "Component file",
+      "size": 4158,
+      "lastModified": "2025-10-20T22:34:38.112Z"
+    },
+    {
+      "file": "src\\app\\sitemap.ts",
+      "reason": "Unused file",
+      "size": 529,
+      "lastModified": "2025-10-20T22:34:24.487Z"
+    },
+    {
+      "file": "src\\app\\robots.ts",
+      "reason": "Unused file",
+      "size": 298,
+      "lastModified": "2025-10-20T22:34:23.259Z"
+    },
+    {
+      "file": "src\\app\\layout.minimal.tsx",
+      "reason": "Unused file",
+      "size": 179,
+      "lastModified": "2025-10-20T22:34:23.170Z"
+    },
+    {
+      "file": "src\\__tests__\\auth\\reset-password.test.tsx",
+      "reason": "Test file",
+      "size": 6783,
+      "lastModified": "2025-10-20T22:33:39.476Z"
+    },
+    {
+      "file": "src\\__tests__\\auth\\register.test.tsx",
+      "reason": "Test file",
+      "size": 7818,
+      "lastModified": "2025-10-20T22:33:39.102Z"
+    },
+    {
+      "file": "src\\__tests__\\auth\\login.test.tsx",
+      "reason": "Test file",
+      "size": 7234,
+      "lastModified": "2025-10-20T22:33:38.773Z"
+    },
+    {
+      "file": "src\\__tests__\\auth\\forgot-password.test.tsx",
+      "reason": "Test file",
+      "size": 5078,
+      "lastModified": "2025-10-20T22:33:38.139Z"
+    },
+    {
+      "file": "src\\__tests__\\api\\patients.test.ts",
+      "reason": "Test file",
+      "size": 8450,
+      "lastModified": "2025-10-20T22:33:36.680Z"
+    },
+    {
+      "file": "src\\__tests__\\api\\appointments.test.ts",
+      "reason": "Test file",
+      "size": 11113,
+      "lastModified": "2025-10-20T22:33:36.005Z"
+    },
+    {
+      "file": "src\\lib\\validation\\security.ts",
+      "reason": "Utility file",
+      "size": 6331,
+      "lastModified": "2025-10-20T22:35:34.405Z"
+    },
+    {
+      "file": "src\\lib\\validation\\schemas.ts",
+      "reason": "Utility file",
+      "size": 6810,
+      "lastModified": "2025-10-20T22:35:33.699Z"
+    },
+    {
+      "file": "src\\lib\\utils\\request-helpers.ts",
+      "reason": "Utility file",
+      "size": 649,
+      "lastModified": "2025-10-20T22:35:31.008Z"
+    },
+    {
+      "file": "src\\lib\\testing\\test-utils.ts",
+      "reason": "Utility file",
+      "size": 9001,
+      "lastModified": "2025-10-20T22:35:28.234Z"
+    },
+    {
+      "file": "src\\lib\\supabase\\server.ts",
+      "reason": "Utility file",
+      "size": 796,
+      "lastModified": "2025-10-20T22:35:27.439Z"
+    },
+    {
+      "file": "src\\lib\\supabase\\client.ts",
+      "reason": "Utility file",
+      "size": 479,
+      "lastModified": "2025-10-20T22:35:27.205Z"
+    },
+    {
+      "file": "src\\lib\\seo\\metadata.ts",
+      "reason": "Utility file",
+      "size": 7133,
+      "lastModified": "2025-10-20T22:35:25.347Z"
+    },
+    {
+      "file": "src\\lib\\payments\\stripe.ts",
+      "reason": "Utility file",
+      "size": 4085,
+      "lastModified": "2025-10-20T22:35:19.573Z"
+    },
+    {
+      "file": "src\\lib\\payments\\moyasar.ts",
+      "reason": "Utility file",
+      "size": 4493,
+      "lastModified": "2025-10-20T22:35:19.083Z"
+    },
+    {
+      "file": "src\\lib\\optimization\\performance.ts",
+      "reason": "Utility file",
+      "size": 6799,
+      "lastModified": "2025-10-20T22:35:18.729Z"
+    },
+    {
+      "file": "src\\lib\\notifications\\sms.ts",
+      "reason": "Utility file",
+      "size": 4248,
+      "lastModified": "2025-10-20T22:35:18.647Z"
+    },
+    {
+      "file": "src\\lib\\notifications\\email.ts",
+      "reason": "Utility file",
+      "size": 7374,
+      "lastModified": "2025-10-20T22:35:18.561Z"
+    },
+    {
+      "file": "src\\lib\\monitoring\\logger.ts",
+      "reason": "Utility file",
+      "size": 4489,
+      "lastModified": "2025-10-20T22:35:17.898Z"
+    },
+    {
+      "file": "src\\lib\\integrations\\test-helpers.ts",
+      "reason": "Utility file",
+      "size": 13208,
+      "lastModified": "2025-10-20T22:35:16.993Z"
+    },
+    {
+      "file": "src\\lib\\insurance\\providers.ts",
+      "reason": "Utility file",
+      "size": 6801,
+      "lastModified": "2025-10-20T22:35:16.012Z"
+    },
+    {
+      "file": "src\\lib\\i18n\\translationService.ts",
+      "reason": "Utility file",
+      "size": 7901,
+      "lastModified": "2025-10-20T22:35:15.389Z"
+    },
+    {
+      "file": "src\\lib\\errors\\api-errors.ts",
+      "reason": "Utility file",
+      "size": 3444,
+      "lastModified": "2025-10-20T22:35:14.109Z"
+    },
+    {
+      "file": "src\\lib\\deployment\\docker.ts",
+      "reason": "Utility file",
+      "size": 10601,
+      "lastModified": "2025-10-20T22:35:12.212Z"
+    },
+    {
+      "file": "src\\lib\\database\\connection-pool.ts",
+      "reason": "Utility file",
+      "size": 4933,
+      "lastModified": "2025-10-20T22:35:11.761Z"
+    },
+    {
+      "file": "src\\lib\\cache\\redis.ts",
+      "reason": "Utility file",
+      "size": 4194,
+      "lastModified": "2025-10-20T22:35:10.130Z"
+    },
+    {
+      "file": "src\\lib\\auth\\roles.ts",
+      "reason": "Utility file",
+      "size": 333,
+      "lastModified": "2025-10-20T22:35:09.680Z"
+    },
+    {
+      "file": "src\\lib\\auth\\authorize.ts",
+      "reason": "Utility file",
+      "size": 1878,
+      "lastModified": "2025-10-20T22:35:09.642Z"
+    },
+    {
+      "file": "src\\lib\\api\\whatsapp.ts",
+      "reason": "Utility file",
+      "size": 1298,
+      "lastModified": "2025-10-20T22:35:09.498Z"
+    },
+    {
+      "file": "src\\lib\\accessibility\\aria-utils.ts",
+      "reason": "Utility file",
+      "size": 4340,
+      "lastModified": "2025-10-20T22:35:08.496Z"
+    },
+    {
+      "file": "src\\core\\api\\client.ts",
+      "reason": "Unused file",
+      "size": 10107,
+      "lastModified": "2025-10-20T22:34:57.508Z"
+    },
+    {
+      "file": "src\\core\\api\\base-handler.ts",
+      "reason": "Unused file",
+      "size": 7022,
+      "lastModified": "2025-10-20T22:34:57.051Z"
+    },
+    {
+      "file": "src\\components\\ui\\Tooltip.tsx",
+      "reason": "Component file",
+      "size": 575,
+      "lastModified": "2025-10-20T22:34:55.586Z"
+    },
+    {
+      "file": "src\\components\\ui\\Toast.tsx",
+      "reason": "Component file",
+      "size": 884,
+      "lastModified": "2025-10-20T22:34:55.443Z"
+    },
+    {
+      "file": "src\\components\\ui\\ThemeSwitch.tsx",
+      "reason": "Component file",
+      "size": 5419,
+      "lastModified": "2025-10-20T22:34:54.660Z"
+    },
+    {
+      "file": "src\\components\\ui\\Textarea.tsx",
+      "reason": "Component file",
+      "size": 330,
+      "lastModified": "2025-10-20T22:34:54.587Z"
+    },
+    {
+      "file": "src\\components\\ui\\Tabs.tsx",
+      "reason": "Component file",
+      "size": 2855,
+      "lastModified": "2025-10-20T22:34:54.390Z"
+    },
+    {
+      "file": "src\\components\\ui\\Table.tsx",
+      "reason": "Component file",
+      "size": 1419,
+      "lastModified": "2025-10-20T22:34:53.808Z"
+    },
+    {
+      "file": "src\\components\\ui\\Switch.tsx",
+      "reason": "Component file",
+      "size": 1182,
+      "lastModified": "2025-10-20T22:34:53.644Z"
+    },
+    {
+      "file": "src\\components\\ui\\Skeleton.tsx",
+      "reason": "Component file",
+      "size": 238,
+      "lastModified": "2025-10-20T22:34:53.283Z"
+    },
+    {
+      "file": "src\\components\\ui\\Select.tsx",
+      "reason": "Component file",
+      "size": 5651,
+      "lastModified": "2025-10-20T22:34:52.905Z"
+    },
+    {
+      "file": "src\\components\\ui\\ScrollArea.tsx",
+      "reason": "Component file",
+      "size": 491,
+      "lastModified": "2025-10-20T22:34:52.485Z"
+    },
+    {
+      "file": "src\\components\\ui\\Modal.tsx",
+      "reason": "Component file",
+      "size": 1937,
+      "lastModified": "2025-10-20T22:34:52.086Z"
+    },
+    {
+      "file": "src\\components\\ui\\LoadingSpinner.tsx",
+      "reason": "Component file",
+      "size": 770,
+      "lastModified": "2025-10-20T22:34:51.841Z"
+    },
+    {
+      "file": "src\\components\\ui\\Label.tsx",
+      "reason": "Component file",
+      "size": 222,
+      "lastModified": "2025-10-20T22:34:51.503Z"
+    },
+    {
+      "file": "src\\components\\ui\\Input.tsx",
+      "reason": "Component file",
+      "size": 4387,
+      "lastModified": "2025-10-20T22:34:51.455Z"
+    },
+    {
+      "file": "src\\components\\ui\\DesignSystemDemo.tsx",
+      "reason": "Component file",
+      "size": 10292,
+      "lastModified": "2025-10-20T22:34:50.668Z"
+    },
+    {
+      "file": "src\\components\\ui\\DataTable.tsx",
+      "reason": "Component file",
+      "size": 3581,
+      "lastModified": "2025-10-20T22:34:50.211Z"
+    },
+    {
+      "file": "src\\components\\ui\\Checkbox.tsx",
+      "reason": "Component file",
+      "size": 1483,
+      "lastModified": "2025-10-20T22:34:49.755Z"
+    },
+    {
+      "file": "src\\components\\ui\\Badge.tsx",
+      "reason": "Component file",
+      "size": 679,
+      "lastModified": "2025-10-20T22:31:21.380Z"
+    },
+    {
+      "file": "src\\components\\shell\\Sidebar.tsx",
+      "reason": "Component file",
+      "size": 5523,
+      "lastModified": "2025-10-20T22:34:48.294Z"
+    },
+    {
+      "file": "src\\components\\shell\\HeaderSimple.tsx",
+      "reason": "Component file",
+      "size": 5668,
+      "lastModified": "2025-10-20T22:34:48.140Z"
+    },
+    {
+      "file": "src\\components\\shell\\Header.tsx",
+      "reason": "Component file",
+      "size": 7035,
+      "lastModified": "2025-10-20T22:34:47.889Z"
+    },
+    {
+      "file": "src\\components\\shared\\Tabs.tsx",
+      "reason": "Component file",
+      "size": 1450,
+      "lastModified": "2025-10-20T22:34:47.527Z"
+    },
+    {
+      "file": "src\\components\\shared\\ScreenReaderOnly.tsx",
+      "reason": "Component file",
+      "size": 256,
+      "lastModified": "2025-10-20T22:34:47.510Z"
+    },
+    {
+      "file": "src\\components\\shared\\Modal.tsx",
+      "reason": "Component file",
+      "size": 2331,
+      "lastModified": "2025-10-20T22:34:47.496Z"
+    },
+    {
+      "file": "src\\components\\shared\\LiveRegion.tsx",
+      "reason": "Component file",
+      "size": 392,
+      "lastModified": "2025-10-20T22:34:47.436Z"
+    },
+    {
+      "file": "src\\components\\shared\\Form.tsx",
+      "reason": "Component file",
+      "size": 1473,
+      "lastModified": "2025-10-20T22:34:46.991Z"
+    },
+    {
+      "file": "src\\components\\shared\\EmptyState.tsx",
+      "reason": "Component file",
+      "size": 1052,
+      "lastModified": "2025-10-20T22:34:46.631Z"
+    },
+    {
+      "file": "src\\components\\shared\\DataTable.tsx",
+      "reason": "Component file",
+      "size": 3027,
+      "lastModified": "2025-10-20T22:34:46.076Z"
+    },
+    {
+      "file": "src\\components\\settings\\SettingsTabs.tsx",
+      "reason": "Component file",
+      "size": 22300,
+      "lastModified": "2025-10-20T22:34:45.643Z"
+    },
+    {
+      "file": "src\\components\\settings\\KeywordEditor.tsx",
+      "reason": "Component file",
+      "size": 1377,
+      "lastModified": "2025-10-20T22:34:44.976Z"
+    },
+    {
+      "file": "src\\components\\providers\\UIProvider.tsx",
+      "reason": "Component file",
+      "size": 992,
+      "lastModified": "2025-10-20T22:34:44.627Z"
+    },
+    {
+      "file": "src\\components\\providers\\ThemeProvider.tsx",
+      "reason": "Component file",
+      "size": 1879,
+      "lastModified": "2025-10-20T22:34:44.547Z"
+    },
+    {
+      "file": "src\\components\\providers\\ModernInteractionsProvider.tsx",
+      "reason": "Component file",
+      "size": 948,
+      "lastModified": "2025-10-20T22:34:44.497Z"
+    },
+    {
+      "file": "src\\components\\providers\\I18nProvider.tsx",
+      "reason": "Component file",
+      "size": 925,
+      "lastModified": "2025-10-20T22:34:44.305Z"
+    },
+    {
+      "file": "src\\components\\providers\\DesignSystemProvider.tsx",
+      "reason": "Component file",
+      "size": 8965,
+      "lastModified": "2025-10-20T22:34:44.246Z"
+    },
+    {
+      "file": "src\\components\\patients\\PatientRecords.tsx",
+      "reason": "Component file",
+      "size": 28413,
+      "lastModified": "2025-10-20T22:34:43.939Z"
+    },
+    {
+      "file": "src\\components\\patient\\PreVisitChecklist.tsx",
+      "reason": "Component file",
+      "size": 8879,
+      "lastModified": "2025-10-20T22:34:43.477Z"
+    },
+    {
+      "file": "src\\components\\patient\\ActivationFlow.tsx",
+      "reason": "Component file",
+      "size": 7477,
+      "lastModified": "2025-10-20T22:34:43.346Z"
+    },
+    {
+      "file": "src\\components\\layout\\SmartHeader.tsx",
+      "reason": "Component file",
+      "size": 9012,
+      "lastModified": "2025-10-20T22:34:42.974Z"
+    },
+    {
+      "file": "src\\components\\layout\\Header.tsx",
+      "reason": "Component file",
+      "size": 6063,
+      "lastModified": "2025-10-20T22:34:42.793Z"
+    },
+    {
+      "file": "src\\components\\layout\\GlobalHeader.tsx",
+      "reason": "Component file",
+      "size": 6016,
+      "lastModified": "2025-10-20T22:34:42.640Z"
+    },
+    {
+      "file": "src\\components\\layout\\Footer.tsx",
+      "reason": "Component file",
+      "size": 9161,
+      "lastModified": "2025-10-20T22:34:42.420Z"
+    },
+    {
+      "file": "src\\components\\insurance\\ClaimsManager.tsx",
+      "reason": "Component file",
+      "size": 13304,
+      "lastModified": "2025-10-20T22:34:41.532Z"
+    },
+    {
+      "file": "src\\components\\dashboard\\KpiCard.tsx",
+      "reason": "Component file",
+      "size": 427,
+      "lastModified": "2025-10-20T22:34:37.550Z"
+    },
+    {
+      "file": "src\\components\\dashboard\\DynamicCharts.tsx",
+      "reason": "Component file",
+      "size": 13286,
+      "lastModified": "2025-10-20T22:34:37.164Z"
+    },
+    {
+      "file": "src\\components\\dashboard\\Charts.tsx",
+      "reason": "Component file",
+      "size": 3948,
+      "lastModified": "2025-10-20T22:34:36.063Z"
+    },
+    {
+      "file": "src\\components\\common\\StatusBanner.tsx",
+      "reason": "Component file",
+      "size": 956,
+      "lastModified": "2025-10-20T22:34:35.694Z"
+    },
+    {
+      "file": "src\\components\\common\\PlaceholderSquare.tsx",
+      "reason": "Component file",
+      "size": 1503,
+      "lastModified": "2025-10-20T22:34:35.667Z"
+    },
+    {
+      "file": "src\\components\\common\\PerformanceOptimizedImage.tsx",
+      "reason": "Component file",
+      "size": 2776,
+      "lastModified": "2025-10-20T22:34:35.629Z"
+    },
+    {
+      "file": "src\\components\\common\\OptimizedImage.tsx",
+      "reason": "Component file",
+      "size": 732,
+      "lastModified": "2025-10-20T22:34:35.560Z"
+    },
+    {
+      "file": "src\\components\\common\\LanguageSwitcher.tsx",
+      "reason": "Component file",
+      "size": 3840,
+      "lastModified": "2025-10-20T22:34:35.519Z"
+    },
+    {
+      "file": "src\\components\\common\\ErrorBoundary.tsx",
+      "reason": "Component file",
+      "size": 4725,
+      "lastModified": "2025-10-20T22:34:35.220Z"
+    },
+    {
+      "file": "src\\components\\common\\EmptyState.tsx",
+      "reason": "Component file",
+      "size": 527,
+      "lastModified": "2025-10-20T22:34:35.016Z"
+    },
+    {
+      "file": "src\\components\\common\\DirectionToggle.tsx",
+      "reason": "Component file",
+      "size": 1002,
+      "lastModified": "2025-10-20T22:34:34.548Z"
+    },
+    {
+      "file": "src\\components\\chatbot\\MoeenChatbot.tsx",
+      "reason": "Component file",
+      "size": 12963,
+      "lastModified": "2025-10-20T22:34:33.714Z"
+    },
+    {
+      "file": "src\\components\\chatbot\\MoainChatbot.tsx",
+      "reason": "Component file",
+      "size": 18008,
+      "lastModified": "2025-10-20T22:34:33.599Z"
+    },
+    {
+      "file": "src\\components\\charts\\LineChart.tsx",
+      "reason": "Component file",
+      "size": 3654,
+      "lastModified": "2025-10-20T22:34:31.495Z"
+    },
+    {
+      "file": "src\\components\\charts\\BarChart.tsx",
+      "reason": "Component file",
+      "size": 3645,
+      "lastModified": "2025-10-20T22:34:29.514Z"
+    },
+    {
+      "file": "src\\components\\charts\\AreaChart.tsx",
+      "reason": "Component file",
+      "size": 3455,
+      "lastModified": "2025-10-20T22:34:28.803Z"
+    },
+    {
+      "file": "src\\components\\booking\\SessionTypeSelector.tsx",
+      "reason": "Component file",
+      "size": 2980,
+      "lastModified": "2025-10-20T22:34:28.067Z"
+    },
+    {
+      "file": "src\\components\\booking\\AvailableSlotsPicker.tsx",
+      "reason": "Component file",
+      "size": 4918,
+      "lastModified": "2025-10-20T22:34:27.505Z"
+    },
+    {
+      "file": "src\\components\\auth\\ProtectedRoute.tsx",
+      "reason": "Component file",
+      "size": 2292,
+      "lastModified": "2025-10-20T22:34:26.642Z"
+    },
+    {
+      "file": "src\\components\\appointments\\AppointmentManager.tsx",
+      "reason": "Component file",
+      "size": 17882,
+      "lastModified": "2025-10-20T22:34:25.895Z"
+    },
+    {
+      "file": "src\\components\\accessibility\\AccessibilitySettings.tsx",
+      "reason": "Component file",
+      "size": 14630,
+      "lastModified": "2025-10-20T22:34:25.496Z"
+    },
+    {
+      "file": "src\\__tests__\\api\\auth\\login.test.ts",
+      "reason": "Test file",
+      "size": 4772,
+      "lastModified": "2025-10-20T22:33:36.270Z"
+    },
+    {
+      "file": "src\\app\\api\\upload\\route.ts",
+      "reason": "Unused file",
+      "size": 5534,
+      "lastModified": "2025-10-20T22:34:21.406Z"
+    },
+    {
+      "file": "src\\app\\api\\progress\\route.ts",
+      "reason": "Unused file",
+      "size": 989,
+      "lastModified": "2025-10-20T22:34:18.073Z"
+    },
+    {
+      "file": "src\\app\\api\\medical-records\\route.ts",
+      "reason": "Unused file",
+      "size": 5541,
+      "lastModified": "2025-10-20T22:34:15.604Z"
+    },
+    {
+      "file": "src\\app\\api\\i18n\\route.ts",
+      "reason": "Unused file",
+      "size": 3240,
+      "lastModified": "2025-10-20T22:34:14.939Z"
+    },
+    {
+      "file": "src\\app\\api\\health\\route.ts",
+      "reason": "Unused file",
+      "size": 8594,
+      "lastModified": "2025-10-20T22:34:14.534Z"
+    },
+    {
+      "file": "src\\app\\api\\family\\route.ts",
+      "reason": "Unused file",
+      "size": 993,
+      "lastModified": "2025-10-20T22:34:14.025Z"
+    },
+    {
+      "file": "src\\app\\api\\errors\\route.ts",
+      "reason": "Unused file",
+      "size": 1712,
+      "lastModified": "2025-10-20T22:34:13.916Z"
+    },
+    {
+      "file": "src\\app\\api\\dynamic-data\\route.ts",
+      "reason": "Unused file",
+      "size": 5544,
+      "lastModified": "2025-10-20T22:34:13.532Z"
+    },
+    {
+      "file": "src\\app\\api\\audit-logs\\route.ts",
+      "reason": "Unused file",
+      "size": 2865,
+      "lastModified": "2025-10-20T22:34:08.490Z"
+    },
+    {
+      "file": "src\\app\\api\\appointments\\route.ts",
+      "reason": "Unused file",
+      "size": 7443,
+      "lastModified": "2025-10-20T22:34:08.358Z"
+    },
+    {
+      "file": "src\\app\\api\\webhook\\whatsapp\\route.ts",
+      "reason": "Unused file",
+      "size": 7390,
+      "lastModified": "2025-10-20T22:34:22.671Z"
+    },
+    {
+      "file": "src\\app\\api\\user\\preferences\\route.ts",
+      "reason": "Unused file",
+      "size": 3113,
+      "lastModified": "2025-10-20T22:34:22.519Z"
+    },
+    {
+      "file": "src\\app\\api\\translations\\[lang]\\route.ts",
+      "reason": "Unused file",
+      "size": 4920,
+      "lastModified": "2025-10-20T22:34:20.741Z"
+    },
+    {
+      "file": "src\\app\\api\\translations\\missing\\route.ts",
+      "reason": "Unused file",
+      "size": 2118,
+      "lastModified": "2025-10-20T22:34:20.933Z"
+    },
+    {
+      "file": "src\\app\\api\\therapists\\availability\\route.ts",
+      "reason": "Unused file",
+      "size": 842,
+      "lastModified": "2025-10-20T22:34:20.586Z"
+    },
+    {
+      "file": "src\\app\\api\\test\\clear-rate-limit\\route.ts",
+      "reason": "Unused file",
+      "size": 760,
+      "lastModified": "2025-10-20T22:34:19.679Z"
+    },
+    {
+      "file": "src\\app\\api\\supervisor\\call-request\\route.ts",
+      "reason": "Unused file",
+      "size": 5292,
+      "lastModified": "2025-10-20T22:34:18.970Z"
+    },
+    {
+      "file": "src\\app\\api\\slack\\webhook\\route.ts",
+      "reason": "Unused file",
+      "size": 1083,
+      "lastModified": "2025-10-20T22:34:18.724Z"
+    },
+    {
+      "file": "src\\app\\api\\slack\\notify\\route.ts",
+      "reason": "Unused file",
+      "size": 6503,
+      "lastModified": "2025-10-20T22:34:18.523Z"
+    },
+    {
+      "file": "src\\app\\api\\settings\\system\\route.ts",
+      "reason": "Unused file",
+      "size": 3678,
+      "lastModified": "2025-10-20T22:34:18.448Z"
+    },
+    {
+      "file": "src\\app\\api\\settings\\staff\\route.ts",
+      "reason": "Unused file",
+      "size": 4815,
+      "lastModified": "2025-10-20T22:34:18.391Z"
+    },
+    {
+      "file": "src\\app\\api\\settings\\emergency-contacts\\route.ts",
+      "reason": "Unused file",
+      "size": 3722,
+      "lastModified": "2025-10-20T22:34:18.323Z"
+    },
+    {
+      "file": "src\\app\\api\\settings\\center\\route.ts",
+      "reason": "Unused file",
+      "size": 3520,
+      "lastModified": "2025-10-20T22:34:18.259Z"
+    },
+    {
+      "file": "src\\app\\api\\sessions\\available-slots\\route.ts",
+      "reason": "Unused file",
+      "size": 5869,
+      "lastModified": "2025-10-20T22:34:18.205Z"
+    },
+    {
+      "file": "src\\app\\api\\reports\\export\\route.ts",
+      "reason": "Unused file",
+      "size": 4223,
+      "lastModified": "2025-10-20T20:40:46.824Z"
+    },
+    {
+      "file": "src\\app\\api\\reports\\dashboard-metrics\\route.ts",
+      "reason": "Unused file",
+      "size": 7592,
+      "lastModified": "2025-10-20T20:40:46.823Z"
+    },
+    {
+      "file": "src\\app\\api\\progress\\assessments\\route.ts",
+      "reason": "Unused file",
+      "size": 1020,
+      "lastModified": "2025-10-20T22:34:18.056Z"
+    },
+    {
+      "file": "src\\app\\api\\patients\\journey\\route.ts",
+      "reason": "Unused file",
+      "size": 10752,
+      "lastModified": "2025-10-20T22:34:17.953Z"
+    },
+    {
+      "file": "src\\app\\api\\owner\\stats\\route.ts",
+      "reason": "Unused file",
+      "size": 1166,
+      "lastModified": "2025-10-20T22:34:17.719Z"
+    },
+    {
+      "file": "src\\app\\api\\owner\\analytics\\route.ts",
+      "reason": "Unused file",
+      "size": 579,
+      "lastModified": "2025-10-20T22:34:17.682Z"
+    },
+    {
+      "file": "src\\app\\api\\notifications\\templates\\route.ts",
+      "reason": "Unused file",
+      "size": 3259,
+      "lastModified": "2025-10-20T22:34:17.171Z"
+    },
+    {
+      "file": "src\\app\\api\\notifications\\send\\route.ts",
+      "reason": "Unused file",
+      "size": 10794,
+      "lastModified": "2025-10-20T22:34:16.225Z"
+    },
+    {
+      "file": "src\\app\\api\\medical-records\\upload\\route.ts",
+      "reason": "Unused file",
+      "size": 6141,
+      "lastModified": "2025-10-20T22:34:15.893Z"
+    },
+    {
+      "file": "src\\app\\api\\insurance\\claims\\route.ts",
+      "reason": "Unused file",
+      "size": 10393,
+      "lastModified": "2025-10-20T22:34:15.420Z"
+    },
+    {
+      "file": "src\\app\\api\\healthcare\\patients\\route.ts",
+      "reason": "Unused file",
+      "size": 3402,
+      "lastModified": "2025-10-20T22:34:14.776Z"
+    },
+    {
+      "file": "src\\app\\api\\healthcare\\appointments\\route.ts",
+      "reason": "Unused file",
+      "size": 3096,
+      "lastModified": "2025-10-20T22:34:14.668Z"
+    },
+    {
+      "file": "src\\app\\api\\family\\support\\route.ts",
+      "reason": "Unused file",
+      "size": 1016,
+      "lastModified": "2025-10-20T22:34:14.384Z"
+    },
+    {
+      "file": "src\\app\\api\\dynamic-data\\staff\\route.ts",
+      "reason": "Unused file",
+      "size": 5090,
+      "lastModified": "2025-10-20T22:34:13.709Z"
+    },
+    {
+      "file": "src\\app\\api\\dynamic-data\\patients\\route.ts",
+      "reason": "Unused file",
+      "size": 6710,
+      "lastModified": "2025-10-20T22:34:13.487Z"
+    },
+    {
+      "file": "src\\app\\api\\dynamic-data\\doctors\\route.ts",
+      "reason": "Unused file",
+      "size": 5020,
+      "lastModified": "2025-10-20T22:34:13.230Z"
+    },
+    {
+      "file": "src\\app\\api\\doctors\\availability\\route.ts",
+      "reason": "Unused file",
+      "size": 4697,
+      "lastModified": "2025-10-20T22:34:12.951Z"
+    },
+    {
+      "file": "src\\app\\api\\dashboard\\statistics\\route.ts",
+      "reason": "Unused file",
+      "size": 1898,
+      "lastModified": "2025-10-20T22:34:12.740Z"
+    },
+    {
+      "file": "src\\app\\api\\dashboard\\metrics\\route.ts",
+      "reason": "Unused file",
+      "size": 18557,
+      "lastModified": "2025-10-20T22:34:12.620Z"
+    },
+    {
+      "file": "src\\app\\api\\dashboard\\logs\\route.ts",
+      "reason": "Unused file",
+      "size": 2962,
+      "lastModified": "2025-10-20T22:34:12.305Z"
+    },
+    {
+      "file": "src\\app\\api\\dashboard\\health\\route.ts",
+      "reason": "Unused file",
+      "size": 1294,
+      "lastModified": "2025-10-20T22:34:12.226Z"
+    },
+    {
+      "file": "src\\app\\api\\crm\\stats\\route.ts",
+      "reason": "Unused file",
+      "size": 2011,
+      "lastModified": "2025-10-20T22:34:12.192Z"
+    },
+    {
+      "file": "src\\app\\api\\crm\\leads\\route.ts",
+      "reason": "Unused file",
+      "size": 2530,
+      "lastModified": "2025-10-20T22:34:12.163Z"
+    },
+    {
+      "file": "src\\app\\api\\crm\\contacts\\route.ts",
+      "reason": "Unused file",
+      "size": 2985,
+      "lastModified": "2025-10-20T22:34:12.126Z"
+    },
+    {
+      "file": "src\\app\\api\\chatbot\\messages\\route.ts",
+      "reason": "Unused file",
+      "size": 2447,
+      "lastModified": "2025-10-20T22:34:12.086Z"
+    },
+    {
+      "file": "src\\app\\api\\chatbot\\message\\route.ts",
+      "reason": "Unused file",
+      "size": 5649,
+      "lastModified": "2025-10-20T22:34:12.046Z"
+    },
+    {
+      "file": "src\\app\\api\\chatbot\\intents\\route.ts",
+      "reason": "Unused file",
+      "size": 1632,
+      "lastModified": "2025-10-20T22:34:11.938Z"
+    },
+    {
+      "file": "src\\app\\api\\chatbot\\flows\\route.ts",
+      "reason": "Unused file",
+      "size": 1524,
+      "lastModified": "2025-10-20T22:34:11.708Z"
+    },
+    {
+      "file": "src\\app\\api\\chatbot\\doctors\\route.ts",
+      "reason": "Unused file",
+      "size": 2218,
+      "lastModified": "2025-10-20T22:34:11.615Z"
+    },
+    {
+      "file": "src\\app\\api\\chatbot\\conversations\\route.ts",
+      "reason": "Unused file",
+      "size": 2178,
+      "lastModified": "2025-10-20T22:34:11.355Z"
+    },
+    {
+      "file": "src\\app\\api\\chatbot\\config\\route.ts",
+      "reason": "Unused file",
+      "size": 3735,
+      "lastModified": "2025-10-20T22:34:10.595Z"
+    },
+    {
+      "file": "src\\app\\api\\chatbot\\appointments\\route.ts",
+      "reason": "Unused file",
+      "size": 8287,
+      "lastModified": "2025-10-20T22:34:10.211Z"
+    },
+    {
+      "file": "src\\app\\api\\auth\\reset-password\\route.ts",
+      "reason": "Unused file",
+      "size": 3062,
+      "lastModified": "2025-10-20T22:34:09.959Z"
+    },
+    {
+      "file": "src\\app\\api\\auth\\register\\route.ts",
+      "reason": "Unused file",
+      "size": 6873,
+      "lastModified": "2025-10-20T22:34:09.676Z"
+    },
+    {
+      "file": "src\\app\\api\\auth\\me\\route.ts",
+      "reason": "Unused file",
+      "size": 477,
+      "lastModified": "2025-10-20T22:34:09.443Z"
+    },
+    {
+      "file": "src\\app\\api\\auth\\logout\\route.ts",
+      "reason": "Unused file",
+      "size": 3277,
+      "lastModified": "2025-10-20T22:34:09.023Z"
+    },
+    {
+      "file": "src\\app\\api\\auth\\login\\route.ts",
+      "reason": "Unused file",
+      "size": 8036,
+      "lastModified": "2025-10-20T22:34:08.906Z"
+    },
+    {
+      "file": "src\\app\\api\\auth\\forgot-password\\route.ts",
+      "reason": "Unused file",
+      "size": 4469,
+      "lastModified": "2025-10-20T22:34:08.624Z"
+    },
+    {
+      "file": "src\\app\\api\\appointments\\[id]\\route.ts",
+      "reason": "Unused file",
+      "size": 6463,
+      "lastModified": "2025-10-20T22:34:07.414Z"
+    },
+    {
+      "file": "src\\app\\api\\appointments\\conflict-check\\route.ts",
+      "reason": "Unused file",
+      "size": 3049,
+      "lastModified": "2025-10-20T22:34:08.180Z"
+    },
+    {
+      "file": "src\\app\\api\\appointments\\book\\route.ts",
+      "reason": "Unused file",
+      "size": 6842,
+      "lastModified": "2025-10-20T22:34:07.841Z"
+    },
+    {
+      "file": "src\\app\\api\\appointments\\availability\\route.ts",
+      "reason": "Unused file",
+      "size": 4340,
+      "lastModified": "2025-10-20T22:34:07.513Z"
+    },
+    {
+      "file": "src\\app\\api\\agent\\tasks\\route.ts",
+      "reason": "Unused file",
+      "size": 857,
+      "lastModified": "2025-10-20T22:34:06.113Z"
+    },
+    {
+      "file": "src\\app\\api\\agent\\status\\route.ts",
+      "reason": "Unused file",
+      "size": 789,
+      "lastModified": "2025-10-20T22:34:05.898Z"
+    },
+    {
+      "file": "src\\app\\api\\agent\\logs\\route.ts",
+      "reason": "Unused file",
+      "size": 701,
+      "lastModified": "2025-10-20T22:34:05.745Z"
+    },
+    {
+      "file": "src\\app\\api\\agent\\completion\\route.ts",
+      "reason": "Unused file",
+      "size": 726,
+      "lastModified": "2025-10-20T22:34:05.712Z"
+    },
+    {
+      "file": "src\\app\\api\\analytics\\metrics\\route.ts",
+      "reason": "Unused file",
+      "size": 1034,
+      "lastModified": "2025-10-20T22:34:06.976Z"
+    },
+    {
+      "file": "src\\app\\api\\analytics\\action\\route.ts",
+      "reason": "Unused file",
+      "size": 1004,
+      "lastModified": "2025-10-20T22:34:06.608Z"
+    },
+    {
+      "file": "src\\app\\api\\admin\\users\\route.ts",
+      "reason": "Unused file",
+      "size": 10387,
+      "lastModified": "2025-10-20T22:34:05.690Z"
+    },
+    {
+      "file": "src\\app\\api\\admin\\system-config\\route.ts",
+      "reason": "Unused file",
+      "size": 2978,
+      "lastModified": "2025-10-20T22:34:05.208Z"
+    },
+    {
+      "file": "src\\app\\api\\admin\\stats\\route.ts",
+      "reason": "Unused file",
+      "size": 4284,
+      "lastModified": "2025-10-20T22:34:05.129Z"
+    },
+    {
+      "file": "src\\app\\api\\admin\\staff-hours\\route.ts",
+      "reason": "Unused file",
+      "size": 1933,
+      "lastModified": "2025-10-20T22:34:04.976Z"
+    },
+    {
+      "file": "src\\app\\api\\admin\\security-events\\route.ts",
+      "reason": "Unused file",
+      "size": 6514,
+      "lastModified": "2025-10-20T22:34:04.713Z"
+    },
+    {
+      "file": "src\\app\\api\\admin\\dashboard\\route.ts",
+      "reason": "Unused file",
+      "size": 4385,
+      "lastModified": "2025-10-20T22:34:04.566Z"
+    },
+    {
+      "file": "src\\app\\api\\admin\\configs\\route.ts",
+      "reason": "Unused file",
+      "size": 8152,
+      "lastModified": "2025-10-20T22:34:04.488Z"
+    },
+    {
+      "file": "src\\app\\api\\webhooks\\payments\\stripe\\route.ts",
+      "reason": "Unused file",
+      "size": 2523,
+      "lastModified": "2025-10-20T22:34:22.767Z"
+    },
+    {
+      "file": "src\\app\\api\\webhooks\\payments\\moyasar\\route.ts",
+      "reason": "Unused file",
+      "size": 2558,
+      "lastModified": "2025-10-20T22:34:22.739Z"
+    },
+    {
+      "file": "src\\app\\api\\payments\\webhook\\stripe\\route.ts",
+      "reason": "Unused file",
+      "size": 5554,
+      "lastModified": "2025-10-20T22:34:18.023Z"
+    },
+    {
+      "file": "src\\app\\api\\patients\\[id]\\activate\\route.ts",
+      "reason": "Unused file",
+      "size": 3205,
+      "lastModified": "2025-10-20T22:34:17.767Z"
+    },
+    {
+      "file": "src\\app\\api\\admin\\users\\[id]\\route.ts",
+      "reason": "Unused file",
+      "size": 4495,
+      "lastModified": "2025-10-20T22:34:05.514Z"
+    },
+    {
+      "file": "src\\app\\api\\patients\\[id]\\activation\\step\\route.ts",
+      "reason": "Unused file",
+      "size": 3535,
+      "lastModified": "2025-10-20T22:34:17.871Z"
+    },
+    {
+      "file": "src\\app\\api\\insurance\\claims\\[id]\\submit\\route.ts",
+      "reason": "Unused file",
+      "size": 5618,
+      "lastModified": "2025-10-20T22:34:15.167Z"
+    },
+    {
+      "file": "components\\Header.jsx",
+      "reason": "Component file",
+      "size": 479,
+      "lastModified": "2025-10-20T22:31:46.795Z"
+    },
+    {
+      "file": "components\\Footer.jsx",
+      "reason": "Component file",
+      "size": 454,
+      "lastModified": "2025-10-20T22:31:46.777Z"
+    }
+  ],
+  "unusedDependencies": [],
+  "deadImports": [
+    {
+      "file": "src\\types\\auth.ts",
+      "import": "./common",
+      "resolved": "D:\\Github\\moeen\\src\\types\\common",
+      "line": 1
+    },
+    {
+      "file": "src\\types\\api.ts",
+      "import": "./index",
+      "resolved": "D:\\Github\\moeen\\src\\types\\index",
+      "line": 1
+    },
+    {
+      "file": "src\\scripts\\seed-translations.ts",
+      "import": "../lib/translations-manager",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\translations-manager",
+      "line": 1
+    },
+    {
+      "file": "src\\scripts\\seed-homepage-content.ts",
+      "import": "../lib/dynamic-content-manager",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\dynamic-content-manager",
+      "line": 1
+    },
+    {
+      "file": "src\\hooks\\usePageI18n.ts",
+      "import": "./useI18n",
+      "resolved": "D:\\Github\\moeen\\src\\hooks\\useI18n",
+      "line": 3
+    },
+    {
+      "file": "src\\lib\\translations-manager.ts",
+      "import": "./cuid",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\cuid",
+      "line": 1
+    },
+    {
+      "file": "src\\lib\\translations-manager.ts",
+      "import": "./supabaseClient",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\supabaseClient",
+      "line": 2
+    },
+    {
+      "file": "src\\lib\\theme-manager.ts",
+      "import": "./design-system",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\design-system",
+      "line": 16
+    },
+    {
+      "file": "src\\lib\\performance-monitor.ts",
+      "import": "./supabase-real",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\supabase-real",
+      "line": 2
+    },
+    {
+      "file": "src\\lib\\file-upload.ts",
+      "import": "./supabase-real",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\supabase-real",
+      "line": 2
+    },
+    {
+      "file": "src\\lib\\dynamic-theme-manager.ts",
+      "import": "./supabase/client",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\supabase\\client",
+      "line": 1
+    },
+    {
+      "file": "src\\lib\\dynamic-content-manager.ts",
+      "import": "./supabase/client",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\supabase\\client",
+      "line": 1
+    },
+    {
+      "file": "src\\lib\\testing\\test-utils.ts",
+      "import": "../monitoring/logger",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\monitoring\\logger",
+      "line": 7
+    },
+    {
+      "file": "src\\lib\\optimization\\performance.ts",
+      "import": "../monitoring/logger",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\monitoring\\logger",
+      "line": 6
+    },
+    {
+      "file": "src\\lib\\deployment\\docker.ts",
+      "import": "../monitoring/logger",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\monitoring\\logger",
+      "line": 8
+    },
+    {
+      "file": "src\\lib\\database\\connection-pool.ts",
+      "import": "../monitoring/logger",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\monitoring\\logger",
+      "line": 7
+    },
+    {
+      "file": "src\\lib\\api\\whatsapp.ts",
+      "import": "./config",
+      "resolved": "D:\\Github\\moeen\\src\\lib\\api\\config",
+      "line": 1
+    },
+    {
+      "file": "src\\core\\validation\\index.ts",
+      "import": "../constants",
+      "resolved": "D:\\Github\\moeen\\src\\core\\constants",
+      "line": 7
+    },
+    {
+      "file": "src\\core\\validation\\index.ts",
+      "import": "../errors",
+      "resolved": "D:\\Github\\moeen\\src\\core\\errors",
+      "line": 8
+    },
+    {
+      "file": "src\\core\\store\\index.ts",
+      "import": "../types",
+      "resolved": "D:\\Github\\moeen\\src\\core\\types",
+      "line": 9
+    },
+    {
+      "file": "src\\core\\hooks\\index.ts",
+      "import": "../store",
+      "resolved": "D:\\Github\\moeen\\src\\core\\store",
+      "line": 8
+    },
+    {
+      "file": "src\\core\\hooks\\index.ts",
+      "import": "../api/client",
+      "resolved": "D:\\Github\\moeen\\src\\core\\api\\client",
+      "line": 9
+    },
+    {
+      "file": "src\\core\\hooks\\index.ts",
+      "import": "../utils/index",
+      "resolved": "D:\\Github\\moeen\\src\\core\\utils\\index",
+      "line": 10
+    },
+    {
+      "file": "src\\core\\hooks\\index.ts",
+      "import": "../types",
+      "resolved": "D:\\Github\\moeen\\src\\core\\types",
+      "line": 11
+    },
+    {
+      "file": "src\\core\\errors\\index.ts",
+      "import": "../constants",
+      "resolved": "D:\\Github\\moeen\\src\\core\\constants",
+      "line": 6
+    },
+    {
+      "file": "src\\core\\config\\index.ts",
+      "import": "../types",
+      "resolved": "D:\\Github\\moeen\\src\\core\\types",
+      "line": 6
+    },
+    {
+      "file": "src\\core\\api\\client.ts",
+      "import": "../constants",
+      "resolved": "D:\\Github\\moeen\\src\\core\\constants",
+      "line": 6
+    },
+    {
+      "file": "src\\core\\api\\client.ts",
+      "import": "../errors",
+      "resolved": "D:\\Github\\moeen\\src\\core\\errors",
+      "line": 7
+    },
+    {
+      "file": "src\\core\\api\\client.ts",
+      "import": "../utils/index",
+      "resolved": "D:\\Github\\moeen\\src\\core\\utils\\index",
+      "line": 8
+    },
+    {
+      "file": "src\\core\\api\\client.ts",
+      "import": "../types",
+      "resolved": "D:\\Github\\moeen\\src\\core\\types",
+      "line": 9
+    },
+    {
+      "file": "src\\core\\api\\base-handler.ts",
+      "import": "../errors",
+      "resolved": "D:\\Github\\moeen\\src\\core\\errors",
+      "line": 8
+    },
+    {
+      "file": "src\\core\\api\\base-handler.ts",
+      "import": "../validation",
+      "resolved": "D:\\Github\\moeen\\src\\core\\validation",
+      "line": 9
+    },
+    {
+      "file": "src\\components\\ui\\ThemeSwitch.tsx",
+      "import": "./Button",
+      "resolved": "D:\\Github\\moeen\\src\\components\\ui\\Button",
+      "line": 6
+    },
+    {
+      "file": "src\\components\\ui\\ThemeSwitch.tsx",
+      "import": "./Card",
+      "resolved": "D:\\Github\\moeen\\src\\components\\ui\\Card",
+      "line": 7
+    },
+    {
+      "file": "src\\components\\ui\\DesignSystemDemo.tsx",
+      "import": "./CTAButton",
+      "resolved": "D:\\Github\\moeen\\src\\components\\ui\\CTAButton",
+      "line": 4
+    },
+    {
+      "file": "src\\components\\ui\\DesignSystemDemo.tsx",
+      "import": "./FeatureCard",
+      "resolved": "D:\\Github\\moeen\\src\\components\\ui\\FeatureCard",
+      "line": 5
+    },
+    {
+      "file": "src\\components\\ui\\DesignSystemDemo.tsx",
+      "import": "./StatCard",
+      "resolved": "D:\\Github\\moeen\\src\\components\\ui\\StatCard",
+      "line": 6
+    },
+    {
+      "file": "src\\components\\ui\\DesignSystemDemo.tsx",
+      "import": "./ThemeToggle",
+      "resolved": "D:\\Github\\moeen\\src\\components\\ui\\ThemeToggle",
+      "line": 7
+    },
+    {
+      "file": "src\\components\\ui\\DesignSystemDemo.tsx",
+      "import": "./RTLToggle",
+      "resolved": "D:\\Github\\moeen\\src\\components\\ui\\RTLToggle",
+      "line": 8
+    },
+    {
+      "file": "src\\components\\common\\StatusBanner.tsx",
+      "import": "./LiveDot",
+      "resolved": "D:\\Github\\moeen\\src\\components\\common\\LiveDot",
+      "line": 3
+    }
+  ],
+  "orphanedFiles": [
+    {
+      "file": "src\\middleware.prod.ts",
+      "reason": "No references found",
+      "size": 4508,
+      "lastModified": "2025-10-20T22:35:40.356Z"
+    },
+    {
+      "file": "src\\middleware.disabled.ts",
+      "reason": "No references found",
+      "size": 307,
+      "lastModified": "2025-10-20T22:35:38.987Z"
+    },
+    {
+      "file": "src\\__tests__\\whatsapp-integration.test.ts",
+      "reason": "No references found",
+      "size": 4953,
+      "lastModified": "2025-10-20T22:33:40.377Z"
+    },
+    {
+      "file": "src\\__tests__\\whatsapp-business-api.test.ts",
+      "reason": "No references found",
+      "size": 9986,
+      "lastModified": "2025-10-20T22:33:40.208Z"
+    },
+    {
+      "file": "src\\__tests__\\setup.ts",
+      "reason": "No references found",
+      "size": 3087,
+      "lastModified": "2025-10-20T22:33:39.856Z"
+    },
+    {
+      "file": "src\\__tests__\\saudi-health-integration.test.ts",
+      "reason": "No references found",
+      "size": 5882,
+      "lastModified": "2025-10-20T22:33:39.626Z"
+    },
+    {
+      "file": "src\\__tests__\\ai-assistant.test.ts",
+      "reason": "No references found",
+      "size": 3953,
+      "lastModified": "2025-10-20T22:33:35.905Z"
+    },
+    {
+      "file": "src\\utils\\validation.ts",
+      "reason": "No references found",
+      "size": 3059,
+      "lastModified": "2025-10-20T22:36:18.070Z"
+    },
+    {
+      "file": "src\\utils\\string.ts",
+      "reason": "No references found",
+      "size": 5153,
+      "lastModified": "2025-10-20T22:36:17.435Z"
+    },
+    {
+      "file": "src\\utils\\storage.ts",
+      "reason": "No references found",
+      "size": 3310,
+      "lastModified": "2025-10-20T22:36:16.664Z"
+    },
+    {
+      "file": "src\\utils\\format.ts",
+      "reason": "No references found",
+      "size": 2639,
+      "lastModified": "2025-10-20T22:36:15.420Z"
+    },
+    {
+      "file": "src\\utils\\date.ts",
+      "reason": "No references found",
+      "size": 5309,
+      "lastModified": "2025-10-20T22:36:15.303Z"
+    },
+    {
+      "file": "src\\utils\\api.ts",
+      "reason": "No references found",
+      "size": 4707,
+      "lastModified": "2025-10-20T22:36:15.221Z"
+    },
+    {
+      "file": "src\\utils\\api-client.ts",
+      "reason": "No references found",
+      "size": 2088,
+      "lastModified": "2025-10-20T22:36:15.168Z"
+    },
+    {
+      "file": "src\\types\\shims.d.ts",
+      "reason": "No references found",
+      "size": 150,
+      "lastModified": "2025-10-20T22:36:14.899Z"
+    },
+    {
+      "file": "src\\types\\database.ts",
+      "reason": "No references found",
+      "size": 5740,
+      "lastModified": "2025-10-20T22:36:14.770Z"
+    },
+    {
+      "file": "src\\types\\components.ts",
+      "reason": "No references found",
+      "size": 595,
+      "lastModified": "2025-10-20T22:36:14.673Z"
+    },
+    {
+      "file": "src\\types\\common.ts",
+      "reason": "No references found",
+      "size": 503,
+      "lastModified": "2025-10-20T22:36:14.653Z"
+    },
+    {
+      "file": "src\\types\\api.ts",
+      "reason": "No references found",
+      "size": 3268,
+      "lastModified": "2025-10-20T22:36:14.388Z"
+    },
+    {
+      "file": "src\\styles\\unified.css",
+      "reason": "No references found",
+      "size": 21374,
+      "lastModified": "2025-10-20T22:36:11.052Z"
+    },
+    {
+      "file": "src\\styles\\theme.css",
+      "reason": "No references found",
+      "size": 8345,
+      "lastModified": "2025-10-20T22:36:09.722Z"
+    },
+    {
+      "file": "src\\styles\\responsive-enhancements.css",
+      "reason": "No references found",
+      "size": 13849,
+      "lastModified": "2025-10-20T22:36:08.421Z"
+    },
+    {
+      "file": "src\\styles\\original-design.css",
+      "reason": "No references found",
+      "size": 17344,
+      "lastModified": "2025-10-20T22:36:07.293Z"
+    },
+    {
+      "file": "src\\styles\\modern-enhancements.css",
+      "reason": "No references found",
+      "size": 10537,
+      "lastModified": "2025-10-20T22:36:05.514Z"
+    },
+    {
+      "file": "src\\styles\\index.css",
+      "reason": "No references found",
+      "size": 85,
+      "lastModified": "2025-10-20T22:36:03.625Z"
+    },
+    {
+      "file": "src\\styles\\hemam-brand-colors.css",
+      "reason": "No references found",
+      "size": 15062,
+      "lastModified": "2025-10-20T22:36:02.412Z"
+    },
+    {
+      "file": "src\\styles\\dynamic-components.css",
+      "reason": "No references found",
+      "size": 22041,
+      "lastModified": "2025-10-20T22:35:59.692Z"
+    },
+    {
+      "file": "src\\styles\\accessibility.css",
+      "reason": "No references found",
+      "size": 8210,
+      "lastModified": "2025-10-20T22:35:56.458Z"
+    },
+    {
+      "file": "src\\scripts\\validate-system.js",
+      "reason": "No references found",
+      "size": 9653,
+      "lastModified": "2025-10-20T22:35:54.961Z"
+    },
+    {
+      "file": "src\\scripts\\validate-dynamic-content.ts",
+      "reason": "No references found",
+      "size": 6568,
+      "lastModified": "2025-10-20T22:35:54.233Z"
+    },
+    {
+      "file": "src\\scripts\\validate-business-logic.js",
+      "reason": "No references found",
+      "size": 14009,
+      "lastModified": "2025-10-20T22:35:53.860Z"
+    },
+    {
+      "file": "src\\scripts\\test-apis.js",
+      "reason": "No references found",
+      "size": 9955,
+      "lastModified": "2025-10-20T22:35:53.093Z"
+    },
+    {
+      "file": "src\\scripts\\system-validation.js",
+      "reason": "No references found",
+      "size": 7521,
+      "lastModified": "2025-10-20T22:35:52.510Z"
+    },
+    {
+      "file": "src\\scripts\\seed-translations.ts",
+      "reason": "No references found",
+      "size": 26172,
+      "lastModified": "2025-10-20T22:35:51.767Z"
+    },
+    {
+      "file": "src\\scripts\\seed-homepage-content.ts",
+      "reason": "No references found",
+      "size": 10196,
+      "lastModified": "2025-10-20T22:35:50.832Z"
+    },
+    {
+      "file": "src\\scripts\\seed-database.ts",
+      "reason": "No references found",
+      "size": 13285,
+      "lastModified": "2025-10-20T22:35:50.032Z"
+    },
+    {
+      "file": "src\\scripts\\seed-complete-translations.js",
+      "reason": "No references found",
+      "size": 12096,
+      "lastModified": "2025-10-20T22:35:49.129Z"
+    },
+    {
+      "file": "src\\scripts\\complete-translations.ts",
+      "reason": "No references found",
+      "size": 12265,
+      "lastModified": "2025-10-20T22:35:48.384Z"
+    },
+    {
+      "file": "src\\scripts\\cleanup-console-logs.js",
+      "reason": "No references found",
+      "size": 2679,
+      "lastModified": "2025-10-20T22:35:45.661Z"
+    },
+    {
+      "file": "src\\middleware\\security.ts",
+      "reason": "No references found",
+      "size": 9743,
+      "lastModified": "2025-10-20T22:35:42.901Z"
+    },
+    {
+      "file": "src\\middleware\\rate-limiter.ts",
+      "reason": "No references found",
+      "size": 3527,
+      "lastModified": "2025-10-20T22:35:41.882Z"
+    },
+    {
+      "file": "src\\lib\\whatsapp-integration.ts",
+      "reason": "No references found",
+      "size": 12623,
+      "lastModified": "2025-10-20T22:35:37.382Z"
+    },
+    {
+      "file": "src\\lib\\whatsapp-business-api.ts",
+      "reason": "No references found",
+      "size": 13080,
+      "lastModified": "2025-10-20T22:35:35.737Z"
+    },
+    {
+      "file": "src\\lib\\validation.ts",
+      "reason": "No references found",
+      "size": 4741,
+      "lastModified": "2025-10-20T22:35:32.337Z"
+    },
+    {
+      "file": "src\\lib\\utils.ts",
+      "reason": "No references found",
+      "size": 118,
+      "lastModified": "2025-10-20T22:35:30.085Z"
+    },
+    {
+      "file": "src\\lib\\translations-manager.ts",
+      "reason": "No references found",
+      "size": 5047,
+      "lastModified": "2025-10-20T22:35:29.685Z"
+    },
+    {
+      "file": "src\\lib\\theme.ts",
+      "reason": "No references found",
+      "size": 1502,
+      "lastModified": "2025-10-20T22:35:29.237Z"
+    },
+    {
+      "file": "src\\lib\\theme-manager.ts",
+      "reason": "No references found",
+      "size": 17764,
+      "lastModified": "2025-10-20T22:35:28.916Z"
+    },
+    {
+      "file": "src\\lib\\supabaseClient.ts",
+      "reason": "No references found",
+      "size": 1249,
+      "lastModified": "2025-10-20T22:35:27.819Z"
+    },
+    {
+      "file": "src\\lib\\supabase-real.ts",
+      "reason": "No references found",
+      "size": 16514,
+      "lastModified": "2025-10-20T22:35:26.318Z"
+    },
+    {
+      "file": "src\\lib\\slack-integration.ts",
+      "reason": "No references found",
+      "size": 14040,
+      "lastModified": "2025-10-20T22:35:25.793Z"
+    },
+    {
+      "file": "src\\lib\\security.ts",
+      "reason": "No references found",
+      "size": 6394,
+      "lastModified": "2025-10-20T22:35:24.429Z"
+    },
+    {
+      "file": "src\\lib\\saudi-ministry-health-integration.ts",
+      "reason": "No references found",
+      "size": 14524,
+      "lastModified": "2025-10-20T22:35:24.226Z"
+    },
+    {
+      "file": "src\\lib\\saudi-health-integration.ts",
+      "reason": "No references found",
+      "size": 13643,
+      "lastModified": "2025-10-20T22:35:23.958Z"
+    },
+    {
+      "file": "src\\lib\\router.ts",
+      "reason": "No references found",
+      "size": 2477,
+      "lastModified": "2025-10-20T22:35:23.405Z"
+    },
+    {
+      "file": "src\\lib\\responsive-design.ts",
+      "reason": "No references found",
+      "size": 7789,
+      "lastModified": "2025-10-20T22:35:23.145Z"
+    },
+    {
+      "file": "src\\lib\\rate-limiter.ts",
+      "reason": "No references found",
+      "size": 1999,
+      "lastModified": "2025-10-20T22:35:22.707Z"
+    },
+    {
+      "file": "src\\lib\\private-center-integration.ts",
+      "reason": "No references found",
+      "size": 13147,
+      "lastModified": "2025-10-20T22:35:22.413Z"
+    },
+    {
+      "file": "src\\lib\\performance.ts",
+      "reason": "No references found",
+      "size": 2544,
+      "lastModified": "2025-10-20T22:35:21.339Z"
+    },
+    {
+      "file": "src\\lib\\performance-optimizations.ts",
+      "reason": "No references found",
+      "size": 1452,
+      "lastModified": "2025-10-20T22:35:20.719Z"
+    },
+    {
+      "file": "src\\lib\\performance-monitor.ts",
+      "reason": "No references found",
+      "size": 12983,
+      "lastModified": "2025-10-20T22:35:20.029Z"
+    },
+    {
+      "file": "src\\lib\\modern-interactions.ts",
+      "reason": "No references found",
+      "size": 11260,
+      "lastModified": "2025-10-20T22:35:17.812Z"
+    },
+    {
+      "file": "src\\lib\\logger.ts",
+      "reason": "No references found",
+      "size": 2415,
+      "lastModified": "2025-10-20T22:35:17.364Z"
+    },
+    {
+      "file": "src\\lib\\integration-system.ts",
+      "reason": "No references found",
+      "size": 11929,
+      "lastModified": "2025-10-20T22:35:16.598Z"
+    },
+    {
+      "file": "src\\lib\\file-upload.ts",
+      "reason": "No references found",
+      "size": 14807,
+      "lastModified": "2025-10-20T22:35:14.625Z"
+    },
+    {
+      "file": "src\\lib\\error-handler.ts",
+      "reason": "No references found",
+      "size": 5224,
+      "lastModified": "2025-10-20T22:35:13.867Z"
+    },
+    {
+      "file": "src\\lib\\encryption.ts",
+      "reason": "No references found",
+      "size": 4625,
+      "lastModified": "2025-10-20T22:35:13.627Z"
+    },
+    {
+      "file": "src\\lib\\dynamic-theme-manager.ts",
+      "reason": "No references found",
+      "size": 7446,
+      "lastModified": "2025-10-20T22:35:13.516Z"
+    },
+    {
+      "file": "src\\lib\\dynamic-content-manager.ts",
+      "reason": "No references found",
+      "size": 7767,
+      "lastModified": "2025-10-20T22:35:13.335Z"
+    },
+    {
+      "file": "src\\lib\\design-tokens.ts",
+      "reason": "No references found",
+      "size": 7207,
+      "lastModified": "2025-10-20T22:35:12.882Z"
+    },
+    {
+      "file": "src\\lib\\design-system.ts",
+      "reason": "No references found",
+      "size": 17891,
+      "lastModified": "2025-10-20T22:35:12.546Z"
+    },
+    {
+      "file": "src\\lib\\database.ts",
+      "reason": "No references found",
+      "size": 10304,
+      "lastModified": "2025-10-20T22:35:11.445Z"
+    },
+    {
+      "file": "src\\lib\\database-utils.ts",
+      "reason": "No references found",
+      "size": 6725,
+      "lastModified": "2025-10-20T22:35:11.162Z"
+    },
+    {
+      "file": "src\\lib\\cuid.ts",
+      "reason": "No references found",
+      "size": 5052,
+      "lastModified": "2025-10-20T22:35:10.798Z"
+    },
+    {
+      "file": "src\\lib\\conversation-flows.ts",
+      "reason": "No references found",
+      "size": 17136,
+      "lastModified": "2025-10-20T22:35:10.548Z"
+    },
+    {
+      "file": "src\\lib\\cn.ts",
+      "reason": "No references found",
+      "size": 876,
+      "lastModified": "2025-10-20T22:35:10.150Z"
+    },
+    {
+      "file": "src\\lib\\cache-system.ts",
+      "reason": "No references found",
+      "size": 10316,
+      "lastModified": "2025-10-20T22:35:09.992Z"
+    },
+    {
+      "file": "src\\lib\\analytics-stubs.ts",
+      "reason": "No references found",
+      "size": 254,
+      "lastModified": "2025-10-20T22:35:09.082Z"
+    },
+    {
+      "file": "src\\lib\\ai-assistant.ts",
+      "reason": "No references found",
+      "size": 9778,
+      "lastModified": "2025-10-20T22:35:08.695Z"
+    },
+    {
+      "file": "src\\lib\\accessibility.ts",
+      "reason": "No references found",
+      "size": 10213,
+      "lastModified": "2025-10-20T22:35:07.665Z"
+    },
+    {
+      "file": "src\\hooks\\useTranslation.ts",
+      "reason": "No references found",
+      "size": 1522,
+      "lastModified": "2025-10-20T22:35:06.898Z"
+    },
+    {
+      "file": "src\\hooks\\useToggle.ts",
+      "reason": "No references found",
+      "size": 934,
+      "lastModified": "2025-10-20T22:35:06.478Z"
+    },
+    {
+      "file": "src\\hooks\\useThrottle.ts",
+      "reason": "No references found",
+      "size": 2902,
+      "lastModified": "2025-10-20T22:35:06.383Z"
+    },
+    {
+      "file": "src\\hooks\\usePrevious.ts",
+      "reason": "No references found",
+      "size": 254,
+      "lastModified": "2025-10-20T22:35:05.929Z"
+    },
+    {
+      "file": "src\\hooks\\usePerformance.ts",
+      "reason": "No references found",
+      "size": 2409,
+      "lastModified": "2025-10-20T22:35:05.755Z"
+    },
+    {
+      "file": "src\\hooks\\usePageI18n.ts",
+      "reason": "No references found",
+      "size": 2720,
+      "lastModified": "2025-10-20T22:35:05.522Z"
+    },
+    {
+      "file": "src\\hooks\\useMemoryLeakPrevention.ts",
+      "reason": "No references found",
+      "size": 4445,
+      "lastModified": "2025-10-20T22:35:05.131Z"
+    },
+    {
+      "file": "src\\hooks\\useMediaQuery.ts",
+      "reason": "No references found",
+      "size": 1891,
+      "lastModified": "2025-10-20T22:35:04.833Z"
+    },
+    {
+      "file": "src\\hooks\\useLocalStorage.ts",
+      "reason": "No references found",
+      "size": 2420,
+      "lastModified": "2025-10-20T22:35:04.740Z"
+    },
+    {
+      "file": "src\\hooks\\useKeyPress.ts",
+      "reason": "No references found",
+      "size": 3207,
+      "lastModified": "2025-10-20T22:35:04.652Z"
+    },
+    {
+      "file": "src\\hooks\\useKeyboardNavigation.ts",
+      "reason": "No references found",
+      "size": 2527,
+      "lastModified": "2025-10-20T22:35:04.468Z"
+    },
+    {
+      "file": "src\\hooks\\useIntersectionObserver.ts",
+      "reason": "No references found",
+      "size": 2121,
+      "lastModified": "2025-10-20T22:35:04.385Z"
+    },
+    {
+      "file": "src\\hooks\\useI18n.ts",
+      "reason": "No references found",
+      "size": 1029,
+      "lastModified": "2025-10-20T22:35:04.314Z"
+    },
+    {
+      "file": "src\\hooks\\useForm.ts",
+      "reason": "No references found",
+      "size": 5879,
+      "lastModified": "2025-10-20T22:35:04.181Z"
+    },
+    {
+      "file": "src\\hooks\\useErrorHandler.tsx",
+      "reason": "No references found",
+      "size": 2190,
+      "lastModified": "2025-10-20T22:35:03.915Z"
+    },
+    {
+      "file": "src\\hooks\\useDebounce.ts",
+      "reason": "No references found",
+      "size": 1595,
+      "lastModified": "2025-10-20T22:35:03.799Z"
+    },
+    {
+      "file": "src\\hooks\\useCounter.ts",
+      "reason": "No references found",
+      "size": 953,
+      "lastModified": "2025-10-20T22:35:03.584Z"
+    },
+    {
+      "file": "src\\hooks\\useClickOutside.ts",
+      "reason": "No references found",
+      "size": 771,
+      "lastModified": "2025-10-20T22:35:03.448Z"
+    },
+    {
+      "file": "src\\hooks\\useBrandColorFromLogo.ts",
+      "reason": "No references found",
+      "size": 2294,
+      "lastModified": "2025-10-20T22:35:03.265Z"
+    },
+    {
+      "file": "src\\hooks\\useAuth.ts",
+      "reason": "No references found",
+      "size": 4105,
+      "lastModified": "2025-10-20T22:35:03.185Z"
+    },
+    {
+      "file": "src\\hooks\\useAsync.ts",
+      "reason": "No references found",
+      "size": 2876,
+      "lastModified": "2025-10-20T22:35:03.067Z"
+    },
+    {
+      "file": "src\\hooks\\useApi.ts",
+      "reason": "No references found",
+      "size": 4309,
+      "lastModified": "2025-10-20T22:35:02.814Z"
+    },
+    {
+      "file": "src\\design-system\\types.ts",
+      "reason": "No references found",
+      "size": 542,
+      "lastModified": "2025-10-20T22:35:02.519Z"
+    },
+    {
+      "file": "src\\core\\utils.ts",
+      "reason": "No references found",
+      "size": 187,
+      "lastModified": "2025-10-20T22:35:00.484Z"
+    },
+    {
+      "file": "src\\context\\TranslationProvider.tsx",
+      "reason": "No references found",
+      "size": 2195,
+      "lastModified": "2025-10-20T22:34:56.590Z"
+    },
+    {
+      "file": "src\\constants\\validation.ts",
+      "reason": "No references found",
+      "size": 4246,
+      "lastModified": "2025-10-20T22:34:56.440Z"
+    },
+    {
+      "file": "src\\constants\\theme.ts",
+      "reason": "No references found",
+      "size": 2341,
+      "lastModified": "2025-10-20T22:34:56.303Z"
+    },
+    {
+      "file": "src\\constants\\storage.ts",
+      "reason": "No references found",
+      "size": 1404,
+      "lastModified": "2025-10-20T22:34:56.234Z"
+    },
+    {
+      "file": "src\\constants\\routes.ts",
+      "reason": "No references found",
+      "size": 5208,
+      "lastModified": "2025-10-20T22:34:56.162Z"
+    },
+    {
+      "file": "src\\constants\\roles.ts",
+      "reason": "No references found",
+      "size": 936,
+      "lastModified": "2025-10-20T22:34:56.121Z"
+    },
+    {
+      "file": "src\\constants\\i18n-keys.ts",
+      "reason": "No references found",
+      "size": 9800,
+      "lastModified": "2025-10-20T22:34:56.023Z"
+    },
+    {
+      "file": "src\\constants\\api.ts",
+      "reason": "No references found",
+      "size": 2982,
+      "lastModified": "2025-10-20T22:34:55.907Z"
+    },
+    {
+      "file": "src\\config\\env.ts",
+      "reason": "No references found",
+      "size": 3381,
+      "lastModified": "2025-10-20T22:34:55.776Z"
+    },
+    {
+      "file": "src\\config\\database.ts",
+      "reason": "No references found",
+      "size": 194,
+      "lastModified": "2025-10-20T22:34:55.688Z"
+    },
+    {
+      "file": "src\\config\\app.ts",
+      "reason": "No references found",
+      "size": 356,
+      "lastModified": "2025-10-20T22:34:55.657Z"
+    },
+    {
+      "file": "src\\config\\api.ts",
+      "reason": "No references found",
+      "size": 288,
+      "lastModified": "2025-10-20T22:34:55.643Z"
+    },
+    {
+      "file": "src\\components\\ThemeSwitcher.tsx",
+      "reason": "No references found",
+      "size": 2006,
+      "lastModified": "2025-10-20T22:34:48.542Z"
+    },
+    {
+      "file": "src\\components\\Navigation.tsx",
+      "reason": "No references found",
+      "size": 5123,
+      "lastModified": "2025-10-20T22:34:43.080Z"
+    },
+    {
+      "file": "src\\components\\LanguageSwitcher.tsx",
+      "reason": "No references found",
+      "size": 1952,
+      "lastModified": "2025-10-20T22:34:42.016Z"
+    },
+    {
+      "file": "src\\components\\dynamic-stats.tsx",
+      "reason": "No references found",
+      "size": 4203,
+      "lastModified": "2025-10-20T22:34:39.925Z"
+    },
+    {
+      "file": "src\\components\\dynamic-services.tsx",
+      "reason": "No references found",
+      "size": 5951,
+      "lastModified": "2025-10-20T22:34:39.490Z"
+    },
+    {
+      "file": "src\\components\\dynamic-doctors-list.tsx",
+      "reason": "No references found",
+      "size": 15678,
+      "lastModified": "2025-10-20T22:31:21.320Z"
+    },
+    {
+      "file": "src\\components\\dynamic-data-dashboard.tsx",
+      "reason": "No references found",
+      "size": 21333,
+      "lastModified": "2025-10-20T22:31:21.113Z"
+    },
+    {
+      "file": "src\\components\\dynamic-contact-info.tsx",
+      "reason": "No references found",
+      "size": 4158,
+      "lastModified": "2025-10-20T22:34:38.112Z"
+    },
+    {
+      "file": "src\\app\\sitemap.ts",
+      "reason": "No references found",
+      "size": 529,
+      "lastModified": "2025-10-20T22:34:24.487Z"
+    },
+    {
+      "file": "src\\app\\robots.ts",
+      "reason": "No references found",
+      "size": 298,
+      "lastModified": "2025-10-20T22:34:23.259Z"
+    },
+    {
+      "file": "src\\app\\layout.minimal.tsx",
+      "reason": "No references found",
+      "size": 179,
+      "lastModified": "2025-10-20T22:34:23.170Z"
+    },
+    {
+      "file": "src\\__tests__\\auth\\reset-password.test.tsx",
+      "reason": "No references found",
+      "size": 6783,
+      "lastModified": "2025-10-20T22:33:39.476Z"
+    },
+    {
+      "file": "src\\__tests__\\auth\\register.test.tsx",
+      "reason": "No references found",
+      "size": 7818,
+      "lastModified": "2025-10-20T22:33:39.102Z"
+    },
+    {
+      "file": "src\\__tests__\\auth\\login.test.tsx",
+      "reason": "No references found",
+      "size": 7234,
+      "lastModified": "2025-10-20T22:33:38.773Z"
+    },
+    {
+      "file": "src\\__tests__\\auth\\forgot-password.test.tsx",
+      "reason": "No references found",
+      "size": 5078,
+      "lastModified": "2025-10-20T22:33:38.139Z"
+    },
+    {
+      "file": "src\\__tests__\\api\\patients.test.ts",
+      "reason": "No references found",
+      "size": 8450,
+      "lastModified": "2025-10-20T22:33:36.680Z"
+    },
+    {
+      "file": "src\\__tests__\\api\\appointments.test.ts",
+      "reason": "No references found",
+      "size": 11113,
+      "lastModified": "2025-10-20T22:33:36.005Z"
+    },
+    {
+      "file": "src\\lib\\validation\\security.ts",
+      "reason": "No references found",
+      "size": 6331,
+      "lastModified": "2025-10-20T22:35:34.405Z"
+    },
+    {
+      "file": "src\\lib\\utils\\request-helpers.ts",
+      "reason": "No references found",
+      "size": 649,
+      "lastModified": "2025-10-20T22:35:31.008Z"
+    },
+    {
+      "file": "src\\lib\\testing\\test-utils.ts",
+      "reason": "No references found",
+      "size": 9001,
+      "lastModified": "2025-10-20T22:35:28.234Z"
+    },
+    {
+      "file": "src\\lib\\supabase\\server.ts",
+      "reason": "No references found",
+      "size": 796,
+      "lastModified": "2025-10-20T22:35:27.439Z"
+    },
+    {
+      "file": "src\\lib\\supabase\\client.ts",
+      "reason": "No references found",
+      "size": 479,
+      "lastModified": "2025-10-20T22:35:27.205Z"
+    },
+    {
+      "file": "src\\lib\\seo\\metadata.ts",
+      "reason": "No references found",
+      "size": 7133,
+      "lastModified": "2025-10-20T22:35:25.347Z"
+    },
+    {
+      "file": "src\\lib\\optimization\\performance.ts",
+      "reason": "No references found",
+      "size": 6799,
+      "lastModified": "2025-10-20T22:35:18.729Z"
+    },
+    {
+      "file": "src\\lib\\notifications\\sms.ts",
+      "reason": "No references found",
+      "size": 4248,
+      "lastModified": "2025-10-20T22:35:18.647Z"
+    },
+    {
+      "file": "src\\lib\\monitoring\\logger.ts",
+      "reason": "No references found",
+      "size": 4489,
+      "lastModified": "2025-10-20T22:35:17.898Z"
+    },
+    {
+      "file": "src\\lib\\integrations\\test-helpers.ts",
+      "reason": "No references found",
+      "size": 13208,
+      "lastModified": "2025-10-20T22:35:16.993Z"
+    },
+    {
+      "file": "src\\lib\\deployment\\docker.ts",
+      "reason": "No references found",
+      "size": 10601,
+      "lastModified": "2025-10-20T22:35:12.212Z"
+    },
+    {
+      "file": "src\\lib\\database\\connection-pool.ts",
+      "reason": "No references found",
+      "size": 4933,
+      "lastModified": "2025-10-20T22:35:11.761Z"
+    },
+    {
+      "file": "src\\lib\\cache\\redis.ts",
+      "reason": "No references found",
+      "size": 4194,
+      "lastModified": "2025-10-20T22:35:10.130Z"
+    },
+    {
+      "file": "src\\lib\\auth\\roles.ts",
+      "reason": "No references found",
+      "size": 333,
+      "lastModified": "2025-10-20T22:35:09.680Z"
+    },
+    {
+      "file": "src\\lib\\api\\whatsapp.ts",
+      "reason": "No references found",
+      "size": 1298,
+      "lastModified": "2025-10-20T22:35:09.498Z"
+    },
+    {
+      "file": "src\\lib\\api\\config.ts",
+      "reason": "No references found",
+      "size": 2057,
+      "lastModified": "2025-10-20T22:35:09.399Z"
+    },
+    {
+      "file": "src\\lib\\accessibility\\aria-utils.ts",
+      "reason": "No references found",
+      "size": 4340,
+      "lastModified": "2025-10-20T22:35:08.496Z"
+    },
+    {
+      "file": "src\\core\\api\\client.ts",
+      "reason": "No references found",
+      "size": 10107,
+      "lastModified": "2025-10-20T22:34:57.508Z"
+    },
+    {
+      "file": "src\\core\\api\\base-handler.ts",
+      "reason": "No references found",
+      "size": 7022,
+      "lastModified": "2025-10-20T22:34:57.051Z"
+    },
+    {
+      "file": "src\\components\\ui\\Tooltip.tsx",
+      "reason": "No references found",
+      "size": 575,
+      "lastModified": "2025-10-20T22:34:55.586Z"
+    },
+    {
+      "file": "src\\components\\ui\\Toast.tsx",
+      "reason": "No references found",
+      "size": 884,
+      "lastModified": "2025-10-20T22:34:55.443Z"
+    },
+    {
+      "file": "src\\components\\ui\\ThemeToggle.tsx",
+      "reason": "No references found",
+      "size": 2736,
+      "lastModified": "2025-10-20T22:34:55.073Z"
+    },
+    {
+      "file": "src\\components\\ui\\ThemeSwitch.tsx",
+      "reason": "No references found",
+      "size": 5419,
+      "lastModified": "2025-10-20T22:34:54.660Z"
+    },
+    {
+      "file": "src\\components\\ui\\Textarea.tsx",
+      "reason": "No references found",
+      "size": 330,
+      "lastModified": "2025-10-20T22:34:54.587Z"
+    },
+    {
+      "file": "src\\components\\ui\\Tabs.tsx",
+      "reason": "No references found",
+      "size": 2855,
+      "lastModified": "2025-10-20T22:34:54.390Z"
+    },
+    {
+      "file": "src\\components\\ui\\Table.tsx",
+      "reason": "No references found",
+      "size": 1419,
+      "lastModified": "2025-10-20T22:34:53.808Z"
+    },
+    {
+      "file": "src\\components\\ui\\Switch.tsx",
+      "reason": "No references found",
+      "size": 1182,
+      "lastModified": "2025-10-20T22:34:53.644Z"
+    },
+    {
+      "file": "src\\components\\ui\\StatCard.tsx",
+      "reason": "No references found",
+      "size": 785,
+      "lastModified": "2025-10-20T22:34:53.506Z"
+    },
+    {
+      "file": "src\\components\\ui\\Skeleton.tsx",
+      "reason": "No references found",
+      "size": 238,
+      "lastModified": "2025-10-20T22:34:53.283Z"
+    },
+    {
+      "file": "src\\components\\ui\\Select.tsx",
+      "reason": "No references found",
+      "size": 5651,
+      "lastModified": "2025-10-20T22:34:52.905Z"
+    },
+    {
+      "file": "src\\components\\ui\\ScrollArea.tsx",
+      "reason": "No references found",
+      "size": 491,
+      "lastModified": "2025-10-20T22:34:52.485Z"
+    },
+    {
+      "file": "src\\components\\ui\\RTLToggle.tsx",
+      "reason": "No references found",
+      "size": 1125,
+      "lastModified": "2025-10-20T22:34:52.336Z"
+    },
+    {
+      "file": "src\\components\\ui\\Modal.tsx",
+      "reason": "No references found",
+      "size": 1937,
+      "lastModified": "2025-10-20T22:34:52.086Z"
+    },
+    {
+      "file": "src\\components\\ui\\LoadingSpinner.tsx",
+      "reason": "No references found",
+      "size": 770,
+      "lastModified": "2025-10-20T22:34:51.841Z"
+    },
+    {
+      "file": "src\\components\\ui\\Label.tsx",
+      "reason": "No references found",
+      "size": 222,
+      "lastModified": "2025-10-20T22:34:51.503Z"
+    },
+    {
+      "file": "src\\components\\ui\\Input.tsx",
+      "reason": "No references found",
+      "size": 4387,
+      "lastModified": "2025-10-20T22:34:51.455Z"
+    },
+    {
+      "file": "src\\components\\ui\\FeatureCard.tsx",
+      "reason": "No references found",
+      "size": 1181,
+      "lastModified": "2025-10-20T22:34:50.871Z"
+    },
+    {
+      "file": "src\\components\\ui\\DesignSystemDemo.tsx",
+      "reason": "No references found",
+      "size": 10292,
+      "lastModified": "2025-10-20T22:34:50.668Z"
+    },
+    {
+      "file": "src\\components\\ui\\DataTable.tsx",
+      "reason": "No references found",
+      "size": 3581,
+      "lastModified": "2025-10-20T22:34:50.211Z"
+    },
+    {
+      "file": "src\\components\\ui\\CTAButton.tsx",
+      "reason": "No references found",
+      "size": 1301,
+      "lastModified": "2025-10-20T22:34:49.926Z"
+    },
+    {
+      "file": "src\\components\\ui\\Checkbox.tsx",
+      "reason": "No references found",
+      "size": 1483,
+      "lastModified": "2025-10-20T22:34:49.755Z"
+    },
+    {
+      "file": "src\\components\\ui\\Card.tsx",
+      "reason": "No references found",
+      "size": 1896,
+      "lastModified": "2025-10-20T22:34:49.422Z"
+    },
+    {
+      "file": "src\\components\\ui\\Button.tsx",
+      "reason": "No references found",
+      "size": 921,
+      "lastModified": "2025-10-20T22:34:49.093Z"
+    },
+    {
+      "file": "src\\components\\ui\\Badge.tsx",
+      "reason": "No references found",
+      "size": 679,
+      "lastModified": "2025-10-20T22:31:21.380Z"
+    },
+    {
+      "file": "src\\components\\shell\\Sidebar.tsx",
+      "reason": "No references found",
+      "size": 5523,
+      "lastModified": "2025-10-20T22:34:48.294Z"
+    },
+    {
+      "file": "src\\components\\shell\\HeaderSimple.tsx",
+      "reason": "No references found",
+      "size": 5668,
+      "lastModified": "2025-10-20T22:34:48.140Z"
+    },
+    {
+      "file": "src\\components\\shell\\Header.tsx",
+      "reason": "No references found",
+      "size": 7035,
+      "lastModified": "2025-10-20T22:34:47.889Z"
+    },
+    {
+      "file": "src\\components\\shared\\Tabs.tsx",
+      "reason": "No references found",
+      "size": 1450,
+      "lastModified": "2025-10-20T22:34:47.527Z"
+    },
+    {
+      "file": "src\\components\\shared\\ScreenReaderOnly.tsx",
+      "reason": "No references found",
+      "size": 256,
+      "lastModified": "2025-10-20T22:34:47.510Z"
+    },
+    {
+      "file": "src\\components\\shared\\Modal.tsx",
+      "reason": "No references found",
+      "size": 2331,
+      "lastModified": "2025-10-20T22:34:47.496Z"
+    },
+    {
+      "file": "src\\components\\shared\\LiveRegion.tsx",
+      "reason": "No references found",
+      "size": 392,
+      "lastModified": "2025-10-20T22:34:47.436Z"
+    },
+    {
+      "file": "src\\components\\shared\\Form.tsx",
+      "reason": "No references found",
+      "size": 1473,
+      "lastModified": "2025-10-20T22:34:46.991Z"
+    },
+    {
+      "file": "src\\components\\shared\\EmptyState.tsx",
+      "reason": "No references found",
+      "size": 1052,
+      "lastModified": "2025-10-20T22:34:46.631Z"
+    },
+    {
+      "file": "src\\components\\shared\\DataTable.tsx",
+      "reason": "No references found",
+      "size": 3027,
+      "lastModified": "2025-10-20T22:34:46.076Z"
+    },
+    {
+      "file": "src\\components\\settings\\SettingsTabs.tsx",
+      "reason": "No references found",
+      "size": 22300,
+      "lastModified": "2025-10-20T22:34:45.643Z"
+    },
+    {
+      "file": "src\\components\\settings\\KeywordEditor.tsx",
+      "reason": "No references found",
+      "size": 1377,
+      "lastModified": "2025-10-20T22:34:44.976Z"
+    },
+    {
+      "file": "src\\components\\providers\\UIProvider.tsx",
+      "reason": "No references found",
+      "size": 992,
+      "lastModified": "2025-10-20T22:34:44.627Z"
+    },
+    {
+      "file": "src\\components\\providers\\ThemeProvider.tsx",
+      "reason": "No references found",
+      "size": 1879,
+      "lastModified": "2025-10-20T22:34:44.547Z"
+    },
+    {
+      "file": "src\\components\\providers\\ModernInteractionsProvider.tsx",
+      "reason": "No references found",
+      "size": 948,
+      "lastModified": "2025-10-20T22:34:44.497Z"
+    },
+    {
+      "file": "src\\components\\providers\\I18nProvider.tsx",
+      "reason": "No references found",
+      "size": 925,
+      "lastModified": "2025-10-20T22:34:44.305Z"
+    },
+    {
+      "file": "src\\components\\providers\\DesignSystemProvider.tsx",
+      "reason": "No references found",
+      "size": 8965,
+      "lastModified": "2025-10-20T22:34:44.246Z"
+    },
+    {
+      "file": "src\\components\\patients\\PatientRecords.tsx",
+      "reason": "No references found",
+      "size": 28413,
+      "lastModified": "2025-10-20T22:34:43.939Z"
+    },
+    {
+      "file": "src\\components\\layout\\SmartHeader.tsx",
+      "reason": "No references found",
+      "size": 9012,
+      "lastModified": "2025-10-20T22:34:42.974Z"
+    },
+    {
+      "file": "src\\components\\layout\\Header.tsx",
+      "reason": "No references found",
+      "size": 6063,
+      "lastModified": "2025-10-20T22:34:42.793Z"
+    },
+    {
+      "file": "src\\components\\layout\\GlobalHeader.tsx",
+      "reason": "No references found",
+      "size": 6016,
+      "lastModified": "2025-10-20T22:34:42.640Z"
+    },
+    {
+      "file": "src\\components\\layout\\Footer.tsx",
+      "reason": "No references found",
+      "size": 9161,
+      "lastModified": "2025-10-20T22:34:42.420Z"
+    },
+    {
+      "file": "src\\components\\dashboard\\KpiCard.tsx",
+      "reason": "No references found",
+      "size": 427,
+      "lastModified": "2025-10-20T22:34:37.550Z"
+    },
+    {
+      "file": "src\\components\\dashboard\\DynamicCharts.tsx",
+      "reason": "No references found",
+      "size": 13286,
+      "lastModified": "2025-10-20T22:34:37.164Z"
+    },
+    {
+      "file": "src\\components\\dashboard\\Charts.tsx",
+      "reason": "No references found",
+      "size": 3948,
+      "lastModified": "2025-10-20T22:34:36.063Z"
+    },
+    {
+      "file": "src\\components\\common\\StatusBanner.tsx",
+      "reason": "No references found",
+      "size": 956,
+      "lastModified": "2025-10-20T22:34:35.694Z"
+    },
+    {
+      "file": "src\\components\\common\\PlaceholderSquare.tsx",
+      "reason": "No references found",
+      "size": 1503,
+      "lastModified": "2025-10-20T22:34:35.667Z"
+    },
+    {
+      "file": "src\\components\\common\\PerformanceOptimizedImage.tsx",
+      "reason": "No references found",
+      "size": 2776,
+      "lastModified": "2025-10-20T22:34:35.629Z"
+    },
+    {
+      "file": "src\\components\\common\\OptimizedImage.tsx",
+      "reason": "No references found",
+      "size": 732,
+      "lastModified": "2025-10-20T22:34:35.560Z"
+    },
+    {
+      "file": "src\\components\\common\\LiveDot.tsx",
+      "reason": "No references found",
+      "size": 449,
+      "lastModified": "2025-10-20T22:34:35.533Z"
+    },
+    {
+      "file": "src\\components\\common\\LanguageSwitcher.tsx",
+      "reason": "No references found",
+      "size": 3840,
+      "lastModified": "2025-10-20T22:34:35.519Z"
+    },
+    {
+      "file": "src\\components\\common\\EmptyState.tsx",
+      "reason": "No references found",
+      "size": 527,
+      "lastModified": "2025-10-20T22:34:35.016Z"
+    },
+    {
+      "file": "src\\components\\common\\DirectionToggle.tsx",
+      "reason": "No references found",
+      "size": 1002,
+      "lastModified": "2025-10-20T22:34:34.548Z"
+    },
+    {
+      "file": "src\\components\\chatbot\\MoeenChatbot.tsx",
+      "reason": "No references found",
+      "size": 12963,
+      "lastModified": "2025-10-20T22:34:33.714Z"
+    },
+    {
+      "file": "src\\components\\chatbot\\MoainChatbot.tsx",
+      "reason": "No references found",
+      "size": 18008,
+      "lastModified": "2025-10-20T22:34:33.599Z"
+    },
+    {
+      "file": "src\\components\\charts\\LineChart.tsx",
+      "reason": "No references found",
+      "size": 3654,
+      "lastModified": "2025-10-20T22:34:31.495Z"
+    },
+    {
+      "file": "src\\components\\charts\\BarChart.tsx",
+      "reason": "No references found",
+      "size": 3645,
+      "lastModified": "2025-10-20T22:34:29.514Z"
+    },
+    {
+      "file": "src\\components\\charts\\AreaChart.tsx",
+      "reason": "No references found",
+      "size": 3455,
+      "lastModified": "2025-10-20T22:34:28.803Z"
+    },
+    {
+      "file": "src\\components\\booking\\SessionTypeSelector.tsx",
+      "reason": "No references found",
+      "size": 2980,
+      "lastModified": "2025-10-20T22:34:28.067Z"
+    },
+    {
+      "file": "src\\components\\booking\\AvailableSlotsPicker.tsx",
+      "reason": "No references found",
+      "size": 4918,
+      "lastModified": "2025-10-20T22:34:27.505Z"
+    },
+    {
+      "file": "src\\components\\accessibility\\AccessibilitySettings.tsx",
+      "reason": "No references found",
+      "size": 14630,
+      "lastModified": "2025-10-20T22:34:25.496Z"
+    },
+    {
+      "file": "src\\components\\appointments\\AppointmentManager.tsx",
+      "reason": "No references found",
+      "size": 17882,
+      "lastModified": "2025-10-20T22:34:25.895Z"
+    },
+    {
+      "file": "src\\__tests__\\api\\auth\\login.test.ts",
+      "reason": "No references found",
+      "size": 4772,
+      "lastModified": "2025-10-20T22:33:36.270Z"
+    },
+    {
+      "file": "components\\Header.jsx",
+      "reason": "No references found",
+      "size": 479,
+      "lastModified": "2025-10-20T22:31:46.795Z"
+    },
+    {
+      "file": "components\\Footer.jsx",
+      "reason": "No references found",
+      "size": 454,
+      "lastModified": "2025-10-20T22:31:46.777Z"
+    }
+  ],
+  "duplicateFiles": [
+    {
+      "original": "src\\services\\index.ts",
+      "duplicate": "src\\lib\\index.ts",
+      "hash": "-1932744463"
+    }
+  ],
+  "largeFiles": [],
+  "summary": {
+    "totalDeadFiles": 304,
+    "totalUnusedDependencies": 0,
+    "totalDeadImports": 40,
+    "totalOrphanedFiles": 222,
+    "totalDuplicateFiles": 1,
+    "totalLargeFiles": 0,
+    "estimatedSpaceSaved": "2.65 MB"
+  }
+}

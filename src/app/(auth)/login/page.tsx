@@ -58,82 +58,93 @@ export default function LoginPage() {
   };
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--brand-surface)] via-white to-[var(--bg-gray-50)] p-4'>
-      <div className='w-full max-w-md'>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[var(--color-bg-secondary)] via-white to-[var(--color-bg-secondary)] p-4">
+      <div className="w-full max-w-md">
         {/* Logo and Header */}
-        <div className='mb-8 text-center'>
-          <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] shadow-lg'>
-            <span className='text-2xl font-bold text-white'>م</span>
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-secondary-500)] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+            <span className="text-white font-bold text-2xl">م</span>
           </div>
-          <h1 className='mb-2 text-3xl font-bold text-foreground'>
+          <h1 className="text-3xl font-bold text-[var(--color-text-primary)] mb-2">
             مرحباً بعودتك
           </h1>
-          <p className='text-muted-foreground'>
+          <p className="text-[var(--color-text-secondary)]">
             سجل دخولك للوصول إلى لوحة التحكم
           </p>
         </div>
 
         {/* Login Form */}
-        <div className='card shadow-xl'>
-          <div className='p-8'>
+        <div className="card shadow-xl">
+          <div className="p-8">
             {error && (
-              <div className='status-error mb-6 p-4'>
-                <div className='flex items-center gap-2'>
-                  <span className='text-lg'>⚠️</span>
-                  <p className='text-sm font-medium'>{error}</p>
+              <div className="mb-6 p-4 status-error">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">⚠️</span>
+                  <p className="text-sm font-medium">{error}</p>
                 </div>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className='space-y-6'>
+            <form onSubmit={handleSubmit} className="space-y-6">
               {/* Email Field */}
               <div>
-                <label htmlFor='email' className='form-label'>
+                <label htmlFor='email' className="form-label">
                   البريد الإلكتروني
                 </label>
+                <div className="relative">
                 <input
                   type='email'
                   id='email'
                   name='email'
                   value={formData.email}
                   onChange={handleInputChange}
-                  className='form-input'
-                  placeholder='أدخل بريدك الإلكتروني'
+                    className="form-input pr-10"
+                    placeholder="you@example.com"
                   required
                 />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <span className="text-gray-400 text-sm">📧</span>
+                  </div>
+                </div>
               </div>
 
               {/* Password Field */}
               <div>
-                <label htmlFor='password' className='form-label'>
+                <label htmlFor='password' className="form-label">
                   كلمة المرور
                 </label>
+                <div className="relative">
                 <input
                   type='password'
                   id='password'
                   name='password'
                   value={formData.password}
                   onChange={handleInputChange}
-                  className='form-input'
-                  placeholder='أدخل كلمة المرور'
+                    className="form-input pr-10"
+                    placeholder="••••••••••"
                   required
                 />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <span className="text-gray-400 text-sm">🔒</span>
+                  </div>
+                </div>
               </div>
 
               {/* Remember Me & Forgot Password */}
-              <div className='flex items-center justify-between'>
-                <label className='form-checkbox'>
+              <div className="flex items-center justify-between">
+                <label className="inline-flex items-center gap-3 text-sm font-medium">
                   <input
                     type='checkbox'
                     name='rememberMe'
                     checked={formData.rememberMe}
                     onChange={handleInputChange}
+                    className="w-4 h-4 rounded border-gray-300 text-[var(--color-primary-500)] focus:ring-[var(--color-primary-500)] focus:ring-2"
                   />
                   تذكرني
                 </label>
                 <Link
                   href='/forgot-password'
-                  className='text-sm text-[var(--brand-primary)] hover:underline'
+                  className="text-sm font-medium text-[var(--color-primary-500)] hover:text-[var(--color-primary-600)] transition-colors"
                 >
                   نسيت كلمة المرور؟
                 </Link>
@@ -143,50 +154,26 @@ export default function LoginPage() {
               <button
                 type='submit'
                 disabled={submitting}
-                className='btn btn-brand btn-lg w-full'
+                className="w-full btn btn-brand btn-lg font-semibold"
               >
-                {submitting ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول'}
+                {submitting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    جاري تسجيل الدخول...
+                  </>
+                ) : (
+                  <>
+                    <span>🔑</span>
+                    تسجيل الدخول
+                  </>
+                )}
               </button>
             </form>
 
-            {/* Quick Test Login */}
-            <div className='mt-6'>
-              <button
-                onClick={handleQuickTestLogin}
-                disabled={submitting}
-                className='btn btn-outline btn-md w-full'
-              >
-                تسجيل دخول تجريبي
-              </button>
-            </div>
-
-            {/* Divider */}
-            <div className='my-6 flex items-center'>
-              <div className='flex-1 border-t border-gray-200 dark:border-gray-700'></div>
-              <span className='px-4 text-sm text-gray-500'>أو</span>
-              <div className='flex-1 border-t border-gray-200 dark:border-gray-700'></div>
-            </div>
-
-            {/* Social Login */}
-            <div className='space-y-3'>
-              <button className='btn btn-ghost btn-md w-full flex items-center justify-center gap-2'>
-                <span>📧</span>
-                تسجيل الدخول بـ Google
-              </button>
-              <button className='btn btn-ghost btn-md w-full flex items-center justify-center gap-2'>
-                <span>📱</span>
-                تسجيل الدخول بـ Apple
-              </button>
-            </div>
-
-            {/* Sign Up Link */}
-            <div className='mt-6 text-center'>
-              <p className='text-sm text-gray-600 dark:text-gray-400'>
-                ليس لديك حساب؟{' '}
-                <Link
-                  href='/register'
-                  className='text-[var(--brand-primary)] hover:underline font-medium'
-                >
+            <div className="mt-6 pt-6 border-t border-[var(--color-primary-500)]">
+              <p className="text-center text-sm text-[var(--color-text-secondary)]">
+                ليس لديك حساب؟{" "}
+                <Link href="/register" className="font-medium text-[var(--color-primary-500)] hover:text-[var(--color-primary-600)] transition-colors">
                   إنشاء حساب جديد
                 </Link>
               </p>
