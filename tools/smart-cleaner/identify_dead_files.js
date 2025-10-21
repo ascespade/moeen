@@ -11,7 +11,6 @@ const __dirname = path.dirname(__filename);
  * Identifies unused files, dead code, and orphaned dependencies
  */
 
-
 class DeadFilesIdentifier {
   constructor(projectRoot) {
     this.projectRoot = projectRoot;
@@ -25,7 +24,7 @@ class DeadFilesIdentifier {
 
   async identify() {
     console.log('🔍 Identifying dead files and unused code...');
-    
+
     await this.loadDependencyGraph();
     await this.findDeadFiles();
     await this.findUnusedDependencies();
@@ -33,7 +32,7 @@ class DeadFilesIdentifier {
     await this.findOrphanedFiles();
     await this.findDuplicateFiles();
     await this.findLargeFiles();
-    
+
     return {
       deadFiles: this.deadFiles,
       unusedDependencies: this.unusedDependencies,
@@ -41,13 +40,13 @@ class DeadFilesIdentifier {
       orphanedFiles: this.orphanedFiles,
       duplicateFiles: this.duplicateFiles,
       largeFiles: this.largeFiles,
-      summary: this.getSummary()
+      summary: this.getSummary(),
     };
   }
 
   async loadDependencyGraph() {
     const graphPath = path.join(__dirname, 'dependency_graph.json');
-    
+
     if (fs.existsSync(graphPath)) {
       try {
         const graphData = JSON.parse(fs.readFileSync(graphPath, 'utf8'));
@@ -55,13 +54,18 @@ class DeadFilesIdentifier {
         this.fileDependencies = graphData.fileDependencies || {};
         this.moduleUsage = graphData.moduleUsage || {};
       } catch (error) {
-        console.warn('Warning: Could not load dependency graph:', error.message);
+        console.warn(
+          'Warning: Could not load dependency graph:',
+          error.message
+        );
         this.dependencyGraph = {};
         this.fileDependencies = {};
         this.moduleUsage = {};
       }
     } else {
-      console.warn('Warning: Dependency graph not found. Run build_dependency_graph.js first.');
+      console.warn(
+        'Warning: Dependency graph not found. Run build_dependency_graph.js first.'
+      );
       this.dependencyGraph = {};
       this.fileDependencies = {};
       this.moduleUsage = {};
@@ -70,16 +74,16 @@ class DeadFilesIdentifier {
 
   async findDeadFiles() {
     console.log('  🗑️  Finding dead files...');
-    
+
     const patterns = [
       'src/**/*.{ts,tsx,js,jsx}',
       'app/**/*.{ts,tsx,js,jsx}',
       'pages/**/*.{ts,tsx,js,jsx}',
-      'components/**/*.{ts,tsx,js,jsx}'
+      'components/**/*.{ts,tsx,js,jsx}',
     ];
 
     const allFiles = new Set();
-    
+
     for (const pattern of patterns) {
       const files = await glob(pattern, { cwd: this.projectRoot });
       files.forEach(file => allFiles.add(file));
@@ -92,7 +96,7 @@ class DeadFilesIdentifier {
           file,
           reason: this.getDeadFileReason(file),
           size: this.getFileSize(file),
-          lastModified: this.getLastModified(file)
+          lastModified: this.getLastModified(file),
         });
       }
     }
@@ -107,7 +111,7 @@ class DeadFilesIdentifier {
     // Check if file is imported by any other file
     for (const otherFile of allFiles) {
       if (otherFile === file) continue;
-      
+
       if (this.isFileImportedBy(otherFile, file)) {
         return false;
       }
@@ -134,7 +138,7 @@ class DeadFilesIdentifier {
       'index.tsx',
       'main.tsx',
       'app.tsx',
-      'App.tsx'
+      'App.tsx',
     ];
 
     const fileName = path.basename(file);
@@ -143,7 +147,7 @@ class DeadFilesIdentifier {
 
   isFileImportedBy(importingFile, importedFile) {
     const imports = this.fileDependencies[importingFile] || [];
-    
+
     // Check direct imports
     if (imports.includes(importedFile)) {
       return true;
@@ -152,16 +156,22 @@ class DeadFilesIdentifier {
     // Check if imported file is in the same directory and might be imported relatively
     const importingDir = path.dirname(importingFile);
     const importedDir = path.dirname(importedFile);
-    
+
     if (importingDir === importedDir) {
-      const importedFileName = path.basename(importedFile, path.extname(importedFile));
-      const importingFileName = path.basename(importingFile, path.extname(importingFile));
-      
+      const importedFileName = path.basename(
+        importedFile,
+        path.extname(importedFile)
+      );
+      const importingFileName = path.basename(
+        importingFile,
+        path.extname(importingFile)
+      );
+
       // Skip if it's the same file
       if (importedFileName === importingFileName) {
         return false;
       }
-      
+
       // Check if the importing file might import the imported file
       if (this.mightImportFile(importingFile, importedFile)) {
         return true;
@@ -173,17 +183,29 @@ class DeadFilesIdentifier {
 
   mightImportFile(importingFile, importedFile) {
     try {
-      const content = fs.readFileSync(path.join(this.projectRoot, importingFile), 'utf8');
-      const importedFileName = path.basename(importedFile, path.extname(importedFile));
-      
+      const content = fs.readFileSync(
+        path.join(this.projectRoot, importingFile),
+        'utf8'
+      );
+      const importedFileName = path.basename(
+        importedFile,
+        path.extname(importedFile)
+      );
+
       // Check for various import patterns
       const importPatterns = [
         new RegExp(`import.*from\\s+['"]\\./${importedFileName}['"]`, 'g'),
         new RegExp(`import.*from\\s+['"]\\.\\./${importedFileName}['"]`, 'g'),
         new RegExp(`import\\s+['"]\\./${importedFileName}['"]`, 'g'),
         new RegExp(`import\\s+['"]\\.\\./${importedFileName}['"]`, 'g'),
-        new RegExp(`require\\s*\\(\\s*['"]\\./${importedFileName}['"]\\s*\\)`, 'g'),
-        new RegExp(`require\\s*\\(\\s*['"]\\.\\./${importedFileName}['"]\\s*\\)`, 'g')
+        new RegExp(
+          `require\\s*\\(\\s*['"]\\./${importedFileName}['"]\\s*\\)`,
+          'g'
+        ),
+        new RegExp(
+          `require\\s*\\(\\s*['"]\\.\\./${importedFileName}['"]\\s*\\)`,
+          'g'
+        ),
       ];
 
       for (const pattern of importPatterns) {
@@ -207,7 +229,7 @@ class DeadFilesIdentifier {
       'tsconfig.json',
       'package.json',
       'vite.config.js',
-      'vite.config.ts'
+      'vite.config.ts',
     ];
 
     for (const configFile of configFiles) {
@@ -229,32 +251,38 @@ class DeadFilesIdentifier {
 
   getDeadFileReason(file) {
     const reasons = [];
-    
+
     if (this.isTestFile(file)) {
       reasons.push('Test file');
     }
-    
+
     if (this.isUtilityFile(file)) {
       reasons.push('Utility file');
     }
-    
+
     if (this.isComponentFile(file)) {
       reasons.push('Component file');
     }
-    
+
     if (this.isPageFile(file)) {
       reasons.push('Page file');
     }
-    
+
     return reasons.join(', ') || 'Unused file';
   }
 
   isTestFile(file) {
-    return file.includes('.test.') || file.includes('.spec.') || file.includes('__tests__');
+    return (
+      file.includes('.test.') ||
+      file.includes('.spec.') ||
+      file.includes('__tests__')
+    );
   }
 
   isUtilityFile(file) {
-    return file.includes('utils') || file.includes('helpers') || file.includes('lib');
+    return (
+      file.includes('utils') || file.includes('helpers') || file.includes('lib')
+    );
   }
 
   isComponentFile(file) {
@@ -285,23 +313,28 @@ class DeadFilesIdentifier {
 
   async findUnusedDependencies() {
     console.log('  📦 Finding unused dependencies...');
-    
+
     const packageJsonPath = path.join(this.projectRoot, 'package.json');
-    
+
     if (!fs.existsSync(packageJsonPath)) {
       return;
     }
 
     try {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-      const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
-      
+      const dependencies = {
+        ...packageJson.dependencies,
+        ...packageJson.devDependencies,
+      };
+
       for (const [depName, depVersion] of Object.entries(dependencies)) {
         if (this.isUnusedDependency(depName)) {
           this.unusedDependencies.push({
             name: depName,
             version: depVersion,
-            type: packageJson.dependencies[depName] ? 'dependency' : 'devDependency'
+            type: packageJson.dependencies[depName]
+              ? 'dependency'
+              : 'devDependency',
           });
         }
       }
@@ -318,23 +351,26 @@ class DeadFilesIdentifier {
       'components/**/*.{ts,tsx,js,jsx}',
       '*.{ts,tsx,js,jsx}',
       '*.json',
-      '*.md'
+      '*.md',
     ];
 
     for (const pattern of patterns) {
       const files = glob.sync(pattern, { cwd: this.projectRoot });
-      
+
       for (const file of files) {
         try {
-          const content = fs.readFileSync(path.join(this.projectRoot, file), 'utf8');
-          
+          const content = fs.readFileSync(
+            path.join(this.projectRoot, file),
+            'utf8'
+          );
+
           // Check for various import patterns
           const importPatterns = [
             new RegExp(`import.*from\\s+['"]${depName}['"]`, 'g'),
             new RegExp(`import\\s+['"]${depName}['"]`, 'g'),
             new RegExp(`require\\s*\\(\\s*['"]${depName}['"]\\s*\\)`, 'g'),
             new RegExp(`from\\s+['"]${depName}['"]`, 'g'),
-            new RegExp(`['"]${depName}['"]`, 'g')
+            new RegExp(`['"]${depName}['"]`, 'g'),
           ];
 
           for (const pattern of importPatterns) {
@@ -353,17 +389,17 @@ class DeadFilesIdentifier {
 
   async findDeadImports() {
     console.log('  🔗 Finding dead imports...');
-    
+
     const patterns = [
       'src/**/*.{ts,tsx,js,jsx}',
       'app/**/*.{ts,tsx,js,jsx}',
       'pages/**/*.{ts,tsx,js,jsx}',
-      'components/**/*.{ts,tsx,js,jsx}'
+      'components/**/*.{ts,tsx,js,jsx}',
     ];
 
     for (const pattern of patterns) {
       const files = await glob(pattern, { cwd: this.projectRoot });
-      
+
       for (const file of files) {
         const deadImports = this.findDeadImportsInFile(file);
         this.deadImports.push(...deadImports);
@@ -373,44 +409,51 @@ class DeadFilesIdentifier {
 
   findDeadImportsInFile(file) {
     const deadImports = [];
-    
+
     try {
-      const content = fs.readFileSync(path.join(this.projectRoot, file), 'utf8');
-      
+      const content = fs.readFileSync(
+        path.join(this.projectRoot, file),
+        'utf8'
+      );
+
       // Extract imports
-      const importRegex = /import\s+(?:{[^}]*}|\w+|\*\s+as\s+\w+)\s+from\s+['"]([^'"]+)['"]/g;
+      const importRegex =
+        /import\s+(?:{[^}]*}|\w+|\*\s+as\s+\w+)\s+from\s+['"]([^'"]+)['"]/g;
       let match;
-      
+
       while ((match = importRegex.exec(content)) !== null) {
         const importPath = match[1];
-        
+
         // Skip external dependencies
         if (!importPath.startsWith('.') && !importPath.startsWith('/')) {
           continue;
         }
-        
+
         // Resolve import path
         const resolvedPath = this.resolveImportPath(file, importPath);
-        
-        if (resolvedPath && !fs.existsSync(path.join(this.projectRoot, resolvedPath))) {
+
+        if (
+          resolvedPath &&
+          !fs.existsSync(path.join(this.projectRoot, resolvedPath))
+        ) {
           deadImports.push({
             file,
             import: importPath,
             resolved: resolvedPath,
-            line: content.substring(0, match.index).split('\n').length
+            line: content.substring(0, match.index).split('\n').length,
           });
         }
       }
     } catch (error) {
       // Ignore errors
     }
-    
+
     return deadImports;
   }
 
   resolveImportPath(fromFile, importPath) {
     const fromDir = path.dirname(fromFile);
-    
+
     if (importPath.startsWith('@/')) {
       const aliasPath = importPath.replace('@/', 'src/');
       return path.resolve(this.projectRoot, aliasPath);
@@ -419,22 +462,22 @@ class DeadFilesIdentifier {
     } else if (importPath.startsWith('/')) {
       return path.resolve(this.projectRoot, importPath);
     }
-    
+
     return null;
   }
 
   async findOrphanedFiles() {
     console.log('  👻 Finding orphaned files...');
-    
+
     const patterns = [
       'src/**/*.{ts,tsx,js,jsx,css,scss,json}',
       'app/**/*.{ts,tsx,js,jsx,css,scss,json}',
       'pages/**/*.{ts,tsx,js,jsx,css,scss,json}',
-      'components/**/*.{ts,tsx,js,jsx,css,scss,json}'
+      'components/**/*.{ts,tsx,js,jsx,css,scss,json}',
     ];
 
     const allFiles = new Set();
-    
+
     for (const pattern of patterns) {
       const files = await glob(pattern, { cwd: this.projectRoot });
       files.forEach(file => allFiles.add(file));
@@ -446,7 +489,7 @@ class DeadFilesIdentifier {
           file,
           reason: 'No references found',
           size: this.getFileSize(file),
-          lastModified: this.getLastModified(file)
+          lastModified: this.getLastModified(file),
         });
       }
     }
@@ -461,7 +504,7 @@ class DeadFilesIdentifier {
     // Check if file is referenced by any other file
     for (const otherFile of allFiles) {
       if (otherFile === file) continue;
-      
+
       if (this.isFileReferencedBy(otherFile, file)) {
         return false;
       }
@@ -472,9 +515,12 @@ class DeadFilesIdentifier {
 
   isFileReferencedBy(referencingFile, referencedFile) {
     try {
-      const content = fs.readFileSync(path.join(this.projectRoot, referencingFile), 'utf8');
+      const content = fs.readFileSync(
+        path.join(this.projectRoot, referencingFile),
+        'utf8'
+      );
       const referencedFileName = path.basename(referencedFile);
-      
+
       return content.includes(referencedFileName);
     } catch (error) {
       return false;
@@ -483,27 +529,27 @@ class DeadFilesIdentifier {
 
   async findDuplicateFiles() {
     console.log('  🔄 Finding duplicate files...');
-    
+
     const fileHashes = new Map();
     const patterns = [
       'src/**/*.{ts,tsx,js,jsx}',
       'app/**/*.{ts,tsx,js,jsx}',
       'pages/**/*.{ts,tsx,js,jsx}',
-      'components/**/*.{ts,tsx,js,jsx}'
+      'components/**/*.{ts,tsx,js,jsx}',
     ];
 
     for (const pattern of patterns) {
       const files = await glob(pattern, { cwd: this.projectRoot });
-      
+
       for (const file of files) {
         const hash = this.getFileHash(file);
-        
+
         if (fileHashes.has(hash)) {
           const existingFile = fileHashes.get(hash);
           this.duplicateFiles.push({
             original: existingFile,
             duplicate: file,
-            hash
+            hash,
           });
         } else {
           fileHashes.set(hash, file);
@@ -514,12 +560,15 @@ class DeadFilesIdentifier {
 
   getFileHash(file) {
     try {
-      const content = fs.readFileSync(path.join(this.projectRoot, file), 'utf8');
+      const content = fs.readFileSync(
+        path.join(this.projectRoot, file),
+        'utf8'
+      );
       // Simple hash function
       let hash = 0;
       for (let i = 0; i < content.length; i++) {
         const char = content.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
+        hash = (hash << 5) - hash + char;
         hash = hash & hash; // Convert to 32-bit integer
       }
       return hash.toString();
@@ -530,28 +579,28 @@ class DeadFilesIdentifier {
 
   async findLargeFiles() {
     console.log('  📏 Finding large files...');
-    
+
     const patterns = [
       'src/**/*',
       'app/**/*',
       'pages/**/*',
       'components/**/*',
-      'public/**/*'
+      'public/**/*',
     ];
 
     for (const pattern of patterns) {
       const files = await glob(pattern, { cwd: this.projectRoot });
-      
+
       for (const file of files) {
         const size = this.getFileSize(file);
-        
+
         // Consider files larger than 100KB as large
         if (size > 100 * 1024) {
           this.largeFiles.push({
             file,
             size,
             sizeFormatted: this.formatFileSize(size),
-            lastModified: this.getLastModified(file)
+            lastModified: this.getLastModified(file),
           });
         }
       }
@@ -565,7 +614,7 @@ class DeadFilesIdentifier {
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     if (bytes === 0) return '0 Bytes';
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
+    return Math.round((bytes / Math.pow(1024, i)) * 100) / 100 + ' ' + sizes[i];
   }
 
   getSummary() {
@@ -576,55 +625,65 @@ class DeadFilesIdentifier {
       totalOrphanedFiles: this.orphanedFiles.length,
       totalDuplicateFiles: this.duplicateFiles.length,
       totalLargeFiles: this.largeFiles.length,
-      estimatedSpaceSaved: this.calculateSpaceSaved()
+      estimatedSpaceSaved: this.calculateSpaceSaved(),
     };
   }
 
   calculateSpaceSaved() {
     let totalSize = 0;
-    
+
     // Add dead files size
-    this.deadFiles.forEach(file => totalSize += file.size);
-    
+    this.deadFiles.forEach(file => (totalSize += file.size));
+
     // Add orphaned files size
-    this.orphanedFiles.forEach(file => totalSize += file.size);
-    
+    this.orphanedFiles.forEach(file => (totalSize += file.size));
+
     // Add duplicate files size (half, since we keep one copy)
     this.duplicateFiles.forEach(file => {
       totalSize += this.getFileSize(file.duplicate) / 2;
     });
-    
+
     return this.formatFileSize(totalSize);
   }
 }
 
 // Main execution
-if (import.meta.url === `file://${process.argv[1]}` || process.argv[1] === fileURLToPath(import.meta.url)) {
+if (
+  import.meta.url === `file://${process.argv[1]}` ||
+  process.argv[1] === fileURLToPath(import.meta.url)
+) {
   const projectRoot = process.argv[2] || process.cwd();
   const identifier = new DeadFilesIdentifier(projectRoot);
-  
-  identifier.identify().then(result => {
-    console.log('\n📊 Dead Files Analysis Results:');
-    console.log('================================');
-    console.log(`Dead files: ${result.summary.totalDeadFiles}`);
-    console.log(`Unused dependencies: ${result.summary.totalUnusedDependencies}`);
-    console.log(`Dead imports: ${result.summary.totalDeadImports}`);
-    console.log(`Orphaned files: ${result.summary.totalOrphanedFiles}`);
-    console.log(`Duplicate files: ${result.summary.totalDuplicateFiles}`);
-    console.log(`Large files: ${result.summary.totalLargeFiles}`);
-    console.log(`Estimated space saved: ${result.summary.estimatedSpaceSaved}`);
-    
-    // Write results to file
-    fs.writeFileSync(
-      path.join(__dirname, '.smart-cleaner-candidates.json'),
-      JSON.stringify(result, null, 2)
-    );
-    
-    console.log('\n✅ Results saved to .smart-cleaner-candidates.json');
-  }).catch(error => {
-    console.error('Error identifying dead files:', error);
-    process.exit(1);
-  });
+
+  identifier
+    .identify()
+    .then(result => {
+      console.log('\n📊 Dead Files Analysis Results:');
+      console.log('================================');
+      console.log(`Dead files: ${result.summary.totalDeadFiles}`);
+      console.log(
+        `Unused dependencies: ${result.summary.totalUnusedDependencies}`
+      );
+      console.log(`Dead imports: ${result.summary.totalDeadImports}`);
+      console.log(`Orphaned files: ${result.summary.totalOrphanedFiles}`);
+      console.log(`Duplicate files: ${result.summary.totalDuplicateFiles}`);
+      console.log(`Large files: ${result.summary.totalLargeFiles}`);
+      console.log(
+        `Estimated space saved: ${result.summary.estimatedSpaceSaved}`
+      );
+
+      // Write results to file
+      fs.writeFileSync(
+        path.join(__dirname, '.smart-cleaner-candidates.json'),
+        JSON.stringify(result, null, 2)
+      );
+
+      console.log('\n✅ Results saved to .smart-cleaner-candidates.json');
+    })
+    .catch(error => {
+      console.error('Error identifying dead files:', error);
+      process.exit(1);
+    });
 }
 
 export default DeadFilesIdentifier;

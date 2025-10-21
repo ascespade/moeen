@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 
 interface HeaderProps {
   className?: string;
@@ -13,7 +13,7 @@ export default function Header({ className = '' }: HeaderProps) {
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('ar');
   const [currentTheme, setCurrentTheme] = useState('light');
-  const router = useRouter();
+  // const router = useRouter();
 
   const languages = [
     { code: 'ar', name: 'العربية', flag: '🇸🇦' },
@@ -30,12 +30,18 @@ export default function Header({ className = '' }: HeaderProps) {
     setCurrentLanguage(langCode);
     setIsLanguageMenuOpen(false);
     // يمكن إضافة منطق تغيير اللغة هنا
-    if (langCode === 'en') {
-      document.documentElement.setAttribute('lang', 'en');
-      document.documentElement.setAttribute('dir', 'ltr');
-    } else {
-      document.documentElement.setAttribute('lang', 'ar');
-      document.documentElement.setAttribute('dir', 'rtl');
+    if (typeof document !== 'undefined') {
+      if (langCode === 'en') {
+        // eslint-disable-next-line no-undef
+        document.documentElement.setAttribute('lang', 'en');
+        // eslint-disable-next-line no-undef
+        document.documentElement.setAttribute('dir', 'ltr');
+      } else {
+        // eslint-disable-next-line no-undef
+        document.documentElement.setAttribute('lang', 'ar');
+        // eslint-disable-next-line no-undef
+        document.documentElement.setAttribute('dir', 'rtl');
+      }
     }
   };
 
@@ -44,20 +50,30 @@ export default function Header({ className = '' }: HeaderProps) {
     setIsThemeMenuOpen(false);
     
     // تطبيق الثيم
-    if (themeCode === 'dark') {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
-    } else if (themeCode === 'light') {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
-    } else {
-      // تلقائي - يتبع إعدادات النظام
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (typeof document !== 'undefined') {
+      if (themeCode === 'dark') {
+        // eslint-disable-next-line no-undef
         document.documentElement.classList.add('dark');
+        // eslint-disable-next-line no-undef
         document.documentElement.classList.remove('light');
-      } else {
+      } else if (themeCode === 'light') {
+        // eslint-disable-next-line no-undef
         document.documentElement.classList.add('light');
+        // eslint-disable-next-line no-undef
         document.documentElement.classList.remove('dark');
+      } else {
+        // تلقائي - يتبع إعدادات النظام
+        if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          // eslint-disable-next-line no-undef
+          document.documentElement.classList.add('dark');
+          // eslint-disable-next-line no-undef
+          document.documentElement.classList.remove('light');
+        } else {
+          // eslint-disable-next-line no-undef
+          document.documentElement.classList.add('light');
+          // eslint-disable-next-line no-undef
+          document.documentElement.classList.remove('dark');
+        }
       }
     }
   };

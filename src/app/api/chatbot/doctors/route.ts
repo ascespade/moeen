@@ -2,13 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+  globalThis.process?.env?.NEXT_PUBLIC_SUPABASE_URL!,
+  // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+  globalThis.process?.env?.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = new globalThis.URL(request.url);
     const specialty = searchParams.get('specialty');
     const date = searchParams.get('date');
 
@@ -46,7 +48,7 @@ export async function GET(request: NextRequest) {
       success: true,
       doctors: doctorsWithSlots,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

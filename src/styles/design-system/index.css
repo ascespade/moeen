@@ -51,13 +51,13 @@ body {
    إعدادات اللغة العربية
    ======================================== */
 
-[lang="ar"] {
+[lang='ar'] {
   font-family: var(--font-family-arabic);
   direction: rtl;
   text-align: right;
 }
 
-[lang="ar"] body {
+[lang='ar'] body {
   font-family: var(--font-family-arabic);
 }
 
@@ -69,13 +69,13 @@ body {
   * {
     color-adjust: var(--print-color-adjust);
   }
-  
+
   body {
     font-size: var(--print-font-size);
     line-height: var(--print-line-height);
     margin: var(--print-margin);
   }
-  
+
   .no-print {
     display: none !important;
   }
@@ -102,8 +102,8 @@ body {
     --color-text-primary: var(--color-gray-900);
     --color-text-secondary: var(--color-gray-800);
   }
-  
-  [data-theme="dark"] {
+
+  [data-theme='dark'] {
     --color-border-primary: var(--color-gray-100);
     --color-text-primary: var(--color-gray-100);
     --color-text-secondary: var(--color-gray-200);
@@ -199,19 +199,11 @@ body {
 
 /* فئات الخطوط المتجاوبة */
 .text-responsive {
-  font-size: clamp(
-    var(--font-size-sm),
-    2.5vw,
-    var(--font-size-lg)
-  );
+  font-size: clamp(var(--font-size-sm), 2.5vw, var(--font-size-lg));
 }
 
 .heading-responsive {
-  font-size: clamp(
-    var(--font-size-xl),
-    4vw,
-    var(--font-size-3xl)
-  );
+  font-size: clamp(var(--font-size-xl), 4vw, var(--font-size-3xl));
 }
 
 /* فئات التخطيط المتجاوب */
@@ -269,19 +261,19 @@ body {
 
 /* فئات الظلال المتدرجة */
 .shadow-gradient-primary {
-  box-shadow: 
+  box-shadow:
     0 4px 6px -1px rgba(255, 107, 53, 0.1),
     0 2px 4px -1px rgba(255, 107, 53, 0.06);
 }
 
 .shadow-gradient-secondary {
-  box-shadow: 
+  box-shadow:
     0 4px 6px -1px rgba(255, 140, 66, 0.1),
     0 2px 4px -1px rgba(255, 140, 66, 0.06);
 }
 
 .shadow-gradient-accent {
-  box-shadow: 
+  box-shadow:
     0 4px 6px -1px rgba(0, 123, 255, 0.1),
     0 2px 4px -1px rgba(0, 123, 255, 0.06);
 }
@@ -312,29 +304,71 @@ body {
 }
 
 /* فئات الألوان المخصصة */
-.text-primary { color: var(--color-primary-500); }
-.text-secondary { color: var(--color-secondary-500); }
-.text-accent { color: var(--color-accent-500); }
-.text-success { color: var(--color-success-500); }
-.text-warning { color: var(--color-warning-500); }
-.text-error { color: var(--color-error-500); }
-.text-info { color: var(--color-info-500); }
+.text-primary {
+  color: var(--color-primary-500);
+}
+.text-secondary {
+  color: var(--color-secondary-500);
+}
+.text-accent {
+  color: var(--color-accent-500);
+}
+.text-success {
+  color: var(--color-success-500);
+}
+.text-warning {
+  color: var(--color-warning-500);
+}
+.text-error {
+  color: var(--color-error-500);
+}
+.text-info {
+  color: var(--color-info-500);
+}
 
-.bg-primary { background-color: var(--color-primary-500); }
-.bg-secondary { background-color: var(--color-secondary-500); }
-.bg-accent { background-color: var(--color-accent-500); }
-.bg-success { background-color: var(--color-success-500); }
-.bg-warning { background-color: var(--color-warning-500); }
-.bg-error { background-color: var(--color-error-500); }
-.bg-info { background-color: var(--color-info-500); }
+.bg-primary {
+  background-color: var(--color-primary-500);
+}
+.bg-secondary {
+  background-color: var(--color-secondary-500);
+}
+.bg-accent {
+  background-color: var(--color-accent-500);
+}
+.bg-success {
+  background-color: var(--color-success-500);
+}
+.bg-warning {
+  background-color: var(--color-warning-500);
+}
+.bg-error {
+  background-color: var(--color-error-500);
+}
+.bg-info {
+  background-color: var(--color-info-500);
+}
 
-.border-primary { border-color: var(--color-primary-500); }
-.border-secondary { border-color: var(--color-secondary-500); }
-.border-accent { border-color: var(--color-accent-500); }
-.border-success { border-color: var(--color-success-500); }
-.border-warning { border-color: var(--color-warning-500); }
-.border-error { border-color: var(--color-error-500); }
-.border-info { border-color: var(--color-info-500); }
+.border-primary {
+  border-color: var(--color-primary-500);
+}
+.border-secondary {
+  border-color: var(--color-secondary-500);
+}
+.border-accent {
+  border-color: var(--color-accent-500);
+}
+.border-success {
+  border-color: var(--color-success-500);
+}
+.border-warning {
+  border-color: var(--color-warning-500);
+}
+.border-error {
+  border-color: var(--color-error-500);
+}
+.border-info {
+  border-color: var(--color-info-500);
+}
 
 /* فئات الحالة */
 .state-hover:hover {
@@ -360,10 +394,18 @@ body {
 }
 
 /* فئات التخطيط المتقدم */
-.aspect-square { aspect-ratio: 1 / 1; }
-.aspect-video { aspect-ratio: 16 / 9; }
-.aspect-photo { aspect-ratio: 4 / 3; }
-.aspect-wide { aspect-ratio: 21 / 9; }
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+.aspect-photo {
+  aspect-ratio: 4 / 3;
+}
+.aspect-wide {
+  aspect-ratio: 21 / 9;
+}
 
 /* فئات التحسينات */
 .optimize-performance {

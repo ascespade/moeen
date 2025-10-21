@@ -6,7 +6,8 @@ export interface ButtonProps {
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   disabled?: boolean;
-  onClick?: (e?: any) => void;
+  // eslint-disable-next-line no-undef
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
 }
 

@@ -72,10 +72,10 @@
      ======================================== */
 
   /* الأزرار */
-  --button-height-sm: 2rem;      /* 32px */
-  --button-height-md: 2.5rem;    /* 40px */
-  --button-height-lg: 3rem;      /* 48px */
-  --button-height-xl: 3.5rem;    /* 56px */
+  --button-height-sm: 2rem; /* 32px */
+  --button-height-md: 2.5rem; /* 40px */
+  --button-height-lg: 3rem; /* 48px */
+  --button-height-xl: 3.5rem; /* 56px */
 
   --button-padding-sm: var(--spacing-2) var(--spacing-3);
   --button-padding-md: var(--spacing-3) var(--spacing-4);
@@ -83,9 +83,9 @@
   --button-padding-xl: var(--spacing-5) var(--spacing-8);
 
   /* حقول الإدخال */
-  --input-height-sm: 2rem;       /* 32px */
-  --input-height-md: 2.5rem;     /* 40px */
-  --input-height-lg: 3rem;       /* 48px */
+  --input-height-sm: 2rem; /* 32px */
+  --input-height-md: 2.5rem; /* 40px */
+  --input-height-lg: 3rem; /* 48px */
 
   --input-padding-sm: var(--spacing-2) var(--spacing-3);
   --input-padding-md: var(--spacing-3) var(--spacing-4);
@@ -104,10 +104,10 @@
      إعدادات التنقل - Navigation Settings
      ======================================== */
 
-  --navbar-height: 4rem;         /* 64px */
-  --sidebar-width-sm: 16rem;     /* 256px */
-  --sidebar-width-md: 20rem;     /* 320px */
-  --sidebar-width-lg: 24rem;     /* 384px */
+  --navbar-height: 4rem; /* 64px */
+  --sidebar-width-sm: 16rem; /* 256px */
+  --sidebar-width-md: 20rem; /* 320px */
+  --sidebar-width-lg: 24rem; /* 384px */
 
   /* ========================================
      إعدادات النماذج - Form Settings
@@ -189,13 +189,13 @@
      إعدادات الأيقونات - Icon Settings
      ======================================== */
 
-  --icon-size-xs: 0.75rem;       /* 12px */
-  --icon-size-sm: 1rem;          /* 16px */
-  --icon-size-md: 1.25rem;       /* 20px */
-  --icon-size-lg: 1.5rem;        /* 24px */
-  --icon-size-xl: 2rem;          /* 32px */
-  --icon-size-2xl: 2.5rem;       /* 40px */
-  --icon-size-3xl: 3rem;         /* 48px */
+  --icon-size-xs: 0.75rem; /* 12px */
+  --icon-size-sm: 1rem; /* 16px */
+  --icon-size-md: 1.25rem; /* 20px */
+  --icon-size-lg: 1.5rem; /* 24px */
+  --icon-size-xl: 2rem; /* 32px */
+  --icon-size-2xl: 2.5rem; /* 40px */
+  --icon-size-3xl: 3rem; /* 48px */
 
   /* ========================================
      إعدادات الطباعة - Print Settings
@@ -268,145 +268,335 @@
   gap: var(--grid-gap-md);
 }
 
-.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-.grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.grid-cols-12 {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
 
-.col-span-1 { grid-column: span 1 / span 1; }
-.col-span-2 { grid-column: span 2 / span 2; }
-.col-span-3 { grid-column: span 3 / span 3; }
-.col-span-4 { grid-column: span 4 / span 4; }
-.col-span-5 { grid-column: span 5 / span 5; }
-.col-span-6 { grid-column: span 6 / span 6; }
-.col-span-12 { grid-column: span 12 / span 12; }
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+.col-span-3 {
+  grid-column: span 3 / span 3;
+}
+.col-span-4 {
+  grid-column: span 4 / span 4;
+}
+.col-span-5 {
+  grid-column: span 5 / span 5;
+}
+.col-span-6 {
+  grid-column: span 6 / span 6;
+}
+.col-span-12 {
+  grid-column: span 12 / span 12;
+}
 
 /* ========================================
    فئات المرونة - Flexbox Classes
    ======================================== */
 
-.flex { display: flex; }
-.inline-flex { display: inline-flex; }
-.flex-col { flex-direction: column; }
-.flex-row { flex-direction: row; }
-.flex-wrap { flex-wrap: wrap; }
-.flex-nowrap { flex-wrap: nowrap; }
+.flex {
+  display: flex;
+}
+.inline-flex {
+  display: inline-flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex-row {
+  flex-direction: row;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
 
-.justify-start { justify-content: flex-start; }
-.justify-end { justify-content: flex-end; }
-.justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.justify-around { justify-content: space-around; }
-.justify-evenly { justify-content: space-evenly; }
+.justify-start {
+  justify-content: flex-start;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-around {
+  justify-content: space-around;
+}
+.justify-evenly {
+  justify-content: space-evenly;
+}
 
-.items-start { align-items: flex-start; }
-.items-end { align-items: flex-end; }
-.items-center { align-items: center; }
-.items-baseline { align-items: baseline; }
-.items-stretch { align-items: stretch; }
+.items-start {
+  align-items: flex-start;
+}
+.items-end {
+  align-items: flex-end;
+}
+.items-center {
+  align-items: center;
+}
+.items-baseline {
+  align-items: baseline;
+}
+.items-stretch {
+  align-items: stretch;
+}
 
-.flex-1 { flex: 1 1 0%; }
-.flex-auto { flex: 1 1 auto; }
-.flex-initial { flex: 0 1 auto; }
-.flex-none { flex: none; }
+.flex-1 {
+  flex: 1 1 0%;
+}
+.flex-auto {
+  flex: 1 1 auto;
+}
+.flex-initial {
+  flex: 0 1 auto;
+}
+.flex-none {
+  flex: none;
+}
 
 /* ========================================
    فئات الموضع - Position Classes
    ======================================== */
 
-.static { position: static; }
-.fixed { position: fixed; }
-.absolute { position: absolute; }
-.relative { position: relative; }
-.sticky { position: sticky; }
+.static {
+  position: static;
+}
+.fixed {
+  position: fixed;
+}
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.sticky {
+  position: sticky;
+}
 
-.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-.inset-auto { top: auto; right: auto; bottom: auto; left: auto; }
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.inset-auto {
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+}
 
-.top-0 { top: 0; }
-.right-0 { right: 0; }
-.bottom-0 { bottom: 0; }
-.left-0 { left: 0; }
+.top-0 {
+  top: 0;
+}
+.right-0 {
+  right: 0;
+}
+.bottom-0 {
+  bottom: 0;
+}
+.left-0 {
+  left: 0;
+}
 
-.top-auto { top: auto; }
-.right-auto { right: auto; }
-.bottom-auto { bottom: auto; }
-.left-auto { left: auto; }
+.top-auto {
+  top: auto;
+}
+.right-auto {
+  right: auto;
+}
+.bottom-auto {
+  bottom: auto;
+}
+.left-auto {
+  left: auto;
+}
 
 /* ========================================
    فئات العرض - Display Classes
    ======================================== */
 
-.block { display: block; }
-.inline-block { display: inline-block; }
-.inline { display: inline; }
-.hidden { display: none; }
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
+.inline {
+  display: inline;
+}
+.hidden {
+  display: none;
+}
 
 /* ========================================
    فئات الحجم - Size Classes
    ======================================== */
 
-.w-full { width: 100%; }
-.h-full { height: 100%; }
-.w-auto { width: auto; }
-.h-auto { height: auto; }
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
+.w-auto {
+  width: auto;
+}
+.h-auto {
+  height: auto;
+}
 
-.w-screen { width: 100vw; }
-.h-screen { height: 100vh; }
+.w-screen {
+  width: 100vw;
+}
+.h-screen {
+  height: 100vh;
+}
 
-.min-w-0 { min-width: 0; }
-.min-h-0 { min-height: 0; }
-.min-w-full { min-width: 100%; }
-.min-h-full { min-height: 100%; }
+.min-w-0 {
+  min-width: 0;
+}
+.min-h-0 {
+  min-height: 0;
+}
+.min-w-full {
+  min-width: 100%;
+}
+.min-h-full {
+  min-height: 100%;
+}
 
-.max-w-none { max-width: none; }
-.max-h-none { max-height: none; }
-.max-w-full { max-width: 100%; }
-.max-h-full { max-height: 100%; }
+.max-w-none {
+  max-width: none;
+}
+.max-h-none {
+  max-height: none;
+}
+.max-w-full {
+  max-width: 100%;
+}
+.max-h-full {
+  max-height: 100%;
+}
 
 /* ========================================
    فئات التمرير - Overflow Classes
    ======================================== */
 
-.overflow-auto { overflow: auto; }
-.overflow-hidden { overflow: hidden; }
-.overflow-visible { overflow: visible; }
-.overflow-scroll { overflow: scroll; }
+.overflow-auto {
+  overflow: auto;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.overflow-visible {
+  overflow: visible;
+}
+.overflow-scroll {
+  overflow: scroll;
+}
 
-.overflow-x-auto { overflow-x: auto; }
-.overflow-x-hidden { overflow-x: hidden; }
-.overflow-x-visible { overflow-x: visible; }
-.overflow-x-scroll { overflow-x: scroll; }
+.overflow-x-auto {
+  overflow-x: auto;
+}
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+.overflow-x-visible {
+  overflow-x: visible;
+}
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
 
-.overflow-y-auto { overflow-y: auto; }
-.overflow-y-hidden { overflow-y: hidden; }
-.overflow-y-visible { overflow-y: visible; }
-.overflow-y-scroll { overflow-y: scroll; }
+.overflow-y-auto {
+  overflow-y: auto;
+}
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+.overflow-y-visible {
+  overflow-y: visible;
+}
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
 
 /* ========================================
    فئات المؤشر - Cursor Classes
    ======================================== */
 
-.cursor-auto { cursor: auto; }
-.cursor-default { cursor: default; }
-.cursor-pointer { cursor: pointer; }
-.cursor-wait { cursor: wait; }
-.cursor-text { cursor: text; }
-.cursor-move { cursor: move; }
-.cursor-help { cursor: help; }
-.cursor-not-allowed { cursor: not-allowed; }
+.cursor-auto {
+  cursor: auto;
+}
+.cursor-default {
+  cursor: default;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.cursor-wait {
+  cursor: wait;
+}
+.cursor-text {
+  cursor: text;
+}
+.cursor-move {
+  cursor: move;
+}
+.cursor-help {
+  cursor: help;
+}
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
 
 /* ========================================
    فئات تحديد النص - Text Selection Classes
    ======================================== */
 
-.select-none { user-select: none; }
-.select-text { user-select: text; }
-.select-all { user-select: all; }
-.select-auto { user-select: auto; }
+.select-none {
+  user-select: none;
+}
+.select-text {
+  user-select: text;
+}
+.select-all {
+  user-select: all;
+}
+.select-auto {
+  user-select: auto;
+}
 
 /* ========================================
    فئات الوصولية - Accessibility Classes
@@ -440,9 +630,15 @@
    ======================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .motion-reduce\:animate-none { animation: none; }
-  .motion-reduce\:transition-none { transition: none; }
-  .motion-reduce\:transform-none { transform: none; }
+  .motion-reduce\:animate-none {
+    animation: none;
+  }
+  .motion-reduce\:transition-none {
+    transition: none;
+  }
+  .motion-reduce\:transform-none {
+    transform: none;
+  }
 }
 
 /* ========================================
@@ -450,9 +646,15 @@
    ======================================== */
 
 @media (prefers-contrast: high) {
-  .contrast-more\:border-2 { border-width: 2px; }
-  .contrast-more\:border-black { border-color: black; }
-  .contrast-more\:text-black { color: black; }
+  .contrast-more\:border-2 {
+    border-width: 2px;
+  }
+  .contrast-more\:border-black {
+    border-color: black;
+  }
+  .contrast-more\:text-black {
+    color: black;
+  }
 }
 
 /* ========================================
@@ -460,11 +662,21 @@
    ======================================== */
 
 @media (prefers-color-scheme: dark) {
-  .dark\:bg-gray-900 { background-color: var(--color-gray-900); }
-  .dark\:bg-gray-800 { background-color: var(--color-gray-800); }
-  .dark\:text-gray-100 { color: var(--color-gray-100); }
-  .dark\:text-gray-200 { color: var(--color-gray-200); }
-  .dark\:border-gray-700 { border-color: var(--color-gray-700); }
+  .dark\:bg-gray-900 {
+    background-color: var(--color-gray-900);
+  }
+  .dark\:bg-gray-800 {
+    background-color: var(--color-gray-800);
+  }
+  .dark\:text-gray-100 {
+    color: var(--color-gray-100);
+  }
+  .dark\:text-gray-200 {
+    color: var(--color-gray-200);
+  }
+  .dark\:border-gray-700 {
+    border-color: var(--color-gray-700);
+  }
 }
 
 /* ========================================
@@ -472,9 +684,19 @@
    ======================================== */
 
 @media print {
-  .print\:hidden { display: none; }
-  .print\:block { display: block; }
-  .print\:text-black { color: black; }
-  .print\:bg-white { background-color: white; }
-  .print\:shadow-none { box-shadow: none; }
+  .print\:hidden {
+    display: none;
+  }
+  .print\:block {
+    display: block;
+  }
+  .print\:text-black {
+    color: black;
+  }
+  .print\:bg-white {
+    background-color: white;
+  }
+  .print\:shadow-none {
+    box-shadow: none;
+  }
 }

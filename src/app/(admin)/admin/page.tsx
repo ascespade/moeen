@@ -27,15 +27,12 @@ import {
   Users,
   Settings,
   Shield,
-  Activity,
   UserPlus,
   UserMinus,
   Key,
   Lock,
-  Unlock,
   AlertTriangle,
   CheckCircle,
-  Clock,
   RefreshCw,
 } from 'lucide-react';
 
@@ -93,15 +90,21 @@ export default function AdminPage() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    document.title = 'Admin Panel - مُعين';
+    if (typeof window !== 'undefined' && window.document) {
+      // eslint-disable-next-line no-undef
+      window.document.title = 'Admin Panel - مُعين';
+    }
   }, []);
 
   const loadAdminData = async () => {
     try {
       setLoading(true);
       const [usersRes, configsRes, eventsRes] = await Promise.all([
+        // eslint-disable-next-line no-undef
         fetch('/api/admin/users'),
+        // eslint-disable-next-line no-undef
         fetch('/api/admin/configs'),
+        // eslint-disable-next-line no-undef
         fetch('/api/admin/security-events'),
       ]);
 
@@ -121,6 +124,7 @@ export default function AdminPage() {
       setCurrentUser(usersData.currentUser || null);
       setError(null);
     } catch (err) {
+      // eslint-disable-next-line no-console, no-undef
       console.error('Error loading admin data:', err);
       // Set mock data if APIs fail
       setUsers([
@@ -183,6 +187,7 @@ export default function AdminPage() {
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      // eslint-disable-next-line no-undef
       const response = await fetch('/api/admin/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -200,6 +205,7 @@ export default function AdminPage() {
 
   const handleUpdateUserStatus = async (userId: string, status: string) => {
     try {
+      // eslint-disable-next-line no-undef
       const response = await fetch(`/api/admin/users/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -216,6 +222,7 @@ export default function AdminPage() {
 
   const handleUpdateConfig = async (config: SystemConfig) => {
     try {
+      // eslint-disable-next-line no-undef
       const response = await fetch(`/api/admin/configs/${config.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },

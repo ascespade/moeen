@@ -20,8 +20,9 @@ export function Badge({
   variant = 'primary',
   className = '',
 }: BadgeProps) {
-  const baseClasses = 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium';
-  
+  const baseClasses =
+    'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium';
+
   const variantClasses = {
     primary: 'bg-[var(--color-primary-500)] text-white',
     secondary: 'bg-[var(--color-secondary-500)] text-white',
@@ -31,7 +32,8 @@ export function Badge({
     destructive: 'bg-[var(--color-error-500)] text-white',
     info: 'bg-[var(--color-accent-500)] text-white',
     default: 'bg-[var(--color-gray-500)] text-white',
-    outline: 'border border-[var(--color-primary-500)] text-[var(--color-primary-500)] bg-transparent',
+    outline:
+      'border border-[var(--color-primary-500)] text-[var(--color-primary-500)] bg-transparent',
   };
 
   return (

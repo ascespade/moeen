@@ -12,15 +12,10 @@ import {
   MapPin,
   Calendar,
   Plus,
-  Search,
-  Filter,
   MoreVertical,
   Edit,
-  Eye,
-  Trash2,
   UserPlus,
   MessageCircle,
-  Star,
   Clock,
   Activity,
 } from 'lucide-react';
@@ -69,12 +64,12 @@ interface ContactActivity {
 }
 
 const ContactsPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [activities, setActivities] = useState<ContactActivity[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterSource, setFilterSource] = useState<string>('all');
@@ -166,7 +161,7 @@ const ContactsPage: React.FC = () => {
 
       setContacts(mockContacts);
       setActivities(mockActivities);
-    } catch (error) {
+    } catch {
       setError('فشل في تحميل جهات الاتصال');
     } finally {
       setLoading(false);

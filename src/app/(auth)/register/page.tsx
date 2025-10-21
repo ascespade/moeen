@@ -1,11 +1,9 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { ROUTES } from '@/constants/routes';
 
 import Link from 'next/link';
-
-import Image from 'next/image';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -19,6 +17,7 @@ export default function RegisterPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState(false);
 
+  // eslint-disable-next-line no-undef
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
@@ -77,7 +76,7 @@ export default function RegisterPage() {
 
     try {
       // Call registration API
-      const response = await fetch('/api/auth/register', {
+      const response = await globalThis.fetch('/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -119,6 +118,7 @@ export default function RegisterPage() {
         agreeToTerms: false,
       });
     } catch (error) {
+      // eslint-disable-next-line no-console, no-undef
       console.error('Registration error:', error);
       setErrors({ general: 'حدث خطأ أثناء الاتصال بالخادم. حاول مرة أخرى.' });
     } finally {

@@ -12,20 +12,9 @@ import {
   AlertCircle,
   Info,
   Calendar,
-  Users,
-  MessageCircle,
-  Phone,
-  Mail,
   Clock,
-  Filter,
-  Search,
-  MoreVertical,
-  Eye,
-  Trash2,
   Archive,
-  Star,
   Settings,
-  Send,
   Plus,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
@@ -74,20 +63,17 @@ interface NotificationTemplate {
 }
 
 const NotificationsPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [templates, setTemplates] = useState<NotificationTemplate[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterPriority, setFilterPriority] = useState<string>('all');
-  const [selectedNotification, setSelectedNotification] =
-    useState<Notification | null>(null);
   const [showTemplates, setShowTemplates] = useState(false);
-  const [showCompose, setShowCompose] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -209,7 +195,7 @@ const NotificationsPage: React.FC = () => {
 
       setNotifications(mockNotifications);
       setTemplates(mockTemplates);
-    } catch (error) {
+    } catch {
       setError('فشل في تحميل الإشعارات');
     } finally {
       setLoading(false);
@@ -331,7 +317,7 @@ const NotificationsPage: React.FC = () => {
               القوالب
             </Button>
             <Button
-              onClick={() => setShowCompose(true)}
+              onClick={() => {/* TODO: Implement compose functionality */}}
               className='bg-[var(--brand-primary)] hover:brightness-95'
             >
               <Plus className='w-4 h-4 mr-2' />
@@ -474,7 +460,6 @@ const NotificationsPage: React.FC = () => {
                     : 'hover:bg-surface'
                 }`}
                 onClick={() => {
-                  setSelectedNotification(notification);
                   if (notification.status === 'unread') {
                     markAsRead(notification.id);
                   }

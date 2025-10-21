@@ -1,8 +1,7 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,7 +20,7 @@ export default function LoginPage() {
 
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => globalThis.setTimeout(resolve, 1000));
 
       // For demo purposes, accept any email/password
       if (formData.email && formData.password) {
@@ -29,13 +28,14 @@ export default function LoginPage() {
       } else {
         setError('يرجى إدخال البريد الإلكتروني وكلمة المرور');
       }
-    } catch (err: any) {
+    } catch {
       setError('فشل تسجيل الدخول');
     } finally {
       setSubmitting(false);
     }
   };
 
+  // eslint-disable-next-line no-undef
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
@@ -44,13 +44,14 @@ export default function LoginPage() {
     }));
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleQuickTestLogin = async () => {
     setError(null);
     setSubmitting(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => globalThis.setTimeout(resolve, 500));
       router.push('/dashboard');
-    } catch (err: any) {
+    } catch {
       setError('فشل تسجيل الدخول السريع');
     } finally {
       setSubmitting(false);

@@ -10,6 +10,7 @@ import { cn } from '@/lib/cn';
 import { AlertCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
 
 export interface InputProps
+  // eslint-disable-next-line no-undef
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
@@ -21,6 +22,7 @@ export interface InputProps
   variant?: 'default' | 'filled' | 'outlined';
 }
 
+// eslint-disable-next-line no-undef
 const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
@@ -40,7 +42,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     ref
   ) => {
     const [showPassword, setShowPassword] = React.useState(false);
-    const [isFocused, setIsFocused] = React.useState(false);
+    // const [isFocused, setIsFocused] = React.useState(false);
 
     const inputType =
       showPasswordToggle && type === 'password'

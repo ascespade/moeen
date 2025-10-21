@@ -1,7 +1,7 @@
 /**
  * Design Tokens - من STYLING_GUIDE.md الأصلي
  * استخرج من commit c96c10fe (2025-10-10)
- * 
+ *
  * هذا الملف يحتوي على جميع قيم التصميم المركزية
  * المستخرجة من التصميم الأصلي للمشروع
  */
@@ -45,30 +45,34 @@ export const COLORS = {
  * الخطوط - System Fonts كما في التصميم الأصلي
  */
 export const FONTS = {
-  primary: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
-  arabic: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+  primary:
+    'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+  arabic:
+    'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
   mono: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace',
-  display: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
-  handwriting: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+  display:
+    'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+  handwriting:
+    'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
 } as const;
 
 /**
  * أحجام الخطوط
  */
 export const FONT_SIZES = {
-  xs: '0.75rem',    // 12px
-  sm: '0.875rem',   // 14px
-  base: '1rem',     // 16px
-  lg: '1.125rem',   // 18px
-  xl: '1.25rem',    // 20px
-  '2xl': '1.5rem',  // 24px
+  xs: '0.75rem', // 12px
+  sm: '0.875rem', // 14px
+  base: '1rem', // 16px
+  lg: '1.125rem', // 18px
+  xl: '1.25rem', // 20px
+  '2xl': '1.5rem', // 24px
   '3xl': '1.875rem', // 30px
   '4xl': '2.25rem', // 36px
-  '5xl': '3rem',    // 48px
+  '5xl': '3rem', // 48px
   '6xl': '3.75rem', // 60px
-  '7xl': '4.5rem',  // 72px
-  '8xl': '6rem',    // 96px
-  '9xl': '8rem',    // 128px
+  '7xl': '4.5rem', // 72px
+  '8xl': '6rem', // 96px
+  '9xl': '8rem', // 128px
 } as const;
 
 /**
@@ -91,39 +95,39 @@ export const FONT_WEIGHTS = {
  */
 export const SPACING = {
   0: '0',
-  0.5: '0.125rem',  // 2px
-  1: '0.25rem',     // 4px
-  1.5: '0.375rem',  // 6px
-  2: '0.5rem',      // 8px
-  2.5: '0.625rem',  // 10px
-  3: '0.75rem',     // 12px
-  3.5: '0.875rem',  // 14px
-  4: '1rem',        // 16px
-  5: '1.25rem',     // 20px
-  6: '1.5rem',      // 24px
-  7: '1.75rem',     // 28px
-  8: '2rem',        // 32px
-  9: '2.25rem',     // 36px
-  10: '2.5rem',     // 40px
-  11: '2.75rem',    // 44px
-  12: '3rem',       // 48px
-  14: '3.5rem',     // 56px
-  16: '4rem',       // 64px
-  20: '5rem',       // 80px
-  24: '6rem',       // 96px
-  28: '7rem',       // 112px
-  32: '8rem',       // 128px
-  36: '9rem',       // 144px
-  40: '10rem',      // 160px
-  44: '11rem',      // 176px
-  48: '12rem',      // 192px
-  52: '13rem',      // 208px
-  56: '14rem',      // 224px
-  60: '15rem',      // 240px
-  64: '16rem',      // 256px
-  72: '18rem',      // 288px
-  80: '20rem',      // 320px
-  96: '24rem',      // 384px
+  0.5: '0.125rem', // 2px
+  1: '0.25rem', // 4px
+  1.5: '0.375rem', // 6px
+  2: '0.5rem', // 8px
+  2.5: '0.625rem', // 10px
+  3: '0.75rem', // 12px
+  3.5: '0.875rem', // 14px
+  4: '1rem', // 16px
+  5: '1.25rem', // 20px
+  6: '1.5rem', // 24px
+  7: '1.75rem', // 28px
+  8: '2rem', // 32px
+  9: '2.25rem', // 36px
+  10: '2.5rem', // 40px
+  11: '2.75rem', // 44px
+  12: '3rem', // 48px
+  14: '3.5rem', // 56px
+  16: '4rem', // 64px
+  20: '5rem', // 80px
+  24: '6rem', // 96px
+  28: '7rem', // 112px
+  32: '8rem', // 128px
+  36: '9rem', // 144px
+  40: '10rem', // 160px
+  44: '11rem', // 176px
+  48: '12rem', // 192px
+  52: '13rem', // 208px
+  56: '14rem', // 224px
+  60: '15rem', // 240px
+  64: '16rem', // 256px
+  72: '18rem', // 288px
+  80: '20rem', // 320px
+  96: '24rem', // 384px
 } as const;
 
 /**
@@ -131,12 +135,12 @@ export const SPACING = {
  */
 export const BORDER_RADIUS = {
   none: '0',
-  sm: '0.125rem',   // 2px
-  md: '0.375rem',   // 6px
-  lg: '0.5rem',     // 8px
-  xl: '0.75rem',    // 12px
-  '2xl': '1rem',    // 16px
-  '3xl': '1.5rem',  // 24px
+  sm: '0.125rem', // 2px
+  md: '0.375rem', // 6px
+  lg: '0.5rem', // 8px
+  xl: '0.75rem', // 12px
+  '2xl': '1rem', // 16px
+  '3xl': '1.5rem', // 24px
   full: '9999px',
 } as const;
 
@@ -194,20 +198,21 @@ export const CSS_CLASSES = {
   textBrand: 'text-[var(--color-primary-500)]',
   bgBrand: 'bg-[var(--color-primary-500)]',
   borderBrand: 'border-[var(--color-primary-500)]',
-  
+
   // الخلفيات
   bgSurface: 'bg-[var(--color-bg-secondary)]',
   bgPanel: 'bg-[var(--color-bg-primary)]',
-  
+
   // النصوص
   textPrimary: 'text-[var(--color-text-primary)]',
-  
+
   // الحدود
   borderPrimary: 'border-[var(--color-border-primary)]',
-  
+
   // التدرجات
-  gradientBrand: 'bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-secondary-500)]',
-  
+  gradientBrand:
+    'bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-secondary-500)]',
+
   // الظلال
   shadowCard: 'shadow-lg',
   shadowButton: 'shadow-md hover:shadow-lg',
@@ -220,28 +225,33 @@ export const COMPONENTS = {
   // الأزرار
   button: {
     base: 'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2',
-    primary: 'bg-[var(--color-primary-500)] hover:bg-[var(--color-primary-600)] text-white focus:ring-[var(--color-primary-500)]',
-    secondary: 'bg-[var(--color-secondary-500)] hover:bg-[var(--color-secondary-600)] text-white focus:ring-[var(--color-secondary-500)]',
-    outline: 'border-2 border-[var(--color-primary-500)] text-[var(--color-primary-500)] hover:bg-[var(--color-primary-500)] hover:text-white focus:ring-[var(--color-primary-500)]',
+    primary:
+      'bg-[var(--color-primary-500)] hover:bg-[var(--color-primary-600)] text-white focus:ring-[var(--color-primary-500)]',
+    secondary:
+      'bg-[var(--color-secondary-500)] hover:bg-[var(--color-secondary-600)] text-white focus:ring-[var(--color-secondary-500)]',
+    outline:
+      'border-2 border-[var(--color-primary-500)] text-[var(--color-primary-500)] hover:bg-[var(--color-primary-500)] hover:text-white focus:ring-[var(--color-primary-500)]',
     sizes: {
       sm: 'px-3 py-1.5 text-sm',
       md: 'px-4 py-2 text-base',
       lg: 'px-6 py-3 text-lg',
     },
   },
-  
+
   // البطاقات
   card: {
     base: 'bg-white rounded-lg shadow-md border border-[var(--color-border-primary)]',
-    elevated: 'bg-white rounded-lg shadow-xl border border-[var(--color-border-primary)]',
-    interactive: 'bg-white rounded-lg shadow-md border border-[var(--color-border-primary)] hover:shadow-lg transition-shadow duration-200',
+    elevated:
+      'bg-white rounded-lg shadow-xl border border-[var(--color-border-primary)]',
+    interactive:
+      'bg-white rounded-lg shadow-md border border-[var(--color-border-primary)] hover:shadow-lg transition-shadow duration-200',
   },
-  
+
   // حقول الإدخال
   input: {
     base: 'w-full px-3 py-2 border border-[var(--color-border-primary)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary-500)] focus:border-[var(--color-primary-500)] transition-colors duration-200',
   },
-  
+
   // التسميات
   label: {
     base: 'block text-sm font-medium text-[var(--color-text-primary)] mb-1',
@@ -268,7 +278,7 @@ export const LAYOUT = {
 export function getColor(colorPath: string): string {
   const keys = colorPath.split('.');
   let value: any = COLORS;
-  
+
   for (const key of keys) {
     value = value?.[key];
     if (value === undefined) {
@@ -276,30 +286,39 @@ export function getColor(colorPath: string): string {
       return '#000000';
     }
   }
-  
+
   return value;
 }
 
 /**
  * دالة للحصول على فئة CSS
  */
-export function getCSSClass(component: keyof typeof COMPONENTS, variant?: string, size?: string): string {
+export function getCSSClass(
+  component: keyof typeof COMPONENTS,
+  variant?: string,
+  size?: string
+): string {
   const componentStyles = COMPONENTS[component];
-  
+
   if (typeof componentStyles === 'object' && 'base' in componentStyles) {
     let classes = componentStyles.base;
-    
+
     if (variant && variant in componentStyles) {
       classes += ` ${componentStyles[variant as keyof typeof componentStyles]}`;
     }
-    
-    if (size && 'sizes' in componentStyles && componentStyles.sizes && size in componentStyles.sizes) {
+
+    if (
+      size &&
+      'sizes' in componentStyles &&
+      componentStyles.sizes &&
+      size in componentStyles.sizes
+    ) {
       classes += ` ${componentStyles.sizes[size as keyof typeof componentStyles.sizes]}`;
     }
-    
+
     return classes;
   }
-  
+
   return '';
 }
 

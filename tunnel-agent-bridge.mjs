@@ -17,14 +17,14 @@ console.log(`📋 Session ID: ${SESSION_ID}`);
 console.log('🚀 تشغيل Background Agent...');
 const agent = spawn('node', ['autoloop.agent.mjs'], {
   cwd: process.cwd(),
-  stdio: 'pipe'
+  stdio: 'pipe',
 });
 
-agent.stdout.on('data', (data) => {
+agent.stdout.on('data', data => {
   console.log(`Agent: ${data.toString()}`);
 });
 
-agent.stderr.on('data', (data) => {
+agent.stderr.on('data', data => {
   console.log(`Agent Error: ${data.toString()}`);
 });
 
@@ -35,13 +35,15 @@ const status = {
   status: 'active',
   tunnelConnected: true,
   agentRunning: true,
-  tunnelName: `cursor-bg-agent-${SESSION_ID}`
+  tunnelName: `cursor-bg-agent-${SESSION_ID}`,
 };
 
 fs.writeFileSync('system-status.json', JSON.stringify(status, null, 2));
 
 console.log('✅ تم ربط الـ tunnel مع الـ background agent');
-console.log('🌐 يمكنك الآن الوصول عبر: https://vscode.dev/tunnel/cursor-bg-agent-');
+console.log(
+  '🌐 يمكنك الآن الوصول عبر: https://vscode.dev/tunnel/cursor-bg-agent-'
+);
 
 // Keep running
 process.on('SIGINT', () => {

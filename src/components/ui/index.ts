@@ -20,8 +20,7 @@ export {
   CardTitle,
   CardDescription,
 } from './Card';
-export type {
-} from './Card';
+export type {} from './Card';
 
 export { Input } from './Input';
 export { Label } from './Label';
