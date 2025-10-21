@@ -1,13 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 // Browser-compatible crypto functions
 const getCrypto = () => {
-  if (typeof window !== 'undefined' && window.crypto) {
-    return window.crypto;
+  if (
+    typeof globalThis !== 'undefined' &&
+    globalThis.window &&
+    globalThis.window.crypto
+  ) {
+    return globalThis.window.crypto;
   }
   if (typeof globalThis !== 'undefined' && globalThis.crypto) {
     return globalThis.crypto;
   }
   // Fallback for Node.js
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
   const crypto = require('crypto');
   return crypto;
 };
@@ -45,7 +51,7 @@ export class CSRFProtection {
     const token = this.generateToken();
     response.cookies.set(this.CSRF_TOKEN_COOKIE, token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: globalThis.process?.env?.NODE_ENV === 'production',
       sameSite: 'strict',
       path: '/',
       maxAge: 60 * 60 * 24, // 24 hours
@@ -187,9 +193,16 @@ export class SessionSecurity {
       return crypto.createHash('sha256').update(sessionId).digest('hex');
     }
     // Fallback for browser - use Web Crypto API
-    const encoder = new TextEncoder();
+    const encoder = new globalThis.TextEncoder();
     const data = encoder.encode(sessionId);
-    return (crypto as any).subtle
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return (
+      crypto as unknown as {
+        subtle: {
+          digest: (algorithm: string, data: Uint8Array) => Promise<ArrayBuffer>;
+        };
+      }
+    ).subtle
       .digest('SHA-256', data)
       .then((hashBuffer: ArrayBuffer) => {
         const hashArray = Array.from(new Uint8Array(hashBuffer));

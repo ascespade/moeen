@@ -277,11 +277,13 @@ export const LAYOUT = {
  */
 export function getColor(colorPath: string): string {
   const keys = colorPath.split('.');
-  let value: any = COLORS;
+  let value: unknown = COLORS;
 
   for (const key of keys) {
     value = value?.[key];
     if (value === undefined) {
+      // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console, no-undef
       console.warn(`Color not found: ${colorPath}`);
       return '#000000';
     }
