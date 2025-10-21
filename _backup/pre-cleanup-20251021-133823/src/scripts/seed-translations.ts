@@ -1,0 +1,1311 @@
+import { bulkInsertTranslations } from '../lib/translations-manager';
+import { logger } from '@/lib/logger';
+
+/**
+ * Seed Translations Script
+ * Adds all translations to the database using CUID system
+ */
+
+// Comprehensive translations data
+const translations = [
+  // Conversations
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'conv.subtitle',
+    value: 'إدارة جميع المحادثات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'conv.new',
+    value: 'محادثة جديدة',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'conv.search',
+    value: 'البحث في المحادثات...',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'conv.filter.all',
+    value: 'الكل',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'conv.filter.active',
+    value: 'نشط',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'conv.filter.pending',
+    value: 'معلق',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'conv.filter.resolved',
+    value: 'تم الحل',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'conv.subtitle',
+    value: 'Manage all conversations',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'conv.new',
+    value: 'New conversation',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'conv.search',
+    value: 'Search conversations...',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'conv.filter.all',
+    value: 'All',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'conv.filter.active',
+    value: 'Active',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'conv.filter.pending',
+    value: 'Pending',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'conv.filter.resolved',
+    value: 'Resolved',
+  },
+
+  // Flow
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'flow.subtitle',
+    value: 'إنشاء وإدارة تدفقات المحادثة',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'flow.new',
+    value: 'تدفق جديد',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'flow.templates',
+    value: 'القوالب الجاهزة',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'flow.subtitle',
+    value: 'Create and manage flows',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'flow.new',
+    value: 'New flow',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'flow.templates',
+    value: 'Templates',
+  },
+
+  // Auth
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'auth.welcomeBack',
+    value: 'مرحباً بك مرة أخرى',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'auth.login.subtitle',
+    value: 'سجل دخولك للوصول إلى لوحة التحكم',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'auth.email',
+    value: 'البريد الإلكتروني',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'auth.email.placeholder',
+    value: 'أدخل بريدك الإلكتروني',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'auth.password',
+    value: 'كلمة المرور',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'auth.password.placeholder',
+    value: 'أدخل كلمة المرور',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'auth.remember',
+    value: 'تذكرني',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'auth.forgot',
+    value: 'نسيت كلمة المرور؟',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'auth.login',
+    value: 'تسجيل الدخول',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'auth.welcomeBack',
+    value: 'Welcome back',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'auth.login.subtitle',
+    value: 'Sign in to access the dashboard',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'auth.email',
+    value: 'Email',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'auth.email.placeholder',
+    value: 'Enter your email',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'auth.password',
+    value: 'Password',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'auth.password.placeholder',
+    value: 'Enter your password',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'auth.remember',
+    value: 'Remember me',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'auth.forgot',
+    value: 'Forgot password?',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'auth.login',
+    value: 'Sign in',
+  },
+
+  // UI common
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'ui.preview',
+    value: 'معاينة',
+  },
+  { locale: 'ar' as const, namespace: 'common', key: 'ui.save', value: 'حفظ' },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'ui.preview',
+    value: 'Preview',
+  },
+  { locale: 'en' as const, namespace: 'common', key: 'ui.save', value: 'Save' },
+
+  // App name and navigation
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'app.name',
+    value: 'معين',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'nav.dashboard',
+    value: 'لوحة التحكم',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'nav.conversations',
+    value: 'المحادثات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'nav.flow',
+    value: 'منشئ التدفق',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'nav.review',
+    value: 'مركز المراجعة',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'nav.settings',
+    value: 'الإعدادات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'nav.users',
+    value: 'إدارة الفريق',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'ui.theme',
+    value: 'الثيم',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'ui.language',
+    value: 'اللغة',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'app.name',
+    value: "Mu'ayin",
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'nav.dashboard',
+    value: 'Dashboard',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'nav.conversations',
+    value: 'Conversations',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'nav.flow',
+    value: 'Flow Builder',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'nav.review',
+    value: 'Review Center',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'nav.settings',
+    value: 'Settings',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'nav.users',
+    value: 'Team Management',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'ui.theme',
+    value: 'Theme',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'ui.language',
+    value: 'Language',
+  },
+
+  // Home page
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'home.hero.title',
+    value: 'منصة دردشة متعددة القنوات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'home.hero.subtitle',
+    value: 'مدعومة بالذكاء الاصطناعي',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'home.hero.ctaPrimary',
+    value: 'جرب الآن مجانًا',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'home.hero.ctaSecondary',
+    value: 'اكتشف المميزات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'home.features.unifiedChat',
+    value: 'دردشة موحدة',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'home.features.unifiedChat.desc',
+    value: 'كل محادثاتك في واجهة واحدة مع بحث وفلاتر ذكية.',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'home.features.customers',
+    value: 'إدارة العملاء',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'home.features.customers.desc',
+    value: 'ملفات تعريف غنية وسجل كامل للتفاعل.',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'home.features.reports',
+    value: 'تقارير ذكية',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'home.features.reports.desc',
+    value: 'لوحات تحكم ومؤشرات أداء لحظية.',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'home.cta.title',
+    value: 'ابدأ اليوم',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'home.cta.button',
+    value: 'إنشاء حساب',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'home.hero.title',
+    value: 'Omnichannel Messaging Platform',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'home.hero.subtitle',
+    value: 'AI-powered',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'home.hero.ctaPrimary',
+    value: 'Try for free',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'home.hero.ctaSecondary',
+    value: 'Explore features',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'home.features.unifiedChat',
+    value: 'Unified chat',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'home.features.unifiedChat.desc',
+    value: 'All conversations in one UI with smart filters.',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'home.features.customers',
+    value: 'Customer management',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'home.features.customers.desc',
+    value: 'Rich profiles and complete interaction history.',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'home.features.reports',
+    value: 'Smart analytics',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'home.features.reports.desc',
+    value: 'Dashboards and real-time KPIs.',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'home.cta.title',
+    value: 'Start today',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'home.cta.button',
+    value: 'Create account',
+  },
+
+  // Dashboard
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'dashboard.title',
+    value: 'لوحة التحكم',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'dashboard.overview',
+    value: 'نظرة عامة',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'dashboard.stats',
+    value: 'الإحصائيات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'dashboard.recentActivity',
+    value: 'النشاط الأخير',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'dashboard.quickActions',
+    value: 'الإجراءات السريعة',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'dashboard.title',
+    value: 'Dashboard',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'dashboard.overview',
+    value: 'Overview',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'dashboard.stats',
+    value: 'Statistics',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'dashboard.recentActivity',
+    value: 'Recent Activity',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'dashboard.quickActions',
+    value: 'Quick Actions',
+  },
+
+  // Users Management
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'users.title',
+    value: 'إدارة المستخدمين',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'users.addUser',
+    value: 'إضافة مستخدم',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'users.editUser',
+    value: 'تعديل المستخدم',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'users.deleteUser',
+    value: 'حذف المستخدم',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'users.role',
+    value: 'الدور',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'users.status',
+    value: 'الحالة',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'users.active',
+    value: 'نشط',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'users.inactive',
+    value: 'غير نشط',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'users.title',
+    value: 'User Management',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'users.addUser',
+    value: 'Add User',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'users.editUser',
+    value: 'Edit User',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'users.deleteUser',
+    value: 'Delete User',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'users.role',
+    value: 'Role',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'users.status',
+    value: 'Status',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'users.active',
+    value: 'Active',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'users.inactive',
+    value: 'Inactive',
+  },
+
+  // Settings
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'settings.title',
+    value: 'الإعدادات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'settings.general',
+    value: 'عام',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'settings.notifications',
+    value: 'الإشعارات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'settings.security',
+    value: 'الأمان',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'settings.integrations',
+    value: 'التكاملات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'settings.save',
+    value: 'حفظ التغييرات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'settings.cancel',
+    value: 'إلغاء',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'settings.title',
+    value: 'Settings',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'settings.general',
+    value: 'General',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'settings.notifications',
+    value: 'Notifications',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'settings.security',
+    value: 'Security',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'settings.integrations',
+    value: 'Integrations',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'settings.save',
+    value: 'Save Changes',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'settings.cancel',
+    value: 'Cancel',
+  },
+
+  // Channels
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'channels.title',
+    value: 'إدارة القنوات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'channels.whatsapp',
+    value: 'واتساب',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'channels.telegram',
+    value: 'تيليجرام',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'channels.facebook',
+    value: 'فيسبوك',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'channels.instagram',
+    value: 'إنستغرام',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'channels.twitter',
+    value: 'تويتر',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'channels.addChannel',
+    value: 'إضافة قناة',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'channels.configure',
+    value: 'تكوين',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'channels.title',
+    value: 'Channel Management',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'channels.whatsapp',
+    value: 'WhatsApp',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'channels.telegram',
+    value: 'Telegram',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'channels.facebook',
+    value: 'Facebook',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'channels.instagram',
+    value: 'Instagram',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'channels.twitter',
+    value: 'Twitter',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'channels.addChannel',
+    value: 'Add Channel',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'channels.configure',
+    value: 'Configure',
+  },
+
+  // Review Center
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'review.title',
+    value: 'مركز المراجعة',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'review.pending',
+    value: 'في الانتظار',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'review.approved',
+    value: 'موافق عليه',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'review.rejected',
+    value: 'مرفوض',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'review.comments',
+    value: 'التعليقات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'review.approve',
+    value: 'موافقة',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'review.reject',
+    value: 'رفض',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'review.title',
+    value: 'Review Center',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'review.pending',
+    value: 'Pending',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'review.approved',
+    value: 'Approved',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'review.rejected',
+    value: 'Rejected',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'review.comments',
+    value: 'Comments',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'review.approve',
+    value: 'Approve',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'review.reject',
+    value: 'Reject',
+  },
+
+  // Common Actions
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'actions.create',
+    value: 'إنشاء',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'actions.edit',
+    value: 'تعديل',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'actions.delete',
+    value: 'حذف',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'actions.view',
+    value: 'عرض',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'actions.search',
+    value: 'بحث',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'actions.filter',
+    value: 'تصفية',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'actions.export',
+    value: 'تصدير',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'actions.import',
+    value: 'استيراد',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'actions.refresh',
+    value: 'تحديث',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'actions.create',
+    value: 'Create',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'actions.edit',
+    value: 'Edit',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'actions.delete',
+    value: 'Delete',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'actions.view',
+    value: 'View',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'actions.search',
+    value: 'Search',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'actions.filter',
+    value: 'Filter',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'actions.export',
+    value: 'Export',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'actions.import',
+    value: 'Import',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'actions.refresh',
+    value: 'Refresh',
+  },
+
+  // Status Messages
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'status.success',
+    value: 'تم بنجاح',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'status.error',
+    value: 'خطأ',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'status.warning',
+    value: 'تحذير',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'status.info',
+    value: 'معلومات',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'status.loading',
+    value: 'جاري التحميل...',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'status.noData',
+    value: 'لا توجد بيانات',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'status.success',
+    value: 'Success',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'status.error',
+    value: 'Error',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'status.warning',
+    value: 'Warning',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'status.info',
+    value: 'Info',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'status.loading',
+    value: 'Loading...',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'status.noData',
+    value: 'No data available',
+  },
+
+  // Form Labels
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'form.name',
+    value: 'الاسم',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'form.email',
+    value: 'البريد الإلكتروني',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'form.phone',
+    value: 'رقم الهاتف',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'form.message',
+    value: 'الرسالة',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'form.subject',
+    value: 'الموضوع',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'form.required',
+    value: 'مطلوب',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'form.optional',
+    value: 'اختياري',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'form.name',
+    value: 'Name',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'form.email',
+    value: 'Email',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'form.phone',
+    value: 'Phone',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'form.message',
+    value: 'Message',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'form.subject',
+    value: 'Subject',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'form.required',
+    value: 'Required',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'form.optional',
+    value: 'Optional',
+  },
+
+  // Time and Date
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'time.today',
+    value: 'اليوم',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'time.yesterday',
+    value: 'أمس',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'time.thisWeek',
+    value: 'هذا الأسبوع',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'time.thisMonth',
+    value: 'هذا الشهر',
+  },
+  {
+    locale: 'ar' as const,
+    namespace: 'common',
+    key: 'time.thisYear',
+    value: 'هذا العام',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'time.today',
+    value: 'Today',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'time.yesterday',
+    value: 'Yesterday',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'time.thisWeek',
+    value: 'This Week',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'time.thisMonth',
+    value: 'This Month',
+  },
+  {
+    locale: 'en' as const,
+    namespace: 'common',
+    key: 'time.thisYear',
+    value: 'This Year',
+  },
+];
+
+/**
+ * Seed all translations to the database
+ */
+export async function seedTranslations(): Promise<void> {
+  try {
+    logger.info('🌱 Starting to seed translations...');
+    logger.info(`📊 Total translations: ${translations.length}`);
+
+    await bulkInsertTranslations(translations);
+
+    logger.info('✅ All translations seeded successfully!');
+    logger.info(`🎯 Added ${translations.length} translations with CUID`);
+  } catch (error) {
+    logger.error('❌ Failed to seed translations:', error);
+    throw error;
+  }
+}
+
+/**
+ * Run the seeding process
+ */
+if (require.main === module) {
+  seedTranslations()
+    .then(() => {
+      logger.info('🎉 Translation seeding completed!');
+      process.exit(0);
+    })
+    .catch(error => {
+      logger.error('💥 Translation seeding failed:', error);
+      process.exit(1);
+    });
+}

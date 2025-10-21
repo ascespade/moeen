@@ -1,0 +1,1049 @@
+/* ========================================
+   UNIFIED STYLING SYSTEM - مُعين
+   ========================================
+   Centralized styling system with single source of truth
+   نظام التصميم الموحد مع مصدر واحد للحقيقة
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   CSS CUSTOM PROPERTIES (DESIGN TOKENS)
+   ======================================== */
+
+:root {
+  /* Brand Colors - Single Source of Truth */
+  --brand-primary: #e46c0a;
+  --brand-primary-hover: #d45f08;
+  --brand-secondary: #ffa500;
+  --brand-accent: #007bff;
+  --brand-success: #009688;
+  --brand-warning: #f59e0b;
+  --brand-error: #ef4444;
+
+  /* Background Colors - Light Theme Default */
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --surface: #f9fafb;
+  --panel: #ffffff;
+  --border: #e5e7eb;
+
+  /* Text Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+
+  /* Interactive States */
+  --hover: #f3f4f6;
+  --active: #e5e7eb;
+  --focus: #007bff;
+
+  /* Spacing Scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Border Radius */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl:
+    0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+
+  /* Z-Index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal: 1040;
+  --z-popover: 1050;
+  --z-tooltip: 1060;
+}
+
+/* ========================================
+   DARK THEME OVERRIDES
+   ======================================== */
+
+[data-theme='dark'] {
+  /* Background Colors - Dark Theme */
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --surface: #1e293b;
+  --panel: #334155;
+  --border: #475569;
+
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+
+  /* Interactive States */
+  --hover: #334155;
+  --active: #475569;
+}
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+body {
+  margin: 0;
+  background-color: var(--background);
+  color: var(--text-primary);
+  transition:
+    background-color var(--transition-normal),
+    color var(--transition-normal);
+}
+
+/* ========================================
+   COMPONENT STYLES
+   ======================================== */
+
+/* Navigation */
+.nav {
+  background-color: var(--background);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  transition:
+    background-color var(--transition-normal),
+    border-color var(--transition-normal);
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-weight: 500;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: none;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.btn-brand {
+  background-color: var(--brand-primary);
+  color: white;
+}
+
+.btn-brand:hover {
+  background-color: var(--brand-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--brand-primary);
+  border: 1px solid var(--brand-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--brand-primary);
+  color: white;
+}
+
+/* Cards */
+.card {
+  background-color: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Text Brand */
+.text-brand {
+  color: var(--brand-primary);
+}
+
+/* Container */
+.container-app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .container-app {
+    padding: 0 var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-app {
+    padding: 0 var(--space-8);
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.shadow-soft {
+  box-shadow: var(--shadow-sm);
+}
+
+.hover\:shadow-soft:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* ========================================
+   ULTRA MODERN COMPONENT STYLES
+   ======================================== */
+
+/* Ultra Modern Card Component */
+.card {
+  @apply bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 p-8 transition-all duration-500 backdrop-blur-sm;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.card:hover {
+  @apply transform -translate-y-3 scale-105;
+  box-shadow:
+    0 40px 80px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Ultra Modern Button Components */
+.btn {
+  @apply inline-flex items-center justify-center px-8 py-4 rounded-2xl font-bold text-base transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden;
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary) 0%,
+    var(--brand-primary-hover) 100%
+  );
+  box-shadow: 0 15px 35px rgba(228, 108, 10, 0.4);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.6s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-brand {
+  @apply text-white hover:scale-105 focus:ring-[var(--brand-primary)] shadow-2xl;
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary) 0%,
+    var(--brand-primary-hover) 100%
+  );
+  box-shadow: 0 20px 40px rgba(228, 108, 10, 0.5);
+}
+
+.btn-brand:hover {
+  box-shadow: 0 25px 50px rgba(228, 108, 10, 0.7);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.btn-outline {
+  @apply border-2 border-[var(--brand-primary)] text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:text-white focus:ring-[var(--brand-primary)] bg-transparent;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(228, 108, 10, 0.05) 100%
+  );
+  box-shadow: 0 10px 20px rgba(228, 108, 10, 0.2);
+}
+
+.btn-outline:hover {
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary) 0%,
+    var(--brand-primary-hover) 100%
+  );
+  box-shadow: 0 20px 40px rgba(228, 108, 10, 0.5);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.btn-secondary {
+  @apply text-white hover:scale-105 focus:ring-[var(--brand-secondary)];
+  background: linear-gradient(135deg, var(--brand-secondary) 0%, #ff8c00 100%);
+  box-shadow: 0 15px 35px rgba(255, 165, 0, 0.4);
+}
+
+.btn-ghost {
+  @apply text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-gray-500 rounded-xl;
+  background: linear-gradient(135deg, transparent 0%, rgba(0, 0, 0, 0.02) 100%);
+}
+
+/* Modern Navigation */
+.nav {
+  @apply backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-gray-200/50 dark:border-gray-700/50;
+}
+
+.nav-link {
+  @apply text-gray-700 dark:text-gray-300 hover:text-[var(--brand-primary)] font-medium transition-all duration-300 relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--brand-primary),
+    var(--brand-secondary)
+  );
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Modern Hero Section */
+.hero-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(228, 108, 10, 0.1) 0%,
+    rgba(255, 165, 0, 0.05) 50%,
+    rgba(0, 123, 255, 0.1) 100%
+  );
+}
+
+/* Modern Service Cards */
+.service-card {
+  @apply cursor-pointer;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(248, 250, 252, 0.8) 100%
+  );
+  @apply bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 p-8 transition-all duration-500 backdrop-blur-sm;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.service-card:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(248, 250, 252, 0.9) 100%
+  );
+  @apply transform -translate-y-3 scale-105;
+  box-shadow:
+    0 40px 80px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.service-icon {
+  @apply h-20 w-20 mx-auto mb-6 flex items-center justify-center rounded-3xl text-4xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.1) 0%,
+    rgba(147, 51, 234, 0.1) 100%
+  );
+}
+
+/* Modern Section Backgrounds */
+.section-gradient-1 {
+  background: linear-gradient(
+    135deg,
+    rgba(228, 108, 10, 0.05) 0%,
+    rgba(255, 165, 0, 0.02) 100%
+  );
+}
+
+.section-gradient-2 {
+  background: linear-gradient(
+    135deg,
+    rgba(147, 51, 234, 0.05) 0%,
+    rgba(59, 130, 246, 0.02) 100%
+  );
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.8s ease-out;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.6s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ========================================
+   CENTRALIZED MODERN COMPONENTS
+   ======================================== */
+
+/* Modern Page Headers */
+.page-header {
+  @apply text-6xl font-bold text-gray-900 dark:text-white mb-8 text-center;
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary) 0%,
+    var(--brand-secondary) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page-subheader {
+  @apply text-2xl text-gray-600 dark:text-gray-300 mb-12 text-center max-w-4xl mx-auto;
+}
+
+/* Modern Section Containers */
+.section-modern {
+  @apply py-24;
+}
+
+.section-modern-alt {
+  @apply py-24 section-gradient-1;
+}
+
+.section-modern-dark {
+  @apply py-24 section-gradient-2;
+}
+
+/* Modern Grid Layouts */
+.grid-modern {
+  @apply grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3;
+}
+
+.grid-modern-2 {
+  @apply grid grid-cols-1 gap-12 lg:grid-cols-2;
+}
+
+.grid-modern-4 {
+  @apply grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4;
+}
+
+/* Modern Text Elements */
+.text-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary) 0%,
+    var(--brand-secondary) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-large {
+  @apply text-lg leading-relaxed;
+}
+
+.text-xl-modern {
+  @apply text-2xl font-bold;
+}
+
+/* Modern Interactive Elements */
+.hover-lift {
+  @apply transition-all duration-300 hover:-translate-y-2 hover:scale-105;
+}
+
+.hover-glow {
+  @apply transition-all duration-300 hover:shadow-2xl;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 25px 50px -12px rgba(228, 108, 10, 0.4);
+}
+
+/* Modern Form Elements */
+.form-group {
+  @apply mb-6;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
+}
+
+.form-input {
+  @apply w-full px-4 py-3 rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-all duration-300;
+}
+
+.form-textarea {
+  @apply form-input resize-none;
+}
+
+/* Modern Status Indicators */
+.status-success {
+  @apply text-green-600 bg-green-100 px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.status-success.dark {
+  @apply bg-green-900 bg-opacity-20;
+}
+
+.status-warning {
+  @apply text-yellow-600 bg-yellow-100 px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.status-warning.dark {
+  @apply bg-yellow-900 bg-opacity-20;
+}
+
+.status-error {
+  @apply text-red-600 bg-red-100 px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.status-error.dark {
+  @apply bg-red-900 bg-opacity-20;
+}
+
+.status-info {
+  @apply text-blue-600 bg-blue-100 px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.status-info.dark {
+  @apply bg-blue-900 bg-opacity-20;
+}
+
+/* Modern Loading States */
+.loading-spinner {
+  @apply animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)];
+}
+
+.loading-dots {
+  @apply flex space-x-1;
+}
+
+.loading-dots div {
+  @apply w-2 h-2 bg-[var(--brand-primary)] rounded-full animate-bounce;
+}
+
+.loading-dots div:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.loading-dots div:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+/* Modern Badges */
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.badge-primary {
+  @apply badge bg-[var(--brand-primary)] text-white;
+}
+
+.badge-secondary {
+  @apply badge bg-[var(--brand-secondary)] text-white;
+}
+
+.badge-outline {
+  @apply badge border border-[var(--brand-primary)] text-[var(--brand-primary)];
+}
+
+/* Modern Dividers */
+.divider {
+  @apply border-t border-gray-200 dark:border-gray-700 my-8;
+}
+
+.divider-gradient {
+  @apply my-8 h-px bg-gradient-to-r from-transparent via-[var(--brand-primary)] to-transparent;
+}
+
+/* Modern Spacing Utilities */
+.space-modern {
+  @apply space-y-8;
+}
+
+.space-modern-lg {
+  @apply space-y-12;
+}
+
+.space-modern-xl {
+  @apply space-y-16;
+}
+
+/* Modern Focus States */
+.focus-modern {
+  @apply focus:outline-none focus:ring-4 focus:ring-[var(--brand-primary)] focus:ring-opacity-50;
+}
+
+/* Modern Responsive Utilities */
+.container-modern {
+  @apply container-app;
+}
+
+.text-responsive {
+  @apply text-4xl md:text-5xl lg:text-6xl;
+}
+
+.text-responsive-lg {
+  @apply text-2xl md:text-3xl lg:text-4xl;
+}
+
+.text-responsive-md {
+  @apply text-lg md:text-xl lg:text-2xl;
+}
+
+/* ========================================
+   GLOBAL MODERN STYLES
+   ======================================== */
+
+/* Modern Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-bold leading-tight;
+}
+
+h1 {
+  @apply text-6xl md:text-7xl lg:text-8xl;
+}
+
+h2 {
+  @apply text-4xl md:text-5xl lg:text-6xl;
+}
+
+h3 {
+  @apply text-2xl md:text-3xl lg:text-4xl;
+}
+
+h4 {
+  @apply text-xl md:text-2xl lg:text-3xl;
+}
+
+h5 {
+  @apply text-lg md:text-xl lg:text-2xl;
+}
+
+h6 {
+  @apply text-base md:text-lg lg:text-xl;
+}
+
+p {
+  @apply leading-relaxed text-gray-700 dark:text-gray-300;
+}
+
+/* Modern Layout Components */
+.container {
+  @apply container-app;
+}
+
+.section {
+  @apply py-24;
+}
+
+.section-alt {
+  @apply py-24 section-gradient-1;
+}
+
+.section-dark {
+  @apply py-24 section-gradient-2;
+}
+
+.grid-2 {
+  @apply grid grid-cols-1 gap-12 lg:grid-cols-2;
+}
+
+.grid-3 {
+  @apply grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3;
+}
+
+.grid-4 {
+  @apply grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4;
+}
+
+/* Modern Interactive Elements */
+a {
+  @apply transition-all duration-300;
+}
+
+a:hover {
+  @apply transform scale-105;
+}
+
+button,
+.btn {
+  @apply focus:outline-none focus:ring-4 focus:ring-[var(--brand-primary)] focus:ring-opacity-50;
+}
+
+input,
+textarea,
+select {
+  @apply w-full px-4 py-3 rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[var(--brand-primary)] focus:ring-opacity-50;
+}
+
+label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
+}
+
+/* Modern Cards */
+.card,
+.panel,
+.box {
+  @apply bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 p-8 transition-all duration-500 backdrop-blur-sm;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Modern Animations */
+.fade-in {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.8s ease-out;
+}
+
+.scale-in {
+  animation: scaleIn 0.6s ease-out;
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Modern Utilities */
+.text-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary) 0%,
+    var(--brand-secondary) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-large {
+  @apply text-lg leading-relaxed;
+}
+
+.text-xl-modern {
+  @apply text-2xl font-bold;
+}
+
+.text-responsive {
+  @apply text-4xl md:text-5xl lg:text-6xl;
+}
+
+.text-responsive-lg {
+  @apply text-2xl md:text-3xl lg:text-4xl;
+}
+
+.text-responsive-md {
+  @apply text-lg md:text-xl lg:text-2xl;
+}
+
+.hover-lift {
+  @apply transition-all duration-300 hover:-translate-y-2 hover:scale-105;
+}
+
+.hover-glow {
+  @apply transition-all duration-300 hover:shadow-2xl;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 25px 50px -12px rgba(228, 108, 10, 0.4);
+}
+
+/* Status Indicators */
+.status-success {
+  @apply text-green-600 bg-green-100 px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.status-warning {
+  @apply text-yellow-600 bg-yellow-100 px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.status-error {
+  @apply text-red-600 bg-red-100 px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.status-info {
+  @apply text-blue-600 bg-blue-100 px-3 py-1 rounded-full text-sm font-medium;
+}
+
+/* Loading States */
+.loading-spinner {
+  @apply animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)];
+}
+
+.loading-dots {
+  @apply flex space-x-1;
+}
+
+.loading-dots div {
+  @apply w-2 h-2 bg-[var(--brand-primary)] rounded-full animate-bounce;
+}
+
+.loading-dots div:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.loading-dots div:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+/* Badges */
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.badge-primary {
+  @apply badge bg-[var(--brand-primary)] text-white;
+}
+
+.badge-secondary {
+  @apply badge bg-[var(--brand-secondary)] text-white;
+}
+
+.badge-outline {
+  @apply badge border border-[var(--brand-primary)] text-[var(--brand-primary)];
+}
+
+/* Dividers */
+.divider {
+  @apply border-t border-gray-200 dark:border-gray-700 my-8;
+}
+
+.divider-gradient {
+  @apply my-8 h-px bg-gradient-to-r from-transparent via-[var(--brand-primary)] to-transparent;
+}
+
+/* Spacing Utilities */
+.space-modern {
+  @apply space-y-8;
+}
+
+.space-modern-lg {
+  @apply space-y-12;
+}
+
+.space-modern-xl {
+  @apply space-y-16;
+}
+
+/* ========================================
+   RTL SUPPORT
+   ======================================== */
+
+[dir='rtl'] {
+  text-align: right;
+}
+
+[dir='rtl'] .container-app {
+  direction: rtl;
+}
+
+/* ========================================
+   FOCUS STYLES
+   ======================================== */
+
+*:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   SCROLLBAR STYLES
+   ======================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .nav,
+  .btn,
+  .card:hover {
+    box-shadow: none;
+  }
+
+  .card {
+    border: 1px solid #000;
+  }
+}
