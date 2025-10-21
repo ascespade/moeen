@@ -22,9 +22,13 @@ console.log(chalk.cyan(figlet.textSync('AI Agent', { font: 'ANSI Shadow' })));
 console.log(chalk.blue('مشروع الأجنت الذكي\n'));
 
 // Check if we're in the right directory
-const requiredFiles = ['package.json', 'src/index.js', 'config/agent-config.json'];
-const missingFiles = requiredFiles.filter(file => 
-  !require('fs').existsSync(path.join(__dirname, file))
+const requiredFiles = [
+  'package.json',
+  'src/index.js',
+  'config/agent-config.json',
+];
+const missingFiles = requiredFiles.filter(
+  file => !require('fs').existsSync(path.join(__dirname, file))
 );
 
 if (missingFiles.length > 0) {
@@ -38,13 +42,13 @@ if (missingFiles.length > 0) {
 if (!require('fs').existsSync(path.join(__dirname, 'node_modules'))) {
   console.log(chalk.yellow('⚠️  لم يتم العثور على node_modules'));
   console.log(chalk.blue('🔧 جاري تثبيت التبعيات...\n'));
-  
+
   const install = spawn('npm', ['install'], {
     cwd: __dirname,
-    stdio: 'inherit'
+    stdio: 'inherit',
   });
 
-  install.on('close', (code) => {
+  install.on('close', code => {
     if (code === 0) {
       console.log(chalk.green('\n✅ تم تثبيت التبعيات بنجاح!'));
       console.log(chalk.blue('🚀 يمكنك الآن تشغيل الأجنت باستخدام: npm start'));
@@ -56,7 +60,7 @@ if (!require('fs').existsSync(path.join(__dirname, 'node_modules'))) {
 } else {
   console.log(chalk.green('✅ التبعيات جاهزة'));
   console.log(chalk.blue('🚀 بدء تشغيل الأجنت...\n'));
-  
+
   // Start the agent
   startAgent();
 }
@@ -64,10 +68,10 @@ if (!require('fs').existsSync(path.join(__dirname, 'node_modules'))) {
 function startAgent() {
   const agent = spawn('node', ['src/index.js'], {
     cwd: __dirname,
-    stdio: 'inherit'
+    stdio: 'inherit',
   });
 
-  agent.on('error', (error) => {
+  agent.on('error', error => {
     console.error(chalk.red('❌ فشل في بدء الأجنت:'), error);
     process.exit(1);
   });

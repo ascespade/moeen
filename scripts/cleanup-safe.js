@@ -19,7 +19,7 @@ class SafeCleanup {
       filesRemoved: 0,
       directoriesRemoved: 0,
       bytesFreed: 0,
-      errors: []
+      errors: [],
     };
   }
 
@@ -29,38 +29,43 @@ class SafeCleanup {
     try {
       // Clean up build artifacts
       await this.cleanBuildArtifacts();
-      
+
       // Clean up temporary files
       await this.cleanTempFiles();
-      
+
       // Clean up logs
       await this.cleanLogs();
-      
+
       // Clean up cache
       await this.cleanCache();
-      
+
       // Clean up node_modules/.cache
       await this.cleanNodeModulesCache();
-      
+
       // Clean up test artifacts
       await this.cleanTestArtifacts();
-      
+
       // Clean up old backups
       await this.cleanOldBackups();
 
       console.log('\n✅ Safe Cleanup Completed Successfully!');
       console.log(`📊 Cleanup Statistics:`);
       console.log(`   • Files removed: ${this.cleanupStats.filesRemoved}`);
-      console.log(`   • Directories removed: ${this.cleanupStats.directoriesRemoved}`);
-      console.log(`   • Space freed: ${this.formatBytes(this.cleanupStats.bytesFreed)}`);
-      
+      console.log(
+        `   • Directories removed: ${this.cleanupStats.directoriesRemoved}`
+      );
+      console.log(
+        `   • Space freed: ${this.formatBytes(this.cleanupStats.bytesFreed)}`
+      );
+
       if (this.cleanupStats.errors.length > 0) {
-        console.log(`   • Errors encountered: ${this.cleanupStats.errors.length}`);
+        console.log(
+          `   • Errors encountered: ${this.cleanupStats.errors.length}`
+        );
         this.cleanupStats.errors.forEach(error => {
           console.log(`     - ${error}`);
         });
       }
-
     } catch (error) {
       console.error('❌ Cleanup failed:', error.message);
       process.exit(1);
@@ -69,13 +74,8 @@ class SafeCleanup {
 
   async cleanBuildArtifacts() {
     console.log('   🏗️  Cleaning build artifacts...');
-    
-    const buildDirs = [
-      '.next',
-      'out',
-      'dist',
-      'build'
-    ];
+
+    const buildDirs = ['.next', 'out', 'dist', 'build'];
 
     for (const dir of buildDirs) {
       await this.removeDirectory(path.join(this.projectRoot, dir));
@@ -84,23 +84,17 @@ class SafeCleanup {
 
   async cleanTempFiles() {
     console.log('   🗂️  Cleaning temporary files...');
-    
+
     const tempPatterns = [
       '**/*.tmp',
       '**/*.temp',
       '**/.DS_Store',
       '**/Thumbs.db',
-      '**/*.log.tmp'
+      '**/*.log.tmp',
     ];
 
     // Clean common temp files
-    const tempFiles = [
-      '.env.local.tmp',
-      'temp-*.json',
-      '*.swp',
-      '*.swo',
-      '*~'
-    ];
+    const tempFiles = ['.env.local.tmp', 'temp-*.json', '*.swp', '*.swo', '*~'];
 
     for (const pattern of tempFiles) {
       await this.removeFilesByPattern(pattern);
@@ -109,12 +103,8 @@ class SafeCleanup {
 
   async cleanLogs() {
     console.log('   📝 Cleaning log files...');
-    
-    const logDirs = [
-      'logs',
-      'log',
-      '*.log'
-    ];
+
+    const logDirs = ['logs', 'log', '*.log'];
 
     for (const dir of logDirs) {
       if (dir.includes('*')) {
@@ -127,13 +117,13 @@ class SafeCleanup {
 
   async cleanCache() {
     console.log('   💾 Cleaning cache directories...');
-    
+
     const cacheDirs = [
       '.cache',
       'cache',
       '.turbo',
       '.swc',
-      'node_modules/.cache'
+      'node_modules/.cache',
     ];
 
     for (const dir of cacheDirs) {
@@ -143,21 +133,25 @@ class SafeCleanup {
 
   async cleanNodeModulesCache() {
     console.log('   📦 Cleaning node_modules cache...');
-    
-    const nodeModulesCache = path.join(this.projectRoot, 'node_modules', '.cache');
+
+    const nodeModulesCache = path.join(
+      this.projectRoot,
+      'node_modules',
+      '.cache'
+    );
     await this.removeDirectory(nodeModulesCache);
   }
 
   async cleanTestArtifacts() {
     console.log('   🧪 Cleaning test artifacts...');
-    
+
     const testDirs = [
       'test-results',
       'playwright-report',
       'coverage',
       '.nyc_output',
       'junit.xml',
-      'test-results.xml'
+      'test-results.xml',
     ];
 
     for (const dir of testDirs) {
@@ -167,9 +161,9 @@ class SafeCleanup {
 
   async cleanOldBackups() {
     console.log('   💾 Cleaning old backups...');
-    
+
     const backupDir = path.join(this.projectRoot, 'backups');
-    
+
     try {
       const stats = await fs.stat(backupDir);
       if (stats.isDirectory()) {
@@ -180,7 +174,7 @@ class SafeCleanup {
         for (const file of files) {
           const filePath = path.join(backupDir, file);
           const fileStats = await fs.stat(filePath);
-          
+
           if (now - fileStats.mtime.getTime() > maxAge) {
             await this.removeFile(filePath);
           }
@@ -202,7 +196,9 @@ class SafeCleanup {
       }
     } catch (error) {
       if (error.code !== 'ENOENT') {
-        this.cleanupStats.errors.push(`Failed to remove directory ${dirPath}: ${error.message}`);
+        this.cleanupStats.errors.push(
+          `Failed to remove directory ${dirPath}: ${error.message}`
+        );
       }
     }
   }
@@ -218,7 +214,9 @@ class SafeCleanup {
       }
     } catch (error) {
       if (error.code !== 'ENOENT') {
-        this.cleanupStats.errors.push(`Failed to remove file ${filePath}: ${error.message}`);
+        this.cleanupStats.errors.push(
+          `Failed to remove file ${filePath}: ${error.message}`
+        );
       }
     }
   }
@@ -239,14 +237,14 @@ class SafeCleanup {
   async findFilesByPattern(pattern) {
     // Simplified pattern matching - in production, use a proper glob library
     const files = [];
-    
+
     try {
-      const walkDir = async (dir) => {
+      const walkDir = async dir => {
         const entries = await fs.readdir(dir, { withFileTypes: true });
-        
+
         for (const entry of entries) {
           const fullPath = path.join(dir, entry.name);
-          
+
           if (entry.isDirectory()) {
             await walkDir(fullPath);
           } else if (entry.isFile()) {
@@ -262,22 +260,22 @@ class SafeCleanup {
           }
         }
       };
-      
+
       await walkDir(this.projectRoot);
     } catch (error) {
       // Directory walk failed
     }
-    
+
     return files;
   }
 
   formatBytes(bytes) {
     if (bytes === 0) return '0 Bytes';
-    
+
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    
+
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 }

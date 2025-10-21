@@ -539,4 +539,3 @@ process.on('SIGTERM', async () => {
 const agent = new AIAgent();
 global.agent = agent;
 agent.init().catch(console.error);
-

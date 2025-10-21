@@ -3,7 +3,7 @@
 /**
  * NextJS Smart Dual-Thread Cleaner & Tester
  * Aggressive AI agent that runs parallel cleanup and full testing with zero stalling.
- * 
+ *
  * Features:
  * - Parallel execution of cleanup and testing processes
  * - Auto-retry and recovery mechanisms
@@ -29,8 +29,20 @@ class DualThreadSystem {
 
     this.processes = new Map();
     this.status = {
-      cleanup: { status: 'pending', startTime: null, endTime: null, retries: 0, errors: [] },
-      testing: { status: 'pending', startTime: null, endTime: null, retries: 0, errors: [] }
+      cleanup: {
+        status: 'pending',
+        startTime: null,
+        endTime: null,
+        retries: 0,
+        errors: [],
+      },
+      testing: {
+        status: 'pending',
+        startTime: null,
+        endTime: null,
+        retries: 0,
+        errors: [],
+      },
     };
     this.startTime = Date.now();
     this.reportData = {
@@ -38,7 +50,7 @@ class DualThreadSystem {
       processes: {},
       summary: {},
       errors: [],
-      performance: {}
+      performance: {},
     };
   }
 
@@ -54,38 +66,38 @@ class DualThreadSystem {
           enabled: true,
           threads: 2,
           mode: 'aggressive',
-          recovery: 'autoRestartOnIdle'
+          recovery: 'autoRestartOnIdle',
         },
         failRecovery: {
           autoRetry: true,
           maxRetries: 3,
           interval: 30000,
-          fallbackAction: 'restartThread'
+          fallbackAction: 'restartThread',
         },
         performance: {
           cpuUsage: 'max',
           ramAllocation: 'auto',
-          cleanupLogs: true
+          cleanupLogs: true,
         },
         monitoring: {
           realTimeStatus: true,
           showProgressBar: true,
-          reportFile: 'dual-run-report.json'
+          reportFile: 'dual-run-report.json',
         },
         safety: {
           backupBeforeRun: true,
-          rollbackOnFailure: true
-        }
+          rollbackOnFailure: true,
+        },
       };
     }
   }
 
   async initialize() {
     console.log('🚀 NextJS Smart Dual-Thread Cleaner & Tester Starting...\n');
-    
+
     // Load configuration
     await this.loadConfig();
-    
+
     // Create backup if enabled
     if (this.config.safety.backupBeforeRun) {
       await this.createBackup();
@@ -93,28 +105,39 @@ class DualThreadSystem {
 
     // Initialize monitoring
     this.startMonitoring();
-    
+
     console.log('📊 System Configuration:');
-    console.log(`   • Parallel Threads: ${this.config.parallelExecution.threads}`);
+    console.log(
+      `   • Parallel Threads: ${this.config.parallelExecution.threads}`
+    );
     console.log(`   • Mode: ${this.config.parallelExecution.mode}`);
-    console.log(`   • Auto Retry: ${this.config.failRecovery.autoRetry ? 'Enabled' : 'Disabled'}`);
+    console.log(
+      `   • Auto Retry: ${this.config.failRecovery.autoRetry ? 'Enabled' : 'Disabled'}`
+    );
     console.log(`   • Max Retries: ${this.config.failRecovery.maxRetries}`);
-    console.log(`   • Real-time Monitoring: ${this.config.monitoring.realTimeStatus ? 'Enabled' : 'Disabled'}\n`);
+    console.log(
+      `   • Real-time Monitoring: ${this.config.monitoring.realTimeStatus ? 'Enabled' : 'Disabled'}\n`
+    );
   }
 
   async createBackup() {
     try {
       console.log('💾 Creating system backup...');
-      const backupDir = path.join(__dirname, '..', 'backups', `backup-${Date.now()}`);
+      const backupDir = path.join(
+        __dirname,
+        '..',
+        'backups',
+        `backup-${Date.now()}`
+      );
       await fs.mkdir(backupDir, { recursive: true });
-      
+
       // Backup critical files
       const criticalFiles = [
         'package.json',
         'next.config.js',
         'tsconfig.json',
         'tailwind.config.cjs',
-        'eslint.config.js'
+        'eslint.config.js',
       ];
 
       for (const file of criticalFiles) {
@@ -145,7 +168,7 @@ class DualThreadSystem {
   displayStatus() {
     console.clear();
     console.log('🔄 NextJS Dual-Thread System - Real-time Status\n');
-    
+
     const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
     console.log(`⏱️  Runtime: ${elapsed}s\n`);
 
@@ -157,12 +180,16 @@ class DualThreadSystem {
     this.displayProcessStatus('testing');
 
     // Overall Progress
-    const completed = Object.values(this.status).filter(s => s.status === 'completed').length;
+    const completed = Object.values(this.status).filter(
+      s => s.status === 'completed'
+    ).length;
     const total = Object.keys(this.status).length;
     const progress = Math.round((completed / total) * 100);
-    
-    console.log(`\n📈 Overall Progress: ${progress}% (${completed}/${total} processes completed)`);
-    
+
+    console.log(
+      `\n📈 Overall Progress: ${progress}% (${completed}/${total} processes completed)`
+    );
+
     if (this.config.monitoring.showProgressBar) {
       const barLength = 30;
       const filled = Math.round((progress / 100) * barLength);
@@ -173,29 +200,34 @@ class DualThreadSystem {
 
   displayProcessStatus(processName) {
     const status = this.status[processName];
-    const statusIcon = {
-      'pending': '⏳',
-      'running': '🔄',
-      'completed': '✅',
-      'failed': '❌',
-      'retrying': '🔄'
-    }[status.status] || '❓';
+    const statusIcon =
+      {
+        pending: '⏳',
+        running: '🔄',
+        completed: '✅',
+        failed: '❌',
+        retrying: '🔄',
+      }[status.status] || '❓';
 
     console.log(`   ${statusIcon} Status: ${status.status.toUpperCase()}`);
-    
+
     if (status.startTime) {
       const runtime = Math.floor((Date.now() - status.startTime) / 1000);
       console.log(`   ⏱️  Runtime: ${runtime}s`);
     }
-    
+
     if (status.retries > 0) {
-      console.log(`   🔄 Retries: ${status.retries}/${this.config.failRecovery.maxRetries}`);
+      console.log(
+        `   🔄 Retries: ${status.retries}/${this.config.failRecovery.maxRetries}`
+      );
     }
-    
+
     if (status.errors.length > 0) {
       console.log(`   ⚠️  Errors: ${status.errors.length}`);
       status.errors.slice(-2).forEach(error => {
-        console.log(`      • ${error.substring(0, 80)}${error.length > 80 ? '...' : ''}`);
+        console.log(
+          `      • ${error.substring(0, 80)}${error.length > 80 ? '...' : ''}`
+        );
       });
     }
   }
@@ -216,9 +248,24 @@ class DualThreadSystem {
       }
 
       const steps = this.config.cleanupProcess.steps || [
-        { name: 'lint-fix', command: 'npm run lint:fix', timeout: 300000, retryOnFailure: true },
-        { name: 'build', command: 'npm run build', timeout: 600000, retryOnFailure: true },
-        { name: 'safe-cleanup', command: 'node scripts/cleanup-safe.js', timeout: 120000, retryOnFailure: false }
+        {
+          name: 'lint-fix',
+          command: 'npm run lint:fix',
+          timeout: 300000,
+          retryOnFailure: true,
+        },
+        {
+          name: 'build',
+          command: 'npm run build',
+          timeout: 600000,
+          retryOnFailure: true,
+        },
+        {
+          name: 'safe-cleanup',
+          command: 'node scripts/cleanup-safe.js',
+          timeout: 120000,
+          retryOnFailure: false,
+        },
       ];
 
       for (const step of steps) {
@@ -238,7 +285,6 @@ class DualThreadSystem {
       this.status[processName].status = 'completed';
       this.status[processName].endTime = Date.now();
       console.log('✅ Cleanup Process Completed Successfully!\n');
-
     } catch (error) {
       await this.handleProcessError(processName, error);
     }
@@ -260,9 +306,28 @@ class DualThreadSystem {
       }
 
       const steps = this.config.testingProcess.steps || [
-        { name: 'unit-tests', command: 'npm run test:unit', timeout: 300000, retryOnFailure: true, continueOnError: true },
-        { name: 'e2e-tests', command: 'npm run test:e2e', timeout: 600000, retryOnFailure: true, continueOnError: true, fallback: 'npx playwright test' },
-        { name: 'vitest', command: 'npx vitest run', timeout: 300000, retryOnFailure: false, continueOnError: true }
+        {
+          name: 'unit-tests',
+          command: 'npm run test:unit',
+          timeout: 300000,
+          retryOnFailure: true,
+          continueOnError: true,
+        },
+        {
+          name: 'e2e-tests',
+          command: 'npm run test:e2e',
+          timeout: 600000,
+          retryOnFailure: true,
+          continueOnError: true,
+          fallback: 'npx playwright test',
+        },
+        {
+          name: 'vitest',
+          command: 'npx vitest run',
+          timeout: 300000,
+          retryOnFailure: false,
+          continueOnError: true,
+        },
       ];
 
       for (const step of steps) {
@@ -276,11 +341,17 @@ class DualThreadSystem {
               await this.executeCommand(step.command, step.name, step.timeout);
             } catch (retryError) {
               if (step.continueOnError) {
-                console.warn(`   ⚠️  ${step.name} failed after retry, continuing...`);
+                console.warn(
+                  `   ⚠️  ${step.name} failed after retry, continuing...`
+                );
                 if (step.fallback) {
                   console.log(`   🔄 Trying fallback: ${step.fallback}`);
                   try {
-                    await this.executeCommand(step.fallback, `${step.name} (fallback)`, step.timeout);
+                    await this.executeCommand(
+                      step.fallback,
+                      `${step.name} (fallback)`,
+                      step.timeout
+                    );
                   } catch (fallbackError) {
                     console.warn(`   ⚠️  Fallback also failed, continuing...`);
                   }
@@ -300,7 +371,6 @@ class DualThreadSystem {
       this.status[processName].status = 'completed';
       this.status[processName].endTime = Date.now();
       console.log('✅ Testing Process Completed Successfully!\n');
-
     } catch (error) {
       await this.handleProcessError(processName, error);
     }
@@ -309,10 +379,10 @@ class DualThreadSystem {
   async executeCommand(command, description, timeout = 300000) {
     return new Promise((resolve, reject) => {
       console.log(`      Executing: ${command}`);
-      
+
       const child = spawn('bash', ['-c', command], {
         stdio: 'pipe',
-        cwd: path.join(__dirname, '..')
+        cwd: path.join(__dirname, '..'),
       });
 
       let stdout = '';
@@ -328,24 +398,26 @@ class DualThreadSystem {
         }
       }, timeout);
 
-      child.stdout.on('data', (data) => {
+      child.stdout.on('data', data => {
         stdout += data.toString();
       });
 
-      child.stderr.on('data', (data) => {
+      child.stderr.on('data', data => {
         stderr += data.toString();
       });
 
-      child.on('close', (code) => {
+      child.on('close', code => {
         if (!isResolved) {
           isResolved = true;
           clearTimeout(timeoutId);
-          
+
           if (code === 0) {
             console.log(`      ✅ ${description} completed successfully`);
             resolve({ stdout, stderr });
           } else {
-            const error = new Error(`${description} failed with exit code ${code}`);
+            const error = new Error(
+              `${description} failed with exit code ${code}`
+            );
             error.stdout = stdout;
             error.stderr = stderr;
             error.exitCode = code;
@@ -354,11 +426,13 @@ class DualThreadSystem {
         }
       });
 
-      child.on('error', (error) => {
+      child.on('error', error => {
         if (!isResolved) {
           isResolved = true;
           clearTimeout(timeoutId);
-          reject(new Error(`${description} execution failed: ${error.message}`));
+          reject(
+            new Error(`${description} execution failed: ${error.message}`)
+          );
         }
       });
     });
@@ -371,14 +445,21 @@ class DualThreadSystem {
 
     console.error(`❌ ${processName} process failed: ${error.message}`);
 
-    if (status.retries < this.config.failRecovery.maxRetries && this.config.failRecovery.autoRetry) {
-      console.log(`🔄 Retrying ${processName} process (attempt ${status.retries + 1}/${this.config.failRecovery.maxRetries})...`);
-      
+    if (
+      status.retries < this.config.failRecovery.maxRetries &&
+      this.config.failRecovery.autoRetry
+    ) {
+      console.log(
+        `🔄 Retrying ${processName} process (attempt ${status.retries + 1}/${this.config.failRecovery.maxRetries})...`
+      );
+
       status.status = 'retrying';
-      
+
       // Wait before retry
-      await new Promise(resolve => setTimeout(resolve, this.config.failRecovery.interval));
-      
+      await new Promise(resolve =>
+        setTimeout(resolve, this.config.failRecovery.interval)
+      );
+
       // Restart the process
       if (processName === 'cleanup') {
         await this.runCleanupProcess();
@@ -388,8 +469,10 @@ class DualThreadSystem {
     } else {
       status.status = 'failed';
       status.endTime = Date.now();
-      console.error(`💥 ${processName} process failed permanently after ${status.retries} retries`);
-      
+      console.error(
+        `💥 ${processName} process failed permanently after ${status.retries} retries`
+      );
+
       if (this.config.safety.rollbackOnFailure) {
         await this.rollback();
       }
@@ -418,16 +501,17 @@ class DualThreadSystem {
 
       // Check success criteria
       const success = this.checkSuccessCriteria();
-      
+
       if (success) {
         console.log('🎉 All processes completed successfully!');
         console.log('📊 Final Status: Stable & Verified');
-        console.log('✨ Dual-thread aggressive cleanup and test finished with no errors or stalls.');
+        console.log(
+          '✨ Dual-thread aggressive cleanup and test finished with no errors or stalls.'
+        );
       } else {
         console.log('⚠️  Some processes failed. Check the report for details.');
         process.exit(1);
       }
-
     } catch (error) {
       console.error('💥 System error:', error.message);
       process.exit(1);
@@ -444,7 +528,7 @@ class DualThreadSystem {
       cleanupDone: this.status.cleanup.status === 'completed',
       testsPassed: this.status.testing.status === 'completed',
       noStalls: true, // We'll implement stall detection if needed
-      buildStable: this.status.cleanup.status === 'completed'
+      buildStable: this.status.cleanup.status === 'completed',
     };
 
     return Object.values(criteria).every(Boolean);
@@ -459,18 +543,24 @@ class DualThreadSystem {
     this.reportData.summary = {
       totalRuntime: `${Math.floor(totalRuntime / 1000)}s`,
       success: this.checkSuccessCriteria(),
-      processesCompleted: Object.values(this.status).filter(s => s.status === 'completed').length,
-      totalProcesses: Object.keys(this.status).length
+      processesCompleted: Object.values(this.status).filter(
+        s => s.status === 'completed'
+      ).length,
+      totalProcesses: Object.keys(this.status).length,
     };
     this.reportData.performance = {
       cpuUsage: 'monitored',
       memoryUsage: process.memoryUsage(),
-      totalRuntime
+      totalRuntime,
     };
 
-    const reportPath = path.join(__dirname, '..', this.config.monitoring.reportFile);
+    const reportPath = path.join(
+      __dirname,
+      '..',
+      this.config.monitoring.reportFile
+    );
     await fs.writeFile(reportPath, JSON.stringify(this.reportData, null, 2));
-    
+
     console.log(`📄 Report generated: ${reportPath}`);
   }
 }
