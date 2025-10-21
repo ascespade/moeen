@@ -158,7 +158,7 @@ export default function SessionNotesPage() {
       router.push('/admin/appointments');
     } catch (error: any) {
       logger.error('Error saving session notes', error);
-      alert(`خطأ: ${  error.message || 'فشل في حفظ الملاحظات'}`);
+      alert(`خطأ: ${error.message || 'فشل في حفظ الملاحظات'}`);
     } finally {
       setSaving(false);
     }

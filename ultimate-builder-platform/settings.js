@@ -30,7 +30,7 @@ class ProjectSettings {
 
     await this.loadConfig();
     await this.loadSecrets();
-    
+
     const action = await this.showMainMenu();
     await this.handleAction(action);
   }
@@ -41,12 +41,12 @@ class ProjectSettings {
     } catch (error) {
       this.config = {
         platform: {
-          name: "Ultimate Builder Platform",
-          version: "1.0.0",
+          name: 'Ultimate Builder Platform',
+          version: '1.0.0',
           port: 3000,
           maxAgents: 256,
           backgroundMode: true,
-          autoSync: true
+          autoSync: true,
         },
         agents: {
           intelligentAgent: {
@@ -54,19 +54,19 @@ class ProjectSettings {
             backgroundMode: true,
             autoSync: true,
             checkInterval: 30000,
-            syncInterval: 300000
-          }
+            syncInterval: 300000,
+          },
         },
         git: {
           autoCommit: true,
           autoPush: true,
-          commitMessage: "Auto-sync: {timestamp} - {fixes} fixes applied"
+          commitMessage: 'Auto-sync: {timestamp} - {fixes} fixes applied',
         },
         monitoring: {
           enabled: true,
           interval: 60000,
-          metrics: ["cpu", "memory", "disk", "network"]
-        }
+          metrics: ['cpu', 'memory', 'disk', 'network'],
+        },
       };
     }
   }
@@ -77,20 +77,20 @@ class ProjectSettings {
     } catch (error) {
       this.secrets = {
         github: {
-          token: "",
-          username: "",
-          repository: ""
+          token: '',
+          username: '',
+          repository: '',
         },
         openai: {
-          apiKey: "",
-          model: "gpt-4",
-          maxTokens: 4000
+          apiKey: '',
+          model: 'gpt-4',
+          maxTokens: 4000,
         },
         supabase: {
-          url: "",
-          anonKey: "",
-          serviceRoleKey: ""
-        }
+          url: '',
+          anonKey: '',
+          serviceRoleKey: '',
+        },
       };
     }
   }
@@ -104,7 +104,7 @@ class ProjectSettings {
       { name: '📊 إعدادات المراقبة', value: 'monitoring' },
       { name: '🔒 إعدادات الأمان', value: 'security' },
       { name: '💾 حفظ الإعدادات', value: 'save' },
-      { name: '❌ خروج', value: 'exit' }
+      { name: '❌ خروج', value: 'exit' },
     ];
 
     const { action } = await inquirer.prompt([
@@ -112,8 +112,8 @@ class ProjectSettings {
         type: 'list',
         name: 'action',
         message: 'اختر الإعداد المطلوب:',
-        choices
-      }
+        choices,
+      },
     ]);
 
     return action;
@@ -143,7 +143,9 @@ class ProjectSettings {
         await this.saveSettings();
         break;
       case 'exit':
-        console.log(chalk.green('👋 شكراً لاستخدام Ultimate Builder Platform!'));
+        console.log(
+          chalk.green('👋 شكراً لاستخدام Ultimate Builder Platform!')
+        );
         process.exit(0);
         break;
     }
@@ -161,34 +163,35 @@ class ProjectSettings {
         type: 'input',
         name: 'name',
         message: 'اسم المنصة:',
-        default: this.config.platform.name
+        default: this.config.platform.name,
       },
       {
         type: 'number',
         name: 'port',
         message: 'منفذ الخادم:',
         default: this.config.platform.port,
-        validate: (input) => input > 0 && input < 65536 || 'يجب أن يكون بين 1 و 65535'
+        validate: input =>
+          (input > 0 && input < 65536) || 'يجب أن يكون بين 1 و 65535',
       },
       {
         type: 'number',
         name: 'maxAgents',
         message: 'الحد الأقصى للأجنات:',
         default: this.config.platform.maxAgents,
-        validate: (input) => input > 0 || 'يجب أن يكون أكبر من 0'
+        validate: input => input > 0 || 'يجب أن يكون أكبر من 0',
       },
       {
         type: 'confirm',
         name: 'backgroundMode',
         message: 'تفعيل الوضع الخلفي؟',
-        default: this.config.platform.backgroundMode
+        default: this.config.platform.backgroundMode,
       },
       {
         type: 'confirm',
         name: 'autoSync',
         message: 'تفعيل المزامنة التلقائية؟',
-        default: this.config.platform.autoSync
-      }
+        default: this.config.platform.autoSync,
+      },
     ]);
 
     this.config.platform = answers;
@@ -203,34 +206,34 @@ class ProjectSettings {
         type: 'confirm',
         name: 'enabled',
         message: 'تفعيل الأجنات الذكية؟',
-        default: this.config.agents.intelligentAgent.enabled
+        default: this.config.agents.intelligentAgent.enabled,
       },
       {
         type: 'confirm',
         name: 'backgroundMode',
         message: 'تفعيل الوضع الخلفي للأجنات؟',
-        default: this.config.agents.intelligentAgent.backgroundMode
+        default: this.config.agents.intelligentAgent.backgroundMode,
       },
       {
         type: 'confirm',
         name: 'autoSync',
         message: 'تفعيل المزامنة التلقائية للأجنات؟',
-        default: this.config.agents.intelligentAgent.autoSync
+        default: this.config.agents.intelligentAgent.autoSync,
       },
       {
         type: 'number',
         name: 'checkInterval',
         message: 'فترة فحص الأجنات (بالميلي ثانية):',
         default: this.config.agents.intelligentAgent.checkInterval,
-        validate: (input) => input > 0 || 'يجب أن يكون أكبر من 0'
+        validate: input => input > 0 || 'يجب أن يكون أكبر من 0',
       },
       {
         type: 'number',
         name: 'syncInterval',
         message: 'فترة مزامنة الأجنات (بالميلي ثانية):',
         default: this.config.agents.intelligentAgent.syncInterval,
-        validate: (input) => input > 0 || 'يجب أن يكون أكبر من 0'
-      }
+        validate: input => input > 0 || 'يجب أن يكون أكبر من 0',
+      },
     ]);
 
     this.config.agents.intelligentAgent = answers;
@@ -245,20 +248,20 @@ class ProjectSettings {
         type: 'confirm',
         name: 'autoCommit',
         message: 'حفظ تلقائي في Git؟',
-        default: this.config.git.autoCommit
+        default: this.config.git.autoCommit,
       },
       {
         type: 'confirm',
         name: 'autoPush',
         message: 'رفع تلقائي للخادم البعيد؟',
-        default: this.config.git.autoPush
+        default: this.config.git.autoPush,
       },
       {
         type: 'input',
         name: 'commitMessage',
         message: 'نص رسالة الحفظ:',
-        default: this.config.git.commitMessage
-      }
+        default: this.config.git.commitMessage,
+      },
     ]);
 
     this.config.git = answers;
@@ -273,7 +276,7 @@ class ProjectSettings {
         type: 'confirm',
         name: 'enabled',
         message: 'تفعيل الذكاء الاصطناعي؟',
-        default: true
+        default: true,
       },
       {
         type: 'list',
@@ -282,17 +285,17 @@ class ProjectSettings {
         choices: [
           { name: 'OpenAI (GPT-4)', value: 'openai' },
           { name: 'Anthropic (Claude)', value: 'anthropic' },
-          { name: 'Google (Gemini)', value: 'google' }
+          { name: 'Google (Gemini)', value: 'google' },
         ],
-        default: 'openai'
+        default: 'openai',
       },
       {
         type: 'number',
         name: 'maxTokens',
         message: 'الحد الأقصى للرموز:',
         default: 4000,
-        validate: (input) => input > 0 || 'يجب أن يكون أكبر من 0'
-      }
+        validate: input => input > 0 || 'يجب أن يكون أكبر من 0',
+      },
     ]);
 
     this.config.ai = answers;
@@ -307,14 +310,14 @@ class ProjectSettings {
         type: 'confirm',
         name: 'enabled',
         message: 'تفعيل المراقبة؟',
-        default: this.config.monitoring.enabled
+        default: this.config.monitoring.enabled,
       },
       {
         type: 'number',
         name: 'interval',
         message: 'فترة المراقبة (بالميلي ثانية):',
         default: this.config.monitoring.interval,
-        validate: (input) => input > 0 || 'يجب أن يكون أكبر من 0'
+        validate: input => input > 0 || 'يجب أن يكون أكبر من 0',
       },
       {
         type: 'checkbox',
@@ -325,9 +328,9 @@ class ProjectSettings {
           { name: 'استخدام الذاكرة', value: 'memory', checked: true },
           { name: 'مساحة القرص', value: 'disk', checked: true },
           { name: 'شبكة الإنترنت', value: 'network', checked: true },
-          { name: 'الأجنات النشطة', value: 'agents', checked: true }
-        ]
-      }
+          { name: 'الأجنات النشطة', value: 'agents', checked: true },
+        ],
+      },
     ]);
 
     this.config.monitoring = answers;
@@ -342,27 +345,27 @@ class ProjectSettings {
         type: 'confirm',
         name: 'https',
         message: 'فرض HTTPS؟',
-        default: true
+        default: true,
       },
       {
         type: 'confirm',
         name: 'cors',
         message: 'تفعيل CORS؟',
-        default: true
+        default: true,
       },
       {
         type: 'number',
         name: 'rateLimit',
         message: 'حد الطلبات في الدقيقة:',
         default: 100,
-        validate: (input) => input > 0 || 'يجب أن يكون أكبر من 0'
+        validate: input => input > 0 || 'يجب أن يكون أكبر من 0',
       },
       {
         type: 'confirm',
         name: 'helmet',
         message: 'تفعيل Helmet للأمان؟',
-        default: true
-      }
+        default: true,
+      },
     ]);
 
     this.config.security = answers;
@@ -373,17 +376,16 @@ class ProjectSettings {
     try {
       // Save config
       await fs.writeJson(this.configPath, this.config, { spaces: 2 });
-      
+
       // Save secrets
       await fs.writeJson(this.secretsPath, this.secrets, { spaces: 2 });
-      
+
       // Set proper permissions for secrets file
       await fs.chmod(this.secretsPath, 0o600);
-      
+
       console.log(chalk.green('\n✅ تم حفظ جميع الإعدادات بنجاح!'));
       console.log(chalk.blue('📁 الإعدادات العامة: core/config.json'));
       console.log(chalk.blue('🔒 المفاتيح الحساسة: core/secrets.json'));
-      
     } catch (error) {
       console.log(chalk.red(`❌ خطأ في حفظ الإعدادات: ${error.message}`));
     }

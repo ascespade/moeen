@@ -24,9 +24,11 @@ class PlatformRunner {
 
   async init() {
     console.clear();
-    
+
     // Show banner
-    console.log(chalk.cyan(figlet.textSync('Ultimate Builder', { font: 'ANSI Shadow' })));
+    console.log(
+      chalk.cyan(figlet.textSync('Ultimate Builder', { font: 'ANSI Shadow' }))
+    );
     console.log(chalk.blue('منصة البناء الذكية المتقدمة\n'));
 
     // Check if we're in the right directory
@@ -37,21 +39,25 @@ class PlatformRunner {
 
     // Check dependencies
     await this.checkDependencies();
-    
+
     // Start the platform
     await this.startPlatform();
   }
 
   isPlatformDirectory() {
-    const requiredFiles = ['package.json', 'core/server.js', 'web-interface/dist/index.html'];
-    return requiredFiles.every(file => 
+    const requiredFiles = [
+      'package.json',
+      'core/server.js',
+      'web-interface/dist/index.html',
+    ];
+    return requiredFiles.every(file =>
       require('fs').existsSync(path.join(__dirname, file))
     );
   }
 
   async checkDependencies() {
     const spinner = ora('فحص التبعيات...').start();
-    
+
     try {
       // Check if node_modules exists
       if (!require('fs').existsSync(path.join(__dirname, 'node_modules'))) {
@@ -59,7 +65,7 @@ class PlatformRunner {
         console.log(chalk.yellow('جاري تثبيت التبعيات...'));
         await this.installDependencies();
       }
-      
+
       spinner.succeed('التبعيات جاهزة');
     } catch (error) {
       spinner.fail('خطأ في فحص التبعيات');
@@ -70,14 +76,14 @@ class PlatformRunner {
 
   async installDependencies() {
     const spinner = ora('تثبيت التبعيات...').start();
-    
+
     return new Promise((resolve, reject) => {
       const install = spawn('npm', ['install'], {
         cwd: __dirname,
-        stdio: 'pipe'
+        stdio: 'pipe',
       });
 
-      install.on('close', (code) => {
+      install.on('close', code => {
         if (code === 0) {
           spinner.succeed('تم تثبيت التبعيات بنجاح');
           resolve();
@@ -95,21 +101,20 @@ class PlatformRunner {
     try {
       // Start core server
       await this.startCoreServer();
-      
+
       // Start web interface
       await this.startWebInterface();
-      
+
       // Start monitoring
       await this.startMonitoring();
-      
+
       this.isRunning = true;
-      
+
       // Show success message
       this.showSuccessMessage();
-      
+
       // Handle graceful shutdown
       this.setupGracefulShutdown();
-      
     } catch (error) {
       console.error(chalk.red('❌ خطأ في تشغيل المنصة:'), error);
       process.exit(1);
@@ -118,14 +123,14 @@ class PlatformRunner {
 
   async startCoreServer() {
     const spinner = ora('بدء الخادم الأساسي...').start();
-    
+
     return new Promise((resolve, reject) => {
       const server = spawn('node', ['core/server.js'], {
         cwd: __dirname,
-        stdio: 'pipe'
+        stdio: 'pipe',
       });
 
-      server.stdout.on('data', (data) => {
+      server.stdout.on('data', data => {
         const output = data.toString();
         if (output.includes('Server running')) {
           spinner.succeed('الخادم الأساسي يعمل على المنفذ 3000');
@@ -134,11 +139,11 @@ class PlatformRunner {
         }
       });
 
-      server.stderr.on('data', (data) => {
+      server.stderr.on('data', data => {
         console.error(chalk.red('خطأ في الخادم الأساسي:'), data.toString());
       });
 
-      server.on('error', (error) => {
+      server.on('error', error => {
         spinner.fail('فشل في بدء الخادم الأساسي');
         reject(error);
       });
@@ -155,7 +160,7 @@ class PlatformRunner {
 
   async startWebInterface() {
     const spinner = ora('بدء واجهة الويب...').start();
-    
+
     // Web interface is served by the core server
     // Just check if it's accessible
     try {
@@ -173,11 +178,11 @@ class PlatformRunner {
 
   async startMonitoring() {
     const spinner = ora('بدء نظام المراقبة...').start();
-    
+
     // Start monitoring process
     const monitor = spawn('node', ['core/monitor.js'], {
       cwd: __dirname,
-      stdio: 'pipe'
+      stdio: 'pipe',
     });
 
     this.processes.set('monitor', monitor);
@@ -187,17 +192,21 @@ class PlatformRunner {
   showSuccessMessage() {
     const message = boxen(
       chalk.green('✅ تم تشغيل المنصة بنجاح!\n\n') +
-      chalk.blue('🌐 واجهة الويب: ') + chalk.white('http://localhost:3000\n') +
-      chalk.blue('🔧 إدارة الإعدادات: ') + chalk.white('node core/settings-manager.js\n') +
-      chalk.blue('⚙️ إعدادات المشروع: ') + chalk.white('node settings.js\n') +
-      chalk.blue('📊 المراقبة: ') + chalk.white('نشطة\n\n') +
-      chalk.yellow('اضغط Ctrl+C لإيقاف المنصة'),
+        chalk.blue('🌐 واجهة الويب: ') +
+        chalk.white('http://localhost:3000\n') +
+        chalk.blue('🔧 إدارة الإعدادات: ') +
+        chalk.white('node core/settings-manager.js\n') +
+        chalk.blue('⚙️ إعدادات المشروع: ') +
+        chalk.white('node settings.js\n') +
+        chalk.blue('📊 المراقبة: ') +
+        chalk.white('نشطة\n\n') +
+        chalk.yellow('اضغط Ctrl+C لإيقاف المنصة'),
       {
         padding: 1,
         margin: 1,
         borderStyle: 'double',
         borderColor: 'cyan',
-        backgroundColor: '#1a1a1a'
+        backgroundColor: '#1a1a1a',
       }
     );
 
@@ -211,18 +220,18 @@ class PlatformRunner {
 
   async shutdown() {
     if (!this.isRunning) return;
-    
+
     console.log(chalk.yellow('\n🛑 إيقاف المنصة...'));
-    
+
     // Stop all processes
     for (const [name, process] of this.processes) {
       console.log(chalk.gray(`إيقاف ${name}...`));
       process.kill('SIGTERM');
     }
-    
+
     // Wait a bit for graceful shutdown
     await new Promise(resolve => setTimeout(resolve, 2000));
-    
+
     console.log(chalk.green('✅ تم إيقاف المنصة بنجاح'));
     process.exit(0);
   }

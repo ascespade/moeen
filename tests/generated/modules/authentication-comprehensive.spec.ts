@@ -25,29 +25,29 @@ class AuthenticationTestHelper {
         phone: '+966501234001',
         role: 'admin',
         name: 'Test Admin',
-        password: 'TestPass123!'
+        password: 'TestPass123!',
       },
       {
         email: 'doctor@test.com',
         phone: '+966501234002',
         role: 'doctor',
         name: 'Test Doctor',
-        password: 'TestPass123!'
+        password: 'TestPass123!',
       },
       {
         email: 'patient@test.com',
         phone: '+966501234003',
         role: 'patient',
         name: 'Test Patient',
-        password: 'TestPass123!'
+        password: 'TestPass123!',
       },
       {
         email: 'therapist@test.com',
         phone: '+966501234004',
         role: 'therapist',
         name: 'Test Therapist',
-        password: 'TestPass123!'
-      }
+        password: 'TestPass123!',
+      },
     ];
 
     for (const user of users) {
@@ -57,7 +57,7 @@ class AuthenticationTestHelper {
           email: user.email,
           phone: user.phone,
           role: user.role as any,
-          is_active: true
+          is_active: true,
         });
         this.testUsers.push(createdUser);
       } catch (error) {
@@ -95,120 +95,132 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
   test.describe('Login Functionality', () => {
     test('should login with valid email and password', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       const adminUser = authHelper.getTestUser('admin');
       await page.fill('[data-testid="email-input"]', adminUser!.email);
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
+
       await expect(page).toHaveURL('/dashboard');
       await expect(page.locator('[data-testid="user-menu"]')).toBeVisible();
     });
 
     test('should login with valid phone and password', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       const doctorUser = authHelper.getTestUser('doctor');
       await page.fill('[data-testid="phone-input"]', doctorUser!.phone);
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
+
       await expect(page).toHaveURL('/doctor-dashboard');
     });
 
     test('should show error for invalid email', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       await page.fill('[data-testid="email-input"]', 'invalid@test.com');
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
-      await expect(page.locator('[data-testid="error-message"]')).toContainText('Invalid credentials');
+
+      await expect(page.locator('[data-testid="error-message"]')).toContainText(
+        'Invalid credentials'
+      );
     });
 
     test('should show error for invalid password', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       const adminUser = authHelper.getTestUser('admin');
       await page.fill('[data-testid="email-input"]', adminUser!.email);
       await page.fill('[data-testid="password-input"]', 'wrongpassword');
       await page.click('[data-testid="login-button"]');
-      
-      await expect(page.locator('[data-testid="error-message"]')).toContainText('Invalid credentials');
+
+      await expect(page.locator('[data-testid="error-message"]')).toContainText(
+        'Invalid credentials'
+      );
     });
 
     test('should show error for empty email', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
-      await expect(page.locator('[data-testid="email-error"]')).toContainText('Email is required');
+
+      await expect(page.locator('[data-testid="email-error"]')).toContainText(
+        'Email is required'
+      );
     });
 
     test('should show error for empty password', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       const adminUser = authHelper.getTestUser('admin');
       await page.fill('[data-testid="email-input"]', adminUser!.email);
       await page.click('[data-testid="login-button"]');
-      
-      await expect(page.locator('[data-testid="password-error"]')).toContainText('Password is required');
+
+      await expect(
+        page.locator('[data-testid="password-error"]')
+      ).toContainText('Password is required');
     });
 
     test('should show error for invalid email format', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       await page.fill('[data-testid="email-input"]', 'invalid-email');
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
-      await expect(page.locator('[data-testid="email-error"]')).toContainText('Invalid email format');
+
+      await expect(page.locator('[data-testid="email-error"]')).toContainText(
+        'Invalid email format'
+      );
     });
 
     test('should show error for short password', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       const adminUser = authHelper.getTestUser('admin');
       await page.fill('[data-testid="email-input"]', adminUser!.email);
       await page.fill('[data-testid="password-input"]', '123');
       await page.click('[data-testid="login-button"]');
-      
-      await expect(page.locator('[data-testid="password-error"]')).toContainText('Password must be at least 8 characters');
+
+      await expect(
+        page.locator('[data-testid="password-error"]')
+      ).toContainText('Password must be at least 8 characters');
     });
 
     test('should redirect to intended page after login', async ({ page }) => {
       await page.goto('/patients');
       await page.goto('/auth/login');
-      
+
       const adminUser = authHelper.getTestUser('admin');
       await page.fill('[data-testid="email-input"]', adminUser!.email);
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
+
       await expect(page).toHaveURL('/patients');
     });
 
     test('should remember login state on page refresh', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       const adminUser = authHelper.getTestUser('admin');
       await page.fill('[data-testid="email-input"]', adminUser!.email);
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
+
       await page.reload();
       await expect(page).toHaveURL('/dashboard');
     });
 
     test('should show loading state during login', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       const adminUser = authHelper.getTestUser('admin');
       await page.fill('[data-testid="email-input"]', adminUser!.email);
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
+
       await expect(page.locator('[data-testid="login-loading"]')).toBeVisible();
     });
   });
@@ -216,7 +228,7 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
   test.describe('Registration Functionality', () => {
     test('should register new patient successfully', async ({ page }) => {
       await page.goto('/auth/register');
-      
+
       await page.fill('[data-testid="name-input"]', 'New Patient');
       await page.fill('[data-testid="email-input"]', 'newpatient@test.com');
       await page.fill('[data-testid="phone-input"]', '+966501234999');
@@ -224,13 +236,13 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       await page.fill('[data-testid="confirm-password-input"]', 'TestPass123!');
       await page.selectOption('[data-testid="role-select"]', 'patient');
       await page.click('[data-testid="register-button"]');
-      
+
       await expect(page).toHaveURL('/patient-dashboard');
     });
 
     test('should show error for duplicate email', async ({ page }) => {
       await page.goto('/auth/register');
-      
+
       const existingUser = authHelper.getTestUser('admin');
       await page.fill('[data-testid="name-input"]', 'Duplicate User');
       await page.fill('[data-testid="email-input"]', existingUser!.email);
@@ -239,13 +251,15 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       await page.fill('[data-testid="confirm-password-input"]', 'TestPass123!');
       await page.selectOption('[data-testid="role-select"]', 'patient');
       await page.click('[data-testid="register-button"]');
-      
-      await expect(page.locator('[data-testid="error-message"]')).toContainText('Email already exists');
+
+      await expect(page.locator('[data-testid="error-message"]')).toContainText(
+        'Email already exists'
+      );
     });
 
     test('should show error for duplicate phone', async ({ page }) => {
       await page.goto('/auth/register');
-      
+
       const existingUser = authHelper.getTestUser('doctor');
       await page.fill('[data-testid="name-input"]', 'Duplicate Phone User');
       await page.fill('[data-testid="email-input"]', 'newemail@test.com');
@@ -254,37 +268,52 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       await page.fill('[data-testid="confirm-password-input"]', 'TestPass123!');
       await page.selectOption('[data-testid="role-select"]', 'patient');
       await page.click('[data-testid="register-button"]');
-      
-      await expect(page.locator('[data-testid="error-message"]')).toContainText('Phone number already exists');
+
+      await expect(page.locator('[data-testid="error-message"]')).toContainText(
+        'Phone number already exists'
+      );
     });
 
     test('should show error for password mismatch', async ({ page }) => {
       await page.goto('/auth/register');
-      
+
       await page.fill('[data-testid="name-input"]', 'Password Mismatch User');
       await page.fill('[data-testid="email-input"]', 'mismatch@test.com');
       await page.fill('[data-testid="phone-input"]', '+966501234777');
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
-      await page.fill('[data-testid="confirm-password-input"]', 'DifferentPass123!');
+      await page.fill(
+        '[data-testid="confirm-password-input"]',
+        'DifferentPass123!'
+      );
       await page.selectOption('[data-testid="role-select"]', 'patient');
       await page.click('[data-testid="register-button"]');
-      
-      await expect(page.locator('[data-testid="password-error"]')).toContainText('Passwords do not match');
+
+      await expect(
+        page.locator('[data-testid="password-error"]')
+      ).toContainText('Passwords do not match');
     });
 
     test('should validate required fields', async ({ page }) => {
       await page.goto('/auth/register');
       await page.click('[data-testid="register-button"]');
-      
-      await expect(page.locator('[data-testid="name-error"]')).toContainText('Name is required');
-      await expect(page.locator('[data-testid="email-error"]')).toContainText('Email is required');
-      await expect(page.locator('[data-testid="phone-error"]')).toContainText('Phone is required');
-      await expect(page.locator('[data-testid="password-error"]')).toContainText('Password is required');
+
+      await expect(page.locator('[data-testid="name-error"]')).toContainText(
+        'Name is required'
+      );
+      await expect(page.locator('[data-testid="email-error"]')).toContainText(
+        'Email is required'
+      );
+      await expect(page.locator('[data-testid="phone-error"]')).toContainText(
+        'Phone is required'
+      );
+      await expect(
+        page.locator('[data-testid="password-error"]')
+      ).toContainText('Password is required');
     });
 
     test('should validate email format', async ({ page }) => {
       await page.goto('/auth/register');
-      
+
       await page.fill('[data-testid="name-input"]', 'Invalid Email User');
       await page.fill('[data-testid="email-input"]', 'invalid-email');
       await page.fill('[data-testid="phone-input"]', '+966501234666');
@@ -292,13 +321,15 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       await page.fill('[data-testid="confirm-password-input"]', 'TestPass123!');
       await page.selectOption('[data-testid="role-select"]', 'patient');
       await page.click('[data-testid="register-button"]');
-      
-      await expect(page.locator('[data-testid="email-error"]')).toContainText('Invalid email format');
+
+      await expect(page.locator('[data-testid="email-error"]')).toContainText(
+        'Invalid email format'
+      );
     });
 
     test('should validate phone format', async ({ page }) => {
       await page.goto('/auth/register');
-      
+
       await page.fill('[data-testid="name-input"]', 'Invalid Phone User');
       await page.fill('[data-testid="email-input"]', 'invalidphone@test.com');
       await page.fill('[data-testid="phone-input"]', '123');
@@ -306,13 +337,15 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       await page.fill('[data-testid="confirm-password-input"]', 'TestPass123!');
       await page.selectOption('[data-testid="role-select"]', 'patient');
       await page.click('[data-testid="register-button"]');
-      
-      await expect(page.locator('[data-testid="phone-error"]')).toContainText('Invalid phone format');
+
+      await expect(page.locator('[data-testid="phone-error"]')).toContainText(
+        'Invalid phone format'
+      );
     });
 
     test('should validate password strength', async ({ page }) => {
       await page.goto('/auth/register');
-      
+
       await page.fill('[data-testid="name-input"]', 'Weak Password User');
       await page.fill('[data-testid="email-input"]', 'weakpass@test.com');
       await page.fill('[data-testid="phone-input"]', '+966501234555');
@@ -320,13 +353,15 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       await page.fill('[data-testid="confirm-password-input"]', '123');
       await page.selectOption('[data-testid="role-select"]', 'patient');
       await page.click('[data-testid="register-button"]');
-      
-      await expect(page.locator('[data-testid="password-error"]')).toContainText('Password must be at least 8 characters');
+
+      await expect(
+        page.locator('[data-testid="password-error"]')
+      ).toContainText('Password must be at least 8 characters');
     });
 
     test('should show loading state during registration', async ({ page }) => {
       await page.goto('/auth/register');
-      
+
       await page.fill('[data-testid="name-input"]', 'Loading Test User');
       await page.fill('[data-testid="email-input"]', 'loading@test.com');
       await page.fill('[data-testid="phone-input"]', '+966501234444');
@@ -334,13 +369,17 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       await page.fill('[data-testid="confirm-password-input"]', 'TestPass123!');
       await page.selectOption('[data-testid="role-select"]', 'patient');
       await page.click('[data-testid="register-button"]');
-      
-      await expect(page.locator('[data-testid="register-loading"]')).toBeVisible();
+
+      await expect(
+        page.locator('[data-testid="register-loading"]')
+      ).toBeVisible();
     });
 
-    test('should redirect to appropriate dashboard after registration', async ({ page }) => {
+    test('should redirect to appropriate dashboard after registration', async ({
+      page,
+    }) => {
       await page.goto('/auth/register');
-      
+
       await page.fill('[data-testid="name-input"]', 'Dashboard Test User');
       await page.fill('[data-testid="email-input"]', 'dashboard@test.com');
       await page.fill('[data-testid="phone-input"]', '+966501234333');
@@ -348,7 +387,7 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       await page.fill('[data-testid="confirm-password-input"]', 'TestPass123!');
       await page.selectOption('[data-testid="role-select"]', 'doctor');
       await page.click('[data-testid="register-button"]');
-      
+
       await expect(page).toHaveURL('/doctor-dashboard');
     });
   });
@@ -367,7 +406,7 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
     test('should logout successfully', async ({ page }) => {
       await page.click('[data-testid="user-menu"]');
       await page.click('[data-testid="logout-button"]');
-      
+
       await expect(page).toHaveURL('/auth/login');
       await expect(page.locator('[data-testid="login-form"]')).toBeVisible();
     });
@@ -375,7 +414,7 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
     test('should clear session data on logout', async ({ page }) => {
       await page.click('[data-testid="user-menu"]');
       await page.click('[data-testid="logout-button"]');
-      
+
       // Check that protected routes redirect to login
       await page.goto('/dashboard');
       await expect(page).toHaveURL('/auth/login');
@@ -384,20 +423,26 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
     test('should show confirmation dialog before logout', async ({ page }) => {
       await page.click('[data-testid="user-menu"]');
       await page.click('[data-testid="logout-button"]');
-      
-      await expect(page.locator('[data-testid="logout-confirmation"]')).toBeVisible();
+
+      await expect(
+        page.locator('[data-testid="logout-confirmation"]')
+      ).toBeVisible();
       await page.click('[data-testid="confirm-logout"]');
-      
+
       await expect(page).toHaveURL('/auth/login');
     });
 
-    test('should cancel logout when confirmation is cancelled', async ({ page }) => {
+    test('should cancel logout when confirmation is cancelled', async ({
+      page,
+    }) => {
       await page.click('[data-testid="user-menu"]');
       await page.click('[data-testid="logout-button"]');
-      
-      await expect(page.locator('[data-testid="logout-confirmation"]')).toBeVisible();
+
+      await expect(
+        page.locator('[data-testid="logout-confirmation"]')
+      ).toBeVisible();
       await page.click('[data-testid="cancel-logout"]');
-      
+
       await expect(page).toHaveURL('/dashboard');
       await expect(page.locator('[data-testid="user-menu"]')).toBeVisible();
     });
@@ -406,39 +451,45 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
   test.describe('Password Reset Functionality', () => {
     test('should send reset email for valid email', async ({ page }) => {
       await page.goto('/auth/forgot-password');
-      
+
       const adminUser = authHelper.getTestUser('admin');
       await page.fill('[data-testid="email-input"]', adminUser!.email);
       await page.click('[data-testid="send-reset-button"]');
-      
-      await expect(page.locator('[data-testid="success-message"]')).toContainText('Reset email sent');
+
+      await expect(
+        page.locator('[data-testid="success-message"]')
+      ).toContainText('Reset email sent');
     });
 
     test('should show error for invalid email', async ({ page }) => {
       await page.goto('/auth/forgot-password');
-      
+
       await page.fill('[data-testid="email-input"]', 'nonexistent@test.com');
       await page.click('[data-testid="send-reset-button"]');
-      
-      await expect(page.locator('[data-testid="error-message"]')).toContainText('Email not found');
+
+      await expect(page.locator('[data-testid="error-message"]')).toContainText(
+        'Email not found'
+      );
     });
 
     test('should validate email format', async ({ page }) => {
       await page.goto('/auth/forgot-password');
-      
+
       await page.fill('[data-testid="email-input"]', 'invalid-email');
       await page.click('[data-testid="send-reset-button"]');
-      
-      await expect(page.locator('[data-testid="email-error"]')).toContainText('Invalid email format');
+
+      await expect(page.locator('[data-testid="email-error"]')).toContainText(
+        'Invalid email format'
+      );
     });
 
     test('should show loading state during reset', async ({ page }) => {
       await page.goto('/auth/forgot-password');
-      
+
       const adminUser = authHelper.getTestUser('admin');
       await page.fill('[data-testid="email-input"]', adminUser!.email);
       await page.click('[data-testid="send-reset-button"]');
-      
+
       await expect(page.locator('[data-testid="reset-loading"]')).toBeVisible();
     });
   });
@@ -504,7 +555,7 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       await page.fill('[data-testid="email-input"]', adminUser!.email);
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
+
       await expect(page).toHaveURL('/dashboard');
     });
 
@@ -514,7 +565,7 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       await page.fill('[data-testid="email-input"]', doctorUser!.email);
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
+
       await expect(page).toHaveURL('/doctor-dashboard');
     });
 
@@ -524,21 +575,25 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       await page.fill('[data-testid="email-input"]', patientUser!.email);
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
+
       await expect(page).toHaveURL('/patient-dashboard');
     });
 
-    test('should redirect therapist to therapist dashboard', async ({ page }) => {
+    test('should redirect therapist to therapist dashboard', async ({
+      page,
+    }) => {
       await page.goto('/auth/login');
       const therapistUser = authHelper.getTestUser('therapist');
       await page.fill('[data-testid="email-input"]', therapistUser!.email);
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
+
       await expect(page).toHaveURL('/therapist-dashboard');
     });
 
-    test('should prevent access to admin pages for non-admin users', async ({ page }) => {
+    test('should prevent access to admin pages for non-admin users', async ({
+      page,
+    }) => {
       await page.goto('/auth/login');
       const patientUser = authHelper.getTestUser('patient');
       await page.fill('[data-testid="email-input"]', patientUser!.email);
@@ -550,7 +605,9 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       await expect(page).toHaveURL('/unauthorized');
     });
 
-    test('should prevent access to doctor pages for non-doctor users', async ({ page }) => {
+    test('should prevent access to doctor pages for non-doctor users', async ({
+      page,
+    }) => {
       await page.goto('/auth/login');
       const patientUser = authHelper.getTestUser('patient');
       await page.fill('[data-testid="email-input"]', patientUser!.email);
@@ -566,31 +623,42 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
   test.describe('Security Tests', () => {
     test('should prevent SQL injection in login', async ({ page }) => {
       await page.goto('/auth/login');
-      
-      await page.fill('[data-testid="email-input"]', "admin@test.com'; DROP TABLE users; --");
+
+      await page.fill(
+        '[data-testid="email-input"]',
+        "admin@test.com'; DROP TABLE users; --"
+      );
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
-      await expect(page.locator('[data-testid="error-message"]')).toContainText('Invalid credentials');
+
+      await expect(page.locator('[data-testid="error-message"]')).toContainText(
+        'Invalid credentials'
+      );
     });
 
     test('should prevent XSS in login form', async ({ page }) => {
       await page.goto('/auth/login');
-      
-      await page.fill('[data-testid="email-input"]', '<script>alert("xss")</script>');
+
+      await page.fill(
+        '[data-testid="email-input"]',
+        '<script>alert("xss")</script>'
+      );
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
       await page.click('[data-testid="login-button"]');
-      
+
       // Check that script was not executed
       const alertHandled = await page.evaluate(() => {
-        return window.alert === undefined || window.alert.toString().indexOf('native code') !== -1;
+        return (
+          window.alert === undefined ||
+          window.alert.toString().indexOf('native code') !== -1
+        );
       });
       expect(alertHandled).toBe(true);
     });
 
     test('should rate limit login attempts', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       // Make multiple failed login attempts
       for (let i = 0; i < 6; i++) {
         await page.fill('[data-testid="email-input"]', 'admin@test.com');
@@ -598,58 +666,70 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
         await page.click('[data-testid="login-button"]');
         await page.waitForTimeout(100);
       }
-      
-      await expect(page.locator('[data-testid="error-message"]')).toContainText('Too many attempts');
+
+      await expect(page.locator('[data-testid="error-message"]')).toContainText(
+        'Too many attempts'
+      );
     });
 
     test('should validate CSRF token', async ({ page }) => {
       // This would require CSRF implementation
       await page.goto('/auth/login');
-      
+
       const adminUser = authHelper.getTestUser('admin');
       await page.fill('[data-testid="email-input"]', adminUser!.email);
       await page.fill('[data-testid="password-input"]', 'TestPass123!');
-      
+
       // Remove CSRF token
       await page.evaluate(() => {
         const tokenInput = document.querySelector('[name="csrf_token"]');
         if (tokenInput) tokenInput.remove();
       });
-      
+
       await page.click('[data-testid="login-button"]');
-      await expect(page.locator('[data-testid="error-message"]')).toContainText('Invalid request');
+      await expect(page.locator('[data-testid="error-message"]')).toContainText(
+        'Invalid request'
+      );
     });
   });
 
   test.describe('Accessibility Tests', () => {
     test('should have proper ARIA labels', async ({ page }) => {
       await page.goto('/auth/login');
-      
-      await expect(page.locator('[data-testid="email-input"]')).toHaveAttribute('aria-label');
-      await expect(page.locator('[data-testid="password-input"]')).toHaveAttribute('aria-label');
-      await expect(page.locator('[data-testid="login-button"]')).toHaveAttribute('aria-label');
+
+      await expect(page.locator('[data-testid="email-input"]')).toHaveAttribute(
+        'aria-label'
+      );
+      await expect(
+        page.locator('[data-testid="password-input"]')
+      ).toHaveAttribute('aria-label');
+      await expect(
+        page.locator('[data-testid="login-button"]')
+      ).toHaveAttribute('aria-label');
     });
 
     test('should support keyboard navigation', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       await page.keyboard.press('Tab');
       await expect(page.locator('[data-testid="email-input"]')).toBeFocused();
-      
+
       await page.keyboard.press('Tab');
-      await expect(page.locator('[data-testid="password-input"]')).toBeFocused();
-      
+      await expect(
+        page.locator('[data-testid="password-input"]')
+      ).toBeFocused();
+
       await page.keyboard.press('Tab');
       await expect(page.locator('[data-testid="login-button"]')).toBeFocused();
     });
 
     test('should announce errors to screen readers', async ({ page }) => {
       await page.goto('/auth/login');
-      
+
       await page.fill('[data-testid="email-input"]', 'invalid@test.com');
       await page.fill('[data-testid="password-input"]', 'wrongpassword');
       await page.click('[data-testid="login-button"]');
-      
+
       const errorElement = page.locator('[data-testid="error-message"]');
       await expect(errorElement).toHaveAttribute('role', 'alert');
       await expect(errorElement).toHaveAttribute('aria-live', 'polite');
@@ -661,7 +741,7 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       const startTime = Date.now();
       await page.goto('/auth/login');
       const loadTime = Date.now() - startTime;
-      
+
       expect(loadTime).toBeLessThan(3000);
     });
 
@@ -670,17 +750,19 @@ test.describe('Authentication Module - Comprehensive Tests', () => {
       const pages = await Promise.all([
         context.newPage(),
         context.newPage(),
-        context.newPage()
+        context.newPage(),
       ]);
 
       const adminUser = authHelper.getTestUser('admin');
-      
-      await Promise.all(pages.map(async (page) => {
-        await page.goto('/auth/login');
-        await page.fill('[data-testid="email-input"]', adminUser!.email);
-        await page.fill('[data-testid="password-input"]', 'TestPass123!');
-        await page.click('[data-testid="login-button"]');
-      }));
+
+      await Promise.all(
+        pages.map(async page => {
+          await page.goto('/auth/login');
+          await page.fill('[data-testid="email-input"]', adminUser!.email);
+          await page.fill('[data-testid="password-input"]', 'TestPass123!');
+          await page.click('[data-testid="login-button"]');
+        })
+      );
 
       // All should succeed
       for (const page of pages) {

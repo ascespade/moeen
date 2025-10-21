@@ -30,7 +30,7 @@ class AgentCreator {
         type: 'input',
         name: 'name',
         message: 'اسم الأجنت:',
-        validate: (input) => input.length > 0 || 'الاسم مطلوب'
+        validate: input => input.length > 0 || 'الاسم مطلوب',
       },
       {
         type: 'list',
@@ -38,20 +38,35 @@ class AgentCreator {
         message: 'نوع الأجنت:',
         choices: [
           { name: '🔧 Code Analyzer - محلل الكود', value: 'code-analyzer' },
-          { name: '🎨 Visual Builder - البناء المرئي', value: 'visual-builder' },
-          { name: '⚡ Performance Optimizer - محسن الأداء', value: 'performance-optimizer' },
-          { name: '🛡️ Security Scanner - ماسح الأمان', value: 'security-scanner' },
+          {
+            name: '🎨 Visual Builder - البناء المرئي',
+            value: 'visual-builder',
+          },
+          {
+            name: '⚡ Performance Optimizer - محسن الأداء',
+            value: 'performance-optimizer',
+          },
+          {
+            name: '🛡️ Security Scanner - ماسح الأمان',
+            value: 'security-scanner',
+          },
           { name: '🧪 Auto Tester - اختبار تلقائي', value: 'auto-tester' },
-          { name: '📚 Documentation Generator - مولد التوثيق', value: 'documentation-generator' },
-          { name: '🚀 Deployment Manager - مدير النشر', value: 'deployment-manager' },
-          { name: '🔄 Custom Agent - أجنت مخصص', value: 'custom' }
-        ]
+          {
+            name: '📚 Documentation Generator - مولد التوثيق',
+            value: 'documentation-generator',
+          },
+          {
+            name: '🚀 Deployment Manager - مدير النشر',
+            value: 'deployment-manager',
+          },
+          { name: '🔄 Custom Agent - أجنت مخصص', value: 'custom' },
+        ],
       },
       {
         type: 'input',
         name: 'description',
         message: 'وصف الأجنت:',
-        default: 'أجنت ذكي للتحليل والإصلاح التلقائي'
+        default: 'أجنت ذكي للتحليل والإصلاح التلقائي',
       },
       {
         type: 'checkbox',
@@ -59,14 +74,29 @@ class AgentCreator {
         message: 'الميزات المطلوبة:',
         choices: [
           { name: '🔄 Auto-healing - إصلاح تلقائي', value: 'auto-healing' },
-          { name: '📊 Real-time monitoring - مراقبة فورية', value: 'monitoring' },
-          { name: '🧠 AI-powered suggestions - اقتراحات ذكية', value: 'ai-suggestions' },
-          { name: '⚡ Parallel processing - معالجة متوازية', value: 'parallel' },
-          { name: '🔄 Background sync - مزامنة خلفية', value: 'background-sync' },
+          {
+            name: '📊 Real-time monitoring - مراقبة فورية',
+            value: 'monitoring',
+          },
+          {
+            name: '🧠 AI-powered suggestions - اقتراحات ذكية',
+            value: 'ai-suggestions',
+          },
+          {
+            name: '⚡ Parallel processing - معالجة متوازية',
+            value: 'parallel',
+          },
+          {
+            name: '🔄 Background sync - مزامنة خلفية',
+            value: 'background-sync',
+          },
           { name: '📱 Web interface - واجهة ويب', value: 'web-interface' },
           { name: '🔧 Git integration - تكامل Git', value: 'git-integration' },
-          { name: '📈 Performance tracking - تتبع الأداء', value: 'performance-tracking' }
-        ]
+          {
+            name: '📈 Performance tracking - تتبع الأداء',
+            value: 'performance-tracking',
+          },
+        ],
       },
       {
         type: 'list',
@@ -77,22 +107,22 @@ class AgentCreator {
           { name: 'TypeScript', value: 'typescript' },
           { name: 'Python', value: 'python' },
           { name: 'Go', value: 'go' },
-          { name: 'Rust', value: 'rust' }
+          { name: 'Rust', value: 'rust' },
         ],
-        default: 'javascript'
+        default: 'javascript',
       },
       {
         type: 'confirm',
         name: 'backgroundMode',
         message: 'العمل في الخلفية؟',
-        default: true
+        default: true,
       },
       {
         type: 'confirm',
         name: 'autoSync',
         message: 'مزامنة تلقائية مع Git؟',
-        default: true
-      }
+        default: true,
+      },
     ]);
 
     await this.generateAgent(answers);
@@ -104,19 +134,19 @@ class AgentCreator {
 
     // Generate main agent file
     await this.generateMainFile(agentDir, config);
-    
+
     // Generate configuration
     await this.generateConfig(agentDir, config);
-    
+
     // Generate package.json
     await this.generatePackageJson(agentDir, config);
-    
+
     // Generate README
     await this.generateReadme(agentDir, config);
-    
+
     // Generate tests
     await this.generateTests(agentDir, config);
-    
+
     // Generate web interface if requested
     if (config.features.includes('web-interface')) {
       await this.generateWebInterface(agentDir, config);
@@ -589,10 +619,12 @@ agent.run().catch(console.error);`;
       autoSync: config.autoSync,
       version: '1.0.0',
       created: new Date().toISOString(),
-      author: 'Ultimate Builder Platform'
+      author: 'Ultimate Builder Platform',
     };
-    
-    await fs.writeJson(path.join(agentDir, 'agent.config.json'), configData, { spaces: 2 });
+
+    await fs.writeJson(path.join(agentDir, 'agent.config.json'), configData, {
+      spaces: 2,
+    });
   }
 
   async generatePackageJson(agentDir, config) {
@@ -608,24 +640,26 @@ agent.run().catch(console.error);`;
         test: 'npm run test:unit',
         'test:unit': 'jest',
         build: 'npm run build:web',
-        'build:web': 'cd web && npm run build'
+        'build:web': 'cd web && npm run build',
       },
       dependencies: {
         'fs-extra': '^11.1.1',
-        'chalk': '^5.3.0',
+        chalk: '^5.3.0',
         'node-cron': '^3.0.2',
-        'chokidar': '^3.5.3'
+        chokidar: '^3.5.3',
       },
       devDependencies: {
-        'jest': '^29.7.0',
-        'nodemon': '^3.0.1'
+        jest: '^29.7.0',
+        nodemon: '^3.0.1',
       },
       keywords: ['ai', 'agent', 'automation', 'builder'],
       author: 'Ultimate Builder Platform',
-      license: 'MIT'
+      license: 'MIT',
     };
-    
-    await fs.writeJson(path.join(agentDir, 'package.json'), packageData, { spaces: 2 });
+
+    await fs.writeJson(path.join(agentDir, 'package.json'), packageData, {
+      spaces: 2,
+    });
   }
 
   async generateReadme(agentDir, config) {
@@ -669,14 +703,14 @@ npm test
 
 هذا الأجنت تم إنشاؤه بواسطة Ultimate Builder Platform.
 `;
-    
+
     await fs.writeFile(path.join(agentDir, 'README.md'), readme);
   }
 
   async generateTests(agentDir, config) {
     const testDir = path.join(agentDir, 'tests');
     await fs.ensureDir(testDir);
-    
+
     const testFile = `import { describe, test, expect, beforeEach } from '@jest/globals';
 
 describe('${config.name} Agent', () => {
@@ -697,14 +731,14 @@ describe('${config.name} Agent', () => {
   });
 });
 `;
-    
+
     await fs.writeFile(path.join(testDir, 'agent.test.js'), testFile);
   }
 
   async generateWebInterface(agentDir, config) {
     const webDir = path.join(agentDir, 'web');
     await fs.ensureDir(webDir);
-    
+
     const webInterface = `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -919,20 +953,20 @@ describe('${config.name} Agent', () => {
     </script>
 </body>
 </html>`;
-    
+
     await fs.writeFile(path.join(webDir, 'index.html'), webInterface);
   }
 
   getFeatureDescription(feature) {
     const descriptions = {
       'auto-healing': 'إصلاح تلقائي للأخطاء والتحذيرات',
-      'monitoring': 'مراقبة فورية لحالة المشروع',
+      monitoring: 'مراقبة فورية لحالة المشروع',
       'ai-suggestions': 'اقتراحات ذكية للتحسين',
-      'parallel': 'معالجة متوازية للمهام',
+      parallel: 'معالجة متوازية للمهام',
       'background-sync': 'مزامنة تلقائية في الخلفية',
       'web-interface': 'واجهة ويب للتحكم',
       'git-integration': 'تكامل مع Git للمزامنة',
-      'performance-tracking': 'تتبع الأداء والتحسين'
+      'performance-tracking': 'تتبع الأداء والتحسين',
     };
     return descriptions[feature] || feature;
   }
@@ -945,4 +979,3 @@ describe('${config.name} Agent', () => {
 // Run the creator
 const creator = new AgentCreator();
 creator.createAgent().catch(console.error);
-

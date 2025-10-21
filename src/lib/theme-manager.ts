@@ -227,7 +227,7 @@ export class ThemeManager {
         removeEventListener: () => {},
         dispatchEvent: () => false,
       });
-      
+
       this.mediaQueries = {
         dark: createFallbackMediaQuery(),
         reducedMotion: createFallbackMediaQuery(),

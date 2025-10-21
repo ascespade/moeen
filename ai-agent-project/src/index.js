@@ -36,17 +36,19 @@ class AIAgent {
 
   async init() {
     console.clear();
-    
+
     // Show banner
-    console.log(chalk.cyan(figlet.textSync('AI Agent', { font: 'ANSI Shadow' })));
+    console.log(
+      chalk.cyan(figlet.textSync('AI Agent', { font: 'ANSI Shadow' }))
+    );
     console.log(chalk.blue('مشروع الأجنت الذكي\n'));
 
     // Load configuration
     await this.loadConfig();
-    
+
     // Create necessary directories
     await this.createDirectories();
-    
+
     // Start the agent
     await this.start();
   }
@@ -64,25 +66,25 @@ class AIAgent {
           mode: 'background',
           autoSync: true,
           checkInterval: 30000,
-          maxCycles: Infinity
+          maxCycles: Infinity,
         },
         monitoring: {
           enabled: true,
           interval: 60000,
-          metrics: ['cpu', 'memory', 'disk', 'network']
+          metrics: ['cpu', 'memory', 'disk', 'network'],
         },
         backup: {
           enabled: true,
           interval: 300000,
-          retention: 7
+          retention: 7,
         },
         logging: {
           level: 'info',
           file: true,
-          console: true
-        }
+          console: true,
+        },
       };
-      
+
       await fs.writeJson(this.configPath, this.config, { spaces: 2 });
     }
   }
@@ -92,7 +94,7 @@ class AIAgent {
       path.join(__dirname, '../logs'),
       path.join(__dirname, '../reports'),
       path.join(__dirname, '../backups'),
-      path.join(__dirname, '../tests')
+      path.join(__dirname, '../tests'),
     ];
 
     for (const dir of dirs) {
@@ -102,7 +104,7 @@ class AIAgent {
 
   async start() {
     console.log(chalk.green('🚀 بدء تشغيل الأجنت الذكي...\n'));
-    
+
     this.isRunning = true;
     this.cycleCount = 0;
 
@@ -129,34 +131,33 @@ class AIAgent {
   async runCycle() {
     while (this.isRunning && this.cycleCount < this.maxCycles) {
       this.cycleCount++;
-      
+
       const spinner = ora(`🔄 تشغيل الدورة ${this.cycleCount}...`).start();
-      
+
       try {
         // 1. Analyze project
         await this.analyzeProject();
-        
+
         // 2. Check for issues
         const issues = await this.checkForIssues();
-        
+
         // 3. Apply fixes
         if (issues.length > 0) {
           await this.applyFixes(issues);
         }
-        
+
         // 4. Generate report
         await this.generateReport();
-        
+
         // 5. Log activity
         await this.logActivity(`الدورة ${this.cycleCount} مكتملة`);
-        
+
         spinner.succeed(`✅ الدورة ${this.cycleCount} مكتملة بنجاح`);
-        
+
         // Wait for next cycle
         if (this.isRunning) {
           await this.sleep(this.checkInterval);
         }
-        
       } catch (error) {
         spinner.fail(`❌ خطأ في الدورة ${this.cycleCount}: ${error.message}`);
         await this.logError(error);
@@ -166,39 +167,46 @@ class AIAgent {
 
   async analyzeProject() {
     await this.logActivity('🔍 تحليل المشروع...');
-    
+
     // Analyze project structure
     const projectFiles = await this.getProjectFiles();
     const projectSize = await this.getProjectSize();
     const dependencies = await this.getDependencies();
-    
+
     return {
       files: projectFiles,
       size: projectSize,
       dependencies: dependencies,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 
   async getProjectFiles() {
     const files = [];
     const extensions = ['.js', '.ts', '.jsx', '.tsx', '.json', '.md'];
-    
-    const scanDir = async (dir) => {
+
+    const scanDir = async dir => {
       const items = await fs.readdir(dir);
-      
+
       for (const item of items) {
         const fullPath = path.join(dir, item);
         const stat = await fs.stat(fullPath);
-        
-        if (stat.isDirectory() && !item.startsWith('.') && item !== 'node_modules') {
+
+        if (
+          stat.isDirectory() &&
+          !item.startsWith('.') &&
+          item !== 'node_modules'
+        ) {
           await scanDir(fullPath);
-        } else if (stat.isFile() && extensions.some(ext => item.endsWith(ext))) {
+        } else if (
+          stat.isFile() &&
+          extensions.some(ext => item.endsWith(ext))
+        ) {
           files.push(fullPath);
         }
       }
     };
-    
+
     await scanDir(this.projectRoot);
     return files;
   }
@@ -206,21 +214,23 @@ class AIAgent {
   async getProjectSize() {
     const files = await this.getProjectFiles();
     let totalSize = 0;
-    
+
     for (const file of files) {
       const stat = await fs.stat(file);
       totalSize += stat.size;
     }
-    
+
     return totalSize;
   }
 
   async getDependencies() {
     try {
-      const packageJson = await fs.readJson(path.join(this.projectRoot, 'package.json'));
+      const packageJson = await fs.readJson(
+        path.join(this.projectRoot, 'package.json')
+      );
       return {
         dependencies: packageJson.dependencies || {},
-        devDependencies: packageJson.devDependencies || {}
+        devDependencies: packageJson.devDependencies || {},
       };
     } catch (error) {
       return { dependencies: {}, devDependencies: {} };
@@ -229,57 +239,56 @@ class AIAgent {
 
   async checkForIssues() {
     await this.logActivity('🔍 فحص المشاكل...');
-    
+
     const issues = [];
-    
+
     // Check for common issues
     const files = await this.getProjectFiles();
-    
+
     for (const file of files) {
       try {
         const content = await fs.readFile(file, 'utf8');
-        
+
         // Check for TODO comments
         if (content.includes('TODO') || content.includes('FIXME')) {
           issues.push({
             type: 'todo',
             file: file,
             message: 'يوجد تعليقات TODO أو FIXME',
-            severity: 'low'
+            severity: 'low',
           });
         }
-        
+
         // Check for console.log statements
         if (content.includes('console.log')) {
           issues.push({
             type: 'console',
             file: file,
             message: 'يوجد console.log statements',
-            severity: 'medium'
+            severity: 'medium',
           });
         }
-        
+
         // Check for empty functions
         if (content.includes('function() {}') || content.includes('() => {}')) {
           issues.push({
             type: 'empty',
             file: file,
             message: 'يوجد دوال فارغة',
-            severity: 'low'
+            severity: 'low',
           });
         }
-        
       } catch (error) {
         // Skip files that can't be read
       }
     }
-    
+
     return issues;
   }
 
   async applyFixes(issues) {
     await this.logActivity(`🔧 تطبيق الإصلاحات لـ ${issues.length} مشكلة...`);
-    
+
     for (const issue of issues) {
       try {
         switch (issue.type) {
@@ -313,8 +322,14 @@ class AIAgent {
   async fixEmptyFunctions(filePath) {
     try {
       let content = await fs.readFile(filePath, 'utf8');
-      content = content.replace(/function\([^)]*\)\s*{\s*}/g, 'function() { /* TODO: Implement */ }');
-      content = content.replace(/\([^)]*\)\s*=>\s*{\s*}/g, '() => { /* TODO: Implement */ }');
+      content = content.replace(
+        /function\([^)]*\)\s*{\s*}/g,
+        'function() { /* TODO: Implement */ }'
+      );
+      content = content.replace(
+        /\([^)]*\)\s*=>\s*{\s*}/g,
+        '() => { /* TODO: Implement */ }'
+      );
       await fs.writeFile(filePath, content);
       await this.logActivity(`✅ تم إصلاح الدوال الفارغة في ${filePath}`);
     } catch (error) {
@@ -325,8 +340,14 @@ class AIAgent {
   async fixTodos(filePath) {
     try {
       let content = await fs.readFile(filePath, 'utf8');
-      content = content.replace(/\/\/\s*TODO[^\n]*/g, '// TODO: Fixed by AI Agent');
-      content = content.replace(/\/\*\s*TODO[^*]*\*\//g, '/* TODO: Fixed by AI Agent */');
+      content = content.replace(
+        /\/\/\s*TODO[^\n]*/g,
+        '// TODO: Fixed by AI Agent'
+      );
+      content = content.replace(
+        /\/\*\s*TODO[^*]*\*\//g,
+        '/* TODO: Fixed by AI Agent */'
+      );
       await fs.writeFile(filePath, content);
       await this.logActivity(`✅ تم إصلاح TODOs في ${filePath}`);
     } catch (error) {
@@ -343,13 +364,13 @@ class AIAgent {
       project: {
         root: this.projectRoot,
         files: await this.getProjectFiles(),
-        size: await this.getProjectSize()
+        size: await this.getProjectSize(),
       },
       issues: await this.checkForIssues(),
       performance: {
         memory: process.memoryUsage(),
-        uptime: process.uptime()
-      }
+        uptime: process.uptime(),
+      },
     };
 
     await fs.writeJson(this.reportPath, report, { spaces: 2 });
@@ -362,10 +383,12 @@ class AIAgent {
           timestamp: new Date().toISOString(),
           cpu: process.cpuUsage(),
           memory: process.memoryUsage(),
-          uptime: process.uptime()
+          uptime: process.uptime(),
         };
-        
-        await this.logActivity(`📊 المقاييس: CPU: ${metrics.cpu.user}, Memory: ${metrics.memory.heapUsed}`);
+
+        await this.logActivity(
+          `📊 المقاييس: CPU: ${metrics.cpu.user}, Memory: ${metrics.memory.heapUsed}`
+        );
       }
     }, this.config.monitoring.interval);
   }
@@ -374,20 +397,20 @@ class AIAgent {
     this.watcher = chokidar.watch(this.projectRoot, {
       ignored: /(node_modules|\.git|logs|reports|backups)/,
       persistent: true,
-      ignoreInitial: true
+      ignoreInitial: true,
     });
 
-    this.watcher.on('change', async (path) => {
+    this.watcher.on('change', async path => {
       await this.logActivity(`📝 ملف تم تغييره: ${path}`);
       // Trigger immediate analysis
       await this.analyzeProject();
     });
 
-    this.watcher.on('add', async (path) => {
+    this.watcher.on('add', async path => {
       await this.logActivity(`➕ ملف جديد: ${path}`);
     });
 
-    this.watcher.on('unlink', async (path) => {
+    this.watcher.on('unlink', async path => {
       await this.logActivity(`🗑️ ملف محذوف: ${path}`);
     });
   }
@@ -403,20 +426,20 @@ class AIAgent {
   async createBackup() {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const backupDir = path.join(this.backupPath, timestamp);
-    
+
     await fs.ensureDir(backupDir);
-    
+
     // Copy important files
     const filesToBackup = await this.getProjectFiles();
-    
+
     for (const file of filesToBackup) {
       const relativePath = path.relative(this.projectRoot, file);
       const backupFile = path.join(backupDir, relativePath);
-      
+
       await fs.ensureDir(path.dirname(backupFile));
       await fs.copy(file, backupFile);
     }
-    
+
     await this.logActivity(`💾 تم إنشاء نسخة احتياطية: ${backupDir}`);
   }
 
@@ -424,13 +447,13 @@ class AIAgent {
     const logEntry = {
       timestamp: new Date().toISOString(),
       level: 'info',
-      message: message
+      message: message,
     };
-    
+
     if (this.config.logging.console) {
       console.log(chalk.blue(`[${logEntry.timestamp}] ${message}`));
     }
-    
+
     if (this.config.logging.file) {
       await fs.appendFile(this.logPath, JSON.stringify(logEntry) + '\n');
     }
@@ -441,13 +464,15 @@ class AIAgent {
       timestamp: new Date().toISOString(),
       level: 'error',
       message: error.message,
-      stack: error.stack
+      stack: error.stack,
     };
-    
+
     if (this.config.logging.console) {
-      console.error(chalk.red(`[${logEntry.timestamp}] ERROR: ${error.message}`));
+      console.error(
+        chalk.red(`[${logEntry.timestamp}] ERROR: ${error.message}`)
+      );
     }
-    
+
     if (this.config.logging.file) {
       await fs.appendFile(this.logPath, JSON.stringify(logEntry) + '\n');
     }
@@ -460,18 +485,23 @@ class AIAgent {
   showSuccessMessage() {
     const message = boxen(
       chalk.green('✅ تم تشغيل الأجنت الذكي بنجاح!\n\n') +
-      chalk.blue('🆔 معرف الأجنت: ') + chalk.white(this.agentId + '\n') +
-      chalk.blue('📁 مجلد المشروع: ') + chalk.white(this.projectRoot + '\n') +
-      chalk.blue('📊 التقارير: ') + chalk.white('reports/agent-report.json\n') +
-      chalk.blue('📝 السجلات: ') + chalk.white('logs/agent.log\n') +
-      chalk.blue('💾 النسخ الاحتياطية: ') + chalk.white('backups/\n\n') +
-      chalk.yellow('اضغط Ctrl+C لإيقاف الأجنت'),
+        chalk.blue('🆔 معرف الأجنت: ') +
+        chalk.white(this.agentId + '\n') +
+        chalk.blue('📁 مجلد المشروع: ') +
+        chalk.white(this.projectRoot + '\n') +
+        chalk.blue('📊 التقارير: ') +
+        chalk.white('reports/agent-report.json\n') +
+        chalk.blue('📝 السجلات: ') +
+        chalk.white('logs/agent.log\n') +
+        chalk.blue('💾 النسخ الاحتياطية: ') +
+        chalk.white('backups/\n\n') +
+        chalk.yellow('اضغط Ctrl+C لإيقاف الأجنت'),
       {
         padding: 1,
         margin: 1,
         borderStyle: 'double',
         borderColor: 'cyan',
-        backgroundColor: '#1a1a1a'
+        backgroundColor: '#1a1a1a',
       }
     );
 
@@ -480,11 +510,11 @@ class AIAgent {
 
   async stop() {
     this.isRunning = false;
-    
+
     if (this.watcher) {
       this.watcher.close();
     }
-    
+
     await this.logActivity('🛑 تم إيقاف الأجنت');
     console.log(chalk.yellow('🛑 تم إيقاف الأجنت الذكي'));
   }
@@ -509,3 +539,4 @@ process.on('SIGTERM', async () => {
 const agent = new AIAgent();
 global.agent = agent;
 agent.init().catch(console.error);
+

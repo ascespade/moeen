@@ -1,6 +1,6 @@
 /**
  * Centralized Translation Manager - مدير الترجمة المركزي
- * 
+ *
  * This system manages all translations from the database
  * No hardcoded labels are allowed - everything must come from DB
  */
@@ -33,19 +33,19 @@ class TranslationManager {
 
   async initialize() {
     if (this.isLoaded) return;
-    
+
     try {
       const translations = await realDB.getTranslations();
       this.cache = {};
-      
+
       translations.forEach((translation: Translation) => {
         this.cache[translation.key] = {
           ar: translation.ar,
           en: translation.en,
-          context: translation.context
+          context: translation.context,
         };
       });
-      
+
       this.isLoaded = true;
       console.log(`✅ Loaded ${Object.keys(this.cache).length} translations`);
     } catch (error) {
@@ -82,27 +82,33 @@ class TranslationManager {
   // Get all translations for a specific module
   getModuleTranslations(module: string): { [key: string]: string } {
     const moduleTranslations: { [key: string]: string } = {};
-    
+
     Object.entries(this.cache).forEach(([key, translation]) => {
       if (key.startsWith(`${module}.`)) {
         moduleTranslations[key] = translation[this.currentLanguage];
       }
     });
-    
+
     return moduleTranslations;
   }
 
   // Add new translation
-  async addTranslation(key: string, ar: string, en: string, context?: string, module?: string) {
+  async addTranslation(
+    key: string,
+    ar: string,
+    en: string,
+    context?: string,
+    module?: string
+  ) {
     try {
       await realDB.createTranslation({
         key,
         ar,
         en,
         context,
-        module
+        module,
       });
-      
+
       // Update cache
       this.cache[key] = { ar, en, context };
     } catch (error) {
@@ -118,7 +124,10 @@ class TranslationManager {
   }
 
   // Validate all translations are present
-  async validateTranslations(): Promise<{ missing: string[], unused: string[] }> {
+  async validateTranslations(): Promise<{
+    missing: string[];
+    unused: string[];
+  }> {
     // This would validate all translation keys
     return { missing: [], unused: [] };
   }
@@ -132,7 +141,8 @@ export function useTranslation() {
     t: translationManager.t.bind(translationManager),
     setLanguage: translationManager.setLanguage.bind(translationManager),
     getLanguage: translationManager.getLanguage.bind(translationManager),
-    getModuleTranslations: translationManager.getModuleTranslations.bind(translationManager)
+    getModuleTranslations:
+      translationManager.getModuleTranslations.bind(translationManager),
   };
 }
 

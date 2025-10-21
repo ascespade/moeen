@@ -48,7 +48,7 @@ async function handleLogin(request: NextRequest, body: any) {
   }
 
   const { email, password } = validation.data;
-  
+
   // In a real implementation, you would verify the password
   // For now, we'll just check if the user exists
   try {
@@ -65,7 +65,7 @@ async function handleLogin(request: NextRequest, body: any) {
         email: user.email,
         role: user.role,
       },
-      message: 'Login successful'
+      message: 'Login successful',
     });
   } catch (error) {
     return NextResponse.json({ error: 'Login failed' }, { status: 401 });
@@ -82,7 +82,7 @@ async function handleRegister(request: NextRequest, body: any) {
   }
 
   const userData = validation.data;
-  
+
   try {
     const user = await realDB.createUser({
       name: userData.name,
@@ -99,7 +99,7 @@ async function handleRegister(request: NextRequest, body: any) {
         email: user.email,
         role: user.role,
       },
-      message: 'Registration successful'
+      message: 'Registration successful',
     });
   } catch (error) {
     return NextResponse.json({ error: 'Registration failed' }, { status: 500 });
@@ -109,6 +109,6 @@ async function handleRegister(request: NextRequest, body: any) {
 async function handleLogout(request: NextRequest) {
   return NextResponse.json({
     success: true,
-    message: 'Logout successful'
+    message: 'Logout successful',
   });
 }

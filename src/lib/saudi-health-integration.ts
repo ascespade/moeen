@@ -436,7 +436,7 @@ export class SaudiHealthSystemIntegration {
     return {
       success: true,
       data: {
-        sehaId: `SEHA_${  Math.random().toString(36).substr(2, 9)}`,
+        sehaId: `SEHA_${Math.random().toString(36).substr(2, 9)}`,
         nationalId: data?.nationalId || '1234567890',
         fullName: 'أحمد محمد الأحمد',
         fullNameEn: 'Ahmed Mohammed Al-Ahmad',
@@ -483,9 +483,8 @@ export class SaudiHealthSystemIntegration {
     return {
       success: true,
       data: {
-        claimId: `CLAIM_${  Math.random().toString(36).substr(2, 9)}`,
-        claimNumber:
-          `CL${  Math.random().toString(36).substr(2, 8).toUpperCase()}`,
+        claimId: `CLAIM_${Math.random().toString(36).substr(2, 9)}`,
+        claimNumber: `CL${Math.random().toString(36).substr(2, 8).toUpperCase()}`,
         status: 'pending',
         covered: true,
         coverageType: 'comprehensive',

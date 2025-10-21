@@ -24,8 +24,7 @@ function fixSupabaseAPIs() {
 
       // Fix missing createClient import
       if (!content.includes('import { createClient }')) {
-        content =
-          `import { createClient } from '@/lib/supabase/client';\n${  content}`;
+        content = `import { createClient } from '@/lib/supabase/client';\n${content}`;
       }
 
       // Fix: const supabase = createClient (missing parentheses)

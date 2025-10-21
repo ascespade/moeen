@@ -52,14 +52,14 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({
         success: true,
         data: [],
-        message: 'No security events found'
+        message: 'No security events found',
       });
     }
 
     return NextResponse.json({
       success: true,
       data: events || [],
-      message: 'Security events fetched successfully'
+      message: 'Security events fetched successfully',
     });
   } catch (error) {
     return NextResponse.json(

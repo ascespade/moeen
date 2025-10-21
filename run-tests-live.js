@@ -87,7 +87,7 @@ const log = fs.createWriteStream('TEST_EXECUTION_LOG.md', { flags: 'w' });
 
 function writeLog(msg) {
   console.log(msg);
-  log.write(`${msg  }\n`);
+  log.write(`${msg}\n`);
 }
 
 writeLog('# 🚀 تنفيذ الاختبارات LIVE - تحديثات فورية\n');

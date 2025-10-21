@@ -3,7 +3,7 @@
 /**
  * 🚀 Ultimate Builder Platform - Server Core
  * منصة البناء الذكية المتقدمة - الخادم الرئيسي
- * 
+ *
  * الميزات:
  * - دعم حتى 256 أجنت متوازي
  * - واجهة ويب احترافية
@@ -35,17 +35,17 @@ class UltimateBuilderPlatform {
     this.server = createServer(this.app);
     this.io = new Server(this.server, {
       cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
-      }
+        origin: '*',
+        methods: ['GET', 'POST'],
+      },
     });
-    
+
     this.port = process.env.PORT || 3000;
     this.maxAgents = 256;
     this.activeAgents = new Map();
     this.projects = new Map();
     this.isDev = process.argv.includes('--dev');
-    
+
     this.setupMiddleware();
     this.setupRoutes();
     this.setupSocketIO();
@@ -54,16 +54,16 @@ class UltimateBuilderPlatform {
 
   async init() {
     console.clear();
-    
+
     // Show banner
     const banner = figlet.textSync('Ultimate Builder', {
       font: 'ANSI Shadow',
       horizontalLayout: 'default',
-      verticalLayout: 'default'
+      verticalLayout: 'default',
     });
-    
+
     console.log(gradient.rainbow(banner));
-    
+
     const info = boxen(
       `🚀 Ultimate Builder Platform v1.0.0
       
@@ -86,24 +86,32 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
         padding: 1,
         margin: 1,
         borderStyle: 'round',
-        borderColor: 'cyan'
+        borderColor: 'cyan',
       }
     );
-    
+
     console.log(info);
-    
+
     // Ensure directories exist
     await this.ensureDirectories();
-    
+
     // Load existing projects
     await this.loadProjects();
-    
+
     // Start server
     this.server.listen(this.port, () => {
-      console.log(chalk.green(`\n🚀 Ultimate Builder Platform started successfully!`));
-      console.log(chalk.cyan(`📱 Web Interface: http://localhost:${this.port}`));
-      console.log(chalk.cyan(`🔌 API Endpoint: http://localhost:${this.port}/api`));
-      console.log(chalk.cyan(`📊 Monitor: http://localhost:${this.port}/monitor`));
+      console.log(
+        chalk.green(`\n🚀 Ultimate Builder Platform started successfully!`)
+      );
+      console.log(
+        chalk.cyan(`📱 Web Interface: http://localhost:${this.port}`)
+      );
+      console.log(
+        chalk.cyan(`🔌 API Endpoint: http://localhost:${this.port}/api`)
+      );
+      console.log(
+        chalk.cyan(`📊 Monitor: http://localhost:${this.port}/monitor`)
+      );
     });
   }
 
@@ -111,12 +119,18 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
     this.app.use(express.json({ limit: '50mb' }));
     this.app.use(express.urlencoded({ extended: true, limit: '50mb' }));
     this.app.use(express.static(path.join(__dirname, 'web-interface/dist')));
-    
+
     // CORS
     this.app.use((req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
-      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+      res.header(
+        'Access-Control-Allow-Methods',
+        'GET, POST, PUT, DELETE, OPTIONS'
+      );
+      res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+      );
       if (req.method === 'OPTIONS') {
         res.sendStatus(200);
       } else {
@@ -138,8 +152,8 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
           cpu: os.cpus().length,
           memory: Math.round(os.totalmem() / 1024 / 1024 / 1024),
           platform: os.platform(),
-          uptime: process.uptime()
-        }
+          uptime: process.uptime(),
+        },
       });
     });
 
@@ -151,7 +165,7 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
         project: agent.project,
         startTime: agent.startTime,
         progress: agent.progress,
-        logs: agent.logs.slice(-10) // Last 10 logs
+        logs: agent.logs.slice(-10), // Last 10 logs
       }));
       res.json(agents);
     });
@@ -164,7 +178,7 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
         type: project.type,
         status: project.status,
         lastModified: project.lastModified,
-        agents: project.agents
+        agents: project.agents,
       }));
       res.json(projects);
     });
@@ -206,19 +220,21 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
   }
 
   setupSocketIO() {
-    this.io.on('connection', (socket) => {
+    this.io.on('connection', socket => {
       console.log(chalk.blue(`📱 Client connected: ${socket.id}`));
-      
-      socket.on('join-project', (projectId) => {
+
+      socket.on('join-project', projectId => {
         socket.join(`project-${projectId}`);
-        console.log(chalk.blue(`📱 Client ${socket.id} joined project ${projectId}`));
+        console.log(
+          chalk.blue(`📱 Client ${socket.id} joined project ${projectId}`)
+        );
       });
-      
-      socket.on('agent-command', async (data) => {
+
+      socket.on('agent-command', async data => {
         try {
           const { agentId, command, params } = data;
           const agent = this.activeAgents.get(agentId);
-          
+
           if (agent) {
             agent.process.send({ command, params });
             socket.emit('agent-response', { agentId, status: 'command-sent' });
@@ -227,7 +243,7 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
           socket.emit('agent-error', { error: error.message });
         }
       });
-      
+
       socket.on('disconnect', () => {
         console.log(chalk.red(`📱 Client disconnected: ${socket.id}`));
       });
@@ -247,14 +263,8 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
   }
 
   async ensureDirectories() {
-    const dirs = [
-      'projects',
-      'logs',
-      'temp',
-      'backups',
-      'web-interface/dist'
-    ];
-    
+    const dirs = ['projects', 'logs', 'temp', 'backups', 'web-interface/dist'];
+
     for (const dir of dirs) {
       await fs.ensureDir(path.join(__dirname, dir));
     }
@@ -264,14 +274,14 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
     try {
       const projectsDir = path.join(__dirname, 'projects');
       const projectFiles = await fs.readdir(projectsDir);
-      
+
       for (const file of projectFiles) {
         if (file.endsWith('.json')) {
           const projectData = await fs.readJson(path.join(projectsDir, file));
           this.projects.set(projectData.id, projectData);
         }
       }
-      
+
       console.log(chalk.green(`✓ Loaded ${this.projects.size} projects`));
     } catch (error) {
       console.log(chalk.yellow(`⚠ No projects found`));
@@ -287,18 +297,18 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
       type,
       status: 'active',
       lastModified: new Date().toISOString(),
-      agents: []
+      agents: [],
     };
-    
+
     this.projects.set(projectId, project);
-    
+
     // Save to file
     await fs.writeJson(
       path.join(__dirname, 'projects', `${projectId}.json`),
       project,
       { spaces: 2 }
     );
-    
+
     this.io.emit('project-added', project);
     return project;
   }
@@ -307,20 +317,20 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
     if (this.activeAgents.size >= this.maxAgents) {
       throw new Error(`Maximum agents limit reached (${this.maxAgents})`);
     }
-    
+
     const project = this.projects.get(projectId);
     if (!project) {
       throw new Error('Project not found');
     }
-    
+
     const agentId = `agent-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const agentPath = path.join(__dirname, 'agents', type, 'index.mjs');
-    
+
     // Check if agent exists
-    if (!await fs.pathExists(agentPath)) {
+    if (!(await fs.pathExists(agentPath))) {
       throw new Error(`Agent type '${type}' not found`);
     }
-    
+
     const agentProcess = fork(agentPath, [], {
       cwd: project.path,
       env: {
@@ -328,10 +338,10 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
         PROJECT_PATH: project.path,
         PROJECT_ID: projectId,
         AGENT_ID: agentId,
-        AGENT_CONFIG: JSON.stringify(config)
-      }
+        AGENT_CONFIG: JSON.stringify(config),
+      },
     });
-    
+
     const agent = {
       id: agentId,
       type,
@@ -340,69 +350,69 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
       status: 'starting',
       startTime: new Date().toISOString(),
       progress: 0,
-      logs: []
+      logs: [],
     };
-    
+
     this.activeAgents.set(agentId, agent);
     project.agents.push(agentId);
-    
+
     // Handle agent communication
-    agentProcess.on('message', (message) => {
+    agentProcess.on('message', message => {
       if (message.type === 'log') {
         agent.logs.push({
           timestamp: new Date().toISOString(),
           level: message.level,
-          message: message.message
+          message: message.message,
         });
-        
+
         this.io.to(`project-${projectId}`).emit('agent-log', {
           agentId,
-          log: message
+          log: message,
         });
       } else if (message.type === 'progress') {
         agent.progress = message.progress;
         agent.status = message.status;
-        
+
         this.io.to(`project-${projectId}`).emit('agent-progress', {
           agentId,
           progress: message.progress,
-          status: message.status
+          status: message.status,
         });
       } else if (message.type === 'complete') {
         agent.status = 'completed';
         agent.progress = 100;
-        
+
         this.io.to(`project-${projectId}`).emit('agent-complete', {
           agentId,
-          result: message.result
+          result: message.result,
         });
       }
     });
-    
-    agentProcess.on('error', (error) => {
+
+    agentProcess.on('error', error => {
       agent.status = 'error';
       agent.logs.push({
         timestamp: new Date().toISOString(),
         level: 'error',
-        message: error.message
+        message: error.message,
       });
-      
+
       this.io.to(`project-${projectId}`).emit('agent-error', {
         agentId,
-        error: error.message
+        error: error.message,
       });
     });
-    
-    agentProcess.on('exit', (code) => {
+
+    agentProcess.on('exit', code => {
       agent.status = code === 0 ? 'completed' : 'failed';
       this.activeAgents.delete(agentId);
-      
+
       this.io.to(`project-${projectId}`).emit('agent-exit', {
         agentId,
-        code
+        code,
       });
     });
-    
+
     this.io.emit('agent-started', agent);
     return agent;
   }
@@ -412,24 +422,26 @@ ${chalk.yellow('Press Ctrl+C to stop the server')}`,
     if (agent) {
       agent.process.kill();
       this.activeAgents.delete(agentId);
-      
+
       const project = this.projects.get(agent.project);
       if (project) {
         project.agents = project.agents.filter(id => id !== agentId);
       }
-      
+
       this.io.emit('agent-stopped', { agentId });
     }
   }
 
   async shutdown() {
-    console.log(chalk.yellow('\n🛑 Shutting down Ultimate Builder Platform...'));
-    
+    console.log(
+      chalk.yellow('\n🛑 Shutting down Ultimate Builder Platform...')
+    );
+
     // Stop all agents
     for (const [agentId, agent] of this.activeAgents) {
       agent.process.kill();
     }
-    
+
     // Close server
     this.server.close(() => {
       console.log(chalk.green('✓ Server closed'));
@@ -450,4 +462,3 @@ process.on('SIGTERM', async () => {
 // Start the platform
 const platform = new UltimateBuilderPlatform();
 platform.init().catch(console.error);
-

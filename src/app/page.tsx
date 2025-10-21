@@ -24,13 +24,11 @@ export default function HomePage() {
               رعاية شاملة لذوي الاحتياجات الخاصة
             </h2>
             <p className='text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto'>
-              نقدم خدمات طبية متخصصة وبرامج تأهيلية شاملة لضمان حياة أفضل لذوي الاحتياجات الخاصة
+              نقدم خدمات طبية متخصصة وبرامج تأهيلية شاملة لضمان حياة أفضل لذوي
+              الاحتياجات الخاصة
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <Link
-                href='/appointments'
-                className='btn btn-brand btn-lg'
-              >
+              <Link href='/appointments' className='btn btn-brand btn-lg'>
                 احجز موعدك الآن
               </Link>
               <Link href='/features' className='btn btn-outline btn-lg'>
@@ -42,9 +40,7 @@ export default function HomePage() {
 
         {/* Slide Indicators */}
         <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2'>
-          <button
-            className='w-3 h-3 rounded-full bg-[var(--brand-primary)]'
-          />
+          <button className='w-3 h-3 rounded-full bg-[var(--brand-primary)]' />
         </div>
       </section>
 

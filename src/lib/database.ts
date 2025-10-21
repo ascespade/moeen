@@ -250,7 +250,7 @@ export class DatabaseManager {
     }
 
     if (conditions.length > 0) {
-      query += ` WHERE ${  conditions.join(' AND ')}`;
+      query += ` WHERE ${conditions.join(' AND ')}`;
     }
 
     query += ' ORDER BY a.appointment_date, a.appointment_time';

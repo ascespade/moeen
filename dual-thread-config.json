@@ -1,0 +1,109 @@
+{
+  "name": "NextJS Smart Dual-Thread Cleaner & Tester",
+  "description": "Aggressive AI agent that runs parallel cleanup and full testing with zero stalling.",
+  "version": "1.0.0",
+  "parallelExecution": {
+    "enabled": true,
+    "threads": 2,
+    "mode": "aggressive",
+    "recovery": "autoRestartOnIdle",
+    "maxConcurrentProcesses": 4
+  },
+  "cleanupProcess": {
+    "enabled": true,
+    "steps": [
+      {
+        "name": "lint-fix",
+        "command": "npm run lint:fix",
+        "timeout": 300000,
+        "retryOnFailure": true
+      },
+      {
+        "name": "build",
+        "command": "npm run build",
+        "timeout": 600000,
+        "retryOnFailure": true
+      },
+      {
+        "name": "safe-cleanup",
+        "command": "node scripts/cleanup-safe.js",
+        "timeout": 120000,
+        "retryOnFailure": false
+      }
+    ]
+  },
+  "testingProcess": {
+    "enabled": true,
+    "steps": [
+      {
+        "name": "unit-tests",
+        "command": "npm run test:unit",
+        "timeout": 300000,
+        "retryOnFailure": true,
+        "continueOnError": true
+      },
+      {
+        "name": "e2e-tests",
+        "command": "npm run test:e2e",
+        "timeout": 600000,
+        "retryOnFailure": true,
+        "continueOnError": true,
+        "fallback": "npx playwright test"
+      },
+      {
+        "name": "vitest",
+        "command": "npx vitest run",
+        "timeout": 300000,
+        "retryOnFailure": false,
+        "continueOnError": true
+      }
+    ]
+  },
+  "failRecovery": {
+    "autoRetry": true,
+    "maxRetries": 3,
+    "interval": 30000,
+    "fallbackAction": "restartThread",
+    "escalationStrategy": "exponentialBackoff"
+  },
+  "performance": {
+    "cpuUsage": "max",
+    "ramAllocation": "auto",
+    "cleanupLogs": true,
+    "memoryThreshold": 0.9,
+    "cpuThreshold": 0.95
+  },
+  "monitoring": {
+    "realTimeStatus": true,
+    "showProgressBar": true,
+    "reportFile": "dual-run-report.json",
+    "updateInterval": 2000,
+    "logLevel": "info"
+  },
+  "safety": {
+    "backupBeforeRun": true,
+    "rollbackOnFailure": true,
+    "backupRetentionDays": 7,
+    "maxBackupSize": "1GB"
+  },
+  "successCriteria": {
+    "cleanupDone": true,
+    "testsPassed": true,
+    "noStalls": true,
+    "buildStable": true,
+    "maxErrorRate": 0.1
+  },
+  "notifications": {
+    "enabled": false,
+    "webhook": null,
+    "email": null,
+    "slack": null
+  },
+  "logging": {
+    "enabled": true,
+    "level": "info",
+    "file": "dual-thread.log",
+    "maxSize": "10MB",
+    "maxFiles": 5
+  }
+}

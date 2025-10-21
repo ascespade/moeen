@@ -102,53 +102,58 @@ const TrainingPage: React.FC = () => {
       // Load real data from database
       const programsData = await realDB.getTrainingPrograms();
       const progressData = await realDB.getTrainingProgress();
-      
+
       // Transform real data to match interface
-      const transformedPrograms: TrainingProgram[] = programsData.map((program: any) => ({
-        id: program.id,
-        title: program.title || program.name,
-        description: program.description,
-        category: program.category || 'عام',
-        level: program.level || 'مبتدئ',
-        duration_weeks: program.duration_weeks || program.duration || 0,
-        max_participants: program.max_participants || 0,
-        current_participants: program.current_participants || 0,
-        instructor_id: program.instructor_id || '',
-        start_date: program.start_date || '',
-        end_date: program.end_date || '',
-        status: program.status || 'active',
-        skills_covered: program.skills_covered || [],
-        prerequisites: program.prerequisites || [],
-        created_at: program.created_at || '',
-        updated_at: program.updated_at || '',
-        public_id: program.public_id || '',
-        instructor: program.instructor || {
-          first_name: '',
-          last_name: '',
-          specialty: '',
-          avatar: '/logo.png'
-        }
-      }));
-      
-      const transformedProgress: TrainingProgress[] = progressData.map((progress: any) => ({
-        id: progress.id,
-        participant_id: progress.participant_id || progress.user_id || '',
-        program_id: progress.program_id || '',
-        progress_percentage: progress.progress_percentage || progress.completion_percentage || 0,
-        completed_modules: progress.completed_modules || 0,
-        total_modules: progress.total_modules || 0,
-        last_activity: progress.last_activity || '',
-        status: progress.status || 'active',
-        created_at: progress.created_at || '',
-        participants: progress.participants || {
-          first_name: '',
-          last_name: '',
-          age: 0,
-          condition: '',
-          avatar: '/logo.png'
-        }
-      }));
-      
+      const transformedPrograms: TrainingProgram[] = programsData.map(
+        (program: any) => ({
+          id: program.id,
+          title: program.title || program.name,
+          description: program.description,
+          category: program.category || 'عام',
+          level: program.level || 'مبتدئ',
+          duration_weeks: program.duration_weeks || program.duration || 0,
+          max_participants: program.max_participants || 0,
+          current_participants: program.current_participants || 0,
+          instructor_id: program.instructor_id || '',
+          start_date: program.start_date || '',
+          end_date: program.end_date || '',
+          status: program.status || 'active',
+          skills_covered: program.skills_covered || [],
+          prerequisites: program.prerequisites || [],
+          created_at: program.created_at || '',
+          updated_at: program.updated_at || '',
+          public_id: program.public_id || '',
+          instructor: program.instructor || {
+            first_name: '',
+            last_name: '',
+            specialty: '',
+            avatar: '/logo.png',
+          },
+        })
+      );
+
+      const transformedProgress: TrainingProgress[] = progressData.map(
+        (progress: any) => ({
+          id: progress.id,
+          participant_id: progress.participant_id || progress.user_id || '',
+          program_id: progress.program_id || '',
+          progress_percentage:
+            progress.progress_percentage || progress.completion_percentage || 0,
+          completed_modules: progress.completed_modules || 0,
+          total_modules: progress.total_modules || 0,
+          last_activity: progress.last_activity || '',
+          status: progress.status || 'active',
+          created_at: progress.created_at || '',
+          participants: progress.participants || {
+            first_name: '',
+            last_name: '',
+            age: 0,
+            condition: '',
+            avatar: '/logo.png',
+          },
+        })
+      );
+
       setPrograms(transformedPrograms);
       setProgress(transformedProgress);
     } catch (error) {
@@ -440,7 +445,11 @@ const TrainingPage: React.FC = () => {
                   <h4 className='text-sm font-semibold mb-2'>المتطلبات:</h4>
                   <div className='flex flex-wrap gap-2'>
                     {program.prerequisites.map((prereq, index) => (
-                      <Badge key={index} variant='secondary' className='text-xs'>
+                      <Badge
+                        key={index}
+                        variant='secondary'
+                        className='text-xs'
+                      >
                         {prereq}
                       </Badge>
                     ))}

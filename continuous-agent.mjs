@@ -18,7 +18,11 @@ class ContinuousSmartBootloaderAgent {
   constructor() {
     this.projectRoot = process.cwd();
     this.logFile = path.join(this.projectRoot, 'logs', 'continuous-agent.log');
-    this.reportFile = path.join(this.projectRoot, 'reports', 'continuous-agent-report.md');
+    this.reportFile = path.join(
+      this.projectRoot,
+      'reports',
+      'continuous-agent-report.md'
+    );
     this.isRunning = false;
     this.cycleCount = 0;
     this.maxCycles = Infinity; // لا يوجد حد أقصى
@@ -91,11 +95,15 @@ class ContinuousSmartBootloaderAgent {
 
   async checkForChanges() {
     try {
-      const result = await this.runCommand('git rev-parse HEAD', { silent: true });
+      const result = await this.runCommand('git rev-parse HEAD', {
+        silent: true,
+      });
       if (result.success) {
         const currentHash = result.output.trim();
         if (this.lastGitHash && this.lastGitHash !== currentHash) {
-          await this.log(`🔄 تم اكتشاف تغييرات في الكود: ${currentHash.substring(0, 7)}`);
+          await this.log(
+            `🔄 تم اكتشاف تغييرات في الكود: ${currentHash.substring(0, 7)}`
+          );
           return true;
         }
         this.lastGitHash = currentHash;
@@ -346,7 +354,9 @@ ${this.generateRecommendations(analysis)}
     }
 
     if (analysis.changes) {
-      recommendations.push('- 🔄 تم اكتشاف تغييرات جديدة، سيتم معالجتها في الدورة التالية');
+      recommendations.push(
+        '- 🔄 تم اكتشاف تغييرات جديدة، سيتم معالجتها في الدورة التالية'
+      );
     }
 
     if (recommendations.length === 0) {
@@ -408,7 +418,7 @@ ${this.generateRecommendations(analysis)}
 
   async startContinuousMonitoring() {
     await this.log('🚀 بدء المراقبة المستمرة...');
-    
+
     // تشغيل الدورة الأولى فوراً
     await this.runCycle();
 
@@ -454,9 +464,10 @@ ${this.generateRecommendations(analysis)}
 
       // الحفاظ على العملية نشطة
       await new Promise(() => {}); // انتظار لا نهائي
-
     } catch (error) {
-      await this.log(`❌ خطأ في Continuous Smart Bootloader Agent: ${error.message}`);
+      await this.log(
+        `❌ خطأ في Continuous Smart Bootloader Agent: ${error.message}`
+      );
       console.error(error);
     }
   }

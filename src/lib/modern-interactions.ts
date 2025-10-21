@@ -454,6 +454,4 @@ export function initModernInteractions() {
 }
 
 // Export all utilities
-export {
-  FormValidator,
-};
+export { FormValidator };

@@ -13,21 +13,21 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
       name: 'Test User',
       phone: '+966501234567',
       email: 'test@example.com',
-      role: 'admin'
+      role: 'admin',
     });
 
     testPatient = await realDB.createUser({
       name: 'Test Patient',
       phone: '+966501234568',
       email: 'patient@example.com',
-      role: 'patient'
+      role: 'patient',
     });
 
     testDoctor = await realDB.createUser({
       name: 'Test Doctor',
       phone: '+966501234569',
       email: 'doctor@example.com',
-      role: 'doctor'
+      role: 'doctor',
     });
   });
 
@@ -40,8 +40,9 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
 
   // API Tests (50+ tests)
   test.describe('API Endpoints', () => {
-    
-    test('notifications - GET request should return valid response', async ({ request }) => {
+    test('notifications - GET request should return valid response', async ({
+      request,
+    }) => {
       const response = await request.get(`/api/notifications`);
       expect(response.status()).toBe(200);
       const data = await response.json();
@@ -49,91 +50,113 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
       expect(data).toHaveProperty('data');
     });
 
-    test('notifications - POST request should create new record', async ({ request }) => {
+    test('notifications - POST request should create new record', async ({
+      request,
+    }) => {
       const testData = {
         name: 'Test Record',
         phone: '+966501234570',
-        email: 'test@example.com'
+        email: 'test@example.com',
       };
-      
+
       const response = await request.post(`/api/notifications`, {
-        data: testData
+        data: testData,
       });
-      
+
       expect(response.status()).toBe(200);
       const data = await response.json();
       expect(data.success).toBe(true);
       expect(data.data).toHaveProperty('id');
     });
 
-    test('notifications - Invalid data should return 400 error', async ({ request }) => {
+    test('notifications - Invalid data should return 400 error', async ({
+      request,
+    }) => {
       const invalidData = {
         // Missing required fields
       };
-      
+
       const response = await request.post(`/api/notifications`, {
-        data: invalidData
+        data: invalidData,
       });
-      
+
       expect(response.status()).toBe(400);
     });
 
-    test('notifications - Unauthorized request should return 401', async ({ request }) => {
+    test('notifications - Unauthorized request should return 401', async ({
+      request,
+    }) => {
       const response = await request.get(`/api/notifications`, {
         headers: {
-          'Authorization': 'Bearer invalid-token'
-        }
+          Authorization: 'Bearer invalid-token',
+        },
       });
-      
+
       expect(response.status()).toBe(401);
     });
 
-    test('notifications - Response should have proper structure', async ({ request }) => {
+    test('notifications - Response should have proper structure', async ({
+      request,
+    }) => {
       const response = await request.get(`/api/notifications`);
       const data = await response.json();
-      
+
       expect(data).toHaveProperty('success');
       expect(data).toHaveProperty('data');
       expect(Array.isArray(data.data)).toBe(true);
     });
 
-    test('notifications - Pagination should work correctly', async ({ request }) => {
-      const response = await request.get(`/api/notifications?limit=10&offset=0`);
+    test('notifications - Pagination should work correctly', async ({
+      request,
+    }) => {
+      const response = await request.get(
+        `/api/notifications?limit=10&offset=0`
+      );
       const data = await response.json();
-      
+
       expect(data).toHaveProperty('pagination');
       expect(data.pagination).toHaveProperty('total');
       expect(data.pagination).toHaveProperty('limit');
       expect(data.pagination).toHaveProperty('offset');
     });
 
-    test('notifications - Search functionality should work', async ({ request }) => {
+    test('notifications - Search functionality should work', async ({
+      request,
+    }) => {
       const response = await request.get(`/api/notifications?search=test`);
       const data = await response.json();
-      
+
       expect(response.status()).toBe(200);
       expect(data.success).toBe(true);
     });
 
-    test('notifications - Filtering should work correctly', async ({ request }) => {
+    test('notifications - Filtering should work correctly', async ({
+      request,
+    }) => {
       const response = await request.get(`/api/notifications?status=active`);
       const data = await response.json();
-      
+
       expect(response.status()).toBe(200);
       expect(data.success).toBe(true);
     });
 
-    test('notifications - Sorting should work correctly', async ({ request }) => {
-      const response = await request.get(`/api/notifications?sort=created_at&order=desc`);
+    test('notifications - Sorting should work correctly', async ({
+      request,
+    }) => {
+      const response = await request.get(
+        `/api/notifications?sort=created_at&order=desc`
+      );
       const data = await response.json();
-      
+
       expect(response.status()).toBe(200);
       expect(data.success).toBe(true);
     });
 
-    test('notifications - Error handling should be proper', async ({ request }) => {
+    test('notifications - Error handling should be proper', async ({
+      request,
+    }) => {
       const response = await request.get(`/api/notifications/invalid-id`);
-      
+
       expect([400, 404, 500]).toContain(response.status());
     });
   });
@@ -152,7 +175,7 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
         name: 'CRUD Test User',
         phone: '+966501234571',
         email: 'crud@example.com',
-        role: 'patient'
+        role: 'patient',
       });
       expect(newRecord).toHaveProperty('id');
 
@@ -162,7 +185,7 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
 
       // Update
       const updatedRecord = await realDB.updateUser(newRecord.id, {
-        name: 'Updated CRUD Test User'
+        name: 'Updated CRUD Test User',
       });
       expect(updatedRecord.name).toBe('Updated CRUD Test User');
 
@@ -181,7 +204,7 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
       try {
         await realDB.createUser({
           // Invalid data - missing required fields
-          phone: 'invalid-phone'
+          phone: 'invalid-phone',
         });
         expect(false).toBe(true); // Should not reach here
       } catch (error) {
@@ -196,7 +219,7 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
           name: 'Transaction Test',
           phone: '+966501234572',
           email: 'transaction@example.com',
-          role: 'patient'
+          role: 'patient',
         });
         expect(true).toBe(true);
       } catch (error) {
@@ -208,14 +231,16 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
     test('Concurrent operations should work', async () => {
       const promises = [];
       for (let i = 0; i < 5; i++) {
-        promises.push(realDB.createUser({
-          name: `Concurrent Test ${i}`,
-          phone: `+96650123457${i}`,
-          email: `concurrent${i}@example.com`,
-          role: 'patient'
-        }));
+        promises.push(
+          realDB.createUser({
+            name: `Concurrent Test ${i}`,
+            phone: `+96650123457${i}`,
+            email: `concurrent${i}@example.com`,
+            role: 'patient',
+          })
+        );
       }
-      
+
       const results = await Promise.allSettled(promises);
       const successful = results.filter(r => r.status === 'fulfilled');
       expect(successful.length).toBeGreaterThan(0);
@@ -226,7 +251,7 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
         name: 'Integrity Test',
         phone: '+966501234573',
         email: 'integrity@example.com',
-        role: 'patient'
+        role: 'patient',
       });
 
       const retrieved = await realDB.getUser(record.id);
@@ -239,7 +264,7 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
       const startTime = Date.now();
       await realDB.searchUsers('', 'patient');
       const endTime = Date.now();
-      
+
       expect(endTime - startTime).toBeLessThan(5000); // Should complete within 5 seconds
     });
 
@@ -250,7 +275,7 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
           name: '',
           phone: '',
           email: 'invalid-email',
-          role: 'invalid-role'
+          role: 'invalid-role',
         });
       } catch (error) {
         // Error should be logged
@@ -263,12 +288,14 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
         name: 'Cleanup Test',
         phone: '+966501234574',
         email: 'cleanup@example.com',
-        role: 'patient'
+        role: 'patient',
       });
 
       if (realDB.deleteUser) {
         await realDB.deleteUser(testRecord.id);
-        const deletedRecord = await realDB.getUser(testRecord.id).catch(() => null);
+        const deletedRecord = await realDB
+          .getUser(testRecord.id)
+          .catch(() => null);
         expect(deletedRecord).toBeNull();
       }
     });
@@ -276,14 +303,15 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
 
   // UI Tests (20+ tests)
   test.describe('User Interface', () => {
-    
     test('notifications page should load correctly', async ({ page }) => {
       await page.goto(`/notifications`);
       await expect(page).toHaveTitle(/مركز الهمم/);
       await expect(page.locator('body')).toBeVisible();
     });
 
-    test('notifications page should have proper navigation', async ({ page }) => {
+    test('notifications page should have proper navigation', async ({
+      page,
+    }) => {
       await page.goto(`/notifications`);
       await expect(page.locator('nav')).toBeVisible();
       await expect(page.locator('a[href="/dashboard"]')).toBeVisible();
@@ -291,23 +319,25 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
 
     test('notifications page should be responsive', async ({ page }) => {
       await page.goto(`/notifications`);
-      
+
       // Test desktop view
       await page.setViewportSize({ width: 1920, height: 1080 });
       await expect(page.locator('main')).toBeVisible();
-      
+
       // Test mobile view
       await page.setViewportSize({ width: 375, height: 667 });
       await expect(page.locator('main')).toBeVisible();
     });
 
-    test('notifications page should have proper accessibility', async ({ page }) => {
+    test('notifications page should have proper accessibility', async ({
+      page,
+    }) => {
       await page.goto(`/notifications`);
-      
+
       // Check for proper heading structure
       const headings = await page.locator('h1, h2, h3, h4, h5, h6').all();
       expect(headings.length).toBeGreaterThan(0);
-      
+
       // Check for proper form labels
       const inputs = await page.locator('input').all();
       for (const input of inputs) {
@@ -319,28 +349,36 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
       }
     });
 
-    test('notifications page should handle loading states', async ({ page }) => {
+    test('notifications page should handle loading states', async ({
+      page,
+    }) => {
       await page.goto(`/notifications`);
-      
+
       // Check for loading indicators
-      const loadingElements = await page.locator('[data-testid="loading"], .loading, .spinner').all();
+      const loadingElements = await page
+        .locator('[data-testid="loading"], .loading, .spinner')
+        .all();
       if (loadingElements.length > 0) {
         await expect(loadingElements[0]).toBeVisible();
       }
     });
 
-    test('notifications page should handle errors gracefully', async ({ page }) => {
+    test('notifications page should handle errors gracefully', async ({
+      page,
+    }) => {
       await page.goto(`/notifications`);
-      
+
       // Simulate network error
       await page.route('**/api/**', route => route.abort());
-      
+
       // Try to interact with the page
       const buttons = await page.locator('button').all();
       if (buttons.length > 0) {
         await buttons[0].click();
         // Should show error message
-        await expect(page.locator('[data-testid="error"], .error')).toBeVisible();
+        await expect(
+          page.locator('[data-testid="error"], .error')
+        ).toBeVisible();
       }
     });
   });
@@ -352,30 +390,32 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
       await page.fill('input[name="email"]', 'test@example.com');
       await page.fill('input[name="password"]', 'password123');
       await page.click('button[type="submit"]');
-      
+
       // Should redirect to dashboard
       await expect(page).toHaveURL(/dashboard/);
     });
 
     test('Module should integrate with database', async ({ page }) => {
       await page.goto('/notifications');
-      
+
       // Wait for data to load
       await page.waitForLoadState('networkidle');
-      
+
       // Check that data is displayed
-      const dataElements = await page.locator('[data-testid="data-item"], .data-item').all();
+      const dataElements = await page
+        .locator('[data-testid="data-item"], .data-item')
+        .all();
       expect(dataElements.length).toBeGreaterThanOrEqual(0);
     });
 
     test('Module should handle real-time updates', async ({ page }) => {
       await page.goto('/notifications');
-      
+
       // Simulate real-time update
       await page.evaluate(() => {
         window.dispatchEvent(new CustomEvent('data-updated'));
       });
-      
+
       // Page should handle the update
       await page.waitForTimeout(1000);
     });
@@ -384,7 +424,7 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
       // Test with admin role
       await page.goto('/notifications');
       await expect(page.locator('body')).toBeVisible();
-      
+
       // Test with patient role
       await page.goto('/notifications');
       await expect(page.locator('body')).toBeVisible();
@@ -393,36 +433,38 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
     test('Module should handle concurrent users', async ({ browser }) => {
       const context1 = await browser.newContext();
       const context2 = await browser.newContext();
-      
+
       const page1 = await context1.newPage();
       const page2 = await context2.newPage();
-      
+
       await Promise.all([
         page1.goto('/notifications'),
-        page2.goto('/notifications')
+        page2.goto('/notifications'),
       ]);
-      
+
       await expect(page1.locator('body')).toBeVisible();
       await expect(page2.locator('body')).toBeVisible();
-      
+
       await context1.close();
       await context2.close();
     });
 
     test('Module should handle data synchronization', async ({ page }) => {
       await page.goto('/notifications');
-      
+
       // Create new data
-      const createButton = page.locator('button:has-text("Create"), button:has-text("Add")').first();
+      const createButton = page
+        .locator('button:has-text("Create"), button:has-text("Add")')
+        .first();
       if (await createButton.isVisible()) {
         await createButton.click();
-        
+
         // Fill form
         const nameInput = page.locator('input[name="name"]');
         if (await nameInput.isVisible()) {
           await nameInput.fill('Sync Test');
           await page.click('button[type="submit"]');
-          
+
           // Data should appear in list
           await expect(page.locator('text=Sync Test')).toBeVisible();
         }
@@ -431,45 +473,53 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
 
     test('Module should handle offline scenarios', async ({ page }) => {
       await page.goto('/notifications');
-      
+
       // Go offline
       await page.context().setOffline(true);
-      
+
       // Try to interact with the page
       const buttons = await page.locator('button').all();
       if (buttons.length > 0) {
         await buttons[0].click();
         // Should show offline message
-        await expect(page.locator('text=offline, text=no connection')).toBeVisible();
+        await expect(
+          page.locator('text=offline, text=no connection')
+        ).toBeVisible();
       }
-      
+
       // Go back online
       await page.context().setOffline(false);
     });
 
     test('Module should handle data validation', async ({ page }) => {
       await page.goto('/notifications');
-      
+
       // Try to submit invalid data
       const form = page.locator('form').first();
       if (await form.isVisible()) {
         const submitButton = form.locator('button[type="submit"]');
         if (await submitButton.isVisible()) {
           await submitButton.click();
-          
+
           // Should show validation errors
-          await expect(page.locator('.error, [data-testid="error"]')).toBeVisible();
+          await expect(
+            page.locator('.error, [data-testid="error"]')
+          ).toBeVisible();
         }
       }
     });
 
     test('Module should handle pagination', async ({ page }) => {
       await page.goto('/notifications');
-      
+
       // Look for pagination controls
-      const pagination = page.locator('.pagination, [data-testid="pagination"]');
+      const pagination = page.locator(
+        '.pagination, [data-testid="pagination"]'
+      );
       if (await pagination.isVisible()) {
-        const nextButton = pagination.locator('button:has-text("Next"), button:has-text("التالي")');
+        const nextButton = pagination.locator(
+          'button:has-text("Next"), button:has-text("التالي")'
+        );
         if (await nextButton.isVisible()) {
           await nextButton.click();
           await page.waitForLoadState('networkidle');
@@ -479,9 +529,11 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
 
     test('Module should handle search functionality', async ({ page }) => {
       await page.goto('/notifications');
-      
+
       // Look for search input
-      const searchInput = page.locator('input[type="search"], input[placeholder*="search"], input[placeholder*="بحث"]');
+      const searchInput = page.locator(
+        'input[type="search"], input[placeholder*="search"], input[placeholder*="بحث"]'
+      );
       if (await searchInput.isVisible()) {
         await searchInput.fill('test');
         await page.keyboard.press('Enter');
@@ -497,7 +549,7 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
       await page.goto('/notifications');
       await page.waitForLoadState('networkidle');
       const endTime = Date.now();
-      
+
       expect(endTime - startTime).toBeLessThan(10000); // Should load within 10 seconds
     });
 
@@ -505,7 +557,7 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
       const startTime = Date.now();
       const response = await request.get('/api/notifications');
       const endTime = Date.now();
-      
+
       expect(response.status()).toBe(200);
       expect(endTime - startTime).toBeLessThan(5000); // Should respond within 5 seconds
     });
@@ -514,21 +566,23 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
       const startTime = Date.now();
       await realDB.searchUsers('', 'patient');
       const endTime = Date.now();
-      
+
       expect(endTime - startTime).toBeLessThan(3000); // Should complete within 3 seconds
     });
 
     test('Memory usage should be reasonable', async ({ page }) => {
       await page.goto('/notifications');
-      
+
       // Get memory usage
       const memoryInfo = await page.evaluate(() => {
-        return (performance as any).memory ? {
-          usedJSHeapSize: (performance as any).memory.usedJSHeapSize,
-          totalJSHeapSize: (performance as any).memory.totalJSHeapSize
-        } : null;
+        return (performance as any).memory
+          ? {
+              usedJSHeapSize: (performance as any).memory.usedJSHeapSize,
+              totalJSHeapSize: (performance as any).memory.totalJSHeapSize,
+            }
+          : null;
       });
-      
+
       if (memoryInfo) {
         expect(memoryInfo.usedJSHeapSize).toBeLessThan(100 * 1024 * 1024); // Less than 100MB
       }
@@ -536,13 +590,15 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
 
     test('Large datasets should be handled efficiently', async ({ page }) => {
       await page.goto('/notifications');
-      
+
       // Simulate large dataset
       await page.evaluate(() => {
-        const largeArray = new Array(10000).fill(0).map((_, i) => ({ id: i, name: `Item ${i}` }));
+        const largeArray = new Array(10000)
+          .fill(0)
+          .map((_, i) => ({ id: i, name: `Item ${i}` }));
         window.largeDataset = largeArray;
       });
-      
+
       // Page should still be responsive
       const buttons = await page.locator('button').all();
       if (buttons.length > 0) {
@@ -556,16 +612,16 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
   test.describe('Security Tests', () => {
     test('Should prevent XSS attacks', async ({ page }) => {
       await page.goto('/notifications');
-      
+
       // Try to inject malicious script
       const maliciousScript = '<script>alert("XSS")</script>';
       const inputs = await page.locator('input').all();
-      
+
       for (const input of inputs) {
         if (await input.isVisible()) {
           await input.fill(maliciousScript);
           await page.keyboard.press('Enter');
-          
+
           // Should not execute the script
           const alerts = await page.evaluate(() => window.alert);
           expect(alerts).toBeUndefined();
@@ -577,13 +633,13 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
       const maliciousData = {
         name: "'; DROP TABLE users; --",
         phone: '+966501234575',
-        email: 'sql@example.com'
+        email: 'sql@example.com',
       };
-      
+
       const response = await request.post('/api/notifications', {
-        data: maliciousData
+        data: maliciousData,
       });
-      
+
       // Should handle malicious input safely
       expect([200, 400, 422]).toContain(response.status());
     });
@@ -592,31 +648,33 @@ test.describe('NOTIFICATIONS Module - Notification system', () => {
       const invalidData = {
         name: 'A'.repeat(1000), // Too long
         phone: 'invalid-phone',
-        email: 'not-an-email'
+        email: 'not-an-email',
       };
-      
+
       const response = await request.post('/api/notifications', {
-        data: invalidData
+        data: invalidData,
       });
-      
+
       expect(response.status()).toBe(400);
     });
 
     test('Should handle authentication properly', async ({ request }) => {
       const response = await request.get('/api/notifications', {
         headers: {
-          'Authorization': 'Bearer invalid-token'
-        }
+          Authorization: 'Bearer invalid-token',
+        },
       });
-      
+
       expect(response.status()).toBe(401);
     });
 
     test('Should prevent CSRF attacks', async ({ page }) => {
       await page.goto('/notifications');
-      
+
       // Check for CSRF token
-      const csrfToken = await page.locator('input[name="_token"], input[name="csrf_token"]').first();
+      const csrfToken = await page
+        .locator('input[name="_token"], input[name="csrf_token"]')
+        .first();
       if (await csrfToken.isVisible()) {
         const token = await csrfToken.getAttribute('value');
         expect(token).toBeTruthy();

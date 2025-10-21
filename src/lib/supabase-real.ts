@@ -615,7 +615,8 @@ export class RealSupabaseManager {
   async getTrainingPrograms() {
     const { data, error } = await admin
       .from('training_programs')
-      .select(`
+      .select(
+        `
         id,
         title,
         description,
@@ -630,7 +631,8 @@ export class RealSupabaseManager {
         status,
         prerequisites,
         created_at
-      `)
+      `
+      )
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -642,7 +644,8 @@ export class RealSupabaseManager {
   async getTrainingProgress(patientId?: string) {
     let query = admin
       .from('training_progress')
-      .select(`
+      .select(
+        `
         id,
         patient_id,
         program_id,
@@ -652,7 +655,8 @@ export class RealSupabaseManager {
         completed_at,
         last_activity_at,
         training_programs!inner(title, category)
-      `)
+      `
+      )
       .order('started_at', { ascending: false });
 
     if (patientId) {
@@ -671,7 +675,8 @@ export class RealSupabaseManager {
   async getProgressGoals(patientId?: string) {
     let query = admin
       .from('progress_goals')
-      .select(`
+      .select(
+        `
         id,
         patient_id,
         title,
@@ -684,7 +689,8 @@ export class RealSupabaseManager {
         status,
         created_at,
         updated_at
-      `)
+      `
+      )
       .order('created_at', { ascending: false });
 
     if (patientId) {
@@ -702,7 +708,8 @@ export class RealSupabaseManager {
   async getAssessments(patientId?: string) {
     let query = admin
       .from('assessments')
-      .select(`
+      .select(
+        `
         id,
         patient_id,
         type,
@@ -712,7 +719,8 @@ export class RealSupabaseManager {
         status,
         completed_at,
         created_at
-      `)
+      `
+      )
       .order('created_at', { ascending: false });
 
     if (patientId) {
@@ -730,7 +738,8 @@ export class RealSupabaseManager {
   async getProgressReports(patientId?: string) {
     let query = admin
       .from('progress_reports')
-      .select(`
+      .select(
+        `
         id,
         patient_id,
         report_date,
@@ -740,7 +749,8 @@ export class RealSupabaseManager {
         recommendations,
         next_steps,
         created_at
-      `)
+      `
+      )
       .order('report_date', { ascending: false });
 
     if (patientId) {

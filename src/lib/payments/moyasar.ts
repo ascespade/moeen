@@ -34,7 +34,7 @@ export class MoyasarPaymentService {
       const response = await fetch(`${this.config.baseUrl}/payments`, {
         method: 'POST',
         headers: {
-          Authorization: `Basic ${Buffer.from(`${this.config.apiKey  }:`).toString('base64')}`,
+          Authorization: `Basic ${Buffer.from(`${this.config.apiKey}:`).toString('base64')}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -79,7 +79,7 @@ export class MoyasarPaymentService {
         {
           method: 'GET',
           headers: {
-            Authorization: `Basic ${Buffer.from(`${this.config.apiKey  }:`).toString('base64')}`,
+            Authorization: `Basic ${Buffer.from(`${this.config.apiKey}:`).toString('base64')}`,
           },
         }
       );
@@ -117,7 +117,7 @@ export class MoyasarPaymentService {
         {
           method: 'POST',
           headers: {
-            Authorization: `Basic ${Buffer.from(`${this.config.apiKey  }:`).toString('base64')}`,
+            Authorization: `Basic ${Buffer.from(`${this.config.apiKey}:`).toString('base64')}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({

@@ -75,15 +75,9 @@ export default function DesignSystemDemo() {
         </div>
 
         <div className='ds-flex ds-justify-center ds-gap-4 mt-6'>
-          <CTAButton variant='primary'>
-            Loading
-          </CTAButton>
-          <CTAButton variant='primary'>
-            Disabled
-          </CTAButton>
-          <CTAButton variant='primary'>
-            Full Width
-          </CTAButton>
+          <CTAButton variant='primary'>Loading</CTAButton>
+          <CTAButton variant='primary'>Disabled</CTAButton>
+          <CTAButton variant='primary'>Full Width</CTAButton>
         </div>
       </section>
 

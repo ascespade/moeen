@@ -99,7 +99,7 @@ const AnalyticsPage: React.FC = () => {
     try {
       setLoading(true);
       // في التطبيق الحقيقي، سيتم جلب البيانات من API
-          const analyticsData: AnalyticsData = {
+      const analyticsData: AnalyticsData = {
         overview: {
           totalPatients: 156,
           activePatients: 142,

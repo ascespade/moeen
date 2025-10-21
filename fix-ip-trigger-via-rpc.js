@@ -106,7 +106,7 @@ async function fixIPTrigger() {
     await supabase.from('patients').delete().eq('id', patient[0].id);
   }
 
-  console.log(`\n${  '='.repeat(70)}`);
+  console.log(`\n${'='.repeat(70)}`);
   console.log('🎯 FINAL SOLUTION');
   console.log('='.repeat(70));
   console.log(`

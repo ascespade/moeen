@@ -118,8 +118,7 @@ function fixSupabaseClient() {
           !content.includes('import { createClient }') &&
           content.includes('supabase.')
         ) {
-          content =
-            `import { createClient } from '@/lib/supabase/client';\n${  content}`;
+          content = `import { createClient } from '@/lib/supabase/client';\n${content}`;
         }
 
         // Fix: const supabase = createClient();

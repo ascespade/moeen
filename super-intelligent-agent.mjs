@@ -3,7 +3,7 @@
 /**
  * 🧠 Super Intelligent Agent - AI Development & Enhancement v6.0
  * أجنت ذكي متقدم - يعمل كمطور خبير حقيقي
- * 
+ *
  * الميزات المتقدمة:
  * - ذكاء اصطناعي متقدم في التحليل
  * - خطة احتياطية شاملة
@@ -26,9 +26,21 @@ const __dirname = path.dirname(__filename);
 class SuperIntelligentAgent {
   constructor() {
     this.projectRoot = process.cwd();
-    this.logFile = path.join(this.projectRoot, 'logs', 'super-intelligent-agent.log');
-    this.reportFile = path.join(this.projectRoot, 'reports', 'super-intelligent-agent-report.md');
-    this.backupDir = path.join(this.projectRoot, 'backups', `backup-${Date.now()}`);
+    this.logFile = path.join(
+      this.projectRoot,
+      'logs',
+      'super-intelligent-agent.log'
+    );
+    this.reportFile = path.join(
+      this.projectRoot,
+      'reports',
+      'super-intelligent-agent-report.md'
+    );
+    this.backupDir = path.join(
+      this.projectRoot,
+      'backups',
+      `backup-${Date.now()}`
+    );
     this.isRunning = false;
     this.cycleCount = 0;
     this.maxCycles = Infinity;
@@ -75,16 +87,35 @@ class SuperIntelligentAgent {
 
   async ensureDirectories() {
     const dirs = [
-      'logs', 'reports', 'backups', 'tmp', 
-      'src/components', 'src/lib', 'src/utils',
-      'src/types', 'src/hooks', 'src/contexts',
-      'src/services', 'src/guards', 'src/middleware',
-      'tests/unit', 'tests/integration', 'tests/e2e', 'tests/security',
-      'docs/api', 'docs/user', 'docs/developer', 'docs/security',
-      'scripts/backup', 'scripts/security', 'scripts/performance',
-      'migrations', 'seeds', 'fixtures'
+      'logs',
+      'reports',
+      'backups',
+      'tmp',
+      'src/components',
+      'src/lib',
+      'src/utils',
+      'src/types',
+      'src/hooks',
+      'src/contexts',
+      'src/services',
+      'src/guards',
+      'src/middleware',
+      'tests/unit',
+      'tests/integration',
+      'tests/e2e',
+      'tests/security',
+      'docs/api',
+      'docs/user',
+      'docs/developer',
+      'docs/security',
+      'scripts/backup',
+      'scripts/security',
+      'scripts/performance',
+      'migrations',
+      'seeds',
+      'fixtures',
     ];
-    
+
     for (const dir of dirs) {
       try {
         await fs.mkdir(path.join(this.projectRoot, dir), { recursive: true });
@@ -96,30 +127,35 @@ class SuperIntelligentAgent {
 
   async createBackupStrategy() {
     await this.log('💾 إنشاء استراتيجية النسخ الاحتياطي...');
-    
+
     // إنشاء نسخة احتياطية كاملة
     await this.createFullBackup();
-    
+
     // إنشاء نقاط استعادة
     await this.createRestorePoints();
-    
+
     await this.log('✅ استراتيجية النسخ الاحتياطي جاهزة');
   }
 
   async createFullBackup() {
     try {
       await fs.mkdir(this.backupDir, { recursive: true });
-      
+
       // نسخ الملفات المهمة
       const importantFiles = [
-        'src', 'public', 'package.json', 'tsconfig.json',
-        'next.config.js', 'tailwind.config.cjs', 'eslint.config.js'
+        'src',
+        'public',
+        'package.json',
+        'tsconfig.json',
+        'next.config.js',
+        'tailwind.config.cjs',
+        'eslint.config.js',
       ];
-      
+
       for (const file of importantFiles) {
         const srcPath = path.join(this.projectRoot, file);
         const destPath = path.join(this.backupDir, file);
-        
+
         try {
           const stat = await fs.stat(srcPath);
           if (stat.isDirectory()) {
@@ -131,21 +167,24 @@ class SuperIntelligentAgent {
           // تجاهل الملفات غير الموجودة
         }
       }
-      
+
       await this.log(`✅ تم إنشاء نسخة احتياطية كاملة في: ${this.backupDir}`);
     } catch (error) {
-      await this.log(`❌ خطأ في إنشاء النسخة الاحتياطية: ${error.message}`, 'error');
+      await this.log(
+        `❌ خطأ في إنشاء النسخة الاحتياطية: ${error.message}`,
+        'error'
+      );
     }
   }
 
   async copyDirectory(src, dest) {
     await fs.mkdir(dest, { recursive: true });
     const entries = await fs.readdir(src, { withFileTypes: true });
-    
+
     for (const entry of entries) {
       const srcPath = path.join(src, entry.name);
       const destPath = path.join(dest, entry.name);
-      
+
       if (entry.isDirectory()) {
         await this.copyDirectory(srcPath, destPath);
       } else {
@@ -160,20 +199,20 @@ class SuperIntelligentAgent {
       { name: 'before-fixes', description: 'قبل الإصلاحات' },
       { name: 'after-fixes', description: 'بعد الإصلاحات' },
       { name: 'before-tests', description: 'قبل الاختبارات' },
-      { name: 'after-tests', description: 'بعد الاختبارات' }
+      { name: 'after-tests', description: 'بعد الاختبارات' },
     ];
-    
+
     for (const point of restorePoints) {
       const pointDir = path.join(this.backupDir, 'restore-points', point.name);
       await fs.mkdir(pointDir, { recursive: true });
-      
+
       const pointInfo = {
         name: point.name,
         description: point.description,
         timestamp: new Date().toISOString(),
-        status: 'created'
+        status: 'created',
       };
-      
+
       await fs.writeFile(
         path.join(pointDir, 'info.json'),
         JSON.stringify(pointInfo, null, 2)
@@ -183,7 +222,14 @@ class SuperIntelligentAgent {
 
   async log(message, level = 'info') {
     const timestamp = new Date().toISOString();
-    const prefix = level === 'error' ? '❌' : level === 'success' ? '✅' : level === 'warning' ? '⚠️' : 'ℹ️';
+    const prefix =
+      level === 'error'
+        ? '❌'
+        : level === 'success'
+          ? '✅'
+          : level === 'warning'
+            ? '⚠️'
+            : 'ℹ️';
     const logMessage = `[${timestamp}] ${prefix} ${message}`;
 
     try {
@@ -218,27 +264,32 @@ class SuperIntelligentAgent {
     const results = await Promise.allSettled(
       tasks.map(task => this.executeTask(task))
     );
-    
+
     return results.map((result, index) => ({
       task: tasks[index],
       success: result.status === 'fulfilled',
-      result: result.status === 'fulfilled' ? result.value : result.reason
+      result: result.status === 'fulfilled' ? result.value : result.reason,
     }));
   }
 
   async executeTask(task) {
     const { name, command, type, priority = 'medium' } = task;
     await this.log(`🔄 تنفيذ: ${name} (${priority})`);
-    
+
     const result = await this.runCommand(command, { silent: true });
-    
+
     if (result.success) {
       await this.log(`✅ نجح: ${name}`);
     } else {
       await this.log(`❌ فشل: ${name} - ${result.error}`, 'warning');
     }
-    
-    return { name, success: result.success, output: result.output, error: result.error };
+
+    return {
+      name,
+      success: result.success,
+      output: result.output,
+      error: result.error,
+    };
   }
 
   async comprehensiveSystemAnalysis() {
@@ -253,9 +304,9 @@ class SuperIntelligentAgent {
         unusedImports: 0,
         deadCode: 0,
         complexity: 0,
-        maintainability: 0
+        maintainability: 0,
       },
-      
+
       // الاختبارات
       testing: {
         unit: { passed: 0, failed: 0, coverage: 0, score: 0 },
@@ -264,9 +315,9 @@ class SuperIntelligentAgent {
         security: { passed: 0, failed: 0, score: 0 },
         performance: { passed: 0, failed: 0, score: 0 },
         accessibility: { passed: 0, failed: 0, score: 0 },
-        missing: []
+        missing: [],
       },
-      
+
       // البناء والأداء
       build: {
         success: false,
@@ -274,9 +325,9 @@ class SuperIntelligentAgent {
         performance: 0,
         lighthouse: 0,
         webVitals: { LCP: 0, FID: 0, CLS: 0 },
-        score: 0
+        score: 0,
       },
-      
+
       // الأمان
       security: {
         vulnerabilities: 0,
@@ -286,9 +337,9 @@ class SuperIntelligentAgent {
         authorization: false,
         dataValidation: false,
         encryption: false,
-        score: 0
+        score: 0,
       },
-      
+
       // الوظائف المفقودة
       missingFeatures: {
         brokenLinks: [],
@@ -298,9 +349,9 @@ class SuperIntelligentAgent {
         missingValidations: [],
         missingErrorHandling: [],
         missingLoadingStates: [],
-        missingEmptyStates: []
+        missingEmptyStates: [],
       },
-      
+
       // التنظيم والهيكلة
       organization: {
         fileStructure: 0,
@@ -309,9 +360,9 @@ class SuperIntelligentAgent {
         comments: 0,
         typeDefinitions: 0,
         interfaces: 0,
-        score: 0
+        score: 0,
       },
-      
+
       // الأداء
       performance: {
         loadTime: 0,
@@ -320,9 +371,9 @@ class SuperIntelligentAgent {
         cpuUsage: 0,
         networkRequests: 0,
         cacheEfficiency: 0,
-        score: 0
+        score: 0,
       },
-      
+
       // التوثيق
       documentation: {
         apiDocs: 0,
@@ -330,35 +381,37 @@ class SuperIntelligentAgent {
         developerDocs: 0,
         securityDocs: 0,
         deploymentDocs: 0,
-        score: 0
-      }
+        score: 0,
+      },
     };
 
     // فحص شامل للكود
     await this.analyzeCodeQuality(analysis);
-    
+
     // فحص شامل للاختبارات
     await this.analyzeTesting(analysis);
-    
+
     // فحص شامل للأمان
     await this.analyzeSecurity(analysis);
-    
+
     // فحص شامل للأداء
     await this.analyzePerformance(analysis);
-    
+
     // فحص شامل للوظائف
     await this.analyzeFeatures(analysis);
-    
+
     // فحص شامل للتنظيم
     await this.analyzeOrganization(analysis);
-    
+
     // فحص شامل للتوثيق
     await this.analyzeDocumentation(analysis);
 
     // حساب النقاط الإجمالية
     analysis.overallScore = this.calculateOverallScore(analysis);
 
-    await this.log(`📊 التحليل الشامل: النقاط الإجمالية ${analysis.overallScore}%`);
+    await this.log(
+      `📊 التحليل الشامل: النقاط الإجمالية ${analysis.overallScore}%`
+    );
     await this.log(`🔍 جودة الكود: ${analysis.codeQuality.eslint.score}%`);
     await this.log(`🧪 الاختبارات: ${analysis.testing.unit.score}%`);
     await this.log(`🛡️ الأمان: ${analysis.security.score}%`);
@@ -371,10 +424,14 @@ class SuperIntelligentAgent {
     await this.log('🔍 تحليل جودة الكود...');
 
     // فحص ESLint
-    const eslintResult = await this.runCommand('npm run lint:check', { silent: true });
+    const eslintResult = await this.runCommand('npm run lint:check', {
+      silent: true,
+    });
     if (!eslintResult.success) {
       const output = eslintResult.output || eslintResult.error || '';
-      const errorMatch = output.match(/(\d+) problems \((\d+) errors, (\d+) warnings\)/);
+      const errorMatch = output.match(
+        /(\d+) problems \((\d+) errors, (\d+) warnings\)/
+      );
       if (errorMatch) {
         analysis.codeQuality.eslint.errors = parseInt(errorMatch[2]);
         analysis.codeQuality.eslint.warnings = parseInt(errorMatch[3]);
@@ -382,28 +439,68 @@ class SuperIntelligentAgent {
     }
 
     // فحص TypeScript
-    const tsResult = await this.runCommand('npm run type:check', { silent: true });
+    const tsResult = await this.runCommand('npm run type:check', {
+      silent: true,
+    });
     if (!tsResult.success) {
       const output = tsResult.output || tsResult.error || '';
-      analysis.codeQuality.typescript.errors = (output.match(/error TS/g) || []).length;
+      analysis.codeQuality.typescript.errors = (
+        output.match(/error TS/g) || []
+      ).length;
     }
 
     // حساب النقاط
-    const totalIssues = analysis.codeQuality.eslint.errors + analysis.codeQuality.eslint.warnings + analysis.codeQuality.typescript.errors;
-    analysis.codeQuality.eslint.score = Math.max(0, 100 - (totalIssues * 2));
-    analysis.codeQuality.typescript.score = Math.max(0, 100 - (analysis.codeQuality.typescript.errors * 5));
+    const totalIssues =
+      analysis.codeQuality.eslint.errors +
+      analysis.codeQuality.eslint.warnings +
+      analysis.codeQuality.typescript.errors;
+    analysis.codeQuality.eslint.score = Math.max(0, 100 - totalIssues * 2);
+    analysis.codeQuality.typescript.score = Math.max(
+      0,
+      100 - analysis.codeQuality.typescript.errors * 5
+    );
   }
 
   async analyzeTesting(analysis) {
     await this.log('🧪 تحليل الاختبارات...');
 
     const testResults = await this.runParallelTasks([
-      { name: 'Unit Tests', command: 'npm run test:unit', type: 'test', priority: 'high' },
-      { name: 'Integration Tests', command: 'npm run test:integration', type: 'test', priority: 'high' },
-      { name: 'E2E Tests', command: 'npm run test:e2e', type: 'test', priority: 'high' },
-      { name: 'Security Tests', command: 'npm run test:security', type: 'test', priority: 'high' },
-      { name: 'Performance Tests', command: 'npm run test:performance', type: 'test', priority: 'medium' },
-      { name: 'Accessibility Tests', command: 'npm run test:accessibility', type: 'test', priority: 'medium' }
+      {
+        name: 'Unit Tests',
+        command: 'npm run test:unit',
+        type: 'test',
+        priority: 'high',
+      },
+      {
+        name: 'Integration Tests',
+        command: 'npm run test:integration',
+        type: 'test',
+        priority: 'high',
+      },
+      {
+        name: 'E2E Tests',
+        command: 'npm run test:e2e',
+        type: 'test',
+        priority: 'high',
+      },
+      {
+        name: 'Security Tests',
+        command: 'npm run test:security',
+        type: 'test',
+        priority: 'high',
+      },
+      {
+        name: 'Performance Tests',
+        command: 'npm run test:performance',
+        type: 'test',
+        priority: 'medium',
+      },
+      {
+        name: 'Accessibility Tests',
+        command: 'npm run test:accessibility',
+        type: 'test',
+        priority: 'medium',
+      },
     ]);
 
     let totalPassed = 0;
@@ -457,18 +554,44 @@ class SuperIntelligentAgent {
 
     // حساب النقاط
     const totalTests = totalPassed + totalFailed;
-    analysis.testing.unit.score = totalTests > 0 ? (totalPassed / totalTests) * 100 : 0;
+    analysis.testing.unit.score =
+      totalTests > 0 ? (totalPassed / totalTests) * 100 : 0;
   }
 
   async analyzeSecurity(analysis) {
     await this.log('🛡️ تحليل الأمان...');
 
     const securityChecks = await this.runParallelTasks([
-      { name: 'Vulnerability Scan', command: 'npm audit', type: 'security', priority: 'high' },
-      { name: 'Dependency Check', command: 'npm outdated', type: 'security', priority: 'high' },
-      { name: 'Security Headers', command: 'node scripts/check-security-headers.js', type: 'security', priority: 'high' },
-      { name: 'Authentication Check', command: 'node scripts/check-authentication.js', type: 'security', priority: 'high' },
-      { name: 'Data Validation Check', command: 'node scripts/check-data-validation.js', type: 'security', priority: 'high' }
+      {
+        name: 'Vulnerability Scan',
+        command: 'npm audit',
+        type: 'security',
+        priority: 'high',
+      },
+      {
+        name: 'Dependency Check',
+        command: 'npm outdated',
+        type: 'security',
+        priority: 'high',
+      },
+      {
+        name: 'Security Headers',
+        command: 'node scripts/check-security-headers.js',
+        type: 'security',
+        priority: 'high',
+      },
+      {
+        name: 'Authentication Check',
+        command: 'node scripts/check-authentication.js',
+        type: 'security',
+        priority: 'high',
+      },
+      {
+        name: 'Data Validation Check',
+        command: 'node scripts/check-data-validation.js',
+        type: 'security',
+        priority: 'high',
+      },
     ]);
 
     let securityScore = 0;
@@ -487,10 +610,30 @@ class SuperIntelligentAgent {
     await this.log('⚡ تحليل الأداء...');
 
     const performanceChecks = await this.runParallelTasks([
-      { name: 'Bundle Analysis', command: 'npm run build:analyze', type: 'performance', priority: 'high' },
-      { name: 'Lighthouse Audit', command: 'npx lighthouse http://localhost:3000 --output=json', type: 'performance', priority: 'high' },
-      { name: 'Memory Usage', command: 'node scripts/check-memory-usage.js', type: 'performance', priority: 'medium' },
-      { name: 'Load Time', command: 'node scripts/check-load-time.js', type: 'performance', priority: 'high' }
+      {
+        name: 'Bundle Analysis',
+        command: 'npm run build:analyze',
+        type: 'performance',
+        priority: 'high',
+      },
+      {
+        name: 'Lighthouse Audit',
+        command: 'npx lighthouse http://localhost:3000 --output=json',
+        type: 'performance',
+        priority: 'high',
+      },
+      {
+        name: 'Memory Usage',
+        command: 'node scripts/check-memory-usage.js',
+        type: 'performance',
+        priority: 'medium',
+      },
+      {
+        name: 'Load Time',
+        command: 'node scripts/check-load-time.js',
+        type: 'performance',
+        priority: 'high',
+      },
     ]);
 
     let performanceScore = 0;
@@ -510,21 +653,25 @@ class SuperIntelligentAgent {
 
     // فحص الروابط المكسورة
     analysis.missingFeatures.brokenLinks = await this.findBrokenLinks();
-    
+
     // فحص الأزرار غير المربوطة
     analysis.missingFeatures.missingButtons = await this.findMissingButtons();
-    
+
     // فحص المكونات غير المكتملة
-    analysis.missingFeatures.incompleteComponents = await this.findIncompleteComponents();
-    
+    analysis.missingFeatures.incompleteComponents =
+      await this.findIncompleteComponents();
+
     // فحص معالجة الأخطاء
-    analysis.missingFeatures.missingErrorHandling = await this.findMissingErrorHandling();
-    
+    analysis.missingFeatures.missingErrorHandling =
+      await this.findMissingErrorHandling();
+
     // فحص حالات التحميل
-    analysis.missingFeatures.missingLoadingStates = await this.findMissingLoadingStates();
-    
+    analysis.missingFeatures.missingLoadingStates =
+      await this.findMissingLoadingStates();
+
     // فحص حالات الفراغ
-    analysis.missingFeatures.missingEmptyStates = await this.findMissingEmptyStates();
+    analysis.missingFeatures.missingEmptyStates =
+      await this.findMissingEmptyStates();
   }
 
   async analyzeOrganization(analysis) {
@@ -533,27 +680,48 @@ class SuperIntelligentAgent {
     // فحص هيكل الملفات
     const fileStructure = await this.checkFileStructure();
     analysis.organization.fileStructure = fileStructure;
-    
+
     // فحص تسمية الملفات
     const namingConventions = await this.checkNamingConventions();
     analysis.organization.namingConventions = namingConventions;
-    
+
     // فحص التوثيق
     const documentation = await this.checkDocumentation();
     analysis.organization.documentation = documentation;
-    
+
     // حساب النقاط
-    analysis.organization.score = (fileStructure + namingConventions + documentation) / 3;
+    analysis.organization.score =
+      (fileStructure + namingConventions + documentation) / 3;
   }
 
   async analyzeDocumentation(analysis) {
     await this.log('📚 تحليل التوثيق...');
 
     const docChecks = await this.runParallelTasks([
-      { name: 'API Documentation', command: 'node scripts/check-api-docs.js', type: 'documentation', priority: 'medium' },
-      { name: 'User Documentation', command: 'node scripts/check-user-docs.js', type: 'documentation', priority: 'medium' },
-      { name: 'Developer Documentation', command: 'node scripts/check-dev-docs.js', type: 'documentation', priority: 'medium' },
-      { name: 'Security Documentation', command: 'node scripts/check-security-docs.js', type: 'documentation', priority: 'high' }
+      {
+        name: 'API Documentation',
+        command: 'node scripts/check-api-docs.js',
+        type: 'documentation',
+        priority: 'medium',
+      },
+      {
+        name: 'User Documentation',
+        command: 'node scripts/check-user-docs.js',
+        type: 'documentation',
+        priority: 'medium',
+      },
+      {
+        name: 'Developer Documentation',
+        command: 'node scripts/check-dev-docs.js',
+        type: 'documentation',
+        priority: 'medium',
+      },
+      {
+        name: 'Security Documentation',
+        command: 'node scripts/check-security-docs.js',
+        type: 'documentation',
+        priority: 'high',
+      },
     ]);
 
     let docScore = 0;
@@ -575,10 +743,10 @@ class SuperIntelligentAgent {
       for (const file of files) {
         const content = await fs.readFile(file, 'utf8');
         const linkMatches = content.match(/href=["']([^"']+)["']/g) || [];
-        
+
         for (const match of linkMatches) {
           const link = match.match(/href=["']([^"']+)["']/)[1];
-          if (link.startsWith('/') && !await this.checkLinkExists(link)) {
+          if (link.startsWith('/') && !(await this.checkLinkExists(link))) {
             brokenLinks.push({ file, link });
           }
         }
@@ -596,7 +764,7 @@ class SuperIntelligentAgent {
       for (const file of files) {
         const content = await fs.readFile(file, 'utf8');
         const buttonMatches = content.match(/<button[^>]*>/g) || [];
-        
+
         for (const match of buttonMatches) {
           if (!match.includes('onClick') && !match.includes('onSubmit')) {
             missingButtons.push({ file, button: match });
@@ -615,11 +783,16 @@ class SuperIntelligentAgent {
       const files = await this.getAllSourceFiles();
       for (const file of files) {
         const content = await fs.readFile(file, 'utf8');
-        
-        if (content.includes('TODO') || content.includes('FIXME') || content.includes('// TODO') || content.includes('// FIXME')) {
+
+        if (
+          content.includes('TODO') ||
+          content.includes('FIXME') ||
+          content.includes('// TODO') ||
+          content.includes('// FIXME')
+        ) {
           incompleteComponents.push({ file, type: 'TODO/FIXME' });
         }
-        
+
         if (content.includes('function') && !content.includes('return')) {
           incompleteComponents.push({ file, type: 'Missing Return' });
         }
@@ -636,17 +809,23 @@ class SuperIntelligentAgent {
       const files = await this.getAllSourceFiles();
       for (const file of files) {
         const content = await fs.readFile(file, 'utf8');
-        
+
         if (content.includes('try') && !content.includes('catch')) {
           missingErrorHandling.push({ file, type: 'Missing Catch Block' });
         }
-        
+
         if (content.includes('fetch') && !content.includes('catch')) {
-          missingErrorHandling.push({ file, type: 'Missing Fetch Error Handling' });
+          missingErrorHandling.push({
+            file,
+            type: 'Missing Fetch Error Handling',
+          });
         }
       }
     } catch (error) {
-      await this.log(`⚠️ خطأ في فحص معالجة الأخطاء: ${error.message}`, 'warning');
+      await this.log(
+        `⚠️ خطأ في فحص معالجة الأخطاء: ${error.message}`,
+        'warning'
+      );
     }
     return missingErrorHandling;
   }
@@ -657,17 +836,23 @@ class SuperIntelligentAgent {
       const files = await this.getAllSourceFiles();
       for (const file of files) {
         const content = await fs.readFile(file, 'utf8');
-        
+
         if (content.includes('useState') && !content.includes('loading')) {
           missingLoadingStates.push({ file, type: 'Missing Loading State' });
         }
-        
+
         if (content.includes('fetch') && !content.includes('loading')) {
-          missingLoadingStates.push({ file, type: 'Missing Fetch Loading State' });
+          missingLoadingStates.push({
+            file,
+            type: 'Missing Fetch Loading State',
+          });
         }
       }
     } catch (error) {
-      await this.log(`⚠️ خطأ في فحص حالات التحميل: ${error.message}`, 'warning');
+      await this.log(
+        `⚠️ خطأ في فحص حالات التحميل: ${error.message}`,
+        'warning'
+      );
     }
     return missingLoadingStates;
   }
@@ -678,8 +863,12 @@ class SuperIntelligentAgent {
       const files = await this.getAllSourceFiles();
       for (const file of files) {
         const content = await fs.readFile(file, 'utf8');
-        
-        if (content.includes('map') && !content.includes('empty') && !content.includes('no data')) {
+
+        if (
+          content.includes('map') &&
+          !content.includes('empty') &&
+          !content.includes('no data')
+        ) {
           missingEmptyStates.push({ file, type: 'Missing Empty State' });
         }
       }
@@ -692,11 +881,11 @@ class SuperIntelligentAgent {
   async getAllSourceFiles() {
     const files = [];
     const extensions = ['.ts', '.tsx', '.js', '.jsx'];
-    
+
     try {
       const srcDir = path.join(this.projectRoot, 'src');
       const entries = await fs.readdir(srcDir, { withFileTypes: true });
-      
+
       for (const entry of entries) {
         const fullPath = path.join(srcDir, entry.name);
         if (entry.isDirectory()) {
@@ -709,7 +898,7 @@ class SuperIntelligentAgent {
     } catch (error) {
       await this.log(`⚠️ خطأ في قراءة الملفات: ${error.message}`, 'warning');
     }
-    
+
     return files;
   }
 
@@ -717,7 +906,7 @@ class SuperIntelligentAgent {
     const files = [];
     try {
       const entries = await fs.readdir(dir, { withFileTypes: true });
-      
+
       for (const entry of entries) {
         const fullPath = path.join(dir, entry.name);
         if (entry.isDirectory()) {
@@ -745,9 +934,14 @@ class SuperIntelligentAgent {
 
   async checkFileStructure() {
     // فحص بسيط لهيكل الملفات
-    const requiredDirs = ['src/components', 'src/lib', 'src/utils', 'src/types'];
+    const requiredDirs = [
+      'src/components',
+      'src/lib',
+      'src/utils',
+      'src/types',
+    ];
     let score = 0;
-    
+
     for (const dir of requiredDirs) {
       try {
         await fs.access(path.join(this.projectRoot, dir));
@@ -756,7 +950,7 @@ class SuperIntelligentAgent {
         // المجلد غير موجود
       }
     }
-    
+
     return score;
   }
 
@@ -765,14 +959,14 @@ class SuperIntelligentAgent {
     const files = await this.getAllSourceFiles();
     let score = 0;
     let totalFiles = files.length;
-    
+
     for (const file of files) {
       const fileName = path.basename(file);
       if (fileName.match(/^[a-z][a-zA-Z0-9]*\.(ts|tsx|js|jsx)$/)) {
         score += 1;
       }
     }
-    
+
     return totalFiles > 0 ? (score / totalFiles) * 100 : 0;
   }
 
@@ -781,25 +975,29 @@ class SuperIntelligentAgent {
     const files = await this.getAllSourceFiles();
     let score = 0;
     let totalFiles = files.length;
-    
+
     for (const file of files) {
       const content = await fs.readFile(file, 'utf8');
-      if (content.includes('/**') || content.includes('//') || content.includes('/*')) {
+      if (
+        content.includes('/**') ||
+        content.includes('//') ||
+        content.includes('/*')
+      ) {
         score += 1;
       }
     }
-    
+
     return totalFiles > 0 ? (score / totalFiles) * 100 : 0;
   }
 
   calculateOverallScore(analysis) {
     const weights = {
       codeQuality: 0.25,
-      testing: 0.20,
-      security: 0.20,
+      testing: 0.2,
+      security: 0.2,
       performance: 0.15,
-      organization: 0.10,
-      documentation: 0.10
+      organization: 0.1,
+      documentation: 0.1,
     };
 
     let totalScore = 0;
@@ -820,32 +1018,56 @@ class SuperIntelligentAgent {
 
     // إصلاحات عالية الأولوية
     if (analysis.codeQuality.eslint.errors > 0) {
-      fixes.push({ name: 'ESLint Fix', command: 'npm run lint:fix', priority: 'high' });
+      fixes.push({
+        name: 'ESLint Fix',
+        command: 'npm run lint:fix',
+        priority: 'high',
+      });
     }
 
     if (analysis.codeQuality.typescript.errors > 0) {
-      fixes.push({ name: 'TypeScript Fix', command: 'npm run type:fix', priority: 'high' });
+      fixes.push({
+        name: 'TypeScript Fix',
+        command: 'npm run type:fix',
+        priority: 'high',
+      });
     }
 
     if (analysis.security.score < this.securityThreshold) {
-      fixes.push({ name: 'Security Fix', command: 'npm audit fix', priority: 'high' });
+      fixes.push({
+        name: 'Security Fix',
+        command: 'npm audit fix',
+        priority: 'high',
+      });
     }
 
     // إصلاحات متوسطة الأولوية
     if (analysis.missingFeatures.brokenLinks.length > 0) {
-      fixes.push({ name: 'Fix Broken Links', command: 'node scripts/fix-broken-links.js', priority: 'medium' });
+      fixes.push({
+        name: 'Fix Broken Links',
+        command: 'node scripts/fix-broken-links.js',
+        priority: 'medium',
+      });
     }
 
     if (analysis.missingFeatures.missingButtons.length > 0) {
-      fixes.push({ name: 'Fix Missing Buttons', command: 'node scripts/fix-missing-buttons.js', priority: 'medium' });
+      fixes.push({
+        name: 'Fix Missing Buttons',
+        command: 'node scripts/fix-missing-buttons.js',
+        priority: 'medium',
+      });
     }
 
     // إصلاحات منخفضة الأولوية
-    fixes.push({ name: 'Prettier Format', command: 'npx prettier --write "src/**/*.{ts,tsx,js,jsx,json}"', priority: 'low' });
+    fixes.push({
+      name: 'Prettier Format',
+      command: 'npx prettier --write "src/**/*.{ts,tsx,js,jsx,json}"',
+      priority: 'low',
+    });
 
     // تشغيل الإصلاحات بالتوازي
     const results = await this.runParallelTasks(fixes);
-    
+
     let successCount = 0;
     results.forEach(result => {
       if (result.success) {
@@ -865,34 +1087,58 @@ class SuperIntelligentAgent {
 
     // تنفيذات عالية الأولوية
     if (analysis.missingFeatures.incompleteComponents.length > 0) {
-      implementations.push({ name: 'Create Missing Components', command: 'node scripts/create-missing-components.js', priority: 'high' });
+      implementations.push({
+        name: 'Create Missing Components',
+        command: 'node scripts/create-missing-components.js',
+        priority: 'high',
+      });
     }
 
     if (analysis.missingFeatures.missingAPIs.length > 0) {
-      implementations.push({ name: 'Create Missing APIs', command: 'node scripts/create-missing-apis.js', priority: 'high' });
+      implementations.push({
+        name: 'Create Missing APIs',
+        command: 'node scripts/create-missing-apis.js',
+        priority: 'high',
+      });
     }
 
     if (analysis.missingFeatures.missingErrorHandling.length > 0) {
-      implementations.push({ name: 'Add Error Handling', command: 'node scripts/add-error-handling.js', priority: 'high' });
+      implementations.push({
+        name: 'Add Error Handling',
+        command: 'node scripts/add-error-handling.js',
+        priority: 'high',
+      });
     }
 
     // تنفيذات متوسطة الأولوية
     if (analysis.missingFeatures.missingLoadingStates.length > 0) {
-      implementations.push({ name: 'Add Loading States', command: 'node scripts/add-loading-states.js', priority: 'medium' });
+      implementations.push({
+        name: 'Add Loading States',
+        command: 'node scripts/add-loading-states.js',
+        priority: 'medium',
+      });
     }
 
     if (analysis.missingFeatures.missingEmptyStates.length > 0) {
-      implementations.push({ name: 'Add Empty States', command: 'node scripts/add-empty-states.js', priority: 'medium' });
+      implementations.push({
+        name: 'Add Empty States',
+        command: 'node scripts/add-empty-states.js',
+        priority: 'medium',
+      });
     }
 
     // تنفيذات منخفضة الأولوية
     if (analysis.testing.missing.length > 0) {
-      implementations.push({ name: 'Create Missing Tests', command: 'node scripts/create-missing-tests.js', priority: 'low' });
+      implementations.push({
+        name: 'Create Missing Tests',
+        command: 'node scripts/create-missing-tests.js',
+        priority: 'low',
+      });
     }
 
     // تشغيل التنفيذات بالتوازي
     const results = await this.runParallelTasks(implementations);
-    
+
     let successCount = 0;
     results.forEach(result => {
       if (result.success) {
@@ -901,7 +1147,9 @@ class SuperIntelligentAgent {
       }
     });
 
-    await this.log(`✅ تم تنفيذ ${successCount}/${implementations.length} ميزة`);
+    await this.log(
+      `✅ تم تنفيذ ${successCount}/${implementations.length} ميزة`
+    );
     return successCount;
   }
 
@@ -912,20 +1160,41 @@ class SuperIntelligentAgent {
 
     // تحسينات عالية الأولوية
     if (analysis.performance.score < this.performanceThreshold) {
-      optimizations.push({ name: 'Bundle Optimization', command: 'npm run build:analyze', priority: 'high' });
-      optimizations.push({ name: 'Image Optimization', command: 'npx next-optimized-images', priority: 'high' });
+      optimizations.push({
+        name: 'Bundle Optimization',
+        command: 'npm run build:analyze',
+        priority: 'high',
+      });
+      optimizations.push({
+        name: 'Image Optimization',
+        command: 'npx next-optimized-images',
+        priority: 'high',
+      });
     }
 
     // تحسينات متوسطة الأولوية
-    optimizations.push({ name: 'CSS Optimization', command: 'npx purgecss --css src/**/*.css --content src/**/*.{js,jsx,ts,tsx}', priority: 'medium' });
-    optimizations.push({ name: 'Database Optimization', command: 'node scripts/optimize-database.js', priority: 'medium' });
+    optimizations.push({
+      name: 'CSS Optimization',
+      command:
+        'npx purgecss --css src/**/*.css --content src/**/*.{js,jsx,ts,tsx}',
+      priority: 'medium',
+    });
+    optimizations.push({
+      name: 'Database Optimization',
+      command: 'node scripts/optimize-database.js',
+      priority: 'medium',
+    });
 
     // تحسينات منخفضة الأولوية
-    optimizations.push({ name: 'Code Splitting', command: 'node scripts/optimize-code-splitting.js', priority: 'low' });
+    optimizations.push({
+      name: 'Code Splitting',
+      command: 'node scripts/optimize-code-splitting.js',
+      priority: 'low',
+    });
 
     // تشغيل التحسينات بالتوازي
     const results = await this.runParallelTasks(optimizations);
-    
+
     let successCount = 0;
     results.forEach(result => {
       if (result.success) {
@@ -934,7 +1203,9 @@ class SuperIntelligentAgent {
       }
     });
 
-    await this.log(`✅ تم تطبيق ${successCount}/${optimizations.length} تحسين أداء`);
+    await this.log(
+      `✅ تم تطبيق ${successCount}/${optimizations.length} تحسين أداء`
+    );
     return successCount;
   }
 
@@ -945,22 +1216,42 @@ class SuperIntelligentAgent {
 
     // معايير عالية الأولوية
     if (analysis.organization.score < 80) {
-      standards.push({ name: 'Clean Code Standards', command: 'node scripts/apply-clean-code.js', priority: 'high' });
-      standards.push({ name: 'Naming Conventions', command: 'node scripts/fix-naming-conventions.js', priority: 'high' });
+      standards.push({
+        name: 'Clean Code Standards',
+        command: 'node scripts/apply-clean-code.js',
+        priority: 'high',
+      });
+      standards.push({
+        name: 'Naming Conventions',
+        command: 'node scripts/fix-naming-conventions.js',
+        priority: 'high',
+      });
     }
 
     // معايير متوسطة الأولوية
-    standards.push({ name: 'File Organization', command: 'node scripts/organize-files.js', priority: 'medium' });
-    standards.push({ name: 'Type Definitions', command: 'node scripts/add-type-definitions.js', priority: 'medium' });
+    standards.push({
+      name: 'File Organization',
+      command: 'node scripts/organize-files.js',
+      priority: 'medium',
+    });
+    standards.push({
+      name: 'Type Definitions',
+      command: 'node scripts/add-type-definitions.js',
+      priority: 'medium',
+    });
 
     // معايير منخفضة الأولوية
     if (analysis.documentation.score < 70) {
-      standards.push({ name: 'Documentation', command: 'node scripts/generate-documentation.js', priority: 'low' });
+      standards.push({
+        name: 'Documentation',
+        command: 'node scripts/generate-documentation.js',
+        priority: 'low',
+      });
     }
 
     // تشغيل المعايير بالتوازي
     const results = await this.runParallelTasks(standards);
-    
+
     let successCount = 0;
     results.forEach(result => {
       if (result.success) {
@@ -978,21 +1269,49 @@ class SuperIntelligentAgent {
     const tests = [];
 
     // اختبارات عالية الأولوية
-    tests.push({ name: 'Unit Tests', command: 'npm run test:unit', priority: 'high' });
-    tests.push({ name: 'Integration Tests', command: 'npm run test:integration', priority: 'high' });
-    tests.push({ name: 'E2E Tests', command: 'npm run test:e2e', priority: 'high' });
-    tests.push({ name: 'Security Tests', command: 'npm run test:security', priority: 'high' });
+    tests.push({
+      name: 'Unit Tests',
+      command: 'npm run test:unit',
+      priority: 'high',
+    });
+    tests.push({
+      name: 'Integration Tests',
+      command: 'npm run test:integration',
+      priority: 'high',
+    });
+    tests.push({
+      name: 'E2E Tests',
+      command: 'npm run test:e2e',
+      priority: 'high',
+    });
+    tests.push({
+      name: 'Security Tests',
+      command: 'npm run test:security',
+      priority: 'high',
+    });
 
     // اختبارات متوسطة الأولوية
-    tests.push({ name: 'Performance Tests', command: 'npm run test:performance', priority: 'medium' });
-    tests.push({ name: 'Accessibility Tests', command: 'npm run test:accessibility', priority: 'medium' });
+    tests.push({
+      name: 'Performance Tests',
+      command: 'npm run test:performance',
+      priority: 'medium',
+    });
+    tests.push({
+      name: 'Accessibility Tests',
+      command: 'npm run test:accessibility',
+      priority: 'medium',
+    });
 
     // اختبارات منخفضة الأولوية
-    tests.push({ name: 'Visual Regression Tests', command: 'npm run test:visual', priority: 'low' });
+    tests.push({
+      name: 'Visual Regression Tests',
+      command: 'npm run test:visual',
+      priority: 'low',
+    });
 
     // تشغيل الاختبارات بالتوازي
     const results = await this.runParallelTasks(tests);
-    
+
     let passedCount = 0;
     results.forEach(result => {
       if (result.success) {
@@ -1002,7 +1321,11 @@ class SuperIntelligentAgent {
     });
 
     await this.log(`✅ نجح ${passedCount}/${tests.length} اختبار`);
-    return { passed: passedCount, total: tests.length, success: passedCount === tests.length };
+    return {
+      passed: passedCount,
+      total: tests.length,
+      success: passedCount === tests.length,
+    };
   }
 
   async generateComprehensiveReport(analysis) {
@@ -1177,7 +1500,7 @@ ${this.generateRecommendations(analysis)}
     await this.generateComprehensiveReport(analysis);
 
     // تحديد ما إذا كان يجب الاستمرار
-    const shouldContinue = 
+    const shouldContinue =
       analysis.overallScore < this.qualityThreshold ||
       analysis.codeQuality.eslint.errors > 0 ||
       analysis.codeQuality.typescript.errors > 0 ||
@@ -1200,7 +1523,7 @@ ${this.generateRecommendations(analysis)}
 
   async startContinuousBuilding() {
     await this.log('🚀 بدء البناء المستمر...');
-    
+
     // تشغيل الدورة الأولى فوراً
     await this.runCycle();
 
@@ -1245,9 +1568,11 @@ ${this.generateRecommendations(analysis)}
 
       // الحفاظ على العملية نشطة
       await new Promise(() => {}); // انتظار لا نهائي
-
     } catch (error) {
-      await this.log(`❌ خطأ في Super Intelligent Agent: ${error.message}`, 'error');
+      await this.log(
+        `❌ خطأ في Super Intelligent Agent: ${error.message}`,
+        'error'
+      );
       console.error(error);
     }
   }

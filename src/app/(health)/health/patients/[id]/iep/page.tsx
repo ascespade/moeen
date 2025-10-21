@@ -169,7 +169,7 @@ export default function PatientIEPPage() {
                     : 'bg-gray-100 text-gray-700'
                 }`}
               >
-                {iep.status === 'active' ? '✅ نشط' : `📋 ${  iep.status}`}
+                {iep.status === 'active' ? '✅ نشط' : `📋 ${iep.status}`}
               </div>
             </div>
           )}

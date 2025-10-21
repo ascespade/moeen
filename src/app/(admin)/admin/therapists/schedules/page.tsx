@@ -107,7 +107,7 @@ export default function TherapistSchedulesPage() {
       alert('تم إضافة الجدول بنجاح!');
     } catch (error: any) {
       logger.error('Error adding schedule', error);
-      alert(`خطأ: ${  error.message || 'فشل في إضافة الجدول'}`);
+      alert(`خطأ: ${error.message || 'فشل في إضافة الجدول'}`);
     } finally {
       setSaving(false);
     }

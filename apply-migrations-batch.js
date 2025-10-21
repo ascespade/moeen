@@ -38,7 +38,7 @@ async function executeSQLStatements(sql) {
 
     try {
       const { error } = await supabase.rpc('exec_sql', {
-        sql_query: `${statement  };`,
+        sql_query: `${statement};`,
       });
 
       if (
@@ -110,11 +110,11 @@ async function main() {
     await new Promise(resolve => setTimeout(resolve, 500));
   }
 
-  console.log(`\n${  '='.repeat(50)}`);
+  console.log(`\n${'='.repeat(50)}`);
   console.log('📊 Migration Summary:');
   console.log(`✅ Successful: ${totalSuccess}/${migrations.length}`);
   console.log(`❌ Failed: ${totalFailed}/${migrations.length}`);
-  console.log(`${'='.repeat(50)  }\n`);
+  console.log(`${'='.repeat(50)}\n`);
 
   if (totalSuccess === migrations.length) {
     console.log('🎉 All migrations applied successfully!');

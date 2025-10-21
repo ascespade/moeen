@@ -33,12 +33,13 @@ export function ThemeProvider({
     return null;
   });
   const [settings, setSettings] = useState<ThemeSettings>(
-    themeManager?.getSettings() || {
-      mode: 'light',
-      customColors: {},
-      typographyScale: 'medium',
-      rtl: false
-    } as ThemeSettings
+    themeManager?.getSettings() ||
+      ({
+        mode: 'light',
+        customColors: {},
+        typographyScale: 'medium',
+        rtl: false,
+      } as ThemeSettings)
   );
 
   useEffect(() => {

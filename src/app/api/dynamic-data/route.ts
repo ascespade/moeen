@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
       realDB.searchUsers('', 'patient'),
       realDB.searchUsers('', 'doctor'),
       realDB.getAppointments(),
-      realDB.getSessions('')
+      realDB.getSessions(''),
     ]);
 
     const dynamicData = {
@@ -27,20 +27,24 @@ export async function GET(request: NextRequest) {
       patients: patients.map((patient: any) => ({
         id: patient.id,
         name: patient.name || patient.full_name,
-        status: patient.is_active ? 'نشط' : 'غير نشط'
+        status: patient.is_active ? 'نشط' : 'غير نشط',
       })),
       doctors: doctors.map((doctor: any) => ({
         id: doctor.id,
         name: `د. ${doctor.name || doctor.full_name}`,
-        specialty: doctor.specialization || doctor.specialty || 'عام'
+        specialty: doctor.specialization || doctor.specialty || 'عام',
       })),
       appointments: appointments.map((appointment: any) => ({
         id: appointment.id,
         patient_id: appointment.patient_id,
         doctor_id: appointment.doctor_id,
-        date: appointment.scheduled_at ? appointment.scheduled_at.split('T')[0] : '',
-        time: appointment.scheduled_at ? appointment.scheduled_at.split('T')[1]?.substring(0, 5) : '',
-        status: appointment.status
+        date: appointment.scheduled_at
+          ? appointment.scheduled_at.split('T')[0]
+          : '',
+        time: appointment.scheduled_at
+          ? appointment.scheduled_at.split('T')[1]?.substring(0, 5)
+          : '',
+        status: appointment.status,
       })),
       contact_info: [
         {

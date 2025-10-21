@@ -239,3 +239,4 @@ class TestRunner {
 // Run tests
 const testRunner = new TestRunner();
 testRunner.run().catch(console.error);
+

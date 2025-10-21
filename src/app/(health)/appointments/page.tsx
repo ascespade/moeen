@@ -127,7 +127,7 @@ const AppointmentsPage: React.FC = () => {
       if (data.success) {
         loadAppointments(); // إعادة تحميل المواعيد
       } else {
-        alert(`فشل في إلغاء الموعد: ${  data.error}`);
+        alert(`فشل في إلغاء الموعد: ${data.error}`);
       }
     } catch (error) {
       alert('حدث خطأ في إلغاء الموعد');

@@ -276,9 +276,7 @@ export default function DynamicDataDashboard({ className }: DynamicDataProps) {
                     {contact.phone}
                   </p>
                   <Badge
-                    variant={
-                      contact.type === 'medical' ? 'error' : 'secondary'
-                    }
+                    variant={contact.type === 'medical' ? 'error' : 'secondary'}
                   >
                     {contact.type}
                   </Badge>

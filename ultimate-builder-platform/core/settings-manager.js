@@ -30,7 +30,7 @@ class SettingsManager {
 
     await this.loadConfig();
     await this.loadSecrets();
-    
+
     const action = await this.showMainMenu();
     await this.handleAction(action);
   }
@@ -41,12 +41,12 @@ class SettingsManager {
     } catch (error) {
       this.config = {
         platform: {
-          name: "Ultimate Builder Platform",
-          version: "1.0.0",
+          name: 'Ultimate Builder Platform',
+          version: '1.0.0',
           port: 3000,
           maxAgents: 256,
           backgroundMode: true,
-          autoSync: true
+          autoSync: true,
         },
         agents: {
           intelligentAgent: {
@@ -54,19 +54,19 @@ class SettingsManager {
             backgroundMode: true,
             autoSync: true,
             checkInterval: 30000,
-            syncInterval: 300000
-          }
+            syncInterval: 300000,
+          },
         },
         git: {
           autoCommit: true,
           autoPush: true,
-          commitMessage: "Auto-sync: {timestamp} - {fixes} fixes applied"
+          commitMessage: 'Auto-sync: {timestamp} - {fixes} fixes applied',
         },
         monitoring: {
           enabled: true,
           interval: 60000,
-          metrics: ["cpu", "memory", "disk", "network"]
-        }
+          metrics: ['cpu', 'memory', 'disk', 'network'],
+        },
       };
     }
   }
@@ -77,39 +77,39 @@ class SettingsManager {
     } catch (error) {
       this.secrets = {
         github: {
-          token: "",
-          username: "",
-          repository: ""
+          token: '',
+          username: '',
+          repository: '',
         },
         openai: {
-          apiKey: "",
-          model: "gpt-4",
-          maxTokens: 4000
+          apiKey: '',
+          model: 'gpt-4',
+          maxTokens: 4000,
         },
         supabase: {
-          url: "",
-          anonKey: "",
-          serviceRoleKey: ""
+          url: '',
+          anonKey: '',
+          serviceRoleKey: '',
         },
         vercel: {
-          token: "",
-          teamId: "",
-          projectId: ""
+          token: '',
+          teamId: '',
+          projectId: '',
         },
         aws: {
-          accessKeyId: "",
-          secretAccessKey: "",
-          region: "us-east-1"
+          accessKeyId: '',
+          secretAccessKey: '',
+          region: 'us-east-1',
         },
         mongodb: {
-          connectionString: "",
-          database: "ultimate_builder"
+          connectionString: '',
+          database: 'ultimate_builder',
         },
         redis: {
-          host: "localhost",
+          host: 'localhost',
           port: 6379,
-          password: ""
-        }
+          password: '',
+        },
       };
     }
   }
@@ -125,7 +125,7 @@ class SettingsManager {
       { name: '📊 إعدادات المراقبة', value: 'monitoring' },
       { name: '🧪 اختبار الاتصالات', value: 'test' },
       { name: '💾 حفظ الإعدادات', value: 'save' },
-      { name: '❌ خروج', value: 'exit' }
+      { name: '❌ خروج', value: 'exit' },
     ];
 
     const { action } = await inquirer.prompt([
@@ -133,8 +133,8 @@ class SettingsManager {
         type: 'list',
         name: 'action',
         message: 'اختر الإعداد المطلوب:',
-        choices
-      }
+        choices,
+      },
     ]);
 
     return action;
@@ -170,7 +170,9 @@ class SettingsManager {
         await this.saveSettings();
         break;
       case 'exit':
-        console.log(chalk.green('👋 شكراً لاستخدام Ultimate Builder Platform!'));
+        console.log(
+          chalk.green('👋 شكراً لاستخدام Ultimate Builder Platform!')
+        );
         process.exit(0);
         break;
     }
@@ -195,9 +197,9 @@ class SettingsManager {
           { name: 'Vercel Token', value: 'vercel' },
           { name: 'AWS Credentials', value: 'aws' },
           { name: 'MongoDB Connection', value: 'mongodb' },
-          { name: 'Redis Configuration', value: 'redis' }
-        ]
-      }
+          { name: 'Redis Configuration', value: 'redis' },
+        ],
+      },
     ]);
 
     await this.configureKey(keyType);
@@ -231,9 +233,13 @@ class SettingsManager {
 
   async configureGitHub() {
     console.log(chalk.yellow('\n📋 إعداد GitHub:\n'));
-    console.log('1. اذهب إلى GitHub.com > Settings > Developer settings > Personal access tokens');
+    console.log(
+      '1. اذهب إلى GitHub.com > Settings > Developer settings > Personal access tokens'
+    );
     console.log('2. اضغط "Generate new token (classic)"');
-    console.log('3. اختر الصلاحيات: repo, workflow, admin:org, admin:public_key');
+    console.log(
+      '3. اختر الصلاحيات: repo, workflow, admin:org, admin:public_key'
+    );
     console.log('4. انسخ المفتاح وأدخله هنا\n');
 
     const answers = await inquirer.prompt([
@@ -241,20 +247,20 @@ class SettingsManager {
         type: 'password',
         name: 'token',
         message: 'GitHub Personal Access Token:',
-        validate: (input) => input.length > 0 || 'المفتاح مطلوب'
+        validate: input => input.length > 0 || 'المفتاح مطلوب',
       },
       {
         type: 'input',
         name: 'username',
         message: 'GitHub Username:',
-        validate: (input) => input.length > 0 || 'اسم المستخدم مطلوب'
+        validate: input => input.length > 0 || 'اسم المستخدم مطلوب',
       },
       {
         type: 'input',
         name: 'repository',
         message: 'Repository Name (اختياري):',
-        default: 'ultimate-builder-project'
-      }
+        default: 'ultimate-builder-project',
+      },
     ]);
 
     this.secrets.github = answers;
@@ -273,7 +279,7 @@ class SettingsManager {
         type: 'password',
         name: 'apiKey',
         message: 'OpenAI API Key:',
-        validate: (input) => input.length > 0 || 'مفتاح API مطلوب'
+        validate: input => input.length > 0 || 'مفتاح API مطلوب',
       },
       {
         type: 'list',
@@ -282,17 +288,17 @@ class SettingsManager {
         choices: [
           { name: 'GPT-4 (الأقوى)', value: 'gpt-4' },
           { name: 'GPT-3.5 Turbo (أسرع)', value: 'gpt-3.5-turbo' },
-          { name: 'GPT-4 Turbo (متوازن)', value: 'gpt-4-turbo-preview' }
+          { name: 'GPT-4 Turbo (متوازن)', value: 'gpt-4-turbo-preview' },
         ],
-        default: 'gpt-4'
+        default: 'gpt-4',
       },
       {
         type: 'number',
         name: 'maxTokens',
         message: 'الحد الأقصى للرموز:',
         default: 4000,
-        validate: (input) => input > 0 || 'يجب أن يكون أكبر من 0'
-      }
+        validate: input => input > 0 || 'يجب أن يكون أكبر من 0',
+      },
     ]);
 
     this.secrets.openai = answers;
@@ -311,20 +317,20 @@ class SettingsManager {
         type: 'input',
         name: 'url',
         message: 'Supabase URL:',
-        validate: (input) => input.includes('supabase.co') || 'URL غير صحيح'
+        validate: input => input.includes('supabase.co') || 'URL غير صحيح',
       },
       {
         type: 'password',
         name: 'anonKey',
         message: 'Supabase Anon Key:',
-        validate: (input) => input.length > 0 || 'المفتاح مطلوب'
+        validate: input => input.length > 0 || 'المفتاح مطلوب',
       },
       {
         type: 'password',
         name: 'serviceRoleKey',
         message: 'Supabase Service Role Key:',
-        validate: (input) => input.length > 0 || 'المفتاح مطلوب'
-      }
+        validate: input => input.length > 0 || 'المفتاح مطلوب',
+      },
     ]);
 
     this.secrets.supabase = answers;
@@ -344,20 +350,20 @@ class SettingsManager {
         type: 'password',
         name: 'token',
         message: 'Vercel Token:',
-        validate: (input) => input.length > 0 || 'المفتاح مطلوب'
+        validate: input => input.length > 0 || 'المفتاح مطلوب',
       },
       {
         type: 'input',
         name: 'teamId',
         message: 'Team ID (اختياري):',
-        default: ''
+        default: '',
       },
       {
         type: 'input',
         name: 'projectId',
         message: 'Project ID (اختياري):',
-        default: ''
-      }
+        default: '',
+      },
     ]);
 
     this.secrets.vercel = answers;
@@ -377,20 +383,20 @@ class SettingsManager {
         type: 'input',
         name: 'accessKeyId',
         message: 'AWS Access Key ID:',
-        validate: (input) => input.length > 0 || 'المفتاح مطلوب'
+        validate: input => input.length > 0 || 'المفتاح مطلوب',
       },
       {
         type: 'password',
         name: 'secretAccessKey',
         message: 'AWS Secret Access Key:',
-        validate: (input) => input.length > 0 || 'المفتاح مطلوب'
+        validate: input => input.length > 0 || 'المفتاح مطلوب',
       },
       {
         type: 'input',
         name: 'region',
         message: 'AWS Region:',
-        default: 'us-east-1'
-      }
+        default: 'us-east-1',
+      },
     ]);
 
     this.secrets.aws = answers;
@@ -411,14 +417,15 @@ class SettingsManager {
         type: 'input',
         name: 'connectionString',
         message: 'MongoDB Connection String:',
-        validate: (input) => input.includes('mongodb') || 'Connection String غير صحيح'
+        validate: input =>
+          input.includes('mongodb') || 'Connection String غير صحيح',
       },
       {
         type: 'input',
         name: 'database',
         message: 'Database Name:',
-        default: 'ultimate_builder'
-      }
+        default: 'ultimate_builder',
+      },
     ]);
 
     this.secrets.mongodb = answers;
@@ -433,20 +440,20 @@ class SettingsManager {
         type: 'input',
         name: 'host',
         message: 'Redis Host:',
-        default: 'localhost'
+        default: 'localhost',
       },
       {
         type: 'number',
         name: 'port',
         message: 'Redis Port:',
-        default: 6379
+        default: 6379,
       },
       {
         type: 'password',
         name: 'password',
         message: 'Redis Password (اختياري):',
-        default: ''
-      }
+        default: '',
+      },
     ]);
 
     this.secrets.redis = answers;
@@ -463,7 +470,7 @@ class SettingsManager {
       { name: 'Vercel', test: () => this.testVercel() },
       { name: 'AWS', test: () => this.testAWS() },
       { name: 'MongoDB', test: () => this.testMongoDB() },
-      { name: 'Redis', test: () => this.testRedis() }
+      { name: 'Redis', test: () => this.testRedis() },
     ];
 
     for (const test of tests) {
@@ -489,9 +496,9 @@ class SettingsManager {
     try {
       const response = await fetch('https://api.github.com/user', {
         headers: {
-          'Authorization': `token ${this.secrets.github.token}`,
-          'User-Agent': 'Ultimate-Builder-Platform'
-        }
+          Authorization: `token ${this.secrets.github.token}`,
+          'User-Agent': 'Ultimate-Builder-Platform',
+        },
       });
 
       if (response.ok) {
@@ -513,9 +520,9 @@ class SettingsManager {
     try {
       const response = await fetch('https://api.openai.com/v1/models', {
         headers: {
-          'Authorization': `Bearer ${this.secrets.openai.apiKey}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${this.secrets.openai.apiKey}`,
+          'Content-Type': 'application/json',
+        },
       });
 
       if (response.ok) {
@@ -537,9 +544,9 @@ class SettingsManager {
     try {
       const response = await fetch(`${this.secrets.supabase.url}/rest/v1/`, {
         headers: {
-          'apikey': this.secrets.supabase.anonKey,
-          'Authorization': `Bearer ${this.secrets.supabase.anonKey}`
-        }
+          apikey: this.secrets.supabase.anonKey,
+          Authorization: `Bearer ${this.secrets.supabase.anonKey}`,
+        },
       });
 
       if (response.ok) {
@@ -560,8 +567,8 @@ class SettingsManager {
     try {
       const response = await fetch('https://api.vercel.com/v2/user', {
         headers: {
-          'Authorization': `Bearer ${this.secrets.vercel.token}`
-        }
+          Authorization: `Bearer ${this.secrets.vercel.token}`,
+        },
       });
 
       if (response.ok) {
@@ -597,12 +604,17 @@ class SettingsManager {
 
   async testMongoDB() {
     if (!this.secrets.mongodb.connectionString) {
-      return { success: false, error: 'لم يتم تعيين MongoDB connection string' };
+      return {
+        success: false,
+        error: 'لم يتم تعيين MongoDB connection string',
+      };
     }
 
     // Basic validation
-    if (!this.secrets.mongodb.connectionString.includes('mongodb://') && 
-        !this.secrets.mongodb.connectionString.includes('mongodb+srv://')) {
+    if (
+      !this.secrets.mongodb.connectionString.includes('mongodb://') &&
+      !this.secrets.mongodb.connectionString.includes('mongodb+srv://')
+    ) {
       return { success: false, error: 'Connection string format غير صحيح' };
     }
 
@@ -626,17 +638,16 @@ class SettingsManager {
     try {
       // Save config
       await fs.writeJson(this.configPath, this.config, { spaces: 2 });
-      
+
       // Save secrets
       await fs.writeJson(this.secretsPath, this.secrets, { spaces: 2 });
-      
+
       // Set proper permissions for secrets file
       await fs.chmod(this.secretsPath, 0o600);
-      
+
       console.log(chalk.green('\n✅ تم حفظ جميع الإعدادات بنجاح!'));
       console.log(chalk.blue('📁 الإعدادات العامة: config.json'));
       console.log(chalk.blue('🔒 المفاتيح الحساسة: secrets.json'));
-      
     } catch (error) {
       console.log(chalk.red(`❌ خطأ في حفظ الإعدادات: ${error.message}`));
     }
@@ -650,26 +661,26 @@ class SettingsManager {
         type: 'confirm',
         name: 'autoCommit',
         message: 'حفظ تلقائي في Git؟',
-        default: true
+        default: true,
       },
       {
         type: 'confirm',
         name: 'autoPush',
         message: 'رفع تلقائي للخادم البعيد؟',
-        default: true
+        default: true,
       },
       {
         type: 'input',
         name: 'commitMessage',
         message: 'نص رسالة الحفظ:',
-        default: 'Auto-sync: {timestamp} - {fixes} fixes applied'
+        default: 'Auto-sync: {timestamp} - {fixes} fixes applied',
       },
       {
         type: 'input',
         name: 'branch',
         message: 'اسم الفرع الرئيسي:',
-        default: 'main'
-      }
+        default: 'main',
+      },
     ]);
 
     this.config.git = answers;
@@ -684,7 +695,7 @@ class SettingsManager {
         type: 'confirm',
         name: 'enabled',
         message: 'تفعيل الذكاء الاصطناعي؟',
-        default: true
+        default: true,
       },
       {
         type: 'list',
@@ -693,23 +704,24 @@ class SettingsManager {
         choices: [
           { name: 'OpenAI (GPT-4)', value: 'openai' },
           { name: 'Anthropic (Claude)', value: 'anthropic' },
-          { name: 'Google (Gemini)', value: 'google' }
+          { name: 'Google (Gemini)', value: 'google' },
         ],
-        default: 'openai'
+        default: 'openai',
       },
       {
         type: 'number',
         name: 'maxTokens',
         message: 'الحد الأقصى للرموز:',
-        default: 4000
+        default: 4000,
       },
       {
         type: 'number',
         name: 'temperature',
         message: 'درجة الإبداع (0-1):',
         default: 0.7,
-        validate: (input) => input >= 0 && input <= 1 || 'يجب أن تكون بين 0 و 1'
-      }
+        validate: input =>
+          (input >= 0 && input <= 1) || 'يجب أن تكون بين 0 و 1',
+      },
     ]);
 
     this.config.ai = answers;
@@ -728,22 +740,22 @@ class SettingsManager {
           { name: 'MongoDB', value: 'mongodb' },
           { name: 'PostgreSQL', value: 'postgresql' },
           { name: 'MySQL', value: 'mysql' },
-          { name: 'SQLite', value: 'sqlite' }
+          { name: 'SQLite', value: 'sqlite' },
         ],
-        default: 'mongodb'
+        default: 'mongodb',
       },
       {
         type: 'confirm',
         name: 'caching',
         message: 'تفعيل التخزين المؤقت (Redis)؟',
-        default: true
+        default: true,
       },
       {
         type: 'number',
         name: 'connectionPool',
         message: 'عدد الاتصالات المتزامنة:',
-        default: 10
-      }
+        default: 10,
+      },
     ]);
 
     this.config.database = answers;
@@ -762,22 +774,22 @@ class SettingsManager {
           { name: 'Vercel', value: 'vercel' },
           { name: 'AWS', value: 'aws' },
           { name: 'Google Cloud', value: 'gcp' },
-          { name: 'Azure', value: 'azure' }
+          { name: 'Azure', value: 'azure' },
         ],
-        default: 'vercel'
+        default: 'vercel',
       },
       {
         type: 'confirm',
         name: 'autoDeploy',
         message: 'نشر تلقائي عند التغييرات؟',
-        default: true
+        default: true,
       },
       {
         type: 'confirm',
         name: 'cdn',
         message: 'تفعيل CDN؟',
-        default: true
-      }
+        default: true,
+      },
     ]);
 
     this.config.cloud = answers;
@@ -792,26 +804,26 @@ class SettingsManager {
         type: 'confirm',
         name: 'https',
         message: 'فرض HTTPS؟',
-        default: true
+        default: true,
       },
       {
         type: 'confirm',
         name: 'cors',
         message: 'تفعيل CORS؟',
-        default: true
+        default: true,
       },
       {
         type: 'number',
         name: 'rateLimit',
         message: 'حد الطلبات في الدقيقة:',
-        default: 100
+        default: 100,
       },
       {
         type: 'confirm',
         name: 'helmet',
         message: 'تفعيل Helmet للأمان؟',
-        default: true
-      }
+        default: true,
+      },
     ]);
 
     this.config.security = answers;
@@ -826,13 +838,13 @@ class SettingsManager {
         type: 'confirm',
         name: 'enabled',
         message: 'تفعيل المراقبة؟',
-        default: true
+        default: true,
       },
       {
         type: 'number',
         name: 'interval',
         message: 'فترة المراقبة (بالميلي ثانية):',
-        default: 60000
+        default: 60000,
       },
       {
         type: 'checkbox',
@@ -843,9 +855,9 @@ class SettingsManager {
           { name: 'استخدام الذاكرة', value: 'memory', checked: true },
           { name: 'مساحة القرص', value: 'disk', checked: true },
           { name: 'شبكة الإنترنت', value: 'network', checked: true },
-          { name: 'الأجنات النشطة', value: 'agents', checked: true }
-        ]
-      }
+          { name: 'الأجنات النشطة', value: 'agents', checked: true },
+        ],
+      },
     ]);
 
     this.config.monitoring = answers;
