@@ -1,0 +1,377 @@
+/**
+ * Centralized Styles - الأنماط المركزية
+ * 
+ * All centralized styles for the design system
+ * جميع الأنماط المركزية لنظام التصميم
+ */
+
+/* ========================================
+   CSS CUSTOM PROPERTIES - خصائص CSS المخصصة
+   ======================================== */
+
+:root {
+  /* Brand Colors - ألوان العلامة التجارية */
+  --brand-primary: #f58220;
+  --brand-primary-hover: #d66f15;
+  --brand-secondary: #a18072;
+  --brand-accent: #007bff;
+  --brand-success: #009688;
+  --brand-warning: #f59e0b;
+  --brand-error: #ef4444;
+  
+  /* Background Colors - ألوان الخلفية */
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --brand-surface: #f9fafb;
+  --panel: #ffffff;
+  --brand-border: #e5e7eb;
+  
+  /* Focus Ring - حلقة التركيز */
+  --focus-ring: #007bff;
+  
+  /* Font Families - عائلات الخطوط */
+  --font-family-sans: 'Cairo', 'Inter', 'system-ui', 'sans-serif';
+  --font-family-mono: 'Fira Code', 'Monaco', 'Consolas', 'monospace';
+  
+  /* Spacing Scale - مقياس المسافات */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  
+  /* Border Radius - نصف قطر الحدود */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  
+  /* Shadows - الظلال */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  /* Transitions - الانتقالات */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Z-index - مؤشر الطبقات */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1090;
+  --z-toast: 1080;
+}
+
+/* Dark Mode Variables - متغيرات الوضع الليلي */
+[data-theme="dark"] {
+  --background: #0d1117;
+  --foreground: #e5eef7;
+  --brand-primary: #f58220;
+  --brand-primary-hover: #c25e0f;
+  --brand-secondary: #a18072;
+  --brand-accent: #007bff;
+  --brand-success: #00b39b;
+  --brand-warning: #fbbf24;
+  --brand-error: #f87171;
+  --brand-border: #1f2937;
+  --brand-surface: #0d1117;
+  --panel: #111827;
+  --focus-ring: #007bff;
+}
+
+/* ========================================
+   UNIFIED COMPONENT STYLES - أنماط المكونات الموحدة
+   ======================================== */
+
+/* Button Styles - أنماط الأزرار */
+.btn-unified {
+  @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-primary {
+  @apply bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-primary-hover)] focus:ring-[var(--brand-primary)];
+}
+
+.btn-secondary {
+  @apply bg-[var(--brand-secondary)] text-white hover:bg-opacity-90 focus:ring-[var(--brand-secondary)];
+}
+
+.btn-outline {
+  @apply border-2 border-[var(--brand-primary)] text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:text-white focus:ring-[var(--brand-primary)];
+}
+
+.btn-ghost {
+  @apply text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:bg-opacity-10 focus:ring-[var(--brand-primary)];
+}
+
+.btn-destructive {
+  @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-600;
+}
+
+/* Card Styles - أنماط البطاقات */
+.card-unified {
+  @apply rounded-xl border transition-all duration-200;
+}
+
+.card-default {
+  @apply bg-white dark:bg-gray-800 shadow-sm border-gray-200 dark:border-gray-700;
+}
+
+.card-elevated {
+  @apply bg-white dark:bg-gray-800 shadow-lg border-gray-200 dark:border-gray-700;
+}
+
+.card-outlined {
+  @apply bg-white dark:bg-gray-800 border-2 border-[var(--brand-primary)];
+}
+
+.card-glass {
+  @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200/50 dark:border-gray-700/50;
+}
+
+.card-stat {
+  @apply bg-white/80 backdrop-blur-xl border border-blue-200/30 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer;
+}
+
+.card-feature {
+  @apply bg-white/80 backdrop-blur-xl rounded-2xl border border-blue-200/30 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer;
+}
+
+/* Badge Styles - أنماط الشارات */
+.badge-unified {
+  @apply inline-flex items-center rounded-full font-medium;
+}
+
+.badge-default {
+  @apply bg-[var(--brand-primary)] text-white;
+}
+
+.badge-success {
+  @apply bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200;
+}
+
+.badge-warning {
+  @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200;
+}
+
+.badge-error {
+  @apply bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200;
+}
+
+.badge-info {
+  @apply bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200;
+}
+
+.badge-outline {
+  @apply border border-gray-300 text-gray-700 dark:border-gray-600 dark:text-gray-300;
+}
+
+/* ========================================
+   UTILITY CLASSES - فئات المساعدة
+   ======================================== */
+
+/* Container - الحاوية */
+.container-unified {
+  @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+}
+
+/* Grid - الشبكة */
+.grid-unified {
+  @apply grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}
+
+/* Flex - المرونة */
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
+.flex-between {
+  @apply flex items-center justify-between;
+}
+
+.flex-start {
+  @apply flex items-center justify-start;
+}
+
+.flex-end {
+  @apply flex items-center justify-end;
+}
+
+/* ========================================
+   ANIMATIONS - الحركات
+   ======================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRTL {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp var(--transition-normal) ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--transition-normal) ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn var(--transition-normal) ease-out;
+}
+
+[dir="rtl"] .animate-slide-in {
+  animation: slideInRTL var(--transition-normal) ease-out;
+}
+
+/* ========================================
+   RTL SUPPORT - دعم RTL
+   ======================================== */
+
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .flex-start {
+  @apply flex-row-reverse;
+}
+
+[dir="rtl"] .flex-end {
+  @apply flex-row-reverse;
+}
+
+[dir="rtl"] .space-x-2 > * + * {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+[dir="rtl"] .space-x-4 > * + * {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
+[dir="rtl"] .space-x-6 > * + * {
+  margin-left: 0;
+  margin-right: 1.5rem;
+}
+
+/* ========================================
+   ACCESSIBILITY - إمكانية الوصول
+   ======================================== */
+
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+}
+
+.focus-visible {
+  @apply focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)] focus:ring-offset-2;
+}
+
+/* High Contrast Mode - وضع التباين العالي */
+[data-high-contrast="true"] {
+  --brand-primary: #ff6b35;
+  --brand-secondary: #8b4513;
+  --brand-success: #00ff00;
+  --brand-warning: #ffff00;
+  --brand-error: #ff0000;
+  --brand-accent: #0000ff;
+}
+
+/* Reduced Motion - تقليل الحركة */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - التصميم المتجاوب
+   ======================================== */
+
+@media (max-width: 640px) {
+  .container-unified {
+    @apply px-4;
+  }
+  
+  .btn-lg {
+    @apply px-4 py-2 text-base;
+  }
+  
+  .card-unified {
+    @apply p-4;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .container-unified {
+    @apply px-6;
+  }
+}
+
+@media (min-width: 1025px) {
+  .container-unified {
+    @apply px-8;
+  }
+}
+
+/* ========================================
+   PRINT STYLES - أنماط الطباعة
+   ======================================== */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .card-unified {
+    @apply shadow-none border border-gray-300;
+  }
+  
+  .btn-unified {
+    @apply border border-gray-300 bg-transparent text-gray-900;
+  }
+}

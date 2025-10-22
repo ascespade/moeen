@@ -566,9 +566,7 @@ const PatientRecords: React.FC = () => {
                                 {record.date}
                               </p>
                             </div>
-                            <Badge variant='info'>
-                              {record.diagnosis}
-                            </Badge>
+                            <Badge variant='info'>{record.diagnosis}</Badge>
                           </div>
                           <div className='space-y-2'>
                             <div>

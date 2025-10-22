@@ -430,11 +430,7 @@ const TrainingPage: React.FC = () => {
                   </h4>
                   <div className='flex flex-wrap gap-2'>
                     {program.skills_covered.map((skill, index) => (
-                      <Badge
-                        key={index}
-                        variant='info'
-                        className='text-xs'
-                      >
+                      <Badge key={index} variant='info' className='text-xs'>
                         {skill}
                       </Badge>
                     ))}
@@ -445,11 +441,7 @@ const TrainingPage: React.FC = () => {
                   <h4 className='text-sm font-semibold mb-2'>المتطلبات:</h4>
                   <div className='flex flex-wrap gap-2'>
                     {program.prerequisites.map((prereq, index) => (
-                      <Badge
-                        key={index}
-                        variant='info'
-                        className='text-xs'
-                      >
+                      <Badge key={index} variant='info' className='text-xs'>
                         {prereq}
                       </Badge>
                     ))}

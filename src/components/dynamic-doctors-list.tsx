@@ -319,11 +319,7 @@ export default function DynamicDoctorsList({
                     <h4 className='text-sm font-semibold mb-2'>المؤهلات</h4>
                     <div className='flex flex-wrap gap-1'>
                       {doctor.qualifications.slice(0, 3).map((qual, index) => (
-                        <Badge
-                          key={index}
-                          variant='info'
-                          className='text-xs'
-                        >
+                        <Badge key={index} variant='info' className='text-xs'>
                           {qual}
                         </Badge>
                       ))}
@@ -342,11 +338,7 @@ export default function DynamicDoctorsList({
                     <h4 className='text-sm font-semibold mb-2'>اللغات</h4>
                     <div className='flex flex-wrap gap-1'>
                       {doctor.languages.map((lang, index) => (
-                        <Badge
-                          key={index}
-                          variant='info'
-                          className='text-xs'
-                        >
+                        <Badge key={index} variant='info' className='text-xs'>
                           {lang}
                         </Badge>
                       ))}

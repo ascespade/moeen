@@ -627,11 +627,7 @@ export default function ApprovalsPage() {
                   <h4 className='mb-3 font-semibold'>المرفقات</h4>
                   <div className='flex flex-wrap gap-2'>
                     {selectedApproval.attachments.map((attachment, index) => (
-                      <Badge
-                        key={index}
-                        variant='info'
-                        className='text-sm'
-                      >
+                      <Badge key={index} variant='info' className='text-sm'>
                         📎 {attachment}
                       </Badge>
                     ))}

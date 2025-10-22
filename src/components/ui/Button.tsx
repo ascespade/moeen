@@ -3,9 +3,10 @@ import { cn } from '@/lib/utils';
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'default' | 'info' | 'outline' | 'ghost' | 'destructive';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   loading?: boolean;
+  asChild?: boolean;
   children: React.ReactNode;
 }
 
@@ -13,10 +14,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
-      variant = 'default',
+      variant = 'primary',
       size = 'md',
       loading = false,
       disabled,
+      asChild = false,
       children,
       ...props
     },
@@ -28,8 +30,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const variants = {
       default:
         'bg-[var(--default-default)] text-white hover:bg-[var(--default-default-hover)] focus:ring-[var(--default-default)]',
-      info:
-        'bg-[var(--default-info)] text-white hover:bg-opacity-90 focus:ring-[var(--default-info)]',
+      info: 'bg-[var(--default-info)] text-white hover:bg-opacity-90 focus:ring-[var(--default-info)]',
       outline:
         'border-2 border-[var(--default-default)] text-[var(--default-default)] hover:bg-[var(--default-default)] hover:text-white focus:ring-[var(--default-default)]',
       ghost:

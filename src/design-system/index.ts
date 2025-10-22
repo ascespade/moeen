@@ -1,6 +1,6 @@
 /**
  * Design System - نظام التصميم
- *
+ * 
  * Centralized design system exports
  * صادرات نظام التصميم المركزي
  */
@@ -10,6 +10,9 @@ export * from './tokens';
 
 // Export all component variants
 export * from './components';
+
+// Export unified components
+export * from './unified-components';
 
 // Export utility functions
 export * from './utils';

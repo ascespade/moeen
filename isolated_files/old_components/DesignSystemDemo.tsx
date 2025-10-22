@@ -1,9 +1,7 @@
 'use client';
 
 import React from 'react';
-import CTAButton from './CTAButton';
-import FeatureCard from './FeatureCard';
-import StatCard from './StatCard';
+import { Button, Card, Badge } from '@/design-system/unified-components';
 import ThemeToggle from './ThemeToggle';
 import RTLToggle from './RTLToggle';
 import { cn } from '@/lib/cn';

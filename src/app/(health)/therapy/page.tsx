@@ -417,11 +417,7 @@ const TherapyPage: React.FC = () => {
                   <h4 className='text-sm font-semibold mb-2'>أهداف الجلسة:</h4>
                   <div className='flex flex-wrap gap-2'>
                     {session.goals.map((goal, index) => (
-                      <Badge
-                        key={index}
-                        variant='info'
-                        className='text-xs'
-                      >
+                      <Badge key={index} variant='info' className='text-xs'>
                         {goal}
                       </Badge>
                     ))}
@@ -432,11 +428,7 @@ const TherapyPage: React.FC = () => {
                   <h4 className='text-sm font-semibold mb-2'>الأنشطة:</h4>
                   <div className='flex flex-wrap gap-2'>
                     {session.activities.map((activity, index) => (
-                      <Badge
-                        key={index}
-                        variant='info'
-                        className='text-xs'
-                      >
+                      <Badge key={index} variant='info' className='text-xs'>
                         {activity}
                       </Badge>
                     ))}
