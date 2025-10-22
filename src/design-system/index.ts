@@ -1,6 +1,6 @@
 /**
  * Design System - نظام التصميم
- * 
+ *
  * Centralized design system exports
  * صادرات نظام التصميم المركزي
  */
