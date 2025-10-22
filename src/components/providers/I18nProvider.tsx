@@ -1,5 +1,11 @@
 'use client';
-import { createContext, useContext, ReactNode, useState, useCallback } from 'react';
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useCallback,
+} from 'react';
 
 interface I18nContextType {
   t: (key: string, fallback?: string) => string;
@@ -31,7 +37,7 @@ export default function I18nProvider({ children }: I18nProviderProps) {
   };
 
   const toggleLanguage = useCallback(() => {
-    setLanguage(prev => prev === 'ar' ? 'en' : 'ar');
+    setLanguage(prev => (prev === 'ar' ? 'en' : 'ar'));
   }, []);
 
   const setArabic = useCallback(() => {
@@ -45,7 +51,7 @@ export default function I18nProvider({ children }: I18nProviderProps) {
   const value = {
     t,
     language,
-    direction: language === 'ar' ? 'rtl' as const : 'ltr' as const,
+    direction: language === 'ar' ? ('rtl' as const) : ('ltr' as const),
     isLoading,
     toggleLanguage,
     setArabic,
