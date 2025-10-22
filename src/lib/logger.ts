@@ -3,14 +3,14 @@
 interface LogLevel {
   ERROR: 'error';
   WARN: 'warn';
-  INFO: 'info';
+  INFO: 'secondary';
   DEBUG: 'debug';
 }
 
 const LOG_LEVELS: LogLevel = {
   ERROR: 'error',
   WARN: 'warn',
-  INFO: 'info',
+  INFO: 'secondary',
   DEBUG: 'debug',
 };
 
@@ -59,8 +59,8 @@ class Logger {
         ? 'error'
         : level === 'warn'
           ? 'warn'
-          : level === 'info'
-            ? 'info'
+          : level === 'secondary'
+            ? 'secondary'
             : 'log';
 
     console[consoleMethod](

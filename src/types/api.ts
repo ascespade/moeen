@@ -142,7 +142,7 @@ export interface AIResponse extends ApiResponse {
 
 // Logs API Types
 export interface LogListParams extends PaginationParams {
-  level?: 'error' | 'warn' | 'info' | 'debug';
+  level?: 'error' | 'warn' | 'secondary' | 'debug';
   service?: string;
   startDate?: string;
   endDate?: string;
@@ -150,7 +150,7 @@ export interface LogListParams extends PaginationParams {
 
 export interface LogEntry {
   id: string;
-  level: 'error' | 'warn' | 'info' | 'debug';
+  level: 'error' | 'warn' | 'secondary' | 'debug';
   message: string;
   service: string;
   timestamp: string;

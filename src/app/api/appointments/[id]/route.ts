@@ -69,7 +69,7 @@ export async function GET(
       ip_address: ipAddress,
       user_agent: userAgent,
       status: 'success',
-      severity: 'info',
+      severity: 'secondary',
       duration_ms: Date.now() - startTime,
     });
 
@@ -209,7 +209,7 @@ export async function PATCH(
       ip_address: ipAddress,
       user_agent: userAgent,
       status: 'success',
-      severity: 'info',
+      severity: 'secondary',
       metadata: {
         old_status: currentAppointment.status,
         new_status: appointment.status,

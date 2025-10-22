@@ -327,7 +327,7 @@ const AppointmentManager: React.FC = () => {
                       <span className='font-medium'>الاحتياجات الخاصة:</span>
                       <div className='flex gap-1'>
                         {appointment.specialNeeds.map((need, index) => (
-                          <Badge key={index} variant='info' className='text-xs'>
+                          <Badge key={index} variant='secondary' className='text-xs'>
                             {need}
                           </Badge>
                         ))}

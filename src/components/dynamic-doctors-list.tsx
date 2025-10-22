@@ -83,7 +83,6 @@ export default function DynamicDoctorsList({
     searchTerm,
     selectedSpecialization,
     selectedLanguage,
-    filterDoctors,
   ]);
 
   const fetchDoctors = async () => {
@@ -249,8 +248,8 @@ export default function DynamicDoctorsList({
                 {/* المعلومات الأساسية */}
                 <div className='space-y-2'>
                   <div className='flex items-center gap-2'>
-                    <Badge variant='info'>{doctor.specialization}</Badge>
-                    <Badge variant={doctor.is_active ? 'default' : 'info'}>
+                    <Badge variant='secondary'>{doctor.specialization}</Badge>
+                    <Badge variant={doctor.is_active ? 'primary' : 'secondary'}>
                       {doctor.is_active ? 'نشط' : 'غير نشط'}
                     </Badge>
                   </div>
@@ -319,12 +318,12 @@ export default function DynamicDoctorsList({
                     <h4 className='text-sm font-semibold mb-2'>المؤهلات</h4>
                     <div className='flex flex-wrap gap-1'>
                       {doctor.qualifications.slice(0, 3).map((qual, index) => (
-                        <Badge key={index} variant='info' className='text-xs'>
+                        <Badge key={index} variant='secondary' className='text-xs'>
                           {qual}
                         </Badge>
                       ))}
                       {doctor.qualifications.length > 3 && (
-                        <Badge variant='info' className='text-xs'>
+                        <Badge variant='secondary' className='text-xs'>
                           +{doctor.qualifications.length - 3} أخرى
                         </Badge>
                       )}
@@ -338,7 +337,7 @@ export default function DynamicDoctorsList({
                     <h4 className='text-sm font-semibold mb-2'>اللغات</h4>
                     <div className='flex flex-wrap gap-1'>
                       {doctor.languages.map((lang, index) => (
-                        <Badge key={index} variant='info' className='text-xs'>
+                        <Badge key={index} variant='secondary' className='text-xs'>
                           {lang}
                         </Badge>
                       ))}

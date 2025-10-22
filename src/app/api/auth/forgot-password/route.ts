@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
           ip_address: ipAddress,
           user_agent: userAgent,
           status: 'success',
-          severity: 'info',
+          severity: 'secondary',
           metadata: {
             email,
             requested_at: new Date().toISOString(),

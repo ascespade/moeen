@@ -141,7 +141,7 @@ const mockApprovals: Approval[] = [
 ];
 
 const requestTypeConfig = {
-  treatment: { label: 'علاج', color: 'info' as const, icon: '🏥' },
+  treatment: { label: 'علاج', color: 'secondary' as const, icon: '🏥' },
   medication: { label: 'دواء', color: 'warning' as const, icon: '💊' },
   procedure: { label: 'إجراء', color: 'error' as const, icon: '⚕️' },
   referral: { label: 'إحالة', color: 'success' as const, icon: '👨‍⚕️' },
@@ -152,11 +152,11 @@ const statusConfig = {
   pending: { label: 'قيد المراجعة', color: 'warning' as const },
   approved: { label: 'موافق عليه', color: 'success' as const },
   rejected: { label: 'مرفوض', color: 'error' as const },
-  under_review: { label: 'قيد التدقيق', color: 'info' as const },
+  under_review: { label: 'قيد التدقيق', color: 'secondary' as const },
 };
 
 const priorityConfig = {
-  low: { label: 'منخفض', color: 'info' as const },
+  low: { label: 'منخفض', color: 'secondary' as const },
   medium: { label: 'متوسط', color: 'warning' as const },
   high: { label: 'عالي', color: 'error' as const },
   urgent: { label: 'عاجل', color: 'error' as const },
@@ -316,7 +316,7 @@ export default function ApprovalsPage() {
               <Button variant='outline' size='sm'>
                 تصدير التقرير
               </Button>
-              <Button variant='default' size='sm'>
+              <Button variant='primary' size='sm'>
                 إضافة طلب موافقة
               </Button>
             </div>
@@ -368,28 +368,28 @@ export default function ApprovalsPage() {
           </div>
           <div className='flex flex-wrap gap-3'>
             <Button
-              variant={filter === 'all' ? 'default' : 'outline'}
+              variant={filter === 'all' ? 'primary' : 'outline'}
               size='sm'
               onClick={() => setFilter('all')}
             >
               جميع الطلبات
             </Button>
             <Button
-              variant={filter === 'pending' ? 'default' : 'outline'}
+              variant={filter === 'pending' ? 'primary' : 'outline'}
               size='sm'
               onClick={() => setFilter('pending')}
             >
               قيد المراجعة
             </Button>
             <Button
-              variant={filter === 'approved' ? 'default' : 'outline'}
+              variant={filter === 'approved' ? 'primary' : 'outline'}
               size='sm'
               onClick={() => setFilter('approved')}
             >
               موافق عليها
             </Button>
             <Button
-              variant={filter === 'rejected' ? 'default' : 'outline'}
+              variant={filter === 'rejected' ? 'primary' : 'outline'}
               size='sm'
               onClick={() => setFilter('rejected')}
             >
@@ -401,7 +401,7 @@ export default function ApprovalsPage() {
         {/* Type Filters */}
         <div className='mb-6 flex flex-wrap gap-3'>
           <Button
-            variant={typeFilter === 'all' ? 'default' : 'outline'}
+            variant={typeFilter === 'all' ? 'primary' : 'outline'}
             size='sm'
             onClick={() => setTypeFilter('all')}
           >
@@ -410,7 +410,7 @@ export default function ApprovalsPage() {
           {Object.entries(requestTypeConfig).map(([type, config]) => (
             <Button
               key={type}
-              variant={typeFilter === type ? 'default' : 'outline'}
+              variant={typeFilter === type ? 'primary' : 'outline'}
               size='sm'
               onClick={() => setTypeFilter(type as Approval['requestType'])}
             >
@@ -488,7 +488,7 @@ export default function ApprovalsPage() {
                     عرض التفاصيل
                   </Button>
                   {approval.status === 'pending' && (
-                    <Button variant='default' size='sm'>
+                    <Button variant='primary' size='sm'>
                       مراجعة
                     </Button>
                   )}
@@ -522,7 +522,7 @@ export default function ApprovalsPage() {
             <p className='mb-4 text-gray-600 dark:text-gray-300'>
               لا توجد طلبات موافقة تطابق البحث أو الفلتر المحدد
             </p>
-            <Button variant='default'>إضافة طلب موافقة</Button>
+            <Button variant='primary'>إضافة طلب موافقة</Button>
           </Card>
         )}
       </main>
@@ -627,7 +627,7 @@ export default function ApprovalsPage() {
                   <h4 className='mb-3 font-semibold'>المرفقات</h4>
                   <div className='flex flex-wrap gap-2'>
                     {selectedApproval.attachments.map((attachment, index) => (
-                      <Badge key={index} variant='info' className='text-sm'>
+                      <Badge key={index} variant='secondary' className='text-sm'>
                         📎 {attachment}
                       </Badge>
                     ))}
@@ -714,12 +714,12 @@ export default function ApprovalsPage() {
                     <Button variant='outline' className='flex-1'>
                       رفض
                     </Button>
-                    <Button variant='default' className='flex-1'>
+                    <Button variant='primary' className='flex-1'>
                       موافقة
                     </Button>
                   </>
                 )}
-                <Button variant='default' className='flex-1'>
+                <Button variant='primary' className='flex-1'>
                   تحديث
                 </Button>
               </div>

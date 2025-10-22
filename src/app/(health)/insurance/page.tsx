@@ -34,7 +34,7 @@ const statusConfig = {
   pending: { label: 'قيد المراجعة', color: 'warning' as const },
   approved: { label: 'موافق عليه', color: 'success' as const },
   rejected: { label: 'مرفوض', color: 'error' as const },
-  under_review: { label: 'قيد التدقيق', color: 'info' as const },
+  under_review: { label: 'قيد التدقيق', color: 'secondary' as const },
 };
 
 export default function InsurancePage() {
@@ -202,7 +202,7 @@ export default function InsurancePage() {
               <Button variant='outline' size='sm'>
                 تصدير التقرير
               </Button>
-              <Button variant='default' size='sm'>
+              <Button variant='primary' size='sm'>
                 إضافة مطالبة جديدة
               </Button>
             </div>
@@ -248,28 +248,28 @@ export default function InsurancePage() {
         {/* Filters */}
         <div className='mb-6 flex flex-wrap gap-3'>
           <Button
-            variant={filter === 'all' ? 'default' : 'outline'}
+            variant={filter === 'all' ? 'primary' : 'outline'}
             size='sm'
             onClick={() => setFilter('all')}
           >
             جميع المطالبات
           </Button>
           <Button
-            variant={filter === 'pending' ? 'default' : 'outline'}
+            variant={filter === 'pending' ? 'primary' : 'outline'}
             size='sm'
             onClick={() => setFilter('pending')}
           >
             قيد المراجعة
           </Button>
           <Button
-            variant={filter === 'approved' ? 'default' : 'outline'}
+            variant={filter === 'approved' ? 'primary' : 'outline'}
             size='sm'
             onClick={() => setFilter('approved')}
           >
             موافق عليها
           </Button>
           <Button
-            variant={filter === 'rejected' ? 'default' : 'outline'}
+            variant={filter === 'rejected' ? 'primary' : 'outline'}
             size='sm'
             onClick={() => setFilter('rejected')}
           >
@@ -341,7 +341,7 @@ export default function InsurancePage() {
                 <Button variant='outline' size='sm' className='flex-1'>
                   عرض التفاصيل
                 </Button>
-                <Button variant='default' size='sm' className='flex-1'>
+                <Button variant='primary' size='sm' className='flex-1'>
                   تحديث
                 </Button>
               </div>
@@ -373,7 +373,7 @@ export default function InsurancePage() {
             <p className='mb-4 text-gray-600 dark:text-gray-300'>
               لا توجد مطالبات تأمينية تطابق الفلتر المحدد
             </p>
-            <Button variant='default'>إضافة مطالبة جديدة</Button>
+            <Button variant='primary'>إضافة مطالبة جديدة</Button>
           </Card>
         )}
       </main>
@@ -505,7 +505,7 @@ export default function InsurancePage() {
                 <Button variant='outline' className='flex-1'>
                   طباعة
                 </Button>
-                <Button variant='default' className='flex-1'>
+                <Button variant='primary' className='flex-1'>
                   تحديث الحالة
                 </Button>
               </div>

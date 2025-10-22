@@ -40,7 +40,7 @@ export default function HomePage() {
 
         <div className='container-app relative z-10'>
           <div className='text-center max-w-4xl mx-auto'>
-            <Badge variant='info' className='mb-4 text-sm'>
+            <Badge variant='secondary' className='mb-4 text-sm'>
               🏥 مركز طبي متخصص
             </Badge>
             <h1 className='text-5xl md:text-7xl font-bold text-foreground mb-6'>
@@ -212,7 +212,7 @@ export default function HomePage() {
       <section className='py-20'>
         <div className='container-app'>
           <div className='text-center mb-16'>
-            <Badge variant='info' className='mb-4'>
+            <Badge variant='secondary' className='mb-4'>
               آراء العملاء
             </Badge>
             <h2 className='text-4xl font-bold text-foreground mb-4'>
@@ -351,7 +351,7 @@ export default function HomePage() {
         <div className='container-app'>
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'>
             <div>
-              <Badge variant='default' className='mb-4'>
+              <Badge variant='primary' className='mb-4'>
                 عن المركز
               </Badge>
               <h2 className='text-4xl font-bold text-foreground mb-6'>

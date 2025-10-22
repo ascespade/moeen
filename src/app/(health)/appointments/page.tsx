@@ -136,16 +136,16 @@ const AppointmentsPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      scheduled: { label: 'مجدول', variant: 'default' as const },
-      confirmed: { label: 'مؤكد', variant: 'info' as const },
-      completed: { label: 'مكتمل', variant: 'info' as const },
+      scheduled: { label: 'مجدول', variant: 'primary' as const },
+      confirmed: { label: 'مؤكد', variant: 'secondary' as const },
+      completed: { label: 'مكتمل', variant: 'secondary' as const },
       cancelled: { label: 'ملغي', variant: 'error' as const },
       no_show: { label: 'لم يحضر', variant: 'error' as const },
     };
 
     const config = statusConfig[status as keyof typeof statusConfig] || {
       label: status,
-      variant: 'info' as const,
+      variant: 'secondary' as const,
     };
 
     return <Badge variant={config.variant}>{config.label}</Badge>;
@@ -284,7 +284,7 @@ const AppointmentsPage: React.FC = () => {
               </select>
 
               <Button
-                variant={showUpcoming ? 'default' : 'outline'}
+                variant={showUpcoming ? 'primary' : 'outline'}
                 onClick={() => setShowUpcoming(!showUpcoming)}
                 className='flex items-center gap-2'
               >

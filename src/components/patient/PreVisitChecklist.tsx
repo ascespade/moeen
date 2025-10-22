@@ -239,7 +239,7 @@ export default function PreVisitChecklist({
                       </h4>
                       <div className='flex items-center space-x-2'>
                         {item.required && (
-                          <Badge variant='info' className='text-xs'>
+                          <Badge variant='secondary' className='text-xs'>
                             {t('common.required')}
                           </Badge>
                         )}

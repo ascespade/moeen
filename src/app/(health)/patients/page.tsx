@@ -191,12 +191,12 @@ export default function PatientsPage() {
     const statusMap = {
       active: {
         label: 'نشط',
-        variant: 'default' as const,
+        variant: 'primary' as const,
         color: 'text-default-success',
       },
       inactive: {
         label: 'غير نشط',
-        variant: 'info' as const,
+        variant: 'secondary' as const,
         color: 'text-gray-600',
       },
       blocked: {
@@ -208,7 +208,7 @@ export default function PatientsPage() {
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'default' as const,
+      variant: 'primary' as const,
       color: 'text-gray-600',
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
@@ -218,12 +218,12 @@ export default function PatientsPage() {
     const severityMap = {
       mild: {
         label: 'خفيف',
-        variant: 'default' as const,
+        variant: 'primary' as const,
         color: 'text-default-success',
       },
       moderate: {
         label: 'متوسط',
-        variant: 'info' as const,
+        variant: 'secondary' as const,
         color: 'text-yellow-600',
       },
       severe: {
@@ -235,7 +235,7 @@ export default function PatientsPage() {
 
     const severityInfo = severityMap[severity as keyof typeof severityMap] || {
       label: severity,
-      variant: 'default' as const,
+      variant: 'primary' as const,
       color: 'text-gray-600',
     };
     return <Badge variant={severityInfo.variant}>{severityInfo.label}</Badge>;

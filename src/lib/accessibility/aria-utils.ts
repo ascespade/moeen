@@ -105,7 +105,7 @@ export function getDialogAriaProps(
  * Generate ARIA attributes for alerts
  */
 export function getAlertAriaProps(
-  type: 'error' | 'warning' | 'success' | 'info'
+  type: 'error' | 'warning' | 'success' | 'secondary'
 ): Record<string, any> {
   return {
     role: 'alert',

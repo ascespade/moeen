@@ -300,17 +300,17 @@ const SecurityPage: React.FC = () => {
     const riskMap = {
       low: {
         label: 'منخفض',
-        variant: 'default' as const,
+        variant: 'primary' as const,
         color: 'text-default-success',
       },
       medium: {
         label: 'متوسط',
-        variant: 'info' as const,
+        variant: 'secondary' as const,
         color: 'text-yellow-600',
       },
       high: {
         label: 'عالي',
-        variant: 'default' as const,
+        variant: 'primary' as const,
         color: 'text-default-default',
       },
       critical: {
@@ -322,7 +322,7 @@ const SecurityPage: React.FC = () => {
 
     const riskInfo = riskMap[level as keyof typeof riskMap] || {
       label: level,
-      variant: 'default' as const,
+      variant: 'primary' as const,
       color: 'text-gray-600',
     };
     return <Badge variant={riskInfo.variant}>{riskInfo.label}</Badge>;
@@ -330,32 +330,32 @@ const SecurityPage: React.FC = () => {
 
   const getSeverityBadge = (severity: string) => {
     const severityMap = {
-      low: { label: 'منخفض', variant: 'default' as const },
-      medium: { label: 'متوسط', variant: 'info' as const },
-      high: { label: 'عالي', variant: 'default' as const },
+      low: { label: 'منخفض', variant: 'primary' as const },
+      medium: { label: 'متوسط', variant: 'secondary' as const },
+      high: { label: 'عالي', variant: 'primary' as const },
       critical: { label: 'حرج', variant: 'error' as const },
     };
 
     const severityInfo = severityMap[severity as keyof typeof severityMap] || {
       label: severity,
-      variant: 'default' as const,
+      variant: 'primary' as const,
     };
     return <Badge variant={severityInfo.variant}>{severityInfo.label}</Badge>;
   };
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      success: { label: 'نجح', variant: 'default' as const },
+      success: { label: 'نجح', variant: 'primary' as const },
       failed: { label: 'فشل', variant: 'error' as const },
       blocked: { label: 'محظور', variant: 'error' as const },
-      new: { label: 'جديد', variant: 'default' as const },
-      investigating: { label: 'قيد التحقيق', variant: 'info' as const },
-      resolved: { label: 'محلول', variant: 'default' as const },
+      new: { label: 'جديد', variant: 'primary' as const },
+      investigating: { label: 'قيد التحقيق', variant: 'secondary' as const },
+      resolved: { label: 'محلول', variant: 'primary' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'default' as const,
+      variant: 'primary' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -709,7 +709,7 @@ const SecurityPage: React.FC = () => {
                         </div>
                         <div className='flex items-center gap-2'>
                           <Badge
-                            variant={session.is_active ? 'default' : 'info'}
+                            variant={session.is_active ? 'primary' : 'secondary'}
                           >
                             {session.is_active ? 'نشط' : 'غير نشط'}
                           </Badge>
@@ -818,11 +818,11 @@ const SecurityPage: React.FC = () => {
                               {policy.name}
                             </h3>
                             <Badge
-                              variant={policy.is_active ? 'default' : 'info'}
+                              variant={policy.is_active ? 'primary' : 'secondary'}
                             >
                               {policy.is_active ? 'نشط' : 'غير نشط'}
                             </Badge>
-                            <Badge variant='info'>{policy.category}</Badge>
+                            <Badge variant='secondary'>{policy.category}</Badge>
                           </div>
                           <p className='text-gray-700 mb-4'>
                             {policy.description}

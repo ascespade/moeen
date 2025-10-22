@@ -216,7 +216,7 @@ export interface Notification {
   id: string;
   public_id: string;
   user_id: string;
-  type: 'info' | 'warning' | 'error' | 'success';
+  type: 'secondary' | 'warning' | 'error' | 'success';
   title: string;
   message: string;
   read: boolean;

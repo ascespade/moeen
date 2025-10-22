@@ -33,7 +33,7 @@ interface RecentActivity {
   title: string;
   description: string;
   timestamp: string;
-  status: 'success' | 'warning' | 'error' | 'info';
+  status: 'success' | 'warning' | 'error' | 'secondary';
 }
 
 interface StaffWorkHours {
@@ -163,7 +163,7 @@ export default function AdminDashboard() {
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 mb-4'>خطأ في تحميل البيانات: {error}</p>
-          <Button onClick={fetchDashboardData} variant='default'>
+          <Button onClick={fetchDashboardData} variant='primary'>
             إعادة المحاولة
           </Button>
         </div>
@@ -223,7 +223,7 @@ export default function AdminDashboard() {
               <Button variant='outline' size='sm'>
                 تصدير التقرير
               </Button>
-              <Button variant='default' size='sm'>
+              <Button variant='primary' size='sm'>
                 إعدادات
               </Button>
             </div>

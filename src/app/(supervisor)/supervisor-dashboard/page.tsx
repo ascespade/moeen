@@ -39,7 +39,7 @@ interface SupervisorData {
   };
   alerts: Array<{
     id: string;
-    type: 'warning' | 'error' | 'info';
+    type: 'warning' | 'error' | 'secondary';
     message: string;
     timestamp: string;
   }>;
@@ -224,9 +224,9 @@ export default function SupervisorDashboard() {
                           <Badge
                             variant={
                               staff.efficiency >= 80
-                                ? 'default'
+                                ? 'primary'
                                 : staff.efficiency >= 60
-                                  ? 'info'
+                                  ? 'secondary'
                                   : 'error'
                             }
                           >
@@ -341,7 +341,7 @@ export default function SupervisorDashboard() {
                             <span className='text-gray-600 dark:text-gray-400'>
                               {report.name}
                             </span>
-                            <Badge variant='info'>
+                            <Badge variant='secondary'>
                               {t(`report.status.${report.status}`)}
                             </Badge>
                           </div>

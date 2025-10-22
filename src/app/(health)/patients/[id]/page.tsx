@@ -51,8 +51,8 @@ export default function PatientDetailsPage({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<
-    'info' | 'sessions' | 'documents' | 'relatives' | 'claims'
-  >('info');
+    'secondary' | 'sessions' | 'documents' | 'relatives' | 'claims'
+  >('secondary');
 
   // Load patient data from database
   useEffect(() => {
@@ -256,7 +256,7 @@ export default function PatientDetailsPage({
           <div className='border-b border-gray-200 dark:border-gray-700'>
             <nav className='flex space-x-8'>
               {[
-                { id: 'info', label: 'البيانات الشخصية' },
+                { id: 'secondary', label: 'البيانات الشخصية' },
                 { id: 'sessions', label: 'سجل الجلسات' },
                 { id: 'documents', label: 'الوثائق' },
                 { id: 'relatives', label: 'الأقارب' },
@@ -279,7 +279,7 @@ export default function PatientDetailsPage({
 
           <div className='p-6'>
             {/* Personal Info Tab */}
-            {activeTab === 'info' && (
+            {activeTab === 'secondary' && (
               <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
                 <div>
                   <h3 className='mb-4 text-lg font-semibold'>

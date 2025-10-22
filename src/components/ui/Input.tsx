@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  variant?: 'default' | 'error' | 'success';
+  variant?: 'primary' | 'error' | 'success';
   label?: string;
   error?: string;
   help?: string;
@@ -15,7 +15,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
       className,
-      variant = 'default',
+      variant = 'primary',
       label,
       error,
       help,

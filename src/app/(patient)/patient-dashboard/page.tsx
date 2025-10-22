@@ -141,7 +141,7 @@ export default function PatientDashboard() {
               <Button
                 className='w-full mt-4'
                 disabled={!patientData?.activated}
-                variant={patientData?.activated ? 'default' : 'info'}
+                variant={patientData?.activated ? 'primary' : 'secondary'}
               >
                 {patientData?.activated
                   ? t('patient.actions.open_file')
@@ -207,7 +207,7 @@ export default function PatientDashboard() {
                           </p>
                         </div>
                       </div>
-                      <Badge variant='info'>
+                      <Badge variant='secondary'>
                         {patientData.nextAppointment.status}
                       </Badge>
                     </div>
@@ -239,7 +239,7 @@ export default function PatientDashboard() {
                       {t('patient.dashboard.activation_status')}
                     </span>
                     <Badge
-                      variant={patientData?.activated ? 'default' : 'info'}
+                      variant={patientData?.activated ? 'primary' : 'secondary'}
                       className={
                         patientData?.activated
                           ? 'bg-green-100 text-green-800'
@@ -255,7 +255,7 @@ export default function PatientDashboard() {
                     <span className='text-sm text-gray-600 dark:text-gray-400'>
                       {t('patient.dashboard.insurance_status')}
                     </span>
-                    <Badge variant='info'>
+                    <Badge variant='secondary'>
                       {patientData?.insuranceStatus?.status ||
                         t('common.unknown')}
                     </Badge>

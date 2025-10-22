@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
       ip_address: ipAddress,
       user_agent: userAgent,
       status: 'success',
-      severity: 'info',
+      severity: 'secondary',
       metadata: {
         count: appointments?.length || 0,
         filters: { patientId, doctorId, date, status },
@@ -234,7 +234,7 @@ export async function POST(request: NextRequest) {
       ip_address: ipAddress,
       user_agent: userAgent,
       status: 'success',
-      severity: 'info',
+      severity: 'secondary',
       metadata: {
         patient_id: patientId,
         doctor_id: doctorId,

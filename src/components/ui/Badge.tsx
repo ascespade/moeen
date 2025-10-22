@@ -2,14 +2,14 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'success' | 'warning' | 'error' | 'info' | 'outline';
+  variant?: 'primary' | 'success' | 'warning' | 'error' | 'secondary' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
 }
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
   (
-    { className, variant = 'default', size = 'md', children, ...props },
+    { className, variant = 'primary', size = 'md', children, ...props },
     ref
   ) => {
     const baseClasses = 'inline-flex items-center rounded-full font-medium';

@@ -2,14 +2,14 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'elevated' | 'outlined' | 'glass';
+  variant?: 'primary' | 'elevated' | 'outlined' | 'glass';
   padding?: 'sm' | 'md' | 'lg' | 'xl';
   children: React.ReactNode;
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (
-    { className, variant = 'default', padding = 'md', children, ...props },
+    { className, variant = 'primary', padding = 'md', children, ...props },
     ref
   ) => {
     const baseClasses = 'rounded-xl border transition-all duration-200';

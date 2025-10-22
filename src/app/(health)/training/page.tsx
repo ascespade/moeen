@@ -166,15 +166,15 @@ const TrainingPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      active: { label: 'نشط', variant: 'default' as const },
-      completed: { label: 'مكتمل', variant: 'default' as const },
-      paused: { label: 'متوقف', variant: 'info' as const },
+      active: { label: 'نشط', variant: 'primary' as const },
+      completed: { label: 'مكتمل', variant: 'primary' as const },
+      paused: { label: 'متوقف', variant: 'secondary' as const },
       cancelled: { label: 'ملغي', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'default' as const,
+      variant: 'primary' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -401,7 +401,7 @@ const TrainingPage: React.FC = () => {
 
                 <div className='grid grid-cols-1 md:grid-cols-4 gap-4 mb-4'>
                   <div className='flex items-center gap-2'>
-                    <Badge variant='info'>{program.category}</Badge>
+                    <Badge variant='secondary'>{program.category}</Badge>
                     {getLevelBadge(program.level)}
                   </div>
                   <div className='flex items-center gap-2'>
@@ -430,7 +430,7 @@ const TrainingPage: React.FC = () => {
                   </h4>
                   <div className='flex flex-wrap gap-2'>
                     {program.skills_covered.map((skill, index) => (
-                      <Badge key={index} variant='info' className='text-xs'>
+                      <Badge key={index} variant='secondary' className='text-xs'>
                         {skill}
                       </Badge>
                     ))}
@@ -441,7 +441,7 @@ const TrainingPage: React.FC = () => {
                   <h4 className='text-sm font-semibold mb-2'>المتطلبات:</h4>
                   <div className='flex flex-wrap gap-2'>
                     {program.prerequisites.map((prereq, index) => (
-                      <Badge key={index} variant='info' className='text-xs'>
+                      <Badge key={index} variant='secondary' className='text-xs'>
                         {prereq}
                       </Badge>
                     ))}

@@ -170,7 +170,7 @@ export default function DashboardPage() {
     switch (status) {
       case 'healthy':
         return (
-          <Badge variant='default' className='bg-green-100 text-green-800'>
+          <Badge variant='primary' className='bg-green-100 text-green-800'>
             Healthy
           </Badge>
         );
@@ -511,7 +511,7 @@ export default function DashboardPage() {
                         <span className='text-sm font-medium'>
                           {specialty.name}
                         </span>
-                        <Badge variant='info'>{specialty.count}</Badge>
+                        <Badge variant='secondary'>{specialty.count}</Badge>
                       </div>
                     )
                   ) || (

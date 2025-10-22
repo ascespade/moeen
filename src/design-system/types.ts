@@ -31,11 +31,11 @@ export type ColorShade =
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
-export type CardVariant = 'default' | 'elevated' | 'outlined' | 'glass';
+export type CardVariant = 'primary' | 'elevated' | 'outlined' | 'glass';
 
-export type InputVariant = 'default' | 'error' | 'success';
+export type InputVariant = 'primary' | 'error' | 'success';
 
-export type BadgeVariant = 'default' | 'success' | 'warning' | 'error' | 'info';
+export type BadgeVariant = 'primary' | 'success' | 'warning' | 'error' | 'secondary';
 
 // ========================================
 // LAYOUT TYPES - أنواع التخطيط

@@ -233,14 +233,14 @@ const FamilySupportPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      scheduled: { label: 'مجدولة', variant: 'default' as const },
-      completed: { label: 'مكتملة', variant: 'default' as const },
+      scheduled: { label: 'مجدولة', variant: 'primary' as const },
+      completed: { label: 'مكتملة', variant: 'primary' as const },
       cancelled: { label: 'ملغية', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'default' as const,
+      variant: 'primary' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -489,7 +489,7 @@ const FamilySupportPage: React.FC = () => {
                         </div>
                         <div className='flex items-center gap-2'>
                           {member.default_caregiver && (
-                            <Badge variant='default'>مقدم رعاية أساسي</Badge>
+                            <Badge variant='primary'>مقدم رعاية أساسي</Badge>
                           )}
                           {member.emergency_contact && (
                             <Badge variant='error'>جهة اتصال طارئة</Badge>
@@ -634,7 +634,7 @@ const FamilySupportPage: React.FC = () => {
                           {session.topics_discussed.map((topic, index) => (
                             <Badge
                               key={index}
-                              variant='info'
+                              variant='secondary'
                               className='text-xs'
                             >
                               {topic}
@@ -651,7 +651,7 @@ const FamilySupportPage: React.FC = () => {
                           {session.recommendations.map((rec, index) => (
                             <Badge
                               key={index}
-                              variant='info'
+                              variant='secondary'
                               className='text-xs'
                             >
                               {rec}
@@ -740,7 +740,7 @@ const FamilySupportPage: React.FC = () => {
                           </div>
                         </div>
                         <div className='flex items-center gap-2'>
-                          <Badge variant='info'>{resource.category}</Badge>
+                          <Badge variant='secondary'>{resource.category}</Badge>
                           <Button variant='outline' size='sm'>
                             <MoreVertical className='w-4 h-4' />
                           </Button>
@@ -755,7 +755,7 @@ const FamilySupportPage: React.FC = () => {
                           {resource.tags.map((tag, index) => (
                             <Badge
                               key={index}
-                              variant='info'
+                              variant='secondary'
                               className='text-xs'
                             >
                               {tag}

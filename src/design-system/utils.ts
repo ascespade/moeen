@@ -45,7 +45,7 @@ export function getBrandColor(
   if (typeof color === 'object' && shade && shade in color) {
     return (color as any)[shade];
   }
-  return typeof color === 'string' ? color : color.DEFAULT;
+  return typeof color === 'string' ? color : (color as any).DEFAULT || color;
 }
 
 // ========================================

@@ -559,7 +559,7 @@ const AnalyticsPage: React.FC = () => {
                           <div key={index} className='p-4 border rounded-lg'>
                             <div className='flex items-center justify-between mb-2'>
                               <span className='font-medium'>{item.type}</span>
-                              <Badge variant='info'>
+                              <Badge variant='secondary'>
                                 {item.successRate}% نجاح
                               </Badge>
                             </div>
@@ -587,7 +587,7 @@ const AnalyticsPage: React.FC = () => {
                               <span className='font-medium'>
                                 {item.therapist}
                               </span>
-                              <Badge variant='default'>
+                              <Badge variant='primary'>
                                 {item.successRate}% نجاح
                               </Badge>
                             </div>

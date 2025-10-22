@@ -151,15 +151,15 @@ const ProgressTrackingPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      active: { label: 'نشط', variant: 'default' as const },
-      completed: { label: 'مكتمل', variant: 'default' as const },
-      paused: { label: 'متوقف', variant: 'info' as const },
+      active: { label: 'نشط', variant: 'primary' as const },
+      completed: { label: 'مكتمل', variant: 'primary' as const },
+      paused: { label: 'متوقف', variant: 'secondary' as const },
       cancelled: { label: 'ملغي', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'default' as const,
+      variant: 'primary' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -572,7 +572,7 @@ const ProgressTrackingPage: React.FC = () => {
                           {assessment.recommendations.map((rec, index) => (
                             <Badge
                               key={index}
-                              variant='info'
+                              variant='secondary'
                               className='text-xs'
                             >
                               {rec}
@@ -694,7 +694,7 @@ const ProgressTrackingPage: React.FC = () => {
                           {report.recommendations.map((rec, index) => (
                             <Badge
                               key={index}
-                              variant='info'
+                              variant='secondary'
                               className='text-xs'
                             >
                               {rec}

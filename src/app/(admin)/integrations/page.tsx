@@ -260,7 +260,7 @@ const IntegrationsPage: React.FC = () => {
                   <span>الحالة:</span>
                   <Badge
                     variant={
-                      integration.status === 'active' ? 'default' : 'info'
+                      integration.status === 'active' ? 'primary' : 'secondary'
                     }
                   >
                     {integration.status === 'active' ? 'نشط' : 'غير نشط'}

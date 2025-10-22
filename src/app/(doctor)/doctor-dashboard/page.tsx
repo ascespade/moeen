@@ -199,10 +199,10 @@ export default function DoctorDashboard() {
                           <Badge
                             variant={
                               appointment.status === 'completed'
-                                ? 'default'
+                                ? 'primary'
                                 : appointment.status === 'in_progress'
-                                  ? 'info'
-                                  : 'info'
+                                  ? 'secondary'
+                                  : 'secondary'
                             }
                           >
                             {t(`appointment.status.${appointment.status}`)}

@@ -204,7 +204,7 @@ export async function POST(request: NextRequest) {
         ip_address: ipAddress,
         user_agent: userAgent,
         status: 'success',
-        severity: 'info',
+        severity: 'secondary',
         new_values: {
           email,
           name,

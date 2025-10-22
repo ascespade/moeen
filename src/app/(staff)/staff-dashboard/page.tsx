@@ -219,7 +219,7 @@ export default function StaffDashboard() {
                             </div>
                           </div>
                           <div className='flex items-center space-x-2'>
-                            <Badge variant='info'>
+                            <Badge variant='secondary'>
                               {t('payment.status.pending')}
                             </Badge>
                             <Button
@@ -264,7 +264,7 @@ export default function StaffDashboard() {
                             </div>
                           </div>
                           <div className='flex items-center space-x-2'>
-                            <Badge variant='info'>
+                            <Badge variant='secondary'>
                               {t(`claim.status.${claim.status}`)}
                             </Badge>
                             <Button

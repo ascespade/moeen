@@ -369,7 +369,7 @@ const MoainChatbot: React.FC = () => {
             </div>
             <div className='flex items-center gap-2'>
               <Badge
-                variant={learningMode ? 'default' : 'info'}
+                variant={learningMode ? 'primary' : 'secondary'}
                 className='flex items-center gap-1'
               >
                 <Brain className='w-3 h-3' />
@@ -464,7 +464,7 @@ const MoainChatbot: React.FC = () => {
                         {appointment.specialty}
                       </p>
                     </div>
-                    <Badge variant='info'>{appointment.date}</Badge>
+                    <Badge variant='secondary'>{appointment.date}</Badge>
                   </div>
                   <div className='flex flex-wrap gap-2'>
                     {appointment.availableSlots.map(time => (

@@ -419,10 +419,10 @@ const APIKeysSettingsPage: React.FC = () => {
                         <Badge
                           variant={
                             keyConfig.status === 'active'
-                              ? 'default'
+                              ? 'primary'
                               : keyConfig.status === 'invalid'
                                 ? 'error'
-                                : 'info'
+                                : 'secondary'
                           }
                         >
                           {keyConfig.status === 'active' && '✅ نشط'}

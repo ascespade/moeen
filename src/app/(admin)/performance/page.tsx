@@ -346,7 +346,7 @@ const PerformancePage: React.FC = () => {
               <div className='space-y-4'>
                 <div className='flex justify-between'>
                   <span className='text-sm font-medium'>حالة الخادم:</span>
-                  <Badge variant='default'>نشط</Badge>
+                  <Badge variant='primary'>نشط</Badge>
                 </div>
                 <div className='flex justify-between'>
                   <span className='text-sm font-medium'>آخر تحديث:</span>

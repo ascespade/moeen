@@ -152,15 +152,15 @@ const TherapyPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      scheduled: { label: 'مجدولة', variant: 'default' as const },
-      in_progress: { label: 'جارية', variant: 'info' as const },
-      completed: { label: 'مكتملة', variant: 'default' as const },
+      scheduled: { label: 'مجدولة', variant: 'primary' as const },
+      in_progress: { label: 'جارية', variant: 'secondary' as const },
+      completed: { label: 'مكتملة', variant: 'primary' as const },
       cancelled: { label: 'ملغية', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'default' as const,
+      variant: 'primary' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -417,7 +417,7 @@ const TherapyPage: React.FC = () => {
                   <h4 className='text-sm font-semibold mb-2'>أهداف الجلسة:</h4>
                   <div className='flex flex-wrap gap-2'>
                     {session.goals.map((goal, index) => (
-                      <Badge key={index} variant='info' className='text-xs'>
+                      <Badge key={index} variant='secondary' className='text-xs'>
                         {goal}
                       </Badge>
                     ))}
@@ -428,7 +428,7 @@ const TherapyPage: React.FC = () => {
                   <h4 className='text-sm font-semibold mb-2'>الأنشطة:</h4>
                   <div className='flex flex-wrap gap-2'>
                     {session.activities.map((activity, index) => (
-                      <Badge key={index} variant='info' className='text-xs'>
+                      <Badge key={index} variant='secondary' className='text-xs'>
                         {activity}
                       </Badge>
                     ))}

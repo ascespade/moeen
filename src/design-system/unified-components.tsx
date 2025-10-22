@@ -61,7 +61,7 @@ export const UnifiedButton = React.forwardRef<
     };
 
     if (asChild && React.isValidElement(children)) {
-      return React.cloneElement(children, {
+      return React.cloneElement(children as React.ReactElement<any>, {
         className: cn(baseClasses, variants[variant], sizes[size], className),
         ref,
         ...props,
@@ -91,14 +91,14 @@ UnifiedButton.displayName = 'UnifiedButton';
 // ========================================
 
 export interface UnifiedCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'elevated' | 'outlined' | 'glass' | 'stat' | 'feature';
+  variant?: 'primary' | 'elevated' | 'outlined' | 'glass' | 'stat' | 'feature';
   padding?: 'sm' | 'md' | 'lg' | 'xl';
   children: React.ReactNode;
 }
 
 export const UnifiedCard = React.forwardRef<HTMLDivElement, UnifiedCardProps>(
   (
-    { className, variant = 'default', padding = 'md', children, ...props },
+    { className, variant = 'primary', padding = 'md', children, ...props },
     ref
   ) => {
     const baseClasses = 'rounded-xl border transition-all duration-200';
@@ -149,14 +149,14 @@ UnifiedCard.displayName = 'UnifiedCard';
 
 export interface UnifiedBadgeProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'success' | 'warning' | 'error' | 'info' | 'outline';
+  variant?: 'primary' | 'success' | 'warning' | 'error' | 'secondary' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
 }
 
 export const UnifiedBadge = React.forwardRef<HTMLDivElement, UnifiedBadgeProps>(
   (
-    { className, variant = 'default', size = 'md', children, ...props },
+    { className, variant = 'primary', size = 'md', children, ...props },
     ref
   ) => {
     const baseClasses = 'inline-flex items-center rounded-full font-medium';

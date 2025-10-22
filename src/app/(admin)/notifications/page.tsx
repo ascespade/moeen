@@ -36,7 +36,7 @@ interface Notification {
   title: string;
   message: string;
   type:
-    | 'info'
+    | 'secondary'
     | 'success'
     | 'warning'
     | 'error'
@@ -237,29 +237,29 @@ const NotificationsPage: React.FC = () => {
 
   const getPriorityBadge = (priority: string) => {
     const priorityMap = {
-      low: { label: 'منخفض', variant: 'info' as const },
-      medium: { label: 'متوسط', variant: 'default' as const },
-      high: { label: 'عالي', variant: 'default' as const },
+      low: { label: 'منخفض', variant: 'secondary' as const },
+      medium: { label: 'متوسط', variant: 'primary' as const },
+      high: { label: 'عالي', variant: 'primary' as const },
       urgent: { label: 'عاجل', variant: 'error' as const },
     };
 
     const priorityInfo = priorityMap[priority as keyof typeof priorityMap] || {
       label: priority,
-      variant: 'default' as const,
+      variant: 'primary' as const,
     };
     return <Badge variant={priorityInfo.variant}>{priorityInfo.label}</Badge>;
   };
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      unread: { label: 'غير مقروء', variant: 'default' as const },
-      read: { label: 'مقروء', variant: 'info' as const },
-      archived: { label: 'مؤرشف', variant: 'info' as const },
+      unread: { label: 'غير مقروء', variant: 'primary' as const },
+      read: { label: 'مقروء', variant: 'secondary' as const },
+      archived: { label: 'مؤرشف', variant: 'secondary' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'default' as const,
+      variant: 'primary' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -556,7 +556,7 @@ const NotificationsPage: React.FC = () => {
                 <div key={template.id} className='p-4 border rounded-lg'>
                   <div className='flex items-center justify-between mb-2'>
                     <h4 className='font-semibold'>{template.name}</h4>
-                    <Badge variant={template.is_active ? 'default' : 'info'}>
+                    <Badge variant={template.is_active ? 'primary' : 'secondary'}>
                       {template.is_active ? 'نشط' : 'غير نشط'}
                     </Badge>
                   </div>
@@ -565,8 +565,8 @@ const NotificationsPage: React.FC = () => {
                     {template.message}
                   </p>
                   <div className='flex items-center gap-2'>
-                    <Badge variant='info'>{template.type}</Badge>
-                    <Badge variant='info'>{template.category}</Badge>
+                    <Badge variant='secondary'>{template.type}</Badge>
+                    <Badge variant='secondary'>{template.category}</Badge>
                     <span className='text-xs text-gray-500'>
                       متغيرات: {template.variables.join(', ')}
                     </span>

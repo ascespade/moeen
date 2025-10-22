@@ -107,13 +107,13 @@ function getActivityTitle(action: string, entityType: string): string {
 function getActivityStatus(action: string): string {
   const statusMap: Record<string, string> = {
     create: 'success',
-    update: 'info',
+    update: 'secondary',
     delete: 'error',
     approve: 'success',
     reject: 'error',
   };
 
-  return statusMap[action] || 'info';
+  return statusMap[action] || 'secondary';
 }
 
 function formatTimestamp(timestamp: string): string {

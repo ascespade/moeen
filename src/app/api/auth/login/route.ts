@@ -216,7 +216,7 @@ export async function POST(request: NextRequest) {
         ip_address: ipAddress,
         user_agent: userAgent,
         status: 'success',
-        severity: 'info',
+        severity: 'secondary',
         session_id: session.access_token.substring(0, 20),
         metadata: {
           email: user.email,

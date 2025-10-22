@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
     // Log interaction
     logger.info('Chatbot interaction', {
       message: message.substring(0, 100),
-      responseType: response === responses['مرحبا'] ? 'greeting' : 'info',
+      responseType: response === responses['مرحبا'] ? 'greeting' : 'secondary',
     });
 
     return NextResponse.json({

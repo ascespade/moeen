@@ -276,12 +276,12 @@ export default function DynamicDataDashboard({ className }: DynamicDataProps) {
                     {contact.phone}
                   </p>
                   <Badge
-                    variant={contact.type === 'medical' ? 'error' : 'info'}
+                    variant={contact.type === 'medical' ? 'error' : 'secondary'}
                   >
                     {contact.type}
                   </Badge>
                   {contact.is_available_24_7 && (
-                    <Badge variant='info' className='ml-2'>
+                    <Badge variant='secondary' className='ml-2'>
                       24/7
                     </Badge>
                   )}
@@ -358,11 +358,11 @@ export default function DynamicDataDashboard({ className }: DynamicDataProps) {
                       <strong>الخبرة:</strong> {doctor.experience_years} سنة
                     </p>
                     <div className='flex items-center gap-2'>
-                      <Badge variant={doctor.is_active ? 'default' : 'info'}>
+                      <Badge variant={doctor.is_active ? 'primary' : 'secondary'}>
                         {doctor.is_active ? 'نشط' : 'غير نشط'}
                       </Badge>
                       {doctor.rating > 0 && (
-                        <Badge variant='info'>
+                        <Badge variant='secondary'>
                           ⭐ {doctor.rating} ({doctor.total_reviews})
                         </Badge>
                       )}
@@ -508,10 +508,10 @@ export default function DynamicDataDashboard({ className }: DynamicDataProps) {
                       <strong>اللغة:</strong> {member.language}
                     </p>
                     <div className='flex items-center gap-2'>
-                      <Badge variant={member.is_active ? 'default' : 'info'}>
+                      <Badge variant={member.is_active ? 'primary' : 'secondary'}>
                         {member.is_active ? 'نشط' : 'غير نشط'}
                       </Badge>
-                      <Badge variant='info'>{member.role}</Badge>
+                      <Badge variant='secondary'>{member.role}</Badge>
                     </div>
                     {member.last_login && (
                       <p className='text-xs text-muted-foreground'>

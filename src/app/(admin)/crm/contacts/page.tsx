@@ -175,15 +175,15 @@ const ContactsPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      lead: { label: 'عميل محتمل', variant: 'info' as const },
-      prospect: { label: 'عميل واعد', variant: 'default' as const },
-      customer: { label: 'عميل', variant: 'default' as const },
+      lead: { label: 'عميل محتمل', variant: 'secondary' as const },
+      prospect: { label: 'عميل واعد', variant: 'primary' as const },
+      customer: { label: 'عميل', variant: 'primary' as const },
       inactive: { label: 'غير نشط', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'info' as const,
+      variant: 'secondary' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -438,7 +438,7 @@ const ContactsPage: React.FC = () => {
                           {contact.tags.map((tag, index) => (
                             <Badge
                               key={index}
-                              variant='info'
+                              variant='secondary'
                               className='text-xs'
                             >
                               {tag}
