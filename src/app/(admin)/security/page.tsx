@@ -709,7 +709,9 @@ const SecurityPage: React.FC = () => {
                         </div>
                         <div className='flex items-center gap-2'>
                           <Badge
-                            variant={session.is_active ? 'primary' : 'secondary'}
+                            variant={
+                              session.is_active ? 'primary' : 'secondary'
+                            }
                           >
                             {session.is_active ? 'نشط' : 'غير نشط'}
                           </Badge>
@@ -818,7 +820,9 @@ const SecurityPage: React.FC = () => {
                               {policy.name}
                             </h3>
                             <Badge
-                              variant={policy.is_active ? 'primary' : 'secondary'}
+                              variant={
+                                policy.is_active ? 'primary' : 'secondary'
+                              }
                             >
                               {policy.is_active ? 'نشط' : 'غير نشط'}
                             </Badge>

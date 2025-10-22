@@ -35,7 +35,12 @@ export type CardVariant = 'primary' | 'elevated' | 'outlined' | 'glass';
 
 export type InputVariant = 'primary' | 'error' | 'success';
 
-export type BadgeVariant = 'primary' | 'success' | 'warning' | 'error' | 'secondary';
+export type BadgeVariant =
+  | 'primary'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'secondary';
 
 // ========================================
 // LAYOUT TYPES - أنواع التخطيط

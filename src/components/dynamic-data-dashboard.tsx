@@ -358,7 +358,9 @@ export default function DynamicDataDashboard({ className }: DynamicDataProps) {
                       <strong>الخبرة:</strong> {doctor.experience_years} سنة
                     </p>
                     <div className='flex items-center gap-2'>
-                      <Badge variant={doctor.is_active ? 'primary' : 'secondary'}>
+                      <Badge
+                        variant={doctor.is_active ? 'primary' : 'secondary'}
+                      >
                         {doctor.is_active ? 'نشط' : 'غير نشط'}
                       </Badge>
                       {doctor.rating > 0 && (
@@ -508,7 +510,9 @@ export default function DynamicDataDashboard({ className }: DynamicDataProps) {
                       <strong>اللغة:</strong> {member.language}
                     </p>
                     <div className='flex items-center gap-2'>
-                      <Badge variant={member.is_active ? 'primary' : 'secondary'}>
+                      <Badge
+                        variant={member.is_active ? 'primary' : 'secondary'}
+                      >
                         {member.is_active ? 'نشط' : 'غير نشط'}
                       </Badge>
                       <Badge variant='secondary'>{member.role}</Badge>

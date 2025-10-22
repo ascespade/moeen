@@ -149,7 +149,13 @@ UnifiedCard.displayName = 'UnifiedCard';
 
 export interface UnifiedBadgeProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'primary' | 'success' | 'warning' | 'error' | 'secondary' | 'outline';
+  variant?:
+    | 'primary'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'secondary'
+    | 'outline';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
 }

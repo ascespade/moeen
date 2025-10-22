@@ -72,42 +72,6 @@ export default function DynamicDoctorsList({
     useState<string>('all');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('all');
 
-  useEffect(() => {
-    fetchDoctors();
-  }, []);
-
-  useEffect(() => {
-    filterDoctors();
-  }, [
-    doctors,
-    searchTerm,
-    selectedSpecialization,
-    selectedLanguage,
-  ]);
-
-  const fetchDoctors = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const response = await fetch(
-        '/api/dynamic-data/doctors?include_users=true'
-      );
-      const data = await response.json();
-
-      if (data.doctors) {
-        setDoctors(data.doctors);
-      } else {
-        setError('لم يتم العثور على أطباء في قاعدة البيانات');
-      }
-    } catch (err) {
-      setError('فشل في تحميل قائمة الأطباء');
-      console.error('Error fetching doctors:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const filterDoctors = useCallback(() => {
     let filtered = doctors.filter(doctor => {
       const matchesSearch =
@@ -138,6 +102,37 @@ export default function DynamicDoctorsList({
 
     setFilteredDoctors(filtered);
   }, [doctors, searchTerm, selectedSpecialization, selectedLanguage, maxItems]);
+
+  useEffect(() => {
+    fetchDoctors();
+  }, []);
+
+  useEffect(() => {
+    filterDoctors();
+  }, [filterDoctors]);
+
+  const fetchDoctors = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch(
+        '/api/dynamic-data/doctors?include_users=true'
+      );
+      const data = await response.json();
+
+      if (data.doctors) {
+        setDoctors(data.doctors);
+      } else {
+        setError('لم يتم العثور على أطباء في قاعدة البيانات');
+      }
+    } catch (err) {
+      setError('فشل في تحميل قائمة الأطباء');
+      console.error('Error fetching doctors:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // الحصول على التخصصات الفريدة
   const specializations = Array.from(
@@ -318,7 +313,11 @@ export default function DynamicDoctorsList({
                     <h4 className='text-sm font-semibold mb-2'>المؤهلات</h4>
                     <div className='flex flex-wrap gap-1'>
                       {doctor.qualifications.slice(0, 3).map((qual, index) => (
-                        <Badge key={index} variant='secondary' className='text-xs'>
+                        <Badge
+                          key={index}
+                          variant='secondary'
+                          className='text-xs'
+                        >
                           {qual}
                         </Badge>
                       ))}
@@ -337,7 +336,11 @@ export default function DynamicDoctorsList({
                     <h4 className='text-sm font-semibold mb-2'>اللغات</h4>
                     <div className='flex flex-wrap gap-1'>
                       {doctor.languages.map((lang, index) => (
-                        <Badge key={index} variant='secondary' className='text-xs'>
+                        <Badge
+                          key={index}
+                          variant='secondary'
+                          className='text-xs'
+                        >
                           {lang}
                         </Badge>
                       ))}
