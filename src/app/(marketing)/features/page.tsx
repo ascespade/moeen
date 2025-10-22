@@ -128,7 +128,9 @@ export default function FeaturesPage() {
             انضم إلى آلاف المراكز الصحية التي تثق في منصة مُعين لإدارة عملياتها
           </p>
           <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-            <Button className='btn-primary btn-lg'>ابدأ التجربة المجانية</Button>
+            <Button className='btn-primary btn-lg'>
+              ابدأ التجربة المجانية
+            </Button>
             <Button className='btn-outline btn-lg'>تواصل معنا</Button>
           </div>
         </div>

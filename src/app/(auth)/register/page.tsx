@@ -228,7 +228,9 @@ export default function RegisterPage() {
                 disabled={isLoading}
               />
               {errors.email && (
-                <p className='mt-1 text-sm text-primary-error'>{errors.email}</p>
+                <p className='mt-1 text-sm text-primary-error'>
+                  {errors.email}
+                </p>
               )}
             </div>
 

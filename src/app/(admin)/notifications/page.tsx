@@ -556,9 +556,7 @@ const NotificationsPage: React.FC = () => {
                 <div key={template.id} className='p-4 border rounded-lg'>
                   <div className='flex items-center justify-between mb-2'>
                     <h4 className='font-semibold'>{template.name}</h4>
-                    <Badge
-                      variant={template.is_active ? 'default' : 'info'}
-                    >
+                    <Badge variant={template.is_active ? 'default' : 'info'}>
                       {template.is_active ? 'نشط' : 'غير نشط'}
                     </Badge>
                   </div>

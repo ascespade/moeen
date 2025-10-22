@@ -137,7 +137,9 @@ export default function CRMDealsPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-primary text-2xl font-bold'>إدارة الصفقات</h1>
+                <h1 className='text-primary text-2xl font-bold'>
+                  إدارة الصفقات
+                </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
                   تتبع وإدارة صفقات المبيعات
                 </p>

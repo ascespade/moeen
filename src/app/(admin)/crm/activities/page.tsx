@@ -180,7 +180,9 @@ export default function CRMActivitiesPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-primary text-2xl font-bold'>إدارة الأنشطة</h1>
+                <h1 className='text-primary text-2xl font-bold'>
+                  إدارة الأنشطة
+                </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
                   تتبع المهام والاجتماعات والمكالمات
                 </p>

@@ -672,7 +672,8 @@ export default function DashboardPage() {
                     <div className='flex justify-between'>
                       <span>Success Rate</span>
                       <span className='font-bold'>
-                        {metrics?.automation.workflows.totalWorkflows && metrics.automation.workflows.totalWorkflows > 0
+                        {metrics?.automation.workflows.totalWorkflows &&
+                        metrics.automation.workflows.totalWorkflows > 0
                           ? Math.round(
                               (metrics.automation.workflows.validWorkflows /
                                 metrics.automation.workflows.totalWorkflows) *

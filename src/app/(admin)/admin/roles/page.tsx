@@ -128,7 +128,9 @@ export default function RolesPage() {
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-primary'>4</div>
+            <div className='mb-2 text-3xl font-bold text-primary-primary'>
+              4
+            </div>
             <div className='text-gray-600 dark:text-gray-300'>أدوار نشطة</div>
           </div>
         </div>

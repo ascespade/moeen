@@ -201,8 +201,8 @@ export default function DoctorDashboard() {
                               appointment.status === 'completed'
                                 ? 'default'
                                 : appointment.status === 'in_progress'
-                                ? 'info'
-                                : 'info'
+                                  ? 'info'
+                                  : 'info'
                             }
                           >
                             {t(`appointment.status.${appointment.status}`)}

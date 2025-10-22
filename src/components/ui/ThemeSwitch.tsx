@@ -93,7 +93,9 @@ export function ThemeSwitch({
             else setTheme('light');
           }}
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary-primary)] focus:ring-offset-2 ${
-            isDark ? 'bg-[var(--primary-primary)]' : 'bg-[var(--border-primary)]'
+            isDark
+              ? 'bg-[var(--primary-primary)]'
+              : 'bg-[var(--border-primary)]'
           }`}
         >
           <span

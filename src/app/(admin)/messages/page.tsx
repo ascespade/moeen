@@ -152,7 +152,9 @@ export default function MessagesPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-primary text-2xl font-bold'>إدارة الرسائل</h1>
+                <h1 className='text-primary text-2xl font-bold'>
+                  إدارة الرسائل
+                </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
                   تتبع وإدارة الرسائل المرسلة
                 </p>

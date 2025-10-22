@@ -214,8 +214,10 @@ const AnalyticsPage: React.FC = () => {
   };
 
   const getGrowthIcon = (rate: number) => {
-    if (rate > 0) return <TrendingUp className='w-4 h-4 text-primary-success' />;
-    if (rate < 0) return <TrendingDown className='w-4 h-4 text-primary-error' />;
+    if (rate > 0)
+      return <TrendingUp className='w-4 h-4 text-primary-success' />;
+    if (rate < 0)
+      return <TrendingDown className='w-4 h-4 text-primary-error' />;
     return <Activity className='w-4 h-4 text-gray-500' />;
   };
 
