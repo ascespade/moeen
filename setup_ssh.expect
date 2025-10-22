@@ -1,0 +1,50 @@
+#!/usr/bin/expect -f
+
+# إعداد SSH بدون كلمة مرور
+set timeout 30
+
+# نسخ المفتاح إلى الخادم
+spawn scp my_public_key.txt ubuntu@100.64.64.33:~/
+expect "password:"
+send "root\r"
+expect eof
+
+# الاتصال بالخادم وإعداد SSH
+spawn ssh ubuntu@100.64.64.33
+expect "password:"
+send "root\r"
+expect "$ "
+
+# إعداد SSH
+send "mkdir -p ~/.ssh\r"
+expect "$ "
+send "chmod 700 ~/.ssh\r"
+expect "$ "
+send "cat ~/my_public_key.txt >> ~/.ssh/authorized_keys\r"
+expect "$ "
+send "chmod 600 ~/.ssh/authorized_keys\r"
+expect "$ "
+send "rm ~/my_public_key.txt\r"
+expect "$ "
+
+# إعداد Tailscale
+send "sudo tailscale down\r"
+expect "password for ubuntu:"
+send "root\r"
+expect "$ "
+send "sudo tailscale up --accept-routes --accept-dns=false\r"
+expect "$ "
+send "sudo systemctl enable tailscaled\r"
+expect "$ "
+send "sudo systemctl start tailscaled\r"
+expect "$ "
+
+# اختبار الاتصال
+send "echo 'SSH setup completed successfully!'\r"
+expect "$ "
+send "tailscale status\r"
+expect "$ "
+send "exit\r"
+expect eof
+
+puts "Setup completed! You can now connect without password using: ssh ubuntu@100.64.64.33"
